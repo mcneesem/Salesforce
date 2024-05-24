@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Group of Permission Sets to be granted to Team AES Users.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Team AES</label>
+    <permissionSets>Assign_Connected_App_Data_Loader</permissionSets>
+    <permissionSets>Assign_Connected_App_Workbench</permissionSets>
+    <status>Updated</status>
+</PermissionSetGroup>

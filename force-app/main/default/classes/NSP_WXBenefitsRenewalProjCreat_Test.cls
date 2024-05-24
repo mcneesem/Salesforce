@@ -52,8 +52,9 @@ public class NSP_WXBenefitsRenewalProjCreat_Test {
       insert BpaUser;
       NSP_Account_Team__c accTeam = (NSP_Account_Team__c)NSP_TestExtendedDataFactory.createSObject(new NSP_Account_Team__c(), ACCOUNT_TEAM_MEMBER_DEFAULTS, false);
       accTeam.NSP_Account__c = acct.Id;
-      accTeam.NSP_Role__c = NSP_ServiceConstants.BENEFITS_SPECIALIST;
+      accTeam.NSP_Role__c = NSP_ServiceConstants.WXWA_BENEFITS;
       accTeam.NSP_User__c = BpaUser.Id;
+      accTeam.NSP_Primary__c = true;
       //inserting account Team
       Insert accTeam;
     }
@@ -71,7 +72,7 @@ public class NSP_WXBenefitsRenewalProjCreat_Test {
     
     NSP_Account_Team__c accTeam4 = (NSP_Account_Team__c)NSP_TestExtendedDataFactory.createSObject(new NSP_Account_Team__c(), ACCOUNT_TEAM_MEMBER_DEFAULTS, false);
     accTeam4.NSP_Account__c = acct2.Id;
-    accTeam4.NSP_Role__c = NSP_ServiceConstants.WXWA_BENEFITS;
+    accTeam4.NSP_Role__c = NSP_ServiceConstants.BENEFITS_SPECIALIST;
     accountTeam.add(accTeam4);
     //inserting more account Teams to check for correct user to be assigned
     insert accountTeam;
@@ -124,7 +125,7 @@ public class NSP_WXBenefitsRenewalProjCreat_Test {
     List<String> accTeamFields = new List<String>{'Id',NAME,NSP_ROLE,'NSP_Account__c', 'NSP_User__c', NSP_PRIMARY};
     String accTeam = new NSP_QueryBuilder('NSP_Account_Team__c', accTeamFields)
     .addFilter(NSP_PRIMARY, true) 
-    .addFilter(NSP_ROLE, NSP_ServiceConstants.BENEFITS_SPECIALIST).addLimit(1).build();
+    .addFilter(NSP_ROLE, NSP_ServiceConstants.WXWA_BENEFITS).addLimit(1).build();
         
     NSP_Account_Team__c accTeamRec = Database.query(accTeam);
     System.assertEquals(proj.Project_Implementer__c, accTeamRec.NSP_User__c);
@@ -165,7 +166,7 @@ public class NSP_WXBenefitsRenewalProjCreat_Test {
     List<String> accTeamFields = new List<String>{'Id',NAME,NSP_ROLE,'NSP_Account__c', 'NSP_User__c', NSP_PRIMARY};
     String accTeam = new NSP_QueryBuilder('NSP_Account_Team__c', accTeamFields)
     .addFilter(NSP_PRIMARY, true) 
-    .addFilter(NSP_ROLE, NSP_ServiceConstants.BENEFITS_SPECIALIST).addLimit(1).build();
+    .addFilter(NSP_ROLE, NSP_ServiceConstants.WXWA_BENEFITS).addLimit(1).build();
         
     NSP_Account_Team__c accTeamRec = Database.query(accTeam);
     //assertion project Implementor field is un assigned

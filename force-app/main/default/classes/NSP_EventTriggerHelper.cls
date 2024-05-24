@@ -2,6 +2,7 @@
 * Represents the Event trigger helper which handles all the logic.
 */
 public class NSP_EventTriggerHelper {
+    // test w/ NSP_EventTriggerHelperTest (88%)
     
     public static String DISCOVERY_CALL = 'Discovery Call';
     private static final String EMPTY_STRING = '';
@@ -62,22 +63,209 @@ public class NSP_EventTriggerHelper {
             populateWhatAndWhoNamesEvent(eligibleEvents);//Update of NSP_What_Name__c and NSP_Who_Name__c before Update
         } 
         }    
-        
-        /**
-    * Iterates throught the list of new Events and passes the required attributes to other methods.
-    * @param eventNewMap Map of New Event. 
-    * @param eventOldMap Map of Old Event.   
-    * @return void             
-    *                
+
+    //
+    // Iterates throught the list of new Events and passes the required attributes to other methods.
+    // @param eventNewMap Map of New Event.
+    // @param eventOldMap Map of Old Event.
+    // @return void
+    //
+    public void afterUpdateDirector( Map<Id,Event> eventNewMap , Map<Id,Event> eventOldMap ) {
+        Map<Id,Event> rescheduledEventsMap = new Map<Id,Event>();
+        Set<String> subjectSet = new Set<String>();  
+        Id eventRecordType = Schema.SObjectType.Event.getRecordTypeInfosByDeveloperName().get('Core_Sales_Event_RT')?.getRecordTypeId();
+        if(eventNewMap != null){
+            for (Event newEventRecord : eventNewMap.Values()){
+                if( ( eventOldMap != null ) && eventOldMap.containsKey( newEventRecord.Id ) ){
+                    Event oldEventRecord = eventOldMap.get(newEventRecord.Id);
+                    if (newEventRecord.RecordTypeId == eventRecordType
+                        && newEventRecord.WhatId != null && newEventRecord.FSL__Event_Type__c == 'Resource Absence'
+                        && oldEventRecord != null && (oldEventRecord.StartDateTime != newEventRecord.StartDateTime || oldEventRecord.EndDateTime != newEventRecord.EndDateTime)
+                        )
+                    {
+                        rescheduledEventsMap.put(newEventRecord.Id, newEventRecord);
+                    }
+                    if ( ( newEventRecord.IsRecurrence2 == TRUE || newEventRecord.IsRecurrence == TRUE )
+                        && newEventRecord.RecordTypeId == eventRecordType
+                        && newEventRecord.WhatId == NULL && newEventRecord.Type == NULL
+                        && ( oldEventRecord != null )
+                        && ( oldEventRecord.StartDateTime != newEventRecord.StartDateTime || oldEventRecord.EndDateTime != newEventRecord.EndDateTime )
+                        )
+                    {
+                        rescheduledEventsMap.put(newEventRecord.Id, newEventRecord);
+                        subjectSet.add(newEventRecord.Subject);  
+                    }
+                }
+            }
+        }
+        Map<Id, Event> attendeesEventMap = getAttendeesEvent(subjectSet,rescheduledEventsMap);
+        if (!attendeesEventMap.isEmpty()){
+            rescheduledEventsMap.putAll(attendeesEventMap);
+        }
+        if (rescheduledEventsMap.size() > 0){
+            updateResourceAbsenceDate(rescheduledEventsMap);
+        }
+        updateOpportunitiesWithDiscoverCalls(eventNewMap.values());
+        updateActivityDate(eventNewMap.values(),eventOldMap);
+    }
+
+    //
+    // Method Name : updateResourceAbsenceDate 
+    // Description : Method to update start and end date on RAs for recurring events
+    // @param Map of Event. 
+    // @return void  
+    //
+    private void updateResourceAbsenceDate(Map<Id,Event> rescheduledEventsMap){
+        List<ResourceAbsence> resourceAbsenceList = new List<ResourceAbsence>();
+        List<ResourceAbsence> resourceAbsenceToUpdateList = new List<ResourceAbsence>();
+        try{
+            if (rescheduledEventsMap.size() > 0){
+                resourceAbsenceList = [
+                    SELECT ID, Start, End, Event_Id__c
+                    FROM ResourceAbsence
+                    WHERE Event_Id__c IN: rescheduledEventsMap.keySet()
+                ];
+            }
+            if (resourceAbsenceList.size() > 0){
+                for (ResourceAbsence eachRA : resourceAbsenceList){
+                    if ( rescheduledEventsMap.containsKey( eachRA.Event_Id__c ) ) {
+                        Event record = rescheduledEventsMap.get( eachRA.Event_Id__c );
+                        if ( record != null ) {
+                            eachRA.Start = record.StartDateTime;
+                            eachRA.End = record.EndDateTime;
+                            resourceAbsenceToUpdateList.add(eachRA);
+                        }
+                    }
+                }
+            }
+            if (resourceAbsenceToUpdateList.size() > 0){
+                Update resourceAbsenceToUpdateList;
+            }
+        }catch(Exception ex){
+            NSP_ErrorLogHandler.logSaveException('NSP_EventTriggerHelper', 'updateResourceAbsenceDate', ex.getMessage());
+        }
+    }
+
+    /**
+    * Iterates throught the list of old Events and map of old Events and passes the required attributes to other methods.
+    * @param eventOldList List of Old Event.
+    * @param eventOldMap Map of Old Event.
+    * @return void
     */
-        
-        public void afterUpdateDirector(Map<Id, Event> eventNewMap, Map<Id, Event> eventOldMap){        
-            
-            updateOpportunitiesWithDiscoverCalls(eventNewMap.values());
-            updateActivityDate(eventNewMap.values(),eventOldMap);
-        }   
-        
-        
+    public void beforeDeleteDirector(List<Event> eventOldList, Map<Id, Event> eventOldMap) {
+        Set<String> subjectSet = new Set<String>();
+        Map<Id, Event> recurringEvents = new Map<Id,Event>();
+        Id eventRecordType = Schema.SObjectType.Event.getRecordTypeInfosByDeveloperName().get('Core_Sales_Event_RT')?.getRecordTypeId();
+        try {
+            if (eventOldMap != null) {
+                for (Event eachEvent : eventOldMap.values()) {
+                    if ( ( eachEvent.RecordTypeId == eventRecordType )
+                        && ( eachEvent.WhatId == NULL && eachEvent.Type == NULL )
+                        && ( eachEvent.IsRecurrence2 == TRUE || eachEvent.IsRecurrence == TRUE )
+                        )
+                    {
+                        subjectSet.add(eachEvent.Subject);  
+                        recurringEvents.put(eachEvent.Id, eachEvent);  
+                    }
+                }
+            }
+            Map<Id, Event> attendeesEventMap = getAttendeesEvent(subjectSet,recurringEvents);
+            if (attendeesEventMap != null && attendeesEventMap.size() > 0) {
+                deleteResourceAbsence(attendeesEventMap);
+            }
+        } catch (Exception ex) {
+            NSP_ErrorLogHandler.logSaveException('NSP_EventTriggerHelper', 'beforeDeleteDirector', ex.getMessage());
+        }
+    }
+
+    /**
+    * Method Name : getAttendeesEvent
+    * Description : Method to update start and end date on RAs for recurring events
+    * @param newList Map of Event.
+    * @return Map of ResourceAbsence
+    */
+    private Map<Id, Event> getAttendeesEvent(Set<String> subjectSet,Map<Id, Event> recurringEvents){
+        List<Event> eventWithSameSubject = new List<Event>();
+        Map<Id, ResourceAbsence> childResourceAbsenceMap = new Map<Id, ResourceAbsence>();
+        String DISPATCHER_RESOURCE = 'Dispatcher + Resource';
+        String RESOURCE = 'Resource';
+        Map<Id,Event> attendeesEventMap = new Map<Id,Event>();
+        Id eventRecordType = Schema.SObjectType.Event.getRecordTypeInfosByDeveloperName().get('Core_Sales_Event_RT')?.getRecordTypeId();
+        if (subjectSet != null && subjectSet.size() > 0){
+            eventWithSameSubject = [
+                SELECT Id, Subject, StartDateTime, EndDateTime, ShowAs, Description, CreatedById, Location
+                FROM Event
+                WHERE (
+                    Subject IN :subjectSet
+                    AND IsChild = TRUE
+                    AND (CreatedBy.NSP_Salesforce_Field_Service__c = :DISPATCHER_RESOURCE OR CreatedBy.NSP_Salesforce_Field_Service__c = :RESOURCE)
+                    AND RecordTypeId = :eventRecordType
+                    AND WhatId = NULL
+                    AND Type = NULL
+                    AND (IsRecurrence2 = TRUE OR IsRecurrence = TRUE)
+                )
+            ];
+        }
+        if (recurringEvents != null && recurringEvents.size() > 0){
+            for (Event eachEvent : recurringEvents.values()) {
+                Set<String> eventAttributes = new Set<String>{
+                    eachEvent.Subject, eachEvent.ShowAs, eachEvent.Description, eachEvent.Location
+                };
+                Set<Datetime> eventDateAttributes = new Set<Datetime>{
+                    eachEvent.StartDateTime, eachEvent.EndDateTime
+                };
+                for (Event childEvent : eventWithSameSubject) {
+                    if (eventAttributes.contains(childEvent.Subject)
+                        && eventDateAttributes.contains(childEvent.StartDateTime)
+                        && eventDateAttributes.contains(childEvent.EndDateTime)
+                        && eventAttributes.contains(childEvent.ShowAs)
+                        && eventAttributes.contains(childEvent.Description)
+                        && eventAttributes.contains(childEvent.Location)
+                        )
+                    {  
+                        attendeesEventMap.put(childEvent.Id,childEvent);
+                    }
+                }
+            }
+        }
+        return attendeesEventMap;
+    }
+
+    /**
+    * Iterates throught the list of old Events and passes the required attributes to other methods.
+    * @param eventOldList List of Old Event.
+    * @param eventOldMap Map of Old Event.
+    * @return void
+    */
+    public void afterDeleteDirector(List<Event> eventOldList,Map<Id, Event> eventOldMap){
+        try{
+            if (eventOldMap != null && eventOldMap.size() > 0){
+                deleteResourceAbsence(eventOldMap);
+            }
+        }catch(Exception ex){
+            NSP_ErrorLogHandler.logSaveException('NSP_EventTriggerHelper', 'afterDeleteDirector', ex.getMessage());
+        }
+    }
+
+    /**
+    * Method to deleted Resource Absences.
+    * @param eventMap Map of Event.
+    * @return void
+    */
+    private void deleteResourceAbsence(Map<Id, Event> eventMap){
+        List<ResourceAbsence> resourceAbsenceList = new List<ResourceAbsence>();
+        try{
+            if (eventMap != null && eventMap.size() > 0){
+                resourceAbsenceList = [SELECT ID,Event_Id__c From ResourceAbsence WHERE Event_Id__c IN: eventMap.keySet()];
+            }
+            if (resourceAbsenceList.size() > 0){
+                Delete resourceAbsenceList;
+            }
+        }catch(Exception ex){
+            NSP_ErrorLogHandler.logSaveException('NSP_EventTriggerHelper', 'deleteResourceAbsence', ex.getMessage());
+        }
+    }
+
     public void updateOpportunitiesWithDiscoverCalls(List<Event> newList) {
 
         Set<ID> updateOpportunityIDList = new Set<ID>();
@@ -129,16 +317,16 @@ public class NSP_EventTriggerHelper {
             }
             }
             if(!leadIdSet.isEmpty()){
-                leadResult = [SELECT Id, Salutation, FirstName, MiddleName, LastName, NSP_Parent_Lead__c, DNBoptimizer__DNB_D_U_N_S_Number__c,LastActivityDate FROM Lead WHERE Id IN: leadIdSet];
+                leadResult = [SELECT Id, Salutation, FirstName, MiddleName, LastName, NSP_Parent_Lead__c, DNB_Connect_DUNS_Number__c,LastActivityDate FROM Lead WHERE Id IN: leadIdSet];
                 if(!leadResult.isEmpty()) {
                     for(Lead leadObj :leadResult){
-                        if(leadObj.LastActivityDate != null && leadObj.DNBoptimizer__DNB_D_U_N_S_Number__c !=null) {
-                            lastActivityDateMap.put(leadObj.DNBoptimizer__DNB_D_U_N_S_Number__c,leadObj.LastActivityDate);
+                        if(leadObj.LastActivityDate != null && leadObj.DNB_Connect_DUNS_Number__c !=null) {
+                            lastActivityDateMap.put(leadObj.DNB_Connect_DUNS_Number__c,leadObj.LastActivityDate);
                         }
                     }
                     if(!lastActivityDateMap.isEmpty()) {
-                        leadWithDuns = [SELECT Id, Salutation, FirstName, NSP_Last_Activity__c, LastName, NSP_Parent_Lead__c, DNBoptimizer__DNB_D_U_N_S_Number__c,LastActivityDate FROM Lead WHERE DNBoptimizer__DNB_D_U_N_S_Number__c IN: lastActivityDateMap.keySet()];
-                        Lead lastActive = [SELECT LastActivityDate FROM Lead WHERE DNBoptimizer__DNB_D_U_N_S_Number__c IN: lastActivityDateMap.keySet() AND LastActivityDate != null ORDER BY LastActivityDate DESC LIMIT 1];
+                        leadWithDuns = [SELECT Id, Salutation, FirstName, NSP_Last_Activity__c, LastName, NSP_Parent_Lead__c, DNB_Connect_DUNS_Number__c,LastActivityDate FROM Lead WHERE DNB_Connect_DUNS_Number__c IN: lastActivityDateMap.keySet()];
+                        Lead lastActive = [SELECT LastActivityDate FROM Lead WHERE DNB_Connect_DUNS_Number__c IN: lastActivityDateMap.keySet() AND LastActivityDate != null ORDER BY LastActivityDate DESC LIMIT 1];
                         if(!leadWithDuns.isEmpty()){
                             for(Lead leadObject : leadWithDuns){
                                  leadObject.NSP_Last_Activity__c = lastActive.LastActivityDate;
@@ -199,7 +387,7 @@ public class NSP_EventTriggerHelper {
 * Description : Method to update NSP_What_Name__c and/or NSP_Who_Name__c on Event Object
 * Date : 25/05/2023
 * @param newEventList List of new Events 
-* @return void  	
+* @return void  
 */
     private void populateWhatAndWhoNamesEvent(List<Event> newEventList) {
         List<String> fieldApiNamesList = new List<String>{ 'WhatId', 'WhoId' };
@@ -226,12 +414,12 @@ public class NSP_EventTriggerHelper {
         for(Schema.DescribeSObjectResult sObjResult : describeSObjectResults){
             objectApiNameLabelMap.put(sObjResult.getName(), sObjResult.getLabel());
         }
-        Map<String, String>	fieldNameByObjectMap = new Map<String, String>{'Case' => 'CaseNumber', 'ServiceAppointment' => 'AppointmentNumber',
-                	                                                                   'ResourceAbsence' => 'AbsenceNumber'};
+        Map<String, String> fieldNameByObjectMap = new Map<String, String>{'Case' => 'CaseNumber', 'ServiceAppointment' => 'AppointmentNumber',
+                                                                                       'ResourceAbsence' => 'AbsenceNumber'};
         for(String objectApiName : targetRecordIdsByObjectApiNameMap.keySet()) {
                 String targetFieldApiName = fieldNameByObjectMap.containsKey(objectApiName) ? fieldNameByObjectMap.get(objectApiName) : 'Name';
-            	Map<Id, String> relatedRecordDetailsMap = getRelatedRecordDetails(objectApiName,
-                                                                              	 targetFieldApiName,
+                Map<Id, String> relatedRecordDetailsMap = getRelatedRecordDetails(objectApiName,
+                                                                                 targetFieldApiName,
                                                                                  targetRecordIdsByObjectApiNameMap.get(objectApiName),
                                                                                  objectApiNameLabelMap.get(objectApiName));
             targetRelatedObjectsMap.putAll(relatedRecordDetailsMap);

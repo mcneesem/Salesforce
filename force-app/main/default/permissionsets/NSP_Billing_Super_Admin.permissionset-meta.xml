@@ -27,7 +27,7 @@
     <classAccesses>
         <apexClass>SBQQ__AbstractDAOTest</apexClass>
         <enabled>true</enabled>
-    </classAccesses>    
+    </classAccesses>
     <classAccesses>
         <apexClass>NSP_CreateProjFromFlow</apexClass>
         <enabled>true</enabled>
@@ -5027,6 +5027,21 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Opportunity.Total_Upfront_Amount__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Opportunity.Enrollment_fee_Subtotal__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Opportunity.Total_Upfront_fee_Tax__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Opportunity.Type</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -5873,6 +5888,11 @@
         <fieldPermissions>
         <editable>false</editable>
         <field>OrderItem.NSP_Order_Partner_Reference__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>OrderItem.OrderType__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -11841,6 +11861,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__Quote__c.Has_Retirement_Integration_Product__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>SBQQ__Quote__c.HeaderFieldSetName__c</field>
         <readable>true</readable>
@@ -12753,6 +12778,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>SBQQ__Quote__c.NSP_Target_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__Quote__c.NSP_Template_AdditionalServiceCount__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -16611,6 +16641,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>blng__CreditNoteLine__c.Credit_Note_Line_ID_18__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>blng__CreditNoteLine__c.NSP_AIMS_Billing_Code__c</field>
         <readable>true</readable>
@@ -17018,6 +17053,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>blng__CreditNoteLine__c.blng__Unallocations__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>blng__CreditNote__c.Credit_Note_ID_18__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -17691,6 +17731,16 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>blng__DebitNoteLine__c.Debit_Note_Line_ID_18__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+        <fieldPermissions>
+        <editable>false</editable>
+        <field>blng__DebitNoteLine__c.NSP_Start_Date_End_Of_Month__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>blng__DebitNote__c.NSP_Debit_Note_External_ID__c</field>
         <readable>true</readable>
@@ -17901,6 +17951,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>blng__DebitNote__c.Debit_Note_ID_18__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>blng__FinanceBook__c.NSP_Finance_Book_External_Id__c</field>
         <readable>true</readable>
@@ -18043,6 +18098,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>blng__GLTreatment__c.blng__UniqueId__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>blng__InvoiceLine__c.Invoice_Line_ID_18__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -18723,6 +18783,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>blng__Invoice__c.Is_Renewal_Invoice__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>blng__Invoice__c.Invoice_ID_18__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -20118,6 +20183,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>blng__Payment__c.blng__Unallocations__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>blng__Payment__c.Payment_ID_18__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

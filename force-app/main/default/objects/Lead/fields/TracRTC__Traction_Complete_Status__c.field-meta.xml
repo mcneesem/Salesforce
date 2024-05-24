@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>TracRTC__Traction_Complete_Status__c</fullName>
+    <deprecated>false</deprecated>
+    <externalId>false</externalId>
+    <formula>IF( TracRTC__Realtime_Clean_Processed__c,
+
+IMAGE(LEFT($Api.Partner_Server_URL_260, FIND( &apos;/services&apos;, $Api.Partner_Server_URL_260))+&apos;resource/TracRTC__icons/&apos; &amp; 
+IF( TracRTC__Realtime_Clean_Company_Match__c , &apos;account_match.png&apos;, &apos;account_no_match.png&apos;), &apos;Company Match Status&apos;, 24, 24) &amp; &apos; &apos; &amp;
+
+IMAGE(LEFT($Api.Partner_Server_URL_260, FIND( &apos;/services&apos;, $Api.Partner_Server_URL_260))+&apos;resource/TracRTC__icons/&apos; &amp; 
+IF( TracRTC__Realtime_Clean_Contact_Match__c , &apos;contact_match.png&apos;, &apos;contact_no_match.png&apos;), &apos;Contact Match Status&apos;, 24, 24) &amp; &apos; &apos; &amp;
+
+
+IMAGE(LEFT($Api.Partner_Server_URL_260, FIND( &apos;/services&apos;, $Api.Partner_Server_URL_260))+&apos;resource/TracRTC__icons/&apos; &amp;
+IF( TracRTC__Traction_Complete_Custom_Match__c , &apos;custom_match.png&apos;, &apos;custom_no_match.png&apos;), &apos;Custom Match Status&apos;, 24, 24) &amp; &apos; &apos; &amp;
+
+
+IMAGE(LEFT($Api.Partner_Server_URL_260, FIND( &apos;/services&apos;, $Api.Partner_Server_URL_260))+&apos;resource/TracRTC__icons/&apos; &amp; 
+IF( TracRTC__Traction_Complete_Lead_Match__c , &apos;lead_match.png&apos;, &apos;lead_no_match.png&apos;), &apos;Lead Match Status&apos;, 24, 24) &amp; &apos; &apos; &amp;
+
+
+IF( TracRTC__Realtime_Clean_Failed__c,IMAGE(LEFT($Api.Partner_Server_URL_260, FIND( &apos;/services&apos;, $Api.Partner_Server_URL_260))+&apos;resource/TracRTC__icons/error.png&apos;, &apos;Error&apos;, 24, 24), &apos;&apos;),
+
+IMAGE(LEFT($Api.Partner_Server_URL_260, FIND( &apos;/services&apos;, $Api.Partner_Server_URL_260))+&apos;resource/TracRTC__icons/account_grey.png&apos;, &apos;Company Match Status&apos;, 24, 24) &amp; &apos; &apos; &amp;
+IMAGE(LEFT($Api.Partner_Server_URL_260, FIND( &apos;/services&apos;, $Api.Partner_Server_URL_260))+&apos;resource/TracRTC__icons/contact_grey.png&apos;, &apos;Contact Match Status&apos;, 24, 24) &amp; &apos; &apos; &amp;
+IMAGE(LEFT($Api.Partner_Server_URL_260, FIND( &apos;/services&apos;, $Api.Partner_Server_URL_260))+&apos;resource/TracRTC__icons/custom_grey.png&apos;, &apos;Custom Match Status&apos;, 24, 24) &amp; &apos; &apos; &amp;
+IMAGE(LEFT($Api.Partner_Server_URL_260, FIND( &apos;/services&apos;, $Api.Partner_Server_URL_260))+&apos;resource/TracRTC__icons/lead_grey.png&apos;, &apos;Lead Match Status&apos;, 24, 24) &amp; &apos; &apos; &amp;
+
+IF( TracRTC__Realtime_Clean_Failed__c,IMAGE(LEFT($Api.Partner_Server_URL_260, FIND( &apos;/services&apos;, $Api.Partner_Server_URL_260))+&apos;resource/TracRTC__icons/error.png&apos;, &apos;Error&apos;, 24, 24), &apos;&apos;)
+
+)&amp; TracRTC__Traction_Complete_Status_Text__c</formula>
+    <label>Traction Complete Status</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

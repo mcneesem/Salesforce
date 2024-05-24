@@ -4,7 +4,8 @@
     <externalId>false</externalId>
     <label>HR COE Advisor - term WSEE on LOA?</label>
     <required>false</required>
-        <trackHistory>true</trackHistory>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>

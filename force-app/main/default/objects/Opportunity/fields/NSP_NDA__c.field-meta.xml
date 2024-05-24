@@ -6,6 +6,6 @@
     <externalId>false</externalId>
     <label>NDA</label>
     <trackFeedHistory>false</trackFeedHistory>
-    <trackTrending>false</trackTrending>
+    <trackHistory>true</trackHistory>
     <type>Checkbox</type>
 </CustomField>

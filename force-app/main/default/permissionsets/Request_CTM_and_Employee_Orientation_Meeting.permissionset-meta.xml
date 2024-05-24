@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Request_CTM_and_Employee_Orientation_Meeting</name>
+    </customPermissions>
+    <flowAccesses>
+        <enabled>true</enabled>
+        <flow>Request_CTM_and_Employee_Orientation_Meeting</flow>
+    </flowAccesses>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Request CTM and Employee Orientation Meeting</label>
+</PermissionSet>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Amendment_Net_Total__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF(  ISPICKVAL(SBQQ__BillingFrequency__c, &apos;Annual&apos;),
+ IF( AND(ISPICKVAL(SBQQ__PricingMethod__c,&apos;Block&apos;), NSP_IsClonedLine__c) , NSP_Delta_Total__c,
+ IF( AND(ISPICKVAL(SBQQ__PricingMethod__c,&apos;List&apos;), NSP_IsClonedLine__c) , Amendment_Net_Unit_Price__c * NSP_Effective_Renewed_Quantity__c,
+ IF( AND(ISPICKVAL(SBQQ__PricingMethod__c,&apos;Block&apos;), NOT(NSP_IsClonedLine__c), SBQQ__Quantity__c != 0) , SBQQ__ListPrice__c-NSP_Delta_Discount__c,
+ IF( NOT(NSP_IsClonedLine__c) , 0,
+ SBQQ__NetTotal__c)))), 
+SBQQ__NetTotal__c
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Amendment Net Total</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Currency</type>
+</CustomField>

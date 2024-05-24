@@ -278,6 +278,10 @@
                 <behavior>Readonly</behavior>
                 <field>NSP_Bypass_Docusign_Signature__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Notes_to_Finance__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
@@ -828,6 +832,9 @@
         <fields>NSP_Non_ProfitName__c</fields>
         <fields>NSP_Reward_Paid_Date__c</fields>
         <relatedList>NSP_Reward__c.Opportunity__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <relatedList>RelatedEntityHistoryList</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>

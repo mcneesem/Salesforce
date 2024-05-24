@@ -3,5 +3,5 @@
     <fullName>TotalOpportunityQuantity</fullName>
     <description>Field to store quantity</description>
     <trackFeedHistory>false</trackFeedHistory>
-    <trackTrending>false</trackTrending>
+    <trackHistory>true</trackHistory>
 </CustomField>

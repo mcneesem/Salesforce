@@ -1,27 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
     <labels>
-        <fullName>NSP_Prevent_Case_Contact_Deletion</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Prevent Case Contact Deletion</shortDescription>
-        <value>Separating WSEE cannot be deleted from the Case</value>
-    </labels>
-    <labels>
-        <fullName>NSP_ReportRequestErrorMessage</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ReportRequestErrorMessage</shortDescription>
-        <value>You cannot add WSEEs to multi employee agreements</value>
-    </labels>
-    <labels>
-        <fullName>NSP_Contact_Center_Email_Addresses</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Contact Center Email Addresses</shortDescription>
-	<value>contact_center@insperity.com,401kPCC@insperity.com,webSC@insperity.com,MarketPlace@insperity.com,contact.center@insperity.com,contactcenter@insperity.com</value>
-    </labels>
-    <labels>
         <fullName>ASSET_BPS_RET_RECORDTYPES</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -43,25 +22,32 @@
         <value>Are there any non-paid users?</value>
     </labels>
     <labels>
+        <fullName>BTCoreEgMinMaxRange</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>BTCoreEgMinMaxRange</shortDescription>
+        <value>-8;-14</value>
+    </labels>
+    <labels>
         <fullName>CANNOT_DELETE_ACCOUNT</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CANNOT_DELETE_ACCOUNT</shortDescription>
-        <value>You do not have permission to delete Accounts</value>
+        <value>Missing Custom Permission: Allow Delete Accounts</value>
     </labels>
     <labels>
         <fullName>CANNOT_DELETE_LEAD</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CANNOT_DELETE_LEAD</shortDescription>
-        <value>You do not have permission to delete Leads.</value>
+        <value>Missing Custom Permission: Allow Delete Leads</value>
     </labels>
     <labels>
-        <fullName>CanDeleteAccountLead</fullName>
+        <fullName>Client_Integra_Responses_smartsheet</fullName>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>CanDeleteAccountLead</shortDescription>
-        <value>System Administrator,Sales Administrator</value>
+        <shortDescription>Client Integra Responses smartsheet</shortDescription>
+        <value>Client Integra Responses (smartsheet.com).</value>
     </labels>
     <labels>
         <fullName>Close_Lost_Role_in_Opportunity_Team</fullName>
@@ -141,6 +127,62 @@
         <value>Does the client offer a Stock Purchase Plan?</value>
     </labels>
     <labels>
+        <fullName>Do_you_have_a_recent_journal</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Do you have a recent journal</shortDescription>
+        <value>Attach sample to Client Integra Responses project task.</value>
+    </labels>
+    <labels>
+        <fullName>Do_you_have_a_recent_journal_entry</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Do you have a recent journal entry</shortDescription>
+        <value>Do you have a recent journal entry into QuickBooks that you could provide to us?</value>
+    </labels>
+    <labels>
+        <fullName>Do_you_need_to_allocate_costs</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Do you need to allocate costs</shortDescription>
+        <value>Do you need to allocate costs with timesheet data?</value>
+    </labels>
+    <labels>
+        <fullName>Do_you_need_to_allocate_help_text</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Do you need to allocate help text</shortDescription>
+        <value>Ex: Do you track time by jobs, service item, class, etc.? Timesheets must be in QuickBooks for Insperity Time and Attendance.</value>
+    </labels>
+    <labels>
+        <fullName>Do_you_require_more_than_3_job_cost</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Do you require more than 3 job cost</shortDescription>
+        <value>Do you require more than 3 job cost splits?</value>
+    </labels>
+    <labels>
+        <fullName>Do_you_require_more_than_3_job_help_text</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Do you require more than 3 job help text</shortDescription>
+        <value>Ensure to add this detail under the “Do you have any additional comments/questions&quot; section of the</value>
+    </labels>
+    <labels>
+        <fullName>Do_you_require_more_than_3_job_hyperlink</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Do you require more than 3 job hyperlink</shortDescription>
+        <value>https://app.smartsheet.com/b/form/a018de2c40de4cc8aea5f4b064ec35e2</value>
+    </labels>
+    <labels>
+        <fullName>EGMMMinMaxRange</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>EGMMMinMaxRange</shortDescription>
+        <value>-22;-28</value>
+    </labels>
+    <labels>
         <fullName>ErrorMessageWhenPrimaryResourceAlreadyExist</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -176,11 +218,39 @@
         <value>Have the user roles been updated in AIMS?</value>
     </labels>
     <labels>
+        <fullName>If_Itemized_they_must_use_Integra</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>If Itemized, they must use Integra</shortDescription>
+        <value>If Itemized, they must use Integra.</value>
+    </labels>
+    <labels>
         <fullName>Inbound_and_Outbound_UserRole</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Inbound  and Outbound UserRole</shortDescription>
         <value>Inbound Rep,Inbound Manager,Sales Development Rep,Sales Development Manager</value>
+    </labels>
+    <labels>
+        <fullName>Integra_Implementation_Timeline</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Integra Implementation Timeline</shortDescription>
+        <value>Integra Implementation Timeline</value>
+    </labels>
+    <labels>
+        <fullName>Is_there_a_need_for_Integra_c</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Is there a need for Integra</shortDescription>
+        <value>Is there a need for Integra?</value>
+    </labels>
+    <labels>
+        <fullName>Is_payroll_entry_itemized_or_simple_entry</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Is_payroll_entry_itemized_or_simple_entry</shortDescription>
+        <value>Is payroll entry itemized or simple entry?</value>
     </labels>
     <labels>
         <fullName>Integration_User</fullName>
@@ -999,6 +1069,13 @@
         <value>You do not have access to bypass docusign signature.</value>
     </labels>
     <labels>
+        <fullName>NSP_CANNOT_CHANGE_CLOSEDWON</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NSP_CANNOT_CHANGE_CLOSEDWON</shortDescription>
+        <value>You can not modify a Closed Won Opportunity</value>
+    </labels>
+    <labels>
         <fullName>NSP_CANNOT_MOVE_TO_CLOSEDLOST</fullName>
         <categories>closed lost, roles eligible</categories>
         <language>en_US</language>
@@ -1580,7 +1657,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Client implementing any other Business Performance Solutions</shortDescription>
-        <value>Is the client implementing any other Business Performance Solutions?</value>
+        <value>Is the client implementing any Business Performance Solutions?</value>
     </labels>
     <labels>
         <fullName>NSP_Client_mntn_existing_EPLI</fullName>
@@ -1726,6 +1803,13 @@
         <protected>false</protected>
         <shortDescription>ConfigurationCall</shortDescription>
         <value>Configuration Call</value>
+    </labels>
+    <labels>
+        <fullName>NSP_Contact_Center_Email_Addresses</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Contact Center Email Addresses</shortDescription>
+        <value>contact_center@insperity.com,401kPCC@insperity.com,webSC@insperity.com,MarketPlace@insperity.com,contact.center@insperity.com,contactcenter@insperity.com</value>
     </labels>
     <labels>
         <fullName>NSP_Copy_Button</fullName>
@@ -2674,7 +2758,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>NSP FLSA QueueId</shortDescription>
-        <value>00G7g000006683Y</value>
+        <value>00G4x000001fpnmEAA</value>
     </labels>
     <labels>
         <fullName>NSP_FSO_Implementation_Profile</fullName>
@@ -3685,7 +3769,7 @@ Meeting - Project Related - Fiduciary,Mutual Fund Corrections - Pricing, Manual 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>NiceCX Flow Error Receipent</shortDescription>
-        <value>rakesh.das@pwc.com,nice.integration@insperity.com</value>
+        <value>nice.integration@insperity.com,paul.mccluskey@insperity.com</value>
     </labels>
     <labels>
         <fullName>NSP_No</fullName>
@@ -4269,6 +4353,13 @@ Meeting - Project Related - Fiduciary,Mutual Fund Corrections - Pricing, Manual 
         <value>You can&apos;t create a Task on a closed Case</value>
     </labels>
     <labels>
+        <fullName>NSP_Prevent_Case_Contact_Deletion</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Prevent Case Contact Deletion</shortDescription>
+        <value>Separating WSEE cannot be deleted from the Case</value>
+    </labels>
+    <labels>
         <fullName>NSP_Previous</fullName>
         <categories>nsp_implementationProfile</categories>
         <language>en_US</language>
@@ -4395,6 +4486,13 @@ Meeting - Project Related - Fiduciary,Mutual Fund Corrections - Pricing, Manual 
         <value>System Administrator,Data Migration,Integration User</value>
     </labels>
     <labels>
+        <fullName>NSP_ProjTemplateDeleteError</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NSP_ProjTemplateDeleteError</shortDescription>
+        <value>You do not have permission to delete project templates</value>
+    </labels>
+    <labels>
         <fullName>NSP_ProjectKeySet</fullName>
         <categories>It stores the name of the project key set names</categories>
         <language>en_US</language>
@@ -4428,7 +4526,7 @@ Meeting - Project Related - Fiduciary,Mutual Fund Corrections - Pricing, Manual 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>NSP_ProjectTask_Validation</shortDescription>
-        <value>You cannot start Dependent task without completing Preceding task</value>
+        <value>You cannot start a dependent task without completing the preceding task.</value>
     </labels>
     <labels>
         <fullName>NSP_ProjectTeamTriggerValidationMsg</fullName>
@@ -4737,6 +4835,13 @@ Meeting - Project Related - Fiduciary,Mutual Fund Corrections - Pricing, Manual 
         <protected>false</protected>
         <shortDescription>NSP_ReportDevelopmentGroupName</shortDescription>
         <value>Report Development Team</value>
+    </labels>
+    <labels>
+        <fullName>NSP_ReportRequestErrorMessage</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ReportRequestErrorMessage</shortDescription>
+        <value>You cannot add WSEEs to multi employee agreements</value>
     </labels>
     <labels>
         <fullName>NSP_Report_Dev_OrgWideEmail</fullName>
@@ -5860,6 +5965,13 @@ Climate Plus: https://nexus.insperity.com/groups/38605/posts/3272612-climate-plu
         <value>Who will be submitting the payroll</value>
     </labels>
     <labels>
+        <fullName>Needed_payroll_entry_allocation</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Needed payroll entry allocation</shortDescription>
+        <value>Needed payroll entry allocation (select all that apply):</value>
+    </labels>
+    <labels>
         <fullName>NotifyITAEmail</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -5888,6 +6000,13 @@ Climate Plus: https://nexus.insperity.com/groups/38605/posts/3272612-climate-plu
         <value>Upsell;Downgrade;Amend/Upsell;Amend/Downgrade</value>
     </labels>
     <labels>
+        <fullName>Organizational_Planning_Imp_Timeline</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Organizational Planning Imp Timeline</shortDescription>
+        <value>Organizational Planning Implementation Timeline</value>
+    </labels>
+    <labels>
         <fullName>PDSSyncedMessage</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -5900,6 +6019,27 @@ Climate Plus: https://nexus.insperity.com/groups/38605/posts/3272612-climate-plu
         <protected>false</protected>
         <shortDescription>Payroll_submitted_frm_multiple_contacts__c</shortDescription>
         <value>Will payroll be submitted from multiple contacts?</value>
+    </labels>
+    <labels>
+        <fullName>Premier_Performance_Implementation_Timeline</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Premier Performance Implementation Timeline</shortDescription>
+        <value>Premier Performance Implementation Timeline</value>
+    </labels>
+    <labels>
+        <fullName>ProjectTaskLongDescription</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ProjectTaskLongDescription</shortDescription>
+        <value>If the client has provided a recent journal entry, attach it to this task. Mark this task complete when the Client Integra Responses Smartsheet has been completed.</value>
+    </labels>
+    <labels>
+        <fullName>ReadyForApprovalError</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ReadyForApprovalError</shortDescription>
+        <value>Check the &apos;Ready for Approval&apos; box and wait until the quote recalculates before submitting for approval.</value>
     </labels>
     <labels>
         <fullName>RecepientIdStateretProgram</fullName>
@@ -6028,6 +6168,13 @@ Climate Plus: https://nexus.insperity.com/groups/38605/posts/3272612-climate-plu
         <value>Bindushreer14@gmail.com.invalid</value>
     </labels>
     <labels>
+        <fullName>Recurring_Created_Date</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Recurring Created Date</shortDescription>
+        <value>yesterday</value>
+    </labels>
+    <labels>
         <fullName>Retirement_Services_For_Non_WO_Products</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -6047,6 +6194,13 @@ Climate Plus: https://nexus.insperity.com/groups/38605/posts/3272612-climate-plu
         <protected>false</protected>
         <shortDescription>Sales Roles</shortDescription>
         <value>Regional Manager,Regional Administrator,District Manager,District Administrator,Business Performance Advisor,Business Performance Consultant</value>
+    </labels>
+    <labels>
+        <fullName>Segment_Days</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Segment Days</shortDescription>
+        <value>-28</value>
     </labels>
     <labels>
         <fullName>Separation_Agreement_Terms_List</fullName>
@@ -6115,6 +6269,34 @@ Climate Plus: https://nexus.insperity.com/groups/38605/posts/3272612-climate-plu
         <value>0050R000008jCfUQAU</value>
     </labels>
     <labels>
+        <fullName>What_accounting_software_do_you_use</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>What_accounting_software_do_you_use</shortDescription>
+        <value>What accounting software do you use?</value>
+    </labels>
+    <labels>
+        <fullName>What_is_client_s_Active_Benefits_Continuation_Period_ABCP</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>What is client&apos;s Active Benefits Continuation Period (ABCP)?</shortDescription>
+        <value>What is client&apos;s Active Benefits Continuation Period (ABCP)?</value>
+    </labels>
+    <labels>
+        <fullName>What_QuickBooks_version_do_you_use</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>What QuickBooks version do you use</shortDescription>
+        <value>What QuickBooks version do you use?</value>
+    </labels>
+    <labels>
+        <fullName>Would_you_like_automation_for_your_general_ledger</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Would_you_like_automation_for_your_general_ledger</shortDescription>
+        <value>Would you like automation for your general ledger?</value>
+    </labels>
+    <labels>
         <fullName>blng_UI_TEXT_PAY_NOW_FOR_PAYMENT_SITE</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -6128,12 +6310,5 @@ Climate Plus: https://nexus.insperity.com/groups/38605/posts/3272612-climate-plu
         <protected>false</protected>
         <shortDescription>nsp Associate Client subplan History</shortDescription>
         <value>Associate a Plan History Record With This Client</value>
-    </labels>
-    <labels>
-        <fullName>NSP_ProjTemplateDeleteError</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>NSP_ProjTemplateDeleteError</shortDescription>
-        <value>You do not have permission to delete project templates</value>
     </labels>
 </CustomLabels>

@@ -18,5 +18,6 @@
     <permissionSets>Sales_Service_Object_Permission</permissionSets>
     <permissionSets>bloomfirex__Bloomfire_User</permissionSets>
     <permissionSets>force__EinsteinAnalyticsPlusUser</permissionSets>
+    <permissionSets>force__PipelineInspectionIncluded</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>

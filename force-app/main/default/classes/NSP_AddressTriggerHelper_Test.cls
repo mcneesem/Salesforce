@@ -11,6 +11,11 @@ public class NSP_AddressTriggerHelper_Test {
         acc.Name = 'Test Acc';
         insert acc;
         
+        Account acc1 = new Account();
+        acc1.Name = 'Test Acc1';
+        insert acc1;
+       
+        
         // Create Contact record
         Contact con = new Contact();
         con.AccountId = acc.Id ;
@@ -41,7 +46,9 @@ public class NSP_AddressTriggerHelper_Test {
         addressObject.NSP_Legal_Name__c  = 'Test';
         addressObject.NSP_State__c = 'Up';
         addressObject.NSP_Label_Code__c = '23456-123456H';
-        addressObject.NSP_Postal_Code__c = '45678'; 
+        addressObject.NSP_Postal_Code__c = '45678';
+        addressObject.NSP_Source__c = NSP_ServiceConstants.SOURCE;
+        addressObject.NSP_Address_Type__c = NSP_ServiceConstants.US_MAIL;
         insert addressObject;
         
         // Create Address record Without Label Code EndWith 'H'
@@ -71,7 +78,6 @@ public class NSP_AddressTriggerHelper_Test {
         subClientConAdd.NSP_Address__c = addressObject.Id;
         subClientConAdd.NSP_Sub_Client_Contact__c = subClientCon.Id;
         insert subClientConAdd ;
-        
         
     }
     
@@ -103,4 +109,18 @@ public class NSP_AddressTriggerHelper_Test {
         }
         
     }
+    
+   @isTest
+   public static void updateContact() {
+      Test.startTest();
+       Account acc = new Account();
+       acc.Name = 'Test Acc2';
+       insert acc;	
+       NSP_Address__c addr = [SELECT Id, NSP_Related_Site__c FROM NSP_Address__c Where NSP_Address_Type__c =: NSP_ServiceConstants.US_MAIL LIMIT 1];
+       addr.NSP_Related_Site__c = acc.Id;
+       update addr;
+      Test.stopTest();
+      System.assertEquals(1,[SELECT count() FROM NSP_Address__c WHERE NSP_Related_Site__c =: acc.Id]);
+    }
+    
 }

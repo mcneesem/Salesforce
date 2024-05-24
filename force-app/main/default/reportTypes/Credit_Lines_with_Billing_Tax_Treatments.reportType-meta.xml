@@ -366,6 +366,11 @@
             <field>NSP_Funding_Source_PEO__c</field>
             <table>blng__CreditNoteLine__c</table>
         </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Credit_Note_Line_ID_18__c</field>
+            <table>blng__CreditNoteLine__c</table>
+        </columns>
         <masterLabel>Credit Note Lines</masterLabel>
     </sections>
     <sections>

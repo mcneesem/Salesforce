@@ -1667,14 +1667,13 @@ public class NSP_ProjectTriggerHelper{
     * Params      : List<pse__Proj__c> servicePlanProjectsList,Set<ID> servicePlanAccountIDs
     * Created as part of STY-04589
     * ********************************************************************************************/
-    private static void updateProjOwnerForServicePlanProjectType (List<pse__Proj__c> servicePlanProjectsList,Set<ID> servicePlanAccountIDs){
-        Map<String, String> AcccountTeamRoleSegmentTypeMap = new Map<String, String>();
-        Map<Id, Id> accountWithTeamMemberId = new Map<Id,Id>();
-        
-        List<String> segmentRoleMappingFields = new List<String>{'NSP_Segment_Type__c','NSP_Account_Team_Role__c'};
-        String querySegmentRoleMetaData = new NSP_QueryBuilder('NSP_Segment_Role_Mapping__mdt', segmentRoleMappingFields).build();
-        
+    private static void updateProjOwnerForServicePlanProjectType( List<pse__Proj__c> servicePlanProjectsList , Set<Id> servicePlanAccountIDs ) {
         //Creating a map for Account Team Role and Account Segment from NSP_Segment_Role_Mapping__mdt
+        List<String> segmentRoleMappingFields = new List<String>{ 'NSP_Segment_Type__c' , 'NSP_Account_Team_Role__c' };
+        String querySegmentRoleMetaData = new NSP_QueryBuilder( 'NSP_Segment_Role_Mapping__mdt' , segmentRoleMappingFields )
+            .setSecurityEnforce( False )
+            .build();
+        Map<String,String> AcccountTeamRoleSegmentTypeMap = new Map<String,String>();
         for(NSP_Segment_Role_Mapping__mdt segmentRoleRecords : Database.query(querySegmentRoleMetaData)){
             AcccountTeamRoleSegmentTypeMap.put(segmentRoleRecords.NSP_Segment_Type__c,segmentRoleRecords.NSP_Account_Team_Role__c);
         }
@@ -1686,6 +1685,7 @@ public class NSP_ProjectTriggerHelper{
             .orderBy('NSP_Primary__c', 'asc', true).build();
         
         //Creating map with Account and Account Team Role User.
+        Map<Id, Id> accountWithTeamMemberId = new Map<Id,Id>();
         for(NSP_Account_Team__c acctTeam: Database.query(queryAccTeam)){
             if(AcccountTeamRoleSegmentTypeMap.keySet().contains(acctTeam.NSP_Account__r.NSP_Service_Segment__c) &&
                AcccountTeamRoleSegmentTypeMap.get(acctTeam.NSP_Account__r.NSP_Service_Segment__c) == acctTeam.NSP_Role__c &&

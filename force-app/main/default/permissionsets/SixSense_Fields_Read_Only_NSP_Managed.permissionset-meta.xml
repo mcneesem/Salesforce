@@ -3,6 +3,11 @@
     <description>Read access for 6Sense custom fields on Accounts, Contacts, Leads</description>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Account.NSP_ICP_Percent__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Account.NSP_ICP__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -129,6 +134,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Contact.contactUpdateDate6sense__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Lead.NSP_ICP_Percent__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

@@ -3,6 +3,6 @@
     <fullName>OwnerId</fullName>
     <description>Field track Opportunity Owner.</description>
     <trackFeedHistory>true</trackFeedHistory>
-    <trackTrending>false</trackTrending>
+    <trackHistory>true</trackHistory>
     <type>Lookup</type>
 </CustomField>

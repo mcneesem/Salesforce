@@ -5,6 +5,6 @@
     <externalId>false</externalId>
     <label>Is MidMarket</label>
     <trackFeedHistory>false</trackFeedHistory>
-    <trackTrending>false</trackTrending>
+    <trackHistory>true</trackHistory>
     <type>Checkbox</type>
 </CustomField>

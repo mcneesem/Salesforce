@@ -16,7 +16,7 @@ Modification Log     :
 */
 
 public class NSP_OpportunityTriggerHelper {
-    //  test w/ NSP_OpportunityTriggerHelperTest (76%)
+    //  test w/ NSP_OpportunityTriggerHelperTest (77%)
 
     public static List<string> analysisStageCriteraTypes = System.Label.NSP_AnalysisStageCriteria.split(',');
     public static List<string> proposeStageCriteraTypes = System.Label.NSP_ProposeStageCriteria.split(',');
@@ -31,13 +31,12 @@ public class NSP_OpportunityTriggerHelper {
     private static set<Id>  byPassValidationOnRole = null;
     private List<UserRole> notAllowedCloseWonRoles = null;
     private String userRole = UserInfo.getUserRoleId();
-    
-/**
-* Iterates throught the list of new Opportunity and passes the required attributes to other methods.
-* @param newList List of New Opportunity.  
-* @return void             
-*                
-*/
+
+    //
+    // Iterates throught the list of new Opportunity and passes the required attributes to other methods.
+    // @param newList List of New Opportunity.
+    // @return void
+    //
     public void beforeInsertDirector(List<Opportunity> newList){        
         
         Set<String> accountIdSet =  new Set<String>();
@@ -56,12 +55,7 @@ public class NSP_OpportunityTriggerHelper {
         //Iterating over the opportunity new list 
         for(Opportunity opportunityObject : newList){
             ownerIdsSet.add(opportunityObject.OwnerId);
-            
-            //  Check opportunity stage
-            if(opportunityObject.StageName == 'Closed Won'){
-                verifyCloseWonNotAllowedRoles(opportunityObject);
-            }
-    
+
             // AZD-191924 AZD-232114 AZD-232117
             //  If primary product IS 'Workforce Optimization' then calculate fees
             if(opportunityObject.NSP_PrimaryProduct__c != null){
@@ -121,7 +115,7 @@ public class NSP_OpportunityTriggerHelper {
         //validateClosedDate(closedOppList);
                }
         
-		}
+        }
         
         NSP_OpportunityTriggerHelperFunctions oppHelperFuncObj = new NSP_OpportunityTriggerHelperFunctions();
         //Setting direct assignments to opportunity records
@@ -197,17 +191,8 @@ public class NSP_OpportunityTriggerHelper {
         getRelatedACR(OpportunityAccountId,opportunityNewMap.keySet());
         
         // Send the list to publish event bus
-        Id profileId=userinfo.getProfileId();
-        //228901 - For fixing SOQL changed to metadata query
-        String profileName;
-        if(!NSP_Trigger_Switch__c.getOrgDefaults().NSP_SOQL_Switch__c){
-            profileName = [SELECT Profile_ID__c, Profile_Name__c FROM NSP_Profile_Detail__mdt WHERE Profile_ID__c =: profileId].Profile_Name__c;            
-        } else {
-            profileName=[SELECT Id,Name from Profile WHERE Id=:profileId].Name;
-        }
-        /* Adding OR Condition as part of DF-01043 so that publishEventBus method will not trigger for Integration user profile*/
-        if(String.isNotBlank(profileName) && !profileName.containsIgnoreCase(System.label.NSP_Integration_User_Profile_Name)){
-            publishEventBus(opportunityEventList, updateResyncFlagOpportunityList);       
+        if(PlatformEventSettings__c.getInstance(UserInfo.getUserId()).IsEnabled_IntegrationOpportunityEvent__c) {
+            publishEventBus(opportunityEventList, updateResyncFlagOpportunityList);
         }
         
     }
@@ -253,9 +238,24 @@ public class NSP_OpportunityTriggerHelper {
             Opportunity newOpportunity =  opportunityNewMap.get(opportunityId);
             Opportunity oldOpportunity =  opportunityOldMap.get(opportunityId);
             
-            //  Check opportunity stage
-            if(newOpportunity.StageName == 'Closed Won'){
-                verifyCloseWonNotAllowedRoles(newOpportunity);
+            //  AZD-258129
+            if ( NSP_hotfix_Switch__c.getInstance( UserInfo.getUserId() ).Is_Edit_Closed_Won_Allowed__c
+                && ( newOpportunity.Create_Box_com_Folder_s__c != oldOpportunity.Create_Box_com_Folder_s__c )
+                && ( newOpportunity.StageName == 'Closed Won' )
+                )
+            {
+                Map<String,Object> changedFields = newOpportunity.getPopulatedFieldsAsMap();
+                // Only the field Create_Box_com_Folder_s__c should be updated
+                for ( String fieldName : changedFields.keySet() ) {
+                    if ( !fieldName.equals( 'Create_Box_com_Folder_s__c' )
+                        && ( newOpportunity.get( fieldName ) != oldOpportunity.get( fieldName ) )
+                        )
+                    {
+                        newOpportunity.addError( Label.NSP_CANNOT_CHANGE_CLOSEDWON );
+                        break;
+                    }
+                }
+                continue;
             }
 
             // AZD-191924 AZD-232114 AZD-232117 
@@ -509,29 +509,19 @@ public class NSP_OpportunityTriggerHelper {
                 backoutOptySet.add(newOpportunity.Id);
             }
         }
-        
-        //for tracking history
-        if(!Test.isRunningTest()){
-        if(opportunityNewMap.size() > 0){
-            NSP_SObjectHistoryTrackingHelper objectFieldHistoryHelper = new NSP_SObjectHistoryTrackingHelper((Map<Id, sObject>)opportunityNewMap, (Map<Id, sObject>)opportunityOldMap);
-            If( Limits.getQueueableJobs() != Limits.getLimitQueueableJobs()) {
-                System.enqueueJob(objectFieldHistoryHelper);  
-            }
+        if ( !Test.isRunningTest()
+            && ( opportunityNewMap != null )
+            && ( opportunityNewMap.size() > 0 )
+            )
+        {
+            NSP_SObjectHistoryTrackingHelper.enqueueJob(
+                (Map<Id,sObject>)opportunityNewMap ,
+                (Map<Id,sObject>)opportunityOldMap
+            );
         }
-        }
-        
         // Send the list to publish event bus
         if(updateResyncFlagOpportunityList.size() > 0){
-            /* Adding If Condition as part of DF-01043 so that publishEventBus method will not trigger for Integration user profile*/
-            Id profileId = userinfo.getProfileId();
-            //228901 - For fixing SOQL changed to metadata query
-            String profileName;
-            if(!NSP_Trigger_Switch__c.getOrgDefaults().NSP_SOQL_Switch__c){
-                profileName = [SELECT Profile_ID__c, Profile_Name__c FROM NSP_Profile_Detail__mdt WHERE Profile_ID__c =: profileId].Profile_Name__c;
-            } else {
-                profileName = [SELECT Id,Name from Profile WHERE Id=:profileId].Name;
-            }
-            if(String.isNotBlank(profileName) && !profileName.containsIgnoreCase(System.label.NSP_Integration_User_Profile_Name)){
+            if(PlatformEventSettings__c.getInstance(UserInfo.getUserId()).IsEnabled_IntegrationOpportunityEvent__c) {
                 publishEventBus(opportunityEventList, updateResyncFlagOpportunityList);
             }
         }
@@ -740,21 +730,11 @@ public class NSP_OpportunityTriggerHelper {
         if(!eventList.isEmpty()) {
             // Publishing records Event 
             List<Database.SaveResult> results = EventBus.publish(eventList);
-            
-            // Inspect publishing result for each event
-            List<NSP_Error_Log__c> logList = new List<NSP_Error_Log__c>();
-            for (Database.SaveResult sr : results) {
-                NSP_Error_Log__c log = new NSP_Error_Log__c();
-                log.NSP_Class__c = 'NSP_OpportunityTriggerHelper';
-                log.NSP_Method__c = 'publishEventBus';                
-                log.NSP_Description__c = String.valueOf(sr.getErrors()[0].getMessage()) + '  '+String.valueOf(sr.getErrors()[0].getStatusCode());
-                log.NSP_Record_Id__c = sr.getId();
-                logList.add(log);  
-            }
-            
-            if(logList.size() > 0){
-                insert logList;
-            }
+            NSP_ErrorLogHandler.logSaveResultsException(
+                NSP_OpportunityTriggerHelper.class.getName() ,
+                'publishEventBus' ,
+                results
+            );
             for(Opportunity  oppObj : objectList) {
                 Opportunity tempOppObj = new Opportunity();
                 tempOppObj.Id = oppObj.Id;
@@ -1061,78 +1041,108 @@ public class NSP_OpportunityTriggerHelper {
         }
         
         if(opportunityIdToRewardTypeMap.Size() > 0){
-                list<NSP_Reward__c> rewardsInsertList = new list<NSP_Reward__c>();
-                map<id,Event> oppottunityToEventMap = new map<id,Event>();
-                
-                for(Event eachEvent : [SELECT Id,NSP_Completed_Date__c,WhatId from Event Where WhatId in :opportunityIdToRewardTypeMap.KeySet() AND NSP_Event_Subtype__c = 'Discovery Call' AND NSP_Status__c = 'Completed' ]){
-                    oppottunityToEventMap.put(eachEvent.WhatId,eachEvent);
-                }
-                
-                for(OpportunityContactRole eachOCR : [SELECT id,opportunityId,opportunity.NSP_Number_of_EEs__c,contactId,Role,Opportunity.AccountId,NSP_Referralbenefitsanonprofitorg__c, 
-                                                        NSP_Nonprofit_Organization_Name__c,NSP_Nonprofit_Organization_Tax_Id__c from OpportunityContactRole 
-                                                        WHERE opportunityId in : opportunityIdToRewardTypeMap.keySet() 
-                                                        AND NSP_isReferral__c = true]){
-                    string rewardType = opportunityIdToRewardTypeMap.get(eachOCR.opportunityId);
-                    opportunity currentOppty = opportunityNewMap.get(eachOCR.opportunityId);
-                    if(rewardType == 'Discovery'){
-                        NSP_Reward__c newReward = createRewards(eachOCR, currentOppty);
-                        if(String.isNotBlank(eachOCR.NSP_Referralbenefitsanonprofitorg__c) && eachOCR.NSP_Referralbenefitsanonprofitorg__c == 'Match'){
-                            newReward.NSP_Reward_Amount__c = 200;
-                            newReward.NSP_Nonprofit_Amount__c = 200;
-                            newReward.NSP_Payment_Type_Reward__c = 'Check';
-                            newReward.NSP_Payment_Type_Non_Profit__c = 'Check';
-                        }
-                        else if(String.isNotBlank(eachOCR.NSP_Referralbenefitsanonprofitorg__c) && eachOCR.NSP_Referralbenefitsanonprofitorg__c == 'Donation'){
-                            newReward.NSP_Reward_Amount__c = 0;
-                            newReward.NSP_Nonprofit_Amount__c = 200;
-                            newReward.NSP_Payment_Type_Reward__c = null;
-                            newReward.NSP_Payment_Type_Non_Profit__c = 'Check';
-                        }
-                        else{
-                            newReward.NSP_Reward_Amount__c = 200;
-                            newReward.NSP_Nonprofit_Amount__c = 0;
-                            newReward.NSP_Payment_Type_Reward__c = 'Check';
-                            newReward.NSP_Payment_Type_Non_Profit__c = null;
-                            
-                        }
-                        newReward.NSP_Reward_Type__c = 'Discovery';
-                        newReward.NSP_Discovery_Call_Completed_Date__c = oppottunityToEventMap.containsKey(eachOCR.opportunityId) ? oppottunityToEventMap.get(eachOCR.opportunityId).NSP_Completed_Date__c: null;
-                        rewardsInsertList.add(newReward);
+            list<NSP_Reward__c> rewardsInsertList = new list<NSP_Reward__c>();
+            map<id,Event> oppottunityToEventMap = new map<id,Event>();
+            for ( Event eachEvent : [
+                        SELECT Id , NSP_Completed_Date__c , WhatId
+                        FROM Event
+                        WHERE (
+                            WhatId IN :opportunityIdToRewardTypeMap.KeySet()
+                            AND NSP_Event_Subtype__c = 'Discovery Call'
+                            AND NSP_Status__c = 'Completed' 
+                        )
+                    ]
+                )
+            {
+                oppottunityToEventMap.put(eachEvent.WhatId,eachEvent);
+            }
+            for ( OpportunityContactRole eachOCR : [
+                        SELECT
+                        Id , OpportunityId , Opportunity.NSP_Number_of_EEs__c , ContactId ,
+                        Role , Opportunity.AccountId , NSP_Referralbenefitsanonprofitorg__c ,
+                        NSP_Nonprofit_Organization_Name__c , NSP_Nonprofit_Organization_Tax_Id__c
+                        FROM OpportunityContactRole 
+                        WHERE (
+                            OpportunityId IN :opportunityIdToRewardTypeMap.keySet()
+                            AND NSP_isReferral__c = true
+                        )
+                    ]
+                )
+            {
+                string rewardType = opportunityIdToRewardTypeMap.get(eachOCR.opportunityId);
+                opportunity currentOppty = opportunityNewMap.get(eachOCR.opportunityId);
+                if(rewardType == 'Discovery'){
+                    NSP_Reward__c newReward = createRewards(eachOCR, currentOppty);
+                    if(String.isNotBlank(eachOCR.NSP_Referralbenefitsanonprofitorg__c)
+                        && eachOCR.NSP_Referralbenefitsanonprofitorg__c == 'Match'
+                        )
+                    {
+                        newReward.NSP_Reward_Amount__c = 200;
+                        newReward.NSP_Nonprofit_Amount__c = 200;
+                        newReward.NSP_Payment_Type_Reward__c = 'Check';
+                        newReward.NSP_Payment_Type_Non_Profit__c = 'Check';
+                    } else if(String.isNotBlank(eachOCR.NSP_Referralbenefitsanonprofitorg__c)
+                        && eachOCR.NSP_Referralbenefitsanonprofitorg__c == 'Donation'
+                        )
+                    {
+                        newReward.NSP_Reward_Amount__c = 0;
+                        newReward.NSP_Nonprofit_Amount__c = 200;
+                        newReward.NSP_Payment_Type_Reward__c = null;
+                        newReward.NSP_Payment_Type_Non_Profit__c = 'Check';
+                    } else{
+                        newReward.NSP_Reward_Amount__c = 200;
+                        newReward.NSP_Nonprofit_Amount__c = 0;
+                        newReward.NSP_Payment_Type_Reward__c = 'Check';
+                        newReward.NSP_Payment_Type_Non_Profit__c = null;
+                        
                     }
-                    else if(rewardType == 'Sold' && (eachOCR.Role == 'Agency' || currentOppty.NSP_Number_of_Employees__c >= 5) ){
-                        NSP_Reward__c newReward = createRewards(eachOCR, currentOppty);
-                        if(String.isNotBlank(eachOCR.NSP_Referralbenefitsanonprofitorg__c) && eachOCR.NSP_Referralbenefitsanonprofitorg__c == 'Match'){
-                            newReward.NSP_Reward_Amount__c = 500;
-                            newReward.NSP_Nonprofit_Amount__c = 500;
-                            newReward.NSP_Payment_Type_Reward__c = 'Check';
-                            newReward.NSP_Payment_Type_Non_Profit__c = 'Check';
-                            
-                        }
-                        else if(String.isNotBlank(eachOCR.NSP_Referralbenefitsanonprofitorg__c) && eachOCR.NSP_Referralbenefitsanonprofitorg__c == 'Donation'){
-                            newReward.NSP_Reward_Amount__c = 0;
-                            newReward.NSP_Nonprofit_Amount__c = 1000;
-                            newReward.NSP_Payment_Type_Reward__c = null;
-                            newReward.NSP_Payment_Type_Non_Profit__c = 'Check';
-                        }
-                        else{
-                            newReward.NSP_Reward_Amount__c = 1000;
-                            newReward.NSP_Nonprofit_Amount__c = 0;
-                            newReward.NSP_Payment_Type_Reward__c = 'Check';
-                            newReward.NSP_Payment_Type_Non_Profit__c = null;
-                            
-                        }
-                        newReward.NSP_Reward_Type__c = 'Sold';
-                        rewardsInsertList.add(newReward);
+                    newReward.NSP_Reward_Type__c = 'Discovery';
+                    newReward.NSP_Discovery_Call_Completed_Date__c = (
+                        oppottunityToEventMap.containsKey(eachOCR.opportunityId)
+                        ? oppottunityToEventMap.get(eachOCR.opportunityId).NSP_Completed_Date__c
+                        : null
+                    );
+                    rewardsInsertList.add(newReward);
+                } else if ( rewardType == 'Sold'
+                    && (eachOCR.Role == 'Agency' || currentOppty.NSP_Number_of_Employees__c >= 5)
+                    )
+                {
+                    NSP_Reward__c newReward = createRewards(eachOCR, currentOppty);
+                    if( String.isNotBlank(eachOCR.NSP_Referralbenefitsanonprofitorg__c)
+                        && eachOCR.NSP_Referralbenefitsanonprofitorg__c == 'Match'
+                        )
+                    {
+                        newReward.NSP_Reward_Amount__c = 500;
+                        newReward.NSP_Nonprofit_Amount__c = 500;
+                        newReward.NSP_Payment_Type_Reward__c = 'Check';
+                        newReward.NSP_Payment_Type_Non_Profit__c = 'Check';
+                        
+                    } else if ( String.isNotBlank(eachOCR.NSP_Referralbenefitsanonprofitorg__c)
+                        && eachOCR.NSP_Referralbenefitsanonprofitorg__c == 'Donation'
+                        )
+                    {
+                        newReward.NSP_Reward_Amount__c = 0;
+                        newReward.NSP_Nonprofit_Amount__c = 1000;
+                        newReward.NSP_Payment_Type_Reward__c = null;
+                        newReward.NSP_Payment_Type_Non_Profit__c = 'Check';
+                    } else{
+                        newReward.NSP_Reward_Amount__c = 1000;
+                        newReward.NSP_Nonprofit_Amount__c = 0;
+                        newReward.NSP_Payment_Type_Reward__c = 'Check';
+                        newReward.NSP_Payment_Type_Non_Profit__c = null;
+                        
                     }
+                    newReward.NSP_Reward_Type__c = 'Sold';
+                    rewardsInsertList.add(newReward);
                 }
-                
-                if(rewardsInsertList.Size() > 0 && !createRewardsOnce ){
-                    createRewardsOnce  = true;
-                    insert rewardsInsertList;
-                }
+            }
+            if(rewardsInsertList.Size() > 0 && !createRewardsOnce ){
+                createRewardsOnce  = true;
+                Database.insert( rewardsInsertList , false );
+            }
         }
     }
-    
+
     public NSP_Reward__c createRewards(OpportunityContactRole objOCR, opportunity objOpportunity){
         NSP_Reward__c newReward = new NSP_Reward__c();
         newReward.NSP_Account__c = objOCR.Opportunity.AccountId;
@@ -1319,10 +1329,15 @@ Created Date:12/05/2022
             if(optysToUpdate.values().size()>0){
                 update optysToUpdate.values();
             }
-        }Catch(Exception ex){
-            NSP_ErrorLogHandler.logSaveException('NSP_OpportunityTriggerHelper','calculateDocupayTax',ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logSaveException(
+                NSP_OpportunityTriggerHelper.class.getName() ,
+                'calculateSetUpAndDocupayTax' ,
+                e.getMessage() + ' ~ ' + e.getStackTraceString()
+            );
         }
     }
+
                 /**
      * Method Name : createHardwareAssets
      * Description : Method to create hardware assets
@@ -1367,31 +1382,7 @@ Created Date:12/05/2022
             NSP_AssetTriggerHandler.TriggerDisabled=false;
             NSP_ErrorLogHandler.logSaveResultsException('NSP_OpportunityTriggerHelper','createHardwareAssets', results); 
         }
-    }     
-
-        private void verifyCloseWonNotAllowedRoles(Opportunity opp){
-
-            //  Bug-205788
-            //  Regardless of product, BPA, BPC, and ABPA should not be allowed to close/won ANY opportunity
-
-            if(notAllowedCloseWonRoles == null){
-                List<String> rolesApiNames = new List<String>();
-                rolesApiNames.add('Business_Performance_Advisor');
-                rolesApiNames.add('Business_Performance_Consultant');
-                rolesApiNames.add('Associate_Business_Performance_Advisors');
-                notAllowedCloseWonRoles = NSP_Lib.getRolesIdByApiName(rolesApiNames);
-            }
-
-            if(userRole != null && notAllowedCloseWonRoles!= null && opp!= null )  //updated as part of DF-04392
-            {
-                for(UserRole role : notAllowedCloseWonRoles){
-                    if(userRole.equals(role.Id)){
-                        opp.addError(Label.NSP_CANNOT_MOVE_TO_CLOSEDWON);
-                        break;
-                    }
-                }
-            }
-        }
+    }
 
     // AZD-191924 232114
     public static void calculateEnrollmentFees(List<Opportunity> opps){
@@ -1446,5 +1437,4 @@ Created Date:12/05/2022
             }   
         }
      }
-    
 }

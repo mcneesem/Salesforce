@@ -5,7 +5,7 @@
     <label>Sales Region</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
-    <trackTrending>false</trackTrending>
+    <trackHistory>true</trackHistory>
     <type>Picklist</type>
     <valueSet>
         <controllingField>NSP_Sales_Division__c</controllingField>
@@ -81,15 +81,23 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>MidMarket</controllingFieldValue>
+            <valueName>MM Sales</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>MidMarket</controllingFieldValue>
             <valueName>National Accounts</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>MidMarket</controllingFieldValue>
-            <valueName>MM Sales</valueName>
+            <valueName>PCM Sales</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Corporate</controllingFieldValue>
             <valueName>Corporate</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Inside Sales</controllingFieldValue>
+            <valueName>Inside Sales</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>

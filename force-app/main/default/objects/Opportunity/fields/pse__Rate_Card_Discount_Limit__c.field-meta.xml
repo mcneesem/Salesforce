@@ -10,7 +10,7 @@
     <required>false</required>
     <scale>4</scale>
     <trackFeedHistory>false</trackFeedHistory>
-    <trackTrending>false</trackTrending>
+    <trackHistory>true</trackHistory>
     <type>Number</type>
     <unique>false</unique>
 </CustomField>

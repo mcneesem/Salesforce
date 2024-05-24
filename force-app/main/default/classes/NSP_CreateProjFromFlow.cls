@@ -10,11 +10,11 @@ public class NSP_CreateProjFromFlow {
     // test w/ NSP_CreateProjFromFlowTest (96%)
 
     @InvocableMethod(label='Create Project' description='Create Project for Order')
-    public static void createProject(List<String> records){
+    public static void createProject( List<String> records ) {
         Set<Id> orderIdSet = new Set<Id>();
         Map<String,String> projectResponseMap = new Map<String,String>();
-        List<OrderItem> oiUpdateList = new  List<OrderItem>();
-        List<Order> ordUpdateList = new  List<Order>();
+        List<OrderItem> oiUpdateList = new List<OrderItem>();
+        List<Order> ordUpdateList = new List<Order>();
         Map<String,String> projectIdMap = new Map<String,String>();
         Map<Id,pse__Proj__c> projOwnerMap = new Map<Id,pse__Proj__c>();
         pse__Proj__c projObj = new pse__Proj__c();
@@ -58,7 +58,7 @@ public class NSP_CreateProjFromFlow {
                     pse__Proj__c projectName = [SELECT Id FROM pse__Proj__c WHERE Id =: orderObj.NSP_Project__c LIMIT 1];
                     for(OrderItem oi : orderItems){
                         oi.NSP_Project__c = projectName.Id;
-                        oiUpdateList.add(oi);
+                        oiUpdateList.add( oi );
                     }
                 }
             }
@@ -66,10 +66,16 @@ public class NSP_CreateProjFromFlow {
         if(projectResponseMap.size() > 0){
             List<OrderItem> orderItems = [SELECT Id, OrderId,Order.NSP_Project_Name__c,Order.Name FROM OrderItem WHERE OrderId IN :orderIdSet];
             List<Order> ordList = [SELECT Id,NSP_Project_Name__c,NSP_ProjectOwner__c,Name FROM Order WHERE Id IN :orderIdSet];
-            for(OrderItem oi : orderItems){
-                if(projectResponseMap.containsKey(oi.OrderId)) {
-                    oi.NSP_Project__c = projectResponseMap.get(oi.OrderId);
-                    oiUpdateList.add(oi);
+            Map<Id,OrderItem> orderItemCheckMap = new Map<Id,OrderItem>( oiUpdateList );
+            if ( ( oiUpdateList != null ) && !oiUpdateList.isEmpty() ) {
+                orderItemCheckMap = new Map<Id,OrderItem>( oiUpdateList );
+            }
+            for ( OrderItem oi : orderItems ) {
+                if ( projectResponseMap.containsKey( oi.OrderId ) ) {
+                    oi.NSP_Project__c = projectResponseMap.get( oi.OrderId );
+                    if ( !orderItemCheckMap.containsKey( oi.Id ) ) { // prevent System.ListException: Duplicate id in list: 802XXXXXXXXXXXXXXX
+                        oiUpdateList.add( oi );
+                    }
                 }
             }
             for(Order orderObj : ordList){
@@ -87,10 +93,14 @@ public class NSP_CreateProjFromFlow {
                 }
             }
         }
-           if(oiUpdateList != null && oiUpdateList.size() > 0){
-                List<Database.SaveResult> results = Database.update(oiUpdateList,false);
-                NSP_ErrorLogHandler.logSaveResultsException('NSP_CreateProjectFromFlow','AssociateProjecttoOrder', results);
-            }
+        if ( ( oiUpdateList != null ) && !oiUpdateList.isEmpty() ) {
+            List<Database.SaveResult> results = Database.update (oiUpdateList , false );
+            NSP_ErrorLogHandler.logSaveResultsException(
+                'NSP_CreateProjectFromFlow' ,
+                'AssociateProjecttoOrder' ,
+                results
+            );
+        }
             if(ordUpdateList != null && ordUpdateList.size() > 0){
                 List<Database.SaveResult> results = Database.update(ordUpdateList,false);
                 NSP_ErrorLogHandler.logSaveResultsException('NSP_CreateProjectFromFlow','AssociateProjecttoOrder', results);
@@ -99,9 +109,9 @@ public class NSP_CreateProjFromFlow {
                 List<Database.SaveResult> results = Database.update(projOwnerMap.values(),false);
                 NSP_ErrorLogHandler.logSaveResultsException('NSP_CreateProjectFromFlow','SetProjectOwner', results);
             }
-        
     }
-/**
+
+    /**
 * Method Name : createProjectFromButton 
 * Description : This method is called from NSP_CreateProject Lightning component to create Project on click of Create Project button from Order Page.
 * Author : CPQ Team       Date : 06/28/2023

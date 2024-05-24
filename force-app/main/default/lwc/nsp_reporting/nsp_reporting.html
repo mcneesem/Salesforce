@@ -80,15 +80,97 @@
         class={styles.NSP_Sample_of_current_GL_report__c}
         onchange={handleValueChange}>
       </c-nsp_selection-box>
-
-      <lightning-input-field
-        disabled={disabledFields.NSP_Name_of_accounting_software__c}
-        data-name="NSP_Name_of_accounting_software__c"
-        value={field.NSP_Name_of_accounting_software__c}
-        field-name="NSP_Name_of_accounting_software__c"
-        class={styles.NSP_Name_of_accounting_software__c}
-        onchange={handleValueChange}>
-      </lightning-input-field>
     </template>
+    <c-nsp_selection-box
+        disabled={disabledFields.Is_there_a_need_for_Integra__c}
+        label={label.IsthereaneedforIntegra}
+        field-api-name="Implementation_Profile__c.Is_there_a_need_for_Integra__c"
+        record-type-id={recordTypeId}
+        value={field.Is_there_a_need_for_Integra__c}
+        data-name="Is_there_a_need_for_Integra__c"
+        class={styles.Is_there_a_need_for_Integra__c}
+        onchange={handleValueChange}>
+    </c-nsp_selection-box>
+    <c-nsp_selection-box
+      disabled={disabledFields.What_QuickBooks_version_do_you_use__c}
+      lwc:if={visibility.What_QuickBooks_version_do_you_use__c}
+      data-name="What_QuickBooks_version_do_you_use__c"
+      class={styles.What_QuickBooks_version_do_you_use__c}
+      label={label.WhatQuickBooksversiondoyouuse}
+      field-api-name="Implementation_Profile__c.What_QuickBooks_version_do_you_use__c"
+      record-type-id={recordTypeId}
+      value={field.What_QuickBooks_version_do_you_use__c}
+      onchange={handleValueChange}>
+    </c-nsp_selection-box>
+    <c-nsp_selection-box
+      disabled={disabledFields.Needed_payroll_entry_allocation__c}
+      lwc:if={visibility.Needed_payroll_entry_allocation__c}
+      data-name="Needed_payroll_entry_allocation__c"
+      class={styles.Needed_payroll_entry_allocation__c}
+      multiple
+      label={label.Neededpayrollentryallocation}
+      field-api-name="Implementation_Profile__c.Needed_payroll_entry_allocation__c"
+      record-type-id={recordTypeId}
+      value={field.Needed_payroll_entry_allocation__c}
+      onchange={handleValueChange}>
+    </c-nsp_selection-box>
+    <c-nsp_selection-box
+      disabled={disabledFields.Do_you_need_to_allocate_costs__c}
+      lwc:if={visibility.Do_you_need_to_allocate_costs__c}
+      data-name="Do_you_need_to_allocate_costs__c"
+      class={styles.Do_you_need_to_allocate_costs__c}
+      label={label.Doyouneedtoallocatecosts}
+      field-api-name="Implementation_Profile__c.Do_you_need_to_allocate_costs__c"
+      record-type-id={recordTypeId}
+      value={field.Do_you_need_to_allocate_costs__c}
+      onchange={handleValueChange}
+      help-text={label.Doyouneedtoallocatehelptext}>
+    </c-nsp_selection-box>
+    <div>
+      <c-nsp_selection-box
+        disabled={disabledFields.Do_you_require_more_than_3_job_cost__c}
+        lwc:if={visibility.Do_you_require_more_than_3_job_cost__c}
+        data-name="Do_you_require_more_than_3_job_cost__c"
+        class={styles.Do_you_require_more_than_3_job_cost__c}
+        label={label.Doyourequiremorethan3jobcost}
+        field-api-name="Implementation_Profile__c.Do_you_require_more_than_3_job_cost__c"
+        record-type-id={recordTypeId}
+        value={field.Do_you_require_more_than_3_job_cost__c}
+        onchange={handleValueChange}>
+      </c-nsp_selection-box>
+      <div>
+        <lightning-formatted-text
+            lwc:if={visibility.showJobCostMessage}
+            class="slds-m-left_x-large headerMessage small"
+            value={label.Doyourequiremorethan3jobhelptext}>
+        </lightning-formatted-text>
+      </div>
+      <div>
+        <lightning-formatted-url
+        lwc:if={visibility.showJobCostMessage}
+        class="slds-m-left_x-large small"
+        value={label.Doyourequiremorethan3jobhyperlink} 
+        label={label.ClientIntegraResponsessmartsheet}>
+        </lightning-formatted-url>
+      </div>
+    </div>
+    <div>
+      <c-nsp_selection-box
+        disabled={disabledFields.Do_you_have_a_recent_journal_entry__c}
+        lwc:if={visibility.Do_you_have_a_recent_journal_entry__c}
+        data-name="Do_you_have_a_recent_journal_entry__c"
+        class={styles.Do_you_have_a_recent_journal_entry__c}
+        label={label.Doyouhavearecentjournalentry}
+        field-api-name="Implementation_Profile__c.Do_you_have_a_recent_journal_entry__c"
+        record-type-id={recordTypeId}
+        value={field.Do_you_have_a_recent_journal_entry__c}
+        onchange={handleValueChange}>
+      </c-nsp_selection-box>
+      <lightning-formatted-text
+          lwc:if={visibility.showJournalMessage}
+          class="slds-m-left_x-large headerMessage"
+          value={label.Doyouhavearecentjournal}>
+      </lightning-formatted-text>
+    </div>
   </lightning-record-edit-form>
 </template>

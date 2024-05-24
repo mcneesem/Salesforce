@@ -1,16 +1,19 @@
-/**
-* Represents the project trigger helper which handles all the logic.
-*/
 public class NSP_ProjectTasksTriggerHelper {
-    // test w/ NSP_ProjectTasksTriggerHelperTest (87%)
+    // test w/ NSP_ProjectTasksTriggerHelperTest (81%)
 
     private static final String HUNDRED_PERCENT =  '100%';
-    private static final String NSP_PROJECTTASKSTRIGGERHELPER = 'NSP_ProjectTasksTriggerHelper';
     private static final string SYS_ADMIN = 'System Administrator';
     private static final String COBRA_MM='NSP_COBRA';
     private static final String COBRA_GUIDELINES_MM= 'NSP_COBRAGuidelines';
    	private static final String COBRA_TEAM_MM= 'NSP_COBRATeam';
    	private static final String COBRA_PACKETS_MM= 'NSP_COBRAPackets';
+    private static final Id WOAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId('Asset',NSP_ServiceConstants.WO_ASSET_RECORDTYPE);
+    private static final Id CPQAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId('Asset','NSP_CPQ_Asset');
+    private static final string BACKOUT= 'Backout';
+    private static final string TERMINATED= 'Terminated';
+    private static final string RETURNED= 'Returned';
+    private static final string INACTIVE= 'Inactive';
+    private static final string PRJ_TASK_NAME = 'Complete termination analysis';
     /**
     * Iterates throught the list of new pse__Project_Task__c and passes the required attributes to other methods.
     * @param projectTaskNewMap Map of New project. 
@@ -94,14 +97,80 @@ public class NSP_ProjectTasksTriggerHelper {
     public void afterInsertFilter(List<pse__Project_Task__c> listProjectTasks, Map<Id, pse__Project_Task__c> mapProjectTasks){
         List<pse__Project_Task__c> cobraProjectTaskList = new List<pse__Project_Task__c>();
         NSP_ProjectTask_Automation__mdt pta =  NSP_ProjectTask_Automation__mdt.getInstance(COBRA_MM);
+        List<ID> accountIdList = new List<ID>();    
         for(pse__Project_Task__c pTask : listProjectTasks){
             //Checking for COBRA Parent Task
             if(pTask.Name==pta.NSP_Task_Name__c){
                 cobraProjectTaskList.add(pTask);
             }
+            //Checking for Project Task Account
+            if (pTask.NSP_Account_Id__c != null && pTask.Name == PRJ_TASK_NAME){
+                accountIdList.add(pTask.NSP_Account_Id__c);
+            }
         }
         if(cobraProjectTaskList.size() > 0){
             createCobraSubTasks(cobraProjectTaskList);
+        }
+        if (accountIdList.size() > 0){
+            updateDocusignAsset(accountIdList);
+        }
+    }
+        
+    /**
+    * @MethodName: updateDocusignAsset
+    * @Description: Populate related Active asset for docusign use
+    * @param :List<Id> accountList
+    * @return void                          
+    */    
+    public static void updateDocusignAsset(List<ID> accountList) {
+        Map<Id, Set<String>> accountToAssetRecordtypeMap = new Map<Id, Set<String>>();
+        Map<Id, RecordTypeInfo> recTypeMap = Asset.sObjectType.getDescribe().getRecordTypeInfosById();
+        List<Asset> assetList = new List<Asset>();
+        List<Account> acctList = new List<Account>();
+        List<String> ActiveAssetList = new List<String>();
+        
+        try {
+            assetList = [SELECT ID, recordtypeId, recordtype.name, AccountId, Status from Asset WHERE AccountId IN:accountList
+                         AND RecordTypeId != :WOAssetRecordTypeId AND RecordTypeId != :CPQAssetRecordTypeId AND Status != :TERMINATED AND Status != :BACKOUT AND Status != :RETURNED AND Status != :INACTIVE
+                         ];
+    
+            for (Asset eachAsset : assetList) {
+                if (eachAsset.AccountId != null) { 
+                    if (!accountToAssetRecordtypeMap.containsKey(eachAsset.AccountId)) {
+                        accountToAssetRecordtypeMap.put(eachAsset.AccountId, new Set<String>());
+                    }
+                    String recordTypeName;
+                    if (recTypeMap.containsKey(eachAsset.RecordTypeId)) {
+                        recordTypeName = recTypeMap.get(eachAsset.RecordTypeId).getName();
+                    }
+                    // Adding recordtypes from all related assets
+                    accountToAssetRecordtypeMap.get(eachAsset.AccountId).addAll(recordTypeName.split(','));
+                }
+            }
+            
+            for (Account eachAccount : [SELECT Id, Docusign_Assets__c FROM Account WHERE ID IN :accountList]) {
+                //Clearing old value for Docusign_Assets__c
+                eachAccount.Docusign_Assets__c = Null;
+                if (accountToAssetRecordtypeMap.containsKey(eachAccount.Id)) {
+                    //Adding value into Set for deduplication
+                    Set<String> existingassetsrecordtype = accountToAssetRecordtypeMap.get(eachAccount.Id);
+                    //Adding value from set to List
+                    ActiveAssetList.addAll(existingassetsrecordtype);
+                    //Updating the Docusign_Assets__c
+                    if (ActiveAssetList.size() > 0){
+                        eachAccount.Docusign_Assets__c = String.join(ActiveAssetList, ', ');
+                    }
+                }
+                acctList.add(eachAccount);
+            }
+            if (acctList.size() > 0){
+                update acctList;
+            }
+        } catch ( exception e ) {
+            NSP_ProjectTasksTriggerHelper.handleException(
+                e ,
+                'updateAssetInDocusign'
+            );
         }
     }
 
@@ -142,12 +211,19 @@ public class NSP_ProjectTasksTriggerHelper {
                 cobraChildProjectTaskList.add(eachProjecttask2);
             }
         }
-        if(!cobraChildProjectTaskList.isEmpty()){
-            List<Database.SaveResult> insertChildResults = Database.Insert(cobraChildProjectTaskList, false);
-            NSP_ErrorLogHandler.logSaveResultsException(NSP_PROJECTTASKSTRIGGERHELPER, 'createCobraSubTasks', insertChildResults);            
-        }
-        }catch (Exception ex) {
-            NSP_ErrorLogHandler.logSaveException(NSP_PROJECTTASKSTRIGGERHELPER, 'createCobraSubTasks', ex.getMessage());
+            if ( !cobraChildProjectTaskList.isEmpty() ) {
+                List<Database.SaveResult> insertChildResults = Database.insert( cobraChildProjectTaskList , false );
+                NSP_ErrorLogHandler.logSaveResultsException(
+                    NSP_ProjectTasksTriggerHelper.class.getName() ,
+                    'createCobraSubTasks' ,
+                    insertChildResults
+                );
+            }
+        } catch ( Exception e ) {
+            NSP_ProjectTasksTriggerHelper.handleException(
+                e ,
+                'createCobraSubTasks'
+            );
         }
     }
 
@@ -418,8 +494,8 @@ public class NSP_ProjectTasksTriggerHelper {
         email.setHtmlBody(mailBody);
         email.setSaveAsActivity(false);
         email.setTargetObjectId(userinfo.getUserId());
-        if(!System.Test.isRunningTest()){
-            Messaging.sendEmail(new Messaging.SingleEmailMessage[] {email});
+        if ( !System.Test.isRunningTest() ) {
+            NSP_ProjectTasksTriggerHelper.sendSingleEmailMessage( email );
         }
     }
 
@@ -447,11 +523,10 @@ public class NSP_ProjectTasksTriggerHelper {
         email.setHtmlBody(mailBody);
         email.setSaveAsActivity(false);
         email.setTargetObjectId(userinfo.getUserId());
-        if(!System.Test.isRunningTest()){
-            Messaging.sendEmail(new Messaging.SingleEmailMessage[] {email});
+        if ( !System.Test.isRunningTest() ) {
+            NSP_ProjectTasksTriggerHelper.sendSingleEmailMessage( email );
         }
     }
-
 
     /* Description : This method throws an error if Dependent Task is started
                     without completing Preceding Task
@@ -494,14 +569,31 @@ public class NSP_ProjectTasksTriggerHelper {
             }
         }
 
-        if(!isMapOfPrecedingTaskAndCompleted.isEmpty()){
-            for(pse__Project_Task__c projectTaskError : lProjectTasks){
-                if(projectTaskError.pse__Started__c 
-                    && !isMapOfPrecedingTaskAndCompleted.get(mapOfDependentTaskAndPrecedingtask.get(projectTaskError.id))){
-                    projectTaskError.addError(System.Label.NSP_ProjectTask_Validation);
+        if ( !isMapOfPrecedingTaskAndCompleted.isEmpty() ) {
+            for ( pse__Project_Task__c projectTaskError : lProjectTasks ) {
+                // when the current task has started...
+                if ( projectTaskError.pse__Started__c ) {
+                    // find the preceeding task...
+                    Id precedingTaskId = null;
+                    if ( ( projectTaskError.Id != null )
+                        && mapOfDependentTaskAndPrecedingtask.containsKey( projectTaskError.Id )
+                       )
+                    {
+                        precedingTaskId = mapOfDependentTaskAndPrecedingtask.get( projectTaskError.Id );
+                    }
+                    // check if the preceeding task is incomplete...
+                    if ( ( precedingTaskId != null )
+                        && isMapOfPrecedingTaskAndCompleted.containsKey( precedingTaskId )
+                        && !isMapOfPrecedingTaskAndCompleted.get( precedingTaskId )
+                       )
+                    {
+                        // show an error when the preceeding task is incomplete...
+                        // ~ Error: You cannot start Dependent task without completing Preceding task
+                        projectTaskError.addError( System.Label.NSP_ProjectTask_Validation );
+                    }
                 }
             }
-        } 
+        }
     }
 
     /**
@@ -787,12 +879,13 @@ public class NSP_ProjectTasksTriggerHelper {
             if(!listOfMilestone.isEmpty()){
                 Database.update(listOfMilestone);
             }
-        }catch(Exception ex){
-            NSP_ErrorLogHandler.logSaveException(NSP_PROJECTTASKSTRIGGERHELPER, 'calculateNumberOfCompletedAndCancelledProjectTask', ex.getMessage());
+        } catch( Exception e ) {
+            NSP_ProjectTasksTriggerHelper.handleException(
+                e ,
+                'calculateNumberOfCompletedAndCancelledProjectTask'
+            );
         }
-        
     }
-
 
     /**
     * Update Depenedent Task Resources about Precending Task Completion if Responsible Party is Different
@@ -820,7 +913,11 @@ public class NSP_ProjectTasksTriggerHelper {
         Set<Id>newTaxIMPLSubProjectSet =new Set<Id>(); 
         Set<Id>wXWADataMigrationSubProject =new Set<Id>();
         Set<Id> goLiveProjectTaskIds = new Set<Id>();
+        List<Id> accountIdList = new List<Id>();
         for(pse__Project_Task__c oProjectTask : mNewProjectTasks.values()){
+            if (oProjectTask.Name == PRJ_TASK_NAME && oProjectTask.NSP_Account_Id__c != NULL &&oldMapProjecttasks.get(oProjectTask.Id).NSP_Account_Id__c != oProjectTask.NSP_Account_Id__c){
+                accountIdList.add(oProjectTask.NSP_Account_Id__c);
+            }
             // FILTER COMPLETED PROJECTS
             if(oProjectTask.pse__Status__c == NSP_ServiceConstants.PROJECTSTATUSCOMPLETED && oldMapProjecttasks.get(oProjectTask.Id).pse__Status__c != NSP_ServiceConstants.PROJECTSTATUSCOMPLETED){
                 sProjectTasksIds.add(oProjectTask.Id);
@@ -915,6 +1012,9 @@ public class NSP_ProjectTasksTriggerHelper {
         if(!projectTaskIdSet.isEmpty()){
             NSP_ProjectTaskTriggerEmailNotification.emailNotifyforFEIN(projectTaskIdSet,mapofProjecttasks);
         }
+        if (accountIdList.size() > 0){
+            updateDocusignAsset(accountIdList);
+        }
         if(!fundingprojectTaskIdSet.isEmpty()){
             NSP_ProjectTaskTriggerEmailNotification.emailNotifyforFundingDocuments(fundingprojectTaskIdSet,mapofFundingProjecttasks);
         }
@@ -924,7 +1024,7 @@ public class NSP_ProjectTasksTriggerHelper {
         if(!projectFsoIdset.isEmpty()){
             NSP_ProjectTaskTriggerEmailNotification.emailNotifyforFirstPayrollFSO(projectFsoIdset, accountIdFsoProjectTaskMap);
         }
-        if(!projectFsoIdset.isEmpty()){
+        if(!projectFsoIdset.isEmpty() && NSP_Trigger_Switch__c.getInstance(UserInfo.getUserId()).NSP_FP_MM_EmailNotification__c){
             NSP_ProjectTaskTriggerEmailNotification.emailNotifyforFirstPayrollMM(projectFsoIdset, accountIdFsoProjectTaskMap);
         }
         if(!projectTaskCobraIdSet.isEmpty()){
@@ -1080,8 +1180,11 @@ public class NSP_ProjectTasksTriggerHelper {
                         }
                     }
             }
-        }catch (Exception ex) {
-            NSP_ErrorLogHandler.logSaveException(NSP_PROJECTTASKSTRIGGERHELPER, 'setStartDateAndEndDateOnProjectTask', ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_ProjectTasksTriggerHelper.handleException(
+                e ,
+                'setStartDateAndEndDateOnProjectTask'
+            );
         }
     }
 
@@ -1159,8 +1262,11 @@ public class NSP_ProjectTasksTriggerHelper {
                     Database.Update(projectTaskList, false);
                 }
             }
-        } catch (Exception ex) {
-            NSP_ErrorLogHandler.logSaveException(NSP_PROJECTTASKSTRIGGERHELPER, 'setStartDateAndEndDateOnProjectTaskQTP', ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_ProjectTasksTriggerHelper.handleException(
+                e ,
+                'setStartDateAndEndDateOnProjectTaskQTP'
+            );
         }
     }
 
@@ -1280,11 +1386,12 @@ public class NSP_ProjectTasksTriggerHelper {
                     }
                 }
             }
-            
-        }catch (Exception ex) {
-            NSP_ErrorLogHandler.logSaveException(NSP_PROJECTTASKSTRIGGERHELPER, 'assignQueueTasks', ex.getMessage());
-        } 
-        
+        } catch ( Exception e ) {
+            NSP_ProjectTasksTriggerHelper.handleException(
+                e ,
+                'assignQueueTasks'
+            );
+        }
     }     
 
     /***********************************************************************************************
@@ -1328,8 +1435,11 @@ public class NSP_ProjectTasksTriggerHelper {
                     proj.NSP_HR_Specialist_Email__c =  mapAccTeamCLHR?.get(NSP_ServiceConstants.HRSpecialist)?.NSP_Email__c;
                 }
             }
-        }catch (Exception ex) {
-            NSP_ErrorLogHandler.logSaveException(NSP_PROJECTTASKSTRIGGERHELPER, 'updateEmailsTransitionToService', ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_ProjectTasksTriggerHelper.handleException(
+                e ,
+                'updateEmailsTransitionToService'
+            );
         }
     }
 
@@ -1374,8 +1484,11 @@ public class NSP_ProjectTasksTriggerHelper {
                 //Inserting HCM Case 
                 database.insert(createCaseList, false);
             }
-        }catch (Exception ex) {
-            NSP_ErrorLogHandler.logSaveException(NSP_PROJECTTASKSTRIGGERHELPER, 'createHCMCaseOnProjectTaskUpdate', ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_ProjectTasksTriggerHelper.handleException(
+                e ,
+                'createHCMCaseOnProjectTaskUpdate'
+            );
         }
     }
 
@@ -1477,8 +1590,11 @@ public class NSP_ProjectTasksTriggerHelper {
                         projTask.NSP_Is_Status_Completed__c = true;
                 }
             }
-        }catch(Exception ex ){
-            NSP_ErrorLogHandler.logSaveException(NSP_PROJECTTASKSTRIGGERHELPER, 'beforeUpdate', ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_ProjectTasksTriggerHelper.handleException(
+                e ,
+                'beforeUpdate'
+            );
         }
     }
 
@@ -1512,8 +1628,11 @@ public class NSP_ProjectTasksTriggerHelper {
             if(!projTasksList.isEmpty()){
                 createCaseForISolvedHCMProj(projTasksList);
             }
-        }catch (Exception ex) {
-            NSP_ErrorLogHandler.logSaveException(NSP_PROJECTTASKSTRIGGERHELPER, 'createCasesOnProjectTasksUpdate', ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_ProjectTasksTriggerHelper.handleException(
+                e ,
+                'createCasesOnProjectTasksUpdate'
+            );
         }
     }
 
@@ -1578,9 +1697,9 @@ public class NSP_ProjectTasksTriggerHelper {
             }
             lstEmailMessages.add(email);
         }
-        if(!lstEmailMessages.isEmpty()){
-            Messaging.sendEmail(lstEmailMessages);
-        } 
+        if ( !lstEmailMessages.isEmpty() ) {
+            NSP_ProjectTasksTriggerHelper.sendSingleEmailMessages( lstEmailMessages );
+        }
     }
 
     /***********************************************************************************************
@@ -1667,14 +1786,19 @@ public class NSP_ProjectTasksTriggerHelper {
                     projListToUpdate = linkProjectWithParentProject(newProjectId, parentProjectIdSet, projectIdWithAccountIdMap, projectTemplate);
                 }
             }
-            
-            if(!projListToUpdate.isEmpty() && childProjectList.size() == 0){
-                Database.SaveResult[] projectUpdateList = Database.update(projListToUpdate,false);
-                NSP_ErrorLogHandler.logSaveResultsException(NSP_PROJECTTASKSTRIGGERHELPER, 'createNewTaxIMPLSubProject:ProjectUpdate', projectUpdateList);
+            if ( !projListToUpdate.isEmpty() && ( childProjectList.size() == 0 ) ) {
+                Database.SaveResult[] projectUpdateList = Database.update( projListToUpdate , false );
+                NSP_ErrorLogHandler.logSaveResultsException(
+                    NSP_ProjectTasksTriggerHelper.class.getName() ,
+                    'createNewTaxIMPLSubProject:ProjectUpdate' ,
+                    projectUpdateList
+                );
             }
-            
-        }catch (Exception ex) {
-            NSP_ErrorLogHandler.logSaveException(NSP_PROJECTTASKSTRIGGERHELPER, 'createNewTaxIMPLSubProject', ex.getMessage());
+        } catch (Exception e ) {
+            NSP_ProjectTasksTriggerHelper.handleException(
+                e ,
+                'createNewTaxIMPLSubProject'
+            );
         }
     }
 
@@ -1755,18 +1879,23 @@ public class NSP_ProjectTasksTriggerHelper {
                     projListToUpdate = linkProjectWithParentProject(newProjectId, parentProjectIdSet, projectIdWithAccountIdMap, projectTemplate);
                 }
             }
-                
-            if(!projListToUpdate.isEmpty() && !newProjectIdSet.isEmpty() && childProjectList.size() == 0){
-                Database.SaveResult[] projectUpdateList = Database.update(projListToUpdate,false);
-                //send email
-                wxwaDataMigrationProjectCreationEmail(newProjectIdSet);
-                NSP_ErrorLogHandler.logSaveResultsException(NSP_PROJECTTASKSTRIGGERHELPER, 'createWXWADataMigrationSubProject:ProjectUpdate', projectUpdateList);
+            if ( !projListToUpdate.isEmpty() && !newProjectIdSet.isEmpty() && ( childProjectList.size() == 0 ) ) {
+                Database.SaveResult[] projectUpdateList = Database.update( projListToUpdate , false );
+                wxwaDataMigrationProjectCreationEmail( newProjectIdSet );
+                NSP_ErrorLogHandler.logSaveResultsException(
+                    NSP_ProjectTasksTriggerHelper.class.getName() ,
+                    'createWXWADataMigrationSubProject:ProjectUpdate' ,
+                    projectUpdateList
+                );
             }
-            
-        }catch (Exception ex) {
-            NSP_ErrorLogHandler.logSaveException(NSP_PROJECTTASKSTRIGGERHELPER, 'createWXWADataMigrationSubProject', ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_ProjectTasksTriggerHelper.handleException(
+                e ,
+                'createWXWADataMigrationSubProject'
+            );
         }
     }
+
     /***********************************************************************************************
     * MethodName: linkProjectWithParentProject
     * Description : Link New Tax IMPL project with Parent Project
@@ -1812,9 +1941,8 @@ public class NSP_ProjectTasksTriggerHelper {
                 email.setSaveAsActivity(false);
                 lstEmailMessages.add(email);
             }
-        if(!lstEmailMessages.isEmpty() && !Test.isRunningTest()){
-            //send email alert
-            Messaging.sendEmail(lstEmailMessages);
+        if ( !lstEmailMessages.isEmpty() && !Test.isRunningTest() ) {
+            NSP_ProjectTasksTriggerHelper.sendSingleEmailMessages( lstEmailMessages );
         }
     }
 
@@ -1838,9 +1966,8 @@ public class NSP_ProjectTasksTriggerHelper {
                 email.setSaveAsActivity(false);
                 lstEmailMessages.add(email);
             }
-        if(!lstEmailMessages.isEmpty() && !Test.isRunningTest()){
-            //send email alert
-            Messaging.sendEmail(lstEmailMessages);
+        if ( !lstEmailMessages.isEmpty() && !Test.isRunningTest() ) {
+            NSP_ProjectTasksTriggerHelper.sendSingleEmailMessages( lstEmailMessages );
         }
     }
 
@@ -1893,8 +2020,11 @@ public class NSP_ProjectTasksTriggerHelper {
                         }
                 }
             }
-        }catch (Exception ex) {
-            NSP_ErrorLogHandler.logSaveException(NSP_PROJECTTASKSTRIGGERHELPER, 'sendEmailToProjectResource', ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_ProjectTasksTriggerHelper.handleException(
+                e ,
+                'sendEmailToProjectResource'
+            );
         }
     }
 
@@ -1909,7 +2039,6 @@ public class NSP_ProjectTasksTriggerHelper {
         //list to store to email address
         List<String> toEmailAddress = new List<String>();
         toEmailAddress.add(sendToUserAddress);
-        List<Messaging.SingleEmailMessage> emailList = new List<Messaging.SingleEmailMessage>();
         List<String> emailTempFields = new List<String>{'ID'};
         //Get email template
         EmailTemplate emailTemplate = NSP_sObjectSelector.selectByDeveloperName(emailTempFields, 'NSP_Send_email_to_resource');
@@ -1920,11 +2049,37 @@ public class NSP_ProjectTasksTriggerHelper {
         String emailBody = email.getHtmlBody().replace('$resource$', completedProjTask);
         email.setHtmlBody(emailBody);
         email.setSaveAsActivity(false);
-        emailList.add(email);
-        
-        //send email
-        if(!emailList.isEmpty()){
-            Messaging.sendEmail(emailList);
+        NSP_ProjectTasksTriggerHelper.sendSingleEmailMessage( email );
+    }
+
+    private static void sendSingleEmailMessage( Messaging.SingleEmailMessage message ) {
+        if ( message != null ) {
+            List<Messaging.SingleEmailMessage> messages = new List<Messaging.SingleEmailMessage>();
+            messages.add( message );
+            NSP_ProjectTasksTriggerHelper.sendSingleEmailMessages( messages );
+        }
+    }
+
+    private static void sendSingleEmailMessages( List<Messaging.SingleEmailMessage> messages ) {
+        if ( ( messages != null ) && !messages.isEmpty() ) {
+            try {
+                Messaging.sendEmail( messages );
+            } catch ( Exception e ) {
+                NSP_ProjectTasksTriggerHelper.handleException(
+                    e ,
+                    'sendSingleEmailMessages'
+                );
+            }
+        }
+    }
+
+    private static void handleException( Exception e , String methodName ) {
+        if ( e != null ) {
+            NSP_ErrorLogHandler.logSaveException(
+                NSP_ProjectTasksTriggerHelper.class.getName() ,
+                methodName ,
+                e.getMessage() + ' ~ ' + e.getStackTraceString()
+            );
         }
     }
 
@@ -1991,8 +2146,11 @@ public class NSP_ProjectTasksTriggerHelper {
             dataMap.put('scheduledProjectTasks', scheduledProjectTasks);
             dataMap.put('scheduledProjectTaskOwnerIds', scheduledProjectTaskOwnerIds);
             dataMap.put('projectTaskIds', projectTaskId);
-        }catch (Exception ex) {
-            NSP_ErrorLogHandler.logSaveException(NSP_PROJECTTASKSTRIGGERHELPER, 'getBeforeUpdateFilteredData', ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_ProjectTasksTriggerHelper.handleException(
+                e ,
+                'getBeforeUpdateFilteredData'
+            );
         }
         return dataMap;
     }
@@ -2101,13 +2259,21 @@ public class NSP_ProjectTasksTriggerHelper {
         //update WO And SA
         recordsToUpdate.addAll(woListToUpdate);
         recordsToUpdate.addAll(saListToUpdate);
-        List<Database.SaveResult> results1 =  Database.update( recordsToUpdate , false );
-        NSP_ErrorLogHandler.logSaveResultsException(NSP_PROJECTTASKSTRIGGERHELPER, 'scheduleWorkOrderAndSA', results1 );
-        
+        List<Database.SaveResult> results1 = Database.update( recordsToUpdate , false );
+        NSP_ErrorLogHandler.logSaveResultsException(
+            NSP_ProjectTasksTriggerHelper.class.getName() ,
+            'scheduleWorkOrderAndSA' ,
+            results1
+        );
         //insert Assigned Resource
         List<Database.SaveResult> results3 = Database.insert( assgnResToCreate , false );
-        NSP_ErrorLogHandler.logSaveResultsException(NSP_PROJECTTASKSTRIGGERHELPER, 'scheduleWorkOrderAndSA', results3 );
+        NSP_ErrorLogHandler.logSaveResultsException(
+            NSP_ProjectTasksTriggerHelper.class.getName() ,
+            'scheduleWorkOrderAndSA' ,
+            results3
+        );
     }
+
     /***********************************************************************************************
     * MethodName: isStatusChangedToScheduled
     * Description : check if status changed to schedule
@@ -2196,14 +2362,20 @@ public class NSP_ProjectTasksTriggerHelper {
                     }
                 }
             }  
-            
-            if(!newPTAList.isEmpty()) {
+            if ( !newPTAList.isEmpty() ) {
                 NSP_ProjectTaskAssignmentTriggerHelper.runAssignmentMethod = true;
-                Database.UpsertResult[] upsertResults = Database.upsert(newPTAList, false);
-                NSP_ErrorLogHandler.logUpsertResultsException(NSP_PROJECTTASKSTRIGGERHELPER, 'createPTAIfOwnerIsChanged:upsertResults', upsertResults);
+                Database.UpsertResult[] upsertResults = Database.upsert( newPTAList , false);
+                NSP_ErrorLogHandler.logUpsertResultsException(
+                    NSP_ProjectTasksTriggerHelper.class.getName() ,
+                    'createPTAIfOwnerIsChanged:upsertResults' ,
+                    upsertResults
+                );
             }
-        } catch (Exception ex) {
-            NSP_ErrorLogHandler.logSaveException(NSP_PROJECTTASKSTRIGGERHELPER, 'createPTAIfOwnerIsChanged', ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_ProjectTasksTriggerHelper.handleException(
+                e ,
+                'createPTAIfOwnerIsChanged'
+            );
         }
     }
 
@@ -2238,8 +2410,12 @@ public class NSP_ProjectTasksTriggerHelper {
                     }
                 }
             }
-        }catch(Exception exp ){
-                NSP_ErrorLogHandler.logSaveException(NSP_PROJECTTASKSTRIGGERHELPER, 'handleBeforeDeleteOfProjTemp', exp.getMessage());
+        } catch( Exception e ) {
+            NSP_ProjectTasksTriggerHelper.handleException(
+                e ,
+                'handleBeforeDeleteOfProjTemp'
+            );
         }
     }
 }
+//

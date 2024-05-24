@@ -5,6 +5,6 @@
     <externalId>false</externalId>
     <formula>TEXT( $User.NSP_Sub_Region__c) =  TEXT( Owner.NSP_Sub_Region__c )</formula>
     <label>Running SubRegion</label>
-    <trackTrending>false</trackTrending>
+    <trackHistory>false</trackHistory>
     <type>Checkbox</type>
 </CustomField>

@@ -11283,11 +11283,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Event.NSP_Recurrence_Interval__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Event.NSP_Regional_Manager__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -13294,7 +13289,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Implementation_Profile__c.Client_Implementing_Premier_Performance__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -13959,11 +13954,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Implementation_Profile__c.Hush_Protocol__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Implementation_Profile__c.If_EE_works_holiday_are_paid_prem__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -16109,7 +16099,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Implementation_Profile__c.When_Client_Wants_Solution_implemented__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -29178,6 +29168,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>NSP_Termination_Form__c.NSP_1900_Merger_CSA__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NSP_Termination_Form__c.NSP_2700_FEIN_Letter_of_Assignment__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>NSP_Termination_Form__c.NSP_Account_Executive__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -29383,6 +29383,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>NSP_Termination_Form__c.NSP_Insperity_offering__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>NSP_Termination_Form__c.NSP_JohnCarney_been_provided_information__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -29418,17 +29423,22 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>NSP_Termination_Form__c.NSP_Next_Scheduled_Pay_Date__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>NSP_Termination_Form__c.NSP_NoOfEmployeesClientGoingToBring__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>NSP_Termination_Form__c.NSP_Note_regarding_Attachment__c</field>
+        <field>NSP_Termination_Form__c.NSP_Notes_Comments__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>NSP_Termination_Form__c.NSP_Notes_Comments__c</field>
+        <field>NSP_Termination_Form__c.NSP_Notes_Regarding_Attachment__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -44844,11 +44854,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Task.NSP_Priority__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Task.NSP_Recurrence_Interval__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

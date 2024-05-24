@@ -5,6 +5,7 @@
     <externalId>false</externalId>
     <formula>TEXT($User.NSP_SalesRegion__c) =  TEXT(NSP_User__r.NSP_SalesRegion__c)</formula>
     <label>Running Sales Region</label>
+    <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

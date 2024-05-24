@@ -139,6 +139,13 @@ public class NSP_ProjectTasksTriggerHelperTest {
         oProjectTaskRec.RecordTypeId = pEOProjectTaskRecordTypeId;
         nProjectTaskList.add(oProjectTaskRec);
         
+        pse__Project_Task__c dTask = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c());
+        dTask.Name = 'Complete termination analysis';
+        dTask.pse__Project__c = hcmProject.Id;
+        dTask.pse__Status__c = NSP_ServiceConstants.PROJECTSTATUSNOTSTARTED;
+        dTask.RecordTypeId = pEOProjectTaskRecordTypeId;
+        nProjectTaskList.add(dTask);
+        
         pse__Project_Task__c pt1 = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c());
         pt1.pse__Project__c = retProj.Id;
         pt1.pse__Order__c = 1;
@@ -246,12 +253,15 @@ public class NSP_ProjectTasksTriggerHelperTest {
         oProjectTask1.pse__Milestone__c = milestone.id;
         oProjectTask1.NSP_Account_Id__c = oAccount.Id;
         oProjectTask1.NSP_Template_Generated__c = true;
-        oProjectTask1.pse__Project__c = oProject.Id;
+        oProjectTask1.pse__Start_Date_Time__c = System.now();
+        oProjectTask1.pse__End_Date_Time__c = System.now();
         oProjectTask1.RecordTypeId = pEOProjectTaskRecordTypeId;
 
         pse__Project_Task__c oProjectTask2 = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c(), 'NSP_TestDataFactory.ProjectTaskDefaults', false);
         oProjectTask2.Name = 'pTask2';
         oProjectTask2.pse__Project__c = oProject.Id;
+        oProjectTask2.pse__Start_Date_Time__c = System.now();
+        oProjectTask2.pse__End_Date_Time__c = System.now();
         oProjectTask2.NSP_of_Days_Offset__c = 10;
         oProjectTask2.NSP_Offset_Date__c = 'Asset Renewal Date';
         oProjectTask2.pse__Milestone__c = milestone.id;
@@ -1064,6 +1074,25 @@ public class NSP_ProjectTasksTriggerHelperTest {
         Test.stopTest();
     }
     
+    /***********************************************************************************************
+    * MethodName: docusignAssetTest
+    * Description : To test docusignAsset 
+    * ********************************************************************************************/
+	@isTest
+    private static void docusignAssetTest(){
+        Test.startTest();
+        Id AssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId('Asset','Employment_Screening');
+        Account acc = [SELECT ID, NSP_AIMS_Client__c FROM Account WHERE NSP_AIMS_Client__c = '8900' LIMIT 1];
+        Asset asseObj = [SELECT Id, AccountId,NSP_Reason_for_Term__c,NSP_Anticipated_Date_Of_Termination__c  FROM Asset Limit 1];
+        asseObj.AccountId = acc.Id;
+        asseObj.RecordTypeId =AssetRecordTypeId;
+        asseObj.Status = 'Active';
+        UPDATE asseObj;
+        pse__Project_Task__c pTask = [SELECT Id, Name, pse__Status__c,NSP_AccountId__c  FROM pse__Project_Task__c WHERE Name = 'Complete termination analysis' Limit 1];
+        pTask.NSP_Account_Id__c = acc.Id;
+		update pTask;
+        Test.stopTest();
+    }
     /***********************************************************************************************
     * MethodName: serviceAppointmentTest
     * Description : To test assignResourceToServiceAppointment and scheduleWorkOrderAndSA methods.    

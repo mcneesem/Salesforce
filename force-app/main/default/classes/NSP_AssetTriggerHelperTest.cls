@@ -408,7 +408,7 @@ public class NSP_AssetTriggerHelperTest {
         eachOppty.NSP_BPA__c = eachOppty.OwnerId;
         //eachOppty.StageName = 'Closed Won';
         eachOppty.NSP_PrimaryProduct__c = 'WO';
-        eachOppty.StageName = 'Closing';
+        //eachOppty.StageName = 'Closing';
         Test.startTest();
         update eachOppty;
             NSP_Checklist__c eachCheckList = new NSP_Checklist__c();

@@ -4,10 +4,11 @@
 * Author : Nischay Jindal
 * Name : NSP_AssetProjectCreation
 */
-public class NSP_AssetProjectCreation implements Queueable  {
-    // test w/ NSP_AssetServiceTriggerHelperTest (83%)
+public class NSP_AssetProjectCreation implements Queueable {
+    // test w/ NSP_AssetServiceTriggerHelperTest (84%)
+
     private static final String NSP_ASSET_PROJECT_CREATION = 'NSP_AssetProjectCreation';
-    
+
     public NSP_FF_APIs implInstance = new NSP_FF_APIImpl();
     public NSP_AssetProjectCreation(){
         if(Test.isRunningTest()){
@@ -72,7 +73,13 @@ public class NSP_AssetProjectCreation implements Queueable  {
                 templateMap.put(template.Key__c, template);
             }
             // checking if the asset has the active project 
-            for(Asset asset: [Select Id ,RecordTypeId,NSP_Client_Segment_type__c,AccountId FROM Asset WHERE Id IN:woAssetIdSet]){
+            for ( Asset asset : [
+                        SELECT Id , RecordTypeId , NSP_Client_Segment_type__c , AccountId , Opportunity__c
+                        FROM Asset
+                        WHERE ( Id IN :woAssetIdSet )
+                    ]
+                )
+            {
                 if(projectList.isEmpty()){
                     String templateType;
                     Id projectId; 
@@ -91,7 +98,15 @@ public class NSP_AssetProjectCreation implements Queueable  {
                     }
                     if(projectId!=null){
                         // Update Mid Market & FSO Project Data
-                        updatedProjectList.add(createProjectObject(projectId, projectRecordType, asset.AccountId,  templateType));
+                        updatedProjectList.add(
+                            createProjectObject(
+                                projectId ,
+                                projectRecordType ,
+                                asset.AccountId ,
+                                templateType ,
+                                asset.opportunity__c
+                            )
+                        );
                         //Update the project with its related entity.
                         projectAssetMapping.add(linkProjectWithAsset(projectId, asset.Id));
                     }  
@@ -150,8 +165,8 @@ public class NSP_AssetProjectCreation implements Queueable  {
         
         return newProject;
     }
-    
-    private static pse__Proj__c createProjectObject(Id projId, Id recordTypeId, Id accountId,String assetTemplateType ){
+
+    private static pse__Proj__c createProjectObject(Id projId, Id recordTypeId, Id accountId,String assetTemplateType, Id opportunityId ){
         pse__Proj__c project = new pse__Proj__c();
         project.Id= projId;
         project.pse__Project_Status__c = NSP_ServiceConstants.ProjectStatus;
@@ -159,6 +174,10 @@ public class NSP_AssetProjectCreation implements Queueable  {
         project.RecordTypeId = recordTypeId;
         project.pse__Is_Billable__c = False;
         project.NSP_Asset_Implementation_Project__c= True;
+        // AZD-269852 ~ mflorian created on 4/4/2024
+        if ( NSP_hotfix_Switch__c.getInstance( UserInfo.getUserId() ).Is_Opportunity_Allowed_On_Project__c ) {
+            project.pse__Opportunity__c = opportunityId;
+        }
         if(assetTemplateType== label.Middle_Market_Implementation_Project){
             project.pse__End_Date__c = System.Today().addDays(180);
         }else if(assetTemplateType== label.FSOImplementationProject){

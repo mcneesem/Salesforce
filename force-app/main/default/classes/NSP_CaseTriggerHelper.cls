@@ -3,18 +3,18 @@
 *
 */
 public class NSP_CaseTriggerHelper {
-    // test w/ NSP_CaseTriggerHelperTest (80%)
+    // test w/ NSP_CaseTriggerHelperTest (78%)
 
     public static string ESCALATION_QUEUE = 'NSP_Escalations';
     public static string QUEUE_TYPE       = 'Queue';
     public static string CATEGORY_VALUE   = 'CSS';
     public static string CSS_ROLE         = 'Customer Success Specialist';
+    public static string RET_NSPHardship_QUEUE = 'RET - NSPHardship';
     public final String BPSRECORDTYPE = 'BPS';
     public final String TASKPRIORITY = 'Medium';
     public final String TASKSTATUS = 'Completed';
     public final String TASKSUBJECT = 'Time Entry';
     private static final String STARTSWITHUSER = '005';
-    private static final String NSP_CASETRIGGERHELPER = 'NSP_CaseTriggerHelper';
     private static final String STARTSWITHGROUP = '00G';
     List<Case> closedCaseLst ;
     Map<Id, Group> queueMap ;
@@ -88,7 +88,7 @@ public class NSP_CaseTriggerHelper {
             
             eachCase.NSP_Case_Sub_Status__c = (eachcase.recordTypeId == PEO_RECORDTYPEID && eachCase.Status == NSP_ServiceConstants.CLOSED_STATUS) ? NSP_ServiceConstants.RESOLVED : eachCase.NSP_Case_Sub_Status__c;
             
-            if(String.isNotBlank(eachCase.accountId) && String.isNotBlank(eachCase.contactId) && eachCase.recordTypeId == PEO_RECORDTYPEID){
+            if(isCorpEE(eachCase, null)){
                 acrAccIdSet.add(eachCase.accountId);
                 acrConIdSet.add(eachCase.contactId);
             }
@@ -108,6 +108,14 @@ public class NSP_CaseTriggerHelper {
                 assetpopulationCategoryIdSet.add(eachcase.NSP_Category__c);
                 assetpopulationSubCategoryIdSet.add(eachcase.NSP_SubCategory__c);
             }
+
+            // Added as part of usrsty-247918
+            if(eachcase.RecordTypeId == PEO_RECORDTYPEID && eachcase.NSP_Assigned_Queue__c == RET_NSPHardship_QUEUE){
+                if(String.isBlank(eachcase.NSP_Category__c) && String.isBlank(eachcase.NSP_SubCategory__c)){
+                    eachcase.NSp_Category__c = 'Retirement Svc-Processing';
+                    eachcase.NSP_SubCategory__c = 'Hardship';
+                }
+            }
             
             if(String.isNotBlank(eachcase.NSP_Category__c) && String.isNotBlank(eachcase.NSP_SubCategory__c)){
                 categorySet.add(eachCase.NSP_Category__c);
@@ -117,11 +125,11 @@ public class NSP_CaseTriggerHelper {
             if(String.isNotBlank(eachcase.NSP_Topic__c) ){
                 eachcase.Origin = 'Inbox Email';
             }
+            if(eachCase.RecordTypeId==bpsRecordTypeId && eachCase.NSP_Level_2__c && eachCase.NSP_Level_2_Assigned_Date__c==NULL){
+                eachCase.NSP_Level_2_Assigned_Date__c = System.now();
+            }
         }
         
-        if(sAssetIds.size() > 0){
-            performAssetValidation(lAssetCases,sAssetIds);
-        }
         if(findContactMap.size()>0){
             findWebContact(findContactMap);
         }
@@ -140,7 +148,7 @@ public class NSP_CaseTriggerHelper {
         }
         
         //STY-03784
-        if(!acrAccIdSet.isEmpty() && !acrConIdSet.isEmpty()){
+        if(!acrConIdSet.isEmpty()){
             NSP_CorporateEmployeeCheck.stampCorporateEmployeeEECheckbox(acrAccIdSet, acrConIdSet, newList, false);
         }
         //STY-01785 mapping of NSP_CQA_Severity__c based on NSP_CQA_Resulting_Severity__c
@@ -213,20 +221,6 @@ public class NSP_CaseTriggerHelper {
             updateCaseOwnerList.add(eachCase) ;
         }
     }
-    
-    
-    /*
-Description: If Case Account is not equal to Asset Id , show Error
-*/
-    public void performAssetValidation(List<Case> lCases, Set<Id> sAssetIds){
-        Map<Id,Asset> mAssets = new Map<Id,Asset>([SELECT Id,AccountId FROM Asset WHERE Id in: sAssetIds]);
-        for(Case oCase : lCases){
-            if(mAssets.get(oCase.AssetId).AccountId != oCase.AccountId){
-                oCase.addError('Asset needs to related to the selected account');
-            }
-        }
-    }
-    
     
     /* Description : This will update the owner of Case to escalations queue
 when L2 is set to true 
@@ -324,6 +318,7 @@ Date        : 30/09/2021
 *                
 */
     public void beforeUpdateDirector(Map<Id, Case> caseNewMap, Map<Id, Case> caseOldMap){
+        BusinessHours defaultBusinessHours = [SELECT ID FROM BusinessHours WHERE IsDefault=true];
         queueMap =  new Map<Id, Group> ([SELECT Id,DeveloperName, Name FROM Group WHERE Id != null]);
         closedCaseLst = new List<Case>();
         List<Case> escalationCaseList = new List<Case>();
@@ -346,6 +341,8 @@ Date        : 30/09/2021
         Set<String> categorySet = new Set<String>();
         Set<String> subCategorySet = new Set<String>();
         List<Case> inProgressCaseList = new List<Case>();
+        Set<Id> acrConIdSet = new Set<Id>();
+        Set<Id> acrAccIdSet = new Set<Id>();
         for(Case eachCase : caseNewMap.values()) {
             
             eachCase = updateFLSACaseDetails(eachCase,caseOldMap);
@@ -356,6 +353,12 @@ Date        : 30/09/2021
             eachCase = recordOwnerAssingedDateTime(eachCase,caseOldMap);
             // enable Juck checkbox will change the case status to Cancelled
             eachCase = markJunkCase(eachCase);
+
+            if(isCorpEE(eachCase, caseOldMap.get(eachCase.Id))){
+                acrConIdSet.add(eachCase.contactId);
+                acrAccIdSet.add(eachCase.AccountId);
+            }
+
             if(eachCase.NSP_SalesOffice__c != null && eachCase.NSP_SalesOffice__c != caseOldMap.get(eachCase.Id).NSP_SalesOffice__c) {
                 eachCase.NSP_SalesOffice__c = salesOfficePicklistValues.containsKey(eachCase.NSP_SalesOffice__c) ? salesOfficePicklistValues.get(eachCase.NSP_SalesOffice__c) : eachCase.NSP_SalesOffice__c;
             }
@@ -434,9 +437,48 @@ Date        : 30/09/2021
                    categorySet.add(eachCase.NSP_Category__c);
                    subCategorySet.add(eachCase.NSP_SubCategory__c);
                    confidentailEligilbleList.add(eachCase);
-               }
+            }
+            Id oldOwnerId = caseOldMap.get(eachCase.Id).OwnerId;
+            Id newOwnerId = eachCase.OwnerId;
+            if(eachCase.RecordTypeId==bpsRecordTypeId && eachCase.NSP_Level_2__c){
+                if ( ( newOwnerId.getSobjectType() != Schema.User.SObjectType )
+                    && ( eachCase.NSP_Level_2_Assigned_Date__c == null )
+                    )
+                {
+                    eachCase.NSP_Level_2_Assigned_Date__c = System.now();
+                } else if ( ( newOwnerId != oldOwnerId )
+                    && ( oldOwnerId.getSobjectType() != Schema.User.SObjectType )
+                    && ( newOwnerId.getSobjectType() == Schema.User.SObjectType )
+                    && ( eachCase.NSP_First_Level2_Assigned_Duration__c == null )
+                    && ( eachCase.NSP_Level_2_Assigned_Date__c != null )
+                    )
+                {
+                    eachCase.NSP_First_Level2_Assigned_Duration__c = calculateTimeDifferenceInMin(
+                        defaultBusinessHours.Id ,
+                        eachCase.NSP_Level_2_Assigned_Date__c ,
+                        System.Now()
+                    );
+                    eachCase.NSP_Level_2_Assigned_Date__c = System.now();
+                }
+                if ( ( caseOldMap.get(eachCase.Id).NSP_First_Level2_Reply_Date__c == null )
+                    && ( eachCase.NSP_First_Level2_Reply_Date__c != null )
+                    && ( eachCase.NSP_Level_2_Assigned_Date__c != null )
+                    )
+                {
+                    eachCase.NSP_First_Level2_Reply_Duration__c = calculateTimeDifferenceInMin(
+                        defaultBusinessHours.Id ,
+                        eachCase.NSP_Level_2_Assigned_Date__c ,
+                        eachCase.NSP_First_Level2_Reply_Date__c
+                    );
+                }
+            }
         }
         
+        //Bug-237020 Logic to check or uncheck Corporate EE flag on Case update.
+        if(!acrConIdSet.isEmpty() && !acrAccIdSet.isEmpty()){
+            NSP_CorporateEmployeeCheck.stampCorporateEmployeeEECheckbox(acrAccIdSet, acrConIdSet, caseNewMap.values(), false);
+        }
+                
         if(escalationCaseList.size()>0){
             updateCaseOwnerWhenL2IsTrue(escalationCaseList);
         } 
@@ -487,6 +529,19 @@ Date        : 30/09/2021
             updateInProgressTime(caseOldMap,inProgressCaseList);
         }
     }     
+
+    /**
+* @MethodName: isCorpEE
+* @Description:  This method determines wheather a contact qualifies for Corporate EE or not
+* @param : Case eachCase
+* @createdDate : 10/25/2023
+* @Story : Bug 237020
+* @return Boolean                         
+*/ 
+    private Boolean isCorpEE(Case eachCase, Case oldCase){
+        return String.isNotBlank(eachCase.contactId) && eachCase.recordTypeId == PEO_RECORDTYPEID;            
+    }
+
     /**
 * @MethodName: checkAccessToUpdatePrivateField
 * @Description:  This method describes about of NSP_Private__c checkbox based on the user access and Category.
@@ -658,13 +713,16 @@ Date        : 30/09/2021
                    }
                 /*STY-02804  ends*/
                 
-                /*Added as part of STY-03256 */
-                if(oCase.recordTypeId == PEO_RECORDTYPEID &&
-                   oCase.OwnerId == healthAndProductsGrpId && 
-                   oCase.Subject.StartsWith(NSP_ServiceConstants.SUBJECT7) &&
-                   String.isNotBlank(oCase.NSP_Implementation_Profile__c)){
-                       iPIdSet.add(oCase.NSP_Implementation_Profile__c);
-                   }
+                // Added as part of STY-03256
+                if ( ( oCase.recordTypeId == PEO_RECORDTYPEID )
+                    && ( oCase.OwnerId == healthAndProductsGrpId )
+                    && String.isNotBlank( oCase.Subject )
+                    && oCase.Subject.startsWith( NSP_ServiceConstants.SUBJECT7 )
+                    && String.isNotBlank( oCase.NSP_Implementation_Profile__c )
+                    )
+                {
+                    iPIdSet.add( oCase.NSP_Implementation_Profile__c );
+                }
                 /*Added as part of STY-03256 */
                 if(String.isNotBlank(oCase.ContactId)){
                     caseIdSet.add(oCase.Id);
@@ -770,12 +828,15 @@ Date        : 30/09/2021
         if(!cseConList.isEmpty()){
             try{
                 Database.insert(cseConList);
-            }catch (Exception ex) {
-                NSP_ErrorLogHandler.logSaveException(NSP_CASETRIGGERHELPER, 'createCaseContact', ex.getMessage());
+            } catch ( Exception e ) {
+                NSP_CaseTriggerHelper.handleException(
+                    e ,
+                    'createCaseContact'
+                );
             }
         }
     }
-    
+
     private void createTimeEntryTask(List<Case> lCases){
         
         Set<String> sTypes = new Set<String>();
@@ -903,14 +964,17 @@ Date        : 30/09/2021
                && reassignrecTypeIds.contains(eachCase.RecordTypeId)){
                    ownerChnagedCases.add(eachCase.Id);
                }
-            
+
             /*Added as part of STY-02181*/
-            if(caseOldMap.get(eachCase.Id).Status != eachCase.Status
-               && eachCase.Status == NSP_ServiceConstants.CASE_CLOSED_STATUS 
-               && eachCase.Subject.contains(NSP_ServiceConstants.HCM_CASE_SUBJECT)){
-                   hcmCaseList.add(eachCase);
-               }
-            
+            if ( ( caseOldMap.get( eachCase.Id ).Status != eachCase.Status )
+                && ( eachCase.Status == NSP_ServiceConstants.CASE_CLOSED_STATUS )
+                && String.isNotBlank( eachCase.Subject )
+                && eachCase.Subject.contains( NSP_ServiceConstants.HCM_CASE_SUBJECT )
+                )
+            {
+                hcmCaseList.add( eachCase );
+            }
+
             /*Added as part of STY-00762*/
             if(caseOldMap.get(eachCase.Id).NSP_Detail__c != eachCase.NSP_Detail__c
                && eachCase.NSP_Category__c == NSP_ServiceConstants.CASE_CATEGORY_SERVICE_OPERATIONS
@@ -936,20 +1000,28 @@ Date        : 30/09/2021
                && eachCase.NSP_Case_Sub_Status__c == NSP_ServiceConstants.CASE_SUB_STATUS_WIRE_MIGRATION_COMPLETE){
                    migrationCompleteCaseList.add(eachCase);
                }
-            
+
             //As a part of STY-02183
-            if(eachCase.Status == NSP_ServiceConstants.CASE_CLOSED_STATUS && 
-               eachCase.NSP_Is_Case_Closed__c && !caseOldMap.get(eachCase.Id).NSP_Is_Case_Closed__c && 
-               eachCase.Subject.contains(NSP_ServiceConstants.BANK_AUDIT_CASE_SUBJECT)){
-                   bankAuditCaseList.add(eachCase);
-               }
-            
+            if ( ( eachCase.Status == NSP_ServiceConstants.CASE_CLOSED_STATUS )
+                && eachCase.NSP_Is_Case_Closed__c
+                && !caseOldMap.get( eachCase.Id ).NSP_Is_Case_Closed__c
+                && String.isNotBlank( eachCase.Subject )
+                && eachCase.Subject.contains( NSP_ServiceConstants.BANK_AUDIT_CASE_SUBJECT )
+                )
+            {
+                bankAuditCaseList.add( eachCase );
+            }
+
             //As a part of STY-02182
-            if(eachCase.Status == NSP_ServiceConstants.CASE_CLOSED_STATUS && 
-               eachCase.Status != caseOldMap.get(eachCase.Id).Status && 
-               eachCase.Subject.contains(NSP_ServiceConstants.FIRST_LIVE_PAYROLL_CASE_SUB)){
-                   firstPayrollCaseList.add(eachCase);
-               }
+            if ( ( eachCase.Status == NSP_ServiceConstants.CASE_CLOSED_STATUS )
+                && ( eachCase.Status != caseOldMap.get( eachCase.Id ).Status )
+                && String.isNotBlank( eachCase.Subject )
+                && eachCase.Subject.contains( NSP_ServiceConstants.FIRST_LIVE_PAYROLL_CASE_SUB )
+                )
+            {
+                firstPayrollCaseList.add( eachCase );
+            }
+
             //Added as part of STY-03638
             if(caseOldMap.get(eachCase.Id).Type != eachCase.Type 
                && caseOldMap.get(eachCase.Id).RecordTypeId == bpsRecordTypeId
@@ -1120,13 +1192,14 @@ createdDate : 6/13/2023
 
             cse.NSP_SubCategory__c = isInsert && cse.NSP_Category__c == NSP_ServiceConstants.FLSA_CATEGORY && cse.NSP_SubCategory__c == NSP_ServiceConstants.SUBCATEGORY_NOT_ON_UI ? '' : cse.NSP_SubCategory__c;
             }
-        }catch(Exception excep){
-            NSP_ErrorLogHandler.logSaveException(NSP_CASETRIGGERHELPER,'autoPopulateAsset',excep.getMessage());
+        } catch( Exception e ) {
+            NSP_CaseTriggerHelper.handleException(
+                e ,
+                'autoPopulateAsset'
+            );
         }
-        
     }
-    
-    
+
     /* update contact support role from ACR 
 * parameter : list of cases
 */
@@ -1312,11 +1385,14 @@ created case will be updated to cancelled.
             if (!restoreOwnerList.isEmpty()) {
                 database.update(restoreOwnerList);
             }
-        }catch (exception ex) {
-            NSP_ErrorLogHandler.logSaveException(NSP_CASETRIGGERHELPER, 'reassignActivitiesOwner', ex.getMessage());
-        } 
+        } catch ( Exception e ) {
+            NSP_CaseTriggerHelper.handleException(
+                e ,
+                'reassignActivitiesOwner'
+            );
+        }
     }
-    
+
     /**
 * @MethodName: getReassignRecordTypeIds
 * @Description: This method is used to get Reassign recordtype Ids
@@ -1336,12 +1412,15 @@ created case will be updated to cancelled.
                                         AND Name IN: reassignRecTypes]){
                                             reassignRecTypeIds.add(cRecTypes.Id);
                                         }
-        }catch (exception ex) {
-            NSP_ErrorLogHandler.logSaveException(NSP_CASETRIGGERHELPER, 'getReassignRecordTypeIds', ex.getMessage());
-        } 
+        } catch ( Exception e ) {
+            NSP_CaseTriggerHelper.handleException(
+                e ,
+                'getReassignRecordTypeIds'
+            );
+        }
         return reassignRecTypeIds;
     }
-    
+
     /**
 * @MethodName: sendHCMCaseCompletionMail
 * @Description: This method will send email when iSolved HCM Case status is complete
@@ -1376,11 +1455,35 @@ created case will be updated to cancelled.
                                        email.setSaveAsActivity(false);
                                        emailList.add(email);
                                    }
-            if(emailList.size() > 0){
-                Messaging.sendEmail(emailList);
+            if ( emailList.size() > 0 ) {
+                NSP_CaseTriggerHelper.sendSingleEmailMessages( emailList );
             }
         }
     }
+
+    private static void sendSingleEmailMessages( List<Messaging.SingleEmailMessage> messages ) {
+        if ( ( messages != null ) && !messages.isEmpty() ) {
+            try {
+                Messaging.sendEmail( messages );
+            } catch ( Exception e ) {
+                NSP_CaseTriggerHelper.handleException(
+                    e ,
+                    'sendSingleEmailMessages'
+                );
+            }
+        }
+    }
+
+    private static void handleException( Exception e , String methodName ) {
+        if ( e != null ) {
+            NSP_ErrorLogHandler.logSaveException(
+                NSP_CaseTriggerHelper.class.getName() ,
+                methodName ,
+                e.getMessage() + ' ~ ' + e.getStackTraceString()
+            );
+        }
+    }
+
     /***********************************************************************************************
 * MethodName  : caseCloseForFirstTime
 * Description : This Method updated the NSP_Is_Case_Closed__c checkbox on Case
@@ -1392,8 +1495,11 @@ created case will be updated to cancelled.
             for(Case caseRec: caseList){
                 caseRec.NSP_Is_Case_Closed__c = true;
             }
-        }catch(Exception ex ){
-            NSP_ErrorLogHandler.logSaveException(NSP_CASETRIGGERHELPER, 'beforeUpdate', ex.getMessage());
+        } catch ( Exception e ){
+            NSP_CaseTriggerHelper.handleException(
+                e ,
+                'caseCloseForFirstTime'
+            );
         }
     }
     
@@ -1427,9 +1533,8 @@ created case will be updated to cancelled.
                 email.setSaveAsActivity(false);
                 lstEmailMessages.add(email);
             }
-        if(!lstEmailMessages.isEmpty() && !Test.isRunningTest()){
-            //send email alert
-            Messaging.sendEmail(lstEmailMessages);
+        if ( !lstEmailMessages.isEmpty() && !Test.isRunningTest() ) {
+            NSP_CaseTriggerHelper.sendSingleEmailMessages( lstEmailMessages );
         }
     }
     
@@ -1458,9 +1563,8 @@ created case will be updated to cancelled.
             email.setSaveAsActivity(false);
             lstEmailMessages.add(email);
         }
-        if(!lstEmailMessages.isEmpty() && !Test.isRunningTest()){
-            //send email alert
-            Messaging.sendEmail(lstEmailMessages);
+        if ( !lstEmailMessages.isEmpty() && !Test.isRunningTest() ) {
+            NSP_CaseTriggerHelper.sendSingleEmailMessages( lstEmailMessages );
         }     
     }
     
@@ -1479,9 +1583,12 @@ created case will be updated to cancelled.
             for(Case caseRec : caseList){
                 bpsCaseUpdateFieldMapping(caseRec);
             }
-        }catch(Exception ex){
-            NSP_ErrorLogHandler.logSaveException(NSP_CASETRIGGERHELPER, 'bpsCaseUpdateForNonInsperityEmployeeType', ex.getMessage());
-        }       
+        } catch( Exception e ) {
+            NSP_CaseTriggerHelper.handleException(
+                e ,
+                'bpsCaseUpdateForNonInsperityEmployeeType'
+            );
+        }
     }
     
     /***********************************************************************
@@ -1613,10 +1720,14 @@ created case will be updated to cancelled.
                 //Send mail 
                 NSP_GenericEmailUtility.sendSingleEmailMessages(emailMessageList,false);
             }
-        }catch (Exception ex) {
-            NSP_ErrorLogHandler.logSaveException(NSP_CASETRIGGERHELPER, 'sendEmailToProjectImplementor', ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_CaseTriggerHelper.handleException(
+                e ,
+                'sendEmailToProjectImplementor'
+            );
         }
     }
+
     /**********************************************************************************************
 * MethodName: updateParentItaCqaCase 
 * Description : This method describes about the updation of parent NSP_CQA_Severity__c with the highest level of the child NSP_CQA_Severity__c
@@ -1657,13 +1768,21 @@ created case will be updated to cancelled.
                 if(!pCaseList.isEmpty()){
                     //updating Parent Case
                     List<Database.SaveResult> results = Database.update(pCaseList, false);
-                    NSP_ErrorLogHandler.logSaveResult(NSP_CASETRIGGERHELPER, 'updateParentItaCqaCase', results );
+                    NSP_ErrorLogHandler.logSaveResult(
+                        NSP_CaseTriggerHelper.class.getName() ,
+                        'updateParentItaCqaCase' ,
+                        results
+                    );
                 }
             }
-        }catch (Exception ex) {
-            NSP_ErrorLogHandler.logSaveException(NSP_CASETRIGGERHELPER, 'updateParentItaCqaCase', ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_CaseTriggerHelper.handleException(
+                e ,
+                'updateParentItaCqaCase'
+            );
         }
     }
+
     /**********************************************************************************************
 MethodName: updatePrentItaCqaCaseStatus 
 Description : This method describes about the updation of parent ITA CQA Case Status when the all the child case status is closed
@@ -1693,13 +1812,21 @@ Story:        STY-01785
                 }
                 if(!cseListToUpdate.isEmpty()){
                     List<Database.SaveResult> results = Database.update(cseListToUpdate, false);
-                    NSP_ErrorLogHandler.logSaveResult(NSP_CASETRIGGERHELPER, 'updatePrentItaCqaCaseStatus', results );    
+                    NSP_ErrorLogHandler.logSaveResult(
+                        NSP_CaseTriggerHelper.class.getName() ,
+                        'updatePrentItaCqaCaseStatus' ,
+                        results
+                    );
                 }
             }
-        }catch (Exception ex) {
-            NSP_ErrorLogHandler.logSaveException(NSP_CASETRIGGERHELPER, 'updatePrentItaCqaCaseStatus', ex.getMessage());
-        }        
+        } catch ( Exception e ) {
+            NSP_CaseTriggerHelper.handleException(
+                e ,
+                'updatePrentItaCqaCaseStatus'
+            );
+        }
     }
+
     /**********************************************************************************************
 MethodName: reOpenParentItaCqaCase 
 Description : This method describes about the updation of parent ITA CQA Case Status when any one of the child case is re-opened
@@ -1717,13 +1844,20 @@ Story:        STY-01785
             }
             if(!pCseListToUpdate.isEmpty()){
                 List<Database.SaveResult> results = Database.update(pCseListToUpdate, false);
-                NSP_ErrorLogHandler.logSaveResult(NSP_CASETRIGGERHELPER, 'reOpenParentItaCqaCase', results );                
+                NSP_ErrorLogHandler.logSaveResult(
+                    NSP_CaseTriggerHelper.class.getName() ,
+                    'reOpenParentItaCqaCase' ,
+                    results
+                );
             }
-        }catch (Exception ex) {
-            NSP_ErrorLogHandler.logSaveException(NSP_CASETRIGGERHELPER, 'reOpenParentItaCqaCase', ex.getMessage());
-        }        
+        } catch ( Exception e ) {
+            NSP_CaseTriggerHelper.handleException(
+                e ,
+                'reOpenParentItaCqaCase'
+            );
+        }
     }
-    
+
     public void createCaseHistory(Map<Id, Case> oldMap, Map<Id, Case> newMap) {
         if(oldMap.isEmpty()) {
             List<NSP_Case_History__c> newCaseHistoryToBeCreatedList = new List<NSP_Case_History__c>();
@@ -1920,39 +2054,46 @@ Story:        STY-01785
                     if(isStatus){
                         historyRecord.NSP_Status_Duration__c += timeToAdd;
                     }
-                    if(isQueue){
-                        string grpOwner;
+                    if ( isQueue ) {
                         List<String> grpFields = new List<String>{'Id', 'Name', 'DeveloperName'};
-                        String grpQuery = new NSP_QueryBuilder('Group', grpFields)
-                            				.addFilter('Name', historyRecord.NSP_Case_Current_Owner_Text__c).build();
-                        List<Group> queueList = Database.query(grpQuery);
-                        if(!queueList.isEmpty()){
-                        grpOwner = queueList[0].DeveloperName;
-                            if(grpOwner == NSP_ReportingConstants.Time_H_W_B_P_C_Queue){
-                        		historyRecord.Time_H_W_B_P_C_Queue__c +=  timeToAdd;
-                            }
-                            else if(grpOwner == NSP_ReportingConstants.Time_H_W_Communications_Queue){
-                        		historyRecord.Time_H_W_Communications_Queue_Spent__c +=  timeToAdd;
-                            }
-                            else if(grpOwner == NSP_ReportingConstants.Time_Health_Welfare_Products_Queue){
-                        		historyRecord.Time_Health_Welfare_Products_Queue__c +=  timeToAdd;
-                            }
-                            else{
-                        		historyRecord.NSP_Time_in_Queue__c  +=  timeToAdd;
+                        String grpQuery = new NSP_QueryBuilder( 'Group' , grpFields )
+                            .addFilter( 'Name' , historyRecord.NSP_Case_Current_Owner_Text__c )
+                            .build()
+                            ;
+                        List<Group> queueList = null;
+                        try {
+                            queueList = Database.query( grpQuery ); // throws...  System.QueryException: mismatched character '' expecting '''
+                        } catch ( Exception e ) {
+                            NSP_CaseTriggerHelper.handleException(
+                                e ,
+                                'createCaseHistory'
+                            );
+                        }
+                        if ( ( queueList != null ) && !queueList.isEmpty() ) {
+                            String grpOwner = queueList[0].DeveloperName;
+                            if ( grpOwner == NSP_ReportingConstants.Time_H_W_B_P_C_Queue ) {
+                                historyRecord.Time_H_W_B_P_C_Queue__c += timeToAdd;
+                            } else if ( grpOwner == NSP_ReportingConstants.Time_H_W_Communications_Queue ) {
+                                historyRecord.Time_H_W_Communications_Queue_Spent__c += timeToAdd;
+                            } else if ( grpOwner == NSP_ReportingConstants.Time_Health_Welfare_Products_Queue ) {
+                                historyRecord.Time_Health_Welfare_Products_Queue__c += timeToAdd;
+                            } else {
+                                historyRecord.NSP_Time_in_Queue__c  += timeToAdd;
                             }
                         }
                     }
-                    if(isUser){
+                    if ( isUser ) {
                         historyRecord.NSP_Time_Individual_Spent__c += timeToAdd;
                     }
-                    newCaseHistoryToBeCreatedList.add(historyRecord);
+                    newCaseHistoryToBeCreatedList.add( historyRecord );
                 }
-                if(!newCaseHistoryToBeCreatedList.isEmpty()) {
-                    upsert newCaseHistoryToBeCreatedList; // try catch capture error logs 
+                if ( !newCaseHistoryToBeCreatedList.isEmpty() ) {
+                    upsert newCaseHistoryToBeCreatedList; // try catch capture error logs
                 }
             }
-        } 
+        }
     }
+
     /**********************************************************************************************
 MethodName: calculateTimeDifference 
 Description : This method calculates Time Difference including the business hours and holidays
@@ -1963,6 +2104,20 @@ Params:       String businessHoursId, DateTime startDate, DateTime endDate
         Decimal mins = timeDifference / 60000;
         Decimal hours = mins/60;//Time spent in Hours
         return hours.setscale(2);
+    }
+ /**********************************************************************************************
+MethodName: calculateTimeDifferenceInMin 
+Description : This method calculates Time Difference including the business hours and holidays
+Params:       String businessHoursId, DateTime startDate, DateTime endDate
+********************************************************************************************/    
+    public Decimal calculateTimeDifferenceInMin(String businessHoursId, DateTime startDate, DateTime endDate) {
+        Decimal mins = 0.0;
+        if ( ( businessHoursId != null ) && ( startDate != null ) && ( endDate != null ) ) {
+            Long timeDifference = BusinessHours.diff(businessHoursId, startDate, endDate);
+            decimal seconds =  timeDifference/1000;
+            mins = (seconds / 60).setscale(2);
+        }
+        return mins;
     }
     
     // states with code and country variable
@@ -1994,7 +2149,11 @@ Created by : Harsha Khiroya
         }
         if(!updatedContactList.isEmpty()){
             List<Database.SaveResult> results = Database.update(updatedContactList, false);
-            NSP_ErrorLogHandler.logSaveResult(NSP_CASETRIGGERHELPER, 'UpdateServiceRequestChannel', results );
+            NSP_ErrorLogHandler.logSaveResult(
+                NSP_CaseTriggerHelper.class.getName() ,
+                'UpdateServiceRequestChannel' ,
+                results
+            );
         }
         
     }
@@ -2026,13 +2185,15 @@ Story:        STY-4166
 createdDate : 6/12/2023
 ********************************************************************************************/
     private static void checkTheEligibiltyOfConfidentiality(Set<String> categorySet, Set<String> subCategorySet, List<case> caseList){
+        Map<string, Boolean> catSubCatDefaultConfidentialEligibleMap = new Map<string, Boolean>();
         Map<string, Boolean> catSubCatConfidentialEligibleMap = new Map<string, Boolean>();
         Map<string, Boolean> catSubCatDetailConfidentialEligibleMap = new Map<string, Boolean>();
         try{           
             for(NSP_Category_Sub_Category_Mapping__c catSubCatMapping : [SELECT Id, NSP_Category__c, NSP_Subcategory__c, 
                                                                          NSP_Public_Groups_To_Share__c,
                                                                          NSP_Detail__c,
-                                                                         NSP_Display_confidential_popup__c
+                                                                         NSP_Display_confidential_popup__c,
+                                                                         Default_case_as_confidential__c
                                                                          FROM NSP_Category_Sub_Category_Mapping__c 
                                                                          WHERE NSP_Category__c IN: categorySet 
                                                                          AND NSP_Subcategory__c IN: subCategorySet]){
@@ -2043,6 +2204,10 @@ createdDate : 6/12/2023
                                                                              catSubCatConfidentialEligibleMap.put(
                                                                                  catSubCatMapping.NSP_Category__c+';'+catSubCatMapping.NSP_Subcategory__c,
                                                                                  catSubCatMapping.NSP_Display_confidential_popup__c
+                                                                             );
+                                                                             catSubCatDefaultConfidentialEligibleMap.put(
+                                                                                 catSubCatMapping.NSP_Category__c+';'+catSubCatMapping.NSP_Subcategory__c,
+                                                                                 catSubCatMapping.Default_case_as_confidential__c
                                                                              );
                                                                          }
     
@@ -2055,8 +2220,14 @@ createdDate : 6/12/2023
                 }else{
                     if(String.isNotBlank(cse.NSP_Detail__c)){
                         cse.NSP_Show_Confidential_Checkbox__c = catSubCatDetailConfidentialEligibleMap.containsKey(detailKey) ? catSubCatDetailConfidentialEligibleMap.get(detailKey) : false;
-                    }else if(catSubCatConfidentialEligibleMap.containsKey(catSubCatKey)){
-                        cse.NSP_Show_Confidential_Checkbox__c = catSubCatConfidentialEligibleMap.get(catSubCatKey);
+                    }else if(catSubCatConfidentialEligibleMap.containsKey(catSubCatKey)){ 
+                        cse.NSP_Show_Confidential_Checkbox__c = false;
+                        if(catSubCatConfidentialEligibleMap.get(catSubCatKey) || catSubCatDefaultConfidentialEligibleMap.get(catSubCatKey)){
+                            cse.NSP_Show_Confidential_Checkbox__c = true;
+                        }
+                        if(catSubCatDefaultConfidentialEligibleMap.get(catSubCatKey) && !catSubCatConfidentialEligibleMap.get(catSubCatKey)){
+                            cse.NSP_Confidential__c = true;
+                        }
                     }else{
                         cse.NSP_Show_Confidential_Checkbox__c = false;
                     }
@@ -2066,9 +2237,12 @@ createdDate : 6/12/2023
                     }
                 }
             }
-        }catch (Exception ex) {
-            NSP_ErrorLogHandler.logSaveException(NSP_CASETRIGGERHELPER, 'checkTheEligibiltyOfConfidentiality', ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_CaseTriggerHelper.handleException(
+                e ,
+                'checkTheEligibiltyOfConfidentiality'
+            );
         }
     }
-
 }
+//

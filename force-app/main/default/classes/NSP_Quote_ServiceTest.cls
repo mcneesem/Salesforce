@@ -12,7 +12,7 @@ public without sharing class NSP_Quote_ServiceTest {
         Id partnerRecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('NSP_Partner_Client').getRecordTypeId();
         accoutObject.Name = 'Test Account';
         accoutObject.recordTypeId=partnerRecordTypeId;
-        accoutObject.DNBoptimizer__DNB_D_U_N_S_Number__c = '876543987';
+        accoutObject.DNB_Connect_DUNS_Number__c = '876543987';
         //Inserting account object
         insert accoutObject;
         

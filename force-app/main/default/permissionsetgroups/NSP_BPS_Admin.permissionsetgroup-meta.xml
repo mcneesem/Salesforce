@@ -3,16 +3,23 @@
     <description>This permission set group is created as part of STY-02427.</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>BPS Admin</label>
+    <permissionSets>Account_Create</permissionSets>
     <permissionSets>BPS</permissionSets>
+    <permissionSets>Bypass_Task_Event_Cancelled_Status</permissionSets>
     <permissionSets>Contact_View_All</permissionSets>
+    <permissionSets>Convert_Leads</permissionSets>
+    <permissionSets>Lead_Create</permissionSets>
     <permissionSets>List_View_Enhanced_Access</permissionSets>
+    <permissionSets>Multi_Factor_Authentication_for_User_Interface_Logins</permissionSets>
     <permissionSets>NSPSteelBrickCPQUser</permissionSets>
     <permissionSets>NSP_Main_Service_Contacts</permissionSets>
     <permissionSets>Opportunity_Bypass_Entry_Exit_Criteria_to_DocuSign_and_CPQ</permissionSets>
     <permissionSets>Report_export_and_print_access</permissionSets>
-    <permissionSets>Sales_Service_Object_Permission</permissionSets>
     <permissionSets>SBQQ__SalesforceCPQUserAccess</permissionSets>
     <permissionSets>SBQQ__SteelBrickCPQUser</permissionSets>
+    <permissionSets>Sales_Service_Object_Permission</permissionSets>
+    <permissionSets>force__PipelineInspectionIncluded</permissionSets>
+    <permissionSets>pse__PSAProjectManagementCreateProjectFromTemplate</permissionSets>
     <permissionSets>sbaa__AdvancedApprovalsUser</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>

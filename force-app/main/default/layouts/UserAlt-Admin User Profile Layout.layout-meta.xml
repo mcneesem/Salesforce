@@ -14,6 +14,14 @@
                 <behavior>Edit</behavior>
                 <field>ManagerId</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>NSP_Sales_Number__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Current_Tier_Level__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -119,6 +127,10 @@
                 <behavior>Edit</behavior>
                 <field>AboutMe</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Custom_Email_Signature__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>OneColumn</style>
     </layoutSections>
@@ -142,7 +154,12 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>NSP_Tier_Number__c</fields>
+        <fields>NSP_Tier_Start_Date__c</fields>
+        <fields>NSP_Tier_End_Date__c</fields>
         <relatedList>NSP_Tier_Tracking__c.NSP_User__c</relatedList>
+        <sortField>NSP_Tier_End_Date__c</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <relatedList>RelatedFileList</relatedList>

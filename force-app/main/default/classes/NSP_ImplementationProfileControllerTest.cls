@@ -155,7 +155,7 @@ public class NSP_ImplementationProfileControllerTest {
     * @Description: This test method is used to cover getEmpDetailsByQuestions method
     * @Created date: 08/16/2022.
     * @return void
-	*/ 
+    */ 
     @IsTest
     static void getEmpDetailsByQuestionsWhenIPRecIdIsNullReturnsEmptyMap(){
         // GIVEN
@@ -206,17 +206,32 @@ public class NSP_ImplementationProfileControllerTest {
     * @return void
     */
     @isTest
-    static void callingMethodToCopyIpRecordsData(){
-        Implementation_Profile__c getIpRecords = [SELECT Id, Name, NSP_EE_Name__c FROM Implementation_Profile__c WHERE Id!=null LIMIT 1 ];
+    static void copyIpRecordsData_verifyUpdatedIp(){
+        // GIVEN
+        Implementation_Profile__c getIpRecords = [SELECT Id, Name, NSP_EE_Name__c FROM Implementation_Profile__c WHERE Id!=null LIMIT 1];
         List<String> ipRecords = new List<String>();
         ipRecords.add(getIpRecords.Id);
+
         Map<String, String> fieldValues = new Map<String, String>{};
-            fieldValues.put('Payroll_general_notes__c', TEST_STR);
+        fieldValues.put('Payroll_general_notes__c', TEST_STR);
         fieldValues.put('NSP_EE_Name__c', TEST_STR);
+
+        Map<String, String> config = new Map<String, String>();
+        config.put('fieldValues', JSON.serialize(fieldValues));
+        config.put('recType', 'MM');
+        config.put('userEmail', 'test@test.com');
+        config.put('postUpsertRecords', JSON.serialize(new List<String>() ));
+
+        // WHEN
         Test.startTest();
-        NSP_ImplementationProfileController.copyIpRecordData(ipRecords, JSON.serialize(fieldValues), null, 'MM', 'test@test.com');
+        NSP_ImplementationProfileController.copyIpRecordData(ipRecords, config);
         Test.stopTest();
-        System.assert(ipRecords.size()>0, true);
+
+        Implementation_Profile__c updatedIpRecord = [SELECT Id, Name, NSP_EE_Name__c, Payroll_general_notes__c FROM Implementation_Profile__c WHERE Id = :getIpRecords.Id];
+
+        // THEN
+        Assert.areEqual(TEST_STR, updatedIpRecord.Payroll_general_notes__c, 'Payroll general notes field not updated correctly');
+        Assert.areEqual(TEST_STR, updatedIpRecord.NSP_EE_Name__c, 'EE Name field not updated correctly');
     }
 
     /**
@@ -448,7 +463,7 @@ public class NSP_ImplementationProfileControllerTest {
         insert ipAddClientConRecord;
         
         Test.startTest();
-        	Map<String, List<Id>> relatedRecordMap = NSP_ImplementationProfileController.getIPRelatedRecords(oIProfile.Id);
+        Map<String, List<Id>> relatedRecordMap = NSP_ImplementationProfileController.getIPRelatedRecords(oIProfile.Id);
         Test.stopTest();   
         System.assertEquals(1, relatedRecordMap.get('Implementation_Pay_Period__c').size());
         System.assertEquals(2, relatedRecordMap.get('Employee_Orientation__c').size());
@@ -470,7 +485,7 @@ public class NSP_ImplementationProfileControllerTest {
         insert ipRecord;
         
         Test.startTest();
-        	Map<String, List<Id>> relatedRecordMap = NSP_ImplementationProfileController.getIPRelatedRecords(ipRecord.Id);
+        Map<String, List<Id>> relatedRecordMap = NSP_ImplementationProfileController.getIPRelatedRecords(ipRecord.Id);
         Test.stopTest();
         System.assertEquals(0, relatedRecordMap.get('Implementation_Pay_Period__c').size());
         System.assertEquals(0, relatedRecordMap.get('Employee_Orientation__c').size());
@@ -486,5 +501,6 @@ public class NSP_ImplementationProfileControllerTest {
         SObject result = NSP_ImplementationProfileController.getRecordWithAllFields(oIProfile.Id);
 
         System.assertEquals(oIProfile.NSP_EE_Name__c, result.get('NSP_EE_Name__c'));
-}
+    }
+
 }

@@ -17,7 +17,7 @@ public class NSP_AccountTriggerHelperTest {
    private static final String languagekey = 'en_US'; 
    private static final String timezonesidkey = 'America/Los_Angeles';   
    /***********************************************************************************************/    
-    public static final String REFPROG3 = 'referralprogramiii';
+    public static final String REFPROG3 = 'ReferralProgramNationalRevShare';
     public static final String ACCOUNTTEST1 = 'AccountTest1';
     public static final String AccountTestData1= 'AccountTestData1';
     public static final String ACCOUNTTEST = 'AccountTest';
@@ -132,7 +132,7 @@ public class NSP_AccountTriggerHelperTest {
         Id partnerRecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get(PARTNER_CLIENT).getRecordTypeId();
         accoutObject.Name = ACCOUNTTEST1;
         accoutObject.recordTypeId=partnerRecordTypeId;
-        accoutObject.DNBoptimizer__DNB_D_U_N_S_Number__c = '876543987';
+        accoutObject.DNB_Connect_DUNS_Number__c = '876543987';
         insert accoutObject;
             Test.stopTest();
             System.assertEquals(ACCOUNTTEST1, accoutObject.Name);
@@ -154,7 +154,7 @@ public class NSP_AccountTriggerHelperTest {
         for(integer count = 0; count < 5; count++) {
             accountList.add(New Account(Name = ACCOUNTTEST+count, AccountNumber = '0000'+count, recordTypeId=partnerRecordTypeId,BillingState=TEXAS,NumberOfEmployees=150));
         }
-        accountList[0].NSP_Template_Selection__c = REFPROG3;
+        accountList[0].NSP_Template_Selection__c = 'Referral Program Associations';
         accountList[0].NumberOfEmployees = 130;
         accountList[0].NSP_Account_Segment__c = 'Emerging Growth';
         Test.startTest();
@@ -179,7 +179,7 @@ public class NSP_AccountTriggerHelperTest {
         for(integer count = 0; count < 5; count++) {
             accountList.add(New Account(Name = 'AccountTest'+String.valueOf(count), AccountNumber = String.valueOf(count), recordTypeId=partnerRecordTypeId,BillingState=TEXAS,NumberOfEmployees=150));
         }
-        accountList[0].NSP_Template_Selection__c = REFPROG3;
+        accountList[0].NSP_Template_Selection__c = 'Referral Program Associations';
         accountList[0].NumberOfEmployees = 130;
         accountList[0].NSP_Account_Segment__c = 'Emerging Growth';
         // Start Test
@@ -233,9 +233,12 @@ public class NSP_AccountTriggerHelperTest {
 
     @isTest
     static void testAccountUpdate() {
-        AccountTriggerSettings__c settings = AccountTriggerSettings__c.getOrgDefaults();
-        settings.IsEnabledDeleteAccountTeams__c = True;
-        upsert settings;
+
+        PlatformEventSettings__c setting = new PlatformEventSettings__c();
+        setting.IsEnabled_IntegrationAccountEvent__c = true;
+        setting.IsEnabled_IntegrationAccountDeleteEvent__c = true;
+        setting.IsEnabled_IntegrationOpportunityEvent__c = true;
+        upsert setting;
 
         List<Account>  accountList = New List<Account>();
          User salesManagerUser=[Select Id , Name , Email , NSP_Sales_Office__c from User WHERE Email = 'testuser@insperity.com' Limit 1];
@@ -243,7 +246,7 @@ public class NSP_AccountTriggerHelperTest {
             accountList.add(New Account(Name = 'AccountTestData'+String.valueOf(count), AccountNumber = String.valueOf(count), NSP_Ready_for_Integration_Sync__c = TRUE,
                                         NSP_Delete_Account_Teams__c = system.now()));
         }
-        accountList[0].NSP_Template_Selection__c = REFPROG3;
+        accountList[0].NSP_Template_Selection__c = 'Referral Program Associations';
         accountList[0].ownerId = salesManagerUser.Id;
         insert accountList;
         // Added for STP
@@ -267,7 +270,7 @@ public class NSP_AccountTriggerHelperTest {
             accIdSet.add(account.Id);
             account.NSP_Ready_for_Integration_Sync__c = TRUE;
             account.NSP_Account_Status__c = ACTIVE;
-            account.NSP_Template_Selection__c = 'referralProgramAF-I';
+            account.NSP_Template_Selection__c = 'Referral Program Associations';
             account.BillingCity = 'CITY1';  // Added for STP
             accountMapOld.put(account.Id, account);
         }
@@ -318,12 +321,12 @@ public class NSP_AccountTriggerHelperTest {
         for(integer count = 0; count < 5; count++) {
             accountList.add(New Account(Name = ACCOUNTTEST+String.valueOf(count), AccountNumber = String.valueOf(count), NSP_Ready_for_Integration_Sync__c = TRUE));
         }
-        accountList[0].NSP_Template_Selection__c = REFPROG3;
+        accountList[0].NSP_Template_Selection__c = 'Referral Program Associations';
         insert accountList;
         for(Account account1 : accountList) {
             account1.NSP_Ready_for_Integration_Sync__c = FALSE;
             account1.NSP_Account_Status__c = ACTIVE;
-            account1.NSP_Template_Selection__c = 'referralProgramAF-I';
+            account1.NSP_Template_Selection__c = 'Referral Program Associations';
             account1.BillingState = TEXAS;
             accountMapOld.put(account1.Id, account1);
         }
@@ -336,9 +339,6 @@ public class NSP_AccountTriggerHelperTest {
 
     @isTest
     static void testhandleTask() {
-        AccountTriggerSettings__c settings = AccountTriggerSettings__c.getOrgDefaults();
-        settings.IsEnabledDeleteAccountTeams__c = True;
-        upsert settings;
 
         List<Account>  accountList = New List<Account>();
         Map<Id, Account> accountMapOld = new Map<Id, Account>();
@@ -351,21 +351,29 @@ public class NSP_AccountTriggerHelperTest {
         Test.startTest();
         system.runAs(userRecord){
         for(integer count = 0; count < 5; count++) {
-            accountList.add(New Account(Name = ACCOUNTTEST+String.valueOf(count), AccountNumber = String.valueOf(count), NSP_Ready_for_Integration_Sync__c = TRUE,NumberOfEmployees = 100));
+            accountList.add(
+                new Account(
+                    OwnerId=userRecord.Id ,
+                    Name=ACCOUNTTEST+String.valueOf( count ) ,
+                    AccountNumber=String.valueOf( count ) ,
+                    NSP_Ready_for_Integration_Sync__c=True ,
+                    NumberOfEmployees=100
+                )
+            );
         }
         
         insert accountList;
         for(Account account1 : accountList) {
             account1.NSP_Ready_for_Integration_Sync__c = FALSE;
             account1.NSP_Account_Status__c = ACTIVE;
-            account1.NSP_Template_Selection__c = 'referralProgramAF-I';
+            account1.NSP_Template_Selection__c = 'Referral Program Associations';
             account1.BillingState = TEXAS;
             account1.NSP_Partner_Lifecycle__c = 'Onboarding';
             account1.NSP_Signed_MOD_Document__c = true;
             accountMapOld.put(account1.Id, account1);
         }
             accountList[0].NSP_Partner_Lifecycle__c = ACTIVE;
-            accountList[0].NSP_Template_Selection__c = REFPROG3;
+            accountList[0].NSP_Template_Selection__c = 'Referral Program Associations';
             accountList[0].NumberOfEmployees = 150;
             accountList[0].NSP_Delete_Account_Teams__c = System.now();
             accountList[0].NSP_Stage__c = 'New';
@@ -406,6 +414,12 @@ public class NSP_AccountTriggerHelperTest {
 */    
     @isTest
     static void testAccountDeleteByNonAdmin() {
+
+        PlatformEventSettings__c setting = new PlatformEventSettings__c();
+        setting.IsEnabled_IntegrationAccountEvent__c = true;
+        setting.IsEnabled_IntegrationAccountDeleteEvent__c = true;
+        setting.IsEnabled_IntegrationOpportunityEvent__c = true;
+        upsert setting;
       
         User userRec = [select id FROM User WHERE LastName = 'TestClassUser1'];
          
@@ -459,7 +473,7 @@ public class NSP_AccountTriggerHelperTest {
             Id partnerRecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get(PARTNER_CLIENT).getRecordTypeId();
             accoutObject.Name = ACCOUNTTEST1;
             accoutObject.recordTypeId=partnerRecordTypeId;
-            accoutObject.DNBoptimizer__DNB_D_U_N_S_Number__c = '876543987';
+            accoutObject.DNB_Connect_DUNS_Number__c = '876543987';
             insert accoutObject;
             accoutObject.NSP_Sales_Office__c = '1081';
             update accoutObject;
@@ -516,9 +530,6 @@ public class NSP_AccountTriggerHelperTest {
     
     @isTest
     static void testAccountPremierUpdate() {
-        AccountTriggerSettings__c settings = AccountTriggerSettings__c.getOrgDefaults();
-        settings.IsEnabledDeleteAccountTeams__c = True;
-        upsert settings;
 
          List<Account>  accountList = New List<Account>();
          User salesManagerUser=[Select Id , Name , Email , NSP_Sales_Office__c FROM User WHERE Email = 'jsmith@insperity.com' Limit 1];
@@ -526,7 +537,7 @@ public class NSP_AccountTriggerHelperTest {
             accountList.add(New Account(Name = 'AccountTestData'+String.valueOf(count), AccountNumber = String.valueOf(count), NSP_Ready_for_Integration_Sync__c = TRUE,
                                         NSP_Delete_Account_Teams__c = system.now()));
         }
-        accountList[0].NSP_Template_Selection__c = REFPROG3;
+        accountList[0].NSP_Template_Selection__c = 'Referral Program Associations';
         accountList[0].ownerId = salesManagerUser.Id;
         accountList[0].NSP_Account_Status__c = NSP_SalesConstants.ACTIVE;
         insert accountList;
@@ -552,7 +563,7 @@ public class NSP_AccountTriggerHelperTest {
             accIdSet.add(account.Id);
             account.NSP_Ready_for_Integration_Sync__c = TRUE;
             account.NSP_Account_Status__c = ACTIVE;
-            account.NSP_Template_Selection__c = 'referralProgramAF-I';
+            account.NSP_Template_Selection__c = 'Referral Program Associations';
             accountMapOld.put(account.Id, account);
         }
        

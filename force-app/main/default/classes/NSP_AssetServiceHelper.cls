@@ -1,8 +1,8 @@
 /**
 * Represents the Asset Service helper which handles the logic for BPS project creation through automation.
 */
-
 public class NSP_AssetServiceHelper {
+    // test w/ NSP_AssetServiceHelperTest (91%)
     
     public static final Id PEO_PROJECT = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.PROJECT,NSP_ServiceConstants.PEOProject );
     public static final Id INTEGRA_ASSET = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.ASSET_SOBJECT_TYPE,NSP_ServiceConstants.INTEGRA );
@@ -38,25 +38,35 @@ public class NSP_AssetServiceHelper {
         
         try{
             List<String> assetRecordTypeList = new List<String>{INTEGRA_ASSET, PERFORM_SMART_ASSET, TIME_ATTENDANCE_ASSET, XML_ASSET};
-                for(Asset asset: assetList){
+            if ( assetList != null ){
+                for ( Asset asset : assetList ) {
                     //STY-03289 implementation
-                    if(asset.RecordTypeId == INTEGRA_ASSET && asset.AccountId!=null){
+                    if ( asset.RecordTypeId == INTEGRA_ASSET && asset.AccountId!=null ) {
                         accountIdSet.add(asset.AccountId);
                         integraAssetSet.add(asset.Id);
                     }
-                    if(asset.RecordTypeId == PERFORM_SMART_ASSET && asset.AccountId!=null){
+                    if ( asset.RecordTypeId == PERFORM_SMART_ASSET
+                        &&  asset.AccountId != null
+                        && !asset.Is_Perform_WO_WS_Asset__c
+                        )
+                    {
                         accountIdSet.add(asset.AccountId);
                         performSmartAssetSet.add(asset.Id);
                     }
-                    if(asset.RecordTypeId == TIME_ATTENDANCE_ASSET && asset.AccountId!=null){
+                    if ( asset.RecordTypeId == TIME_ATTENDANCE_ASSET
+                        && asset.AccountId!=null
+                        && !asset.Is_Perform_WO_WS_Asset__c
+                        )
+                    {
                         accountIdSet.add(asset.AccountId);
                         timeAttendanceAssetSet.add(asset.Id);
                     }
-                    if(asset.RecordTypeId == XML_ASSET && asset.AccountId!=null){
+                    if ( asset.RecordTypeId == XML_ASSET && asset.AccountId!=null){
                         accountIdSet.add(asset.AccountId);
                         xmlAssetSet.add(asset.Id);
                     }
                 }
+            }
             
             //check if asset has active account
             for(Account acc: [SELECT Id ,NSP_Sales_Service_Account_Status__c,Name,
@@ -98,9 +108,7 @@ public class NSP_AssetServiceHelper {
                    }
                 
                 //create perform smart implementation project
-                if(performSmartAssetSet.contains(asset.Id) && mapOfAccount.get(asset.AccountId)!=null 
-                   && !hasMoreThanOneAsset(mapOfAccount.get(asset.AccountId), PERFORM_SMART_ASSET )){
-                       
+                if(performSmartAssetSet.contains(asset.Id) && mapOfAccount.get(asset.AccountId)!=null ){
                        templateType=NSP_ServiceConstants.PERFORMSMART_IMPLEMENTATION;
                        projectTemplateType = templateMap.get(NSP_ServiceConstants.PERFORMANCE);
                        projectId = assetServiceHelper.createProjectWithTemplateFromAsset(projectTemplateType, asset.Id );  
@@ -116,17 +124,18 @@ public class NSP_AssetServiceHelper {
                    }
                 
                 //create ITA implementation project
-                if(timeAttendanceAssetSet.contains(asset.Id) && mapOfAccount.get(asset.AccountId)!=null 
-                   && !hasMoreThanOneAsset(mapOfAccount.get(asset.AccountId), TIME_ATTENDANCE_ASSET )){
-                       
-                       templateType=NSP_ServiceConstants.ITA_IMPLEMENTATION;
-                  		projectTemplateType = templateMap.get(NSP_ServiceConstants.CATEGORY_TIME_ATTENDANCE);
-                       projectId = assetServiceHelper.createProjectWithTemplateFromAsset(projectTemplateType, asset.Id );  
-                   }
+                if ( timeAttendanceAssetSet.contains(asset.Id)
+                    && ( mapOfAccount.get(asset.AccountId) != null )
+                    && !hasMoreThanOneAsset(mapOfAccount.get(asset.AccountId), TIME_ATTENDANCE_ASSET )
+                    )
+                {
+                    templateType=NSP_ServiceConstants.ITA_IMPLEMENTATION;
+                    projectTemplateType = templateMap.get(NSP_ServiceConstants.CATEGORY_TIME_ATTENDANCE);
+                    projectId = assetServiceHelper.createProjectWithTemplateFromAsset(projectTemplateType, asset.Id );
+                }
                 if(String.isNotBlank(projectId)){
                     // Update integra implementation Project Data
-                    updatedProjectList.add(createProjectObject(projectId, BPSRECORDTYPE,
-                                                               asset, mapOfAccount.get(asset.AccountId).Name,templateType ));
+                    updatedProjectList.add(createProjectObject(projectId, BPSRECORDTYPE, asset, mapOfAccount.get(asset.AccountId).Name,templateType));
                     //Update the project with its related entity.
                     projectAssetMapping.add(NSP_AssetServiceTriggerHelper.linkProjectWithAsset(projectId, asset.Id));
                 }  

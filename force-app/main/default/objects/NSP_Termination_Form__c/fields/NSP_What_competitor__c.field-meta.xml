@@ -12,34 +12,136 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>Employer Flexible</fullName>
+                <fullName>ADP TOTALSOURCE</fullName>
                 <default>false</default>
-                <label>Employer Flexible</label>
+                <label>ADP TOTALSOURCE</label>
+            </value>
+            <value>
+                <fullName>EMPLOYERS SOLUTION</fullName>
+                <default>false</default>
+                <label>EMPLOYERS SOLUTION</label>
+            </value>
+            <value>
+                <fullName>G&amp;G PARTNERS</fullName>
+                <default>false</default>
+                <label>G&amp;G PARTNERS</label>
+            </value>
+            <value>
+                <fullName>GRAYSTONE STRATEGY</fullName>
+                <default>false</default>
+                <label>GRAYSTONE STRATEGY</label>
+            </value>
+            <value>
+                <fullName>GUSTO</fullName>
+                <default>false</default>
+                <label>GUSTO</label>
+            </value>
+            <value>
+                <fullName>HARBOR AMERICA</fullName>
+                <default>false</default>
+                <label>HARBOR AMERICA</label>
+            </value>
+            <value>
+                <fullName>HR&amp;P HUMAN RESOURCES</fullName>
+                <default>false</default>
+                <label>HR&amp;P HUMAN RESOURCES</label>
+            </value>
+            <value>
+                <fullName>INTUIT</fullName>
+                <default>false</default>
+                <label>INTUIT</label>
+            </value>
+            <value>
+                <fullName>JUSTWORKS</fullName>
+                <default>false</default>
+                <label>JUSTWORKS</label>
+            </value>
+            <value>
+                <fullName>NAMELY</fullName>
+                <default>false</default>
+                <label>NAMELY</label>
+            </value>
+            <value>
+                <fullName>NEXTEP</fullName>
+                <default>false</default>
+                <label>NEXTEP</label>
+            </value>
+            <value>
+                <fullName>OASIS</fullName>
+                <default>false</default>
+                <label>OASIS</label>
+            </value>
+            <value>
+                <fullName>PAYCHEX</fullName>
+                <default>false</default>
+                <label>PAYCHEX</label>
+            </value>
+            <value>
+                <fullName>PAYCOR</fullName>
+                <default>false</default>
+                <label>PAYCOR</label>
+            </value>
+            <value>
+                <fullName>PAYLOCITY</fullName>
+                <default>false</default>
+                <label>PAYLOCITY</label>
+            </value>
+            <value>
+                <fullName>PROPEL HR</fullName>
+                <default>false</default>
+                <label>PROPEL HR</label>
+            </value>
+            <value>
+                <fullName>QUESTCO</fullName>
+                <default>false</default>
+                <label>QUESTCO</label>
+            </value>
+            <value>
+                <fullName>RESOURCING EDGE</fullName>
+                <default>false</default>
+                <label>RESOURCING EDGE</label>
+            </value>
+            <value>
+                <fullName>SEQUOIA ONE</fullName>
+                <default>false</default>
+                <label>SEQUOIA ONE</label>
+            </value>
+            <value>
+                <fullName>SWBC</fullName>
+                <default>false</default>
+                <label>SWBC</label>
+            </value>
+            <value>
+                <fullName>TANDEM HR</fullName>
+                <default>false</default>
+                <label>TANDEM HR</label>
+            </value>
+            <value>
+                <fullName>TRINET</fullName>
+                <default>false</default>
+                <label>TRINET</label>
+            </value>
+            <value>
+                <fullName>ZENEFITS</fullName>
+                <default>false</default>
+                <label>ZENEFITS</label>
+            </value>
+            <value>
+                <fullName>OTHER</fullName>
+                <default>false</default>
+                <label>OTHER</label>
             </value>
             <value>
                 <fullName>ADP Total Source</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>ADP Total Source</label>
             </value>
             <value>
-                <fullName>Oasis</fullName>
+                <fullName>Employer Flexible</fullName>
                 <default>false</default>
-                <label>Oasis</label>
-            </value>
-            <value>
-                <fullName>Paychex</fullName>
-                <default>false</default>
-                <label>Paychex</label>
-            </value>
-            <value>
-                <fullName>Trinet</fullName>
-                <default>false</default>
-                <label>Trinet</label>
-            </value>
-            <value>
-                <fullName>Other</fullName>
-                <default>false</default>
-                <label>Other</label>
+                <isActive>false</isActive>
+                <label>Employer Flexible</label>
             </value>
         </valueSetDefinition>
     </valueSet>

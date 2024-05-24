@@ -10,7 +10,7 @@ NSP_Account_Name__c + &quot;_&quot; + TEXT(NSP_Merge_On_Demand_Template_Selectio
 NSP_Account_Name__c + &quot;_&quot; + TEXT(NSP_Merge_On_Demand_Template_Selection__c) + &quot;_&quot; )</formula>
     <label>Sales Template Document Name</label>
     <required>false</required>
-    <trackTrending>false</trackTrending>
+    <trackHistory>false</trackHistory>
     <type>Text</type>
     <unique>false</unique>
 </CustomField>

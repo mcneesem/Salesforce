@@ -27,10 +27,9 @@ public with sharing class NSP_EmailMessageTriggerHelper {
         List<Case> caseToUpdate = new List<Case> ();
         Map<Id, EmailMessage> healthWelfareInternalExternalCaseIdFromAddMap = new Map<Id, EmailMessage>();
         for(EmailMessage eMessage : newList){
-            if(eMessage.ParentId != null && incomingEmailCheck(eMessage)){
-                setOfCaseId.add(eMessage.ParentId);   
+            if ( ( eMessage.ParentId != null ) && incomingEmailCheck( eMessage ) ) {
+                setOfCaseId.add( eMessage.ParentId );
             }
-
             //Added as a part of STY-04132 
             if(!setOfCaseId.isEmpty()){
               for(Id caseID:setOfCaseId){
@@ -87,17 +86,15 @@ public with sharing class NSP_EmailMessageTriggerHelper {
         restrictEmailFromRestrictedSenders(newList); 
     }
     
-    /***********************************************************************************************
-    * Description: This method will reOpen an existing case if days between closing of case (BPS)
-    and EmailMessage date is less than 90 days,else, it will mark
-    Response After Close to True
-    * Date       : 17/11/2021 
-    * Modified Date : 20/09/2021
-    * Update- This Method will also will reOpen an existing case if days between closing of case (PEO)
-    and EmailMessage date is within 5 days,else, it will create a new Case
-    ***********************************************************************************************/
-    public static void reOpenOrMarkResponseAfterCloseTrue(Set<Id> caseIds, List<EmailMessage> listOfEmailMessage){
-        List<Case> listOfCase = new List<Case> ();
+    // ***********************************************************************************************
+    // Description: This method will reOpen an existing case if days between closing of (BPS) Case
+    // and EmailMessage date is less than 90 days,else, it will mark Response After Close to True
+    // Date       : 17/11/2021 
+    // Modified Date : 20/09/2021
+    // Update- This Method will also will reOpen an existing case if days between closing of
+    // case (PEO) and EmailMessage date is within 5 days,else, it will create a new Case
+    // ***********************************************************************************************
+    private static void reOpenOrMarkResponseAfterCloseTrue( Set<Id> caseIds , List<EmailMessage> listOfEmailMessage ) {
         Map<Id, Case> mapOfCaseIdAndCase = new Map<Id, Case> ();
         
         Id caseBPSRecordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('BPS').getRecordTypeId();
@@ -115,46 +112,47 @@ public with sharing class NSP_EmailMessageTriggerHelper {
                 mapOfCaseIdAndCase.put(caseRec.id, caseRec);
             }
         }
-        
-        for(EmailMessage eMessage : listOfEmailMessage){
-            Integer daysBetween;
-            Integer businessDaysBetween;
-            List<String> ToAddressList = new List<String>(); 
-            
+        List<Case> listOfCase = new List<Case>();
+        for ( EmailMessage eMessage : listOfEmailMessage ) {
             if(mapOfCaseIdAndCase.get(eMessage.ParentId).NSP_Date_Closed__c != null){
                 Case getCase = mapOfCaseIdAndCase.get(eMessage.ParentId);
                 Date caseClosedDate = mapOfCaseIdAndCase.get(eMessage.ParentId).NSP_Date_Closed__c;
                 Datetime emailMessageDate = Datetime.newInstance(eMessage.MessageDate.year(), eMessage.MessageDate.month(), eMessage.MessageDate.day());
-                
-                daysBetween = caseClosedDate.daysBetween(Date.valueOf(emailMessageDate));
-                
-                if(mapOfCaseIdAndCase.get(eMessage.ParentId).RecordTypeId == caseBPSRecordTypeId && daysBetween <= 90){
+                Integer daysBetween = caseClosedDate.daysBetween(Date.valueOf(emailMessageDate));
+                if ( ( mapOfCaseIdAndCase.get(eMessage.ParentId).RecordTypeId == caseBPSRecordTypeId ) && ( daysBetween <= 90 ) ) {
                     getCase.Status = 'ReOpened';
                     getCase.NSP_Case_Reopened_EmaiToCase__c = true;
-                    listOfCase.add(getCase);
+                    listOfCase.add( getCase );
                 } else if(
-                    	(mapOfCaseIdAndCase.get(eMessage.ParentId).RecordTypeId == casePEORecordTypeId) ||
-                    	(mapOfCaseIdAndCase.get(eMessage.ParentId).RecordTypeId == caseBPSRecordTypeId && daysBetween > 90)){
-                              getCase.NSP_Response_After_Close__c = true;
-                              listOfCase.add(getCase);
-                          }
+                    ( mapOfCaseIdAndCase.get(eMessage.ParentId).RecordTypeId == casePEORecordTypeId )
+                    || ( ( mapOfCaseIdAndCase.get(eMessage.ParentId).RecordTypeId == caseBPSRecordTypeId ) && ( daysBetween > 90 ) )
+                    )
+                {
+                    getCase.NSP_Response_After_Close__c = true;
+                    listOfCase.add( getCase );
+                }
             }
-            ToAddressList = eMessage.ToAddress.split(';');
-            if(mapOfCaseIdAndCase.get(eMessage.ParentId).ClosedDate != null && mapOfCaseIdAndCase.get(eMessage.ParentId).Status == 'Closed' && 
-              mapOfCaseIdAndCase.get(eMessage.ParentId).RecordTypeId == casePEORecordTypeId && isContactCenterCase(ContactCenterEmailAddresses,ToAddressList)){
+            List<String> ToAddressList = new List<String>();
+            if ( String.isNotBlank( eMessage.ToAddress ) ) { // prevent NullPointerException when ToAddress is missing a value...
+                ToAddressList = eMessage.ToAddress.split( ';' );
+            }
+            if ( ( mapOfCaseIdAndCase.get(eMessage.ParentId).ClosedDate != null )
+                && ( mapOfCaseIdAndCase.get(eMessage.ParentId).Status == 'Closed' )
+                && ( mapOfCaseIdAndCase.get(eMessage.ParentId).RecordTypeId == casePEORecordTypeId )
+                && isContactCenterCase( ContactCenterEmailAddresses , ToAddressList )
+                )
+            {
                 Case getCase = mapOfCaseIdAndCase.get(eMessage.ParentId);
                 Datetime caseClosedDate = mapOfCaseIdAndCase.get(eMessage.ParentId).ClosedDate;
                 Datetime emailMessageDate = Datetime.newInstance(eMessage.MessageDate.year(), eMessage.MessageDate.month(), eMessage.MessageDate.day());
-                
-                businessDaysBetween = getNoOfBusinessDaysBetweenDates(caseClosedDate,emailMessageDate);
+                Integer businessDaysBetween = getNoOfBusinessDaysBetweenDates(caseClosedDate,emailMessageDate);
                 if(businessDaysBetween <= 5){
                     getCase.Status = REOPENED;
                     getCase.NSP_Case_Sub_Status__c = UNASSIGNED;
                     getCase.OwnerId = contactCenterQueueId;
                     getCase.NSP_Response_After_Close__c = False;
                     listOfCaseReopen.add(getCase);
-                }
-                else if (businessDaysBetween > 5){
+                } else if (businessDaysBetween > 5){
                     CaseToSubjectMap.put(getCase,eMessage.Subject);  
                     ParentCaseToEmailMessageMap.put(getCase,eMessage);
                 }
@@ -166,37 +164,45 @@ public with sharing class NSP_EmailMessageTriggerHelper {
         if(CaseToSubjectMap.size() > 0){
             insertedCaseList = createCaseFromEmail(CaseToSubjectMap,contactCenterQueueId);
         }
-        
         if(!insertedCaseList.isEmpty()){
             updateRelatedCaseOnEmailMessage(ParentCaseToEmailMessageMap,insertedCaseList);
         }
-        if(!listOfCase.isEmpty()){
-            Database.update(listOfCase);
-        }
-    }
-    
-    /***********************************************************************************************
-    * MethodName    : isContactCenterCase
-    * Description   : Check if ToAddress has Contact Center Email
-    * Story         : STY-04647
-    * Params        : List<String> ContactCenterEmailAddresses, List<String> ToAddress
-    * ********************************************************************************************/
-    public static Boolean isContactCenterCase(List<String> ContactCenterEmailAddresses, List<String> ToAddress){
-        Boolean isPresent;
-        Integer count = 0;
-        for(String str : ToAddress){
-            if(ContactCenterEmailAddresses.contains(str)){
-                count ++;
+        if ( !listOfCase.isEmpty() ) {
+            try {
+                Database.update( listOfCase );
+            } catch ( Exception e ) { // catch unhandled DmlExceptions within Case Trigger logic...
+                System.debug( ' ~ CATCH ~ e=' + e );
             }
         }
-        if(count == 0){
-            isPresent = False;
-        }else {
+    }
+
+    // ********************************************************************************************
+    // MethodName    : isContactCenterCase
+    // Description   : Check if ToAddress contains Contact Center Email
+    // Story         : STY-04647
+    // Params        : List<String> ContactCenterEmailAddresses , List<String> ToAddress
+    // ********************************************************************************************
+    private static Boolean isContactCenterCase( List<String> ContactCenterEmailAddresses , List<String> ToAddress ) {
+        Integer count = 0;
+        if ( ( ToAddress != null )
+            && !ToAddress.isEmpty()
+            && ( ContactCenterEmailAddresses != null )
+            && !ContactCenterEmailAddresses.isEmpty()
+            )
+        {
+            for ( String str : ToAddress ) {
+                if ( ContactCenterEmailAddresses.contains( str ) ) {
+                    count++;
+                }
+            }
+        }
+        Boolean isPresent = False;
+        if ( count > 0 ) {
             isPresent = True;
         }
         return isPresent;
     }
-    
+
     /***********************************************************************************************
     * MethodName    : getNoOfBusinessDaysBetweenDates
     * Description   : Get number of business days between two dates
@@ -354,28 +360,33 @@ public with sharing class NSP_EmailMessageTriggerHelper {
             && (restrictedEmailAddresses.contains(eMessage.FromAddress)
                 || eMessage.FromAddress.startsWith(NSP_ServiceConstants.POSTMASTER_EMAIL_ADDRESS));
     }
-    
-    /***********************************************************************************************
-    * MethodName	: incomingEmailCheck
-    * Description	: Incoming Email check for subject check
-    * Story 		: STY-03643
-    * Params		: EmailMessage eMessage
-    * ********************************************************************************************/
-    public static Boolean incomingEmailCheck(EmailMessage eMessage){
-        return eMessage.incoming && 
-            String.valueOf(eMessage.ParentId).startsWith('500') && 
-            (!eMessage.Subject.containsIgnoreCase('OOO') && 
-             !eMessage.Subject.containsIgnoreCase('Out of Office') && 
-             !eMessage.Subject.containsIgnoreCase('Auto-Response') &&
-             !eMessage.Subject.containsIgnoreCase('Auto-Reply') &&
-             !eMessage.Subject.containsIgnoreCase('Auto Response') &&
-             !eMessage.Subject.containsIgnoreCase('Auto Reply') &&
-             !eMessage.Subject.containsIgnoreCase('Automatic Response') &&
-             !eMessage.Subject.containsIgnoreCase('Automatic Reply') &&
-             !eMessage.Subject.containsIgnoreCase('Automatic-Response') &&
-             !eMessage.Subject.containsIgnoreCase('Automatic-Reply')); 
+
+    // ********************************************************************************************
+    // MethodName	: incomingEmailCheck
+    // Description	: Incoming Email check for subject check
+    // Story 		: STY-03643
+    // Params		: EmailMessage eMessage
+    // ********************************************************************************************
+    private static Boolean incomingEmailCheck( EmailMessage eMessage ) {
+        return (
+            ( eMessage != null ) // prevent NullPointerException...
+            && eMessage.Incoming
+            && ( eMessage.ParentId != null ) // prevent NullPointerException when EmailMessage is not related to a Case...
+            && ( eMessage.ParentId.getSObjectType() == Case.getSObjectType() )
+            && String.isNotBlank( eMessage.Subject ) // prevent NullPointerException when Subject is missing a value...
+            && !eMessage.Subject.containsIgnoreCase( 'OOO' )
+            && !eMessage.Subject.containsIgnoreCase( 'Out of Office' )
+            && !eMessage.Subject.containsIgnoreCase( 'Auto-Response' )
+            && !eMessage.Subject.containsIgnoreCase( 'Auto Response' )
+            && !eMessage.Subject.containsIgnoreCase( 'Auto-Reply' )
+            && !eMessage.Subject.containsIgnoreCase( 'Auto Reply' )
+            && !eMessage.Subject.containsIgnoreCase( 'Automatic Response' )
+            && !eMessage.Subject.containsIgnoreCase( 'Automatic-Response' )
+            && !eMessage.Subject.containsIgnoreCase( 'Automatic Reply' )
+            && !eMessage.Subject.containsIgnoreCase( 'Automatic-Reply' )
+        );
     }
-    
+
     /***********************************************************************************************
     * MethodName : updateConfidentialCheckBoxForEmpScreening
     * Story : STY-03671

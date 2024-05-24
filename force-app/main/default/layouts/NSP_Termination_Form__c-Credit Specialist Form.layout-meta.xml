@@ -31,12 +31,12 @@
                 <field>NSP_Client_Owner__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>NSP_Client_Owner_Email__c</field>
+                <behavior>Edit</behavior>
+                <field>Client_Owner_Email__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>NSP_Client_Owner_Phone__c</field>
+                <behavior>Edit</behavior>
+                <field>Client_Owner_Phone__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -173,7 +173,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
-                <field>NSP_Credit_Specialist__c</field>
+                <field>Credit_Specialist__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -206,7 +206,7 @@
                 <field>NSP_Account_Executive__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Required</behavior>
+                <behavior>Edit</behavior>
                 <field>NSP_Credit_Specialist_Phone__c</field>
             </layoutItems>
         </layoutColumns>

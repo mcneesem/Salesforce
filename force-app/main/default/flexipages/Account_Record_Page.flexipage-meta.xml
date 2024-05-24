@@ -82,6 +82,9 @@
                             <value>Account.NSP_Update_NAICS_SIC</value>
                         </valueListItems>
                         <valueListItems>
+                            <value>Account.DNB_Connect_Data_Refresh</value>
+                        </valueListItems>
+                        <valueListItems>
                             <value>Account.Referral_Log</value>
                         </valueListItems>
                         <valueListItems>
@@ -116,9 +119,33 @@
                         </valueListItems>
                         <valueListItems>
                             <value>Account.Request_a_Discover_SKO_Meeting</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!$Permission.CustomPermission.Request_Client_Transition_Meeting}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>true</rightValue>
+                                </criteria>
+                            </visibilityRule>
                         </valueListItems>
                         <valueListItems>
                             <value>Account.Request_an_Employee_Orientation_Meeting</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!$Permission.CustomPermission.Request_Employee_Orientation_Meeting}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>true</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Account.Request_CTM_and_Employee_Orientation_Meeting</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!$Permission.CustomPermission.Request_CTM_and_Employee_Orientation_Meeting}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>true</rightValue>
+                                </criteria>
+                            </visibilityRule>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
@@ -186,7 +213,7 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>fields</name>
-                    <value>NSP_Field_Name__c,NSP_Modified_Date__c,NSP_Old_Value__c,NSP_New_Value__c,	NSP_Modified_By__r.Name</value>
+                    <value>NSP_Field_Name__c,NSP_Modified_Date__c,NSP_Old_Value__c,NSP_New_Value__c,NSP_Modified_By__r.Name</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>relatedFieldApiName</name>
@@ -254,6 +281,118 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
+                    <name>dashboardId</name>
+                    <value>Subscription_template</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>enableNotifications</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>enableSubscriptions</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>filter</name>
+                    <value>{&quot;datasets&quot;:{&quot;FINANCE_STY_01242&quot;:[{&quot;fields&quot;:[&quot;Account.Id&quot;],&quot;filter&quot;:{&quot;operator&quot;:&quot;in&quot;,&quot;values&quot;:[&quot;$Id&quot;]},&quot;locked&quot;:true,&quot;hidden&quot;:true}]}}</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>height</name>
+                    <value>700</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>hideOnError</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>openLinksInNewWindow</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>openLocation</name>
+                    <value>HIDE</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>showHeader</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>showSharing</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>showTitle</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentName>wave:waveDashboard</componentName>
+                <identifier>wave_waveDashboard</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-f2510251-5fbd-4585-bd5b-6526560894b9</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>Height</name>
+                    <value>400</value>
+                </componentInstanceProperties>
+                <componentName>TracHier:hierarchy</componentName>
+                <identifier>TracHier_hierarchy</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>createQuickActionName</name>
+                    <value>NewAccount</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>lookupFieldName</name>
+                    <value>Id</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>titleFieldName</name>
+                    <value>Domestic Ultimate Hierarchy Information</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>updateQuickActionName</name>
+                    <value>Account.Domestic_Ultimate_Hierarchy_Information</value>
+                </componentInstanceProperties>
+                <componentName>console:relatedRecord</componentName>
+                <identifier>console_relatedRecord2</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>createQuickActionName</name>
+                    <value>NewAccount</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>lookupFieldName</name>
+                    <value>Id</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>titleFieldName</name>
+                    <value>D&amp;B Hierarchy Information</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>updateQuickActionName</name>
+                    <value>Account.Complete_Hierarchy_Fields</value>
+                </componentInstanceProperties>
+                <componentName>console:relatedRecord</componentName>
+                <identifier>console_relatedRecord</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-b95298db-b829-4d8f-b830-a1a8a9f84dc7</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
                     <name>active</name>
                     <value>true</value>
                 </componentInstanceProperties>
@@ -313,6 +452,34 @@
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
                 <identifier>flexipage_tab</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-f2510251-5fbd-4585-bd5b-6526560894b9</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>Subscriptions</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tab</componentName>
+                <identifier>flexipage_tab4</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-b95298db-b829-4d8f-b830-a1a8a9f84dc7</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>Sales Hierarchy</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tab</componentName>
+                <identifier>flexipage_tab3</identifier>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>

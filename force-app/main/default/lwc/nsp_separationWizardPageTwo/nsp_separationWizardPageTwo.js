@@ -35,6 +35,8 @@ NSP_ClientName__c='';
 clientContact='';
 NSP_Client_Contact__c='';
 isOnloadCalled =false;
+NSP_Request_TotalAgreementsRequested_Value= '';
+NSP_Request_Severance_Total_Value = '';
 
 @wire(getPicklistValues, {
         recordTypeId: '$recordTypeId' ,
@@ -67,8 +69,15 @@ handleOnload(event){
                 && this.multipleEmployeesValue == null){
                 this.multipleEmployeesValue =  this.fieldsData.NSP_RequestingMultipleEmployees__c.value;
                 this.enableTotalAgreement =  (this.fieldsData.NSP_RequestingMultipleEmployees__c.value == 'Yes');
-
+                
+                if(this.fieldsData.NSP_TotalAgreementsRequested__c.value != null && this.enableTotalAgreement == true){
+                    this.NSP_Request_TotalAgreementsRequested_Value = this.fieldsData.NSP_TotalAgreementsRequested__c.value;
+                }
+                if(this.fieldsData.NSP_Severance_Total__c.value != null && this.enableTotalAgreement == true){
+                    this.NSP_Request_Severance_Total_Value = this.fieldsData.NSP_Severance_Total__c.value;
+                }
             }
+
             if(this.isOnloaded){
             if(this.fieldsData.NSP_ClientName__c != null  && this.fieldsData.NSP_ClientName__c.value != null &&
                 this.fieldsData.NSP_FinanceLevel__c != null  && this.fieldsData.NSP_FinanceLevel__c.value == null &&
@@ -176,6 +185,16 @@ handlePrev(event){
         this.multipleEmployeesValue = event.currentTarget.value;
         this.enableTotalAgreement = (event.currentTarget.value === "Yes");
        // this.findeFileSize(event);
+       if(this.enableTotalAgreement == true){
+            this.refs.SeveranceTotal.style.display = '';
+        }
+
+        if(event.currentTarget.value === "No"){
+            this.enableTotalAgreement = (event.currentTarget.value === "No");
+            this.refs.SeveranceTotal.style.display = 'none';
+            this.NSP_Request_TotalAgreementsRequested_Value = null;
+            this.NSP_Request_Severance_Total_Value = null;
+        }
     }
 
     if( event.currentTarget.fieldName == "NSP_ClientName__c" ){
@@ -190,6 +209,15 @@ handlePrev(event){
         }
     }
 
+  }
+
+
+  get NSP_TotalAgreementsRequested(){
+    return this.multipleEmployeesValue=='Yes' ? true : false;
+  }
+
+  get NSP_Severance_Total(){
+    return this.multipleEmployeesValue=='Yes' ? true : false;
   }
 
   publishSyncEvent(fieldName,value) {

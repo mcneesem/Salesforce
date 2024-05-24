@@ -25,9 +25,26 @@ class NSP_PrepSandboxTest {
     @isTest(SeeAllData = True)
     static void testManualSteps() {
         Test.startTest();
-        NSP_PrepSandbox.runManualSteps();
-        NSP_PrepSandbox.runManualSteps2();
-        NSP_PrepSandbox.doUserImport('sandbox');
+        NSP_PrepSandbox.doE2CAddresses('test');
+        NSP_PrepSandbox.doCLabels('merge');
+        NSP_PrepSandbox.doCLabels('test');
+        NSP_PrepSandbox.doCLabels('stage');
+        NSP_PrepSandbox.doCSettings('merge');
+        NSP_PrepSandbox.doCSettings('test');
+        Test.stopTest();
+    }
+
+    @isTest
+    static void testPageRef() {
+        Test.startTest();
+        PageReference pageRef = Page.SandboxManualSteps;
+        Test.setCurrentPage(pageRef);
+        NSP_PrepSandbox prep = new NSP_PrepSandbox();
+        System.assertEquals(null,prep.resetResult());
+        System.assertEquals(null,prep.doUserImportPage());
+        System.assertEquals(null,prep.runManualStepsButton());
+        System.assertEquals(null,prep.runManualStepsButton2());
+        System.assertEquals(null,prep.runE2CAddressesButton());
         Test.stopTest();
     }
 }

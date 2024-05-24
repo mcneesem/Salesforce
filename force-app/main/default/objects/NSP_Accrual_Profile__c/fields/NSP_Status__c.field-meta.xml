@@ -17,14 +17,14 @@
                 <label>Draft</label>
             </value>
             <value>
-                <fullName>Submitted</fullName>
+                <fullName>Submitted for Approval</fullName>
                 <default>false</default>
-                <label>Submitted</label>
+                <label>Submitted for Approval</label>
             </value>
             <value>
-                <fullName>Resubmitted</fullName>
+                <fullName>Resubmitted for Approval</fullName>
                 <default>false</default>
-                <label>Resubmitted</label>
+                <label>Resubmitted for Approval</label>
             </value>
             <value>
                 <fullName>Rejected</fullName>
@@ -45,6 +45,16 @@
                 <fullName>Cancelled</fullName>
                 <default>false</default>
                 <label>Cancelled</label>
+            </value>
+            <value>
+                <fullName>HR Approved</fullName>
+                <default>false</default>
+                <label>HR Approved</label>
+            </value>
+            <value>
+                <fullName>AP Approved</fullName>
+                <default>false</default>
+                <label>AP Approved</label>
             </value>
         </valueSetDefinition>
     </valueSet>

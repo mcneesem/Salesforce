@@ -1,0 +1,60 @@
+<template>
+    <template lwc:if={error}>
+        <c-error-panel error={error} parent="c-permissions-directory"></c-error-panel>
+    </template>
+    <template lwc:else>
+        <template lwc:if={isAccessible}>
+            <lightning-card  title="Permissions Directory" icon-name="custom:custom76">
+                <lightning-spinner alternative-text="Loading" size="small" class={spinnerClass}></lightning-spinner>
+                <div slot="actions">
+                    <lightning-input
+                        type="text"
+                        label="Filter Permissions"
+                        variant="label-hidden"
+                        placeholder="Filter Permissions..."
+                        value={filter}
+                        onchange={filterChanged}
+                        disabled={isLoading}
+                        lwc:ref="filter"
+                        >
+                    </lightning-input>
+                </div>
+                <div class="slds-var-p-horizontal_small">
+                    <lightning-accordion
+                        allow-multiple-sections-open
+                        onsectiontoggle={handleSectionToggle}
+                        >
+                        <!-- User Permissions -->
+                        <c-permissions-directory-section
+                            name="UserPermissions"
+                            label="User Permissions"
+                            permissions={userPermissions}
+                            filter={filter}
+                            >
+                        </c-permissions-directory-section>
+                        <!-- Object Permissions -->
+                        <c-permissions-directory-section
+                            name="ObjectPermissions"
+                            label="Object Permissions"
+                            permissions={objectPermissions}
+                            filter={filter}
+                            >
+                        </c-permissions-directory-section>
+                        <!-- Custom Permissions -->
+                        <c-permissions-directory-section
+                            name="CustomPermissions"
+                            label="Custom Permissions"
+                            permissions={customPermissions}
+                            filter={filter}
+                            >
+                        </c-permissions-directory-section>
+                    </lightning-accordion>
+                </div>
+            </lightning-card>
+        </template>
+        <template lwc:else>
+            <!-- completely hidden when inaccessible -->
+            <div style="margin-bottom: calc(var(--lwc-cardSpacingMargin,0.75rem)*-1);"></div>
+        </template>
+    </template>
+</template>

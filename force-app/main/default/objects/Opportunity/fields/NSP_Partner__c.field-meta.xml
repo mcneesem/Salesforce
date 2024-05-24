@@ -5,11 +5,20 @@
     <description>Field used to store Partner Account details</description>
     <externalId>false</externalId>
     <label>Partner</label>
+    <lookupFilter>
+        <active>true</active>
+        <filterItems>
+            <field>Account.RecordTypeName__c</field>
+            <operation>equals</operation>
+            <value>NSP_Partner_Client</value>
+        </filterItems>
+        <isOptional>true</isOptional>
+    </lookupFilter>
     <referenceTo>Account</referenceTo>
     <relationshipLabel>Partner Opportunities</relationshipLabel>
     <relationshipName>Partner_Opportunities</relationshipName>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
-    <trackTrending>false</trackTrending>
+    <trackHistory>true</trackHistory>
     <type>Lookup</type>
 </CustomField>

@@ -17,6 +17,7 @@ public class NSP_ContactTriggerHelperTest {
         'Name'
     };
     private static final String TEST_ACCOUNT = 'TestAccount';
+    private static final String TEST_ACCOUNT2 = 'TestAccount2';
     /**
      * Checks the Contact After Insert Trigger
      * @param N/A. 
@@ -52,7 +53,6 @@ public class NSP_ContactTriggerHelperTest {
         oldRecTypeContact.recordTypeId = NSP_ContactTriggerHelper.NEW_CON_REC_TYPE_ID;
         oldRecTypeContact.FirstName = 'oldRecordType';
         contactList.add(oldRecTypeContact);
-        
         
         // Start Test
         Test.startTest();
@@ -168,5 +168,16 @@ public class NSP_ContactTriggerHelperTest {
         system.assertNotEquals(acr.NSP_Work_Email__c, 'test@gmail.com'); // Negative Test
     } 
     
-    
+        @isTest
+    public static void updateContact(){
+        Test.startTest();
+		Account acc = New Account(Name = TEST_ACCOUNT2, AccountNumber = '123456');
+        insert acc;
+        Contact cont = [SELECT Id, AccountId, Account.Name FROM Contact WHERE Account.Name =: TEST_ACCOUNT LIMIT 1];
+        cont.AccountId = acc.Id;
+        update cont;
+        Test.stopTest();
+        System.assertEquals(1,[SELECT count() FROM Contact WHERE AccountId =: acc.Id]);
+        
+    }
 }

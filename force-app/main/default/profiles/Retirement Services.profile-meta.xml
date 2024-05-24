@@ -1,16 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Profile xmlns="http://soap.sforce.com/2006/04/metadata">
     <applicationVisibilities>
-        <application>DNBoptimizer__DB_Optimizer</application>
-        <default>false</default>
-        <visible>false</visible>
-    </applicationVisibilities>
-    <applicationVisibilities>
-        <application>DNBoptimizer__D_B_Optimizer</application>
-        <default>false</default>
-        <visible>false</visible>
-    </applicationVisibilities>
-    <applicationVisibilities>
         <application>DOZISF__ZoomInfo</application>
         <default>false</default>
         <visible>false</visible>
@@ -16624,6 +16614,31 @@
         <name>FSL__Service_List_Unscheduled</name>
     </customPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_Address__c.Field_For_Search__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>US_Mail_Address__c.USAddress__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>US_Contact__c.Work_Phone__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>US_Contact__c.Work_Email__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>US_Contact__c.Job_Title__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Onboarding_Meeting_Request__c.Block_End__c</field>
         <readable>true</readable>
@@ -17081,16 +17096,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Account.Client_Number_TA__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Account.DNBoptimizer__DNB_D_U_N_S_Number__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Account.DNBoptimizer__DnBCompanyRecord__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -20951,11 +20956,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Contact.AssistantPhone</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Contact.DNBoptimizer__DnBContactRecord__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -30186,6 +30186,16 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>NSP_Termination_Form__c.NSP_1900_Merger_CSA__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NSP_Termination_Form__c.NSP_2700_FEIN_Letter_of_Assignment__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>NSP_Termination_Form__c.NSP_CSA__c</field>
         <readable>true</readable>
@@ -30247,12 +30257,12 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>NSP_Termination_Form__c.NSP_Client_Owner_Email__c</field>
+        <field>NSP_Termination_Form__c.Client_Owner_Email__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>NSP_Termination_Form__c.NSP_Client_Owner_Phone__c</field>
+        <field>NSP_Termination_Form__c.Client_Owner_Phone__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -30382,6 +30392,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>NSP_Termination_Form__c.NSP_Next_Scheduled_Pay_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>NSP_Termination_Form__c.NSP_NoOfEmployeesClientGoingToBring__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -30393,6 +30408,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>NSP_Termination_Form__c.NSP_Notes_Comments__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NSP_Termination_Form__c.NSP_Notes_Regarding_Attachment__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -30466,7 +30486,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>NSP_Termination_Form__c.NSP_Status__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -36002,6 +36022,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>pse__Proj__c.NSP_Queued_for_Delete__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>pse__Proj__c.Additional_Billing_Details__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -36304,11 +36329,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>pse__Proj__c.Project_Coordinator__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>pse__Proj__c.Project_Description__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -39310,7 +39330,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Implementation_Profile__c.Client_Implementing_Premier_Performance__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -41906,7 +41926,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Implementation_Profile__c.When_Client_Wants_Solution_implemented__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -42366,11 +42386,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Implementation_Profile__c.How_will_e_verify_be_completed__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Implementation_Profile__c.If_EE_works_holiday_are_paid_prem__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -47085,6 +47100,24 @@
         <allowEdit>false</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
+        <object>US_Contact__c</object>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>false</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>false</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>US_Mail_Address__c</object>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>false</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>false</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
         <object>NSP_Checklist__c</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
@@ -48129,52 +48162,7 @@
         <allowEdit>false</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
-        <object>sbaa__EmailTemplate__c</object>
-        <viewAllRecords>false</viewAllRecords>
-    </objectPermissions>
-    <objectPermissions>
-        <allowCreate>false</allowCreate>
-        <allowDelete>false</allowDelete>
-        <allowEdit>false</allowEdit>
-        <allowRead>true</allowRead>
-        <modifyAllRecords>false</modifyAllRecords>
         <object>CLM_Document__c</object>
-        <viewAllRecords>false</viewAllRecords>
-    </objectPermissions>
-    <objectPermissions>
-        <allowCreate>false</allowCreate>
-        <allowDelete>false</allowDelete>
-        <allowEdit>false</allowEdit>
-        <allowRead>true</allowRead>
-        <modifyAllRecords>false</modifyAllRecords>
-        <object>blng__PaymentMethod__c</object>
-        <viewAllRecords>false</viewAllRecords>
-    </objectPermissions>
-    <objectPermissions>
-        <allowCreate>false</allowCreate>
-        <allowDelete>false</allowDelete>
-        <allowEdit>false</allowEdit>
-        <allowRead>true</allowRead>
-        <modifyAllRecords>false</modifyAllRecords>
-        <object>blng__Invoice__c</object>
-        <viewAllRecords>false</viewAllRecords>
-    </objectPermissions>
-    <objectPermissions>
-        <allowCreate>false</allowCreate>
-        <allowDelete>false</allowDelete>
-        <allowEdit>false</allowEdit>
-        <allowRead>true</allowRead>
-        <modifyAllRecords>false</modifyAllRecords>
-        <object>blng__Payment__c</object>
-        <viewAllRecords>false</viewAllRecords>
-    </objectPermissions>
-    <objectPermissions>
-        <allowCreate>false</allowCreate>
-        <allowDelete>false</allowDelete>
-        <allowEdit>false</allowEdit>
-        <allowRead>true</allowRead>
-        <modifyAllRecords>false</modifyAllRecords>
-        <object>blng__CreditNote__c</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
@@ -49018,10 +49006,6 @@
         <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>
-        <tab>DNBoptimizer__DnBContactRecord__c</tab>
-        <visibility>Hidden</visibility>
-    </tabVisibilities>
-    <tabVisibilities>
         <tab>standard-ContactRequest</tab>
         <visibility>Hidden</visibility>
     </tabVisibilities>
@@ -49434,10 +49418,6 @@
         <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>
-        <tab>DNBoptimizer__DnBCompanyRecord__c</tab>
-        <visibility>Hidden</visibility>
-    </tabVisibilities>
-    <tabVisibilities>
         <tab>standard-LegalEntity</tab>
         <visibility>Hidden</visibility>
     </tabVisibilities>
@@ -49744,6 +49724,10 @@
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>
+        <name>ForceTwoFactor</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>true</enabled>
         <name>GiveRecognitionBadge</name>
     </userPermissions>
     <userPermissions>
@@ -49881,10 +49865,6 @@
     <userPermissions>
         <enabled>true</enabled>
         <name>SendCustomNotifications</name>
-    </userPermissions>
-    <userPermissions>
-        <enabled>true</enabled>
-        <name>SendExternalEmailAvailable</name>
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>

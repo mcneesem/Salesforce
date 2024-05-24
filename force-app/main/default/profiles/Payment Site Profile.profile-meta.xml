@@ -37,16 +37,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Account.DNBoptimizer__DNB_D_U_N_S_Number__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Account.DNBoptimizer__DnBCompanyRecord__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Account.DOZISF__ZoomInfo_Enrich_Status__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -798,11 +788,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Contact.Birthdate</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Contact.DNBoptimizer__DnBContactRecord__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>

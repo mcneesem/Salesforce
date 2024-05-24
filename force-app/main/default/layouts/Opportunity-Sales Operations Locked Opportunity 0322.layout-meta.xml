@@ -562,6 +562,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
+                <field>Notes_to_Finance__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
                 <field>NSP_Primary_Quote_Link__c</field>
             </layoutItems>
         </layoutColumns>
@@ -833,6 +837,9 @@
         <fields>NSP_WX_WA_Enrollment_Fee_Received__c</fields>
         <fields>NSP_Docupay_Upfront_fee_Inc_Tax__c</fields>
         <relatedList>NSP_Enrollment_Fee_Payment__c.NSP_Opportunity__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <relatedList>RelatedEntityHistoryList</relatedList>
     </relatedLists>
     <relatedObjects>AccountId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>

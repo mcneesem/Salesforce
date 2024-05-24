@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Queue xmlns="http://soap.sforce.com/2006/04/metadata">
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
+    <email>contact_center@insperity.com.invalid</email>
     <name>Contact Center Web Support</name>
-    <queueRoutingConfig>NSP_Web_Support</queueRoutingConfig>
+    <queueRoutingConfig>Messaging_Default</queueRoutingConfig>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>
     <queueSobject>
         <sobjectType>LiveChatTranscript</sobjectType>
+    </queueSobject>
+    <queueSobject>
+        <sobjectType>MessagingSession</sobjectType>
     </queueSobject>
 </Queue>

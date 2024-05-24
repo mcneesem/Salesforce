@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Group of Permission Sets to be granted to Team Money Matters.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Team Money Matters</label>
+    <permissionSets>Assign_Connected_App_Data_Loader</permissionSets>
+    <permissionSets>Assign_Connected_App_DocuSign</permissionSets>
+    <permissionSets>Assign_Connected_App_Workbench</permissionSets>
+    <permissionSets>dfsle__CLM_Administrator</permissionSets>
+    <permissionSets>dfsle__DocuSign_Administrator</permissionSets>
+    <status>Updated</status>
+</PermissionSetGroup>

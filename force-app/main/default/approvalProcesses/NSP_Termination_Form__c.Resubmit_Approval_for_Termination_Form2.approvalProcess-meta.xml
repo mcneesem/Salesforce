@@ -146,9 +146,12 @@
     IF(
     RecordType.Name = &apos;Payroll Specialist Form&apos;,
     AND( 
-        NOT(ISBLANK(TEXT(NSP_Revision__c))),
         NOT(ISBLANK(NSP_Project_Task__c)),
         NOT(ISBLANK(NSP_Client_Owner__c)),
+        NSP_CSA__c,
+        NSP_NY_VA_Report__c,
+        NOT(ISBLANK(Client_Owner_Email__c)),
+        NOT(ISBLANK(Client_Owner_Phone__c)),
         NOT(ISBLANK(NSP_Insperity_Blended_Role__c)),
         NOT(ISBLANK(NSP_Segment_Type__c)),
         NOT(ISBLANK(NSP_Payroll_Specialist__c)),
@@ -161,17 +164,14 @@
         NOT(ISBLANK(TEXT(NSP_EmployeesEverWorkedInStateVirginia__c))),
         NOT(ISBLANK(TEXT(NSP_EmployeesEverWorkedInStateNewYork__c))),
         NOT(ISBLANK(TEXT(NSP_TWC_Bad_faith_credit_letter__c))),
-        NOT(ISBLANK(TEXT(NSP_TerminatingDueToNaturalDisaster__c))),
         NOT(ISBLANK(TEXT(NSP_Term_Code__c))),
         NOT(ISBLANK(NSP_Last_Date_Wages_Paid_Through__c)),
-        NOT(ISBLANK(NSP_Client_Term_Date__c)),
         NOT(ISBLANK(TEXT(NSP_Status__c))),
         NOT(ISBLANK(NSP_Approver__c))
         ), 
     IF(
         RecordType.Name = &apos;Client Reinstatement&apos;,
         AND( 
-            NOT(ISBLANK(TEXT(NSP_Revision__c))),
             NOT(ISBLANK(NSP_Project_Task__c)),
             NOT(ISBLANK(TEXT(NSP_Term_Code__c))),
             NOT(ISBLANK(TEXT(NSP_Term_Reason__c))),
@@ -180,15 +180,16 @@
             NOT(ISBLANK(NSP_Client_Term_Date__c))
             ),
         AND( 
-            NOT(ISBLANK(TEXT(NSP_Revision__c))),
             NOT(ISBLANK(NSP_Project_Task__c)),
             NOT(ISBLANK(NSP_Client_Owner__c)),
+            NOT(ISBLANK(Client_Owner_Email__c)),
+            NOT(ISBLANK(Client_Owner_Phone__c)),
             NOT(ISBLANK(NSP_Insperity_Blended_Role__c)),
             NOT(ISBLANK(NSP_Segment_Type__c)),
             NOT(ISBLANK(NSP_Payroll_Specialist__c)),
             NOT(ISBLANK(NSP_Renewal_Date__c)),
             NOT(ISBLANK(NSP_Supervisor__c)),
-            NOT(ISBLANK(NSP_Credit_Specialist__c)),
+            NOT(ISBLANK(Credit_Specialist__c)),
             NOT(ISBLANK(NSP_Credit_Specialist_Phone__c)),
             NOT(ISBLANK(NSP_Account_Executive__c)),
             NOT(ISBLANK(NSP_Client_Liaison__c)),
@@ -197,10 +198,8 @@
             NOT(ISBLANK(TEXT(NSP_EmployeesEverWorkedInStateVirginia__c))),
             NOT(ISBLANK(TEXT(NSP_EmployeesEverWorkedInStateNewYork__c))),
             NOT(ISBLANK(TEXT(NSP_TWC_Bad_faith_credit_letter__c))),
-            NOT(ISBLANK(TEXT(NSP_TerminatingDueToNaturalDisaster__c))),
             NOT(ISBLANK(TEXT(NSP_Term_Code__c))),
             NOT(ISBLANK(NSP_Last_Date_Wages_Paid_Through__c)),
-            NOT(ISBLANK(NSP_Client_Term_Date__c)),
             NOT(ISBLANK(TEXT(NSP_Status__c)))
             )
         )
@@ -228,7 +227,7 @@
         </action>
     </initialSubmissionActions>
     <label>Resubmit Approval for Termination Form2</label>
-    <processOrder>2</processOrder>
+    <processOrder>4</processOrder>
     <recordEditability>AdminOnly</recordEditability>
     <showApprovalHistory>false</showApprovalHistory>
 </ApprovalProcess>

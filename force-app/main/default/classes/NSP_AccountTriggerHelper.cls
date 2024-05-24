@@ -10,6 +10,7 @@
 ***************************************************************************************************/
 public class NSP_AccountTriggerHelper {
     // test w/ NSP_AccountTriggerHelperTest, NSP_AccountContactRelationHelperTest, NSP_AccountContactServiceHelperTest (77%)
+    // test w/ NSP_AccountTriggerHelperTest, NSP_LeadTriggerHelperTest (77%)
     // test w/ NSP_AccountTriggerHelperTest (76%)
     // test w/ NSP_AccountContactRelationHelperTest (34%)
     // test w/ NSP_AccountContactServiceHelperTest (38%)
@@ -17,7 +18,6 @@ public class NSP_AccountTriggerHelper {
     private static final string PARTNER_RECORDTYPE = 'NSP_Partner_Client';
     private static final Id PARTNER_RECORDTYPE_ID = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get(PARTNER_RECORDTYPE).getRecordTypeId();
     private static final string DA_ROLE = 'District Administrator';
-    public static List < string > CanDeleteAccountLead = System.Label.CanDeleteAccountLead.split(',');
 //Added as part of 128176
 public static List<string> salesRoles = System.Label.Sales_Roles.split(',');
 // Added as part of 194459
@@ -94,18 +94,21 @@ if(accountObj.RecordTypeId==PARTNER_RECORDTYPE_ID
             //modified for user story 191911    
             List<PermissionSetAssignment> getPermSet = new List<PermissionSetAssignment>();
             if(userDetails.Profile.Name == NSP_SalesConstants.SalesManager){ 
-                                
                 getPermSet = [SELECT Id, PermissionSetId, PermissionSet.Name, AssigneeId
                 FROM PermissionSetAssignment WHERE Assignee.IsActive = true AND 
                 AssigneeId =: userDetails.Id AND PermissionSetId IN 
                 (SELECT ParentId FROM ObjectPermissions WHERE SobjectType = 'Account' 
                 AND PermissionsModifyAllRecords = true )];    
             }
+            Boolean hasNamedAccountGroupBypass = CustomPermissionController.checkUserPermission(
+                'Named_Account_Group_Bypass_Restrictions',
+                UserInfo.getUserId()
+            );
             //Added as part of 128176
             // Modified on 02/2023-part of 194459- Bypass for MM roles
-            if(userDetails.Profile.Name == NSP_SalesConstants.SalesManager && (!MMRoles.contains(userDetails.UserRole.Name))){
+            if(!hasNamedAccountGroupBypass && userDetails.Profile.Name == NSP_SalesConstants.SalesManager && (!MMRoles.contains(userDetails.UserRole.Name))){
                 if(!getPermSet.isEmpty() || Test.isRunningTest()){
-                restrictAccountChange(accountNewMap, accountOldMap, userDetails);
+                    restrictAccountChange(accountNewMap, accountOldMap, userDetails);
                 }
             }
         }catch(Exception ex){
@@ -215,17 +218,7 @@ if(accountObj.RecordTypeId==PARTNER_RECORDTYPE_ID
             }
             // Send the list to publish event bus
             if (accountEventList.size() > 0) {
-                Id profileId = userinfo.getProfileId();
-                //228901 - For fixing SOQL changed to metadata query
-                String profileName;
-                if(!NSP_Trigger_Switch__c.getOrgDefaults().NSP_SOQL_Switch__c){
-                    profileName = [SELECT Profile_ID__c, Profile_Name__c FROM NSP_Profile_Detail__mdt WHERE Profile_ID__c =: profileId].Profile_Name__c;
-                } else{
-                    profileName = [SELECT Id, Name FROM Profile WHERE Id =: profileId].Name;
-                }
-                /* Adding AND Condition as part of DF-01043 so that publishEventBus method will not trigger for Integration user profile*/
-                if (!profileName.containsIgnoreCase(System.label.NSP_Data_Migration_Profile_Name) && 
-                    !profileName.containsIgnoreCase(System.label.NSP_Integration_User_Profile_Name)) {
+                if (PlatformEventSettings__c.getInstance(UserInfo.getUserId()).IsEnabled_IntegrationAccountEvent__c) {
                     publishEventBus(accountEventList, updateResyncFlagAccountList);
                 }
             }
@@ -257,13 +250,6 @@ if(accountObj.RecordTypeId==PARTNER_RECORDTYPE_ID
                     accountEvent.add(New Integration_Account_Event__e(Id__c = accObj.Id));
                     updateAccountList.add(accObj);
                 }
-                if ( NSP_AccountTriggerHelper.isEnabledDeleteAccountTeams // kill switch added by AZD-236894
-                    && ( accObj.NSP_Delete_Account_Teams__c != null )
-                   )
-                {
-                    accountTeamMDeleteMap.put(accObj.Id, accObj.NSP_Delete_Account_Teams__c);
-                    accountTeamMDelete.put(accObj.Id, accObj.NSP_Integrated_With__c);
-                }
                 if ( ( accObj.NSP_Partner_Lifecycle__c != oldMap.get(accObj.Id).NSP_Partner_Lifecycle__c )
                     && ( accObj.RecordTypeId == PARTNER_RECORDTYPE_ID )
                     && (
@@ -286,26 +272,15 @@ if(accountObj.RecordTypeId==PARTNER_RECORDTYPE_ID
                     updateAddressAccountList.add(accObj);
                 }
             }
-            //for tracking history
-            if (!test.isRunningTest()) {
-                NSP_SObjectHistoryTrackingHelper objectFieldHistoryHelper = new NSP_SObjectHistoryTrackingHelper((Map < Id, sObject > ) newMap, (Map < Id, sObject > ) oldMap);
-                If(Limits.getQueueableJobs() != Limits.getLimitQueueableJobs()) {
-                    System.enqueueJob(objectFieldHistoryHelper);
-                }
+            if ( !Test.isRunningTest() ) {
+                NSP_SObjectHistoryTrackingHelper.enqueueJob(
+                    (Map<Id,sObject>)newMap ,
+                    (Map<Id,sObject>)oldMap
+                );
             }
-            
             // Send the list to publish event bus
             if (updateAccountList.size() > 0) {
-                /* Adding If Condition as part of DF-01043 so that publishEventBus method will not trigger for Integration user profile*/
-                Id profileId = userinfo.getProfileId();
-                //228901 - For fixing SOQL changed to metadata query
-                String profileName;
-                if(!NSP_Trigger_Switch__c.getOrgDefaults().NSP_SOQL_Switch__c){
-                    profileName = [SELECT Profile_ID__c, Profile_Name__c FROM NSP_Profile_Detail__mdt WHERE Profile_ID__c =: profileId].Profile_Name__c;
-                } else{
-                    profileName = [SELECT Id, Name FROM Profile WHERE Id =: profileId].Name;
-                }
-                if (String.isNotBlank(profileName) && !profileName.containsIgnoreCase(System.label.NSP_Integration_User_Profile_Name)) {
+                if (PlatformEventSettings__c.getInstance(UserInfo.getUserId()).IsEnabled_IntegrationAccountEvent__c) {
                     publishEventBus(accountEvent, updateAccountList);
                 }
             }
@@ -317,13 +292,6 @@ if(accountObj.RecordTypeId==PARTNER_RECORDTYPE_ID
             //Added for User Story - 194644
             if(updateAddressAccountList.size() > 0) {
                 updateAddressOnCheckList(updateAddressAccountList, newMap);
-            }
-            //call future method
-            if ( NSP_AccountTriggerHelper.isEnabledDeleteAccountTeams // kill switch added by AZD-236894
-                && ( accountTeamMDeleteMap.size() > 0 )
-                )
-            {
-                deleteAccountTeam(accountTeamMDeleteMap, accountTeamMDelete);
             }
         } catch (Exception ex) {
             NSP_CustomException.LogException(ex);
@@ -394,24 +362,16 @@ if(accountObj.RecordTypeId==PARTNER_RECORDTYPE_ID
         }
     }
 
-    /**
-     * Restricts non-Admins from deleting Accounts.
-     * @param oldList List of New Account.
-     * @param oldMap List of New Account.
-     * @return void
-     * Ticket 582488
-     * author           | Date              | Description
-     * -------------------------------------------------------------------------------------
-     * Ruchi Roy         08/08/2022           Created this method
-     *                
-     */
-public void restrictDelete(List<Account> accountList, Map < Id, Account > accountMap) {
-        Id profileId = UserInfo.getProfileId();
-        List < Profile > profileName = New List < Profile > ();
-        profileName = [SELECT Id, Name FROM Profile WHERE Id =: profileId];
-        for (Account accObject: accountList) {
-            if (!CanDeleteAccountLead.contains(profileName[0].Name)) {
-                accObject.addError(System.Label.CANNOT_DELETE_ACCOUNT);
+    public void restrictDelete( List<Account> records , Map<Id,Account> deprecated ) {
+        if ( ( records != null ) && !records.isEmpty() ) {
+            Boolean hasPermissionDelete = CustomPermissionController.checkUserPermission(
+                'Allow_Delete_Accounts' ,
+                UserInfo.getUserId()
+            );
+            if ( !hasPermissionDelete ) {
+                for ( Account record : records ) {
+                    record.addError( System.Label.CANNOT_DELETE_ACCOUNT );
+                }
             }
         }
     }
@@ -568,46 +528,6 @@ WHERE (userRole.Name = 'Loyalty Advisor' OR userRole.Name = 'Channel Program Man
         }
     }
 
-    // kill switch added by AZD-236894
-    public static Boolean isEnabledDeleteAccountTeams {
-        public get {
-            if ( isEnabledDeleteAccountTeams == null ) {
-                isEnabledDeleteAccountTeams = AccountTriggerSettings__c.getInstance( UserInfo.getUserId() ).IsEnabledDeleteAccountTeams__c;
-            }
-            return isEnabledDeleteAccountTeams;
-        }
-        private set;
-    }
-
-    // DEPRECATED BY AZD-236894
-    @future public static void deleteAccountTeam( Map<Id,DateTime> accountIdDeleteAccountTeamMap , Map<Id,String> accountTeamMDelete ) {
-        if ( NSP_AccountTriggerHelper.isEnabledDeleteAccountTeams ) { // kill switch added by AZD-236894
-            try {
-                List<NSP_Account_Team__c> accountTeamList = [
-                    SELECT Id, NSP_Account__c, NSP_Integrated_With__c from NSP_Account_Team__c
-                    WHERE NSP_Account__c IN: accountIdDeleteAccountTeamMap.keySet() AND createdBy.profile.name =: System.label.NSP_Integration_Profile_Name
-                    AND createddate <: accountIdDeleteAccountTeamMap.values()
-                    AND NSP_Integrated_With__c != ''
-                ];
-                List < NSP_Account_Team__c > accountDelTeamList = new List < NSP_Account_Team__c > ();
-                if (!accountTeamList.isEmpty()) {
-                    for (NSP_Account_Team__c nspAccTeam: accountTeamList) {
-                        if (nspAccTeam.NSP_Integrated_With__c == accountTeamMDelete.get(nspAccTeam.NSP_Account__c)) {
-                            NSP_Account_Team__c newAccTeam = new NSP_Account_Team__c();
-                            newAccTeam.Id = nspAccTeam.Id;
-                            accountDelTeamList.add(newAccTeam);
-                        }
-                    }
-                }
-                if (!accountDelTeamList.isEmpty()) {
-                    delete accountDelTeamList;
-                }
-            } catch (Exception ex) {
-                NSP_CustomException.LogException(ex);
-            }
-        }
-    }
-
     /* Description: This method sets signer to dummy user
      * BPA to Account owner if role is BPA
      * @param: accountList
@@ -648,58 +568,75 @@ WHERE (userRole.Name = 'Loyalty Advisor' OR userRole.Name = 'Channel Program Man
         }
     }
 
-// /**
-// * Restricts users assigned with Account View All/Modify All ps to Edit Accounts outside Sales Office.
-// * @param accountNewMap Map of New Account.
-// * @param accountOldMap Map of Old Account.
-// * @return void
-// * Ticket 128176
-// * author           | Date              | Description
-// * -------------------------------------------------------------------------------------
-// * Ruchi Roy         10/21/2022           Created this method
-// * Ruchi Roy         11/17/2022           Modified this method for 190991
-// * Rahul Singh       11/29/2022       	 Modified for user story 191911
-// * Modified on 02/2023-part of 194459- Bypass for MM roles
-// * Matt McNeese      05/26/2023       	 Modified for user story 215091
-// */
-public void restrictAccountChange (Map<Id, Account> accountNewMap, Map<Id, Account> accountOldMap, User loggedinUser){
-    Map<String, string> accOwnerSalesOfficeMap = new Map<String, string>();
-    Set<Id> accOwnerIdSet = new Set<Id>();
-    List<String> loggedInUserGrpName = new List<String>();
-    Set<Id> accountTeamMemberId = new Set<Id>();
-    List<User> userAvailable =[SELECT Id, Name FROM User WHERE Name = 'Available'];
-    
-    for(GroupMember gMem: [SELECT Id, GroupId, Group.Name, UserOrGroupId FROM GroupMember WHERE UserOrGroupId =: userinfo.getUserId()]){  
-        loggedInUserGrpName.add(gMem.Group.Name);
-    }
-    for(Account acc : [SELECT Id, OwnerId, owner.userRoleId, owner.UserRole.Name, ToLabel(owner.NSP_Sales_Office__c), ToLabel(owner.NSP_Sales_Office_Membership__c) 
-                       FROM Account WHERE Id IN: accountOldMap.keySet() AND Owner.UserRole.Name IN :salesRoles]){
-                           accOwnerSalesOfficeMap.put(acc.OwnerId, (acc.owner.NSP_Sales_Office__c));
-                       }
-    for(NSP_Account_Team__c accTeam : [SELECT ID, NSP_User__c,NSP_Account__c FROM NSP_Account_Team__c WHERE NSP_Account__c =:accountNewMap.keySet()] ){
-                    accountTeamMemberId.add(accTeam.NSP_User__c);
-    }                  
-    try{
-        for(Account acc : accountNewMap.values()){
-                    Integer isallowUpdate = 0;
-            if(!userAvailable.isEmpty() && accountOldMap.get(acc.Id).OwnerId == userAvailable[0].Id){
-                if(accountNewMap.get(acc.Id).OwnerId != userAvailable[0].Id && allowedAssignAvailableRoles.contains(loggedinUser.UserRole.Name)){
+    // Restricts users assigned with Account View All/Modify All ps to Edit Accounts outside Sales Office.
+    // @param accountNewMap Map of New Account.
+    // @param accountOldMap Map of Old Account.
+    // @return void
+    // Ticket 128176
+    // author           | Date              | Description
+    // -------------------------------------------------------------------------------------
+    // Ruchi Roy         10/21/2022           Created this method
+    // Ruchi Roy         11/17/2022           Modified this method for 190991
+    // Rahul Singh       11/29/2022       	 Modified for user story 191911
+    // Modified on 02/2023-part of 194459- Bypass for MM roles
+    // Matt McNeese      05/26/2023       	 Modified for user story 215091
+    public void restrictAccountChange (Map<Id, Account> accountNewMap, Map<Id, Account> accountOldMap, User loggedinUser){
+        Map<String, string> accOwnerSalesOfficeMap = new Map<String, string>();
+        Set<Id> accOwnerIdSet = new Set<Id>();
+        List<String> loggedInUserGrpName = new List<String>();
+        Set<Id> accountTeamMemberId = new Set<Id>();
+        List<User> userAvailable =[SELECT Id, Name FROM User WHERE Name = 'Available'];
+        for(GroupMember gMem: [
+                    SELECT Id, GroupId, Group.Name, UserOrGroupId
+                    FROM GroupMember
+                    WHERE UserOrGroupId =: userinfo.getUserId()
+                ]
+            )
+        {
+            loggedInUserGrpName.add(gMem.Group.Name);
+        }
+        for(Account acc : [
+                    SELECT Id, OwnerId, owner.userRoleId, owner.UserRole.Name, ToLabel(owner.NSP_Sales_Office__c), ToLabel(owner.NSP_Sales_Office_Membership__c) 
+                    FROM Account
+                    WHERE Id IN: accountOldMap.keySet() AND Owner.UserRole.Name IN :salesRoles
+                ]
+            )
+        {
+            accOwnerSalesOfficeMap.put(acc.OwnerId, (acc.owner.NSP_Sales_Office__c));
+        }
+        for(NSP_Account_Team__c accTeam : [
+                    SELECT ID, NSP_User__c,NSP_Account__c
+                    FROM NSP_Account_Team__c
+                    WHERE NSP_Account__c =:accountNewMap.keySet()
+                ]
+            )
+        {
+            accountTeamMemberId.add(accTeam.NSP_User__c);
+        }
+        try{
+            for(Account acc : accountNewMap.values()){
+                Integer isallowUpdate = 0;
+                if(accountOldMap.get(acc.Id).Zip_Based_Location__c != acc.Zip_Based_Location__c){
                     isallowUpdate++;
+                } else if(!userAvailable.isEmpty() && accountOldMap.get(acc.Id).OwnerId == userAvailable[0].Id){
+                    if(accountNewMap.get(acc.Id).OwnerId != userAvailable[0].Id && allowedAssignAvailableRoles.contains(loggedinUser.UserRole.Name)){
+                        isallowUpdate++;
+                    }
+                } else if(accOwnerSalesOfficeMap.isEmpty() || MMRoles.contains(loggedinUser.UserRole.Name) || ((!loggedInUserGrpName.isEmpty() && loggedInUserGrpName.contains(accOwnerSalesOfficeMap.get(accountOldMap.get(acc.ID).ownerId))) || accountTeamMemberId.contains(userInfo.getUserId()) || (accOwnerSalesOfficeMap.containsKey(userInfo.getUserId())))){
+                    isallowUpdate++;
+                }
+                if(isallowUpdate == 0){
+                    acc.addError(system.label.NSP_AccountTriggerError);
                 }
             }
-            else if(accOwnerSalesOfficeMap.isEmpty() || MMRoles.contains(loggedinUser.UserRole.Name) || ((!loggedInUserGrpName.isEmpty() && 
-                    loggedInUserGrpName.contains(accOwnerSalesOfficeMap.get(accountOldMap.get(acc.ID).ownerId))) || accountTeamMemberId.contains(userInfo.getUserId()) || 
-                    (accOwnerSalesOfficeMap.containsKey(userInfo.getUserId())))){
-                    isallowUpdate++;
-                    }
-                    if(isallowUpdate == 0){
-                        acc.addError(system.label.NSP_AccountTriggerError);
-                    }
-                }
-    } catch(Exception ex) {
-        NSP_ErrorLogHandler.logSaveException(NSP_AccountTriggerHelper.class.getName(),'restrictAccountChange',ex.getMessage());
+        } catch(Exception e) {
+            NSP_ErrorLogHandler.logSaveException(
+                NSP_AccountTriggerHelper.class.getName() ,
+                'restrictAccountChange' ,
+                e.getMessage() + ' ~ ' + e.getStackTraceString()
+            );
+        }
     }
-}
 
 /**
 * Description: This method returns AccountTeamMember.
@@ -821,10 +758,7 @@ public static String getTeamMember(Id userId, Id accountId){
         }
         // Send the list to publish event bus
         if(accountDeleteEventList.size() > 0){
-            Id profileId=userinfo.getProfileId();
-            String profileName=[SELECT Id,Name FROM Profile WHERE Id=:profileId].Name;
-            /* Adding Condition as part of DF-01043 so that publishEventBus method will not trigger for Integration user profile*/
-            if(!profileName.containsIgnoreCase(System.label.NSP_Integration_User_Profile_Name)){ // see also "Trigger Switch" Custom Setting
+            if(PlatformEventSettings__c.getInstance(UserInfo.getUserId()).IsEnabled_IntegrationAccountDeleteEvent__c) { // see also "Trigger Switch" Custom Setting
                 publishEventBus(accountDeleteEventList, updateResyncFlagAccountList);
             }
         }

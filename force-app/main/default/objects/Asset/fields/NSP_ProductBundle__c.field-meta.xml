@@ -4,6 +4,7 @@
     <externalId>false</externalId>
     <label>Product Bundle</label>
     <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>true</trackHistory>
     <type>Picklist</type>
     <valueSet>
@@ -61,7 +62,7 @@
                 <default>false</default>
                 <label>Expensable</label>
             </value>
-        </valueSetDefinition>        
+        </valueSetDefinition>
         <valueSettings>
             <controllingFieldValue>Performance Management</controllingFieldValue>
             <controllingFieldValue>Recruiting Services</controllingFieldValue>

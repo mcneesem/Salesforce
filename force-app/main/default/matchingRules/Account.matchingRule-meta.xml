@@ -1,3 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<MatchingRules xmlns="http://soap.sforce.com/2006/04/metadata"/>
-
+<MatchingRules xmlns="http://soap.sforce.com/2006/04/metadata">
+    <matchingRules>
+        <fullName>Lead_to_Account_Match_matching_rule</fullName>
+        <booleanFilter>(1 AND 2) OR 3</booleanFilter>
+        <description>Matching on DU DUNS or DUNS # or FEIN</description>
+        <label>Lead to Account Match matching rule</label>
+        <matchingRuleItems>
+            <blankValueBehavior>NullNotAllowed</blankValueBehavior>
+            <fieldName>DnB_Domestic_Ultimate_DUNS__c</fieldName>
+            <matchingMethod>Exact</matchingMethod>
+        </matchingRuleItems>
+        <matchingRuleItems>
+            <blankValueBehavior>NullNotAllowed</blankValueBehavior>
+            <fieldName>DNB_Connect_DUNS_Number__c</fieldName>
+            <matchingMethod>Exact</matchingMethod>
+        </matchingRuleItems>
+        <matchingRuleItems>
+            <blankValueBehavior>NullNotAllowed</blankValueBehavior>
+            <fieldName>NSP_FEIN__c</fieldName>
+            <matchingMethod>Exact</matchingMethod>
+        </matchingRuleItems>
+        <ruleStatus>Active</ruleStatus>
+    </matchingRules>
+</MatchingRules>

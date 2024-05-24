@@ -4,6 +4,52 @@
     <active>true</active>
     <label>Manually Created</label>
     <picklistValues>
+        <picklist>NSP_Account_Health__c</picklist>
+        <values>
+            <fullName>Favorable</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Neutral</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Somewhat favorable</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Somewhat unfavorable</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Unfavorable</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Renewal_Probability__c</picklist>
+        <values>
+            <fullName>Favorable</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Neutral</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Somewhat favorable</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Somewhat unfavorable</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Unfavorable</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>NSP_Type__c</picklist>
         <values>
             <fullName>Common Ownership</fullName>

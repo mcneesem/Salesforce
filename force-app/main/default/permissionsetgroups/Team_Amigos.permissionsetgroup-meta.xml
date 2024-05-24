@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Group of Permission Sets to be granted to Team Amigos Users.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Team Amigos</label>
+    <permissionSets>Assign_Connected_App_Workbench</permissionSets>
+    <permissionSets>One_Time_Sync_Single_Record</permissionSets>
+    <status>Updated</status>
+</PermissionSetGroup>

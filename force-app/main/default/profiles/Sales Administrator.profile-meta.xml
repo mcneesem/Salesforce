@@ -1042,6 +1042,14 @@
         <enabled>false</enabled>
     </classAccesses>
     <custom>true</custom>
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Allow_Delete_Accounts</name>
+    </customPermissions>
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Allow_Delete_Leads</name>
+    </customPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>User.NSP_Running_Sales_Division__c</field>
@@ -1225,16 +1233,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Account.Client_Number_TA__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Account.DNBoptimizer__DNB_D_U_N_S_Number__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Account.DNBoptimizer__DnBCompanyRecord__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -3209,11 +3207,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Contact.DNBoptimizer__DnBContactRecord__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Contact.DOZISF__ZoomInfo_Company_ID__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -4321,21 +4314,6 @@
         <editable>false</editable>
         <field>Lead.Current_Medical_Carrier__c</field>
         <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Lead.DNBoptimizer__DNB_D_U_N_S_Number__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Lead.DNBoptimizer__DnBCompanyRecord__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Lead.DNBoptimizer__DnBContactRecord__c</field>
-        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -13742,10 +13720,6 @@
     </flowAccesses>
     <flowAccesses>
         <enabled>false</enabled>
-        <flow>NSP_Opportunity_Process_Builder</flow>
-    </flowAccesses>
-    <flowAccesses>
-        <enabled>false</enabled>
         <flow>NSP_Opportunity_Team_Member_Creation</flow>
     </flowAccesses>
     <flowAccesses>
@@ -15024,7 +14998,7 @@
         <name>LightningExperienceUser</name>
     </userPermissions>
     <userPermissions>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
         <name>ListEmailSend</name>
     </userPermissions>
     <userPermissions>

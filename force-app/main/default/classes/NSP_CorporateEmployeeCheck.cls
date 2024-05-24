@@ -10,6 +10,7 @@ Modification Log     :
 * -------------------------------------------------------------------------------------------------  
 */
 public class NSP_CorporateEmployeeCheck {
+    // test w/ NSP_CorporateEmployeeCheckTest,NSP_CaseTriggerHelperTest (80%)
     
     private static Map<Id,Account> accIdAccMap ;
     private static Map<Id, List<AccountContactRelation>> conIdListOfACRMap; 
@@ -26,44 +27,46 @@ public class NSP_CorporateEmployeeCheck {
 * Story: STY-03784
 * ********************************************************************************************/
     public static void stampCorporateEmployeeEECheckbox(Set<Id> acrAccIdSet, Set<Id> acrConIdSet, List<Case> newList, Boolean isAcr){
-        
-        accIdAccMap =new Map<Id,Account>([SELECT Id, Name FROM Account WHERE Id IN: acrAccIdSet]);
-        
-        conIdListOfACRMap = new Map<Id, List<AccountContactRelation>>();
-        conIdInspAccIdMap = new Map<Id, Id>();
-        conIdInspNotTerminatedAccIdMap = new Map<Id, Id>();
-        conIdNotTerminateACRdMap = new Map<Id, List<AccountContactRelation>>();
-        conIdTerminatedOrBlankACRMap = new Map<Id, List<AccountContactRelation>>();
-        conIdACRListMap = new Map<Id, List<AccountContactRelation>>();
-        List<Case> cseToUpdateList = new List<Case>();
-        
-        for(AccountContactRelation acr : [SELECT Id, AccountId, ContactId, NSP_Employee_Status__c FROM AccountContactRelation WHERE ContactId IN: acrConIdSet]){
-            getconIdACRListMap(acr); // Framing the map of Con and ACRs
-            insperityAccountId = test.isRunningTest() ? acr.AccountId : System.Label.NSP_Insperity_Account;
-            if(accIdAccMap.containsKey(acr.AccountId) && accIdAccMap.get(acr.AccountId).Id == insperityAccountId){
-                conIdInspAccIdMap.put(acr.ContactId, acr.AccountId);
-                if(acr.NSP_Employee_Status__c != NSP_ServiceConstants.TERMINATED_STATUS){
-                    conIdInspNotTerminatedAccIdMap.put(acr.ContactId, acr.AccountId);
+        Boolean isNewCorpEEEnable = Case_Settings__c.getInstance(UserInfo.getUserId() ).Enable_New_Corp_EE_Logic__c;
+        if(!isNewCorpEEEnable){
+            accIdAccMap =new Map<Id,Account>([SELECT Id, Name FROM Account WHERE Id IN: acrAccIdSet]);
+            
+            conIdListOfACRMap = new Map<Id, List<AccountContactRelation>>();
+            conIdInspAccIdMap = new Map<Id, Id>();
+            conIdInspNotTerminatedAccIdMap = new Map<Id, Id>();
+            conIdNotTerminateACRdMap = new Map<Id, List<AccountContactRelation>>();
+            conIdTerminatedOrBlankACRMap = new Map<Id, List<AccountContactRelation>>();
+            conIdACRListMap = new Map<Id, List<AccountContactRelation>>();
+            List<Case> cseToUpdateList = new List<Case>();
+            
+            for(AccountContactRelation acr : [SELECT Id, AccountId, ContactId, NSP_Employee_Status__c FROM AccountContactRelation WHERE ContactId IN: acrConIdSet]){
+                getconIdACRListMap(acr); // Framing the map of Con and ACRs
+                insperityAccountId = test.isRunningTest() ? acr.AccountId : System.Label.NSP_Insperity_Account;
+                if(checkForInspAcc(accIdAccMap,conIdInspAccIdMap,null,acr,true)){
+                    conIdInspAccIdMap.put(acr.ContactId, acr.AccountId);
+                    if(acr.NSP_Employee_Status__c != NSP_ServiceConstants.TERMINATED_STATUS){
+                        conIdInspNotTerminatedAccIdMap.put(acr.ContactId, acr.AccountId);
+                    }
+                } 
+                
+                getconIdTerminatedACRMap(acr);  // framing the map of Contact and Terminated or Blank Employee Status ACRs
+                getconIdNotTerminateACRdMap(acr); // framing the map of Contact and Not Terminated or Not Blank Employee Status ACRs 
+                
+            }        
+            try{
+                for(Case cse : newList){
+                    cse.NSP_CorporateEmployeeEE__c = oneAcrWithInsperityAccount(cse);
+                    cseToUpdateList.add(cse);
                 }
-            } 
-            
-            getconIdTerminatedACRMap(acr);  // framing the map of Contact and Terminated or Blank Employee Status ACRs
-            getconIdNotTerminateACRdMap(acr); // framing the map of Contact and Not Terminated or Not Blank Employee Status ACRs 
-            
-        }        
-        try{
-            for(Case cse : newList){
-                cse.NSP_CorporateEmployeeEE__c = oneAcrWithInsperityAccount(cse);
-                cseToUpdateList.add(cse);
+                
+                if(!cseToUpdateList.isEmpty() && isAcr){
+                    List<Database.SaveResult> results = Database.update(cseToUpdateList,false); 
+                    NSP_ErrorLogHandler.logSaveResultsException('NSP_CorporateEmployeeCheck', 'stampCorporateEmployeeEECheckbox', results );
+                }
+                
+            }catch(Exception ex){
+                NSP_CustomException.LogException(ex);
             }
-            
-            if(!cseToUpdateList.isEmpty() && isAcr){
-                List<Database.SaveResult> results = Database.update(cseToUpdateList,false); 
-                NSP_ErrorLogHandler.logSaveResultsException('NSP_CorporateEmployeeCheck', 'stampCorporateEmployeeEECheckbox', results );
-            }
-            
-        }catch(Exception ex){
-            NSP_CustomException.LogException(ex);
         } 
     }
     
@@ -114,22 +117,22 @@ public class NSP_CorporateEmployeeCheck {
     }
     
     /***********************************************************************************************
-* MethodName: oneAcrWithInsperityAccount
-* Description : A case is created against a contact where the Contact has only one ACR AND that is with the Insperity Account
-* Params:      case cse
-* Story: STY-03784
-* ********************************************************************************************/
+    * MethodName: oneAcrWithInsperityAccount
+    * Description : A case is created against a contact where the Contact has only one ACR AND that is with the Insperity Account
+    * Params:      case cse
+    * Story: STY-03784
+    * ********************************************************************************************/
     private static Boolean oneAcrWithInsperityAccount(case cse){
         Boolean isCorpCase = false;
-        
-        if(!conIdACRListMap.isEmpty() && conIdACRListMap.get(cse.contactId).size() == 1 &&
-           conIdInspAccIdMap.get(cse.ContactId) != null &&
-           accIdAccMap.get(conIdInspAccIdMap.get(cse.ContactId)).Id == insperityAccountId){
+        if(!conIdACRListMap.isEmpty()
+            && conIdACRListMap.get(cse.contactId).size() == 1
+            && conIdInspAccIdMap.get(cse.ContactId) != null
+            && checkForInspAcc(accIdAccMap,conIdInspAccIdMap,cse,null,false)
+        ){
             isCorpCase = true;
-           }else{
+        }else{
             isCorpCase = contactWasclientEmployee(cse);
-           }
-        
+        }
         return isCorpCase;
     }
     
@@ -179,27 +182,27 @@ the Employee Status on one of the other ACRs does not = Terminated
     }
     
     /***********************************************************************************************
-* MethodName: contactWorksForBothInsperityAndClient
-* Description :  A case is created against a contact where the contact has more than one ACR AND 
-the Employee Status does not = Terminated on the Insperity account AND 
-the Employee status does not = Terminated on the other ACRs
-* Params:      case cse
-* Story: STY-03784
-* ********************************************************************************************/
+    * MethodName: contactWorksForBothInsperityAndClient
+    * Description :  A case is created against a contact where the contact has more than one ACR AND 
+    * the Employee Status does not = Terminated on the Insperity account AND 
+    * the Employee status does not = Terminated on the other ACRs
+    * Params:      case cse
+    * Story: STY-03784
+    * ********************************************************************************************/
     private static Boolean contactWorksForBothInsperityAndClient(Case cse){
         Boolean isCorpCase = false;
-        
-        if(!conIdInspNotTerminatedAccIdMap.isEmpty() && 
-           String.isNotBlank(conIdInspNotTerminatedAccIdMap.get(cse.ContactId)) &&
-           !conIdNotTerminateACRdMap.get(cse.ContactId).isEmpty()){
-               if(String.isNotBlank(conIdInspAccIdMap.get(cse.ContactId))
-                  && accIdAccMap.containsKey(cse.AccountId) && accIdAccMap.get(conIdInspAccIdMap.get(cse.ContactId)).Id == insperityAccountId){
-                    isCorpCase = true;      
-                  }   
-           }else{
+        if(!conIdInspNotTerminatedAccIdMap.isEmpty()
+            && String.isNotBlank(conIdInspNotTerminatedAccIdMap.get(cse.ContactId))
+            && !conIdNotTerminateACRdMap.get(cse.ContactId).isEmpty()
+        ){
+            if(String.isNotBlank(conIdInspAccIdMap.get(cse.ContactId)) 
+                && checkForInspAcc(accIdAccMap,conIdInspAccIdMap,cse,null,false)
+            ){
+                isCorpCase = true;
+            }
+        }else{
             isCorpCase = contactDoNotWorksForBothInsperityAndClient(cse);
-           }
-        
+        }
         return isCorpCase;
     }
     
@@ -217,5 +220,29 @@ the Employee status does not = Terminated on the other ACRs
         }
         
         return isCorpCase;
+    }
+
+    /***********************************************************************************************
+    * MethodName: CheckforInsperityAccount
+    * Description : Method to check if the Account is insperity Account or Not
+    * Params:  Map<Id,Account> accIdAccMap,Map<Id, Id> conIdInspAccIdMap,case cse,AccountContactRelation acr,isAcr
+    * Story: Bug-237020
+    * ********************************************************************************************/
+    private static Boolean checkForInspAcc(Map<Id,Account> accIdAccMap,Map<Id, Id> conIdInspAccIdMap,case cse,AccountContactRelation acr,Boolean isAcr){
+        Boolean con = false;
+        if(isAcr){
+            if(accIdAccMap.isEmpty()){
+                con = acr.AccountId == insperityAccountId;
+            }else{
+                con = accIdAccMap.containsKey(acr.AccountId) && accIdAccMap.get(acr.AccountId).Id == insperityAccountId;
+            }
+        }else{
+            if(accIdAccMap.isEmpty()){
+                con = conIdInspAccIdMap.get(cse.ContactId) == insperityAccountId;
+            }else{
+                con = accIdAccMap.containsKey(cse.AccountId) && accIdAccMap.get(conIdInspAccIdMap.get(cse.ContactId)).Id == insperityAccountId;
+            }
+        }
+        return con;
     }
 }

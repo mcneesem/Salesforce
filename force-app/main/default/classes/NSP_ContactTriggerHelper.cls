@@ -4,8 +4,9 @@
 *    @date: 06/07/2021
 *    @author: Tejas
 */
-
 public class NSP_ContactTriggerHelper {
+    // test w/ NSP_ContactTriggerHelperTest (79%)
+
     public static final String INSPERITYROLE = 'Insperity';
     public static final String CUSTOMERROLE = 'Customer';
     public static final String COMMUNITYLICENSE = 'Customer Community';
@@ -103,45 +104,51 @@ public class NSP_ContactTriggerHelper {
         }
     }        
         
-    /**
-* Iterates throught the list of new Contact and passes the required attributes to other methods.
-* @param newList List of New Contact.
-* @param newMap List of New Contact.
-* @return void
-*                
-*/
-
-public void afterInsertDirector(List < Contact > newList, Map < Id, Contact > newMap) {
-    Map<Id, Contact> ConIdcontactMap = new Map<Id,Contact>();
-    List < Contact > clientRefernceContactList = new List < Contact > ();
-    //Modified as part of SOQL fix 228901
-    String loggedInUserProfile_Name;
-    List<Profile> loggedInUserProfileName = new List<Profile>();
+    //
+    // Iterates throught the list of new Contact and passes the required attributes to other methods.
+    // @param newList List of New Contact.
+    // @param newMap List of New Contact.
+    // @return void
+    //
+    public void afterInsertDirector( List<Contact> newList , Map <Id,Contact > newMap ) {
+        Map<Id, Contact> ConIdcontactMap = new Map<Id,Contact>();
+        List < Contact > clientRefernceContactList = new List < Contact > ();
+        //Modified as part of SOQL fix 228901
+        String loggedInUserProfile_Name;
+        List<Profile> loggedInUserProfileName = new List<Profile>();
         if(NSP_Trigger_Switch__c.getOrgDefaults().NSP_SOQL_Switch__c){
             loggedInUserProfileName = getLoggedInUserProfile();
         } else {
             loggedInUserProfile_Name = getLoggedInUserProfileName();
-        } 
-    //Modified as part of SOQL fix 228901 
-    //if(loggedInUserProfileName.size() > 0 && !INT_DM_PROFILES.contains(loggedInUserProfileName[0].Name))
-    if((loggedInUserProfile_Name != null && !INT_DM_PROFILES.contains(loggedInUserProfile_Name)) 
-        || (loggedInUserProfileName.size() > 0 && !INT_DM_PROFILES.contains(loggedInUserProfileName[0].Name))) {
-        for (Contact conObj: newList) {
-          if (conObj.NSP_Client_Reference__c) {
-            clientRefernceContactList.add(conObj);
-          }
-          ConIdcontactMap.put(conObj.Id, conObj);
-        
         }
-       if(!ConIdcontactMap.isEmpty()){
-               updateWorkPhoneEmailOnACR(ConIdcontactMap);
-       } 
-      if (clientRefernceContactList.size() > 0) {
-        createTaskforClientReference(clientRefernceContactList);
-      }
+        //Modified as part of SOQL fix 228901
+        if ( ( loggedInUserProfile_Name != null && !INT_DM_PROFILES.contains(loggedInUserProfile_Name) )
+            || ( loggedInUserProfileName.size() > 0 && !INT_DM_PROFILES.contains(loggedInUserProfileName[0].Name) )
+            )
+        {
+            for (Contact conObj: newList) {
+                if (conObj.NSP_Client_Reference__c) {
+                    clientRefernceContactList.add(conObj);
+                }
+                ConIdcontactMap.put(conObj.Id, conObj);
+            }
+            if(!ConIdcontactMap.isEmpty()){
+                updateWorkPhoneEmailOnACR(ConIdcontactMap);
+            }
+            if (clientRefernceContactList.size() > 0) {
+                createTaskforClientReference(clientRefernceContactList);
+            }
+        }
+        if (newList != null && !newList.isEmpty() && Limits.getQueueableJobs() < Limits.getLimitQueueableJobs() ) {
+            System.enqueueJob(
+                new QueueableTermFormJunctionObjects(
+                    newList,
+                    null,
+                    NSP_ServiceConstants.INSERT_TRIGGER
+                )
+            );
+        }
     }
-}
-    
     
     /**
 * Iterates throught the list of new Contact and passes the required attributes to other methods.
@@ -174,8 +181,16 @@ public void afterInsertDirector(List < Contact > newList, Map < Id, Contact > ne
                 sUserIds.add(conObj.pse__Salesforce_User__c);
                 lContacts.add(conObj);
             }
-             if(conObj.NSP_SSN__c != null && conObj.NSP_SSN__c.length() > 4 && oldMap.get(conObj.Id).NSP_SSN__c != conObj.NSP_SSN__c){
-            conObj.NSP_Last_4Digit_Of_SSN__c = conObj.NSP_SSN__c.right(4);
+            //Set and reset NSP_Last_4Digit_Of_SSN__c field
+            if ( oldMap.containsKey( conObj.Id )
+                && ( oldMap.get( conObj.Id ) != null )
+                && ( oldMap.get( conObj.Id ).NSP_SSN__c != conObj.NSP_SSN__c ) // detect an SSN change...
+                )
+            {
+                conObj.NSP_Last_4Digit_Of_SSN__c = null; // reset the last 4 digits...
+                if ( String.isNotBlank( conObj.NSP_SSN__c ) && ( conObj.NSP_SSN__c.length() > 4 ) ) {
+                    conObj.NSP_Last_4Digit_Of_SSN__c = conObj.NSP_SSN__c.right( 4 ); // rebuild the last 4 digits...
+                }
             }
         }
          if(sUserIds.size() > 0){
@@ -234,7 +249,7 @@ public void afterInsertDirector(List < Contact > newList, Map < Id, Contact > ne
     public void publishEventBus(List<Integration_Account_Event__e> eventList, Set<Id> idSet) {
         
         List<Account> accountList = [SELECT Id, Name, NSP_Ready_for_Integration_Sync__c FROM Account WHERE Id =: idSet];
-        if(!eventList.isEmpty()) {
+        if(PlatformEventSettings__c.getInstance(UserInfo.getUserId()).IsEnabled_IntegrationAccountEvent__c && !eventList.isEmpty()) {
             // Publishing records Event 
             EventBus.publish(eventList);
             for(Account account : accountList) {
@@ -245,19 +260,19 @@ public void afterInsertDirector(List < Contact > newList, Map < Id, Contact > ne
         Update accountList;
     }
     
-    
-    /**
-* Iterates through the list of new Contact and passes the required attributes to other methods.
-* @param newList List of New Contact.
-* @param newMap List of New Contact.
-* @return void
-*                
-*/
-    
+    //
+    // Iterates through the list of new Contact and passes the required attributes to other methods.
+    // @param newList List of New Contact.
+    // @param newMap List of New Contact.
+    // @return void
+    //
     public void afterUpdateDirector(Map<Id, Contact> newMap,Map<Id, Contact> oldMap) {
         //Modified as part of SOQL fix 228901 
         String loggedInUserProfile_Name;
-    	List<Profile> loggedInUserProfileName = New List<Profile>();
+        List<Contact> queueNewContact = new List<Contact>();
+        Map<Id, Contact> queueOldMap = new Map<Id, Contact>();
+        Set<Id> processedContact = new Set<Id>();
+        List<Profile> loggedInUserProfileName = New List<Profile>();
         if(NSP_Trigger_Switch__c.getOrgDefaults().NSP_SOQL_Switch__c){
             loggedInUserProfileName = getLoggedInUserProfile();
         } else {
@@ -266,43 +281,67 @@ public void afterInsertDirector(List < Contact > newList, Map < Id, Contact > ne
         try{
             List<Contact> clientRefernceContactList = new List<Contact>();
             Map<Id, Contact> ConIdcontactMap = new Map<Id,Contact>();
-            Contact oldContact;
-        //Modified as part of SOQL fix 228901             
-            //if(loggedInUserProfileName.size() > 0 && !INT_DM_PROFILES.contains(loggedInUserProfileName[0].Name))
-            if((loggedInUserProfile_Name != null && !INT_DM_PROFILES.contains(loggedInUserProfile_Name)) 
-                || (loggedInUserProfileName.size() > 0 && !INT_DM_PROFILES.contains(loggedInUserProfileName[0].Name))){
-              for(Contact conObj : newMap.values()){
-                oldContact = oldMap.get(conObj.Id);
-                if(conObj.NSP_Client_Reference__c != oldMap.get(conObj.Id).NSP_Client_Reference__c 
-                   && conObj.NSP_Client_Reference__c){
-                       clientRefernceContactList.add(conObj);
-                   }
-                if((conObj.NSP_Work_Phone__c != null && oldContact.NSP_Work_Phone__c != conObj.NSP_Work_Phone__c) || 
-                   (conObj.NSP_Work_email__c != null && oldContact.NSP_Work_email__c != conObj.NSP_Work_email__c) ||
-                   oldContact.NSP_Employee_Status__c != conObj.NSP_Employee_Status__c ||
-                   oldContact.NSP_Status_Date__c != conObj.NSP_Status_Date__c ||
-                   oldContact.NSP_Job_Title__c != conObj.NSP_Job_Title__c){
-                    ConIdcontactMap.put(conObj.Id, conObj);
+            //Modified as part of SOQL fix 228901
+            if ( ( loggedInUserProfile_Name != null && !INT_DM_PROFILES.contains(loggedInUserProfile_Name) )
+                || ( loggedInUserProfileName.size() > 0 && !INT_DM_PROFILES.contains(loggedInUserProfileName[0].Name) )
+                )
+            {
+                for(Contact conObj : newMap.values()){
+                    Contact oldContact = ( ( oldMap != null ) ? oldMap.get(conObj.Id) : null );
+                    if ( oldContact != null ) {
+                        if ( conObj.NSP_Client_Reference__c != oldContact.NSP_Client_Reference__c
+                            && conObj.NSP_Client_Reference__c
+                            )
+                        {
+                            clientRefernceContactList.add(conObj);
+                        }
+                        if ( (conObj.NSP_Work_Phone__c != null && oldContact.NSP_Work_Phone__c != conObj.NSP_Work_Phone__c)
+                            || (conObj.NSP_Work_email__c != null && oldContact.NSP_Work_email__c != conObj.NSP_Work_email__c)
+                            || oldContact.NSP_Employee_Status__c != conObj.NSP_Employee_Status__c
+                            || oldContact.NSP_Status_Date__c != conObj.NSP_Status_Date__c
+                            || oldContact.NSP_Job_Title__c != conObj.NSP_Job_Title__c
+                            )
+                        {
+                            ConIdcontactMap.put(conObj.Id, conObj);
+                        }
+                    }
                 }
-              }
-            
-              if(clientRefernceContactList.size() > 0){
-                 createTaskforClientReference(clientRefernceContactList);
-              }
-            if(!ConIdcontactMap.isEmpty()){
-                updateWorkPhoneEmailOnACR(ConIdcontactMap);
+                if(clientRefernceContactList.size() > 0){
+                    createTaskforClientReference(clientRefernceContactList);
+                }
+                if(!ConIdcontactMap.isEmpty()){
+                    updateWorkPhoneEmailOnACR(ConIdcontactMap);
+                }
             }
-            }
-            //for tracking history
-            NSP_SObjectHistoryTrackingHelper objectFieldHistoryHelper = new NSP_SObjectHistoryTrackingHelper((Map<Id, sObject>)newMap, (Map<Id, sObject>)oldMap);
-            If( Limits.getQueueableJobs() != Limits.getLimitQueueableJobs()) {
-                System.enqueueJob(objectFieldHistoryHelper);  
-            }
+            NSP_SObjectHistoryTrackingHelper.enqueueJob(
+                (Map<Id,sObject>)newMap ,
+                (Map<Id,sObject>)oldMap
+            );
         }catch(Exception ex){
             NSP_CustomException.LogException(ex);
-        } 
+        }
+        if(newMap != null){
+            for(Contact conObj : newMap.values()){
+                Contact oldContact = ( ( oldMap != null ) ? oldMap.get(conObj.Id) : null );
+                if(oldContact != null && conObj.AccountId !=null && conObj.AccountId != oldContact.AccountId && !processedContact.contains(conObj.Id))
+                {
+                    queueOldMap.put(conObj.Id,oldContact);
+                    queueNewContact.add(conObj);
+                    processedContact.add(conObj.Id); 
+                }
+            }
+        }
+        if (!queueNewContact.isEmpty() && Limits.getQueueableJobs() < Limits.getLimitQueueableJobs() ) {
+            System.enqueueJob(
+                new QueueableTermFormJunctionObjects(
+                    queueNewContact,
+                    queueOldMap,
+                    NSP_ServiceConstants.UPDATE_TRIGGER
+                )
+            );
+        }
     }
-    
+
     /**
 * Iterates throught the list of new Contact and passes the required attributes to other methods.
 * @param newList List of New Contact.
@@ -553,21 +592,32 @@ public String formatCommonPattern(String input) {
                 .addFilter('Id', UserInfo.getProfileId()).setSecurityEnforce(false).build();
         return Database.query(queryProfile);
     }
-    
-    /**
-	* Method Name : getLoggedInUserProfileName 
-	* Date : 11/08/2023
-	* @param   
-	* @return String  profileName
-	*/   
+
+    //
+    // Method Name : getLoggedInUserProfileName 
+    // Date : 11/08/2023
+    // @param
+    // @return String profileName
+    //
     public String getLoggedInUserProfileName() {
-        
-        Id profileId = userinfo.getProfileId();
-        String profileName = [SELECT Profile_ID__c, Profile_Name__c FROM NSP_Profile_Detail__mdt WHERE Profile_ID__c =: profileId LIMIT 1].Profile_Name__c;
-		
+        String profileName = '';
+        List<User> autouser = [ SELECT Alias FROM User WHERE ( Id = :UserInfo.getUserId() ) ];
+        if ( !autoUser.isEmpty() && ( autoUser[0].Alias == 'autoproc' ) ) {
+            profileName = 'AutoProc';
+        } else {
+            List<NSP_Profile_Detail__mdt> profileDetails = [
+                SELECT Profile_Name__c
+                FROM NSP_Profile_Detail__mdt
+                WHERE ( Profile_ID__c = :UserInfo.getProfileId() )
+                LIMIT 1
+            ];
+            if ( !profileDetails.isEmpty() ) {
+                profileName = profileDetails[0].Profile_Name__c;
+            }
+        }
         return profileName;
     }
-    
+
     /**
 	* Method Name : getRegionId 
 	* Description : STY-02849/DF-05013 Method to United State region id
@@ -603,4 +653,5 @@ public String formatCommonPattern(String input) {
         }
         return null;
     }
+    
 }

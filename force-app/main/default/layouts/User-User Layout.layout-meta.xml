@@ -70,6 +70,10 @@
                 <behavior>Edit</behavior>
                 <field>NSP_Dispatch_Region__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Current_Tier_Level__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

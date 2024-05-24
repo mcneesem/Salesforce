@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_HR_Contact_Methods__c</fullName>
     <externalId>false</externalId>
-    <label>HR Contact Methods</label>
+    <label>HR Contact Method</label>
     <required>false</required>
     <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>

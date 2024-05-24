@@ -7,6 +7,6 @@
     <inlineHelpText>The decision maker of the company being referred is aware and consents to Insperity (or a representative from a third-party vendor, such as Certify) contacting the potential Insperity client.</inlineHelpText>
     <label>Referral consent</label>
     <trackFeedHistory>false</trackFeedHistory>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <type>Checkbox</type>
 </CustomField>

@@ -2,11 +2,27 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>54.0</apiVersion>
     <assignments>
+        <name>Default_Account_Description</name>
+        <label>Default Account Description</label>
+        <locationX>534</locationX>
+        <locationY>600</locationY>
+        <assignmentItems>
+            <assignToReference>varAccountDescription</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Account_Record.Description</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Check_Lead_Description</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <description>map the existing Account Status from Account to the variable so it doesn&apos;t get changed</description>
         <name>Set_varAccountStatus_to_current_Account_Status</name>
         <label>Set varAccountStatus to current Account Status</label>
-        <locationX>66</locationX>
-        <locationY>492</locationY>
+        <locationX>50</locationX>
+        <locationY>1116</locationY>
         <assignmentItems>
             <assignToReference>varAccountStatus</assignToReference>
             <operator>Assign</operator>
@@ -15,14 +31,14 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Update_related_account_record</targetReference>
+            <targetReference>Does_Account_need_to_be_updated</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Set_varAccountStatus_to_Networking</name>
         <label>Set varAccountStatus to Networking</label>
-        <locationX>594</locationX>
-        <locationY>600</locationY>
+        <locationX>578</locationX>
+        <locationY>1224</locationY>
         <assignmentItems>
             <assignToReference>varAccountStatus</assignToReference>
             <operator>Assign</operator>
@@ -31,14 +47,14 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Update_related_account_record</targetReference>
+            <targetReference>Does_Account_need_to_be_updated</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Set_varAccountStatus_to_Prospecting</name>
         <label>Set varAccountStatus to Prospecting</label>
-        <locationX>330</locationX>
-        <locationY>600</locationY>
+        <locationX>314</locationX>
+        <locationY>1224</locationY>
         <assignmentItems>
             <assignToReference>varAccountStatus</assignToReference>
             <operator>Assign</operator>
@@ -47,7 +63,23 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Update_related_account_record</targetReference>
+            <targetReference>Does_Account_need_to_be_updated</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Update_Account_Description</name>
+        <label>Update Account Description</label>
+        <locationX>402</locationX>
+        <locationY>816</locationY>
+        <assignmentItems>
+            <assignToReference>varAccountDescription</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Description</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Does_Account_have_an_Account_Status_that_should_be_updated</targetReference>
         </connector>
     </assignments>
     <constants>
@@ -58,6 +90,75 @@
         </value>
     </constants>
     <decisions>
+        <name>Check_Account</name>
+        <label>Check Account</label>
+        <locationX>864</locationX>
+        <locationY>492</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Found_Account</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Account_Record</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Default_Account_Description</targetReference>
+            </connector>
+            <label>Found Account</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Converted_Account_Id</name>
+        <label>Check Converted Account Id</label>
+        <locationX>1293</locationX>
+        <locationY>276</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Has_Converted_Account_Id</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.ConvertedAccountId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Account_Record</targetReference>
+            </connector>
+            <label>Has Converted Account Id</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Lead_Description</name>
+        <label>Check Lead Description</label>
+        <locationX>534</locationX>
+        <locationY>708</locationY>
+        <defaultConnector>
+            <targetReference>Does_Account_have_an_Account_Status_that_should_be_updated</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Has_Lead_Description</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Description</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Account_Description</targetReference>
+            </connector>
+            <label>Has Lead Description</label>
+        </rules>
+    </decisions>
+    <decisions>
         <description>If current Account Status (NSP_Sales_Service_Account_Status__c) is: Active, Onboarding, On Demand, Prospecting then don&apos;t update Account Status,
 
 If current Account Status is: Blank, Terminated, or Lost, then update Account Status.
@@ -65,10 +166,10 @@ If current Account Status is: Blank, Terminated, or Lost, then update Account St
 Further consideration in another node: if current Account Status is Networking, and Opportunity DOES exist on Lead Conversion then update to Prospecting</description>
         <name>Does_Account_have_an_Account_Status_that_should_be_updated</name>
         <label>Does Account have an Account Status that should be updated?</label>
-        <locationX>550</locationX>
-        <locationY>384</locationY>
+        <locationX>534</locationX>
+        <locationY>1008</locationY>
         <defaultConnector>
-            <targetReference>Update_related_account_record</targetReference>
+            <targetReference>Does_Account_need_to_be_updated</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Not Applicable</defaultConnectorLabel>
         <rules>
@@ -145,13 +246,56 @@ Further consideration in another node: if current Account Status is Networking, 
         </rules>
     </decisions>
     <decisions>
+        <name>Does_Account_need_to_be_updated</name>
+        <label>Does Account need to be updated?</label>
+        <locationX>534</locationX>
+        <locationY>1500</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Account_Update_Required</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Account_Record.NSP_Sales_Service_Account_Status__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>varAccountStatus</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Account_Record.Sic</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>$Record.NSP_SIC__c</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Account_Record.SicDesc</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>safeSicDesc</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Account_Record.Description</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>varAccountDescription</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_related_account_record</targetReference>
+            </connector>
+            <label>Account Update Required</label>
+        </rules>
+    </decisions>
+    <decisions>
         <description>If current Account Status is Networking, and Opportunity DOES exist on Lead Conversion then update to Prospecting</description>
         <name>Is_there_an_Opportunity_attached_to_this_Lead</name>
         <label>Is there an Opportunity attached to this Lead?</label>
-        <locationX>594</locationX>
-        <locationY>492</locationY>
+        <locationX>578</locationX>
+        <locationY>1116</locationY>
         <defaultConnector>
-            <targetReference>Update_related_account_record</targetReference>
+            <targetReference>Does_Account_need_to_be_updated</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Not Applicable</defaultConnectorLabel>
         <rules>
@@ -187,6 +331,19 @@ Further consideration in another node: if current Account Status is Networking, 
     </decisions>
     <description>Updated to include Account Status considerations. Use for mapping of custom field of lead to standard fields of account when Lead is converted. Updated to run asynchronously</description>
     <environments>Default</environments>
+    <formulas>
+        <description>80-character maximum SicDesc to prevent DmlExceptions.</description>
+        <name>safeSicDesc</name>
+        <dataType>String</dataType>
+        <expression>IF(
+  AND(
+    NOT( ISBLANK( {!$Record.NSP_SicDesc__c} ) ) ,
+    ( LEN( {!$Record.NSP_SicDesc__c} ) &gt; 80 )
+  ) ,
+  LEFT( {!$Record.NSP_SicDesc__c} , 80 ) ,
+  {!$Record.NSP_SicDesc__c}
+)</expression>
+    </formulas>
     <interviewLabel>Lead Conversion - Update Fields on Account {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Lead Conversion - Update Fields on Account</label>
     <processMetadataValues>
@@ -212,11 +369,11 @@ Further consideration in another node: if current Account Status is Networking, 
         <description>Get the Account related to this Lead record</description>
         <name>Get_Account_Record</name>
         <label>Get Account Record</label>
-        <locationX>550</locationX>
-        <locationY>276</locationY>
+        <locationX>864</locationX>
+        <locationY>384</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Does_Account_have_an_Account_Status_that_should_be_updated</targetReference>
+            <targetReference>Check_Account</targetReference>
         </connector>
         <faultConnector>
             <isGoTo>true</isGoTo>
@@ -237,8 +394,8 @@ Further consideration in another node: if current Account Status is Networking, 
     <recordUpdates>
         <name>Update_related_account_record</name>
         <label>Update related account record</label>
-        <locationX>550</locationX>
-        <locationY>876</locationY>
+        <locationX>270</locationX>
+        <locationY>1608</locationY>
         <faultConnector>
             <targetReference>Fault_Handler_Subflow</targetReference>
         </faultConnector>
@@ -265,13 +422,13 @@ Further consideration in another node: if current Account Status is Networking, 
         <inputAssignments>
             <field>SicDesc</field>
             <value>
-                <elementReference>$Record.NSP_SicDesc__c</elementReference>
+                <elementReference>safeSicDesc</elementReference>
             </value>
         </inputAssignments>
         <object>Account</object>
     </recordUpdates>
     <start>
-        <locationX>50</locationX>
+        <locationX>413</locationX>
         <locationY>0</locationY>
         <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
         <filterLogic>and</filterLogic>
@@ -286,18 +443,18 @@ Further consideration in another node: if current Account Status is Networking, 
         <recordTriggerType>Update</recordTriggerType>
         <scheduledPaths>
             <connector>
-                <targetReference>Get_Account_Record</targetReference>
+                <targetReference>Check_Converted_Account_Id</targetReference>
             </connector>
             <pathType>AsyncAfterCommit</pathType>
         </scheduledPaths>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <subflows>
         <name>Fault_Handler_Subflow</name>
         <label>Fault Handler Subflow</label>
-        <locationX>1210</locationX>
-        <locationY>984</locationY>
+        <locationX>534</locationX>
+        <locationY>1716</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultMessage</name>
@@ -312,6 +469,16 @@ Further consideration in another node: if current Account Status is Networking, 
             </value>
         </inputAssignments>
     </subflows>
+    <variables>
+        <name>varAccountDescription</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue></stringValue>
+        </value>
+    </variables>
     <variables>
         <name>varAccountStatus</name>
         <dataType>String</dataType>

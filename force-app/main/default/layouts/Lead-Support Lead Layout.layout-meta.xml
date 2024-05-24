@@ -388,7 +388,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>DNBoptimizer__DNB_D_U_N_S_Number__c</field>
+                <field>DNB_Connect_DUNS_Number__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -575,7 +575,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>DNBoptimizer__DnBContactRecord__c</field>
+                <field>DNBConnect__D_B_Connect_Contact_Profile__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -593,7 +593,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>DNBoptimizer__DnBCompanyRecord__c</field>
+                <field>DNBConnect__D_B_Connect_Company_Profile__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>

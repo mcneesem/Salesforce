@@ -5,10 +5,18 @@ const DYNAMIC_FIELDS = {
       dependentFields: ["PEO_Name__c"],
     },
   ],
-  Client_Implementing_Premier_Performance__c: [
+  Select_BPSes__c: [
     {
-      expValue: ["Yes"],
-      dependentFields: ["When_Client_Wants_Solution_implemented__c"],
+      expValue: ["Organization Planning"],
+      dependentFields: ["Organizational_Planning_Imp_Timeline__c"],
+    },
+    {
+      expValue: ["Integra"],
+      dependentFields: ["Integra_Implementation_Timeline__c"],
+    },
+    {
+      expValue: ["Premier Performance"],
+      dependentFields: ["Premier_Performance_Imp_Timeline__c"],
     },
   ],
   Implementing_biz_Performance_solutions__c: [

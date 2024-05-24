@@ -456,6 +456,11 @@
             <field>NSP_CLM_Document_Received__c</field>
             <table>blng__Invoice__c</table>
         </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Invoice_ID_18__c</field>
+            <table>blng__Invoice__c</table>
+        </columns>
         <masterLabel>Invoices</masterLabel>
     </sections>
     <sections>

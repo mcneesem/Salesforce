@@ -5,26 +5,23 @@
 * author           | Date              | Description
 * -------------------------------------------------------------------------------------
 * Rahul         11-17-2022            Modified this class for user story 128436
-* 
 */
 public class NSP_QuoteTriggerHelper {
+    // test w/ NSP_QuoteTriggerTest, NSP_QuoteTriggerHelper_Test (86%)
+    // test w/ NSP_QuoteTriggerTest (83%)
+    // test w/ NSP_QuoteTriggerHelper_Test (56%)
+
     public static boolean STOP_ACCOUNT_QUERY  = false;
     static final string CLASS_NAME = 'NSP_QuoteTriggerHelper';
-    /**
-* Iterates throught the list of new leads and passes the required attributes to other methods.
-* @param newList List of New leads.  
-* @return void             
-*                
-*/
-static final String PRICING_MODEL_INCORRECT_ERR_MESSAGE=System.Label.NSP_Incorrect_Pricing_Model;    
-static final String WO_APP_PRICEBOOK_ERR_MESSAGE=System.Label.NSP_WO_Applicable_PriceBooks_Error;    
-static final String BYPASS_SIGNATURE_NOT_ALLOWED=System.Label.NSP_Bypass_Signature_Not_Allowed;   
-static final String SUPPLEMENTAL_TYPE_CHANGE_ERROR=System.Label.NSP_Cannot_Change_Supplemental_Error;     
-static final String AMENDMENT_TYPE_CHANGE_ERROR=System.Label.NSP_Cannot_Change_Amendment_Error;
-static final String WX_WA_QUOTE_VALIDATION_ERROR=System.Label.NSP_WX_WA_Quote_Validation_Message;
-static final String STRING_WO_WS = 'WO/WS';
-static final String LASSO_PARTNERNAME=System.Label.NSP_Lasso_PartnerName;
-    
+    static final String PRICING_MODEL_INCORRECT_ERR_MESSAGE=System.Label.NSP_Incorrect_Pricing_Model;
+    static final String WO_APP_PRICEBOOK_ERR_MESSAGE=System.Label.NSP_WO_Applicable_PriceBooks_Error;
+    static final String BYPASS_SIGNATURE_NOT_ALLOWED=System.Label.NSP_Bypass_Signature_Not_Allowed;
+    static final String SUPPLEMENTAL_TYPE_CHANGE_ERROR=System.Label.NSP_Cannot_Change_Supplemental_Error;
+    static final String AMENDMENT_TYPE_CHANGE_ERROR=System.Label.NSP_Cannot_Change_Amendment_Error;
+    static final String WX_WA_QUOTE_VALIDATION_ERROR=System.Label.NSP_WX_WA_Quote_Validation_Message;
+    static final String STRING_WO_WS = 'WO/WS';
+    static final String LASSO_PARTNERNAME=System.Label.NSP_Lasso_PartnerName;
+
     public void beforeInsertDirector(List<SBQQ__Quote__c> newList){        
         List<SBQQ__Quote__c> primaryQuotes= new List<SBQQ__Quote__c>();
         validateQuote(newList);
@@ -289,7 +286,7 @@ static final String LASSO_PARTNERNAME=System.Label.NSP_Lasso_PartnerName;
 
             if(String.isNotEmpty(newQuote.NSP_Opportunity_Partner_Name__c) && partnerNames.contains(newQuote.NSP_Opportunity_Partner_Name__c)) {
                 NSP_Partner_Configurations__mdt pcc = partConfigWithpbNameMap.get(newQuote.NSP_Opportunity_Partner_Name__c);
-                if((newQuote.SBQQ__Type__c.equals(NSP_CPQConstants.QUOTE_TYPE_NEW) ||  newQuote.SBQQ__Type__c.equals(NSP_CPQConstants.QUOTE_TYPE_AMENDMENT)) && pcc.NSP_New_Sale_Discount__c!=null) {
+                if((newQuote.SBQQ__Type__c.equals(NSP_CPQConstants.QUOTE_TYPE_NEW) ||  newQuote.SBQQ__Type__c.equals(NSP_CPQConstants.QUOTE_TYPE_AMENDMENT) && newQuote.NSP_TransactionType__c != NSP_CPQConstants.QUOTE_TYPE_TERMINATION) && pcc.NSP_New_Sale_Discount__c!=null) {
                     newQuote.SBQQ__PartnerDiscount__c = pcc.NSP_New_Sale_Discount__c;
                 }
                 if(newQuote.SBQQ__Type__c.equals(NSP_CPQConstants.QUOTE_TYPE_RENEWAL) && pcc.NSP_Renewal_Discount__c!=null ) {
@@ -301,23 +298,21 @@ static final String LASSO_PARTNERNAME=System.Label.NSP_Lasso_PartnerName;
                 newQuote.NSP_Budgetary_Quote__c = true;
                 if(newQuote.SBQQ__Partner__c == null &&  opportunityMap.get(newQuote.SBQQ__Opportunity2__c).NSP_Partner__c!=null) {
                     newQuote.SBQQ__Partner__c = opportunityMap.get(newQuote.SBQQ__Opportunity2__c).NSP_Partner__c;
-                    newQuote.NSP_Is_Partner_CS_Applicable__c = true;
                 }
             }
         }
     }
-    
 
-/**
-* Method Name : initializeDefaultFieldValues 
-* Description : Method to set default Quote values based on conditions.
-* Author : Rakesh Das       Date : 10/08/2021
-* @param QuoteNewMap Map of New Quote. 
-* @param QuoteOldMap Map of Old Quote.   
-* @return void  
-*/
-public void initializeDefaultFieldValues(Map<Id, SBQQ__Quote__c> quoteNewMap,Map<Id, SBQQ__Quote__c> quoteOldMap) { 
-  
+    //
+    // Method Name : initializeDefaultFieldValues
+    // Description : Method to set default Quote values based on conditions.
+    // Author : Rakesh Das       Date : 10/08/2021
+    // @param QuoteNewMap Map of New Quote.
+    // @param QuoteOldMap Map of Old Quote.
+    // @return void
+    //
+    public void initializeDefaultFieldValues( Map<Id,SBQQ__Quote__c> quoteNewMap , Map<Id,SBQQ__Quote__c> quoteOldMap ) {
+
     NSP_Partner_Configurations__mdt partnerConfigRec = NSP_Partner_Configurations__mdt.getInstance('Altula');
     Map<String,String> woPBNames = new Map<String,String>{'WA Pricebook'=>'WA','WX Pricebook'=>'WX'};
     List<String> notapplicableCoreProducts = new List<String>{'HR Consulting Services'};
@@ -428,22 +423,35 @@ public void initializeDefaultFieldValues(Map<Id, SBQQ__Quote__c> quoteNewMap,Map
         }
     }
 
-    for(SBQQ__QuoteLine__c ql : [SELECT Id, SBQQ__ProductCode__c, NSP_Lock_On_QLI__c, SBQQ__Quote__c FROM SBQQ__QuoteLine__c WHERE (NSP_Lock_On_QLI__c = true OR NSP_Parent_Product_Code__c = 'HR Consulting Services' OR SBQQ__ProductCode__c IN :applicableCoreProducts) AND SBQQ__Quote__c IN : quoteNewMap.keySet() AND SBQQ__ProductCode__c NOT IN :notapplicableCoreProducts]) {
-
-        if(ql.SBQQ__ProductCode__c!=null) {
-
-            if(quoteProductBundles.containskey(ql.SBQQ__Quote__c)) {
-                Set<String> prodlist = quoteProductBundles.get(ql.SBQQ__Quote__c);     
-                prodlist.add(ql.SBQQ__ProductCode__c);
-                quoteProductBundles.put(ql.SBQQ__Quote__c,prodlist);
+        for ( SBQQ__QuoteLine__c ql : [
+                    SELECT Id , SBQQ__ProductCode__c , NSP_Lock_On_QLI__c , SBQQ__Quote__c , SBQQ__Quote__r.Has_Retirement_Integration_Product__c
+                    FROM SBQQ__QuoteLine__c
+                    WHERE (
+                        (
+                            ( NSP_ActionType__c != null )
+                            OR ( SBQQ__Quote__r.Has_Retirement_Integration_Product__c = true )
+                        )
+                        AND (
+                            ( NSP_Lock_On_QLI__c = true )
+                            OR ( NSP_Parent_Product_Code__c = 'HR Consulting Services' )
+                            OR ( SBQQ__ProductCode__c IN :applicableCoreProducts )
+                        )
+                        AND SBQQ__Quote__c IN : quoteNewMap.keySet()
+                        AND SBQQ__ProductCode__c NOT IN :notapplicableCoreProducts
+                    )
+                ]
+            )
+        {
+            if ( ql.SBQQ__ProductCode__c!=null ) {
+                if ( quoteProductBundles.containskey( ql.SBQQ__Quote__c ) ) {
+                    Set<String> prodlist = quoteProductBundles.get( ql.SBQQ__Quote__c );
+                    prodlist.add( ql.SBQQ__ProductCode__c );
+                    quoteProductBundles.put( ql.SBQQ__Quote__c , prodlist );
+                } else {
+                    quoteProductBundles.put( ql.SBQQ__Quote__c , new Set<String>{ ql.SBQQ__ProductCode__c } );
+                }
             }
-            else{
-                quoteProductBundles.put(ql.SBQQ__Quote__c,new Set<String>{ql.SBQQ__ProductCode__c});
-            }
-
         }
-
-    }
 
     for(SBQQ__Quote__c newQuote : quoteNewMap.values()) {
         
@@ -470,9 +478,6 @@ public void initializeDefaultFieldValues(Map<Id, SBQQ__Quote__c> quoteNewMap,Map
             }
         }
 
-        if(newQuote.NSP_TransactionType__c==NSP_CPQConstants.QUOTE_TYPE_TERMINATION && newQuote.SBQQ__Type__c!=NSP_CPQConstants.QUOTE_TYPE_TERMINATION) {
-            newQuote.SBQQ__Type__c = NSP_CPQConstants.QUOTE_TYPE_TERMINATION;
-        }
         
         if(productsToBypassSignature.contains(newQuote.NSP_Opportunity_Primary_Product__c)) {
             newQuote.NSP_Bypass_DocuSign_Signature__c = true;
@@ -499,7 +504,7 @@ public void initializeDefaultFieldValues(Map<Id, SBQQ__Quote__c> quoteNewMap,Map
         if(sortedTemplateSettingsByProduct.containsKey(settingkey) && newQuote.SBQQ__Type__c.equals(NSP_CPQConstants.QUOTE_TYPE_NEW) ) {
             newQuote.NSP_Final_Template__c = sortedTemplateSettingsByProduct.get(settingkey).NSP_Selected_Template__c;
         }
-            if(AmendTemplateSettingsByProduct.containsKey(settingkey) &&  newQuote.SBQQ__Type__c.equals(NSP_CPQConstants.QUOTE_TYPE_AMENDMENT) ) {
+            if(AmendTemplateSettingsByProduct.containsKey(settingkey) &&  newQuote.SBQQ__Type__c.equals(NSP_CPQConstants.QUOTE_TYPE_AMENDMENT)  && newQuote.NSP_TransactionType__c != NSP_CPQConstants.QUOTE_TYPE_TERMINATION ) {
                 newQuote.NSP_Final_Template__c = AmendTemplateSettingsByProduct.get(settingkey).NSP_Selected_Template__c;
 }
             if(RenewTemplateSettingsByProduct.containsKey(settingkey) && newQuote.SBQQ__Type__c.equals(NSP_CPQConstants.QUOTE_TYPE_RENEWAL) ) {
@@ -522,7 +527,7 @@ public void initializeDefaultFieldValues(Map<Id, SBQQ__Quote__c> quoteNewMap,Map
           if(newQuote.SBQQ__Type__c==NSP_CPQConstants.QUOTE_TYPE_NEW && newQuote.NSP_Final_Template__c != 'TimeStar') {
                 newQuote.NSP_Final_Template__c = NSP_CPQConstants.QUOTE_NEW_SHOW_DISCOUNT_BPS;
             }
-            if(newQuote.SBQQ__Type__c==NSP_CPQConstants.QUOTE_TYPE_AMENDMENT) {
+            if(newQuote.SBQQ__Type__c==NSP_CPQConstants.QUOTE_TYPE_AMENDMENT && newQuote.NSP_TransactionType__c != NSP_CPQConstants.QUOTE_TYPE_TERMINATION) {
                 newQuote.NSP_Final_Template__c = NSP_CPQConstants.QUOTE_AMENDMENT_SHOW_DISCOUNT_BPS;
             }
       if(newQuote.SBQQ__Type__c==NSP_CPQConstants.QUOTE_TYPE_RENEWAL) {
@@ -560,22 +565,16 @@ public void initializeDefaultFieldValues(Map<Id, SBQQ__Quote__c> quoteNewMap,Map
             newQuote.SBQQ__Type__c.addError(AMENDMENT_TYPE_CHANGE_ERROR);
         } **/
         
-        if(newQuote.SBQQ__Type__c!=quoteOldMap.get(newQuote.Id).SBQQ__Type__c && (quoteOldMap.get(newQuote.Id).SBQQ__Type__c == NSP_CPQConstants.QUOTE_TYPE_AMENDMENT || quoteOldMap.get(newQuote.Id).SBQQ__Type__c == NSP_CPQConstants.SUPPLEMENTAL) && newQuote.SBQQ__LineItemCount__c != 0 ) {
+        if(newQuote.SBQQ__Type__c!=quoteOldMap.get(newQuote.Id).SBQQ__Type__c && (quoteOldMap.get(newQuote.Id).SBQQ__Type__c == NSP_CPQConstants.QUOTE_TYPE_AMENDMENT || quoteOldMap.get(newQuote.Id).SBQQ__Type__c == NSP_CPQConstants.SUPPLEMENTAL) && newQuote.SBQQ__LineItemCount__c != 0 &&  newQuote.NSP_TransactionType__c != NSP_CPQConstants.QUOTE_TYPE_TERMINATION) {
             newQuote.SBQQ__Type__c.addError(AMENDMENT_TYPE_CHANGE_ERROR);
         }
         //Added for Partner CS Story
         if(newQuote.SBQQ__Partner__c == null) {
             newQuote.NSP_Is_Partner_CS_Applicable__c = false;
         }
-        if(newQuote.SBQQ__Partner__c != null && newQuote.SBQQ__Partner__c!=quoteOldMap.get(newQuote.Id).SBQQ__Partner__c && newQuote.NSP_Opportunity_Partner_Name__c != LASSO_PARTNERNAME && newQuote.SBQQ__Type__c.equals(NSP_CPQConstants.QUOTE_TYPE_NEW) && (newQuote.NSP_Opportunity_Primary_Product__c == 'WX' || newQuote.NSP_Opportunity_Primary_Product__c == 'WA') && newQuote.NSP_Opportunity_Primary_Bundle__c != STRING_WO_WS ){
-            newQuote.NSP_Is_Partner_CS_Applicable__c = true;
-        }
         //Added for Partner CS Story
-        
-}
-
-
-}
+        }
+    }
 
 /**
 * Method Name : initializeDefaultFieldValuesOnInsert 
@@ -604,9 +603,6 @@ public void initializeDefaultFieldValuesOnInsert(List<SBQQ__Quote__c> newQuotesL
             }
         }
 
-        if(newQuote.NSP_TransactionType__c==NSP_CPQConstants.QUOTE_TYPE_TERMINATION && newQuote.SBQQ__Type__c!=NSP_CPQConstants.QUOTE_TYPE_TERMINATION) {
-            newQuote.SBQQ__Type__c = NSP_CPQConstants.QUOTE_TYPE_TERMINATION;
-        }
         if(newQuote.SBQQ__Type__c==NSP_CPQConstants.SUPPLEMENTAL) {
             newQuote.NSP_Product_Type__c = NSP_CPQConstants.SUPPLEMENTAL;
         }
@@ -623,9 +619,9 @@ public void initializeDefaultFieldValuesOnInsert(List<SBQQ__Quote__c> newQuotesL
                                             SBQQ__AmendedContract__r.SBQQ__Quote__r.NSP_Client_For_Life__c, SBQQ__AmendedContract__r.SBQQ__Quote__r.SBQQ__Partner__c, SBQQ__AmendedContract__r.SBQQ__Quote__r.NSP_Opportunity_Primary_Product__c, SBQQ__AmendedContract__r.SBQQ__Quote__r.SBQQ__PrimaryContact__c,SBQQ__AmendedContract__r.SBQQ__Quote__r.NSP_Invoice_To_Email__c, SBQQ__AmendedContract__r.SBQQ__Quote__r.NSP_Product_Type__c,
                                             SBQQ__RenewedContract__r.NSP_Number_of_Employees__c, SBQQ__RenewedContract__r.NSP_Pricing_Model__c, SBQQ__RenewedContract__r.NSP_Product_Type__c, SBQQ__RenewedContract__r.SBQQ__Quote__r.NSP_Billing_Account__c,  SBQQ__RenewedContract__r.SBQQ__Quote__r.NSP_Billing_Address__c, SBQQ__RenewedContract__r.SBQQ__Quote__r.NSP_Shipping_Address__c, SBQQ__RenewedContract__r.SBQQ__Quote__r.NSP_Customer_Billing_Address__c, SBQQ__RenewedContract__r.SBQQ__Quote__r.NSP_Customer_Shipping_Address__c,SBQQ__RenewedContract__r.SBQQ__Quote__r.NSP_Opportunity_Type__c,
                                             SBQQ__RenewedContract__r.SBQQ__Quote__r.NSP_Client_For_Life__c, SBQQ__RenewedContract__r.SBQQ__Quote__r.SBQQ__Partner__c, SBQQ__RenewedContract__r.SBQQ__Quote__r.NSP_Opportunity_Primary_Product__c, SBQQ__RenewedContract__r.SBQQ__Quote__r.SBQQ__PrimaryContact__c,SBQQ__RenewedContract__r.SBQQ__Quote__r.NSP_Invoice_To_Email__c, SBQQ__AmendedContract__r.SBQQ__Quote__r.NSP_BPS_Billing_Frequency__c, 
-                                 			SBQQ__RenewedContract__r.SBQQ__Quote__c, SBQQ__RenewedContract__r.SBQQ__Order__c ,SBQQ__RenewedContract__r.NSP_PrimaryProduct__c, SBQQ__RenewedContract__r.NSP_Client_For_Life__c,SBQQ__RenewedContract__r.NSP_Partner__c, SBQQ__RenewedContract__r.NSP_Invoice_To_Email__c, SBQQ__RenewedContract__r.SBQQ__Order__r.blng__BillingAccount__c, SBQQ__RenewedContract__r.SBQQ__Order__r.NSP_Billing_Address__c, SBQQ__RenewedContract__r.SBQQ__Order__r.NSP_Shipping_Address__c,
-                                 			SBQQ__AmendedContract__r.SBQQ__Quote__c, SBQQ__AmendedContract__r.SBQQ__Order__c, SBQQ__AmendedContract__r.NSP_PrimaryProduct__c, SBQQ__AmendedContract__r.NSP_Client_For_Life__c,SBQQ__AmendedContract__r.NSP_Partner__c, SBQQ__AmendedContract__r.NSP_Invoice_To_Email__c, SBQQ__AmendedContract__r.SBQQ__Order__r.blng__BillingAccount__c, SBQQ__AmendedContract__r.SBQQ__Order__r.NSP_Billing_Address__c, SBQQ__AmendedContract__r.SBQQ__Order__r.NSP_Shipping_Address__c
-											
+                                            SBQQ__RenewedContract__r.SBQQ__Quote__c, SBQQ__RenewedContract__r.SBQQ__Order__c ,SBQQ__RenewedContract__r.NSP_PrimaryProduct__c, SBQQ__RenewedContract__r.NSP_Client_For_Life__c,SBQQ__RenewedContract__r.NSP_Partner__c, SBQQ__RenewedContract__r.NSP_Invoice_To_Email__c, SBQQ__RenewedContract__r.SBQQ__Order__r.blng__BillingAccount__c, SBQQ__RenewedContract__r.SBQQ__Order__r.NSP_Billing_Address__c, SBQQ__RenewedContract__r.SBQQ__Order__r.NSP_Shipping_Address__c,
+                                            SBQQ__AmendedContract__r.SBQQ__Quote__c, SBQQ__AmendedContract__r.SBQQ__Order__c, SBQQ__AmendedContract__r.NSP_PrimaryProduct__c, SBQQ__AmendedContract__r.NSP_Client_For_Life__c,SBQQ__AmendedContract__r.NSP_Partner__c, SBQQ__AmendedContract__r.NSP_Invoice_To_Email__c, SBQQ__AmendedContract__r.SBQQ__Order__r.blng__BillingAccount__c, SBQQ__AmendedContract__r.SBQQ__Order__r.NSP_Billing_Address__c, SBQQ__AmendedContract__r.SBQQ__Order__r.NSP_Shipping_Address__c
+                                            
                                             FROM Opportunity WHERE Id IN:opportunityIds AND (SBQQ__AmendedContract__c!=null OR SBQQ__RenewedContract__c!=null) ] ){ //AND (SBQQ__AmendedContract__c!=null AND SBQQ__AmendedContract__r.SBQQ__Quote__c!=null) OR (SBQQ__RenewedContract__c!=null AND SBQQ__RenewedContract__r.SBQQ__Quote__c!=null) ] {
 
             renewAmendOpptys.put(opp.Id,opp);                               
@@ -1312,64 +1308,104 @@ public void stampQuoteOwnerGrouponInsert(List<SBQQ__Quote__c> newQuotesList) {
             newQuote.NSP_Ship_To_Name__c       = objAddress.Name;            
         }
     }
-    
-            /**
-* Method Name : createEnrollmentFee 
-* Description : Method to create enrollment fee record with associated opportunity once quote approved
-* Author : Samba Raju       Date : 22/09/2021
-* @param QuoteNewMap Map of New Quote. 
-* @param QuoteOldMap Map of Old Quote.   
-* @return void  
-*/
-    
-public void createEnrollmentFee(Map<Id, SBQQ__Quote__c> quoteNewMap,Map<Id, SBQQ__Quote__c> quoteOldMap)  { 
-    List<NSP_Enrollment_Fee_Payment__c> enrollmentRecs= new List<NSP_Enrollment_Fee_Payment__c>();
-    List<Opportunity> optysToupdate= new List<Opportunity>();
-    Map<Id,NSP_Enrollment_Fee_Payment__c> existingEnrollments =getExistingEnrollments(quoteNewMap);
-    for(SBQQ__Quote__c newQuote : quoteNewMap.values()) {
-        SBQQ__Quote__c oldQuote =quoteOldMap.get(newQuote.Id);
-        If(newQuote.SBQQ__Opportunity2__c!=null && newQuote.SBQQ__Type__c=='New Product' && (newQuote.NSP_Opportunity_Primary_Product__c=='WX'||newQuote.NSP_Opportunity_Primary_Product__c=='WA') && 
-           ((newQuote.SBQQ__Primary__c==true && newQuote.SBQQ__Status__c != oldQuote.SBQQ__Status__c && newQuote.SBQQ__Status__c == NSP_CPQConstants.QUOTE_APPROVAL_STATUS_APPROVED)||(newQuote.SBQQ__Primary__c!=oldQuote.SBQQ__Primary__c && newQuote.SBQQ__Primary__c==true &&newQuote.SBQQ__Status__c == NSP_CPQConstants.QUOTE_APPROVAL_STATUS_APPROVED))){
-              NSP_Enrollment_Fee_Payment__c enrollmentFee= new NSP_Enrollment_Fee_Payment__c();
-               If(existingEnrollments.containskey(newQuote.SBQQ__Opportunity2__c)){
-                   enrollmentFee.Id=existingEnrollments.get(newQuote.SBQQ__Opportunity2__c).Id;
-                   enrollmentFee.NSP_Opportunity__c=newQuote.SBQQ__Opportunity2__c;
-                   enrollmentFee.NSP_WX_WA_Enrollment_Fee__c=newQuote.NSP_WX_WA_Enrollment_Fee__c;
-                   enrollmentFee.NSP_Docupay_Upfront_fee__c=newQuote.NSP_Docupay_Upfront_fee__c;
-               }
-               else{
-                   enrollmentFee.NSP_Opportunity__c=newQuote.SBQQ__Opportunity2__c;
-                   enrollmentFee.NSP_WX_WA_Enrollment_Fee__c=newQuote.NSP_WX_WA_Enrollment_Fee__c;
-                   enrollmentFee.NSP_Docupay_Upfront_fee__c=newQuote.NSP_Docupay_Upfront_fee__c;
-                   enrollmentFee.NSP_Payment_Method__c='Card';
-               }
-               enrollmentRecs.add(enrollmentFee);
-           }
-        //if set up fee is zero,set non docupay flag on Opportunity to true
-        if(newQuote.NSP_WX_WA_Enrollment_Fee__c==0){
-            Opportunity opty =new Opportunity(Id=newQuote.SBQQ__Opportunity2__c,NSP_Non_docupay__c=true);
-            optysToupdate.add(opty);
+
+    // Method Name : createEnrollmentFee 
+    // Description : Method to create enrollment fee record with associated opportunity once quote approved
+    // Author : Samba Raju       Date : 22/09/2021
+    // @param QuoteNewMap Map of New Quote. 
+    // @param QuoteOldMap Map of Old Quote.   
+    // @return void  
+    public void createEnrollmentFee(Map<Id, SBQQ__Quote__c> quoteNewMap,Map<Id, SBQQ__Quote__c> quoteOldMap)  { 
+        List<NSP_Enrollment_Fee_Payment__c> enrollmentRecs= new List<NSP_Enrollment_Fee_Payment__c>();
+        List<Opportunity> optysToupdate= new List<Opportunity>();
+        Map<Id,NSP_Enrollment_Fee_Payment__c> existingEnrollments =getExistingEnrollments(quoteNewMap);
+        for(SBQQ__Quote__c newQuote : quoteNewMap.values()) {
+            SBQQ__Quote__c oldQuote =quoteOldMap.get(newQuote.Id);
+            if ( newQuote.SBQQ__Opportunity2__c != null
+                && newQuote.SBQQ__Type__c == 'New Product'
+                && (
+                    newQuote.NSP_Opportunity_Primary_Product__c == 'WX'
+                    || newQuote.NSP_Opportunity_Primary_Product__c == 'WA'
+                )
+                && (
+                    (
+                        newQuote.SBQQ__Primary__c == true
+                        && newQuote.SBQQ__Status__c != oldQuote.SBQQ__Status__c
+                        && newQuote.SBQQ__Status__c == NSP_CPQConstants.QUOTE_APPROVAL_STATUS_APPROVED
+                    )
+                    || (
+                        newQuote.SBQQ__Primary__c != oldQuote.SBQQ__Primary__c
+                        && newQuote.SBQQ__Primary__c == true
+                        && newQuote.SBQQ__Status__c == NSP_CPQConstants.QUOTE_APPROVAL_STATUS_APPROVED
+                    )
+                )
+                )
+            {
+                NSP_Enrollment_Fee_Payment__c enrollmentFee= new NSP_Enrollment_Fee_Payment__c();
+                If(existingEnrollments.containskey(newQuote.SBQQ__Opportunity2__c)){
+                    enrollmentFee.Id=existingEnrollments.get(newQuote.SBQQ__Opportunity2__c).Id;
+                    enrollmentFee.NSP_Opportunity__c=newQuote.SBQQ__Opportunity2__c;
+                    enrollmentFee.NSP_WX_WA_Enrollment_Fee__c=newQuote.NSP_WX_WA_Enrollment_Fee__c;
+                    enrollmentFee.NSP_Docupay_Upfront_fee__c=newQuote.NSP_Docupay_Upfront_fee__c;
+                } else{
+                    enrollmentFee.NSP_Opportunity__c=newQuote.SBQQ__Opportunity2__c;
+                    enrollmentFee.NSP_WX_WA_Enrollment_Fee__c=newQuote.NSP_WX_WA_Enrollment_Fee__c;
+                    enrollmentFee.NSP_Docupay_Upfront_fee__c=newQuote.NSP_Docupay_Upfront_fee__c;
+                    enrollmentFee.NSP_Payment_Method__c='Card';
+                }
+                enrollmentRecs.add(enrollmentFee);
+            }
+            //if set up fee is zero,set non docupay flag on Opportunity to true
+            if(newQuote.NSP_WX_WA_Enrollment_Fee__c==0){
+                Opportunity opty =new Opportunity(Id=newQuote.SBQQ__Opportunity2__c,NSP_Non_docupay__c=true);
+                optysToupdate.add(opty);
+            } else if(newQuote.NSP_WX_WA_Enrollment_Fee__c>0 ){
+                Opportunity opty;
+                if( newQuote.SBQQ__Status__c == NSP_CPQConstants.QUOTE_STATUS_APPROVED
+                    && oldQuote != null
+                    && newQuote.SBQQ__Status__c != oldQuote.SBQQ__Status__c
+                    )
+                {
+                    if(newQuote.SBQQ__Primary__c == true) {
+                        opty =new Opportunity(Id=newQuote.SBQQ__Opportunity2__c,NSP_Non_docupay__c=false);
+                    }
+                } else if(
+                    newQuote.SBQQ__Primary__c == true
+                    && oldQuote != null
+                    && newQuote.SBQQ__Primary__c != oldQuote.SBQQ__Primary__c
+                    )
+                {
+                    if(newQuote.SBQQ__Status__c == NSP_CPQConstants.QUOTE_STATUS_APPROVED  ) {
+                        opty =new Opportunity(Id=newQuote.SBQQ__Opportunity2__c,NSP_Non_docupay__c=false);
+                    }
+                }
+                optysToupdate.add(opty);
+            }
         }
-        else if(newQuote.NSP_WX_WA_Enrollment_Fee__c>0){
-            Opportunity opty =new Opportunity(Id=newQuote.SBQQ__Opportunity2__c,NSP_Non_docupay__c=false);
-            optysToupdate.add(opty);
+        if(!enrollmentRecs.isEmpty()){
+            try{
+                upsert enrollmentRecs;
+            } catch(Exception ex){
+                NSP_ErrorLogHandler.logSaveException(
+                    NSP_QuoteTriggerHelper.class.getName() ,
+                    'createEnrollmentFee upsert enrollmentRecs' ,
+                    ex.getMessage() + ' ~ ' + ex.getStackTraceString()
+                );
+            }
+        }
+        if(!optysToupdate.isEmpty()){
+            try{
+                update optysToupdate;
+            } catch(Exception ex){
+                NSP_ErrorLogHandler.logSaveException(
+                    NSP_QuoteTriggerHelper.class.getName() ,
+                    'createEnrollmentFee update optysToupdat' ,
+                    ex.getMessage() + ' ~ ' + ex.getStackTraceString()
+                );
+            }
         }
     }
-    if(!enrollmentRecs.isEmpty()){
-        try{
-            upsert enrollmentRecs;
-        } catch(Exception ex){
-            NSP_ErrorLogHandler.logSaveException(CLASS_NAME,'createEnrollmentFee',ex.getMessage());
-        }  
-    }
-    if(!optysToupdate.isEmpty()){
-        try{
-            update optysToupdate;
-        } catch(Exception ex){
-            NSP_ErrorLogHandler.logSaveException(CLASS_NAME,'createEnrollmentFee',ex.getMessage());
-        }  
-    }
-}
+
 /**
 * Method Name : getExistingEnrollments 
 * Description : Method to retrieve existing enrollements related to opportunities
@@ -1520,7 +1556,7 @@ private void validateQuote(List<SBQQ__Quote__c> quotes){
              
              if((newQuote.SBQQ__Primary__c == True && Trigger.isInsert) ||(Trigger.isUpdate && newQuote.SBQQ__Primary__c != oldQuote.SBQQ__Primary__c && newQuote.SBQQ__Primary__c == True) ){
                 oppIdSet.add(newQuote.SBQQ__Opportunity2__c);       
-         	 }
+             }
          }
          
         if (oppIdSet.size() > 0) {    

@@ -2105,7 +2105,7 @@ ISCHANGED({!myVariable_current.NSP_CCPA_email_Sent__c})
     </processMetadataValues>
     <processType>Workflow</processType>
     <startElementReference>isChangedDecision2_myRule_1_NSP_IsCaseCreatedNotificationEmailSent_c</startElementReference>
-    <status>Active</status>
+    <status>Obsolete</status>
     <variables>
         <name>myVariable_current</name>
         <dataType>SObject</dataType>

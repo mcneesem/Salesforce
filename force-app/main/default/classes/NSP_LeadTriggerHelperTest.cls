@@ -14,7 +14,11 @@ public class NSP_LeadTriggerHelperTest {
     
     @testSetup
     static void testData() {
-        
+
+        Lead_Trigger_Settings__c settings = Lead_Trigger_Settings__c.getOrgDefaults();
+        settings.AllowStatusChangedToWorking__c = True;
+        upsert settings;
+
         //Create custom setting record for lead zip to city Mapping
         NSP_Zip_To_City_Mapping__c zipToCityCustomSetting = new NSP_Zip_To_City_Mapping__c();
         zipToCityCustomSetting.NSP_City__c = 'New York';
@@ -79,7 +83,7 @@ public class NSP_LeadTriggerHelperTest {
         Id partnerRecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('NSP_Partner_Client').getRecordTypeId();
         accoutObject.Name = 'Test Account';
         accoutObject.recordTypeId=partnerRecordTypeId;
-        accoutObject.DNBoptimizer__DNB_D_U_N_S_Number__c = '876543987';
+        accoutObject.DNB_Connect_DUNS_Number__c = '876543987';
         //Inserting account object
         insert accoutObject;
         
@@ -122,7 +126,7 @@ public class NSP_LeadTriggerHelperTest {
         leadObject.NSP_Partner__c =accoutObject.Id;
         leadObject.NSP_Lead_Stage__c  =null;      
         leadObject.NSP_Lead_Routing__c = true;
-        leadObject.DNBoptimizer__DNB_D_U_N_S_Number__c  = '876543987';
+        leadObject.DNB_connect_DUNS_Number__c  = '876543987';
         //Adding lead object to the list
         leadList.add(leadObject);
         
@@ -134,7 +138,7 @@ public class NSP_LeadTriggerHelperTest {
         leadObject3.Email = 'fbook@gmail.com';
         leadObject3.NSP_Partner__c =accoutObject.Id;
         leadObject3.NSP_Lead_Stage__c  =null;
-        leadObject.DNBoptimizer__DNB_D_U_N_S_Number__c  = '743243789';
+        leadObject.DNB_connect_DUNS_Number__c  = '743243789';
         leadList.add(leadObject3);
         
         //Lead Creation
@@ -188,7 +192,7 @@ public class NSP_LeadTriggerHelperTest {
         leadObject4.Company = 'ABC';
         leadObject4.NSP_Referred_By_COI__c = contactObject.Id;
         leadObject4.Email = 'test@test.com';
-        leadObject4.DNBoptimizer__DNB_D_U_N_S_Number__c  = '743243789';
+        leadObject4.DNB_connect_DUNS_Number__c  = '743243789';
         leadObject4.NSP_Lead_Routing__c = true;
         newLeadList.add(leadObject4);
         
@@ -200,7 +204,7 @@ public class NSP_LeadTriggerHelperTest {
         leadObject5.Company = 'Allstate123';
         leadObject5.NSP_Referred_By_COI__c = contactObject.Id;
         leadObject5.Email = 'test333@test.com';
-        leadObject5.DNBoptimizer__DNB_D_U_N_S_Number__c  = '';
+        leadObject5.DNB_connect_DUNS_Number__c  = '';
         leadObject5.NSP_Lead_Routing__c = true;
         
         newLeadList.add(leadObject5);
@@ -213,7 +217,7 @@ public class NSP_LeadTriggerHelperTest {
         leadObject6.Company = 'Allstate123';
         leadObject6.NSP_Referred_By_COI__c = contactObject.Id;
         leadObject6.Email = 'test333@test.com';
-        leadObject6.DNBoptimizer__DNB_D_U_N_S_Number__c  = '';
+        leadObject6.DNB_connect_DUNS_Number__c  = '';
         leadObject6.NSP_Parent_Lead__c = leadObject5.Id;
         leadObject6.NSP_Lead_Routing__c = true;
         newLeadList.add(leadObject6);
@@ -300,11 +304,11 @@ public class NSP_LeadTriggerHelperTest {
     public static void dunsCheckBeforeUpdateTest(){ 
         Lead getLead = [SELECT Id, Company,NSP_DC_SetDate__c, NSP_Product_Interest__c,NumberOfEmployees,PostalCode, NSP_DC_SetTime__c,NSP_Assign_Lead__c FROM Lead 
                         WHERE firstName = 'TestLead113'];
-        getLead.DNBoptimizer__DNB_D_U_N_S_Number__c = '';
+        getLead.DNB_connect_DUNS_Number__c = '';
         Test.startTest();
         database.update(getLead);
         Test.stopTest();
-        system.assertEquals(getLead.DNBoptimizer__DNB_D_U_N_S_Number__c, '');
+        system.assertEquals(getLead.DNB_connect_DUNS_Number__c, '');
     }
     /**
 * @Description: This test method is used to cover beforeUpdateDirector method
@@ -315,12 +319,12 @@ public class NSP_LeadTriggerHelperTest {
     public static void dunsCheckBeforeUpdateMidMarketTest(){ 
         Lead getLead = [SELECT Id, Company,NSP_DC_SetDate__c, NSP_Product_Interest__c,NumberOfEmployees,PostalCode, NSP_DC_SetTime__c,NSP_Assign_Lead__c FROM Lead 
                         WHERE firstName = 'TestLead113'];
-        getLead.DNBoptimizer__DNB_D_U_N_S_Number__c = '';
+        getLead.DNB_connect_DUNS_Number__c = '';
         getLead.NSP_Product_Interest__c = 'Full Service HR (Workforce Optimization)';
         Test.startTest();
         database.update(getLead);
         Test.stopTest();
-        system.assertEquals(getLead.DNBoptimizer__DNB_D_U_N_S_Number__c, '');
+        system.assertEquals(getLead.DNB_connect_DUNS_Number__c, '');
     }
     /**
 * @Description: This test method is used to cover beforeUpdateDirector method
@@ -331,13 +335,13 @@ public class NSP_LeadTriggerHelperTest {
     public static void dunsCheckBeforeUpdateZipCodeTest(){ 
         Lead getLead = [SELECT Id, Company,NSP_DC_SetDate__c, NSP_Product_Interest__c,NumberOfEmployees,PostalCode, NSP_DC_SetTime__c,NSP_Assign_Lead__c FROM Lead 
                         WHERE firstName = 'TestLead113'];
-        getLead.DNBoptimizer__DNB_D_U_N_S_Number__c = '';
+        getLead.DNB_connect_DUNS_Number__c = '';
         getLead.PostalCode = '10001';
         getLead.NumberOfEmployees = 100;
         Test.startTest();
         database.update(getLead);
         Test.stopTest();
-        system.assertEquals(getLead.DNBoptimizer__DNB_D_U_N_S_Number__c, '');
+        system.assertEquals(getLead.DNB_connect_DUNS_Number__c, '');
     }
     /**
 * @Description: This test method is used to cover beforeUpdateDirector method
@@ -348,13 +352,13 @@ public class NSP_LeadTriggerHelperTest {
     public static void dunsCheckBeforeUpdateCompanyTest(){ 
         Lead getLead = [SELECT Id, Company,NSP_DC_SetDate__c, NSP_Product_Interest__c,NumberOfEmployees,PostalCode, NSP_DC_SetTime__c,NSP_Assign_Lead__c FROM Lead 
                         WHERE Company = 'TestClass'];
-        getLead.DNBoptimizer__DNB_D_U_N_S_Number__c = '';
+        getLead.DNB_connect_DUNS_Number__c = '';
         getLead.NSP_Lead_Routing__c = true;
         getLead.Company = 'AllState';
         Test.startTest();
         database.update(getLead);
         Test.stopTest();
-        system.assertEquals(getLead.DNBoptimizer__DNB_D_U_N_S_Number__c, '');
+        system.assertEquals(getLead.DNB_connect_DUNS_Number__c, '');
     } 
     /**
 * @Description: This test method is used to cover beforeUpdateDirector method
@@ -385,7 +389,7 @@ public class NSP_LeadTriggerHelperTest {
         Id partnerRecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('NSP_Partner_Client').getRecordTypeId();
         accoutObject.Name = 'Test Account';
         accoutObject.recordTypeId=partnerRecordTypeId;
-        accoutObject.DNBoptimizer__DNB_D_U_N_S_Number__c = '876543987';
+        accoutObject.DNB_Connect_DUNS_Number__c = '876543987';
         //Inserting account object
         insert accoutObject;
         
@@ -398,7 +402,7 @@ public class NSP_LeadTriggerHelperTest {
         nLead.PostalCode = '10001';
         nLead.NumberOfEmployees  =160;  
         nLead.NSP_Lead_Routing__c = true;
-        nLead.DNBoptimizer__DNB_D_U_N_S_Number__c  = '876543987';
+        nLead.DNB_connect_DUNS_Number__c  = '876543987';
         Test.startTest();
         insert nLead;
         Test.stopTest();
@@ -432,7 +436,7 @@ public class NSP_LeadTriggerHelperTest {
         nLead.PostalCode = '10001';
         nLead.NumberOfEmployees  =160;  
         nLead.NSP_Lead_Routing__c = true;
-        nLead.DNBoptimizer__DNB_D_U_N_S_Number__c  = '876543987';
+        nLead.DNB_connect_DUNS_Number__c  = '876543987';
        
         insert nLead;
         
@@ -502,4 +506,44 @@ static void serviceReferralLeadCreationTest() {
     Lead assertLead = [SELECT Id, OwnerId From Lead WHERE Id =: nLead.Id];
     system.assertEquals(assertLead.Ownerid, inBoundSolutionsQueue[0].id); // Checking whether Created lead is assigned to Inbound Solutions Queue
 }
+
+    @isTest private static void testAllowStatusChangedToWorking() {
+        List<String> allowedUserRoleNames = Label.MM_AND_BPC_USERROLE.split( ',' ); // Custom Label: MidMarket Administrator,MidMarket Sales Leader,Business Performance Consultant
+        List<User> records = [
+            SELECT Id
+            FROM User
+            WHERE (
+                ( IsActive = True )
+                AND ( ProfileId != null )
+                AND ( NOT Profile.Name LIKE 'System Admin%' )
+                AND ( Profile.Name != 'Integration User' )
+                AND ( UserRoleId != null )
+                AND ( UserRole.Name NOT IN :allowedUserRoleNames )
+            )
+            ORDER BY CreatedDate ASC
+            LIMIT 1
+        ];
+        Assert.isNotNull( records , 'Null User query results.' );
+        Assert.isTrue( ( records.size() > 0 ) , 'No User query results.' );
+        System.runAs( records[0] ) {
+            Test.startTest();
+            List<Lead> employees = [
+                SELECT Id
+                FROM Lead
+                WHERE ( LastName='Employee' )
+                LIMIT 1
+            ];
+            Assert.isNotNull( employees , 'Null Lead query results.' );
+            Assert.isTrue( ( employees.size() > 0 ) , 'No Lead query results.' );
+            Lead employee = employees[0];
+            employee.Status = 'Working';
+            try {
+                update employee;
+            } catch ( Exception e ) {
+                System.debug( ' ~ CATCH ~ e=' + e );
+            }
+            Test.stopTest();
+        }
+    }
 }
+//

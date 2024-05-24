@@ -96,6 +96,11 @@
         <label>0581 Sacramento 1</label>
     </customValue>
     <customValue>
+        <fullName>582</fullName>
+        <default>false</default>
+        <label>0582 Sacramento 2</label>
+    </customValue>
+    <customValue>
         <fullName>601</fullName>
         <default>false</default>
         <label>0601 Denver 1</label>
@@ -106,9 +111,19 @@
         <label>0602 Denver 2</label>
     </customValue>
     <customValue>
+        <fullName>603</fullName>
+        <default>false</default>
+        <label>0603 Denver 3</label>
+    </customValue>
+    <customValue>
         <fullName>701</fullName>
         <default>false</default>
         <label>0701 Stamford 1</label>
+    </customValue>
+    <customValue>
+        <fullName>702</fullName>
+        <default>false</default>
+        <label>0702 Hartford 1</label>
     </customValue>
     <customValue>
         <fullName>801</fullName>
@@ -226,6 +241,11 @@
         <label>1702 Kansas City 2</label>
     </customValue>
     <customValue>
+        <fullName>1703</fullName>
+        <default>false</default>
+        <label>1703 Kansas City 3</label>
+    </customValue>
+    <customValue>
         <fullName>1901</fullName>
         <default>false</default>
         <label>1901 Louisiana 1</label>
@@ -264,6 +284,11 @@
         <fullName>2203</fullName>
         <default>false</default>
         <label>2203 Boston 4</label>
+    </customValue>
+    <customValue>
+        <fullName>2301</fullName>
+        <default>false</default>
+        <label>2301 Detroit 1</label>
     </customValue>
     <customValue>
         <fullName>2400</fullName>
@@ -341,6 +366,11 @@
         <label>3305 New York 6</label>
     </customValue>
     <customValue>
+        <fullName>3306</fullName>
+        <default>false</default>
+        <label>3306 New York 7</label>
+    </customValue>
+    <customValue>
         <fullName>3401</fullName>
         <default>false</default>
         <label>3401 Charlotte 1</label>
@@ -399,6 +429,11 @@
         <fullName>4301</fullName>
         <default>false</default>
         <label>4301 Nashville 1</label>
+    </customValue>
+    <customValue>
+        <fullName>4302</fullName>
+        <default>false</default>
+        <label>4302 Memphis 1</label>
     </customValue>
     <customValue>
         <fullName>4400</fullName>
@@ -491,9 +526,19 @@
         <label>4417 Dallas 6</label>
     </customValue>
     <customValue>
+        <fullName>4418</fullName>
+        <default>false</default>
+        <label>4418 San Antonio 2</label>
+    </customValue>
+    <customValue>
+        <fullName>4450</fullName>
+        <default>false</default>
+        <label>4450 Inside Sales 1</label>
+    </customValue>
+    <customValue>
         <fullName>4466</fullName>
         <default>false</default>
-        <label>4466 Inside Sales</label>
+        <label>4466 MidMarket Traditional</label>
     </customValue>
     <customValue>
         <fullName>4477</fullName>
@@ -514,6 +559,11 @@
         <fullName>4493</fullName>
         <default>false</default>
         <label>4493 MidMarket (National Accounts)</label>
+    </customValue>
+    <customValue>
+        <fullName>4494</fullName>
+        <default>false</default>
+        <label>4494 MidMarket (Private Capital Market)</label>
     </customValue>
     <customValue>
         <fullName>4499</fullName>
@@ -547,5 +597,4 @@
     </customValue>
     <masterLabel>Sales Offices</masterLabel>
     <sorted>false</sorted>
-    
 </GlobalValueSet>

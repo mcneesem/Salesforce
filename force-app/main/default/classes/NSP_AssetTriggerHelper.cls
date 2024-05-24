@@ -5,9 +5,9 @@
 * Rahul Singh        June  02 2023   
 */
 
-public class NSP_AssetTriggerHelper {    
-    // test w/ NSP_AssetTriggerHelperTest (87%)    
-        
+public class NSP_AssetTriggerHelper {
+    // test w/ NSP_AssetTriggerHelperTest (87%)
+
     private static final string assetWoType = 'WO';
     private static final string assetwxType = 'WX_WA';
     private static final string activeStatus = 'Active';
@@ -138,58 +138,58 @@ public class NSP_AssetTriggerHelper {
 		updatePayDateonAsset(newMap.values(),oldMap); // added for STY-03387
 
     }
-    
-  
-    /**
-    * Iterates throught the list of new Assets and passes the required attributes to other methods.
-    * @param newMap, oldMap List of Assets.  
-    * @return void             
-    *                
-    */
-   public void afterUpdateDirector(Map<Id, Asset> newMap,Map<Id, Asset> oldMap){ 
-       Set<Id> asstIdSet = new Set<Id>();        
-       List<Asset> ast = new List<Asset>();
-       List<Asset> astremove = new List<Asset>();
-       List<Asset> docusignAsset = new List<Asset>();
-       if(newMap.size() > 0){
-           NSP_SObjectHistoryTrackingHelper objectFieldHistoryHelper = new NSP_SObjectHistoryTrackingHelper((Map<Id, sObject>)newMap, (Map<Id, sObject>)oldMap);
-           If( Limits.getQueueableJobs() != Limits.getLimitQueueableJobs()) {
-               System.enqueueJob(objectFieldHistoryHelper);  
-           }
-       }
-       
-       updateInvoiceDate(newMap.values(),oldMap);
-       peoTESClientStatus(newMap.values(),oldMap);
-       updateRETAsset(newMap.values(),oldMap);
-       
-       for(Asset asst : newMap.values()){
-           if(asst.NSP_Government_Contractor__c != oldMap.get(asst.Id).NSP_Government_Contractor__c && asst.recordTypeId == WOAssetRecordTypeId
-             ){
-                 asstIdSet.add(asst.Id);
-             }           
 
-            if(asst.Status != oldMap.get(asst.Id).Status)
-            {
-                 ast.add(asst);
-       }
-           if(asst.Status != oldMap.get(asst.Id).Status && asst.RecordTypeId != WOAssetRecordTypeId && asst.RecordTypeId != CPQAssetRecordTypeId){
-                 docusignAsset.add(asst); 
-             
-       }
-           if(!docusignAsset.isEmpty()){
-               updateAssetInDocusign(docusignAsset);
-           }
+    //
+    // Iterates throught the list of new Assets and passes the required attributes to other methods.
+    // @param newMap, oldMap List of Assets.
+    // @return void
+    //
+    public void afterUpdateDirector( Map<Id,Asset> newMap , Map<Id,Asset> oldMap ) { 
+        if ( ( newMap != null ) && ( newMap.size() > 0 ) ) {
+            NSP_SObjectHistoryTrackingHelper.enqueueJob(
+                (Map<Id,sObject>)newMap ,
+                (Map<Id,sObject>)oldMap
+            );
+        }
+        Set<Id> asstIdSet = new Set<Id>();        
+        List<Asset> ast = new List<Asset>();
+        List<Asset> astremove = new List<Asset>();
+        List<Asset> docusignAsset = new List<Asset>();
+        updateInvoiceDate( newMap.values() , oldMap );
+        peoTESClientStatus( newMap.values() , oldMap );
+        updateRETAsset( newMap.values() , oldMap );
+        for ( Asset asst : newMap.values() ) {
+            Asset oldRecord = oldMap.get( asst.Id );
+            if ( oldRecord != null ) {
+                if ( ( asst.NSP_Government_Contractor__c != oldRecord.NSP_Government_Contractor__c )
+                    && ( asst.recordTypeId == WOAssetRecordTypeId )
+                    )
+                {
+                    asstIdSet.add( asst.Id );
+                }
+                if ( asst.Status != oldRecord.Status ) {
+                    ast.add( asst );
+                }
+                if ( ( asst.Status != oldRecord.Status )
+                    && ( asst.RecordTypeId != WOAssetRecordTypeId )
+                    && ( asst.RecordTypeId != CPQAssetRecordTypeId )
+                    )
+                {
+                    docusignAsset.add( asst );
+                }
+            }
+        }
+        if ( !docusignAsset.isEmpty() ) {
+            updateAssetInDocusign( docusignAsset );
+        }
+        if ( !ast.isEmpty() ) {
+            updateActiveAssets( ast );
+        }
+        if ( !asstIdSet.isEmpty() ) {
+            mapGovernmentContratcorOnPDS( asstIdSet );
+        }
+    }
 
-       if(!ast.isEmpty()){
-           updateActiveAssets(ast);
-       }
-       
-       if(!asstIdSet.isEmpty()){
-           mapGovernmentContratcorOnPDS(asstIdSet);
-       }               
-       }
-   }
-   
     /**
     * @MethodName: updateAssetInDocusign
     * @Description: Active asset for docusign use
@@ -645,7 +645,7 @@ public class NSP_AssetTriggerHelper {
     * Params:       List<Asset> Boolean isInsert
     * ********************************************************************************************/
         
-    Public Static void updateAssetServiceRegion(List<Asset> newList){
+    public static void updateAssetServiceRegion(List<Asset> newList){
         Id wORecordTypeId = Schema.SObjectType.Asset.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.WO_ASSET_RECORDTYPE).getRecordTypeId();
         Map<id,NSP_Account_Team__c> accountTeamById = new Map<id,NSP_Account_Team__c>();
         set<Id> setofAccountIds = new set<Id>();

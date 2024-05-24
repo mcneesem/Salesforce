@@ -2,8 +2,9 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_OutplacementServicesValue__c</fullName>
     <externalId>false</externalId>
-    <label>Std/Reimbursement Outplacement Services</label>
+    <label>Client Pay/Reimbursement Outplacement Se</label>
     <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
@@ -15,6 +16,11 @@
                 <fullName>Reimbursement of Outplacement Services</fullName>
                 <default>false</default>
                 <label>Reimbursement of Outplacement Services</label>
+            </value>
+            <value>
+                <fullName>Client to pay vendor directly</fullName>
+                <default>false</default>
+                <label>Client to pay vendor directly (Default vendor is Lee Hecht Harrison.  If another vendor is preferred, please note in Special Items section.)</label>
             </value>
             <value>
                 <fullName>Standard Outplacement Service</fullName>

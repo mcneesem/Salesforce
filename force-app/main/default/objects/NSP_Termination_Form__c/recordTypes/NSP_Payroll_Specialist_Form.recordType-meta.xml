@@ -84,11 +84,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Expense Management</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Human Capital Management%2FWorkforce Administration</fullName>
+            <fullName>Expense Management%2FCertify</fullName>
             <default>false</default>
         </values>
         <values>
@@ -96,11 +92,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Payroll Services</fullName>
+            <fullName>Performance Management</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Performance Management</fullName>
+            <fullName>Recruiting Services %28ITC%29</fullName>
             <default>false</default>
         </values>
         <values>
@@ -108,7 +104,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Time and Attendance</fullName>
+            <fullName>Time and Attendance%28TimeStar%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Workforce Acceleration%2FAdministration</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -289,10 +289,6 @@
     <picklistValues>
         <picklist>NSP_Term_Reason__c</picklist>
         <values>
-            <fullName>1400 Financial Default</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>1600 Void</fullName>
             <default>false</default>
         </values>
@@ -318,10 +314,6 @@
         </values>
         <values>
             <fullName>3100 Non-Compliance of Client</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>3200 Non-Renewal</fullName>
             <default>false</default>
         </values>
         <values>
@@ -378,27 +370,99 @@
     <picklistValues>
         <picklist>NSP_What_competitor__c</picklist>
         <values>
-            <fullName>ADP Total Source</fullName>
+            <fullName>ADP TOTALSOURCE</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Employer Flexible</fullName>
+            <fullName>EMPLOYERS SOLUTION</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Oasis</fullName>
+            <fullName>G%26G PARTNERS</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Other</fullName>
+            <fullName>GRAYSTONE STRATEGY</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Paychex</fullName>
+            <fullName>GUSTO</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Trinet</fullName>
+            <fullName>HARBOR AMERICA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HR%26P HUMAN RESOURCES</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>INTUIT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>JUSTWORKS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NAMELY</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NEXTEP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OASIS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OTHER</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PAYCHEX</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PAYCOR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PAYLOCITY</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PROPEL HR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>QUESTCO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RESOURCING EDGE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SEQUOIA ONE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SWBC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>TANDEM HR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>TRINET</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ZENEFITS</fullName>
             <default>false</default>
         </values>
     </picklistValues>

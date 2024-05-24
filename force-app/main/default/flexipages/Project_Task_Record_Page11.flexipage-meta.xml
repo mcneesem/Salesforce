@@ -7,6 +7,22 @@
                     <name>actionNames</name>
                     <valueList>
                         <valueListItems>
+                            <value>pse__Project_Task__c.New_Termination_Form</value>
+                            <visibilityRule>
+                                <booleanFilter>1 OR 2</booleanFilter>
+                                <criteria>
+                                    <leftValue>{!Record.Name}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Termination request form</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Name}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Reinstatement Requested</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
                             <value>pse__Project_Task__c.Add_Update_Address</value>
                             <visibilityRule>
                                 <criteria>
@@ -114,7 +130,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>numVisibleActions</name>
-                    <value>3</value>
+                    <value>4</value>
                 </componentInstanceProperties>
                 <componentName>force:highlightsPanel</componentName>
                 <identifier>force_highlightsPanel</identifier>
@@ -1128,6 +1144,16 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_OV_Project_Task_Contacts__c</fieldItem>
                 <identifier>RecordNSP_OV_Project_Task_Contacts_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.pse__Work_Calendar__c</fieldItem>
+                <identifier>Recordpse_Work_Calendar_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-b2e6c84a-2a3a-4f7a-94ba-bcc2ec8947b9</name>

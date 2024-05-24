@@ -457,7 +457,7 @@ AND(NOT(ISNEW()),ISCHANGED({!$Record.OwnerId}))
         <recordTriggerType>Update</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Obsolete</status>
     <variables>
         <name>Coordinator_Profile_Id</name>
         <dataType>String</dataType>

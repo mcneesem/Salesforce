@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FlexiPage xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Fully dynamic page primarily used by Sales</description>
     <flexiPageRegions>
         <itemInstances>
             <fieldInstance>
@@ -188,11 +189,128 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
+                    <name>actionNames</name>
+                    <valueList>
+                        <valueListItems>
+                            <value>Lead.TracRTC__Visualize_Logs</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Convert</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Edit</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Delete</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Lead.NSP_Update_NAICS_SIC</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Lead.DNB_Connect_Data_Refresh</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Clone</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>FeedItem.ContentNote</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>FeedItem.TextPost</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>FeedItem.ContentPost</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>EmailHighlightAction</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>FeedItem.PollPost</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>FeedItem.QuestionPost</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Global.New_Core_Sales_Event</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Global.New_Mid_Market_Event</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Referral</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Global.New_Core_Sales_Task</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Global.New_Mid_Market_Task</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Referral</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Global.New_Client_Sales_Task</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Referral</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Global.New_Correspondence_Task</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Referral</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Global.New_Eloqua_Task</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Referral</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Global.New_BPS_Task</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Referral</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Global.LogACall</value>
+                        </valueListItems>
+                    </valueList>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>collapsed</name>
                     <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>enableActionsConfiguration</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>enableActionsInNative</name>
                     <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
@@ -608,6 +726,16 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.Account_Assignment_Method__c</fieldItem>
+                <identifier>RecordAccount_Assignment_Method_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Sales_Office__c</fieldItem>
                 <identifier>RecordNSP_Sales_Office_cField</identifier>
             </fieldInstance>
@@ -726,10 +854,20 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>none</value>
+                    <value>readonly</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.DNBoptimizer__DNB_D_U_N_S_Number__c</fieldItem>
-                <identifier>RecordDNBoptimizer_DNB_D_U_N_S_Number_cField</identifier>
+                <fieldItem>Record.DNB_Connect_DUNS_Number__c</fieldItem>
+                <identifier>RecordDNB_Connect_DUNS_Number_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Named_Account_Group__c</fieldItem>
+                <identifier>RecordNamed_Account_Group_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-b59e6338-ef71-4ea7-a5ae-48ab0c832437</name>
@@ -894,6 +1032,16 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.OwnerId</fieldItem>
                 <identifier>RecordOwnerIdField2</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Account_Assignment_Method__c</fieldItem>
+                <identifier>RecordAccount_Assignment_Method_cField2</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1112,6 +1260,16 @@
                 <identifier>RecordNSP_Regen_Date_cField2</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Named_Account_Group__c</fieldItem>
+                <identifier>RecordNamed_Account_Group_cField3</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-c0add9bb-1921-4454-bb0b-f9b01fbf6ac6</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -1230,6 +1388,16 @@
                 <identifier>RecordNSP_Partner_cField3</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Account_Assignment_Method__c</fieldItem>
+                <identifier>RecordAccount_Assignment_Method_cField3</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-bd99d3aa-1231-4aee-9bea-7e42f516637c</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -1306,10 +1474,20 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>none</value>
+                    <value>readonly</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.DNBoptimizer__DNB_D_U_N_S_Number__c</fieldItem>
-                <identifier>RecordDNBoptimizer_DNB_D_U_N_S_Number_cField2</identifier>
+                <fieldItem>Record.DNB_Connect_DUNS_Number__c</fieldItem>
+                <identifier>RecordDNB_Connect_DUNS_Number_cField2</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Named_Account_Group__c</fieldItem>
+                <identifier>RecordNamed_Account_Group_cField2</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -2152,14 +2330,44 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.DNBoptimizer__DNB_D_U_N_S_Number__c</fieldItem>
-                <identifier>RecordDNBoptimizer_DNB_D_U_N_S_Number_cField3</identifier>
+                <fieldItem>Record.DNB_Connect_DUNS_Number__c</fieldItem>
+                <identifier>RecordDNB_Connect_DUNS_Number_cField3</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.DnB_Domestic_Ultimate_DUNS__c</fieldItem>
+                <identifier>RecordDnB_Domestic_Ultimate_DUNS_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.DnB_Domestic_Ultimate_Name__c</fieldItem>
+                <identifier>RecordDnB_Domestic_Ultimate_Name_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-9944fda8-6b45-4446-9eb4-904131eaa12e</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.DNBConnect__D_B_Connect_Company_Profile__c</fieldItem>
+                <identifier>RecordDNBConnect_D_B_Connect_Company_Profile_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <itemInstances>
             <fieldInstance>
                 <fieldInstanceProperties>
@@ -2498,16 +2706,6 @@
                 <identifier>RecordNSP_Is_Sales_Office_Assigned_cField</identifier>
             </fieldInstance>
         </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.DNBoptimizer__DnBContactRecord__c</fieldItem>
-                <identifier>RecordDNBoptimizer_DnBContactRecord_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
         <name>Facet-02c6cb99-72ff-45d0-bd76-d7683d5a6230</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -2540,16 +2738,6 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Lead_Owner_Role__c</fieldItem>
                 <identifier>RecordNSP_Lead_Owner_Role_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.DNBoptimizer__DnBCompanyRecord__c</fieldItem>
-                <identifier>RecordDNBoptimizer_DnBCompanyRecord_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -3513,7 +3701,7 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>fields</name>
-                    <value>NSP_Field_Name__c,NSP_Modified_Date__c,NSP_Old_Value__c,NSP_New_Value__c,	NSP_Modified_By__r.Name</value>
+                    <value>NSP_Field_Name__c,NSP_Modified_Date__c,NSP_Old_Value__c,NSP_New_Value__c,NSP_Modified_By__r.Name</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>relatedFieldApiName</name>
@@ -3624,6 +3812,256 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
+                    <name>Height</name>
+                    <value>600</value>
+                </componentInstanceProperties>
+                <componentName>TracHier:hierarchy</componentName>
+                <identifier>TracHier_hierarchy</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-d4e39ef0-b2a1-4397-ad14-8f8f74c447bf</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.TracRTC__Traction_Complete_Lead_Match__c</fieldItem>
+                <identifier>RecordTracRTC_Traction_Complete_Lead_Match_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.TracRTC__Lead_Match_Type__c</fieldItem>
+                <identifier>RecordTracRTC_Lead_Match_Type_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.TracRTC__Contact__c</fieldItem>
+                <identifier>RecordTracRTC_Contact_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.TracRTC__Realtime_Clean_Contact_Match__c</fieldItem>
+                <identifier>RecordTracRTC_Realtime_Clean_Contact_Match_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.TracRTC__Match_Type__c</fieldItem>
+                <identifier>RecordTracRTC_Match_Type_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.TracRTC__Account__c</fieldItem>
+                <identifier>RecordTracRTC_Account_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.TracRTC__Realtime_Clean_Company_Match__c</fieldItem>
+                <identifier>RecordTracRTC_Realtime_Clean_Company_Match_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.TracRTC__Traction_Complete_Custom_Match__c</fieldItem>
+                <identifier>RecordTracRTC_Traction_Complete_Custom_Match_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <name>Facet-b255d984-ea37-466a-b390-dac504461e30</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.TracRTC__Realtime_Clean_Processed__c</fieldItem>
+                <identifier>RecordTracRTC_Realtime_Clean_Processed_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.TracRTC__Re_run_Realtime_Clean__c</fieldItem>
+                <identifier>RecordTracRTC_Re_run_Realtime_Clean_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.TracRTC__Realtime_Clean_Failed__c</fieldItem>
+                <identifier>RecordTracRTC_Realtime_Clean_Failed_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.TracRTC__Traction_Complete_Status__c</fieldItem>
+                <identifier>RecordTracRTC_Traction_Complete_Status_cField2</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.TracRTC__Realtime_Clean_Error_Message__c</fieldItem>
+                <identifier>RecordTracRTC_Realtime_Clean_Error_Message_cField2</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.TracRTC__Original_Completion_Date__c</fieldItem>
+                <identifier>RecordTracRTC_Original_Completion_Date_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.TracRTC__Date_of_Last_Completion__c</fieldItem>
+                <identifier>RecordTracRTC_Date_of_Last_Completion_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <name>Facet-a920f41c-41af-42ed-8dc0-1f01d4589306</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-b255d984-ea37-466a-b390-dac504461e30</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column35</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-a920f41c-41af-42ed-8dc0-1f01d4589306</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column36</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-f4634c9a-ede9-4589-9060-cb3e506e4cb6</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentName>TracRTC:TractionComplete</componentName>
+                <identifier>TracRTC_TractionComplete</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>parentFieldApiName</name>
+                    <value>Lead.Id</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListApiName</name>
+                    <value>TracRTC__History_Logs__r</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListComponentOverride</name>
+                    <value>NONE</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>rowsToDisplay</name>
+                    <value>10</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>showActionBar</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentName>force:relatedListSingleContainer</componentName>
+                <identifier>force_relatedListSingleContainer</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>columns</name>
+                    <value>Facet-f4634c9a-ede9-4589-9060-cb3e506e4cb6</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>label</name>
+                    <value>Traction Status Fields</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:fieldSection</componentName>
+                <identifier>flexipage_fieldSection18</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-4f7c6750-d52e-4c6e-b7ea-f8a75b5302fa</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
                     <name>active</name>
                     <value>true</value>
                 </componentInstanceProperties>
@@ -3707,6 +4145,34 @@
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
                 <identifier>flexipage_tab</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-d4e39ef0-b2a1-4397-ad14-8f8f74c447bf</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>Sales Hierarchy</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tab</componentName>
+                <identifier>flexipage_tab3</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-4f7c6750-d52e-4c6e-b7ea-f8a75b5302fa</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>TC Automation</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tab</componentName>
+                <identifier>flexipage_tab4</identifier>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>

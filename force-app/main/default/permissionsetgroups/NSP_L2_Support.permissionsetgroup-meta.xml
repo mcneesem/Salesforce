@@ -3,12 +3,18 @@
     <description>This permission set group is created as part of STY-02427.</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>L2 Support</label>
+    <permissionSets>Account_Assignment_Method_Edit_Access</permissionSets>
+    <permissionSets>Account_Create</permissionSets>
     <permissionSets>Advanced_Salesforce_Administrator</permissionSets>
     <permissionSets>Bypass_Campaign_Dates</permissionSets>
+    <permissionSets>Bypass_Task_Event_Cancelled_Status</permissionSets>
     <permissionSets>Contact_Modify_All</permissionSets>
     <permissionSets>Contact_View_All</permissionSets>
+    <permissionSets>Convert_Leads</permissionSets>
     <permissionSets>Delegated_Admin_User_Provisioning</permissionSets>
     <permissionSets>Edit_Integrated_Fields</permissionSets>
+    <permissionSets>Lead_Create</permissionSets>
+    <permissionSets>Manage_Internal_Users</permissionSets>
     <permissionSets>NSP_Billing_View_All</permissionSets>
     <permissionSets>NSP_Finance_Service_Objects_Permission</permissionSets>
     <permissionSets>NSP_Main_Service_Contacts</permissionSets>
@@ -20,10 +26,10 @@
     <permissionSets>Read_Permission_on_all_Fields</permissionSets>
     <permissionSets>Report_export_and_print_access</permissionSets>
     <permissionSets>Sales_Service_Object_Permission</permissionSets>
-    <permissionSets>User_Compliance_and_Audit_permissions</permissionSets>
     <permissionSets>bloomfirex__Bloomfire_Admin</permissionSets>
     <permissionSets>force__HighVelocitySalesCadenceCreatorIncluded</permissionSets>
     <permissionSets>force__HighVelocitySalesUserIncluded</permissionSets>
+    <permissionSets>force__PipelineInspectionIncluded</permissionSets>
     <permissionSets>force__SalesCloudUnlimitedIncluded</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>

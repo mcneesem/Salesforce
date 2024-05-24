@@ -3,12 +3,18 @@
     <description>This permission set group is created as part of STY-02427.</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>L1 Support</label>
+    <permissionSets>Account_Assignment_Method_Edit_Access</permissionSets>
+    <permissionSets>Account_Create</permissionSets>
     <permissionSets>Account_View_All_Modify_All</permissionSets>
     <permissionSets>Advanced_Salesforce_Administrator</permissionSets>
     <permissionSets>Bypass_Campaign_Dates</permissionSets>
+    <permissionSets>Bypass_Task_Event_Cancelled_Status</permissionSets>
     <permissionSets>Contact_View_All</permissionSets>
+    <permissionSets>Convert_Leads</permissionSets>
     <permissionSets>Core_Sales</permissionSets>
     <permissionSets>Correspondence</permissionSets>
+    <permissionSets>DataGroomer_Permission_Set</permissionSets>
+    <permissionSets>Lead_Create</permissionSets>
     <permissionSets>Mid_Market</permissionSets>
     <permissionSets>NSP_Billing_View_All</permissionSets>
     <permissionSets>NSP_Finance_Service_Objects_Permission</permissionSets>
@@ -26,6 +32,7 @@
     <permissionSets>bloomfirex__Bloomfire_User</permissionSets>
     <permissionSets>force__EinsteinActivityCaptureIncluded</permissionSets>
     <permissionSets>force__HighVelocitySalesUserIncluded</permissionSets>
+    <permissionSets>force__PipelineInspectionIncluded</permissionSets>
     <permissionSets>force__SalesCloudEinsteinIncluded</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>

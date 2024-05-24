@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Allow_Delete_Leads</name>
+    </customPermissions>
+    <description>Grants the Custom Permission: Allow Delete Leads</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Allow Delete Leads</label>
+</PermissionSet>

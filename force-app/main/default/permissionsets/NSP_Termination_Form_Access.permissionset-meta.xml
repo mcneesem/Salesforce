@@ -2,6 +2,31 @@
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <fieldPermissions>
         <editable>true</editable>
+        <field>NSP_Termination_Form__c.NSP_1900_Merger_CSA__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_Termination_Form__c.NSP_2700_FEIN_Letter_of_Assignment__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_Termination_Form__c.Credit_Specialist__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_Termination_Form__c.Client_Owner_Email__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_Termination_Form__c.Client_Owner_Phone__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>NSP_Termination_Form__c.NSP_Account_Executive__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -232,17 +257,27 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>NSP_Termination_Form__c.NSP_NoOfEmployeesClientGoingToBring__c</field>
+        <field>NSP_Termination_Form__c.NSP_Next_Scheduled_Pay_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>NSP_Termination_Form__c.NSP_NoOfEmployeesClientGoingToBring__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>NSP_Termination_Form__c.NSP_Note_regarding_Attachment__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>NSP_Termination_Form__c.NSP_Notes_Comments__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NSP_Termination_Form__c.NSP_Notes_Regarding_Attachment__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -401,4 +436,16 @@
         <object>NSP_Termination_Form__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
+    <recordTypeVisibilities>
+        <recordType>NSP_Termination_Form__c.NSP_Client_Reinstatement</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <recordType>NSP_Termination_Form__c.NSP_Credit_Specialist_Form</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <recordType>NSP_Termination_Form__c.NSP_Payroll_Specialist_Form</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
 </PermissionSet>

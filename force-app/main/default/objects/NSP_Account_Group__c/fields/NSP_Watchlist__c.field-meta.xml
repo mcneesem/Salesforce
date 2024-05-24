@@ -5,7 +5,7 @@
     <description>to mark the Growth Forecast group as being on the Watchlist</description>
     <externalId>false</externalId>
     <label>Watchlist</label>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

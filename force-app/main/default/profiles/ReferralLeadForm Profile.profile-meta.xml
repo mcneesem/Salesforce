@@ -1079,16 +1079,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Account.DNBoptimizer__DNB_D_U_N_S_Number__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Account.DNBoptimizer__DnBCompanyRecord__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Account.DOZISF__ZoomInfo_Enrich_Status__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -3044,11 +3034,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Contact.DNBoptimizer__DnBContactRecord__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Contact.DOZISF__ZoomInfo_Company_ID__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -4074,11 +4059,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Event.NSP_Recurrence_Interval__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Event.NSP_Regional_Manager__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -4210,21 +4190,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Lead.Current_Medical_Carrier__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Lead.DNBoptimizer__DNB_D_U_N_S_Number__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Lead.DNBoptimizer__DnBCompanyRecord__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Lead.DNBoptimizer__DnBContactRecord__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -13191,11 +13156,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Task.NSP_Recurrence_Interval__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Task.NSP_Regional_Manager__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -13564,10 +13524,6 @@
     <flowAccesses>
         <enabled>false</enabled>
         <flow>NSP_Notify_Opportunity_Owner_of_Assignment</flow>
-    </flowAccesses>
-    <flowAccesses>
-        <enabled>false</enabled>
-        <flow>NSP_Opportunity_Process_Builder</flow>
     </flowAccesses>
     <flowAccesses>
         <enabled>false</enabled>

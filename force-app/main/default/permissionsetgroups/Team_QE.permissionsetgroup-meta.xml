@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Group of Permission Sets to be granted to Team QE Users.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Team QE</label>
+    <permissionSets>Use_Any_API_Client</permissionSets>
+    <status>Updated</status>
+</PermissionSetGroup>

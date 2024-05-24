@@ -4,14 +4,14 @@
     <decisions>
         <name>Validate_Account_Group</name>
         <label>Validate Account Group</label>
-        <locationX>1172</locationX>
+        <locationX>2409</locationX>
         <locationY>539</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>CSS_Rep_exists</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Get_Account_Team_records.Id</leftValueReference>
+                <leftValueReference>Get_Account_Team_records</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -26,19 +26,12 @@
     <decisions>
         <name>Validate_Account_Record</name>
         <label>Validate Account Record</label>
-        <locationX>1535</locationX>
+        <locationX>2945</locationX>
         <locationY>323</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Account_is_valid</name>
-            <conditionLogic>1 AND (2 OR 3) AND (4 OR 5)</conditionLogic>
-            <conditions>
-                <leftValueReference>$Record.NSP_CSS_Start_Date__c</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
+            <conditionLogic>(1 OR 2) AND (3 OR 4)</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.NSP_Engagement_Level__c</leftValueReference>
                 <operator>EqualTo</operator>
@@ -74,16 +67,38 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Validate_BPS_Record_Type_Of_Task</name>
+        <label>Validate BPS Record Type Of Task</label>
+        <locationX>710</locationX>
+        <locationY>1187</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>BPS_Exists</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Fetch_BPS_Record_Type_Id_of_Task_Object</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Create_1st_CSS_TP_Assigned_by_Project_Manager_Task</targetReference>
+            </connector>
+            <label>BPS Exists</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Validate_WX_Asset</name>
         <label>Validate WX Asset</label>
-        <locationX>710</locationX>
-        <locationY>863</locationY>
+        <locationX>1304</locationX>
+        <locationY>971</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>WX_Asset_exists</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Fetch_Active_WX_Asset.Id</leftValueReference>
+                <leftValueReference>Fetch_Active_WX_Asset</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -93,6 +108,28 @@
                 <targetReference>Fetch_BPS_Record_Type_Id_of_Task_Object</targetReference>
             </connector>
             <label>WX Asset exists</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Validate_WX_Asset_Record_Type_Found</name>
+        <label>Validate WX Asset Record Type Found</label>
+        <locationX>1865</locationX>
+        <locationY>755</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Asset_RecordType_Exists</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Fetch_WX_Asset_Record_Type_Id</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Fetch_Active_WX_Asset</targetReference>
+            </connector>
+            <label>Asset RecordType Exists</label>
         </rules>
     </decisions>
     <environments>Default</environments>
@@ -162,12 +199,12 @@
         <name>Create_1st_CSS_TP_Assigned_by_Project_Manager_Task</name>
         <label>Create 1st CSS TP (Assigned by Project Manager) Task</label>
         <locationX>50</locationX>
-        <locationY>1079</locationY>
+        <locationY>1295</locationY>
         <connector>
             <targetReference>Create_Quarterly_Client_Meeting_Task_90_Days</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Create_Error_Log_Record</targetReference>
+            <targetReference>Create_Task_Fault</targetReference>
         </faultConnector>
         <inputAssignments>
             <field>ActivityDate</field>
@@ -215,54 +252,16 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
     <recordCreates>
-        <name>Create_Error_Log_Record</name>
-        <label>Create Error Log Record</label>
-        <locationX>1106</locationX>
-        <locationY>1187</locationY>
-        <inputAssignments>
-            <field>NSP_Class__c</field>
-            <value>
-                <stringValue>[FLOW] Create CSS Service Plan Task</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>NSP_Description__c</field>
-            <value>
-                <elementReference>$Flow.FaultMessage</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>NSP_Method__c</field>
-            <value>
-                <stringValue>Create Task (Flow Action)</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>NSP_Object__c</field>
-            <value>
-                <stringValue>Account</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>NSP_Record_Id__c</field>
-            <value>
-                <elementReference>$Record.Id</elementReference>
-            </value>
-        </inputAssignments>
-        <object>NSP_Error_Log__c</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordCreates>
-    <recordCreates>
         <name>Create_Quarterly_Client_Meeting_Task_180_Days</name>
         <label>Create Quarterly Client Meeting Task (180 Days)</label>
         <locationX>50</locationX>
-        <locationY>1295</locationY>
+        <locationY>1511</locationY>
         <connector>
             <targetReference>Create_Quarterly_Client_Meeting_Task_270_Days</targetReference>
         </connector>
         <faultConnector>
             <isGoTo>true</isGoTo>
-            <targetReference>Create_Error_Log_Record</targetReference>
+            <targetReference>Create_Task_Fault</targetReference>
         </faultConnector>
         <inputAssignments>
             <field>ActivityDate</field>
@@ -313,10 +312,10 @@
         <name>Create_Quarterly_Client_Meeting_Task_270_Days</name>
         <label>Create Quarterly Client Meeting Task (270 Days)</label>
         <locationX>50</locationX>
-        <locationY>1403</locationY>
+        <locationY>1619</locationY>
         <faultConnector>
             <isGoTo>true</isGoTo>
-            <targetReference>Create_Error_Log_Record</targetReference>
+            <targetReference>Create_Task_Fault</targetReference>
         </faultConnector>
         <inputAssignments>
             <field>ActivityDate</field>
@@ -367,13 +366,13 @@
         <name>Create_Quarterly_Client_Meeting_Task_90_Days</name>
         <label>Create Quarterly Client Meeting Task (90 Days)</label>
         <locationX>50</locationX>
-        <locationY>1187</locationY>
+        <locationY>1403</locationY>
         <connector>
             <targetReference>Create_Quarterly_Client_Meeting_Task_180_Days</targetReference>
         </connector>
         <faultConnector>
             <isGoTo>true</isGoTo>
-            <targetReference>Create_Error_Log_Record</targetReference>
+            <targetReference>Create_Task_Fault</targetReference>
         </faultConnector>
         <inputAssignments>
             <field>ActivityDate</field>
@@ -423,12 +422,15 @@
     <recordLookups>
         <name>Fetch_Active_WX_Asset</name>
         <label>Fetch Active WX Asset</label>
-        <locationX>710</locationX>
-        <locationY>755</locationY>
+        <locationX>1304</locationX>
+        <locationY>863</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Validate_WX_Asset</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Fetch_Asset_Fault</targetReference>
+        </faultConnector>
         <filterLogic>1 AND 2 AND (3 OR 4)</filterLogic>
         <filters>
             <field>AccountId</field>
@@ -465,12 +467,15 @@
     <recordLookups>
         <name>Fetch_BPS_Record_Type_Id_of_Task_Object</name>
         <label>Fetch BPS Record Type Id of Task Object</label>
-        <locationX>50</locationX>
-        <locationY>971</locationY>
+        <locationX>710</locationX>
+        <locationY>1079</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Create_1st_CSS_TP_Assigned_by_Project_Manager_Task</targetReference>
+            <targetReference>Validate_BPS_Record_Type_Of_Task</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Fetch_BPS_Record_Type_of_Task_Fault</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>SobjectType</field>
@@ -493,12 +498,15 @@
     <recordLookups>
         <name>Fetch_WX_Asset_Record_Type_Id</name>
         <label>Fetch WX Asset Record Type Id</label>
-        <locationX>710</locationX>
+        <locationX>1865</locationX>
         <locationY>647</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Fetch_Active_WX_Asset</targetReference>
+            <targetReference>Validate_WX_Asset_Record_Type_Found</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Fetch_WX_Asset_Record_Type_Fault</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>SobjectType</field>
@@ -522,12 +530,15 @@
     <recordLookups>
         <name>Get_Account_Team_records</name>
         <label>Get &apos;Account Team&apos; records</label>
-        <locationX>1172</locationX>
+        <locationX>2409</locationX>
         <locationY>431</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Validate_Account_Group</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Get_Account_Team_Fault</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>NSP_Account__c</field>
@@ -548,14 +559,124 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <start>
-        <locationX>1409</locationX>
+        <locationX>2819</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Validate_Account_Record</targetReference>
         </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>NSP_CSS_Start_Date__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>NSP_CSS_Renewal_Date__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
         <object>Account</object>
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
+    <subflows>
+        <name>Create_Task_Fault</name>
+        <label>Create Task Fault</label>
+        <locationX>1106</locationX>
+        <locationY>1403</locationY>
+        <flowName>Insperity_Fault_Handler_Subflow</flowName>
+        <inputAssignments>
+            <name>faultMessage</name>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>triggeringFlow</name>
+            <value>
+                <stringValue>NSP_Create_CSS_Service_Plan_Task</stringValue>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>Fetch_Asset_Fault</name>
+        <label>Fetch Asset Fault</label>
+        <locationX>2162</locationX>
+        <locationY>971</locationY>
+        <flowName>Insperity_Fault_Handler_Subflow</flowName>
+        <inputAssignments>
+            <name>faultMessage</name>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>triggeringFlow</name>
+            <value>
+                <stringValue>NSP_Create_CSS_Service_Plan_Task</stringValue>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>Fetch_BPS_Record_Type_of_Task_Fault</name>
+        <label>Fetch BPS Record Type of Task Fault</label>
+        <locationX>1634</locationX>
+        <locationY>1187</locationY>
+        <flowName>Insperity_Fault_Handler_Subflow</flowName>
+        <inputAssignments>
+            <name>faultMessage</name>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>triggeringFlow</name>
+            <value>
+                <stringValue>NSP_Create_CSS_Service_Plan_Task</stringValue>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>Fetch_WX_Asset_Record_Type_Fault</name>
+        <label>Fetch WX Asset Record Type Fault</label>
+        <locationX>2690</locationX>
+        <locationY>755</locationY>
+        <flowName>Insperity_Fault_Handler_Subflow</flowName>
+        <inputAssignments>
+            <name>faultMessage</name>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>triggeringFlow</name>
+            <value>
+                <stringValue>NSP_Create_CSS_Service_Plan_Task</stringValue>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>Get_Account_Team_Fault</name>
+        <label>Get Account Team Fault</label>
+        <locationX>3218</locationX>
+        <locationY>539</locationY>
+        <flowName>Insperity_Fault_Handler_Subflow</flowName>
+        <inputAssignments>
+            <name>faultMessage</name>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>triggeringFlow</name>
+            <value>
+                <stringValue>NSP_Create_CSS_Service_Plan_Task</stringValue>
+            </value>
+        </inputAssignments>
+    </subflows>
 </Flow>

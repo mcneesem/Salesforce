@@ -10,15 +10,16 @@ Modification Log     :
 * -------------------------------------------------------------------------------------------------
 * Jatin                      6/9/2022                First Iteration
 */
-// test with NPS_CloneServicePlanProjectController 81%
 public without sharing class Nps_CloneServicePlanProjectController {
+    // test w/ Nps_CloneServicePlanProjectCtrTest (80%)
 
     private static final List<String> PROJECT_TASK_FIELDS = new List<String>{ 
-                                            'Id', 'pse__Project__c', 'Name', 'pse__Status__c', 'NSP_isClonedFromAutomation__c',
-                                             'pse__Start_Date_Time__c',
-                                             'pse__End_Date_Time__c', 'OwnerId', 'NSP_Percentage_Complete__c',
-                                             'NSP_Category__c', 'NSP_Sub_Category__c', 'NSP_Detail__c', 'pse__Parent_Task__r.Name','pse__Parent_Task__c'
-                                        };
+        'Id' , 'pse__Project__c' , 'Name' , 'OwnerId' , 'pse__Status__c' ,
+        'pse__Start_Date_Time__c' , 'pse__End_Date_Time__c' ,
+        'NSP_Percentage_Complete__c' , 'NSP_isClonedFromAutomation__c' ,
+        'NSP_Category__c' , 'NSP_Sub_Category__c' , 'NSP_Detail__c' ,
+        'pse__Parent_Task__c' , 'pse__Parent_Task__r.Name'
+    };
 
     @AuraEnabled
     public static List<pse__Project_Task__c> retrieveProjectTask( String recordId){
@@ -349,10 +350,10 @@ public without sharing class Nps_CloneServicePlanProjectController {
         return projAccounts;
      }
 
-     /**
-      * This method inserts the related records of Project Task to be cloned.
-      */
-    public static void insertProjTaskRelatedRecords(List<String> prevProjTaskIds, List<Id> newProjTaskIds, Id projId){
+    //
+    // This method inserts the related records of Project Task to be cloned.
+    //
+    public static void insertProjTaskRelatedRecords( List<String> prevProjTaskIds , List<Id> newProjTaskIds , Id projId ) {
         
         List<pse__Project_Task__c> prevProjTasks = (List<pse__Project_Task__c>) new NSP_sObjectSelector('pse__Project_Task__c', PROJECT_TASK_FIELDS)
                                                .selectById(prevProjTaskIds);
@@ -388,14 +389,22 @@ public without sharing class Nps_CloneServicePlanProjectController {
         }  
         
         //clone the notes and attach them to the newly cloned project task
-        for(NSP_Note__c note: [SELECT Id, NSP_NetSuite_External_ID__c, NSP_OneVoice_External_ID__c, Note__c, NSP_Project_Task__c, NSP_Project_Task__r.Name, NSP_Project_Task__r.pse__Status__c, 
-                                NSP_Project_Task__r.pse__Start_Date_Time__c, NSP_Project_Task__r.pse__End_Date_Time__c, NSP_Project_Task__r.NSP_Percentage_Complete__c
-                                FROM NSP_Note__c WHERE NSP_Project_Task__c =: prevProjTaskIds]){
+        for(NSP_Note__c note: [
+                    SELECT
+                        Id , NSP_NetSuite_External_ID__c , NSP_OneVoice_External_ID__c , Note__c ,
+                        NSP_Project_Task__c , NSP_Project_Task__r.Name , NSP_Project_Task__r.pse__Status__c ,  
+                        NSP_Project_Task__r.pse__Start_Date_Time__c , NSP_Project_Task__r.pse__End_Date_Time__c ,
+                        NSP_Project_Task__r.NSP_Percentage_Complete__c , NSP_Project_Task__r.pse__Parent_Task__r.Name
+                    FROM NSP_Note__c
+                    WHERE NSP_Project_Task__c =: prevProjTaskIds
+                ]
+            )
+        {
             NSP_Note__c newNote = note.clone(false, true, false, false);
             String identifier = uniqueIdentifierForPTA(note.NSP_Project_Task__r);
             newNote.NSP_Project_Task__c = newMapOfPTNameAndId.get(identifier);
             relatedRecords.add(newNote);
-        }   
+        }
 
         //clone the files and attach them to the newly cloned project task
         if(!oldMapOfPTIdAndName.isEmpty()){
@@ -411,7 +420,7 @@ public without sharing class Nps_CloneServicePlanProjectController {
                 Database.insert(relatedRecords);
             }
         }
-     }
+    }
 
      private static String uniqueIdentifierForPTA(pse__Project_Task__c projTask){
         return projTask.Name + '`' + projTask.pse__Parent_Task__r.Name;

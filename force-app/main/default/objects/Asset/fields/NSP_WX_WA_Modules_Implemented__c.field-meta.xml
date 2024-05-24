@@ -4,6 +4,7 @@
     <externalId>false</externalId>
     <label>WX/WA Modules Implemented</label>
     <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>true</trackHistory>
     <type>MultiselectPicklist</type>
     <valueSet>
@@ -149,6 +150,30 @@
                 <fullName>WC - Insurelinx</fullName>
                 <default>false</default>
                 <label>WC - Insurelinx</label>
+            </value>
+            <value>
+                <fullName>HSA</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>HSA</label>
+            </value>
+            <value>
+                <fullName>PerformSmart</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>PerformSmart</label>
+            </value>
+            <value>
+                <fullName>Recruiting</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Recruiting</label>
+            </value>
+            <value>
+                <fullName>TimeSimplicity</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>TimeSimplicity</label>
             </value>
         </valueSetDefinition>
     </valueSet>

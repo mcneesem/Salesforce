@@ -1,15 +1,15 @@
 public class LoadFullAccessPermSetsQueueable implements Queueable {
-    // test w/ LoadFullAccessPermSetsQueueableTest (80%)
+    // test w/ LoadFullAccessPermSetsQueueableTest (82%)
 
     // **************************************************************************************************
-	//  Author:         Matthew McNeese
-    //  MethodName:     LoadFullAccessPermSetsQueueable 
-	//  Description :   Queueable method for loading two specified PermissionSets with Object and Field
+    //  Author:         Matthew McNeese
+    //  MethodName:     LoadFullAccessPermSetsQueueable
+    //  Description:    Queueable method for loading two specified PermissionSets with Object and Field
     //                  Permissions for specified list of object API names. For each object name in the
     //                  specified list, method upserts ObjectPermissions and then FieldPermissions for
-    //                  that object into each Perm Set and then strings a new Queueable job to do the same
+    //                  that object into each Perm Set then strings a new Queueable job to do the same
     //                  for the next object name in the list. This Queueable chain can be aborted by
-    //                  unchecking 'EnableLoadPermSetChain' field on 'QueueableSettings' Custom Setting.
+    //                  unchecking 'EnableLoadPermSetChain' field on 'QueueableSettings' Custom Setting
     // ***************************************************************************************************
 
     private List<String> objectApiNames = new List<String>();
@@ -29,12 +29,15 @@ public class LoadFullAccessPermSetsQueueable implements Queueable {
         String currObjName = objectApiNames.remove(0); // remove top item from objectApiNames in each link in chain
 
         createErrorLog('LoadFullAccessPermSetsQueueable', 'execute', currObjName, 'Loading ObjectPermissions');
-        loadObjectPermissions(readPermSetId, false, objectApiNames, currObjName, depRetry, true); // upsert read Object Permissions for all objects in list
-        loadObjectPermissions(editPermSetId, true, objectApiNames, currObjName, depRetry, true); // upsert edit Object Permissions for all objects in list
+        loadObjectPermissions(readPermSetId, false, objectApiNames, currObjName, depRetry, true); // upsert read Object Permissions for first object in list
+        loadObjectPermissions(editPermSetId, true, objectApiNames, currObjName, depRetry, true); // upsert edit Object Permissions for first object in list
 
         createErrorLog('LoadFullAccessPermSetsQueueable', 'execute', currObjName, 'Loading FieldPermissions');
         loadFieldPermissions(readPermSetId, false, currObjName); // upsert read Field Permissions for first object in list
         loadFieldPermissions(editPermSetId, true, currObjName); // upsert edit Field Permissions for first object in list
+
+        createErrorLog('LoadFullAccessPermSetsQueueable', 'execute', currObjName, 'Loading RecTypeVisibilities');
+        loadRecTypeVisibility(editPermSetId, currObjName); // upsert edit RecTypeVisibilities for first object in list
 
         if (!String.isBlank(readPermSetId) || !String.isBlank(editPermSetId)) {
             if (QueueableSettings__c.getOrgDefaults().EnableLoadPermSetChain__c) {
@@ -114,11 +117,10 @@ public class LoadFullAccessPermSetsQueueable implements Queueable {
     //                  specified Perm Set.
     // *******************************************************************************************
     public static void loadFieldPermissions(Id permSetId, Boolean editFlag, String currObjName) {
-        
         if (!String.isBlank(permSetId)) {
             Set<String> skipFields = new Set<String>{'Id','IsDeleted','CreatedDate','LastModifiedDate','SystemModstamp','UserRecordAccessId',
-            	'LastActivityDate','PhotoUrl','MasterRecordId','RecordTypeId','CreatedById','LastModifiedById','OwnerId','CurrencyIsoCode',
-           		'LastViewedDate','LastReferencedDate','RecordVisibilityId'};
+                'LastActivityDate','PhotoUrl','MasterRecordId','RecordTypeId','CreatedById','LastModifiedById','OwnerId','CurrencyIsoCode',
+                'LastViewedDate','LastReferencedDate','RecordVisibilityId'};
 
             List<FieldDefinition> fieldDefList =  [SELECT EntityDefinition.QualifiedApiName, QualifiedApiName, IsCalculated
                 FROM FieldDefinition WHERE EntityDefinition.QualifiedApiName = :currObjName AND IsNameField=false AND QualifiedApiName NOT IN :skipFields];
@@ -163,14 +165,54 @@ public class LoadFullAccessPermSetsQueueable implements Queueable {
         }
     }
 
+    // ************************************ Record Type Visibility ************************************
+    //  Description :   Upserts PermissionSetRecordTypeVisibility for all Record Types of specified 
+    //                  object name into specified Perm Set.
+    // *******************************************************************************************
+    @Future(callout=true)
+    public static void loadRecTypeVisibility(Id permSetId, String currObjName) {        
+        if (!String.isBlank(permSetId)) {
+            List<RecordType> recTypeList =  [SELECT DeveloperName FROM RecordType WHERE SobjectType = :currObjName AND IsActive = true];
+            MetadataService.MetadataPort service = NSP_PrepSandbox.createService();
+
+            String[] permissionSetNames = new String[] {[SELECT Name FROM PermissionSet WHERE Id = :permSetId LIMIT 1].Name};
+            MetadataService.PermissionSet permSet = new MetadataService.PermissionSet();
+            if (!Test.isRunningTest()) {
+                permSet = (MetadataService.PermissionSet) service.readMetadata('PermissionSet', permissionSetNames).getRecords()[0];
+            }
+
+            for (RecordType recType : recTypeList) {
+                MetadataService.PermissionSetRecordTypeVisibility recTypeVis = new MetadataService.PermissionSetRecordTypeVisibility();	
+                recTypeVis.recordType = currObjName + '.' + recType.DeveloperName;
+                recTypeVis.visible = true;
+
+                if (permSet.recordTypeVisibilities != null) {
+                    permSet.recordTypeVisibilities.add(recTypeVis);
+                } else {
+                    permSet.recordTypeVisibilities = new MetadataService.PermissionSetRecordTypeVisibility[] { recTypeVis };
+                }
+            }
+
+            if (permSet != null && !Test.isRunningTest()) {
+                List<MetadataService.SaveResult> results = service.updateMetadata( new MetadataService.Metadata[] { permSet });
+                if (!results[0].success) createErrorLog('LoadFullAccessPermSetsQueueable', 'loadRecTypeVisibility', currObjName, 'RecTypeVisibility errors occurred on Perm Set: ' + permSetId);
+            }
+        }
+    }
+
     // ************************ Chain Completion Email ************************
     public static void sendCompletionEmail(){
         Messaging.SingleEmailMessage oEmail = new Messaging.SingleEmailMessage();
         oEmail.setSubject(OrgSettings__c.getOrgDefaults().SandboxName__c + ': LoadFullAccessPermSets job finished');
-        oEmail.setTargetObjectId(UserInfo.getUserId());
+        String[] sendingTo = new String[]{'sfconfig@insperity.com'};
+        oEmail.setToAddresses(sendingTo);
         oEmail.setSaveAsActivity(false);
         oEmail.setPlainTextBody('Your LoadFullAccessPermSets job has finished for org: ' + OrgSettings__c.getOrgDefaults().SandboxName__c + '.');
-        Messaging.sendEmail(new Messaging.SingleEmailMessage[]{oEmail});
+        try {
+            Messaging.sendEmail( new Messaging.SingleEmailMessage[]{ oEmail } );
+        } catch ( Exception e ) {
+            System.debug( ' ~ CATCH ~ e=' + e );
+        }
     }
 
     // ************************ Write Error Log ************************

@@ -1379,16 +1379,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Account.DNBoptimizer__DNB_D_U_N_S_Number__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Account.DNBoptimizer__DnBCompanyRecord__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Account.DOZISF__ZoomInfo_Enrich_Status__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -3349,11 +3339,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Contact.DNBoptimizer__DnBContactRecord__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Contact.DOZISF__ZoomInfo_Company_ID__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -4461,21 +4446,6 @@
         <editable>false</editable>
         <field>Lead.Current_Medical_Carrier__c</field>
         <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Lead.DNBoptimizer__DNB_D_U_N_S_Number__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Lead.DNBoptimizer__DnBCompanyRecord__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Lead.DNBoptimizer__DnBContactRecord__c</field>
-        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -13916,10 +13886,6 @@
     </flowAccesses>
     <flowAccesses>
         <enabled>false</enabled>
-        <flow>NSP_Opportunity_Process_Builder</flow>
-    </flowAccesses>
-    <flowAccesses>
-        <enabled>false</enabled>
         <flow>NSP_Opportunity_Team_Member_Creation</flow>
     </flowAccesses>
     <flowAccesses>
@@ -14379,6 +14345,14 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>Project_Account__c-Project Account Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>pse__Proj__c-PEO Project Layout</layout>
+        <recordType>pse__Proj__c.PEO_Project</recordType>
+    </layoutAssignments> 
+    <layoutAssignments>
+        <layout>pse__Proj__c-TES%2BBPS</layout>
+        <recordType>pse__Proj__c.TES_BPS</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>QuickText-Quick Text Layout</layout>
@@ -15155,6 +15129,10 @@
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>
+        <name>ForceTwoFactor</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>true</enabled>
         <name>LightningConsoleAllowedForUser</name>
     </userPermissions>
     <userPermissions>
@@ -15162,7 +15140,7 @@
         <name>LightningExperienceUser</name>
     </userPermissions>
     <userPermissions>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
         <name>ListEmailSend</name>
     </userPermissions>
     <userPermissions>

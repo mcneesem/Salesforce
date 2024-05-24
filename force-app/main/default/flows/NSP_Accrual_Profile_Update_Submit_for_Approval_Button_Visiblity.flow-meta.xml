@@ -265,7 +265,7 @@
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Lookup_Fields</name>
-            <conditionLogic>(1 AND 2 AND 3 AND 4 AND 5)</conditionLogic>
+            <conditionLogic>(1 AND 2 AND 3 AND 4 AND 5 AND 6 AND (7 OR 8 OR 9))</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.NSP_Account_HRS__c</leftValueReference>
                 <operator>IsNull</operator>
@@ -299,6 +299,34 @@
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Is_Client_MM_or_MM_Enterprise__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Is_Client_MM_or_MM_Enterprise__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>N/A</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Enter_Case_number__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.NSP_NewExisting_Client_or_Change_order__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>New Client/New ITA Implementation</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -1116,33 +1144,33 @@
         <name>AIMSApprovalCondition</name>
         <dataType>Boolean</dataType>
         <expression>AND(
-	NOT(ISBLANK({!$Record.NSP_Account_HRS__c})),
-	NOT(ISBLANK({!$Record.NSP_Submitted_by__c})),
-	NOT(ISBLANK({!$Record.NSP_Contact__c})),
-	NOT(ISBLANK({!$Record.NSP_Contact_email__c})),
-	NOT(ISPICKVAL({!$Record.NSP_Is_this_a_Middle_Market_client__c,&apos;&apos;})),
-	NOT(ISPICKVAL({!$Record.NSP_Type_of_Policy__c,&apos;&apos;})),
-	NOT(ISBLANK({!$Record.NSP_Accrual_Profile_Plan_Name__c})),
-	NOT(ISPICKVAL({!$Record.NSP_New_Revised__c,&apos;&apos;})),
-	NOT(ISBLANK({!$Record.NSP_Effective_date__c})),
-	NOT(ISPICKVAL({!$Record.NSP_Does_this_plan_replace_other_plans__c,&apos;&apos;})),
-	NOT(ISBLANK({!$Record.NSP_Employee_Status_check_all_that_apply__c})),
-	
+NOT(ISBLANK({!$Record.NSP_Account_HRS__c})),
+NOT(ISBLANK({!$Record.NSP_Submitted_by__c})),
+NOT(ISBLANK({!$Record.NSP_Contact__c})),
+NOT(ISBLANK({!$Record.NSP_Contact_email__c})),
+NOT(ISPICKVAL({!$Record.NSP_Is_this_a_Middle_Market_client__c,&apos;&apos;})),
+NOT(ISPICKVAL({!$Record.NSP_Type_of_Policy__c,&apos;&apos;})),
+NOT(ISBLANK({!$Record.NSP_Accrual_Profile_Plan_Name__c})),
+NOT(ISPICKVAL({!$Record.NSP_New_Revised__c,&apos;&apos;})),
+NOT(ISBLANK({!$Record.NSP_Effective_date__c})),
+NOT(ISPICKVAL({!$Record.NSP_Does_this_plan_replace_other_plans__c,&apos;&apos;})),
+NOT(ISBLANK({!$Record.NSP_Employee_Status_check_all_that_apply__c})),
+
  OR( 
-	        NOT(ISPICKVAL({!$Record.NSP_Do_balances_carry_over_into_next_yer__c,&apos;&apos;})),
-	        NOT(ISPICKVAL({!$Record.NSP_Carryover_in_Hours_or_percentage__c,&apos;&apos;}))
-	),
-	        NOT(ISPICKVAL({!$Record.NSP_What_unitoftime_are_accruals_tracked__c,&apos;&apos;})),
-	        NOT(ISPICKVAL({!$Record.NSP_Accrual_waiting_period__c,&apos;&apos;})),
-	        NOT(ISPICKVAL({!$Record.NSP_balances_paid_in_lieu_of_carryover__c,&apos;&apos;})),
-	        NOT(ISPICKVAL({!$Record.NSP_Are_balances_paid_on_termination__c,&apos;&apos;}))
+        NOT(ISPICKVAL({!$Record.NSP_Do_balances_carry_over_into_next_yer__c,&apos;&apos;})),
+        NOT(ISPICKVAL({!$Record.NSP_Carryover_in_Hours_or_percentage__c,&apos;&apos;}))
+),
+        NOT(ISPICKVAL({!$Record.NSP_What_unitoftime_are_accruals_tracked__c,&apos;&apos;})),
+        NOT(ISPICKVAL({!$Record.NSP_Accrual_waiting_period__c,&apos;&apos;})),
+        NOT(ISPICKVAL({!$Record.NSP_balances_paid_in_lieu_of_carryover__c,&apos;&apos;})),
+        NOT(ISPICKVAL({!$Record.NSP_Are_balances_paid_on_termination__c,&apos;&apos;}))
 )</expression>
     </formulas>
     <formulas>
         <name>ITAApprovalCondition</name>
         <dataType>Boolean</dataType>
         <expression>OR(
-	        AND(
+        AND(
                      INCLUDES({!$Record.NSP_Hours_paid_for_earning_accruals__c}, &apos;Client Specific Pay Codes&apos;),
                      NOT(ISBLANK({!$Record.NSP_List_pay_codes__c}))
                 ),
@@ -1151,7 +1179,7 @@
                      NOT(INCLUDES({!$Record.NSP_Hours_paid_for_earning_accruals__c}, &apos;Client Specific Pay Codes&apos;)),
                      ISBLANK({!$Record.NSP_List_pay_codes__c})
                 )
-	)</expression>
+)</expression>
     </formulas>
     <interviewLabel>Accrual Profile Update Submit for Approval Button Visiblity {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Accrual Profile Update Submit for Approval Button Visiblity</label>
@@ -1210,7 +1238,7 @@
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <variables>
         <name>FilesCount</name>
         <dataType>Number</dataType>

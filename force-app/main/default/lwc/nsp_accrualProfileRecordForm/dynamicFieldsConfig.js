@@ -1,6 +1,23 @@
 import { YES } from './constants';
 
 const DYNAMIC_FIELDS = {
+  Is_Client_MM_or_MM_Enterprise__c:[
+    {
+      expValue: [
+        'N/A'
+      ],
+      dependentFields: ['Enter_Case_number__c'],
+    },
+  ],
+  NSP_NewExisting_Client_or_Change_order__c:[
+    {
+      expValue: [
+        'Existing Client/New ITA Implementation',
+        'Existing Client/Change Orders (changes to current ITA plan)',
+      ],
+      dependentFields: ['Enter_Case_number__c'],
+    },
+  ],
   NSP_Type_of_Policy__c: [
     {
       expValue: ['Other'],
@@ -291,4 +308,11 @@ const DYNAMIC_FIELDS = {
   ],
 };
 
-export { DYNAMIC_FIELDS };
+const MULTIPLE_DEPENDENT_FIELDS = {
+  Enter_Case_number__c:[
+    'Is_Client_MM_or_MM_Enterprise__c',
+    'NSP_NewExisting_Client_or_Change_order__c'
+  ],
+};
+
+export { DYNAMIC_FIELDS, MULTIPLE_DEPENDENT_FIELDS };

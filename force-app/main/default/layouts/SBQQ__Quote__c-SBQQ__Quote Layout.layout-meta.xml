@@ -55,6 +55,10 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Ready_for_Approval__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>SBQQ__Opportunity2__c</field>
             </layoutItems>
             <layoutItems>
@@ -275,6 +279,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>SBQQ__LineItemsGrouped__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>NSP_Project__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>

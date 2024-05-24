@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>54.0</apiVersion>
-    <description>Created as part of STY-02221</description>
+    <description>DEPRECATED
+Unified with Lead_Conversion_Update_Fields_on_Account to reduce UNABLE_TO_LOCK_ROW DmlExceptions
+Created as part of STY-02221</description>
+    <environments>Default</environments>
     <interviewLabel>Update Account Description on Lead Conversion {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Update Account Description on Lead Conversion</label>
     <processMetadataValues>
@@ -28,7 +31,7 @@
         <name>Update_Account_Description</name>
         <label>Update Account Description</label>
         <locationX>176</locationX>
-        <locationY>335</locationY>
+        <locationY>323</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -78,5 +81,5 @@
         <recordTriggerType>Update</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
 </Flow>

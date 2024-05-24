@@ -12,6 +12,11 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
+                <fullName>Advance Scheduling</fullName>
+                <default>false</default>
+                <label>Advance Scheduling</label>
+            </value>
+            <value>
                 <fullName>Business Insurance</fullName>
                 <default>false</default>
                 <label>Business Insurance</label>
@@ -22,9 +27,14 @@
                 <label>Employment Screening</label>
             </value>
             <value>
-                <fullName>Expense Management</fullName>
+                <fullName>Expense Management/Certify</fullName>
                 <default>false</default>
-                <label>Expense Management</label>
+                <label>Expense Management/Certify</label>
+            </value>
+            <value>
+                <fullName>Workforce Acceleration/Administration</fullName>
+                <default>false</default>
+                <label>Workforce Acceleration/Administration</label>
             </value>
             <value>
                 <fullName>Organizational Planning</fullName>
@@ -32,19 +42,14 @@
                 <label>Organizational Planning</label>
             </value>
             <value>
-                <fullName>Payroll Services</fullName>
-                <default>false</default>
-                <label>Payroll Services</label>
-            </value>
-            <value>
-                <fullName>Human Capital Management/Workforce Administration</fullName>
-                <default>false</default>
-                <label>Human Capital Management/Workforce Administration</label>
-            </value>
-            <value>
                 <fullName>Performance Management</fullName>
                 <default>false</default>
                 <label>Performance Management</label>
+            </value>
+            <value>
+                <fullName>Recruiting Services (ITC)</fullName>
+                <default>false</default>
+                <label>Recruiting Services (ITC)</label>
             </value>
             <value>
                 <fullName>Retirement Services/401(k)</fullName>
@@ -52,14 +57,15 @@
                 <label>Retirement Services/401(k)</label>
             </value>
             <value>
-                <fullName>Time and Attendance</fullName>
+                <fullName>Time and Attendance(TimeStar)</fullName>
                 <default>false</default>
-                <label>Time and Attendance</label>
+                <label>Time and Attendance(TimeStar)</label>
             </value>
             <value>
-                <fullName>Advance Scheduling</fullName>
+                <fullName>Payroll Services</fullName>
                 <default>false</default>
-                <label>Advance Scheduling</label>
+                <isActive>false</isActive>
+                <label>Payroll Services</label>
             </value>
         </valueSetDefinition>
     </valueSet>

@@ -43,7 +43,7 @@
     </decisions>
     <description>Updated to be more efficient and contain a fault path on &quot;Update Record&quot; element, changed run mode back to &quot;Runs as System&quot;</description>
     <dynamicChoiceSets>
-        <description>picklist values 	NSP_Nonprofit__c</description>
+        <description>picklist values NSP_Nonprofit__c</description>
         <name>referralBenefitsChoices</name>
         <dataType>Picklist</dataType>
         <displayField xsi:nil="true"/>

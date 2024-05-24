@@ -1,6 +1,7 @@
 const SYNC_FIELDS = {
   Provide_PEO_Name__c: 'PEO_Name__c',
   Account__c: 'prefilledIpDetails',
+  Select_BPSes:'Select_BPSes__c'
 };
 
 const POST_SYNC_IP_FIELDS = { prefilledIpDetails: 'updatePrefilledIpValues' };
@@ -34,10 +35,11 @@ const SECTION_FIELDS = [
   'Implementation_Profile__c',
   'PEO_Name__c',
   'Client_s_previous_payroll_provider__c',
-  'Client_Implementing_Premier_Performance__c',
-  'When_Client_Wants_Solution_implemented__c',
   'Implementing_biz_Performance_solutions__c',
   'Select_BPSes__c',
+  'Organizational_Planning_Imp_Timeline__c',
+  'Integra_Implementation_Timeline__c',
+  'Premier_Performance_Imp_Timeline__c',
   'Time_Entry_Method__c',
   'Client_Profile_Information__c',
   'NSP_Related_Client__c',

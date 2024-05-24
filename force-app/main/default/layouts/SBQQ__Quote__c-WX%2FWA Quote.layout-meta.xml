@@ -64,6 +64,10 @@
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Ready_for_Approval__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>SBQQ__Status__c</field>
             </layoutItems>
@@ -119,6 +123,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>SBQQ__Ordered__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>NSP_Project__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>

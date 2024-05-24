@@ -3,7 +3,7 @@
     <fullName>NSP_Primary_Payroll_Contact_Methods__c</fullName>
     <description>Primary Payroll Contact Methods</description>
     <externalId>false</externalId>
-    <label>Primary Payroll Contact Methods</label>
+    <label>Primary Payroll Contact Method</label>
     <required>false</required>
     <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>

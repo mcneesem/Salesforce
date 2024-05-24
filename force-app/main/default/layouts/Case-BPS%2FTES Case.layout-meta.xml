@@ -232,7 +232,7 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>NSP_Level_2_Date__c</field>
+                <field>NSP_Level_2_Assigned_Date__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -584,6 +584,9 @@
         <fields>NSP_Per_Id__c</fields>
         <fields>NSP_IsPrimary__c</fields>
         <relatedList>NSP_Case_Contacts__c.NSP_Case__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <relatedList>RelatedEntityHistoryList</relatedList>
     </relatedLists>
     <relatedObjects>ContactId</relatedObjects>
     <relatedObjects>AccountId</relatedObjects>

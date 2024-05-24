@@ -44,9 +44,10 @@ import Yes from '@salesforce/label/c.NSP_Yes';
 import No from '@salesforce/label/c.NSP_No';
 
 import isClientComingFromAnotherPEO from '@salesforce/label/c.NSP_Is_the_client_coming_from_Another_PEO';
-import isClientComingImplementingPerformance from '@salesforce/label/c.NSP_Will_the_client_be_implemening_Premier_Performannce';
-import whenClientLikeSolutionImplemented from '@salesforce/label/c.NSP_When_client_like_solution_implemented';
 import isClientImplementingAnyOtherBusinessSolutions from '@salesforce/label/c.NSP_Client_implementing_any_other_Business_Performance_Solutions';
+import premierPerformanceImplementationTimeline from '@salesforce/label/c.Premier_Performance_Implementation_Timeline';
+import organizationalPlanningImpTimeline from '@salesforce/label/c.Organizational_Planning_Imp_Timeline';
+import integraImplementationTimeline from '@salesforce/label/c.Integra_Implementation_Timeline';
 import timeEntryMethod from '@salesforce/label/c.NSP_Time_Entry_Method';
 import clientProfileInformation from '@salesforce/label/c.NSP_Client_Profile_Information';
 import hushProtocol from '@salesforce/label/c.NSP_Hush_Protocol';
@@ -96,8 +97,23 @@ import doesClientHaveExpenseOrAllowance from '@salesforce/label/c.NSP_Does_clien
 import doesClientHavePostTaxDeductions from '@salesforce/label/c.NSP_Does_client_have_post_tax_deductions';
 import otherDetails from '@salesforce/label/c.NSP_Other_Details';
 import doesClientHaveSpecialPayrollNeeds from '@salesforce/label/c.NSP_Does_Client_Have_SpecialPayrollNeeds';
+import whatAccountingSoftwareDoYouUse from '@salesforce/label/c.What_accounting_software_do_you_use';
+import wouldYouLikeAutomationForYourGeneralLedger from '@salesforce/label/c.Would_you_like_automation_for_your_general_ledger';
+import isPayrollEntryItemizedOrSimpleEntry from '@salesforce/label/c.Is_payroll_entry_itemized_or_simple_entry';
+import itemized from '@salesforce/label/c.If_Itemized_they_must_use_Integra';
 import employeesWorkinFollowingStates from '@salesforce/label/c.NSP_Employees_Work_in_Following_States';
 import allowances from '@salesforce/label/c.NSP_Allowances';
+import WhatQuickBooksversiondoyouuse from '@salesforce/label/c.What_QuickBooks_version_do_you_use';
+import Neededpayrollentryallocation from '@salesforce/label/c.Needed_payroll_entry_allocation';
+import Doyouneedtoallocatecosts from '@salesforce/label/c.Do_you_need_to_allocate_costs';
+import Doyourequiremorethan3jobcost from '@salesforce/label/c.Do_you_require_more_than_3_job_cost';
+import Doyouhavearecentjournalentry from '@salesforce/label/c.Do_you_have_a_recent_journal_entry';
+import Doyouhavearecentjournal from '@salesforce/label/c.Do_you_have_a_recent_journal';
+import Doyouneedtoallocatehelptext from '@salesforce/label/c.Do_you_need_to_allocate_help_text';
+import Doyourequiremorethan3jobhelptext from '@salesforce/label/c.Do_you_require_more_than_3_job_help_text';
+import ClientIntegraResponsessmartsheet from '@salesforce/label/c.Client_Integra_Responses_smartsheet';
+import Doyourequiremorethan3jobhyperlink from '@salesforce/label/c.Do_you_require_more_than_3_job_hyperlink';
+import IsthereaneedforIntegra from '@salesforce/label/c.Is_there_a_need_for_Integra_c';
 import expenses from '@salesforce/label/c.NSP_Expenses';
 import clientBusinessMeetingQuestion from '@salesforce/label/c.NSP_Client_Business_Meeting_States_Question';
 import clientBusinessMeeting from '@salesforce/label/c.NSP_Client_Business_Meeting_States';
@@ -148,6 +164,7 @@ import areThereEEsWithUrgentNeeds from '@salesforce/label/c.NSP_Are_there_any_EE
 import doesCignaTakeoverApplyToClient from '@salesforce/label/c.NSP_Does_Cigna_takeover_apply_to_client';
 import areParticipantsInEligibilityPeriod from '@salesforce/label/c.NSP_Are_participants_in_eligibility_period';
 import doYouHaveCOBRAEmployees from '@salesforce/label/c.NSP_Do_you_have_name_of_COBRA_employees';
+import whatIsClientsABCP from '@salesforce/label/c.What_is_client_s_Active_Benefits_Continuation_Period_ABCP';
 import areThereEEsonLOA from '@salesforce/label/c.NSP_Are_there_any_EEs_LOA';
 import doYouHaveLOAInformation from '@salesforce/label/c.NSP_Do_LOA_Information';
 import didYouInformThatEEwillnotbeEligible from '@salesforce/label/c.NSP_Did_you_inform_client_that_EE_will_not_be_eligible';
@@ -571,8 +588,10 @@ export {
     YES_CONSTANT,
     No,
     isClientComingFromAnotherPEO,
-    isClientComingImplementingPerformance,
     isClientImplementingAnyOtherBusinessSolutions,
+    premierPerformanceImplementationTimeline,
+    organizationalPlanningImpTimeline,
+    integraImplementationTimeline,
     timeEntryMethod,
     clientProfileInformation,
     nationalClient,
@@ -629,6 +648,21 @@ export {
     isClientaFederalContractor,
     doesClientHaveEEONumber,
     doAnyEEsHaveGarnishments,
+    itemized,
+    whatAccountingSoftwareDoYouUse,
+    wouldYouLikeAutomationForYourGeneralLedger,
+    isPayrollEntryItemizedOrSimpleEntry,
+    WhatQuickBooksversiondoyouuse,
+    Neededpayrollentryallocation,
+    Doyouneedtoallocatecosts,
+    Doyourequiremorethan3jobcost,
+    Doyouhavearecentjournalentry,
+    Doyouhavearecentjournal,
+    Doyouneedtoallocatehelptext,
+    Doyourequiremorethan3jobhyperlink,
+    ClientIntegraResponsessmartsheet,
+    Doyourequiremorethan3jobhelptext,
+    IsthereaneedforIntegra,
     doAnyEEsHaveTaxLevies,
     doesClientHaveExpenseOrAllowance,
     doesClientHavePostTaxDeductions,
@@ -694,6 +728,7 @@ export {
     doesCignaTakeoverApplyToClient,
     areParticipantsInEligibilityPeriod,
     doYouHaveCOBRAEmployees,
+    whatIsClientsABCP,
     areThereEEsonLOA,
     doYouHaveLOAInformation,
     didYouInformThatEEwillnotbeEligible,
@@ -736,7 +771,6 @@ export {
     clientInternalDeadlineEE,
     allEEsPaidToSameFEIN,
     certCoverForGeneralLiability,
-    whenClientLikeSolutionImplemented,
     FSO,
     FSOHeader,
     MMHeader,

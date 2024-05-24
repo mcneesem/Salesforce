@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Elective Available Assignment</fullName>
+        <default>false</default>
+        <label>Elective Available Assignment</label>
+    </customValue>
+    <customValue>
+        <fullName>Marketing Generated</fullName>
+        <default>false</default>
+        <label>Marketing Generated</label>
+    </customValue>
+    <customValue>
+        <fullName>ROE Available Assignment</fullName>
+        <default>false</default>
+        <label>ROE Available Assignment</label>
+    </customValue>
+    <customValue>
+        <fullName>Self Generated</fullName>
+        <default>false</default>
+        <label>Self Generated</label>
+    </customValue>
+    <customValue>
+        <fullName>Target Account Assignment</fullName>
+        <default>false</default>
+        <label>Target Account Assignment</label>
+    </customValue>
+    <customValue>
+        <fullName>Available Account Assignment</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Available Account Assignment</label>
+    </customValue>
+    <customValue>
+        <fullName>Pre-ABX</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Pre-ABX</label>
+    </customValue>
+    <masterLabel>Account Assignment Method</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

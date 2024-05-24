@@ -5,6 +5,6 @@
     <externalId>false</externalId>
     <formula>IF(NOT(ISBLANK( SBQQ__PrimaryQuote__c)),true,false)</formula>
     <label>Has Primary Quote</label>
-    <trackTrending>false</trackTrending>
+    <trackHistory>false</trackHistory>
     <type>Checkbox</type>
 </CustomField>

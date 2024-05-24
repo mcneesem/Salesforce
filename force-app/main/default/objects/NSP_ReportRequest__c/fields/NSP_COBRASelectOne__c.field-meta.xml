@@ -4,6 +4,7 @@
     <externalId>false</externalId>
     <label>COBRA</label>
     <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
@@ -14,31 +15,64 @@
             <value>
                 <fullName>COBRA1: &quot;This payment includes an amount to help defray&quot; (amount for COBRA included in consideration, but actual amount is not stated in the release)</fullName>
                 <default>false</default>
-                <label>COBRA1: &quot;This payment includes an amount to help defray&quot; (amount for COBRA included in consideration, but actual amount is not stated in the release)</label>
+                <label>COBRA-1: &quot;This payment includes an amount to help defray&quot; (amount for COBRA included in consideration, but actual amount is not stated in the release)</label>
+            </value>
+            <value>
+                <fullName>COBRA2: &quot;The Company has also agreed to pay you an additional&quot; (amount for COBRA is stated separately in release)</fullName>
+                <default>false</default>
+                <label>COBRA-2: &quot;The Company has also agreed to pay you an additional&quot; (amount for COBRA is stated separately in release)</label>
+            </value>
+            <value>
+                <fullName>COBRA3:  &quot;The Company has agreed to reimburse you for&quot;</fullName>
+                <default>false</default>
+                <label>COBRA-3: &quot;The Company has agreed to reimburse you for&quot;</label>
+            </value>
+            <value>
+                <fullName>COBRA2: &quot;This payment includes an amount of&quot;  (amount for COBRA is stated separately in release)</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>COBRA2: &quot;This payment includes an amount of&quot;  (amount for COBRA is stated separately in release)</label>
             </value>
             <value>
                 <fullName>COBRA2: &quot;This payment includes an amount of&quot; (amount for COBRA is stated separately in release)</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>COBRA2: &quot;This payment includes an amount of&quot; (amount for COBRA is stated separately in release)</label>
             </value>
             <value>
                 <fullName>COBRA3: &quot;The Company has also agreed to pay you an additional&quot; (amount for COBRA is stated separately in release)</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>COBRA3: &quot;The Company has also agreed to pay you an additional&quot; (amount for COBRA is stated separately in release)</label>
+            </value>
+            <value>
+                <fullName>COBRA4:&quot;The Company has also agreed to reimburse you for an amount equal to _ full month(s)&quot; (No of months COBRA is being reimbursed; if this should be defined as weeks instead of months or through a particular date, please note the Special Items section)</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>COBRA4:&quot;The Company has also agreed to reimburse you for an amount equal to _ full month(s)&quot; (No of months COBRA is being reimbursed; if this should be defined as weeks instead of months or through a particular date, please note the Special Items section)</label>
             </value>
             <value>
                 <fullName>COBRA4:&quot;The Company has also agreed to reimburse you for an amount equal to _ full month(s)” (No of months COBRA is being reimbursed; if this should be defined as weeks instead of months or through a particular date, please note the Special Items section)</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>COBRA4:&quot;The Company has also agreed to reimburse you for an amount equal to _ full month(s)” (No of months COBRA is being reimbursed; if this should be defined as weeks instead of months or through a particular date, please note the Special Items section)</label>
             </value>
             <value>
                 <fullName>COBRA5: &quot;The Company has also agreed to reimburse you for an amount up to&quot; (dollar amount for COBRA reimbursement</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>COBRA5: &quot;The Company has also agreed to reimburse you for an amount up to&quot; (dollar amount for COBRA reimbursement</label>
+            </value>
+            <value>
+                <fullName>COBRA6: &quot;Client ONLY wants to offer COBRA.  Must be a dollar amount equal to at least 2 weeks salary, and will NOT be defined as a reimbursement&quot;</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>COBRA6: &quot;Client ONLY wants to offer COBRA.  Must be a dollar amount equal to at least 2 weeks salary, and will NOT be defined as a reimbursement&quot;</label>
             </value>
             <value>
                 <fullName>COBRA6: &quot;Client ONLY wants to offer COBRA. Must be a dollar amount equal to at least 2 weeks salary, and will NOT be defined as a reimbursement&quot;</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>COBRA6: &quot;Client ONLY wants to offer COBRA. Must be a dollar amount equal to at least 2 weeks salary, and will NOT be defined as a reimbursement&quot;</label>
             </value>
         </valueSetDefinition>

@@ -176,10 +176,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>DNBoptimizer__DNB_D_U_N_S_Number__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>NSP_Inc_5000__c</field>
             </layoutItems>
         </layoutColumns>
@@ -327,7 +323,7 @@
     </layoutSections>
     <platformActionList>
         <actionListContext>Record</actionListContext>
-                <platformActionListItems>
+        <platformActionListItems>
             <actionName>Account.NSP_New_BPS_Task</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>0</sortOrder>
@@ -342,7 +338,7 @@
             <actionType>StandardButton</actionType>
             <sortOrder>2</sortOrder>
         </platformActionListItems>
-<platformActionListItems>
+        <platformActionListItems>
             <actionName>Edit</actionName>
             <actionType>StandardButton</actionType>
             <sortOrder>3</sortOrder>
@@ -397,7 +393,7 @@
             <actionType>QuickAction</actionType>
             <sortOrder>13</sortOrder>
         </platformActionListItems>
-                <platformActionListItems>
+        <platformActionListItems>
             <actionName>blng__CreditCenter</actionName>
             <actionType>CustomButton</actionType>
             <sortOrder>14</sortOrder>
@@ -412,7 +408,7 @@
             <actionType>QuickAction</actionType>
             <sortOrder>16</sortOrder>
         </platformActionListItems>
-<platformActionListItems>
+        <platformActionListItems>
             <actionName>Account.NSP_New_task_BPS</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>17</sortOrder>
@@ -466,7 +462,11 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
-                <relatedList>NSP_Account_Group_Member__c.NSP_Member_Account__c</relatedList>
+        <fields>NSP_Account_Group__c.NAME</fields>
+        <fields>NSP_Primary__c</fields>
+        <fields>NSP_AIMS_Client_ID__c</fields>
+        <fields>NSP_Type__c</fields>
+        <relatedList>NSP_Account_Group_Member__c.NSP_Member_Account__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
@@ -504,7 +504,7 @@
         <fields>NSP_SubCategory__c</fields>
         <fields>CASES.STATUS</fields>
         <fields>CASES.CREATED_DATE_DATE_ONLY</fields>
-    <relatedList>RelatedCaseList</relatedList>
+        <relatedList>RelatedCaseList</relatedList>
     </relatedLists>
     <relatedLists>
         <customButtons>pse__Create_Project_From_Template</customButtons>

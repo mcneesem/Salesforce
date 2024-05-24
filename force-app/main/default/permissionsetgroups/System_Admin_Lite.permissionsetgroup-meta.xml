@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Perm set group to move permissions off the Sys Admin Lite profile</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>System Admin Lite</label>
+    <permissionSets>Account_Assignment_Method_Edit_Access</permissionSets>
+    <permissionSets>Accrual_Profile_access</permissionSets>
+    <permissionSets>Allow_Delete_Accounts</permissionSets>
+    <permissionSets>Allow_Delete_Leads</permissionSets>
+    <permissionSets>Field_Access_to_System_Admin_Lite</permissionSets>
+    <permissionSets>NSP_Termination_Form_Access</permissionSets>
+    <permissionSets>Resource_Absence_record_type_access</permissionSets>
+    <permissionSets>Sales_Enablement</permissionSets>
+    <permissionSets>force__PipelineInspectionIncluded</permissionSets>
+    <status>Updated</status>
+</PermissionSetGroup>

@@ -6,7 +6,7 @@
     <label>Reason Lost</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
-    <trackTrending>false</trackTrending>
+    <trackHistory>true</trackHistory>
     <type>Picklist</type>
     <valueSet>
         <restricted>true</restricted>
@@ -113,6 +113,11 @@
                 <label>Other</label>
             </value>
             <value>
+                <fullName>Out of Business</fullName>
+                <default>false</default>
+                <label>Out of Business</label>
+            </value>
+            <value>
                 <fullName>Price</fullName>
                 <default>false</default>
                 <label>Price</label>
@@ -128,6 +133,11 @@
                 <label>Prohibited Industry</label>
             </value>
             <value>
+                <fullName>Regen</fullName>
+                <default>false</default>
+                <label>Regen</label>
+            </value>
+            <value>
                 <fullName>Satisfied with Current</fullName>
                 <default>false</default>
                 <label>Satisfied with Current</label>
@@ -136,6 +146,11 @@
                 <fullName>Satisfied with Current Process</fullName>
                 <default>false</default>
                 <label>Satisfied with Current Process</label>
+            </value>
+            <value>
+                <fullName>Stayed with Current Insperity Solution</fullName>
+                <default>false</default>
+                <label>Stayed with Current Insperity Solution</label>
             </value>
             <value>
                 <fullName>Timing</fullName>
@@ -156,16 +171,6 @@
                 <fullName>WO Competitor</fullName>
                 <default>false</default>
                 <label>WO Competitor</label>
-            </value>
-            <value>
-                <fullName>Regen</fullName>
-                <default>false</default>
-                <label>Regen</label>
-            </value>
-            <value>
-                <fullName>Stayed with Current Insperity Solution</fullName>
-                <default>false</default>
-                <label>Stayed with Current Insperity Solution</label>
             </value>
         </valueSetDefinition>
     </valueSet>

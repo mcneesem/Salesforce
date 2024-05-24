@@ -157,6 +157,7 @@
     <nameField>
         <displayFormat>AT-{0000000000}</displayFormat>
         <label>Record ID</label>
+        <trackHistory>true</trackHistory>
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Account Teams</pluralLabel>

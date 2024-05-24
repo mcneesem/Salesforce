@@ -11,14 +11,14 @@ Modification Log     :  11/09/2023-Suhas : Added RET Client Id for Sync WO Asset
 * Developer                   Date                   Description
 * -------------------------------------------------------------------------------------------------
 * Virendra Kumar               9/30/2022           First Iteration
-* Ramya Ravi  				   10/28/2022          V2.0- RET - Automation - Subplan Lead Parent Sync to Associated Assets  <STY-02671>
-* Ramya Ravi 				   11/02/2022          V3.0 - TES Asset & RET Asset - AIMS Information - <STY-02841>
-* Ramya Ravi 				   11/04/2022          V4.0 - RET Asset - Sync WO Asset data to RET Asset  <STY-03527>
+* Ramya Ravi                   10/28/2022          V2.0- RET - Automation - Subplan Lead Parent Sync to Associated Assets  <STY-02671>
+* Ramya Ravi                   11/02/2022          V3.0 - TES Asset & RET Asset - AIMS Information - <STY-02841>
+* Ramya Ravi                   11/04/2022          V4.0 - RET Asset - Sync WO Asset data to RET Asset  <STY-03527>
 * Abhishek Kumar               12/26/2022          v5.0 - Account - Product First Pay Date <STY-03597>
-* Ramya Ravi 				   01/16/2022		   v6.0 - Create project from asset <STY-02234>
+* Ramya Ravi                   01/16/2022          v6.0 - Create project from asset <STY-02234>
 */
 public class NSP_AssetServiceTriggerHelper {
-    // test w/ NSP_AssetServiceTriggerHelperTest (82%)
+    // test w/ NSP_AssetServiceTriggerHelperTest (80%)
 
     public final String PEORECORDTYPE = 'PEO';
     public final String HRSPECIALISTROLE = 'HR Specialist';
@@ -60,7 +60,6 @@ public class NSP_AssetServiceTriggerHelper {
     private static final String ASSET_TERMINATION_PAYROLL_TEMPLATE = 'NSP_Retention_Strategy_Payroll_Email';
     private static final String ASSET_TERMINATION_OTHER_ROLE_TEMPLATE = 'NSP_Asset_Retention_Strategy_Email';
     private static final String RSAP = 'Relationship Strategy Action Plan';
-    private static final String ASSET_SERVICE_TRIGGER_HELPER = 'NSP_AssetServiceTriggerHelper';
     private static final Id hardWareRecordTypeId = NSP_GenericRecordType.getRecordTypeId(ASSET, 'Hardware_Asset');
     private static final String errorMessage = System.Label.NSP_Error_Message_Without_CreateAsset_PermSet_On_Asset;
 
@@ -123,7 +122,11 @@ public class NSP_AssetServiceTriggerHelper {
             }//<STY-02841> end
 
             String recordTypeLabel = recTypeLabelMap.get(asset.RecordTypeId);
-            if(OnboardingStatusRecordTypes.contains(recordTypeLabel) && asset.NSP_Account_Status__c != NSP_ServiceConstants.TERMINATED){
+            if( OnboardingStatusRecordTypes.contains(recordTypeLabel)
+                && asset.NSP_Account_Status__c != NSP_ServiceConstants.TERMINATED
+                && !asset.Is_Perform_WO_WS_Asset__c
+                )
+            {
                 asset.Status = ASSET_STATUS_ONBOARDING;
             }else if(NonServiceAsset.contains(recordTypeLabel)){
                 asset.Status = ASSET_STATUS_PURCHASED;
@@ -437,12 +440,15 @@ public class NSP_AssetServiceTriggerHelper {
 * ReturnAssetRecordtypes()
 * UpdateLstAssets()
 * //Added as a part of <STY-02841>
+* Updated for RET_Client_ID Bug 12142023
 */
 
     private Asset updateAssets(Asset getAsst, Asset assLst){
         Asset returnAsset = getAsst;
         getAsst.NSP_WO_AIMS_Client_Number__c = assLst.NSP_Client__c;
-        getAsst.NSP_RET_Client_ID__c = assLst.NSP_Client__c;//11092023-STY-241721
+        if(getAsst.RecordTypeId == RETWOAssetRecordTypeId){
+            getAsst.NSP_RET_Client_ID__c = assLst.NSP_Client__c;//11092023-STY-241721
+        }
         getAsst.NSP_Client__c = null;
         getAsst.NSP_Company_Name__c = null;
         getAsst.NSP_Account_Status__c = assLst.NSP_Account_Status__c;
@@ -480,7 +486,7 @@ public class NSP_AssetServiceTriggerHelper {
                             NSP_DBA__c, NSP_Business_Type__c, NSP_FEIN__c, NSP_Business_Inception_Date__c,
                             NSP_SIC_Code__c, NSP_Legal_Entity_Description__c, NSP_NAICS_Code__c, NSP_AIMS_Original_First_Pay_Date__c,
                             NSP_Sales_Office__c,NSP_RET_Region__c,NSP_RET_AIMS_Original_Empl_Date__c,NSP_RET_NAICS_Description__c,
-                            NSP_Phone__c,NSP_RET_Phone_Ext__c,NSP_Email__c,NSP_Renewal_Date__c
+                            NSP_Phone__c,NSP_RET_Phone_Ext__c,NSP_Email__c,NSP_Renewal_Date__c,RecordTypeId
                             FROM Asset WHERE AccountId in : accountID AND
                             RecordType.DeveloperName IN: AssetRecTypeSet ]  ){
                                 RETBPSassets.add(assLst);
@@ -772,7 +778,6 @@ public class NSP_AssetServiceTriggerHelper {
                 updateTerminationDate(asset,oldMap);
             }
 
-			//As a part of DF-
             if(hasBPSCustomPermission == false){
                 notEditableBPSFieldsAssetList.add(asset);
             }
@@ -887,8 +892,11 @@ public class NSP_AssetServiceTriggerHelper {
             if(!mapAccountIdRecordTypeId.isEmpty()){
                 createAccGroupsMembersGroups(mapAccountIdRecordTypeId,newList);
             }
-        }catch(Exception ex){
-            NSP_ErrorLogHandler.logSaveException(ASSET_SERVICE_TRIGGER_HELPER,'createAccountGroupsForAssets',ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_AssetServiceTriggerHelper.handleException(
+                e ,
+                'createAccountGroupsForAssets'
+            );
         }
     }
 
@@ -1045,17 +1053,22 @@ public class NSP_AssetServiceTriggerHelper {
      * @param List<Asset> newList
      * @return void
      */
-    public static void createWXAssetGroups(Map<String,String> mapwXParentIdAccountId ,Id wXRecordTypeId ){
+    public static void createWXAssetGroups( Map<String,String> mapwXParentIdAccountId , Id wXRecordTypeId ) {
         try{
-        	//if the WxAssets then Create AccountGroups and Group members
-            if(!mapwXParentIdAccountId.isEmpty()){
-           	 createWXAccountGroup(mapwXParentIdAccountId.keyset(), mapwXParentIdAccountId, wXRecordTypeId);                
+            if ( !mapwXParentIdAccountId.isEmpty() ) {
+                createWXAccountGroup(
+                    mapwXParentIdAccountId.keyset() ,
+                    mapwXParentIdAccountId ,
+                    wXRecordTypeId
+                );
             }
-        } catch (Exception ex) {
-            NSP_ErrorLogHandler.logSaveException(ASSET_SERVICE_TRIGGER_HELPER, 'createWXAssetGroups', ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_AssetServiceTriggerHelper.handleException(
+                e ,
+                'createWXAssetGroups'
+            );
         }
     }
-
 
     /**
      * Create WX AccountGroup When Asset is Updated
@@ -1088,9 +1101,12 @@ public class NSP_AssetServiceTriggerHelper {
             createWXAccountGroup(mapwXParentIdAccountId.keyset(), mapwXParentIdAccountId, wXRecordTypeId);
 
 
-         } catch (Exception ex) {
-            NSP_ErrorLogHandler.logSaveException(ASSET_SERVICE_TRIGGER_HELPER, 'createWXAssetGroups', ex.getMessage());
-         }
+        } catch ( Exception e ) {
+            NSP_AssetServiceTriggerHelper.handleException(
+                e ,
+                'createWXAssetGroups'
+            );
+        }
     }
 
     /**
@@ -1321,8 +1337,11 @@ Implementation profile related to the account of the created asset
         if (!impProfileList.isEmpty()) {
             try {
                 database.update(impProfileList);
-            } catch (exception ex) {
-                NSP_ErrorLogHandler.logSaveException(ASSET_SERVICE_TRIGGER_HELPER, 'linkAssetWithImpProfile', ex.getMessage());
+            } catch ( Exception e ) {
+                NSP_AssetServiceTriggerHelper.handleException(
+                    e ,
+                    'linkAssetWithImpProfile'
+                );
             }
         }
     }
@@ -1357,31 +1376,40 @@ Implementation profile related to the account of the created asset
                 if(!payRollList.isEmpty()){
                     Database.update(payRollList);
                 }
-            } catch (exception ex) {
-                NSP_ErrorLogHandler.logSaveException('NSP_AssetTriggerHelper', 'mapGovernmentContratcorOnPDS', ex.getMessage());
+            } catch ( Exception e ) {
+                NSP_AssetServiceTriggerHelper.handleException(
+                    e ,
+                    'mapGovernmentContratcorOnPDS'
+                );
             }
         }
     }
 
     //<STY-02671> start
-    public void  UpdateLstPSP(List<NSP_Plan_SubPlan__c> PSPToUpdate){
-        try{
-            Database.update(PSPToUpdate);
-        }
-        catch(Exception ex){
-            NSP_ErrorLogHandler.logSaveException(ASSET_SERVICE_TRIGGER_HELPER, 'UpdateLstPSP', ex.getMessage());
+    public void UpdateLstPSP( List<NSP_Plan_SubPlan__c> PSPToUpdate ) {
+        try {
+            Database.update( PSPToUpdate );
+        } catch ( Exception e ) {
+            NSP_AssetServiceTriggerHelper.handleException(
+                e ,
+                'UpdateLstPSP'
+            );
         }
     }
 
-    public void  UpdateLstAssets(List<Asset> assetToUpdate){
-        try{
-            if(!assetToUpdate.isEmpty()){
-            Database.update(assetToUpdate);
-        }}
-        catch(Exception ex){
-            NSP_ErrorLogHandler.logSaveException(ASSET_SERVICE_TRIGGER_HELPER, 'UpdateLstAssets', ex.getMessage());
+    public void UpdateLstAssets( List<Asset> assetToUpdate ) {
+        try {
+            if ( !assetToUpdate.isEmpty() ) {
+                Database.update( assetToUpdate );
+            }
+        } catch ( Exception e ) {
+            NSP_AssetServiceTriggerHelper.handleException(
+                e ,
+                'UpdateLstAssets'
+            );
         }
-    }//<STY-02671> end
+    }
+    //<STY-02671> end
 
     /**
 * @MethodName: subPlanLeadParentSync
@@ -1556,8 +1584,11 @@ Implementation profile related to the account of the created asset
                        asset.addError(label.NSP_BPSPermisisonAssetValidation);
                    }
             }
-        }catch(Exception ex){
-            NSP_ErrorLogHandler.logSaveException(ASSET_SERVICE_TRIGGER_HELPER, 'restrictProductSegupdate', ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_AssetServiceTriggerHelper.handleException(
+                e ,
+                'restrictProductSegupdate'
+            );
         }
     }
 
@@ -1642,10 +1673,27 @@ Implementation profile related to the account of the created asset
                     emailList.add(email);
                 }
 
-                if(emailList.size() > 0){
-                    Messaging.sendEmail(emailList);
+                if ( emailList.size() > 0 ) {
+                    try {
+                        Messaging.sendEmail( emailList );
+                    } catch ( Exception e ) {
+                        NSP_AssetServiceTriggerHelper.handleException(
+                            e ,
+                            'sendMail'
+                        );
+                    }
                 }
             }
+        }
+    }
+
+    private static void handleException( Exception e , String methodName ) {
+        if ( e != null ) {
+            NSP_ErrorLogHandler.logSaveException(
+                NSP_AssetServiceTriggerHelper.class.getName() ,
+                methodName ,
+                e.getMessage() + ' ~ ' + e.getStackTraceString()
+            );
         }
     }
 
@@ -1678,12 +1726,19 @@ Implementation profile related to the account of the created asset
                 isCheckFirstIteration = false;
             }
             //update account with earliest first pay date
-            if( !mapOfAccountIdWithAccount.isEmpty()){
-                List<Database.SaveResult> results = Database.update(mapOfAccountIdWithAccount.values());
-                NSP_ErrorLogHandler.logSaveResultsException('NSP_AssetServiceHelper', 'updateEarliestProductFirstPayDateOnAccount', results );
+            if ( !mapOfAccountIdWithAccount.isEmpty() ) {
+                List<Database.SaveResult> results = Database.update( mapOfAccountIdWithAccount.values() );
+                NSP_ErrorLogHandler.logSaveResultsException(
+                    NSP_AssetServiceTriggerHelper.class.getName() ,
+                    'updateEarliestProductFirstPayDateOnAccount' ,
+                    results
+                );
             }
-        }catch(Exception ex) {
-            NSP_ErrorLogHandler.logSaveException('NSP_AssetServiceHelper', 'updateEarliestProductFirstPayDateOnAccount', ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_AssetServiceTriggerHelper.handleException(
+                e ,
+                'updateEarliestProductFirstPayDateOnAccount'
+            );
         }
     }
 
@@ -1734,27 +1789,29 @@ Implementation profile related to the account of the created asset
                     }
                 }
             }
-        }catch(Exception ex){
-            NSP_ErrorLogHandler.logSaveException('NSP_AssetServiceHelper', 'updateAssetTerminationDate', ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_AssetServiceTriggerHelper.handleException(
+                e ,
+                'updateAssetTerminationDate'
+            );
         }
-
     }
 
-/***********************************************************************************************
-* MethodName: updateServiceSegmentOnAccount
-* Description : update Service Segment on Account
-* Story : STY-03292
-* Params: List<Asset> assetList
-* ********************************************************************************************/
-public static void updateServiceSegmentOnAccount(Set<Id> accountIdSet){
+    // ********************************************************************************************
+    // MethodName: updateServiceSegmentOnAccount
+    // Description : update Service Segment on Account
+    // Story : STY-03292
+    // Params: List<Asset> assetList
+    // ********************************************************************************************
+    public static void updateServiceSegmentOnAccount( Set<Id> accountIdSet ) {
 
     List<Account> accountToUpdateList = new List<Account>();
     Map<Id, Asset> accIdAssetMap = new Map<Id, Asset>();
     List<String> assetStatusList = new List<String>{NSP_ServiceConstants.ASSETBLACKOUT, NSP_ServiceConstants.TERMINATED};
         Set<Id> assetRecordTypeIdSet = new Set<Id>{WOAssetRecordTypeId, wxWaAssetRecordTypeId};
 
-            try{
-                if(!accountIdSet.isEmpty()){
+        try{
+            if(!accountIdSet.isEmpty()){
                     for(Asset assetRec:  [SELECT Id, AccountId,
                                           RecordTypeId,
                                           Status,
@@ -1785,14 +1842,21 @@ public static void updateServiceSegmentOnAccount(Set<Id> accountIdSet){
                             accountToUpdateList.add(acc);
                         }
                     }
-                }
-                if(!accountToUpdateList.isEmpty()){
-                    List<Database.SaveResult> results = Database.update(accountToUpdateList,false);
-                    NSP_ErrorLogHandler.logSaveResultsException('NSP_AccountServiceSegmetUpdateHelper', 'updateServiceSegment', results );
-                }
-            }catch(Exception ex){
-                NSP_ErrorLogHandler.logSaveException('NSP_AccountServiceSegmetUpdateHelper', 'updateServiceSegment', ex.getMessage());
             }
+            if ( !accountToUpdateList.isEmpty() ) {
+                List<Database.SaveResult> results = Database.update( accountToUpdateList , false );
+                NSP_ErrorLogHandler.logSaveResultsException(
+                    NSP_AssetServiceTriggerHelper.class.getName() ,
+                    'updateServiceSegment' ,
+                    results
+                );
+            }
+        } catch ( Exception e ) {
+            NSP_AssetServiceTriggerHelper.handleException(
+                e ,
+                'updateServiceSegment'
+            );
+        }
     }
 
     /***********************************************************************************************
@@ -1902,7 +1966,7 @@ public static void updateServiceSegmentOnAccount(Set<Id> accountIdSet){
     * Description : To update Asset Name as per decided naming convention
     * Story : DF-04204
     * Params: List<Asset> assetList, Map<Id, Account> assetAccIdNameMap,
-    * 		  Map<String, String> recTypeLabelMap
+    * Map<String, String> recTypeLabelMap
     *********************************************************************************************/
     public static void updateAssetNameAsPerConvention(List<Asset> assetList, Map<Id, Account> assetAccIdNameMap, Map<String, String> recTypeLabelMap){
         for(Asset assetRec : assetList){
@@ -1911,46 +1975,53 @@ public static void updateServiceSegmentOnAccount(Set<Id> accountIdSet){
             }
         }
     }
-/***********************************************************************************************
-* MethodName: throwErrorMessageForNonEditFields
-* Description : Throw error message if user tries to edit fields for which perm set is not assigned
-    * Story : DF-04328
-* Params: List<Asset> assetList, Map<Id, Asset> oldMap, Boolean isBPSAssetFields
-* ********************************************************************************************/
-public void throwErrorMessageForNonEditFields(List<Asset> assetList, Map<Id, Asset> oldMap, Boolean isBPSAssetFields, Boolean onCreate){
-    String profileName = [SELECT Id, Name FROM Profile WHERE Id =: UserInfo.getProfileId()].Name;
+
+    //
+    // MethodName: throwErrorMessageForNonEditFields
+    // Description : Throw error message if user tries to edit fields for which perm set is not assigned
+    // Story : DF-04328
+    //
+    public void throwErrorMessageForNonEditFields( List<Asset> assetList , Map<Id,Asset> oldMap , Boolean isBPSAssetFields , Boolean onCreate ) {
+        String profileName = [ SELECT Id, Name FROM Profile WHERE Id = :UserInfo.getProfileId() ].Name;
         Boolean isBPSUserFields = false ;
         //List of all fields which RET users cannot edit if BPS Create Asset perm set is not assigned
-    List<String> nonEditableBPSAssetFields = System.Label.NSP_BPS_Non_Editable_Fields.split(',');
-    List<String> nonEditableHardwareLoanerBPSAssetFields = System.Label.NSP_BPS_Non_Hardware_Loaner_Fields.split(',');
-    //List of all fields which RET users cannot edit if RET Create Asset perm set is not assigned
-    List<String> nonEditableRETFields = System.Label.NSP_RET_Non_Editable_Fields.split(',');
-    List<String> nonEditableAssetFields = (isBPSAssetFields && profileName == NSP_ServiceConstants.BPSSERVICE) ? nonEditableBPSAssetFields :
-                                          (!isBPSAssetFields && profileName == NSP_ServiceConstants.RT) ? nonEditableRETFields : null;
-    if(nonEditableAssetFields == nonEditableBPSAssetFields){
+        List<String> nonEditableBPSAssetFields = System.Label.NSP_BPS_Non_Editable_Fields.split( ',' );
+        List<String> nonEditableHardwareLoanerBPSAssetFields = System.Label.NSP_BPS_Non_Hardware_Loaner_Fields.split( ',' );
+        //List of all fields which RET users cannot edit if RET Create Asset perm set is not assigned
+        List<String> nonEditableRETFields = System.Label.NSP_RET_Non_Editable_Fields.split( ',' );
+        List<String> nonEditableAssetFields = ( isBPSAssetFields && profileName == NSP_ServiceConstants.BPSSERVICE ) ? nonEditableBPSAssetFields :
+                                            ( !isBPSAssetFields && profileName == NSP_ServiceConstants.RT ) ? nonEditableRETFields : null;
+        if ( nonEditableAssetFields == nonEditableBPSAssetFields ) {
             isBPSUserFields = true;
-    }
-    try{
-        for(Asset assetRec: assetList){
-            Asset oldAsset = oldMap != null ? oldMap.get(assetRec.Id) : null;
-            for(String nonEditableField: nonEditableAssetFields){
-                //if the value is entered/edited in the nonEditableAssetFields throw a validation error message
-                if((oldAsset != null && assetRec.get(nonEditableField) != oldAsset.get(nonEditableField)) ||
-                   (assetRec.get(nonEditableField) != null && onCreate == true)){
-
-                    if(isBPSUserFields){
-                        throwErrorOnSpecificRecordTypesAndField(assetRec, oldAsset, nonEditableField);
-                    }else{
-                        assetRec.addError(nonEditableField, errorMessage);
+        }
+        try {
+            if ( nonEditableAssetFields != null ) { // prevent NullPointerExceptions
+                for ( Asset assetRec : assetList ) {
+                    Asset oldAsset = oldMap != null ? oldMap.get( assetRec.Id ) : null;
+                    for ( String nonEditableField : nonEditableAssetFields ) {
+                        //if the value is entered/edited in the nonEditableAssetFields throw a validation error message
+                        if ( ( oldAsset != null && assetRec.get( nonEditableField ) != oldAsset.get( nonEditableField ) )
+                            || ( assetRec.get( nonEditableField ) != null && onCreate == true )
+                            )
+                        {
+                            if ( isBPSUserFields ) {
+                                throwErrorOnSpecificRecordTypesAndField( assetRec , oldAsset , nonEditableField );
+                            }else{
+                                assetRec.addError( nonEditableField , errorMessage );
+                            }
+                        }
                     }
                 }
             }
+        } catch ( Exception e ) {
+            NSP_AssetServiceTriggerHelper.handleException(
+                e ,
+                'throwErrorMessageForNonEditFields'
+            );
         }
-    }catch(Exception exc){
-        NSP_ErrorLogHandler.logSaveException('NSP_AssetServiceTriggerHelper', 'throwErrorMessageForNonEditFields', exc.getMessage());
     }
-}
-// TO throw error message while editing Asset Recordtype as a BPS User
+
+    // TO throw error message while editing Asset Recordtype as a BPS User
 
 private void throwErrorOnSpecificRecordTypesAndField (Asset assetRec, Asset oldAsset, String nonEditableField){
 
@@ -1981,3 +2052,4 @@ private void throwErrorOnSpecificRecordTypesAndField (Asset assetRec, Asset oldA
     }
 }
 }
+//

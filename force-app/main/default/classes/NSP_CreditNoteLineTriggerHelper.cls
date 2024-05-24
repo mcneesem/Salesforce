@@ -9,6 +9,8 @@ Description    :         This is the helper class for Credit Note Line Trigger
 * -------------------------------------------------------------------------------------------------  
 */
 public class NSP_CreditNoteLineTriggerHelper {
+    // test w/ NSP_CreditNoteLineTriggerTest (83%)
+
     /**
 * Method Name : beforeInsertDirector 
 * Description : Method to handle the automations in before insert scenario,routes to respective methods as per use cases
@@ -42,7 +44,6 @@ public class NSP_CreditNoteLineTriggerHelper {
                     Date firstDayOfMonth = cLine.blng__StartDate__c!=null?cLine.blng__StartDate__c.toStartOfMonth():cline.blng__CreditNoteLineDate__c.toStartOfMonth();
                     Date lastDayOfMonth = firstDayOfMonth.addDays(Date.daysInMonth(firstDayOfMonth.year(), firstDayOfMonth.month()) - 1);
                     String key=cLine.blng__BillingFinanceBook__c+'_'+cLine.blng__LegalEntity__c+'_'+lastDayOfMonth;
-                    cLine.blng__FinancePeriod__c=financePeriodsMap.get(key)?.Id;
                 }
                 
             }

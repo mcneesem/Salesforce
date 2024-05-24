@@ -9,9 +9,13 @@
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
-        <restricted>true</restricted>
         <valueSetDefinition>
             <sorted>false</sorted>
+            <value>
+                <fullName>401k Plan Consultant</fullName>
+                <default>false</default>
+                <label>401k Plan Consultant</label>
+            </value>
             <value>
                 <fullName>Benefits Specialist</fullName>
                 <default>false</default>
@@ -63,6 +67,11 @@
                 <label>Client Liaison</label>
             </value>
             <value>
+                <fullName>Customer Success Specialist</fullName>
+                <default>false</default>
+                <label>Customer Success Specialist</label>
+            </value>
+            <value>
                 <fullName>Deal Team Manager</fullName>
                 <default>false</default>
                 <label>Deal Team Manager</label>
@@ -108,6 +117,16 @@
                 <label>HR Specialist</label>
             </value>
             <value>
+                <fullName>ITA Analyst</fullName>
+                <default>false</default>
+                <label>ITA Analyst</label>
+            </value>
+            <value>
+                <fullName>ITA Support Specialist</fullName>
+                <default>false</default>
+                <label>ITA Support Specialist</label>
+            </value>
+            <value>
                 <fullName>Lead Qualifier</fullName>
                 <default>false</default>
                 <label>Lead Qualifier</label>
@@ -116,6 +135,16 @@
                 <fullName>Manager, HR Services</fullName>
                 <default>false</default>
                 <label>Manager, HR Services</label>
+            </value>
+            <value>
+                <fullName>Manager, ITA</fullName>
+                <default>false</default>
+                <label>Manager, ITA</label>
+            </value>
+            <value>
+                <fullName>Manager, ITA Support</fullName>
+                <default>false</default>
+                <label>Manager, ITA Support</label>
             </value>
             <value>
                 <fullName>MidMarket Account Exec</fullName>
@@ -273,24 +302,14 @@
                 <label>Technology Solutions Sales Consultant</label>
             </value>
             <value>
-                <fullName>WX/WA Benefits Specialist</fullName>
-                <default>false</default>
-                <label>WX/WA Benefits Specialist</label>
-            </value>
-            <value>
                 <fullName>WA/WX Payroll Specialist</fullName>
                 <default>false</default>
                 <label>WA/WX Payroll Specialist</label>
             </value>
             <value>
-                <fullName>Customer Success Specialist</fullName>
+                <fullName>WX/WA Benefits Specialist</fullName>
                 <default>false</default>
-                <label>Customer Success Specialist</label>
-            </value>
-            <value>
-                <fullName>401k Plan Consultant</fullName>
-                <default>false</default>
-                <label>401k Plan Consultant</label>
+                <label>WX/WA Benefits Specialist</label>
             </value>
         </valueSetDefinition>
     </valueSet>

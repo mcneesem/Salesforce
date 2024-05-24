@@ -6,7 +6,7 @@
     <label>Secondary Products</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
-    <trackTrending>false</trackTrending>
+    <trackHistory>true</trackHistory>
     <type>MultiselectPicklist</type>
     <valueSet>
         <controllingField>NSP_PrimaryProduct__c</controllingField>

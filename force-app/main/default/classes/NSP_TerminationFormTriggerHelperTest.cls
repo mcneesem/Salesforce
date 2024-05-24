@@ -15,11 +15,22 @@ Modification Log     :
 @isTest
 public class NSP_TerminationFormTriggerHelperTest {
     public static final String NSP_Credit_Specialist_Form = 'NSP_Credit_Specialist_Form';
+    public static final String Test_Account = 'Test Account';
+    public static final String Test_Account1 = 'Test Account 1';
+    public static final String Test1 = 'Test1';
+    public static final String Test2 = 'Test2';
     @TestSetup
     public static void setUpData(){
         Id woAssetRecordTypeId =  Schema.SObjectType.Asset.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.WO_ASSET_RECORDTYPE)?.getRecordTypeId();
         Id PEOProjectTaskRecordTypeId = Schema.SObjectType.pse__Project_Task__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.PROJECT_TASK_PEO_RECORDTYPE).getRecordTypeId();
-        Account oAccount = (Account)NSP_TestExtendedDataFactory.createSObject(new Account(), 'NSP_TestDataFactory.AccountDefaults', true);
+        List<Account> accList = new List<Account>();
+        Account oAccount = (Account)NSP_TestExtendedDataFactory.createSObject(new Account(), 'NSP_TestDataFactory.AccountDefaults', false);
+        oAccount.Name = Test_Account;
+        accList.add(oAccount);
+        Account oAccount1 = (Account)NSP_TestExtendedDataFactory.createSObject(new Account(), 'NSP_TestDataFactory.AccountDefaults', false);
+        oAccount1.Name = Test_Account1;
+        accList.add(oAccount1);
+        insert accList;
         //inserting Asset
         Asset oAsset = (Asset)NSP_TestExtendedDataFactory.createSObject(new Asset(), 'NSP_TestDataFactory.AssetDefaults', false);
         oAsset.NSP_Actual_Seasonal_EE_Count__c = 1;
@@ -49,9 +60,16 @@ public class NSP_TerminationFormTriggerHelperTest {
         insert oContact;*/
         //Inserting Project
         Test.startTest();
+        List<pse__Proj__c> listProject = new List<pse__Proj__c>();
         pse__Proj__c oProject = (pse__Proj__c)NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c(), 'NSP_TestDataFactory.ProjectDefaults', false);
         oProject.pse__Start_Date__c = Date.Today();
-        insert oProject;
+        oProject.pse__Account__c = oAccount.id;
+        listProject.add(oProject);
+        pse__Proj__c oProject1 = (pse__Proj__c)NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c(), 'NSP_TestDataFactory.ProjectDefaults', false);
+        oProject1.pse__Start_Date__c = Date.Today();
+        oProject1.pse__Account__c = oAccount1.id;
+        listProject.add(oProject1);
+        insert listProject;
         
         List<NSP_Account_Team__c> accTeamList = new List<NSP_Account_Team__c>();
         NSP_Account_Team__c accTeam = (NSP_Account_Team__c)NSP_TestExtendedDataFactory.createSObject(new NSP_Account_Team__c(), 'NSP_TestDataFactory.AccountTeamMemberDefaults', false);
@@ -93,10 +111,26 @@ public class NSP_TerminationFormTriggerHelperTest {
         Insert accTeamList;
             
         //Inserting Project Task
+        List<pse__Project_Task__c> listProjecttask = new List<pse__Project_Task__c>();
         pse__Project_Task__c oProjectTask = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c(), 'NSP_TestDataFactory.ProjectTaskDefaults', false);
         oProjectTask.pse__Project__c = oProject.Id;
         oProjectTask.RecordTypeId = PEOProjectTaskRecordTypeId;
-        insert oProjectTask;
+        listProjecttask.add(oProjectTask);
+        
+        pse__Project_Task__c oProjectTask2 = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c(), 'NSP_TestDataFactory.ProjectTaskDefaults', false);
+        oProjectTask2.pse__Project__c = oProject.Id;
+        oProjectTask2.RecordTypeId = PEOProjectTaskRecordTypeId;
+        oProjectTask2.NSP_Account_Id__c = oAccount.Id;
+        oProjectTask2.Name = Test1;
+        listProjecttask.add(oProjectTask2);
+
+        pse__Project_Task__c oProjectTask3 = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c(), 'NSP_TestDataFactory.ProjectTaskDefaults', false);
+        oProjectTask3.pse__Project__c = oProject1.Id;
+        oProjectTask3.RecordTypeId = PEOProjectTaskRecordTypeId;
+        oProjectTask3.NSP_Account_Id__c = oAccount1.Id;
+        oProjectTask3.Name = Test2;
+        listProjecttask.add(oProjectTask3);
+        insert listProjecttask;
         Test.stopTest();
     }
 
@@ -320,5 +354,87 @@ public class NSP_TerminationFormTriggerHelperTest {
         Test.stopTest();
         System.assertEquals(FormList[0].NSP_Status__c, 'Term Team Denied');
     }
-	
+    
+    @isTest
+    public static void insertUsMailAddressTest(){
+        Test.startTest();
+        Account lAccounts = [SELECT Id FROM Account WHERE Name =:Test_Account LIMIT 1];
+        Account nAccounts = [SELECT Id FROM Account WHERE Name =:Test_Account1 LIMIT 1];
+        pse__Project_Task__c lProjectTasks =[SELECT ID,NSP_Account_Id__c FROM pse__Project_Task__c WHERE Name =:Test1 Limit 1];
+        pse__Project_Task__c nProjectTasks =[SELECT ID,NSP_Account_Id__c FROM pse__Project_Task__c WHERE Name =:Test2 Limit 1];
+
+        //Inserting Address
+        List<NSP_Address__c> addressList = new List<NSP_Address__c>();
+        NSP_Address__c oAddress = (NSP_Address__c)NSP_TestExtendedDataFactory.createSObject(new NSP_Address__c(), 'NSP_TestDataFactory.AddressDefaults', false);
+        oAddress.NSP_Related_Site__c = lAccounts.Id;
+        oAddress.NSP_Address_Type__c = 'U.S. Mail';
+        addressList.add(oAddress);
+        NSP_Address__c oAddress1 = (NSP_Address__c)NSP_TestExtendedDataFactory.createSObject(new NSP_Address__c(), 'NSP_TestDataFactory.AddressDefaults', false);
+        oAddress1.NSP_Related_Site__c = nAccounts.Id;
+        oAddress1.NSP_Address_Type__c = 'U.S. Mail';
+        addressList.add(oAddress1);
+        NSP_Address__c oAddress2 = (NSP_Address__c)NSP_TestExtendedDataFactory.createSObject(new NSP_Address__c(), 'NSP_TestDataFactory.AddressDefaults', false);
+        oAddress2.NSP_Related_Site__c = nAccounts.Id;
+        oAddress2.NSP_Address_Type__c = 'U.S. Mail';
+        addressList.add(oAddress2);
+        insert addressList;
+        
+        //Inserting Termination Form
+        NSP_Termination_Form__c oTerminationForm = (NSP_Termination_Form__c)NSP_TestExtendedDataFactory.createSObject(new NSP_Termination_Form__c(), 'NSP_TestDataFactory.TerminationFormDefaults', false);
+        oTerminationForm.NSP_Project_Task__c = lProjectTasks.Id;
+        insert oTerminationForm;
+        oTerminationForm.NSP_Project_Task__c = nProjectTasks.Id;
+        update oTerminationForm;
+        Test.stopTest();
+        System.assertEquals(2, [SELECT count() FROM US_Mail_Address__c WHERE Termination_Form__c =: oTerminationForm.Id]);      
+    }
+    @isTest
+    public static void insertUsContactTest(){
+        Test.startTest();
+        Account lAccounts = [SELECT Id FROM Account WHERE Name =: Test_Account LIMIT 1];
+        Account nAccounts = [SELECT Id FROM Account WHERE Name =: Test_Account1 LIMIT 1];
+        pse__Project_Task__c lProjectTasks =[SELECT ID FROM pse__Project_Task__c WHERE Name =:Test1 Limit 1];
+        pse__Project_Task__c nProjectTasks =[SELECT ID FROM pse__Project_Task__c WHERE Name =:Test2 Limit 1];
+       
+        //Inserting Contact
+        List<Contact> contactList = new List<Contact>();
+        Contact oContact = (Contact)NSP_TestExtendedDataFactory.createSObject(new Contact(), 'NSP_TestDataFactory.ContactDefaultsLight', false);
+        oContact.AccountId = lAccounts.Id;
+        contactList.add(oContact);
+        Contact oContact1 = (Contact)NSP_TestExtendedDataFactory.createSObject(new Contact(), 'NSP_TestDataFactory.ContactDefaultsLight', false);
+        oContact1.AccountId = nAccounts.Id;
+        contactList.add(oContact1);
+        Contact oContact2 = (Contact)NSP_TestExtendedDataFactory.createSObject(new Contact(), 'NSP_TestDataFactory.ContactDefaultsLight', false);
+        oContact2.AccountId = nAccounts.Id;
+        contactList.add(oContact2);
+        insert contactList;
+        
+        //Inserting Termination Form
+        NSP_Termination_Form__c oTerminationForm = (NSP_Termination_Form__c)NSP_TestExtendedDataFactory.createSObject(new NSP_Termination_Form__c(), 'NSP_TestDataFactory.TerminationFormDefaults', false);
+        oTerminationForm.NSP_Project_Task__c = lProjectTasks.Id;
+        insert oTerminationForm;
+        oTerminationForm.NSP_Project_Task__c = nProjectTasks.Id;
+        update oTerminationForm;
+        Test.stopTest();
+        System.assertEquals(2, [SELECT count() FROM US_Contact__c WHERE Termination_Form__c =: oTerminationForm.Id]);
+
+    }
+
+    @isTest private static void insertcreditspecialistphone() {
+        Test.startTest();
+        //Inserting Contact
+        Account oAccount = [SELECT Id FROM Account WHERE Id != null LIMIT 1];
+        List<Contact>  contactList = New List<Contact>();
+        contactList.add(New Contact(FirstName = 'FName', LastName = 'LName', AccountId = oAccount.Id));
+        insert contactList;
+        List<NSP_Termination_Form__c> terminationList = new List<NSP_Termination_Form__c>();
+        Contact oCon =[SELECT Id,NSP_Work_Phone__c FROM Contact WHERE Id!=null Limit 1];      
+        NSP_Termination_Form__c oTerminationForm = (NSP_Termination_Form__c)NSP_TestExtendedDataFactory.createSObject(new NSP_Termination_Form__c(), 'NSP_TestDataFactory.TerminationFormDefaults', false); 
+        oTerminationForm.Credit_Specialist__c = oCon.Id;
+        oTerminationForm.NSP_Credit_Specialist_Phone__c = oCon.NSP_Work_Phone__c;
+        insert oTerminationForm;
+        Test.stopTest();
+        System.assertEquals(oTerminationForm.NSP_Credit_Specialist_Phone__c,oCon.NSP_Work_Phone__c);
+    }
+
 }

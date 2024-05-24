@@ -5,7 +5,8 @@
     <description>This flag is used to check if case is created for a subclient from the asset FLSA case creation batch.</description>
     <externalId>false</externalId>
     <label>Case created from FLSA Batch</label>
-    <trackHistory>false</trackHistory>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

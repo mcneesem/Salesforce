@@ -15,22 +15,52 @@
             <value>
                 <fullName>6301</fullName>
                 <default>false</default>
-                <label>Level 1</label>
+                <label>Level 1 - $1MM</label>
             </value>
             <value>
                 <fullName>6302</fullName>
                 <default>false</default>
-                <label>Level 2</label>
+                <label>Level 2 - $750K</label>
             </value>
             <value>
                 <fullName>6303</fullName>
                 <default>false</default>
-                <label>Level 1R</label>
+                <label>Level 3 - $500k</label>
             </value>
             <value>
                 <fullName>6304</fullName>
                 <default>false</default>
-                <label>Level 2R</label>
+                <label>Level 4 - $250K</label>
+            </value>
+            <value>
+                <fullName>6305</fullName>
+                <default>false</default>
+                <label>Level 5 - $50K</label>
+            </value>
+            <value>
+                <fullName>6306</fullName>
+                <default>false</default>
+                <label>Level R1 - $1MM</label>
+            </value>
+            <value>
+                <fullName>6307</fullName>
+                <default>false</default>
+                <label>Level R2 - $750K</label>
+            </value>
+            <value>
+                <fullName>6308</fullName>
+                <default>false</default>
+                <label>Level R3 - $500k</label>
+            </value>
+            <value>
+                <fullName>6309</fullName>
+                <default>false</default>
+                <label>Level R4 - $250K</label>
+            </value>
+            <value>
+                <fullName>6310</fullName>
+                <default>false</default>
+                <label>Level R5 - $50K</label>
             </value>
         </valueSetDefinition>
     </valueSet>

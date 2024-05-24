@@ -108,6 +108,25 @@ public class NSP_OpportunityTriggerServiceHelperTest {
    */ 
   @isTest
   static void updateImplementationProfileTest(){
+      Test.startTest();
+      UserRole userRole = [SELECT Id FROM UserRole WHERE Name='New Client Sales'];
+      User userRecord = new User(
+            ProfileId = [SELECT Id FROM Profile WHERE Name = 'System Administrator'][0].Id,
+            LastName = 'TestClassUser',
+            Email = 'testuser2@insperity.com',
+            Username = 'testuser2@test.com' + System.currentTimeMillis(),
+            CompanyName = 'TEST',
+            Title = 'title',
+            Alias = 'alias',
+            TimeZoneSidKey = 'America/Los_Angeles',
+            EmailEncodingKey = 'UTF-8',
+            LanguageLocaleKey = 'en_US',
+            NSP_Sales_Office_Membership__c = '301',
+            LocaleSidKey = 'en_US',
+          	UserRoleId = userRole.Id
+        );
+        insert userRecord;
+      System.runAs(userRecord){
       Id projectRecordType = SObjectType.pse__Proj__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.PEOProject).getRecordTypeId();
       Account acc= [Select Id , Name from Account WHERE Name = 'Test Account' LIMIT 1];
       
@@ -129,12 +148,49 @@ public class NSP_OpportunityTriggerServiceHelperTest {
             oppty.NSP_DA_User__c = oppty.OwnerId;
             oppty.NSP_BPA__c = oppty.OwnerId;
             oppty.StageName = 'Closed Won';
+          	oppty.NSP_PrimaryProduct__c = 'WO';
+          	oppty.NSP_IPMRecommendation__c = NSP_SalesConstants.Yes;
             oppty.NSP_Time_Entry_Recommendation__c = NSP_ServiceConstants.Premier_Time_Att;
             oppty.NSP_Signed_CSA__c = true;
             oppty.NSP_Signed_CSA_Date__c = system.today();
+            update oppty;
+      Test.stopTest();
+      
+      system.assertEquals(impProfile.Account__c, acc.Id);
+          }
+  } 
+    
+    @isTest
+  static void updatePerformanceManagement(){
       Test.startTest();
+            Id projectRecordType = SObjectType.pse__Proj__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.PEOProject).getRecordTypeId();
+      Account acc= [Select Id , Name from Account WHERE Name = 'Test Account' LIMIT 1];
+      
+      pse__Proj__c oProject = (pse__Proj__c)NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c(), 'NSP_TestDataFactory.ProjectDefaults', false);
+        oProject.pse__Start_Date__c = System.Today();
+        oProject.pse__Account__c= acc.Id;
+        oProject.TemplateName__c = label.Middle_Market_Implementation_Project;
+      	oProject.RecordTypeId = projectRecordType;
+      	oProject.pse__Project_Type__c =NSP_ServiceConstants.ImplementationProjectType;
+        insert oProject;
+      
+      Implementation_Profile__c impProfile = new Implementation_Profile__c();
+          impProfile.Account__c= acc.Id;
+          Insert impProfile;
+      List<Opportunity> opportunityList = [SELECT Id,NSP_PrimaryProduct__c,AccountId,OwnerId FROM Opportunity WHERE NSP_Number_Of_Employees__c = 151 LIMIT 1];
+            opportunity oppty = opportunityList[0];
+            oppty.NSP_DM_User__c = oppty.OwnerId;
+            oppty.NSP_DA_User__c = oppty.OwnerId;
+            oppty.NSP_BPA__c = oppty.OwnerId;
+            oppty.StageName = 'Closed Won';
+            oppty.NSP_Time_Entry_Recommendation__c = NSP_ServiceConstants.Premier_Time_Att;
+              oppty.NSP_Signed_CSA_Date__c = system.today();
+              oppty.NSP_PrimaryProduct__c = NSP_ServiceConstants.PERFORMANCE_MANAGEMENT;
+              oppty.NSP_Signed_CSA__c = true;
+              oppty.NSP_IPMRecommendation__c = NSP_SalesConstants.Yes;
+      
             update oppty;
       Test.stopTest();
       system.assertEquals(impProfile.Account__c, acc.Id);
-  } 
+  }
 }

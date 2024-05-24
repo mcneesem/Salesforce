@@ -4,7 +4,7 @@
     <description>Is the client ending their co-employment relationship and moving to an Insperity offering or keeping a current BPS?</description>
     <externalId>false</externalId>
     <inlineHelpText>Is the client ending their co-employment relationship and moving to an Insperity offering or keeping a current BPS?</inlineHelpText>
-    <label>Client Ending CoEmployment Relationship?</label>
+    <label>Client moving to an Insperity Offering?</label>
     <required>false</required>
     <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>

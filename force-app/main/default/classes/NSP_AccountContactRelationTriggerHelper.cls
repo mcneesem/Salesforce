@@ -10,7 +10,7 @@
 * 
 */
 public class NSP_AccountContactRelationTriggerHelper {
-    // test w/ NSP_AccountContactRelationTriggerHelperTest (80%)
+    // test w/ NSP_AccountContactRelationHelperTest (80%)
 
     private static final Id PEO_RECORDTYPEID = NSP_GenericRecordType.getRecordTypeId('Case', NSP_ServiceConstants.PEO);
     private static final String NSP_ACCOUNT_CONTACT_RELATIONSHIP_TRIGGER_HELPER = 'NSP_AccountContactRelationTriggerHelper';

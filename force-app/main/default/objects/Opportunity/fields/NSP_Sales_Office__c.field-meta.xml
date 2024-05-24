@@ -5,8 +5,8 @@
     <externalId>false</externalId>
     <label>Sales Office</label>
     <required>false</required>
-    <trackFeedHistory>false</trackFeedHistory>
-    <trackTrending>false</trackTrending>
+    <trackFeedHistory>true</trackFeedHistory>
+    <trackHistory>true</trackHistory>
     <type>Picklist</type>
     <valueSet>
         <restricted>true</restricted>

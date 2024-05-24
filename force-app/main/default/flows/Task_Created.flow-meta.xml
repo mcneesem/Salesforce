@@ -5,7 +5,7 @@
         <name>Assign_AccountId</name>
         <label>Assign AccountId</label>
         <locationX>842</locationX>
-        <locationY>539</locationY>
+        <locationY>647</locationY>
         <assignmentItems>
             <assignToReference>accountId</assignToReference>
             <operator>Assign</operator>
@@ -21,7 +21,7 @@
         <name>Assign_LeadId</name>
         <label>Assign LeadId</label>
         <locationX>1898</locationX>
-        <locationY>539</locationY>
+        <locationY>647</locationY>
         <assignmentItems>
             <assignToReference>leadId</assignToReference>
             <operator>Assign</operator>
@@ -37,7 +37,7 @@
         <name>Assign_OpportunityId_and_AccountId</name>
         <label>Assign OpportunityId and AccountId</label>
         <locationX>50</locationX>
-        <locationY>539</locationY>
+        <locationY>647</locationY>
         <assignmentItems>
             <assignToReference>opportunityId</assignToReference>
             <operator>Assign</operator>
@@ -64,10 +64,55 @@
         </value>
     </constants>
     <decisions>
+        <name>Check_AutoLaunchedFlows_Bypass</name>
+        <label>Check AutoLaunchedFlows Bypass</label>
+        <locationX>578</locationX>
+        <locationY>323</locationY>
+        <defaultConnector>
+            <targetReference>What_type_of_record_is_in_WhatId_or_WhoId</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Is_Bypassed</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Setup.NSP_Trigger_Switch__c.AutoLaunchedFlows__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>Is Bypassed</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Prevent DmlExceptions for Orientation Meeting Request Tasks</description>
+        <name>Check_Task_Record_Type</name>
+        <label>Check Task Record Type</label>
+        <locationX>1370</locationX>
+        <locationY>1247</locationY>
+        <defaultConnector>
+            <targetReference>Update_Task_Record_if_Status_not_Cancelled</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Is_Orientation_Meeting_Request</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.RecordTypeId</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>0124x0000019l9xAAA</stringValue>
+                </rightValue>
+            </conditions>
+            <label>Is Orientation Meeting Request</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Is_Task_Status_Completed_and_should_Lead_Status_be_changed_to_Working</name>
         <label>Is Task Status &quot;Completed&quot; and should Lead Status be changed to &quot;Working&quot;?</label>
         <locationX>1898</locationX>
-        <locationY>647</locationY>
+        <locationY>755</locationY>
         <defaultConnectorLabel>Lead status does not need to be updated</defaultConnectorLabel>
         <rules>
             <name>Yes_Task_is_Completed_and_Lead_should_move_to_Working</name>
@@ -103,7 +148,7 @@
         <name>What_type_of_record_is_in_WhatId_or_WhoId</name>
         <label>What type of record is in WhatId or WhoId?</label>
         <locationX>1370</locationX>
-        <locationY>323</locationY>
+        <locationY>431</locationY>
         <defaultConnectorLabel>Not related to a relevant record</defaultConnectorLabel>
         <rules>
             <name>Related_to_Opportunity</name>
@@ -178,7 +223,7 @@
         <name>Get_Account_Info</name>
         <label>Get Account Info</label>
         <locationX>842</locationX>
-        <locationY>431</locationY>
+        <locationY>539</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Assign_AccountId</targetReference>
@@ -203,7 +248,7 @@
         <name>Get_Lead_Info</name>
         <label>Get Lead Info</label>
         <locationX>1898</locationX>
-        <locationY>431</locationY>
+        <locationY>539</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Assign_LeadId</targetReference>
@@ -228,7 +273,7 @@
         <name>Get_Opportunity_Info</name>
         <label>Get Opportunity Info</label>
         <locationX>50</locationX>
-        <locationY>431</locationY>
+        <locationY>539</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Assign_OpportunityId_and_AccountId</targetReference>
@@ -253,9 +298,9 @@
         <name>Update_Account_Record</name>
         <label>Update Account Record</label>
         <locationX>842</locationX>
-        <locationY>647</locationY>
+        <locationY>755</locationY>
         <connector>
-            <targetReference>Update_Task_Record_if_Status_not_Cancelled</targetReference>
+            <targetReference>Check_Task_Record_Type</targetReference>
         </connector>
         <faultConnector>
             <isGoTo>true</isGoTo>
@@ -281,7 +326,7 @@
         <name>Update_Lead_Record</name>
         <label>Update Lead Record</label>
         <locationX>1634</locationX>
-        <locationY>755</locationY>
+        <locationY>863</locationY>
         <faultConnector>
             <isGoTo>true</isGoTo>
             <targetReference>Fault_Handler_subflow</targetReference>
@@ -306,9 +351,9 @@
         <name>Update_Opportunity_Record</name>
         <label>Update Opportunity Record</label>
         <locationX>50</locationX>
-        <locationY>647</locationY>
+        <locationY>755</locationY>
         <connector>
-            <targetReference>Update_Task_Record_if_Status_not_Cancelled</targetReference>
+            <targetReference>Check_Task_Record_Type</targetReference>
         </connector>
         <faultConnector>
             <isGoTo>true</isGoTo>
@@ -333,8 +378,8 @@
     <recordUpdates>
         <name>Update_Task_Record_if_Status_not_Cancelled</name>
         <label>Update Task Record if Status not Cancelled</label>
-        <locationX>1370</locationX>
-        <locationY>1139</locationY>
+        <locationX>1502</locationX>
+        <locationY>1355</locationY>
         <faultConnector>
             <targetReference>Fault_Handler_subflow</targetReference>
         </faultConnector>
@@ -361,24 +406,50 @@
         <inputReference>$Record</inputReference>
     </recordUpdates>
     <start>
-        <locationX>1244</locationX>
+        <locationX>452</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>What_type_of_record_is_in_WhatId_or_WhoId</targetReference>
+            <targetReference>Check_AutoLaunchedFlows_Bypass</targetReference>
         </connector>
-        <filterFormula>( NOT(ISBLANK( {!$Record.WhatId} )) || NOT(ISBLANK( {!$Record.WhoId} )) ) 
-&amp;&amp;
-NOT( {!$Setup.NSP_Trigger_Switch__c.AutoLaunchedFlows__c} )</filterFormula>
+        <filterLogic>( 1 AND 2 ) OR ( 3 AND 4 )</filterLogic>
+        <filters>
+            <field>WhatId</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>WhatId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>WhoId</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>WhoId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </filters>
         <object>Task</object>
         <recordTriggerType>Create</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <subflows>
         <name>Fault_Handler_subflow</name>
         <label>Fault Handler subflow</label>
-        <locationX>2954</locationX>
-        <locationY>1247</locationY>
+        <locationX>1766</locationX>
+        <locationY>1463</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultMessage</name>
@@ -403,13 +474,6 @@ NOT( {!$Setup.NSP_Trigger_Switch__c.AutoLaunchedFlows__c} )</filterFormula>
     <variables>
         <name>leadId</name>
         <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>leadStatus</name>
-        <dataType>Picklist</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>

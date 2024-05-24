@@ -2,28 +2,47 @@
 * Represents the termination form trigger helper which handles all the logic.
 */
 public class NSP_TerminationFormTriggerHelper {
+    // test w/ NSP_TerminationFormTriggerHelperTest (91%)
+
     private static final string SUPERVISOR_DENIED = 'PR Supervisor Denied';
     private static final string TERM_TEAM_DENIED = 'Term Team Denied';
     private static final string TERM_TEAM_APPROVED = 'Term Team Approved';
     public static final String NSP_Credit_Specialist_Form = 'NSP_Credit_Specialist_Form';
     public static final String Termination_Form_Approved = 'Termination_Form_Approved';
-    /* Description : This method will run before inserting Termination Form
-       Date        : 13/10/2021 */
-    public void beforeTerminationFormInsert(List<NSP_Termination_Form__c> terminationFormList){
+
+    // Description : This method will run before inserting Termination Form
+    // Date        : 13/10/2021
+    public void beforeTerminationFormInsert(List<NSP_Termination_Form__c> terminationFormList) {
         set<Id> setOfProjectTaskId = new set<Id>();
+        set<Id> setOfClientOwnerId = new set<Id>();
+        set<Id> setOfCreditSpecialistId = new set<Id>();
         updateAccountOnTerm(terminationFormList,null);
         List<NSP_Termination_Form__c> lTerminationForms = new List<NSP_Termination_Form__c>();
-
+        List<NSP_Termination_Form__c> clientTerminationForms = new List<NSP_Termination_Form__c>();
+        List<NSP_Termination_Form__c> creditTerminationForms = new List<NSP_Termination_Form__c>();
         for(NSP_Termination_Form__c terminationForm : terminationFormList){
             if(terminationForm.NSP_Project_Task__c != null){
                 setOfProjectTaskId.add(terminationForm.NSP_Project_Task__c);
                 lTerminationForms.add(terminationForm);
             }
+            if(terminationForm.NSP_Client_Owner__c != null){
+                setOfClientOwnerId.add(terminationForm.NSP_Client_Owner__c);
+                clientTerminationForms.add(terminationForm);
+            }
+            if(terminationForm.Credit_Specialist__c !=null){
+                setOfCreditSpecialistId.add(terminationForm.Credit_Specialist__c);
+                creditTerminationForms.add(terminationForm);
+            }
         }
-
         if(!setOfProjectTaskId.isEmpty()){
             updateUserLookups(setOfProjectTaskId, terminationFormList);
             populateSubClientandAssetValues(setOfProjectTaskId, lTerminationForms);
+        }
+        if(!setOfClientOwnerId.isEmpty()){
+            populateClientOwnerEmailAndPhone(setOfClientOwnerId, clientTerminationForms);
+        }
+        if(!setOfCreditSpecialistId.isEmpty()){
+            populateCreditspecialistphone(setOfCreditSpecialistId, creditTerminationForms);
         }
     }
 
@@ -156,17 +175,23 @@ public class NSP_TerminationFormTriggerHelper {
     }
 
 
-    /**
-    * Iterates throught the list of new Asset and passes the required attributes to other methods.
-    * @param newList List of New Termination Forms.
-    * @param newList Map of New Termination Forms.
-    * @return void             
-    *                
-    */
+    //
+    // Iterates throught the list of new Asset and passes the required attributes to other methods.
+    // @param newList List of New Termination Forms.
+    // @param newList Map of New Termination Forms.
+    // @return void
+    //
     public void afterInsertFilter(List<NSP_Termination_Form__c> lTerminationForms , Map<Id,NSP_Termination_Form__c> mTerminationForms){
-        
+        if (lTerminationForms != null && !lTerminationForms.isEmpty() && Limits.getQueueableJobs() < Limits.getLimitQueueableJobs() ) {
+            System.enqueueJob(
+                new QueueableTermFormJunctionObjects(
+                    lTerminationForms,
+                    null,
+                    NSP_ServiceConstants.INSERT_TRIGGER
+                )
+            );
+        }
         Map<Id,Set<Id>> mTFToUsers = new Map<Id,Set<Id>>();
-      
         for(NSP_Termination_Form__c oTerminationForm : lTerminationForms){
             mTFToUsers.put(oTerminationForm.Id,new Set<Id>());
             checkLookupChange(mTFToUsers,oTerminationForm.Id,oTerminationForm.OwnerId,oTerminationForm.NSP_Payroll_Specialist__c);
@@ -176,7 +201,6 @@ public class NSP_TerminationFormTriggerHelper {
                 mTFToUsers.remove(oTerminationForm.Id);
             }
         }
-
         if(mTFToUsers.keySet().size() > 0){
             shareTerminationFormsWithUsers(mTFToUsers,'Edit');
         }
@@ -193,11 +217,50 @@ public class NSP_TerminationFormTriggerHelper {
             insert lTerminationFormShares;
         }
     }
+    
+    public void beforeTerminationFormUpdate( Map<Id,NSP_Termination_Form__c> newMap , Map<Id,NSP_Termination_Form__c> oldMap ) {
+        set<Id> setOfClientOwnerId = new set<Id>();
+        set<Id> setOfCreditSpecialistId = new set<Id>();
+        List<NSP_Termination_Form__c> clientTerminationForms = new List<NSP_Termination_Form__c>();
+        List<NSP_Termination_Form__c> creditTerminationForms = new List<NSP_Termination_Form__c>();
+        if(newMap != null){
+            for(NSP_Termination_Form__c terminationForm : newMap.values()){
+                if ( terminationForm.NSP_Client_Owner__c != null
+                    && terminationForm.NSP_Client_Owner__c != oldMap.get(terminationForm.id).NSP_Client_Owner__c
+                    )
+                {
+                    setOfClientOwnerId.add(terminationForm.NSP_Client_Owner__c);
+                    clientTerminationForms.add(terminationForm);
+                }
+                if(String.isBlank(terminationForm.NSP_Client_Owner__c) && terminationForm.NSP_Client_Owner__c != oldMap.get(terminationForm.id).NSP_Client_Owner__c){
+                    terminationForm.Client_Owner_Phone__c = '';
+                    terminationForm.Client_Owner_Email__c = '';
+                }
+                if(terminationForm.Credit_Specialist__c != null && terminationForm.Credit_Specialist__c!= oldMap.get(terminationForm.id).Credit_Specialist__c){
+                    setOfCreditSpecialistId.add(terminationForm.Credit_Specialist__c);
+                    creditTerminationForms.add(terminationForm);
+                }
+                if(String.isBlank(terminationForm.NSP_Client_Owner__c) && terminationForm.NSP_Client_Owner__c != oldMap.get(terminationForm.id).NSP_Client_Owner__c){
+                    terminationForm.Client_Owner_Phone__c = '';
+                    terminationForm.Client_Owner_Email__c = '';
+                } 
+            }
+        }
+        if(!setOfClientOwnerId.isEmpty()){
+            populateClientOwnerEmailAndPhone(setOfClientOwnerId, clientTerminationForms);
+        }
+        if(!setOfCreditSpecialistId.isEmpty()){
+            populateCreditspecialistphone(setOfCreditSpecialistId, creditTerminationForms);
+        }
+    }
+
     public void afterUpdateTerminationForm(List<NSP_Termination_Form__c> terminationFormList, map<Id, NSP_Termination_Form__c> oldMap){
         set<Id> setOfProjectTaskId = new set<Id>();
         Map<Id,Set<Id>> mTFToUsers = new Map<Id,Set<Id>>();
         Map<Id,Set<Id>> mTFSharingToDelete = new Map<Id,Set<Id>>();
-        
+        List<NSP_Termination_Form__c> queueNewTerm = new List<NSP_Termination_Form__c>();
+       	Map<Id, NSP_Termination_Form__c> queueOldMap = new Map<Id, NSP_Termination_Form__c>();
+        Set<Id> processedTerm = new Set<Id>();
         Set<Id> termFormSet = new Set<Id>();
         Set<ID> terminationFormBellNotificationSet = new Set<ID>();
         String PayrollRecordTypeId = Schema.SObjectType.NSP_Termination_Form__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.NSP_Payroll_Specialist_Form).getRecordTypeId();
@@ -214,7 +277,16 @@ public class NSP_TerminationFormTriggerHelper {
             mTFToUsers.put(terminationForm.Id,new Set<Id>());
             mTFSharingToDelete.put(terminationForm.Id,new Set<Id>());
             NSP_Termination_Form__c oOldTermination = oldMap.get(terminationForm.Id);
-
+            if ( ( oOldTermination != null )
+                && ( terminationForm.NSP_Project_Task__c != null )
+                && ( terminationForm.NSP_Project_Task__c != oOldTermination.NSP_Project_Task__c )
+                && !processedTerm.contains(terminationForm.Id)
+                )
+            {
+                queueOldMap.put(terminationForm.Id,oOldTermination);
+                queueNewTerm.add(terminationForm);
+                processedTerm.add(terminationForm.Id);
+            }
             if(terminationForm.OwnerId != oOldTermination.OwnerId){
                 checkLookupChange(mTFToUsers,terminationForm.Id,terminationForm.OwnerId,terminationForm.NSP_Payroll_Specialist__c);
                 checkLookupChange(mTFToUsers,terminationForm.Id,terminationForm.OwnerId,terminationForm.NSP_Supervisor__c);
@@ -253,7 +325,16 @@ public class NSP_TerminationFormTriggerHelper {
                    termFormSet.add(terminationForm.Id);
                }
         }
-
+        if (!queueNewTerm.isEmpty() && Limits.getQueueableJobs() < Limits.getLimitQueueableJobs()) {
+            System.enqueueJob(
+                new QueueableTermFormJunctionObjects(
+                    queueNewTerm,
+                    queueOldMap,
+                    NSP_ServiceConstants.UPDATE_TRIGGER
+                )
+            );
+        }
+        
         if(mTFSharingToDelete.keySet().size() > 0){
             deleteTerminationFormSharing(mTFSharingToDelete);
         }
@@ -283,17 +364,19 @@ public class NSP_TerminationFormTriggerHelper {
         String CreditRecordTypeId = Schema.SObjectType.NSP_Termination_Form__c.getRecordTypeInfosByDeveloperName().get(NSP_Credit_Specialist_Form).getRecordTypeId();
         Set<String> specialistIds = new Set<String>();
         Map<NSP_Termination_Form__c,Set<String>> termFormToSpecialistIdsMap = new Map<NSP_Termination_Form__c,Set<String>>();
-        List<NSP_Termination_Form__c> terminationFormBellNotificationList = [SELECT ID, Name, NSP_Supervisor__c, NSP_Status__c, RecordTypeId, NSP_Payroll_Specialist__c, NSP_Credit_Specialist__c, OwnerId, CreatedById
-                                                                             FROM NSP_Termination_Form__c 
-                                                                             WHERE ID IN:terminationFormSet];
-
-        
+        List<NSP_Termination_Form__c> terminationFormBellNotificationList = [
+            SELECT
+                Id, Name, NSP_Supervisor__c, NSP_Status__c, RecordTypeId, NSP_Payroll_Specialist__c,
+                Credit_Specialist__c, OwnerId, CreatedById, Credit_Specialist__r.pse__Salesforce_User__c
+            FROM NSP_Termination_Form__c 
+            WHERE ID IN:terminationFormSet
+        ];
         for(NSP_Termination_Form__c term : terminationFormBellNotificationList){
             if(term.RecordTypeId == PayrollRecordTypeId && term.NSP_Status__c == SUPERVISOR_DENIED && term.NSP_Payroll_Specialist__c != Null){
                 specialistIds.add(term.NSP_Payroll_Specialist__c);
                 termFormToSpecialistIdsMap.put(term, specialistIds);
-            }else if(term.RecordTypeId == CreditRecordTypeId && term.NSP_Status__c == TERM_TEAM_DENIED && term.NSP_Credit_Specialist__c != Null){
-                specialistIds.add(term.NSP_Credit_Specialist__c);
+            }else if(term.RecordTypeId == CreditRecordTypeId && term.NSP_Status__c == TERM_TEAM_DENIED && term.Credit_Specialist__c != Null){
+                specialistIds.add(term.Credit_Specialist__r.pse__Salesforce_User__c);
                 termFormToSpecialistIdsMap.put(term, specialistIds);
             }else if(term.RecordTypeId == CreditRecordTypeId && term.NSP_Status__c == TERM_TEAM_APPROVED && term.OwnerId != Null){
                 specialistIds.add(term.OwnerId);
@@ -305,7 +388,6 @@ public class NSP_TerminationFormTriggerHelper {
                 specialistIds.add(term.CreatedById);
                 termFormToSpecialistIdsMap.put(term, specialistIds);
             }
-                
         }
         
         if(termFormToSpecialistIdsMap.keySet().size()> 0 ){
@@ -494,12 +576,46 @@ public class NSP_TerminationFormTriggerHelper {
             }
 
         } 
-			for(NSP_Termination_Form__c newTerm : newList){
-                if(termAccountIdMap.keyset().contains(newTerm.id)){
-                    newTerm.NSP_Account__c = accountIdMap.get(termAccountIdMap.get(newTerm.id));
-              }
-			        
-			}
+        for(NSP_Termination_Form__c newTerm : newList){
+            if(termAccountIdMap.keyset().contains(newTerm.id)){
+                newTerm.NSP_Account__c = accountIdMap.get(termAccountIdMap.get(newTerm.id));
+            }
+        }
+    }
+    
+    /**
+    * Populates email and phone from client Owner lookup when user selects client owner
+    * @param setOfClientOwnerId set of Client Owner(Contact) Ids
+    * @param clientTerminationForms termination form list.
+    * @return void
+    *
+    */
+    private void populateClientOwnerEmailAndPhone( Set<Id> setOfClientOwnerId , List<NSP_Termination_Form__c> clientTerminationForms ) {
+        Map<Id,Contact> contactMap = new Map<Id,Contact>([
+            SELECT Id , NSP_Work_email__c , NSP_Work_Phone__c
+            FROM Contact
+            WHERE Id IN: setOfClientOwnerId
+        ]);
+        for(NSP_Termination_Form__c termForm : clientTerminationForms){
+            termForm.Client_Owner_Email__c = contactMap.get(termForm.NSP_Client_Owner__c).NSP_Work_email__c;
+            termForm.Client_Owner_Phone__c = contactMap.get(termForm.NSP_Client_Owner__c).NSP_Work_Phone__c;
+        }
+    }
 
-	}
+    /**
+    * Populates phone from credit specialist lookup when user selects credit specialist
+    * @param setOfCreditSpecialistId set of Credit specialist(Contact) Ids
+    * @param creditTerminationForms termination form list.
+    * @return void
+    *
+    */
+    public void populateCreditspecialistphone(Set<Id> setOfCreditSpecialistId, List<NSP_Termination_Form__c> creditTerminationForms ){
+        Map<Id,Contact> contactMap = new Map<Id,Contact>([SELECT Id,NSP_Work_Phone__c FROM Contact WHERE ID IN: setOfCreditSpecialistId]);
+        if(creditTerminationForms != null && contactMap != null){
+            for(NSP_Termination_Form__c termForm : creditTerminationForms){
+                termForm.NSP_Credit_Specialist_Phone__c = contactMap.get(termForm.Credit_Specialist__c).NSP_Work_Phone__c;
+            }
+        }
+    }
+
 }
