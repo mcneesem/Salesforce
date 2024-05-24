@@ -491,10 +491,10 @@ NSP_WX_WA_Benefits_Specialist__c, and NSP_Retirement_Service_Plan_Name__c field 
         //Filter record based on Insert or Update
         for(NSP_Account_Team__c accTeam : newAccTeam) {
             if(oldMap == null && accTeam.NSP_Account__c != null || 
-               ((oldMap != null && accTeam.NSP_Role__c != oldMap.get(accTeam.Id).NSP_Role__c) || 
-                (accTeam.NSP_User__c <> oldMap.get(accTeam.Id).NSP_User__c))) {                    
+            (oldMap != null && ((accTeam.NSP_Role__c != oldMap.get(accTeam.Id).NSP_Role__c) || 
+            (accTeam.NSP_User__c <> oldMap.get(accTeam.Id).NSP_User__c)) )) {                    
                  accIds.add(accTeam.NSP_Account__c);
-             }            
+             }           
         }
         //Get Account Team's User Serice Region field for Insert case
         if(!accIds.isEmpty()) {            
