@@ -504,7 +504,7 @@
                     <dataType>String</dataType>
                     <fieldText>OSS Name</fieldText>
                     <fieldType>InputField</fieldType>
-                    <isRequired>false</isRequired>
+                    <isRequired>true</isRequired>
                 </fields>
                 <fields>
                     <name>OSS_Phone_EOM</name>
