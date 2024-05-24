@@ -497,7 +497,6 @@ NSP_WX_WA_Benefits_Specialist__c, and NSP_Retirement_Service_Plan_Name__c field 
                  accIds.add(accTeam.NSP_Account__c);
              }           
         }
-        
         //Get Account Team's User Serice Region field for Insert case
         if(!accIds.isEmpty()) {            
             for(NSP_Account_Team__c accountTeam : [SELECT Id, NSP_User__r.NSP_Service_Region__c, NSP_Role__c , NSP_Account__c FROM NSP_Account_Team__c 
@@ -505,6 +504,7 @@ NSP_WX_WA_Benefits_Specialist__c, and NSP_Retirement_Service_Plan_Name__c field 
                 accountTeams.put(accountTeam.NSP_Account__c, accountTeam);
             }
         }
+        
         //Update Asset on Insert Or Update based on AccountTeams Map
         updateAssetRegion(accIds, woRecordTypeId, accountTeams);
         
