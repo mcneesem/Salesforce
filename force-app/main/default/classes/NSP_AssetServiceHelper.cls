@@ -28,8 +28,10 @@ public class NSP_AssetServiceHelper {
         Set<Id> performSmartAssetSet = new Set<Id>();
         Set<Id> xmlAssetSet = new Set<Id>();
         Set<Id> timeAttendanceAssetSet = new Set<Id>();
-    
-        
+    	Set<Id> opptyIdSet = new Set<Id>();
+        Map<Id, Opportunity> mapOfOpportunity = new Map<Id, Opportunity>();
+        Map<Id, Id> mapOfAssetOppty = new Map<Id, Id>();
+            
         List<pse__Proj__c> updatedProjectList = new List<pse__Proj__c>();
         List<Project_Asset__c> projectAssetMapping = new List<Project_Asset__c>();
         Map<Id, Account> mapOfAccount = new Map<Id, Account>();
@@ -40,6 +42,25 @@ public class NSP_AssetServiceHelper {
             List<String> assetRecordTypeList = new List<String>{INTEGRA_ASSET, PERFORM_SMART_ASSET, TIME_ATTENDANCE_ASSET, XML_ASSET};
             if ( assetList != null ){
                 for ( Asset asset : assetList ) {
+                    if (( asset.RecordTypeId == PERFORM_SMART_ASSET || asset.RecordTypeId == TIME_ATTENDANCE_ASSET )
+                        &&  asset.Opportunity__c != null 
+                        )
+                    {
+                        opptyIdSet.add(asset.Opportunity__c);
+                        mapOfAssetOppty.put(asset.id,asset.Opportunity__c);
+                    }
+                    
+                }
+                
+                if ( !opptyIdSet.isEmpty() ){
+                    List<Opportunity> opptyList = [SELECT Id,NSP_Time_Entry_Recommendation__c,NSP_IPMRecommendation__c FROM Opportunity where (NSP_PrimaryProduct__c =: NSP_ServiceConstants.PERFORMANCE_MANAGEMENT OR NSP_PrimaryProduct__c =: NSP_ServiceConstants.TIME_ATTENDANCE) ];
+                    if ( !opptyList.isEmpty() ){
+                        for ( Opportunity oppty : opptyList ) {
+                            mapOfOpportunity.put(oppty.Id,oppty);
+                        } 
+                    }
+                }
+                for ( Asset asset : assetList ) {
                     //STY-03289 implementation
                     if ( asset.RecordTypeId == INTEGRA_ASSET && asset.AccountId!=null ) {
                         accountIdSet.add(asset.AccountId);
@@ -47,7 +68,8 @@ public class NSP_AssetServiceHelper {
                     }
                     if ( asset.RecordTypeId == PERFORM_SMART_ASSET
                         &&  asset.AccountId != null
-                        && !asset.Is_Perform_WO_WS_Asset__c
+                        && !asset.Is_Perform_WO_WS_Asset__c && mapOfAssetOppty.containsKey(asset.Id)
+						&& mapOfOpportunity.containsKey(mapOfAssetOppty.get(asset.Id)) && mapOfOpportunity.get(mapOfAssetOppty.get(asset.id)).NSP_IPMRecommendation__c == NSP_SalesConstants.Yes
                         )
                     {
                         accountIdSet.add(asset.AccountId);
@@ -55,7 +77,8 @@ public class NSP_AssetServiceHelper {
                     }
                     if ( asset.RecordTypeId == TIME_ATTENDANCE_ASSET
                         && asset.AccountId!=null
-                        && !asset.Is_Perform_WO_WS_Asset__c
+                        && !asset.Is_Perform_WO_WS_Asset__c && mapOfAssetOppty.containsKey(asset.Id)
+						&& mapOfOpportunity.containsKey(mapOfAssetOppty.get(asset.Id)) && mapOfOpportunity.get(mapOfAssetOppty.get(asset.id)).NSP_Time_Entry_Recommendation__c == NSP_ServiceConstants.Premier_Time_Att
                         )
                     {
                         accountIdSet.add(asset.AccountId);
