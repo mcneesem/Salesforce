@@ -11,6 +11,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
     private Map<String, Set<Id>> ipRecordsByAutomation = new Map<String, Set<Id>>();
     private List<sObject> recToInsert = new List<sObject>();
     private List<sObject> recToUpdate = new List<sObject>();
+    private List<pse__Project_Task__c> updateProjTask = new List<pse__Project_Task__c>();
     private Map<String, Map<Id, sObject>> data = new Map<String, Map<Id, sObject>>();
     private Map<String, List<String>> ipAutomationdata = new Map<String, List<String>>();
     private Map<String, Map<String, NSP_Employee_Data__c>> employeeData = new Map<String, Map<String, NSP_Employee_Data__c>>();
@@ -236,6 +237,9 @@ public class NSP_Implprofile_ServiceHelperUpdate {
             }
         }
         database.insert(recToInsert,false);
+        if(updateProjTask != null) {
+            database.update(updateProjTask,false);    
+        }
         List<Database.UpsertResult> upsertImpResults = Database.upsert(impProfileToUpdate.values(), false);
         NSP_ErrorLogHandler.logUpsertResultsException('NSP_Implprofile_ServiceHelperUpdate', 'impProfileToUpdate:upsertResults', upsertResults);
 
@@ -754,6 +758,11 @@ public class NSP_Implprofile_ServiceHelperUpdate {
                 {
                     updateEligibleRecordsMap(ipRecordsByAutomation, newRec.Id, INTEGRA_RESPONSE);
                 }
+            } else if( newRec.RecordTypeId == ipFSORecordTypeId
+                && newRec.Is_there_a_need_for_Integra__c == NSP_ServiceConstants.NO
+                )
+            {
+                updateProjecttaskforIntegraResponse(existingRec);
             }
         }
     }
@@ -1839,6 +1848,26 @@ public class NSP_Implprofile_ServiceHelperUpdate {
         recToInsert.addAll(getnewTaskstoInsert(projectTaskList));
         //check for existing Automation record and store the new Automation records
         getnewAutomationListtoInsert(ipAutomationRecords,recToInsert,recToUpdate);
+    }
+
+    // Method to update Project Task status field to Cancelled if the related IP record field
+    // Is there a need for Integra is changed to No, as long as the Project Task status != Complete
+    private void updateProjecttaskforIntegraResponse(Implementation_Profile__c existingRec){
+        if(existingRec != null) { 
+            List<pse__Project_Task__c> projectTasks = [
+                SELECT Id, pse__Status__c 
+                FROM pse__Project_Task__c 
+                WHERE Implementation_Profile__c =: existingRec.Id
+            ];
+            if(!projectTasks.isEmpty()) {
+                for(pse__Project_Task__c projTask: projectTasks){
+                    if(projTask.pse__Status__c != NSP_ServiceConstants.TASKCOMPLETE){
+                        projTask.pse__Status__c = NSP_ServiceConstants.PROJECT_TASK_CANCELLED;
+                    }
+                    updateProjTask.add(projTask);
+                }
+            }
+        }
     }
 
     public  void createProjecttaskforReportingIntegra(){
