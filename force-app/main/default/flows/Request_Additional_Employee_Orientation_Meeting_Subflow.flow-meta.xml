@@ -784,7 +784,7 @@
     <formulas>
         <name>OMR_task_subject</name>
         <dataType>String</dataType>
-        <expression>&quot;New Client Orientation Request | &quot; + {!Get_picklistvalueinfo_of_sales_office_on_account.Label}</expression>
+        <expression>{!vOB_Request_Type} + &quot; Request | &quot; + {!Get_picklistvalueinfo_of_sales_office_on_account.Label}</expression>
     </formulas>
     <interviewLabel>Request Additional Employee Orientation Meeting Subflow {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Request Additional Employee Orientation Meeting Subflow</label>
