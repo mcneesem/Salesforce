@@ -12,6 +12,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Exclude</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Marketing Generated</fullName>
             <default>false</default>
         </values>
