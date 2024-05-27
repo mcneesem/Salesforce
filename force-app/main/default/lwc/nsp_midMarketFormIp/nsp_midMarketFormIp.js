@@ -77,6 +77,7 @@ export default class NSP_MidMarketFormIp extends NavigationMixin(
   disabledFields = {};
   relatedRecords = {};
   @track ipAutomationTable = [];
+  copySectionChanged = false;
 
   connectedCallback() {
     this.disableFieldsIfIpInActive();
@@ -205,6 +206,7 @@ export default class NSP_MidMarketFormIp extends NavigationMixin(
 
   handleCopySectionChange({ detail }) {
     this.state.selectedSections = detail.value;
+    this.copySectionChanged = true;
   }
 
   generateCopyRequest(records) {
@@ -745,7 +747,7 @@ export default class NSP_MidMarketFormIp extends NavigationMixin(
   get selectedCopySections() {
     const { state, fieldValues } = this;
 
-    if (isNonEmptyArray(state.selectedSections)) {
+    if (isNonEmptyArray(state.selectedSections) || this.copySectionChanged) {
       return state.selectedSections;
     }
 
