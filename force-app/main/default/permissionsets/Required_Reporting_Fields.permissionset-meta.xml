@@ -236,6 +236,16 @@
         <field>pse__Proj__c.Time_and_Labor_Effective_date__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>pse__Project_Task__c.NSP_Efforts_To_Retain__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>pse__Project_Task__c.NSP_Situation_Termination_Drivers__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Required Reporting Fields</label>
     <objectPermissions>
