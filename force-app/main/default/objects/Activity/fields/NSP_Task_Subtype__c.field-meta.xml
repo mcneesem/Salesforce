@@ -381,6 +381,11 @@
         <valueSettings>
             <controllingFieldValue>Core Sales</controllingFieldValue>
             <controllingFieldValue>Mid Market</controllingFieldValue>
+            <valueName>Safety Ordered</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Core Sales</controllingFieldValue>
+            <controllingFieldValue>Mid Market</controllingFieldValue>
             <valueName>Send Docs for Signature</valueName>
         </valueSettings>
         <valueSettings>
