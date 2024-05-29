@@ -513,30 +513,45 @@ if ((leadNewMap.get(leadId).NSP_Lead_Routing__c == true &&
             if(parentToUpdate != null && parentToUpdate.size() > 0) {
                 update parentToUpdate;
             }
-        } catch (Exception ex) {
-            NSP_ErrorLogHandler.logSaveException('NSP_LeadTriggerHelper', 'updateChildLeadOwner', ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_LeadTriggerHelper.handleException(
+                e ,
+                'updateChildLeadOwner'
+            );
         }
       }
       
   }
-  
-  /**
-* Stamps Parent lead owner on child leads
-* @param newList List of New leads. 
-* @return void             
-*                
-*/
-  public void updateSkipValidationFlag(Lead leadToUpdate) {
-      //updating the child leads
-      try {
-          if(leadToUpdate != null) {
-              update leadToUpdate;
-          }
-      } catch (Exception ex) {
-          NSP_ErrorLogHandler.logSaveException('NSP_LeadTriggerHelper', 'updateSkipValidationFlag', ex.getMessage());
-      }
-  }   
-  
+
+    //
+    // Stamps Parent lead owner on child leads
+    // @param newList List of New leads.
+    // @return void
+    //
+    private void updateSkipValidationFlag( Lead leadToUpdate ) {
+        //updating the child leads
+        try {
+            if ( ( leadToUpdate != null ) && ( leadToUpdate.Id != null ) ) {
+                update leadToUpdate;
+            }
+        } catch ( Exception e ) {
+            NSP_LeadTriggerHelper.handleException(
+                e ,
+                'updateSkipValidationFlag'
+            );
+        }
+    }
+
+    private static void handleException( Exception e , String methodName ) {
+        if ( e != null ) {
+            NSP_ErrorLogHandler.logSaveException(
+                NSP_LeadTriggerHelper.class.getName() ,
+                methodName ,
+                e.getMessage() + ' ~ ' + e.getStackTraceString()
+            );
+        }
+    }
+
   /**
 * Stamps partner email on lead record
 * @param newList List of New leads. 
@@ -779,11 +794,14 @@ if ((leadNewMap.get(leadId).NSP_Lead_Routing__c == true &&
             if(ocrList.size() > 0){
                 insert ocrList;
             }
-        } catch (Exception ex) {
-            NSP_ErrorLogHandler.logSaveException('NSP_LeadTriggerHelper', 'setContactasCOI', ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_LeadTriggerHelper.handleException(
+                e ,
+                'setContactasCOI'
+            );
         }
     }
-    
+
     /**
 * This method accepts all oppportunity Ids during lead conversion and defaults the
 * Opportunity fields 
@@ -972,7 +990,7 @@ insert tasksList;
 * @param newContactList.  
 * @return void  
 */
-public void createContact(List < Lead > newLeadList) {
+    public void createContact(List < Lead > newLeadList) {
     Map < Id, Lead > parentMap = new Map < Id, Lead > ();
     Map < Id, Lead > childMap = new Map < Id, Lead > ();
     Map < Id, Id > mapLead = new Map < Id, Id > ();
@@ -1067,12 +1085,14 @@ public void createContact(List < Lead > newLeadList) {
           if (linkEventList != null && !linkEventList.isEmpty()) {
             update linkEventList;
         }
-    } catch (Exception ex) {
-        NSP_ErrorLogHandler.logSaveException('NSP_LeadTriggerHelper', 'createContact', ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_LeadTriggerHelper.handleException(
+                e ,
+                'createContact'
+            );
+        }
     }
-}
 
-    
 /**
 * @MethodName: setContactAsPrimary
 * @Description: Marks the converted contact as Primary Contact  ,added as a part of story STY-02090 
@@ -1122,45 +1142,15 @@ Modified History: Name : Description : date
                 }
             }
             NSP_OpportunityTriggerHelperFunctions.getAccountOwnerEmail(AccountId);
-        } catch (Exception ex) {
-            NSP_ErrorLogHandler.logSaveException('NSP_LeadTriggerHelper', 'setContactAsPrimary', ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_LeadTriggerHelper.handleException(
+                e ,
+                'setContactAsPrimary'
+            );
         }
         
     }
-     /**
-* @MethodName: updateNonProfitOrgFields
-* @Description: When Referral Lead is converted update Non Profit Organisation fields
-* @param Map<Id,Id> opportunityLeadMap. 
-* @Defect : DF-01654 removed for STY-03346
-* @return void                          
-*/
-    /*public void updateNonProfitOrgFields(Map < String, Lead > opportunityLeadMap) {
-        List<OpportunityContactRole> oppConRoleList = new List<OpportunityContactRole>();
-        try{
-            for (OpportunityContactRole oppConRole : [SELECT Id, 
-                                                      OpportunityId, 
-                                                      ContactId, 
-                                                      IsPrimary,
-                                                      NSP_Nonprofit_Organization_Name__c,
-                                                      NSP_Nonprofit_Organization_Tax_Id__c, 
-                                                      NSP_Referralbenefitsanonprofitorg__c 
-                                                      FROM OpportunityContactRole
-                                                      WHERE OpportunityId IN: opportunityLeadMap.keySet() 
-                                                      AND IsPrimary = true]) {
-                                                          Lead leadObject = opportunityLeadMap.get(oppConRole.opportunityId);
-                                                          oppConRole.NSP_Nonprofit_Organization_Name__c = leadObject.NSP_Nonprofit_Organization_Name__c;
-                                                          oppConRole.NSP_Nonprofit_Organization_Tax_Id__c = leadObject.NSP_Nonprofit_Organization_Tax_Id__c;
-                                                          oppConRole.NSP_Referralbenefitsanonprofitorg__c = leadObject.NSP_Referralbenefitsanonprofitorg__c;   
-                                                          oppConRoleList.add(oppConRole);
-                                                      }
-            if(!oppConRoleList.isEmpty()){
-                Database.update(oppConRoleList, false);
-            }
-        } catch (Exception ex) {
-            NSP_ErrorLogHandler.logSaveException('NSP_LeadTriggerHelper', 'updateNonProfitOrgFields', ex.getMessage());
-        }
-    }*/
-   
+
     /* Description: This method sets sales office details from user 
      * 
      * @param: leadList, leadMap
