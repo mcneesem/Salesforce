@@ -5,8 +5,11 @@
         <label>Create Folder</label>
         <locationX>308</locationX>
         <locationY>276</locationY>
-        <actionName>box__CreateFolderForRecordIdFromTemplate_v2</actionName>
+        <actionName>BoxCreateFolderForRecordIdFromTemplate</actionName>
         <actionType>apex</actionType>
+        <faultConnector>
+            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
+        </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>optCreateRootFolder</name>
@@ -26,7 +29,9 @@
                 <elementReference>$Setup.BoxFileRequest__c.BoxTemplateFolderId__c</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>BoxCreateFolderForRecordIdFromTemplate</nameSegment>
         <storeOutputAutomatically>true</storeOutputAutomatically>
+        <versionSegment>1</versionSegment>
     </actionCalls>
     <apiVersion>56.0</apiVersion>
     <description>Creates a sub folder to allow users the ability to share via link using the Box Explorer component</description>
@@ -75,5 +80,24 @@
         </scheduledPaths>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
+    <subflows>
+        <name>Insperity_Fault_Handler_Subflow</name>
+        <label>Insperity Fault Handler Subflow</label>
+        <locationX>572</locationX>
+        <locationY>384</locationY>
+        <flowName>Insperity_Fault_Handler_Subflow</flowName>
+        <inputAssignments>
+            <name>faultMessage</name>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>triggeringFlow</name>
+            <value>
+                <stringValue>Box_File_Sub_Folder_Creation</stringValue>
+            </value>
+        </inputAssignments>
+    </subflows>
 </Flow>

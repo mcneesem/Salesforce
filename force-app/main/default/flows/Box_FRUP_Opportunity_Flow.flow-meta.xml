@@ -5,7 +5,7 @@
         <label>Collaborate Opportunity Team Member</label>
         <locationX>440</locationX>
         <locationY>708</locationY>
-        <actionName>box__CreateCollaborationOnRecord_v2</actionName>
+        <actionName>BoxCreateCollaborationOnRecord</actionName>
         <actionType>apex</actionType>
         <connector>
             <targetReference>Loop_Opportunity_Team_Memeber</targetReference>
@@ -33,17 +33,16 @@
                 <elementReference>Loop_Opportunity_Team_Memeber.User.Id</elementReference>
             </value>
         </inputParameters>
-        <nameSegment>box__CreateCollaborationOnRecord_v2</nameSegment>
+        <nameSegment>BoxCreateCollaborationOnRecord</nameSegment>
         <storeOutputAutomatically>true</storeOutputAutomatically>
         <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
-        <description>Creates Child folder in Opportunity folder to be used for external sharing</description>
-        <name>CreateFileRequestFolder</name>
+        <name>Create_File_Request_Folder</name>
         <label>Create File Request Folder</label>
         <locationX>352</locationX>
         <locationY>492</locationY>
-        <actionName>box__CreateFolder_v2</actionName>
+        <actionName>BoxCreateFolder</actionName>
         <actionType>apex</actionType>
         <connector>
             <targetReference>Loop_Opportunity_Team_Memeber</targetReference>
@@ -65,7 +64,7 @@
                 <elementReference>$Record.box__Folder_ID__c</elementReference>
             </value>
         </inputParameters>
-        <nameSegment>box__CreateFolder_v2</nameSegment>
+        <nameSegment>BoxCreateFolder</nameSegment>
         <storeOutputAutomatically>true</storeOutputAutomatically>
         <versionSegment>1</versionSegment>
     </actionCalls>
@@ -111,7 +110,7 @@
         <locationY>384</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>CreateFileRequestFolder</targetReference>
+            <targetReference>Create_File_Request_Folder</targetReference>
         </connector>
         <faultConnector>
             <isGoTo>true</isGoTo>
