@@ -14011,7 +14011,7 @@
         <layout>Campaign-Sales Campaign Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Campaign-Sales Campaign Layout</layout>
+        <layout>Campaign-Marketing Campaign Layout</layout>
         <recordType>Campaign.Marketing_Record_Type</recordType>
     </layoutAssignments>
     <layoutAssignments>
