@@ -645,7 +645,19 @@
     <picklistValues>
         <picklist>NSP_Event_Subtype__c</picklist>
         <values>
+            <fullName>Breakfast</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Closing Appointment</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Coffee</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Data Collection Meeting</fullName>
             <default>false</default>
         </values>
         <values>
@@ -653,7 +665,31 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Dinner</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Discovery Call</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Happy Hour</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Lunch</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Networking</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Safety Meeting</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WO Proposal</fullName>
             <default>false</default>
         </values>
     </picklistValues>

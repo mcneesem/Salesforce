@@ -11,109 +11,9 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>Form Submission</fullName>
+                <fullName>Birthday Call</fullName>
                 <default>false</default>
-                <label>Form Submission</label>
-            </value>
-            <value>
-                <fullName>Email Send</fullName>
-                <default>false</default>
-                <label>Email Send</label>
-            </value>
-            <value>
-                <fullName>Email Open</fullName>
-                <default>false</default>
-                <label>Email Open</label>
-            </value>
-            <value>
-                <fullName>Email Click</fullName>
-                <default>false</default>
-                <label>Email Click</label>
-            </value>
-            <value>
-                <fullName>Website Visit</fullName>
-                <default>false</default>
-                <label>Website Visit</label>
-            </value>
-            <value>
-                <fullName>Email Bounced</fullName>
-                <default>false</default>
-                <label>Email Bounced</label>
-            </value>
-            <value>
-                <fullName>WO Business Profile</fullName>
-                <default>false</default>
-                <label>WO Business Profile</label>
-            </value>
-            <value>
-                <fullName>WO Proposal</fullName>
-                <default>false</default>
-                <label>WO Proposal</label>
-            </value>
-            <value>
-                <fullName>WX Quote</fullName>
-                <default>false</default>
-                <label>WX Quote</label>
-            </value>
-            <value>
-                <fullName>WX Proposal</fullName>
-                <default>false</default>
-                <label>WX Proposal</label>
-            </value>
-            <value>
-                <fullName>Phone Call</fullName>
-                <default>false</default>
-                <label>Phone Call</label>
-            </value>
-            <value>
-                <fullName>Video Call</fullName>
-                <default>false</default>
-                <label>Video Call</label>
-            </value>
-            <value>
-                <fullName>Voicemail</fullName>
-                <default>false</default>
-                <label>Voicemail</label>
-            </value>
-            <value>
-                <fullName>Email</fullName>
-                <default>false</default>
-                <label>Email</label>
-            </value>
-            <value>
-                <fullName>Postal Mail</fullName>
-                <default>false</default>
-                <label>Postal Mail</label>
-            </value>
-            <value>
-                <fullName>In-Person Meet</fullName>
-                <default>false</default>
-                <label>In-Person Meet</label>
-            </value>
-            <value>
-                <fullName>Chat</fullName>
-                <default>false</default>
-                <label>Chat</label>
-            </value>
-            <value>
-                <fullName>Social Media</fullName>
-                <default>false</default>
-                <label>Social Media</label>
-            </value>
-            <value>
-                <fullName>LinkedIn</fullName>
-                <default>false</default>
-                <label>LinkedIn</label>
-            </value>
-            <value>
-                <fullName>Required for Booking</fullName>
-                <default>false</default>
-                <label>Required for Booking</label>
-            </value>
-            <value>
-                <fullName>Documents Missing</fullName>
-                <default>false</default>
-                <label>Documents Missing</label>
+                <label>Birthday Call</label>
             </value>
             <value>
                 <fullName>BPA Debrief Call</fullName>
@@ -121,9 +21,144 @@
                 <label>BPA Debrief Call</label>
             </value>
             <value>
+                <fullName>Call</fullName>
+                <default>false</default>
+                <label>Call</label>
+            </value>
+            <value>
+                <fullName>Chat</fullName>
+                <default>false</default>
+                <label>Chat</label>
+            </value>
+            <value>
+                <fullName>Client Meeting</fullName>
+                <default>false</default>
+                <label>Client Meeting</label>
+            </value>
+            <value>
+                <fullName>Data Analysis Email</fullName>
+                <default>false</default>
+                <label>Data Analysis Email</label>
+            </value>
+            <value>
+                <fullName>Demo Requested</fullName>
+                <default>false</default>
+                <label>Demo Requested</label>
+            </value>
+            <value>
+                <fullName>Discovery Call</fullName>
+                <default>false</default>
+                <label>Discovery Call</label>
+            </value>
+            <value>
+                <fullName>Documents Missing</fullName>
+                <default>false</default>
+                <label>Documents Missing</label>
+            </value>
+            <value>
+                <fullName>Email</fullName>
+                <default>false</default>
+                <label>Email</label>
+            </value>
+            <value>
+                <fullName>Email Bounced</fullName>
+                <default>false</default>
+                <label>Email Bounced</label>
+            </value>
+            <value>
+                <fullName>Email Click</fullName>
+                <default>false</default>
+                <label>Email Click</label>
+            </value>
+            <value>
+                <fullName>Email Open</fullName>
+                <default>false</default>
+                <label>Email Open</label>
+            </value>
+            <value>
+                <fullName>Email Send</fullName>
+                <default>false</default>
+                <label>Email Send</label>
+            </value>
+            <value>
+                <fullName>Financial Analysis Generated</fullName>
+                <default>false</default>
+                <label>Financial Analysis Generated</label>
+            </value>
+            <value>
+                <fullName>Form Submission</fullName>
+                <default>false</default>
+                <label>Form Submission</label>
+            </value>
+            <value>
+                <fullName>Gift Drop</fullName>
+                <default>false</default>
+                <label>Gift Drop</label>
+            </value>
+            <value>
+                <fullName>Information Request Sent</fullName>
+                <default>false</default>
+                <label>Information Request Sent</label>
+            </value>
+            <value>
+                <fullName>InMail</fullName>
+                <default>false</default>
+                <label>InMail</label>
+            </value>
+            <value>
+                <fullName>In-Person Meet</fullName>
+                <default>false</default>
+                <label>In-Person Meet</label>
+            </value>
+            <value>
                 <fullName>Internal Meeting</fullName>
                 <default>false</default>
                 <label>Internal Meeting</label>
+            </value>
+            <value>
+                <fullName>L.I. Connection Request</fullName>
+                <default>false</default>
+                <label>L.I. Connection Request</label>
+            </value>
+            <value>
+                <fullName>LinkedIn</fullName>
+                <default>false</default>
+                <label>LinkedIn</label>
+            </value>
+            <value>
+                <fullName>Nurture/Regen</fullName>
+                <default>false</default>
+                <label>Nurture/Regen</label>
+            </value>
+            <value>
+                <fullName>Other Social Media</fullName>
+                <default>false</default>
+                <label>Other Social Media</label>
+            </value>
+            <value>
+                <fullName>Partner Agreement</fullName>
+                <default>false</default>
+                <label>Partner Agreement</label>
+            </value>
+            <value>
+                <fullName>Phone Call</fullName>
+                <default>false</default>
+                <label>Phone Call</label>
+            </value>
+            <value>
+                <fullName>Postal Mail</fullName>
+                <default>false</default>
+                <label>Postal Mail</label>
+            </value>
+            <value>
+                <fullName>Product Presentation</fullName>
+                <default>false</default>
+                <label>Product Presentation</label>
+            </value>
+            <value>
+                <fullName>Proposal</fullName>
+                <default>false</default>
+                <label>Proposal</label>
             </value>
             <value>
                 <fullName>Prospect Follow Up Meeting</fullName>
@@ -136,24 +171,39 @@
                 <label>Prospect Initial Meeting</label>
             </value>
             <value>
-                <fullName>Client Meeting</fullName>
+                <fullName>Required for Booking</fullName>
                 <default>false</default>
-                <label>Client Meeting</label>
+                <label>Required for Booking</label>
             </value>
             <value>
-                <fullName>Discovery Call</fullName>
+                <fullName>Safety Ordered</fullName>
                 <default>false</default>
-                <label>Discovery Call</label>
+                <label>Safety Ordered</label>
             </value>
             <value>
-                <fullName>Transition Meeting</fullName>
+                <fullName>Send Docs for Signature</fullName>
                 <default>false</default>
-                <label>Transition Meeting</label>
+                <label>Send Docs for Signature</label>
             </value>
             <value>
-                <fullName>Proposal</fullName>
+                <fullName>Send MM MPC</fullName>
                 <default>false</default>
-                <label>Proposal</label>
+                <label>Send MM MPC</label>
+            </value>
+            <value>
+                <fullName>Sent to P &amp; R</fullName>
+                <default>false</default>
+                <label>Sent to P &amp; R</label>
+            </value>
+            <value>
+                <fullName>Snail Mail</fullName>
+                <default>false</default>
+                <label>Snail Mail</label>
+            </value>
+            <value>
+                <fullName>Social Media</fullName>
+                <default>false</default>
+                <label>Social Media</label>
             </value>
             <value>
                 <fullName>Technical Demo</fullName>
@@ -161,19 +211,49 @@
                 <label>Technical Demo</label>
             </value>
             <value>
-                <fullName>Product Presentation</fullName>
+                <fullName>Text</fullName>
                 <default>false</default>
-                <label>Product Presentation</label>
+                <label>Text</label>
             </value>
             <value>
-                <fullName>Birthday Call</fullName>
+                <fullName>Transition Meeting</fullName>
                 <default>false</default>
-                <label>Birthday Call</label>
+                <label>Transition Meeting</label>
             </value>
             <value>
-                <fullName>Partner Agreement</fullName>
+                <fullName>Video Call</fullName>
                 <default>false</default>
-                <label>Partner Agreement</label>
+                <label>Video Call</label>
+            </value>
+            <value>
+                <fullName>Voicemail</fullName>
+                <default>false</default>
+                <label>Voicemail</label>
+            </value>
+            <value>
+                <fullName>Website Visit</fullName>
+                <default>false</default>
+                <label>Website Visit</label>
+            </value>
+            <value>
+                <fullName>WO Business Profile</fullName>
+                <default>false</default>
+                <label>WO Business Profile</label>
+            </value>
+            <value>
+                <fullName>WO Proposal</fullName>
+                <default>false</default>
+                <label>WO Proposal</label>
+            </value>
+            <value>
+                <fullName>WX Proposal</fullName>
+                <default>false</default>
+                <label>WX Proposal</label>
+            </value>
+            <value>
+                <fullName>WX Quote</fullName>
+                <default>false</default>
+                <label>WX Quote</label>
             </value>
             <value>
                 <fullName>Contracting</fullName>
@@ -251,17 +331,87 @@
         <valueSettings>
             <controllingFieldValue>Core Sales</controllingFieldValue>
             <controllingFieldValue>Mid Market</controllingFieldValue>
-            <valueName>WO Business Profile</valueName>
+            <valueName>Call</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Core Sales</controllingFieldValue>
+            <controllingFieldValue>Mid Market</controllingFieldValue>
+            <valueName>Data Analysis Email</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Core Sales</controllingFieldValue>
+            <controllingFieldValue>Mid Market</controllingFieldValue>
+            <valueName>Demo Requested</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Core Sales</controllingFieldValue>
+            <controllingFieldValue>Mid Market</controllingFieldValue>
+            <valueName>Financial Analysis Generated</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Core Sales</controllingFieldValue>
+            <controllingFieldValue>Mid Market</controllingFieldValue>
+            <valueName>Gift Drop</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Core Sales</controllingFieldValue>
+            <controllingFieldValue>Mid Market</controllingFieldValue>
+            <valueName>Information Request Sent</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Core Sales</controllingFieldValue>
+            <controllingFieldValue>Mid Market</controllingFieldValue>
+            <valueName>InMail</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Core Sales</controllingFieldValue>
+            <controllingFieldValue>Mid Market</controllingFieldValue>
+            <valueName>L.I. Connection Request</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Core Sales</controllingFieldValue>
+            <controllingFieldValue>Mid Market</controllingFieldValue>
+            <valueName>Nurture/Regen</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Core Sales</controllingFieldValue>
+            <controllingFieldValue>Mid Market</controllingFieldValue>
+            <valueName>Other Social Media</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Core Sales</controllingFieldValue>
+            <controllingFieldValue>Mid Market</controllingFieldValue>
+            <valueName>Safety Ordered</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Core Sales</controllingFieldValue>
+            <controllingFieldValue>Mid Market</controllingFieldValue>
+            <valueName>Send Docs for Signature</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Core Sales</controllingFieldValue>
+            <controllingFieldValue>Mid Market</controllingFieldValue>
+            <valueName>Send MM MPC</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Core Sales</controllingFieldValue>
+            <controllingFieldValue>Mid Market</controllingFieldValue>
+            <valueName>Sent to P &amp; R</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Core Sales</controllingFieldValue>
+            <controllingFieldValue>Mid Market</controllingFieldValue>
+            <valueName>Snail Mail</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Core Sales</controllingFieldValue>
+            <controllingFieldValue>Mid Market</controllingFieldValue>
+            <valueName>Text</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Core Sales</controllingFieldValue>
             <controllingFieldValue>Mid Market</controllingFieldValue>
             <valueName>WO Proposal</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Core Sales</controllingFieldValue>
-            <controllingFieldValue>Mid Market</controllingFieldValue>
-            <valueName>WX Quote</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Core Sales</controllingFieldValue>
@@ -274,7 +424,23 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>BPS</controllingFieldValue>
+            <valueName>Client Meeting</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>BPS</controllingFieldValue>
+            <valueName>Discovery Call</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>BPS</controllingFieldValue>
             <valueName>Internal Meeting</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>BPS</controllingFieldValue>
+            <valueName>Product Presentation</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>BPS</controllingFieldValue>
+            <valueName>Proposal</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>BPS</controllingFieldValue>
@@ -286,39 +452,15 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>BPS</controllingFieldValue>
-            <valueName>Client Meeting</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>BPS</controllingFieldValue>
-            <valueName>Discovery Call</valueName>
+            <valueName>Technical Demo</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>BPS</controllingFieldValue>
             <valueName>Transition Meeting</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>BPS</controllingFieldValue>
-            <valueName>Proposal</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>BPS</controllingFieldValue>
-            <valueName>Technical Demo</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>BPS</controllingFieldValue>
-            <valueName>Product Presentation</valueName>
-        </valueSettings>
-        <valueSettings>
             <controllingFieldValue>Eloqua</controllingFieldValue>
-            <valueName>Form Submission</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Eloqua</controllingFieldValue>
-            <valueName>Email Send</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Eloqua</controllingFieldValue>
-            <valueName>Email Open</valueName>
+            <valueName>Email Bounced</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Eloqua</controllingFieldValue>
@@ -326,23 +468,59 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Eloqua</controllingFieldValue>
-            <valueName>Website Visit</valueName>
+            <valueName>Email Open</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Eloqua</controllingFieldValue>
-            <valueName>Email Bounced</valueName>
+            <valueName>Email Send</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>New Client Sales</controllingFieldValue>
-            <valueName>Required for Booking</valueName>
+            <controllingFieldValue>Eloqua</controllingFieldValue>
+            <valueName>Form Submission</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Eloqua</controllingFieldValue>
+            <valueName>Website Visit</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>New Client Sales</controllingFieldValue>
             <valueName>Documents Missing</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>New Client Sales</controllingFieldValue>
+            <valueName>Required for Booking</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Correspondence</controllingFieldValue>
+            <valueName>Birthday Call</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Correspondence</controllingFieldValue>
+            <valueName>Chat</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Correspondence</controllingFieldValue>
+            <valueName>Email</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Correspondence</controllingFieldValue>
+            <valueName>In-Person Meet</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Correspondence</controllingFieldValue>
+            <valueName>LinkedIn</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Correspondence</controllingFieldValue>
             <valueName>Phone Call</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Correspondence</controllingFieldValue>
+            <valueName>Postal Mail</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Correspondence</controllingFieldValue>
+            <valueName>Social Media</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Correspondence</controllingFieldValue>
@@ -351,34 +529,6 @@
         <valueSettings>
             <controllingFieldValue>Correspondence</controllingFieldValue>
             <valueName>Voicemail</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Correspondence</controllingFieldValue>
-            <valueName>Email</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Correspondence</controllingFieldValue>
-            <valueName>Postal Mail</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Correspondence</controllingFieldValue>
-            <valueName>In-Person Meet</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Correspondence</controllingFieldValue>
-            <valueName>Chat</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Correspondence</controllingFieldValue>
-            <valueName>Social Media</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Correspondence</controllingFieldValue>
-            <valueName>LinkedIn</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Correspondence</controllingFieldValue>
-            <valueName>Birthday Call</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Channels</controllingFieldValue>

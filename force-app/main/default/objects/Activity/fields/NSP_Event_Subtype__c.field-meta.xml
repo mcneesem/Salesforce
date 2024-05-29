@@ -11,9 +11,9 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>Discovery Call</fullName>
+                <fullName>Breakfast</fullName>
                 <default>false</default>
-                <label>Discovery Call</label>
+                <label>Breakfast</label>
             </value>
             <value>
                 <fullName>Closing Appointment</fullName>
@@ -21,14 +21,59 @@
                 <label>Closing Appointment</label>
             </value>
             <value>
-                <fullName>WO Business Profile</fullName>
+                <fullName>Coffee</fullName>
                 <default>false</default>
-                <label>WO Business Profile</label>
+                <label>Coffee</label>
+            </value>
+            <value>
+                <fullName>Data Collection Meeting</fullName>
+                <default>false</default>
+                <label>Data Collection Meeting</label>
             </value>
             <value>
                 <fullName>Demo</fullName>
                 <default>false</default>
                 <label>Demo</label>
+            </value>
+            <value>
+                <fullName>Dinner</fullName>
+                <default>false</default>
+                <label>Dinner</label>
+            </value>
+            <value>
+                <fullName>Discovery Call</fullName>
+                <default>false</default>
+                <label>Discovery Call</label>
+            </value>
+            <value>
+                <fullName>Happy Hour</fullName>
+                <default>false</default>
+                <label>Happy Hour</label>
+            </value>
+            <value>
+                <fullName>Lunch</fullName>
+                <default>false</default>
+                <label>Lunch</label>
+            </value>
+            <value>
+                <fullName>Networking</fullName>
+                <default>false</default>
+                <label>Networking</label>
+            </value>
+            <value>
+                <fullName>Safety Meeting</fullName>
+                <default>false</default>
+                <label>Safety Meeting</label>
+            </value>
+            <value>
+                <fullName>WO Business Profile</fullName>
+                <default>false</default>
+                <label>WO Business Profile</label>
+            </value>
+            <value>
+                <fullName>WO Proposal</fullName>
+                <default>false</default>
+                <label>WO Proposal</label>
             </value>
             <value>
                 <fullName>Email</fullName>
@@ -115,12 +160,6 @@
                 <label>Voicemail</label>
             </value>
             <value>
-                <fullName>WO Proposal</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>WO Proposal</label>
-            </value>
-            <value>
                 <fullName>WX Proposal</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
@@ -136,7 +175,7 @@
         <valueSettings>
             <controllingFieldValue>Core Sales</controllingFieldValue>
             <controllingFieldValue>Mid Market</controllingFieldValue>
-            <valueName>Discovery Call</valueName>
+            <valueName>Breakfast</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Core Sales</controllingFieldValue>
@@ -146,7 +185,52 @@
         <valueSettings>
             <controllingFieldValue>Core Sales</controllingFieldValue>
             <controllingFieldValue>Mid Market</controllingFieldValue>
+            <valueName>Coffee</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Core Sales</controllingFieldValue>
+            <controllingFieldValue>Mid Market</controllingFieldValue>
+            <valueName>Data Collection Meeting</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Core Sales</controllingFieldValue>
+            <controllingFieldValue>Mid Market</controllingFieldValue>
             <valueName>Demo</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Core Sales</controllingFieldValue>
+            <controllingFieldValue>Mid Market</controllingFieldValue>
+            <valueName>Dinner</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Core Sales</controllingFieldValue>
+            <controllingFieldValue>Mid Market</controllingFieldValue>
+            <valueName>Discovery Call</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Core Sales</controllingFieldValue>
+            <controllingFieldValue>Mid Market</controllingFieldValue>
+            <valueName>Happy Hour</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Core Sales</controllingFieldValue>
+            <controllingFieldValue>Mid Market</controllingFieldValue>
+            <valueName>Lunch</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Core Sales</controllingFieldValue>
+            <controllingFieldValue>Mid Market</controllingFieldValue>
+            <valueName>Networking</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Core Sales</controllingFieldValue>
+            <controllingFieldValue>Mid Market</controllingFieldValue>
+            <valueName>Safety Meeting</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Core Sales</controllingFieldValue>
+            <controllingFieldValue>Mid Market</controllingFieldValue>
+            <valueName>WO Proposal</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>

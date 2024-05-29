@@ -2627,11 +2627,23 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Call</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Chat</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Client Meeting</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Data Analysis Email</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Demo Requested</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2663,7 +2675,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Financial Analysis Generated</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Form Submission</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gift Drop</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2671,11 +2691,31 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>InMail</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Information Request Sent</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Internal Meeting</fullName>
             <default>false</default>
         </values>
         <values>
+            <fullName>L%2EI%2E Connection Request</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>LinkedIn</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Nurture%2FRegen</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other Social Media</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2711,11 +2751,35 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Safety Ordered</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Send Docs for Signature</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Send MM MPC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sent to P %26 R</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Snail Mail</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Social Media</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Technical Demo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Text</fullName>
             <default>false</default>
         </values>
         <values>
