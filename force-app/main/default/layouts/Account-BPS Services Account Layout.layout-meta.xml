@@ -503,6 +503,7 @@
         <fields>NSP_Category__c</fields>
         <fields>NSP_SubCategory__c</fields>
         <fields>CASES.STATUS</fields>
+        <fields>OWNER_NAME</fields>
         <fields>CASES.CREATED_DATE_DATE_ONLY</fields>
         <relatedList>RelatedCaseList</relatedList>
     </relatedLists>
