@@ -32,7 +32,7 @@ public class NSP_FSOImplementationController {
             //AZD-271433
             NSP_Trigger_Switch__c triggerSwitch =  NSP_Trigger_Switch__c.getInstance(UserInfo.getUserId());
             if(triggerSwitch != null && triggerSwitch.Premier_Performance_Automation__c) {
-                if (automationTable != null) {
+                if ( ( automationTable != null ) && !automationTable.isEmpty() ) {
                     for(Integer i = automationTable.size() - 1; i >=0; i--) {
                         if(automationTable[i].NSP_Automation_Name__c == NSP_ServiceConstants.PremierPerformance) {
                             automationTable.remove(i);
