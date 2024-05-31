@@ -28,6 +28,19 @@ public class NSP_FSOImplementationController {
                                                                          NSP_Section__c, NSP_Method_Name__c, NSP_Class_Name__c, NSP_IP_Record_Type__c,NSP_IP_Record_Type_IP__c 
                                                                          FROM NSP_Implementation_Automations__mdt WHERE NSP_IP_Record_Type__c =: impRecordTypeName AND NSP_Section__c!=null 
                                                                          Order By Sort_Order__c , NSP_Automation_Order__c NULLS  LAST  ];
+            //Exclude Premier Performance automation if triggerSwitch.Premier_Performance_Automation__c = true
+            //AZD-271433
+            NSP_Trigger_Switch__c triggerSwitch =  NSP_Trigger_Switch__c.getInstance(UserInfo.getUserId());
+            if(triggerSwitch != null && triggerSwitch.Premier_Performance_Automation__c) {
+                if (automationTable != null) {
+                    for(Integer i = automationTable.size() - 1; i >=0; i--) {
+                        if(automationTable[i].NSP_Automation_Name__c == NSP_ServiceConstants.PremierPerformance) {
+                            automationTable.remove(i);
+                        }
+                    }
+                }
+            }
+
             if(recordId !=null){
                 impProfileMap = NSP_ImpAutomationsController.getIpRecord(recordId);
                 impProfile =impProfileMap.values()[0];

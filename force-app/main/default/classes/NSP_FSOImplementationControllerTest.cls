@@ -87,6 +87,12 @@ public class NSP_FSOImplementationControllerTest {
         insert ipAutomationList;
 		Boolean isRunAutomation ;
         
+        //Insert Premier Peformance Trigger Switch (custom setting)
+        NSP_Trigger_Switch__c triggerSwitch = new NSP_Trigger_Switch__c(  
+            Name = UserInfo.getUserId(),  
+            Premier_Performance_Automation__c = true  
+        );  
+        insert triggerSwitch; 
      Test.startTest();
      // calling Class method
         NSP_FSOImplementationController.loadAutomationRecords(impProfile.Id,FSORecordIPRecordTypeId);
