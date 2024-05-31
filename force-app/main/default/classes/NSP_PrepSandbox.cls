@@ -160,6 +160,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
             allMetadataList.add(new List<MetadataService.Metadata>());
             List<NSP_DocuSign_Signers__mdt> cMdDocuSigners = [Select Id, Label, DeveloperName, NSP_Signer_Username__c FROM NSP_DocuSign_Signers__mdt WHERE Id!=null AND NSP_Signer_Username__c!=null];
             List<NSP_PEO_Implementations__mdt> cMdPEOImps = [Select Id, Label, DeveloperName, NSP_Email_Address__c FROM NSP_PEO_Implementations__mdt WHERE Id!=null AND NSP_Email_Address__c!=null];
+            List<NSP_Retirement_Services__mdt> cMdRetSvcs = [Select Id, Label, DeveloperName, NSP_Email_Address__c FROM NSP_Retirement_Services__mdt WHERE Id!=null AND NSP_Email_Address__c!=null];
 
             for (NSP_DocuSign_Signers__mdt cMdRecord : cMdDocuSigners) {
                 string name = cMdRecord.DeveloperName;
@@ -202,6 +203,29 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
                             customField1.value = cMdRecord.NSP_Email_Address__c.substringBefore('.invalid').trim() + '.invalid';
                          }
                      }
+
+                if (cMdUpd.values != null) { //add the changes to list of changes to be deployed
+                    cMdUpd.values.add(customField1); 
+                } else {
+                    cMdUpd.values = new MetadataService.CustomMetadataValue[] { customField1 };
+                }
+
+                if (allMetadataList[batch].size() >= 200) {
+                    batch++;
+                    allMetadataList.add(new List<MetadataService.Metadata>()); // create a new batch when we fill one up
+                }
+                allMetadataList[batch].add(cMdUpd);
+            }
+
+            for (NSP_Retirement_Services__mdt cMdRecord : cMdRetSvcs) {
+                string name = cMdRecord.DeveloperName;
+                string fullName = 'NSP_Retirement_Services.' + name; //custom metadata full name
+                MetadataService.CustomMetadata cMdUpd = new MetadataService.CustomMetadata();
+                    cMdUpd.fullName = fullName;
+                    cMdUpd.label = name;
+                MetadataService.CustomMetadataValue customField1 = new MetadataService.CustomMetadataValue();
+                    customField1.field = 'NSP_Email_Address__c'; // the custom field API Name to be updated
+                    customField1.value = cMdRecord.NSP_Email_Address__c.substringBefore('.invalid').trim() + '.invalid';
 
                 if (cMdUpd.values != null) { //add the changes to list of changes to be deployed
                     cMdUpd.values.add(customField1); 
