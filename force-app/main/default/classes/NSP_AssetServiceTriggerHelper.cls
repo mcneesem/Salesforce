@@ -390,10 +390,11 @@ public class NSP_AssetServiceTriggerHelper {
                 WOAssetMap.put(asset.AccountId,asset );
             }
          // check if  WO asset is made INACTIVE
+         NSP_Trigger_Switch__c triggerSwitch =  NSP_Trigger_Switch__c.getInstance(UserInfo.getUserId());
          if(asset.RecordTypeId == WOAssetRecordTypeId &&
             asset.NSP_Account_Status__c != oldMapvalue.NSP_Account_Status__c &&
             asset.NSP_Account_Status__c != NSP_ServiceConstants.ASSET_ACTIVE_STATUS &&
-            asset.NSP_Client__c != null  ){
+            asset.NSP_Client__c != null && triggerSwitch.Null_BPS_assets__c ){
                 // check if  WO asset is made INACTIVE
                 isNull = true;
                 AccountIDNull.add(asset.AccountId );
