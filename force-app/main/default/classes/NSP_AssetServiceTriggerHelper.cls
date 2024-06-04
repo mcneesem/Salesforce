@@ -394,7 +394,9 @@ public class NSP_AssetServiceTriggerHelper {
          if(asset.RecordTypeId == WOAssetRecordTypeId &&
             asset.NSP_Account_Status__c != oldMapvalue.NSP_Account_Status__c &&
             asset.NSP_Account_Status__c != NSP_ServiceConstants.ASSET_ACTIVE_STATUS &&
-            asset.NSP_Client__c != null && triggerSwitch.Null_BPS_assets__c ){
+            asset.NSP_Client__c != null && 
+            triggerSwitch != null && 
+            triggerSwitch.Null_BPS_assets__c ){
                 // check if  WO asset is made INACTIVE
                 isNull = true;
                 AccountIDNull.add(asset.AccountId );
