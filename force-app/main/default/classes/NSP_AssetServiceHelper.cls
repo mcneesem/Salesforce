@@ -72,21 +72,31 @@ public class NSP_AssetServiceHelper {
                     if ( asset.RecordTypeId == PERFORM_SMART_ASSET
                         && asset.AccountId != null
                         && !asset.Is_Perform_WO_WS_Asset__c
-                        && ((mapOfAssetOppty.containsKey(asset.Id)
-                        && mapOfOpportunity.containsKey(mapOfAssetOppty.get(asset.Id))
-                        && ( mapOfOpportunity.get(mapOfAssetOppty.get(asset.id)).NSP_IPMRecommendation__c == NSP_SalesConstants.Yes )
-                        )|| asset.Opportunity__c == null))
+                        && (
+                            (
+                                mapOfAssetOppty.containsKey(asset.Id)
+                                && mapOfOpportunity.containsKey(mapOfAssetOppty.get(asset.Id))
+                                && ( mapOfOpportunity.get(mapOfAssetOppty.get(asset.id)).NSP_IPMRecommendation__c == NSP_SalesConstants.Yes )
+                            )
+                            || asset.Opportunity__c == null
+                        )
+                    )
                     {
                         accountIdSet.add(asset.AccountId);
                         performSmartAssetSet.add(asset.Id);
                     }
                     if ( asset.RecordTypeId == TIME_ATTENDANCE_ASSET
-                        && asset.AccountId!=null
+                        && asset.AccountId != null
                         && !asset.Is_Perform_WO_WS_Asset__c
-                        && ((mapOfAssetOppty.containsKey(asset.Id)
-                        && mapOfOpportunity.containsKey(mapOfAssetOppty.get(asset.Id))
-                        && ( mapOfOpportunity.get(mapOfAssetOppty.get(asset.id)).NSP_Time_Entry_Recommendation__c == NSP_ServiceConstants.Premier_Time_Att )
-                        )|| asset.Opportunity__c == null))
+                        && (
+                            (
+                                mapOfAssetOppty.containsKey(asset.Id)
+                                && mapOfOpportunity.containsKey(mapOfAssetOppty.get(asset.Id))
+                                && ( mapOfOpportunity.get(mapOfAssetOppty.get(asset.id)).NSP_Time_Entry_Recommendation__c == NSP_ServiceConstants.Premier_Time_Att )
+                            )
+                            || asset.Opportunity__c == null
+                        )
+                    )
                     {
                         accountIdSet.add(asset.AccountId);
                         timeAttendanceAssetSet.add(asset.Id);
