@@ -1671,14 +1671,6 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>pse__ResourceInfoController</apexClass>
-            <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>pse__ResourceInfoControllerTest</apexClass>
-                <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
       <apexClass>NSP_VisualIndicatorHelper</apexClass>
        <enabled>true</enabled>
     </classAccesses>
@@ -37328,10 +37320,6 @@ m   <fieldPermissions>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Campaign-Sales Campaign Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Campaign-Marketing Campaign Layout</layout>
-        <recordType>Campaign.Marketing_Record_Type</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Campaign-Sales Campaign Layout</layout>
