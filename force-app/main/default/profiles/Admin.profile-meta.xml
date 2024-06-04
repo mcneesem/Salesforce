@@ -37322,6 +37322,10 @@ m   <fieldPermissions>
         <layout>Campaign-Sales Campaign Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Campaign-Marketing Campaign Layout</layout>
+        <recordType>Campaign.Marketing_Record_Type</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Campaign-Sales Campaign Layout</layout>
         <recordType>Campaign.Sales_Record_Type</recordType>
     </layoutAssignments>
