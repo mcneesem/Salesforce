@@ -145,6 +145,8 @@ const SECTION_FIELDS = [
   'Has_sample_payroll_report_been_requsted__c',
   'NSP_Provide_details_around_reporting__c',
   'Employees_work_in_the_following_states__c',
+  'Does_this_client_have_an_AWW__c',
+  'Is_client_CA_docs_submitted_for_approval__c',
   'Client_does_business_in_MA_NY_or_VA__c',
   'NSP_Business_Meeting_States__c',
   'Any_EEs_travel_internationally_for_work__c',
