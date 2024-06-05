@@ -345,6 +345,9 @@
         <label>Check for Case</label>
         <locationX>1431</locationX>
         <locationY>350</locationY>
+        <defaultConnector>
+            <targetReference>Case_Not_Found</targetReference>
+        </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Case_is_not_null</name>
@@ -674,6 +677,23 @@
         <object>Contact</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <screens>
+        <description>Case Not Found!</description>
+        <name>Case_Not_Found</name>
+        <label>Case Not Found</label>
+        <locationX>2290</locationX>
+        <locationY>458</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>MissingCase</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;color: rgb(247, 4, 28); font-size: 16px;&quot;&gt;Case Not Found!&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
     <screens>
         <name>Category_Sub_Category_Blank</name>
         <label>Category Sub Category Blank</label>
