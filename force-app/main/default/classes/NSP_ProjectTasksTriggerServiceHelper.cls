@@ -2,6 +2,8 @@
 * Represents the new project task trigger helper which handles all the logic.
 */
 public class NSP_ProjectTasksTriggerServiceHelper {
+    // test w/ NSP_ProjectTasksTriggerServiceHelperTest (85%)
+
     private Set<Id> allProjectIds = new Set<Id>();
     public static Boolean runOwnerAssignmentLogic = true;
     
@@ -69,9 +71,8 @@ public class NSP_ProjectTasksTriggerServiceHelper {
             
             /*STY-02085  checking for checkBox(Create Work Order) on projectTask Object is checked 
             and Disptach region field is not null*/
-            if(pTask.NSP_Create_Work_Order__c == true && 
-               (pTask.NSP_Create_Work_Order__c != projectTaskOldMap.get(pTask.id).NSP_Create_Work_Order__c ||
-                String.isBlank(projectTaskOldMap.get(pTask.id).NSP_Dispatch_Region__c)) && 
+            if(pTask.NSP_Create_Work_Order__c == true &&
+               pTask.NSP_Create_Work_Order__c != projectTaskOldMap.get(pTask.id).NSP_Create_Work_Order__c &&
                String.isNotBlank(pTask.NSP_Dispatch_Region__c)){
                    mapOfProjectTaskIdAndProjecTask.put(pTask.Id, pTask);
                }

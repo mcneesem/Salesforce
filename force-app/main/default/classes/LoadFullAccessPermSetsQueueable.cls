@@ -1,5 +1,5 @@
 public class LoadFullAccessPermSetsQueueable implements Queueable {
-    // test w/ LoadFullAccessPermSetsQueueableTest (82%)
+    // test w/ LoadFullAccessPermSetsQueueableTest (81%)
 
     // **************************************************************************************************
     //  Author:         Matthew McNeese
@@ -35,9 +35,6 @@ public class LoadFullAccessPermSetsQueueable implements Queueable {
         createErrorLog('LoadFullAccessPermSetsQueueable', 'execute', currObjName, 'Loading FieldPermissions');
         loadFieldPermissions(readPermSetId, false, currObjName); // upsert read Field Permissions for first object in list
         loadFieldPermissions(editPermSetId, true, currObjName); // upsert edit Field Permissions for first object in list
-
-        createErrorLog('LoadFullAccessPermSetsQueueable', 'execute', currObjName, 'Loading RecTypeVisibilities');
-        loadRecTypeVisibility(editPermSetId, currObjName); // upsert edit RecTypeVisibilities for first object in list
 
         if (!String.isBlank(readPermSetId) || !String.isBlank(editPermSetId)) {
             if (QueueableSettings__c.getOrgDefaults().EnableLoadPermSetChain__c) {
@@ -165,14 +162,12 @@ public class LoadFullAccessPermSetsQueueable implements Queueable {
         }
     }
 
-    // ************************************ Record Type Visibility ************************************
-    //  Description :   Upserts PermissionSetRecordTypeVisibility for all Record Types of specified 
-    //                  object name into specified Perm Set.
-    // *******************************************************************************************
-    @Future(callout=true)
-    public static void loadRecTypeVisibility(Id permSetId, String currObjName) {        
+    // ************************************ Record Type Visibility ********************************************
+    //  Description :   Upserts PermissionSetRecordTypeVisibility for all Record Types into specified Perm Set.
+    // ********************************************************************************************************
+    public static void loadRecTypeVisibility(Id permSetId) {
         if (!String.isBlank(permSetId)) {
-            List<RecordType> recTypeList =  [SELECT DeveloperName FROM RecordType WHERE SobjectType = :currObjName AND IsActive = true];
+            List<RecordType> recTypeList =  [SELECT DeveloperName, SobjectType, NamespacePrefix FROM RecordType WHERE IsActive = true];
             MetadataService.MetadataPort service = NSP_PrepSandbox.createService();
 
             String[] permissionSetNames = new String[] {[SELECT Name FROM PermissionSet WHERE Id = :permSetId LIMIT 1].Name};
@@ -183,7 +178,8 @@ public class LoadFullAccessPermSetsQueueable implements Queueable {
 
             for (RecordType recType : recTypeList) {
                 MetadataService.PermissionSetRecordTypeVisibility recTypeVis = new MetadataService.PermissionSetRecordTypeVisibility();	
-                recTypeVis.recordType = currObjName + '.' + recType.DeveloperName;
+                String prefix = (recType.NamespacePrefix == null) ? '' : recType.NamespacePrefix + '__';
+                recTypeVis.recordType = recType.SobjectType + '.' + prefix + recType.DeveloperName;
                 recTypeVis.visible = true;
 
                 if (permSet.recordTypeVisibilities != null) {
@@ -195,7 +191,7 @@ public class LoadFullAccessPermSetsQueueable implements Queueable {
 
             if (permSet != null && !Test.isRunningTest()) {
                 List<MetadataService.SaveResult> results = service.updateMetadata( new MetadataService.Metadata[] { permSet });
-                if (!results[0].success) createErrorLog('LoadFullAccessPermSetsQueueable', 'loadRecTypeVisibility', currObjName, 'RecTypeVisibility errors occurred on Perm Set: ' + permSetId);
+                if (!results[0].success) createErrorLog('LoadFullAccessPermSetsQueueable', 'loadRecTypeVisibility', null, 'RecTypeVisibility errors: ' + results[0].errors[0].message);
             }
         }
     }

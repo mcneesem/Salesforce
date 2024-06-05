@@ -348,6 +348,29 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_Work_email__c</fieldItem>
+                <identifier>RecordNSP_Work_email_cField</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 OR 2</booleanFilter>
+                    <criteria>
+                        <leftValue>{!$User.UserRole.DeveloperName}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>BPS_Administrator</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!$User.UserRole.DeveloperName}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>BPS_Sales_Manager</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Do_Not_Contact__c</fieldItem>
@@ -1048,8 +1071,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.DNBoptimizer__DnBContactRecord__c</fieldItem>
-                <identifier>RecordDNBoptimizer_DnBContactRecord_cField</identifier>
+                <fieldItem>Record.DNBConnect__D_B_Connect_Contact_Profile__c</fieldItem>
+                <identifier>RecordDNBConnect__D_B_Connect_Contact_Profile__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-506aa983-7ae6-49f8-b886-e1c437c9129f</name>

@@ -671,7 +671,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>NSP_Payroll__c.NSP_Work_Week__c</field>
         <readable>true</readable>
     </fieldPermissions>

@@ -1,5 +1,5 @@
 public class LoadFullAccessPermSets {
-    // test w/ LoadFullAccessPermSetsQueueableTest (96%)
+    // test w/ LoadFullAccessPermSetsQueueableTest (93%)
 
     // ********************************************************************************************************
     //  Author:        Matthew McNeese
@@ -60,8 +60,10 @@ public class LoadFullAccessPermSets {
         }
 
         if (!Test.isRunningTest()) {
+            LoadFullAccessPermSetsQueueable.loadRecTypeVisibility(mPermSets.get(editPermSetName));
             System.enqueueJob(new LoadFullAccessPermSetsQueueable(objectApiNames, mPermSets.get(readPermSetName), mPermSets.get(editPermSetName), depRetry));
         }
+        LoadFullAccessPermSetsQueueable.createErrorLog('LoadFullAccessPermSetsQueueable', 'runLoadFullAccessPermSets', null, 'Loading RecTypeVisibilities');
         LoadFullAccessPermSetsQueueable.createErrorLog('LoadFullAccessPermSetsQueueable', 'runLoadFullAccessPermSets', null, 'Launching LoadFullAccessPermSetsQueueable; objectCount=' + objectApiNames.size() );
     }
 }

@@ -339,7 +339,7 @@
         <fields>NSP_Preferred_First_Name__c</fields>
         <fields>NSP_Personal_Email__c</fields>
         <fields>CORE.USERS.ALIAS</fields>
-        <profileName>Contact Center</profileName>
+        <profileName>PEO Service</profileName>
     </profileSearchLayouts>
     <profileSearchLayouts>
         <fields>FULL_NAME</fields>
@@ -350,7 +350,7 @@
         <fields>NSP_Preferred_First_Name__c</fields>
         <fields>NSP_Personal_Email__c</fields>
         <fields>CORE.USERS.ALIAS</fields>
-        <profileName>PEO Service</profileName>
+        <profileName>Retirement Services</profileName>
     </profileSearchLayouts>
     <profileSearchLayouts>
         <fields>FULL_NAME</fields>
@@ -372,15 +372,15 @@
         <fields>NSP_Preferred_First_Name__c</fields>
         <fields>NSP_Personal_Email__c</fields>
         <fields>CORE.USERS.ALIAS</fields>
-        <profileName>Retirement Services</profileName>
+        <profileName>Contact Center</profileName>
     </profileSearchLayouts>
     <recordTypeTrackFeedHistory>false</recordTypeTrackFeedHistory>
-    <recordTypeTrackHistory>false</recordTypeTrackHistory>
-    
+    <recordTypeTrackHistory>true</recordTypeTrackHistory>
     <searchLayouts>
         <customTabListAdditionalFields>FULL_NAME</customTabListAdditionalFields>
         <customTabListAdditionalFields>ACCOUNT.NAME</customTabListAdditionalFields>
         <customTabListAdditionalFields>CONTACT.PHONE1</customTabListAdditionalFields>
+        <excludedStandardButtons>SendListEmailAction</excludedStandardButtons>
         <lookupDialogsAdditionalFields>FULL_NAME</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>ACCOUNT.NAME</lookupDialogsAdditionalFields>
         <lookupPhoneDialogsAdditionalFields>FULL_NAME</lookupPhoneDialogsAdditionalFields>

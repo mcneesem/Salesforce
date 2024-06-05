@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Dlivry_Mech_Type_req_when_CampLvl_Chld</fullName>
+    <active>true</active>
+    <description>If Marketing RT, and Campaign Level = Child: Delivery Mechanism Type, then Delivery Mechanism Type is required</description>
+    <errorConditionFormula>AND(
+ISPICKVAL( Campaign_Level__c , &quot;Child: Delivery Mechanism Type&quot;),
+ISPICKVAL( Delivery_Mechanism_Type__c , &quot;&quot;),
+RecordType.DeveloperName = &apos;Marketing_Record_Type&apos;)</errorConditionFormula>
+    <errorDisplayField>Delivery_Mechanism_Type__c</errorDisplayField>
+    <errorMessage>Delivery Mechanism Type must have a value when Campaign Level is &quot;Child: Delivery Mechanism Type&quot;</errorMessage>
+</ValidationRule>

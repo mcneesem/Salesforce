@@ -3507,6 +3507,23 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.NSP_ReasonLostNotes__c</fieldItem>
+                <identifier>RecordNSP_ReasonLostNotes_cField3</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!$Permission.CustomPermission.Allow_Closed_Lost_Opportunity}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Regen_Date__c</fieldItem>
                 <identifier>RecordNSP_Regen_Date_cField</identifier>
             </fieldInstance>
@@ -4333,6 +4350,30 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Lost_Reason__c</fieldItem>
                 <identifier>RecordNSP_Lost_Reason_cField2</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!$Permission.CustomPermission.Allow_Closed_Lost_Opportunity}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>false</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_Lost_Reason__c</fieldItem>
+                <identifier>RecordNSP_Lost_Reason_cField3</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!$Permission.CustomPermission.Allow_Closed_Lost_Opportunity}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -4343,6 +4384,30 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_ReasonLostNotes__c</fieldItem>
                 <identifier>RecordNSP_ReasonLostNotes_cField2</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!$Permission.CustomPermission.Allow_Closed_Lost_Opportunity}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>false</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_ReasonLostNotes__c</fieldItem>
+                <identifier>RecordNSP_ReasonLostNotes_cField4</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!$Permission.CustomPermission.Allow_Closed_Lost_Opportunity}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -5326,16 +5391,6 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Lock_Opportunity__c</fieldItem>
                 <identifier>RecordNSP_Lock_Opportunity_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Loss_Reason__c</fieldItem>
-                <identifier>RecordLoss_Reason_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -8778,6 +8833,10 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
+                <componentInstanceProperties>
+                    <name>active</name>
+                    <value>true</value>
+                </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>body</name>
                     <value>detailTabContent</value>

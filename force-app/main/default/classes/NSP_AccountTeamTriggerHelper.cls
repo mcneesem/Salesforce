@@ -481,9 +481,8 @@ NSP_WX_WA_Benefits_Specialist__c, and NSP_Retirement_Service_Plan_Name__c field 
     * @param : List<NSP_Account_Team__c> newAccTeam, Map<Id, NSP_Account_Team__c> oldMap
     * @createdDate : 11/30/2022
     * @Defect : STY-02108
-    * @return void                          
+    * @return void
     */
-    
     public static void updateAssetServiceRegion(List<NSP_Account_Team__c> newAccTeam, Map<Id, NSP_Account_Team__c> oldMap ){
         //Get Record Type Id
         Id woRecordTypeId = NSP_GenericRecordType.getRecordTypeId('Asset', NSP_ServiceConstants.WO_ASSET_RECORDTYPE );
@@ -491,23 +490,40 @@ NSP_WX_WA_Benefits_Specialist__c, and NSP_Retirement_Service_Plan_Name__c field 
         Map<Id, NSP_Account_Team__c> accountTeams = new  Map<Id, NSP_Account_Team__c>();
         //Filter record based on Insert or Update
         for(NSP_Account_Team__c accTeam : newAccTeam) {
-            if(oldMap == null && accTeam.NSP_Account__c != null || oldMap != null && accTeam.NSP_Role__c != oldMap.get(accTeam.Id).NSP_Role__c) {                    
-                 accIds.add(accTeam.NSP_Account__c);
-             }            
+            if ( oldMap == null
+                && accTeam.NSP_Account__c != null
+                || ( oldMap != null
+                    && (
+                        ( accTeam.NSP_Role__c != oldMap.get(accTeam.Id).NSP_Role__c )
+                        || ( accTeam.NSP_User__c != oldMap.get(accTeam.Id).NSP_User__c )
+                    )
+                )
+            )
+            {
+                accIds.add(accTeam.NSP_Account__c);
+            }
         }
         //Get Account Team's User Serice Region field for Insert case
-        if(!accIds.isEmpty()) {            
-            for(NSP_Account_Team__c accountTeam : [SELECT Id, NSP_User__r.NSP_Service_Region__c, NSP_Role__c , NSP_Account__c FROM NSP_Account_Team__c 
-                                                   WHERE Id =: newAccTeam AND NSP_User__c != null AND NSP_Role__c != null AND NSP_Role__c = 'Manager, HR Services']) {
+        if(!accIds.isEmpty()) {
+            for(NSP_Account_Team__c accountTeam : [
+                        SELECT Id , NSP_User__r.NSP_Service_Region__c , NSP_Role__c , NSP_Account__c
+                        FROM NSP_Account_Team__c 
+                        WHERE (
+                            Id =: newAccTeam
+                            AND NSP_User__c != null
+                            AND NSP_Role__c != null
+                            AND NSP_Role__c = 'Manager, HR Services'
+                        )
+                    ]
+                )
+            {
                 accountTeams.put(accountTeam.NSP_Account__c, accountTeam);
             }
         }
-        
         //Update Asset on Insert Or Update based on AccountTeams Map
         updateAssetRegion(accIds, woRecordTypeId, accountTeams);
-        
     }
-    
+
     /** 
     * @MethodName: updateAssetRegion
     * @Description: This method is used to update Asset Fields on after Insert

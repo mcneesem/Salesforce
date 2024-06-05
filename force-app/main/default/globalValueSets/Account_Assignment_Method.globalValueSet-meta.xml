@@ -6,6 +6,11 @@
         <label>Elective Available Assignment</label>
     </customValue>
     <customValue>
+        <fullName>Exclude</fullName>
+        <default>false</default>
+        <label>Exclude</label>
+    </customValue>
+    <customValue>
         <fullName>Marketing Generated</fullName>
         <default>false</default>
         <label>Marketing Generated</label>
