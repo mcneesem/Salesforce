@@ -13,7 +13,7 @@
                                 <criteria>
                                     <leftValue>{!Record.Name}</leftValue>
                                     <operator>EQUAL</operator>
-                                    <rightValue>Termination request form</rightValue>
+                                    <rightValue>Submit Termination Checklist</rightValue>
                                 </criteria>
                                 <criteria>
                                     <leftValue>{!Record.Name}</leftValue>
@@ -106,7 +106,7 @@
                                 <criteria>
                                     <leftValue>{!Record.Name}</leftValue>
                                     <operator>EQUAL</operator>
-                                    <rightValue>Complete termination analysis</rightValue>
+                                    <rightValue>Completion of Termination Analysis</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>

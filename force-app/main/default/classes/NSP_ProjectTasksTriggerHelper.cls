@@ -13,7 +13,7 @@ public class NSP_ProjectTasksTriggerHelper {
     private static final string TERMINATED= 'Terminated';
     private static final string RETURNED= 'Returned';
     private static final string INACTIVE= 'Inactive';
-    private static final string PRJ_TASK_NAME = 'Complete termination analysis';
+
     /**
     * Iterates throught the list of new pse__Project_Task__c and passes the required attributes to other methods.
     * @param projectTaskNewMap Map of New project. 
@@ -97,15 +97,23 @@ public class NSP_ProjectTasksTriggerHelper {
     public void afterInsertFilter(List<pse__Project_Task__c> listProjectTasks, Map<Id, pse__Project_Task__c> mapProjectTasks){
         List<pse__Project_Task__c> cobraProjectTaskList = new List<pse__Project_Task__c>();
         NSP_ProjectTask_Automation__mdt pta =  NSP_ProjectTask_Automation__mdt.getInstance(COBRA_MM);
-        List<ID> accountIdList = new List<ID>();    
-        for(pse__Project_Task__c pTask : listProjectTasks){
-            //Checking for COBRA Parent Task
-            if(pTask.Name==pta.NSP_Task_Name__c){
-                cobraProjectTaskList.add(pTask);
-            }
-            //Checking for Project Task Account
-            if (pTask.NSP_Account_Id__c != null && pTask.Name == PRJ_TASK_NAME){
-                accountIdList.add(pTask.NSP_Account_Id__c);
+        List<ID> accountIdList = new List<ID>(); 
+        List<string> peoTerminationTaskList = System.Label.PEO_Termination_Tasks.split(';');
+        String TERMINATIONANALYSIS = null;
+        if(peoTerminationTaskList != null && !peoTerminationTaskList.isEmpty()){
+            TERMINATIONANALYSIS = peoTerminationTaskList[1];
+        }
+        
+        if(listProjectTasks != null){
+            for(pse__Project_Task__c pTask : listProjectTasks){
+                //Checking for COBRA Parent Task
+                if(pTask.Name==pta.NSP_Task_Name__c){
+                    cobraProjectTaskList.add(pTask);
+                }
+                //Checking for Project Task Account
+                if (pTask.NSP_Account_Id__c != null && pTask.Name == TERMINATIONANALYSIS){
+                    accountIdList.add(pTask.NSP_Account_Id__c);
+                }
             }
         }
         if(cobraProjectTaskList.size() > 0){
@@ -331,202 +339,164 @@ public class NSP_ProjectTasksTriggerHelper {
         }     
     }
 
-    public void sendEmailToAccountTeamMembersIfTaskIsLetterReceived(List<pse__Project_Task__c> lProjectTasks, map<Id, pse__Project_Task__c> oldMap){
-        Id wORecordTypeId = Schema.SObjectType.Asset.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.WO_ASSET_RECORDTYPE).getRecordTypeId();
-        List<String> listOfToAddresses = new List<String>();
-        map<Id, Id> mapOfProjectTaskAndProject = new map<Id, Id>();
-        map<Id, Id> mapOfProjectTaskAndProject1 = new map<Id, Id>();
-        map<Id, Id> mapOfProjectAndAccount = new map<Id, Id>();
-        map<Id, pse__Project_Task__c> mapOfProjectAndAccountName = new map<Id, pse__Project_Task__c>();
-        List<Id> listOfAccountId = new List<Id>();
-        map<Id, Asset> woActiveList = new map<Id, Asset>();
-
-        map<Id, list<String>> mapOfAccountAndListOfAccountTeamMemberEmailAddress = new map<Id, list<String>>();
-        Map<Id, pse__Project_Task__c> projectTaskLetterMap = new Map<Id, pse__Project_Task__c>();
-        map<Id, list<NSP_Account_Team__c>> mapOfAccountPayrollMem = new map<Id, list<NSP_Account_Team__c>>();
-        List<NSP_Account_Team__c> listOfPayrollMem = new List<NSP_Account_Team__c>();
-        map<Id, list<NSP_Account_Team__c>> mapOfNotifyPayrollMem = new map<Id, list<NSP_Account_Team__c>>();
-        map<Id, Id> mapOfNotifyaccountMem = new map<Id,Id>();
-        List<NSP_Account_Team__c> listOfNotifyMem = new List<NSP_Account_Team__c>();
-
-        for(pse__Project_Task__c projectTask : lProjectTasks){
-            if(projectTask.pse__Status__c == 'Complete' 
-            && projectTask.pse__Status__c != oldMap.get(projectTask.id).pse__Status__c){
-                if(projectTask.name == 'Letter Received (Termination Letter)'){
-                    if(!mapOfProjectTaskAndProject.containsKey(projectTask.id)){
-                        mapOfProjectTaskAndProject.put(projectTask.id, projectTask.pse__Project__c);
-                    } 
-                    listOfAccountId.add(projectTask.NSP_AccountId__c);
-                    
-                }
-                if(projectTask.name == 'Notify ITA if term date is today'){
-                    if(!mapOfProjectTaskAndProject1.containsKey(projectTask.id)){
-                        mapOfProjectTaskAndProject1.put(projectTask.id, projectTask.pse__Project__c);
-                    }
-                }        
-            }    
-        }
-        //get the data for the email template. - Added by Sruthi
-        if(!mapOfProjectTaskAndProject.isEmpty() ){
-            for(pse__Project_Task__c projectTask : [SELECT Id, pse__Project__c, Name, pse__Project__r.pse__Account__r.Name,
-                                                    pse__Project__r.pse__Account__r.NSP_AIMS_Client__c,NSP_AccountId__c
-                                                    FROM pse__Project_Task__c 
-                                                    WHERE Id IN :mapOfProjectTaskAndProject.keySet()]){
-                //projectTaskWithTerminationMap.put(temination.NSP_Project_Task__c, temination); 
-                //mapOfProjectAndAccount.put(temination.NSP_Project_Task__c, temination.NSP_Project_Task__r.pse__Project__r.pse__Account__c);
-                if(!mapOfProjectAndAccount.containsKey(projectTask.id)){
-                    mapOfProjectAndAccount.put(projectTask.Id, projectTask.NSP_AccountId__c);                                           
-                } 
-                if(!projectTaskLetterMap.containsKey(projectTask.id)){
-                    projectTaskLetterMap.put(projectTask.Id, projectTask);                                           
-                }                                        
-            }
-        }
-        if(!listOfAccountId.isEmpty()){
-        for(Asset assetLi : [SELECT id,accountid,NSP_Reason_for_Term__c,NSP_Anticipated_Date_Of_Termination__c FROM Asset Where RecordTypeId =: wORecordTypeId AND Status= 'Active'AND accountid IN :listOfAccountId ]){
-        woActiveList.put(assetLi.accountid,assetLi);
-            }
-        }
-
-        if(!mapOfProjectTaskAndProject1.isEmpty()){
-            for(pse__Project_Task__c projectTask : [SELECT Id, pse__Project__c, Name, pse__Project__r.pse__Account__r.Name,
-                                                    pse__Project__r.pse__Account__r.NSP_AIMS_Client__c,NSP_AccountId__c
-                                                    FROM pse__Project_Task__c 
-                                                    WHERE Id IN :mapOfProjectTaskAndProject1.keySet()]){
-                if(!mapOfProjectAndAccountName.containsKey(projectTask.id)){
-                    mapOfProjectAndAccountName.put(projectTask.Id, projectTask);                                           
-                }
-                    if(!mapOfNotifyaccountMem.containsKey(projectTask.id)){
-                    mapOfNotifyaccountMem.put(projectTask.Id, projectTask.NSP_AccountId__c);
-                }
-            }
-        }
+    public void sendEmailToAccountTeamMembersIfTaskIsLetterReceived(List<pse__Project_Task__c> lProjectTasks, Map<Id, pse__Project_Task__c> oldMap) {  
+        Id wORecordTypeId = Schema.SObjectType.Asset.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.WO_ASSET_RECORDTYPE)?.getRecordTypeId();  
+        List<String> listOfToAddresses = new List<String>();  
+        Map<Id, Id> mapOfProjectTaskAndProject = new Map<Id, Id>();  
+        Map<Id, Id> mapOfProjectAndAccount = new Map<Id, Id>();  
+        List<Id> listOfAccountId = new List<Id>();  
+        Map<Id, Asset> woActiveList = new Map<Id, Asset>();  
+        Map<Id, List<String>> mapOfAccountAndListOfAccountTeamMemberEmailAddress = new Map<Id, List<String>>();  
+        Map<Id, pse__Project_Task__c> projectTaskLetterMap = new Map<Id, pse__Project_Task__c>();  
+        Map<Id, List<NSP_Account_Team__c>> mapOfAccountPayrollMem = new Map<Id, List<NSP_Account_Team__c>>();  
+        List<NSP_Account_Team__c> listOfPayrollMem = new List<NSP_Account_Team__c>();  
+        String PAYROLL_SPECIALIST = 'Payroll Specialist';  
+        List<String> peoTerminationTeamRoles = System.Label.PEO_Termination_Team_Roles.split(';');  
+        List<String> peoTerminationTaskList = System.Label.PEO_Termination_Tasks.split(';');  
+        String WRITTENTERMINATION = null;  
         
-        if(!mapOfProjectAndAccount.values().isEmpty() || !mapOfNotifyaccountMem.values().isEmpty() ){
-            for(NSP_Account_Team__c accTeamMember :  [SELECT Id, NSP_Role__c, NSP_Account__c, NSP_Email__c,NSP_First_Name__c,NSP_Last_Name__c,NSP_Work_Phone__c
-                                                    FROM NSP_Account_Team__c 
-                                                    WHERE (NSP_Account__c IN: mapOfProjectAndAccount.values() AND
-                                                    (NSP_Role__c = 'Business Performance Advisor' OR
-                                                    NSP_Role__c = 'Client Liaison' OR 
-                                                    NSP_Role__c = 'Manager,HR Services' OR 
-                                                    NSP_Role__c = 'Payroll Manager' OR 
-                                                    NSP_Role__c = 'Customer Success Specialist' OR
-                                                    NSP_Role__c = 'Payroll Specialist'
-                                                    )) OR (NSP_Account__c IN: mapOfNotifyaccountMem.values() AND
-                                                    NSP_Role__c = 'Payroll Specialist')]){
-                                                        
-                if(accTeamMember.NSP_Role__c !='Payroll Specialist' && mapOfProjectAndAccount.values().contains(accTeamMember.NSP_Account__c) ){
-                if(mapOfAccountAndListOfAccountTeamMemberEmailAddress.containsKey(accTeamMember.NSP_Account__c)){
-                    mapOfAccountAndListOfAccountTeamMemberEmailAddress.get(accTeamMember.NSP_Account__c).add(accTeamMember.NSP_Email__c);
-                } else{
-                    mapOfAccountAndListOfAccountTeamMemberEmailAddress.put(accTeamMember.NSP_Account__c, new list<String> {accTeamMember.NSP_Email__c});
-                }
-            }
-                Else if(accTeamMember.NSP_Role__c =='Payroll Specialist'&& mapOfProjectAndAccount.values().contains(accTeamMember.NSP_Account__c) ){  
-                if(mapOfAccountPayrollMem.containsKey(accTeamMember.NSP_Account__c)){
-                    mapOfAccountPayrollMem.get(accTeamMember.NSP_Account__c).add(accTeamMember);
-                } else{
-                    mapOfAccountPayrollMem.put(accTeamMember.NSP_Account__c, new list<NSP_Account_Team__c> {accTeamMember});
-        }
-                }
-                Else if(accTeamMember.NSP_Role__c =='Payroll Specialist'&& mapOfNotifyaccountMem.values().contains(accTeamMember.NSP_Account__c) ){
-                    if(mapOfNotifyPayrollMem.containsKey(accTeamMember.NSP_Account__c)){
-                    mapOfNotifyPayrollMem.get(accTeamMember.NSP_Account__c).add(accTeamMember);
-                } else{
-                    mapOfNotifyPayrollMem.put(accTeamMember.NSP_Account__c, new list<NSP_Account_Team__c> {accTeamMember});
-                }
-                }
-                
-            }
-        }
-        
-        
-        if(projectTaskLetterMap.size()>0 || (mapOfProjectTaskAndProject1.size()>0 && mapOfProjectAndAccountName.size()>0 ) ){
-            // Group terminationQueueEmailAddress = [SELECT Id, Email FROM Group WHERE Type = 'Queue' and DeveloperNAME = 'Termination_Team'];   
-
-        for(pse__Project_Task__c pTask : lProjectTasks){
-            if(projectTaskLetterMap.containsKey(pTask.id)&& woActiveList.containsKey(pTask.NSP_AccountId__c) && pTask.name == 'Letter Received (Termination Letter)'){
-                String emailNSP_Termination_Team = System.Label.NSP_Termination_Team;
-                listOfPayrollMem.addAll(mapOfAccountPayrollMem.get(mapOfProjectAndAccount.get(pTask.id)));
-                if(mapOfAccountAndListOfAccountTeamMemberEmailAddress.size()>0){
-                listOfToAddresses.addAll(mapOfAccountAndListOfAccountTeamMemberEmailAddress.get(mapOfProjectAndAccount.get(pTask.id)));
-                }
-                listOfToAddresses.add(emailNSP_Termination_Team);
-                letterRecievedEmail(projectTaskLetterMap.get(pTask.id).pse__Project__r.pse__Account__r.Name,
-                                    projectTaskLetterMap.get(pTask.id).pse__Project__r.pse__Account__r.NSP_AIMS_Client__c,
-                                    listOfToAddresses,listOfPayrollMem,
-                                    woActiveList.get(pTask.NSP_AccountId__c).NSP_Reason_for_Term__c,
-                                    woActiveList.get(pTask.NSP_AccountId__c).NSP_Anticipated_Date_Of_Termination__c);
-                
-            }if(mapOfProjectAndAccountName.containsKey(pTask.id) && mapOfProjectAndAccountName.get(pTask.id).Name == 'Notify ITA if term date is today'){
-                if(mapOfNotifyPayrollMem.size()>0){
-                    listOfNotifyMem.addAll(mapOfNotifyPayrollMem.get(mapOfNotifyaccountMem.get(pTask.id)));
-                }
-                notifyEmail(mapOfProjectAndAccountName.get(pTask.id).pse__Project__r.pse__Account__r.Name, mapOfProjectAndAccountName.get(pTask.id).pse__Project__r.pse__Account__r.NSP_AIMS_Client__c, listOfNotifyMem);
-            }
+        try{
+            if (peoTerminationTaskList != null && !peoTerminationTaskList.isEmpty()) {  
+                WRITTENTERMINATION = peoTerminationTaskList[0];  
+            }  
+            
+            if (lProjectTasks != null) {  
+                for (pse__Project_Task__c projectTask : lProjectTasks) {  
+                    if (projectTask != null && projectTask.pse__Status__c == 'Complete' && oldMap != null && oldMap.containsKey(projectTask.Id)  
+                        && projectTask.pse__Status__c != oldMap.get(projectTask.Id).pse__Status__c) {  
+                            if (projectTask.Name == WRITTENTERMINATION) {  
+                                if (!mapOfProjectTaskAndProject.containsKey(projectTask.Id)) {  
+                                    mapOfProjectTaskAndProject.put(projectTask.Id, projectTask.pse__Project__c);  
+                                }  
+                                if (projectTask.NSP_AccountId__c != null) {  
+                                    listOfAccountId.add(projectTask.NSP_AccountId__c);  
+                                }  
+                            }  
+                        }  
+                }  
+            }  
+            
+            if (!mapOfProjectTaskAndProject.isEmpty()) {  
+                for (pse__Project_Task__c projectTask : [ SELECT Id, pse__Project__c, Name, pse__Project__r.pse__Account__r.Name, pse__Project__r.pse__Account__r.NSP_AIMS_Client__c, NSP_AccountId__c 
+                                                         FROM pse__Project_Task__c  
+                                                         WHERE Id IN :mapOfProjectTaskAndProject.keySet()]) 
+                {  
+                    if (projectTask != null) {  
+                        if (!mapOfProjectAndAccount.containsKey(projectTask.Id)) {  
+                            mapOfProjectAndAccount.put(projectTask.Id, projectTask.NSP_AccountId__c);  
+                        }  
+                        if (!projectTaskLetterMap.containsKey(projectTask.Id)) {  
+                            projectTaskLetterMap.put(projectTask.Id, projectTask);  
+                        }  
+                    }  
+                }  
+            }  
+            
+            if (!listOfAccountId.isEmpty()) {  
+                for (Asset eachAsset : [SELECT Id, AccountId, NSP_Reason_for_Term__c, NSP_Anticipated_Date_Of_Termination__c 
+                                        FROM Asset 
+                                        WHERE RecordTypeId = :wORecordTypeId  
+                                        AND Status = 'Active'  
+                                        AND AccountId IN :listOfAccountId]) 
+                {  
+                    if (eachAsset != null && eachAsset.AccountId != null) {  
+                        woActiveList.put(eachAsset.AccountId, eachAsset);  
+                    }  
+                }  
+            }  
+            
+            if (!mapOfProjectAndAccount.values().isEmpty()) {  
+                for (NSP_Account_Team__c accTeamMember : [  
+                    SELECT Id, NSP_Role__c, NSP_Account__c, NSP_Email__c, NSP_First_Name__c, NSP_Last_Name__c, NSP_Work_Phone__c  
+                    FROM NSP_Account_Team__c  
+                    WHERE NSP_Account__c IN :mapOfProjectAndAccount.values()  
+                    AND NSP_Role__c IN :peoTerminationTeamRoles  
+                ]) {  
+                    if (accTeamMember != null && accTeamMember.NSP_Account__c != null) {  
+                        if (accTeamMember.NSP_Role__c != PAYROLL_SPECIALIST && mapOfProjectAndAccount.values().contains(accTeamMember.NSP_Account__c)) {  
+                            if (mapOfAccountAndListOfAccountTeamMemberEmailAddress.containsKey(accTeamMember.NSP_Account__c)) {  
+                                mapOfAccountAndListOfAccountTeamMemberEmailAddress.get(accTeamMember.NSP_Account__c).add(accTeamMember.NSP_Email__c);  
+                            } else {  
+                                mapOfAccountAndListOfAccountTeamMemberEmailAddress.put(accTeamMember.NSP_Account__c, new List<String>{accTeamMember.NSP_Email__c});  
+                            }  
+                        } else if (accTeamMember.NSP_Role__c == PAYROLL_SPECIALIST && mapOfProjectAndAccount.values().contains(accTeamMember.NSP_Account__c)) {  
+                            if (mapOfAccountPayrollMem.containsKey(accTeamMember.NSP_Account__c)) {  
+                                mapOfAccountPayrollMem.get(accTeamMember.NSP_Account__c).add(accTeamMember);  
+                            } else {  
+                                mapOfAccountPayrollMem.put(accTeamMember.NSP_Account__c, new List<NSP_Account_Team__c>{accTeamMember});  
+                            }  
+                        }  
+                    }  
+                }  
+            }  
+            
+            if (projectTaskLetterMap.size() > 0) {  
+                for (pse__Project_Task__c pTask : lProjectTasks) {  
+                    if (pTask != null && projectTaskLetterMap.containsKey(pTask.Id) && woActiveList.containsKey(pTask.NSP_AccountId__c) && pTask.Name == WRITTENTERMINATION) {  
+                        String emailNSP_Termination_Team = System.Label.NSP_Termination_Team;  
+                        listOfPayrollMem.addAll(mapOfAccountPayrollMem.get(mapOfProjectAndAccount.get(pTask.Id)));  
+                        if (mapOfAccountAndListOfAccountTeamMemberEmailAddress.size() > 0) {  
+                            listOfToAddresses.addAll(mapOfAccountAndListOfAccountTeamMemberEmailAddress.get(mapOfProjectAndAccount.get(pTask.Id)));  
+                        }  
+                        listOfToAddresses.add(emailNSP_Termination_Team);  
+                        letterRecievedEmail(  
+                            projectTaskLetterMap.get(pTask.Id).pse__Project__r.pse__Account__r.Name,  
+                            projectTaskLetterMap.get(pTask.Id).pse__Project__r.pse__Account__r.NSP_AIMS_Client__c,  
+                            listOfToAddresses,  
+                            listOfPayrollMem,  
+                            woActiveList.get(pTask.NSP_AccountId__c).NSP_Reason_for_Term__c,  
+                            woActiveList.get(pTask.NSP_AccountId__c).NSP_Anticipated_Date_Of_Termination__c  
+                        );  
+                    }  
+                }  
+            }  
+        } catch(Exception e){
+            NSP_ErrorLogHandler.logSaveException(
+                NSP_ProjectTasksTriggerHelper.class.getName() ,
+                'sendEmailToAccountTeamMembersIfTaskIsLetterReceived' ,
+                e.getMessage() + ' ~ ' + e.getStackTraceString()
+            );
         }
     }
-    }
-
+    
     //Letter Received email.
     public void letterRecievedEmail(String accountName, String accountAIMS, list<String> listOfToAddresses, List<NSP_Account_Team__c> listOfPayrollMem, String ReasonForTerm, Date TermDate){
-        String dtStr;
-        if(TermDate!= null){
-        dtStr = TermDate.format();
-        }
-        String subjectString = 'Termination letter received for '+accountName+'('+accountAIMS+')';
-        String mailBody = 'Hello Team,'+'<br/><br/>';
-        mailBody += accountName+'('+accountAIMS+')'+' submitted written notification of their intent to terminate their contract with Insperity. Below are the details of the termination:'+'<br/><br/>';
-        mailBody += 'Intended effective termination date: '+dtStr+'<br/>';
-        mailBody += 'Termination reason: '+ReasonForTerm+'<br/><br/>';
-        mailBody += 'Regards,'+'<br/>';
-        for(NSP_Account_Team__c payrollTeam : listOfPayrollMem){
-        mailBody += payrollTeam.NSP_First_Name__c+' '+payrollTeam.NSP_Last_Name__c+'<br/>';  // updated as part of STY-04147
-        mailBody += payrollTeam.NSP_Role__c+'<br/>';
-        mailBody += payrollTeam.NSP_Email__c+'<br/>';
-        mailBody += payrollTeam.NSP_Work_Phone__c+'<br/>';  
-        //mailBody += UserInfo.getFirstName()+' '+UserInfo.getLastName()+'<br/>';
-        //mailBody += UserInfo.getUserEmail();
-        }
-        Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
-        email.setToAddresses(listOfToAddresses);
-        email.setSubject(subjectString);
-        email.setHtmlBody(mailBody);
-        email.setSaveAsActivity(false);
-        email.setTargetObjectId(userinfo.getUserId());
-        if ( !System.Test.isRunningTest() ) {
-            NSP_ProjectTasksTriggerHelper.sendSingleEmailMessage( email );
+        try{	
+            String dtStr;
+            if(TermDate!= null){
+                dtStr = TermDate.format();
+            }
+            String subjectString = 'Termination letter received for '+accountName+'('+accountAIMS+')';
+            String mailBody = 'Hello Team,'+'<br/><br/>';
+            mailBody += accountName+'('+accountAIMS+')'+' submitted written notification of their intent to terminate their contract with Insperity. Below are the details of the termination:'+'<br/><br/>';
+            mailBody += 'Intended effective termination date: '+dtStr+'<br/>';
+            mailBody += 'Termination reason: '+ReasonForTerm+'<br/><br/>';
+            mailBody += 'Regards,'+'<br/>';
+            for(NSP_Account_Team__c payrollTeam : listOfPayrollMem){
+                mailBody += payrollTeam.NSP_First_Name__c+' '+payrollTeam.NSP_Last_Name__c+'<br/>';  // updated as part of STY-04147
+                mailBody += payrollTeam.NSP_Role__c+'<br/>';
+                mailBody += payrollTeam.NSP_Email__c+'<br/>';
+                mailBody += payrollTeam.NSP_Work_Phone__c+'<br/>';
+               
+            }
+            Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
+            email.setToAddresses(listOfToAddresses);
+            email.setSubject(subjectString);
+            email.setHtmlBody(mailBody);
+            email.setSaveAsActivity(false);
+            email.setTargetObjectId(userinfo.getUserId());
+            if ( !Test.isRunningTest() ) {
+                NSP_ProjectTasksTriggerHelper.sendSingleEmailMessage( email );
+            }
+        }catch(Exception e){
+            NSP_ErrorLogHandler.logSaveException(
+                NSP_ProjectTasksTriggerHelper.class.getName() ,
+                'letterRecievedEmail' ,
+                e.getMessage() + ' ~ ' + e.getStackTraceString()
+            );
         }
     }
 
-    //Notify email.
-    public void notifyEmail(String accountName, String accountAIMS, List<NSP_Account_Team__c> listOfNotifyMem){
-        String subjectString = 'Termination date is today for '+accountName+'('+accountAIMS+')'+' - do not disable access to ITA';
-        //string[] to = new string[] {'time.support@insperity.com'};
-        String[] to = new String[] {System.Label.NSP_ITA_Email_Address};
-        String mailBody = 'Hello Team,'+'<br/><br/>';
-        mailBody += accountName+'('+accountAIMS+')'+'  is terminating their contract with Insperity effective today, '+System.today().month()+'/'+System.today().day()+'/'+System.today().year()+'<br/><br/>';
-        mailBody += 'This client is an Insperity Time and Attendance client and will need to retain access to ITA in order to process their final payroll. Please do not disable this client’s access to ITA until their final payroll is processed.'+'<br/><br/>';
-        mailBody += 'Should you have any questions or concerns, please reach out to me.'+'<br/><br/>';
-        mailBody += 'Regards,'+'<br/>';
-        for(NSP_Account_Team__c notifyPayrollTeam : listOfNotifyMem){
-        mailBody += notifyPayrollTeam.NSP_First_Name__c+' '+notifyPayrollTeam.NSP_Last_Name__c+'<br/>';  //updated as part of STY-04147
-        mailBody += notifyPayrollTeam.NSP_Role__c+'<br/>';
-        mailBody += notifyPayrollTeam.NSP_Email__c+'<br/>';
-        mailBody += notifyPayrollTeam.NSP_Work_Phone__c+'<br/>';  
-        }
-        //mailBody += UserInfo.getFirstName()+' '+UserInfo.getLastName()+'<br/>';
-        //mailBody += UserInfo.getUserEmail();
-        Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
-        email.setToAddresses(to);
-        email.setSubject(subjectString);
-        email.setHtmlBody(mailBody);
-        email.setSaveAsActivity(false);
-        email.setTargetObjectId(userinfo.getUserId());
-        if ( !System.Test.isRunningTest() ) {
-            NSP_ProjectTasksTriggerHelper.sendSingleEmailMessage( email );
-        }
-    }
 
     /* Description : This method throws an error if Dependent Task is started
                     without completing Preceding Task
@@ -927,8 +897,16 @@ public class NSP_ProjectTasksTriggerHelper {
         Set<Id>wXWADataMigrationSubProject =new Set<Id>();
         Set<Id> goLiveProjectTaskIds = new Set<Id>();
         List<Id> accountIdList = new List<Id>();
+        List<string> peoTerminationTaskList = System.Label.PEO_Termination_Tasks.split(';');
+        String TERMINATIONANALYSIS = null;
+        if(peoTerminationTaskList != null && !peoTerminationTaskList.isEmpty()){
+            TERMINATIONANALYSIS = peoTerminationTaskList[1];
+        }
+        
+        if(mNewProjectTasks != null && !mNewProjectTasks.values().isEmpty()){
         for(pse__Project_Task__c oProjectTask : mNewProjectTasks.values()){
-            if (oProjectTask.Name == PRJ_TASK_NAME && oProjectTask.NSP_Account_Id__c != NULL &&oldMapProjecttasks.get(oProjectTask.Id).NSP_Account_Id__c != oProjectTask.NSP_Account_Id__c){
+            if (oProjectTask.Name == TERMINATIONANALYSIS && oProjectTask.NSP_Account_Id__c != NULL 
+                && oldMapProjecttasks != null && oldMapProjecttasks.containsKey(oProjectTask.Id) && oldMapProjecttasks.get(oProjectTask.Id).NSP_Account_Id__c != oProjectTask.NSP_Account_Id__c){
                 accountIdList.add(oProjectTask.NSP_Account_Id__c);
             }
             // FILTER COMPLETED PROJECTS
@@ -996,6 +974,7 @@ public class NSP_ProjectTasksTriggerHelper {
                 projectTaskidsChangedOwner.add(oProjectTask.Id);
             }
         }
+    }
         
         if(!hcmProjectSet.isEmpty() && !System.isFuture() && !System.isBatch()){
             createHCMCaseOnProjectTaskUpdate(hcmProjectSet);

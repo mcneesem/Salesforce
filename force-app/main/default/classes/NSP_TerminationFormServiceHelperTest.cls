@@ -34,9 +34,14 @@ public class NSP_TerminationFormServiceHelperTest {
         insert oProject;
         
         //Inserting Project Task
+        List<string> peoTerminationTaskList = System.Label.PEO_Termination_Tasks.split(';');
+        String TERMINATIONCHECKLIST = null;
+        if(peoTerminationTaskList != null && !peoTerminationTaskList.isEmpty()){
+            TERMINATIONCHECKLIST = peoTerminationTaskList[2];
+        }
         pse__Project_Task__c oProjectTask = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c(), 'NSP_TestDataFactory.ProjectTaskDefaults', false);
         oProjectTask.pse__Project__c = oProject.Id;
-        oProjectTask.Name = 'Termination request form';
+        oProjectTask.Name = TERMINATIONCHECKLIST;
         insert oProjectTask;
         
         //Client reinstate termination form record creation
@@ -66,13 +71,6 @@ public class NSP_TerminationFormServiceHelperTest {
         Test.startTest();
         update termForm;
         Test.stopTest();
-        System.assertEquals('142', termForm.NSP_Client__c);
-        
-        
+        System.assertEquals('142', termForm.NSP_Client__c);   
     }
-    
-    
-    
-    
-
 }
