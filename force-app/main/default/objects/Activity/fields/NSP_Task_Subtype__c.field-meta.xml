@@ -336,11 +336,6 @@
         <valueSettings>
             <controllingFieldValue>Core Sales</controllingFieldValue>
             <controllingFieldValue>Mid Market</controllingFieldValue>
-            <valueName>Data Analysis Email</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Core Sales</controllingFieldValue>
-            <controllingFieldValue>Mid Market</controllingFieldValue>
             <valueName>Demo Requested</valueName>
         </valueSettings>
         <valueSettings>
@@ -352,11 +347,6 @@
             <controllingFieldValue>Core Sales</controllingFieldValue>
             <controllingFieldValue>Mid Market</controllingFieldValue>
             <valueName>Gift Drop</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Core Sales</controllingFieldValue>
-            <controllingFieldValue>Mid Market</controllingFieldValue>
-            <valueName>Information Request Sent</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Core Sales</controllingFieldValue>
@@ -381,22 +371,7 @@
         <valueSettings>
             <controllingFieldValue>Core Sales</controllingFieldValue>
             <controllingFieldValue>Mid Market</controllingFieldValue>
-            <valueName>Safety Ordered</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Core Sales</controllingFieldValue>
-            <controllingFieldValue>Mid Market</controllingFieldValue>
             <valueName>Send Docs for Signature</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Core Sales</controllingFieldValue>
-            <controllingFieldValue>Mid Market</controllingFieldValue>
-            <valueName>Send MM MPC</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Core Sales</controllingFieldValue>
-            <controllingFieldValue>Mid Market</controllingFieldValue>
-            <valueName>Sent to P &amp; R</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Core Sales</controllingFieldValue>
@@ -457,6 +432,26 @@
         <valueSettings>
             <controllingFieldValue>BPS</controllingFieldValue>
             <valueName>Transition Meeting</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Mid Market</controllingFieldValue>
+            <valueName>Data Analysis Email</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Mid Market</controllingFieldValue>
+            <valueName>Information Request Sent</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Mid Market</controllingFieldValue>
+            <valueName>Safety Ordered</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Mid Market</controllingFieldValue>
+            <valueName>Send MM MPC</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Mid Market</controllingFieldValue>
+            <valueName>Sent to P &amp; R</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Eloqua</controllingFieldValue>

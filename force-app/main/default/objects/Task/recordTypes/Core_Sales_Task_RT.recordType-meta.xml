@@ -2639,10 +2639,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Data Analysis Email</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Demo Requested</fullName>
             <default>false</default>
         </values>
@@ -2692,10 +2688,6 @@
         </values>
         <values>
             <fullName>InMail</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Information Request Sent</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2751,19 +2743,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Safety Ordered</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Send Docs for Signature</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Send MM MPC</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Sent to P %26 R</fullName>
             <default>false</default>
         </values>
         <values>
