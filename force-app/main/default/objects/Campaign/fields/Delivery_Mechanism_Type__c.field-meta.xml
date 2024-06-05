@@ -107,6 +107,11 @@
                 <label>Event - Webinar</label>
             </value>
             <value>
+                <fullName>External Referral</fullName>
+                <default>false</default>
+                <label>External Referral</label>
+            </value>
+            <value>
                 <fullName>Insperity Blog</fullName>
                 <default>false</default>
                 <label>Insperity Blog</label>
@@ -307,6 +312,10 @@
         <valueSettings>
             <controllingFieldValue>Child: Delivery Mechanism Type</controllingFieldValue>
             <valueName>Event - Webinar</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Child: Delivery Mechanism Type</controllingFieldValue>
+            <valueName>External Referral</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Child: Delivery Mechanism Type</controllingFieldValue>
