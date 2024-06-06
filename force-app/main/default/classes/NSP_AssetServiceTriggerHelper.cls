@@ -348,8 +348,8 @@ public class NSP_AssetServiceTriggerHelper {
         List<Id> AccountIDNull = new List<Id>();
         Set<Id> assetPayrollSet = new Set<Id>();
         // check if atleast one field in WO asset is updated as per condition
-        for(Asset asset : newList)
-        {   Asset oldMapvalue =  oldMap.get(asset.id);
+        for(Asset asset : newList) {
+            Asset oldMapvalue =  oldMap.get(asset.id);
             // added as a part of DF-03798
         if(asset.AccountId!=null &&
             (asset.RecordTypeId == WOAssetRecordTypeId || asset.RecordTypeId==wxWaAssetRecordTypeId) &&
@@ -389,17 +389,19 @@ public class NSP_AssetServiceTriggerHelper {
                 isValid = true;
                 WOAssetMap.put(asset.AccountId,asset );
             }
-         // check if  WO asset is made INACTIVE
-         NSP_Trigger_Switch__c triggerSwitch =  NSP_Trigger_Switch__c.getInstance(UserInfo.getUserId());
-         if(asset.RecordTypeId == WOAssetRecordTypeId &&
-            asset.NSP_Account_Status__c != oldMapvalue.NSP_Account_Status__c &&
-            asset.NSP_Account_Status__c != NSP_ServiceConstants.ASSET_ACTIVE_STATUS &&
-            asset.NSP_Client__c != null && 
-            triggerSwitch != null && 
-            triggerSwitch.Null_BPS_assets__c ){
+            // check if  WO asset is made INACTIVE
+            NSP_Trigger_Switch__c triggerSwitch =  NSP_Trigger_Switch__c.getInstance(UserInfo.getUserId());
+            if ( asset.RecordTypeId == WOAssetRecordTypeId
+                && asset.NSP_Account_Status__c != oldMapvalue.NSP_Account_Status__c
+                && asset.NSP_Account_Status__c != NSP_ServiceConstants.ASSET_ACTIVE_STATUS
+                && asset.NSP_Client__c != null
+                && triggerSwitch != null
+                && triggerSwitch.Null_BPS_assets__c
+                )
+            {
                 // check if  WO asset is made INACTIVE
                 isNull = true;
-                AccountIDNull.add(asset.AccountId );
+                AccountIDNull.add( asset.AccountId );
             }
         }
 
