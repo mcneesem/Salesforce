@@ -2,8 +2,8 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>60.0</apiVersion>
     <environments>Default</environments>
-    <interviewLabel>Messaging Session To Update ITS Related Case {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Messaging Session To Update ITS Related Case</label>
+    <interviewLabel>Messaging Session Created Async Case Ownership {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Messaging Session Created Async Case Ownership</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -26,9 +26,6 @@
     <start>
         <locationX>50</locationX>
         <locationY>0</locationY>
-        <connector>
-            <targetReference>Update_Case</targetReference>
-        </connector>
         <filterLogic>1 AND (  2 OR 3 OR 4 OR 5 OR 6  )</filterLogic>
         <filters>
             <field>OwnerId</field>
@@ -40,9 +37,6 @@
         <filters>
             <field>OwnerId</field>
             <operator>EqualTo</operator>
-            <value>
-                <stringValue>00G4x000001fXXPEA2</stringValue>
-            </value>
         </filters>
         <filters>
             <field>OwnerId</field>
@@ -74,17 +68,23 @@
         </filters>
         <object>MessagingSession</object>
         <recordTriggerType>Create</recordTriggerType>
+        <scheduledPaths>
+            <connector>
+                <targetReference>Copy_Messaging_Session_Owner_To_Case_Owner</targetReference>
+            </connector>
+            <pathType>AsyncAfterCommit</pathType>
+        </scheduledPaths>
         <triggerType>RecordAfterSave</triggerType>
     </start>
     <status>Draft</status>
     <subflows>
-        <name>Update_Case</name>
-        <label>Update Case</label>
-        <locationX>176</locationX>
-        <locationY>323</locationY>
-        <flowName>Update_Case_Owner</flowName>
+        <name>Copy_Messaging_Session_Owner_To_Case_Owner</name>
+        <label>Copy Messaging Session Owner To Case Owner</label>
+        <locationX>308</locationX>
+        <locationY>276</locationY>
+        <flowName>Copy_Messaging_Session_Owner_To_Case_Owner</flowName>
         <inputAssignments>
-            <name>messagingSessionCase</name>
+            <name>messagingSessionRecord</name>
             <value>
                 <elementReference>$Record</elementReference>
             </value>
