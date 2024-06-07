@@ -2877,9 +2877,9 @@ public class NSP_Implprofile_ServiceHelperUpdate {
         List<NSP_Implementation_Profile_Automation__c> ipAutomationRecords = new List<NSP_Implementation_Profile_Automation__c>();
         if(ipRecordsByAutomation != null){
             for(Id ipRecId : ipRecordsByAutomation.get(DATA_VERIFICATION)){
-                if(newIPs != null && newIPs.containsKey(ipRecId)) {
+                if(newIPs != null) {
                     Implementation_Profile__c ipRec = newIPs.get(ipRecId);
-                    if(ipRec != null && data.containsKey(PROJECT_IDENTIFIER)) {
+                    if(ipRec != null) {
                         if((isRerun || ipRec.NSP_Form_Completed__c) && !isSaveForm){
                             pse__Proj__c proj = (pse__Proj__c) data.get(PROJECT_IDENTIFIER).get(ipRec.NSP_Project__c);
                             if(proj != null){
@@ -2899,37 +2899,37 @@ public class NSP_Implprofile_ServiceHelperUpdate {
                                 eachProjecttask.NSP_Sub_Category__c= projectTaskName;
                                 eachProjecttask.Name= projectTaskName;
                                 eachProjecttask.pse__Order__c=93;
-                                if(data.containsKey(IMPL_PROFILE_IDENTIFIER)) {
-                                    Implementation_Profile__c ipwithValue=(Implementation_Profile__c) data.get(IMPL_PROFILE_IDENTIFIER).get(ipRecId);
-                                    
-                                    if(ipwithValue != null){
-                                        if(ipwithValue.NSP_Payroll_Specialist__c!=null && ipwithValue.NSP_Payroll_Specialist__r.pse__Salesforce_User__c!=null){
-                                            eachProjecttask.OwnerId=ipwithValue.NSP_Payroll_Specialist__r.pse__Salesforce_User__c;
-                                        }
-                                        if(ipwithValue.Account__c!=null && ipwithValue.Account__r.Name!=null){
-                                            eachProjecttask.NSP_Implementation_Profile_Account__c=ipwithValue.Account__r.Name;
-                                        }
-                                        if(ipwithValue.Account__c!=null && ipwithValue.Account__r.Id!=null){
-                                            eachProjecttask.NSP_Implementation_Account_Id__c=ipwithValue.Account__r.Id;
-                                        }
-                                        DateTime now = DateTime.now(); 
-                                        Integer hour = now.hour();
-                                        Integer minute = now.minute();
-                                        Integer second = now.second();
-                                        if(ipwithValue.First_Pay_Date__c != null){
-                                            eachProjecttask.pse__Start_Date_Time__c = DateTime.now();
-                                            DateTime endDate = DateTime.newInstance(
-                                                ipwithValue.First_Pay_Date__c.year() ,
-                                                ipwithValue.First_Pay_Date__c.month() ,
-                                                ipwithValue.First_Pay_Date__c.day() ,
-                                                hour ,
-                                                minute ,
-                                                second
-                                            );
-                                            eachProjecttask.pse__End_Date_Time__c = endDate.addDays(-7);
-                                        }
+                                
+                                Implementation_Profile__c ipwithValue=(Implementation_Profile__c) data.get(IMPL_PROFILE_IDENTIFIER).get(ipRecId);
+                                
+                                if(ipwithValue != null){
+                                    if(ipwithValue.NSP_Payroll_Specialist__c!=null && ipwithValue.NSP_Payroll_Specialist__r.pse__Salesforce_User__c!=null){
+                                        eachProjecttask.OwnerId=ipwithValue.NSP_Payroll_Specialist__r.pse__Salesforce_User__c;
+                                    }
+                                    if(ipwithValue.Account__c!=null && ipwithValue.Account__r.Name!=null){
+                                        eachProjecttask.NSP_Implementation_Profile_Account__c=ipwithValue.Account__r.Name;
+                                    }
+                                    if(ipwithValue.Account__c!=null && ipwithValue.Account__r.Id!=null){
+                                        eachProjecttask.NSP_Implementation_Account_Id__c=ipwithValue.Account__r.Id;
+                                    }
+                                    DateTime now = DateTime.now(); 
+                                    Integer hour = now.hour();
+                                    Integer minute = now.minute();
+                                    Integer second = now.second();
+                                    if(ipwithValue.First_Pay_Date__c != null){
+                                        eachProjecttask.pse__Start_Date_Time__c = DateTime.now();
+                                        DateTime endDate = DateTime.newInstance(
+                                            ipwithValue.First_Pay_Date__c.year() ,
+                                            ipwithValue.First_Pay_Date__c.month() ,
+                                            ipwithValue.First_Pay_Date__c.day() ,
+                                            hour ,
+                                            minute ,
+                                            second
+                                        );
+                                        eachProjecttask.pse__End_Date_Time__c = endDate.addDays(-7);
                                     }
                                 }
+                                
                                 //eachProjecttask.pse__Long_Description__c = System.label.ProjectTaskLongDescription;
                                 eachProjecttask.pse__Milestone__c=milestoneId;
                                 projectTaskList.add(eachProjecttask);
