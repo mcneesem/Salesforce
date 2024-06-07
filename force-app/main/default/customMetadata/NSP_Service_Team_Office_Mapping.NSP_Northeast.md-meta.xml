@@ -4,7 +4,11 @@
     <protected>false</protected>
     <values>
         <field>NSP_Sales_Offices__c</field>
-        <value xsi:type="xsd:string">3300 New York 1
+        <value xsi:type="xsd:string">801 Delaware 1
+2100 Maryland 1
+2101 Maryland 2
+4701 Norfolk
+3300 New York 1
 3301 New York 2
 3302 New York 3
 3303 New York 4
@@ -17,23 +21,16 @@
 2201 Boston 2
 2202 Boston 3
 2203 Boston 4
+3921 Pittsburgh 1
 3901 Philadelphia 1
-3902 Philadelphia 2
-2100 Maryland 1
-2101 Maryland 2
-0701 Stamford 1
+3902 Philadelp...
 4001 Providence 1
-4701 Norfolk 1
-3601 Columbus 1
-2602 St. Louis 2
-1701 Kansas City 1
-1702 Kansas City 2
-0801 Delaware 1
-0902 Washington DC 2
-0903 Washington DC 3</value>
+0701 Stamford
+902 Washington DC 2
+903 Washington DC 3</value>
     </values>
     <values>
         <field>NSP_Service_Team_Email__c</field>
-        <value xsi:type="xsd:string">northeastservice.notification@insperity.com.invalid</value>
+        <value xsi:type="xsd:string">northeastservice.notification@insperity.com</value>
     </values>
 </CustomMetadata>
