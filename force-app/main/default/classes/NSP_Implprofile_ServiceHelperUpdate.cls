@@ -418,11 +418,11 @@ public class NSP_Implprofile_ServiceHelperUpdate {
         }
     } 
 
-	private void checkDataVerification(Implementation_Profile__c newRec, Implementation_Profile__c existingRec){
+    private void checkDataVerification(Implementation_Profile__c newRec, Implementation_Profile__c existingRec){
         if ( newRec != null ) {
             if( newRec.RecordTypeId == ipFSORecordTypeId
                 && newRec.Does_this_client_have_an_AWW__c == NSP_ServiceConstants.YES
-               && newRec.First_Pay_Date__c != null
+                && newRec.First_Pay_Date__c != null
                 )
             {
                 if ( existingRec == null
@@ -435,6 +435,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
             }
         }
     }
+
     private  void checkPermierPerfomance(Implementation_Profile__c newRec, Implementation_Profile__c existingRec){
         if( newRec.RecordTypeId != ipFSORecordTypeId || newRec.Client_Implementing_Premier_Performance__c == null 
            || newRec.Client_Implementing_Premier_Performance__c != NSP_ServiceConstants.YES) {
@@ -2929,8 +2930,6 @@ public class NSP_Implprofile_ServiceHelperUpdate {
                                         eachProjecttask.pse__End_Date_Time__c = endDate.addDays(-7);
                                     }
                                 }
-                                
-                                //eachProjecttask.pse__Long_Description__c = System.label.ProjectTaskLongDescription;
                                 eachProjecttask.pse__Milestone__c=milestoneId;
                                 projectTaskList.add(eachProjecttask);
                                 ipAutomationRecords.add(
@@ -2953,7 +2952,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
         //check for existing Automation record and store the new Automation records
         getnewAutomationListtoInsert(ipAutomationRecords,recToInsert,recToUpdate);
     }
-    
+
      public  void createSubtaskforEnrollment(){
         List<pse__Project_Task__c> projectTaskList = new List<pse__Project_Task__c>();
         List<pse__Project_Task__c> taskList = new List<pse__Project_Task__c>  (); 
