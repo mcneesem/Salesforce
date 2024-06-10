@@ -100,7 +100,7 @@ public class NSP_ProjectTasksTriggerHelper {
         List<ID> accountIdList = new List<ID>(); 
         List<string> peoTerminationTaskList = System.Label.PEO_Termination_Tasks.split(';');
         String TERMINATIONANALYSIS = null;
-        if(peoTerminationTaskList != null && !peoTerminationTaskList.isEmpty()){
+        if(peoTerminationTaskList != null && !peoTerminationTaskList.isEmpty() && peoTerminationTaskList.size() >= 2){
             TERMINATIONANALYSIS = peoTerminationTaskList[1];
         }
         
@@ -340,7 +340,7 @@ public class NSP_ProjectTasksTriggerHelper {
     }
 
     public void sendEmailToAccountTeamMembersIfTaskIsLetterReceived(List<pse__Project_Task__c> lProjectTasks, Map<Id, pse__Project_Task__c> oldMap) {  
-        Id wORecordTypeId = Schema.SObjectType.Asset.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.WO_ASSET_RECORDTYPE)?.getRecordTypeId();  
+        Id wORecordTypeId = Schema.SObjectType.Asset.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.WO_ASSET_RECORDTYPE)?.getRecordTypeId(); 
         List<String> listOfToAddresses = new List<String>();  
         Map<Id, Id> mapOfProjectTaskAndProject = new Map<Id, Id>();  
         Map<Id, Id> mapOfProjectAndAccount = new Map<Id, Id>();  
@@ -356,7 +356,7 @@ public class NSP_ProjectTasksTriggerHelper {
         String WRITTENTERMINATION = null;  
         
         try{
-            if (peoTerminationTaskList != null && !peoTerminationTaskList.isEmpty()) {  
+            if (peoTerminationTaskList != null && !peoTerminationTaskList.isEmpty() && peoTerminationTaskList.size() >=1) {  
                 WRITTENTERMINATION = peoTerminationTaskList[0];  
             }  
             
@@ -413,19 +413,25 @@ public class NSP_ProjectTasksTriggerHelper {
                     AND NSP_Role__c IN :peoTerminationTeamRoles  
                 ]) {  
                     if (accTeamMember != null && accTeamMember.NSP_Account__c != null) {  
-                        if (accTeamMember.NSP_Role__c != PAYROLL_SPECIALIST && mapOfProjectAndAccount.values().contains(accTeamMember.NSP_Account__c)) {  
-                            if (mapOfAccountAndListOfAccountTeamMemberEmailAddress.containsKey(accTeamMember.NSP_Account__c)) {  
-                                mapOfAccountAndListOfAccountTeamMemberEmailAddress.get(accTeamMember.NSP_Account__c).add(accTeamMember.NSP_Email__c);  
-                            } else {  
-                                mapOfAccountAndListOfAccountTeamMemberEmailAddress.put(accTeamMember.NSP_Account__c, new List<String>{accTeamMember.NSP_Email__c});  
-                            }  
-                        } else if (accTeamMember.NSP_Role__c == PAYROLL_SPECIALIST && mapOfProjectAndAccount.values().contains(accTeamMember.NSP_Account__c)) {  
-                            if (mapOfAccountPayrollMem.containsKey(accTeamMember.NSP_Account__c)) {  
-                                mapOfAccountPayrollMem.get(accTeamMember.NSP_Account__c).add(accTeamMember);  
-                            } else {  
-                                mapOfAccountPayrollMem.put(accTeamMember.NSP_Account__c, new List<NSP_Account_Team__c>{accTeamMember});  
-                            }  
-                        }  
+                        if ( mapOfProjectAndAccount.values().contains( accTeamMember.NSP_Account__c ) ) {
+                            if ( accTeamMember.NSP_Role__c == PAYROLL_SPECIALIST ) {
+                                if ( !mapOfAccountPayrollMem.containsKey( accTeamMember.NSP_Account__c ) ) {
+                                    mapOfAccountPayrollMem.put(
+                                        accTeamMember.NSP_Account__c ,
+                                        new List<NSP_Account_Team__c>()
+                                    );
+                                }
+                                mapOfAccountPayrollMem.get( accTeamMember.NSP_Account__c ).add( accTeamMember );
+                            } else {
+                                if ( !mapOfAccountAndListOfAccountTeamMemberEmailAddress.containsKey( accTeamMember.NSP_Account__c ) ) {
+                                    mapOfAccountAndListOfAccountTeamMemberEmailAddress.put(
+                                        accTeamMember.NSP_Account__c ,
+                                        new List<String>()
+                                    );
+                                }
+                                mapOfAccountAndListOfAccountTeamMemberEmailAddress.get( accTeamMember.NSP_Account__c ).add( accTeamMember.NSP_Email__c );  
+                            }
+                        } 
                     }  
                 }  
             }  
@@ -477,7 +483,6 @@ public class NSP_ProjectTasksTriggerHelper {
                 mailBody += payrollTeam.NSP_Role__c+'<br/>';
                 mailBody += payrollTeam.NSP_Email__c+'<br/>';
                 mailBody += payrollTeam.NSP_Work_Phone__c+'<br/>';
-               
             }
             Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
             email.setToAddresses(listOfToAddresses);
@@ -899,7 +904,7 @@ public class NSP_ProjectTasksTriggerHelper {
         List<Id> accountIdList = new List<Id>();
         List<string> peoTerminationTaskList = System.Label.PEO_Termination_Tasks.split(';');
         String TERMINATIONANALYSIS = null;
-        if(peoTerminationTaskList != null && !peoTerminationTaskList.isEmpty()){
+        if(peoTerminationTaskList != null && !peoTerminationTaskList.isEmpty() && peoTerminationTaskList.size() >= 2){
             TERMINATIONANALYSIS = peoTerminationTaskList[1];
         }
         
