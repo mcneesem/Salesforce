@@ -37,6 +37,9 @@
         <filters>
             <field>OwnerId</field>
             <operator>EqualTo</operator>
+            <value>
+                <stringValue>00G4x000001fXXPEA2</stringValue>
+            </value>
         </filters>
         <filters>
             <field>OwnerId</field>
