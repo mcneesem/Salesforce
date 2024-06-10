@@ -25,7 +25,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Affiliate - Paid - Centerfield</fullName>
+            <fullName>6Sense - 6QA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Affiliate - Paid</fullName>
             <default>false</default>
         </values>
         <values>
@@ -38,10 +42,6 @@
         </values>
         <values>
             <fullName>Corporate Employee Referral</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Delivery Mechanisms</fullName>
             <default>false</default>
         </values>
         <values>
@@ -86,6 +86,10 @@
         </values>
         <values>
             <fullName>Email</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Event - Relationship Marketing</fullName>
             <default>false</default>
         </values>
         <values>
@@ -166,6 +170,10 @@
         </values>
         <values>
             <fullName>Social - Organic - Meta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Social - Organic - X</fullName>
             <default>false</default>
         </values>
         <values>
