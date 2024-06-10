@@ -138,7 +138,7 @@
             <field>Name</field>
             <operator>EqualTo</operator>
             <value>
-                <stringValue>Complete termination analysis</stringValue>
+                <stringValue>Completion of termination analysis</stringValue>
             </value>
         </filters>
         <filters>
