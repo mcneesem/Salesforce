@@ -7,7 +7,7 @@
     <relationshipLabel>RET-Client Sub Plan History</relationshipLabel>
     <relationshipName>Client_Sub_Plan_History</relationshipName>
     <relationshipOrder>0</relationshipOrder>
-    <reparentableMasterDetail>false</reparentableMasterDetail>
+    <reparentableMasterDetail>true</reparentableMasterDetail>
     <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>MasterDetail</type>
