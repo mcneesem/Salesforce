@@ -152,7 +152,7 @@ public class NSP_TerminationFormTriggerHelper {
             for(Asset otempAsset : lAssets){
                 Decimal uniqueActiveEmp = 0;
                 if ( otempAsset.NSP_Unique_Active_Employee__c != null ) {
-                    uniqueActiveEmp = otempAsset.NSP_Unique_Active_Employee__c
+                    uniqueActiveEmp = otempAsset.NSP_Unique_Active_Employee__c;
                 }
                 mAccountToAssetEmployees.put(otempAsset.AccountId,uniqueActiveEmp);
                 if(otempAsset.NSP_Client__c != null){
@@ -264,7 +264,7 @@ public class NSP_TerminationFormTriggerHelper {
                             oTerminationForm.NSP_Segment_Type__c = clientSegmentAsset.get(accountId);
                         }
                         if (accountSubClientsMap != null && accountSubClientsMap.containsKey(accountId)){
-                            NSP_Sub_Client__c sub = accountSubClientsMap.get(accountId);
+                            NSP_Sub_Client__c accountSubClient = accountSubClientsMap.get(accountId);
                             if ( accountSubClient != null ) {
                                 oTerminationForm.NSP_Renewal_Date__c = accountSubClient.NSP_Renewal_Date__c;
                                 oTerminationForm.NSP_CSA_Effective_Date__c = accountSubClient.NSP_Original_Contract_Date__c;
