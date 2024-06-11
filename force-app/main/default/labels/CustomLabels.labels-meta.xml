@@ -43,20 +43,6 @@
         <value>Missing Custom Permission: Allow Delete Leads</value>
     </labels>
     <labels>
-        <fullName>PEO_Termination_Team_Roles</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>PEO Termination Team Roles</shortDescription>
-        <value>Business Performance Advisor;Client Liaison;Manager,HR Services;Payroll Manager;Customer Success Specialist;Payroll Specialist</value>
-    </labels>
-    <labels>
-        <fullName>PEO_Termination_Tasks</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>PEO Termination Tasks</shortDescription>
-        <value>Attach Written Termination Email or Letter Upon Receipt;Completion of Termination Analysis;Submit Termination Checklist</value>
-    </labels>
-    <labels>
         <fullName>Client_Integra_Responses_smartsheet</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -6040,6 +6026,20 @@ Climate Plus: https://nexus.insperity.com/groups/38605/posts/3272612-climate-plu
         <protected>false</protected>
         <shortDescription>PDSSyncedMessage</shortDescription>
         <value>Please wait while we retrieve AIMS and Salesforce data for you.</value>
+    </labels>
+    <labels>
+        <fullName>PEO_Termination_Tasks</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PEO Termination Tasks</shortDescription>
+        <value>Attach Written Termination Email or Letter Upon Receipt;Completion of Termination Analysis;Submit Termination Checklist</value>
+    </labels>
+    <labels>
+        <fullName>PEO_Termination_Team_Roles</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PEO Termination Team Roles</shortDescription>
+        <value>Business Performance Advisor;Client Liaison;Manager,HR Services;Payroll Manager;Customer Success Specialist;Payroll Specialist</value>
     </labels>
     <labels>
         <fullName>Payroll_submitted_frm_multiple_contacts</fullName>
