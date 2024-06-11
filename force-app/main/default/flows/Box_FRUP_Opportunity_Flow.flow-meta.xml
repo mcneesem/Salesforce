@@ -250,7 +250,7 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <name>triggeringFlow</name>
+            <name>faultFlow</name>
             <value>
                 <stringValue>Box_FRUP_Opportunity_Flow</stringValue>
             </value>

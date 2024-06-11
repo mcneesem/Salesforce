@@ -217,7 +217,7 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <name>triggeringFlow</name>
+            <name>faultFlow</name>
             <value>
                 <stringValue>Box_Create_Folder_and_Collabs_Flow</stringValue>
             </value>

@@ -94,7 +94,7 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <name>triggeringFlow</name>
+            <name>faultFlow</name>
             <value>
                 <stringValue>Box_File_Sub_Folder_Creation</stringValue>
             </value>
