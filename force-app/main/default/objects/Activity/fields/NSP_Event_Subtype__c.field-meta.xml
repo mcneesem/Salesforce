@@ -190,11 +190,6 @@
         <valueSettings>
             <controllingFieldValue>Core Sales</controllingFieldValue>
             <controllingFieldValue>Mid Market</controllingFieldValue>
-            <valueName>Data Collection Meeting</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Core Sales</controllingFieldValue>
-            <controllingFieldValue>Mid Market</controllingFieldValue>
             <valueName>Demo</valueName>
         </valueSettings>
         <valueSettings>
@@ -225,12 +220,15 @@
         <valueSettings>
             <controllingFieldValue>Core Sales</controllingFieldValue>
             <controllingFieldValue>Mid Market</controllingFieldValue>
-            <valueName>Safety Meeting</valueName>
+            <valueName>WO Proposal</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Core Sales</controllingFieldValue>
             <controllingFieldValue>Mid Market</controllingFieldValue>
-            <valueName>WO Proposal</valueName>
+            <valueName>Data Collection Meeting</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Mid Market</controllingFieldValue>
+            <valueName>Safety Meeting</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>
