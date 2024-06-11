@@ -9,7 +9,7 @@ Modification Log     :
 * Developer                   Date                   Description                                     
 * -------------------------------------------------------------------------------------------------  
 
-*	Tejas           October 10, 2021          First Iteration
+* Tejas           October 10, 2021          First Iteration
 * Harsha Khiroya  Feb 25, 2021              DF-01321
 ***************************************************************************************************/
 
@@ -179,7 +179,7 @@ public class NSP_LeadTriggerHelper {
             // add 12 hours to time value if value is 12 AM- DF-01502
             if (leadNewMap.get(leadId).NSP_DC_SetTime__c != leadOldMap.get(leadId).NSP_DC_SetTime__c && leadNewMap.get(leadId).NSP_DC_SetTime__c == Time.newInstance(0,0,0,0)) {
                 leadNewMap.get(leadId).NSP_DC_SetTime__c += Integer.valueOf(System.Label.NSP_12_hours_Milliseconds);
-			}  
+            }  
             /* Added as part of DF-01301 */
             
             /* As part of DF-00998 comments
@@ -769,7 +769,7 @@ if ((leadNewMap.get(leadId).NSP_Lead_Routing__c == true &&
             acrObject.ContactId = leadObject.NSP_Referred_By_COI__c;
             acrObject.Roles = leadObject.NSP_Referral_Source__c;
             acrObject.NSP_isReferral__c = true;
-			acrObject.NSP_Nonprofit_Organization_Name__c = leadObject.NSP_Nonprofit_Organization_Name__c;
+            acrObject.NSP_Nonprofit_Organization_Name__c = leadObject.NSP_Nonprofit_Organization_Name__c;
             acrObject.NSP_Nonprofit_Organization_Tax_Id__c = leadObject.NSP_Nonprofit_Organization_Tax_Id__c;
             acrObject.NSP_Referralbenefitsanonprofitorg__c = leadObject.NSP_Referralbenefitsanonprofitorg__c;
             acrList.add(acrObject);
@@ -781,7 +781,7 @@ if ((leadNewMap.get(leadId).NSP_Lead_Routing__c == true &&
             ocrObject.ContactId = leadObject.NSP_Referred_By_COI__c;
             ocrObject.Role = leadObject.NSP_Referral_Source__c;
             ocrObject.NSP_isReferral__c = true;
-			ocrObject.NSP_Nonprofit_Organization_Name__c = leadObject.NSP_Nonprofit_Organization_Name__c;
+            ocrObject.NSP_Nonprofit_Organization_Name__c = leadObject.NSP_Nonprofit_Organization_Name__c;
             ocrObject.NSP_Nonprofit_Organization_Tax_Id__c = leadObject.NSP_Nonprofit_Organization_Tax_Id__c;
             ocrObject.NSP_Referralbenefitsanonprofitorg__c = leadObject.NSP_Referralbenefitsanonprofitorg__c;   
                                                           
@@ -1101,7 +1101,7 @@ insert tasksList;
 * @author : Nischay Jindal  
 *-----------------------------------------------------------------------------------
 Modified History: Name : Description : date
-				 Mani Teja : Commented the If condition as we do not require it anymore and moved to future to avoid soql 101. : 3/31/2023
+Mani Teja : Commented the If condition as we do not require it anymore and moved to future to avoid soql 101. : 3/31/2023
 ------------------------------------------------------------------------------------  
 *           
 */
