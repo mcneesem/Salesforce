@@ -234,11 +234,11 @@ public class NSP_TerminationFormTriggerHelper {
                     termSubClientsMap
                 );
             }
-        }catch ( Exception e ) {
-            NSP_ErrorLogHandler.logSaveException(
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
                 NSP_TerminationFormTriggerHelper.class.getName() ,
                 'populateSubClientandAssetValues' ,
-                e.getMessage() + ' ~ ' + e.getStackTraceString()
+                e
             );
         }
     }
@@ -274,10 +274,10 @@ public class NSP_TerminationFormTriggerHelper {
                 }
             }
         } catch ( Exception e ) {
-            NSP_ErrorLogHandler.logSaveException(
+            NSP_ErrorLogHandler.logException(
                 NSP_TerminationFormTriggerHelper.class.getName() ,
                 'updateTermFormFields' ,
-                e.getMessage() + ' ~ ' + e.getStackTraceString()
+                e
             );
         }
     }
