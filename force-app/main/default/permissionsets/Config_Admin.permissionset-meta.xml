@@ -42,6 +42,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>NSP_Checklist__c.Status__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Opportunity.Max_Orientation_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
