@@ -54,6 +54,8 @@ public class NSP_AssetServiceHelper {
                             AND (
                                 ( NSP_PrimaryProduct__c = :NSP_ServiceConstants.PERFORMANCE_MANAGEMENT )
                                 OR ( NSP_PrimaryProduct__c = :NSP_ServiceConstants.TIME_ATTENDANCE )
+                                OR ( NSP_PrimaryProduct__c = :NSP_SalesConstants.WO )
+                                OR ( NSP_PrimaryProduct__c = :NSP_SalesConstants.WS )
                             )
                         )
                     ];
@@ -81,8 +83,7 @@ public class NSP_AssetServiceHelper {
                         performSmartAssetSet.add(asset.Id);
                     }
                     if ( asset.RecordTypeId == TIME_ATTENDANCE_ASSET
-                        && asset.AccountId!=null
-                        && !asset.Is_Perform_WO_WS_Asset__c
+                        && asset.AccountId != null
                         && mapOfAssetOppty.containsKey(asset.Id)
                         && mapOfOpportunity.containsKey(mapOfAssetOppty.get(asset.Id))
                         && ( mapOfOpportunity.get(mapOfAssetOppty.get(asset.id)).NSP_Time_Entry_Recommendation__c == NSP_ServiceConstants.Premier_Time_Att )
