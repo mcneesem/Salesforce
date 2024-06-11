@@ -7,10 +7,10 @@ public with sharing class BoxCreateFolder {
         try {
             responses = box.CreateFolder_v2.tkCreateFolder( requests );
         } catch ( Exception e ) {
-            NSP_ErrorLogHandler.logSaveException(
+            NSP_ErrorLogHandler.logException(
                 BoxCreateCollaborationOnRecord.class.getName() ,
                 'createFolder' ,
-                e.getMessage() + ' ~ ' + e.getStackTraceString()
+                e
             );
         }
         return responses;
