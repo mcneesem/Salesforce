@@ -317,11 +317,11 @@
                     onchange={handleValueChange}>
                   </lightning-input-field>
 
-                  <lightning-formatted-text
+                  <lightning-formatted-rich-text
                     if:true={visibility.frontLoadITACalendar}
-                    value="Please complete the Frontload Proration file and attach to the PTO Smartform once approved."
+                    value="Complete the &lt;a href=&quot;https://serviceops.spapps.insperity.com/sites/hr/Shared%20Documents/front%20load%20proration%20tool.xlsx&quot;&gt;Frontloaded Proration&lt;/a&gt; file and attach to the Accrual Profile once approved."
                     class="slds-show slds-text-heading_small slds-var-m-around_medium">
-                  </lightning-formatted-text>
+                  </lightning-formatted-rich-text>
                 </template>
 
                 <lightning-input-field
@@ -529,11 +529,11 @@
                   onchange={handleValueChange}>
                 </lightning-input-field>
 
-                <lightning-formatted-text
+                <lightning-formatted-rich-text
                   if:true={visibility.frontLoad}
-                  value="Please complete the Frontload Proration file and attach to the PTO Smartform once approved."
+                  value="Complete the &lt;a href=&quot;https://serviceops.spapps.insperity.com/sites/hr/Shared%20Documents/front%20load%20proration%20tool.xlsx&quot;&gt;Frontloaded Proration&lt;/a&gt; file and attach to the Accrual Profile once approved."
                   class="slds-show slds-text-heading_small slds-var-m-around_medium">
-                </lightning-formatted-text>
+                </lightning-formatted-rich-text>
 
                 <lightning-input-field
                   if:true={visibility.NSP_Select_Pay_Frequency__c_ITA_FISCAL}
