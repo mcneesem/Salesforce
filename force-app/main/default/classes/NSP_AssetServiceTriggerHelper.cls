@@ -18,7 +18,7 @@ Modification Log     :  11/09/2023-Suhas : Added RET Client Id for Sync WO Asset
 * Ramya Ravi                   01/16/2022          v6.0 - Create project from asset <STY-02234>
 */
 public class NSP_AssetServiceTriggerHelper {
-    // test w/ NSP_AssetServiceTriggerHelperTest (80%)
+    // test w/ NSP_AssetServiceTriggerHelperTest (79%)
 
     public final String PEORECORDTYPE = 'PEO';
     public final String HRSPECIALISTROLE = 'HR Specialist';
@@ -1104,7 +1104,7 @@ public class NSP_AssetServiceTriggerHelper {
         } catch ( Exception e ) {
             NSP_AssetServiceTriggerHelper.handleException(
                 e ,
-                'createWXAssetGroups'
+                'createWXAssetGroupsonUpdate'
             );
         }
     }
@@ -1213,7 +1213,11 @@ public class NSP_AssetServiceTriggerHelper {
             if (!lstRecordsToUpsert.isEmpty()) {
                 lstRecordsToUpsert.sort();
                 List<Database.UpsertResult> results = Database.upsert(lstRecordsToUpsert, false);
-                NSP_ErrorLogHandler.logUpsertResultsException('NSP_AssetServiceTriggerHelper', 'createWXAccountGroupError', results);
+                NSP_ErrorLogHandler.logResults(
+                    NSP_AssetServiceTriggerHelper.class.getName() ,
+                    'createWXAccountGroup' ,
+                    results
+                );
             }
         }
     }
@@ -1245,11 +1249,13 @@ public class NSP_AssetServiceTriggerHelper {
 
         if (!lstAccGroupsToDelete.isEmpty()) {
             Database.DeleteResult[] lstGroupResults = Database.delete(lstAccGroupsToDelete, false);
-            NSP_ErrorLogHandler.logDeleteResultsException('NSP_AssetServiceTriggerHelper', 'deleteAccountGroups', lstGroupResults);
+            NSP_ErrorLogHandler.logResults(
+                NSP_AssetServiceTriggerHelper.class.getName() ,
+                'deleteAccountGroups' ,
+                lstGroupResults
+            );
         }
-
     }
-
 
     public class WxAssetGroup {
         public Map < String, Set < String >> mapWxParentIdAccountIds;
@@ -1689,10 +1695,10 @@ Implementation profile related to the account of the created asset
 
     private static void handleException( Exception e , String methodName ) {
         if ( e != null ) {
-            NSP_ErrorLogHandler.logSaveException(
+            NSP_ErrorLogHandler.logException(
                 NSP_AssetServiceTriggerHelper.class.getName() ,
                 methodName ,
-                e.getMessage() + ' ~ ' + e.getStackTraceString()
+                e
             );
         }
     }
@@ -1728,7 +1734,7 @@ Implementation profile related to the account of the created asset
             //update account with earliest first pay date
             if ( !mapOfAccountIdWithAccount.isEmpty() ) {
                 List<Database.SaveResult> results = Database.update( mapOfAccountIdWithAccount.values() );
-                NSP_ErrorLogHandler.logSaveResultsException(
+                NSP_ErrorLogHandler.logResults(
                     NSP_AssetServiceTriggerHelper.class.getName() ,
                     'updateEarliestProductFirstPayDateOnAccount' ,
                     results
@@ -1845,16 +1851,16 @@ Implementation profile related to the account of the created asset
             }
             if ( !accountToUpdateList.isEmpty() ) {
                 List<Database.SaveResult> results = Database.update( accountToUpdateList , false );
-                NSP_ErrorLogHandler.logSaveResultsException(
+                NSP_ErrorLogHandler.logResults(
                     NSP_AssetServiceTriggerHelper.class.getName() ,
-                    'updateServiceSegment' ,
+                    'updateServiceSegmentOnAccount' ,
                     results
                 );
             }
         } catch ( Exception e ) {
             NSP_AssetServiceTriggerHelper.handleException(
                 e ,
-                'updateServiceSegment'
+                'updateServiceSegmentOnAccount'
             );
         }
     }
@@ -1951,13 +1957,19 @@ Implementation profile related to the account of the created asset
         }
         if(!newAccountList.isEmpty()){
             List<Database.SaveResult> results = Database.update(newAccountList,false);
-            NSP_ErrorLogHandler.logSaveResultsException('NSP_AssetServiceTriggerHelper', 'updateaccountPayrollEmployee', results );
-
+            NSP_ErrorLogHandler.logResults(
+                NSP_AssetServiceTriggerHelper.class.getName() ,
+                'updateaccountPayrollEmployee' ,
+                results
+            );
         }
         if(!accountList.isEmpty()){
             List<Database.SaveResult> results = Database.update(accountList,false);
-            NSP_ErrorLogHandler.logSaveResultsException('NSP_AssetServiceTriggerHelper', 'updateaccountPayrollEmployee', results );
-
+            NSP_ErrorLogHandler.logResults(
+                NSP_AssetServiceTriggerHelper.class.getName() ,
+                'updateaccountPayrollEmployee' ,
+                results
+            );
         }
     }
 

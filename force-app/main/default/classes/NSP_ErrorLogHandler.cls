@@ -112,7 +112,8 @@ public with sharing class NSP_ErrorLogHandler {
         if ( e != null ) {
             String newLine = '\r\n';
             message = ''
-                + e.getMessage() + newLine + newLine
+                + e.getTypeName() + ': ' + e.getMessage() + newLine
+                + newLine
                 + e.getStackTraceString()
                 ;
         }
