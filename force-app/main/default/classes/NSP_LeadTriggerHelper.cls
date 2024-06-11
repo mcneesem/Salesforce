@@ -544,10 +544,10 @@ if ((leadNewMap.get(leadId).NSP_Lead_Routing__c == true &&
 
     private static void handleException( Exception e , String methodName ) {
         if ( e != null ) {
-            NSP_ErrorLogHandler.logSaveException(
+            NSP_ErrorLogHandler.logException(
                 NSP_LeadTriggerHelper.class.getName() ,
                 methodName ,
-                e.getMessage() + ' ~ ' + e.getStackTraceString()
+                e
             );
         }
     }
