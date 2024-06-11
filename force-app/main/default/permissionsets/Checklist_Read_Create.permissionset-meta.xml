@@ -1191,6 +1191,11 @@
         <field>NSP_Checklist__c.NSP_wanttotracktimeorganizational_level__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_Checklist__c.Status__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Checklist - Read &amp; Create</label>
     <objectPermissions>
