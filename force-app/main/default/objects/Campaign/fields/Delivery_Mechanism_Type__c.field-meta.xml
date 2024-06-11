@@ -42,6 +42,11 @@
                 <label>Corporate Employee Referral</label>
             </value>
             <value>
+                <fullName>Display - Paid - 3rd Party</fullName>
+                <default>false</default>
+                <label>Display - Paid - 3rd Party</label>
+            </value>
+            <value>
                 <fullName>Display - Paid - 6Sense</fullName>
                 <default>false</default>
                 <label>Display - Paid - 6Sense</label>
@@ -282,6 +287,10 @@
         <valueSettings>
             <controllingFieldValue>Child: Delivery Mechanism Type</controllingFieldValue>
             <valueName>Corporate Employee Referral</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Child: Delivery Mechanism Type</controllingFieldValue>
+            <valueName>Display - Paid - 3rd Party</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Child: Delivery Mechanism Type</controllingFieldValue>
