@@ -155,7 +155,7 @@ export default class ProjectTaskCategorySubCategoryPage extends NavigationMixin(
         }else{
             this.showsubcategory = false;
         }
-        getRelatedDetail({selectedSubCategory: this.selectedSubCategory, recordTypeId: this.recordTypeId}).then((response) => {
+        getRelatedDetail({selectedSubCategory: this.selectedSubCategory, selectedCategory:this.selectedCategory, recordTypeId: this.recordTypeId}).then((response) => {
             this.detailOptions = this.createOptions(response);
             if(this.detailOptions.length > 0){
                 this.showdetail = true;
@@ -192,7 +192,7 @@ export default class ProjectTaskCategorySubCategoryPage extends NavigationMixin(
         }
         if (event.currentTarget.name == 'Subcategory') {
             this.selectedSubCategory = event.target.value;
-            getRelatedDetail({selectedSubCategory: this.selectedSubCategory, recordTypeId: this.recordTypeId}).then((response) => {
+            getRelatedDetail({selectedSubCategory: this.selectedSubCategory, selectedCategory: this.selectedCategory, recordTypeId: this.recordTypeId}).then((response) => {
                 this.detailOptions = this.createOptions(response);
                 if(this.detailOptions.length > 0){
                     this.showdetail = true;
@@ -240,7 +240,7 @@ export default class ProjectTaskCategorySubCategoryPage extends NavigationMixin(
             this.selectedVersion = null;
             this.showdetail = false;
             this.showVersion = false;
-            getRelatedDetail({selectedSubCategory: this.selectedSubCategory, recordTypeId: this.recordTypeId}).then((response) => {
+            getRelatedDetail({selectedSubCategory: this.selectedSubCategory, selectedCategory: this.selectedCategory, recordTypeId: this.recordTypeId}).then((response) => {
                 this.detailOptions = this.createOptions(response);
                 if(this.detailOptions.length > 0){
                     this.showdetail = true;
