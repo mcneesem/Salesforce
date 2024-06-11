@@ -7,10 +7,10 @@ public with sharing class BoxCreateFolderForRecordIdFromTemplate {
         try {
             responses = box.CreateFolderForRecordIdFromTemplate_v2.tkCreateFolderForRecordIdFromTemplate( requests );
         } catch ( Exception e ) {
-            NSP_ErrorLogHandler.logSaveException(
+            NSP_ErrorLogHandler.logException(
                 BoxCreateCollaborationOnRecord.class.getName() ,
                 'createFolderForRecordIdFromTemplate' ,
-                e.getMessage() + ' ~ ' + e.getStackTraceString()
+                e
             );
         }
         return responses;
