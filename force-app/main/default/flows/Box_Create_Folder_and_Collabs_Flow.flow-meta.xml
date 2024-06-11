@@ -5,7 +5,7 @@
         <label>Create Opportunity Folder From Template</label>
         <locationX>50</locationX>
         <locationY>458</locationY>
-        <actionName>box__CreateFolderForRecordIdFromTemplate_v2</actionName>
+        <actionName>BoxCreateFolderForRecordIdFromTemplate</actionName>
         <actionType>apex</actionType>
         <connector>
             <targetReference>Update_Box_Folder_Created</targetReference>
@@ -27,7 +27,7 @@
                 <elementReference>boxOptyFolderId</elementReference>
             </value>
         </inputParameters>
-        <nameSegment>box__CreateFolderForRecordIdFromTemplate_v2</nameSegment>
+        <nameSegment>BoxCreateFolderForRecordIdFromTemplate</nameSegment>
         <storeOutputAutomatically>true</storeOutputAutomatically>
         <versionSegment>1</versionSegment>
     </actionCalls>
