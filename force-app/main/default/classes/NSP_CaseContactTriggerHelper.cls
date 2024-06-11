@@ -76,7 +76,7 @@ public class NSP_CaseContactTriggerHelper {
             }
             try {
                 List<Database.SaveResult> results = Database.update( caseList , false ); 
-                NSP_ErrorLogHandler.logSaveResultsException(
+                NSP_ErrorLogHandler.logResults(
                     NSP_CaseContactTriggerHelper.class.getName() ,
                     'updateCorporateEmployeecheckBox' ,
                     results
@@ -151,7 +151,7 @@ public class NSP_CaseContactTriggerHelper {
                 }
                 if ( !caseToUpdateList.isEmpty() ) {
                     List<Database.SaveResult> results = Database.update( caseToUpdateList , False );
-                    NSP_ErrorLogHandler.logSaveResultsException(
+                    NSP_ErrorLogHandler.logResults(
                         NSP_CaseContactTriggerHelper.class.getName() ,
                         'updateContactonCase' ,
                         results
@@ -168,10 +168,10 @@ public class NSP_CaseContactTriggerHelper {
 
     private static void handleException( Exception e , String methodName ) {
         if ( e != null ) {
-            NSP_ErrorLogHandler.logSaveException(
+            NSP_ErrorLogHandler.logException(
                 NSP_CaseContactTriggerHelper.class.getName() ,
                 methodName ,
-                e.getMessage() + ' ~ ' + e.getStackTraceString()
+                e
             );
         }
     }
