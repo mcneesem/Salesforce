@@ -6,7 +6,7 @@
 ISPICKVAL( NSP_Task_Subtype__c, &quot;Nurture/Regen&quot;),
 OR(
  ISCHANGED(ActivityDate),
- ActivityDate - 90 &gt; DATEVALUE(CreatedDate),
+ ISNULL(ActivityDate),
  ActivityDate - 90 &gt;  TODAY() 
 )
 )</errorConditionFormula>
