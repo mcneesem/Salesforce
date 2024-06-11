@@ -7,26 +7,9 @@
         <locationY>600</locationY>
         <actionName>Opportunity.NSP_Opportunity_requires_assignment_to_New_Client_Sales_Specialist</actionName>
         <actionType>emailAlert</actionType>
-        <connector>
-            <targetReference>Update_New_Client_Sales_Email2</targetReference>
-        </connector>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
-        <inputParameters>
-            <name>SObjectRowId</name>
-            <value>
-                <elementReference>$Record.Id</elementReference>
-            </value>
-        </inputParameters>
-        <nameSegment>Opportunity.NSP_Opportunity_requires_assignment_to_New_Client_Sales_Specialist</nameSegment>
-        <versionSegment>1</versionSegment>
-    </actionCalls>
-    <actionCalls>
-        <name>NCS_Notify_0</name>
-        <label>NCS Notify</label>
-        <locationX>490</locationX>
-        <locationY>1032</locationY>
-        <actionName>Opportunity.NSP_Opportunity_requires_assignment_to_New_Client_Sales_Specialist</actionName>
-        <actionType>emailAlert</actionType>
+        <faultConnector>
+            <targetReference>Fault_Handler</targetReference>
+        </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>SObjectRowId</name>
@@ -266,7 +249,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Update_New_Client_Sales_Email2</targetReference>
+                <targetReference>Update_New_Client_Sales_Email_Salepprwk</targetReference>
             </connector>
             <label>Otherthan Workforce Products</label>
         </rules>
@@ -379,7 +362,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Update_New_Client_Sales_Email2</targetReference>
+                <targetReference>Update_New_Client_Sales_Email_Salepprwk</targetReference>
             </connector>
             <label>CoreAndMidMarketHierarchy</label>
         </rules>
@@ -394,15 +377,22 @@
             <name>Notnull</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>$Record.Owner.UserRoleId</leftValueReference>
+                <leftValueReference>$Setup.NSP_Trigger_Switch__c.OpportunityTrigger__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.OwnerId</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>$Setup.NSP_Trigger_Switch__c.OpportunityTrigger__c</leftValueReference>
-                <operator>EqualTo</operator>
+                <leftValueReference>$Record.Owner.UserRoleId</leftValueReference>
+                <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
@@ -436,16 +426,16 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <recordUpdates>
-        <name>Update_New_Client_Sales_Email2</name>
-        <label>Update New Client Sales Email2</label>
+        <name>Update_New_Client_Sales_Email_Salepprwk</name>
+        <label>Update New Client Sales Email Salepprwk</label>
         <locationX>490</locationX>
         <locationY>924</locationY>
         <connector>
-            <targetReference>NCS_Notify_0</targetReference>
+            <targetReference>NCS_Notify</targetReference>
         </connector>
         <faultConnector>
             <isGoTo>true</isGoTo>
-            <targetReference>Insperity_Fault_Handler_Subflow_Flow_1</targetReference>
+            <targetReference>Fault_Handler</targetReference>
         </faultConnector>
         <inputAssignments>
             <field>NSP_New_Client_Sales_Email__c</field>
@@ -464,7 +454,8 @@
             <targetReference>NCS_Notify</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Insperity_Fault_Handler_Subflow_Flow_1</targetReference>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler</targetReference>
         </faultConnector>
         <inputAssignments>
             <field>NSP_New_Client_Sales_Email__c</field>
@@ -509,10 +500,10 @@
         </scheduledPaths>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <subflows>
-        <name>Insperity_Fault_Handler_Subflow_Flow_1</name>
-        <label>Insperity Fault Handler Subflow Flow 1</label>
+        <name>Fault_Handler</name>
+        <label>Fault Handler</label>
         <locationX>314</locationX>
         <locationY>600</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
@@ -523,9 +514,9 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <name>triggeringFlow</name>
+            <name>faultFlow</name>
             <value>
-                <stringValue>&quot;ClosingOpportunityNotifications&quot;</stringValue>
+                <stringValue>closingOpptyNotifications</stringValue>
             </value>
         </inputAssignments>
     </subflows>
