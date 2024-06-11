@@ -213,7 +213,7 @@ public class NSP_ProjectTasksTriggerHelper {
         }
             if ( !cobraChildProjectTaskList.isEmpty() ) {
                 List<Database.SaveResult> insertChildResults = Database.insert( cobraChildProjectTaskList , false );
-                NSP_ErrorLogHandler.logSaveResultsException(
+                NSP_ErrorLogHandler.logResults(
                     NSP_ProjectTasksTriggerHelper.class.getName() ,
                     'createCobraSubTasks' ,
                     insertChildResults
@@ -1801,7 +1801,7 @@ public class NSP_ProjectTasksTriggerHelper {
             }
             if ( !projListToUpdate.isEmpty() && ( childProjectList.size() == 0 ) ) {
                 Database.SaveResult[] projectUpdateList = Database.update( projListToUpdate , false );
-                NSP_ErrorLogHandler.logSaveResultsException(
+                NSP_ErrorLogHandler.logResults(
                     NSP_ProjectTasksTriggerHelper.class.getName() ,
                     'createNewTaxIMPLSubProject:ProjectUpdate' ,
                     projectUpdateList
@@ -1895,7 +1895,7 @@ public class NSP_ProjectTasksTriggerHelper {
             if ( !projListToUpdate.isEmpty() && !newProjectIdSet.isEmpty() && ( childProjectList.size() == 0 ) ) {
                 Database.SaveResult[] projectUpdateList = Database.update( projListToUpdate , false );
                 wxwaDataMigrationProjectCreationEmail( newProjectIdSet );
-                NSP_ErrorLogHandler.logSaveResultsException(
+                NSP_ErrorLogHandler.logResults(
                     NSP_ProjectTasksTriggerHelper.class.getName() ,
                     'createWXWADataMigrationSubProject:ProjectUpdate' ,
                     projectUpdateList
@@ -2088,10 +2088,10 @@ public class NSP_ProjectTasksTriggerHelper {
 
     private static void handleException( Exception e , String methodName ) {
         if ( e != null ) {
-            NSP_ErrorLogHandler.logSaveException(
+            NSP_ErrorLogHandler.logException(
                 NSP_ProjectTasksTriggerHelper.class.getName() ,
                 methodName ,
-                e.getMessage() + ' ~ ' + e.getStackTraceString()
+                e
             );
         }
     }
@@ -2273,16 +2273,16 @@ public class NSP_ProjectTasksTriggerHelper {
         recordsToUpdate.addAll(woListToUpdate);
         recordsToUpdate.addAll(saListToUpdate);
         List<Database.SaveResult> results1 = Database.update( recordsToUpdate , false );
-        NSP_ErrorLogHandler.logSaveResultsException(
+        NSP_ErrorLogHandler.logResults(
             NSP_ProjectTasksTriggerHelper.class.getName() ,
-            'scheduleWorkOrderAndSA' ,
+            'scheduleWorkOrderAndSA:update' ,
             results1
         );
         //insert Assigned Resource
         List<Database.SaveResult> results3 = Database.insert( assgnResToCreate , false );
-        NSP_ErrorLogHandler.logSaveResultsException(
+        NSP_ErrorLogHandler.logResults(
             NSP_ProjectTasksTriggerHelper.class.getName() ,
-            'scheduleWorkOrderAndSA' ,
+            'scheduleWorkOrderAndSA:insert' ,
             results3
         );
     }
@@ -2378,9 +2378,9 @@ public class NSP_ProjectTasksTriggerHelper {
             if ( !newPTAList.isEmpty() ) {
                 NSP_ProjectTaskAssignmentTriggerHelper.runAssignmentMethod = true;
                 Database.UpsertResult[] upsertResults = Database.upsert( newPTAList , false);
-                NSP_ErrorLogHandler.logUpsertResultsException(
+                NSP_ErrorLogHandler.logResults(
                     NSP_ProjectTasksTriggerHelper.class.getName() ,
-                    'createPTAIfOwnerIsChanged:upsertResults' ,
+                    'createPTAIfOwnerIsChanged' ,
                     upsertResults
                 );
             }
