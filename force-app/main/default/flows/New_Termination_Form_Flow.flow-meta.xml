@@ -691,7 +691,7 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <name>triggeringFlow</name>
+            <name>faultFlow</name>
             <value>
                 <elementReference>FlowName</elementReference>
             </value>
