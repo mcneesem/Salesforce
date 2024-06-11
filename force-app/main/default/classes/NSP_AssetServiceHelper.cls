@@ -73,12 +73,12 @@ public class NSP_AssetServiceHelper {
                         && asset.AccountId != null
                         && !asset.Is_Perform_WO_WS_Asset__c
                         && (
-                            (
+                            ( asset.Opportunity__c == null )
+                            || (
                                 mapOfAssetOppty.containsKey(asset.Id)
                                 && mapOfOpportunity.containsKey(mapOfAssetOppty.get(asset.Id))
                                 && ( mapOfOpportunity.get(mapOfAssetOppty.get(asset.id)).NSP_IPMRecommendation__c == NSP_SalesConstants.Yes )
                             )
-                            || asset.Opportunity__c == null
                         )
                     )
                     {
@@ -89,12 +89,12 @@ public class NSP_AssetServiceHelper {
                         && asset.AccountId != null
                         && !asset.Is_Perform_WO_WS_Asset__c
                         && (
-                            (
+                            ( asset.Opportunity__c == null )
+                            || (
                                 mapOfAssetOppty.containsKey(asset.Id)
                                 && mapOfOpportunity.containsKey(mapOfAssetOppty.get(asset.Id))
                                 && ( mapOfOpportunity.get(mapOfAssetOppty.get(asset.id)).NSP_Time_Entry_Recommendation__c == NSP_ServiceConstants.Premier_Time_Att )
                             )
-                            || asset.Opportunity__c == null
                         )
                     )
                     {
@@ -193,8 +193,12 @@ public class NSP_AssetServiceHelper {
             if(!projectAssetMapping.isEmpty()){
                 insert projectAssetMapping;
             }
-        } catch (Exception ex) {
-            NSP_ErrorLogHandler.logSaveException('NSP_AssetServiceHelper', 'createBPSProject', ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_AssetServiceHelper.class.getName() ,
+                'createBPSProject' ,
+                e
+            );
         }
         
         
@@ -233,13 +237,15 @@ public class NSP_AssetServiceHelper {
                                                              }
                 
             }
-        } catch (Exception ex) {
-            NSP_ErrorLogHandler.logSaveException('NSP_AssetServiceHelper', 'updateTerminationInformation', ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_AssetServiceHelper.class.getName() ,
+                'updateTerminationInformation' ,
+                e
+            );
         }
-        
-        
     }
-    
+
     /***********************************************************************************************
 * MethodName: clearAssetTerminationSection
 * Description :  This method will clear the asset termination information section
@@ -307,13 +313,15 @@ public class NSP_AssetServiceHelper {
             if(!updatedAssetList.isEmpty()){
                 database.update(updatedAssetList);
             }
-        } catch (Exception ex) {
-            NSP_ErrorLogHandler.logSaveException('NSP_AssetServiceHelper', 'clearAssetTerminationSection', ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_AssetServiceHelper.class.getName() ,
+                'clearAssetTerminationSection' ,
+                e
+            );
         }
-        
     }
-    
-    
+
     /***********************************************************************************************
         * MethodName: hasMoreThanOneAsset
     * Description :  This method checks if more than one asset is present of same record Type
