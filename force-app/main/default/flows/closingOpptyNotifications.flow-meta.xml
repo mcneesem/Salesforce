@@ -4,13 +4,12 @@
         <name>NCS_Notify</name>
         <label>NCS Notify</label>
         <locationX>50</locationX>
-        <locationY>695</locationY>
+        <locationY>600</locationY>
         <actionName>Opportunity.NSP_Opportunity_requires_assignment_to_New_Client_Sales_Specialist</actionName>
         <actionType>emailAlert</actionType>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>GetEFP</targetReference>
-        </connector>
+        <faultConnector>
+            <targetReference>Fault_Handler</targetReference>
+        </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>SObjectRowId</name>
@@ -18,90 +17,10 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
-    </actionCalls>
-    <actionCalls>
-        <name>NCS_Notify_0</name>
-        <label>NCS Notify</label>
-        <locationX>358</locationX>
-        <locationY>1091</locationY>
-        <actionName>Opportunity.NSP_Opportunity_requires_assignment_to_New_Client_Sales_Specialist</actionName>
-        <actionType>emailAlert</actionType>
-        <connector>
-            <targetReference>GetEFP</targetReference>
-        </connector>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
-        <inputParameters>
-            <name>SObjectRowId</name>
-            <value>
-                <elementReference>$Record.Id</elementReference>
-            </value>
-        </inputParameters>
+        <nameSegment>Opportunity.NSP_Opportunity_requires_assignment_to_New_Client_Sales_Specialist</nameSegment>
+        <versionSegment>1</versionSegment>
     </actionCalls>
     <apiVersion>54.0</apiVersion>
-    <assignments>
-        <name>AddToUpdateList</name>
-        <label>AddToUpdateList</label>
-        <locationX>424</locationX>
-        <locationY>1787</locationY>
-        <assignmentItems>
-            <assignToReference>EPFUpdateList</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <elementReference>Loop1</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Loop1</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>AddToUpdateList1</name>
-        <label>AddToUpdateList</label>
-        <locationX>776</locationX>
-        <locationY>1787</locationY>
-        <assignmentItems>
-            <assignToReference>EPFUpdateList</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <elementReference>Loop2</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Loop2</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>SetCheckbox</name>
-        <label>SetCheckbox</label>
-        <locationX>424</locationX>
-        <locationY>1667</locationY>
-        <assignmentItems>
-            <assignToReference>Loop1.NSP_Is_MidMarket__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>AddToUpdateList</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>SetCheckbox1</name>
-        <label>SetCheckbox</label>
-        <locationX>776</locationX>
-        <locationY>1667</locationY>
-        <assignmentItems>
-            <assignToReference>Loop2.NSP_Is_MidMarket__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <booleanValue>false</booleanValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>AddToUpdateList1</targetReference>
-        </connector>
-    </assignments>
     <constants>
         <name>conABPA</name>
         <dataType>String</dataType>
@@ -179,29 +98,15 @@
             <stringValue>Regional VP</stringValue>
         </value>
     </constants>
-    <constants>
-        <name>NumberOfEmployees</name>
-        <dataType>Number</dataType>
-        <value>
-            <numberValue>150.0</numberValue>
-        </value>
-    </constants>
     <decisions>
         <name>Check_Owner_Role</name>
         <label>Check Owner Role</label>
-        <locationX>358</locationX>
-        <locationY>455</locationY>
-        <defaultConnectorLabel>Blank</defaultConnectorLabel>
+        <locationX>490</locationX>
+        <locationY>384</locationY>
+        <defaultConnectorLabel>Default</defaultConnectorLabel>
         <rules>
             <name>Workforce_Product</name>
-            <conditionLogic>1 AND (2 OR 3 OR 4 OR 5) AND (6 AND 7)</conditionLogic>
-            <conditions>
-                <leftValueReference>$Record.StageName</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Closing</stringValue>
-                </rightValue>
-            </conditions>
+            <conditionLogic>(1 OR 2 OR 3 OR 4) AND (5 AND 6)</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.NSP_PrimaryProduct__c</leftValueReference>
                 <operator>Contains</operator>
@@ -251,7 +156,7 @@
         </rules>
         <rules>
             <name>Otherthan_Workforce_Products</name>
-            <conditionLogic>(1 OR 2 OR 3 OR 4 OR 5) AND (6 AND 7) AND 8</conditionLogic>
+            <conditionLogic>((1 AND 9 AND 10) OR 2 OR 3 OR (4 AND 8 AND 12 AND 13) OR (5 AND 11)) AND (6 AND 7)</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.NSP_PrimaryProduct__c</leftValueReference>
                 <operator>EqualTo</operator>
@@ -302,20 +207,55 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>$Record.StageName</leftValueReference>
-                <operator>EqualTo</operator>
+                <leftValueReference>$Record.Owner.Title</leftValueReference>
+                <operator>NotEqualTo</operator>
                 <rightValue>
-                    <stringValue>Closing</stringValue>
+                    <stringValue>Customer Success Specialist</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Owner.Title</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Performance Consultant, Client Recruiting</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Owner.Title</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Recruiting Analyst, Client Recruiting</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Owner.Title</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Administrator, Office Services</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Owner.Title</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Manager, Accounting</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Owner.Title</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Plan Expense &amp; Billing Analyst</stringValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Update_New_Client_Sales_Email2</targetReference>
+                <targetReference>Update_New_Client_Sales_Email_Salepprwk</targetReference>
             </connector>
             <label>Otherthan Workforce Products</label>
         </rules>
         <rules>
             <name>Core_And_MidMarket_Hierarchy</name>
-            <conditionLogic>(1 OR 2 OR 3 OR 4 OR 5 OR 6) AND (7 OR 8 OR 9 OR 10 OR 11 OR 12 OR 13 OR 14 OR 15) AND 16</conditionLogic>
+            <conditionLogic>(1 OR 2 OR 3 OR 4 OR 5 OR 6) AND (7 OR 8 OR 9 OR 10 OR 11 OR 12 OR 13 OR 14 OR 15)</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.NSP_PrimaryProduct__c</leftValueReference>
                 <operator>EqualTo</operator>
@@ -421,89 +361,21 @@
                     <elementReference>conMA</elementReference>
                 </rightValue>
             </conditions>
-            <conditions>
-                <leftValueReference>$Record.StageName</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Closing</stringValue>
-                </rightValue>
-            </conditions>
             <connector>
-                <targetReference>Update_New_Client_Sales_Email2</targetReference>
+                <targetReference>Update_New_Client_Sales_Email_Salepprwk</targetReference>
             </connector>
             <label>CoreAndMidMarketHierarchy</label>
         </rules>
     </decisions>
     <decisions>
-        <name>isMid_Market</name>
-        <label>isMid_Market</label>
-        <locationX>644</locationX>
-        <locationY>1427</locationY>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>True</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>$Record.NSP_Number_of_Employees__c</leftValueReference>
-                <operator>GreaterThanOrEqualTo</operator>
-                <rightValue>
-                    <elementReference>NumberOfEmployees</elementReference>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.NSP_Number_of_Employees__c</leftValueReference>
-                <operator>IsChanged</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Loop1</targetReference>
-            </connector>
-            <label>Greater than 150</label>
-        </rules>
-        <rules>
-            <name>False</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>$Record.NSP_Number_of_Employees__c</leftValueReference>
-                <operator>LessThan</operator>
-                <rightValue>
-                    <elementReference>NumberOfEmployees</elementReference>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.NSP_Number_of_Employees__c</leftValueReference>
-                <operator>IsChanged</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Loop2</targetReference>
-            </connector>
-            <label>Less than 150</label>
-        </rules>
-    </decisions>
-    <decisions>
         <name>OwnerIDNullCheck</name>
         <label>OwnerIDNullCheck</label>
-        <locationX>644</locationX>
-        <locationY>335</locationY>
-        <defaultConnector>
-            <targetReference>GetEFP</targetReference>
-        </defaultConnector>
+        <locationX>974</locationX>
+        <locationY>276</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Notnull</name>
             <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>$Record.Owner.UserRoleId</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
             <conditions>
                 <leftValueReference>$Setup.NSP_Trigger_Switch__c.OpportunityTrigger__c</leftValueReference>
                 <operator>EqualTo</operator>
@@ -512,21 +384,14 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>$Record.StageName</leftValueReference>
-                <operator>IsChanged</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.StageName</leftValueReference>
+                <leftValueReference>$Record.OwnerId</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>$Record.NSP_PrimaryProduct__c</leftValueReference>
+                <leftValueReference>$Record.Owner.UserRoleId</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -541,34 +406,6 @@
     <environments>Default</environments>
     <interviewLabel>closingOpptyNotifications {!$Flow.CurrentDateTime}</interviewLabel>
     <label>ClosingOpportunityNotifications</label>
-    <loops>
-        <name>Loop1</name>
-        <label>Loop1</label>
-        <locationX>336</locationX>
-        <locationY>1547</locationY>
-        <collectionReference>GetEFP</collectionReference>
-        <iterationOrder>Asc</iterationOrder>
-        <nextValueConnector>
-            <targetReference>SetCheckbox</targetReference>
-        </nextValueConnector>
-        <noMoreValuesConnector>
-            <targetReference>Update_EPFUpdateList</targetReference>
-        </noMoreValuesConnector>
-    </loops>
-    <loops>
-        <name>Loop2</name>
-        <label>Loop2</label>
-        <locationX>688</locationX>
-        <locationY>1547</locationY>
-        <collectionReference>GetEFP</collectionReference>
-        <iterationOrder>Asc</iterationOrder>
-        <nextValueConnector>
-            <targetReference>SetCheckbox1</targetReference>
-        </nextValueConnector>
-        <noMoreValuesConnector>
-            <targetReference>Update_EPFUpdateList1</targetReference>
-        </noMoreValuesConnector>
-    </loops>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -588,51 +425,18 @@
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
-    <recordLookups>
-        <name>GetEFP</name>
-        <label>GetEFP</label>
-        <locationX>644</locationX>
-        <locationY>1307</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+    <recordUpdates>
+        <name>Update_New_Client_Sales_Email_Salepprwk</name>
+        <label>Update New Client Sales Email Salepprwk</label>
+        <locationX>490</locationX>
+        <locationY>924</locationY>
         <connector>
-            <targetReference>isMid_Market</targetReference>
+            <targetReference>NCS_Notify</targetReference>
         </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>NSP_Opportunity__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>$Record.Id</elementReference>
-            </value>
-        </filters>
-        <getFirstRecordOnly>false</getFirstRecordOnly>
-        <object>NSP_Enrollment_Fee_Payment__c</object>
-        <queriedFields>Id</queriedFields>
-        <queriedFields>NSP_Is_MidMarket__c</queriedFields>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordUpdates>
-        <name>Update_EPFUpdateList</name>
-        <label>Update EPFUpdateList</label>
-        <locationX>336</locationX>
-        <locationY>2003</locationY>
-        <inputReference>EPFUpdateList</inputReference>
-    </recordUpdates>
-    <recordUpdates>
-        <name>Update_EPFUpdateList1</name>
-        <label>Update EPFUpdateList</label>
-        <locationX>688</locationX>
-        <locationY>2003</locationY>
-        <inputReference>EPFUpdateList</inputReference>
-    </recordUpdates>
-    <recordUpdates>
-        <name>Update_New_Client_Sales_Email2</name>
-        <label>Update New Client Sales Email2</label>
-        <locationX>358</locationX>
-        <locationY>971</locationY>
-        <connector>
-            <targetReference>NCS_Notify_0</targetReference>
-        </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler</targetReference>
+        </faultConnector>
         <inputAssignments>
             <field>NSP_New_Client_Sales_Email__c</field>
             <value>
@@ -645,10 +449,14 @@
         <name>Update_Oppty_New_Client_Sales_Email</name>
         <label>Update Oppty New Client Sales Email</label>
         <locationX>50</locationX>
-        <locationY>575</locationY>
+        <locationY>492</locationY>
         <connector>
             <targetReference>NCS_Notify</targetReference>
         </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler</targetReference>
+        </faultConnector>
         <inputAssignments>
             <field>NSP_New_Client_Sales_Email__c</field>
             <value>
@@ -658,29 +466,58 @@
         <inputReference>$Record</inputReference>
     </recordUpdates>
     <start>
-        <locationX>518</locationX>
+        <locationX>254</locationX>
         <locationY>0</locationY>
-        <connector>
-            <targetReference>OwnerIDNullCheck</targetReference>
-        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>StageName</field>
+            <operator>IsChanged</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>StageName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Closing</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>NSP_PrimaryProduct__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
         <object>Opportunity</object>
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <scheduledPaths>
+            <connector>
+                <targetReference>OwnerIDNullCheck</targetReference>
+            </connector>
+            <pathType>AsyncAfterCommit</pathType>
+        </scheduledPaths>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Obsolete</status>
-    <variables>
-        <name>EPFUpdateList</name>
-        <dataType>SObject</dataType>
-        <isCollection>true</isCollection>
-        <isInput>true</isInput>
-        <isOutput>true</isOutput>
-        <objectType>NSP_Enrollment_Fee_Payment__c</objectType>
-    </variables>
-    <variables>
-        <name>test</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>true</isInput>
-        <isOutput>true</isOutput>
-    </variables>
+    <status>Draft</status>
+    <subflows>
+        <name>Fault_Handler</name>
+        <label>Fault Handler</label>
+        <locationX>314</locationX>
+        <locationY>600</locationY>
+        <flowName>Insperity_Fault_Handler_Subflow</flowName>
+        <inputAssignments>
+            <name>faultMessage</name>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultFlow</name>
+            <value>
+                <stringValue>closingOpptyNotifications</stringValue>
+            </value>
+        </inputAssignments>
+    </subflows>
 </Flow>
