@@ -12,6 +12,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Implementation_Profile__c.Does_this_client_have_an_AWW__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Implementation_Profile__c.Is_client_CA_docs_submitted_for_approval__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Implementation_Profile__c.NSP_Old_Benefits_Package__c</field>
         <readable>true</readable>
     </fieldPermissions>

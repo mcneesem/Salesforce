@@ -102,6 +102,8 @@ import wouldYouLikeAutomationForYourGeneralLedger from '@salesforce/label/c.Woul
 import isPayrollEntryItemizedOrSimpleEntry from '@salesforce/label/c.Is_payroll_entry_itemized_or_simple_entry';
 import itemized from '@salesforce/label/c.If_Itemized_they_must_use_Integra';
 import employeesWorkinFollowingStates from '@salesforce/label/c.NSP_Employees_Work_in_Following_States';
+import doesClientHaveAlternativeWorkWeek from '@salesforce/label/c.Does_this_client_have_an_AWW';
+import isClientCADocsSubmitted from '@salesforce/label/c.Is_client_CA_docs_submitted_for_approval';
 import allowances from '@salesforce/label/c.NSP_Allowances';
 import WhatQuickBooksversiondoyouuse from '@salesforce/label/c.What_QuickBooks_version_do_you_use';
 import Neededpayrollentryallocation from '@salesforce/label/c.Needed_payroll_entry_allocation';
@@ -669,6 +671,8 @@ export {
     otherDetails,
     doesClientHaveSpecialPayrollNeeds,
     employeesWorkinFollowingStates,
+    doesClientHaveAlternativeWorkWeek,
+    isClientCADocsSubmitted,
     allowances,
     expenses,
     clientBusinessMeetingQuestion,

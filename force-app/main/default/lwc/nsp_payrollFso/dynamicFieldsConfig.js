@@ -374,6 +374,13 @@ const DYNAMIC_FIELDS = {
       ],
     },
   ],
+
+  Does_this_client_have_an_AWW__c: [
+    {
+      expValue: ["Yes"],
+      dependentFields: ["Is_client_CA_docs_submitted_for_approval__c"]
+    }
+  ]
 };
 
 export { DYNAMIC_FIELDS };

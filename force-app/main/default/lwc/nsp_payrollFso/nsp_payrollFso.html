@@ -944,6 +944,30 @@
       multiple
       help-text="e-Verify states are AL, AZ, GA, FL, LA, MO, MS, NC, SC, TN, UT">
     </c-nsp_selection-box>
+
+    <c-nsp_selection-box
+      disabled={disabledFields.Does_this_client_have_an_AWW__c}
+      data-name="Does_this_client_have_an_AWW__c"
+      class={styles.Does_this_client_have_an_AWW__c}
+      label={label.doesClientHaveAlternativeWorkWeek}
+      field-api-name="Implementation_Profile__c.Does_this_client_have_an_AWW__c"
+      record-type-id={recordTypeId}
+      value={field.Does_this_client_have_an_AWW__c}
+      onchange={handleValueChange}>
+    </c-nsp_selection-box>
+
+    <c-nsp_selection-box
+      disabled={disabledFields.Is_client_CA_docs_submitted_for_approval__c}
+      lwc:if={visibility.Is_client_CA_docs_submitted_for_approval__c}
+      data-name="Is_client_CA_docs_submitted_for_approval__c"
+      class={styles.Is_client_CA_docs_submitted_for_approval__c}
+      label={label.isClientCADocsSubmitted}
+      field-api-name="Implementation_Profile__c.Is_client_CA_docs_submitted_for_approval__c"
+      record-type-id={recordTypeId}
+      value={field.Is_client_CA_docs_submitted_for_approval__c}
+      onchange={handleValueChange}>
+    </c-nsp_selection-box>
+
     <c-nsp_selection-box
       disabled={disabledFields.Client_does_business_in_MA_NY_or_VA__c}
       label={label.ClntBsnsMANYVA}

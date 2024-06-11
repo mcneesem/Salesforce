@@ -1311,6 +1311,17 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Does_this_client_have_an_AWW__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Duration__c</picklist>
         <values>
             <fullName>120</fullName>
@@ -2026,6 +2037,21 @@
     </picklistValues>
     <picklistValues>
         <picklist>Is_Insperity_s_group_health_plan_replaci__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Is_client_CA_docs_submitted_for_approval__c</picklist>
+        <values>
+            <fullName>N%2FA</fullName>
+            <default>false</default>
+        </values>
         <values>
             <fullName>No</fullName>
             <default>false</default>
