@@ -309,8 +309,12 @@ public class NSP_PayrollTriggerHelper {
                     }
                 }
             }
-        } catch (exception ex) {
-            NSP_ErrorLogHandler.logSaveException('NSP_PayrollTriggerHelper', 'checkForGovernmentContractor', ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_PayrollTriggerHelper.class.getName() ,
+                'checkForGovernmentContractor' ,
+                e
+            );
         }
     }
     
