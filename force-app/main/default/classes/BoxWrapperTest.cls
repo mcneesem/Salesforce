@@ -12,7 +12,7 @@
         Test.stopTest();
     }
 
-    @isTest private static void testCreateFolder() {
+    @isTest private static void testCreateFolderForRecordIdFromTemplate() {
         Test.startTest();
         BoxCreateFolderForRecordIdFromTemplate.createFolderForRecordIdFromTemplate( null );
         Test.stopTest();
