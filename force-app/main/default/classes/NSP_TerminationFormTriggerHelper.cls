@@ -2,8 +2,8 @@
 * Represents the termination form trigger helper which handles all the logic.
 */
 public class NSP_TerminationFormTriggerHelper {
-    // test w/ NSP_TerminationFormTriggerHelperTest (91%)
-
+    // test w/ NSP_TerminationFormTriggerHelperTest (89%)
+    
     private static final string SUPERVISOR_DENIED = 'PR Supervisor Denied';
     private static final string TERM_TEAM_DENIED = 'Term Team Denied';
     private static final string TERM_TEAM_APPROVED = 'Term Team Approved';
@@ -46,134 +46,241 @@ public class NSP_TerminationFormTriggerHelper {
         }
     }
 
-    /**
-    * Populates the Sub Client Numbers from the Account and Number of Employees from WO Asset on Termination Form
-    * @param sProjectTaskIds set of Project Task Ids
-    * @param lTerminationForms List of New Termination Forms.
-    * @return void             
-    *                
-    */
+    //
+    // Populates the Sub Client Numbers from the Account and Number of Employees from WO Asset on Termination Form
+    // @param sProjectTaskIds set of Project Task Ids
+    // @param lTerminationForms List of New Termination Forms.
+    // @return void
+    //
+    //
     public void populateSubClientandAssetValues(Set<Id> sProjectTaskIds, List<NSP_Termination_Form__c> lTerminationForms){
         Id woAssetRecordTypeId =  Schema.SObjectType.Asset.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.WO_ASSET_RECORDTYPE)?.getRecordTypeId();
         String ClientRecordTypeId = Schema.SObjectType.NSP_Termination_Form__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.NSP_Client_Reinstatement).getRecordTypeId();
-        Map<Id,pse__Project_Task__c> mProjectTasks = new Map<Id,pse__Project_Task__c>([SELECT Id,pse__Project__r.pse__Account__c FROM pse__Project_Task__c WHERE ID in : sProjectTaskIds]);
+        Map<Id,pse__Project_Task__c> mProjectTasks = new Map<Id,pse__Project_Task__c>(
+            [
+                SELECT Id , pse__Project__r.pse__Account__c
+                FROM pse__Project_Task__c
+                WHERE Id in :sProjectTaskIds
+            ]
+        );
         Set<Id> sAccountIds = new Set<Id>();
-        for(pse__Project_Task__c oProjectTask : mProjectTasks.values()){
-            if(oProjectTask.pse__Project__r?.pse__Account__c != null){
-                sAccountIds.add(oProjectTask.pse__Project__r.pse__Account__c);
-            }
-        }
-        List<String> assetFields = new List<String>{'Id','AccountId','Status','NSP_Client_Segment_type__c'};
-        //getting all the assets from record with filter from queryBuilder Class
-        String query = new NSP_QueryBuilder(NSP_ServiceConstants.ASSET_SOBJECT_TYPE, assetFields)
-            .addFilter('RecordTypeId', woAssetRecordTypeId)
-            .addFilter('Status', NSP_ServiceConstants.ASSET_ACTIVE_STATUS)
-            .addFilter('AccountId', new List<Id>(sAccountIds), NSP_QueryBuilder.Operator.INCLUDES)
-            .addLimit(1).build();
-
-        List<Asset> assetsList = (List<Asset>)Database.query(query);
-		// added for DF-03867
-         String queryTerm = new NSP_QueryBuilder(NSP_ServiceConstants.ASSET_SOBJECT_TYPE, assetFields)
-            .addFilter('RecordTypeId', woAssetRecordTypeId)
-            .addFilter('NSP_Account_Status__c', NSP_ServiceConstants.TERMINATED)
-            .addFilter('AccountId', new List<Id>(sAccountIds), NSP_QueryBuilder.Operator.INCLUDES)
-            .orderBy('NSP_Termination_Date__c','Desc',False)
-            .addLimit(1).build();
-        
-       
-        List<Asset> terminatedAssetsList = (List<Asset>)Database.query(queryTerm);
-        List<NSP_Sub_Client__c> lTerminatedSubClients = new List<NSP_Sub_Client__c>([SELECT Id,NSP_Account__c,NSP_Sub_Client__c 
-                                                FROM NSP_Sub_Client__c 
-                                                WHERE NSP_Account__c IN: sAccountIds
-                                                AND NSP_Asset__c IN: terminatedAssetsList]);
-        
-        List<NSP_Sub_Client__c> lSubClients = new List<NSP_Sub_Client__c>([SELECT Id,NSP_Account__c,NSP_Sub_Client__c,NSP_Renewal_Date__c 
-                                                FROM NSP_Sub_Client__c 
-                                                WHERE NSP_Account__c IN: sAccountIds
-                                                AND NSP_Asset__c IN: assetsList
-                                                AND NSP_Account_Status__c != :NSP_ServiceConstants.TERMINATED]);
-        
-        Map<Id,String> mTermAccountToSubClientNumbers = new Map<Id,String>();
-        for(NSP_Sub_Client__c oTempSClient : lTerminatedSubClients){
-            if(String.isNotBlank(oTempSClient.NSP_Sub_Client__c)){
-                if(mTermAccountToSubClientNumbers.get(oTempSClient.NSP_Account__c) != null ){
-                    String subClientNumbers = mTermAccountToSubClientNumbers.get(oTempSClient.NSP_Account__c) + ',' + oTempSClient.NSP_Sub_Client__c;
-                    mTermAccountToSubClientNumbers.put(oTempSClient.NSP_Account__c,subClientNumbers);
-                }else{
-                    mTermAccountToSubClientNumbers.put(oTempSClient.NSP_Account__c,oTempSClient.NSP_Sub_Client__c);
+        try{
+            for(pse__Project_Task__c oProjectTask : mProjectTasks.values()){
+                if(oProjectTask.pse__Project__r?.pse__Account__c != null){
+                    sAccountIds.add(oProjectTask.pse__Project__r.pse__Account__c);
                 }
             }
-        }
-        Map<Id,String> mAccountToSubClientNumbers = new Map<Id,String>();
-        Map<Id, String> mAccountToAssetAIMSClientNumber = new Map<Id, String> ();
-        for(NSP_Sub_Client__c oTempSClient : lSubClients){
-            if(String.isNotBlank(oTempSClient.NSP_Sub_Client__c)){
-                if(mAccountToSubClientNumbers.get(oTempSClient.NSP_Account__c) != null ){
-                    String subClientNumbers = mAccountToSubClientNumbers.get(oTempSClient.NSP_Account__c) + ',' + oTempSClient.NSP_Sub_Client__c;
-                    mAccountToSubClientNumbers.put(oTempSClient.NSP_Account__c,subClientNumbers);
-                }else{
-                    mAccountToSubClientNumbers.put(oTempSClient.NSP_Account__c,oTempSClient.NSP_Sub_Client__c);
-                }
-            }
-        }
-        
-        List<Asset> lAssets = new List<Asset>([SELECT ID,AccountId,NSP_Client__c, NSP_Unique_Active_Employee__c FROM Asset WHERE RecordTypeId =: woAssetRecordTypeId AND AccountId IN : sAccountIds]);
-        Map<Id,Decimal> mAccountToAssetEmployees = new Map<Id,Decimal>();
-        for(Asset otempAsset : lAssets){
-            Decimal uniqueActiveEmp = otempAsset.NSP_Unique_Active_Employee__c != null ? otempAsset.NSP_Unique_Active_Employee__c : 0;
-            mAccountToAssetEmployees.put(otempAsset.AccountId,uniqueActiveEmp);
-            if(otempAsset.NSP_Client__c != null){
-                mAccountToAssetAIMSClientNumber.put(otempAsset.AccountId, otempAsset.NSP_Client__c);
-            }
-        }
-        
-        Map<Id,String> mClientSegmentAsset = new Map<Id,String>();
-        for(Asset oClientAsset : assetsList){
-            if(oClientAsset.NSP_Client_Segment_type__c != null){
-                mClientSegmentAsset.put(oClientAsset.AccountId, oClientAsset.NSP_Client_Segment_type__c);
-            }
-        }
-        
-        Map<Id,Date> mClientRenewelDate = new Map<Id,Date>();
-        for(NSP_Sub_Client__c oClientRenewel : lSubClients){
-            if(oClientRenewel.NSP_Sub_Client__c!=Null && oClientRenewel.NSP_Sub_Client__c.endsWith('00')
-               && oClientRenewel.NSP_Renewal_Date__c!=Null ){
-                mClientRenewelDate.put(oClientRenewel.NSP_Account__c, oClientRenewel.NSP_Renewal_Date__c);
-            }
-        }
-
-        for(NSP_Termination_Form__c oTerminationForm : lTerminationForms){
-            pse__Project_Task__c oProjectTask  = mProjectTasks.get(oTerminationForm.NSP_Project_Task__c);
-            Id accountId = oProjectTask.pse__Project__r?.pse__Account__c;
-            if(accountId != null){
-                if(oTerminationForm.RecordTypeId != ClientRecordTypeId ){
-                oTerminationForm.NSP_Client_Sub_Account_Numbers__c = mAccountToSubClientNumbers.get(accountId);
-                oTerminationForm.NSP_Number_of_Active_Employees__c = mAccountToAssetEmployees.get(accountId);
-                  
-                 }
-                Else{
-                    If(mAccountToSubClientNumbers.get(accountId)==Null){
-                      oTerminationForm.NSP_Client_Sub_Account_Numbers__c = mTermAccountToSubClientNumbers.get(accountId);
-               		  oTerminationForm.NSP_Number_of_Active_Employees__c = mAccountToAssetEmployees.get(accountId);
+            List<String> assetFields = new List<String>{'Id','AccountId','Status','NSP_Account_Status__c','NSP_Client_Segment_type__c'};
+                //getting all the assets from record with filter from queryBuilder Class
+                String query = new NSP_QueryBuilder(NSP_ServiceConstants.ASSET_SOBJECT_TYPE, assetFields)
+                .addFilter('RecordTypeId', woAssetRecordTypeId)
+                .addFilter('NSP_Account_Status__c', NSP_ServiceConstants.Terminated,NSP_QueryBuilder.Operator.NOT_EQUALS)
+                .addFilter('AccountId', new List<Id>(sAccountIds), NSP_QueryBuilder.Operator.INCLUDES)
+                .addLimit(1).build();
+            List<Asset> assetsList = (List<Asset>)Database.query(query);
+            // added for DF-03867
+            String queryTerm = new NSP_QueryBuilder(NSP_ServiceConstants.ASSET_SOBJECT_TYPE, assetFields)
+                .addFilter('RecordTypeId', woAssetRecordTypeId)
+                .addFilter('NSP_Account_Status__c', NSP_ServiceConstants.TERMINATED)
+                .addFilter('AccountId', new List<Id>(sAccountIds), NSP_QueryBuilder.Operator.INCLUDES)
+                .orderBy('NSP_Termination_Date__c','Desc',False)
+                .addLimit(1).build();
+            List<Asset> terminatedAssetsList = (List<Asset>)Database.query(queryTerm);
+            List<NSP_Sub_Client__c> lTerminatedSubClients = new List<NSP_Sub_Client__c>(
+                [
+                    SELECT
+                        Id , NSP_Account__c , NSP_Sub_Client__c , NSP_Renewal_Date__c ,
+                        NSP_Original_Contract_Date__c , NSP_Account_Status_Date__c ,
+                        NSP_Asset__r.NSP_Account_Status_Date__c
+                    FROM NSP_Sub_Client__c 
+                    WHERE (
+                        NSP_Account__c IN: sAccountIds
+                        AND NSP_Asset__c IN: terminatedAssetsList
+                    )
+                ]
+            );
+            List<NSP_Sub_Client__c> lSubClients = new List<NSP_Sub_Client__c>(
+                [
+                    SELECT
+                        Id , NSP_Account__c , NSP_Sub_Client__c , NSP_Renewal_Date__c ,
+                        NSP_Original_Contract_Date__c
+                    FROM NSP_Sub_Client__c 
+                    WHERE (
+                        NSP_Account__c IN: sAccountIds
+                        AND NSP_Asset__c IN: assetsList
+                        AND NSP_Account_Status__c != :NSP_ServiceConstants.TERMINATED
+                    )
+                ]
+            );
+            Map<Id,String> mTermAccountToSubClientNumbers = new Map<Id,String>();
+            for(NSP_Sub_Client__c oTempSClient : lTerminatedSubClients){
+                if ( String.isNotBlank(oTempSClient.NSP_Sub_Client__c)
+                    && ( oTempSClient.NSP_Account_Status_Date__c >= oTempSClient.NSP_Asset__r.NSP_Account_Status_Date__c )
+                    )
+                {
+                    if(mTermAccountToSubClientNumbers.get(oTempSClient.NSP_Account__c) != null ){
+                        String subClientNumbers = mTermAccountToSubClientNumbers.get(oTempSClient.NSP_Account__c) + ',' + oTempSClient.NSP_Sub_Client__c;
+                        mTermAccountToSubClientNumbers.put(oTempSClient.NSP_Account__c,subClientNumbers);
+                    }else{
+                        mTermAccountToSubClientNumbers.put(oTempSClient.NSP_Account__c,oTempSClient.NSP_Sub_Client__c);
                     }
-                    Else{
-                      oTerminationForm.NSP_Client_Sub_Account_Numbers__c = mAccountToSubClientNumbers.get(accountId);
-               		  oTerminationForm.NSP_Number_of_Active_Employees__c = mAccountToAssetEmployees.get(accountId);
-                    }  
-                 }
-                if(mAccountToAssetAIMSClientNumber != null){
-                    oTerminationForm.NSP_Client_Number__c = mAccountToAssetAIMSClientNumber.get(accountId);
                 }
-                if(mClientSegmentAsset != null){
-                    oTerminationForm.NSP_Segment_Type__c = mClientSegmentAsset.get(accountId); 
+            }
+            Map<Id,String> mAccountToSubClientNumbers = new Map<Id,String>();
+            Map<Id, String> mAccountToAssetAIMSClientNumber = new Map<Id, String> ();
+            for(NSP_Sub_Client__c oTempSClient : lSubClients){
+                if(String.isNotBlank(oTempSClient.NSP_Sub_Client__c)){
+                    if(mAccountToSubClientNumbers.get(oTempSClient.NSP_Account__c) != null ){
+                        String subClientNumbers = mAccountToSubClientNumbers.get(oTempSClient.NSP_Account__c) + ',' + oTempSClient.NSP_Sub_Client__c;
+                        mAccountToSubClientNumbers.put(oTempSClient.NSP_Account__c,subClientNumbers);
+                    }else{
+                        mAccountToSubClientNumbers.put(oTempSClient.NSP_Account__c,oTempSClient.NSP_Sub_Client__c);
+                    }
                 }
-                if(mClientRenewelDate != null){
-                    oTerminationForm.NSP_Renewal_Date__c = mClientRenewelDate.get(accountId); 
+            }
+            List<Asset> lAssets = new List<Asset>(
+                [
+                    SELECT Id , AccountId , NSP_Client__c , NSP_Unique_Active_Employee__c
+                    FROM Asset
+                    WHERE (
+                        RecordTypeId =: woAssetRecordTypeId
+                        AND AccountId IN : sAccountIds
+                    )
+                ]
+            );
+            Map<Id,Decimal> mAccountToAssetEmployees = new Map<Id,Decimal>();
+            for(Asset otempAsset : lAssets){
+                Decimal uniqueActiveEmp = 0;
+                if ( otempAsset.NSP_Unique_Active_Employee__c != null ) {
+                    uniqueActiveEmp = otempAsset.NSP_Unique_Active_Employee__c
                 }
-            }           
+                mAccountToAssetEmployees.put(otempAsset.AccountId,uniqueActiveEmp);
+                if(otempAsset.NSP_Client__c != null){
+                    mAccountToAssetAIMSClientNumber.put(otempAsset.AccountId, otempAsset.NSP_Client__c);
+                }
+            }
+            Map<Id,String> mClientSegmentAsset = new Map<Id,String>();
+            for(Asset oClientAsset : assetsList){
+                if(oClientAsset.NSP_Client_Segment_type__c != null){
+                    mClientSegmentAsset.put(oClientAsset.AccountId, oClientAsset.NSP_Client_Segment_type__c);
+                }
+            }
+            Map<ID,NSP_Sub_Client__c> nonTermSubClientsMap = new Map<ID,NSP_Sub_Client__c>();
+            for(NSP_Sub_Client__c oClientRenewel : lSubClients){
+                if ( String.isNotBlank( oClientRenewel.NSP_Sub_Client__c )
+                    && oClientRenewel.NSP_Sub_Client__c.endsWith( '00' )
+                    )
+                {
+                    nonTermSubClientsMap.put(oClientRenewel.NSP_Account__c, oClientRenewel);
+                }
+            }
+            Map<Id,String> termClientSegmentAsset = new Map<Id,String>();
+            for(Asset pClientAsset : terminatedAssetsList){
+                if(pClientAsset.NSP_Client_Segment_type__c != null){
+                    termClientSegmentAsset.put(pClientAsset.AccountId, pClientAsset.NSP_Client_Segment_type__c);
+                }
+            }
+            Map<ID,NSP_Sub_Client__c> termSubClientsMap = new Map<ID,NSP_Sub_Client__c>();
+            for(NSP_Sub_Client__c oClientRenewel : lTerminatedSubClients){
+                if ( String.isNotBlank( oClientRenewel.NSP_Sub_Client__c )
+                    && oClientRenewel.NSP_Sub_Client__c.endsWith( '00' )
+                    )
+                {
+                    termSubClientsMap.put(oClientRenewel.NSP_Account__c, oClientRenewel);
+                }
+            }
+            List<NSP_Termination_Form__c> nonTerminatedFormList = new List<NSP_Termination_Form__c>();
+            List<NSP_Termination_Form__c> terminatedFormList = new List<NSP_Termination_Form__c>();
+            for(NSP_Termination_Form__c oTerminationForm : lTerminationForms){
+                if(oTerminationForm.NSP_Project_Task__c != null){
+                    pse__Project_Task__c oProjectTask  = mProjectTasks.get(oTerminationForm.NSP_Project_Task__c);
+                    Id accountId = oProjectTask?.pse__Project__r?.pse__Account__c;
+                    if(accountId != null){
+                        if(oTerminationForm.RecordTypeId != ClientRecordTypeId){
+                            //check if Account has Active WO Asset
+                            if(mAccountToSubClientNumbers.containsKey(accountId)){
+                                nonterminatedFormList.add(oTerminationForm);
+                            } else{
+                                terminatedFormList.add(oTerminationForm);
+                            }
+                        } else {
+                            //for ClientRecordTypeId values will come from Active WO Asset
+                            nonterminatedFormList.add(oTerminationForm);
+                        }
+                        if(mAccountToAssetAIMSClientNumber.containsKey(accountId)){
+                            oTerminationForm.NSP_Client_Number__c = mAccountToAssetAIMSClientNumber.get(accountId);
+                        }
+                        if(mAccountToAssetEmployees.containsKey(accountId)){
+                            oTerminationForm.NSP_Number_of_Active_Employees__c = mAccountToAssetEmployees.get(accountId);
+                        }
+                    }
+                }
+            }
+            if(!nonTerminatedFormList.isEmpty()){
+                updateTermFormFields(
+                    nonTerminatedFormList ,
+                    mProjectTasks ,
+                    mAccountToSubClientNumbers ,
+                    mClientSegmentAsset ,
+                    nonTermSubClientsMap
+                );
+            }
+            if(!terminatedFormList.isEmpty()){
+                updateTermFormFields(
+                    terminatedFormList ,
+                    mProjectTasks ,
+                    mTermAccountToSubClientNumbers ,
+                    termClientSegmentAsset ,
+                    termSubClientsMap
+                );
+            }
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_TerminationFormTriggerHelper.class.getName() ,
+                'populateSubClientandAssetValues' ,
+                e
+            );
         }
     }
-
+    
+    private void updateTermFormFields(
+        List<NSP_Termination_Form__c> termformList , 
+        Map<Id,pse__Project_Task__c> projectTasks ,
+        Map<Id,String> accountToSubClientNumbers ,
+        Map<Id,String> clientSegmentAsset ,
+        Map<ID,NSP_Sub_Client__c> accountSubClientsMap
+        )
+    {
+        try{
+            if ( ( termformList != null ) && !termformList.isEmpty() ) {
+                for(NSP_Termination_Form__c oTerminationForm : termformList){
+                    pse__Project_Task__c oProjectTask  = ProjectTasks.get(oTerminationForm.NSP_Project_Task__c);
+                    Id accountId = oProjectTask?.pse__Project__r?.pse__Account__c;
+                    if(accountId != null){
+                        if ( accountToSubClientNumbers != null ) {
+                            oTerminationForm.NSP_Client_Sub_Account_Numbers__c = accountToSubClientNumbers.get(accountId);
+                        }
+                        if (clientSegmentAsset != null && clientSegmentAsset.containsKey(accountId)){
+                            oTerminationForm.NSP_Segment_Type__c = clientSegmentAsset.get(accountId);
+                        }
+                        if (accountSubClientsMap != null && accountSubClientsMap.containsKey(accountId)){
+                            NSP_Sub_Client__c sub = accountSubClientsMap.get(accountId);
+                            if ( accountSubClient != null ) {
+                                oTerminationForm.NSP_Renewal_Date__c = accountSubClient.NSP_Renewal_Date__c;
+                                oTerminationForm.NSP_CSA_Effective_Date__c = accountSubClient.NSP_Original_Contract_Date__c;
+                            }
+                        }
+                    }
+                }
+            }
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_TerminationFormTriggerHelper.class.getName() ,
+                'updateTermFormFields' ,
+                e
+            );
+        }
+    }
 
     //
     // Iterates throught the list of new Asset and passes the required attributes to other methods.
@@ -259,7 +366,7 @@ public class NSP_TerminationFormTriggerHelper {
         Map<Id,Set<Id>> mTFToUsers = new Map<Id,Set<Id>>();
         Map<Id,Set<Id>> mTFSharingToDelete = new Map<Id,Set<Id>>();
         List<NSP_Termination_Form__c> queueNewTerm = new List<NSP_Termination_Form__c>();
-       	Map<Id, NSP_Termination_Form__c> queueOldMap = new Map<Id, NSP_Termination_Form__c>();
+        Map<Id, NSP_Termination_Form__c> queueOldMap = new Map<Id, NSP_Termination_Form__c>();
         Set<Id> processedTerm = new Set<Id>();
         Set<Id> termFormSet = new Set<Id>();
         Set<ID> terminationFormBellNotificationSet = new Set<ID>();
@@ -393,15 +500,15 @@ public class NSP_TerminationFormTriggerHelper {
         if(termFormToSpecialistIdsMap.keySet().size()> 0 ){
             for(NSP_Termination_Form__c termForm : termFormToSpecialistIdsMap.keySet()){
                 CustomNotificationType bellNotificationTermForm = [SELECT Id, DeveloperName FROM CustomNotificationType WHERE DeveloperName='NSP_Bell_Notification_Termination_Form' LIMIT 1];  
-        		Messaging.CustomNotification Notification = new Messaging.CustomNotification();
-        		Notification.setNotificationTypeId(bellNotificationTermForm.id);
-            	if(termForm.NSP_Status__c == TERM_TEAM_DENIED || termForm.NSP_Status__c == SUPERVISOR_DENIED){
+                Messaging.CustomNotification Notification = new Messaging.CustomNotification();
+                Notification.setNotificationTypeId(bellNotificationTermForm.id);
+                if(termForm.NSP_Status__c == TERM_TEAM_DENIED || termForm.NSP_Status__c == SUPERVISOR_DENIED){
                     Notification.setTitle('Approval Request for Termination Form is Rejected');
                 }else if(termForm.NSP_Status__c == TERM_TEAM_APPROVED){
-                	Notification.setTitle('Approval Request for Termination Form is Approved');
+                    Notification.setTitle('Approval Request for Termination Form is Approved');
                 }
-        		Notification.setBody(termForm.Name); 
-        		Notification.setTargetId(termForm.Id);
+                Notification.setBody(termForm.Name); 
+                Notification.setTargetId(termForm.Id);
                 Notification.send(termFormToSpecialistIdsMap.get(termForm));
             }
         }
@@ -559,14 +666,14 @@ public class NSP_TerminationFormTriggerHelper {
 */
     public void updateAccountOnTerm(List<NSP_Termination_Form__c> newList,Map<Id, NSP_Termination_Form__c> oldMap){
         List <NSP_Termination_Form__c> termListLookup = new List<NSP_Termination_Form__c> ();
-		map<id,id> accountIdMap = new map<id,id>();
+        map<id,id> accountIdMap = new map<id,id>();
         map<id,id> termAccountIdMap = new map<id,id>();
-		for(NSP_Termination_Form__c newTerm : newList){
-			NSP_Termination_Form__c oldTerm = oldMap != null ? oldMap.get(newTerm.Id):null;
+        for(NSP_Termination_Form__c newTerm : newList){
+            NSP_Termination_Form__c oldTerm = oldMap != null ? oldMap.get(newTerm.Id):null;
             if((newTerm.NSP_Project_Task__c != null && Trigger.isInsert) || (newTerm.NSP_Project_Task__c != oldTerm.NSP_Project_Task__c && newTerm.NSP_Project_Task__c != null)  ){
                 termAccountIdMap.put(newTerm.Id,newTerm.NSP_Project_Task__c );
             }
-		}
+        }
         if(termAccountIdMap.Size() > 0) {
            
             for(pse__Project_Task__c eachProjectTasklist : [SELECT Id, NSP_Account_Id__c FROM pse__Project_Task__c 

@@ -30176,7 +30176,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>NSP_Termination_Form__c.NSP_CSA_Effective_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
