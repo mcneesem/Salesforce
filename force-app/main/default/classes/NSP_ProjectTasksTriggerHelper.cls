@@ -1,5 +1,5 @@
 public class NSP_ProjectTasksTriggerHelper {
-    // test w/ NSP_ProjectTasksTriggerHelperTest (81%)
+    // test w/ NSP_ProjectTasksTriggerHelperTest (79%)
 
     private static final String HUNDRED_PERCENT =  '100%';
     private static final string SYS_ADMIN = 'System Administrator';
@@ -169,7 +169,7 @@ public class NSP_ProjectTasksTriggerHelper {
         } catch ( exception e ) {
             NSP_ProjectTasksTriggerHelper.handleException(
                 e ,
-                'updateAssetInDocusign'
+                'updateDocusignAsset'
             );
         }
     }
@@ -213,7 +213,7 @@ public class NSP_ProjectTasksTriggerHelper {
         }
             if ( !cobraChildProjectTaskList.isEmpty() ) {
                 List<Database.SaveResult> insertChildResults = Database.insert( cobraChildProjectTaskList , false );
-                NSP_ErrorLogHandler.logSaveResultsException(
+                NSP_ErrorLogHandler.logResults(
                     NSP_ProjectTasksTriggerHelper.class.getName() ,
                     'createCobraSubTasks' ,
                     insertChildResults
@@ -803,34 +803,47 @@ public class NSP_ProjectTasksTriggerHelper {
             Database.update(listOfMilestone);
         }
     }
-    /**
-    * UPDATE: This method update Project Complete field on related Project
-    * @return void
-    * STY-00717                 
-    */
-    @future
-    private static void updateProjectPercentageComplete(Set<Id> projectIds){
+
+    //
+    // UPDATE: This method update Project Complete field on related Project
+    // @return void
+    // STY-00717
+    //
+    @future private static void updateProjectPercentageComplete( Set<Id> projectIds ) {
         List<pse__Proj__c> listOfProject = new List<pse__Proj__c>();
-        
-        AggregateResult[] groupedResults = [SELECT SUM(NSP_PercentageCompleteFormula__c),Count(id),pse__Project__c 
-                                            FROM pse__Project_Task__c 
-                                            WHERE pse__Project__c IN :projectIds AND
-                                            (pse__Status__c !=: NSP_ServiceConstants.PROJECT_TASK_CANCELLED OR
-                                                pse__Status__c !=: NSP_ServiceConstants.PROJECTSTATUSCOMPLETED )
-                                            GROUP BY pse__Project__c ];
-        
-        for(AggregateResult ar:groupedResults) {
-            if(ar.get(NSP_ServiceConstants.PSE_PROJECT)!=null ){
-                Id pProject = (ID)ar.get(NSP_ServiceConstants.PSE_PROJECT);
-            Decimal count = (Decimal)ar.get('expr0');
-            Decimal countOfrecords = (Decimal)ar.get('expr1');
-                pse__Proj__c projectObj = new pse__Proj__c(Id = pProject);
-            projectObj.NSP_Project_Complete__c= count/countOfrecords;
-            listOfProject.add(projectObj);
+        AggregateResult[] groupedResults = [
+            SELECT SUM(NSP_PercentageCompleteFormula__c) , Count(Id) , pse__Project__c
+            FROM pse__Project_Task__c 
+            WHERE (
+                ( pse__Project__c IN :projectIds )
+                AND (
+                    ( pse__Status__c != :NSP_ServiceConstants.PROJECT_TASK_CANCELLED )
+                    OR ( pse__Status__c != :NSP_ServiceConstants.PROJECTSTATUSCOMPLETED )
+                )
+            )
+            GROUP BY pse__Project__c
+        ];
+        for( AggregateResult ar : groupedResults ) {
+            if( ar.get( NSP_ServiceConstants.PSE_PROJECT ) != null ) {
+                Id pProject = (Id)ar.get( NSP_ServiceConstants.PSE_PROJECT );
+                Decimal count = (Decimal)ar.get( 'expr0' );
+                Decimal countOfrecords = (Decimal)ar.get( 'expr1' );
+                pse__Proj__c projectObj = new pse__Proj__c(
+                    Id=pProject
+                );
+                projectObj.NSP_Project_Complete__c = ( count / countOfrecords );
+                listOfProject.add( projectObj );
+            }
         }
-        }
-        if(!listOfProject.isEmpty()){
-            Database.update(listOfProject);
+        if ( !listOfProject.isEmpty() ) {
+            try {
+                Database.update( listOfProject );
+            } catch ( Exception e ) {
+                NSP_ProjectTasksTriggerHelper.handleException(
+                    e ,
+                    'updateProjectPercentageComplete'
+                );
+            }
         }
     }
 
@@ -1788,7 +1801,7 @@ public class NSP_ProjectTasksTriggerHelper {
             }
             if ( !projListToUpdate.isEmpty() && ( childProjectList.size() == 0 ) ) {
                 Database.SaveResult[] projectUpdateList = Database.update( projListToUpdate , false );
-                NSP_ErrorLogHandler.logSaveResultsException(
+                NSP_ErrorLogHandler.logResults(
                     NSP_ProjectTasksTriggerHelper.class.getName() ,
                     'createNewTaxIMPLSubProject:ProjectUpdate' ,
                     projectUpdateList
@@ -1882,7 +1895,7 @@ public class NSP_ProjectTasksTriggerHelper {
             if ( !projListToUpdate.isEmpty() && !newProjectIdSet.isEmpty() && ( childProjectList.size() == 0 ) ) {
                 Database.SaveResult[] projectUpdateList = Database.update( projListToUpdate , false );
                 wxwaDataMigrationProjectCreationEmail( newProjectIdSet );
-                NSP_ErrorLogHandler.logSaveResultsException(
+                NSP_ErrorLogHandler.logResults(
                     NSP_ProjectTasksTriggerHelper.class.getName() ,
                     'createWXWADataMigrationSubProject:ProjectUpdate' ,
                     projectUpdateList
@@ -2075,10 +2088,10 @@ public class NSP_ProjectTasksTriggerHelper {
 
     private static void handleException( Exception e , String methodName ) {
         if ( e != null ) {
-            NSP_ErrorLogHandler.logSaveException(
+            NSP_ErrorLogHandler.logException(
                 NSP_ProjectTasksTriggerHelper.class.getName() ,
                 methodName ,
-                e.getMessage() + ' ~ ' + e.getStackTraceString()
+                e
             );
         }
     }
@@ -2260,16 +2273,16 @@ public class NSP_ProjectTasksTriggerHelper {
         recordsToUpdate.addAll(woListToUpdate);
         recordsToUpdate.addAll(saListToUpdate);
         List<Database.SaveResult> results1 = Database.update( recordsToUpdate , false );
-        NSP_ErrorLogHandler.logSaveResultsException(
+        NSP_ErrorLogHandler.logResults(
             NSP_ProjectTasksTriggerHelper.class.getName() ,
-            'scheduleWorkOrderAndSA' ,
+            'scheduleWorkOrderAndSA:update' ,
             results1
         );
         //insert Assigned Resource
         List<Database.SaveResult> results3 = Database.insert( assgnResToCreate , false );
-        NSP_ErrorLogHandler.logSaveResultsException(
+        NSP_ErrorLogHandler.logResults(
             NSP_ProjectTasksTriggerHelper.class.getName() ,
-            'scheduleWorkOrderAndSA' ,
+            'scheduleWorkOrderAndSA:insert' ,
             results3
         );
     }
@@ -2365,9 +2378,9 @@ public class NSP_ProjectTasksTriggerHelper {
             if ( !newPTAList.isEmpty() ) {
                 NSP_ProjectTaskAssignmentTriggerHelper.runAssignmentMethod = true;
                 Database.UpsertResult[] upsertResults = Database.upsert( newPTAList , false);
-                NSP_ErrorLogHandler.logUpsertResultsException(
+                NSP_ErrorLogHandler.logResults(
                     NSP_ProjectTasksTriggerHelper.class.getName() ,
-                    'createPTAIfOwnerIsChanged:upsertResults' ,
+                    'createPTAIfOwnerIsChanged' ,
                     upsertResults
                 );
             }
