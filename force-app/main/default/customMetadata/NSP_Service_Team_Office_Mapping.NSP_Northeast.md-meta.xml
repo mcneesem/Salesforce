@@ -4,7 +4,7 @@
     <protected>false</protected>
     <values>
         <field>NSP_Sales_Offices__c</field>
-        <value xsi:type="xsd:string">801 Delaware 1
+        <value xsi:type="xsd:string">0801 Delaware 1
 2100 Maryland 1
 2101 Maryland 2
 4701 Norfolk
@@ -26,8 +26,8 @@
 3902 Philadelphia 2
 4001 Providence 1
 0701 Stamford
-902 Washington DC 2
-903 Washington DC 3</value>
+0902 Washington DC 2
+0903 Washington DC 3</value>
     </values>
     <values>
         <field>NSP_Service_Team_Email__c</field>
