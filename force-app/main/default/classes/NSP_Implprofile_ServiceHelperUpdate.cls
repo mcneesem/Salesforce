@@ -104,12 +104,16 @@ public class NSP_Implprofile_ServiceHelperUpdate {
             execute();
             finish();
             ipRecordsByAutomationMap= ipRecordsByAutomation;
-        }catch(Exception ex ){
-            NSP_ErrorLogHandler.logSaveException('NSP_Implprofile_ServiceHelperUpdate', 'executeAutomation', ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_Implprofile_ServiceHelperUpdate.class.getName() ,
+                'executeAutomation' ,
+                e
+            );
         }
         return ipRecordsByAutomationMap;
     }
-    
+
     private void start() {
         //get all Employee Data
         // Create a set of eligible records which we need to pull
@@ -227,8 +231,11 @@ public class NSP_Implprofile_ServiceHelperUpdate {
     
     private void finish(){
         List<Database.UpsertResult> upsertResults = Database.upsert(mileStonesToInsert.values(), false);
-        NSP_ErrorLogHandler.logUpsertResultsException('NSP_Implprofile_ServiceHelperUpdate', 'milestoneRecords:upsertResults', upsertResults);
-
+        NSP_ErrorLogHandler.logResults(
+            NSP_Implprofile_ServiceHelperUpdate.class.getName() ,
+            'finish:upsertResults' ,
+            upsertResults
+        );
         recToInsert.sort();
         for (SObject rec : recToInsert) {
             if(rec.getSObjectType() == Schema.pse__Project_Task__c.getSObjectType()){
@@ -245,10 +252,13 @@ public class NSP_Implprofile_ServiceHelperUpdate {
             database.update(updateProjTask,false);    
         }
         List<Database.UpsertResult> upsertImpResults = Database.upsert(impProfileToUpdate.values(), false);
-        NSP_ErrorLogHandler.logUpsertResultsException('NSP_Implprofile_ServiceHelperUpdate', 'impProfileToUpdate:upsertResults', upsertResults);
-
+        NSP_ErrorLogHandler.logResults(
+            NSP_Implprofile_ServiceHelperUpdate.class.getName() ,
+            'finish:upsertImpResults' ,
+            upsertImpResults
+        );
     }
-    
+
     private void getProjectDBRecords(){
         Set<Id> projectIDs = new Set<Id>();
         
@@ -2530,12 +2540,16 @@ public class NSP_Implprofile_ServiceHelperUpdate {
                 Insert newIPAautomation;
                 IPAautomation=newIPAautomation;
             }
-        }catch(Exception ex){
-            NSP_ErrorLogHandler.logSaveException('NSP_Implprofile_ServiceHelperUpdate', 'automationRecordUpdate', ex.getMessage());  
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_Implprofile_ServiceHelperUpdate.class.getName() ,
+                'automationRecordUpdate' ,
+                e
+            );
         }
         return IPAautomation;
     }
-    
+
     private Id getMilestoneId(List<pse__Milestone__c> listOfMilestone, String milestoneName){
         
         if(!listOfMilestone.isEmpty()){
