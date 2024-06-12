@@ -251,11 +251,19 @@ public class NSP_ImplementationHelper {
                 if(String.isNotBlank(userEmail)){
                     sendCopyActionStatusEmail(sourceId, recType, userEmail, ipRecordsMap);
                 }
-            } catch(Exception ex) {
-                NSP_ErrorLogHandler.logSaveException(NSP_ImplementationHelper.class.getName(), 'copyIpRecordData', ex.getMessage());
+            } catch ( Exception e ) {
+                NSP_ErrorLogHandler.logException(
+                    NSP_ImplementationHelper.class.getName() ,
+                    'copyIpRecordData:inner' ,
+                    e
+                );
             }
-        } catch (Exception ex) {
-            NSP_ErrorLogHandler.logSaveException(NSP_ImplementationHelper.class.getName(), 'copyIpRecordData', ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_ImplementationHelper.class.getName() ,
+                'copyIpRecordData:outer' ,
+                e
+            );
         }
     }
 
