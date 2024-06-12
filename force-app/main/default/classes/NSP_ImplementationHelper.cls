@@ -5,7 +5,7 @@
 * Name : NSP_ImplementationHelper
 */
 public class NSP_ImplementationHelper {
-    // test w/ NSP_ImplementationHelperTest,NSP_ImplementationProfileControllerTest (76%)
+    // test w/ NSP_ImplementationHelperTest,NSP_ImplementationProfileControllerTest (78%)
 
     // URL Params for Copy Action
     private static final String SOURCE_PARAM = 'source';
@@ -223,12 +223,26 @@ public class NSP_ImplementationHelper {
             String sourceId = config.get('sourceId');
             String recType = config.get('recType');
             String userEmail = config.get('userEmail');
+            List<String> relatedObjectNames = config.get('relatedObjnames') != null ? (List<String>) JSON.deserialize(config.get('relatedObjnames'), List<String>.class):new List<String>();
             List<SObject> postUpsertRecords = (List<SObject>) JSON.deserialize(config.get('postUpsertRecords'), List<SObject>.class);
-
             // Copy Data to target IP records
             try {
+                if(!relatedObjectNames.isEmpty()) {
+                    List<SObject> existingRecordsToDelete = new List<SObject>();
+                    for(String objName:relatedObjectNames) {
+                        String query = new NSP_QueryBuilder(objName, new List<String>{'Id'})
+                            .addFilter('NSP_Implementation_Profile__c', recordIds, NSP_QueryBuilder.Operator.INCLUDES)
+                            .build();
+                        List<SObject> existingRelatedRecords = Database.query(query);
+                        existingRecordsToDelete.addAll(existingRelatedRecords);
+                    }
+                    if(!existingRecordsToDelete.isEmpty()) {
+                        delete existingRecordsToDelete;
+                    }
+                }
+                
                 // Create IP child object records on all the target IP records 
-                Database.upsert(postUpsertRecords);
+                Database.insert(postUpsertRecords);
 
                 // Update incoming field values on target IP records
                 Map<String, List<String>> ipRecordsMap = updateCopyTargetIPRecords(recordIds, fieldValues);

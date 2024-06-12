@@ -204,6 +204,7 @@ export default class Nsp_fsoFormIp extends NavigationMixin(LightningElement) {
       sourceId: this.recordId,
       recType: 'FSO',
       userEmail: this.userData?.Email?.value,
+      relatedObjnames: JSON.stringify(fieldValues.relatedObjects),
       postUpsertRecords: JSON.stringify(fieldValues.postUpsertRecords),
     };
     copyIpRecordData({
@@ -233,6 +234,7 @@ export default class Nsp_fsoFormIp extends NavigationMixin(LightningElement) {
   }
 
   getFieldValuesToCopy(targetRecordIds) {
+    const uniqueRelatedObjSet = new Set();
     const fieldValues = this.state.selectedSections.reduce(
       (fieldValues, sectionName) => {
         const sectionFields = {
@@ -245,7 +247,7 @@ export default class Nsp_fsoFormIp extends NavigationMixin(LightningElement) {
             .filter((objName) => COPY_ABLE_IP_CHILD_OBJECTS.includes(objName))
             .forEach((objName) => {
               const objWiseChildRecs = sectionPostUpsertRecs[objName];
-
+              uniqueRelatedObjSet.add(objName);
               fieldValues.postUpsertRecords = [
                 ...fieldValues.postUpsertRecords,
                 ...this.getChildRecordsForAllTargetIpRecords(
@@ -270,7 +272,7 @@ export default class Nsp_fsoFormIp extends NavigationMixin(LightningElement) {
     NON_COPY_ABLE_FIELDS.forEach((fieldName) => {
       delete fieldValues[fieldName];
     });
-
+    fieldValues.relatedObjects = [...uniqueRelatedObjSet];
     return fieldValues;
   }
 

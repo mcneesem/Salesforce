@@ -221,6 +221,7 @@ public class NSP_ImplementationProfileControllerTest {
         config.put('recType', 'MM');
         config.put('userEmail', 'test@test.com');
         config.put('postUpsertRecords', JSON.serialize(new List<String>() ));
+        config.put('relatedObjnames', JSON.serialize(new List<String>{'Employee_Orientation__c'}));
 
         // WHEN
         Test.startTest();
