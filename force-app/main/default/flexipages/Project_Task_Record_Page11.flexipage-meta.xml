@@ -1289,7 +1289,7 @@
                     <criteria>
                         <leftValue>{!Record.Name}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>Complete termination analysis</rightValue>
+                        <rightValue>Completion of Termination Analysis</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.pse__Project__r.TemplateName__c}</leftValue>
