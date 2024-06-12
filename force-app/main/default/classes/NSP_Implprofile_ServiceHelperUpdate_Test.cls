@@ -178,6 +178,7 @@ public class NSP_Implprofile_ServiceHelperUpdate_Test {
         ip.NSP_Form_Completed__c=true;
         ip.Client_Implementing_Premier_Performance__c ='Yes';
         ip.Is_there_a_need_for_Integra__c = NSP_ServiceConstants.YES;
+        ip.Does_this_client_have_an_AWW__c = NSP_ServiceConstants.YES;
         ip.First_Pay_Date__c = system.today();
         Test.startTest();
         update ip;
