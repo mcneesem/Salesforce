@@ -13,7 +13,7 @@ public class NSP_DunningEmailNotificationsBatch implements Database.Batchable<sO
     public NSP_DunningEmailNotificationsBatch(){
         query = 'SELECT Id, CaseNumber, Status, ClosedDate, AccountId, Account.NSP_Max_Days_Overdue__c, NSP_Dunning_Emails_Sent__c, NSP_Dunning_Case_Invoice__c,NSP_Dunning_Automation__c,NSP_CSS_Email__c FROM Case WHERE Status!=\'Closed\' AND Account.NSP_Max_Days_Overdue__c > 30 AND Origin=\'Dunning\' AND RecordTypeId=:DUNNING_CASE_RT_ID';
     }
-    
+
     // start method
     public Database.QueryLocator start(Database.BatchableContext bc){
         //returns QueryLocator to execute method.
@@ -101,7 +101,7 @@ public class NSP_DunningEmailNotificationsBatch implements Database.Batchable<sO
             NSP_ErrorLogHandler.logSaveException('NSP_DunningEmailNotificationsBatch','execute',ex.getMessage());
         }
     }
-    
+
     public void finish(Database.BatchableContext bc){
         System.debug('Mails Sent :'+totalMailsSent);
         System.debug('Records Processed :'+recordsProcessed);
@@ -127,7 +127,16 @@ public class NSP_DunningEmailNotificationsBatch implements Database.Batchable<sO
             'Total Records :'+recordsProcessed +
             'Total Emails Sent :'+totalMailsSent
         );
-        Messaging.sendEmail(new Messaging.SingleEmailMessage[] { mail });
+        try {
+            Messaging.sendEmail( new Messaging.SingleEmailMessage[]{mail} );
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_DunningEmailNotificationsBatch.class.getName() ,
+                'finish' ,
+                e
+            );
+        }
     }
 
 }
+//
