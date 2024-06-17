@@ -1,5 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Redirect_to_case</name>
+        <label>Redirect to case</label>
+        <locationX>1095</locationX>
+        <locationY>3590</locationY>
+        <actionName>c:NSP_NavigateToRecord</actionName>
+        <actionType>component</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>recordId</name>
+            <value>
+                <elementReference>finalCaseId</elementReference>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
     <apiVersion>56.0</apiVersion>
     <assignments>
         <name>Add_Contact_Id_in_Collection</name>
@@ -580,6 +596,9 @@
         <label>Create Case Contacts</label>
         <locationX>1095</locationX>
         <locationY>3482</locationY>
+        <connector>
+            <targetReference>Redirect_to_case</targetReference>
+        </connector>
         <faultConnector>
             <targetReference>handle_flow_fault</targetReference>
         </faultConnector>
@@ -691,7 +710,7 @@
             <fieldText>&lt;p&gt;&lt;strong style=&quot;color: rgb(247, 4, 28); font-size: 16px;&quot;&gt;Case Not Found!&lt;/strong&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
-        <showFooter>false</showFooter>
+        <showFooter>true</showFooter>
         <showHeader>true</showHeader>
     </screens>
     <screens>
@@ -870,7 +889,7 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <name>faultFlow</name>
+            <name>triggeringFlow</name>
             <value>
                 <stringValue>NSP_Add_Multiple_Contacts_On_Case</stringValue>
             </value>
