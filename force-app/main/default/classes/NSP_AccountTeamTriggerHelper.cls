@@ -533,6 +533,7 @@ NSP_WX_WA_Benefits_Specialist__c, and NSP_Retirement_Service_Plan_Name__c field 
     * @return void                          
     */
     private static void updateAssetRegion(Set<Id> accIds, Id woRecordTypeId,  Map<Id, NSP_Account_Team__c> accountTeams) {
+        Boolean switchEnabled = AccountTeamTriggerSettings__c.getInstance(UserInfo.getUserId()).IsServiceRegionChangeEnabled__c;
         List<Asset> assetToBeUpdated = new List<Asset>();
         //Get All Active asset for the account
         for(Asset asset : [SELECT Id, RecordTypeId, NSP_Service_Region__c, AccountId From Asset WHERE RecordTypeId =:woRecordTypeId AND AccountId =:accIds AND NSP_Account_Status__c = 'Active']){
@@ -540,7 +541,7 @@ NSP_WX_WA_Benefits_Specialist__c, and NSP_Retirement_Service_Plan_Name__c field 
             if(accountTeams.containsKey(asset.AccountId) && accountTeams.get(asset.AccountId).NSP_Role__c == 'Manager, HR Services') {
                 asset.NSP_Service_Region__c = accountTeams.get(asset.AccountId).NSP_User__r.NSP_Service_Region__c;
                 assetToBeUpdated.add(asset);
-            }else {
+            }else if(switchEnabled){
                 //When new Role is not equal to Manager, HR Services
                 asset.NSP_Service_Region__c = null;
                 assetToBeUpdated.add(asset);
