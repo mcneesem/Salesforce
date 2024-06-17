@@ -16,7 +16,7 @@ public class NSP_NotifyPMForITAProjBatch implements Schedulable,Database.Batchab
      * description: Start method to query project records
      */
     public Database.QueryLocator start(Database.BatchableContext bc){       
-        String ITA_IMPLEMENTATION = NSP_ServiceConstants.ITA_IMPLEMENTATION + '%';
+        String ITA_IMPLEMENTATION = '%ITA%Implementation%';
         List<String> ProjFields = new List<String>{
                 'ID',
                 'NSP_RET_Client_ID__c',
