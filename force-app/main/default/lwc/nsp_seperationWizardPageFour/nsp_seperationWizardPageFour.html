@@ -10,18 +10,20 @@
 
             <!-- <label class="slds-form-element__label" for="NSP_ReportPlace__c"> <span class="slds-required" >*</span> Where would you like us to place this report ?</label> -->
 
-        
+
             <!--**********Corporate Review ******************-->
             <div if:true={isCorporateReview}>
-              <div class="slds-p-vertical_medium " >
+              <div class="slds-p-vertical_medium ">
                 <div class="slds-form-element slds-form-element_horizontal ">
-                  <lightning-radio-group name="ReviewStatus" label="Select Review Status" options={ReviewStatusOption.data.values}
-                    value={reviewStatusValue} onchange={handleChange} required={isCorporateReview} type="radio">
+                  <lightning-radio-group name="ReviewStatus" label="Select Review Status"
+                    options={ReviewStatusOption.data.values} value={reviewStatusValue} onchange={handleChange}
+                    required={isCorporateReview} type="radio">
                   </lightning-radio-group>
-                  <lightning-input-field style='display:none' class="slds-hidden" data-fname="reviewStatus" field-name="NSP_ReviewStatus__c"
-                  value={reviewStatusValue} onchange={handleChange} required={isCorporateReview} ></lightning-input-field>
+                  <lightning-input-field style='display:none' class="slds-hidden" data-fname="reviewStatus"
+                    field-name="NSP_ReviewStatus__c" value={reviewStatusValue} onchange={handleChange}
+                    required={isCorporateReview}></lightning-input-field>
+                </div>
               </div>
-            </div>
             </div>
 
             <!--above only for Coporate Review-->
@@ -29,456 +31,541 @@
             <!-- ******************* Screen Four HRS Reivew Guideline *****************-->
             <div if:true={isHRSReview}>
               <div style="padding-left:0.1rem;;position:relative">
-                
-                <div class="slds-text-body_regular slds-p-vertical_medium">HRS Review Guidelines 
-                 <lightning-icon icon-name="utility:info" alternative-text="Success!" size="xx-small"  style="padding-left:0.3rem" onclick={showMsg}> </lightning-icon>
+
+                <div class="slds-text-body_regular slds-p-vertical_medium">HRS Review Guidelines
+                  <lightning-icon icon-name="utility:info" alternative-text="Success!" size="xx-small"
+                    style="padding-left:0.3rem" onclick={showMsg}> </lightning-icon>
                 </div>
-                <div class="showMsg" style="display:none"> 
+                <div class="showMsg" style="display:none">
                   <!-- slds-popover_tooltip  style="position:absolute;top:30px;left:30px;max-width:50rem!important;" -->
-                  <div class="slds-popover slds-nubbin_top-left slds-popover_full-width" role="dialog" style="position:absolute;top:52px;left:118px;" >
-                  <div id="popover-body-id" class="slds-popover__body">
+                  <div class="slds-popover slds-nubbin_top-left slds-popover_full-width" role="dialog"
+                    style="position:absolute;top:52px;left:118px;">
+                    <div id="popover-body-id" class="slds-popover__body">
                       <ul>
-                      <li>Is the agreement is fully executed. If not, remind the client request from client and do not finalize until executed agreement received.</li>
-                      <br/>
-                      <li>Insperity included in the release of claims paragraph as a released party. If not, remind client to include in any future agreement. &ndash; if checked, a message pops up
-                        <br/>
-                      <ul>
-                        <br/>
-                      <li>REMINDER: [CLIENT NAME] and Insperity PEO Services, L.P. ("Insperity") and their respective and former parent companies, subsidiaries and other affiliated companies as well as any of their respective current and former&nbsp;insurers, directors, officers, agents, shareholders, and employees&hellip;</li>
+                        <li>Is the agreement is fully executed. If not, remind the client request from client and do not
+                          finalize until executed agreement received.</li>
+                        <br />
+                        <li>Insperity included in the release of claims paragraph as a released party. If not, remind
+                          client to include in any future agreement. &ndash; if checked, a message pops up
+                          <br />
+                          <ul>
+                            <br />
+                            <li>REMINDER: [CLIENT NAME] and Insperity PEO Services, L.P. ("Insperity") and their
+                              respective and former parent companies, subsidiaries and other affiliated companies as
+                              well as any of their respective current and former&nbsp;insurers, directors, officers,
+                              agents, shareholders, and employees&hellip;</li>
+                          </ul>
+                        </li>
+                        <br />
+                        <li>Disclaimer for the promised payment is included. If not, remind the client to include in any
+                          future agreement. &ndash; if checked, a message pops up
+                          <br />
+                          <ul>
+                            <li>REMINDER: You agree that the additional compensation to be paid under this Agreement, is
+                              due solely from [CLIENT NAME] and that Insperity has no obligation to pay the additional
+                              compensation, even though its payment may be processed through Insperity.</li>
+                          </ul>
+                        </li>
                       </ul>
-                      </li>
-                      <br/>
-                      <li>Disclaimer for the promised payment is included. If not, remind the client to include in any future agreement. &ndash; if checked, a message pops up
-                      <br/>
-                      <ul>
-                      <li>REMINDER: You agree that the additional compensation to be paid under this Agreement, is due solely from [CLIENT NAME] and that Insperity has no obligation to pay the additional compensation, even though its payment may be processed through Insperity.</li>
-                      </ul>
-                      </li>
-                      </ul>
-                      <br/>
+                      <br />
                       <p>Make sure the following requirements are met:</p>
-                      <br/>
+                      <br />
                       <ul>
-                      <li>* Insperity named correctly "Insperity PEO Services, L.P."</li>
-                      <br/>
-                      <li>* No continuation of employment</li>
-                      <br/>
-                      <li>* No continuation of salary</li>
-                      <br/>
-                      <li>* Benefits end on termination date</li>
-                      <br/>
-                      <li>* No release of wages claims in California (CA Division of Labor Standards Enforcement, Fair Labor Standards Act)</li>
-                      <br/>
-                      <li>* Employment Agreement (request copy and review for any provisions surviving the termination)</li>
-                      <br/>
-                      <li>* Stock Provisions: Obtain written confirmation from the&nbsp;client that any stock-related transactions (recording sale of stock, reporting of taxes) will be handled by the client internally</li>
-                      <br/>
-                      <li>* If the client has agreed to not contest an unemployment claim by the WSEE, please notify an unemployment specialist @ <a href="mailto:Unemployment_Specialists@insperity.com">Unemployment_Specialists@insperity.com</a>. Please remember to enter "SEPARATION AGREEMENT- NO PROTEST" into the subject line. Please include: Client Name, Client Number, WSEE Name, and WSEE ID# in the body of the email.</li>
+                        <li>* Insperity named correctly "Insperity PEO Services, L.P."</li>
+                        <br />
+                        <li>* No continuation of employment</li>
+                        <br />
+                        <li>* No continuation of salary</li>
+                        <br />
+                        <li>* Benefits end on termination date</li>
+                        <br />
+                        <li>* No release of wages claims in California (CA Division of Labor Standards Enforcement, Fair
+                          Labor Standards Act)</li>
+                        <br />
+                        <li>* Employment Agreement (request copy and review for any provisions surviving the
+                          termination)</li>
+                        <br />
+                        <li>* Stock Provisions: Obtain written confirmation from the&nbsp;client that any stock-related
+                          transactions (recording sale of stock, reporting of taxes) will be handled by the client
+                          internally</li>
+                        <br />
+                        <li>* If the client has agreed to not contest an unemployment claim by the WSEE, please notify
+                          an unemployment specialist @ <a
+                            href="mailto:Unemployment_Specialists@insperity.com">Unemployment_Specialists@insperity.com</a>.
+                          Please remember to enter "SEPARATION AGREEMENT- NO PROTEST" into the subject line. Please
+                          include: Client Name, Client Number, WSEE Name, and WSEE ID# in the body of the email.</li>
                       </ul>
-                      <br/>
+                      <br />
+                    </div>
                   </div>
-                </div> 
                 </div>
-                </div>
-              <lightning-input-field class="slds-p-vertical_medium" field-name="NSP_ExceptionGranted__c" required={isHRSReview}>
+              </div>
+              <lightning-input-field class="slds-p-vertical_medium" field-name="NSP_ExceptionGranted__c"
+                required={isHRSReview}>
               </lightning-input-field>
               <lightning-input-field class="slds-p-vertical_medium"
                 field-name="NSP_ManagerHRServicesWhoGrantedException__c" required={isHRSReview}></lightning-input-field>
-             <div if:true={NSP_Mid_Market_or_Mid_Market_Enterprise__c}>
-            <div class="slds-p-vertical_medium">
-              <div class="medium slds-form-element slds-form-element_horizontal">
-              <lightning-radio-group name="AnyAttachedApprovalEmail"
-                label="Have you attached the approval email?"
-                options={pickValueYesNo} value={NSP_Attached_Approval_Email__c} onchange={handleChange} 
-                required
-                type="radio">
-              </lightning-radio-group>
-              <lightning-input-field style="display:none" class="slds-hidden" field-name="NSP_Attached_Approval_Email__c"
-                value={NSP_Attached_Approval_Email__c}  required ></lightning-input-field>
-              </div>
-            </div>
-          </div>
-          <div class="slds-text-color_error slds-p-vertical_medium slds-form-element NSP_Attached_Approval_Email__c" style="display:none">
-            STOP! Attach the document to the right
-          </div>
-        </div>
-            <!--above only for HRS Review-->
-<!--********************************************************* Insperity-Prepared ************************************************************************* -->
-            <template if:true={enableInsperityPrepared}>
-              <lightning-layout multiple-rows=true> 
-                
-              <div class="slds-form-element__label  slds-p-vertical_medium"> Select all items to be included in the agreement. If client questionnaire is used, items selected below must match questionnaire </div>
-            </lightning-layout>
-            </template>
-
-            <template if:true={enableInsperityPrepared}>
-            <lightning-layout multiple-rows=true> 
-            <lightning-layout-item size="12"> 
-              <lightning-input-field class="slds-p-vertical_medium" id="Is_Rehire_Clause_Required__c" field-name="Is_Rehire_Clause_Required__c" onchange={radioOnChange}>
-              </lightning-input-field>
-              <div class="slds-text-color_error slds-form-element__label  slds-p-vertical_medium Is_Rehire_Clause_Required__c" style="display:none">
-                <div class="California" >
-                Reminder: This language will not be included if the Employees's Work State is California or Oregon!
-                </div>
-              </div>
-            </lightning-layout-item>
-              <lightning-layout-item size="12">
-                <lightning-input-field class="slds-p-vertical_medium" id="Is_Notary_Required__c" field-name="Is_Notary_Required__c" onchange={radioOnChange} ></lightning-input-field>
-
-                <div class="slds-form-element__label slds-p-vertical_medium Is_Notary_Required__c" style="display:none">
-                  Please remind the client that the notary jurat is used to ensure that the person signing is the person named in the release, and, although not legally required, it is additional protection for them.
-                  Additionally, the client should be reminded that the employee should be given an opportunity to review the release and seek counsel from an attorney before signing the release.
-                </div>
-              </lightning-layout-item>
-
-              <lightning-layout-item size="12">
-
-                <!---Installments -->
-            
-           <!-- Added as part of STY-02069--> 
-           <div class="slds-p-vertical_medium " >
-            <div  class="slds-form-element_horizontal">
-            <label class="slds-form-element__label" for="NSP_Installments_Check__c">
-              Installments</label>
-           <lightning-input-field  field-name="NSP_Installments_Check__c" variant="label-hidden" onchange={radioOnChange}  >
-          </lightning-input-field>
-          </div> 
-          
-          <div class="NSP_Installments_Check__c" style="display:none">
-            <lightning-input-field class="NSP_NumberOfpayments__c NSP_Installments_Check__c" style="display:none" field-name="NSP_NumberOfpayments__c" 
-         required={NSP_NumberOfpayments}></lightning-input-field>
-            </div>
-          </div>
-                     <!-- Added as part of STY-02069-->                 
-        <!---Installments -->
-
-              <lightning-input-field class="slds-p-vertical_medium"  field-name="NSP_Bonus__c" onchange={radioOnChange}  >
-              </lightning-input-field>
-
-              <div if:true={bonusOptions.data}>
-              <div class="slds-p-vertical_medium NSP_Bonus__c" style="display:none">
-                <div class="slds-form-element slds-form-element_horizontal">
-                <lightning-radio-group name="NSP_BonusSelectOne__c" class='NSP_Bonus__c_childNode NSP_Bonus__c'
-                  label="Select One"
-                  options={bonusOptions.data.values}  onchange={onchangeNspPrepared} 
-                  required={NSP_Bonus}
-                  value={NSP_BonusSelectOne__c}
-                  type="radio">
-                </lightning-radio-group>
-                <lightning-input-field class="slds-hidden" field-name="NSP_BonusSelectOne__c" style="display:none" value={NSP_BonusSelectOne__c}
-                required={NSP_Bonus}>
-                </lightning-input-field>
-              </div>
-
-                <lightning-input-field class="slds-p-vertical_medium  NSP_EnterBonusAmmount__c NSP_Bonus__c_childNode" style="display:none" field-name="NSP_EnterBonusAmmount__c" 
-                required={NSP_EnterBonusAmmount}>
-                </lightning-input-field>
-
-               </div>
-              </div>
-
-
-
-
-              <lightning-input-field class="slds-p-vertical_medium" field-name="NSP_COBRA__c" onchange={radioOnChange}  >
-              </lightning-input-field>
-
-
-
-              <template if:true={cobraOption.data}>
-              <div class="slds-p-vertical_medium NSP_COBRA__c" style="display:none" >
-                <div class="slds-form-element slds-form-element_horizontal">
-                <lightning-radio-group name="NSP_COBRASelectOne__c" class='NSP_COBRA__c_childNode NSP_COBRA__c'
-                  label="Select One"
-                  options={cobraOption.data.values} value={NSP_COBRASelectOne__c} onchange={onchangeNspPrepared} 
-                  required={NSP_COBRA}
-                  type="radio">
-                </lightning-radio-group>
-                <lightning-input-field class="slds-hidden" style="display:none" field-name="NSP_COBRASelectOne__c" value={NSP_COBRASelectOne__c}
-                required={NSP_COBRA} >
-                </lightning-input-field>
-              </div>
-              </div>
-            </template>
-
-            <!-- Prakash Code Starts-->
-            
-            <template if:true={cobraOptions.data}>
-              <div class="slds-p-vertical_medium COBRA_Amount_Type__c" style="display:none" >
-                <div class="slds-form-element slds-form-element_horizontal">
-                  <lightning-radio-group name="COBRA_Amount_Type__c" class='NSP_COBRASelectOne__c_childNode COBRA_Amount_Type__c' 
-                  label="Select One" options={cobraOptions.data.values}
-                  value={COBRA_Amount_Type__c} required={Cobra_SelectOne} type="radio" onchange={onChangeAmountType}>
-                </lightning-radio-group>
-                <lightning-input-field class="slds-hidden" style="display:none" field-name="COBRA_Amount_Type__c" value={COBRA_Amount_Type__c}
-                  required={Cobra_SelectOne}>
-                </lightning-input-field>
-                </div>
-              </div>
-          </template>
-            <lightning-input-field class="slds-p-vertical_medium  NSP_NumberOfMonthsCOBRA__c COBRA_Amount_Type__c_childNode" style="display:none" field-name="NSP_NumberOfMonthsCOBRA__c" required={NSP_NumberOfMonthsCOBRA}>
-            </lightning-input-field>
-            
-            <lightning-input-field class="slds-p-vertical_medium  Num_Of_Weeks_Count__c COBRA_Amount_Type__c_childNode" style="display:none" field-name="Num_Of_Weeks_Count__c" required={Num_Of_Weeks_Count}>
-            </lightning-input-field>
-            
-            <lightning-input-field class="slds-p-vertical_medium  NSP_COBRA_Amount__c COBRA_Amount_Type__c_childNode" style="display:none" field-name="NSP_COBRA_Amount__c" required={NSP_COBRA_Amount}>
-            </lightning-input-field>
-
-            <lightning-input-field class="slds-p-vertical_medium  Through_Date__c COBRA_Amount_Type__c_childNode" style="display:none" field-name="Through_Date__c" required={Through_Date}>
-            </lightning-input-field>
-            <!-- End Prakash Code-->
-
-              <lightning-input-field class="slds-p-vertical_medium" field-name="NSP_Commissions__c" onchange={radioOnChange}  >
-              </lightning-input-field>
-
-
-              <template if:true={commissionOption.data}>
-              <div class="slds-p-vertical_medium NSP_Commissions__c" style="display:none">
-                <div class="slds-form-element slds-form-element_horizontal">
-                    <lightning-radio-group data-id="amount_Type" name="NSP_CommissionsSelectOne__c" class='NSP_Commissions__c_childNode NSP_Commissions__c'
-                      label="Select One"
-                      options={commissionOption.data.values} value={NSP_CommissionsSelectOne__c} onchange={onchangeNspPrepared} 
-                      required={NSP_Commissions}
-                      type="radio">
-                    </lightning-radio-group>
-                    <lightning-input-field class="slds-hidden" style="display:none" field-name="NSP_CommissionsSelectOne__c" value={NSP_CommissionsSelectOne__c} required={NSP_Commissions}>
-                    </lightning-input-field>
-              </div>
-               </div>
-            </template>
-
-              <lightning-input-field class="slds-p-vertical_medium NSP_CommissionAmount__c NSP_Commissions__c_childNode" field-name="NSP_CommissionAmount__c"
-              required={NSP_CommissionAmount} style="display: none;" >
-              </lightning-input-field>
-
-              <lightning-input-field class="slds-p-vertical_medium" field-name="NSP_Equipment__c" onchange={radioOnChange}  >
-              </lightning-input-field>
-              <div class="slds-form-element__label  NSP_Equipment__c" style="display:none">
-                (State the equipment manufacturer, model and fair market value in the field provided below; remind client if equipment is gifted to the WSEE in the Release, the gift will be taxed) 
-              </div> 
-
-              <template if:true={equipmentOption.data}>
-              <div class="slds-p-vertical_medium NSP_Equipment__c" style="display:none" >
-                <div class="slds-form-element slds-form-element_horizontal">
-                  <lightning-radio-group name="NSP_EquipmentSelection__c" class='NSP_Equipment__c_childNode NSP_Equipment__c'
-                    label="Select One"
-                    options={equipmentOption.data.values} value={NSP_EquipmentSelection__c} onchange={onchangeNspPrepared} 
-                    required ={NSP_Equipment}
-                    type="radio">
-                  </lightning-radio-group>
-                  <lightning-input-field class="slds-hidden" style="display:none" field-name="NSP_EquipmentSelection__c"
-                  value={NSP_EquipmentSelection__c} required={NSP_Equipment} >
-                  </lightning-input-field>
-              </div>
-              </div>
-            </template> 
-
-              <lightning-input-field class="slds-p-vertical_medium NSP_Equipment__c" style="display:none" field-name="NSP_ManufacturerNameandModel__c" required={NSP_Equipment}
-                ></lightning-input-field>
-              <lightning-input-field class="slds-p-vertical_medium NSP_Equipment__c" style="display:none" field-name="NSP_FairMarketValue__c" required={NSP_Equipment} >
-              </lightning-input-field>
-            </lightning-layout-item>
-            <lightning-layout-item size="12">
-              <div class="slds-p-vertical_medium " >
-                <div class="slds-form-element_horizontal" >
-                  <label class="slds-form-element__label " for="NSP_MutualConfidentiality__c" > 
-                    Mutual Confidentiality – Not applicable for IL, WA, or OR employees <div class="Illinois" > (REMINDER: client approval should be obtained) </div>  </label>
-                  <lightning-input-field variant="label-hidden" id="NSP_MutualConfidentiality__c" field-name="NSP_MutualConfidentiality__c" onchange={radioOnChange} disabled={NSP_MutualConfidentiality}>
-                  </lightning-input-field>
-                </div>
-              </div>
-              <div class="slds-text-color_error slds-form-element__label  slds-p-vertical_medium NSP_MutualConfidentiality__c" style="display:none">
-                <div class="Illinois" >
-                Reminder: Confidentiality language will not be included if the Employees’ Work State is Illinois, Washington and Oregon!
-              </div>
-              </div>
-            </lightning-layout-item>
-            <lightning-layout-item size="12">
-              <lightning-input-field class="slds-p-vertical_medium" field-name="NSP_OutplacementServices__c" onchange={radioOnChange} >
-              </lightning-input-field>
-
-                <template if:true={outplacementOption.data}>
-
-                <div class="NSP_OutplacementServices__c" style="display:none" >
-                 <div class="slds-form-element slds-form-element_horizontal">
-                  <lightning-radio-group name="NSP_OutplacementServicesValue__c" class='NSP_OutplacementServices__c_childNode NSP_OutplacementServices__c'
-                    label=""
-                    options={outplacementOption.data.values} value={NSP_OutplacementServicesValue__c} onchange={onChangeOutplacementService} 
-                    required={NSP_OutplacementServices}
-                    type="radio" variant="label-hidden">
-                  </lightning-radio-group>
-                  <lightning-input-field class="slds-hidden" style="display:none"  field-name="NSP_OutplacementServicesValue__c" value={NSP_OutplacementServicesValue__c}
-                  required={NSP_OutplacementServices} ></lightning-input-field>
-                </div>
-              
-
-                  <lightning-input-field class="slds-p-vertical_medium NSP_NumberOfMonthsOfOutplacement_Service__c NSP_OutplacementServices__c_childNode" field-name="NSP_NumberOfMonthsOfOutplacement_Service__c"
-                  required={NSP_NumberOfMonthsOfOutplacement_Service}  style="display:none"
-                  ></lightning-input-field>
-                  <lightning-input-field class="slds-p-vertical_medium NSP_AmountOfReimbursement__c NSP_OutplacementServices__c_childNode" field-name="NSP_AmountOfReimbursement__c"
-                  required={NSP_AmountOfReimbursement}  style="display:none"
-                  ></lightning-input-field>
-                  <lightning-input-field class="slds-p-vertical_medium NSP_ExpirationDate__c NSP_OutplacementServices__c_childNode" field-name="NSP_ExpirationDate__c"
-                  required={NSP_ExpirationDate}  style="display:none"
-                  ></lightning-input-field>     
-               </div>
-              </template>
-            </lightning-layout-item>
-            <lightning-layout-item size="12">
-
-              <lightning-input-field class="slds-p-vertical_medium" field-name="NSP_SignatureBlockforClientRequired__c" onchange={radioOnChange} 
-               ></lightning-input-field>
-
-              <lightning-input-field class="slds-p-vertical_medium  NSP_SignatureBlockforClientRequired__c" required={NSP_SignatureBlockforClientRequired} style="display:none" field-name="NSP_NameOnSignature__c" >
-              </lightning-input-field>
-              <lightning-input-field class="slds-p-vertical_medium  NSP_SignatureBlockforClientRequired__c" required={NSP_SignatureBlockforClientRequired} style="display:none" field-name="NSP_SignatureTitle__c" >
-              </lightning-input-field>
-
-              <lightning-input-field class="slds-p-vertical_medium" field-name="NSP_VerificationOfEmploymentHotline__c" 
-                ></lightning-input-field>
-
-              <lightning-input-field class="slds-p-vertical_medium" field-name="NSP_DontContestUnemployment__c" onchange={radioOnChange} 
-                ></lightning-input-field>
-
-                <div class="slds-text-color_error slds-form-element__label  slds-p-vertical_medium NSP_DontContestUnemployment__c" style="display:none">
-                  REMINDER:  If the client has agreed to not contest an unemployment claim by the WSEE, please notify an unemployment specialist @ Unemployment@insperity.com.  Please remember to enter “SEPARATION AGREEMENT – NO PROTEST” into the subject line.  Please include:  Client Name, WSEE Name, and WSEE ID# in the body of the email.
-                  If a multi-person layoff, email Unemployment@insperity.com with a spreadsheet identifying all employees and the subject line should read:  “SEPARATION AGREEMENT – NO PROTEST”.
-                </div>
-              <lightning-input-field class="slds-p-vertical_medium" field-name="NSP_ReferenceTospecificClientDocument__c" onchange={radioOnChange} value={NSP_ReferenceTospecificClientDocument__c}>
-              </lightning-input-field>
-
-              <div class="slds-text-color_error slds-form-element__label  slds-p-vertical_medium ReferenceTospecificClientDocument" style="display:none">
-                STOP! Attach the fully executed document to be referenced to the right.
-              </div>
-              <div class="slds-p-vertical_medium " >
-                <div  class="slds-form-element_horizontal">
-                <label class="slds-form-element__label" for="NSP_TransitionOfDuties__c">
-                  Transition of Duties</label>
-              <lightning-input-field class="slds-p-vertical_medium" variant="label-hidden" field-name="NSP_TransitionOfDuties__c" onchange={radioOnChange}>
-              </lightning-input-field>
-              </div>
-              <div class="slds-form-element NSP_TransitionOfDuties__c"  style="display:none">
-                You also agree as consideration for the additional compensation received under this release, 
-                subject to your other personal and professional obligations and on reasonable notice and at reasonable times, 
-                to make yourself available until, to assist the Company with the transition of any ongoing work projects, 
-                communications or other responsibilities, and to answer any related questions.
-              </div>
-            </div>
-              <lightning-input-field class="slds-p-vertical_medium NSP_TransitionOfDuties__c" style="display:none" field-name="NSP_TransitionDate__c" required={transitionDate}>
-              </lightning-input-field>
               <div class="slds-p-vertical_medium">
-                <lightning-input-field class="slds-p-vertical_medium NSP_SpecialItems__c"  field-name="NSP_SpecialItemsNote__c" >
-                </lightning-input-field>
+                <div class="medium slds-form-element slds-form-element_horizontal">
+                  <lightning-radio-group name="AnyAttachedApprovalEmail"
+                    label="Have you attached the MHRS approval email?" options={pickValueYesNo}
+                    value={NSP_Attached_Approval_Email__c} onchange={handleChange} required type="radio">
+
+                  </lightning-radio-group>
+                  <lightning-input-field style="display:none" class="slds-hidden"
+                    field-name="NSP_Attached_Approval_Email__c" value={NSP_Attached_Approval_Email__c}
+                    required></lightning-input-field>
+                </div>
               </div>
 
-            </lightning-layout-item>
+              <div class="slds-text-color_error slds-p-vertical_medium slds-form-element NSP_Attached_Approval_Email__c"
+                style="display:none">
+                STOP! Attach the document to the right
+              </div>
+            </div>
+            <!--above only for HRS Review-->
+            <!--********************************************************* Insperity-Prepared ************************************************************************* -->
+            <template if:true={enableInsperityPrepared}>
+              <lightning-layout multiple-rows=true>
+
+                <div class="slds-form-element__label  slds-p-vertical_medium"> Select all items to be included in the
+                  agreement. If client questionnaire is used, items selected below must match questionnaire </div>
               </lightning-layout>
             </template>
-<!--**************************************************** above only for Insperity-Prepared ****************************************************************-->
+
+            <template if:true={enableInsperityPrepared}>
+              <lightning-layout multiple-rows=true>
+                <lightning-layout-item size="12">
+                  <lightning-input-field class="slds-p-vertical_medium" id="Is_Rehire_Clause_Required__c"
+                    field-name="Is_Rehire_Clause_Required__c" onchange={radioOnChange}>
+                  </lightning-input-field>
+                  <div
+                    class="slds-text-color_error slds-form-element__label  slds-p-vertical_medium Is_Rehire_Clause_Required__c"
+                    style="display:none">
+                    <div class="California">
+                      Reminder: This language will not be included if the Employees's Work State is California or
+                      Oregon!
+                    </div>
+                  </div>
+                </lightning-layout-item>
+                <lightning-layout-item size="12">
+                  <lightning-input-field class="slds-p-vertical_medium" id="Is_Notary_Required__c"
+                    field-name="Is_Notary_Required__c" onchange={radioOnChange}></lightning-input-field>
+
+                  <div class="slds-form-element__label slds-p-vertical_medium Is_Notary_Required__c"
+                    style="display:none">
+                    Please remind the client that the notary jurat is used to ensure that the person signing is the
+                    person named in the release, and, although not legally required, it is additional protection for
+                    them.
+                    Additionally, the client should be reminded that the employee should be given an opportunity to
+                    review the release and seek counsel from an attorney before signing the release.
+                  </div>
+                </lightning-layout-item>
+
+                <lightning-layout-item size="12">
+
+                  <!---Installments -->
+
+                  <!-- Added as part of STY-02069-->
+                  <div class="slds-p-vertical_medium ">
+                    <div class="slds-form-element_horizontal">
+                      <label class="slds-form-element__label" for="NSP_Installments_Check__c">
+                        Installments</label>
+                      <lightning-input-field field-name="NSP_Installments_Check__c" variant="label-hidden"
+                        onchange={radioOnChange}>
+                      </lightning-input-field>
+                    </div>
+
+                    <div class="NSP_Installments_Check__c" style="display:none">
+                      <lightning-input-field class="NSP_NumberOfpayments__c NSP_Installments_Check__c"
+                        style="display:none" field-name="NSP_NumberOfpayments__c"
+                        required={NSP_NumberOfpayments}></lightning-input-field>
+                    </div>
+                  </div>
+                  <!-- Added as part of STY-02069-->
+                  <!---Installments -->
+
+                  <lightning-input-field class="slds-p-vertical_medium" field-name="NSP_Bonus__c"
+                    onchange={radioOnChange}>
+                  </lightning-input-field>
+
+                  <div if:true={bonusOptions.data}>
+                    <div class="slds-p-vertical_medium NSP_Bonus__c" style="display:none">
+                      <div class="slds-form-element slds-form-element_horizontal">
+                        <lightning-radio-group name="NSP_BonusSelectOne__c" class='NSP_Bonus__c_childNode NSP_Bonus__c'
+                          label="Select One" options={bonusOptions.data.values} onchange={onchangeNspPrepared}
+                          required={NSP_Bonus} value={NSP_BonusSelectOne__c} type="radio">
+                        </lightning-radio-group>
+                        <lightning-input-field class="slds-hidden" field-name="NSP_BonusSelectOne__c"
+                          style="display:none" value={NSP_BonusSelectOne__c} required={NSP_Bonus}>
+                        </lightning-input-field>
+                      </div>
+
+                      <lightning-input-field
+                        class="slds-p-vertical_medium  NSP_EnterBonusAmmount__c NSP_Bonus__c_childNode"
+                        style="display:none" field-name="NSP_EnterBonusAmmount__c" required={NSP_EnterBonusAmmount}>
+                      </lightning-input-field>
+
+                    </div>
+                  </div>
+
+
+
+
+                  <lightning-input-field class="slds-p-vertical_medium" field-name="NSP_COBRA__c"
+                    onchange={radioOnChange}>
+                  </lightning-input-field>
+
+
+
+                  <template if:true={cobraOption.data}>
+                    <div class="slds-p-vertical_medium NSP_COBRA__c" style="display:none">
+                      <div class="slds-form-element slds-form-element_horizontal">
+                        <lightning-radio-group name="NSP_COBRASelectOne__c" class='NSP_COBRA__c_childNode NSP_COBRA__c'
+                          label="Select One" options={cobraOption.data.values} value={NSP_COBRASelectOne__c}
+                          onchange={onchangeNspPrepared} required={NSP_COBRA} type="radio">
+                        </lightning-radio-group>
+                        <lightning-input-field class="slds-hidden" style="display:none"
+                          field-name="NSP_COBRASelectOne__c" value={NSP_COBRASelectOne__c} required={NSP_COBRA}>
+                        </lightning-input-field>
+                      </div>
+                    </div>
+                  </template>
+
+                  <!-- Prakash Code Starts-->
+
+                  <template if:true={cobraOptions.data}>
+                    <div class="slds-p-vertical_medium COBRA_Amount_Type__c" style="display:none">
+                      <div class="slds-form-element slds-form-element_horizontal">
+                        <lightning-radio-group name="COBRA_Amount_Type__c"
+                          class='NSP_COBRASelectOne__c_childNode COBRA_Amount_Type__c' label="Select One"
+                          options={cobraOptions.data.values} value={COBRA_Amount_Type__c} required={Cobra_SelectOne}
+                          type="radio" onchange={onChangeAmountType}>
+                        </lightning-radio-group>
+                        <lightning-input-field class="slds-hidden" style="display:none"
+                          field-name="COBRA_Amount_Type__c" value={COBRA_Amount_Type__c} required={Cobra_SelectOne}>
+                        </lightning-input-field>
+                      </div>
+                    </div>
+                  </template>
+                  <lightning-input-field
+                    class="slds-p-vertical_medium  NSP_NumberOfMonthsCOBRA__c COBRA_Amount_Type__c_childNode"
+                    style="display:none" field-name="NSP_NumberOfMonthsCOBRA__c" required={NSP_NumberOfMonthsCOBRA}>
+                  </lightning-input-field>
+
+                  <lightning-input-field
+                    class="slds-p-vertical_medium  Num_Of_Weeks_Count__c COBRA_Amount_Type__c_childNode"
+                    style="display:none" field-name="Num_Of_Weeks_Count__c" required={Num_Of_Weeks_Count}>
+                  </lightning-input-field>
+
+                  <lightning-input-field
+                    class="slds-p-vertical_medium  NSP_COBRA_Amount__c COBRA_Amount_Type__c_childNode"
+                    style="display:none" field-name="NSP_COBRA_Amount__c" required={NSP_COBRA_Amount}>
+                  </lightning-input-field>
+
+                  <lightning-input-field class="slds-p-vertical_medium  Through_Date__c COBRA_Amount_Type__c_childNode"
+                    style="display:none" field-name="Through_Date__c" required={Through_Date}>
+                  </lightning-input-field>
+                  <!-- End Prakash Code-->
+
+                  <lightning-input-field class="slds-p-vertical_medium" field-name="NSP_Commissions__c"
+                    onchange={radioOnChange}>
+                  </lightning-input-field>
+
+
+                  <template if:true={commissionOption.data}>
+                    <div class="slds-p-vertical_medium NSP_Commissions__c" style="display:none">
+                      <div class="slds-form-element slds-form-element_horizontal">
+                        <lightning-radio-group data-id="amount_Type" name="NSP_CommissionsSelectOne__c"
+                          class='NSP_Commissions__c_childNode NSP_Commissions__c' label="Select One"
+                          options={commissionOption.data.values} value={NSP_CommissionsSelectOne__c}
+                          onchange={onchangeNspPrepared} required={NSP_Commissions} type="radio">
+                        </lightning-radio-group>
+                        <lightning-input-field class="slds-hidden" style="display:none"
+                          field-name="NSP_CommissionsSelectOne__c" value={NSP_CommissionsSelectOne__c}
+                          required={NSP_Commissions}>
+                        </lightning-input-field>
+                      </div>
+                    </div>
+                  </template>
+
+                  <lightning-input-field
+                    class="slds-p-vertical_medium NSP_CommissionAmount__c NSP_Commissions__c_childNode"
+                    field-name="NSP_CommissionAmount__c" required={NSP_CommissionAmount} style="display: none;">
+                  </lightning-input-field>
+
+                  <lightning-input-field class="slds-p-vertical_medium" field-name="NSP_Equipment__c"
+                    onchange={radioOnChange}>
+                  </lightning-input-field>
+                  <div class="slds-form-element__label  NSP_Equipment__c" style="display:none">
+                    (State the equipment manufacturer, model and fair market value in the field provided below; remind
+                    client if equipment is gifted to the WSEE in the Release, the gift will be taxed)
+                  </div>
+
+                  <template if:true={equipmentOption.data}>
+                    <div class="slds-p-vertical_medium NSP_Equipment__c" style="display:none">
+                      <div class="slds-form-element slds-form-element_horizontal">
+                        <lightning-radio-group name="NSP_EquipmentSelection__c"
+                          class='NSP_Equipment__c_childNode NSP_Equipment__c' label="Select One"
+                          options={equipmentOption.data.values} value={NSP_EquipmentSelection__c}
+                          onchange={onchangeNspPrepared} required={NSP_Equipment} type="radio">
+                        </lightning-radio-group>
+                        <lightning-input-field class="slds-hidden" style="display:none"
+                          field-name="NSP_EquipmentSelection__c" value={NSP_EquipmentSelection__c}
+                          required={NSP_Equipment}>
+                        </lightning-input-field>
+                      </div>
+                    </div>
+                  </template>
+
+                  <lightning-input-field class="slds-p-vertical_medium NSP_Equipment__c" style="display:none"
+                    field-name="NSP_ManufacturerNameandModel__c" required={NSP_Equipment}></lightning-input-field>
+                  <lightning-input-field class="slds-p-vertical_medium NSP_Equipment__c" style="display:none"
+                    field-name="NSP_FairMarketValue__c" required={NSP_Equipment}>
+                  </lightning-input-field>
+                </lightning-layout-item>
+                <lightning-layout-item size="12">
+                  <div class="slds-p-vertical_medium ">
+                    <div class="slds-form-element_horizontal">
+                      <label class="slds-form-element__label " for="NSP_MutualConfidentiality__c">
+                        Mutual Confidentiality – Not applicable for IL, WA, or OR employees <div class="Illinois">
+                          (REMINDER: client approval should be obtained) </div> </label>
+                      <lightning-input-field variant="label-hidden" id="NSP_MutualConfidentiality__c"
+                        field-name="NSP_MutualConfidentiality__c" onchange={radioOnChange}
+                        disabled={NSP_MutualConfidentiality}>
+                      </lightning-input-field>
+                    </div>
+                  </div>
+                  <div
+                    class="slds-text-color_error slds-form-element__label  slds-p-vertical_medium NSP_MutualConfidentiality__c"
+                    style="display:none">
+                    <div class="Illinois">
+                      Reminder: Confidentiality language will not be included if the Employees’ Work State is Illinois,
+                      Washington and Oregon!
+                    </div>
+                  </div>
+                </lightning-layout-item>
+                <lightning-layout-item size="12">
+                  <lightning-input-field class="slds-p-vertical_medium" field-name="NSP_OutplacementServices__c"
+                    onchange={radioOnChange}>
+                  </lightning-input-field>
+
+                  <template if:true={outplacementOption.data}>
+
+                    <div class="NSP_OutplacementServices__c" style="display:none">
+                      <div class="slds-form-element slds-form-element_horizontal">
+                        <lightning-radio-group name="NSP_OutplacementServicesValue__c"
+                          class='NSP_OutplacementServices__c_childNode NSP_OutplacementServices__c' label=""
+                          options={outplacementOption.data.values} value={NSP_OutplacementServicesValue__c}
+                          onchange={onChangeOutplacementService} required={NSP_OutplacementServices} type="radio"
+                          variant="label-hidden">
+                        </lightning-radio-group>
+                        <lightning-input-field class="slds-hidden" style="display:none"
+                          field-name="NSP_OutplacementServicesValue__c" value={NSP_OutplacementServicesValue__c}
+                          required={NSP_OutplacementServices}></lightning-input-field>
+                      </div>
+
+
+                      <lightning-input-field
+                        class="slds-p-vertical_medium NSP_NumberOfMonthsOfOutplacement_Service__c NSP_OutplacementServices__c_childNode"
+                        field-name="NSP_NumberOfMonthsOfOutplacement_Service__c"
+                        required={NSP_NumberOfMonthsOfOutplacement_Service}
+                        style="display:none"></lightning-input-field>
+                      <lightning-input-field
+                        class="slds-p-vertical_medium NSP_AmountOfReimbursement__c NSP_OutplacementServices__c_childNode"
+                        field-name="NSP_AmountOfReimbursement__c" required={NSP_AmountOfReimbursement}
+                        style="display:none"></lightning-input-field>
+                      <lightning-input-field
+                        class="slds-p-vertical_medium NSP_ExpirationDate__c NSP_OutplacementServices__c_childNode"
+                        field-name="NSP_ExpirationDate__c" required={NSP_ExpirationDate}
+                        style="display:none"></lightning-input-field>
+                    </div>
+                  </template>
+                </lightning-layout-item>
+                <lightning-layout-item size="12">
+
+                  <lightning-input-field class="slds-p-vertical_medium"
+                    field-name="NSP_SignatureBlockforClientRequired__c"
+                    onchange={radioOnChange}></lightning-input-field>
+
+                  <lightning-input-field class="slds-p-vertical_medium  NSP_SignatureBlockforClientRequired__c"
+                    required={NSP_SignatureBlockforClientRequired} style="display:none"
+                    field-name="NSP_NameOnSignature__c">
+                  </lightning-input-field>
+                  <lightning-input-field class="slds-p-vertical_medium  NSP_SignatureBlockforClientRequired__c"
+                    required={NSP_SignatureBlockforClientRequired} style="display:none"
+                    field-name="NSP_SignatureTitle__c">
+                  </lightning-input-field>
+
+                  <lightning-input-field class="slds-p-vertical_medium"
+                    field-name="NSP_VerificationOfEmploymentHotline__c"></lightning-input-field>
+
+                  <lightning-input-field class="slds-p-vertical_medium" field-name="NSP_DontContestUnemployment__c"
+                    onchange={radioOnChange}></lightning-input-field>
+
+                  <div
+                    class="slds-text-color_error slds-form-element__label  slds-p-vertical_medium NSP_DontContestUnemployment__c"
+                    style="display:none">
+                    REMINDER: If the client has agreed to not contest an unemployment claim by the WSEE, please notify
+                    an unemployment specialist @ Unemployment@insperity.com. Please remember to enter “SEPARATION
+                    AGREEMENT – NO PROTEST” into the subject line. Please include: Client Name, WSEE Name, and WSEE ID#
+                    in the body of the email.
+                    If a multi-person layoff, email Unemployment@insperity.com with a spreadsheet identifying all
+                    employees and the subject line should read: “SEPARATION AGREEMENT – NO PROTEST”.
+                  </div>
+                  <lightning-input-field class="slds-p-vertical_medium"
+                    field-name="NSP_ReferenceTospecificClientDocument__c" onchange={radioOnChange}
+                    value={NSP_ReferenceTospecificClientDocument__c}>
+                  </lightning-input-field>
+
+                  <div
+                    class="slds-text-color_error slds-form-element__label  slds-p-vertical_medium ReferenceTospecificClientDocument"
+                    style="display:none">
+                    STOP! Attach the fully executed document to be referenced to the right.
+                  </div>
+                  <div class="slds-p-vertical_medium ">
+                    <div class="slds-form-element_horizontal">
+                      <label class="slds-form-element__label" for="NSP_TransitionOfDuties__c">
+                        Transition of Duties</label>
+                      <lightning-input-field class="slds-p-vertical_medium" variant="label-hidden"
+                        field-name="NSP_TransitionOfDuties__c" onchange={radioOnChange}>
+                      </lightning-input-field>
+                    </div>
+                    <div class="slds-form-element NSP_TransitionOfDuties__c" style="display:none">
+                      You also agree as consideration for the additional compensation received under this release,
+                      subject to your other personal and professional obligations and on reasonable notice and at
+                      reasonable times,
+                      to make yourself available until, to assist the Company with the transition of any ongoing work
+                      projects,
+                      communications or other responsibilities, and to answer any related questions.
+                    </div>
+                  </div>
+                  <lightning-input-field class="slds-p-vertical_medium NSP_TransitionOfDuties__c" style="display:none"
+                    field-name="NSP_TransitionDate__c" required={transitionDate}>
+                  </lightning-input-field>
+                  <div class="slds-p-vertical_medium">
+                    <lightning-input-field class="slds-p-vertical_medium NSP_SpecialItems__c"
+                      field-name="NSP_SpecialItemsNote__c">
+                    </lightning-input-field>
+                  </div>
+
+                </lightning-layout-item>
+              </lightning-layout>
+            </template>
+            <!--**************************************************** above only for Insperity-Prepared ****************************************************************-->
 
             <div style='display:none'>
 
             </div>
-            
 
-            <div class="slds-text-color_error slds-p-vertical_medium slds-form-element AttachmentVerify" style="display:none">
+
+            <div class="slds-text-color_error slds-p-vertical_medium slds-form-element AttachmentVerify"
+              style="display:none">
               STOP! Attach the document to the right
             </div>
 
             <!--- Below only for HRS REview-->
             <div if:true={isHRSReview}>
-              <div class="slds-p-vertical_medium " >
-              <div class="slds-form-element slds-form-element_horizontal">
-                <lightning-radio-group name="IsInsperityIncludedAsReleasedParty"
-                  label="Is Insperity included as a released party in the release of claims paragraph ?"
-                  options={pickValueYesNo} value={isIncludedReleaseParty} onchange={handleChange} required type="radio">
-                </lightning-radio-group>
-
-                <lightning-input-field style="display:none" class="slds-hidden" 
-                field-name="NSP_IsInsperityIncludedAsReleasedParty__c" value={isIncludedReleaseParty} required>
-              </lightning-input-field>
-            </div>
-
-                <div class="showIncludePartyMsg slds-p-vertical_medium" style="display:none">
-                  * Remind client to include Insperity as a released party in future agreements:  “[CLIENT NAME] and Insperity PEO Services, L.P. ("Insperity") and their respective and former parent companies, subsidiaries and other affiliated companies as well as any of their respective current and former insurers, directors, officers, agents, shareholders, and employees…"
-                </div>
-
-                <div class="slds-p-vertical_medium " >
-                <div class="slds-form-element slds-form-element_horizontal ">
-                  <lightning-radio-group name="IsInsperityDisclaimerIncluded"
-                    label="Is Insperity’s disclaimer for promised payment included?" options={pickValueYesNo}
-                    value={IsNSPDisclaimerIncluded} onchange={handleChange} required type="radio">
+              <div class="slds-p-vertical_medium ">
+                <div class="slds-form-element slds-form-element_horizontal">
+                  <lightning-radio-group name="IsInsperityIncludedAsReleasedParty"
+                    label="Is Insperity included as a released party in the release of claims paragraph ?"
+                    options={pickValueYesNo} value={isIncludedReleaseParty} onchange={handleChange} required
+                    type="radio">
                   </lightning-radio-group>
 
-                  <lightning-input-field style="display:none" class="slds-hidden"  field-name="NSP_IsInsperityDisclaimerIncluded__c"
-                  value={IsNSPDisclaimerIncluded} required ></lightning-input-field>
+                  <lightning-input-field style="display:none" class="slds-hidden"
+                    field-name="NSP_IsInsperityIncludedAsReleasedParty__c" value={isIncludedReleaseParty} required>
+                  </lightning-input-field>
                 </div>
+
+                <div class="showIncludePartyMsg slds-p-vertical_medium" style="display:none">
+                  * Remind client to include Insperity as a released party in future agreements: “[CLIENT NAME] and
+                  Insperity PEO Services, L.P. ("Insperity") and their respective and former parent companies,
+                  subsidiaries and other affiliated companies as well as any of their respective current and former
+                  insurers, directors, officers, agents, shareholders, and employees…"
+                </div>
+
+                <div class="slds-p-vertical_medium ">
+                  <div class="slds-form-element slds-form-element_horizontal ">
+                    <lightning-radio-group name="IsInsperityDisclaimerIncluded"
+                      label="Is Insperity’s disclaimer for promised payment included?" options={pickValueYesNo}
+                      value={IsNSPDisclaimerIncluded} onchange={handleChange} required type="radio">
+                    </lightning-radio-group>
+
+                    <lightning-input-field style="display:none" class="slds-hidden"
+                      field-name="NSP_IsInsperityDisclaimerIncluded__c" value={IsNSPDisclaimerIncluded}
+                      required></lightning-input-field>
+                  </div>
                 </div>
 
                 <div class="showIncludeDisclaimeryMsg slds-p-vertical_medium" style="display:none">
-                  	Remind client to include the following in future agreements:  “You agree that the additional compensation to be paid under this Agreement, is due solely from [CLIENT NAME] and that Insperity has no obligation to pay the additional compensation, even though its payment may be processed through Insperity.”
+                  Remind client to include the following in future agreements: “You agree that the additional
+                  compensation to be paid under this Agreement, is due solely from [CLIENT NAME] and that Insperity has
+                  no obligation to pay the additional compensation, even though its payment may be processed through
+                  Insperity.”
                 </div>
 
 
               </div>
-              </div>
-              <!--- Above only for HRS REview-->
-              <div class="slds-p-vertical_medium">
-                <div class="medium slds-form-element slds-form-element_horizontal">
-                  <lightning-radio-group name="AnyPreparedDocumentForTermination"
+            </div>
+            <!--- Above only for HRS REview-->
+            <div class="slds-p-vertical_medium">
+              <div class="medium slds-form-element slds-form-element_horizontal">
+                <lightning-radio-group name="AnyPreparedDocumentForTermination"
                   label="Did the terminated WSEE sign an Offer Letter, Employment Agreement, any Restrictive Covenants Agreements, or Retention/Stay/Bonus Agreements, etc."
-                  options={pickValueYesNo} value={prepareDocTerminationValue} onchange={handleChange} 
-                  required
+                  options={pickValueYesNo} value={prepareDocTerminationValue} onchange={handleChange} required
                   type="radio">
                 </lightning-radio-group>
-                   
-               
-                <lightning-input-field style="display:none" class="slds-hidden" field-name="NSP_AnyPreparedDocumentForTermination__c"
-                value={prepareDocTerminationValue}  required ></lightning-input-field>
+
+
+                <lightning-input-field style="display:none" class="slds-hidden"
+                  field-name="NSP_AnyPreparedDocumentForTermination__c" value={prepareDocTerminationValue}
+                  required></lightning-input-field>
               </div>
             </div>
 
-              <div class="slds-p-vertical_medium " >
-                <div class="slds-form-element slds-form-element_horizontal">
-                  <lightning-radio-group name="AnyProvisionInPreparedDocRefersStock"
-                    label="Is there any reference to stock/equity that survives termination in the client-prepared agreements ?"
-                    options={pickValueYesNo} value={IsanyReferenceStock} onchange={handleChange} required type="radio">
-                  </lightning-radio-group>
-                    <lightning-input-field style='display:none' class="slds-hidden"
-                      field-name="NSP_AnyProvisionInPreparedDocRefersStock__c" value={IsanyReferenceStock} required >
-                    </lightning-input-field>
-               </div>
-              </div>
-
-              <div if:false={isHRSReview}>
-              <template if:true={whoIsResponsibleStock.data}>
-                <div class="slds-p-vertical_medium WhoResponsibleForStockEquityPaymt" style='display:none'>
-                  <div class ="slds-form-element slds-form-element_horizontal  ">
-                  <lightning-radio-group name="WhoResponsibleForStockEquityPaymt"
-                    label="Who is responsibile for the payroll processing and W-2 reporting of stock/equity under the client's FEIN?"
-                    options={whoIsResponsibleStock.data.values} value={whoResponsibleStokcValue} onchange={handleChange} 
-                    required={whoResponsibleStok}
-                    type="radio">
-                  </lightning-radio-group>
-                  <lightning-input-field style='display:none' class="slds-hidden"
-                  field-name="NSP_WhoResponsibleForStockEquityPaymt__c" value={whoResponsibleStokcValue} required={whoResponsibleStok} >
+            <div class="slds-p-vertical_medium ">
+              <div class="slds-form-element slds-form-element_horizontal">
+                <lightning-radio-group name="AnyProvisionInPreparedDocRefersStock"
+                  label="Is there any reference to stock/equity that survives termination in the client-prepared agreements ?"
+                  options={pickValueYesNo} value={IsanyReferenceStock} onchange={handleChange} required type="radio">
+                </lightning-radio-group>
+                <lightning-input-field style='display:none' class="slds-hidden"
+                  field-name="NSP_AnyProvisionInPreparedDocRefersStock__c" value={IsanyReferenceStock} required>
                 </lightning-input-field>
               </div>
-              </div>
-            </template>
+            </div>
+
+            <div if:false={isHRSReview}>
+              <template if:true={whoIsResponsibleStock.data}>
+                <div class="slds-p-vertical_medium WhoResponsibleForStockEquityPaymt" style='display:none'>
+                  <div class="slds-form-element slds-form-element_horizontal  ">
+                    <lightning-radio-group name="WhoResponsibleForStockEquityPaymt"
+                      label="Who is responsibile for the payroll processing and W-2 reporting of stock/equity under the client's FEIN?"
+                      options={whoIsResponsibleStock.data.values} value={whoResponsibleStokcValue}
+                      onchange={handleChange} required={whoResponsibleStok} type="radio">
+                    </lightning-radio-group>
+                    <lightning-input-field style='display:none' class="slds-hidden"
+                      field-name="NSP_WhoResponsibleForStockEquityPaymt__c" value={whoResponsibleStokcValue}
+                      required={whoResponsibleStok}>
+                    </lightning-input-field>
+                  </div>
+                </div>
+              </template>
 
               <!--- IF Insperity Selected display below -->
-                <div class="slds-p-vertical_medium NSPResponsible" style="display:none">
-                  <div class="slds-form-element slds-form-element_horizontal">
+              <div class="slds-p-vertical_medium NSPResponsible" style="display:none">
+                <div class="slds-form-element slds-form-element_horizontal">
                   <lightning-radio-group name="AaddendumForStockEquity" data-fname="addendum"
                     label="Does the Client have an Equity Addendum with Insperity ?" options={pickValueYesNo}
                     value={adddendumValue} onchange={handleChange} required={enableAddendumStock} type="radio">
                   </lightning-radio-group>
-                  <lightning-input-field class="slds-hidden" field-name="NSP_CSAaddendumForStockEquity__c" value={adddendumValue}
-                  style="display: none;" required={enableAddendumStock} ></lightning-input-field>
+                  <lightning-input-field class="slds-hidden" field-name="NSP_CSAaddendumForStockEquity__c"
+                    value={adddendumValue} style="display: none;"
+                    required={enableAddendumStock}></lightning-input-field>
                 </div>
-                </div>
+              </div>
 
               <!-- If No select display below -->
               <div class="slds-p-vertical_medium slds-form-element AaddendumNO" style="display:none">
@@ -492,55 +579,58 @@
               </div>
 
             </div>
-              <!-- if Client Select or HRS REview-->
-              <div class="slds-p-vertical_medium slds-form-element clientResponsible" style="display:none">
-                Please ask the client to confirm, via email, its understanding that it is responsible for any
-                equity-related transcation should the employee
-                choose to exercie the options or have other such transactions in the future, including payroll
-                processing and W-2 reporting under the client's FEIN.
-                
-              </div>
+            <!-- if Client Select or HRS REview-->
+            <div class="slds-p-vertical_medium slds-form-element clientResponsible" style="display:none">
+              Please ask the client to confirm, via email, its understanding that it is responsible for any
+              equity-related transcation should the employee
+              choose to exercie the options or have other such transactions in the future, including payroll
+              processing and W-2 reporting under the client's FEIN.
 
-              <div  class="slds-text-color_error slds-p-vertical_medium hrsStopMsgStok" style={hrsstopMsgStock}>
-                STOP! Attach the client stock/equity confirmation email to the right.
-              </div>
+            </div>
 
-              <div  class="slds-text-color_error slds-p-vertical_medium clientResponsiblefile" style="display:none">
-                STOP! Attach the client stock/equity confirmation email to the right.
-              </div>
-             
+            <div class="slds-text-color_error slds-p-vertical_medium hrsStopMsgStok" style={hrsstopMsgStock}>
+              STOP! Attach the client stock/equity confirmation email to the right.
+            </div>
 
-              <!---     HRS & Corporate     -->
-              <template if:false={enableInsperityPrepared}>
-                <div class="slds-p-vertical_medium">
+            <div class="slds-text-color_error slds-p-vertical_medium clientResponsiblefile" style="display:none">
+              STOP! Attach the client stock/equity confirmation email to the right.
+            </div>
+
+
+            <!---     HRS & Corporate     -->
+            <template if:false={enableInsperityPrepared}>
+              <div class="slds-p-vertical_medium">
                 <div class="slds-form-element slds-form-element_horizontal">
                   <lightning-radio-group name="HaveYouattachedPreparedAgreement"
                     label="Have you attached the Client prepared Agreement ?" options={pickValueYesNo}
                     value={NSP_HaveYouattachedPreparedAgreement__c} onchange={handleChange} required type="radio">
                   </lightning-radio-group>
-                  <div style="display:none" >
+                  <div style="display:none">
                     <lightning-input-field class="slds-hidden" field-name="NSP_HaveYouattachedPreparedAgreement__c"
-                      value={NSP_HaveYouattachedPreparedAgreement__c} required ></lightning-input-field>
+                      value={NSP_HaveYouattachedPreparedAgreement__c} required></lightning-input-field>
                   </div>
                 </div>
 
-                  <div  class="slds-text-color_error slds-form-element__label  slds-p-vertical_medium NSP_HaveYouattachedPreparedAgreement__c" style="display:none">
-                    You must attach the Client Prepared Agreement before you can proceed, if you have attached please confirm by selecting 'Yes' to proceed.
-                  </div>
+                <div
+                  class="slds-text-color_error slds-form-element__label  slds-p-vertical_medium NSP_HaveYouattachedPreparedAgreement__c"
+                  style="display:none">
+                  You must attach the Client Prepared Agreement before you can proceed, if you have attached please
+                  confirm by selecting 'Yes' to proceed.
+                </div>
 
-                  <div class = "slds-p-vertical_medium" >
-                      <div class="slds-form-element_horizontal">
-                        <label class="slds-form-element__label"  for="NSP_KeepNorehireParagraphForcompany__c">
-                              Enter any special items needed for the agreement
-                      </label>  
-                      <lightning-input-field variant="label-hidden"  field-name="NSP_SpecialItemsNote__c" >
-                      </lightning-input-field>
-                      </div>
+                <div class="slds-p-vertical_medium">
+                  <div class="slds-form-element_horizontal">
+                    <label class="slds-form-element__label" for="NSP_KeepNorehireParagraphForcompany__c">
+                      Enter any special items needed for the agreement
+                    </label>
+                    <lightning-input-field variant="label-hidden" field-name="NSP_SpecialItemsNote__c">
+                    </lightning-input-field>
                   </div>
+                </div>
 
               </div>
             </template>
-        </div>
+          </div>
         </lightning-layout-item>
 
         <lightning-layout-item size="5">
@@ -548,22 +638,25 @@
           <div class="slds-align_absolute-center slds-p-around_medium">
             <c-wizard-file-upload re-req-id={reReqId} onfileaction={findFileSize}> </c-wizard-file-upload>
           </div>
-          <div style="display:none"> 
-            <lightning-input-field class="slds-hidden" data-fname="LastSavedPageNumber"  field-name="NSP_LastSavedPageNumber__c" variant="label-hidden" value={pageNumber} >
-            </lightning-input-field> 
-        </div>
+          <div style="display:none">
+            <lightning-input-field class="slds-hidden" data-fname="LastSavedPageNumber"
+              field-name="NSP_LastSavedPageNumber__c" variant="label-hidden" value={pageNumber}>
+            </lightning-input-field>
+          </div>
           <!-- File Upload End here -->
         </lightning-layout-item>
       </lightning-layout>
 
       <div class="slds-m-top_medium slds-align_absolute-center slds-p-around_medium">
-        <lightning-button variant="brand" label="Previous" class="slds-m-top_small slds-m-left_small" onclick={handlePrev}>
+        <lightning-button variant="brand" label="Previous" class="slds-m-top_small slds-m-left_small"
+          onclick={handlePrev}>
         </lightning-button>
 
         <lightning-button class="slds-m-top_small slds-m-left_small" label="Save and Exit" onclick={handleSave}>
         </lightning-button>
 
-        <lightning-button variant="brand" class="slds-m-top_small slds-m-left_small" type="submit" onclick={hanldeNext} label="Next"> 
+        <lightning-button variant="brand" class="slds-m-top_small slds-m-left_small" type="submit" onclick={hanldeNext}
+          label="Next">
         </lightning-button>
       </div>
     </lightning-record-edit-form>

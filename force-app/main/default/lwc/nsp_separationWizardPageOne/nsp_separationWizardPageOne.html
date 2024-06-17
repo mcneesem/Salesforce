@@ -57,8 +57,6 @@
                         <lightning-input-field style='display:none' id="NSP_Mid_Market_or_Mid_Market_Enterprise__c" field-name="NSP_Mid_Market_or_Mid_Market_Enterprise__c" value={NSP_Mid_Market_or_Mid_Market_Enterprise__c}  class="slds-hidden" required={NSP_ReviewType}></lightning-input-field>
                     </div>
                 </template>
-
-                <div class="slds-var-m-around_medium slds-form-element slds-form-element_horizontal writtenApprovalFromMhrs" style="display:none;">
                     <template if:true={writtenApprovalFromMhrsValues.data}>
                        <div class="slds-var-m-around_medium slds-form-element slds-form-element_horizontal">
                            <lightning-radio-group name="NSP_Written_Approval_From_The_MHRS__c" for="NSP_Written_Approval_From_The_MHRS__c" class='NSP_Written_Approval_From_The_MHRS__c'
@@ -72,7 +70,6 @@
                            <lightning-input-field style='display:none' id="NSP_Written_Approval_From_The_MHRS__c" field-name="NSP_Written_Approval_From_The_MHRS__c" value={NSP_Written_Approval_From_The_MHRS__c}  class="slds-hidden" required={NSP_Mid_Market_or_Mid_Market_Enterprise}></lightning-input-field>
                        </div>
                    </template>
-                   </div>
 
                    <div class="slds-var-m-around_medium slds-form-element slds-form-element_horizontal statusAgreementDiv" style="display:none;">
                 

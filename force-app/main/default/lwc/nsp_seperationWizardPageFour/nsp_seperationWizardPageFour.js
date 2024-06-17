@@ -41,7 +41,6 @@ NSP_Commissions =false;
 NSP_COBRA = false;
 NSP_Bonus =false;
 NSP_Installments = false;
-NSP_Mid_Market_or_Mid_Market_Enterprise__c = false;
 hrsstopMsgStock = "display:none";
 
 /**
@@ -143,7 +142,7 @@ currentPageFields=['Is_Rehire_Clause_Required__c','Is_Notary_Required__c','NSP_I
 'NSP_CommissionsSelectOne__c','NSP_CommissionAmount__c','NSP_Equipment__c','NSP_EquipmentSelection__c','NSP_ManufacturerNameandModel__c','NS_FairMarketValue__c',
 'NSP_MutualConfidentiality__c','NSP_OutplacementServices__c','NSP_OutplacementServicesValue__c',
 'NSP_NumberOfMonthsOfOutplacement_Service__c','NSP_AmountOfReimbursement__c','NSP_ExpirationDate__c','NSP_SignatureBlockforClientRequired__c','NSP_NameOnSignature__c','NSP_SignatureTitle__c',
-'NSP_VerificationOfEmploymentHotline__c','NSP_DontContestUnemployment__c','NSP_ReferenceTospecificClientDocument__c','NSP_TransitionOfDuties__c','NSP_TransitionDate__c','NSP_Mid_Market_or_Mid_Market_Enterprise__c'];
+'NSP_VerificationOfEmploymentHotline__c','NSP_DontContestUnemployment__c','NSP_ReferenceTospecificClientDocument__c','NSP_TransitionOfDuties__c','NSP_TransitionDate__c'];
 fieldValue =  { currentTarget : { name :'', value :''} };
 
 // event.currentTarget.value == true? this.template.querySelector('div.'+event.currentTarget.fieldName).style.display='':
@@ -542,7 +541,6 @@ handleOnload(event){
 
         this.recordTypeId =  Object.values(JSON.parse(JSON.stringify(event.detail.records)))[0].recordTypeId;
         if(this.fieldsData != null &&  this.fieldsData != undefined && this.fieldsData !='' ){
-            this.NSP_Mid_Market_or_Mid_Market_Enterprise__c = this.fieldsData.NSP_Mid_Market_or_Mid_Market_Enterprise__c?.value =='Yes' ? ( this.fileCounts++ ,true ) : false;
             if(this.fieldsData.NSP_ReviewType__c != null  && this.fieldsData.NSP_ReviewType__c.value != null){
                     this.reviewType = this.fieldsData.NSP_ReviewType__c.value;
             }
