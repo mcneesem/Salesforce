@@ -110,7 +110,7 @@ public class NSP_ServicePlanProjectTaskBatch implements Database.Batchable<sObje
         if(lstOfRecords.size() > 0){
             lstOfRecords.sort();
             NSP_ProjectTasksTriggerServiceHelper.runOwnerAssignmentLogic = false;
-            Database.SaveResult[] results = Database.insert(lstOfRecords);
+            Database.SaveResult[] results = Database.insert(lstOfRecords, false);
             NSP_ErrorLogHandler.logSaveResult('NSP_ServicePlanProjectTaskBatch', 'execute', results);
         }
     }
