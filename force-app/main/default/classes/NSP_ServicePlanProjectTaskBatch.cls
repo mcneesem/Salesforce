@@ -14,16 +14,17 @@ Modification Log     :
 */
 
 public class NSP_ServicePlanProjectTaskBatch implements Database.Batchable<sObject>{
-	public Database.QueryLocator start(Database.BatchableContext BC){
+
+    public Database.QueryLocator start(Database.BatchableContext BC){
         //Using SOQL QUery to fetch Template Name, project status from Project Task object
-    	String query = 'SELECT Id, Name, TemplateName__c, pse__Project_Status__c, pse__Project_Type__c, pse__Account__c '+
-            		   'FROM pse__Proj__c WHERE '+
-                       'TemplateName__c = '+'\''+ NSP_ServiceConstants.PROJECT_TEMPLATE_NAME +'\''+
-                       'AND pse__Is_Template__c = False '+
-            		   'AND pse__Project_Type__c = '+'\''+ NSP_ServiceConstants.PROJECT_TYPE_SERVICE +'\''+
-                       'AND pse__Account__r.NSP_Sales_Service_Account_Status__c = '+'\''+ NSP_ServiceConstants.Account_Status +'\''+
-                       'AND (pse__Project_Status__c != '+'\''+ NSP_ServiceConstants.PROJECTSTATUSCANCELLED +'\''+
-                       'AND pse__Project_Status__c != '+'\''+ NSP_ServiceConstants.PROJECTSTATUSCOMPLETED +'\''+')';
+        String query = 'SELECT Id, Name, TemplateName__c, pse__Project_Status__c, pse__Project_Type__c, pse__Account__c '+
+            'FROM pse__Proj__c WHERE '+
+            'TemplateName__c = '+'\''+ NSP_ServiceConstants.PROJECT_TEMPLATE_NAME +'\''+
+            'AND pse__Is_Template__c = False '+
+            'AND pse__Project_Type__c = '+'\''+ NSP_ServiceConstants.PROJECT_TYPE_SERVICE +'\''+
+            'AND pse__Account__r.NSP_Sales_Service_Account_Status__c = '+'\''+ NSP_ServiceConstants.Account_Status +'\''+
+            'AND (pse__Project_Status__c != '+'\''+ NSP_ServiceConstants.PROJECTSTATUSCANCELLED +'\''+
+            'AND pse__Project_Status__c != '+'\''+ NSP_ServiceConstants.PROJECTSTATUSCOMPLETED +'\''+')';
         return Database.getQueryLocator(query);   
     }
     
@@ -40,7 +41,7 @@ public class NSP_ServicePlanProjectTaskBatch implements Database.Batchable<sObje
         if(relatedProjectList.size() > 0){
             //iterating over project list
             for(pse__Proj__c prj : relatedProjectList){
-            	accountIdSet.add(prj.pse__Account__c);
+                accountIdSet.add(prj.pse__Account__c);
             }
         }
         
@@ -62,7 +63,7 @@ public class NSP_ServicePlanProjectTaskBatch implements Database.Batchable<sObje
             for(pse__Proj__c prj : relatedProjectList){
                 //checking for Account Id && renewal date
                 if(mapOfAccountIdAndRenewalDate.get(prj.pse__Account__c) == System.today()){
-					Integer randomNumber = Integer.valueof((Math.random() * 1847263450));
+                    Integer randomNumber = Integer.valueof((Math.random() * 1847263450));
                     pse__Project_Task_Assignment__c projTaskAssigmt = new pse__Project_Task_Assignment__c();
                     projTaskAssigmt.pse__Resource_Role__c = NSP_ServiceConstants.BUS_TEAM_HRSP_CL;
                     projTaskAssigmt.NSP_Priority__c = 1;
@@ -87,7 +88,7 @@ public class NSP_ServicePlanProjectTaskBatch implements Database.Batchable<sObje
                     projectTask.pse__External_Task_ID__c = prj.Id+'-'+NSP_ServiceConstants.QTP1+'-'+randomNumber;
                     projectTask.OwnerId = accountTeamMap.get(prj.pse__Account__c).NSP_User__c;
                     lstOfRecords.add(projectTask);
-					lstOfRecords.add(projTaskAssigmt);    
+                    lstOfRecords.add(projTaskAssigmt);    
                     
                     //create project task
                     pse__Project_Task__c projectTask1 = new pse__Project_Task__c();
@@ -111,7 +112,11 @@ public class NSP_ServicePlanProjectTaskBatch implements Database.Batchable<sObje
             lstOfRecords.sort();
             NSP_ProjectTasksTriggerServiceHelper.runOwnerAssignmentLogic = false;
             Database.SaveResult[] results = Database.insert(lstOfRecords, false);
-            NSP_ErrorLogHandler.logSaveResult('NSP_ServicePlanProjectTaskBatch', 'execute', results);
+            NSP_ErrorLogHandler.logResults(
+                NSP_ServicePlanProjectTaskBatch.class.getName() ,
+                'execute' ,
+                results
+            );
         }
     }
     
