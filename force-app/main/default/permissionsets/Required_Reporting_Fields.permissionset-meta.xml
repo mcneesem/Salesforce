@@ -271,6 +271,11 @@
         <field>pse__Project_Task__c.NSP_Situation_Termination_Drivers__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>pse__Project_Task__c.Associated_RSAP__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Required Reporting Fields</label>
     <objectPermissions>
