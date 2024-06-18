@@ -12,8 +12,8 @@ Modification Log     :
 * Jatin Ahuja                    6/9/2022           First Iteration
 *
 */
-
-public class NSP_ServicePlanProjectTaskBatch implements Database.Batchable<sObject>{
+public class NSP_ServicePlanProjectTaskBatch implements Database.Batchable<sObject> {
+    // test w/ NSP_ServicePlanProjectTaskBatch_Test (100%)
 
     public Database.QueryLocator start(Database.BatchableContext BC){
         //Using SOQL QUery to fetch Template Name, project status from Project Task object
