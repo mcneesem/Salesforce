@@ -315,7 +315,6 @@
 		<members>MacroInstruction</members>
 		<members>MacroUsage</members>
 		<members>ManagedContentVersion</members>
-		<members>NS_Audit__Netskope_Audit_Log__c</members>
 		<members>Opportunity</members>
 		<members>OpportunityCompetitor</members>
 		<members>OpportunityContactRole</members>
