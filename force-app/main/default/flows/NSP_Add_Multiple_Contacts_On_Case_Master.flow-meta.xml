@@ -46,7 +46,7 @@
             <targetReference>Add_Multiple_Contacts</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <subflows>
         <name>Add_Multiple_Contacts</name>
         <label>Add Multiple Contacts</label>
