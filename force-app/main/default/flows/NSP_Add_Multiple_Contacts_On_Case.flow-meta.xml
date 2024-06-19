@@ -1,21 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
-    <actionCalls>
-        <name>Redirect_to_case</name>
-        <label>Redirect to case</label>
-        <locationX>1095</locationX>
-        <locationY>3590</locationY>
-        <actionName>c:NSP_NavigateToRecord</actionName>
-        <actionType>component</actionType>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
-        <inputParameters>
-            <name>recordId</name>
-            <value>
-                <elementReference>finalCaseId</elementReference>
-            </value>
-        </inputParameters>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </actionCalls>
     <apiVersion>56.0</apiVersion>
     <assignments>
         <name>Add_Contact_Id_in_Collection</name>
@@ -596,9 +580,6 @@
         <label>Create Case Contacts</label>
         <locationX>1095</locationX>
         <locationY>3482</locationY>
-        <connector>
-            <targetReference>Redirect_to_case</targetReference>
-        </connector>
         <faultConnector>
             <targetReference>handle_flow_fault</targetReference>
         </faultConnector>
