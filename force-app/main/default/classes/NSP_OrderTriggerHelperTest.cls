@@ -524,6 +524,16 @@ public class NSP_OrderTriggerHelperTest{
         System.assert(orderList.size()>0, 'Order List size is greater than 0');
     }
 
+    @isTest private static void testProcessConsumptionSchedule(){
+        Test.startTest();
+        NSP_OrderItemTriggerHelper.processConsumptionSchedule(
+            new List<String>() ,
+            3 ,
+            new List<String>()
+        );
+        Test.stopTest();
+    }
+
     @isTest
     public static void createInvoiceMethod(){
         List<Order> orderList = [Select Id, Status, SBQQ__Quote__c, NSP_Project_Go_Live_Date__c, NSP_Project_Go_Live_Approved__c, NSP_First_usage_upload__c, Type, NSP_Project_Name__c, blng__InvoiceBatch__c, NSP_Billing_Address__c, NSP_Shipping_Address__c, NSP_Billing_Account__c
@@ -546,6 +556,7 @@ public class NSP_OrderTriggerHelperTest{
         blngTranObj.Name = 'Invoiced at Signature';
         blngTranObj.blng__Status__c = 'Pending';
         blngTranObj.blng__Amount__c = 100.00;
+        blngTranObj.blng__Quantity__c = 1.00;
         blngTranObj.blng__InvoicePlanLine__c = invPlanLineRec[0].Id;
         blngTranObj.blng__BillingSchedule__c = blngSchdObj[0].Id;
         insert blngTranObj;
