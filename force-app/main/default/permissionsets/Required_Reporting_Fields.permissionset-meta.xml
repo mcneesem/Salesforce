@@ -8,6 +8,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Account.Has_Financial_Info__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Account.Most_Recent_Activity_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -134,6 +139,16 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Sales_to_Implementation__c.AIMS_Client__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NSP_Sub_Client__c.ABCP_Effective_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NSP_Sub_Client__c.ABCP_Period__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

@@ -62,7 +62,6 @@ public with sharing class NSP_SObjectHistoryTrackingHelperTest {
             ip.Does_the_client_have_any_union_EEs__c=NSP_ServiceConstants.YES;
             ip.Are_there_any_EEs_on_Leave_of_Absence__c=NSP_ServiceConstants.YES;
             ip.Select_the_applicable_LOA_types__c = NSP_ServiceConstants.MILITARY_LEAVE;
-            ip.Select_BPSes__c = NSP_ServiceConstants.PERFORMANCE;
             ip.Client_have_any_urgent_HR_needs__c = NSP_ServiceConstants.YES;
             ip.Select_client_urgent_HR_needs__c=NSP_ServiceConstants.JOBDESCRIPTION;
             ip.Is_client_s_current_HSA_with_Optum_Bank__c = NSP_ServiceConstants.Yes;

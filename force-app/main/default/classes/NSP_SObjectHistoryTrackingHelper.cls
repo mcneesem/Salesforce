@@ -17,7 +17,22 @@ public class NSP_SObjectHistoryTrackingHelper implements Queueable {
 
     // unified entry point...
     public static void enqueueJob( Map<Id,sObject> newRecords , Map<Id,sObject> oldRecords ) {
-        if ( Limits.getQueueableJobs() != Limits.getLimitQueueableJobs() ) {
+        String localSObjectName = null;
+        if ( newRecords != null ) {
+            Schema.SObjectType localSObjectType = newRecords.getSObjectType();
+            if ( localSObjectType != null ) {
+                localSObjectName = String.valueOf( localSObjectType );
+            }
+        }
+        Boolean isEnabled = False;
+        if ( String.isNotBlank( localSObjectName )
+            && ( NSP_SObjectHistoryTrackingHelper.allowedSObjectNames != null )
+            && NSP_SObjectHistoryTrackingHelper.allowedSObjectNames.contains( localSObjectName )
+           )
+        {
+            isEnabled = True;
+        }
+        if ( isEnabled && ( Limits.getQueueableJobs() != Limits.getLimitQueueableJobs() ) ) {
             System.enqueueJob(
                 new NSP_SObjectHistoryTrackingHelper(
                     newRecords ,
@@ -25,6 +40,25 @@ public class NSP_SObjectHistoryTrackingHelper implements Queueable {
                 )
             );
         }
+    }
+
+    private static Set<String> allowedSObjectNames {
+        private get {
+            if ( allowedSObjectNames == null ) {
+                Set<String> local = null;
+                // Account , Asset , Contact , Implementation_Profile__c , Lead , NSP_Account_Group__c , Opportunity
+                String allowedSObjectNamesSetting = 'Account,Asset,Contact,Implementation_Profile__c,Lead,NSP_Account_Group__c,Opportunity';
+                if ( String.isNotBlank( allowedSObjectNamesSetting ) ) {
+                    List<String> allowedSObjectNamesList = allowedSObjectNamesSetting.split( ',' );
+                    if ( ( allowedSObjectNamesList != null ) && !allowedSObjectNamesList.isEmpty() ) {
+                        local = new Set<String>( allowedSObjectNamesList );
+                    }
+                }
+                allowedSObjectNames = local;
+            }
+            return allowedSObjectNames;
+        }
+        private set;
     }
 
     //
@@ -144,7 +178,7 @@ public class NSP_SObjectHistoryTrackingHelper implements Queueable {
     }
 
     private Schema.SObjectType soType {
-        get {
+        private get {
             if ( ( soType == null ) && ( this.newMapSObject != null ) ) {
                 soType = this.newMapSObject.getSObjectType();
             }
@@ -155,7 +189,7 @@ public class NSP_SObjectHistoryTrackingHelper implements Queueable {
 
     // cache the results of the describing the field map results to reduce System.LimitException: Apex CPU time limit exceeded...
     private Map<String,Schema.SObjectField> fieldMap {
-        get {
+        private get {
             if ( ( fieldMap == null ) && ( this.soType != null ) ) {
                 fieldMap = this.soType.getDescribe().fields.getMap();
             }
@@ -165,7 +199,7 @@ public class NSP_SObjectHistoryTrackingHelper implements Queueable {
     }
     
     private String sObjectName {
-        get {
+        private get {
             if ( ( sObjectName == null ) && ( this.soType != null ) ) {
                 sObjectName = String.valueOf( this.soType );
             }

@@ -657,10 +657,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Data Collection Meeting</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Demo</fullName>
             <default>false</default>
         </values>
@@ -682,10 +678,6 @@
         </values>
         <values>
             <fullName>Networking</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Safety Meeting</fullName>
             <default>false</default>
         </values>
         <values>

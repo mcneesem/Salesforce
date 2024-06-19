@@ -54,6 +54,8 @@ public class NSP_AssetServiceHelper {
                             AND (
                                 ( NSP_PrimaryProduct__c = :NSP_ServiceConstants.PERFORMANCE_MANAGEMENT )
                                 OR ( NSP_PrimaryProduct__c = :NSP_ServiceConstants.TIME_ATTENDANCE )
+                                OR ( NSP_PrimaryProduct__c = :NSP_SalesConstants.WO )
+                                OR ( NSP_PrimaryProduct__c = :NSP_SalesConstants.WS )
                             )
                         )
                     ];
@@ -72,21 +74,30 @@ public class NSP_AssetServiceHelper {
                     if ( asset.RecordTypeId == PERFORM_SMART_ASSET
                         && asset.AccountId != null
                         && !asset.Is_Perform_WO_WS_Asset__c
-                        && mapOfAssetOppty.containsKey(asset.Id)
-                        && mapOfOpportunity.containsKey(mapOfAssetOppty.get(asset.Id))
-                        && ( mapOfOpportunity.get(mapOfAssetOppty.get(asset.id)).NSP_IPMRecommendation__c == NSP_SalesConstants.Yes )
+                        && (
+                            ( asset.Opportunity__c == null )
+                            || (
+                                mapOfAssetOppty.containsKey(asset.Id)
+                                && mapOfOpportunity.containsKey(mapOfAssetOppty.get(asset.Id))
+                                && ( mapOfOpportunity.get(mapOfAssetOppty.get(asset.id)).NSP_IPMRecommendation__c == NSP_SalesConstants.Yes )
+                            )
                         )
+                    )
                     {
                         accountIdSet.add(asset.AccountId);
                         performSmartAssetSet.add(asset.Id);
                     }
                     if ( asset.RecordTypeId == TIME_ATTENDANCE_ASSET
-                        && asset.AccountId!=null
-                        && !asset.Is_Perform_WO_WS_Asset__c
-                        && mapOfAssetOppty.containsKey(asset.Id)
-                        && mapOfOpportunity.containsKey(mapOfAssetOppty.get(asset.Id))
-                        && ( mapOfOpportunity.get(mapOfAssetOppty.get(asset.id)).NSP_Time_Entry_Recommendation__c == NSP_ServiceConstants.Premier_Time_Att )
+                        && asset.AccountId != null
+                        && (
+                            ( asset.Opportunity__c == null )
+                            || (
+                                mapOfAssetOppty.containsKey(asset.Id)
+                                && mapOfOpportunity.containsKey(mapOfAssetOppty.get(asset.Id))
+                                && ( mapOfOpportunity.get(mapOfAssetOppty.get(asset.id)).NSP_Time_Entry_Recommendation__c == NSP_ServiceConstants.Premier_Time_Att )
+                            )
                         )
+                    )
                     {
                         accountIdSet.add(asset.AccountId);
                         timeAttendanceAssetSet.add(asset.Id);
@@ -183,13 +194,15 @@ public class NSP_AssetServiceHelper {
             if(!projectAssetMapping.isEmpty()){
                 insert projectAssetMapping;
             }
-        } catch (Exception ex) {
-            NSP_ErrorLogHandler.logSaveException('NSP_AssetServiceHelper', 'createBPSProject', ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_AssetServiceHelper.class.getName() ,
+                'createBPSProject' ,
+                e
+            );
         }
-        
-        
     }
-    
+
     /***********************************************************************************************
 * MethodName: updateTerminationInformation
 * Description :  This method will update the asset termination information section
@@ -223,13 +236,15 @@ public class NSP_AssetServiceHelper {
                                                              }
                 
             }
-        } catch (Exception ex) {
-            NSP_ErrorLogHandler.logSaveException('NSP_AssetServiceHelper', 'updateTerminationInformation', ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_AssetServiceHelper.class.getName() ,
+                'updateTerminationInformation' ,
+                e
+            );
         }
-        
-        
     }
-    
+
     /***********************************************************************************************
 * MethodName: clearAssetTerminationSection
 * Description :  This method will clear the asset termination information section
@@ -297,13 +312,15 @@ public class NSP_AssetServiceHelper {
             if(!updatedAssetList.isEmpty()){
                 database.update(updatedAssetList);
             }
-        } catch (Exception ex) {
-            NSP_ErrorLogHandler.logSaveException('NSP_AssetServiceHelper', 'clearAssetTerminationSection', ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_AssetServiceHelper.class.getName() ,
+                'clearAssetTerminationSection' ,
+                e
+            );
         }
-        
     }
-    
-    
+
     /***********************************************************************************************
         * MethodName: hasMoreThanOneAsset
     * Description :  This method checks if more than one asset is present of same record Type

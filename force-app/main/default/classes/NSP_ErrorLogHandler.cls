@@ -1,5 +1,6 @@
 public with sharing class NSP_ErrorLogHandler {
-    // test w/ NSP_ErrorLogHandlerTest (86%)
+    // test w/ NSP_ErrorLogHandlerTest (90%)
+    private static final String NO_ERRORS_FOUND = 'No errors found.';
 
     //
     // PUBLIC
@@ -21,7 +22,7 @@ public with sharing class NSP_ErrorLogHandler {
             className ,
             methodName ,
             null ,
-            NSP_Utilities.getDbErrorRecords( results )
+            NSP_ErrorLogHandler.summarizeDatabaseResults( results )
         );
     }
 
@@ -31,7 +32,7 @@ public with sharing class NSP_ErrorLogHandler {
             className ,
             methodName ,
             null ,
-            NSP_Utilities.getDbErrorRecords( results )
+            NSP_ErrorLogHandler.summarizeDatabaseResults( results )
         );
     }
 
@@ -41,7 +42,7 @@ public with sharing class NSP_ErrorLogHandler {
             className ,
             methodName ,
             null ,
-            NSP_Utilities.getDbErrorRecords( results )
+            NSP_ErrorLogHandler.summarizeDatabaseResults( results )
         );
     }
 
@@ -50,7 +51,7 @@ public with sharing class NSP_ErrorLogHandler {
     //
 
     // DEPRECATED ~ see logException
-    // ~ 111 classes
+    // ~ 112 classes
     public static void logSaveException( String className , String methodName , String message ) {
         NSP_ErrorLogHandler.insertLog(
             className ,
@@ -61,7 +62,7 @@ public with sharing class NSP_ErrorLogHandler {
     }
 
     // DEPRECATED ~ see logResults
-    // ~ 14 classes
+    // ~ 15 classes
     public static void logSaveResult( String className , String methodName , List<Database.SaveResult> saveResultList ) {
         NSP_ErrorLogHandler.logResults(
             className ,
@@ -72,7 +73,7 @@ public with sharing class NSP_ErrorLogHandler {
 
     // DEPRECATED ~ see logResults
     // This method logs error for the failed results of Database.insert/update operation in DB.
-    // ~ 55 classes
+    // ~ 50 classes
     public static void logSaveResultsException( String className , String methodName , List<Database.SaveResult> results ) {
         NSP_ErrorLogHandler.logResults(
             className ,
@@ -83,7 +84,7 @@ public with sharing class NSP_ErrorLogHandler {
 
     // DEPRECATED ~ see logResults
     // This method logs error for the failed results of Database.delete operation in DB.
-    // ~ 11 classes
+    // ~ 8 classes
     public static void logDeleteResultsException( String className , String methodName , List<Database.DeleteResult> results ) {
         NSP_ErrorLogHandler.logResults(
             className ,
@@ -94,13 +95,85 @@ public with sharing class NSP_ErrorLogHandler {
 
     // DEPRECATED ~ see logResults
     // This method logs error for the failed results of Database.upsert operation in DB.
-    // ~ 16 classes
+    // ~ 14 classes
     public static void logUpsertResultsException( String className , String methodName , List<Database.UpsertResult> results ) {
         NSP_ErrorLogHandler.logResults(
             className ,
             methodName ,
             results
         );
+    }
+
+    //
+    // SUMMARIZE DATABASE RESULTS
+    //
+
+    private static List<String> summarizeDatabaseErrors( List<Database.Error> errors ) {
+        List<String> messages = new List<String>();
+        if ( ( errors != null ) && !errors.isEmpty() ) {
+            for ( Database.Error error : errors ) {
+                messages.add(
+                    error.getStatusCode()
+                    + ', '
+                    + error.getMessage()
+                    + ': ['
+                    + String.join( error.getFields() , ', ' )
+                    + ']'
+                );
+            }
+        }
+        return messages;
+    }
+
+    private static List<String> summarizeDatabaseResults( List<Database.SaveResult> results ) {
+        List<String> messages = new List<String>();
+        for ( Database.SaveResult result : results ) {
+            if ( !result.isSuccess() ) {
+                messages.addAll(
+                    NSP_ErrorLogHandler.summarizeDatabaseErrors(
+                        result.getErrors()
+                    )
+                );
+            }
+        }
+        if ( messages.isEmpty() ) {
+            messages.add( NSP_ErrorLogHandler.NO_ERRORS_FOUND );
+        }
+        return messages;
+    }
+
+    private static List<String> summarizeDatabaseResults( List<Database.UpsertResult> results ) {
+        List<String> messages = new List<String>();
+        for ( Database.UpsertResult result : results ) {
+            if ( !result.isSuccess() ) {
+                messages.addAll(
+                    NSP_ErrorLogHandler.summarizeDatabaseErrors(
+                        result.getErrors()
+                    )
+                );
+            }
+        }
+        if ( messages.isEmpty() ) {
+            messages.add( NSP_ErrorLogHandler.NO_ERRORS_FOUND );
+        }
+        return messages;
+    }
+
+    private static List<String> summarizeDatabaseResults( List<Database.DeleteResult> results ) {
+        List<String> messages = new List<String>();
+        for ( Database.DeleteResult result : results ) {
+            if ( !result.isSuccess() ) {
+                messages.addAll(
+                    NSP_ErrorLogHandler.summarizeDatabaseErrors(
+                        result.getErrors()
+                    )
+                );
+            }
+        }
+        if ( messages.isEmpty() ) {
+            messages.add( NSP_ErrorLogHandler.NO_ERRORS_FOUND );
+        }
+        return messages;
     }
 
     //
@@ -112,7 +185,8 @@ public with sharing class NSP_ErrorLogHandler {
         if ( e != null ) {
             String newLine = '\r\n';
             message = ''
-                + e.getMessage() + newLine + newLine
+                + e.getTypeName() + ': ' + e.getMessage() + newLine
+                + newLine
                 + e.getStackTraceString()
                 ;
         }

@@ -5,7 +5,7 @@
         <label>Collaborate Opportunity Team Member on Box Folder</label>
         <locationX>176</locationX>
         <locationY>492</locationY>
-        <actionName>box__CreateCollaborationOnRecord_v2</actionName>
+        <actionName>BoxCreateCollaborationOnRecord</actionName>
         <actionType>apex</actionType>
         <faultConnector>
             <isGoTo>true</isGoTo>
@@ -30,7 +30,7 @@
                 <elementReference>$Record.User.Id</elementReference>
             </value>
         </inputParameters>
-        <nameSegment>box__CreateCollaborationOnRecord_v2</nameSegment>
+        <nameSegment>BoxCreateCollaborationOnRecord</nameSegment>
         <storeOutputAutomatically>true</storeOutputAutomatically>
         <versionSegment>1</versionSegment>
     </actionCalls>
@@ -188,7 +188,7 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <name>triggeringFlow</name>
+            <name>faultFlow</name>
             <value>
                 <stringValue>Box_Opportunity_Team_Member_Collaboration</stringValue>
             </value>

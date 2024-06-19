@@ -2,6 +2,8 @@
 * Represents the Payroll trigger helper which handles all the logic.
 */
 public class NSP_PayrollTriggerHelper {
+    // test w/ NSP_PayrollTriggerHelperTest (85%)
+
     public static list<NSP_Payroll_Data_Sheet_Event__e> payrollDataSheetEventListToBeInserted = new list <NSP_Payroll_Data_Sheet_Event__e>();
     public Static final Id WOASSETRECTYPEID = Schema.SObjectType.Asset.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.WO_ASSET_RECORDTYPE).getRecordTypeId();
     /**
@@ -168,7 +170,8 @@ public class NSP_PayrollTriggerHelper {
             }
         }
     }
-    
+
+    // dead code...
     public void checkSubClient(List<NSP_Payroll__c> Payrolls){
         Set<Id> subClientIds = new Set<Id>();
         for(NSP_Payroll__c newPayroll : Payrolls){
@@ -306,8 +309,12 @@ public class NSP_PayrollTriggerHelper {
                     }
                 }
             }
-        } catch (exception ex) {
-            NSP_ErrorLogHandler.logSaveException('NSP_PayrollTriggerHelper', 'checkForGovernmentContractor', ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_PayrollTriggerHelper.class.getName() ,
+                'checkForGovernmentContractor' ,
+                e
+            );
         }
     }
     
@@ -533,52 +540,59 @@ public class NSP_PayrollTriggerHelper {
                     Boolean isPrimaryFound = false;
                     Boolean isHrConFound = false;
                     Boolean isSupervisorFound = false;
-                    for(NSP_Sub_Client_Contact__c subClientCon : subClienBySCC.get(payroll.NSP_Sub_Client_Name__c)) {
-                        //Check if backup payroll contact is set
-                        if(payroll.NSP_Back_Up_Payroll_Contact__c != null) {
-                            if(payroll.NSP_Back_Up_Payroll_Contact__c == subClientCon.NSP_Contact__c && !isBackupFound) {//is backup same as SCC contact
-                                payroll.NSP_Backup_Payroll_Contact_SCC__c = subClientCon.id;
-                                isBackupFound = true;
+                    if ( ( payroll.NSP_Sub_Client_Name__c != null )
+                        && subClienBySCC.containsKey( payroll.NSP_Sub_Client_Name__c )
+                        )
+                    {
+                        List<NSP_Sub_Client_Contact__c> subClientCons = subClienBySCC.get( payroll.NSP_Sub_Client_Name__c );
+                        if ( ( subClientCons != null ) && !subClientCons.isEmpty() ) {
+                            for ( NSP_Sub_Client_Contact__c subClientCon : subClientCons ) {
+                                //Check if backup payroll contact is set
+                                if(payroll.NSP_Back_Up_Payroll_Contact__c != null) {
+                                    if(payroll.NSP_Back_Up_Payroll_Contact__c == subClientCon.NSP_Contact__c && !isBackupFound) {//is backup same as SCC contact
+                                        payroll.NSP_Backup_Payroll_Contact_SCC__c = subClientCon.id;
+                                        isBackupFound = true;
+                                    }
+                                }else {
+                                    payroll.NSP_Back_Up_Payroll_Contact__c = null;
+                                }
+                                
+                                if(payroll.NSP_Primary_Payroll_Contact__c != null) {
+                                    if(subClientCon.NSP_Payroll_Contact__c && !isPrimaryFound) {
+                                        payroll.NSP_Payroll_SCC__c = subClientCon.Id;
+                                        payroll.NSP_Primary_Payroll_Contact__c = subClientCon.NSP_Contact__c;
+                                        isPrimaryFound = true;
+                                    }
+                                }else{
+                                    payroll.NSP_Payroll_SCC__c = null;
+                                }
+                                
+                                if(payroll.NSP_HR_Contact__c != null) {
+                                    if(subClientCon.NSP_HR_Contact__c && !isHrConFound) {
+                                        payroll.NSP_HR_Contact_SCC__c = subClientCon.Id;
+                                        payroll.NSP_HR_Contact__c = subClientCon.NSP_Contact__c;
+                                        isHrConFound = true;
+                                    }
+                                }else{
+                                    payroll.NSP_HR_Contact_SCC__c = null;
+                                }
+                                
+                                if(payroll.NSP_On_site_Supervisor__c != null) {
+                                    if(subClientCon.NSP_On_site_Supervisor__c && !isSupervisorFound) {
+                                        payroll.NSP_OSS_SCC__c = subClientCon.Id;
+                                        payroll.NSP_On_site_Supervisor__c = subClientCon.NSP_Contact__c;
+                                        isSupervisorFound = true;
+                                    }
+                                }else{
+                                    payroll.NSP_OSS_SCC__c = null;
+                                }
                             }
-                        }else {
-                            payroll.NSP_Back_Up_Payroll_Contact__c = null;
-                        }
-                        
-                        if(payroll.NSP_Primary_Payroll_Contact__c != null) {
-                            if(subClientCon.NSP_Payroll_Contact__c && !isPrimaryFound) {
-                                payroll.NSP_Payroll_SCC__c = subClientCon.Id;
-                                payroll.NSP_Primary_Payroll_Contact__c = subClientCon.NSP_Contact__c;
-                                isPrimaryFound = true;
-                            }
-                        }else{
-                            payroll.NSP_Payroll_SCC__c = null;
-                        }
-                        
-                        if(payroll.NSP_HR_Contact__c != null) {
-                            if(subClientCon.NSP_HR_Contact__c && !isHrConFound) {
-                                payroll.NSP_HR_Contact_SCC__c = subClientCon.Id;
-                                payroll.NSP_HR_Contact__c = subClientCon.NSP_Contact__c;
-                                isHrConFound = true;
-                            }
-                        }else{
-                            payroll.NSP_HR_Contact_SCC__c = null;
-                        }
-                        
-                        if(payroll.NSP_On_site_Supervisor__c != null) {
-                            if(subClientCon.NSP_On_site_Supervisor__c && !isSupervisorFound) {
-                                payroll.NSP_OSS_SCC__c = subClientCon.Id;
-                                payroll.NSP_On_site_Supervisor__c = subClientCon.NSP_Contact__c;
-                                isSupervisorFound = true;
-                            }
-                        }else{
-                            payroll.NSP_OSS_SCC__c = null;
                         }
                     }
-                    
                 }
             }
-            
-        } 
-        
+        }
     }
+
 }
+//

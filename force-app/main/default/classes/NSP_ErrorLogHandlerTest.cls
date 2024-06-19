@@ -3,14 +3,13 @@
 */
 
 @isTest(SeeAllData=false)
-public class NSP_ErrorLogHandlerTest {
+private class NSP_ErrorLogHandlerTest {
     /**
 * Checks the logSaveResult and LogSaveException
 * @param N/A. 
 * @return void                          
 */
-    @isTest
-    static void checkTestMehod() {
+    @isTest private static void checkTestMehod() {
         Test.startTest();
         //List to store account objects
         List<Account> accountList = new List<Account>();
@@ -29,8 +28,7 @@ public class NSP_ErrorLogHandlerTest {
         System.assertEquals(accountList.size(), 5);
     }
 
-    @isTest
-    static void logSaveExceptionForSaveTest(){
+    @isTest private static void logSaveExceptionForSaveTest(){
         //List to store account objects
         List<Account> accountList = new List<Account>();
         //Iterating over the loop to create 5 accounts
@@ -48,8 +46,7 @@ public class NSP_ErrorLogHandlerTest {
         System.assertEquals(accountList.size(), 5);
     }
 
-    @isTest
-    static void logSaveExceptionForDeleteTest(){
+    @isTest private static void logSaveExceptionForDeleteTest(){
         //List to store account objects
         List<Account> accountList = new List<Account>();
         //Iterating over the loop to create 5 accounts
@@ -68,8 +65,7 @@ public class NSP_ErrorLogHandlerTest {
         System.assertEquals(accountList.size(), 5);
     }
 
-    @isTest
-    static void logSaveExceptionForUpsert(){
+    @isTest private static void logSaveExceptionForUpsert(){
         //List to store account objects
         List<Account> accountList = new List<Account>();
         //Iterating over the loop to create 5 accounts
@@ -87,4 +83,12 @@ public class NSP_ErrorLogHandlerTest {
         Test.stopTest();
         System.assertEquals(accountList.size(), 5);
     }
+
+    @isTest private static void testLogException() {
+        Test.startTest();
+        NSP_ErrorLogHandler.logException( null , null , null );
+        Test.stopTest();
+    }
+
 }
+//

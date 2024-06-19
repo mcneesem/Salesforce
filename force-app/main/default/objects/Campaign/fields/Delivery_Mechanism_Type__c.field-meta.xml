@@ -17,9 +17,14 @@
                 <label>3rd Party Content Marketing</label>
             </value>
             <value>
-                <fullName>Affiliate - Paid - Centerfield</fullName>
+                <fullName>6Sense - 6QA</fullName>
                 <default>false</default>
-                <label>Affiliate - Paid - Centerfield</label>
+                <label>6Sense - 6QA</label>
+            </value>
+            <value>
+                <fullName>Affiliate - Paid</fullName>
+                <default>false</default>
+                <label>Affiliate - Paid</label>
             </value>
             <value>
                 <fullName>Audio - Paid - Adswerve</fullName>
@@ -37,9 +42,9 @@
                 <label>Corporate Employee Referral</label>
             </value>
             <value>
-                <fullName>Delivery Mechanisms</fullName>
+                <fullName>Display - Paid - 3rd Party</fullName>
                 <default>false</default>
-                <label>Delivery Mechanisms</label>
+                <label>Display - Paid - 3rd Party</label>
             </value>
             <value>
                 <fullName>Display - Paid - 6Sense</fullName>
@@ -60,6 +65,11 @@
                 <fullName>Display - Paid - Google via 6Sense</fullName>
                 <default>false</default>
                 <label>Display - Paid - Google via 6Sense</label>
+            </value>
+            <value>
+                <fullName>Display - Paid - StackAdapt</fullName>
+                <default>false</default>
+                <label>Display - Paid - StackAdapt</label>
             </value>
             <value>
                 <fullName>Display - Paid Remarketing - 6Sense</fullName>
@@ -87,14 +97,14 @@
                 <label>Display - Paid Remarketing - StackAdapt</label>
             </value>
             <value>
-                <fullName>Display - Paid - StackAdapt</fullName>
-                <default>false</default>
-                <label>Display - Paid - StackAdapt</label>
-            </value>
-            <value>
                 <fullName>Email</fullName>
                 <default>false</default>
                 <label>Email</label>
+            </value>
+            <value>
+                <fullName>Event - Relationship Marketing</fullName>
+                <default>false</default>
+                <label>Event - Relationship Marketing</label>
             </value>
             <value>
                 <fullName>Event - Tradeshow, Industry Conference</fullName>
@@ -105,6 +115,11 @@
                 <fullName>Event - Webinar</fullName>
                 <default>false</default>
                 <label>Event - Webinar</label>
+            </value>
+            <value>
+                <fullName>External Referral</fullName>
+                <default>false</default>
+                <label>External Referral</label>
             </value>
             <value>
                 <fullName>Insperity Blog</fullName>
@@ -192,6 +207,11 @@
                 <label>Social - Organic - Meta</label>
             </value>
             <value>
+                <fullName>Social - Organic - X</fullName>
+                <default>false</default>
+                <label>Social - Organic - X</label>
+            </value>
+            <value>
                 <fullName>Social - Paid - Influencer</fullName>
                 <default>false</default>
                 <label>Social - Paid - Influencer</label>
@@ -231,6 +251,18 @@
                 <default>false</default>
                 <label>Traditional Media</label>
             </value>
+            <value>
+                <fullName>Affiliate - Paid - Centerfield</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Affiliate - Paid - Centerfield</label>
+            </value>
+            <value>
+                <fullName>Delivery Mechanisms</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Delivery Mechanisms</label>
+            </value>
         </valueSetDefinition>
         <valueSettings>
             <controllingFieldValue>Child: Delivery Mechanism Type</controllingFieldValue>
@@ -238,7 +270,11 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Child: Delivery Mechanism Type</controllingFieldValue>
-            <valueName>Affiliate - Paid - Centerfield</valueName>
+            <valueName>6Sense - 6QA</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Child: Delivery Mechanism Type</controllingFieldValue>
+            <valueName>Affiliate - Paid</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Child: Delivery Mechanism Type</controllingFieldValue>
@@ -254,7 +290,7 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Child: Delivery Mechanism Type</controllingFieldValue>
-            <valueName>Delivery Mechanisms</valueName>
+            <valueName>Display - Paid - 3rd Party</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Child: Delivery Mechanism Type</controllingFieldValue>
@@ -271,6 +307,10 @@
         <valueSettings>
             <controllingFieldValue>Child: Delivery Mechanism Type</controllingFieldValue>
             <valueName>Display - Paid - Google via 6Sense</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Child: Delivery Mechanism Type</controllingFieldValue>
+            <valueName>Display - Paid - StackAdapt</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Child: Delivery Mechanism Type</controllingFieldValue>
@@ -294,11 +334,11 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Child: Delivery Mechanism Type</controllingFieldValue>
-            <valueName>Display - Paid - StackAdapt</valueName>
+            <valueName>Email</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Child: Delivery Mechanism Type</controllingFieldValue>
-            <valueName>Email</valueName>
+            <valueName>Event - Relationship Marketing</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Child: Delivery Mechanism Type</controllingFieldValue>
@@ -307,6 +347,10 @@
         <valueSettings>
             <controllingFieldValue>Child: Delivery Mechanism Type</controllingFieldValue>
             <valueName>Event - Webinar</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Child: Delivery Mechanism Type</controllingFieldValue>
+            <valueName>External Referral</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Child: Delivery Mechanism Type</controllingFieldValue>
@@ -375,6 +419,10 @@
         <valueSettings>
             <controllingFieldValue>Child: Delivery Mechanism Type</controllingFieldValue>
             <valueName>Social - Organic - Meta</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Child: Delivery Mechanism Type</controllingFieldValue>
+            <valueName>Social - Organic - X</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Child: Delivery Mechanism Type</controllingFieldValue>

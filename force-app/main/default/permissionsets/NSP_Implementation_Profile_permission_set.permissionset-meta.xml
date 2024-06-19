@@ -12,6 +12,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Implementation_Profile__c.Does_this_client_have_an_AWW__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Implementation_Profile__c.Is_client_CA_docs_submitted_for_approval__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Implementation_Profile__c.NSP_Old_Benefits_Package__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -19339,51 +19349,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Zip_To_City_Mapping__c.NSP_Zip__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>NS_Audit__Netskope_Audit_Log__c.NS_Audit__Activity_Done_By__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>NS_Audit__Netskope_Audit_Log__c.NS_Audit__Activity_Info__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>NS_Audit__Netskope_Audit_Log__c.NS_Audit__Activity__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>NS_Audit__Netskope_Audit_Log__c.NS_Audit__Field_Name__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>NS_Audit__Netskope_Audit_Log__c.NS_Audit__Last_Modified_Date__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>NS_Audit__Netskope_Audit_Log__c.NS_Audit__New_Value__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>NS_Audit__Netskope_Audit_Log__c.NS_Audit__Object_Name__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>NS_Audit__Netskope_Audit_Log__c.NS_Audit__Old_Value__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>NS_Audit__Netskope_Audit_Log__c.NS_Audit__Original_Id__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>

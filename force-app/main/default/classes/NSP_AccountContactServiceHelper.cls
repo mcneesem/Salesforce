@@ -127,8 +127,12 @@ public class NSP_AccountContactServiceHelper {
                 assignPermissionControl(reactivatedUserIdSet);
             }
             
-        }catch(Exception ex){
-            NSP_ErrorLogHandler.logSaveException('NSP_AccountContactServiceHelper', 'createExternalUser', ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_AccountContactServiceHelper.class.getName() ,
+                'createExternalUser' ,
+                e
+            );
         }
     }
     
@@ -226,8 +230,12 @@ public class NSP_AccountContactServiceHelper {
             lstpermControl.add(permissionControl);
         }
         if(!lstpermControl.isEmpty()) {
-            List<Database.UpsertResult> saveResults = Database.upsert(lstpermControl, false);
-            NSP_ErrorLogHandler.logUpsertResultsException('NSP_AccountContactServiceHelper', 'assignPermissionControl:permissionControlList', saveResults);
+            List<Database.UpsertResult> results = Database.upsert(lstpermControl, false);
+            NSP_ErrorLogHandler.logResults(
+                NSP_AccountContactServiceHelper.class.getName() ,
+                'assignPermissionControl' ,
+                results
+            );
         }
     }
     
@@ -241,7 +249,11 @@ public class NSP_AccountContactServiceHelper {
             .addFilter('pse__User__c', new List<Id>(deactivateUserId), NSP_QueryBuilder.Operator.INCLUDES)
             .build();
         List<pse__Permission_Control__c> lstRecords = Database.query(permissionControlQuery);
-        Database.DeleteResult[] records = Database.Delete(lstRecords,false);
-        NSP_ErrorLogHandler.logDeleteResultsException('NSP_AccountContactServiceHelper', 'removePermissionControlForDeactivatedUsers', records );
+        Database.DeleteResult[] results = Database.Delete(lstRecords,false);
+        NSP_ErrorLogHandler.logResults(
+            NSP_AccountContactServiceHelper.class.getName() ,
+            'removePermissionControlForDeactivatedUsers' ,
+            results
+        );
     }
 }

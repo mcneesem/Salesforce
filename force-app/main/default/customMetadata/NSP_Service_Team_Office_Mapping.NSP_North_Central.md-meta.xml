@@ -10,14 +10,17 @@
 1404 Chicago 4
 1405 Chicago 5
 1406 Chicago 6
+3622 Cincinnati
+3601 Columbus
+1501 Indianapolis 1
 2601 St Louis 1
+5001 Milwaukee 1
 2400 Minneapolis 1
 2401 Minneapolis 2
-2402 Minneapolis 3
-5001 Milwaukee 1</value>
+2402 Minneapolis 3</value>
     </values>
     <values>
         <field>NSP_Service_Team_Email__c</field>
-        <value xsi:type="xsd:string">centralnorthservicenotifications@insperity.com.invalid</value>
+        <value xsi:type="xsd:string">centralnorthservicenotifications@insperity.com</value>
     </values>
 </CustomMetadata>

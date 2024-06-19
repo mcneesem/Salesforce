@@ -1476,10 +1476,10 @@ created case will be updated to cancelled.
 
     private static void handleException( Exception e , String methodName ) {
         if ( e != null ) {
-            NSP_ErrorLogHandler.logSaveException(
+            NSP_ErrorLogHandler.logException(
                 NSP_CaseTriggerHelper.class.getName() ,
                 methodName ,
-                e.getMessage() + ' ~ ' + e.getStackTraceString()
+                e
             );
         }
     }
@@ -1768,7 +1768,7 @@ created case will be updated to cancelled.
                 if(!pCaseList.isEmpty()){
                     //updating Parent Case
                     List<Database.SaveResult> results = Database.update(pCaseList, false);
-                    NSP_ErrorLogHandler.logSaveResult(
+                    NSP_ErrorLogHandler.logResults(
                         NSP_CaseTriggerHelper.class.getName() ,
                         'updateParentItaCqaCase' ,
                         results
@@ -1812,7 +1812,7 @@ Story:        STY-01785
                 }
                 if(!cseListToUpdate.isEmpty()){
                     List<Database.SaveResult> results = Database.update(cseListToUpdate, false);
-                    NSP_ErrorLogHandler.logSaveResult(
+                    NSP_ErrorLogHandler.logResults(
                         NSP_CaseTriggerHelper.class.getName() ,
                         'updatePrentItaCqaCaseStatus' ,
                         results
@@ -1844,7 +1844,7 @@ Story:        STY-01785
             }
             if(!pCseListToUpdate.isEmpty()){
                 List<Database.SaveResult> results = Database.update(pCseListToUpdate, false);
-                NSP_ErrorLogHandler.logSaveResult(
+                NSP_ErrorLogHandler.logResults(
                     NSP_CaseTriggerHelper.class.getName() ,
                     'reOpenParentItaCqaCase' ,
                     results
@@ -2149,7 +2149,7 @@ Created by : Harsha Khiroya
         }
         if(!updatedContactList.isEmpty()){
             List<Database.SaveResult> results = Database.update(updatedContactList, false);
-            NSP_ErrorLogHandler.logSaveResult(
+            NSP_ErrorLogHandler.logResults(
                 NSP_CaseTriggerHelper.class.getName() ,
                 'UpdateServiceRequestChannel' ,
                 results

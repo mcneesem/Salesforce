@@ -2,12 +2,14 @@
 * Represents the Opportunity trigger helper created By Service which handles all the logic.
 */
 public class NSP_OpportunityTriggerServiceHelper {
-    // test w/ NSP_OpportunityTriggerServiceHelperTest (86%)
+    // test w/ NSP_OpportunityTriggerServiceHelperTest, NSP_AutomaticProjectBatchTest (91%)
 
     /*****************************************************************
     * Creating Constructor to call FF API's
     * Creating Mock records of FF Api's Using interfaces 
     */
+    private static final Id PERFORM_SMART_ASSET = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.ASSET_SOBJECT_TYPE,NSP_ServiceConstants.PERFORMANCE_ASSET );
+    private static final Id TIME_ATTENDANCE_ASSET = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.ASSET_SOBJECT_TYPE,NSP_ServiceConstants.ASSET_TT_RECORDTYPE );
     public NSP_FF_APIs implInstance = new NSP_FF_APIImpl();
     public NSP_OpportunityTriggerServiceHelper(){
         if(Test.isRunningTest()){
@@ -59,56 +61,104 @@ public class NSP_OpportunityTriggerServiceHelper {
         Map<Id,Opportunity> perAssetMap = new Map<Id,Opportunity>();
         Map<Id,Id> oppIdAccIdMap = new Map<Id,Id>();
         Set<Id>accountIdSet = new Set<Id>();
-        for(Id opportunityId : opportunityNewMap.keySet()){
-            Opportunity opp = opportunityNewMap.get(opportunityId);
-            Boolean isValidTimeEntryRecommendation = (
-                ( opp.NSP_Time_Entry_Recommendation__c == NSP_ServiceConstants.Premier_Time_Att )
-                || ( opp.NSP_Time_Entry_Recommendation__c == NSP_ServiceConstants.Premier_Timesheet )
-            );
-            Boolean isValidWoWsPrimaryProduct = (
-                ( opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WO )
-                || ( opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WS )
-            );
-            if ( opp.stagename != opportunityOldMap.get(opportunityId).stagename
-                && opp.stagename.equals(NSP_SalesConstants.CLOSED_WON))
-            {
-                // added as a part of STY-03649
-                if ( isValidWoWsPrimaryProduct
-                    && isValidTimeEntryRecommendation
+        Set<Id>  performSmartSet = new Set<Id>();
+        Set<Id>  timeAttendenceSet = new Set<Id>();
+        
+        if (opportunityNewMap != null){
+            for(Opportunity opportunityRecord : opportunityNewMap.values()){
+                Opportunity oldOpportunity = opportunityOldMap != null ? opportunityOldMap.get(opportunityRecord.id):null;
+                if ( oldOpportunity != null
+                    && opportunityRecord.stagename != oldOpportunity.stagename
+                    && opportunityRecord.Stagename == NSP_SalesConstants.CLOSED_WON
                     )
                 {
-                    timeAttAssetMap.put(opp.Id,opp);
+                    oppIdAccIdMap.put(opportunityRecord.Id,opportunityRecord.AccountId);
                 }
-                if ( (opp.NSP_PrimaryProduct__c == NSP_ServiceConstants.TIME_ATTENDANCE)
-                    && isValidTimeEntryRecommendation
-                    )
-                {
-                    timeAttAssetMap.put(opp.Id,opp);
-                }
-                if ( isValidWoWsPrimaryProduct
-                    && opp.NSP_IPMRecommendation__c == NSP_SalesConstants.Yes
-                    )
-                {
-                    perAssetMap.put(opp.Id,opp);
-                }
-                if ( opp.NSP_PrimaryProduct__c == NSP_ServiceConstants.PERFORMANCE_MANAGEMENT 
-                    && opp.NSP_IPMRecommendation__c == NSP_SalesConstants.Yes
-                    )
-                {
-                    perAssetMap.put(opp.Id,opp);
-                }
-                oppIdAccIdMap.put(opp.Id,opp.AccountId);
             }
-            //Added as part of STY-STY-01602
-            if(opportunityNewMap.get(opportunityId).NSP_Signed_CSA__c != opportunityOldMap.get(opportunityId).NSP_Signed_CSA__c &&
-               opportunityNewMap.get(opportunityId).NSP_Signed_CSA__c == true && opportunityNewMap.get(opportunityId).NSP_Signed_CSA_Date__c != null){
-                   docusignedOpportunityList.add(opportunityNewMap.get(opportunityId));
-               }
-            // added as a part of STY-02129
-            if(opp.StageName != opportunityOldMap.get(opp.Id).StageName && opp.StageName ==NSP_SalesConstants.CLOSED_WON && opp.AccountId!=null ){
-                accountIdSet.add(opp.AccountId);
+        }
+        if (!oppIdAccIdMap.values().isEmpty()){
+            List<Asset> existingAssetList = [
+                SELECT Id, Accountid, RecordTypeId
+                FROM Asset
+                WHERE (
+                    AccountId IN :oppIdAccIdMap.values()
+                    AND Status IN (:NSP_ServiceConstants.ASSET_ONBOARDING_STATUS, :NSP_ServiceConstants.ASSET_ONDEMAND_STATUS, :NSP_ServiceConstants.ASSET_ACTIVE_STATUS)
+                    AND RecordTypeId IN (:PERFORM_SMART_ASSET, :TIME_ATTENDANCE_ASSET)
+                )
+            ];
+            if(existingAssetList.size()>0){
+                for(Asset assetList : existingAssetList){
+                    if ( assetList.AccountId != null ) {
+                        if ( assetList.RecordTypeId == PERFORM_SMART_ASSET ) {
+                            performSmartSet.add( assetList.AccountId );
+                        } else if( assetList.RecordTypeId == TIME_ATTENDANCE_ASSET ) {
+                            timeAttendenceSet.add( assetList.AccountId );
+                        }
+                    } 
+                }
             }
-        }       
+        }
+        if (!oppIdAccIdMap.keyset().isEmpty()){
+            for(Id opportunityId : oppIdAccIdMap.keyset()){
+                Opportunity opp = opportunityNewMap != null ? opportunityNewMap.get(opportunityId):null;
+                if ( opp != null ) {
+                    Boolean isValidTimeEntryRecommendation = (
+                        ( opp.NSP_Time_Entry_Recommendation__c == NSP_ServiceConstants.Premier_Time_Att )
+                        || ( opp.NSP_Time_Entry_Recommendation__c == NSP_ServiceConstants.Premier_Timesheet )
+                    );
+                    Boolean isValidWoWsPrimaryProduct = (
+                        ( opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WO )
+                        || ( opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WS )
+                    );
+                    if (!timeAttendenceSet.contains(opp.AccountId)) {
+                        // added as a part of STY-03649
+                        if ( isValidWoWsPrimaryProduct
+                            && isValidTimeEntryRecommendation
+                            )
+                        {
+                            timeAttAssetMap.put(opp.Id,opp);
+                        }
+                        if ( (opp.NSP_PrimaryProduct__c == NSP_ServiceConstants.TIME_ATTENDANCE)
+                            && isValidTimeEntryRecommendation
+                            )
+                        {
+                            timeAttAssetMap.put(opp.Id,opp);
+                        }
+                        
+                    }
+                    if (!performSmartSet.contains(opp.AccountId)) {
+                        if ( isValidWoWsPrimaryProduct
+                            && opp.NSP_IPMRecommendation__c == NSP_SalesConstants.Yes
+                            )
+                        {
+                            perAssetMap.put(opp.Id,opp);
+                        }
+                        if ( opp.NSP_PrimaryProduct__c == NSP_ServiceConstants.PERFORMANCE_MANAGEMENT 
+                            && opp.NSP_IPMRecommendation__c == NSP_SalesConstants.Yes
+                            )
+                        {
+                            perAssetMap.put(opp.Id,opp);
+                        }
+                    }
+                }
+                //Added as part of STY-STY-01602
+                if ( opportunityNewMap.get(opportunityId).NSP_Signed_CSA__c != opportunityOldMap.get(opportunityId).NSP_Signed_CSA__c
+                    && opportunityNewMap.get(opportunityId).NSP_Signed_CSA__c == true
+                    && opportunityNewMap.get(opportunityId).NSP_Signed_CSA_Date__c != null
+                    )
+                {
+                    docusignedOpportunityList.add(opportunityNewMap.get(opportunityId));
+                }
+                // added as a part of STY-02129
+                if ( opp.StageName != opportunityOldMap.get(opp.Id).StageName
+                    && opp.StageName == NSP_SalesConstants.CLOSED_WON
+                    && opp.AccountId!=null
+                    )
+                {
+                    accountIdSet.add(opp.AccountId);
+                }
+            }
+        }
         
         //Added as part of STY-STY-01602
         if(!docusignedOpportunityList.isEmpty()){
@@ -186,12 +236,15 @@ public class NSP_OpportunityTriggerServiceHelper {
             if(!updateImProfileList.isEmpty()){
                 update updateImProfileList;
             } 
-        } catch (Exception ex) {
-            NSP_ErrorLogHandler.logSaveException('NSP_OpportunityTriggerHelper', 'updateImplementationProfile', ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_OpportunityTriggerServiceHelper.class.getName() ,
+                'updateImplementationProfile' ,
+                e
+            );
         }
-        
     }
-    
+
     /***********************************************************************************************
     * MethodName: createAssetwithProject
     * Description : This Method will update Opportunity related account ProjectId on the Implementation Profile for the Closed Opportunities 
@@ -199,8 +252,6 @@ public class NSP_OpportunityTriggerServiceHelper {
     * ********************************************************************************************/     
     private static void createAssetwithProject( Map<Id,Opportunity> timeAttAssetMap , Map<Id,Opportunity> perAssetMap , Map<Id,Id> oppAccMap ) {
         List<Asset> assetList = new List<Asset>();
-        List<pse__Proj__c> updateProjectList = new List<pse__Proj__c>();
-        List<Project_Asset__c> projectAssetMapping = new List<Project_Asset__c>();
         try{
         Id TimeAttAssetRecordType = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.ASSET_SOBJECT_TYPE,NSP_ServiceConstants.TIME_ATTENDANCE_ASSET);
         Id PermformanceAssetRecordType = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.ASSET_SOBJECT_TYPE,NSP_ServiceConstants.PERFORMANCE_MANAGEMENT_ASSET);
@@ -211,7 +262,6 @@ public class NSP_OpportunityTriggerServiceHelper {
             for(Id oppId:timeAttAssetMap.keyset() ){
                 Opportunity record = timeAttAssetMap.get(oppId);
                 if(record != null){
-                    Boolean IsPerformWOWSAsset = True;
                     assetList.add(
                         createAssetObject(
                             record.Name ,
@@ -221,7 +271,7 @@ public class NSP_OpportunityTriggerServiceHelper {
                             NSP_ServiceConstants.ASSET_ONBOARDING_STATUS ,
                             NSP_ServiceConstants.CASE_TIME_ATTENDENCE ,
                             NSP_ServiceConstants.WoWSAsset,
-                            IsPerformWOWSAsset
+                            record.NSP_PrimaryProduct__c
                         )
                     );
                 }
@@ -232,10 +282,8 @@ public class NSP_OpportunityTriggerServiceHelper {
                 Opportunity record = perAssetMap.get(oppId);
                 if(record != null){
                     String assetStatus = NSP_ServiceConstants.ASSET_ONDEMAND_STATUS;
-                    Boolean IsPerformWOWSAsset = True;
                     if(record.NSP_PrimaryProduct__c == NSP_ServiceConstants.PERFORMANCE_MANAGEMENT){
                         assetStatus = NSP_ServiceConstants.ASSET_ONBOARDING_STATUS;
-                        IsPerformWOWSAsset = False;
                     }
                     assetList.add(
                         createAssetObject(
@@ -246,50 +294,33 @@ public class NSP_OpportunityTriggerServiceHelper {
                             assetStatus ,
                             NSP_ServiceConstants.PERFORMANCE ,
                             NSP_ServiceConstants.WoWSAsset,
-                            IsPerformWOWSAsset
+                            record.NSP_PrimaryProduct__c
                         )
                     );
                 }
             }
         }
-        if(!assetList.isEmpty()){
-                List<Database.UpsertResult> upsertResults = Database.upsert(assetList, false);
-                NSP_ErrorLogHandler.logUpsertResultsException('NSP_OpportunityTriggerHelper', 'createAssetwithProject:upsertResults', upsertResults);
-                
-            // Create Project and Link Asset With Project
-            for(Asset ast: assetList){
-                if(ast.recordTypeId == TimeAttAssetRecordType){
-                    NSP_AssetServiceTriggerHelper astService = new NSP_AssetServiceTriggerHelper();
-                    String projectId;
-                    projectId = astService.createProjectWithTemplateFromAsset(templateMapping, ast.Id ); 
-                    if(projectId!=null){
-                        updateProjectList.add(createProjectObject(projectId, ast.AccountId, TESBPSProjectRecordType));
-                        projectAssetMapping.add(NSP_AssetServiceTriggerHelper.linkProjectWithAsset(projectId, ast.Id));
-                    }
-                }                    
+            if ( !assetList.isEmpty() ) {
+                List<Database.UpsertResult> upsertResults = Database.upsert( assetList , false );
+                NSP_ErrorLogHandler.logResults(
+                    NSP_OpportunityTriggerServiceHelper.class.getName() ,
+                    'createAssetwithProject' ,
+                    upsertResults
+                );
             }
-            
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_OpportunityTriggerServiceHelper.class.getName() ,
+                'createAssetwithProject' ,
+                e
+            );
         }
-        if(!updateProjectList.isEmpty()){
-                List<Database.UpsertResult> upsertResults = Database.upsert(updateProjectList, false);
-                NSP_ErrorLogHandler.logUpsertResultsException('NSP_OpportunityTriggerServiceHelper', 'createAssetwithProject:upsertResults', upsertResults);
-        }        
-        if(!projectAssetMapping.isEmpty()){
-                List<Database.UpsertResult> upsertResults = Database.upsert(projectAssetMapping, false);
-                NSP_ErrorLogHandler.logUpsertResultsException('NSP_OpportunityTriggerServiceHelper', 'createAssetwithProject:upsertResults', upsertResults);
-           
-        }        
-        }catch (Exception ex) {
-            NSP_ErrorLogHandler.logSaveException('NSP_OpportunityTriggerServiceHelper', 'createAssetwithProject', ex.getMessage());
-        }
-       
-        
     }
-    
+
     /***********************************************************************************************
     * MethodName: createAssetObject
     * ********************************************************************************************/    
-    private static Asset createAssetObject(String assetName , Id oppId, Id accountId , Id assetRecordTypeId , String status , String productLine , String bundle, Boolean IsPerformWOWSAsset){
+    private static Asset createAssetObject(String assetName , Id oppId, Id accountId , Id assetRecordTypeId , String status , String productLine , String bundle, String primaryProduct){
         Asset ast = new Asset();
         ast.Name = assetName;
         ast.RecordTypeId = assetRecordTypeId;
@@ -299,24 +330,11 @@ public class NSP_OpportunityTriggerServiceHelper {
         ast.NSP_ProductBundle__c = bundle;
         ast.Opportunity__c = OppId;
         ast.AccountId = accountId;
-        ast.Is_Perform_WO_WS_Asset__c = IsPerformWOWSAsset;
+        if(primaryProduct == NSP_SalesConstants.WO || primaryProduct == NSP_SalesConstants.WS){
+            ast.Is_Perform_WO_WS_Asset__c = TRUE;
+        }
         return ast;
-    }   
-    
-    /***********************************************************************************************
-    * MethodName: createProjectObject
-    * ********************************************************************************************/ 
-    private static pse__Proj__c createProjectObject(Id projId, Id accountId , Id projectRecordType ){
-        pse__Proj__c project = new pse__Proj__c();
-        project.Id= projId;
-        project.pse__Project_Status__c = NSP_ServiceConstants.INTAKE;
-        project.pse__Account__c = accountId;
-        project.RecordTypeId = projectRecordType;
-        project.pse__End_Date__c = System.Today().addDays(45);
-        project.pse__Start_Date__c = System.Today();
-        return project;
     }
-    
     /***********************************************************************
     * @MethodName : updateCSAsignedDateOnOpportunity
     * @Description: This method will update CSA Signed Date on opportunity
@@ -330,10 +348,14 @@ public class NSP_OpportunityTriggerServiceHelper {
             for(Opportunity oppoRec : opportunityList){
                 oppoRec.NSP_Signed_CSA_Date__c = System.today();
             }
-        }catch(Exception ex){
-            NSP_ErrorLogHandler.logSaveException('NSP_OpportunityTriggerHelper', 'updateCSAsignedDateOnOpportunity', ex.getMessage());
-        }		
-	}
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_OpportunityTriggerServiceHelper.class.getName() ,
+                'updateCSAsignedDateOnOpportunity' ,
+                e
+            );
+        }
+    }
 
     /***********************************************************************
     * @MethodName : updateCSAsignedDateOnAsset
@@ -368,13 +390,20 @@ public class NSP_OpportunityTriggerServiceHelper {
                 }
             }
 
-            if(!assetListToUpdate.isEmpty()){
-                Database.SaveResult[] assetUpdateList = Database.update(assetListToUpdate,false);
-                NSP_ErrorLogHandler.logSaveResultsException('NSP_OpportunityTriggerHelper', 'updateCSAsignedDateOnAsset:AssetUpdate', assetUpdateList);
+            if ( !assetListToUpdate.isEmpty() ) {
+                Database.SaveResult[] assetUpdateList = Database.update( assetListToUpdate , false );
+                NSP_ErrorLogHandler.logResults(
+                    NSP_OpportunityTriggerServiceHelper.class.getName() ,
+                    'updateCSAsignedDateOnAsset' ,
+                    assetUpdateList
+                );
             }
-            
-        }catch(Exception ex){
-            NSP_ErrorLogHandler.logSaveException('NSP_OpportunityTriggerHelper', 'updateCSAsignedDateOnAsset', ex.getMessage());
-        }		
-	}
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_OpportunityTriggerServiceHelper.class.getName() ,
+                'updateCSAsignedDateOnAsset' ,
+                e
+            );
+        }
+    }
 }
