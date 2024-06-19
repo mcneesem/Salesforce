@@ -4,7 +4,7 @@
     <assignments>
         <name>Assign_Opportunity_ID_from_Asset_to_OptyId_variable</name>
         <label>Assign Opportunity ID from Asset to OptyId variable</label>
-        <locationX>314</locationX>
+        <locationX>380</locationX>
         <locationY>816</locationY>
         <assignmentItems>
             <assignToReference>optyId</assignToReference>
@@ -20,7 +20,7 @@
     <assignments>
         <name>Assign_Opportunity_ID_from_Project_to_OptyId_variable</name>
         <label>Assign Opportunity ID from Project to OptyId variable</label>
-        <locationX>50</locationX>
+        <locationX>116</locationX>
         <locationY>708</locationY>
         <assignmentItems>
             <assignToReference>optyId</assignToReference>
@@ -34,13 +34,49 @@
         </connector>
     </assignments>
     <decisions>
+        <name>Check_Opportunity_Max_Orientation_Date</name>
+        <label>Check Opportunity Max Orientation Date</label>
+        <locationX>314</locationX>
+        <locationY>1308</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Update_Is_Required</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Opportunity</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_related_New_Client_EE_OT_Meeting_Project_Tasks</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Opportunity.Max_Orientation_Date__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>Get_related_New_Client_EE_OT_Meeting_Project_Tasks.pse__End_Date__c</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Opty_Max_Orientation_Date</targetReference>
+            </connector>
+            <label>Update Is Required</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Is_Asset_linked_to_Opty</name>
         <label>Is Asset linked to Opty?</label>
-        <locationX>446</locationX>
+        <locationX>512</locationX>
         <locationY>708</locationY>
-        <defaultConnectorLabel>Asset is not linked to Opty</defaultConnectorLabel>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>Yes_Asset_is_linked_to_Opty</name>
+            <name>Asset_Is_Linked_To_Opportunity</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>Get_ProjectAsset_to_get_Asset_ID.Asset__r.Opportunity__c</leftValueReference>
@@ -52,20 +88,20 @@
             <connector>
                 <targetReference>Assign_Opportunity_ID_from_Asset_to_OptyId_variable</targetReference>
             </connector>
-            <label>Yes - Asset is linked to Opty</label>
+            <label>Asset Is Linked To Opportunity</label>
         </rules>
     </decisions>
     <decisions>
         <name>Is_Opportunity_Linked</name>
         <label>Is Opportunity Linked?</label>
-        <locationX>248</locationX>
+        <locationX>314</locationX>
         <locationY>600</locationY>
         <defaultConnector>
             <targetReference>Is_Asset_linked_to_Opty</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Opty is not linked</defaultConnectorLabel>
         <rules>
-            <name>Yes_Opty_field_is_populated_on_Project</name>
+            <name>Project_Is_Link_To_Opportunity</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.pse__Project__r.pse__Opportunity__c</leftValueReference>
@@ -77,18 +113,25 @@
             <connector>
                 <targetReference>Assign_Opportunity_ID_from_Project_to_OptyId_variable</targetReference>
             </connector>
-            <label>Yes - Opty field is populated on Project</label>
+            <label>Project Is Link To Opportunity</label>
         </rules>
     </decisions>
     <decisions>
         <name>Is_Related_Asset_Active</name>
         <label>Is Related Asset Active?</label>
-        <locationX>809</locationX>
+        <locationX>875</locationX>
         <locationY>492</locationY>
-        <defaultConnectorLabel>Asset is not Active</defaultConnectorLabel>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>Yes_Related_Asset_is_Active</name>
+            <name>Related_Asset_Is_Active</name>
             <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_ProjectAsset_to_get_Asset_ID</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
             <conditions>
                 <leftValueReference>Get_ProjectAsset_to_get_Asset_ID.Asset__r.Status</leftValueReference>
                 <operator>EqualTo</operator>
@@ -99,19 +142,26 @@
             <connector>
                 <targetReference>Is_Opportunity_Linked</targetReference>
             </connector>
-            <label>Yes - Related Asset is Active</label>
+            <label>Related Asset Is Active</label>
         </rules>
     </decisions>
     <decisions>
         <description>WO Project is denoted by: Project RT= PEO Project AND Project Type = Implementation</description>
         <name>Is_Related_Project_WO</name>
         <label>Is Related Project WO?</label>
-        <locationX>1353</locationX>
+        <locationX>1419</locationX>
         <locationY>276</locationY>
-        <defaultConnectorLabel>Not WO Project</defaultConnectorLabel>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>Yes_Project_is_WO</name>
+            <name>Project_Is_WO</name>
             <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.pse__Project__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
             <conditions>
                 <leftValueReference>$Record.pse__Project__r.NSP_Record_Type_Name__c</leftValueReference>
                 <operator>EqualTo</operator>
@@ -129,7 +179,7 @@
             <connector>
                 <targetReference>Get_ProjectAsset_to_get_Asset_ID</targetReference>
             </connector>
-            <label>Yes - Project is WO</label>
+            <label>Project Is WO</label>
         </rules>
     </decisions>
     <description>Updated Project Asset &quot;get&quot;. When WO Project has a Project Tasks created/updated that hit criteria, get furthest End Date in the future of all Project Tasks that hit relevant criteria, and update &quot;Max Orientation Date&quot; on related Opty</description>
@@ -156,15 +206,45 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <recordLookups>
+        <name>Get_Opportunity</name>
+        <label>Get Opportunity</label>
+        <locationX>314</locationX>
+        <locationY>1200</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_Opportunity_Max_Orientation_Date</targetReference>
+        </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>optyId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Opportunity</object>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Max_Orientation_Date__c</queriedFields>
+        <sortField>CreatedDate</sortField>
+        <sortOrder>Asc</sortOrder>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>Get_ProjectAsset_to_get_Asset_ID</name>
         <label>Get ProjectAsset to get Asset ID</label>
-        <locationX>809</locationX>
+        <locationX>875</locationX>
         <locationY>384</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Is_Related_Asset_Active</targetReference>
         </connector>
         <faultConnector>
+            <isGoTo>true</isGoTo>
             <targetReference>Fault_Handler_Subflow</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
@@ -189,11 +269,11 @@
     <recordLookups>
         <name>Get_related_New_Client_EE_OT_Meeting_Project_Tasks</name>
         <label>Get related New Client - EE OT Meeting Project Tasks</label>
-        <locationX>248</locationX>
+        <locationX>314</locationX>
         <locationY>1092</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Update_Opty_Max_Orientation_Date</targetReference>
+            <targetReference>Get_Opportunity</targetReference>
         </connector>
         <faultConnector>
             <isGoTo>true</isGoTo>
@@ -251,10 +331,9 @@
     <recordUpdates>
         <name>Update_Opty_Max_Orientation_Date</name>
         <label>Update Opty Max Orientation Date</label>
-        <locationX>248</locationX>
-        <locationY>1200</locationY>
+        <locationX>50</locationX>
+        <locationY>1416</locationY>
         <faultConnector>
-            <isGoTo>true</isGoTo>
             <targetReference>Fault_Handler_Subflow</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
@@ -274,7 +353,7 @@
         <object>Opportunity</object>
     </recordUpdates>
     <start>
-        <locationX>443</locationX>
+        <locationX>476</locationX>
         <locationY>0</locationY>
         <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
         <filterLogic>1 AND 2 AND 3 AND 4 AND (5 OR 6)</filterLogic>
@@ -334,19 +413,19 @@
     <subflows>
         <name>Fault_Handler_Subflow</name>
         <label>Fault Handler Subflow</label>
-        <locationX>1634</locationX>
-        <locationY>492</locationY>
+        <locationX>314</locationX>
+        <locationY>1524</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
+        <inputAssignments>
+            <name>faultFlow</name>
+            <value>
+                <stringValue>Project_Task_Async_Max_Orientation_Date</stringValue>
+            </value>
+        </inputAssignments>
         <inputAssignments>
             <name>faultMessage</name>
             <value>
                 <elementReference>$Flow.FaultMessage</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>triggeringFlow</name>
-            <value>
-                <stringValue>Project Task - Created Async Max Orientation Date</stringValue>
             </value>
         </inputAssignments>
     </subflows>
