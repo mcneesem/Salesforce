@@ -1,16 +1,4 @@
-/**
-Apex Class Name      :  NSP_ClientSubPlanHistoryBatchTest for NSP_ClientSubPlanHistoryBatch
-Version              :  1.0                                                                          
-Created Date         :  11/04/2022   
-Function             :  Test class for NSP_ClientSubPlanHistoryBatch 
-Story                :                                                                      
-Modification Log     :                                                                              
-*--------------------------------------------------------------------------------------------------  
-* Developer                   Date                   Description                                    
-* -------------------------------------------------------------------------------------------------  
-* Srushti                     11/04/2022            First Iteration
-*/
-
+// 2022-11-04 ~ STY-03665 ~ Srushti ~ NSP_ClientSubPlanHistoryBatchTest for NSP_ClientSubPlanHistoryBatch
 @isTest
 private class NSP_ClientSubPlanHistoryBatchTest {
     private static final Id CHOICECLIENTSUBPLANRECORDTYPEID = NSP_GenericRecordType.getRecordTypeId('NSP_Client_Sub_Plan_History__c', 'Choice');
@@ -23,6 +11,11 @@ private class NSP_ClientSubPlanHistoryBatchTest {
     * ********************************************************************************************/
 	@testSetUp
     private static void setUpTestData(){
+        ClientSubPlanHistoryBatchSettings__c settings = ClientSubPlanHistoryBatchSettings__c.getOrgDefaults();
+        settings.IsEnabled__c = True;
+        settings.BatchSize__c = 200;
+        upsert settings;
+
         Id choicePlanSubPlanRecordTypeId = NSP_GenericRecordType.getRecordTypeId('NSP_Plan_SubPlan__c', 'Choice');
     	Id choicePlanRecordTypeId = NSP_GenericRecordType.getRecordTypeId('NSP_Plan__c', 'Choice');
         
@@ -82,7 +75,13 @@ private class NSP_ClientSubPlanHistoryBatchTest {
 
         Database.insert(clientSubPlanHistoryList);
     }
-    
+
+    @isTest private static void testSchedule() {
+        Test.startTest();
+        NSP_ClientSubPlanHistoryBatch.schedule();
+        Test.stopTest();
+    }
+
     /***********************************************************************************************
     * MethodName: updateFieldsOnAssetRecord
     * Description : Test method to check if asset status is updated

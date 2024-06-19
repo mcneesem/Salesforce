@@ -1,35 +1,38 @@
-/**
- *  Version - STY           - DESCRIPTION                                      - TAG
- * 	V1.0					Batch Class to update Asset 						<STY-03665>
- * 							record fields from client sub plan history record.
- * 
-* @date 11/04/2022
-* Name : NSP_ClientSubPlanHistoryBatch
-*/
+// 2022-11-04 ~ STY-03665 ~ Srushti ~ Batch Class to update Asset record fields from client sub plan history record.
+public class NSP_ClientSubPlanHistoryBatch implements Database.Batchable<sObject>, Schedulable {
+    // test w/ NSP_ClientSubPlanHistoryBatchTest (96%)
 
-public class NSP_ClientSubPlanHistoryBatch implements Schedulable, Database.Batchable < sObject > {
-	public Database.QueryLocator start(Database.BatchableContext bc) {
+    public NSP_ClientSubPlanHistoryBatch() {
+        // intentionally blank...
+    }
+
+    //
+    // Batchable
+    //
+
+    public Database.QueryLocator start( Database.BatchableContext bc ) {
         //get RET_Choice Asset Record Type Id
         Id retChoiceAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId('Asset', 'RET_Choice');
         //get RET_WO Asset Record Type Id
         Id retWOAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId('Asset', 'RET_WO');
-        List<String> clientSubPlanHistoryFields = new List<String>{
-            'NSP_Start_Date__c',
-            'NSP_End_Date__c',
-            'NSP_Asset__c',
-            'CreatedDate',
-            'NSP_Asset__r.RecordTypeId'
-        };
-        String clientSubPlanHistoryObjectApiName = 'NSP_Client_Sub_Plan_History__c';
         //query to get the client sub plan history records where start date is in future and end date is less than or equal to today
-    	NSP_QueryBuilder queryBuilder = new NSP_QueryBuilder(clientSubPlanHistoryObjectApiName, clientSubPlanHistoryFields);
-        queryBuilder.setSecurityEnforce(false);
-        String query = queryBuilder.build();
-        query += ' WHERE NSP_Asset__c != NULL AND (NSP_Asset__r.RecordTypeId =: retChoiceAssetRecordTypeId OR NSP_Asset__r.RecordTypeId =: retWOAssetRecordTypeId)';
-        return Database.getQueryLocator(query);
+        return Database.getQueryLocator(
+            [
+                SELECT Id , NSP_Start_Date__c , NSP_End_Date__c , NSP_Asset__c , NSP_Asset__r.RecordTypeId , CreatedDate
+                FROM NSP_Client_Sub_Plan_History__c
+                WHERE (
+                    ( NSP_Asset__c != null )
+                    AND (
+                        ( NSP_Asset__r.RecordTypeId = :retChoiceAssetRecordTypeId )
+                        OR ( NSP_Asset__r.RecordTypeId = :retWOAssetRecordTypeId )
+                    )
+                )
+                WITH SECURITY_ENFORCED
+            ]
+        );
     }
-    
-    public void execute(Database.BatchableContext BC, List<NSP_Client_Sub_Plan_History__c> scope){
+
+    public void execute( Database.BatchableContext bc , List<NSP_Client_Sub_Plan_History__c> scope ) {
         Set<Id> assetIdSet =  new Set<Id>();
         Set<Id> nonTermAssetIdSet = new Set<Id>();
         Map<Id, NSP_Client_Sub_Plan_History__c> assetClientSubPlanHistoryMap = new Map<Id, NSP_Client_Sub_Plan_History__c>();
@@ -43,7 +46,14 @@ public class NSP_ClientSubPlanHistoryBatch implements Schedulable, Database.Batc
         }
         List<Asset> assetRecordToUpdate = [SELECT Id, NSP_Termination_Date__c, Status FROM Asset WHERE Id IN: assetIdSet];
         List<Asset> nonTermAssetToUpdate = [SELECT Id, NSP_Termination_Date__c, Status FROM Asset WHERE Id IN: nonTermAssetIdSet];
-        List<NSP_Client_Sub_Plan_History__c> clientSubPlanHistoryList = [SELECT Id, NSP_Start_Date__c, CreatedDate, NSP_End_Date__c, NSP_Asset__c FROM NSP_Client_Sub_Plan_History__c WHERE NSP_Asset__c IN: assetIdSet AND NSP_End_Date__c <= TODAY];
+        List<NSP_Client_Sub_Plan_History__c> clientSubPlanHistoryList = [
+            SELECT Id , NSP_Start_Date__c , CreatedDate , NSP_End_Date__c , NSP_Asset__c
+            FROM NSP_Client_Sub_Plan_History__c
+            WHERE (
+                NSP_Asset__c IN :assetIdSet
+                AND NSP_End_Date__c <= TODAY
+            )
+        ];
         //Link the most recently created client sub plan history to the asset 
         for(NSP_Client_Sub_Plan_History__c clientSubPlanHistoryRec: clientSubPlanHistoryList){
             if(assetClientSubPlanHistoryMap.get(clientSubPlanHistoryRec.NSP_Asset__c) == NULL){
@@ -58,7 +68,7 @@ public class NSP_ClientSubPlanHistoryBatch implements Schedulable, Database.Batc
             NSP_Client_Sub_Plan_History__c clientSubPlanHistory = assetClientSubPlanHistoryMap.get(eachAssetRecordToUpdate.Id);
             if(clientSubPlanHistory != NULL){
                 eachAssetRecordToUpdate.NSP_Termination_Date__c = clientSubPlanHistory.NSP_End_Date__c;
-            	eachAssetRecordToUpdate.Status = NSP_ServiceConstants.TERMINATED;
+                eachAssetRecordToUpdate.Status = NSP_ServiceConstants.TERMINATED;
             }
         }
         if(!assetRecordToUpdate.isEmpty()){
@@ -73,11 +83,89 @@ public class NSP_ClientSubPlanHistoryBatch implements Schedulable, Database.Batc
             Database.update(nonTermAssetToUpdate);
         }
     }
-    public void finish(Database.BatchableContext bc) {
 
+    public void finish( Database.BatchableContext bc ) {
+        // intentionally blank...
     }
-        public void execute(SchedulableContext scon) {
-        //Executes Batch
-        Database.executeBatch(new NSP_ClientSubPlanHistoryBatch(),200);
+
+    //
+    // Schedulable
+    //
+
+    public void execute( SchedulableContext sc ) {
+        if ( NSP_ClientSubPlanHistoryBatch.isEnabled ) {
+            Database.executeBatch(
+                new NSP_ClientSubPlanHistoryBatch() ,
+                NSP_ClientSubPlanHistoryBatch.batchSize
+            );
+        }
     }
+
+    public static String schedule() {
+        return System.schedule(
+            NSP_ClientSubPlanHistoryBatch.class.getName()
+                + ' ~ Update the status of the Retirement Services assets considering associated client subplan history records'
+                + ' ~ Schedule to run everyday 2 AM'
+                + ( Test.isRunningTest() ? ' ~ TEST' : '' ) ,
+            '0 0 2 * * ? *' , // every day at 02:00 AM
+            new NSP_ClientSubPlanHistoryBatch()
+        );
     }
+
+    //
+    // attributes controlled by Custom Settings...
+    // ~ intentionlly static to allow Custom Settings to modify the attributes a Scheduled job...
+    //
+
+    private static ClientSubPlanHistoryBatchSettings__c settings {
+        private get {
+            if ( settings == null ) {
+                settings = ClientSubPlanHistoryBatchSettings__c.getInstance( UserInfo.getUserId() );
+            }
+            return settings;
+        }
+        private set;
+    }
+
+    // is the Schedulable enabled for execution???
+    private static Boolean isEnabled {
+        private get {
+            if ( isEnabled == null ) {
+                Boolean local = False;
+                if ( NSP_ClientSubPlanHistoryBatch.settings != null ) {
+                    local = NSP_ClientSubPlanHistoryBatch.settings.IsEnabled__c;
+                }
+                isEnabled = local;
+            }
+            return isEnabled;
+        }
+        private set;
+    }
+
+    private static Integer batchSize {
+        private get {
+            if ( batchSize == null ) {
+                Integer local = 200;
+                if ( ( NSP_ClientSubPlanHistoryBatch.settings != null )
+                    && ( NSP_ClientSubPlanHistoryBatch.settings.BatchSize__c != null )
+                    )
+                {
+                    local = NSP_ClientSubPlanHistoryBatch.settings.BatchSize__c.intValue();
+                }
+                // batch size must be greater than zero...
+                if ( local < 1 ) {
+                    local = 1;
+                }
+                // batch size must be less than or equal to 2000...
+                if ( local > 2000 ) {
+                    local = 2000;
+                }
+                batchSize = local;
+            }
+            return batchSize;
+        }
+        private set;
+    }
+
+}
+//
