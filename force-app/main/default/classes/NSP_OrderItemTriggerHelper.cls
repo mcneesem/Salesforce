@@ -217,7 +217,7 @@ public class NSP_OrderItemTriggerHelper {
                         NSP_Project_Completion_Date__c,NSP_ReCalculation_Status_Internal__c, NSP_Payment_Method__c,SBQQ__Activated__c,
                         Product2.NSP_Partial_Period_Free_Treatment__c, Product2.NSP_Legal_Entity__c,NSP_Additional_Product_Description__c,
                         SBQQ__QuoteLine__r.SBQQ__EndDate__c,SBQQ__OrderedQuantity__c,SBQQ__RevisedOrderProduct__c,SBQQ__BillingFrequency__c,
-                        EndDate,Order.Type,SBQQ__QuoteLine__r.NSP_MergeProducts__c
+                        EndDate,Order.Type,Order.NSP_Transaction_Type__c,SBQQ__QuoteLine__r.NSP_MergeProducts__c
                         FROM OrderItem
                         WHERE Id IN:OrderItemNewMap.keyset()
                     ]
@@ -425,35 +425,46 @@ public class NSP_OrderItemTriggerHelper {
             }
         }
 
-        /**
-        * Method Name : activateOrderProduct 
-        * Description : Method to activate order product based on order activation trigger
-        * Author : CPQ Team       Date : 09/06/2022
-        * @param OrderNewMap Map of New Order. 
-        * @param OrderOldMap Map of Old Order.   
-        * @return void  
-        */
-        public static void activateOrder(Set<Id> orderIdSet){
-            List<Order> orderUp = new List<Order>();
-            AggregateResult[]  groupedResults =  [SELECT COUNT(Id)Ids,OrderId FROM OrderItem WHERE OrderId IN :orderIdSet AND SBQQ__Status__c != :NSP_CPQConstants.ORDER_ACTIVATED GROUP BY OrderId ]; 
-           
-            if(groupedResults.isEmpty()){
-                for(Id ordId : orderIdSet){
-                    Order orderToUpdate = new Order();
-                    orderToUpdate.ID = ordId;
-                    orderToUpdate.Status = NSP_CPQConstants.ORDER_ACTIVATED;
-                    orderUp.add(orderToUpdate);
-                }
-                if(orderUp != null && orderUp.size() > 0){
-                    try{
-                        database.update(orderUp);
-                    }
-                    catch(Exception ex){
-                        NSP_CustomException.LogException(ex);
-                    } 
+    /**
+    * Method Name : activateOrderProduct 
+    * Description : Method to activate order product based on order activation trigger
+    * Author : CPQ Team       Date : 09/06/2022
+    * @param OrderNewMap Map of New Order. 
+    * @param OrderOldMap Map of Old Order.   
+    * @return void  
+    */
+    public static void activateOrder(Set<Id> orderIdSet){
+        List<Order> orderUp = new List<Order>();
+        AggregateResult[] groupedResults = [
+            SELECT COUNT(Id)Ids,OrderId
+            FROM OrderItem
+            WHERE (
+                OrderId IN :orderIdSet
+                AND SBQQ__Status__c != :NSP_CPQConstants.ORDER_ACTIVATED
+            )
+            GROUP BY OrderId
+        ];
+        
+        if(groupedResults.isEmpty()){
+            for(Id ordId : orderIdSet){
+                Order orderToUpdate = new Order();
+                orderToUpdate.ID = ordId;
+                orderToUpdate.Status = NSP_CPQConstants.ORDER_ACTIVATED;
+                orderUp.add(orderToUpdate);
+            }
+            if(orderUp != null && orderUp.size() > 0){
+                try {
+                    database.update( orderUp );
+                } catch ( Exception e ) {
+                    NSP_ErrorLogHandler.logException(
+                        NSP_OrderItemTriggerHelper.class.getName() ,
+                        'activateOrder' ,
+                        e
+                    );
                 }
             }
         }
+    }
             /**
 * Method Name : populateLegalEntityOnOrderItem 
 * Description : Method to copy legal entity from Proudcts to Order Products
@@ -565,16 +576,20 @@ public class NSP_OrderItemTriggerHelper {
                 }
         }
         
-            try{
-                if(ordItemList != null && ordItemList.size() > 0){
-                    database.update(ordItemList);
-                }
-                if(updateAssetList != null && updateAssetList.size() > 0){
-                    database.update(updateAssetList);
-                }
-            } catch(Exception ex){
-                NSP_CustomException.LogException(ex);
+        try{
+            if ( ( ordItemList != null ) && ( ordItemList.size() > 0 ) ) {
+                database.update( ordItemList );
             }
+            if ( ( updateAssetList != null ) && ( updateAssetList.size() > 0 ) ) {
+                database.update( updateAssetList );
+            }
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_OrderItemTriggerHelper.class.getName() ,
+                'updateAsset' ,
+                e
+            );
+        }
     }
 
             /**
