@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Contract_Product_Type__c</fullName>
+    <externalId>false</externalId>
+    <formula>CASE(NSP_Order_Product_Type__c,
+&quot;Organizational Planning&quot;, &quot;Organizational Planning&quot;,
+&quot;IWX Bundle&quot;,&quot;Workforce Acceleration&quot;,
+&quot;Time &amp; Attendance&quot;,&quot;Time and Attendance&quot;,
+&quot;Retirement Services&quot;,&quot;Choice Retirement Services&quot;,
+&quot;Time &amp; Attendance Hardware&quot;, &quot;Time and Attendance Hardware&quot;,
+NSP_Order_Product_Type__c)</formula>
+    <label>Contract Product Type</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

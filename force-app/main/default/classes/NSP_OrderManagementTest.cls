@@ -116,5 +116,107 @@ public class NSP_OrderManagementTest {
         System.assert(isContractUpdated);
         Test.stopTest();
     }
- 
+    /*
+*Test Method : testcheckAmendmentConditionsApex
+*@Vaibhav Jetli(282854)
+*/
+    @isTest
+    private static void testcheckAmendmentConditionsApex_False(){
+        Boolean ammendmentConditionsStatus;
+        Contract con = [SELECT id, NSP_Product_Type__c FROM Contract LIMIT 1];
+        con.NSP_Product_Type__c = 'Workforce Acceleration';
+        update con;
+        Account acc = [SELECT id from Account LIMIT 1];
+        Pricebook2 testPriceBook = new PriceBook2(Name = 'Test Pricebook');
+        insert testPriceBook;
+        SBQQ__Quote__c quote = [SELECT id, SBQQ__Ordered__c,SBQQ__Primary__c FROM SBQQ__Quote__c LIMIT 1];
+        Product2 product = NSP_TestHelper.createProduct('ProductA', true);
+        Order ord = New Order(NSP_Order_Product_Type__c = 'Organizational Planning',AccountId = acc.id, blng__BillingAccount__c = acc.id, /*TotalAmount = 100 + j,*/ CurrencyIsoCode = 'USD',EffectiveDate = Date.Today(),NSP_TerminationDate__c = Date.Today() + 1 ,Status = 'Draft',NSP_Back_Out__c = false,Prevent_Reassignment__c = false, Pricebook2id = testPriceBook.Id);
+        insert ord;
+        Pricebook2 stdPricebook = NSP_TestHelper.getStandardPriceBook2();
+        PricebookEntry stdPriceEntry = NSP_TestHelper.createCustomPriceBookEntry(product.id,100.00,stdPricebook.id,true);
+        PricebookEntry customEntry = NSP_TestHelper.createCustomPriceBookEntry(product.id,100.00,testPriceBook.id,true);
+        
+        blng__BillingRule__c billingRule = NSP_TestHelper.createBillingRule();
+        blng__RevenueRecognitionRule__c recognitionRule = NSP_TestHelper.createRevrecRule('recoRule');
+        blng__TaxRule__c objTaxRule = NSP_TestHelper.createRevTaxRule();
+        product.blng__BillingRule__c = billingRule.id;
+        product.blng__RevenueRecognitionRule__c = recognitionRule.id;
+        product.blng__TaxRule__c = objTaxRule.id;
+        update product;
+        OrderItem orderProduct = new OrderItem(blng__RevenueRecognitionRule__c = recognitionRule.id, OrderId = ord.id, Quantity = 1, SBQQ__SubscriptionPricing__c = 'Fixed Price',PricebookEntryId = customEntry.id, SBQQ__ChargeType__c = 'Recurring',SBQQ__BillingFrequency__c = 'Monthly', UnitPrice = 100, SBQQ__BillingType__c = 'Advance', blng__BillingRule__c = billingRule.id);
+        insert orderProduct;
+        
+        
+        Test.startTest();
+        ammendmentConditionsStatus = NSP_OrderManagement.checkAmendmentConditionsApex(con.id);
+        Test.stopTest();
+        
+        system.assertequals(false,ammendmentConditionsStatus);
+        
+    }
+    @isTest
+    private static void testcheckAmendmentConditionsApex_True(){
+        Boolean ammendmentConditionsStatus;
+        Contract con = [SELECT id, NSP_Product_Type__c FROM Contract LIMIT 1];
+        con.NSP_Product_Type__c = 'Organizational Planning';
+        update con;
+        Account acc = [SELECT id from Account LIMIT 1];
+        Pricebook2 testPriceBook = new PriceBook2(Name = 'Test Pricebook');
+        insert testPriceBook;
+        SBQQ__Quote__c quote = [SELECT id, SBQQ__Ordered__c,SBQQ__Primary__c FROM SBQQ__Quote__c LIMIT 1];
+        
+        Order ord = New Order(NSP_Order_Product_Type__c = 'Organizational Planning',AccountId = acc.id, blng__BillingAccount__c = acc.id, /*TotalAmount = 100 + j,*/ CurrencyIsoCode = 'USD',EffectiveDate = Date.Today(),NSP_TerminationDate__c = Date.Today() + 1 ,Status = 'Draft',NSP_Back_Out__c = true,Prevent_Reassignment__c = false, Pricebook2id = testPriceBook.Id);
+        insert ord;
+        
+        
+        Test.startTest();
+        ammendmentConditionsStatus = NSP_OrderManagement.checkAmendmentConditionsApex(con.id);
+        Test.stopTest();
+        
+        system.assertequals(true,ammendmentConditionsStatus);
+        
+    }
+    @isTest
+    private static void testcheckAmendmentConditionsApex_Exception(){
+        Boolean exceptionCaught;
+        Boolean ammendmentConditionsStatus;
+        Contract con = [SELECT id, NSP_Product_Type__c FROM Contract LIMIT 1];
+        con.NSP_Product_Type__c = 'Organizational Planning';
+        update con;
+        Account acc = [SELECT id from Account LIMIT 1];
+        Pricebook2 testPriceBook = new PriceBook2(Name = 'Test Pricebook');
+        insert testPriceBook;
+        SBQQ__Quote__c quote = [SELECT id, SBQQ__Ordered__c,SBQQ__Primary__c FROM SBQQ__Quote__c LIMIT 1];
+        Product2 product = NSP_TestHelper.createProduct('ProductA', true);
+        Order ord = New Order(NSP_Order_Product_Type__c = 'Organizational Planning',AccountId = acc.id, blng__BillingAccount__c = acc.id, /*TotalAmount = 100 + j,*/ CurrencyIsoCode = 'USD',EffectiveDate = Date.Today(),NSP_TerminationDate__c = Date.Today() + 1 ,Status = 'Draft',NSP_Back_Out__c = false,Prevent_Reassignment__c = false, Pricebook2id = testPriceBook.Id);
+        insert ord;
+        Pricebook2 stdPricebook = NSP_TestHelper.getStandardPriceBook2();
+        PricebookEntry stdPriceEntry = NSP_TestHelper.createCustomPriceBookEntry(product.id,100.00,stdPricebook.id,true);
+        PricebookEntry customEntry = NSP_TestHelper.createCustomPriceBookEntry(product.id,100.00,testPriceBook.id,true);
+        
+        blng__BillingRule__c billingRule = NSP_TestHelper.createBillingRule();
+        blng__RevenueRecognitionRule__c recognitionRule = NSP_TestHelper.createRevrecRule('recoRule');
+        blng__TaxRule__c objTaxRule = NSP_TestHelper.createRevTaxRule();
+        product.blng__BillingRule__c = billingRule.id;
+        product.blng__RevenueRecognitionRule__c = recognitionRule.id;
+        product.blng__TaxRule__c = objTaxRule.id;
+        update product;
+        OrderItem orderProduct = new OrderItem(blng__RevenueRecognitionRule__c = recognitionRule.id, OrderId = ord.id, Quantity = 1, SBQQ__SubscriptionPricing__c = 'Fixed Price',PricebookEntryId = customEntry.id, SBQQ__ChargeType__c = 'Recurring',SBQQ__BillingFrequency__c = 'Monthly', UnitPrice = 100, SBQQ__BillingType__c = 'Advance', blng__BillingRule__c = billingRule.id);
+        insert orderProduct;
+        
+        
+        Test.startTest();
+        try{
+            ammendmentConditionsStatus = NSP_OrderManagement.checkAmendmentConditionsApex('8007f00000168ybAAA');
+        }catch(Exception ex){
+            exceptionCaught = true;
+        }
+        
+        Test.stopTest();
+        
+        system.assertequals(true,exceptionCaught);
+    }
+
+    
 }

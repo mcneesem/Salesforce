@@ -66,9 +66,58 @@
                         });
                         toastEvent.fire();
                         $A.get("e.force:closeQuickAction").fire();
+                    //Vaibhav Jetli 7th june 2024 start    
+                    }else if(component.get("v.optionSelected")=='Amendment/Supplemental'){
+                        console.log('Amendment/Supplemental selected');
+                        var validateOrder = component.get('c.checkAmendmentConditionsApex');
+                        console.log('validate order found');
+
+                        validateOrder.setParams({
+                            "contractId" :selectedContractId
+                        });
+                        console.log('validate order params set');
+
+                        validateOrder.setCallback(this,function(resp){
+
+                            var stateOrder = resp.getState();
+                            if(stateOrder === "SUCCESS"){
+                                var status = resp.getReturnValue();
+                                console.log('status = ' + status);
+                                if(status == false){
+                                    //show error
+                                    var errorMessage = 'Amendment transaction is not allowed as there is an open order for the same product type. Please reach out to Finance for assistance';
+                                    component.find('notifLib').showNotice({
+                                        "variant": "error",
+                                        "header": "Amendment not allowed!",
+                                        "message": errorMessage,
+                                        closeCallback: function() {
+                                            alert('You closed the alert!');
+                                        }
+                                    });
+                                    
+                                }else{
+                                    var urlEvent1 = $A.get("e.force:navigateToURL");
+                                    urlEvent1.setParams({
+                                        "url": "/apex/sbqq__AmendContract?scontrolCaching=1&id="+component.get("v.selectedRow")[0].Id
+                                });
+                                urlEvent1.fire();
+                            }
+
+                            }if(stateOrder === "ERROR"){
+                                component.find('notifLib').showNotice({
+                                    "variant": "error",
+                                    "header": "Some error occurred!",
+                                    "message": validateOrder.getError(),
+                                });
+                            }
+
+
+                        });
+                        $A.enqueueAction(validateOrder);
                     }
-                    else if(component.get("v.optionSelected")=='Amendment/Supplemental' 
-                            || component.get("v.optionSelected")==='Supplemental Only' 
+                    //Vaibhav Jetli 7th june 2024 End
+                    else if(/*component.get("v.optionSelected")=='Amendment/Supplemental' 
+                            || */component.get("v.optionSelected")==='Supplemental Only' 
                             || component.get("v.optionSelected")==='Termination'){
                         var urlEvent = $A.get("e.force:navigateToURL");
                         urlEvent.setParams({ 

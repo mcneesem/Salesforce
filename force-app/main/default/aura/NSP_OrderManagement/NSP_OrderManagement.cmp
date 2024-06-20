@@ -13,7 +13,7 @@ Function             :  This component is called from the 'Manage Order' button
  -->
  <aura:component controller="NSP_OrderManagement" implements="lightning:isUrlAddressable,force:lightningQuickActionWithoutHeader,flexipage:availableForRecordHome,force:hasRecordId,force:appHostable">
     <!--Attrinutes used in the Component -->
-    
+    <lightning:notificationsLibrary aura:id="notifLib"/>
     <aura:attribute name="selectedContractId" type="Id" />
     <aura:attribute name="recordId" type="Id" />
     <aura:attribute name="optionSelected" type="string" />
