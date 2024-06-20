@@ -46,11 +46,6 @@
                 <label>Discovery Call</label>
             </value>
             <value>
-                <fullName>Happy Hour</fullName>
-                <default>false</default>
-                <label>Happy Hour</label>
-            </value>
-            <value>
                 <fullName>Lunch</fullName>
                 <default>false</default>
                 <label>Lunch</label>
@@ -86,6 +81,12 @@
                 <default>false</default>
                 <isActive>false</isActive>
                 <label>Gift Mailing</label>
+            </value>
+            <value>
+                <fullName>Happy Hour</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Happy Hour</label>
             </value>
             <value>
                 <fullName>In-Person Meet</fullName>
@@ -201,11 +202,6 @@
             <controllingFieldValue>Core Sales</controllingFieldValue>
             <controllingFieldValue>Mid Market</controllingFieldValue>
             <valueName>Discovery Call</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Core Sales</controllingFieldValue>
-            <controllingFieldValue>Mid Market</controllingFieldValue>
-            <valueName>Happy Hour</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Core Sales</controllingFieldValue>
