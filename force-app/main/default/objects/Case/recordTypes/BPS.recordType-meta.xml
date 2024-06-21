@@ -429,6 +429,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Client Unresponsive</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Closed</fullName>
             <default>false</default>
         </values>
