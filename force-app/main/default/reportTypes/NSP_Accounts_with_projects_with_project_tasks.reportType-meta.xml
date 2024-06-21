@@ -521,6 +521,16 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>DNBConnect__D_B_Connect_Company_Profile__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>DNB_Connect_DUNS_Number__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>DnB_Direct_Marketing_Opt_Out__c</field>
             <table>Account</table>
         </columns>
@@ -1711,11 +1721,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Max_Overdue_Invoice_Date__c</field>
-            <table>Account</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>NSP_Dunning_Status__c</field>
             <table>Account</table>
         </columns>
@@ -2612,6 +2617,21 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>NSP_Board_of_Directors__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Has_Financial_Info__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Sandbox_Targeted__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Sandbox_AIMS_Client__c</field>
             <table>Account</table>
         </columns>
         <masterLabel>Accounts</masterLabel>
@@ -4077,6 +4097,11 @@
             <field>NSP_Exclusively_Assign_Owner__c</field>
             <table>Account.pse__Projects__r</table>
         </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Project_ID_18__c</field>
+            <table>Account.pse__Projects__r</table>
+        </columns>
         <masterLabel>Projects</masterLabel>
     </sections>
     <sections>
@@ -4768,6 +4793,16 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>NSP_Project_Task_External_ID__c</field>
+            <table>Account.pse__Projects__r.pse__Project_Tasks__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>pse__Parent_Task__c.Owner.Name</field>
+            <table>Account.pse__Projects__r.pse__Project_Tasks__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Project_Task_ID_18__c</field>
             <table>Account.pse__Projects__r.pse__Project_Tasks__r</table>
         </columns>
         <masterLabel>Project Tasks</masterLabel>

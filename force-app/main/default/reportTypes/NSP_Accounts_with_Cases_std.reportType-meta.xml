@@ -122,11 +122,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>DNBoptimizer__DnBCompanyRecord__c</field>
-            <table>Account</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>NSP_Active_Date__c</field>
             <table>Account</table>
         </columns>
@@ -168,6 +163,11 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>NSP_Agreement_Type__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>NSP_Product_First_Pay_Date__c</field>
             <table>Account</table>
         </columns>
         <columns>
@@ -687,17 +687,22 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>DNBConnect__D_B_Connect_Company_Profile__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>DNB_Connect_DUNS_Number__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>DnB_Domestic_Ultimate_DUNS__c</field>
             <table>Account</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>DnB_Domestic_Ultimate_Name__c</field>
-            <table>Account</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>DNBoptimizer__DNB_D_U_N_S_Number__c</field>
             <table>Account</table>
         </columns>
         <columns>
@@ -1403,11 +1408,6 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>NSP_Max_Days_Overdue__c</field>
-            <table>Account</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Max_Overdue_Invoice_Date__c</field>
             <table>Account</table>
         </columns>
         <columns>
@@ -2227,6 +2227,11 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>NSP_Service_Segment__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>NSP_Top_25_Client__c</field>
             <table>Account</table>
         </columns>
@@ -2515,6 +2520,21 @@
             <field>NSP_Exceptions_Tracking__c</field>
             <table>Account</table>
         </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Has_Financial_Info__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Sandbox_Targeted__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Sandbox_AIMS_Client__c</field>
+            <table>Account</table>
+        </columns>
         <masterLabel>Accounts</masterLabel>
     </sections>
     <sections>
@@ -2651,6 +2671,11 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>NSP_Case_Reopened_EmaiToCase__c</field>
+            <table>Account.Cases</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>NSP_Category_Picklist__c</field>
             <table>Account.Cases</table>
         </columns>
         <columns>
@@ -3020,11 +3045,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Level_2_Date__c</field>
-            <table>Account.Cases</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>NSP_Loaner_Repair_Serial__c</field>
             <table>Account.Cases</table>
         </columns>
@@ -3325,6 +3345,11 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>NSP_Level_2_Assigned_Date__c</field>
+            <table>Account.Cases</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>NSP_TotalSavedByClient__c</field>
             <table>Account.Cases</table>
         </columns>
@@ -3461,6 +3486,11 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>Asset.Product2.StockKeepingUnit</field>
+            <table>Account.Cases</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Case_ID_18__c</field>
             <table>Account.Cases</table>
         </columns>
         <masterLabel>Cases</masterLabel>
