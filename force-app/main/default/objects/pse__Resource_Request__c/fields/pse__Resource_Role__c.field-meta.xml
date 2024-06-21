@@ -145,6 +145,36 @@
                 <default>false</default>
                 <label>RET CSP Conversion</label>
             </value>
+            <value>
+                <fullName>Project Implementer</fullName>
+                <default>false</default>
+                <label>Project Implementer</label>
+            </value>
+            <value>
+                <fullName>Project Coordinator</fullName>
+                <default>false</default>
+                <label>Project Coordinator</label>
+            </value>
+            <value>
+                <fullName>Intake Specialist</fullName>
+                <default>false</default>
+                <label>Intake Specialist</label>
+            </value>
+            <value>
+                <fullName>Time Analyst</fullName>
+                <default>false</default>
+                <label>Time Analyst</label>
+            </value>
+            <value>
+                <fullName>Benefit Analyst</fullName>
+                <default>false</default>
+                <label>Benefit Analyst</label>
+            </value>
+            <value>
+                <fullName>Data Analyst</fullName>
+                <default>false</default>
+                <label>Data Analyst</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
