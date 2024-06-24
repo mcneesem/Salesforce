@@ -673,10 +673,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Happy Hour</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Lunch</fullName>
             <default>false</default>
         </values>
