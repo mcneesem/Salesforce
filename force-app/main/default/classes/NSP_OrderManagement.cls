@@ -13,7 +13,7 @@ Modification Log     :  June 6,2024 - Added new method checkAmendmentConditionsA
 * Vaibhav Jetli			   June 6,2024				checkAmendmentConditionsApex(282854)
 ***************************************************************************************************/
 public class NSP_OrderManagement {
-    // test w/ NSP_OrderManagementTest (85%)
+    // test w/ NSP_OrderManagementTest (86%)
     
     @AuraEnabled
     public static List<Contract> getContractRecord(Id recordId){
@@ -90,41 +90,44 @@ public class NSP_OrderManagement {
     
     @AuraEnabled
     public static boolean checkAmendmentConditionsApex(String contractId){
-        NSP_Trigger_Switch__c triggerSwitch =  NSP_Trigger_Switch__c.getInstance(UserInfo.getUserId());
-        if(!triggerSwitch.CheckAmmendmentConditions__c){
+        boolean noError = true;
+        OrderManagementSettings__c triggerSwitch =  OrderManagementSettings__c.getInstance(UserInfo.getUserId());
+        if(!triggerSwitch.CheckAmendmentConditions__c){
             try{
-                if(contractId != null || contractId != ''){
+                if ( String.isNotBlank( contractId ) && ( contractId InstanceOf Id ) ){
                     //fetch the contract and required fields using the contractId param
-                    Contract contract = [SELECT id, NSP_Product_Type__c, AccountId FROM Contract WHERE Id =: contractId limit 1];
+                    List<Contract> contracts = [SELECT id, NSP_Product_Type__c, AccountId FROM Contract WHERE Id =: contractId limit 1];
+                    Contract contract = new Contract();
+                    if(contracts != null && !contracts.isEmpty()){
+                        contract = contracts[0];
+                    }
+                    
                     if(contract !=null){
                         //get the required field accountId
                         id accountId = contract.AccountId;
                         //get multi-select picklist of product type and split
-                        String productType = contract.NSP_Product_Type__c;
-                        List<String> productTypeList = productType.split(';',-2);
+                        List<String> productTypeList = new List<String>();
+                        if(contract.NSP_Product_Type__c != null){
+                        	String productType = contract.NSP_Product_Type__c;
+                        	productTypeList = productType.split(';',-2);    
+                        }
+                        
                         //get orders in draft/reviewed state and backout as false, with same product type and account
                         List<Order> listOfOrders = [SELECT id, Status, NSP_Back_Out__c, NSP_TerminationDate__c from order where Contract_Product_Type__c IN :productTypeList AND AccountId =:accountId AND Status IN ('Draft','Reviewed') AND NSP_Back_Out__c = false AND Subscription_Product_Count__c > 0];
+                        
                         //if no order returned then pass true(go ahead) otherwise false(error)
-                        return listOfOrders.isEmpty() ? true:false;
-                    }else{
-                        return true;
-                    }
-                    
-                }else{
-                    return true;
+                        if(!listOfOrders.isEmpty()){
+                            noError = False;
+                        }   
+                    } 
                 }
-                
-                
             }
             catch(Exception ex){
-                NSP_ErrorLogHandler.logSaveException(NSP_ImplementationHelper.class.getName(), 'copyIpRecordData', ex.getMessage());
+                NSP_ErrorLogHandler.logException(NSP_ImplementationHelper.class.getName(), 'checkAmendmentConditionsApex', ex);
                 throw new AuraHandledException(ex.getMessage());
-                
             }
         }
-        
-        return true;
-        
+        return noError;
     }
     
     
