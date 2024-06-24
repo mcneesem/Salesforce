@@ -528,6 +528,8 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
     }
 
     public static void doCSettings(String sandboxName) {
+        String dSAccountId = '';
+        String cLMBaseURL = '';
         try {
             Map<String, DocuSign_Settings__c> docusignSettingsMap = DocuSign_Settings__c.getAll();
             List<DocuSign_Settings__c> updDSSettings = new List<DocuSign_Settings__c>();
@@ -536,6 +538,8 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
                 docusignSettings.IsEnabled__c = false;
                 if (sandboxName.startsWith(key.toLowerCase().left(3))) {
                     docusignSettings.IsEnabled__c = true;
+                    dSAccountId = docusignSettings.AccountNumber__c;
+                    cLMBaseURL = docusignSettings.CLMBaseUrl__c;
                 }
                 updDSSettings.add(docusignSettings);
             }            
@@ -555,21 +559,11 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
 
         try {
             NSP_Docusign_Account_Details__c cS2 = NSP_Docusign_Account_Details__c.getOrgDefaults();
-            switch on sandboxName {
-                when 'merge' {
-                    cS2.Docusign_Account_Id__c = '122677';
-                }
-                when 'test' {
-                    cS2.Docusign_Account_Id__c = '65500';
-                }
-                when 'stage' {
-                    cS2.Docusign_Account_Id__c = '48945';
-                }
-                when else {
-                    cS2.Docusign_Account_Id__c = '50202';
-                }
+            if (dSAccountId != '' && cLMBaseURL != ''){
+                cS2.Docusign_Account_Id__c = dSAccountId;
+                cS2.CLM_Base_URL__c = cLMBaseURL;
+                upsert cS2;
             }
-            upsert cS2;
         } catch(Exception e) {
             System.debug('An exception occurred in doCSettings: ' + e.getMessage());
         }
