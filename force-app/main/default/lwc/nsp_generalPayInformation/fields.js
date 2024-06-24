@@ -18,8 +18,18 @@ const SECTION_FIELDS = [
   'NSP_Are_Certified_Payroll_reports_needed__c',
 ];
 
+const RL_FIELDS = [
+'NSP_SalaryExemptEmployeeReceiveOvertime__c',
+'NSP_Do_you_track_hours__c',
+'NSP_Employee_with_compensation_other__c',
+'NSP_DoTheEmployeeWorkA40HourWorkWeek__c',
+'NSP_Are_there_any_OT_exceptions__c',
+'NSP_Do_you_have_GovernmentContracted_job__c',
+'NSP_Are_Certified_Payroll_reports_needed__c'
+];
+
 const SYNC_FIELDS = {
 Employees_work_in_the_following_states__c: 'employeeStates',
 }
 
-export { SECTION_FIELDS, SYNC_FIELDS};
+export { SECTION_FIELDS, SYNC_FIELDS,RL_FIELDS};

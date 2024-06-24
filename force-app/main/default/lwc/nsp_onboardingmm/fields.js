@@ -1,5 +1,13 @@
 const RL_FIELDS = [
     'Client_provided_copy_of_communication__c',
+    'Are_there_multiple_worksite_locations__c',
+    'NSP_Is_a_translator_needed__c',
+    'Is_there_a_need_for_a_tech_package__c',
+    'Is_the_client_coming_from_another_PEO__c',
+    'EE_enrollments_outside_of_Insperity__c',
+    'NSP_remote_EEs_not_working_physical_loc__c',
+    'Client_does_business_in_MA_NY_or_VA__c',
+    'Have_EEs_been_notified_of_the_transition__c'
 ];
 
 const SECTION_FIELDS = [

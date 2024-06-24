@@ -6,4 +6,8 @@ const SECTION_FIELDS = [
   'NSP_CheckOnceYouDiscussEPAY_with_client__c',
 ];
 
-export { SECTION_FIELDS };
+const RL_FIELDS = [
+   'NSP_DoAIMSMatchAboveWorksite_information__c',
+];
+
+export { SECTION_FIELDS,RL_FIELDS };
