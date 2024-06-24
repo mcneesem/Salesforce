@@ -28408,51 +28408,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>NS_Audit__Netskope_Audit_Log__c.NS_Audit__Activity_Done_By__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>NS_Audit__Netskope_Audit_Log__c.NS_Audit__Activity_Info__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>NS_Audit__Netskope_Audit_Log__c.NS_Audit__Activity__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>NS_Audit__Netskope_Audit_Log__c.NS_Audit__Field_Name__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>NS_Audit__Netskope_Audit_Log__c.NS_Audit__Last_Modified_Date__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>NS_Audit__Netskope_Audit_Log__c.NS_Audit__New_Value__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>NS_Audit__Netskope_Audit_Log__c.NS_Audit__Object_Name__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>NS_Audit__Netskope_Audit_Log__c.NS_Audit__Old_Value__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>NS_Audit__Netskope_Audit_Log__c.NS_Audit__Original_Id__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Opportunity.AVA_SFCLOUD__AvaTax_Doc_Status__c</field>
         <readable>true</readable>
     </fieldPermissions>
