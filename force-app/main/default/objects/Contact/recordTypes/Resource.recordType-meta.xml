@@ -1254,11 +1254,35 @@
     <picklistValues>
         <picklist>pse__Resource_Role__c</picklist>
         <values>
+            <fullName>Benefit Analyst</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Customer</fullName>
             <default>false</default>
         </values>
         <values>
+            <fullName>Data Analyst</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Insperity</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Intake Specialist</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Project Coordinator</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Project Implementer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Project Manager</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1331,6 +1355,10 @@
         </values>
         <values>
             <fullName>RET Sec 125</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Time Analyst</fullName>
             <default>false</default>
         </values>
     </picklistValues>
