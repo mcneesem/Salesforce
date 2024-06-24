@@ -5,7 +5,7 @@
         <name>ThisFlowName</name>
         <dataType>String</dataType>
         <value>
-            <stringValue>Order After Update Related Account Financial Info Flag</stringValue>
+            <stringValue>Order_After_update_related_account_Financial_info_flag</stringValue>
         </value>
     </constants>
     <decisions>
@@ -189,7 +189,7 @@
         <inputAssignments>
             <name>triggeringFlow</name>
             <value>
-                <stringValue>Order After Update Related Account Financial Info Flag</stringValue>
+                <elementReference>ThisFlowName</elementReference>
             </value>
         </inputAssignments>
     </subflows>
