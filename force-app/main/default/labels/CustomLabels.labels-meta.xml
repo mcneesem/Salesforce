@@ -6000,6 +6000,13 @@ Climate Plus: https://nexus.insperity.com/groups/38605/posts/3272612-climate-plu
         <value>The account will be removed from its current group. Are you sure?</value>
     </labels>
     <labels>
+        <fullName>One_Open_Nurture_Regen_Task_Per_Opportunity</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>One Open Nurture/Regen Task Per Opportunity</shortDescription>
+        <value>An Open Nurture/Regen Task already exists on the Opportunity.</value>
+    </labels>
+    <labels>
         <fullName>Opportunity_Product_Update_Error_Message</fullName>
         <language>en_US</language>
         <protected>false</protected>
