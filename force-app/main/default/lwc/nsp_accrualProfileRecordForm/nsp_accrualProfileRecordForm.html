@@ -223,6 +223,15 @@
                 multiple>
               </c-nsp_selection-box>
 
+              <lightning-input-field 
+                lwc:if={visibility.Other_Status__c}
+                field-name="Other_Status__c"
+                data-name="Other_Status__c"
+                value={fieldValue.Other_Status__c}
+                class="slds-show slds-var-p-horizontal_xx-small"
+                onchange={handleValueChange}>
+              </lightning-input-field>
+
               <lightning-input-field
                 value={fieldValue.NSP_Submitted_to_satisfy_compliance_need__c}
                 field-name="NSP_Submitted_to_satisfy_compliance_need__c"
@@ -230,20 +239,21 @@
                 onchange={handleValueChange}>
               </lightning-input-field>
 
+              <lightning-formatted-rich-text
+                  lwc:if={visibility.NSP_Compliance_Location__c}
+                  value="Compliance Locations (Click &lt;a href=&quot;https://serviceops.spapps.insperity.com/sites/hr/Shared%20Documents/Mandatory%20Leave%20Ordinances.docx&quot;&gt;here&lt;/a&gt; to see list of mandated sick/leave locations)."
+                  class="slds-show slds-var-m-around_xx-small slds-text-body_small">
+              </lightning-formatted-rich-text>
+
               <lightning-input-field
                 if:true={visibility.NSP_Compliance_Location__c}
+                variant="label-hidden"
                 field-name="NSP_Compliance_Location__c"
                 value={fieldValue.NSP_Compliance_Location__c}
                 data-name="NSP_Compliance_Location__c"
                 onchange={handleValueChange}>
               </lightning-input-field>
 
-              <lightning-input-field
-                value={fieldValue.NSP_New_Implementation_or_Change_Order__c}
-                field-name="NSP_New_Implementation_or_Change_Order__c"
-                data-name="NSP_New_Implementation_or_Change_Order__c"
-                onchange={handleValueChange}>
-              </lightning-input-field>
             </div>
             <div class="slds-col slds-size_1-of-2"></div>
           </div>
@@ -600,9 +610,15 @@
                 </lightning-combobox>
               </div>
 
+              <lightning-formatted-text
+                value="Delay in the Accrual start time? (NOTE: THIS IS NOT RECOMMENDED FOR MANDATED SICK/LEAVE)"
+                class="slds-show slds-var-m-around_xx-small slds-text-body_small">
+              </lightning-formatted-text>
+
               <lightning-input-field
                 field-name="NSP_Delay_in_the_Accrual_start_time__c"
                 data-name="NSP_Delay_in_the_Accrual_start_time__c"
+                variant="label-hidden"
                 value={fieldValue.NSP_Delay_in_the_Accrual_start_time__c}
                 onchange={handleValueChange}>
               </lightning-input-field>
@@ -636,11 +652,13 @@
               </lightning-input-field>
 
               <lightning-formatted-text
+                lwc:if={visibility.NSP_Does_carryover_expire__c}
                 value="Does carryover expire? (NOTE: THIS IS NOT RECOMMENDED FOR MANDATED SICK/LEAVE)"
                 class="slds-show slds-var-m-around_medium">
               </lightning-formatted-text>
 
               <lightning-input-field
+                lwc:if={visibility.NSP_Does_carryover_expire__c}
                 variant="label-hidden"
                 class="slds-show slds-var-p-horizontal_xx-small"
                 field-name="NSP_Does_carryover_expire__c"

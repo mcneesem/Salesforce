@@ -1,6 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>57.0</apiVersion>
+    <assignments>
+        <name>Update_Submit_for_Approval_to_False</name>
+        <label>Update Submit for Approval to False</label>
+        <locationX>314</locationX>
+        <locationY>611</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.NSP_Hide_Submit_For_Approval__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Update_Submit_For_Approval_to_True</name>
+        <label>Update Submit For Approval to True</label>
+        <locationX>1238</locationX>
+        <locationY>1379</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.NSP_Hide_Submit_For_Approval__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+    </assignments>
     <decisions>
         <name>Check_for_Plan_Year</name>
         <label>AIMS Check for Plan Year</label>
@@ -718,9 +744,16 @@
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Accrual</name>
-            <conditionLogic>(1 AND ( 2 OR(3 AND 4)) AND ((5 AND 6) OR 7) AND 8 AND 9 )</conditionLogic>
+            <conditionLogic>(1 AND 2 AND (3 OR (4 AND 6 AND (5 AND (7 OR (8 AND 9))))) AND 10 AND 11)</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.NSP_Delay_in_the_Accrual_start_time__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.NSP_Do_balances_carry_over_into_next_yer__c</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -749,13 +782,6 @@
             </conditions>
             <conditions>
                 <leftValueReference>$Record.NSP_Does_carryover_expire__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Yes</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.NSP_Days_Date_after_carryover_balance_ex__c</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -766,6 +792,20 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>No</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.NSP_Does_carryover_expire__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>yes</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.NSP_Days_Date_after_carryover_balance_ex__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
@@ -938,7 +978,7 @@
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>True</name>
-            <conditionLogic>((1 AND 4 ) OR (2 AND 3)) AND 5 AND 6 AND 7 AND 8 AND ( 9 OR ( 10 AND (11 OR (12 AND 13)))) AND 14 AND(15 OR(16 AND 17)) AND 18</conditionLogic>
+            <conditionLogic>((1 AND 4 ) OR (2 AND 3)) AND 5 AND 6 AND 7 AND 8 AND ( 9 OR ( 10 AND (11 OR (12 AND 13)))) AND 14 AND(15 OR(16 AND 17))</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.NSP_Type_of_Policy__c</leftValueReference>
                 <operator>NotEqualTo</operator>
@@ -1053,13 +1093,6 @@
             </conditions>
             <conditions>
                 <leftValueReference>$Record.NSP_Compliance_Location__c</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.NSP_New_Implementation_or_Change_Order__c</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -1202,32 +1235,6 @@ NOT(ISBLANK({!$Record.NSP_Employee_Status_check_all_that_apply__c})),
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
-    <recordUpdates>
-        <name>Update_Submit_for_Approval_to_False</name>
-        <label>Update Submit for Approval to False</label>
-        <locationX>2162</locationX>
-        <locationY>431</locationY>
-        <inputAssignments>
-            <field>NSP_Hide_Submit_For_Approval__c</field>
-            <value>
-                <booleanValue>false</booleanValue>
-            </value>
-        </inputAssignments>
-        <inputReference>$Record</inputReference>
-    </recordUpdates>
-    <recordUpdates>
-        <name>Update_Submit_For_Approval_to_True</name>
-        <label>Update Submit For Approval to True</label>
-        <locationX>1238</locationX>
-        <locationY>1415</locationY>
-        <inputAssignments>
-            <field>NSP_Hide_Submit_For_Approval__c</field>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </inputAssignments>
-        <inputReference>$Record</inputReference>
-    </recordUpdates>
     <start>
         <locationX>1112</locationX>
         <locationY>0</locationY>
@@ -1236,7 +1243,7 @@ NOT(ISBLANK({!$Record.NSP_Employee_Status_check_all_that_apply__c})),
         </connector>
         <object>NSP_Accrual_Profile__c</object>
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
-        <triggerType>RecordAfterSave</triggerType>
+        <triggerType>RecordBeforeSave</triggerType>
     </start>
     <status>Draft</status>
     <variables>
