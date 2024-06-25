@@ -83,16 +83,19 @@ public with sharing class ApexExceptionLogController {
         return exceptionLog;
     }
 
-    private static ApexExceptionLog__c parseApexExceptionBody( ApexExceptionLog__c exceptionLog ) {
+    public static ApexExceptionLog__c parseApexExceptionBody( ApexExceptionLog__c exceptionLog ) {
         String METHOD_NAME = 'parseApexExceptionBody';
         String DEBUG_PREFIX = CLASS_NAME + '.' + METHOD_NAME;
         if ( exceptionLog != null ) {
             List<String> apexExceptionBodyChunks = null;
             if ( String.isNotBlank( exceptionLog.ApexExceptionBody__c ) ) {
+                // 'Source organization' only appears in Sandbox Orgs...
+                // ~ replace with '\n' newline to pattern like the Production format...
                 String apexExceptionBodyRaw = exceptionLog.ApexExceptionBody__c;
                 if ( apexExceptionBodyRaw.contains( 'Source organization: 00D4x000003x74T (null)\n' ) ) {
                     apexExceptionBodyRaw = apexExceptionBodyRaw.replace( 'Source organization: 00D4x000003x74T (null)\n' , '\n' );
                 }
+                // split into chunks on paragraph breaks (double-newline)...
                 apexExceptionBodyChunks = apexExceptionBodyRaw.split( '\n\n' );
             }
             //
@@ -113,12 +116,13 @@ public with sharing class ApexExceptionLogController {
             //
             if ( ( apexExceptionBodyChunks != null ) && ( apexExceptionBodyChunks.size() > 0 ) ) {
                 System.debug( DEBUG_PREFIX + ' ~ apexExceptionBodyChunks.size=' + apexExceptionBodyChunks.size() );
-                //
+                // first, search for paragraph chunks with constant starting phases...
                 for ( String apexExceptionBodyChunk : apexExceptionBodyChunks ) {
                     apexExceptionBodyChunk = apexExceptionBodyChunk.trim();
                     System.debug( DEBUG_PREFIX + ' ~ apexExceptionBodyChunk=' + apexExceptionBodyChunk );
                     //
                     if ( apexExceptionBodyChunk.startsWith( 'Apex script unhandled ' ) ) {
+                        // found paragraph chunk: 'Apex script unhandled [trigger] exception by user/organization: 005XXXXXXXXXXXX/00DXXXXXXXXXXXX'
                         String remainingLine = apexExceptionBodyChunk.substringAfter( 'Apex script unhandled ' );
                         if ( remainingLine.startsWith( 'trigger ' ) ) {
                             isTrigger = True;
@@ -132,7 +136,11 @@ public with sharing class ApexExceptionLogController {
                                 orgId = splitResponse.organizationId;
                             }
                         }
+                    } else if ( apexExceptionBodyChunk.startsWith( 'Organization: Insperity (' ) ) {
+                        // found paragraph chunk: 'Organization: Insperity (insperity[--XXXXX.sandbox].my.salesforce.com).'
+                        // ~ new pattern in Summer '24...
                     } else if ( apexExceptionBodyChunk.startsWith( 'Visualforce Page: ' ) ) {
+                        // found paragraph chunk: 'Visualforce Page: XXXXXXXXXXXXXXX'
                         message = apexExceptionBodyChunk;
                         String extractedPageName = ApexExceptionLogController.extractPageName( apexExceptionBodyChunk );
                         if ( String.isNotBlank( extractedPageName ) ) {
@@ -143,6 +151,7 @@ public with sharing class ApexExceptionLogController {
                             }
                         }
                     } else if ( apexExceptionBodyChunk.startsWith( 'caused by: ' ) ) {
+                        // found paragraph chunk: 'caused by: XXXXXXXXXXXXXXX'
                         cause = apexExceptionBodyChunk.substringAfter( 'caused by: ' );
                         if ( cause.contains( ':' ) ) {
                             typeName = cause.substringBefore( ':' );
@@ -150,9 +159,11 @@ public with sharing class ApexExceptionLogController {
                     }
                 }
                 System.debug( DEBUG_PREFIX + ' ~ isTrigger=' + isTrigger );
+                // second, search for paragraph chunks with irregular starting phases...
                 if ( isTrigger ) {
-                    if ( apexExceptionBodyChunks.size() > 1 ) {
-                        message = apexExceptionBodyChunks[1];
+                    // search for trigger pattern: '[XXXXX.]XXXXXXXXXX: execution of [Before|After][Insert|Update|Delete|Undeleted]'
+                    if ( apexExceptionBodyChunks.size() > 2 ) {
+                        message = apexExceptionBodyChunks[2];
                         if ( message.contains( ':' ) ) {
                             triggerName = message.substringBefore( ':' );
                             if ( triggerName.contains( '.' ) ) {
@@ -168,11 +179,13 @@ public with sharing class ApexExceptionLogController {
                         }
                     }
                 }
+                // third paragraph chunk is the message when the expection did not come from a trigger or from a visualforce page...
                 if ( String.isBlank( triggerName ) && String.isBlank( pageName ) ) {
-                    if ( apexExceptionBodyChunks.size() > 1 ) {
-                        message = apexExceptionBodyChunks[1];
+                    if ( apexExceptionBodyChunks.size() > 2 ) {
+                        message = apexExceptionBodyChunks[2];
                     }
                 }
+                // last paragraph chunk is always the stack trace string...
                 if ( apexExceptionBodyChunks.size() > 3 ) {
                     stackTraceString = apexExceptionBodyChunks[apexExceptionBodyChunks.size()-1];
                 }
