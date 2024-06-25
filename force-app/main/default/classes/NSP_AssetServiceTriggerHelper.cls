@@ -92,7 +92,7 @@ public class NSP_AssetServiceTriggerHelper {
         List<Asset> nonWOassetList = new List<Asset>();
         Map<Id, List<Asset>> RETBPSassets = new Map<Id, List<Asset>>();
         Map<String, String> recTypeLabelMap = new Map<String, String>();
-        Map<String, Schema.RecordTypeInfo> assetAllRecordTypes = NSP_GenericRecordType.getRecordTypeMap(ASSET);
+        Map<String, Schema.RecordTypeInfo> assetAllRecordTypes = NSP_AssetServiceTriggerHelper.ASSET_RECORD_TYPES;
         Map<Id, Account> assetAccIdNameMap;
         Set<Id> accIdSet = new Set<Id>();
 
