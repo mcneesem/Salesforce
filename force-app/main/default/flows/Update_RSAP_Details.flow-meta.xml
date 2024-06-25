@@ -50,7 +50,7 @@
     <assignments>
         <name>Assign_RSAP</name>
         <label>Assign RSAP</label>
-        <locationX>226</locationX>
+        <locationX>182</locationX>
         <locationY>719</locationY>
         <assignmentItems>
             <assignToReference>$Record.Associated_RSAP__c</assignToReference>
@@ -66,7 +66,7 @@
     <decisions>
         <name>Check_for_Initiative_and_Engagement_path</name>
         <label>Check for Initiative and Engagement path</label>
-        <locationX>226</locationX>
+        <locationX>182</locationX>
         <locationY>1043</locationY>
         <defaultConnector>
             <targetReference>Assign_Business_Drivers_and_Efforts_to_retain</targetReference>
@@ -139,7 +139,7 @@
     <decisions>
         <name>Check_for_project_record</name>
         <label>Check for project record</label>
-        <locationX>776</locationX>
+        <locationX>809</locationX>
         <locationY>395</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -168,7 +168,7 @@
     <decisions>
         <name>Check_RSAP_Record</name>
         <label>Check RSAP Record</label>
-        <locationX>534</locationX>
+        <locationX>512</locationX>
         <locationY>611</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -212,7 +212,7 @@
     <recordLookups>
         <name>Get_Engagement_Path_Record</name>
         <label>Get Engagement Path Record</label>
-        <locationX>226</locationX>
+        <locationX>182</locationX>
         <locationY>935</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -244,7 +244,7 @@
     <recordLookups>
         <name>Get_Initiative_Records</name>
         <label>Get Initiative Records</label>
-        <locationX>226</locationX>
+        <locationX>182</locationX>
         <locationY>827</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -283,7 +283,7 @@
     <recordLookups>
         <name>Get_Project_Record</name>
         <label>Get Project Record</label>
-        <locationX>776</locationX>
+        <locationX>809</locationX>
         <locationY>287</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -308,7 +308,7 @@
     <recordLookups>
         <name>Get_RSAP_Record</name>
         <label>Get RSAP Record</label>
-        <locationX>534</locationX>
+        <locationX>512</locationX>
         <locationY>503</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -338,7 +338,7 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <start>
-        <locationX>650</locationX>
+        <locationX>683</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Project_Record</targetReference>
@@ -363,11 +363,4 @@
         <triggerType>RecordBeforeSave</triggerType>
     </start>
     <status>Draft</status>
-    <variables>
-        <name>accountId</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
 </Flow>
