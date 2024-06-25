@@ -326,39 +326,49 @@ public with sharing class NSP_EmailMessageTriggerHelper {
             NSP_ErrorLogHandler.logSaveException( CLASS_NAME, 'updateParentIdOnClonedEmailMessage', exc.getMessage());
         }
     }
-    
-    /***********************************************************************************************
-    * MethodName    : restrictEmailFromRestrictedSenders
-    * Description   : Restrict Email to Case from restricted senders
-    * Story         : STY-03643
-    * Params        : List<EmailMessage> listOfEmailMessage
-    * ********************************************************************************************/
-    public static void restrictEmailFromRestrictedSenders(List<EmailMessage> listOfEmailMessage){
-        
+
+    // MethodName    : restrictEmailFromRestrictedSenders
+    // Description   : Restrict Email to Case from restricted senders
+    // Story         : STY-03643
+    // Params        : List<EmailMessage> listOfEmailMessage
+    public static void restrictEmailFromRestrictedSenders( List<EmailMessage> listOfEmailMessage ) {
         try{
-            
-            for(EmailMessage eMessage : listOfEmailMessage){
-                if(restrictedEmailCheck(eMessage)){
-                    eMessage.addError(NSP_ServiceConstants.RESTRICTED_EMAIL_ERROR_MESSAGE);   
+            if ( ( listOfEmailMessage != null ) && !listOfEmailMessage.isEmpty() ) {
+                for ( EmailMessage eMessage : listOfEmailMessage ) {
+                    if ( restrictedEmailCheck( eMessage ) ) {
+                        eMessage.addError(
+                            'EmailMessage cannot be created as sender is from restricted list.'
+                        );
+                    }
                 }
             }
-            
-        }catch(Exception exc){
-            NSP_ErrorLogHandler.logSaveException( CLASS_NAME, 'restrictEmailFromRestrictedSenders', exc.getMessage());
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                CLASS_NAME ,
+                'restrictEmailFromRestrictedSenders' ,
+                e
+            );
         }
     }
-    
-    /***********************************************************************************************
-    * MethodName	: restrictedEmailCheck
-    * Description	: Restrict Email check
-    * Story 		: STY-03643
-    * Params		: EmailMessage eMessage
-    * ********************************************************************************************/
-    public static Boolean restrictedEmailCheck(EmailMessage eMessage){
-        List<String> restrictedEmailAddresses = System.Label.NSP_Restricted_Email_Addresses.split(',');
-        return eMessage.incoming 
-            && (restrictedEmailAddresses.contains(eMessage.FromAddress)
-                || eMessage.FromAddress.startsWith(NSP_ServiceConstants.POSTMASTER_EMAIL_ADDRESS));
+
+    // MethodName  : restrictedEmailCheck
+    // Description : Restrict Email check
+    // Story       : STY-03643
+    // Params      : EmailMessage eMessage
+    private static Boolean restrictedEmailCheck( EmailMessage eMessage ) {
+        List<String> restrictedEmailAddresses = new List<String>();
+        if ( String.isNotBlank( System.Label.NSP_Restricted_Email_Addresses ) ) {
+            restrictedEmailAddresses = System.Label.NSP_Restricted_Email_Addresses.split( ',' );
+        }
+        return (
+            ( eMessage != null )
+            && eMessage.Incoming
+            && String.isNotBlank( eMessage.FromAddress )
+            && (
+                restrictedEmailAddresses.contains( eMessage.FromAddress )
+                || eMessage.FromAddress.startsWith( 'postmaster@' )
+            )
+        );
     }
 
     // ********************************************************************************************
