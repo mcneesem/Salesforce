@@ -938,7 +938,7 @@
         <categories>Stores all the fields which BPS users can edit  on Time Attendance Asset if Create Asset Perm Set is not assigned.</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>BPS Non-Editable Fields</shortDescription>
+        <shortDescription>BPS Non-Editable Fields,Status</shortDescription>
         <value>NSP_Netsuite_Hardware_Item__c</value>
     </labels>
     <labels>
