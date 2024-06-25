@@ -1200,39 +1200,51 @@ createdDate : 6/13/2023
         }
     }
 
-    /* update contact support role from ACR 
-* parameter : list of cases
-*/
-    public static void updateContactSupportRole(List<Case> supportCases){
-        try{
-            for (Case sCase: supportCases) {
-                Boolean isSupportRoleFound = false;
-                for(AccountContactRelation ACR : [Select Id,NSP_Support_Role__c from AccountContactRelation WHERE AccountId = :sCase.AccountId and ContactId = :sCase.ContactId]){
-                    String [] ACRSupportRoleValues = ACR.NSP_Support_Role__c.split(';');
-                    
-                    for(String supportRole:ACRSupportRoleValues){
-                        if(!isSupportRoleFound && ((sCase.NSP_Category__c == 'Time and Attendance' || sCase.NSP_Category__c == 'Time & Attendance') && timeAttendanceSupportRoles.contains(supportRole))
-                           ||(sCase.NSP_Category__c == 'Time Clocks' && timeAttendanceSupportRoles.contains(supportRole))
-                           ||(sCase.NSP_Category__c == 'OrgPlus Software' && orgPlusSupportRoles.contains(supportRole))
-                           ||(sCase.NSP_Category__c == 'PerformSmart Software' && performSmartSupportRoles.contains(supportRole))
-                           ||(sCase.NSP_Category__c == 'WX/WA' && tesSupportRoles.contains(supportRole))){
-                               sCase.Contact_Support_Role__c = supportRole;
-                               isSupportRoleFound = true;
-                               break;
-                           }
-                        
-                        
+    // update contact support role from ACR 
+    // parameter : list of cases
+    public static void updateContactSupportRole( List<Case> supportCases ) {
+        try {
+            if ( ( supportCases != null ) && !supportCases.isEmpty() ) {
+                for ( Case sCase : supportCases ) {
+                    Boolean isSupportRoleFound = false;
+                    for ( AccountContactRelation ACR : [
+                                SELECT Id , NSP_Support_Role__c
+                                FROM AccountContactRelation
+                                WHERE (
+                                    AccountId = :sCase.AccountId
+                                    AND ContactId = :sCase.ContactId
+                                )
+                            ]
+                        )
+                    {
+                        if ( String.isNotBlank( ACR.NSP_Support_Role__c ) ) {
+                            String [] ACRSupportRoleValues = ACR.NSP_Support_Role__c.split(';');
+                            for ( String supportRole : ACRSupportRoleValues ) {
+                                if ( !isSupportRoleFound
+                                    && (
+                                        ( ( sCase.NSP_Category__c == 'Time and Attendance' ) || ( sCase.NSP_Category__c == 'Time & Attendance') )
+                                        && NSP_CaseTriggerHelper.timeAttendanceSupportRoles.contains( supportRole )
+                                    )
+                                    || ( ( sCase.NSP_Category__c == 'Time Clocks' ) && NSP_CaseTriggerHelper.timeAttendanceSupportRoles.contains( supportRole ) )
+                                    || ( ( sCase.NSP_Category__c == 'OrgPlus Software' ) && NSP_CaseTriggerHelper.orgPlusSupportRoles.contains( supportRole ) )
+                                    || ( ( sCase.NSP_Category__c == 'PerformSmart Software' ) && NSP_CaseTriggerHelper.performSmartSupportRoles.contains( supportRole ) )
+                                    || ( ( sCase.NSP_Category__c == 'WX/WA' ) && NSP_CaseTriggerHelper.tesSupportRoles.contains( supportRole ) )
+                                    )
+                                {
+                                    sCase.Contact_Support_Role__c = supportRole;
+                                    isSupportRoleFound = true;
+                                    break;
+                                }
+                            }
+                        }
                     }
-                    
-                    
                 }
-                
             }
-        }catch(Exception ex){
-            NSP_CustomException.LogException(ex);
+        } catch ( Exception e ) {
+            NSP_CustomException.logException( e );
         }
     }
-    
+
     /**
 * Iterate for each case and verify the the condition for BPS Support AccountGroup.
 * @param Case newCase.
