@@ -947,7 +947,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>BPS Non-Editable Fields</shortDescription>
-        <value>NSP_Product_Term_Reason__c,NSP_Business_Type__c,NSP_Company_Name__c,NSP_Netsuite_Hardware_Item__c</value>
+        <value>NSP_Product_Term_Reason__c,NSP_Business_Type__c,NSP_Company_Name__c,NSP_Netsuite_Hardware_Item__c,Status</value>
     </labels>
     <labels>
         <fullName>NSP_BPS_Wet_Envelope</fullName>
