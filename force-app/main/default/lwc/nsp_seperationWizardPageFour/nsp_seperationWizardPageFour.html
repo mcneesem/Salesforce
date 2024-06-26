@@ -444,11 +444,13 @@
                     field-name="NSP_TransitionDate__c" required={transitionDate}>
                   </lightning-input-field>
                   <div class="slds-p-vertical_medium">
-                    <lightning-input-field class="slds-p-vertical_medium NSP_SpecialItems__c"
-                      field-name="NSP_SpecialItemsNote__c">
-                    </lightning-input-field>
-                  </div>
-
+                      <lightning-input-field class="NSP_SpecialItems__c"
+                        field-name="NSP_SpecialItemsNote__c">
+                      </lightning-input-field>
+                      <p class="slds-p-vertical_small">
+                        This section is for HR specialist notes to the separation agreement team, not for non-standard language requests.
+                      </p>
+                    </div>
                 </lightning-layout-item>
               </lightning-layout>
             </template>
@@ -510,33 +512,6 @@
               </div>
             </div>
             <!--- Above only for HRS REview-->
-            <div class="slds-p-vertical_medium">
-              <div class="medium slds-form-element slds-form-element_horizontal">
-                <lightning-radio-group name="AnyPreparedDocumentForTermination"
-                  label="Did the terminated WSEE sign an Offer Letter, Employment Agreement, any Restrictive Covenants Agreements, or Retention/Stay/Bonus Agreements, etc."
-                  options={pickValueYesNo} value={prepareDocTerminationValue} onchange={handleChange} required
-                  type="radio">
-                </lightning-radio-group>
-
-
-                <lightning-input-field style="display:none" class="slds-hidden"
-                  field-name="NSP_AnyPreparedDocumentForTermination__c" value={prepareDocTerminationValue}
-                  required></lightning-input-field>
-              </div>
-            </div>
-
-            <div class="slds-p-vertical_medium ">
-              <div class="slds-form-element slds-form-element_horizontal">
-                <lightning-radio-group name="AnyProvisionInPreparedDocRefersStock"
-                  label="Is there any reference to stock/equity that survives termination in the client-prepared agreements ?"
-                  options={pickValueYesNo} value={IsanyReferenceStock} onchange={handleChange} required type="radio">
-                </lightning-radio-group>
-                <lightning-input-field style='display:none' class="slds-hidden"
-                  field-name="NSP_AnyProvisionInPreparedDocRefersStock__c" value={IsanyReferenceStock} required>
-                </lightning-input-field>
-              </div>
-            </div>
-
             <div if:false={isHRSReview}>
               <template if:true={whoIsResponsibleStock.data}>
                 <div class="slds-p-vertical_medium WhoResponsibleForStockEquityPaymt" style='display:none'>

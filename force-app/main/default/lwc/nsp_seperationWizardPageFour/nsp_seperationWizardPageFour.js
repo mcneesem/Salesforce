@@ -43,16 +43,6 @@ NSP_Bonus =false;
 NSP_Installments = false;
 hrsstopMsgStock = "display:none";
 
-/**
-get hrsstopMsgStock(){
-
-    if( this.reviewType =='HRS Review' && this.IsanyReferenceStock =="Yes" ){
-        return "display:''"
-    }else{
-        return "display:none"
-    }
-}
- */
 
 get NSP_NumberOfMonthsOfOutplacement_Service(){
     return (this.NSP_OutplacementServices && this.NSP_OutplacementServicesValue__c != null && this.NSP_OutplacementServicesValue__c.includes('Client to pay vendor directly') && this.enableInsperityPrepared) ? true :false;
@@ -521,9 +511,7 @@ enableInsperityPrepared =false;
 /**  Common Fields**/
 enableAddendumStock =false;
 NSPResponsible = false;
-prepareDocTerminationValue;
 NSP_Attached_Approval_Email__c='';
-IsanyReferenceStock;
 whoResponsibleStokcValue;
 adddendumValue;
 NSP_HaveYouattachedPreparedAgreement__c = '';  // need to verify later
@@ -571,43 +559,6 @@ handleOnload(event){
             
           }
 
-            if(this.fieldsData.NSP_AnyProvisionInPreparedDocRefersStock__c != null  && this.fieldsData.NSP_AnyProvisionInPreparedDocRefersStock__c.value != null){
-                this.IsanyReferenceStock = this.fieldsData.NSP_AnyProvisionInPreparedDocRefersStock__c.value;
-                this.whoResponsibleStok = (this.IsanyReferenceStock == "Yes");
-                if(this.whoResponsibleStok){
-                    if(this.isHRSReview){
-                        this.hrsstopMsgStock = "display:''";
-                        if(this.template.querySelector('div.clientResponsible')!=null)this.template.querySelector('div.clientResponsible').style.display='';
-                    }else{
-                        if(this.template.querySelector('div.WhoResponsibleForStockEquityPaymt') != null){
-                            this.template.querySelector('div.WhoResponsibleForStockEquityPaymt').style.display='';
-                        }
-                    }
-                }else{
-                    this.whoResponsibleStokcValue ='';
-                    this.adddendumValue =''
-                    if(this.isHRSReview){
-                        if(this.template.querySelector('div.clientResponsible')!=null)this.template.querySelector('div.clientResponsible').style.display='none';
-                            }else{
-                     
-                    if(this.template.querySelector('div.WhoResponsibleForStockEquityPaymt') != null){
-                        this.template.querySelector('div.WhoResponsibleForStockEquityPaymt').style.display='none';
-                        this.whoResponsibleStokcValue ='';
-                        this.adddendumValue =''
-                        this.enableAddendumStock = false;
-                        this.template.querySelector('div.clientResponsible')!=null?this.template.querySelector('div.clientResponsible').style.display='none':'';
-
-                        this.template.querySelector('div.AaddendumNO')!=null?this.template.querySelector('div.AaddendumNO').style.display='none':'';
-
-                        this.template.querySelector('div.AaddendumYES')!=null?this.template.querySelector('div.AaddendumYES').style.display='none':'';
-
-                        if(this.template.querySelector('div.NSPResponsible')!=null)this.template.querySelector('div.NSPResponsible').style.display='none';  
-                    }
-                    }
-                }
-
-            }
-
             if(this.fieldsData.NSP_WhoResponsibleForStockEquityPaymt__c != null  && this.fieldsData.NSP_WhoResponsibleForStockEquityPaymt__c.value != null){	
                 this.whoResponsibleStokcValue = this.fieldsData.NSP_WhoResponsibleForStockEquityPaymt__c.value;
                 if(this.template.querySelector('div.WhoResponsibleForStockEquityPaymt')!=null)this.template.querySelector('div.WhoResponsibleForStockEquityPaymt').style.display='';
@@ -644,13 +595,6 @@ handleOnload(event){
                this.reviewStatusValue = this.fieldsData.NSP_ReviewStatus__c .value;        
             }
         
-            if( this.fieldsData.NSP_AnyPreparedDocumentForTermination__c && this.fieldsData.NSP_AnyPreparedDocumentForTermination__c.value != null ){
-                this.prepareDocTerminationValue = this.fieldsData.NSP_AnyPreparedDocumentForTermination__c.value; 
-                if(this.isHRSReview && this.template.querySelector('div.AttachmentVerify')!= null ){
-                    this.prepareDocTerminationValue == "Yes" ? this.template.querySelector('div.AttachmentVerify').style.display='':
-                    this.template.querySelector('div.AttachmentVerify').style.display='none';
-                }
-             }
              if( this.fieldsData.NSP_Attached_Approval_Email__c && this.fieldsData.NSP_Attached_Approval_Email__c.value != null){
                 this.NSP_Attached_Approval_Email__c = this.fieldsData.NSP_Attached_Approval_Email__c.value;
                 if( this.template.querySelector('div.NSP_Attached_Approval_Email__c')!= null){
@@ -810,20 +754,12 @@ handleSubmit(event){
     if(this.filesize < 1 && this.whoResponsibleStokcValue !=null && this.whoResponsibleStokcValue == 'Client'){
         event.preventDefault(); // it will prevent the submit
     }
-
-    if(this.filesize < 1 && this.prepareDocTerminationValue !=null && this.prepareDocTerminationValue == 'Yes'){
-        event.preventDefault(); // it will prevent the submit
-    }
     if(this.NSP_Attached_Approval_Email__c == 'No' || this.filesize < 1 && this.NSP_Attached_Approval_Email__c == 'Yes' ){
         this.template.querySelector('div.NSP_Attached_Approval_Email__c').style.display='block';
         event.preventDefault();
     }
     if(this.NSP_HaveYouattachedPreparedAgreement__c == 'No' || this.filesize < 1 && this.NSP_HaveYouattachedPreparedAgreement__c == 'Yes' ){
         this.template.querySelector('div.NSP_HaveYouattachedPreparedAgreement__c').style.display='block';
-        event.preventDefault();
-    }
-    if(this.filesize < 1 && this.reviewType =='HRS Review' && this.IsanyReferenceStock =="Yes" ){
-        this.hrsstopMsgStock = "display:''";
         event.preventDefault();
     }
 }
@@ -838,33 +774,7 @@ handlePrev(event){
     this.dispatchEvent(new CustomEvent('prev', {detail: this.reReqId}));
   }
 
-  handleChange(event){
-
-    if( event.currentTarget.name == "AnyProvisionInPreparedDocRefersStock" && event.currentTarget.value != null){
-        this.IsanyReferenceStock = event.currentTarget.value;
-        this.whoResponsibleStok = (event.currentTarget.value === "Yes");
-        if(this.whoResponsibleStok){
-            if(this.isHRSReview){
-                if(this.template.querySelector('div.clientResponsible')!=null)this.template.querySelector('div.clientResponsible').style.display='';
-            }else{
-                if(this.template.querySelector('div.WhoResponsibleForStockEquityPaymt')!=null)this.template.querySelector('div.WhoResponsibleForStockEquityPaymt').style.display='';
-            }
-        }else{
-            if(this.isHRSReview){
-                if(this.template.querySelector('div.clientResponsible')!=null)this.template.querySelector('div.clientResponsible').style.display='none';
-            }else{
-            if(this.template.querySelector('div.WhoResponsibleForStockEquityPaymt')!=null)this.template.querySelector('div.WhoResponsibleForStockEquityPaymt').style.display='none';
-            this.whoResponsibleStokcValue ='';
-            this.adddendumValue =''
-            if(this.template.querySelector('div.clientResponsible')!=null)this.template.querySelector('div.clientResponsible').style.display='none';
-            if(this.template.querySelector('div.AaddendumNO')!=null)this.template.querySelector('div.AaddendumNO').style.display='none';
-            if(this.template.querySelector('div.AaddendumYES')!=null)this.template.querySelector('div.AaddendumYES').style.display='none';
-            if(this.template.querySelector('div.NSPResponsible')!=null)this.template.querySelector('div.NSPResponsible').style.display='none';
-            }
-            this.enableAddendumStock = false;
-        }
-    }
-    
+  handleChange(event){    
     if( event.currentTarget.name == "WhoResponsibleForStockEquityPaymt" && event.currentTarget.value !=null ){
         this.whoResponsibleStokcValue = event.currentTarget.value;
         this.enableAddendumStock = (event.currentTarget.value == "Insperity");
@@ -916,15 +826,6 @@ handlePrev(event){
        this.reviewStatusValue = event.currentTarget.value;        
     }
 
-    if( event.currentTarget.name == "AnyPreparedDocumentForTermination" && event.currentTarget.value != null ){
-        this.prepareDocTerminationValue = event.currentTarget.value; 
-      /**  if(this.isHRSReview && this.template.querySelector('div.AttachmentVerify')!= null ){
-        this.prepareDocTerminationValue == "Yes" ? this.template.querySelector('div.AttachmentVerify').style.display='':
-        this.template.querySelector('div.AttachmentVerify').style.display='none';
-        }
-         */
-     }
-
      if( event.currentTarget.name == "AnyAttachedApprovalEmail" && event.currentTarget.value != null ){
         this.NSP_Attached_Approval_Email__c = event.currentTarget.value;  
         if( this.template.querySelector('div.NSP_Attached_Approval_Email__c')!= null){
@@ -963,20 +864,11 @@ handlePrev(event){
             this.template.querySelector("div.clientResponsiblefile").style.display ='';
         }
 
-        if(this.prepareDocTerminationValue !=null && this.prepareDocTerminationValue == 'Yes' && this.template.querySelector("div.AttachmentVerify")!= null ){
-            this.template.querySelector("div.AttachmentVerify").style.display ='';
-        }
-
-
         if((this.NSP_ReferenceTospecificClientDocument__c ==null || this.NSP_ReferenceTospecificClientDocument__c != true) && this.template.querySelector("div.ReferenceTospecificClientDocument")!= null ){
             this.template.querySelector("div.ReferenceTospecificClientDocument").style.display ='none';
         }
         if((this.whoResponsibleStokcValue ==null || this.whoResponsibleStokcValue != 'Client' ) && this.template.querySelector("div.clientResponsiblefile")!= null ){
             this.template.querySelector("div.clientResponsiblefile").style.display ='none';
-        }
-
-        if((this.prepareDocTerminationValue == null || this.prepareDocTerminationValue != 'Yes' ) && this.template.querySelector("div.AttachmentVerify")!= null ){
-            this.template.querySelector("div.AttachmentVerify").style.display ='none';
         }
 
     }else {
@@ -987,10 +879,7 @@ handlePrev(event){
         if((this.whoResponsibleStokcValue ==null || this.whoResponsibleStokcValue != 'Client' || this.filesize > 0 ) && this.template.querySelector("div.clientResponsiblefile")!= null ){
             this.template.querySelector("div.clientResponsiblefile").style.display ='none';
         }
-
-        if((this.prepareDocTerminationValue == null || this.prepareDocTerminationValue != 'Yes' || this.filesize > 0) && this.template.querySelector("div.AttachmentVerify")!= null ){
-            this.template.querySelector("div.AttachmentVerify").style.display ='none';
-        }
+        
         if(this.NSP_Attached_Approval_Email__c == 'Yes' &&  this.filesize > 0 && this.template.querySelector('div.NSP_Attached_Approval_Email__c')!=null){
             this.template.querySelector('div.NSP_Attached_Approval_Email__c').style.display='none';
         }
