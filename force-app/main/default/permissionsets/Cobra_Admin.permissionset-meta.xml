@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Cobra_Admin</name>
+    </customPermissions>
+    <description>Permissions to view cobra Admin Button on contact object</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Cobra Admin</label>
+</PermissionSet>
