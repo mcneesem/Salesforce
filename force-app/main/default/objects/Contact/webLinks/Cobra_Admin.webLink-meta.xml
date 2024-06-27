@@ -16,5 +16,5 @@
     <protected>false</protected>
     <showsLocation>false</showsLocation>
     <showsStatus>false</showsStatus>
-    <url>{!$Setup.cobra_Admin__c.Cobra_Admin_URL__c}</url>
+    <url>{!$Setup.Cobra_Admin_Settings__c.Cobra_Admin_URL__c}</url>
 </WebLink>
