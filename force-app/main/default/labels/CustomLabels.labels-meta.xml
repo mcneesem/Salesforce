@@ -22,6 +22,14 @@
         <value>Are there any non-paid users?</value>
     </labels>
     <labels>
+        <fullName>BPS_Non_Performance_Management_Fields</fullName>
+        <categories>Stores all the fields which BPS users can edit  on Insurance Asset if Create Asset Perm Set is not assigned.</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>BPS Non Performance Management Fields</shortDescription>
+        <value>Status</value>
+    </labels>
+    <labels>
         <fullName>BTCoreEgMinMaxRange</fullName>
         <language>en_US</language>
         <protected>false</protected>

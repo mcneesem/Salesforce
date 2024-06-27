@@ -18,7 +18,7 @@ Modification Log     :  11/09/2023-Suhas : Added RET Client Id for Sync WO Asset
 * Ramya Ravi                   01/16/2022          v6.0 - Create project from asset <STY-02234>
 */
 public class NSP_AssetServiceTriggerHelper {
-    // test w/ NSP_AssetServiceTriggerHelperTest (79%)
+    // test w/ NSP_AssetServiceTriggerHelperTest (81%)
 
     public final String PEORECORDTYPE = 'PEO';
     public final String HRSPECIALISTROLE = 'HR Specialist';
@@ -56,7 +56,7 @@ public class NSP_AssetServiceTriggerHelper {
     Static final Id RETWOAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId(ASSET,NSP_ServiceConstants.RET_WO_ASSET_RECORDTYPE); //<STY-03527>
     private static final Id wxWaAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId(ASSET, 'NSP_Asset_Product');
     private static final Id CPQ_ASSET_RECORDTYPE_ID = NSP_GenericRecordType.getRecordTypeId(ASSET, 'NSP_CPQ_Asset');
-
+    private static final Id PERFORM_SMART_ASSET = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.ASSET_SOBJECT_TYPE,NSP_ServiceConstants.PERFORMANCE_ASSET );
     private static final String ASSET_TERMINATION_PAYROLL_TEMPLATE = 'NSP_Retention_Strategy_Payroll_Email';
     private static final String ASSET_TERMINATION_OTHER_ROLE_TEMPLATE = 'NSP_Asset_Retention_Strategy_Email';
     private static final String RSAP = 'Relationship Strategy Action Plan';
@@ -2024,7 +2024,7 @@ Implementation profile related to the account of the created asset
                             if ( isBPSUserFields ) {
                                 throwErrorOnSpecificRecordTypesAndField( assetRec , oldAsset , nonEditableField );
                             }else{
-                                assetRec.addError( nonEditableField , errorMessage );
+                                assetRec.addError( nonEditableField , NSP_AssetServiceTriggerHelper.errorMessage );
                             }
                         }
                     }
@@ -2039,34 +2039,40 @@ Implementation profile related to the account of the created asset
     }
 
     // TO throw error message while editing Asset Recordtype as a BPS User
-
-private void throwErrorOnSpecificRecordTypesAndField (Asset assetRec, Asset oldAsset, String nonEditableField){
-
-    List<String> nonEditableRETFields = System.Label.NSP_RET_Non_Editable_Fields.split(',');
-    //List of all fields which BPS users cannot edit if Create Asset perm set is not assigned
-    List<String> nonEditableBPSAssetFields = System.Label.NSP_BPS_Non_Editable_Fields.split(',');
-    List<String> nonEditableHardwareLoanerBPSAssetFields = System.Label.NSP_BPS_Non_Hardware_Loaner_Fields.split(',');
-    List<string> nonEditableHardwareBPSAssetFields = System.Label.NSP_BPS_Non_Hardware_Fields.split(',');
-    List<String> nonEditableXMLBPSAssetFields = System.Label.NSP_BPS_Non_XML_Fields.split(',');
-    List<String> nonEditableInsuranceServicesBPSAssetFields = System.Label.NSP_BPS_Non_Insurance_Services_Fields.split(',');
-    List<String> nonEditableEmploymentScreeningBPSAssetFields = System.Label.NSP_BPS_Non_Employment_Screening_Fields.split(',');
-    List<String> nonEditableCertifyBPSAssetFields = System.Label.NSP_BPS_Non_Certify_Fields.split(',');
-    List<String> nonEditableApplicantTrackingBPSAssetFields = System.Label.NSP_BPS_Non_Applicant_Tracking_Fields.split(',');
-    List<String> nonEditableTimeAttendanceBPSAssetFields = System.Label.NSP_BPS_Non_Time_Attendance_Fields.split(',');
-    Id assetRecordTypeId = assetRec.RecordTypeId;
-
-    if((assetRecordTypeId == HardwareLoanerAsset && nonEditableHardwareLoanerBPSAssetFields.Contains(nonEditableField)) ||
-        (assetRecordTypeId == HardwareAsset && nonEditableHardwareBPSAssetFields.Contains(nonEditableField)) ||
-        (assetRecordTypeId == XmlAssetRecordId && nonEditableXMLBPSAssetFields.Contains(nonEditableField))||
-        (assetRecordTypeId == InsuranceServiceRT && nonEditableInsuranceServicesBPSAssetFields.Contains(nonEditableField)) ||
-        (assetRecordTypeId == ApplicantTrackingRT && nonEditableApplicantTrackingBPSAssetFields.Contains(nonEditableField)) ||
-        (assetRecordTypeId == EmploymentScreeningRT && nonEditableEmploymentScreeningBPSAssetFields.Contains(nonEditableField)) ||
-        (assetRecordTypeId == CertifyRT && nonEditableCertifyBPSAssetFields.Contains(nonEditableField)) ||
-        (assetRecordTypeId == TimeAttendanceRecordId && nonEditableTimeAttendanceBPSAssetFields.Contains(nonEditableField))){
-            return;
-        }else{
-        assetRec.addError(nonEditableField, errorMessage);
+    private void throwErrorOnSpecificRecordTypesAndField( Asset assetRec , Asset oldAsset , String nonEditableField ) {
+        List<String> nonEditableRETFields = System.Label.NSP_RET_Non_Editable_Fields.split(',');
+        //List of all fields which BPS users cannot edit if Create Asset perm set is not assigned
+        List<String> nonEditableBPSAssetFields = System.Label.NSP_BPS_Non_Editable_Fields.split(',');
+        List<String> nonEditableHardwareLoanerBPSAssetFields = System.Label.NSP_BPS_Non_Hardware_Loaner_Fields.split(',');
+        List<String> nonEditableHardwareBPSAssetFields = System.Label.NSP_BPS_Non_Hardware_Fields.split(',');
+        List<String> nonEditableXMLBPSAssetFields = System.Label.NSP_BPS_Non_XML_Fields.split(',');
+        List<String> nonEditableInsuranceServicesBPSAssetFields = System.Label.NSP_BPS_Non_Insurance_Services_Fields.split(',');
+        List<String> nonEditableEmploymentScreeningBPSAssetFields = System.Label.NSP_BPS_Non_Employment_Screening_Fields.split(',');
+        List<String> nonEditableCertifyBPSAssetFields = System.Label.NSP_BPS_Non_Certify_Fields.split(',');
+        List<String> nonEditableApplicantTrackingBPSAssetFields = System.Label.NSP_BPS_Non_Applicant_Tracking_Fields.split(',');
+        List<String> nonEditableTimeAttendanceBPSAssetFields = System.Label.NSP_BPS_Non_Time_Attendance_Fields.split(',');
+        List<String> nonEditablePerformanceBPSAssetFields = System.Label.BPS_Non_Performance_Management_Fields.split(',');
+        Id assetRecordTypeId = assetRec.RecordTypeId;
+        if ( assetRecordTypeId != null ) {
+            Boolean isValid = False;
+            if ( ( assetRecordTypeId == HardwareLoanerAsset && nonEditableHardwareLoanerBPSAssetFields.size()>0 && nonEditableHardwareLoanerBPSAssetFields.Contains(nonEditableField) )
+                || ( assetRecordTypeId == HardwareAsset && nonEditableHardwareBPSAssetFields.size()>0 && nonEditableHardwareBPSAssetFields.Contains(nonEditableField) )
+                || ( assetRecordTypeId == XmlAssetRecordId && nonEditableXMLBPSAssetFields.size()>0 && nonEditableXMLBPSAssetFields.Contains(nonEditableField) )
+                || ( assetRecordTypeId == InsuranceServiceRT && nonEditableInsuranceServicesBPSAssetFields.size()>0 && nonEditableInsuranceServicesBPSAssetFields.Contains(nonEditableField) )
+                || ( assetRecordTypeId == ApplicantTrackingRT && nonEditableApplicantTrackingBPSAssetFields.size()>0 && nonEditableApplicantTrackingBPSAssetFields.Contains(nonEditableField) )
+                || ( assetRecordTypeId == EmploymentScreeningRT && nonEditableEmploymentScreeningBPSAssetFields.size()>0 && nonEditableEmploymentScreeningBPSAssetFields.Contains(nonEditableField) )
+                || ( assetRecordTypeId == CertifyRT && nonEditableCertifyBPSAssetFields.size()>0 &&nonEditableCertifyBPSAssetFields.Contains(nonEditableField) )
+                || ( assetRecordTypeId == TimeAttendanceRecordId && nonEditableTimeAttendanceBPSAssetFields.size()>0 && nonEditableTimeAttendanceBPSAssetFields.Contains(nonEditableField) )
+                || ( assetRecordTypeId == PERFORM_SMART_ASSET && nonEditablePerformanceBPSAssetFields.size()>0 && nonEditablePerformanceBPSAssetFields.Contains(nonEditableField) )
+                )
+            {
+                isValid = True;
+            }
+            if ( !isValid ) {
+                assetRec.addError( nonEditableField , NSP_AssetServiceTriggerHelper.errorMessage );
+            }
+        }
     }
-}
+
 }
 //
