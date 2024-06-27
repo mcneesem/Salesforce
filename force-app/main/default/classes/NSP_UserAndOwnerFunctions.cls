@@ -1,4 +1,5 @@
-public class NSP_UserAndOwnerFunctions {
+public with sharing class NSP_UserAndOwnerFunctions {
+    // test w/ NSP_UserAndOwnerFunctionsTest (89%)
 
     public static final String SELECT_PRIMARY_CONTACT = System.Label.NSP_Select_Primary_Contact;
 
@@ -15,7 +16,7 @@ public class NSP_UserAndOwnerFunctions {
 * 
 * 
 */
-    public void setDummyUsers(List<Opportunity> setOpptyTemplateIdList,Set<String> accountIdSet,Set<Id> ownerIdset){
+    public void setDummyUsers( List<Opportunity> setOpptyTemplateIdList , Set<String> accountIdSet , Set<Id> ownerIdset ) {
         //get custom metadata for docusign template mapping
         
         try{
@@ -24,25 +25,34 @@ public class NSP_UserAndOwnerFunctions {
             	    accountContactMap.put(accountObj.AccountId,accountObj.ContactId );
         		}
             Map<Id, User> mapUserObject = new Map<Id, User>([SELECT Id,UserRole.Name,Manager.Id, Manager.Manager.Id FROM User WHERE Id IN :ownerIdset]);
-            
-            List<User> dummyUser = [select Id FROM User WHERE Name = :NSP_SalesConstants.DUMMY_USER_SIGNER LIMIT 1];
+
+            List<User> dummyUsers = [
+                SELECT Id
+                FROM User
+                WHERE ( Name = :NSP_SalesConstants.DUMMY_USER_SIGNER )
+                LIMIT 1
+            ];
+            Id dummyUserId = null;
+            if ( ( dummyUsers != null ) && !dummyUsers.isEmpty() ) {
+                dummyUserId = dummyUsers[0].Id;
+            }
             for(Opportunity opportuntityObj : setOpptyTemplateIdList){
                 if(opportuntityObj.NSP_BPA__c == null ){
                     if(opportuntityObj.NSP_Opportunity_Owner_Role__c == NSP_SalesConstants.BPA_User){
                         opportuntityObj.NSP_BPA__c = opportuntityObj.OwnerId;
                         opportuntityObj.NSP_DM_User__c = mapUserObject.get(opportuntityObj.OwnerId).ManagerID;
                         opportuntityObj.NSP_DA_User__c = mapUserObject.get(opportuntityObj.OwnerId).Manager.ManagerID;
-                    }else{
-                        opportuntityObj.NSP_BPA__c = dummyUser[0].Id;
-                        opportuntityObj.NSP_DM_User__c = dummyUser[0].Id;
-                        opportuntityObj.NSP_DA_User__c =  dummyUser[0].Id;
+                    } else {
+                        opportuntityObj.NSP_BPA__c = dummyUserId;
+                        opportuntityObj.NSP_DM_User__c = dummyUserId;
+                        opportuntityObj.NSP_DA_User__c = dummyUserId;
                     }
                 }
-                if(opportuntityObj.NSP_Insperity_Signer__c == null){
-                    opportuntityObj.NSP_Insperity_Signer__c = dummyUser[0].Id;
+                if ( opportuntityObj.NSP_Insperity_Signer__c == null ) {
+                    opportuntityObj.NSP_Insperity_Signer__c = dummyUserId;
                 }
-                if(opportuntityObj.Legals_Counter_Signer__c == null){
-                    opportuntityObj.Legals_Counter_Signer__c = dummyUser[0].Id;
+                if ( opportuntityObj.Legals_Counter_Signer__c == null ) {
+                    opportuntityObj.Legals_Counter_Signer__c = dummyUserId;
                 }
                 if(accountContactMap.containsKey(opportuntityObj.AccountId) ){  
                     if(accountContactMap.get(opportuntityObj.AccountId) != null){
@@ -53,8 +63,12 @@ public class NSP_UserAndOwnerFunctions {
                     }              
                 }  
             }
-        }catch(Exception ex){
-            NSP_CustomException.LogException(ex);
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_UserAndOwnerFunctions.class.getName() ,
+                'setDummyUsers' ,
+                e
+            );
         }  
     }
 	
@@ -91,3 +105,4 @@ public class NSP_UserAndOwnerFunctions {
 	
     
 }
+//
