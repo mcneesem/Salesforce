@@ -13,6 +13,9 @@ public with sharing class NSP_ReportRequestTriggerHelper {
         List<NSP_ReportRequest__c> insperityPreparedRepReqList = new List<NSP_ReportRequest__c>();
         Set<Id> repReqContactIds = new Set<Id>();
         Set<Id> repReqAccountIds = new Set<Id>();
+
+        string YES_VALUE = 'YES';
+        
         beforeInsertDirector(newMap.values(), oldMap);
         //Added the below logic as part of STY-04602
         for(NSP_ReportRequest__c repReq: newMap.values()){
