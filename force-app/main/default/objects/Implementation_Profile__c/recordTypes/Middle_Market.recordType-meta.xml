@@ -1533,7 +1533,7 @@
             <fullName>Yes</fullName>
             <default>false</default>
         </values>
-    </picklistValues>    
+    </picklistValues>
     <picklistValues>
         <picklist>Duration__c</picklist>
         <values>
