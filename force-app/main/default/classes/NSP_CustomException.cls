@@ -10,7 +10,7 @@ public class NSP_CustomException extends Exception {
 
     // primary entry point...
     public static void logException( Exception ex ) {
-        logException( ex );
+        insertLog( ex );
     }
 
     //
@@ -26,7 +26,7 @@ public class NSP_CustomException extends Exception {
     // PRIVATE
     //
 
-    private static void logException( Exception record ) {
+    private static void insertLog( Exception record ) {
         try {
             if ( record != null ) {
                 String stackTrace = record.getStackTraceString().substringBefore( '\n' );
