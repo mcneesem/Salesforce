@@ -4,7 +4,7 @@
         <name>Post_Chatter_Feed</name>
         <label>Post Chatter Feed</label>
         <locationX>1304</locationX>
-        <locationY>2255</locationY>
+        <locationY>2039</locationY>
         <actionName>NSP_ChatterPostController</actionName>
         <actionType>apex</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -26,13 +26,99 @@
                 <elementReference>RecipientIds</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>NSP_ChatterPostController</nameSegment>
+        <versionSegment>1</versionSegment>
     </actionCalls>
     <apiVersion>56.0</apiVersion>
+    <assignments>
+        <name>Assign_Fault_Element_GetGroupQueue</name>
+        <label>Assign Fault Element</label>
+        <locationX>2162</locationX>
+        <locationY>539</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Group_Queue</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_Fault_Element_GetProfile_Owner</name>
+        <label>Assign Fault Element</label>
+        <locationX>842</locationX>
+        <locationY>539</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Profile</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_Fault_Element_GetProfile_User</name>
+        <label>Assign Fault Element</label>
+        <locationX>1898</locationX>
+        <locationY>947</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Profile_User</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_Fault_Element_GetUser</name>
+        <label>Assign Fault Element</label>
+        <locationX>578</locationX>
+        <locationY>947</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_User</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_Fault_Element_GetUsers</name>
+        <label>Assign Fault Element</label>
+        <locationX>1634</locationX>
+        <locationY>1355</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Users</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
     <assignments>
         <name>Assign_Profiles</name>
         <label>Assign Profiles</label>
         <locationX>270</locationX>
-        <locationY>695</locationY>
+        <locationY>647</locationY>
         <assignmentItems>
             <assignToReference>ProfileIds</assignToReference>
             <operator>Add</operator>
@@ -48,7 +134,7 @@
         <name>Assign_Subject</name>
         <label>Assign Subject</label>
         <locationX>50</locationX>
-        <locationY>1271</locationY>
+        <locationY>1163</locationY>
         <assignmentItems>
             <assignToReference>Subject</assignToReference>
             <operator>Assign</operator>
@@ -64,7 +150,7 @@
         <name>Assign_UserIds</name>
         <label>Assign UserIds</label>
         <locationX>182</locationX>
-        <locationY>1031</locationY>
+        <locationY>947</locationY>
         <assignmentItems>
             <assignToReference>RecipientIds</assignToReference>
             <operator>Add</operator>
@@ -80,7 +166,7 @@
         <name>Assign_UserorGroupId_to_List</name>
         <label>Assign UserorGroupId to List</label>
         <locationX>1326</locationX>
-        <locationY>695</locationY>
+        <locationY>647</locationY>
         <assignmentItems>
             <assignToReference>lstUserorGroupId</assignToReference>
             <operator>Add</operator>
@@ -96,7 +182,7 @@
         <name>Assign_Users_To_Recipients</name>
         <label>Assign Users To Recipients</label>
         <locationX>1326</locationX>
-        <locationY>1607</locationY>
+        <locationY>1463</locationY>
         <assignmentItems>
             <assignToReference>RecipientIds</assignToReference>
             <operator>Add</operator>
@@ -112,7 +198,7 @@
         <name>Copy_1_of_Assign_Profiles</name>
         <label>Assign Profiles</label>
         <locationX>1326</locationX>
-        <locationY>1151</locationY>
+        <locationY>1055</locationY>
         <assignmentItems>
             <assignToReference>ProfileIds</assignToReference>
             <operator>Add</operator>
@@ -128,7 +214,7 @@
         <name>Queue_Assign_Subject</name>
         <label>Assign Subject</label>
         <locationX>1106</locationX>
-        <locationY>1943</locationY>
+        <locationY>1763</locationY>
         <assignmentItems>
             <assignToReference>Subject</assignToReference>
             <operator>Assign</operator>
@@ -144,7 +230,7 @@
         <name>Check_if_Recipients_is_Empty</name>
         <label>Check if Recipients is Empty</label>
         <locationX>1238</locationX>
-        <locationY>1823</locationY>
+        <locationY>1655</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Recipients_Exists</name>
@@ -173,7 +259,7 @@
         <name>Check_if_Recipients_isEmpty</name>
         <label>Check if Recipients is Empty?</label>
         <locationX>182</locationX>
-        <locationY>1151</locationY>
+        <locationY>1055</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>is_Recipients_Empty</name>
@@ -195,7 +281,7 @@
         <name>Check_Whether_Owner_is_changed</name>
         <label>Check Whether Owner is changed?</label>
         <locationX>1304</locationX>
-        <locationY>335</locationY>
+        <locationY>323</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Check_Owner_is_User</name>
@@ -228,6 +314,7 @@
             <label>Check Owner is Group/Queue?</label>
         </rules>
     </decisions>
+    <description>When Event is not Cancelled and Owner is changed, flow posts custom notification to new Owner&apos;s Chatter.</description>
     <environments>Default</environments>
     <interviewLabel>Event Custom Notification {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Event Custom Notification</label>
@@ -235,8 +322,8 @@
         <name>Copy_1_of_loop_Profiles</name>
         <label>loop Profiles</label>
         <locationX>1238</locationX>
-        <locationY>1031</locationY>
-        <collectionReference>Copy_1_of_Get_Profile</collectionReference>
+        <locationY>947</locationY>
+        <collectionReference>Get_Profile_User</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
             <targetReference>Copy_1_of_Assign_Profiles</targetReference>
@@ -249,21 +336,21 @@
         <name>Loop_Group_Members</name>
         <label>Loop Group Members</label>
         <locationX>1238</locationX>
-        <locationY>575</locationY>
+        <locationY>539</locationY>
         <collectionReference>Get_Group_Queue</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
             <targetReference>Assign_UserorGroupId_to_List</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
-            <targetReference>Copy_1_of_Get_Profile</targetReference>
+            <targetReference>Get_Profile_User</targetReference>
         </noMoreValuesConnector>
     </loops>
     <loops>
         <name>loop_Profiles</name>
         <label>loop Profiles</label>
         <locationX>182</locationX>
-        <locationY>575</locationY>
+        <locationY>539</locationY>
         <collectionReference>Get_Profile</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -277,7 +364,7 @@
         <name>Loop_Users</name>
         <label>Loop Users</label>
         <locationX>1238</locationX>
-        <locationY>1487</locationY>
+        <locationY>1355</locationY>
         <collectionReference>Get_Users</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -306,94 +393,96 @@
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
-    <recordCreates>
-        <name>Create_Group_Member_Error</name>
-        <label>Create Group Member Error</label>
-        <locationX>2162</locationX>
-        <locationY>575</locationY>
-        <inputAssignments>
-            <field>NSP_Class__c</field>
-            <value>
-                <stringValue>Case Custom Notification </stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>NSP_Description__c</field>
-            <value>
-                <elementReference>$Flow.FaultMessage</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>NSP_Method__c</field>
-            <value>
-                <stringValue>Get Group members</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>NSP_Object__c</field>
-            <value>
-                <stringValue>Group Member</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>NSP_Record_Id__c</field>
-            <value>
-                <elementReference>$Record.Id</elementReference>
-            </value>
-        </inputAssignments>
-        <object>NSP_Error_Log__c</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordCreates>
-    <recordCreates>
-        <name>Create_User_Error</name>
-        <label>Create User Error</label>
-        <locationX>578</locationX>
-        <locationY>1031</locationY>
-        <inputAssignments>
-            <field>NSP_Class__c</field>
-            <value>
-                <stringValue>Case Custom Notification </stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>NSP_Description__c</field>
-            <value>
-                <elementReference>$Flow.FaultMessage</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>NSP_Method__c</field>
-            <value>
-                <stringValue>Get Users</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>NSP_Object__c</field>
-            <value>
-                <stringValue>User</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>NSP_Record_Id__c</field>
-            <value>
-                <elementReference>$Record.Id</elementReference>
-            </value>
-        </inputAssignments>
-        <object>NSP_Error_Log__c</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordCreates>
     <recordLookups>
-        <name>Copy_1_of_Get_Profile</name>
-        <label>Get Profile</label>
+        <name>Get_Group_Queue</name>
+        <label>Get Group/Queue</label>
         <locationX>1238</locationX>
-        <locationY>911</locationY>
+        <locationY>431</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Loop_Group_Members</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Assign_Fault_Element_GetGroupQueue</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>GroupId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.OwnerId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>GroupMember</object>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>GroupId</queriedFields>
+        <queriedFields>UserOrGroupId</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Profile</name>
+        <label>Get Profile</label>
+        <locationX>182</locationX>
+        <locationY>431</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>loop_Profiles</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Assign_Fault_Element_GetProfile_Owner</targetReference>
+        </faultConnector>
+        <filterLogic>or</filterLogic>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>PEO Service</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>BPS Service</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Contact Center</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Retirement Services</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Name</field>
+            <operator>StartsWith</operator>
+            <value>
+                <stringValue>System Admin</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>Profile</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Profile_User</name>
+        <label>Get Profile User</label>
+        <locationX>1238</locationX>
+        <locationY>839</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Copy_1_of_loop_Profiles</targetReference>
         </connector>
         <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Create_User_Error</targetReference>
+            <targetReference>Assign_Fault_Element_GetProfile_User</targetReference>
         </faultConnector>
         <filterLogic>or</filterLogic>
         <filters>
@@ -439,96 +528,16 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
-        <name>Get_Group_Queue</name>
-        <label>Get Group/Queue</label>
-        <locationX>1238</locationX>
-        <locationY>455</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Loop_Group_Members</targetReference>
-        </connector>
-        <faultConnector>
-            <targetReference>Create_Group_Member_Error</targetReference>
-        </faultConnector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>GroupId</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>$Record.OwnerId</elementReference>
-            </value>
-        </filters>
-        <getFirstRecordOnly>false</getFirstRecordOnly>
-        <object>GroupMember</object>
-        <queriedFields>Id</queriedFields>
-        <queriedFields>GroupId</queriedFields>
-        <queriedFields>UserOrGroupId</queriedFields>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordLookups>
-        <name>Get_Profile</name>
-        <label>Get Profile</label>
-        <locationX>182</locationX>
-        <locationY>455</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>loop_Profiles</targetReference>
-        </connector>
-        <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Create_User_Error</targetReference>
-        </faultConnector>
-        <filterLogic>or</filterLogic>
-        <filters>
-            <field>Name</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>PEO Service</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>Name</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>BPS Service</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>Name</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Contact Center</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>Name</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Retirement Services</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>Name</field>
-            <operator>StartsWith</operator>
-            <value>
-                <stringValue>System Admin</stringValue>
-            </value>
-        </filters>
-        <getFirstRecordOnly>false</getFirstRecordOnly>
-        <object>Profile</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordLookups>
         <name>Get_User</name>
         <label>Get User</label>
         <locationX>182</locationX>
-        <locationY>911</locationY>
+        <locationY>839</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Assign_UserIds</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Create_User_Error</targetReference>
+            <targetReference>Assign_Fault_Element_GetUser</targetReference>
         </faultConnector>
         <filterLogic>1 AND 2</filterLogic>
         <filters>
@@ -554,14 +563,13 @@
         <name>Get_Users</name>
         <label>Get Users</label>
         <locationX>1238</locationX>
-        <locationY>1367</locationY>
+        <locationY>1247</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Loop_Users</targetReference>
         </connector>
         <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Create_User_Error</targetReference>
+            <targetReference>Assign_Fault_Element_GetUsers</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -589,15 +597,41 @@
         <connector>
             <targetReference>Check_Whether_Owner_is_changed</targetReference>
         </connector>
-        <filterFormula>OR( 
+        <filterFormula>AND(NOT(ISPICKVAL({!$Record.NSP_Status__c}, &quot;Cancelled&quot;)),
+OR( 
 AND(ISNEW(), {!$Record.CreatedById} &lt;&gt; {!$Record.OwnerId}),
 AND(NOT(ISNEW()), ISCHANGED({!$Record.OwnerId}) )
-)</filterFormula>
+))</filterFormula>
         <object>Event</object>
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
+    <subflows>
+        <name>Fault_Handler_Subflow</name>
+        <label>Fault Handler Subflow</label>
+        <locationX>578</locationX>
+        <locationY>1055</locationY>
+        <flowName>Insperity_Fault_Handler_Subflow</flowName>
+        <inputAssignments>
+            <name>faultElement</name>
+            <value>
+                <elementReference>varFaultElement</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultFlow</name>
+            <value>
+                <stringValue>NSP_Event_Custom_Notification</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultMessage</name>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
     <variables>
         <name>lstUserorGroupId</name>
         <dataType>String</dataType>
@@ -625,5 +659,12 @@ AND(NOT(ISNEW()), ISCHANGED({!$Record.OwnerId}) )
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>varFaultElement</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
     </variables>
 </Flow>
