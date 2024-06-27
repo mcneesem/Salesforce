@@ -1533,18 +1533,7 @@
             <fullName>Yes</fullName>
             <default>false</default>
         </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>Does_this_client_have_an_AWW__c</picklist>
-        <values>
-            <fullName>No</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Yes</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
+    </picklistValues>    
     <picklistValues>
         <picklist>Duration__c</picklist>
         <values>
