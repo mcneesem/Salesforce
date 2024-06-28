@@ -415,7 +415,7 @@ public class NSP_ProjectTriggerHelper{
             if(!project.pse__Is_Template__c && (project.RecordTypeId != PEOBILLRECTYPEID && project.pse__Project_Type__c !=	NSP_ServiceConstants.PROJECT_TYPE_SERVICE)){
                 if(project.OwnerId == null || !String.valueOf(project.OwnerId).startsWith('00G') && project.NSP_Exclusively_Assign_Owner__c != true){
                     project.OwnerId = UserInfo.getUserId();
-                } 
+                }
             }
             if (payrollUser != null && !project.pse__Is_Template__c && project.RecordTypeId == peoProjectRecordTypeId && project.NSP_Exclusively_Assign_Owner__c != true){
                     project.OwnerId = payrollUser;
