@@ -60,7 +60,8 @@ const RL_FIELDS = [
   'Does_client_have_their_code_group_ID__c',
   'Spnsrd_pln_when_Insperity_hndles_payroll__c',
   'Employees_currently_enrolled_in_FSA__c',
-  'Client_maintain_own_FSA__c'
+  'Client_maintain_own_FSA__c',
+  'Old_plan_administrator_was_another_PEO__c'
 ];
 
 const SECTION_FIELDS = [

@@ -39,7 +39,11 @@ const RL_FIELDS = [
   'Any_employees_currently_enrolled__c',
   'Client_maintain_own_FSA__c',
   'Is_client_s_current_HSA_with_Optum_Bank__c',
-  'Does_client_have_their_code_group_ID__c'
+  'Does_client_have_their_code_group_ID__c',
+  'Old_plan_administrator_was_another_PEO__c',
+  'Carrier_notified_of_termination__c',
+  'Employees_currently_enrolled_in_FSA__c',
+  'Client_is_making_employer_contributions__c'
 ];
 const SECTION_FIELDS = [
   'Insperity_benefits_effective_date__c',
