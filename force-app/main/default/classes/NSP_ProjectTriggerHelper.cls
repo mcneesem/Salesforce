@@ -391,12 +391,35 @@ public class NSP_ProjectTriggerHelper{
             NSP_ServiceConstants.PROJECT_CORE_TEMPLATE, 
             NSP_ServiceConstants.PROJECT_MM_FOUNDATIONAL_TEMPLATE};
         Id bpsProjectRecordTypeId = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.PROJECT, NSP_ServiceConstants.PROJECT_BPS_RECORDTYPE);
+        String payrollUser = '';  
+        
+        if (projAccIdNameMap != null && !projAccIdNameMap.isEmpty()) {  
+            List<NSP_Account_Team__c> teamList = [  
+                SELECT NSP_Role__c, NSP_User__c, NSP_Primary__c,NSP_Last_Name__c  
+                FROM NSP_Account_Team__c  
+                WHERE NSP_Account__c IN :projAccIdNameMap.keySet()  
+                AND NSP_User__c != null  
+                AND (NSP_Role__c = :NSP_ServiceConstants.PAYROLL_SPECIALIST  
+                     OR NSP_Role__c = :NSP_ServiceConstants.PAYROLL_SUPERVISOR)  
+                ORDER BY NSP_Role__c ASC, NSP_Primary__c DESC, NSP_Last_Name__c ASC  
+                LIMIT 1  
+            ];  
+            
+            if (!teamList.isEmpty()) {  
+                payrollUser = teamList[0].NSP_User__c;  
+            } else {  
+                payrollUser = UserInfo.getUserId();  
+            }  
+        }
         for(pse__Proj__c project : newProjectsList){
             if(!project.pse__Is_Template__c && (project.RecordTypeId != PEOBILLRECTYPEID && project.pse__Project_Type__c !=	NSP_ServiceConstants.PROJECT_TYPE_SERVICE)){
                 if(project.OwnerId == null || !String.valueOf(project.OwnerId).startsWith('00G') && project.NSP_Exclusively_Assign_Owner__c != true){
                     project.OwnerId = UserInfo.getUserId();
-                }
+                } 
             }
+            if (payrollUser != null && !project.pse__Is_Template__c && project.RecordTypeId == peoProjectRecordTypeId && project.NSP_Exclusively_Assign_Owner__c != true){
+                    project.OwnerId = payrollUser;
+                }
             if(project.pse__Is_Template__c){
                 project.TemplateName__c = project.name;
             }
