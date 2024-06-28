@@ -22,8 +22,16 @@
         <value>Are there any non-paid users?</value>
     </labels>
     <labels>
+        <fullName>BPS_Integra_Asset_Feilds</fullName>
+        <categories>Stores all the fields which BPS users can edit on Integra Asset if Create Asset Perm Set is not assigned.</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>BPS Integra Asset Feilds</shortDescription>
+        <value>Status</value>
+    </labels>
+    <labels>
         <fullName>BPS_Non_Performance_Management_Fields</fullName>
-        <categories>Stores all the fields which BPS users can edit  on Insurance Asset if Create Asset Perm Set is not assigned.</categories>
+        <categories>Stores all the fields which BPS users can edit on Performance Management Asset if Create Asset Perm Set is not assigned.</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>BPS Non Performance Management Fields</shortDescription>
