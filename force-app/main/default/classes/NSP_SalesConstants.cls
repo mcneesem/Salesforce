@@ -6,11 +6,11 @@
 */
 public class NSP_SalesConstants {
     //To set lead stage as sales ready
-    public static final String LEAD_STAGE_SRL = 'Sales Ready';   
+    public static final String LEAD_STAGE_SRL = 'Sales Ready';
     //To set lead stage non Prioritized
-    public static final String LEAD_STAGE_SUSPECT = 'Non-Prioritized';  
+    public static final String LEAD_STAGE_SUSPECT = 'Non-Prioritized';
     //To set lead stage as Prioritized
-    public static final String LEAD_STAGE_MPL ='Prioritized';  
+    public static final String LEAD_STAGE_MPL ='Prioritized';
     //To set opportunity stage as closed lost
     public static final String CLOSED_LOST ='Closed Lost';
     //To set opportunity stage as closed won
@@ -43,10 +43,16 @@ public class NSP_SalesConstants {
     public static final String CLIENT_GROWTH_CREDIT ='Client Growth Credit';
     // To set opportunity type as New Product
     public static final String NEW_BUSINESS_OPPORTUNITY ='New Product';
+    // To set opportunity type as Prospecting
+    public static final String PROSPECTING_STAGE ='Prospecting';
+    // To set opportunity type as Data Collection
+    public static final String DATA_COLLECTION_STAGE ='Data Collection';
     // To set opportunity type as Discovery
+    public static final String BID_STATUS_LOCKED = 'Bid Locked';
     public static final String DISCOVERY_STAGE ='Discovery';
-    // To set opportunity type as Abalysis
+    // To set opportunity type as Analysis
     public static final String ANALYSIS_STAGE ='Analysis';
+    public static final String BID_STATUS_APPROVED = 'Approved';
     // To set opportunity type as Proposal
     public static final String PROPOSAL_STAGE ='Proposal';
     public static final String DISCOVERY_CALL_ACTIVITY = 'Discovery Call';
@@ -55,6 +61,8 @@ public class NSP_SalesConstants {
     public static final String CLOSING_STAGE = 'Closing';
     //To set opportunity stage as closed won
     public static final String CLOSED_WON_STAGE = 'Closed Won';
+    public static final String FORECAST_STATUS_PENDING = 'Pending-Docs Submitted to NCS';
+    public static final String FORECAST_STATUS_SOLDBOOKED = 'Sold-Booked';
     //To set opportunity stage as closed lost
     public static final String CLOSED_LOST_STAGE = 'Closed Lost';
     public static final String LOCKED_OPPORTUNITY = 'Opportunity_Locked';
@@ -197,4 +205,6 @@ public class NSP_SalesConstants {
     //Added as part of user story 128436
     public static final String Task_Type ='Core Sales';
     public static final String Task_SubType = 'WX Quote';
+    //Added as part of user story 280309
+    public static final String INTEGRATION_USER_PROFILE_ID = '00e4x0000012vOHAAY';
 }

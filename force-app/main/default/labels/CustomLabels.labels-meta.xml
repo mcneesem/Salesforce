@@ -8,6 +8,27 @@
         <value>NSP_Asset_Product,Time_Attendance,Applicant_Tracking,Employment_Screening,Learning_Development,Organizational_Planning,Performance_Management,Integra,Certify,Insurance_Service,Recruiting_Services,XML,RET_WO</value>
     </labels>
     <labels>
+        <fullName>AddContact_Discovery</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AddContact_Discovery</shortDescription>
+        <value>Please add at least one Contact to the Opportunity to move to Discovery stage</value>
+    </labels>
+    <labels>
+        <fullName>AddDiscoveryCalls_DataColl</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AddDiscoveryCalls_DataColl</shortDescription>
+        <value>Please add Discovery Calls before moving to Data Collection stage</value>
+    </labels>
+    <labels>
+        <fullName>AddDiscoveryCalls_Discovery</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AddDiscoveryCalls_Discovery</shortDescription>
+        <value>Please add Discovery Calls before moving to Discovery stage</value>
+    </labels>
+    <labels>
         <fullName>Any_users_who_cannot_see_salary</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -213,6 +234,13 @@
         <value>There is already an existing Project Task Assignment marked as Primary. Please change Resource Type on Primary PTA first.</value>
     </labels>
     <labels>
+        <fullName>EvalTaskPrefix_Analysis</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>EvalTaskPrefix_Analysis</shortDescription>
+        <value>Please complete the following Tasks to move to Analysis stage:</value>
+    </labels>
+    <labels>
         <fullName>ExistingPDSMessage</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -225,6 +253,13 @@
         <protected>false</protected>
         <shortDescription>FSOImplementationProject</shortDescription>
         <value>FSO - Implementation</value>
+    </labels>
+    <labels>
+        <fullName>ForecastStatus_ClosedWon</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ForecastStatus_ClosedWon</shortDescription>
+        <value>Please ensure Forecast Status is Pending or Sold/Booked to move to Closed/Won stage</value>
     </labels>
     <labels>
         <fullName>HCM_Case_Email_Send_To_Address</fullName>
@@ -536,7 +571,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AddPrimaryProduct</shortDescription>
-        <value>Please Select Primary Product before changing stage to Analysis</value>
+        <value>Please Select Primary Product before moving to next Stage</value>
     </labels>
     <labels>
         <fullName>NSP_AddPrimaryQuote</fullName>
@@ -6325,6 +6360,13 @@ Climate Plus: https://nexus.insperity.com/groups/38605/posts/3272612-climate-plu
         <protected>false</protected>
         <shortDescription>Sub Client Contact Initial</shortDescription>
         <value>aD4</value>
+    </labels>
+    <labels>
+        <fullName>STPCompleted_ClosedWon</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>STPCompleted_ClosedWon</shortDescription>
+        <value>Please ensure Sold to Paid Checklist is completed to move to Closed/Won stage</value>
     </labels>
     <labels>
         <fullName>Transition_Progress_Survey_Case_Owner</fullName>
