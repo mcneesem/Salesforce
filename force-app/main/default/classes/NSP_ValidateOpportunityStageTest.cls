@@ -135,7 +135,7 @@ private class NSP_ValidateOpportunityStageTest {
             WhatId = opp.Id,
             NSP_Task_Type__c = 'Core Sales',
             RecordTypeId = taskRecTypeId,
-            NSP_Task_Subtype__c = 'WO Proposal',
+            //NSP_Task_Subtype__c = 'WO Proposal', // 2024-06-27 ~ PMCC ~ removed to correct apex test failures resulting from PR-22367
             NSP_Status__c='Open'
         );
         sOList.add(taskRecOld3);
