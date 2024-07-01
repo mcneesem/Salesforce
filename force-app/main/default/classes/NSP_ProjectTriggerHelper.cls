@@ -387,60 +387,88 @@ public class NSP_ProjectTriggerHelper{
     * 
     * ********************************************************************************************/   
     public void updateProjectNameonBeforeInsert(List<pse__Proj__c> newProjectsList, Map<Id, Account> projAccIdNameMap){
-        List<String> templateNameList = new List<String>{NSP_ServiceConstants.PROJECT_TEMPLATE_NAME, 
-            NSP_ServiceConstants.PROJECT_CORE_TEMPLATE, 
-            NSP_ServiceConstants.PROJECT_MM_FOUNDATIONAL_TEMPLATE};
-        Id bpsProjectRecordTypeId = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.PROJECT, NSP_ServiceConstants.PROJECT_BPS_RECORDTYPE);
-        String payrollUser = '';  
-        
-        if (projAccIdNameMap != null && !projAccIdNameMap.isEmpty()) {  
-            List<NSP_Account_Team__c> teamList = [  
-                SELECT NSP_Role__c, NSP_User__c, NSP_Primary__c,NSP_Last_Name__c  
-                FROM NSP_Account_Team__c  
-                WHERE NSP_Account__c IN :projAccIdNameMap.keySet()  
-                AND NSP_User__c != null  
-                AND (NSP_Role__c = :NSP_ServiceConstants.PAYROLL_SPECIALIST  
-                     OR NSP_Role__c = :NSP_ServiceConstants.PAYROLL_SUPERVISOR)  
-                ORDER BY NSP_Role__c ASC, NSP_Primary__c DESC, NSP_Last_Name__c ASC  
-                LIMIT 1  
-            ];  
-            
-            if (!teamList.isEmpty()) {  
-                payrollUser = teamList[0].NSP_User__c;  
-            } else {  
-                payrollUser = UserInfo.getUserId();  
-            }  
+        List<String> templateNameList = new List<String>{
+            NSP_ServiceConstants.PROJECT_TEMPLATE_NAME ,
+            NSP_ServiceConstants.PROJECT_CORE_TEMPLATE ,
+            NSP_ServiceConstants.PROJECT_MM_FOUNDATIONAL_TEMPLATE
+        };
+        Id bpsProjectRecordTypeId = NSP_GenericRecordType.getRecordTypeId(
+            NSP_ServiceConstants.PROJECT ,
+            NSP_ServiceConstants.PROJECT_BPS_RECORDTYPE
+        );
+        String payrollUser = UserInfo.getUserId();
+        if ( ( projAccIdNameMap != null ) && !projAccIdNameMap.isEmpty() ) {
+            List<NSP_Account_Team__c> teamList = [
+                SELECT NSP_Role__c , NSP_User__c , NSP_Primary__c , NSP_Last_Name__c
+                FROM NSP_Account_Team__c
+                WHERE (
+                    NSP_Account__c IN :projAccIdNameMap.keySet()
+                    AND NSP_User__c != null
+                    AND (
+                        NSP_Role__c = :NSP_ServiceConstants.PAYROLL_SPECIALIST
+                        OR NSP_Role__c = :NSP_ServiceConstants.PAYROLL_SUPERVISOR
+                    )
+                )
+                ORDER BY NSP_Role__c ASC , NSP_Primary__c DESC , NSP_Last_Name__c ASC
+                LIMIT 1
+            ];
+            if ( !teamList.isEmpty() ) {
+                payrollUser = teamList[0].NSP_User__c;
+            }
         }
-        for(pse__Proj__c project : newProjectsList){
-            if(!project.pse__Is_Template__c && (project.RecordTypeId != PEOBILLRECTYPEID && project.pse__Project_Type__c !=	NSP_ServiceConstants.PROJECT_TYPE_SERVICE)){
-                if(project.OwnerId == null || !String.valueOf(project.OwnerId).startsWith('00G') && project.NSP_Exclusively_Assign_Owner__c != true){
+        for ( pse__Proj__c project : newProjectsList ) {
+            if (!project.pse__Is_Template__c
+                && ( project.RecordTypeId != PEOBILLRECTYPEID && project.pse__Project_Type__c != NSP_ServiceConstants.PROJECT_TYPE_SERVICE )
+                )
+            {
+                if ( project.OwnerId == null || !String.valueOf(project.OwnerId).startsWith('00G') && project.NSP_Exclusively_Assign_Owner__c != true){
                     project.OwnerId = UserInfo.getUserId();
                 }
             }
-            if (payrollUser != null && !project.pse__Is_Template__c && project.RecordTypeId == peoProjectRecordTypeId && project.NSP_Exclusively_Assign_Owner__c != true){
-                    project.OwnerId = payrollUser;
-                }
-            if(project.pse__Is_Template__c){
+            if ( payrollUser != null
+                && !project.pse__Is_Template__c
+                && project.RecordTypeId == peoProjectRecordTypeId
+                && project.NSP_Exclusively_Assign_Owner__c != true
+                )
+            {
+                project.OwnerId = payrollUser;
+            }
+            if ( project.pse__Is_Template__c ) {
                 project.TemplateName__c = project.name;
-            }
-            else if(!project.pse__Is_Template__c && project.RecordTypeId == bpsProjectRecordTypeId){
-                String projectName = String.isNotBlank(project.pse__Account__c) ? projAccIdNameMap.get(project.pse__Account__c).Name + ': ' + project.TemplateName__c : project.TemplateName__c;
+            } else if ( !project.pse__Is_Template__c
+                && project.RecordTypeId == bpsProjectRecordTypeId
+                )
+            {
+                String projectName = String.isNotBlank(project.pse__Account__c) ?
+                    projAccIdNameMap.get(project.pse__Account__c).Name + ': ' + project.TemplateName__c :
+                    project.TemplateName__c
+                    ;
                 if(String.isNotBlank(projectName)){
-                	project.name = projectName.length() > 80 ? projectName.substring(0, 80) : projectName;
+                    project.Name = projectName.length() > 80 ? projectName.substring(0, 80) : projectName;
                 }
+            } else if ( !project.pse__Is_Template__c
+                && project.pse__Start_Date__c == System.today()
+                && project.pse__Is_Active__c == true
+                && templateNameList.contains(project.TemplateName__c)
+                )
+            {
+                project.Name = String.isNotBlank(project.pse__Account__c) ?
+                    projectNameAsPerNamingConvention(project.TemplateName__c,project.pse__Start_Date__c, projAccIdNameMap.get(project.pse__Account__c).Name) :
+                    projectNameAsPerNamingConvention(project.TemplateName__c,project.pse__Start_Date__c, NSP_ServiceConstants.EMPTY_STRING)
+                    ;
+            } else if ( !project.pse__Is_Template__c
+                && ( project.RecordTypeId == peoProjectRecordTypeId || project.RecordTypeId == PEOBILLRECTYPEID )
+                && project.pse__Start_Date__c != null
+                )
+            {
+                project.Name = String.isNotBlank(project.pse__Account__c) ?
+                    projectNameAsPerNamingConvention(project.TemplateName__c,project.pse__Start_Date__c, projAccIdNameMap.get(project.pse__Account__c).Name) :
+                    projectNameAsPerNamingConvention(project.TemplateName__c,project.pse__Start_Date__c, NSP_ServiceConstants.EMPTY_STRING)
+                    ;
             }
-            else if(!project.pse__Is_Template__c && project.pse__Start_Date__c == System.today() && 
-                    project.pse__Is_Active__c == true && templateNameList.contains(project.TemplateName__c)){
-                        project.name = String.isNotBlank(project.pse__Account__c) ? projectNameAsPerNamingConvention(project.TemplateName__c,project.pse__Start_Date__c, projAccIdNameMap.get(project.pse__Account__c).Name)
-                            : projectNameAsPerNamingConvention(project.TemplateName__c,project.pse__Start_Date__c, NSP_ServiceConstants.EMPTY_STRING);
-                    }
-            else if(!project.pse__Is_Template__c && ( project.RecordTypeId == peoProjectRecordTypeId || project.RecordTypeId == PEOBILLRECTYPEID ) && project.pse__Start_Date__c != null){
-                project.name = String.isNotBlank(project.pse__Account__c) ? projectNameAsPerNamingConvention(project.TemplateName__c,project.pse__Start_Date__c, projAccIdNameMap.get(project.pse__Account__c).Name)
-                    : projectNameAsPerNamingConvention(project.TemplateName__c,project.pse__Start_Date__c, NSP_ServiceConstants.EMPTY_STRING);
-            }
-        }   
-
+        }
     }
+
 /***********************************************************************************************
     * MethodName: getProjectAssetFromTemp
     * Description : Method to get projecttemplate Asset Type
