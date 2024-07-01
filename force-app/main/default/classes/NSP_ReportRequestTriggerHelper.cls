@@ -19,6 +19,11 @@ public with sharing class NSP_ReportRequestTriggerHelper {
         beforeInsertDirector(newMap.values(), oldMap);
         //Added the below logic as part of STY-04602
         for(NSP_ReportRequest__c repReq: newMap.values()){
+            if(YES_VALUE.equalsIgnoreCase(repReq.NSP_RequestingMultipleEmployees__c))
+            {
+                repReq.NSP_WSEE__c = null;
+                repReq.NSP_Consideration_Amount_min_2wks_Salary__c = null;
+            }
             if ( repReq.NSP_WSEE__c != oldMap.get(repReq.Id).NSP_WSEE__c
                 && repReq.NSP_RequestingMultipleEmployees__c != NSP_ServiceConstants.YES
                 )
