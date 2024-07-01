@@ -31,6 +31,11 @@
     <description>Provide access to Billing objects</description>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Account.Previous_Month_Account__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Asset.AccountId</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -4267,6 +4272,16 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>OpportunityLineItem.sbaa__ApprovalStatus__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.Prevent_Reassignment__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>OrderItem.Has_Consumption_Schedule__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
