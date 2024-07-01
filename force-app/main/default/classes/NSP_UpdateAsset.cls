@@ -20,7 +20,7 @@ public class NSP_UpdateAsset {
             FROM Asset
             WHERE (
                 NSP_WX_WA_ParentId_Store_Internal__c != null
-                AND RrecordTypeId = :WXWAAssetRecordTypeId
+                AND RecordTypeId = :WXWAAssetRecordTypeId
                 AND CreatedDate >= :monthStartDate
                 AND CreatedDate < :monthEndDate
             )
