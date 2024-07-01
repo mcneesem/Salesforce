@@ -1,5 +1,5 @@
 public with sharing class InsperityWOBillingAccountTransferBatch implements Database.Batchable<sObject> , Database.Stateful {
-    // test w/ NSP_RetirementServiceActivationBatchTest (92%)
+    // test w/ InsperityWOBlngAccTransferBatchTest (92%)
 
     public String previousMonthAccountName;
     public String currentAccountId;
