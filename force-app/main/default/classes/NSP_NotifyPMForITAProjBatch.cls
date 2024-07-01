@@ -186,7 +186,7 @@ public class NSP_NotifyPMForITAProjBatch implements Schedulable,Database.Batchab
             if(!lstEmailMessages.isEmpty() && !Test.isRunningTest()){
                 Messaging.sendEmail(lstEmailMessages);
             }    
-        }catch (Exception ex) {
+        } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
                 NSP_NotifyPMForITAProjBatch.class.getName() ,
                 'sendEmailToUsers' ,
