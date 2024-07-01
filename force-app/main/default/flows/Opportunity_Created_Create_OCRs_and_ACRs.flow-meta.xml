@@ -20,8 +20,8 @@
     <assignments>
         <name>Add_new_OCR_to_collection</name>
         <label>Add new OCR to collection</label>
-        <locationX>2349</locationX>
-        <locationY>2604</locationY>
+        <locationX>2437</locationX>
+        <locationY>2712</locationY>
         <assignmentItems>
             <assignToReference>OCRCollection</assignToReference>
             <operator>Add</operator>
@@ -50,10 +50,26 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Count_ACRs</name>
+        <label>Count ACRs</label>
+        <locationX>2173</locationX>
+        <locationY>2280</locationY>
+        <assignmentItems>
+            <assignToReference>countACRs</assignToReference>
+            <operator>AssignCount</operator>
+            <value>
+                <elementReference>GetAllAcrsOnAccount</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Check_Count_ACRs</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>CreateNewOCRs</name>
         <label>CreateNewOCRs</label>
-        <locationX>2349</locationX>
-        <locationY>2496</locationY>
+        <locationX>2437</locationX>
+        <locationY>2604</locationY>
         <assignmentItems>
             <assignToReference>OpportunityContactRole.ContactId</assignToReference>
             <operator>Assign</operator>
@@ -93,20 +109,38 @@
             <targetReference>Add_new_OCR_to_collection</targetReference>
         </connector>
     </assignments>
-    <constants>
-        <name>FlowName</name>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>Opportunity Insert to Create Contact roles</stringValue>
-        </value>
-    </constants>
+    <decisions>
+        <description>Prevent Flow Error: Number of iterations exceeded
+~ Salesforce has a limit of 2000 executed elements at run time.
+~ The following loop has a potential to execute 2 element per ACR selected in the previous query</description>
+        <name>Check_Count_ACRs</name>
+        <label>Check Count ACRs</label>
+        <locationX>2173</locationX>
+        <locationY>2388</locationY>
+        <defaultConnector>
+            <targetReference>LoopEachACRtoCreateOCR</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Too_Many_ACRs</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>countACRs</leftValueReference>
+                <operator>GreaterThan</operator>
+                <rightValue>
+                    <numberValue>900.0</numberValue>
+                </rightValue>
+            </conditions>
+            <label>Too Many ACRs</label>
+        </rules>
+    </decisions>
     <decisions>
         <name>Do_ACR_Records_exist_on_the_Account</name>
         <label>Do ACR Records exist on the Account?</label>
         <locationX>1953</locationX>
         <locationY>2172</locationY>
         <defaultConnector>
-            <targetReference>LoopEachACRtoCreateOCR</targetReference>
+            <targetReference>Count_ACRs</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>ACRs exist on the Account</defaultConnectorLabel>
         <rules>
@@ -219,65 +253,8 @@
             <label>Referral ACR should be referenced to update OCR</label>
         </rules>
     </decisions>
-    <decisions>
-        <name>Should_OCR_be_created_for_this_ACR</name>
-        <label>Should OCR be created for this ACR?</label>
-        <locationX>2481</locationX>
-        <locationY>2388</locationY>
-        <defaultConnector>
-            <targetReference>LoopEachACRtoCreateOCR</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Do not create OCR for this ACR</defaultConnectorLabel>
-        <rules>
-            <name>Yes_Create_OCR_for_this_ACR</name>
-            <conditionLogic>1 AND (2 OR 3)</conditionLogic>
-            <conditions>
-                <leftValueReference>LoopEachACRtoCreateOCR.IsActive</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>LoopEachACRtoCreateOCR.NSP_Is_Primary__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>ACRtoOCRRoleFormula</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>CreateNewOCRs</targetReference>
-            </connector>
-            <label>Yes - Create OCR for this ACR</label>
-        </rules>
-    </decisions>
     <description>Added COI check for Referral ACR/OCR to work with updated Apex, Get ACRs does not equal referralContactId, updated referral decision node to handle dupes and nonprofits, moved existing OCR loop up...nonprofit info from Opty vs ACR, flipped role check to formula in last loop, removed COI filter for referral ACR/OCR, non profit on referral OCR</description>
     <environments>Default</environments>
-    <formulas>
-        <name>ACRtoOCRRoleFormula</name>
-        <dataType>Boolean</dataType>
-        <expression>IF(
-OR( 
-INCLUDES( {!LoopEachACRtoCreateOCR.Roles}, &quot;Channel Partner&quot;),
-INCLUDES( {!LoopEachACRtoCreateOCR.Roles}, &quot;COI&quot;),
-INCLUDES( {!LoopEachACRtoCreateOCR.Roles}, &quot;Decision Maker&quot;),
-INCLUDES( {!LoopEachACRtoCreateOCR.Roles}, &quot;Economic Buyer&quot;),
-INCLUDES( {!LoopEachACRtoCreateOCR.Roles}, &quot;Economic Decision Maker&quot;),
-INCLUDES( {!LoopEachACRtoCreateOCR.Roles}, &quot;Evaluator&quot;),
-INCLUDES( {!LoopEachACRtoCreateOCR.Roles}, &quot;Executive Sponsor&quot;),
-INCLUDES( {!LoopEachACRtoCreateOCR.Roles}, &quot;Influencer&quot;),
-INCLUDES( {!LoopEachACRtoCreateOCR.Roles}, &quot;Technical Buyer&quot;) ),
-TRUE,
-FALSE
-)</expression>
-    </formulas>
     <interviewLabel>Opportunity Created - Create OCRs and ACRs {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Opportunity Created - Create OCRs and ACRs</label>
     <loops>
@@ -297,12 +274,12 @@ FALSE
     <loops>
         <name>LoopEachACRtoCreateOCR</name>
         <label>LoopEachACRtoCreateOCR</label>
-        <locationX>2261</locationX>
-        <locationY>2280</locationY>
+        <locationX>2349</locationX>
+        <locationY>2496</locationY>
         <collectionReference>GetAllAcrsOnAccount</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
-            <targetReference>Should_OCR_be_created_for_this_ACR</targetReference>
+            <targetReference>CreateNewOCRs</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
             <targetReference>createOCRs</targetReference>
@@ -387,10 +364,9 @@ FALSE
     <recordCreates>
         <name>createOCRs</name>
         <label>createOCRs</label>
-        <locationX>2261</locationX>
-        <locationY>2880</locationY>
+        <locationX>2349</locationX>
+        <locationY>2904</locationY>
         <faultConnector>
-            <isGoTo>true</isGoTo>
             <targetReference>ErrorHandler</targetReference>
         </faultConnector>
         <inputReference>OCRCollection</inputReference>
@@ -608,6 +584,7 @@ FALSE
             <targetReference>Do_ACR_Records_exist_on_the_Account</targetReference>
         </connector>
         <faultConnector>
+            <isGoTo>true</isGoTo>
             <targetReference>ErrorHandler</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
@@ -630,6 +607,20 @@ FALSE
             <operator>NotEqualTo</operator>
             <value>
                 <elementReference>referralContactId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>IsActive</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Is_Opportunity_Role__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
             </value>
         </filters>
         <getFirstRecordOnly>false</getFirstRecordOnly>
@@ -711,23 +702,23 @@ FALSE
         </scheduledPaths>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <subflows>
         <name>ErrorHandler</name>
         <label>ErrorHandler</label>
-        <locationX>2789</locationX>
-        <locationY>2172</locationY>
+        <locationX>2613</locationX>
+        <locationY>3012</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
+        <inputAssignments>
+            <name>faultFlow</name>
+            <value>
+                <stringValue>Opportunity_Created_Create_OCRs_and_ACRs</stringValue>
+            </value>
+        </inputAssignments>
         <inputAssignments>
             <name>faultMessage</name>
             <value>
                 <elementReference>$Flow.FaultMessage</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>triggeringFlow</name>
-            <value>
-                <elementReference>FlowName</elementReference>
             </value>
         </inputAssignments>
     </subflows>
@@ -739,32 +730,15 @@ FALSE
         <isOutput>false</isOutput>
     </variables>
     <variables>
-        <name>collectionOCRNewContactIds</name>
-        <dataType>String</dataType>
-        <isCollection>true</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>collectionReferralContactIds</name>
-        <dataType>String</dataType>
-        <isCollection>true</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>collOCRsOnOpty</name>
-        <dataType>String</dataType>
-        <isCollection>true</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>currentLoopACRRole</name>
-        <dataType>String</dataType>
+        <name>countACRs</name>
+        <dataType>Number</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
+        <scale>0</scale>
+        <value>
+            <numberValue>0.0</numberValue>
+        </value>
     </variables>
     <variables>
         <name>existingOCRContactId</name>
@@ -798,20 +772,6 @@ FALSE
     </variables>
     <variables>
         <name>referralContactId</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>varNewOCRContactId</name>
-        <dataType>String</dataType>
-        <isCollection>true</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>varReferralContactId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
