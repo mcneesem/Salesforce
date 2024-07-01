@@ -16,7 +16,7 @@ public class NSP_NotifyPMForITAProjBatch implements Schedulable,Database.Batchab
      * description: Start method to query project records
      */
     public Database.QueryLocator start(Database.BatchableContext bc){       
-        String ITA_IMPLEMENTATION = NSP_ServiceConstants.ITA_IMPLEMENTATION + '%';
+        String ITA_IMPLEMENTATION = '%ITA%Implementation%';
         List<String> ProjFields = new List<String>{
                 'ID',
                 'NSP_RET_Client_ID__c',
@@ -25,10 +25,10 @@ public class NSP_NotifyPMForITAProjBatch implements Schedulable,Database.Batchab
                 };
         String projObjectApiName = 'pse__Proj__c';        
         NSP_QueryBuilder queryBuilder = new NSP_QueryBuilder(projObjectApiName, ProjFields)
-            								.addFilter('pse__Is_Template__c', false)
-            								.addFilter('NSP_Is_ITA_Mail_Sent__c', false)
-            								.addFilter('TemplateName__c', ITA_IMPLEMENTATION, NSP_QueryBuilder.Operator.LIKES,true)
-            								.setSecurityEnforce(false);
+            .addFilter('pse__Is_Template__c', false)
+            .addFilter('NSP_Is_ITA_Mail_Sent__c', false)
+            .addFilter('TemplateName__c', ITA_IMPLEMENTATION, NSP_QueryBuilder.Operator.LIKES,true)
+            .setSecurityEnforce(false);
         String query = queryBuilder.build();        
         return Database.getQueryLocator(query);
     }
@@ -121,10 +121,15 @@ public class NSP_NotifyPMForITAProjBatch implements Schedulable,Database.Batchab
             if(!projListToUpdate.isEmpty()){
                 Database.update(projListToUpdate,false);
             }
-        }catch (Exception ex) {
-            NSP_ErrorLogHandler.logSaveException('NSP_NotifyPMForITAProjBatch', 'execute', ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_NotifyPMForITAProjBatch.class.getName() ,
+                'execute' ,
+                e
+            );
         }
-    }    
+    }
+
     //finish method 
     public void finish(Database.BatchableContext bc){
         
@@ -182,9 +187,14 @@ public class NSP_NotifyPMForITAProjBatch implements Schedulable,Database.Batchab
                 Messaging.sendEmail(lstEmailMessages);
             }    
         }catch (Exception ex) {
-            NSP_ErrorLogHandler.logSaveException('NSP_NotifyPMForITAProjBatch', 'sendEmailToUsers', ex.getMessage());
-        }       
-    }    
+            NSP_ErrorLogHandler.logException(
+                NSP_NotifyPMForITAProjBatch.class.getName() ,
+                'sendEmailToUsers' ,
+                e
+            );
+        }
+    }
+
     // Method to check if the account ids to update list has the account 
     // and then mark NSP_Is_ITA_Mail_Sent__c field as TRUE on project to identify that email has been sent for the ITA project  
     public static List<pse__Proj__c>  updateProjList(Map<Id,Id> projAcctIDMap, Set<Id> acctIDsToupdate){ 
@@ -199,9 +209,15 @@ public class NSP_NotifyPMForITAProjBatch implements Schedulable,Database.Batchab
                     projListToUpdate.add(proj);
                 }             
             }                
-        }catch (Exception ex) {
-            NSP_ErrorLogHandler.logSaveException('NSP_NotifyPMForITAProjBatch', 'updateProjList', ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_NotifyPMForITAProjBatch.class.getName() ,
+                'updateProjList' ,
+                e
+            );
         }
-        return projListToUpdate;     
-    }      
+        return projListToUpdate;
+    }
+
 }
+//
