@@ -14,7 +14,7 @@ public class NSP_ImpAutomationsController {
         Map<Id,Implementation_Profile__c> ipRecordMap =  new Map<Id,Implementation_Profile__c>(
             [
                 SELECT
-                    Id,NSP_COBRA_Takeover_Emp_Details__c,recordType.Name, OwnerId, Name,  RecordTypeId, Account__c, Addressee_for_each_worksite_location__c,
+                    Id,NSP_COBRA_Takeover_Emp_Details__c,recordType.Name, OwnerId, Name,  RecordTypeId, Account__c, Account__r.Name, Addressee_for_each_worksite_location__c,
                     All_EEs_paid_under_same_FEIN_currently__c, Allowances__c, Any_EEs_in_clients_waiting_period__c, Any_EEs_travel_internationally_for_work__c,
                     Any_EEs_with_urgent_medical_needs__c, Any_employees_currently_enrolled__c, Any_employer_contributions_to_EE_HSA__c, Any_special_needs_for_EE_orientation__c,
                     Any_users_who_cannot_see_salary__c, Arbitration_Agreement_been_discussed__c, Are_there_any_EEs_on_Leave_of_Absence__c, Are_there_any_non_paid_users__c,
@@ -45,7 +45,7 @@ public class NSP_ImpAutomationsController {
                     Has_form_8973_been_discussed__c, Have_name_s_of_COBRA_takeovr_employees__c, Have_the_SCA_EEs_been_approved__c,
                     Have_the_user_roles_been_updated_in_AIMS__c, Holiday_or_weekend_rule__c, How_will_EE_complete_their_enrollment__c, How_will_emp_deferral_loan_amnt__c,
                     How_will_future_payments_be_made__c, Hush_Protocol__c, NSP_Immediate_need_for_Workers_Comp_Cert__c, Implementing_biz_Performance_solutions__c,
-                    Insperity_benefits_effective_date__c, Insperity_benefits_waiting_period__c, Insperity_grp_hlth_plan_replacing_prior__c,
+                    Insperity_benefits_effective_date__c, Insperity_benefits_waiting_period__c, Insperity_grp_hlth_plan_replacing_prior__c, Is_client_CA_docs_submitted_for_approval__c,
                     Is_client_s_current_HSA_with_Optum_Bank__c, Is_the_client_a_federal_contractor__c, Is_the_client_coming_from_another_PEO__c,
                     Is_the_client_required_to_track__c, Is_there_a_need_for_a_GL_interface__c, Is_there_a_need_for_a_subaccount__c, Is_there_a_need_for_a_tech_package__c,
                     Iss_translator_needed__c, NSP_OT_Planner__c, NSP_Orientation_Rep__c, Legal_Name__c, List_additional_FEIN_s__c, List_change_s__c,
@@ -158,7 +158,7 @@ public class NSP_ImpAutomationsController {
                     NSP_Commission_Provide_Details__c, NSP_DoYouPay_Other_Provide_details__c, NSP_Non_paid_users_Enter_User_Names__c,
                     NSP_compensation_structu_Provide_Details__c, NSP_Govt_Type_Other_Provide_Details__c, NSP_employee_40_hour_work_Week_PDetails__c,
                     NSP_Any_OT_Expections_Provide_Details__c, NSP_PD_different_contact_for_subaccount__c, NSP_Provide_Details_Relabeling_Needed__c,
-                    NSP_Any_special_pay_code_Provide_Details__c, Insperity_pay_frequency__c, NSP_Payroll_Specialist__r.NSP_Work_email__c,
+                    NSP_Any_special_pay_code_Provide_Details__c, Insperity_pay_frequency__c, NSP_Payroll_Specialist__r.NSP_Work_email__c, NSP_Project_Manager__r.NSP_Work_email__c,
                     NSP_Asset__r.AccountId, NSP_Payroll_Specialist__r.pse__Salesforce_User__c,  NSP_Project_Manager__r.pse__Salesforce_User__c,
                     NSP_Project_Manager__r.pse__Salesforce_User__r.Email,NSP_Urgent_Medical_Needs_Emp_Details__c, NSP_Employees_on_LOA__c,
                     NSP_Employee_Details_On_LOA__c ,NSP_Old_Benefits_Package__c ,NSP_Old_Effective_Date_EPLI__c,NSP_Old_Insperity_Ben_effective_date__c,
