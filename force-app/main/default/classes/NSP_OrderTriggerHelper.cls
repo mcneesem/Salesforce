@@ -462,8 +462,7 @@ public class NSP_OrderTriggerHelper {
                                 orderItemObj.blng__BillThroughDateOverride__c = orderItemObj.EndDate;
                             }
                             orderItemListToUpdate.add(orderItemObj);
-                        }
-                        else{
+                        } else{
                             //Activates Order Product whose Order Activation trigger is Immediate
                             if(orderItemObj.NSP_Preferred_Payment_Method__c == null && orderItemObj.NSP_Order_Activation_Trigger__c == NSP_CPQConstants.IMMEDIATE && orderItemObj.Order.Type == NSP_CPQConstants.QUOTE_TYPE_NEW && orderItemObj.Order.NSP_Change_Order_Process_Quote__c == FALSE){
                                 orderItemObj.ServiceDate = System.today();
@@ -506,8 +505,12 @@ public class NSP_OrderTriggerHelper {
                     }
                     //call asset method which creates project asset record
                     NSP_AssetUpdate.createAssetProject(orderIdSet);
-                } catch(Exception ex){
-                    NSP_CustomException.LogException(ex);
+                } catch ( Exception e ) {
+                    NSP_ErrorLogHandler.logException(
+                        NSP_OrderTriggerHelper.class.getName() ,
+                        'createInvoice inner' ,
+                        e
+                    );
                 } 
             }
             if(projCompletedIdSet != null && projCompletedIdSet.size() > 0){
@@ -523,12 +526,16 @@ public class NSP_OrderTriggerHelper {
                 if(orderListToUpdate.size()>0) {
                     database.update(orderListToUpdate);
                 }
-            } catch(Exception ex){
-                NSP_CustomException.LogException(ex);
-            } 
-        } 
+            } catch ( Exception e ) {
+                NSP_ErrorLogHandler.logException(
+                    NSP_OrderTriggerHelper.class.getName() ,
+                    'createInvoice outer' ,
+                    e
+                );
+            }
+        }
     }
-    
+
     /**
 * Method Name : setProjNameNew 
 * Description : Method to update Project Template on Order for New transaction
@@ -663,7 +670,7 @@ public static void setProjNameSupplement(Set < ID > orderListSuppl,List < Order 
 * @param OrderOldMap Map of Old Order.   
 * @return void  
 */
-public static void activateOrderProduct(List<Order> newList,Set<Id> projCompletedIdSet){
+    public static void activateOrderProduct( List<Order> newList , Set<Id> projCompletedIdSet ) {
     Set<String> actionTypeValues = new Set<String>(System.Label.OrderItemRecalcTypes.split(';'));
     List<OrderItem> orderItemToUpdate = new List<OrderItem>();
     //Map<Id,Order> orderUpdateMap = new Map<Id,Order>();
@@ -727,14 +734,18 @@ public static void activateOrderProduct(List<Order> newList,Set<Id> projComplete
             if(orderItemToUpdate != null && orderItemToUpdate.size() > 0){
                 database.update(orderItemToUpdate); 
             }
-        }  catch(Exception ex){
-            NSP_CustomException.LogException(ex);
+            } catch ( Exception e ) {
+                NSP_ErrorLogHandler.logException(
+                    NSP_OrderTriggerHelper.class.getName() ,
+                    'activateOrderProduct' ,
+                    e
+                );
         } 
-        NSP_UpdateProjMilestone updateJob = new NSP_UpdateProjMilestone(projCompletedIdSet);
+        NSP_UpdateProjMilestone updateJob = new NSP_UpdateProjMilestone( projCompletedIdSet );
         // enqueue the job for processing , updates Override Next Billing Date on Billing transaction
-        ID jobID = System.enqueueJob(updateJob);
-}
-    
+        Id jobID = System.enqueueJob( updateJob );
+    }
+
 /**
  * Method Name : stampDunningEmailonContact 
  * Description : Method to check and stamp contact acr record for dunning emails.
@@ -743,7 +754,7 @@ public static void activateOrderProduct(List<Order> newList,Set<Id> projComplete
  * @param Set<Id> account Ids    
  * @return void  
  */
-public static void stampDunningEmailonContact(Set<Id> contactIds,Set<Id> accountIds, Set<String> uniqueACRIds){
+    public static void stampDunningEmailonContact( Set<Id> contactIds , Set<Id> accountIds , Set<String> uniqueACRIds ) {
     try{
     List<AccountContactRelation> acrRecsToUpdate = new List<AccountContactRelation>();
     Map<String,Integer> accountWithOrdersMap = new Map<String,Integer>();
@@ -761,11 +772,17 @@ public static void stampDunningEmailonContact(Set<Id> contactIds,Set<Id> account
     }
     }
 
-    if(acrRecsToUpdate.size()>0){ update acrRecsToUpdate;}
- }catch(Exception ex){
-    NSP_CustomException.LogException(ex);
-}
-}
+            if ( acrRecsToUpdate.size() > 0 ) {
+                update acrRecsToUpdate;
+            }
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_OrderTriggerHelper.class.getName() ,
+                'stampDunningEmailonContact' ,
+                e
+            );
+        }
+    }
 
     /**
     * Method Name : setInvoiceBatch
@@ -938,14 +955,16 @@ public static void stampDunningEmailonContact(Set<Id> contactIds,Set<Id> account
             {
                 update OrderUpdateMap.values();
             } 
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_OrderTriggerHelper.class.getName() ,
+                'checkDownPaymentDetails' ,
+                e
+            );
         }
-        catch(Exception ex){
-            NSP_CustomException.LogException(ex);
-        }    
-            
     }
 
-     /**
+    /**
     * Method Name : updateUsageProd
     * Description : Method to activate Order and update start date on usage based products
     * Author : CPQ Team       Date : 10/10/2022
@@ -989,11 +1008,15 @@ public static void stampDunningEmailonContact(Set<Id> contactIds,Set<Id> account
                     }
                     //Call Invoice batch after order activation
                     setInvoiceBatch(orderIdSet,newList);
-                } catch(Exception ex){
-                    NSP_CustomException.LogException(ex);
-                }
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_OrderTriggerHelper.class.getName() ,
+                'updateUsageProd' ,
+                e
+            );
+        }
     }
-    
+
     /**
 * Method Name : checkProjectGoLiveChangedToDiffPeriod 
 * Description : Method to set a flag when Project go live date change to a different period
@@ -1002,7 +1025,7 @@ public static void stampDunningEmailonContact(Set<Id> contactIds,Set<Id> account
 * @param OrderOldMap Map of Old Order.   
 * @return void  
 */
-public static void checkProjectGoLiveChanged(List<Order> newList,Map<Id, Order> OrderOldMap){
+    public static void checkProjectGoLiveChanged( List<Order> newList , Map<Id,Order> OrderOldMap ) {
     Set<String> backoutOrders = new Set<String>();
     Set<Id> createProjectIds = new Set<Id>();
     Set<ID> projCompletedIdSet = new Set<Id>();
@@ -1035,35 +1058,17 @@ public static void checkProjectGoLiveChanged(List<Order> newList,Map<Id, Order> 
        // enqueue the job for processing , updates Override Next Billing Date on Billing transaction
        ID jobID = System.enqueueJob(updateJob);
    }
-    //Platform event to trigger Project creation, when Create Project field is checked
-    if(billingEvents.size()>0){
-        List<NSP_Error_Log__c> erlogs= new List<NSP_Error_Log__c>();
-        // Call method to publish events
-        List<Database.SaveResult> results = EventBus.publish(billingEvents);
-        for (Database.SaveResult sr : results) {
-            if(!sr.isSuccess()){
-                for(Database.Error err : sr.getErrors()){
-                    NSP_Error_Log__c erlog= new NSP_Error_Log__c();
-                    erlog.NSP_Class__c='NSP_OrderTriggerHelper';
-                    erlog.NSP_Method__c = 'publishBillingEvent';  
-                    erlog.NSP_Description__c=err.getMessage();
-                    erlog.NSP_Object__c='Process_Billing_Event__e';
-                    erlogs.add(erlog);
-                } 
-            }
-            else{
-                NSP_Error_Log__c erlog= new NSP_Error_Log__c();
-                erlog.NSP_Class__c='NSP_OrderTriggerHelper';
-                erlog.NSP_Method__c = 'publishBillingEvent';
-                erlog.NSP_Record_Id__c = sr.getId();
-                erlogs.add(erlog);
-            }
-        }
-        if(erlogs.size()>0){
-            insert erlogs;
+        //Platform event to trigger Project creation, when Create Project field is checked
+        if ( billingEvents.size() > 0 ) {
+            // Call method to publish events
+            List<Database.SaveResult> results = EventBus.publish(billingEvents);
+            NSP_ErrorLogHandler.logResults(
+                NSP_OrderTriggerHelper.class.getName() ,
+                'checkProjectGoLiveChanged' ,
+                results
+            );
         }
     }
-}
 
 // STY-03797 Starts
 /**
@@ -1199,9 +1204,9 @@ public static void createAndStampSalesTaxContact(Set<Id> accountIdSet, List<Orde
 * @param set woBillingOrderId  
 * @return void  
 */
-public static void changeTaxRulesForWOOrders(Set<Id> woBillingOrderId){
-    Map<String,String> legalEntiyBasedZeroTaxRuleMap= new Map<String,String>();
-    try{
+    public static void changeTaxRulesForWOOrders( Set<Id> woBillingOrderId ) {
+        Map<String,String> legalEntiyBasedZeroTaxRuleMap= new Map<String,String>();
+        try{
         List<blng__TaxTreatment__c> zeroTaxTreatments= [SELECT Id,blng__TaxLegalEntity__c,blng__TaxRule__c FROM blng__TaxTreatment__c WHERE blng__TaxRule__r.blng__TaxableYesNo__c='No' AND blng__Active__c=TRUE];
         for(blng__TaxTreatment__c treatment:zeroTaxTreatments){
             legalEntiyBasedZeroTaxRuleMap.put(treatment.blng__TaxLegalEntity__c,treatment.blng__TaxRule__c);
@@ -1220,10 +1225,15 @@ public static void changeTaxRulesForWOOrders(Set<Id> woBillingOrderId){
         if(oitemconsumptions.size()>0){
             update oitemconsumptions;
         }
-}Catch(Exception ex){
-    NSP_ErrorLogHandler.logSaveException('NSP_OrderTriggerHelper','changeTaxRulesForWOOrders',ex.getMessage());
-}
-}
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_OrderTriggerHelper.class.getName() ,
+                'changeTaxRulesForWOOrders' ,
+                e
+            );
+        }
+    }
+
         /**
      * Method Name : activateHardwareAssets
      * Description : Method to activate purchased hardware assets
@@ -1248,7 +1258,11 @@ public static void changeTaxRulesForWOOrders(Set<Id> woBillingOrderId){
             if(assetsToActivate.size()>0){
                 NSP_AssetTriggerHandler.TriggerDisabled=true;
                 List<Database.SaveResult> results = Database.update(assetsToActivate,false);
-                NSP_ErrorLogHandler.logSaveResultsException('NSP_OrderTriggerHelper','activateHardwareAssets', results);
+                NSP_ErrorLogHandler.logResults(
+                    NSP_OrderTriggerHelper.class.getName() ,
+                    'activateHardwareAssets' ,
+                    results
+                );
                 NSP_AssetTriggerHandler.TriggerDisabled=false;
             }
         }
@@ -1262,8 +1276,7 @@ public static void changeTaxRulesForWOOrders(Set<Id> woBillingOrderId){
     * @return void  
     */    
     
-    @future
-    public static void setOrderProductType(Set<Id> orderIdPT){
+    @future public static void setOrderProductType( Set<Id> orderIdPT ) {
         Map<Id,Order> productType = new Map<Id,Order>();
         
         List<OrderItem> orderProdList=[SELECT Id,SBQQ__Status__c,NSP_Order_Product_Type__c,OrderId FROM OrderItem WHERE OrderId IN :orderIdPT];
@@ -1279,10 +1292,15 @@ public static void changeTaxRulesForWOOrders(Set<Id> woBillingOrderId){
                         if(productType != null && productType.size()>0) {
                             database.update(productType.values());
                         }
-                    }catch(Exception ex){
-                        NSP_CustomException.LogException(ex);
-                    } 
+        } catch ( Exception e ){
+            NSP_ErrorLogHandler.logException(
+                NSP_OrderTriggerHelper.class.getName() ,
+                'setOrderProductType' ,
+                e
+            );
+        } 
     }
+
                 /**
      * Method Name : setProjectDatesForInfightOrders
      * Description : Method to get Project Go Live Dates from Existing Project to Order
@@ -1309,10 +1327,15 @@ public static void changeTaxRulesForWOOrders(Set<Id> woBillingOrderId){
         if(ordersToUpdate.size()>0 && ordersToUpdate!=null){
             NSP_OrderTriggerHandler.TriggerDisabled=true;
             List<Database.SaveResult> results = Database.update(ordersToUpdate,false);
-            NSP_ErrorLogHandler.logSaveResultsException('NSP_OrderTriggerHelper','setProjectDatesForInfightOrders', results);
+            NSP_ErrorLogHandler.logResults(
+                NSP_OrderTriggerHelper.class.getName() ,
+                'setProjectDatesForInfightOrders' ,
+                results
+            );
             NSP_OrderTriggerHandler.TriggerDisabled=false;
         }
     }
+
     /**
     * Method Name : updateRevisedOrderProd
     * Description : Method to nullify Revised Order Product on order items when Order is marked as Backout
@@ -1322,15 +1345,20 @@ public static void changeTaxRulesForWOOrders(Set<Id> woBillingOrderId){
     */    
     public static void updateRevisedOrderProd(Set<String> orderIdSet){
         List<OrderItem> updateList = new List<OrderItem>();
-        
         List<OrderItem> orderProdList=[SELECT Id,SBQQ__Status__c,SBQQ__RevisedOrderProduct__c,OrderId FROM OrderItem WHERE OrderId IN :orderIdSet];
-                    for(OrderItem oi:orderProdList){
-                        oi.SBQQ__RevisedOrderProduct__c = null;
-                        updateList.add(oi);
-                    }
-                    if(updateList != null && updateList.size()>0) {
-                        List<Database.SaveResult> results = Database.update(updateList,false);
-                        NSP_ErrorLogHandler.logSaveResultsException('NSP_OrderTriggerHelper','updateRevisedOrderProd', results);
-                    }
+        for(OrderItem oi:orderProdList){
+            oi.SBQQ__RevisedOrderProduct__c = null;
+            updateList.add(oi);
+        }
+        if(updateList != null && updateList.size()>0) {
+            List<Database.SaveResult> results = Database.update(updateList,false);
+            NSP_ErrorLogHandler.logResults(
+                NSP_OrderTriggerHelper.class.getName() ,
+                'updateRevisedOrderProd' ,
+                results
+            );
+        }
     }
+
 }
+//

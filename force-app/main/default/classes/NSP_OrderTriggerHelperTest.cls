@@ -751,5 +751,6 @@ public class NSP_OrderTriggerHelperTest{
         orderList[0].NSP_TerminationDate__c = Date.today();
         update orderList[0];
         System.assert(orderList[0].id!=null, true);
+        NSP_OrderTriggerHelper.updateOrderStartDate( new Set<Id>{ orderList[0].Id } );
     }
 }
