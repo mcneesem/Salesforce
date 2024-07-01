@@ -1230,7 +1230,7 @@ export default class Nsp_accrualProfileRecordForm extends NavigationMixin(
   }
 
   get title() {
-    return this.isRecordTypeSelected ? 'Accrual Profile (AIMS)' : 'Accrual Profile';
+    return this.isRecordTypeSelected ? 'AIMS Accrual Profile' : 'Accrual Profile';
   }
 
 }
