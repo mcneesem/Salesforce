@@ -241,16 +241,6 @@
                 <label>WO Business Profile</label>
             </value>
             <value>
-                <fullName>WO Proposal</fullName>
-                <default>false</default>
-                <label>WO Proposal</label>
-            </value>
-            <value>
-                <fullName>WX Proposal</fullName>
-                <default>false</default>
-                <label>WX Proposal</label>
-            </value>
-            <value>
                 <fullName>WX Quote</fullName>
                 <default>false</default>
                 <label>WX Quote</label>
@@ -327,6 +317,18 @@
                 <isActive>false</isActive>
                 <label>Suitability Call</label>
             </value>
+            <value>
+                <fullName>WO Proposal</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>WO Proposal</label>
+            </value>
+            <value>
+                <fullName>WX Proposal</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>WX Proposal</label>
+            </value>
         </valueSetDefinition>
         <valueSettings>
             <controllingFieldValue>Core Sales</controllingFieldValue>
@@ -386,12 +388,7 @@
         <valueSettings>
             <controllingFieldValue>Core Sales</controllingFieldValue>
             <controllingFieldValue>Mid Market</controllingFieldValue>
-            <valueName>WO Proposal</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Core Sales</controllingFieldValue>
-            <controllingFieldValue>Mid Market</controllingFieldValue>
-            <valueName>WX Proposal</valueName>
+            <valueName>WX Quote</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>BPS</controllingFieldValue>

@@ -2775,14 +2775,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>WO Proposal</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>WX Proposal</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Website Visit</fullName>
             <default>false</default>
         </values>
