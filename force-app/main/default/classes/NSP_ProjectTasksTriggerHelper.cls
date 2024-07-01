@@ -405,8 +405,13 @@ public class NSP_ProjectTasksTriggerHelper {
             if (!mapOfProjectTaskAndProject.isEmpty()) {  
                 for ( pse__Project_Task__c projectTask : [
                             SELECT
-                                Id , pse__Project__c , Name , pse__Project__r.pse__Account__r.Name ,
-                                pse__Project__r.pse__Account__r.NSP_AIMS_Client__c , NSP_AccountId__c, OwnerId
+                                Id ,
+                                pse__Project__c ,
+                                Name ,
+                                pse__Project__r.pse__Account__r.Name ,
+                                pse__Project__r.pse__Account__r.NSP_AIMS_Client__c ,
+                                NSP_AccountId__c ,
+                                OwnerId
                             FROM pse__Project_Task__c  
                             WHERE ( Id IN :mapOfProjectTaskAndProject.keySet() )
                         ]
@@ -426,7 +431,11 @@ public class NSP_ProjectTasksTriggerHelper {
                 }
             }
             if(!mapofProjectTaskAndOwner.isEmpty()){
-                projectTaskOwnerList = [SELECT ID, Name, UserRole.Name, Phone, Email FROM User WHERE ID IN :mapofProjectTaskAndOwner.Values()];
+                projectTaskOwnerList = [
+                    SELECT Id , Name , UserRole.Name , Phone , Email
+                    FROM User
+                    WHERE ( Id IN :mapofProjectTaskAndOwner.values() )
+                ];
             }
             if(!projectTaskOwnerList.isEmpty()){
                 projectTaskOwnerMap = new Map<Id,User>(projectTaskOwnerList);
@@ -473,14 +482,13 @@ public class NSP_ProjectTasksTriggerHelper {
                                 }
                                 mapOfAccountPayrollMem.get( accTeamMember.NSP_Account__c ).add( accTeamMember );
                             }
-                                if ( !mapOfAccountAndListOfAccountTeamMemberEmailAddress.containsKey( accTeamMember.NSP_Account__c ) ) {
-                                    mapOfAccountAndListOfAccountTeamMemberEmailAddress.put(
-                                        accTeamMember.NSP_Account__c ,
-                                        new List<String>()
-                                    );
-                                }
-                                mapOfAccountAndListOfAccountTeamMemberEmailAddress.get( accTeamMember.NSP_Account__c ).add( accTeamMember.NSP_Email__c );
-                            
+                            if ( !mapOfAccountAndListOfAccountTeamMemberEmailAddress.containsKey( accTeamMember.NSP_Account__c ) ) {
+                                mapOfAccountAndListOfAccountTeamMemberEmailAddress.put(
+                                    accTeamMember.NSP_Account__c ,
+                                    new List<String>()
+                                );
+                            }
+                            mapOfAccountAndListOfAccountTeamMemberEmailAddress.get( accTeamMember.NSP_Account__c ).add( accTeamMember.NSP_Email__c );
                         }
                     }
                 }
@@ -497,14 +505,17 @@ public class NSP_ProjectTasksTriggerHelper {
                         )
                     {
                         String emailNSP_Termination_Team = System.Label.NSP_Termination_Team;
-                        if(mapOfProjectAndAccount.containsKey(pTask.Id) && mapOfAccountPayrollMem.containsKey(mapOfProjectAndAccount.get(pTask.Id))){
+                        if ( mapOfProjectAndAccount.containsKey(pTask.Id)
+                            && mapOfAccountPayrollMem.containsKey(mapOfProjectAndAccount.get(pTask.Id))
+                            )
+                        {
                             listOfPayrollMem.addAll(mapOfAccountPayrollMem.get(mapOfProjectAndAccount.get(pTask.Id)));
                         }
                         if (mapOfAccountAndListOfAccountTeamMemberEmailAddress.size() > 0) {  
                             listOfToAddresses.addAll(mapOfAccountAndListOfAccountTeamMemberEmailAddress.get(mapOfProjectAndAccount.get(pTask.Id)));
                         }
                         listOfToAddresses.add(emailNSP_Termination_Team);
-                            letterRecievedEmail(
+                        letterRecievedEmail(
                             projectTaskLetterMap.get(pTask.Id).pse__Project__r.pse__Account__r.Name,
                             projectTaskLetterMap.get(pTask.Id).pse__Project__r.pse__Account__r.NSP_AIMS_Client__c,
                             listOfToAddresses,
@@ -513,7 +524,6 @@ public class NSP_ProjectTasksTriggerHelper {
                             woActiveList.get(pTask.NSP_AccountId__c).NSP_Anticipated_Date_Of_Termination__c,
                             projectTaskOwnerMap.get(pTask.OwnerId)
                         );
-                            
                     }
                 }
             }
@@ -549,9 +559,9 @@ public class NSP_ProjectTasksTriggerHelper {
             }
             if(projectTaskOwner != null && !payrollmemberList.contains(projectTaskOwner.ID)){
                 mailBody += projectTaskOwner.Name+'<br/>';
-            	mailBody += projectTaskOwner.UserRole.Name+'<br/>';
-            	mailBody += projectTaskOwner.Email+'<br/>';
-            	mailBody += projectTaskOwner.Phone+'<br/>';
+                mailBody += projectTaskOwner.UserRole.Name+'<br/>';
+                mailBody += projectTaskOwner.Email+'<br/>';
+                mailBody += projectTaskOwner.Phone+'<br/>';
             }
             Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
             email.setToAddresses(listOfToAddresses);
