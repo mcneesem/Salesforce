@@ -1342,7 +1342,7 @@ if(this.isMultipleContactsSelected === false){
     get inputVariables() {
         return [
             {
-                name: 'caseRecordId',
+                name: 'caseId',
                 type: 'String',
                 value: this.recordId
             }
