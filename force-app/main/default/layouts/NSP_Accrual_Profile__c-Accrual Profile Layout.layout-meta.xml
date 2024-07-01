@@ -238,9 +238,6 @@
         <relatedList>RelatedEntityHistoryList</relatedList>
     </relatedLists>
     <relatedLists>
-        <relatedList>RelatedContentNoteList</relatedList>
-    </relatedLists>
-    <relatedLists>
         <fields>NAME</fields>
         <relatedList>NSP_Accrual_Profile_Grid__c.NSP_Accrual_Profile__c</relatedList>
     </relatedLists>
