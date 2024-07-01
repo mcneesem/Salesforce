@@ -215,5 +215,24 @@ public class NSP_AssetServiceHelperTest {
         
         
     }
+    @isTest
+    private static void testBPSUserPerformSmartFields(){
+        Test.startTest();
+        Profile profile = [SELECT Id FROM Profile WHERE Name =: NSP_ServiceConstants.BPSSERVICE];
+        User newBPSUser = (User)NSP_TestExtendedDataFactory.createSObject(new User(), 'NSP_TestDataFactory.UserDefaults', false);
+        newBPSUser.ProfileId = profile.Id;
+        System.runAs(newBPSUser){
+            Asset assetObject = (Asset) NSP_TestExtendedDataFactory.createSObject(new Asset(), 'NSP_TestDataFactory.AssetDefaults', false);
+            assetObject.NSP_Company_Name__c=NSP_ServiceConstants.TESTPAYROLL;
+            assetObject.recordTypeId = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.ASSET_SOBJECT_TYPE,NSP_ServiceConstants.PERFORMANCE_ASSET);
+            assetObject.Status =NSP_ServiceConstants.ASSET_ONBOARDING_STATUS ;
+            insert assetObject;
+            
+            assetObject.Status = NSP_ServiceConstants.ASSET_ACTIVE_STATUS ;
+            update assetObject;
+            System.assertEquals(assetObject.Status,NSP_ServiceConstants.ASSET_ACTIVE_STATUS);
+        }
+        Test.stopTest();  
+    }
 
 }
