@@ -1,5 +1,5 @@
 public class NSP_Implementationprofile_ServiceHelper {
-    // test w/ NSP_FSOImplementationControllerTest, NSP_ImpprofileServiceHelper_Test, NSP_MMImplProfile_UpdateTest (84%)
+    // test w/ NSP_FSOImplementationControllerTest, NSP_ImpprofileServiceHelper_Test, NSP_MMImplProfile_UpdateTest (83%)
 
     private String impRecordId;
     private String  impAutomationName;
@@ -72,6 +72,8 @@ public class NSP_Implementationprofile_ServiceHelper {
     private static final String TECH_PACKET_FN ='NSP_Teck_Packet';
     private static final String AdditionalBPSes_FSO ='NSP_Additional_BPSes';
     private static final String NSP_New_401_k_FSO='NSP_New_401_k_FSO';
+    private static final String CLIENT_AWW_YES = 'clientAWWYes';
+    private static final String CLIENT_AWW_NO = 'clientAWWNo';
 
     private Map<Id, Id> mapOfProjectManagers = new Map<Id, Id>();
     private Map<Id, Id> mapOfPayrollSpecialist = new Map<Id, Id>();
@@ -108,13 +110,19 @@ public class NSP_Implementationprofile_ServiceHelper {
     public NSP_Implementationprofile_ServiceHelper(Map<Id, Implementation_Profile__c> newIPs, Map<Id, Implementation_Profile__c> oldIPs){
         this.newIPs = newIPs;
         this.oldIPs = oldIPs;
-        this.automationsToExecute.addAll(new List<String>{CLIENT_PROFILE_FN,WAITING_PERIOD_FN,MEDICAL_NEED_FN,WORKERS_CERTIFICATE_FN,
+        this.automationsToExecute.addAll(new List<String>{
+            CLIENT_PROFILE_FN,WAITING_PERIOD_FN,MEDICAL_NEED_FN,WORKERS_CERTIFICATE_FN,
             SEASONAL_EEFSO_FN,RRP_CASE_FN,OFFER_HSA_FN,OFFER_OPTUM_FN,LEAVE_ABSENCEFSO_FN,
-            EMP_HOURS_FN,SEASONAL_EE_FN,LEAVE_ABSENCE_FN,WC_NOTIFICATION_FN,EPLI_POLICY_FN,LOGO_COLLECTED_FN,PAYROLL_SUMMARY_FN,FEIN_NOTIFY_FN,
-            SUB_ACCOUNT_FN,EMPLOYEE_DIRECTORY_FN,SERVICE_CONTRACT_FN,EMPLOYEE_MINISTER_FN,FORM_DISCUSSED_FN,
-            SUBACCOUNT_NEED_FN,TIME_ENTRY_FN,SPECIAL_PAYROLLNEED_FN,STOCK_PURCHASEPLAN_FN,STOCK_OPTION_FN,
-            IRR_FN,CLIENT_SUMMARY_FN,PAYROLL_SPECIALIST_SUMMARY_FN, REMOVE_EMPLOYEE_DIR_FN, STOCK_PURCHASE_PLAN_FN, EPLI_NOTIFY_FN, EXISTING_RET_PLAN_KEEP_FN, 
-            EXISTING_RET_PLAN_MOVE_FN, EEO_INFO_FN, NEW_401_FN, SRP_NOTIFY_FN,PRIOR_WAGES_FN,EE_COMMISSION_FN,CAFETERIAL_PLAN_FN,TECH_PACKET_FN,AdditionalBPSes_FSO});
+            EMP_HOURS_FN,SEASONAL_EE_FN,LEAVE_ABSENCE_FN,WC_NOTIFICATION_FN,EPLI_POLICY_FN,
+            LOGO_COLLECTED_FN,PAYROLL_SUMMARY_FN,FEIN_NOTIFY_FN,SUB_ACCOUNT_FN,
+            EMPLOYEE_DIRECTORY_FN,SERVICE_CONTRACT_FN,EMPLOYEE_MINISTER_FN,FORM_DISCUSSED_FN,
+            SUBACCOUNT_NEED_FN,TIME_ENTRY_FN,SPECIAL_PAYROLLNEED_FN,STOCK_PURCHASEPLAN_FN,
+            STOCK_OPTION_FN,IRR_FN,CLIENT_SUMMARY_FN,PAYROLL_SPECIALIST_SUMMARY_FN,
+            REMOVE_EMPLOYEE_DIR_FN, STOCK_PURCHASE_PLAN_FN, EPLI_NOTIFY_FN, EXISTING_RET_PLAN_KEEP_FN,
+            EXISTING_RET_PLAN_MOVE_FN, EEO_INFO_FN, NEW_401_FN, SRP_NOTIFY_FN,PRIOR_WAGES_FN,
+            EE_COMMISSION_FN,CAFETERIAL_PLAN_FN,TECH_PACKET_FN,AdditionalBPSes_FSO,
+            CLIENT_AWW_YES, CLIENT_AWW_NO
+        });
     }
     
     public NSP_Implementationprofile_ServiceHelper(Id ipRecord, String automationName){
@@ -303,6 +311,12 @@ public class NSP_Implementationprofile_ServiceHelper {
         if(ipRecordsByAutomation.containsKey(AdditionalBPSes_FSO)){
             emailNotifyforcheckforBpses();
         }
+        if(ipRecordsByAutomation.containsKey(CLIENT_AWW_YES)){
+            emailNotifyforclientAWWYes();
+        }
+        if(ipRecordsByAutomation.containsKey(CLIENT_AWW_NO)){
+            emailNotifyforclientAWWNo();
+        }
     }
     
     private void finish(){
@@ -466,6 +480,12 @@ public class NSP_Implementationprofile_ServiceHelper {
             }
             if(automationsToExecute.contains(AdditionalBPSes_FSO)){
                 checkforBpses(ipRec, existingRec);
+            }
+            if(automationsToExecute.contains(CLIENT_AWW_YES)){
+                checkforClientAWWYes(ipRec, existingRec);
+            }
+            if(automationsToExecute.contains(CLIENT_AWW_NO)){
+                checkforClientAWWNo(ipRec, existingRec);
             }
             
         }
@@ -1328,6 +1348,75 @@ public class NSP_Implementationprofile_ServiceHelper {
         recToInsert.addAll(ipAutomationRecords);
         if(impRecordId!=null && impAutomationName !=null){
          NSP_Implprofile_ServiceHelperUpdate.automationRecordUpdate(impRecordId,impAutomationName,impMethodName,impAutomationRecordType,impAutomationSection );
+        }
+    }
+    
+    /**
+     Automathion Section: Payroll
+     Automation Name: AWW - Yes
+     Automation icon: envelope
+    */
+    private void checkforClientAWWYes(Implementation_Profile__c newRec, Implementation_Profile__c existingRec) {
+        if ( newRec != null ) {
+            if ( newRec.RecordTypeId == ipFSORecordTypeId
+                && newRec.Does_this_client_have_an_AWW__c == NSP_ServiceConstants.YES
+                && newRec.Is_client_CA_docs_submitted_for_approval__c != null
+                )
+            {
+                checkforClientAWW(newRec, existingRec, CLIENT_AWW_YES);
+            }
+        }
+    }
+
+    private void emailNotifyforclientAWWYes() {
+        if(ipRecordsByAutomation != null) {
+            for(Id ipRecId : ipRecordsByAutomation.get(CLIENT_AWW_YES)) {
+                Implementation_Profile__c ipWithValue=(Implementation_Profile__c) data.get(IP_IDENTIFIER).get(ipRecId);
+                if(ipWithValue != null) {
+                    String subject = ipWithValue.Account__r.Name + ' ('+ ipWithValue.NSP_AIMS_ClientNo__c+') has an AWW';
+                    String body = ipWithValue.Account__r.Name + ' ('+ ipWithValue.NSP_AIMS_ClientNo__c+') has employees with an Alternative Work Week (AWW) schedule. Partner\n'+
+                        'with client to obtain any required documentation. Additional information below.\n'+
+                        '\nDoes this client have an Alternative Workweek or AWW? '+ ipWithValue.Does_this_client_have_an_AWW__c +
+                        '\nIf client has employees in CA who work this schedule, has the client already submitted all required\n'+ 
+                        'documentation to the state for approval? '+ipWithValue.Is_client_CA_docs_submitted_for_approval__c+'\n';
+                    emailNotifyforclientAWW(ipWithValue, CLIENT_AWW_YES, subject, body, 'AWW_Yes');
+                }
+            }
+        }
+        if(impRecordId!=null && impAutomationName !=null){
+            NSP_Implprofile_ServiceHelperUpdate.automationRecordUpdate(impRecordId,impAutomationName,impMethodName,impAutomationRecordType,impAutomationSection );
+        }
+    }
+
+    /**
+     Automathion Section: Payroll
+     Automation Name: AWW - No
+     Automation icon: envelope
+    */
+    private void checkforClientAWWNo(Implementation_Profile__c newRec, Implementation_Profile__c existingRec) {
+        if ( newRec != null ) {
+            if( newRec.RecordTypeId == ipFSORecordTypeId
+                && newRec.Does_this_client_have_an_AWW__c == NSP_ServiceConstants.NO
+                )
+            {
+                checkforClientAWW(newRec, existingRec, CLIENT_AWW_NO);
+            }
+        }
+    }
+
+    private void emailNotifyforclientAWWNo() {
+        if(ipRecordsByAutomation != null) {
+            for(Id ipRecId : ipRecordsByAutomation.get(CLIENT_AWW_NO)) {
+                Implementation_Profile__c ipWithValue=(Implementation_Profile__c) data.get(IP_IDENTIFIER).get(ipRecId);
+                if(ipWithValue != null) {
+                    String subject = ipWithValue.Account__r.Name + ' ('+ ipWithValue.NSP_AIMS_ClientNo__c+') does not have an AWW';
+                    String body = ipWithValue.Account__r.Name + ' ('+ ipWithValue.NSP_AIMS_ClientNo__c+') does not have an Alternative Work Week.';
+                    emailNotifyforclientAWW(ipWithValue, CLIENT_AWW_NO, subject, body, 'AWW_No');       
+                }
+            }
+        }
+        if(impRecordId!=null && impAutomationName !=null){
+            NSP_Implprofile_ServiceHelperUpdate.automationRecordUpdate(impRecordId,impAutomationName,impMethodName,impAutomationRecordType,impAutomationSection );
         }
     }
 
@@ -2419,18 +2508,29 @@ public class NSP_Implementationprofile_ServiceHelper {
         }
         return false;
     }
-    
-    
+
     private void getIPRecords(){
         
         for (Set<Id> ipRecords : ipRecordsByAutomation.values()) {
             ipIds.addAll(ipRecords);
         }
         
-        Map<Id, sObject> dbRec = new Map<Id, sObject>([SELECT Id,NSP_Asset__c,Account__c,NSP_BPA_BPC__c, NSP_BPA_BPC_Ids__c,NSP_Asset__r.AccountId,NSP_Payroll_Specialist__c, NSP_Payroll_Specialist__r.pse__Salesforce_User__c,  
-                                                       NSP_Onboarding_Specialist_Coordinator__c, NSP_Orientation_Rep__c, NSP_Orientation_Rep__r.NSP_Work_Email__c,NSP_Onboarding_Specialist_Coordinator__r.NSP_Work_email__c,NSP_HR_Specialist__c,NSP_HR_Specialist__r.pse__Salesforce_User__c,
-                                                       NSP_Payroll_Specialist__r.NSP_Work_email__c, NSP_Project_Manager__c,NSP_Project_Manager__r.NSP_Work_email__c, NSP_Project_Manager__r.pse__Salesforce_User__c,
-                                                       NSP_Project_Manager__r.pse__Salesforce_User__r.Email,NSP_OT_Representative__c ,NSP_OT_Representative__r.NSP_Work_email__c FROM Implementation_Profile__c WHERE Id in:ipIds]);
+        Map<Id, sObject> dbRec = new Map<Id, sObject>([
+            SELECT
+            Id,NSP_Asset__c,Account__c,Account__r.Name,NSP_AIMS_ClientNo__c,NSP_BPA_BPC__c,
+            NSP_BPA_BPC_Ids__c,NSP_Asset__r.AccountId, NSP_Form_Completed__c, NSP_Payroll_Specialist__c,
+            NSP_Payroll_Specialist__r.pse__Salesforce_User__c, NSP_Onboarding_Specialist_Coordinator__c,
+            NSP_Orientation_Rep__c, NSP_Orientation_Rep__r.NSP_Work_Email__c,
+            NSP_Onboarding_Specialist_Coordinator__r.NSP_Work_email__c,NSP_HR_Specialist__c,
+            NSP_HR_Specialist__r.pse__Salesforce_User__c,NSP_Payroll_Specialist__r.NSP_Work_email__c,
+            NSP_Project_Manager__c,NSP_Project_Manager__r.NSP_Work_email__c,
+            NSP_Project_Manager__r.pse__Salesforce_User__c, RecordTypeId,
+            NSP_Project_Manager__r.pse__Salesforce_User__r.Email,NSP_OT_Representative__c,
+            NSP_OT_Representative__r.NSP_Work_email__c, Does_this_client_have_an_AWW__c,
+            Is_client_CA_docs_submitted_for_approval__c
+            FROM Implementation_Profile__c
+            WHERE Id in:ipIds
+        ]);
         data.put(IP_IDENTIFIER, dbRec);
         
         
@@ -3019,4 +3119,57 @@ public class NSP_Implementationprofile_ServiceHelper {
                                  Is_arrearage_7_days__c = :NSP_ServiceConstants.YES AND
                                  Have_credit_services_approved__c = :NSP_ServiceConstants.NO ];
     }
+
+    private void checkforClientAWW(Implementation_Profile__c newRec, Implementation_Profile__c existingRec, String fnName) {
+        if ( existingRec == null 
+            || newRec.NSP_Form_Completed__c 
+            || newRec.Does_this_client_have_an_AWW__c != existingRec.Does_this_client_have_an_AWW__c
+           )
+        {
+            updateEligibleRecordsMap(ipRecordsByAutomation, newRec.Id, fnName);
+        }
+    }
+
+    private void emailNotifyforclientAWW(Implementation_Profile__c ipWithValue, String fnName, String subject, String body, String mdtName) {
+        if(ipWithValue != null && String.isNotBlank(fnName) && String.isNotBlank(subject) && String.isNotBlank(body) && String.isNotBlank(mdtName)) {
+            List<NSP_Implementation_Profile_Automation__c> ipAutomationRecords = new List<NSP_Implementation_Profile_Automation__c>();
+            List<String> emailAddress = new List<String>();
+            if(ipWithValue.NSP_Payroll_Specialist__c != null && ipWithValue.NSP_Payroll_Specialist__r.NSP_Work_email__c != null && 
+                ipWithValue.NSP_Project_Manager__c != null && ipWithValue.NSP_Project_Manager__r.NSP_Work_email__c != null) {
+                emailAddress.add(ipWithValue.NSP_Payroll_Specialist__r.NSP_Work_email__c);
+                emailAddress.add(ipWithValue.NSP_Project_Manager__r.NSP_Work_email__c);
+            }
+            NSP_Implementation_Automations__mdt ipa = NSP_Implementation_Automations__mdt.getInstance(mdtName);
+            if((isRerun || ipWithValue.NSP_Form_Completed__c) && !isSaveForm && ipa != null) {
+                if(!isRerun && !ipAutomationdata?.get(IP_AUTOMATION_IDENTIFIER).contains(ipWithValue.Id+'_'+fnName+'_'+NSP_ServiceConstants.FSOProfile)){
+                    sendMailUsingFlowAction(emailAddress,subject,body);
+                    ipAutomationRecords.add(ipAutomationHelper.createIPAutomation(ipWithValue, ipa.NSP_Automation_Name__c, ipa.NSP_Method_Name__c,ipa.NSP_Section__c));
+                } else if(isRerun){
+                    sendMailUsingFlowAction(emailAddress,subject,body);
+                    impRecordId = ipWithValue.Id;
+                    impAutomationName = ipa.NSP_Automation_Name__c;
+                    impMethodName = ipa.NSP_Method_Name__c;
+                    impAutomationSection = ipa.NSP_Section__c;
+                    impAutomationRecordType=NSP_ServiceConstants.FSOProfile;
+                }
+            }
+            recToInsert.addAll(ipAutomationRecords);
+        }
+    }
+
+    private void sendMailUsingFlowAction(List<String> emailAddress, String subject, String body) {
+        Map<String, Object> inputs = new Map<String, Object>();
+        inputs.put('toEmailAddresses', emailAddress);
+        inputs.put('emailSubject', subject);
+        inputs.put('emailBody', body);
+        inputs.put('useLineBreaks', true);
+        try {
+            Flow.Interview.Send_Email sendEmailFlow = new Flow.Interview.Send_Email(inputs);
+            sendEmailFlow.start();
+        }
+        catch(Exception exc) {
+            NSP_ErrorLogHandler.logException(NSP_Implementationprofile_ServiceHelper.class.getName(), 'sendMailUsingFlowAction', exc);
+        }
+    }
+
 }
