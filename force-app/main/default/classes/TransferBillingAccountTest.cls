@@ -14,7 +14,7 @@
         listOfFlowInputs.add(flowInputB);
 
         Test.startTest();
-        TransferBillingAccount.TransferAccount(listOfFlowInputs);
+        TransferBillingAccount.transfer(listOfFlowInputs);
         Test.stopTest();
 
         List<AsyncApexJob> jobs = [SELECT Id, Status, JobType FROM AsyncApexJob WHERE JobType = 'BatchApex'];
