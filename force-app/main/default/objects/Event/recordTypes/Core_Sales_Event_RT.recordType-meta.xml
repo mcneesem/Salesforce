@@ -680,6 +680,10 @@
             <fullName>WO Proposal</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>WX Proposal</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>NSP_Event_Type__c</picklist>
@@ -2752,14 +2756,6 @@
         </values>
         <values>
             <fullName>WO Business Profile</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>WO Proposal</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>WX Proposal</fullName>
             <default>false</default>
         </values>
         <values>
