@@ -252,6 +252,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Pending</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Yes</fullName>
             <default>false</default>
         </values>
@@ -498,6 +502,10 @@
         <picklist>Checks_delivered__c</picklist>
         <values>
             <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pending</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1567,6 +1575,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Pending</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Yes</fullName>
             <default>false</default>
         </values>
@@ -2363,6 +2375,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Pending</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Yes</fullName>
             <default>false</default>
         </values>
@@ -2371,6 +2387,10 @@
         <picklist>Is_exempt_from_Minimum_Wage__c</picklist>
         <values>
             <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pending</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2497,6 +2517,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Pending</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Yes</fullName>
             <default>false</default>
         </values>
@@ -2604,6 +2628,10 @@
         <picklist>Monthly_pay_freq_comply_w_state_laws__c</picklist>
         <values>
             <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pending</fullName>
             <default>false</default>
         </values>
         <values>
@@ -4508,6 +4536,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Pending</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Yes</fullName>
             <default>false</default>
         </values>
@@ -4565,6 +4597,10 @@
         <picklist>Non_exempt_EEs_on_semi_monthly_pay_freq__c</picklist>
         <values>
             <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pending</fullName>
             <default>false</default>
         </values>
         <values>
@@ -5219,6 +5255,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Pending</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Yes</fullName>
             <default>false</default>
         </values>
@@ -5227,6 +5267,10 @@
         <picklist>Sep_doc_specifying_pay_breakdown__c</picklist>
         <values>
             <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pending</fullName>
             <default>false</default>
         </values>
         <values>
@@ -5644,6 +5688,10 @@
         <picklist>Written_doc_pay_plan_for_how_EE_is_paid__c</picklist>
         <values>
             <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pending</fullName>
             <default>false</default>
         </values>
         <values>

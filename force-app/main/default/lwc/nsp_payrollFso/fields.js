@@ -68,7 +68,11 @@ const RL_FIELDS = [
   'Are_all_EEs_eligible_for_paid_holidays__c',
   'NSP_If_EE_works_holiday_are_paid_prem__c',
   'Does_client_have_premium_pay_needs__c',
-  'NSP_Has_hardware_been_ordered__c'
+  'NSP_Has_hardware_been_ordered__c',
+  'NSP_Does_the_client_have_prior_wages__c',
+  'Non_exempt_EEs_on_semi_monthly_pay_freq__c',
+  'Semi_monthly_pay_freq_comply_w_state_law__c',
+  'Monthly_pay_freq_comply_w_state_laws__c',
 ];
 
 const PREFILLED_FIELDS = {
@@ -190,8 +194,6 @@ const SECTION_FIELDS = [
   'Has_sample_payroll_report_been_requsted__c',
   'NSP_Provide_details_around_reporting__c',
   'Employees_work_in_the_following_states__c',
-  'Does_this_client_have_an_AWW__c',
-  'Is_client_CA_docs_submitted_for_approval__c',
   'Client_does_business_in_MA_NY_or_VA__c',
   'NSP_Business_Meeting_States__c',
   'Any_EEs_travel_internationally_for_work__c',

@@ -41,8 +41,14 @@ const ERROR_TOAST_CONFIG = {
     variant: 'error',
   };
 
+const RL_FIELDS = [
+    'Does_the_client_have_prior_wages__c'
+];
+
 export {
     SECTION_FIELDS,
     PAY_FREQUENCY_FIELDS,
-    ERROR_TOAST_CONFIG
+    ERROR_TOAST_CONFIG,
+    RL_FIELDS
+
 };

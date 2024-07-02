@@ -34,7 +34,9 @@ const RL_FIELDS = [
   'Has_FLSA_team_approved__c',
   'Day_one_start__c',
   'Do_you_pay_non_exempt_employees__c',
-  'NSP_Prepop_Timecards_w_Stndrd_hrs__c'
+  'NSP_Prepop_Timecards_w_Stndrd_hrs__c',
+  'Non_exempt_EEs_on_semi_monthly_pay_freq__c',
+  'Semi_monthly_pay_freq_comply_w_state_law__c'
 ];
 
 const SECTION_FIELDS = [

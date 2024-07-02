@@ -8,7 +8,24 @@ const RL_FIELDS = [
     'NSP_remote_EEs_not_working_physical_loc__c',
     'Client_does_business_in_MA_NY_or_VA__c',
     'Have_EEs_been_notified_of_the_transition__c',
-    'NSP_separate_pay_document_specify__c'
+    'NSP_separate_pay_document_specify__c',
+    'Written_doc_pay_plan_for_how_EE_is_paid__c',
+    'Are_all_of_the_rates_in_agreement__c',
+    'Checks_delivered__c',
+    'Is_exempt_from_Minimum_Wage__c',
+    'Is_exempt_from_MN_Statute_177__c',
+    'Is_there_a_separate_Vacation_policy__c',
+    'Sep_doc_specifying_pay_breakdown__c',
+    'Are_all_of_the_rates_in_agreement__c',
+    'NSP_Separate_pay_document_Illinois__c',
+    'NSP_Separate_pay_document_Maryland__c',
+    'NSP_Separate_pay_document_Minnesota__c',
+    'NSP_Separate_pay_document_New_Hampshire__c',
+    'NSP_Separate_pay_document_New_York__c',
+    'NSP_Separate_pay_document_Washington_DC__c',
+    'NSP_Separate_pay_document_South_Carolina__c'
+
+
 ];
 
 const SECTION_FIELDS = [
