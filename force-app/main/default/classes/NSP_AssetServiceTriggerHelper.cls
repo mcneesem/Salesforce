@@ -57,6 +57,7 @@ public class NSP_AssetServiceTriggerHelper {
     private static final Id wxWaAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId(ASSET, 'NSP_Asset_Product');
     private static final Id CPQ_ASSET_RECORDTYPE_ID = NSP_GenericRecordType.getRecordTypeId(ASSET, 'NSP_CPQ_Asset');
     private static final Id PERFORM_SMART_ASSET = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.ASSET_SOBJECT_TYPE,NSP_ServiceConstants.PERFORMANCE_ASSET );
+    private static final Id INTEGRA_ASSET = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.ASSET_SOBJECT_TYPE,NSP_ServiceConstants.INTEGRA );
     private static final String ASSET_TERMINATION_PAYROLL_TEMPLATE = 'NSP_Retention_Strategy_Payroll_Email';
     private static final String ASSET_TERMINATION_OTHER_ROLE_TEMPLATE = 'NSP_Asset_Retention_Strategy_Email';
     private static final String RSAP = 'Relationship Strategy Action Plan';
@@ -2052,6 +2053,7 @@ Implementation profile related to the account of the created asset
         List<String> nonEditableApplicantTrackingBPSAssetFields = System.Label.NSP_BPS_Non_Applicant_Tracking_Fields.split(',');
         List<String> nonEditableTimeAttendanceBPSAssetFields = System.Label.NSP_BPS_Non_Time_Attendance_Fields.split(',');
         List<String> nonEditablePerformanceBPSAssetFields = System.Label.BPS_Non_Performance_Management_Fields.split(',');
+        List<String> nonEditableIntegraBPSAssetFields = System.Label.BPS_Integra_Asset_Feilds.split(',');
         Id assetRecordTypeId = assetRec.RecordTypeId;
         if ( assetRecordTypeId != null ) {
             Boolean isValid = False;
@@ -2064,6 +2066,7 @@ Implementation profile related to the account of the created asset
                 || ( assetRecordTypeId == CertifyRT && nonEditableCertifyBPSAssetFields.size()>0 &&nonEditableCertifyBPSAssetFields.Contains(nonEditableField) )
                 || ( assetRecordTypeId == TimeAttendanceRecordId && nonEditableTimeAttendanceBPSAssetFields.size()>0 && nonEditableTimeAttendanceBPSAssetFields.Contains(nonEditableField) )
                 || ( assetRecordTypeId == PERFORM_SMART_ASSET && nonEditablePerformanceBPSAssetFields.size()>0 && nonEditablePerformanceBPSAssetFields.Contains(nonEditableField) )
+                || ( assetRecordTypeId == INTEGRA_ASSET && nonEditableIntegraBPSAssetFields.size()>0 && nonEditableIntegraBPSAssetFields.Contains(nonEditableField))
                 )
             {
                 isValid = True;
