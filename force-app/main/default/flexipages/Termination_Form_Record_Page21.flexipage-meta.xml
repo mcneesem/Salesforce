@@ -1121,16 +1121,10 @@
                 <fieldItem>Record.Total_Number_of_Files__c</fieldItem>
                 <identifier>RecordTotal_Number_of_Files_cField</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 OR 2</booleanFilter>
                     <criteria>
                         <leftValue>{!$User.Profile.Name}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>System Administrator</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!$User.Profile.Name}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>System Admin Lite</rightValue>
+                        <operator>CONTAINS</operator>
+                        <rightValue>System Admin</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -1144,16 +1138,10 @@
                 <fieldItem>Record.Number_of_required_checkboxes__c</fieldItem>
                 <identifier>RecordNumber_of_required_checkboxes_cField</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 OR 2</booleanFilter>
                     <criteria>
                         <leftValue>{!$User.Profile.Name}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>System Administrator</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!$User.Profile.Name}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>System Admin Lite</rightValue>
+                        <operator>CONTAINS</operator>
+                        <rightValue>System Admin</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
