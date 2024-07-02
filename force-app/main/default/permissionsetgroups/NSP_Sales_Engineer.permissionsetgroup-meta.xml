@@ -6,6 +6,7 @@
     <permissionSets>Account_Create</permissionSets>
     <permissionSets>BPS</permissionSets>
     <permissionSets>Bypass_Task_Event_Cancelled_Status</permissionSets>
+    <permissionSets>Checklist_Create_Sales_Engineer_Questionnaire</permissionSets>
     <permissionSets>Contact_View_All</permissionSets>
     <permissionSets>Convert_Leads</permissionSets>
     <permissionSets>Core_Sales</permissionSets>
