@@ -4,7 +4,7 @@
     <assignments>
         <name>Assign_AccountId</name>
         <label>Assign AccountId</label>
-        <locationX>842</locationX>
+        <locationX>1282</locationX>
         <locationY>539</locationY>
         <assignmentItems>
             <assignToReference>accountId</assignToReference>
@@ -14,13 +14,131 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Update_Account_Record</targetReference>
+            <targetReference>Check_Account_Last_Updated</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_Fault_Element_GetAccountInfo</name>
+        <label>Assign Fault Element</label>
+        <locationX>1722</locationX>
+        <locationY>539</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Account_Info</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_Fault_Element_GetLeadInfo</name>
+        <label>Assign Fault Element</label>
+        <locationX>2778</locationX>
+        <locationY>539</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Lead_Info</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_Fault_Element_GetOpportunityInfo</name>
+        <label>Assign Fault Element</label>
+        <locationX>754</locationX>
+        <locationY>539</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Opportunity_Info</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_Fault_Element_UpdateAccountRecord</name>
+        <label>Assign Fault Element</label>
+        <locationX>1282</locationX>
+        <locationY>863</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Update_Account_Record</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_Fault_Element_UpdateEventRecord</name>
+        <label>Assign Fault Element</label>
+        <locationX>3306</locationX>
+        <locationY>1487</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Update_Event_Record_if_Status_not_Cancelled</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_Fault_Element_UpdateLeadRecord</name>
+        <label>Assign Fault Element</label>
+        <locationX>2250</locationX>
+        <locationY>863</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Update_Lead_Record</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Fault_Handler_subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_Fault_Element_UpdateOpportunityRecord</name>
+        <label>Assign Fault Element</label>
+        <locationX>314</locationX>
+        <locationY>863</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Update_Opportunity_Record</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_subflow</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Assign_LeadId</name>
         <label>Assign LeadId</label>
-        <locationX>1898</locationX>
+        <locationX>2250</locationX>
         <locationY>539</locationY>
         <assignmentItems>
             <assignToReference>leadId</assignToReference>
@@ -36,7 +154,7 @@
     <assignments>
         <name>Assign_OpportunityId_and_AccountId</name>
         <label>Assign OpportunityId and AccountId</label>
-        <locationX>50</locationX>
+        <locationX>314</locationX>
         <locationY>539</locationY>
         <assignmentItems>
             <assignToReference>opportunityId</assignToReference>
@@ -53,7 +171,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Update_Opportunity_Record</targetReference>
+            <targetReference>Check_Opportunity_Last_Updated</targetReference>
         </connector>
     </assignments>
     <constants>
@@ -64,9 +182,66 @@
         </value>
     </constants>
     <decisions>
+        <name>Check_Account_Last_Updated</name>
+        <label>Check Account Last Updated</label>
+        <locationX>1282</locationX>
+        <locationY>647</locationY>
+        <defaultConnector>
+            <targetReference>Update_Event_Record_if_Status_not_Cancelled</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Account_Update_Needed</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Account_Info.NSP_Last_Updated__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>$Flow.CurrentDate</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Account_Record</targetReference>
+            </connector>
+            <label>Account Update Needed</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Opportunity_Last_Updated</name>
+        <label>Check Opportunity Last Updated</label>
+        <locationX>314</locationX>
+        <locationY>647</locationY>
+        <defaultConnector>
+            <targetReference>Update_Event_Record_if_Status_not_Cancelled</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Opportunity_Update_Needed</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Opportunity_Info.NSP_Last_Updated__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>$Flow.CurrentDate</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Opportunity_Info.StageName</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Closed Won</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Opportunity_Record</targetReference>
+            </connector>
+            <label>Opportunity Update Needed</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Is_Event_Status_Completed_and_should_Lead_Status_be_changed_to_Working</name>
         <label>Is Event Status &quot;Completed&quot; and should Lead Status be changed to &quot;Working&quot;?</label>
-        <locationX>1898</locationX>
+        <locationX>2250</locationX>
         <locationY>647</locationY>
         <defaultConnectorLabel>Lead status does not need to be updated</defaultConnectorLabel>
         <rules>
@@ -95,7 +270,7 @@
     <decisions>
         <name>What_type_of_record_is_in_WhatId</name>
         <label>What type of record is in WhatId?</label>
-        <locationX>1370</locationX>
+        <locationX>1678</locationX>
         <locationY>323</locationY>
         <defaultConnectorLabel>Not related to a relevant record</defaultConnectorLabel>
         <rules>
@@ -144,7 +319,7 @@
             <label>Related to Lead</label>
         </rules>
     </decisions>
-    <description>Updated &quot;Update Record&quot; node to exclude Status = &quot;Cancelled&quot;</description>
+    <description>Upon Event update with a non-Cancelled status, flow updates Last Updated on related Account or Opportunity, if needed; flow updates related Lead status if Event is Completed.</description>
     <environments>Default</environments>
     <interviewLabel>Event - Updated {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Event - Updated</label>
@@ -170,15 +345,14 @@
     <recordLookups>
         <name>Get_Account_Info</name>
         <label>Get Account Info</label>
-        <locationX>842</locationX>
+        <locationX>1282</locationX>
         <locationY>431</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Assign_AccountId</targetReference>
         </connector>
         <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Fault_Handler_subflow</targetReference>
+            <targetReference>Assign_Fault_Element_GetAccountInfo</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -195,15 +369,14 @@
     <recordLookups>
         <name>Get_Lead_Info</name>
         <label>Get Lead Info</label>
-        <locationX>1898</locationX>
+        <locationX>2250</locationX>
         <locationY>431</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Assign_LeadId</targetReference>
         </connector>
         <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Fault_Handler_subflow</targetReference>
+            <targetReference>Assign_Fault_Element_GetLeadInfo</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -220,15 +393,14 @@
     <recordLookups>
         <name>Get_Opportunity_Info</name>
         <label>Get Opportunity Info</label>
-        <locationX>50</locationX>
+        <locationX>314</locationX>
         <locationY>431</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Assign_OpportunityId_and_AccountId</targetReference>
         </connector>
         <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Fault_Handler_subflow</targetReference>
+            <targetReference>Assign_Fault_Element_GetOpportunityInfo</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -245,14 +417,13 @@
     <recordUpdates>
         <name>Update_Account_Record</name>
         <label>Update Account Record</label>
-        <locationX>842</locationX>
-        <locationY>647</locationY>
+        <locationX>1018</locationX>
+        <locationY>755</locationY>
         <connector>
             <targetReference>Update_Event_Record_if_Status_not_Cancelled</targetReference>
         </connector>
         <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Fault_Handler_subflow</targetReference>
+            <targetReference>Assign_Fault_Element_UpdateAccountRecord</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -273,10 +444,10 @@
     <recordUpdates>
         <name>Update_Event_Record_if_Status_not_Cancelled</name>
         <label>Update Event Record if Status not Cancelled</label>
-        <locationX>1370</locationX>
-        <locationY>1139</locationY>
+        <locationX>1678</locationX>
+        <locationY>1379</locationY>
         <faultConnector>
-            <targetReference>Fault_Handler_subflow</targetReference>
+            <targetReference>Assign_Fault_Element_UpdateEventRecord</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -303,11 +474,10 @@
     <recordUpdates>
         <name>Update_Lead_Record</name>
         <label>Update Lead Record</label>
-        <locationX>1634</locationX>
+        <locationX>1986</locationX>
         <locationY>755</locationY>
         <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Fault_Handler_subflow</targetReference>
+            <targetReference>Assign_Fault_Element_UpdateLeadRecord</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -329,13 +499,12 @@
         <name>Update_Opportunity_Record</name>
         <label>Update Opportunity Record</label>
         <locationX>50</locationX>
-        <locationY>647</locationY>
+        <locationY>755</locationY>
         <connector>
             <targetReference>Update_Event_Record_if_Status_not_Cancelled</targetReference>
         </connector>
         <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Fault_Handler_subflow</targetReference>
+            <targetReference>Assign_Fault_Element_UpdateOpportunityRecord</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -354,35 +523,43 @@
         <object>Opportunity</object>
     </recordUpdates>
     <start>
-        <locationX>1244</locationX>
+        <locationX>1552</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>What_type_of_record_is_in_WhatId</targetReference>
         </connector>
-        <filterFormula>( NOT(ISBLANK( {!$Record.WhatId} )) || NOT(ISBLANK( {!$Record.WhoId} )) ) 
+        <filterFormula>NOT(ISPICKVAL({!$Record.NSP_Status__c}, &quot;Cancelled&quot;))
+&amp;&amp;
+( NOT(ISBLANK( {!$Record.WhatId} )) || NOT(ISBLANK( {!$Record.WhoId} )) )
 &amp;&amp;
 NOT( {!$Setup.NSP_Trigger_Switch__c.AutoLaunchedFlows__c} )</filterFormula>
         <object>Event</object>
         <recordTriggerType>Update</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <subflows>
         <name>Fault_Handler_subflow</name>
         <label>Fault Handler subflow</label>
-        <locationX>2954</locationX>
-        <locationY>1247</locationY>
+        <locationX>2250</locationX>
+        <locationY>971</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
+        <inputAssignments>
+            <name>faultElement</name>
+            <value>
+                <elementReference>varFaultElement</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultFlow</name>
+            <value>
+                <stringValue>Event_Updated</stringValue>
+            </value>
+        </inputAssignments>
         <inputAssignments>
             <name>faultMessage</name>
             <value>
                 <elementReference>$Flow.FaultMessage</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>triggeringFlow</name>
-            <value>
-                <elementReference>flowName</elementReference>
             </value>
         </inputAssignments>
     </subflows>
@@ -406,5 +583,12 @@ NOT( {!$Setup.NSP_Trigger_Switch__c.AutoLaunchedFlows__c} )</filterFormula>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>varFaultElement</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
     </variables>
 </Flow>
