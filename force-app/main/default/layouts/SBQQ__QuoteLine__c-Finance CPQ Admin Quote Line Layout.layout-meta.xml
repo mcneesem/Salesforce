@@ -978,6 +978,10 @@
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Price_Update_Stable_Quantity__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>NSP_AIMS_Item_Code_1__c</field>
             </layoutItems>
