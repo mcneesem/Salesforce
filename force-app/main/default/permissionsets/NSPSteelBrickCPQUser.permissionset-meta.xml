@@ -5699,6 +5699,10 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <field>SBQQ__QuoteLine__c.Price_Update_Stable_Quantity__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>SBQQ__QuoteLine__c.Amendment_Monthly_Fees__c</field>
         <readable>true</readable>
