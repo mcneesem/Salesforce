@@ -608,6 +608,16 @@
                 <identifier>RecordNSP_On_site_Supervisor_Email_cField</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.On_site_Supervisor_Notes_Txt__c</fieldItem>
+                <identifier>RecordOn_site_Supervisor_Notes_Txt_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-d9e41ce3-df7d-4718-a5ee-2411d3fa0ddf</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -660,6 +670,16 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Onsite_Super_Located_Outside_Unite__c</fieldItem>
                 <identifier>RecordNSP_Onsite_Super_Located_Outside_Unite__cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.On_Site_View_Payroll_Paperwork__c</fieldItem>
+                <identifier>RecordOn_Site_View_Payroll_Paperwork_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-39e3d4e9-f6ec-4ad2-8709-85796dc63fd1</name>
