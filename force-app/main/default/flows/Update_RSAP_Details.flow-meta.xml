@@ -30,7 +30,7 @@
             <assignToReference>$Record.NSP_Efforts_To_Retain__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Get_Engagement_Path_Record.Action__c</elementReference>
+                <elementReference>Get_Engagement_Path_Record.Action_info__c</elementReference>
             </value>
         </assignmentItems>
     </assignments>
@@ -43,7 +43,7 @@
             <assignToReference>$Record.NSP_Efforts_To_Retain__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Get_Engagement_Path_Record.Action__c</elementReference>
+                <elementReference>Get_Engagement_Path_Record.Action_info__c</elementReference>
             </value>
         </assignmentItems>
     </assignments>
@@ -236,7 +236,7 @@
         <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>NSP_Engagement_Path__c</object>
         <queriedFields>Id</queriedFields>
-        <queriedFields>Action__c</queriedFields>
+        <queriedFields>Action_info__c</queriedFields>
         <sortField>LastModifiedDate</sortField>
         <sortOrder>Desc</sortOrder>
         <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -348,7 +348,7 @@
             <field>Name</field>
             <operator>EqualTo</operator>
             <value>
-                <stringValue>Complete termination analysis</stringValue>
+                <stringValue>Completion of Termination Analysis</stringValue>
             </value>
         </filters>
         <filters>
