@@ -136,7 +136,7 @@ public with sharing class NSP_ProjBlngTriggerHelper {
         try{
             for(pse__Proj__c proj :newProjectMap.values()){
                 pse__Proj__c oldProj=oldProjectMap.get(proj.Id);
-                if(oldProj.pse__Project_Status__c!=proj.pse__Project_Status__c && proj.pse__Project_Status__c=='Close/Lost' && proj.Go_Live_Date__c<=System.today() && proj.Invoice_Ready__c==TRUE){
+                if(proj.pse__Project_Status__c=='Close/Lost' && proj.Go_Live_Date__c!= null && proj.Invoice_Ready__c==TRUE){
                     lostProjectIds.add(proj.Id);
                 }
             }
