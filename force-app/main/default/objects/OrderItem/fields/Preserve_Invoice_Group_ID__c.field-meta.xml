@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Preserve_Invoice_Group_ID__c</fullName>
+    <defaultValue>false</defaultValue>
+    <externalId>false</externalId>
+    <label>Preserve Invoice Group Id</label>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

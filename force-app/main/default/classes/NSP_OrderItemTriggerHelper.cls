@@ -48,7 +48,7 @@ public class NSP_OrderItemTriggerHelper {
                 if(ordersMap.containsKey(oi.OrderId) && oi.NSP_Preferred_Payment_Method__c=='ACH' && oi.blng__BillingAccount__c!=null){
                     oi.NSP_Payment_Method__c=billingActPaymentMap.get(oi.blng__BillingAccount__c)?.Id;
                 }
-                if(currOrder.NSP_Partner__r.Name != LASSO_PARTNERNAME){
+                if(currOrder.NSP_Partner__r.Name != LASSO_PARTNERNAME && oi.Preserve_Invoice_Group_ID__c == false){
                     oi.blng__InvoiceGroupId__c = (String)currOrder.AccountId + (String)currOrder.NSP_Billing_Account__c + (String)currOrder.ShippingPostalCode +(String)oi.NSP_Payment_Method__c;
                 }
             }
@@ -340,7 +340,7 @@ public class NSP_OrderItemTriggerHelper {
             if(paymentMethodChangedLines.size()>0){
                 for(OrderItem oi : OrderItemNewMap.values()) {  
                 if(paymentMethodChangedLines.contains(oi.Id)){
-                    if(oi.NSP_Payment_Method__c!=null) {
+                    if(oi.NSP_Payment_Method__c!=null && oi.Preserve_Invoice_Group_ID__c == false) {
                         oi.blng__InvoiceGroupId__c = (String)oi.NSP_Order_Account__c + (String)oi.blng__BillingAccount__c +oi.NSP_Shipping_Postal_Code__c+(String)oi.NSP_Payment_Method__c;
                     if(oi.SBQQ__QuoteLine__c!=null){
                         quoteLinesToUpdate.add(new SBQQ__QuoteLine__c(Id=oi.SBQQ__QuoteLine__c,NSP_Payment_Method__c=oi.NSP_Payment_Method__c));
