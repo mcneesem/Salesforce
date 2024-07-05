@@ -512,8 +512,12 @@
         <excludeButtons>MassChangeOwner</excludeButtons>
         <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
-        <fields>pse__Start_Date__c</fields>
+        <fields>NSP_Account__c</fields>
         <fields>pse__Project_Status__c</fields>
+        <fields>pse__Start_Date__c</fields>
+        <fields>pse__End_Date__c</fields>
+        <fields>NSP_Owner__c</fields>
+        <fields>RECORDTYPE</fields>
         <relatedList>pse__Proj__c.pse__Account__c</relatedList>
     </relatedLists>
     <relatedLists>
