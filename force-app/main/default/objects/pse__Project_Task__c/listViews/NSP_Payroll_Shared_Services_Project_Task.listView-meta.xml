@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Payroll_Shared_Services_Project_Task</fullName>
+    <columns>NAME</columns>
+    <columns>pse__Project__c</columns>
+    <columns>NSP_Account_Id__c</columns>
+    <columns>pse__Start_Date_Time__c</columns>
+    <columns>pse__End_Date_Time__c</columns>
+    <columns>pse__Status__c</columns>
+    <filterScope>Queue</filterScope>
+    <filters>
+        <field>NSP_Template__c</field>
+        <operation>equals</operation>
+        <value>0</value>
+    </filters>
+    <label>Payroll Shared Services</label>
+    <queue>NSP_Payroll_Shared_Services</queue>
+    <sharedTo>
+        <allInternalUsers></allInternalUsers>
+    </sharedTo>
+</ListView>
