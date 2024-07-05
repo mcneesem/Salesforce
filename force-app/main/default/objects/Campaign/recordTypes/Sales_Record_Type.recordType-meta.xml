@@ -185,11 +185,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Social - Organic - Facebook</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Social - Organic - Instagram</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Social - Organic - LinkedIn</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Social - Organic - Meta</fullName>
+            <fullName>Social - Organic - Pinterest</fullName>
             <default>false</default>
         </values>
         <values>
@@ -197,7 +205,23 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Social - Organic - YouTube</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Social - Paid - Facebook</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Social - Paid - Facebook via 6Sense</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Social - Paid - Influencer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Social - Paid - Instagram</fullName>
             <default>false</default>
         </values>
         <values>
@@ -206,14 +230,6 @@
         </values>
         <values>
             <fullName>Social - Paid - LinkedIn via 6Sense</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Social - Paid - Meta</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Social - Paid - Meta via 6Sense</fullName>
             <default>false</default>
         </values>
         <values>

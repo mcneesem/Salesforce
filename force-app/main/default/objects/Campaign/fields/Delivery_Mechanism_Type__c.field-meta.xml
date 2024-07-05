@@ -217,14 +217,24 @@
                 <label>Search - Paid - Google</label>
             </value>
             <value>
+                <fullName>Social - Organic - Facebook</fullName>
+                <default>false</default>
+                <label>Social - Organic - Facebook</label>
+            </value>
+            <value>
+                <fullName>Social - Organic - Instagram</fullName>
+                <default>false</default>
+                <label>Social - Organic - Instagram</label>
+            </value>
+            <value>
                 <fullName>Social - Organic - LinkedIn</fullName>
                 <default>false</default>
                 <label>Social - Organic - LinkedIn</label>
             </value>
             <value>
-                <fullName>Social - Organic - Meta</fullName>
+                <fullName>Social - Organic - Pinterest</fullName>
                 <default>false</default>
-                <label>Social - Organic - Meta</label>
+                <label>Social - Organic - Pinterest</label>
             </value>
             <value>
                 <fullName>Social - Organic - X</fullName>
@@ -232,9 +242,29 @@
                 <label>Social - Organic - X</label>
             </value>
             <value>
+                <fullName>Social - Organic - YouTube</fullName>
+                <default>false</default>
+                <label>Social - Organic - YouTube</label>
+            </value>
+            <value>
+                <fullName>Social - Paid - Facebook</fullName>
+                <default>false</default>
+                <label>Social - Paid - Facebook</label>
+            </value>
+            <value>
+                <fullName>Social - Paid - Facebook via 6Sense</fullName>
+                <default>false</default>
+                <label>Social - Paid - Facebook via 6Sense</label>
+            </value>
+            <value>
                 <fullName>Social - Paid - Influencer</fullName>
                 <default>false</default>
                 <label>Social - Paid - Influencer</label>
+            </value>
+            <value>
+                <fullName>Social - Paid - Instagram</fullName>
+                <default>false</default>
+                <label>Social - Paid - Instagram</label>
             </value>
             <value>
                 <fullName>Social - Paid - LinkedIn</fullName>
@@ -245,16 +275,6 @@
                 <fullName>Social - Paid - LinkedIn via 6Sense</fullName>
                 <default>false</default>
                 <label>Social - Paid - LinkedIn via 6Sense</label>
-            </value>
-            <value>
-                <fullName>Social - Paid - Meta</fullName>
-                <default>false</default>
-                <label>Social - Paid - Meta</label>
-            </value>
-            <value>
-                <fullName>Social - Paid - Meta via 6Sense</fullName>
-                <default>false</default>
-                <label>Social - Paid - Meta via 6Sense</label>
             </value>
             <value>
                 <fullName>Social - Paid - Quora</fullName>
@@ -491,11 +511,19 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Child: Delivery Mechanism Type</controllingFieldValue>
+            <valueName>Social - Organic - Facebook</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Child: Delivery Mechanism Type</controllingFieldValue>
+            <valueName>Social - Organic - Instagram</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Child: Delivery Mechanism Type</controllingFieldValue>
             <valueName>Social - Organic - LinkedIn</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Child: Delivery Mechanism Type</controllingFieldValue>
-            <valueName>Social - Organic - Meta</valueName>
+            <valueName>Social - Organic - Pinterest</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Child: Delivery Mechanism Type</controllingFieldValue>
@@ -503,7 +531,23 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Child: Delivery Mechanism Type</controllingFieldValue>
+            <valueName>Social - Organic - YouTube</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Child: Delivery Mechanism Type</controllingFieldValue>
+            <valueName>Social - Paid - Facebook</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Child: Delivery Mechanism Type</controllingFieldValue>
+            <valueName>Social - Paid - Facebook via 6Sense</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Child: Delivery Mechanism Type</controllingFieldValue>
             <valueName>Social - Paid - Influencer</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Child: Delivery Mechanism Type</controllingFieldValue>
+            <valueName>Social - Paid - Instagram</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Child: Delivery Mechanism Type</controllingFieldValue>
@@ -512,14 +556,6 @@
         <valueSettings>
             <controllingFieldValue>Child: Delivery Mechanism Type</controllingFieldValue>
             <valueName>Social - Paid - LinkedIn via 6Sense</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Child: Delivery Mechanism Type</controllingFieldValue>
-            <valueName>Social - Paid - Meta</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Child: Delivery Mechanism Type</controllingFieldValue>
-            <valueName>Social - Paid - Meta via 6Sense</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Child: Delivery Mechanism Type</controllingFieldValue>
