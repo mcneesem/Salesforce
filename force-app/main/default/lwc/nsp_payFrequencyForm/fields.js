@@ -42,7 +42,10 @@ const ERROR_TOAST_CONFIG = {
   };
 
 const RL_FIELDS = [
-    'Does_the_client_have_prior_wages__c'
+    'Does_the_client_have_prior_wages__c',
+    'Is_arrearage_7_days__c',
+    'Have_credit_services_approved__c',
+    'Does_arrearage_comply_with_state_laws__c'
 ];
 
 export {

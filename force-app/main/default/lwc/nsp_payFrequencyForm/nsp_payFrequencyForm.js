@@ -23,6 +23,7 @@ export default class Nsp_payFrequencyForm extends LightningElement {
   @api disabled;
   @track state = {
     isLoadingFirstTime: true,
+    isRenderingFirstTime : true,
   };
   payFrequencyFields = PAY_FREQUENCY_FIELDS;  
 
@@ -56,6 +57,14 @@ export default class Nsp_payFrequencyForm extends LightningElement {
     if (state.isLoadingFirstTime) {
       state.isLoadingFirstTime = false;
       this.doOneTimeActions();
+    }
+  }
+  renderedCallback(){
+    const { state } = this;
+    if(state.isRenderingFirstTime && this.visibility.Have_credit_services_approved__c) {
+          this.addStyleToPrePopulatedQuestions('Have_credit_services_approved__c', this.existingFieldValues['Have_credit_services_approved__c'].value);
+          this.addStyleToPrePopulatedQuestions('Does_arrearage_comply_with_state_laws__c', this.existingFieldValues['Does_arrearage_comply_with_state_laws__c'].value);
+          state.isRenderingFirstTime = false;
     }
   }
 
