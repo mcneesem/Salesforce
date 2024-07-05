@@ -5,7 +5,7 @@
         <name>Confirm_File_Upload_Field</name>
         <label>Confirm File Upload Field</label>
         <locationX>182</locationX>
-        <locationY>695</locationY>
+        <locationY>803</locationY>
         <assignmentItems>
             <assignToReference>$Record.Confirm_File_Upload__c</assignToReference>
             <operator>Assign</operator>
@@ -15,8 +15,8 @@
         </assignmentItems>
     </assignments>
     <assignments>
-        <name>File_Count</name>
-        <label>File Count</label>
+        <name>Count_Files</name>
+        <label>Count Files</label>
         <locationX>50</locationX>
         <locationY>503</locationY>
         <assignmentItems>
@@ -26,29 +26,15 @@
                 <elementReference>Get_files</elementReference>
             </value>
         </assignmentItems>
-        <assignmentItems>
-            <assignToReference>$Record.Total_Number_of_Files__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>AttachmentCount</elementReference>
-            </value>
-        </assignmentItems>
         <connector>
-            <targetReference>Confirm_File_Upload_Field</targetReference>
+            <targetReference>Set_Total_Number_of_Files</targetReference>
         </connector>
     </assignments>
     <assignments>
-        <name>File_Count_Zero</name>
-        <label>File Count Zero</label>
-        <locationX>314</locationX>
-        <locationY>503</locationY>
-        <assignmentItems>
-            <assignToReference>AttachmentCount</assignToReference>
-            <operator>AssignCount</operator>
-            <value>
-                <elementReference>Get_files</elementReference>
-            </value>
-        </assignmentItems>
+        <name>Set_Total_Number_of_Files</name>
+        <label>Set Total Number of Files</label>
+        <locationX>182</locationX>
+        <locationY>695</locationY>
         <assignmentItems>
             <assignToReference>$Record.Total_Number_of_Files__c</assignToReference>
             <operator>Assign</operator>
@@ -66,7 +52,7 @@
         <locationX>182</locationX>
         <locationY>395</locationY>
         <defaultConnector>
-            <targetReference>File_Count_Zero</targetReference>
+            <targetReference>Set_Total_Number_of_Files</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -80,7 +66,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>File_Count</targetReference>
+                <targetReference>Count_Files</targetReference>
             </connector>
             <label>Files</label>
         </rules>
@@ -142,6 +128,13 @@
                 <booleanValue>true</booleanValue>
             </value>
         </filters>
+        <filters>
+            <field>Confirm_File_Upload__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
         <object>NSP_Termination_Form__c</object>
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
         <triggerType>RecordBeforeSave</triggerType>
@@ -157,36 +150,5 @@
         <value>
             <numberValue>0.0</numberValue>
         </value>
-    </variables>
-    <variables>
-        <name>CountOfFiles</name>
-        <dataType>SObject</dataType>
-        <isCollection>true</isCollection>
-        <isInput>true</isInput>
-        <isOutput>true</isOutput>
-        <objectType>ContentDocumentLink</objectType>
-    </variables>
-    <variables>
-        <name>DocCollectionVar</name>
-        <dataType>Number</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>true</isOutput>
-        <scale>0</scale>
-    </variables>
-    <variables>
-        <name>DocCollectionVar2</name>
-        <dataType>Number</dataType>
-        <isCollection>true</isCollection>
-        <isInput>true</isInput>
-        <isOutput>true</isOutput>
-        <scale>2</scale>
-    </variables>
-    <variables>
-        <name>DocsCountVAR</name>
-        <dataType>Boolean</dataType>
-        <isCollection>false</isCollection>
-        <isInput>true</isInput>
-        <isOutput>true</isOutput>
     </variables>
 </Flow>
