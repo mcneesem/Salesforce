@@ -517,7 +517,7 @@ public class NSP_ProjectTasksTriggerHelper {
     }
 
     //Letter Received email.
-    public void letterRecievedEmail(String accountName, String accountAIMS, list<String> listOfToAddresses, List<NSP_Account_Team__c> listOfPayrollMem, String ReasonForTerm, Date TermDate){
+    private void letterRecievedEmail(String accountName, String accountAIMS, list<String> listOfToAddresses, List<NSP_Account_Team__c> listOfPayrollMem, String ReasonForTerm, Date TermDate){
         try{
             String dtStr;
             if(TermDate!= null){
