@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
-        <name>Send_Email_to_Case_Owner_after_reopening_a_case</name>
-        <label>Send Email to Case Owner after reopening a case</label>
-        <locationX>242</locationX>
-        <locationY>384</locationY>
+        <name>Send_Email_to_Case_Owner</name>
+        <label>Send Email to Case Owner</label>
+        <locationX>396</locationX>
+        <locationY>576</locationY>
         <actionName>Case.Send_Email_to_Case_Owner_after_reopening_a_case</actionName>
         <actionType>emailAlert</actionType>
+        <faultConnector>
+            <targetReference>Fault_Handler</targetReference>
+        </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>SObjectRowId</name>
@@ -14,17 +17,28 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>Case.Send_Email_to_Case_Owner_after_reopening_a_case</nameSegment>
+        <versionSegment>1</versionSegment>
     </actionCalls>
     <apiVersion>60.0</apiVersion>
     <decisions>
-        <name>Check_for_Owner_Email</name>
-        <label>Check for Owner Email</label>
-        <locationX>374</locationX>
+        <description>~ User must be Active with a non-null and non-blank Email
+~ Queue must have a non-null and non-blank Email</description>
+        <name>Check_Owner_Email</name>
+        <label>Check Owner Email</label>
+        <locationX>396</locationX>
         <locationY>276</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>Email_is_not_null</name>
-            <conditionLogic>( ( 1 AND 2 ) OR ( 3 AND 4 ) )</conditionLogic>
+            <name>Has_Active_User_Email</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Owner:User.IsActive</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
             <conditions>
                 <leftValueReference>$Record.Owner:User.Email</leftValueReference>
                 <operator>IsNull</operator>
@@ -34,29 +48,37 @@
             </conditions>
             <conditions>
                 <leftValueReference>$Record.Owner:User.Email</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <stringValue></stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.Owner:Group.Email</leftValueReference>
-                <operator>IsNull</operator>
+                <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.Owner:Group.Email</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <stringValue></stringValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Send_Email_to_Case_Owner_after_reopening_a_case</targetReference>
+                <targetReference>Send_Email_to_Case_Owner</targetReference>
             </connector>
-            <label>Email is not null</label>
+            <label>Has Active User Email</label>
+        </rules>
+        <rules>
+            <name>Has_Queue_Email</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Owner:Group.Email</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Owner:Group.Email</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Send_Email_to_Case_Owner</targetReference>
+            </connector>
+            <label>Has Queue Email</label>
         </rules>
     </decisions>
     <environments>Default</environments>
@@ -86,10 +108,10 @@
         <locationY>0</locationY>
         <filterLogic>and</filterLogic>
         <filters>
-            <field>NSP_Case_Reopened_EmaiToCase__c</field>
-            <operator>IsChanged</operator>
+            <field>OwnerId</field>
+            <operator>IsNull</operator>
             <value>
-                <booleanValue>true</booleanValue>
+                <booleanValue>false</booleanValue>
             </value>
         </filters>
         <filters>
@@ -99,15 +121,47 @@
                 <booleanValue>true</booleanValue>
             </value>
         </filters>
+        <filters>
+            <field>NSP_Case_Reopened_EmaiToCase__c</field>
+            <operator>IsChanged</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
         <object>Case</object>
         <recordTriggerType>Update</recordTriggerType>
         <scheduledPaths>
             <connector>
-                <targetReference>Check_for_Owner_Email</targetReference>
+                <targetReference>Check_Owner_Email</targetReference>
             </connector>
             <pathType>AsyncAfterCommit</pathType>
         </scheduledPaths>
         <triggerType>RecordAfterSave</triggerType>
     </start>
     <status>Draft</status>
+    <subflows>
+        <name>Fault_Handler</name>
+        <label>Fault Handler</label>
+        <locationX>836</locationX>
+        <locationY>684</locationY>
+        <flowName>Insperity_Fault_Handler_Subflow</flowName>
+        <inputAssignments>
+            <name>faultElement</name>
+            <value>
+                <stringValue>Send_Email_to_Case_Owner</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultFlow</name>
+            <value>
+                <stringValue>Case_Automation_Reopened_Email_Alert</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultMessage</name>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
 </Flow>
