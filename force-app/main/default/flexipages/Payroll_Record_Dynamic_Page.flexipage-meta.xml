@@ -182,6 +182,16 @@
                 <identifier>RecordNSP_Primary_Payroll_Contact_Email_cField</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Primary_Payroll_Contact_Notes__c</fieldItem>
+                <identifier>RecordPrimary_Payroll_Contact_Notes__cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-205c9621-1691-4a28-9202-7fd3c41d5518</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -234,6 +244,16 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Primary_Payroll_Con_Located_Outside__c</fieldItem>
                 <identifier>RecordNSP_Primary_Payroll_Con_Located_Outside__cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Primary_View_Payroll_Paperwork__c</fieldItem>
+                <identifier>RecordPrimary_View_Payroll_Paperwork__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-c208ab8f-1422-412f-aea6-7d74784ec272</name>
