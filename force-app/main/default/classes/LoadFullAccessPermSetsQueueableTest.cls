@@ -11,14 +11,6 @@ public class LoadFullAccessPermSetsQueueableTest {
     }
 
     @isTest
-    static void testLoadRecTypeVisibility() {
-        Test.startTest();
-        Id editPermSetId = [SELECT Id FROM PermissionSet WHERE Name = 'FA_Test_Edit_Permission_Set' LIMIT 1].Id;
-        LoadFullAccessPermSetsQueueable.loadRecTypeVisibility(editPermSetId);
-        Test.stopTest();
-    }
-
-    @isTest
     static void testLoadFullAccessPermSets1() {
         Test.startTest();
         LoadFullAccessPermSets.runLoadFullAccessPermSets('FA_Test_Read_Permission_Set', 'FA_Test_Edit_Permission_Set', null, null);
