@@ -324,6 +324,16 @@
                 <identifier>RecordNSP_Back_Up_Payroll_Contact_Email_cField</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Back_Up_Payroll_Contact_Notes__c</fieldItem>
+                <identifier>RecordBack_Up_Payroll_Contact_Notes__cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-cb0144e8-efd4-4d1a-829c-b2b63b2cec8f</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -376,6 +386,16 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_BackUpPayroll_Con_Located_Outside_US__c</fieldItem>
                 <identifier>RecordNSP_BackUpPayroll_Con_Located_Outside_US__cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Back_Up_View_Payroll_Paperwork__c</fieldItem>
+                <identifier>RecordBack_Up_View_Payroll_Paperwork__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-1de7ab40-7ffa-42bf-a4c1-3cd8b82d26a7</name>

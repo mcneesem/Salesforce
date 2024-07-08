@@ -103,6 +103,10 @@
                 <behavior>Edit</behavior>
                 <field>NSP_BackUpPayrollContactBest_Time_Of_Day__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Back_Up_Payroll_Contact_Notes__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -116,6 +120,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>NSP_BackUpPayroll_Contact_Contact_Method__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Back_Up_View_Payroll_Paperwork__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
