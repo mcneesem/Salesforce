@@ -3,36 +3,46 @@
     <fullName>NSP_ActionType__c</fullName>
     <description>Field Indicate the Current transaction of quote line</description>
     <externalId>false</externalId>
-    <formula>IF(SBQQ__UpgradedSubscription__c != null || SBQQ__UpgradedAsset__c != null,
-IF(AND(!NSP_Original_Line__c, SBQQ__Quantity__c == NSP_Previous_Quantity__c),
-    null,
-    IF(NSP_Original_Line__c,
-        'Amend',
-        IF(SBQQ__Quote__r.NSP_Has_Renewable_Products__c == 0 ,
-            IF( SBQQ__Quantity__c > SBQQ__PriorQuantity__c,
-                'Amend/Upsell',
-                IF(SBQQ__Quantity__c < SBQQ__PriorQuantity__c,
-                    'Amend/Downgrade', 
-                    ''
-                )
-            ) ,
+    <formula>IF(
+  SBQQ__UpgradedSubscription__c != null || SBQQ__UpgradedAsset__c != null ,
+  IF(
+    AND(!NSP_Original_Line__c, SBQQ__Quantity__c == NSP_Previous_Quantity__c) ,
+    null ,
+    IF(
+      NSP_Original_Line__c ,
+      'Amend' ,
+      IF(
+        SBQQ__Quote__r.NSP_Has_Renewable_Products__c == 0 ,
+        IF(
+          SBQQ__Quantity__c > SBQQ__PriorQuantity__c ,
+          'Amend/Upsell' ,
+          IF(
+            SBQQ__Quantity__c < SBQQ__PriorQuantity__c ,
+            'Amend/Downgrade' ,
             ''
-        )
-    )
-) ,
-IF( AND (SBQQ__Source__c != null,TEXT(NSP_Action_Type__c)!= ''),
-    IF(  NOT(ISBLANK(NSP_Previous_Quantity__c)),
-        IF(NSP_Previous_Quantity__c < NSP_Quoted_Quantity__c,
-            'Upsell',
-            IF(NSP_Previous_Quantity__c > NSP_Quoted_Quantity__c,
-                'Downgrade',
-                ''
-            )
+          )
         ) ,
-        'Add Product'
-    ),
+        ''
+      )
+    )
+  ) ,
+  IF(
+    AND(SBQQ__Source__c != null,TEXT(NSP_Action_Type__c)!= '') ,
+    IF(
+      NOT(ISBLANK(NSP_Previous_Quantity__c)) ,
+      IF(
+        NSP_Previous_Quantity__c < NSP_Quoted_Quantity__c ,
+        'Upsell' ,
+        IF(
+          NSP_Previous_Quantity__c > NSP_Quoted_Quantity__c ,
+          'Downgrade' ,
+          ''
+        )
+      ) ,
+      'Add Product'
+    ) ,
     'Add Product'
-)
+  )
 )</formula>
     <label>Action Type</label>
     <required>false</required>
