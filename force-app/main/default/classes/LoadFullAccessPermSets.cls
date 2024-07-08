@@ -59,7 +59,7 @@ public class LoadFullAccessPermSets {
             }
         }
 
-		loadRecTypeVisibility(mPermSets.get(editPermSetName));
+        loadRecTypeVisibility(mPermSets.get(editPermSetName));
         if (!Test.isRunningTest()) {
             System.enqueueJob(new LoadFullAccessPermSetsQueueable(objectApiNames, mPermSets.get(readPermSetName), mPermSets.get(editPermSetName), depRetry));
         }
