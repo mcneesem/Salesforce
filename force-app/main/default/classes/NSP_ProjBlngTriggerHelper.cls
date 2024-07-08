@@ -1,17 +1,6 @@
-/**
-* 
-*
-*
-Apex Class Name      :  NSP_ProjBlngTriggerHelper
-Version              :  1.0                                                                          
-Created Date         :                                                                       
-Description    :        This represents Project trigger helper for billing team 
-*
-*--------------------------------------------------------------------------------------------------  
-*  Developer                   Date                   Description                                    
-* -------------------------------------------------------------------------------------------------  
-*/
-public class NSP_ProjBlngTriggerHelper {
+public with sharing class NSP_ProjBlngTriggerHelper {
+    // test w/ NSP_ProjBlngTriggerHelperTest (81%)
+
     private static final String PROJECT_UPDATE_ORDER='PROJECT_UPDATE_ORDER';
     
     /**
@@ -88,28 +77,11 @@ public class NSP_ProjBlngTriggerHelper {
             List<NSP_Error_Log__c> erlogs= new List<NSP_Error_Log__c>();
             // Call method to publish events
             List<Database.SaveResult> results = EventBus.publish(billingEvents);
-            for (Database.SaveResult sr : results) {
-                if(!sr.isSuccess()){
-                    for(Database.Error err : sr.getErrors()){
-                        NSP_Error_Log__c erlog= new NSP_Error_Log__c();
-                        erlog.NSP_Class__c='NSP_ProjBlngTriggerHelper';
-                        erlog.NSP_Method__c = 'publishBillingEvent';  
-                        erlog.NSP_Description__c=err.getMessage();
-                        erlog.NSP_Object__c='Process_Billing_Event__e';
-                        erlogs.add(erlog);
-                    } 
-                }
-                else{
-                    NSP_Error_Log__c erlog= new NSP_Error_Log__c();
-                    erlog.NSP_Class__c='NSP_ProjBlngTriggerHelper';
-                    erlog.NSP_Method__c = 'publishBillingEvent';
-                    erlog.NSP_Record_Id__c = sr.getId();
-                    erlogs.add(erlog);
-                }
-            }
-            if(erlogs.size()>0){
-                insert erlogs;
-            }
+            NSP_ErrorLogHandler.logResults(
+                NSP_ProjBlngTriggerHelper.class.getName() ,
+                'onProjectDateUpdates' ,
+                results
+            );
         }
     }
     /***********************************************************************************************
@@ -143,7 +115,11 @@ public class NSP_ProjBlngTriggerHelper {
         }
         if(ordersToUpdateMap.values().size()>0){
             List<Database.SaveResult> results = Database.update(ordersToUpdateMap.values(),false);
-            NSP_ErrorLogHandler.logSaveResultsException('NSP_ProjBlngTriggerHelper','updateOrderONProjectUpdates', results); 
+            NSP_ErrorLogHandler.logResults(
+                NSP_ProjBlngTriggerHelper.class.getName() ,
+                'updateOrderONProjectUpdates' ,
+                results
+            );
         }
     }
     /***********************************************************************************************
@@ -173,9 +149,14 @@ public class NSP_ProjBlngTriggerHelper {
                     update ordersToUpdate;
                 }
             }
-        }Catch(Exception ex){
-            NSP_ErrorLogHandler.logSaveException('NSP_ProjectTriggerHelper ', 'updateBackOutOnOrder', ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_ProjBlngTriggerHelper.class.getName() ,
+                'updateBackOutOnOrder' ,
+                e
+            );
         }
     } 
-    
+
 }
+//
