@@ -66,6 +66,41 @@
         <value>-8;-14</value>
     </labels>
     <labels>
+        <fullName>BidApproved_Proposal</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>BidApproved_Proposal</shortDescription>
+        <value>Please ensure Bid is Approved to move to Proposal stage</value>
+    </labels>
+    <labels>
+        <fullName>BidLocked_Analysis</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>BidLocked_Analysis</shortDescription>
+        <value>Please ensure Bid is Locked before moving to Analysis stage</value>
+    </labels>
+    <labels>
+        <fullName>Bid_Generated_in_AIMS</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Bid Generated in AIMS</shortDescription>
+        <value>Bid Generated in AIMS</value>
+    </labels>
+    <labels>
+        <fullName>Bid_Sent_to_Pricing_and_Review</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Bid Sent to Pricing and Review</shortDescription>
+        <value>Bid Sent to Pricing and Review</value>
+    </labels>
+    <labels>
+        <fullName>Business_Profile_Started</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Business Profile Started</shortDescription>
+        <value>Business Profile Started</value>
+    </labels>
+    <labels>
         <fullName>CANNOT_DELETE_ACCOUNT</fullName>
         <language>en_US</language>
         <protected>false</protected>
