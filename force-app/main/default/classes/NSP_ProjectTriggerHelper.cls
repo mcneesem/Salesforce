@@ -427,7 +427,7 @@ public class NSP_ProjectTriggerHelper{
             }
             if ( payrollUser != null
                 && !project.pse__Is_Template__c
-                && project.RecordTypeId == peoProjectRecordTypeId
+                && project.TemplateName__c == 'PEO Termination'
                 && project.NSP_Exclusively_Assign_Owner__c != true
                 )
             {
