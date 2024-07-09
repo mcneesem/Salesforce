@@ -368,9 +368,6 @@ public class NSP_ProjectTasksTriggerHelper {
         List<String> peoTerminationTeamRoles = System.Label.PEO_Termination_Team_Roles.split(';');
         List<String> peoTerminationTaskList = System.Label.PEO_Termination_Tasks.split(';');
         String WRITTENTERMINATION = null;
-        List<User> projectTaskOwnerList = new List<User>();
-        Map<Id,Id> mapofProjectTaskAndOwner = new Map<Id,Id>();
-        Map<Id,User> projectTaskOwnerMap = null;
         
         try{
             if ( peoTerminationTaskList != null
@@ -424,23 +421,9 @@ public class NSP_ProjectTasksTriggerHelper {
                         if (!projectTaskLetterMap.containsKey(projectTask.Id)) {
                             projectTaskLetterMap.put(projectTask.Id, projectTask);
                         }
-                        if(projectTask.OwnerId != null){
-                           mapofProjectTaskAndOwner.put(projectTask.Id,projectTask.OwnerId);
-                       }
                     }
                 }
             }
-            if(!mapofProjectTaskAndOwner.isEmpty()){
-                projectTaskOwnerList = [
-                    SELECT Id , Name , UserRole.Name , Phone , Email
-                    FROM User
-                    WHERE ( Id IN :mapofProjectTaskAndOwner.values() )
-                ];
-            }
-            if(!projectTaskOwnerList.isEmpty()){
-                projectTaskOwnerMap = new Map<Id,User>(projectTaskOwnerList);
-            }
-            
             if (!listOfAccountId.isEmpty()) {  
                 for (Asset eachAsset : [
                             SELECT Id , AccountId , NSP_Reason_for_Term__c , NSP_Anticipated_Date_Of_Termination__c 
@@ -500,8 +483,6 @@ public class NSP_ProjectTasksTriggerHelper {
                         && projectTaskLetterMap.containsKey(pTask.Id)
                         && woActiveList.containsKey(pTask.NSP_AccountId__c)
                         && pTask.Name == WRITTENTERMINATION
-                        && projectTaskOwnerMap != null
-                        && projectTaskOwnerMap.containsKey(pTask.OwnerId)
                         )
                     {
                         String emailNSP_Termination_Team = System.Label.NSP_Termination_Team;
@@ -521,8 +502,7 @@ public class NSP_ProjectTasksTriggerHelper {
                             listOfToAddresses,
                             listOfPayrollMem,
                             woActiveList.get(pTask.NSP_AccountId__c).NSP_Reason_for_Term__c,
-                            woActiveList.get(pTask.NSP_AccountId__c).NSP_Anticipated_Date_Of_Termination__c,
-                            projectTaskOwnerMap.get(pTask.OwnerId)
+                            woActiveList.get(pTask.NSP_AccountId__c).NSP_Anticipated_Date_Of_Termination__c
                         );
                     }
                 }
@@ -537,9 +517,8 @@ public class NSP_ProjectTasksTriggerHelper {
     }
 
     //Letter Received email.
-    public void letterRecievedEmail(String accountName, String accountAIMS, list<String> listOfToAddresses, List<NSP_Account_Team__c> listOfPayrollMem, String ReasonForTerm, Date TermDate, User projectTaskOwner){
+    private void letterRecievedEmail(String accountName, String accountAIMS, list<String> listOfToAddresses, List<NSP_Account_Team__c> listOfPayrollMem, String ReasonForTerm, Date TermDate){
         try{
-            List<Id> payrollmemberList = new List<Id>();
             String dtStr;
             if(TermDate!= null){
                 dtStr = TermDate.format();
@@ -555,13 +534,6 @@ public class NSP_ProjectTasksTriggerHelper {
                 mailBody += payrollTeam.NSP_Role__c+'<br/>';
                 mailBody += payrollTeam.NSP_Email__c+'<br/>';
                 mailBody += payrollTeam.NSP_Work_Phone__c+'<br/>';
-                payrollmemberList.add(payrollTeam.NSP_User__c);
-            }
-            if(projectTaskOwner != null && !payrollmemberList.contains(projectTaskOwner.ID)){
-                mailBody += projectTaskOwner.Name+'<br/>';
-                mailBody += projectTaskOwner.UserRole.Name+'<br/>';
-                mailBody += projectTaskOwner.Email+'<br/>';
-                mailBody += projectTaskOwner.Phone+'<br/>';
             }
             Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
             email.setToAddresses(listOfToAddresses);
