@@ -6519,7 +6519,7 @@
         <editable>true</editable>
         <field>OrderItem.Preserve_Invoice_Group_ID__c</field>
         <readable>true</readable>
-    </fieldPermissions>   
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>OrderItem.ProductCode</field>
