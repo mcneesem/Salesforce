@@ -1,19 +1,16 @@
-/**
-* Represents the OrderItem trigger helper which handles all the logic.
-*/
+// Represents the OrderItem trigger helper which handles all the logic.
 public class NSP_OrderItemTriggerHelper {
     // test w/ NSP_OrderTriggerHelperTest,NSP_OrderItemTriggerHelperTest (77%)
 
     static final string RENEWABLE = 'Renewable';
-    static final String LASSO_PARTNERNAME=System.Label.NSP_Lasso_PartnerName;
-    /**
-    * Single method for before insert operations for Order Item Trigger.
-    * @param newList List of New OrderItems.  
-    * @return void             
-    *                
-    */
+    static final String LASSO_PARTNERNAME = System.Label.NSP_Lasso_PartnerName;
+
+    //
+    // Single method for before insert operations for Order Item Trigger.
+    // @param newList List of New OrderItems.
+    // @return void
+    //
     public void populateFieldValuesOnInsert(List<OrderItem> OrderItemNewList)  {
-    
         List<String> orderIds = new List<String> (); 
         Set<String> billingAccounts= new Set<String>();  
         Set<String> productsByLegalEntity = new Set<String>(System.Label.NSP_InvoiceByLegalEntityProducts.split(','));
@@ -26,7 +23,7 @@ public class NSP_OrderItemTriggerHelper {
                 oli.NSP_Scholarship_End_Date__c = System.today().addMonths(23).toStartOfMonth();
             }
         }
-            if(orderIds.size()>0) {
+        if ( orderIds.size() > 0 ) {
             Map<Id,Order> ordersMap = new Map<Id,Order>([Select Id, Status, AccountId,  NSP_Billing_Account__c, ShippingPostalCode, NSP_Partner__r.Name,blng__BillingAccount__c  FROM Order WHERE Id IN:orderIds]);
             for (OrderItem oi : OrderItemNewList) {
                 if(orderIds.contains(oi.OrderId)) {
@@ -42,20 +39,26 @@ public class NSP_OrderItemTriggerHelper {
                     }
                 }
             }
-            Map<String,blng__PaymentMethod__c> billingActPaymentMap=retrieveACHActivePaymentMethods(billingAccounts);
-            for(OrderItem oi : OrderItemNewList){
-                Order currOrder = ordersMap.get(oi.OrderId);
-                if(ordersMap.containsKey(oi.OrderId) && oi.NSP_Preferred_Payment_Method__c=='ACH' && oi.blng__BillingAccount__c!=null){
-                    oi.NSP_Payment_Method__c=billingActPaymentMap.get(oi.blng__BillingAccount__c)?.Id;
+            Map<String,blng__PaymentMethod__c> billingActPaymentMap=retrieveACHActivePaymentMethods( billingAccounts );
+            for ( OrderItem oi : OrderItemNewList ) {
+                Order currOrder = ordersMap.get( oi.OrderId );
+                if ( ordersMap.containsKey( oi.OrderId )
+                    && ( oi.NSP_Preferred_Payment_Method__c == 'ACH' )
+                    && ( oi.blng__BillingAccount__c != null )
+                    )
+                {
+                    oi.NSP_Payment_Method__c = billingActPaymentMap.get( oi.blng__BillingAccount__c )?.Id;
                 }
-                if(currOrder.NSP_Partner__r.Name != LASSO_PARTNERNAME){
+                if ( ( currOrder.NSP_Partner__r.Name != LASSO_PARTNERNAME )
+                    && ( oi.Preserve_Invoice_Group_ID__c == false )
+                    )
+                    {
                     oi.blng__InvoiceGroupId__c = (String)currOrder.AccountId + (String)currOrder.NSP_Billing_Account__c + (String)currOrder.ShippingPostalCode +(String)oi.NSP_Payment_Method__c;
                 }
             }
-         }
+        }
     }
-    
-    
+
     /**
     * Iterates throught the list of new OrderItem and passes the required attributes to other methods.
     * @param newList List of New OrderItems.  
@@ -172,15 +175,14 @@ public class NSP_OrderItemTriggerHelper {
             } */
             
         }
-        
-    /**
-    * Single method for before update operations for Order Item Trigger.
-    * @param OrderItemNewMap Map of New OrderItems.
-    * @param OrderItemOldMap Map of Old OrderItems.  
-    * @return void             
-    *                
-    */
-    public void beforeUpdateDirector(Map<Id, OrderItem> OrderItemNewMap,Map<Id, OrderItem> OrderItemOldMap) {
+
+    //
+    // Single method for before update operations for Order Item Trigger.
+    // @param OrderItemNewMap Map of New OrderItems.
+    // @param OrderItemOldMap Map of Old OrderItems.
+    // @return void
+    //
+    public void beforeUpdateDirector( Map<Id,OrderItem> OrderItemNewMap , Map<Id,OrderItem> OrderItemOldMap ) {
             Set<String> actionTypeValues = new Set<String>(System.Label.OrderItemRecalcTypes.split(';'));
             Set<Id> statusIdToChange = new Set<Id>();
             Set<Id> paymentMethodChangedLines = new Set<Id>();
@@ -336,27 +338,45 @@ public class NSP_OrderItemTriggerHelper {
                      
                 }
             }
-            // STY-03076 - logic to handle multiple invoice lines grouping
-            if(paymentMethodChangedLines.size()>0){
-                for(OrderItem oi : OrderItemNewMap.values()) {  
-                if(paymentMethodChangedLines.contains(oi.Id)){
-                    if(oi.NSP_Payment_Method__c!=null) {
-                        oi.blng__InvoiceGroupId__c = (String)oi.NSP_Order_Account__c + (String)oi.blng__BillingAccount__c +oi.NSP_Shipping_Postal_Code__c+(String)oi.NSP_Payment_Method__c;
-                    if(oi.SBQQ__QuoteLine__c!=null){
-                        quoteLinesToUpdate.add(new SBQQ__QuoteLine__c(Id=oi.SBQQ__QuoteLine__c,NSP_Payment_Method__c=oi.NSP_Payment_Method__c));
-                    }
+        // STY-03076 - logic to handle multiple invoice lines grouping
+        if ( paymentMethodChangedLines.size() > 0 ) {
+            for ( OrderItem oi : OrderItemNewMap.values() ) {
+                if ( paymentMethodChangedLines.contains( oi.Id ) ) {
+                    if ( ( oi.NSP_Payment_Method__c != null )
+                        && ( oi.Preserve_Invoice_Group_ID__c == false )
+                        )
+                    {
+                        oi.blng__InvoiceGroupId__c = (String)oi.NSP_Order_Account__c
+                            + (String)oi.blng__BillingAccount__c
+                            + oi.NSP_Shipping_Postal_Code__c
+                            + (String)oi.NSP_Payment_Method__c
+                            ;
+                        if ( oi.SBQQ__QuoteLine__c != null ) {
+                            quoteLinesToUpdate.add(
+                                new SBQQ__QuoteLine__c(
+                                    Id=oi.SBQQ__QuoteLine__c ,
+                                    NSP_Payment_Method__c=oi.NSP_Payment_Method__c
+                                )
+                            );
+                        }
                     }
                 }
-                }
             }
-    
-            if (quoteLinesToUpdate.size()>0){ update quoteLinesToUpdate;}
-            if (orderLinesForUsage.size()>0){ NSP_OrderItemFreePeriodCalculator.applyZeroUnitPriceToUsageRecords(orderLinesForUsage);}
-            if(opTerminationMap != null && opTerminationMap.size() > 0){
-                NSP_AssetUpdate.assetTermination(opTerminationMap);
-            }
+        }
+        if ( quoteLinesToUpdate.size() > 0 ) {
+            update quoteLinesToUpdate;
+        }
+        if ( orderLinesForUsage.size() > 0 ) {
+            NSP_OrderItemFreePeriodCalculator.applyZeroUnitPriceToUsageRecords( orderLinesForUsage );
+        }
+        if ( ( opTerminationMap != null )
+            && ( opTerminationMap.size() > 0 )
+            )
+        {
+            NSP_AssetUpdate.assetTermination( opTerminationMap );
+        }
     }
-        
+
         /**
         * Single method for after update operations for Order Item Trigger.
         * @param OrderItemNewMap Map of New OrderItems.
