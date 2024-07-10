@@ -1,6 +1,6 @@
 public class NSP_ProjectTasksTriggerHelper {
     // test w/ NSP_ProjectTasksTriggerHelperTest (80%)
-    
+
     private static final String HUNDRED_PERCENT =  '100%';
     private static final string SYS_ADMIN = 'System Administrator';
     private static final String COBRA_MM='NSP_COBRA';
@@ -368,7 +368,6 @@ public class NSP_ProjectTasksTriggerHelper {
         List<String> peoTerminationTeamRoles = System.Label.PEO_Termination_Team_Roles.split(';');
         List<String> peoTerminationTaskList = System.Label.PEO_Termination_Tasks.split(';');
         String WRITTENTERMINATION = null;
-        
         try{
             if ( peoTerminationTaskList != null
                 && !peoTerminationTaskList.isEmpty()
@@ -444,8 +443,14 @@ public class NSP_ProjectTasksTriggerHelper {
             if (!mapOfProjectAndAccount.values().isEmpty()) {
                 for (NSP_Account_Team__c accTeamMember : [
                             SELECT
-                                Id , NSP_Role__c , NSP_Account__c , NSP_Email__c ,
-                                NSP_First_Name__c , NSP_Last_Name__c , NSP_Work_Phone__c, NSP_User__c
+                                Id ,
+                                NSP_Role__c ,
+                                NSP_Account__c ,
+                                NSP_Email__c ,
+                                NSP_First_Name__c ,
+                                NSP_Last_Name__c ,
+                                NSP_Work_Phone__c ,
+                                NSP_User__c
                             FROM NSP_Account_Team__c
                             WHERE (
                                 NSP_Account__c IN :mapOfProjectAndAccount.values()
@@ -476,7 +481,6 @@ public class NSP_ProjectTasksTriggerHelper {
                     }
                 }
             }
-            
             if (projectTaskLetterMap.size() > 0) {
                 for (pse__Project_Task__c pTask : lProjectTasks) {
                     if ( pTask != null
