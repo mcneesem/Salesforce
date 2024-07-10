@@ -452,17 +452,21 @@ public class NSP_OrderTriggerHelper {
                 for(OrderItem orderItemObj :orderProductList){ 
                     if(orderItemObj.SBQQ__Status__c != NSP_CPQConstants.ORDER_ACTIVATED){
                         //Checks if Order Product is eligible for Anniversay Billing and activates the order product and sets the bill through Date as Satrt Date + (Subscription Term - 1) when Order is reviewed
-                        if(orderItemObj.SBQQ__BillingFrequency__c == NSP_CPQConstants.BLNGFREQ_ANNUAL && orderItemObj.NSP_AnniversaryBlngApplicable__c == true && (orderItemObj.Order.Type == NSP_CPQConstants.QUOTE_TYPE_NEW || orderItemObj.Order.Type == NSP_CPQConstants.QUOTE_TYPE_RENEWAL)){
+                        if ( ( orderItemObj.SBQQ__BillingFrequency__c == NSP_CPQConstants.BLNGFREQ_ANNUAL )
+                            && ( orderItemObj.NSP_AnniversaryBlngApplicable__c == true )
+                            && ( orderItemObj.Order.Type == NSP_CPQConstants.QUOTE_TYPE_NEW )
+                            )
+                        {
                             orderItemObj.ServiceDate = System.today();
                             orderItemObj.SBQQ__Status__c = NSP_CPQConstants.ORDER_ACTIVATED;
-                            if(orderItemObj.SBQQ__SubscriptionTerm__c != null){
-                                orderItemObj.blng__BillThroughDateOverride__c = System.today().addMonths(Integer.valueOf(orderItemObj.SBQQ__SubscriptionTerm__c))-1; 
-                            } 
-                            else if(orderItemObj.EndDate != null){
+                            if ( orderItemObj.SBQQ__SubscriptionTerm__c != null ) {
+                                Integer subscriptionTerm = Integer.valueOf( orderItemObj.SBQQ__SubscriptionTerm__c );
+                                orderItemObj.blng__BillThroughDateOverride__c = ( System.today().addMonths( subscriptionTerm ) - 1 ); 
+                            } else if ( orderItemObj.EndDate != null ) {
                                 orderItemObj.blng__BillThroughDateOverride__c = orderItemObj.EndDate;
                             }
                             orderItemListToUpdate.add(orderItemObj);
-                        } else{
+                        } else {
                             //Activates Order Product whose Order Activation trigger is Immediate
                             if(orderItemObj.NSP_Preferred_Payment_Method__c == null && orderItemObj.NSP_Order_Activation_Trigger__c == NSP_CPQConstants.IMMEDIATE && orderItemObj.Order.Type == NSP_CPQConstants.QUOTE_TYPE_NEW && orderItemObj.Order.NSP_Change_Order_Process_Quote__c == FALSE){
                                 orderItemObj.ServiceDate = System.today();
