@@ -24351,6 +24351,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>NSP_Termination_Form__c.Confirm_File_Upload__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>NSP_Termination_Form__c.Credit_Specialist__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -24767,6 +24772,16 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>NSP_Termination_Form__c.NSP_ZIP__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_Termination_Form__c.Number_of_required_checkboxes__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_Termination_Form__c.Total_Number_of_Files__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
