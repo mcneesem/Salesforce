@@ -682,6 +682,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>NSP_Payroll__c.On_Site_View_Payroll_Paperwork__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NSP_Payroll__c.On_site_Supervisor_Notes_Txt__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>NSP_Payroll__c.User__c</field>
         <readable>true</readable>
     </fieldPermissions>
