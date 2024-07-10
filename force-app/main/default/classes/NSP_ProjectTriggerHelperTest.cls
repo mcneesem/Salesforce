@@ -61,6 +61,10 @@ private class NSP_ProjectTriggerHelperTest {
         
         insert accList;
         
+        NSP_Account_Team__c oAccountTeams = (NSP_Account_Team__c)NSP_TestExtendedDataFactory.createSObject(new NSP_Account_Team__c(), 'NSP_TestDataFactory.accountTeamDefaults', false);
+        oAccountTeams.NSP_Account__c = oAccount1.Id;
+        insert oAccountTeams;
+        
         //Insert ACR record
         NSP_TestHelper.createContact(oAccount.Id, true);
         List<String> acrFields = new List<String>{'Id','ContactId','AccountId','NSP_Community_Access__c'};
@@ -338,13 +342,13 @@ private class NSP_ProjectTriggerHelperTest {
     * ********************************************************************************************/
     @isTest
     private static void updateProjectNameWithoutAccountTest(){
-        
+        Account oAccount = [Select Id, Name from Account WHERE Name = 'Test Account 01' LIMIT 1];
         //crating Project
         pse__Proj__c project = (pse__Proj__c)NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c(), 'NSP_TestDataFactory.ProjectDefaults', false);
         project.Templates_Used__c = 'TEMP USED';
         project.RecordTypeId = peoProjectRecordType;
         project.pse__Start_Date__c = Date.today();
-        project.pse__Account__c = null;
+        project.pse__Account__c = oAccount.Id;
 
         test.startTest();
         //inserting Project
@@ -355,7 +359,7 @@ private class NSP_ProjectTriggerHelperTest {
                             .addFilter('Id', project.id).addLimit(1).build();
         pse__Proj__c updatedProj = Database.query(queryProj);
 
-       System.assertEquals(null + ' - ' +Date.today().month()+'.'+Date.today().day()+'.'+Date.today().year() , updatedProj.Name, 'project name updated with start date');
+       System.assertEquals(null + ' - ' +Date.today().month()+'.'+Date.today().day()+'.'+Date.today().year() + ' - '+oAccount.Name, updatedProj.Name, 'project name updated with start date');
 
     }
     
