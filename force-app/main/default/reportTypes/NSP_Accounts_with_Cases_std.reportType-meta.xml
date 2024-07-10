@@ -3305,6 +3305,11 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>NSP_Subcategory_Picklist__c</field>
+            <table>Account.Cases</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>Subject</field>
             <table>Account.Cases</table>
         </columns>
