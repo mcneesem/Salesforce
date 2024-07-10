@@ -1,21 +1,13 @@
-/*
-*Test class for NSP_OrderManagement
-*@Utpal Utkalit
-*/
+// Test class for NSP_OrderManagement
 @isTest(SeeAllData=false)
-public class NSP_OrderManagementTest {
+private class NSP_OrderManagementTest {
     
-    public static final String goLiveDate = 'Project go-live date';
-    public static final String TEST_PRODUCT = 'Test Product';
+    private static final String goLiveDate = 'Project go-live date';
+    private static final String TEST_PRODUCT = 'Test Product';
     
-    public class myException extends Exception {}
+    private class myException extends Exception {}
     
-    /*
-    *Test setup Data
-    *@Utpal Utkalit
-    */
-@testSetup
-    public static void makeData(){
+    @testSetup private static void makeData(){
          Account acnt=NSP_TestHelper.createAccount(true);
          Opportunity opp=NSP_TestHelper.createOpenOpportunity(acnt.Id,'New Product',true);
          SBQQ__Quote__c quote = NSP_TestHelper.createCPQQuote(acnt.Id,opp.Id,true);
@@ -60,38 +52,23 @@ public class NSP_OrderManagementTest {
         update ctrct;
         
     }
-    
-    /*
-    *Test Method : testGetContractRecord
-    *@Utpal Utkalit
-    */
-     @isTest
-    private static void testGetContractRecord(){
+
+    @isTest private static void testGetContractRecord(){
         Test.startTest();
         List<Account> accList = [SELECT Id FROM Account WHERE Name =: NSP_TestHelper.DEFAULT_COMPANY_NAME LIMIT 10]; //Added WHERE Condition as part of code fix
         List<Contract> contractList=NSP_OrderManagement.getContractRecord(accList[0].Id);
         System.assert(contractList.size() > 0);
         Test.stopTest();
     }
-    
-    /*
-    *Test Method : testGetCurrentUserInfo
-    *@Utpal Utkalit
-    */
-    @isTest
-    private static void testGetCurrentUserInfo(){
+
+    @isTest private static void testGetCurrentUserInfo(){
         Test.startTest();
         User user=NSP_OrderManagement.getCurrentUserInfo();
         System.assert(user != null);
         Test.stopTest();
     }
     
-    /*
-    *Test Method : testUpdateContract
-    *@Utpal Utkalit
-    */
-     @isTest
-    private static void testUpdateContract(){
+    @isTest private static void testUpdateContract(){
         Test.startTest();
         List<Contract> contractList = [SELECT Id FROM Contract WHERE Status = 'Activated' LIMIT 10]; //Added WHERE Condition as part of code fix
         Boolean isContractUpdated= NSP_OrderManagement.updateContract(contractList[0].Id,'Amendment/Supplemental');
@@ -99,12 +76,7 @@ public class NSP_OrderManagementTest {
         Test.stopTest();
     }
 
-    /*
-    *Test Method : testUpdateContractException
-    *@Utpal Utkalit
-    */
-     @isTest
-    private static void testUpdateContractException(){
+    @isTest private static void testUpdateContractException(){
         //For Code coverage
         Boolean isContractUpdated = true;
         Test.startTest();
@@ -116,12 +88,8 @@ public class NSP_OrderManagementTest {
         System.assert(isContractUpdated);
         Test.stopTest();
     }
-    /*
-*Test Method : testcheckAmendmentConditionsApex
-*@Vaibhav Jetli(282854)
-*/
-    @isTest
-    private static void testcheckAmendmentConditionsApex_False(){
+
+    @isTest private static void testcheckAmendmentConditionsApex_False() {
         Boolean ammendmentConditionsStatus;
         Contract con = [SELECT id, NSP_Product_Type__c FROM Contract LIMIT 1];
         con.NSP_Product_Type__c = 'Workforce Acceleration';
@@ -153,10 +121,9 @@ public class NSP_OrderManagementTest {
         Test.stopTest();
         
         system.assertequals(false,ammendmentConditionsStatus);
-        
     }
-    @isTest
-    private static void testcheckAmendmentConditionsApex_True(){
+
+    @isTest private static void testcheckAmendmentConditionsApex_True() {
         Boolean ammendmentConditionsStatus;
         Contract con = [SELECT id, NSP_Product_Type__c FROM Contract LIMIT 1];
         con.NSP_Product_Type__c = 'Organizational Planning';
@@ -177,6 +144,6 @@ public class NSP_OrderManagementTest {
         system.assertequals(true,ammendmentConditionsStatus);
         
     }
-    
-    
+
 }
+//
