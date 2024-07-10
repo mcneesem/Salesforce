@@ -32,7 +32,9 @@ const RL_FIELDS = [
   'Client_utilizing_Insperity_s_TimeStar__c',
   'classing_req_a_new_download_for_Subacc__c',
   'Has_FLSA_team_approved__c',
-  'Day_one_start__c'
+  'Day_one_start__c',
+  'Do_you_pay_non_exempt_employees__c',
+  'NSP_Prepop_Timecards_w_Stndrd_hrs__c'
 ];
 
 const SECTION_FIELDS = [

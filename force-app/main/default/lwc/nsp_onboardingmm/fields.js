@@ -7,7 +7,8 @@ const RL_FIELDS = [
     'EE_enrollments_outside_of_Insperity__c',
     'NSP_remote_EEs_not_working_physical_loc__c',
     'Client_does_business_in_MA_NY_or_VA__c',
-    'Have_EEs_been_notified_of_the_transition__c'
+    'Have_EEs_been_notified_of_the_transition__c',
+    'NSP_separate_pay_document_specify__c'
 ];
 
 const SECTION_FIELDS = [

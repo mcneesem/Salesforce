@@ -1234,6 +1234,21 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Do_you_require_more_than_3_job_cost__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pending</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Documentation_Status__c</picklist>
         <values>
             <fullName>Collected</fullName>
@@ -1252,21 +1267,6 @@
         </values>
         <values>
             <fullName>Requested</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Yes</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>Do_you_require_more_than_3_job_cost__c</picklist>
-        <values>
-            <fullName>No</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Pending</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1526,6 +1526,10 @@
         <picklist>Does_this_client_have_an_AWW__c</picklist>
         <values>
             <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pending</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2189,6 +2193,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Pending</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Yes</fullName>
             <default>false</default>
         </values>
@@ -2425,21 +2433,6 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>Is_there_a_need_for_a_GL_interface__c</picklist>
-        <values>
-            <fullName>No</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Pending</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Yes</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>Is_there_a_need_for_Integra__c</picklist>
         <values>
             <fullName>No</fullName>
@@ -2454,7 +2447,21 @@
             <default>false</default>
         </values>
     </picklistValues>
-    
+    <picklistValues>
+        <picklist>Is_there_a_need_for_a_GL_interface__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pending</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
     <picklistValues>
         <picklist>Is_there_a_need_for_a_subaccount__c</picklist>
         <values>
@@ -4503,17 +4510,6 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>Non_active_non_paid_empl_w_benefits_cov__c</picklist>
-        <values>
-            <fullName>No</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Yes</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>Needed_payroll_entry_allocation__c</picklist>
         <values>
             <fullName>Class</fullName>
@@ -4529,6 +4525,17 @@
         </values>
         <values>
             <fullName>Location</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Non_active_non_paid_empl_w_benefits_cov__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -5356,17 +5363,6 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>What_accounting_software_do_you_use__c</picklist>
-        <values>
-            <fullName>Other</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>QuickBooks</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>Uses_WageWorks_for_commuter_benefit_plan__c</picklist>
         <values>
             <fullName>No</fullName>
@@ -5374,17 +5370,6 @@
         </values>
         <values>
             <fullName>Yes</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>What_is_client_s_ABCP__c</picklist>
-        <values>
-            <fullName>12 weeks</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>26 weeks</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -5400,6 +5385,28 @@
         </values>
         <values>
             <fullName>QuickBooks Online</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>What_accounting_software_do_you_use__c</picklist>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>QuickBooks</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>What_is_client_s_ABCP__c</picklist>
+        <values>
+            <fullName>12 weeks</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>26 weeks</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -5608,6 +5615,10 @@
         <picklist>Would_you_like_automation_general__c</picklist>
         <values>
             <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pending</fullName>
             <default>false</default>
         </values>
         <values>

@@ -62,7 +62,13 @@ const RL_FIELDS = [
   'Will_all_EEs_use_ITA__c',
   'Does_client_offer_paid_holidays__c',
   'NSP_Any_EEs_work_on_holidays__c',
-  'Does_client_offer_floating_holidays__c'
+  'Does_client_offer_floating_holidays__c',
+  'Would_you_like_automation_general__c',
+  'Does_this_client_have_an_AWW__c',
+  'Are_all_EEs_eligible_for_paid_holidays__c',
+  'NSP_If_EE_works_holiday_are_paid_prem__c',
+  'Does_client_have_premium_pay_needs__c',
+  'NSP_Has_hardware_been_ordered__c'
 ];
 
 const PREFILLED_FIELDS = {

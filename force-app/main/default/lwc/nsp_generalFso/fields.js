@@ -28,7 +28,10 @@ const RL_FIELDS = [
   'remove_employee_directory_from_premier__c',
   'All_EEs_paid_under_same_FEIN_currently__c',
   'Client_part_of_entity_w_o_NSP__c',
-  'Sole_Proprietorship_or_partnership__c'
+  'Sole_Proprietorship_or_partnership__c',
+  'Hush_Protocol__c',
+  'Will_the_owner_s_be_on_payroll__c',
+  'Owner_aware_they_will_not_get_W2_wages__c',
 ];
 
 const FIELD_CHANGE_HANDLER_MAPPING = {
