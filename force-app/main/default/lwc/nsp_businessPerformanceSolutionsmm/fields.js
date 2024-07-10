@@ -4,4 +4,8 @@ const SECTION_FIELDS = [
    'NSP_BPS_Notes__c',
 ];
 
-export { SECTION_FIELDS };
+const RL_FIELDS = [
+   'Implementing_biz_Performance_solutions__c'
+];
+
+export { SECTION_FIELDS,RL_FIELDS };

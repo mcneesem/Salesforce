@@ -1,7 +1,7 @@
 import { LightningElement, api, track } from 'lwc';
 import IP_OBJECT from '@salesforce/schema/Implementation_Profile__c';
 import { DYNAMIC_FIELDS } from './dynamicFieldsConfig';
-import { SECTION_FIELDS} from './fields';
+import { SECTION_FIELDS,RL_FIELDS} from './fields';
 
 import * as LABELS from 'c/nsp_implementationLabels';
 import {
@@ -9,7 +9,9 @@ import {
   getFieldStylesByHierarchy,
   isMultiSelectCheckbox,
   isSelectionBox,
-  ANSWERED_CLASS_NAME
+  ANSWERED_CLASS_NAME,
+  RL_FIELD_ACCEPTED_VALUES,
+  RL_CLASS_NAME
 } from 'c/nsp_utils';
 
 export default class Nsp_checkDelivery extends LightningElement {
@@ -87,6 +89,7 @@ export default class Nsp_checkDelivery extends LightningElement {
   addStyleToAnsweredQuestion(target, value) {
     const fieldName = target.dataset.name;
     const elm = this.getCustomLabelElm(fieldName) || target;
+    const isValuePresent = Array.isArray(value) ? !!value.length : !!value;
 
     if (elm) {
       if (isSelectionBox(target)) {
@@ -98,7 +101,20 @@ export default class Nsp_checkDelivery extends LightningElement {
           elm.classList.remove(ANSWERED_CLASS_NAME);
         }
       }
+      const className = this.getLabelClassName(fieldName, value);
+      elm.classList.remove(ANSWERED_CLASS_NAME);
+      elm.classList.remove(RL_CLASS_NAME);
+      if (isValuePresent) {
+          elm.classList.add(className);
+      }
     }
+  }
+
+   getLabelClassName(fieldName, value) {
+    return RL_FIELDS.includes(fieldName) &&
+      RL_FIELD_ACCEPTED_VALUES.includes(value)
+      ? RL_CLASS_NAME
+      : ANSWERED_CLASS_NAME;
   }
 
   getCustomLabelElm(fieldName) {

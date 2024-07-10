@@ -22,6 +22,16 @@ const RL_FIELDS = [
   'Recent_Payroll_Register_Collected__c',
   'Employee_Data_Collection_EDC_collected__c',
   'Owner_not_on_payroll_addendum_collected__c',
+  'Chngs_for_cafeteria_plan_questionnaire__c',
+  'Implementing_biz_Performance_solutions__c',
+  'Is_the_client_coming_from_another_PEO__c',
+  'remove_employee_directory_from_premier__c',
+  'All_EEs_paid_under_same_FEIN_currently__c',
+  'Client_part_of_entity_w_o_NSP__c',
+  'Sole_Proprietorship_or_partnership__c',
+  'Hush_Protocol__c',
+  'Will_the_owner_s_be_on_payroll__c',
+  'Owner_aware_they_will_not_get_W2_wages__c',
 ];
 
 const FIELD_CHANGE_HANDLER_MAPPING = {

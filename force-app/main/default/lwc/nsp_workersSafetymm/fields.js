@@ -1,4 +1,10 @@
-const RL_FIELDS = ['NSP_collected_copies_of_state_WC_policy__c'];
+const RL_FIELDS = [
+  'NSP_collected_copies_of_state_WC_policy__c',
+  'NSP_Immediateworkerscomporsafety_concern__c',
+  'Regulatory_accreditation_inspections__c',
+  'Interested_in_on_site_safety_inspections__c',
+  'NSP_Immediate_need_for_Workers_Comp_Cert__c'
+  ];
 
 const SECTION_FIELDS = [
   'NSP_Immediate_need_for_Workers_Comp_Cert__c',
