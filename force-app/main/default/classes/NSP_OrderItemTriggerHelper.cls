@@ -172,15 +172,14 @@ public class NSP_OrderItemTriggerHelper {
             } */
             
         }
-        
-    /**
-    * Single method for before update operations for Order Item Trigger.
-    * @param OrderItemNewMap Map of New OrderItems.
-    * @param OrderItemOldMap Map of Old OrderItems.  
-    * @return void             
-    *                
-    */
-    public void beforeUpdateDirector(Map<Id, OrderItem> OrderItemNewMap,Map<Id, OrderItem> OrderItemOldMap) {
+
+    //
+    // Single method for before update operations for Order Item Trigger.
+    // @param OrderItemNewMap Map of New OrderItems.
+    // @param OrderItemOldMap Map of Old OrderItems.
+    // @return void
+    //
+    public void beforeUpdateDirector( Map<Id,OrderItem> OrderItemNewMap , Map<Id,OrderItem> OrderItemOldMap ) {
             Set<String> actionTypeValues = new Set<String>(System.Label.OrderItemRecalcTypes.split(';'));
             Set<Id> statusIdToChange = new Set<Id>();
             Set<Id> paymentMethodChangedLines = new Set<Id>();
@@ -336,27 +335,45 @@ public class NSP_OrderItemTriggerHelper {
                      
                 }
             }
-            // STY-03076 - logic to handle multiple invoice lines grouping
-            if(paymentMethodChangedLines.size()>0){
-                for(OrderItem oi : OrderItemNewMap.values()) {  
-                if(paymentMethodChangedLines.contains(oi.Id)){
-                    if(oi.NSP_Payment_Method__c!=null && oi.Preserve_Invoice_Group_ID__c == false) {
-                        oi.blng__InvoiceGroupId__c = (String)oi.NSP_Order_Account__c + (String)oi.blng__BillingAccount__c +oi.NSP_Shipping_Postal_Code__c+(String)oi.NSP_Payment_Method__c;
-                    if(oi.SBQQ__QuoteLine__c!=null){
-                        quoteLinesToUpdate.add(new SBQQ__QuoteLine__c(Id=oi.SBQQ__QuoteLine__c,NSP_Payment_Method__c=oi.NSP_Payment_Method__c));
-                    }
+        // STY-03076 - logic to handle multiple invoice lines grouping
+        if ( paymentMethodChangedLines.size() > 0 ) {
+            for ( OrderItem oi : OrderItemNewMap.values() ) {
+                if ( paymentMethodChangedLines.contains( oi.Id ) ) {
+                    if ( ( oi.NSP_Payment_Method__c != null )
+                        && ( oi.Preserve_Invoice_Group_ID__c == false )
+                        )
+                    {
+                        oi.blng__InvoiceGroupId__c = (String)oi.NSP_Order_Account__c
+                            + (String)oi.blng__BillingAccount__c
+                            + oi.NSP_Shipping_Postal_Code__c
+                            + (String)oi.NSP_Payment_Method__c
+                            ;
+                        if ( oi.SBQQ__QuoteLine__c != null ) {
+                            quoteLinesToUpdate.add(
+                                new SBQQ__QuoteLine__c(
+                                    Id=oi.SBQQ__QuoteLine__c ,
+                                    NSP_Payment_Method__c=oi.NSP_Payment_Method__c
+                                )
+                            );
+                        }
                     }
                 }
-                }
             }
-    
-            if (quoteLinesToUpdate.size()>0){ update quoteLinesToUpdate;}
-            if (orderLinesForUsage.size()>0){ NSP_OrderItemFreePeriodCalculator.applyZeroUnitPriceToUsageRecords(orderLinesForUsage);}
-            if(opTerminationMap != null && opTerminationMap.size() > 0){
-                NSP_AssetUpdate.assetTermination(opTerminationMap);
-            }
+        }
+        if ( quoteLinesToUpdate.size() > 0 ) {
+            update quoteLinesToUpdate;
+        }
+        if ( orderLinesForUsage.size() > 0 ) {
+            NSP_OrderItemFreePeriodCalculator.applyZeroUnitPriceToUsageRecords( orderLinesForUsage );
+        }
+        if ( ( opTerminationMap != null )
+            && ( opTerminationMap.size() > 0 )
+            )
+        {
+            NSP_AssetUpdate.assetTermination( opTerminationMap );
+        }
     }
-        
+
         /**
         * Single method for after update operations for Order Item Trigger.
         * @param OrderItemNewMap Map of New OrderItems.
