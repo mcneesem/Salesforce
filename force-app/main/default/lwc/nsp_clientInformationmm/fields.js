@@ -16,7 +16,8 @@ const RL_FIELDS = [
   'Client_has_Service_Contract_Act_SCA_EEs__c',
   'Have_the_SCA_EEs_been_approved__c',
   'SCA_EEs_get_wages_in_lieu_of_benefits__c',
-  'Can_client_provide_EEO_filing_address__c'
+  'Can_client_provide_EEO_filing_address__c',
+  'NSP_Are_Certified_Payroll_reports_needed__c'
 ];
 
 const FIELD_CHANGE_HANDLER_MAPPING = {

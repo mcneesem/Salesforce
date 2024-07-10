@@ -2605,6 +2605,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Pending</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Yes</fullName>
             <default>false</default>
         </values>
@@ -3261,6 +3265,10 @@
         <picklist>NSP_Does_the_client_have_prior_wages__c</picklist>
         <values>
             <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pending</fullName>
             <default>false</default>
         </values>
         <values>
@@ -4546,6 +4554,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Pending</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Yes</fullName>
             <default>false</default>
         </values>
@@ -5194,6 +5206,10 @@
         <picklist>Semi_monthly_pay_freq_comply_w_state_law__c</picklist>
         <values>
             <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pending</fullName>
             <default>false</default>
         </values>
         <values>

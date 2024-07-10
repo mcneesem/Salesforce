@@ -6,9 +6,11 @@ import {
   getUpdatedFieldVisibility,
   isSelectionBox,
   ANSWERED_CLASS_NAME,
+  RL_FIELD_ACCEPTED_VALUES,
+  RL_CLASS_NAME
 } from 'c/nsp_utils';
 import { DYNAMIC_FIELDS } from './dynamicFieldsConfig';
-import { SECTION_FIELDS, PAY_FREQUENCY_FIELDS, ERROR_TOAST_CONFIG } from './fields';
+import { SECTION_FIELDS, PAY_FREQUENCY_FIELDS, ERROR_TOAST_CONFIG, RL_FIELDS } from './fields';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 export default class Nsp_payFrequencyForm extends LightningElement {
@@ -21,6 +23,7 @@ export default class Nsp_payFrequencyForm extends LightningElement {
   @api disabled;
   @track state = {
     isLoadingFirstTime: true,
+    isRenderingFirstTime : true,
   };
   payFrequencyFields = PAY_FREQUENCY_FIELDS;  
 
@@ -54,6 +57,14 @@ export default class Nsp_payFrequencyForm extends LightningElement {
     if (state.isLoadingFirstTime) {
       state.isLoadingFirstTime = false;
       this.doOneTimeActions();
+    }
+  }
+  renderedCallback(){
+    const { state } = this;
+    if(state.isRenderingFirstTime && this.visibility.Have_credit_services_approved__c) {
+          this.addStyleToPrePopulatedQuestions('Have_credit_services_approved__c', this.existingFieldValues['Have_credit_services_approved__c'].value);
+          this.addStyleToPrePopulatedQuestions('Does_arrearage_comply_with_state_laws__c', this.existingFieldValues['Does_arrearage_comply_with_state_laws__c'].value);
+          state.isRenderingFirstTime = false;
     }
   }
 
@@ -105,7 +116,20 @@ export default class Nsp_payFrequencyForm extends LightningElement {
           elm.classList.remove(ANSWERED_CLASS_NAME);
         }
       }
+      const className1 = this.getLabelClassName(fieldName, value);
+      elm.classList.remove(ANSWERED_CLASS_NAME);
+      elm.classList.remove(RL_CLASS_NAME);
+      if (isValuePresent) {
+          elm.classList.add(className1);
+      }
     }
+  }
+
+  getLabelClassName(fieldName, value) {
+    return RL_FIELDS.includes(fieldName) &&
+      RL_FIELD_ACCEPTED_VALUES.includes(value)
+      ? RL_CLASS_NAME
+      : ANSWERED_CLASS_NAME;
   }
 
   removeValuesFromHiddenFields(fieldName, value) {
