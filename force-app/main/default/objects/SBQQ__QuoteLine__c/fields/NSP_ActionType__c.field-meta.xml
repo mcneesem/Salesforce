@@ -16,41 +16,41 @@
     null ,
     IF(
       NSP_Original_Line__c ,
-      'Amend' ,
+      &apos;Amend&apos; ,
       IF(
         ( SBQQ__Quote__r.NSP_Has_Renewable_Products__c == 0 ) ,
         IF(
-          ( SBQQ__Quantity__c > SBQQ__PriorQuantity__c ) ,
-          'Amend/Upsell' ,
+          ( SBQQ__Quantity__c &gt; SBQQ__PriorQuantity__c ) ,
+          &apos;Amend/Upsell&apos; ,
           IF(
-            ( SBQQ__Quantity__c < SBQQ__PriorQuantity__c ) ,
-            'Amend/Downgrade' ,
-            ''
+            ( SBQQ__Quantity__c &lt; SBQQ__PriorQuantity__c ) ,
+            &apos;Amend/Downgrade&apos; ,
+            &apos;&apos;
           )
         ) ,
-        ''
+        &apos;&apos;
       )
     )
   ) ,
   IF(
     AND(
       ( SBQQ__Source__c != null ) ,
-      ( TEXT( NSP_Action_Type__c ) != '' )
+      NOT( ISBLANK( TEXT( NSP_Action_Type__c ) ) )
     ) ,
     IF(
       NOT( ISBLANK( NSP_Previous_Quantity__c ) ) ,
       IF(
-        ( NSP_Previous_Quantity__c < NSP_Quoted_Quantity__c ) ,
-        'Upsell' ,
+        ( NSP_Previous_Quantity__c &lt; NSP_Quoted_Quantity__c ) ,
+        &apos;Upsell&apos; ,
         IF(
-          ( NSP_Previous_Quantity__c > NSP_Quoted_Quantity__c ) ,
-          'Downgrade' ,
-          ''
+          ( NSP_Previous_Quantity__c &gt; NSP_Quoted_Quantity__c ) ,
+          &apos;Downgrade&apos; ,
+          &apos;&apos;
         )
       ) ,
-      'Add Product'
+      &apos;Add Product&apos;
     ) ,
-    'Add Product'
+    &apos;Add Product&apos;
   )
 )</formula>
     <label>Action Type</label>
