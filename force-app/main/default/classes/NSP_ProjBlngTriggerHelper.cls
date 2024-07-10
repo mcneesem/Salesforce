@@ -122,30 +122,44 @@ public with sharing class NSP_ProjBlngTriggerHelper {
             );
         }
     }
-    /***********************************************************************************************
-* MethodName:   updateBackOutOnOrder
-* Description : This Method updates the Back Out on Order
-* Params:       Map<Id,pse__Proj__c> newProjectMap ,  Map<Id,pse__Proj__c> oldProjectMap
-*return void
-*Date:
-* Author :      CPQ Team
-* ********************************************************************************************/   
-    public static void updateBackOutOnOrder(Map<Id,pse__Proj__c> newProjectMap , Map<Id,pse__Proj__c> oldProjectMap){
-        Set<Id> lostProjectIds= new Set<Id>();
-        List<Order> ordersToUpdate= new List<Order>();
+
+    //
+    // MethodName: updateBackOutOnOrder
+    // Description: This Method updates the Back Out on Order
+    // Params: Map<Id,pse__Proj__c> newProjectMap ,  Map<Id,pse__Proj__c> oldProjectMap
+    // return void
+    //
+    public static void updateBackOutOnOrder( Map<Id,pse__Proj__c> newProjectMap , Map<Id,pse__Proj__c> oldProjectMap ) {
+        Set<Id> lostProjectIds = new Set<Id>();
+        List<Order> ordersToUpdate = new List<Order>();
         try{
-            for(pse__Proj__c proj :newProjectMap.values()){
-                pse__Proj__c oldProj=oldProjectMap.get(proj.Id);
-                if(proj.pse__Project_Status__c=='Close/Lost' && proj.Go_Live_Date__c!= null && proj.Invoice_Ready__c==TRUE){
-                    lostProjectIds.add(proj.Id);
+            for ( pse__Proj__c proj : newProjectMap.values() ) {
+                if ( ( proj.pse__Project_Status__c == 'Close/Lost' )
+                    && ( proj.Go_Live_Date__c != null )
+                    && ( proj.Invoice_Ready__c == true )
+                    )
+                {
+                    lostProjectIds.add( proj.Id );
                 }
             }
-            if(lostProjectIds.size()>0){
-                for(Order orderObj :[SELECT Id,Status,NSP_Back_Out__c FROM Order WHERE NSP_Project__c IN :lostProjectIds AND Status!='Activated']){
-                    Order obj= new Order(Id=orderObj.Id,NSP_Back_Out__c=TRUE);
-                    ordersToUpdate.add(obj);
+            if ( lostProjectIds.size() > 0 ) {
+                for ( Order orderObj : [
+                            SELECT Id , Status,NSP_Back_Out__c
+                            FROM Order
+                            WHERE (
+                                ( NSP_Project__c IN :lostProjectIds )
+                                AND ( Status != 'Activated' )
+                            )
+                        ]
+                    )
+                {
+                    Order obj= new Order(
+                        Id=orderObj.Id ,
+                        NSP_Back_Out__c=true
+                    );
+                    ordersToUpdate.add( obj );
                 }
-                if(ordersToUpdate.size()>0){
+                if ( ordersToUpdate.size() > 0 ) {
                     update ordersToUpdate;
                 }
             }
