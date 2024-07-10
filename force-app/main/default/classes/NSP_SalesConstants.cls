@@ -1,10 +1,12 @@
-/**
-* @Author : Tejas Patkar
-* @description  : Represents the contant class used for sales track.
-* @date 06/11/2021
-* Name : NSP_SalesConstants
-*/
+//
+// @Author : Tejas Patkar
+// @description  : Represents the contant class used for sales track.
+// @date 06/11/2021
+// Name : NSP_SalesConstants
+//
 public class NSP_SalesConstants {
+    // test w/ NSP_ValidateOpportunityStageTest (??%)
+
     //To set lead stage as sales ready
     public static final String LEAD_STAGE_SRL = 'Sales Ready';
     //To set lead stage non Prioritized
