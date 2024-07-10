@@ -1711,11 +1711,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Max_Overdue_Invoice_Date__c</field>
-            <table>Account</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>NSP_Dunning_Status__c</field>
             <table>Account</table>
         </columns>

@@ -2696,11 +2696,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Max_Overdue_Invoice_Date__c</field>
-            <table>Account</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>NSP_Account_Health_Rate_Number__c</field>
             <table>Account</table>
         </columns>
