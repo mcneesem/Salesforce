@@ -322,15 +322,21 @@
         <locationY>1176</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
-            <name>faultMessage</name>
+            <name>faultElement</name>
             <value>
-                <elementReference>$Flow.FaultMessage</elementReference>
+                <stringValue>Send_Email_NSPHardship</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
-            <name>triggeringFlow</name>
+            <name>faultFlow</name>
             <value>
                 <stringValue>Hardship_Case_Creation_Alert</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultMessage</name>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
             </value>
         </inputAssignments>
     </subflows>
