@@ -506,6 +506,16 @@
                 <identifier>RecordNSP_HR_Contact_Email_cField</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.HR_Contact_Notes_Txt__c</fieldItem>
+                <identifier>RecordHR_Contact_Notes_Txt_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-cb912398-0d66-40f5-b1f5-987be844f71b</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -558,6 +568,16 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_HR_Con_Located_Outside_United_States__c</fieldItem>
                 <identifier>RecordNSP_HR_Con_Located_Outside_United_States__cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.View_Payroll_Paperwork__c</fieldItem>
+                <identifier>RecordView_Payroll_Paperwork_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-d859eeb8-7c2d-4f35-80be-2a57f866d5d3</name>

@@ -61,6 +61,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>NSP_Payroll__c.HR_Contact_Notes_Txt__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>NSP_Payroll__c.Most_Recent_Pay_Period_End_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -727,6 +732,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Payroll__c.User__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NSP_Payroll__c.View_Payroll_Paperwork__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

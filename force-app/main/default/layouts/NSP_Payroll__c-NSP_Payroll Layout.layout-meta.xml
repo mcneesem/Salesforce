@@ -162,6 +162,10 @@
                 <behavior>Edit</behavior>
                 <field>NSP_HR_Contact_Best_Time_Of_Day_to_Reach__c</field>
         </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>HR_Contact_Notes_Txt__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -176,6 +180,10 @@
                 <behavior>Edit</behavior>
                 <field>NSP_HR_Contact_Methods__c</field>
         </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>View_Payroll_Paperwork__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
