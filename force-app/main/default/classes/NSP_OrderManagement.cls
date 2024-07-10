@@ -4,12 +4,13 @@ Version              :  1.0
 Created Date         :  AUG 2,2021                                                       
 Function             :  This class is called from 'NSP_OrderManagement' component for Order Management functionality .
 Story                :                                                                            
-Modification Log     :                                                                              
+Modification Log     :  June 6,2024 - Added new method checkAmendmentConditionsApex(282854)                                                                            
 *--------------------------------------------------------------------------------------------------  
 * Developer                   Date                   Description                                    
 * -------------------------------------------------------------------------------------------------  
 
 * Utpal Utkalit            AUG 2,2021               First Iteration
+* Vaibhav Jetli            June 6,2024              checkAmendmentConditionsApex(282854)
 ***************************************************************************************************/
 public class NSP_OrderManagement {
     // test w/ NSP_OrderManagementTest (86%)
@@ -86,4 +87,62 @@ public class NSP_OrderManagement {
         return isContractUpdated;
     }
 
+    @AuraEnabled
+    public static boolean checkAmendmentConditionsApex(String contractId){
+        boolean noError = true;
+        OrderManagementSettings__c triggerSwitch =  OrderManagementSettings__c.getInstance(UserInfo.getUserId());
+        if(!triggerSwitch.CheckAmendmentConditions__c){
+            try{
+                if ( String.isNotBlank( contractId ) && ( contractId InstanceOf Id ) ) {
+                    //fetch the contract and required fields using the contractId param
+                    List<Contract> contracts = [
+                        SELECT Id , NSP_Product_Type__c , AccountId
+                        FROM Contract
+                        WHERE Id = :contractId
+                        LIMIT 1
+                    ];
+                    Contract contract = new Contract();
+                    if(contracts != null && !contracts.isEmpty()){
+                        contract = contracts[0];
+                    }
+                    if(contract !=null){
+                        //get the required field accountId
+                        id accountId = contract.AccountId;
+                        //get multi-select picklist of product type and split
+                        List<String> productTypeList = new List<String>();
+                        if(contract.NSP_Product_Type__c != null){
+                            String productType = contract.NSP_Product_Type__c;
+                            productTypeList = productType.split(';',-2);
+                        }
+                        //get orders in draft/reviewed state and backout as false, with same product type and account
+                        List<Order> listOfOrders = [
+                            SELECT Id , Status , NSP_Back_Out__c , NSP_TerminationDate__c
+                            FROM Order
+                            WHERE (
+                                Contract_Product_Type__c IN :productTypeList
+                                AND AccountId = :accountId
+                                AND Status IN ( 'Draft' , 'Reviewed' )
+                                AND NSP_Back_Out__c = false
+                                AND Subscription_Product_Count__c > 0
+                            )
+                        ];
+                        //if no order returned then pass true(go ahead) otherwise false(error)
+                        if(!listOfOrders.isEmpty()){
+                            noError = False;
+                        }
+                    }
+                }
+            } catch ( Exception e ) {
+                NSP_ErrorLogHandler.logException(
+                    NSP_ImplementationHelper.class.getName() ,
+                    'checkAmendmentConditionsApex' ,
+                    e
+                );
+                throw new AuraHandledException( e.getMessage() );
+            }
+        }
+        return noError;
+    }
+
 }
+//
