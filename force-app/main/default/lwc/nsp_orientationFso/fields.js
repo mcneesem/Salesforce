@@ -12,4 +12,10 @@ const SECTION_FIELDS = [
   'NSP_Orientation_Notes__c',
 ];
 
-export { SECTION_FIELDS };
+const RL_FIELDS=[
+  'Are_there_multiple_worksite_locations__c',
+  'NSP_Is_a_translator_needed__c',
+  'Is_there_a_need_for_a_tech_package__c'
+]
+
+export { SECTION_FIELDS,RL_FIELDS };

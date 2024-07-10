@@ -9,9 +9,11 @@ import {
   isMultiSelectCheckbox,
   isSelectionBox,
   ANSWERED_CLASS_NAME,
-  isNonEmptyArray
+  isNonEmptyArray,
+  RL_CLASS_NAME,
+  RL_FIELD_ACCEPTED_VALUES
 } from 'c/nsp_utils';
-import { SECTION_FIELDS } from './fields';
+import { SECTION_FIELDS,RL_FIELDS } from './fields';
 
 export default class Nsp_orientationFso extends LightningElement {
   @api recordId;
@@ -114,7 +116,21 @@ export default class Nsp_orientationFso extends LightningElement {
           elm.classList.remove(ANSWERED_CLASS_NAME);
         }
       }
+      const className = this.getLabelClassName(fieldName, value);
+
+      elm.classList.remove(ANSWERED_CLASS_NAME);
+      elm.classList.remove(RL_CLASS_NAME);
+      if (isValuePresent) {
+          elm.classList.add(className);
+      }
+
     }
+  }
+  getLabelClassName(fieldName, value) {
+    return RL_FIELDS.includes(fieldName) &&
+      RL_FIELD_ACCEPTED_VALUES.includes(value)
+      ? RL_CLASS_NAME
+      : ANSWERED_CLASS_NAME;
   }
 
   getCustomLabelElm(fieldName) {

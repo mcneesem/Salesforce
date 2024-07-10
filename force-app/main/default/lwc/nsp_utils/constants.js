@@ -13,6 +13,7 @@ const RL_FIELD_ACCEPTED_VALUES = [
   "Requested",
   "Requested - Not Collected",
   "Requested - Not collected",
+  "Pending"
 ];
 
 export {

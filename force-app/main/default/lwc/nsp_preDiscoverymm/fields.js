@@ -1,6 +1,10 @@
 const RL_FIELDS = [
   'Received_Section_125_Questionnaire__c',
   'Gotten_Cvrg_Cert_Gen_Liability_Auto__c',
+  'Any_Special_Agreements_Addendum_in_CSA__c',
+  'Insperity_Empl_contrib_rate_determined__c',
+  'Received_Enrollment_Fee__c',
+  'Will_there_be_benefits_classing__c'
 ];
 
 const SECTION_FIELDS = [

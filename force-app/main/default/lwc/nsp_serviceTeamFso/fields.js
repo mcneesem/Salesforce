@@ -12,4 +12,10 @@ const SECTION_FIELDS = [
   'NSP_Service_team_notes__c',
 ];
 
-export { SECTION_FIELDS };
+const RL_FIELDS = [
+'NSP_Immediate_need_for_Workers_Comp_Cert__c',
+'Client_have_any_urgent_HR_needs__c',
+'Client_expect_chnges_in_the_organization__c'
+];
+
+export { SECTION_FIELDS,RL_FIELDS };
