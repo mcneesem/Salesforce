@@ -53,6 +53,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Asset.NSP_Projected_First_Pay_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Campaign.NSP_Campaign_ID_18__c</field>
         <readable>true</readable>
     </fieldPermissions>
