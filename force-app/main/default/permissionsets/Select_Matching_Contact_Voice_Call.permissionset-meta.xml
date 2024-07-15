@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Select_Matching_Contact_Voice_Call</name>
+    </customPermissions>
+    <description>Grants the Custom Permission to control access to &quot;Select Matching Contact (Voice Call)&quot; components.</description>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.First_Call_Resolution__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <flowAccesses>
+        <enabled>true</enabled>
+        <flow>Select_Matching_Contact_Voice_Call</flow>
+    </flowAccesses>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Select Matching Contact (Voice Call)</label>
+</PermissionSet>
