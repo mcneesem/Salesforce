@@ -189,14 +189,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>NSP_AnyPreparedDocumentForTermination__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>NSP_AnyProvisionInPreparedDocRefersStock__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>NSP_WhoResponsibleForStockEquityPaymt__c</field>
             </layoutItems>
             <layoutItems>
