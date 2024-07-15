@@ -3,6 +3,7 @@
     <channels>
         <channel>sfdc_liveagent</channel>
         <channel>sfdc_livemessage</channel>
+        <channel>sfdc_phone</channel>
     </channels>
     <label>Available</label>
 </ServicePresenceStatus>

@@ -1234,6 +1234,12 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
+                <componentName>support:emailSummaries</componentName>
+                <identifier>support_emailSummaries</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
                 <componentInstanceProperties>
                     <name>tabs</name>
                     <value>tabs</value>

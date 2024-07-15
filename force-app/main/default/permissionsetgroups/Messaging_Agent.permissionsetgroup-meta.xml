@@ -4,7 +4,8 @@
     <hasActivationRequired>false</hasActivationRequired>
     <label>Messaging Agent</label>
     <permissionSets>Messaging_Session_Access</permissionSets>
-    <permissionSets>Service_Presence_Statuses_Access_All</permissionSets>
+    <permissionSets>Service_Presence_Statuses_Base</permissionSets>
+    <permissionSets>Service_Presence_Statuses_Messaging</permissionSets>
     <permissionSets>force__MessagingForInAppAndWebUser</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>

@@ -261,6 +261,12 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
+                <componentName>verifyContactPinMessaging</componentName>
+                <identifier>c_verifyContactPinMessaging</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
                 <componentInstanceProperties>
                     <name>createQuickActionName</name>
                     <value>NewContact</value>
