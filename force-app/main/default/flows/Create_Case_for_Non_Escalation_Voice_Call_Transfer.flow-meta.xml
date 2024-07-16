@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
-    <apiVersion>61.0</apiVersion>
+    <apiVersion>60.0</apiVersion>
     <environments>Default</environments>
-    <interviewLabel>Create Case for Non-Escalation Call {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Create Case for Non-Escalation Call</label>
+    <interviewLabel>Create Case for Non-Escalation Voice Call Transfer {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Create Case for Non-Escalation Voice Call Transfer</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -26,12 +26,19 @@
     <start>
         <locationX>50</locationX>
         <locationY>0</locationY>
-        <filterLogic>1 AND 7 AND ( 2 OR 3 OR 4 OR 5 OR 6)</filterLogic>
+        <filterLogic>( 1 AND 2 AND ( 3 OR 4 OR 5 OR 6 OR 7 ) )</filterLogic>
         <filters>
             <field>CallType</field>
             <operator>EqualTo</operator>
             <value>
                 <stringValue>Transfer</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Contact_Center_Queue__c</field>
+            <operator>IsChanged</operator>
+            <value>
+                <booleanValue>true</booleanValue>
             </value>
         </filters>
         <filters>
@@ -69,27 +76,20 @@
                 <stringValue>Section 125</stringValue>
             </value>
         </filters>
-        <filters>
-            <field>Contact_Center_Queue__c</field>
-            <operator>IsChanged</operator>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </filters>
         <object>VoiceCall</object>
         <recordTriggerType>Update</recordTriggerType>
         <scheduledPaths>
             <connector>
-                <targetReference>Create_Case_for_Transfer_Voice_Call</targetReference>
+                <targetReference>Create_Case_for_Voice_Call_Transfer</targetReference>
             </connector>
             <pathType>AsyncAfterCommit</pathType>
         </scheduledPaths>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <subflows>
-        <name>Create_Case_for_Transfer_Voice_Call</name>
-        <label>Create Case for Transfer Voice Call</label>
+        <name>Create_Case_for_Voice_Call_Transfer</name>
+        <label>Create Case for Voice Call Transfer</label>
         <locationX>308</locationX>
         <locationY>276</locationY>
         <flowName>Voice_Omni_Channel_Flow</flowName>
