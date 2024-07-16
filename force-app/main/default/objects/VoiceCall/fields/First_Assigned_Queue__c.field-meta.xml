@@ -3,55 +3,72 @@
     <fullName>First_Assigned_Queue__c</fullName>
     <externalId>false</externalId>
     <formula>IF(
-    TEXT(CallType) = &apos;Inbound&apos;,
+  TEXT(CallType) = &apos;Inbound&apos; ,
+  IF(
+    Contact_Center_Queue__c = &apos;401K&apos; ,
+    &apos;Contact Center 401K&apos; ,
     IF(
-        Contact_Center_Queue__c = &apos;401K&apos;, &apos;Contact Center 401K&apos;,
+      Contact_Center_Queue__c = &apos;1 Benefit Option&apos; ,
+      &apos;Contact Center Benefits&apos; ,
+      IF(
+        Contact_Center_Queue__c = &apos;Web Support&apos; ,
+        &apos;Contact Center Web Support&apos; ,
         IF(
-            Contact_Center_Queue__c = &apos;1 Benefit Option&apos;, &apos;Contact Center Benefits&apos;,
+          Contact_Center_Queue__c = &apos;5 Employment Verification&apos; ,
+          &apos;Contact Center Employment Verification&apos; ,
+          IF(
+            Contact_Center_Queue__c = &apos;Section 125&apos; ,
+            &apos;Contact Center Section 125&apos; ,
             IF(
-                Contact_Center_Queue__c = &apos;Web Support&apos;, &apos;Contact Center Web Support&apos;,
-                IF(
-                    Contact_Center_Queue__c = &apos;5 Employment Verification&apos;, &apos;Contact Center Employment Verification&apos;,
-                    IF(
-                        Contact_Center_Queue__c = &apos;Section 125&apos;, &apos;Contact Center Section 125&apos;,
-                        IF(
-                            Contact_Center_Queue__c = &apos;401K Core&apos;, &apos;Contact Center 401k Core&apos;,
-                            IF(
-                                Contact_Center_Queue__c = &apos;Escalations&apos;, &apos;Contact Center Escalations&apos;, &apos;&apos;
-                            )
-                        )
-                    )
-                )
+              Contact_Center_Queue__c = &apos;401K Core&apos; ,
+              &apos;Contact Center 401k Core&apos; ,
+              IF(
+                Contact_Center_Queue__c = &apos;Escalations&apos; ,
+                &apos;Contact Center Escalations&apos; ,
+                &apos;&apos;
+              )
             )
+          )
         )
-    ),
-    IF(
-        OR(
-            TEXT(CallType) = &apos;Transfer&apos;,
-            TEXT(CallType) = &apos;Callback&apos;
-        ),
-        IF(
-            First_Assigned_Queue_for_Transfer__c = &apos;401K&apos;, &apos;Contact Center 401K&apos;,
-            IF(
-                First_Assigned_Queue_for_Transfer__c = &apos;1 Benefit Option&apos;, &apos;Contact Center Benefits&apos;,
-                IF(
-                    First_Assigned_Queue_for_Transfer__c = &apos;Web Support&apos;, &apos;Contact Center Web Support&apos;,
-                    IF(
-                        First_Assigned_Queue_for_Transfer__c = &apos;5 Employment Verification&apos;, &apos;Contact Center Employment Verification&apos;,
-                        IF(
-                            First_Assigned_Queue_for_Transfer__c = &apos;Section 125&apos;, &apos;Contact Center Section 125&apos;,
-                            IF(
-                                First_Assigned_Queue_for_Transfer__c = &apos;401K Core&apos;, &apos;Contact Center 401k Core&apos;,
-                                IF(
-                                    First_Assigned_Queue_for_Transfer__c = &apos;Escalations&apos;, &apos;Contact Center Escalations&apos;, &apos;&apos;
-                                )
-                            )
-                        )
-                    )
-                )
-            )
-        ),&apos;&apos;
+      )
     )
+  ) ,
+  IF(
+    OR(
+      TEXT(CallType) = &apos;Transfer&apos; ,
+      TEXT(CallType) = &apos;Callback&apos;
+    ) ,
+    IF(
+      First_Assigned_Queue_for_Transfer__c = &apos;401K&apos; ,
+      &apos;Contact Center 401K&apos; ,
+      IF(
+        First_Assigned_Queue_for_Transfer__c = &apos;1 Benefit Option&apos; ,
+        &apos;Contact Center Benefits&apos; ,
+        IF(
+          First_Assigned_Queue_for_Transfer__c = &apos;Web Support&apos; ,
+          &apos;Contact Center Web Support&apos; ,
+          IF(
+            First_Assigned_Queue_for_Transfer__c = &apos;5 Employment Verification&apos; ,
+            &apos;Contact Center Employment Verification&apos; ,
+            IF(
+              First_Assigned_Queue_for_Transfer__c = &apos;Section 125&apos; ,
+              &apos;Contact Center Section 125&apos; ,
+              IF(
+                First_Assigned_Queue_for_Transfer__c = &apos;401K Core&apos; ,
+                &apos;Contact Center 401k Core&apos; ,
+                IF(
+                  First_Assigned_Queue_for_Transfer__c = &apos;Escalations&apos; ,
+                  &apos;Contact Center Escalations&apos; ,
+                  &apos;&apos;
+                )
+              )
+            )
+          )
+        )
+      )
+    ) ,
+    &apos;&apos;
+  )
 )</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>First Assigned Queue</label>
