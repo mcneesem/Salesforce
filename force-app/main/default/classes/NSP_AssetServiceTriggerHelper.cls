@@ -390,7 +390,7 @@ public class NSP_AssetServiceTriggerHelper {
                 isValid = true;
                 WOAssetMap.put(asset.AccountId,asset );
             }
-            // check if  WO asset is made INACTIVE
+         // check if  WO asset is made INACTIVE
             NSP_Trigger_Switch__c triggerSwitch =  NSP_Trigger_Switch__c.getInstance(UserInfo.getUserId());
             if ( asset.RecordTypeId == WOAssetRecordTypeId
                 && asset.NSP_Account_Status__c != oldMapvalue.NSP_Account_Status__c
@@ -1816,7 +1816,9 @@ Implementation profile related to the account of the created asset
     // Params: List<Asset> assetList
     // ********************************************************************************************
     public static void updateServiceSegmentOnAccount( Set<Id> accountIdSet ) {
-
+        
+	Boolean switchEnabled = AssetTriggerSettings__c.getInstance(UserInfo.getUserId()).isAccountServiceSegmentCheckEnabled__c;
+        
     List<Account> accountToUpdateList = new List<Account>();
     Map<Id, Asset> accIdAssetMap = new Map<Id, Asset>();
     List<String> assetStatusList = new List<String>{NSP_ServiceConstants.ASSETBLACKOUT, NSP_ServiceConstants.TERMINATED};
@@ -1848,7 +1850,7 @@ Implementation profile related to the account of the created asset
                             accIdAssetMap.get(acc.Id).NSP_Product_Segment__c;
                             accountToUpdateList.add(acc);
                         }
-                    }else{
+                    }else if(switchEnabled){
                         for(Account acc : [SELECT Id, NSP_Service_Segment__c FROM Account WHERE Id IN: accountIdSet]){
                             acc.NSP_Service_Segment__c = NSP_ServiceConstants.EMPTY_STRING;
                             accountToUpdateList.add(acc);
@@ -2041,20 +2043,20 @@ Implementation profile related to the account of the created asset
 
     // TO throw error message while editing Asset Recordtype as a BPS User
     private void throwErrorOnSpecificRecordTypesAndField( Asset assetRec , Asset oldAsset , String nonEditableField ) {
-        List<String> nonEditableRETFields = System.Label.NSP_RET_Non_Editable_Fields.split(',');
-        //List of all fields which BPS users cannot edit if Create Asset perm set is not assigned
-        List<String> nonEditableBPSAssetFields = System.Label.NSP_BPS_Non_Editable_Fields.split(',');
-        List<String> nonEditableHardwareLoanerBPSAssetFields = System.Label.NSP_BPS_Non_Hardware_Loaner_Fields.split(',');
+    List<String> nonEditableRETFields = System.Label.NSP_RET_Non_Editable_Fields.split(',');
+    //List of all fields which BPS users cannot edit if Create Asset perm set is not assigned
+    List<String> nonEditableBPSAssetFields = System.Label.NSP_BPS_Non_Editable_Fields.split(',');
+    List<String> nonEditableHardwareLoanerBPSAssetFields = System.Label.NSP_BPS_Non_Hardware_Loaner_Fields.split(',');
         List<String> nonEditableHardwareBPSAssetFields = System.Label.NSP_BPS_Non_Hardware_Fields.split(',');
-        List<String> nonEditableXMLBPSAssetFields = System.Label.NSP_BPS_Non_XML_Fields.split(',');
-        List<String> nonEditableInsuranceServicesBPSAssetFields = System.Label.NSP_BPS_Non_Insurance_Services_Fields.split(',');
-        List<String> nonEditableEmploymentScreeningBPSAssetFields = System.Label.NSP_BPS_Non_Employment_Screening_Fields.split(',');
-        List<String> nonEditableCertifyBPSAssetFields = System.Label.NSP_BPS_Non_Certify_Fields.split(',');
-        List<String> nonEditableApplicantTrackingBPSAssetFields = System.Label.NSP_BPS_Non_Applicant_Tracking_Fields.split(',');
-        List<String> nonEditableTimeAttendanceBPSAssetFields = System.Label.NSP_BPS_Non_Time_Attendance_Fields.split(',');
+    List<String> nonEditableXMLBPSAssetFields = System.Label.NSP_BPS_Non_XML_Fields.split(',');
+    List<String> nonEditableInsuranceServicesBPSAssetFields = System.Label.NSP_BPS_Non_Insurance_Services_Fields.split(',');
+    List<String> nonEditableEmploymentScreeningBPSAssetFields = System.Label.NSP_BPS_Non_Employment_Screening_Fields.split(',');
+    List<String> nonEditableCertifyBPSAssetFields = System.Label.NSP_BPS_Non_Certify_Fields.split(',');
+    List<String> nonEditableApplicantTrackingBPSAssetFields = System.Label.NSP_BPS_Non_Applicant_Tracking_Fields.split(',');
+    List<String> nonEditableTimeAttendanceBPSAssetFields = System.Label.NSP_BPS_Non_Time_Attendance_Fields.split(',');
         List<String> nonEditablePerformanceBPSAssetFields = System.Label.BPS_Non_Performance_Management_Fields.split(',');
         List<String> nonEditableIntegraBPSAssetFields = System.Label.BPS_Integra_Asset_Feilds.split(',');
-        Id assetRecordTypeId = assetRec.RecordTypeId;
+    Id assetRecordTypeId = assetRec.RecordTypeId;
         if ( assetRecordTypeId != null ) {
             Boolean isValid = False;
             if ( ( assetRecordTypeId == HardwareLoanerAsset && nonEditableHardwareLoanerBPSAssetFields.size()>0 && nonEditableHardwareLoanerBPSAssetFields.Contains(nonEditableField) )
