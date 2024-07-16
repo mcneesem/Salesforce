@@ -8,6 +8,7 @@ export default class vi2 extends LightningElement {
     @api recordId;
     accountId;
     @track showPaperless = false;
+    @track showNationalAccount = false;
     @track showNeutral = false;
     @track showSomewhat_fav = false;
     @track showSomewhat_unfav = false;
@@ -30,6 +31,7 @@ export default class vi2 extends LightningElement {
     contract_exempt = nsp_ReportingResource + '/nsp_ReportingResource/images/contract_exempt.png';
     somewhat_fav = nsp_ReportingResource + '/nsp_ReportingResource/images/somewhat_fav.jfif';
     paperless = nsp_ReportingResource + '/nsp_ReportingResource/images/not_paperless.png';
+    nationalAccount = nsp_ReportingResource + '/nsp_ReportingResource/images/nationalAccount.png';
     neutral = nsp_ReportingResource + '/nsp_ReportingResource/images/neutral.jfif';
     somewhat_unfav = nsp_ReportingResource + '/nsp_ReportingResource/images/somewhat_unfav.jfif';
     fav = nsp_ReportingResource + '/nsp_ReportingResource/images/fav.jfif';
@@ -54,7 +56,11 @@ export default class vi2 extends LightningElement {
                 //For Asset Paperless                
                 if (this.accountsDetails[0].assetPaperlessPresent){
                     this.showPaperless = true; 
-                }  
+                }
+                //For Asset National Account
+                if (this.accountsDetails[0].assetNationalAccount){
+                    this.showNationalAccount = true;
+                }    
                 //For workforce sync client                
                 if (this.accountsDetails[0].workSyncClientTrue){
                     this.showWorkSyncClientTrue = true; 

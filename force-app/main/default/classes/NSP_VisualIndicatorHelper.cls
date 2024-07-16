@@ -26,7 +26,7 @@ public without sharing class NSP_VisualIndicatorHelper {
             List<Account> accList = [SELECT Id, NSP_Renewal_Probability__c, NSP_Account_Health__c, NSP_Paperless__c, Name, Industry,
                                             (SELECT Id, NSP_End_Date__c FROM Service_Exceptions__r),
                                             (SELECT Id, NSP_Paperless__c,NSP_Workforce_Sync__c, NSP_Client_Retained_Workers_Comp__c,
-                                                    NSP_Pending_Termination__c, NSP_Service_Package__c, RecordTypeId FROM Assets),
+                                                    NSP_Pending_Termination__c, NSP_Service_Package__c, RecordTypeId, NSP_National_Account_Group__c FROM Assets),
                                             (SELECT Id, Survey_End_Date__c FROM Surveys__r 
                                                     WHERE RecordTypeId =:vocSruveyRecordTypeId AND Survey_End_Date__c !=null Order by Survey_End_Date__c Desc LIMIT 1) 
                                             FROM Account 
@@ -65,6 +65,9 @@ public without sharing class NSP_VisualIndicatorHelper {
                 //To check if any 1 asset is paperless
                 if(atleastAsset.RecordTypeId == woAssetRecordTypeId && atleastAsset.NSP_Paperless__c == NSP_ServiceConstants.VALUE_TRUE) {
                     accWrapper.assetPaperlessPresent = NSP_ServiceConstants.VALUE_TRUE;
+                }
+                if(atleastAsset.RecordTypeId == woAssetRecordTypeId && String.isNotBlank( atleastAsset.NSP_National_Account_Group__c )) {
+                    accWrapper.assetNationalAccount = NSP_ServiceConstants.VALUE_TRUE;
                 }
                 if(atleastAsset.NSP_Service_Package__c != null  && atleastAsset.NSP_Service_Package__c.startswith('WS') ) {
                     accWrapper.workSyncClientTrue = NSP_ServiceConstants.VALUE_TRUE;
@@ -140,6 +143,8 @@ public without sharing class NSP_VisualIndicatorHelper {
         public Boolean serviceExceptionPresent {get;set;}
         @AuraEnabled
         public Boolean assetPaperlessPresent {get;set;}
+        @AuraEnabled
+        public Boolean assetNationalAccount {get;set;}
         @AuraEnabled
         public Boolean workSyncClientTrue {get;set;}  
         @AuraEnabled
