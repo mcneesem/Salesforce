@@ -2,6 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>MidMarket_National_Account__c</fullName>
     <externalId>false</externalId>
+    <inlineHelpText>Set by Sales and may not reflect the National Account information in AIMS.</inlineHelpText>
     <label>MidMarket National Account</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>

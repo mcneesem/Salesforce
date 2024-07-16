@@ -106,6 +106,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>MidMarket_National_Account__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>NSP_Sales_Office__c</field>
             </layoutItems>
             <layoutItems>
