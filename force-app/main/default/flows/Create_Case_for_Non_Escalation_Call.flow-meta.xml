@@ -26,10 +26,7 @@
     <start>
         <locationX>50</locationX>
         <locationY>0</locationY>
-        <connector>
-            <targetReference>Create_Case_for_Transfer_Voice_Call</targetReference>
-        </connector>
-        <filterLogic>1 AND ( 2 OR 3 OR 4 OR 5 OR 6)</filterLogic>
+        <filterLogic>1 AND 7 AND ( 2 OR 3 OR 4 OR 5 OR 6)</filterLogic>
         <filters>
             <field>CallType</field>
             <operator>EqualTo</operator>
@@ -72,16 +69,29 @@
                 <stringValue>Section 125</stringValue>
             </value>
         </filters>
+        <filters>
+            <field>Contact_Center_Queue__c</field>
+            <operator>IsChanged</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
         <object>VoiceCall</object>
         <recordTriggerType>Update</recordTriggerType>
+        <scheduledPaths>
+            <connector>
+                <targetReference>Create_Case_for_Transfer_Voice_Call</targetReference>
+            </connector>
+            <pathType>AsyncAfterCommit</pathType>
+        </scheduledPaths>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <subflows>
         <name>Create_Case_for_Transfer_Voice_Call</name>
         <label>Create Case for Transfer Voice Call</label>
-        <locationX>176</locationX>
-        <locationY>323</locationY>
+        <locationX>308</locationX>
+        <locationY>276</locationY>
         <flowName>Voice_Omni_Channel_Flow</flowName>
         <inputAssignments>
             <name>input_record</name>
