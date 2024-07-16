@@ -23,6 +23,7 @@ export default class Nsp_checkDelivery extends LightningElement {
   @track field = {};
   @track visibility = {};
   @track styles = getFieldStylesByHierarchy(DYNAMIC_FIELDS);
+  isDoubleClick = false;
   @track state = {
     isLoadingFirstTime: true,
   };
@@ -56,6 +57,10 @@ export default class Nsp_checkDelivery extends LightningElement {
     this.field[fieldName] = isMultiSelectCheckbox(target)
       ? value.join(';')
       : value;
+    if(this.isDoubleClick){
+      this.field[fieldName] = undefined;
+      this.isDoubleClick = false;
+    }
     this.updateDependentFieldVisibility(fieldName, value);
     this.addStyleToAnsweredQuestion(target, value);
   }
@@ -156,5 +161,9 @@ export default class Nsp_checkDelivery extends LightningElement {
 
   get label() {
     return LABELS;
+  }
+  handleDoubleClick({ detail, target }){
+    this.isDoubleClick = true;
+    this.handleValueChange({ detail: detail, target: target });
   }
 }

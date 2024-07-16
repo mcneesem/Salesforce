@@ -17,7 +17,8 @@
       record-type-id={recordTypeId}
       value={field.Client_has_existing_retirement_plan__c}
       data-name="Client_has_existing_retirement_plan__c"
-      onchange={handleValueChange}>
+      onchange={handleValueChange}
+      ondblclick={handleDoubleClick}>
     </c-nsp_selection-box>
 
     <div if:true={visibility.Type_of_retirement_plan_client_has_today__c}>
@@ -29,7 +30,8 @@
         value={field.Type_of_retirement_plan_client_has_today__c}
         class={styles.Type_of_retirement_plan_client_has_today__c}
         data-name="Type_of_retirement_plan_client_has_today__c"
-        onchange={handleValueChange}>
+        onchange={handleValueChange}
+        ondblclick={handleDoubleClick}>
       </c-nsp_selection-box>
 
       <c-nsp_selection-box
@@ -41,7 +43,8 @@
         value={field.Emp_deferral_loan_amount__c}
         class={styles.Emp_deferral_loan_amount__c}
         data-name="Emp_deferral_loan_amount__c"
-        onchange={handleValueChange}>
+        onchange={handleValueChange}
+        ondblclick={handleDoubleClick}>
       </c-nsp_selection-box>
         <c-nsp_selection-box
           if:true={visibility.NSP_Is_the_client_working_an_NSP_RS_rep__c}
@@ -52,7 +55,8 @@
           value={field.NSP_Is_the_client_working_an_NSP_RS_rep__c}
           class={styles.NSP_Is_the_client_working_an_NSP_RS_rep__c}
           data-name="NSP_Is_the_client_working_an_NSP_RS_rep__c"
-          onchange={handleValueChange}>
+          onchange={handleValueChange}
+          ondblclick={handleDoubleClick}>
         </c-nsp_selection-box>
         <div class={styles.NSP_Is_the_client_working_an_NSP_RS_rep__c}>
         <c-nsp_employee-data
@@ -75,7 +79,8 @@
         value={field.Client_want_to_begin_401k_w_NSP_setup__c}
         class={styles.Client_want_to_begin_401k_w_NSP_setup__c}
         data-name="Client_want_to_begin_401k_w_NSP_setup__c"
-        onchange={handleValueChange}>
+        onchange={handleValueChange}
+        ondblclick={handleDoubleClick}>
       </c-nsp_selection-box>
 
       <div if:true={visibility.Client_working_with_an_NSP_RS_rep__c}>
@@ -87,7 +92,8 @@
           value={field.Client_working_with_an_NSP_RS_rep__c}
           class={styles.Client_working_with_an_NSP_RS_rep__c}
           data-name="Client_working_with_an_NSP_RS_rep__c"
-          onchange={handleValueChange}>
+          onchange={handleValueChange}
+          ondblclick={handleDoubleClick}>
         </c-nsp_selection-box>
 
         <div class={styles.Client_working_with_an_NSP_RS_rep__c}>

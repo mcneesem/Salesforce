@@ -26,7 +26,7 @@ export default class Nsp_payRollInfo extends LightningElement {
   @track state = {
     isLoadingFirstTime: true,
   };
-
+  isDoubleClick = false;
   _objectInfo;
   @api get objectInfo() {
     return this._objectInfo;
@@ -82,6 +82,10 @@ export default class Nsp_payRollInfo extends LightningElement {
     this.field[fieldName] = isMultiSelectCheckbox(target)
       ? value.join(';')
       : value;
+    if(this.isDoubleClick){
+      this.field[fieldName] = undefined;
+      this.isDoubleClick = false;
+    }
     this.updateDependentFieldVisibility(fieldName, value);
     this.addStyleToAnsweredQuestion(target, value);
   }
@@ -189,5 +193,10 @@ export default class Nsp_payRollInfo extends LightningElement {
 
   get label() {
     return LABELS;
+  }
+  
+  handleDoubleClick({ detail, target }){
+    this.isDoubleClick = true;
+    this.handleValueChange({ detail: detail, target: target });
   }
 }

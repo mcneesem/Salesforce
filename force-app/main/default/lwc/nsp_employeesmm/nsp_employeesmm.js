@@ -23,6 +23,7 @@ export default class Nsp_employeesmm extends LightningElement {
     @track visibility = {};
     @api disabledFields = {};
     @track styles = getFieldStylesByHierarchy(DYNAMIC_FIELDS);
+    isDoubleClick = false;
     @track state = {
         isLoadingFirstTime: true,
     };
@@ -67,6 +68,10 @@ export default class Nsp_employeesmm extends LightningElement {
           this.field[fieldName] = isMultiSelectCheckbox(target)
               ? value.join(";")
               : value;
+          if(this.isDoubleClick){
+            this.field[fieldName] = undefined;
+            this.isDoubleClick = false;
+          }
           this.updateDependentFieldVisibility(fieldName, value);
           this.addStyleToAnsweredQuestion(target, value);
         }catch(error){
@@ -180,5 +185,9 @@ export default class Nsp_employeesmm extends LightningElement {
     
     get helpText(){
         return HELP_TEXT;
+    }
+    handleDoubleClick({ detail, target }){
+      this.isDoubleClick = true;
+      this.handleValueChange({ detail: detail, target: target });
     }
 }

@@ -31,6 +31,7 @@ export default class Nsp_assignmentAndMeetingsFso extends LightningElement {
   };
   @track field = {};
   @track styles = {};
+  isDoubleClick = false;
 
   _objectInfo;
   @api get objectInfo() {
@@ -124,6 +125,10 @@ export default class Nsp_assignmentAndMeetingsFso extends LightningElement {
       this.field[fieldName] = value.length ? value[0] : null;
     } else {
       this.field[fieldName] = value;
+    }
+    if(this.isDoubleClick){
+      this.field[fieldName] = undefined;
+      this.isDoubleClick = false;
     }
     this.addStyleToAnsweredQuestion(target, value);
   }
@@ -223,5 +228,9 @@ export default class Nsp_assignmentAndMeetingsFso extends LightningElement {
       return selectedOption ? selectedOption.label : '';
     }
     return '';
+  }
+  handleDoubleClick({ detail, target }){
+    this.isDoubleClick = true;
+    this.handleValueChange({ detail: detail, target: target });
   }
 }

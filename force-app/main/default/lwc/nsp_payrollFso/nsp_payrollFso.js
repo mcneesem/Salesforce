@@ -41,6 +41,7 @@ export default class Nsp_payrollFso extends LightningElement {
   @track state = {
     isLoadingFirstTime: true,
   };
+  isDoubleClick = false;
 
   _objectInfo;
   @api get objectInfo() {
@@ -131,6 +132,10 @@ export default class Nsp_payrollFso extends LightningElement {
     this.field[fieldName] = isMultiSelectCheckbox(target)
       ? value.join(';')
       : value;
+    if(this.isDoubleClick){
+      this.field[fieldName] = undefined;
+      this.isDoubleClick = false;
+    }
     this.updateDependentFieldVisibility(fieldName, value);
     this.addStyleToAnsweredQuestion(target, value);
     this.publishSyncEvent(fieldName);
@@ -474,5 +479,10 @@ export default class Nsp_payrollFso extends LightningElement {
 
   get checkIfIpisActive() {
     return this.userData?.Profile?.displayValue !== LABELS.SYSTEM_ADMIN && this.fieldValues && this.fieldValues?.NSP_Inactive__c?.value
+  }
+
+  handleDoubleClick({ detail, target }){
+    this.isDoubleClick = true;
+    this.handleValueChange({ detail: detail, target: target });
   }
 }

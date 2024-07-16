@@ -10,7 +10,8 @@
             record-type-id={recordTypeId}
             data-name="Implementing_biz_Performance_solutions__c"
             value={field.Implementing_biz_Performance_solutions__c}
-            onchange={handleValueChange}>
+            onchange={handleValueChange}
+            ondblclick={handleDoubleClick}>
         </c-nsp_selection-box>
         <c-nsp_selection-box disabled={disabledFields.Select_BPSes__c} if:true={visibility.Select_BPSes__c} class={styles.Select_BPSes__c} label={objFields.Select_BPSes__c.label}
             field-api-name="Implementation_Profile__c.Select_BPSes__c"

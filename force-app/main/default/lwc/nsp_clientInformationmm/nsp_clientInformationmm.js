@@ -44,6 +44,7 @@ export default class Nsp_clientInformationmm extends LightningElement {
   @track formattedValue = {};
 
   @track styles = getFieldStylesByHierarchy(DYNAMIC_FIELDS);
+  isDoubleClick = false;
   @track state = {
     isLoadingFirstTime: true,
   };
@@ -223,7 +224,10 @@ export default class Nsp_clientInformationmm extends LightningElement {
           ? value.join(';')
           : value;
       }
-
+      if(this.isDoubleClick){
+        this.field[fieldName] = undefined;
+        this.isDoubleClick = false;
+      }
       this.updateDependentFieldVisibility(fieldName, value);
       this.addStyleToAnsweredQuestion(target, value);
     } catch (error) {
@@ -393,5 +397,9 @@ export default class Nsp_clientInformationmm extends LightningElement {
 
   get checkIfIpisActive(){
     return this.userData?.Profile?.displayValue !== LABELS.SYSTEM_ADMIN && this.fieldValues && this.fieldValues?.NSP_Inactive__c?.value
+  }
+  handleDoubleClick({ detail, target }){
+    this.isDoubleClick = true;
+    this.handleValueChange({ detail: detail, target: target });
   }
 }

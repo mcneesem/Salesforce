@@ -42,6 +42,7 @@ export default class Nsp_payrollmm extends LightningElement {
   @track field = {};
   @track visibility = {};
   @track styles = getFieldStylesByHierarchy(DYNAMIC_FIELDS);
+  isDoubleClick = false;
   @track state = {
     isLoadingFirstTime: true,
   };
@@ -161,6 +162,10 @@ set sectionsData(value){
       this.field[fieldName] = isMultiSelectCheckbox(target)
         ? value.join(';')
         : value;
+      if(this.isDoubleClick){
+        this.field[fieldName] = undefined;
+        this.isDoubleClick = false;
+      }
       this.updateDependentFieldVisibility(fieldName, value);
       this.addStyleToAnsweredQuestion(target, value);
     } catch (error) {
@@ -577,5 +582,9 @@ set sectionsData(value){
 
     this.multiplePay = this.field.NSP_Employees_with_multiple_types_of_pay__c.split(';');
     return this.multiplePay.includes('Piece Rate') && this.field.employeesWorkStates.split(';').includes('CA');
+  }
+  handleDoubleClick({ detail, target }){
+    this.isDoubleClick = true;
+    this.handleValueChange({ detail: detail, target: target });
   }
 }
