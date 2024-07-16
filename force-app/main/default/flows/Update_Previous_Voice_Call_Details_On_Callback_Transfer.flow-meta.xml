@@ -2,17 +2,10 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>61.0</apiVersion>
     <assignments>
-        <name>Assign_values_for_callback_esc_record</name>
-        <label>Assign values for callback/esc record</label>
-        <locationX>50</locationX>
-        <locationY>395</locationY>
-        <assignmentItems>
-            <assignToReference>$Record.CaseId__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>$Record.PreviousCall.CaseId__c</elementReference>
-            </value>
-        </assignmentItems>
+        <name>Copy_Vonage_Queue_from_previous_Voice_Call</name>
+        <label>Copy Vonage Queue from previous Voice Call</label>
+        <locationX>402</locationX>
+        <locationY>587</locationY>
         <assignmentItems>
             <assignToReference>$Record.First_Assigned_Queue_for_Transfer__c</assignToReference>
             <operator>Assign</operator>
@@ -22,27 +15,30 @@
         </assignmentItems>
     </assignments>
     <assignments>
-        <name>Assign_values_for_non_escalation_record</name>
-        <label>Assign values for non-escalation record</label>
-        <locationX>314</locationX>
+        <name>Relate_to_Case_from_previous_Voice_Call</name>
+        <label>Relate to Case from previous Voice Call</label>
+        <locationX>50</locationX>
         <locationY>395</locationY>
         <assignmentItems>
-            <assignToReference>$Record.First_Assigned_Queue_for_Transfer__c</assignToReference>
+            <assignToReference>$Record.CaseId__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>$Record.PreviousCall.Contact_Center_Queue__c</elementReference>
+                <elementReference>$Record.PreviousCall.CaseId__c</elementReference>
             </value>
         </assignmentItems>
+        <connector>
+            <targetReference>Copy_Vonage_Queue_from_previous_Voice_Call</targetReference>
+        </connector>
     </assignments>
     <decisions>
-        <name>check_call_type</name>
-        <label>check call type</label>
-        <locationX>314</locationX>
+        <name>Check_Call_Type_and_Vonage_Queue</name>
+        <label>Check Call Type and Vonage Queue</label>
+        <locationX>402</locationX>
         <locationY>287</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>callback</name>
-            <conditionLogic>1 OR (2 AND (3 OR 4))</conditionLogic>
+            <name>Callback</name>
+            <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.CallType</leftValueReference>
                 <operator>EqualTo</operator>
@@ -50,6 +46,14 @@
                     <stringValue>Callback</stringValue>
                 </rightValue>
             </conditions>
+            <connector>
+                <targetReference>Relate_to_Case_from_previous_Voice_Call</targetReference>
+            </connector>
+            <label>Callback</label>
+        </rules>
+        <rules>
+            <name>Escalation_Transfer</name>
+            <conditionLogic>( 1 AND ( 2 OR 3 ) )</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.CallType</leftValueReference>
                 <operator>EqualTo</operator>
@@ -72,27 +76,14 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Assign_values_for_callback_esc_record</targetReference>
+                <isGoTo>true</isGoTo>
+                <targetReference>Relate_to_Case_from_previous_Voice_Call</targetReference>
             </connector>
-            <label>callback</label>
+            <label>Escalation Transfer</label>
         </rules>
         <rules>
-            <name>transfer_and_non_escalation</name>
+            <name>Non_Escalation_Transfer</name>
             <conditionLogic>or</conditionLogic>
-            <conditions>
-                <leftValueReference>$Record.Contact_Center_Queue__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Web Support</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.Contact_Center_Queue__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>1 Benefit Option</stringValue>
-                </rightValue>
-            </conditions>
             <conditions>
                 <leftValueReference>$Record.Contact_Center_Queue__c</leftValueReference>
                 <operator>EqualTo</operator>
@@ -114,15 +105,29 @@
                     <stringValue>5 Employment Verification</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>$Record.Contact_Center_Queue__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Section 125</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Contact_Center_Queue__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Web Support</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
-                <targetReference>Assign_values_for_non_escalation_record</targetReference>
+                <targetReference>Copy_Vonage_Queue_from_previous_Voice_Call</targetReference>
             </connector>
-            <label>transfer and non-escalation</label>
+            <label>Non-Escalation Transfer</label>
         </rules>
     </decisions>
     <environments>Default</environments>
-    <interviewLabel>Update Previous Call Details on Callback/Transfer {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Update Previous Call Details on Callback/Transfer</label>
+    <interviewLabel>Update Previous Voice Call Details On Callback/Transfer {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Update Previous Voice Call Details On Callback/Transfer</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -143,10 +148,10 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <start>
-        <locationX>188</locationX>
+        <locationX>276</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>check_call_type</targetReference>
+            <targetReference>Check_Call_Type_and_Vonage_Queue</targetReference>
         </connector>
         <filterLogic>1 OR ( 2 AND 3 )</filterLogic>
         <filters>
@@ -174,5 +179,5 @@
         <recordTriggerType>Update</recordTriggerType>
         <triggerType>RecordBeforeSave</triggerType>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
 </Flow>
