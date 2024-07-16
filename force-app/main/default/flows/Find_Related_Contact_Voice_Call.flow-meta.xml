@@ -193,7 +193,7 @@
             <name>X1_or_more</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>get_case_FCR</leftValueReference>
+                <leftValueReference>Get_Case_First_Call_Resolution_Hours</leftValueReference>
                 <operator>IsEmpty</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -301,9 +301,10 @@
     <description>Finds a Contact record related with the phone number for the Messaging User record from the specified Voice Call record.  If the Voice Agent cancels rather than links to a Contact, then no Contact is returned.</description>
     <environments>Default</environments>
     <formulas>
-        <name>FCRHours</name>
+        <description>48 hours in the past.</description>
+        <name>FirstCallResolutionHours</name>
         <dataType>Date</dataType>
-        <expression>NOW() - VALUE({!$Label.FCR_Hours})/24</expression>
+        <expression>NOW() - 48/24</expression>
     </formulas>
     <interviewLabel>Find Related Contact (Voice Call) {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Find Related Contact (Voice Call)</label>
@@ -350,8 +351,8 @@
     </processMetadataValues>
     <processType>IndividualObjectLinkingFlow</processType>
     <recordLookups>
-        <name>get_case_FCR</name>
-        <label>get case FCR</label>
+        <name>Get_Case_First_Call_Resolution_Hours</name>
+        <label>Get Case First Call Resolution Hours</label>
         <locationX>380</locationX>
         <locationY>2138</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
@@ -377,7 +378,7 @@
             <field>CreatedDate</field>
             <operator>GreaterThan</operator>
             <value>
-                <elementReference>FCRHours</elementReference>
+                <elementReference>FirstCallResolutionHours</elementReference>
             </value>
         </filters>
         <filters>
@@ -545,7 +546,7 @@
         <locationX>380</locationX>
         <locationY>2030</locationY>
         <connector>
-            <targetReference>get_case_FCR</targetReference>
+            <targetReference>Get_Case_First_Call_Resolution_Hours</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -635,7 +636,7 @@
             <inputParameters>
                 <name>tableData</name>
                 <value>
-                    <elementReference>get_case_FCR</elementReference>
+                    <elementReference>Get_Case_First_Call_Resolution_Hours</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
