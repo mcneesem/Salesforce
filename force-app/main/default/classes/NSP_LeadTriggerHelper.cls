@@ -81,7 +81,19 @@ public class NSP_LeadTriggerHelper {
             if (leadObject.RecordTypeId == REFERRAL_RECORDTYPE_ID || 
             leadObject.RecordTypeId == SERVICE_REFERRAL_RECORDTYPE_ID || 
             (String.isNotBlank(createdUserName) && externalUsers.contains(createdUserName))) {
-                inboundSolutionsList.add(leadObject);
+
+                //  290445 - Inbound Solutions - Existing Lead Flow
+                if(UserInfo.getUserId().equals(Label.Eloqua_Integration_User_Id)){
+
+                    if( !Label.Eloqua_Lead_Marketing_Priority.split(',').contains(leadObject.Marketing_Priority__c) || 
+                    (String.isNotBlank(leadObject.ownerId) && !Label.Eloqua_Integration_User_Id.equals(leadObject.ownerId) )){ 
+                        inboundSolutionsList.add(leadObject);
+                    }
+                }
+                else{
+                    inboundSolutionsList.add(leadObject);
+                }
+                
             }
 
             //if value Discovery call time is 12 AM , set it to 12 PMto 12 PM.

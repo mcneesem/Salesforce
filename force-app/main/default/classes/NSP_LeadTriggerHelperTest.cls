@@ -1,24 +1,24 @@
 /**
-* Represents test class for lead trigger helper
-*/
+ * Represents test class for lead trigger helper
+ */
 
 @isTest(SeeAllData=false)
 public class NSP_LeadTriggerHelperTest {
     public static final String LEADCONVERTRECORD_EMAIL ='Allstate@Allstate.com';
     public static final String LEADSTATUS ='Nurturing'; // Added as part of code scan fix
     /**
-* Does test data setup
-* @param N/A. 
-* @return void                          
-*/
+     * Does test data setup
+     * @param N/A.
+     * @return void
+     */
     
     @testSetup
     static void testData() {
-
+        
         Lead_Trigger_Settings__c settings = Lead_Trigger_Settings__c.getOrgDefaults();
         settings.AllowStatusChangedToWorking__c = True;
         upsert settings;
-
+        
         //Create custom setting record for lead zip to city Mapping
         NSP_Zip_To_City_Mapping__c zipToCityCustomSetting = new NSP_Zip_To_City_Mapping__c();
         zipToCityCustomSetting.NSP_City__c = 'New York';
@@ -38,33 +38,33 @@ public class NSP_LeadTriggerHelperTest {
         //Creating User
         User userRecord = new User(
             ProfileId = [SELECT Id FROM Profile WHERE Name = 'System Administrator'][0].Id,
-            LastName = 'TestClassUser',
-            Email = 'testuser@insperity.com',
-            Username = 'testuser@test.com' + System.currentTimeMillis(),
-            CompanyName = 'TEST',
-            Title = 'title',
-            Alias = 'alias',
-            TimeZoneSidKey = 'America/Los_Angeles',
-            EmailEncodingKey = 'UTF-8',
-            LanguageLocaleKey = 'en_US',
-            LocaleSidKey = 'en_US'
-        );
+        LastName = 'TestClassUser',
+        Email = 'testuser@insperity.com',
+        Username = 'testuser@test.com' + System.currentTimeMillis(),
+        CompanyName = 'TEST',
+        Title = 'title',
+        Alias = 'alias',
+        TimeZoneSidKey = 'America/Los_Angeles',
+        EmailEncodingKey = 'UTF-8',
+        LanguageLocaleKey = 'en_US',
+        LocaleSidKey = 'en_US'
+            );
         //Inserting users that can be used in the test class data setup
         insert userRecord;
         
         User userRecord1 = new User(
             ProfileId = [SELECT Id FROM Profile WHERE Name = 'Sales Manager'][0].Id,
-            LastName = 'TestClassUser1',
-            Email = 'testuser1@insperity.com',
-            Username = 'testuser1@test.com' + System.currentTimeMillis(),
-            CompanyName = 'TEST',
-            Title = 'title',
-            Alias = 'alias',
-            TimeZoneSidKey = 'America/Los_Angeles',
-            EmailEncodingKey = 'UTF-8',
-            LanguageLocaleKey = 'en_US',
-            LocaleSidKey = 'en_US'
-        );
+        LastName = 'TestClassUser1',
+        Email = 'testuser1@insperity.com',
+        Username = 'testuser1@test.com' + System.currentTimeMillis(),
+        CompanyName = 'TEST',
+        Title = 'title',
+        Alias = 'alias',
+        TimeZoneSidKey = 'America/Los_Angeles',
+        EmailEncodingKey = 'UTF-8',
+        LanguageLocaleKey = 'en_US',
+        LocaleSidKey = 'en_US'
+            );
         //Inserting users that can be used in the test class data setup
         insert userRecord1;
         
@@ -93,7 +93,7 @@ public class NSP_LeadTriggerHelperTest {
         //Inserting account object
         insert accoutObject1;
         
-        //Contact creation        
+        //Contact creation
         Contact contactObject = new Contact();
         contactObject.lastname = 'TestContact';
         contactObject.email = 'test@test.com';
@@ -124,7 +124,7 @@ public class NSP_LeadTriggerHelperTest {
         leadObject.Email = 'testlead1@testlead1.com';
         leadObject.PostalCode = '10001';
         leadObject.NSP_Partner__c =accoutObject.Id;
-        leadObject.NSP_Lead_Stage__c  =null;      
+        leadObject.NSP_Lead_Stage__c  =null;
         leadObject.NSP_Lead_Routing__c = true;
         leadObject.DNB_connect_DUNS_Number__c  = '876543987';
         //Adding lead object to the list
@@ -160,7 +160,7 @@ public class NSP_LeadTriggerHelperTest {
         
         leadObject1.PostalCode = '10001';
         leadObject1.NSP_Partner__c =accoutObject.Id;
-        leadObject1.NSP_Lead_Stage__c  =null;  
+        leadObject1.NSP_Lead_Stage__c  =null;
         leadObject1.NSP_Referred_By_COI__c=contactObject.Id;
         leadObject1.NSP_Referral_Source__c='COI';
         leadObject1.OwnerId = userRecord.Id;
@@ -177,8 +177,8 @@ public class NSP_LeadTriggerHelperTest {
         leadObject2.Email = 'tmp@tmp.com';
         leadObject2.PostalCode = '10001';
         leadObject2.NSP_Partner__c =accoutObject.Id;
-        leadObject2.NumberOfEmployees  =160;  
-        //Adding lead object to the list 
+        leadObject2.NumberOfEmployees  =160;
+        //Adding lead object to the list
         leadList.add(leadObject2);
         
         // Inserting lead object
@@ -221,19 +221,19 @@ public class NSP_LeadTriggerHelperTest {
         leadObject6.NSP_Parent_Lead__c = leadObject5.Id;
         leadObject6.NSP_Lead_Routing__c = true;
         newLeadList.add(leadObject6);
-        insert newLeadList; 
+        insert newLeadList;
     }
     
     
     
     /**
-* Checks the lead stage
-* @param N/A. 
-* @return void                          
-*/
+     * Checks the lead stage
+     * @param N/A.
+     * @return void
+     */
     @isTest
     static void checkLeadStage() {
-        //Querying to get get lead with last name as 
+        //Querying to get get lead with last name as
         List<Lead>  leadList = [SELECT id,nsp_fire_score__c FROM lead WHERE lastname = 'lead'];
         //Setting the fire score to greater than 80
         leadList[0].nsp_fire_score__c = 82;
@@ -258,11 +258,11 @@ public class NSP_LeadTriggerHelperTest {
         update leadRecord;
         Task taskRecord = new Task(
             Subject='Discovery Call Task',
-            NSP_Task_Type__c='Core Sales',
-            NSP_Task_SubType__c='WX Quote',
-            OwnerId=UserInfo.getUserId(),
-            WhoId=leadRecord.Id
-        );
+        NSP_Task_Type__c='Core Sales',
+        NSP_Task_SubType__c='WX Quote',
+        OwnerId=UserInfo.getUserId(),
+        WhoId=leadRecord.Id
+            );
         
         insert taskRecord;
         
@@ -296,12 +296,12 @@ public class NSP_LeadTriggerHelperTest {
     }
     
     /**
-* @Description: This test method is used to cover beforeUpdateDirector method
-* @Created date: 04/29/2022. 
-* @return void             
-*     */           
+     * @Description: This test method is used to cover beforeUpdateDirector method
+     * @Created date: 04/29/2022.
+     * @return void
+     *     */
     @isTest
-    public static void dunsCheckBeforeUpdateTest(){ 
+    public static void dunsCheckBeforeUpdateTest(){
         Lead getLead = [SELECT Id, Company,NSP_DC_SetDate__c, NSP_Product_Interest__c,NumberOfEmployees,PostalCode, NSP_DC_SetTime__c,NSP_Assign_Lead__c FROM Lead 
                         WHERE firstName = 'TestLead113'];
         getLead.DNB_connect_DUNS_Number__c = '';
@@ -311,12 +311,12 @@ public class NSP_LeadTriggerHelperTest {
         system.assertEquals(getLead.DNB_connect_DUNS_Number__c, '');
     }
     /**
-* @Description: This test method is used to cover beforeUpdateDirector method
-* @Created date: 04/29/2022. 
-* @return void             
-*     */   
+     * @Description: This test method is used to cover beforeUpdateDirector method
+     * @Created date: 04/29/2022.
+     * @return void
+     *     */
     @isTest
-    public static void dunsCheckBeforeUpdateMidMarketTest(){ 
+    public static void dunsCheckBeforeUpdateMidMarketTest(){
         Lead getLead = [SELECT Id, Company,NSP_DC_SetDate__c, NSP_Product_Interest__c,NumberOfEmployees,PostalCode, NSP_DC_SetTime__c,NSP_Assign_Lead__c FROM Lead 
                         WHERE firstName = 'TestLead113'];
         getLead.DNB_connect_DUNS_Number__c = '';
@@ -327,12 +327,12 @@ public class NSP_LeadTriggerHelperTest {
         system.assertEquals(getLead.DNB_connect_DUNS_Number__c, '');
     }
     /**
-* @Description: This test method is used to cover beforeUpdateDirector method
-* @Created date: 04/29/2022. 
-* @return void             
-*     */  
+     * @Description: This test method is used to cover beforeUpdateDirector method
+     * @Created date: 04/29/2022.
+     * @return void
+     *     */
     @isTest
-    public static void dunsCheckBeforeUpdateZipCodeTest(){ 
+    public static void dunsCheckBeforeUpdateZipCodeTest(){
         Lead getLead = [SELECT Id, Company,NSP_DC_SetDate__c, NSP_Product_Interest__c,NumberOfEmployees,PostalCode, NSP_DC_SetTime__c,NSP_Assign_Lead__c FROM Lead 
                         WHERE firstName = 'TestLead113'];
         getLead.DNB_connect_DUNS_Number__c = '';
@@ -344,12 +344,12 @@ public class NSP_LeadTriggerHelperTest {
         system.assertEquals(getLead.DNB_connect_DUNS_Number__c, '');
     }
     /**
-* @Description: This test method is used to cover beforeUpdateDirector method
-* @Created date: 04/29/2022. 
-* @return void             
-*     */  
+     * @Description: This test method is used to cover beforeUpdateDirector method
+     * @Created date: 04/29/2022.
+     * @return void
+     *     */
     @isTest
-    public static void dunsCheckBeforeUpdateCompanyTest(){ 
+    public static void dunsCheckBeforeUpdateCompanyTest(){
         Lead getLead = [SELECT Id, Company,NSP_DC_SetDate__c, NSP_Product_Interest__c,NumberOfEmployees,PostalCode, NSP_DC_SetTime__c,NSP_Assign_Lead__c FROM Lead 
                         WHERE Company = 'TestClass'];
         getLead.DNB_connect_DUNS_Number__c = '';
@@ -359,14 +359,14 @@ public class NSP_LeadTriggerHelperTest {
         database.update(getLead);
         Test.stopTest();
         system.assertEquals(getLead.DNB_connect_DUNS_Number__c, '');
-    } 
+    }
     /**
-* @Description: This test method is used to cover beforeUpdateDirector method
-* @Created date: 04/29/2022. 
-* @return void             
-*     */  
+     * @Description: This test method is used to cover beforeUpdateDirector method
+     * @Created date: 04/29/2022.
+     * @return void
+     *     */
     @isTest
-    public static void dunsCheckBeforeUpdateParentLeadTest(){ 
+    public static void dunsCheckBeforeUpdateParentLeadTest(){
         Lead getLead = [SELECT Id, Company,NSP_DC_SetDate__c, NSP_Product_Interest__c,NumberOfEmployees,PostalCode, NSP_DC_SetTime__c,NSP_Assign_Lead__c FROM Lead 
                         WHERE firstName = 'HelloTest'];
         Lead getParentLead = [SELECT Id, Company,NSP_DC_SetDate__c, NSP_Product_Interest__c,NSP_Parent_Lead__c,NumberOfEmployees,PostalCode, NSP_DC_SetTime__c,NSP_Assign_Lead__c FROM Lead 
@@ -377,14 +377,14 @@ public class NSP_LeadTriggerHelperTest {
         database.update(getLead);
         Test.stopTest();
         system.assertEquals(getLead.NumberOfEmployees, 100);
-    } 
+    }
     /**
-* @Description: This test method is used to cover beforeUpdateDirector method
-* @Created date: 04/29/2022. 
-* @return void             
-*     */  
+     * @Description: This test method is used to cover beforeUpdateDirector method
+     * @Created date: 04/29/2022.
+     * @return void
+     *     */
     @isTest
-    public static void dunsCheckBeforeInsertTest(){ 
+    public static void dunsCheckBeforeInsertTest(){
         Account accoutObject = new Account();
         Id partnerRecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('NSP_Partner_Client').getRecordTypeId();
         accoutObject.Name = 'Test Account';
@@ -400,31 +400,31 @@ public class NSP_LeadTriggerHelperTest {
         nLead.Company = 'tmp123';
         nLead.Email = 'tmp@tmp123.com';
         nLead.PostalCode = '10001';
-        nLead.NumberOfEmployees  =160;  
+        nLead.NumberOfEmployees  =160;
         nLead.NSP_Lead_Routing__c = true;
         nLead.DNB_connect_DUNS_Number__c  = '876543987';
         Test.startTest();
         insert nLead;
         Test.stopTest();
         system.assertEquals(nLead.NumberOfEmployees, 160);
-    } 
+    }
     
     @isTest
     public static void salesOfficetest()
     {
         User currentUser = [SELECT Id,NSP_SalesDivision__c,NSP_Sales_Office__c,NSP_SalesRegion__c from user where Id =:UserInfo.getUserId()];
-         currentUser.NSP_Sales_Office__c = '301';
-         currentUser.NSP_SalesRegion__c = 'Central 1';
-         currentUser.NSP_SalesDivision__c = 'Central';
-         update currentUser;
-
-         NSP_Sales_Office_Mapping__c officeMapping = new NSP_Sales_Office_Mapping__c();
+        currentUser.NSP_Sales_Office__c = '301';
+        currentUser.NSP_SalesRegion__c = 'Central 1';
+        currentUser.NSP_SalesDivision__c = 'Central';
+        update currentUser;
+        
+        NSP_Sales_Office_Mapping__c officeMapping = new NSP_Sales_Office_Mapping__c();
         officeMapping.NSP_Sales_Office__c = '1081';
         officeMapping.NSP_Sales_Division__c = 'Central';
         officeMapping.NSP_Sales_Region__c = 'Central 1';
         officeMapping.NSP_Start_Date__c = system.today()-1;
         officeMapping.NSP_End_Date__c = system.today()+100;
-        insert officeMapping; 
+        insert officeMapping;
         
         Test.startTest();
         Lead nLead = new Lead();
@@ -434,10 +434,10 @@ public class NSP_LeadTriggerHelperTest {
         nLead.Company = 'tmp123';
         nLead.Email = 'tmp@tmp123.com';
         nLead.PostalCode = '10001';
-        nLead.NumberOfEmployees  =160;  
+        nLead.NumberOfEmployees  =160;
         nLead.NSP_Lead_Routing__c = true;
         nLead.DNB_connect_DUNS_Number__c  = '876543987';
-       
+        
         insert nLead;
         
         nLead.NSP_Sales_Office__c = '1081';
@@ -445,68 +445,68 @@ public class NSP_LeadTriggerHelperTest {
         Test.stopTest();
     }
     
-
-/* Ticket 582488
-* author           | Date              | Description
-* -------------------------------------------------------------------------------------
-* Harsha Khiroya      08/08/2022           Created this method - test method for admin user
-*/    
+    
+    /* Ticket 582488
+     * author           | Date              | Description
+     * -------------------------------------------------------------------------------------
+     * Harsha Khiroya      08/08/2022           Created this method - test method for admin user
+     */
     @isTest
     static void testLeadDeleteByAdmin() {
-      User userRecord1 = [select id from User WHERE LastName = 'TestClassUser1'];
+        User userRecord1 = [select id from User WHERE LastName = 'TestClassUser1'];
         List<Lead>  leadList = [SELECT id,nsp_fire_score__c FROM lead WHERE lastname = 'lead'];
         // Start Test
         Test.startTest();
-        	delete leadList[0];   
+        delete leadList[0];
         Test.stopTest();
         system.assertNotEquals(null,leadList);
- 	}
-
-/* Ticket 582488
-* author           | Date              | Description
-* -------------------------------------------------------------------------------------
-* Harsha Khiroya      08/08/2022           Created this method - test method for non admin user(sales manager here)
-*/
+    }
+    
+    /* Ticket 582488
+     * author           | Date              | Description
+     * -------------------------------------------------------------------------------------
+     * Harsha Khiroya      08/08/2022           Created this method - test method for non admin user(sales manager here)
+     */
     @isTest
     static void testLeadDeleteByNonAdmin() {
-      User userRecord1 = [select id from User WHERE LastName = 'TestClassUser1'];
+        User userRecord1 = [select id from User WHERE LastName = 'TestClassUser1'];
         List<Lead>  leadList = [SELECT id,nsp_fire_score__c FROM lead WHERE lastname = 'lead'];
         // Start Test
         Test.startTest();
         system.runAs(userRecord1){
             try{
-        		delete leadList; 
+                delete leadList;
             }catch(Exception ex){
                 system.assertNotEquals(null, ex);
             }
         }
         Test.stopTest();
         
- 	}
-
-        /**
-* @Description: This test method describes about when Service Referral Lead is created it should get assigned to Inbound Solutions Queue
-* @Created date: 11/08/2022. 
-* @Story : STY-03751
-* @return void             
-*     */  
-@isTest
-static void serviceReferralLeadCreationTest() {
-    List<Group> inBoundSolutionsQueue = [SELECT Id,DeveloperName,name FROM Group WHERE Type = 'Queue' AND DeveloperName = :System.label.NSP_DEVELOPERNAME_INBOUNDSOLUTIONS];
-    Lead nLead = new Lead();
-    nLead.firstname='HelloTest123';
-    nLead.lastname='Employee123';
-    nLead.NSP_Product_Interest__c='Payroll & Human Capital Management(Workforce Acceleration)';
-    nLead.Company = 'tmp123';
-    nLead.Email = 'tmp@tmp123.com';
-    nLead.recordTypeId = NSP_LeadTriggerHelper.SERVICE_REFERRAL_RECORDTYPE_ID;
-    Test.startTest();
-    insert nLead;
-    Test.stopTest();
-    Lead assertLead = [SELECT Id, OwnerId From Lead WHERE Id =: nLead.Id];
-    system.assertEquals(assertLead.Ownerid, inBoundSolutionsQueue[0].id); // Checking whether Created lead is assigned to Inbound Solutions Queue
-}
-
+    }
+    
+    /**
+     * @Description: This test method describes about when Service Referral Lead is created it should get assigned to Inbound Solutions Queue
+     * @Created date: 11/08/2022.
+     * @Story : STY-03751
+     * @return void
+     *     */
+    @isTest
+    static void serviceReferralLeadCreationTest() {
+        List<Group> inBoundSolutionsQueue = [SELECT Id,DeveloperName,name FROM Group WHERE Type = 'Queue' AND DeveloperName = :System.label.NSP_DEVELOPERNAME_INBOUNDSOLUTIONS];
+        Lead nLead = new Lead();
+        nLead.firstname='HelloTest123';
+        nLead.lastname='Employee123';
+        nLead.NSP_Product_Interest__c='Payroll & Human Capital Management(Workforce Acceleration)';
+        nLead.Company = 'tmp123';
+        nLead.Email = 'tmp@tmp123.com';
+        nLead.recordTypeId = NSP_LeadTriggerHelper.SERVICE_REFERRAL_RECORDTYPE_ID;
+        Test.startTest();
+        insert nLead;
+        Test.stopTest();
+        Lead assertLead = [SELECT Id, OwnerId From Lead WHERE Id =: nLead.Id];
+        system.assertEquals(assertLead.Ownerid, inBoundSolutionsQueue[0].id); // Checking whether Created lead is assigned to Inbound Solutions Queue
+    }
+    
     @isTest private static void testAllowStatusChangedToWorking() {
         List<String> allowedUserRoleNames = Label.MM_AND_BPC_USERROLE.split( ',' ); // Custom Label: MidMarket Administrator,MidMarket Sales Leader,Business Performance Consultant
         List<User> records = [
@@ -545,5 +545,50 @@ static void serviceReferralLeadCreationTest() {
             Test.stopTest();
         }
     }
+    
+    @isTest
+    static void testEloquaLeadInboundSolutions() {
+        
+        User eloquaUser = [select id from User WHERE id =: Label.Eloqua_Integration_User_Id ];
+        List<Group> inBoundSolutionsQueue = [SELECT Id FROM Group WHERE Type = 'Queue' AND DeveloperName = :System.label.NSP_DEVELOPERNAME_INBOUNDSOLUTIONS];
+        
+        // Start Test
+        Test.startTest();
+        system.runAs(eloquaUser){
+            try{
+                
+                List <Lead> leads = new  List <Lead>();
+                
+                //  Lead should not be assigned to Inbound Solutions
+                Lead lead1 = new  Lead();
+                lead1.Marketing_Priority__c = 'High - General';
+                lead1.firstName = 'Test1';
+                lead1.lastName = 'Test1';
+                lead1.email = 'myemail1@yahoo.com';
+                lead1.phone = '999999';
+                lead1.ownerId = Label.Eloqua_Integration_User_Id;
+                leads.add(lead1);
+                
+                //  Lead should be assigned to Inbound Solutions
+                Lead lead2 = new  Lead();
+                lead2.Marketing_Priority__c = 'High - Direct';
+                lead2.firstName = 'Test2';
+                lead2.lastName = 'Test2';
+                lead2.email = 'myemail2@yahoo.com';
+                lead2.phone = '999999';
+                leads.add(lead2);
+                
+                insert leads;
+
+                system.assertNotEquals(lead1.Ownerid, inBoundSolutionsQueue[0].id);
+                system.assertEquals(lead2.Ownerid, inBoundSolutionsQueue[0].id);        
+                
+            }catch(Exception ex){
+                system.assertNotEquals(null, ex);
+            }
+        }
+        Test.stopTest();
+    }
+    
 }
 //
