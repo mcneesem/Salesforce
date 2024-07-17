@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>work_performed_the_same_as_the_rest_year__c</fullName>
     <externalId>false</externalId>
-    <label>work performed the same as the rest year</label>
+    <label>Work performed the same as the rest year</label>
     <required>false</required>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
