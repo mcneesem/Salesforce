@@ -23,14 +23,38 @@ public without sharing class NSP_VisualIndicatorHelper {
 
             Id vocSruveyRecordTypeId = Schema.SObjectType.NSP_Survey__c.getRecordTypeInfosByDeveloperName().get('VOC').getRecordTypeId();
 
-            List<Account> accList = [SELECT Id, NSP_Renewal_Probability__c, NSP_Account_Health__c, NSP_Paperless__c, Name, Industry,
-                                            (SELECT Id, NSP_End_Date__c FROM Service_Exceptions__r),
-                                            (SELECT Id, NSP_Paperless__c,NSP_Workforce_Sync__c, NSP_Client_Retained_Workers_Comp__c,
-                                                    NSP_Pending_Termination__c, NSP_Service_Package__c, RecordTypeId, NSP_National_Account_Group__c FROM Assets),
-                                            (SELECT Id, Survey_End_Date__c FROM Surveys__r 
-                                                    WHERE RecordTypeId =:vocSruveyRecordTypeId AND Survey_End_Date__c !=null Order by Survey_End_Date__c Desc LIMIT 1) 
-                                            FROM Account 
-                                            WHERE Id = :accId];
+            List<Account> accList = [
+                SELECT
+                    Id ,
+                    Name ,
+                    Industry ,
+                    NSP_Account_Health__c ,
+                    NSP_Paperless__c ,
+                    NSP_Renewal_Probability__c ,
+                    (
+                        SELECT Id , NSP_End_Date__c
+                        FROM Service_Exceptions__r
+                    ) ,
+                    (
+                        SELECT
+                            Id , NSP_Paperless__c , NSP_Workforce_Sync__c ,
+                            NSP_Client_Retained_Workers_Comp__c , NSP_Pending_Termination__c ,
+                            NSP_Service_Package__c , RecordTypeId , NSP_National_Account_Group__c
+                        FROM Assets
+                    ) ,
+                    (
+                        SELECT Id , Survey_End_Date__c
+                        FROM Surveys__r
+                        WHERE (
+                            ( RecordTypeId = :vocSruveyRecordTypeId )
+                            AND ( Survey_End_Date__c != null )
+                        )
+                        ORDER BY Survey_End_Date__c DESC
+                        LIMIT 1
+                    ) 
+                FROM Account 
+                WHERE ( Id = :accId )
+            ];
             
             VisualIndicatorWrapper accWrapper = new VisualIndicatorWrapper();
                             
