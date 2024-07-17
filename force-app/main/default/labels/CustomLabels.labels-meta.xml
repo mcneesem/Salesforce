@@ -220,13 +220,6 @@
         <value>There is already an existing Payroll Datasheet record for this Sub Client.</value>
     </labels>
     <labels>
-        <fullName>FCR_Hours</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>FCR Hours</shortDescription>
-        <value>48</value>
-    </labels>
-    <labels>
         <fullName>FSOImplementationProject</fullName>
         <language>en_US</language>
         <protected>false</protected>
