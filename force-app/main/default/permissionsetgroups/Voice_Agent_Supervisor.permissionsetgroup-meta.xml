@@ -4,6 +4,7 @@
     <hasActivationRequired>false</hasActivationRequired>
     <label>Voice Agent Supervisor</label>
     <permissionSets>Omni_Supervisor</permissionSets>
+    <permissionSets>Work_Summary_Visibility</permissionSets>
     <permissionSets>force__EinsteinGPTWorkSummaries</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>
