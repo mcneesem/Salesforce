@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>61.0</apiVersion>
+    <assignments>
+        <name>Copy_Vonage_Queue_from_previous_Voice_Call</name>
+        <label>Copy Vonage Queue from previous Voice Call</label>
+        <locationX>402</locationX>
+        <locationY>587</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.First_Assigned_Queue_for_Transfer__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.PreviousCall.Contact_Center_Queue__c</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Relate_to_Case_from_previous_Voice_Call</name>
+        <label>Relate to Case from previous Voice Call</label>
+        <locationX>50</locationX>
+        <locationY>395</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.CaseId__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.PreviousCall.CaseId__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Copy_Vonage_Queue_from_previous_Voice_Call</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>Check_Call_Type_and_Vonage_Queue</name>
+        <label>Check Call Type and Vonage Queue</label>
+        <locationX>402</locationX>
+        <locationY>287</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Callback</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.CallType</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Callback</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Relate_to_Case_from_previous_Voice_Call</targetReference>
+            </connector>
+            <label>Callback</label>
+        </rules>
+        <rules>
+            <name>Escalation_Transfer</name>
+            <conditionLogic>( 1 AND ( 2 OR 3 ) )</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.CallType</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Transfer</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Contact_Center_Queue__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Escalations</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Contact_Center_Queue__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>401K Core</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <isGoTo>true</isGoTo>
+                <targetReference>Relate_to_Case_from_previous_Voice_Call</targetReference>
+            </connector>
+            <label>Escalation Transfer</label>
+        </rules>
+        <rules>
+            <name>Non_Escalation_Transfer</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Contact_Center_Queue__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>401K</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Contact_Center_Queue__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Section 125</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Contact_Center_Queue__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>5 Employment Verification</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Contact_Center_Queue__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Section 125</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Contact_Center_Queue__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Web Support</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Copy_Vonage_Queue_from_previous_Voice_Call</targetReference>
+            </connector>
+            <label>Non-Escalation Transfer</label>
+        </rules>
+    </decisions>
+    <environments>Default</environments>
+    <interviewLabel>Update Previous Voice Call Details On Callback/Transfer {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Update Previous Voice Call Details On Callback/Transfer</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>276</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Check_Call_Type_and_Vonage_Queue</targetReference>
+        </connector>
+        <filterLogic>1 OR ( 2 AND 3 )</filterLogic>
+        <filters>
+            <field>CallType</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Callback</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>CallType</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Transfer</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Transfer_Queue__c</field>
+            <operator>IsChanged</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <object>VoiceCall</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Draft</status>
+</Flow>
