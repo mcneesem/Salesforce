@@ -5937,7 +5937,7 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>work_performed_the_same_as_the_rest_year__c</picklist>
+        <picklist>Work_performed_the_same_as_the_rest_year__c</picklist>
         <values>
             <fullName>Different</fullName>
             <default>false</default>
