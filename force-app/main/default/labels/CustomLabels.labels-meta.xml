@@ -136,6 +136,20 @@
         <value>District Administrator,District Manager</value>
     </labels>
     <labels>
+        <fullName>Describe_the_type_of_work_that_is_different_than_work_normally_performed</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Describe the type of work that is different than work normally performed</shortDescription>
+        <value>Describe the type of work that is different than work normally performed.</value>
+    </labels>
+    <labels>
+        <fullName>Do_the_employee_s_work_more_than_6_months</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Do the employee’s work more than 6 months</shortDescription>
+        <value>Do the employee’s work more than 6 months in a calendar year?</value>
+    </labels>
+    <labels>
         <fullName>DoesTheClientOfferStockPurchasePlan</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -302,6 +316,27 @@
         <protected>false</protected>
         <shortDescription>Is_payroll_entry_itemized_or_simple_entry</shortDescription>
         <value>Is payroll entry itemized or simple entry?</value>
+    </labels>
+    <labels>
+        <fullName>Is_the_Employee_an_Intern</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Is the Employee an Intern?</shortDescription>
+        <value>Is the Employee an Intern?</value>
+    </labels>
+    <labels>
+        <fullName>Is_the_work_performed_the_same_as_the_rest_of_the_year</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Is the work performed the same as the rest of the year</shortDescription>
+        <value>Is the work performed the same as the rest of the year or different?</value>
+    </labels>
+    <labels>
+        <fullName>Is_the_work_performed_typically_the_same_months_each_year</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Is the work performed typically the same months each year</shortDescription>
+        <value>Is the work performed typically the same months each year?</value>
     </labels>
     <labels>
         <fullName>Is_there_a_need_for_Integra_c</fullName>
@@ -6360,6 +6395,27 @@ Climate Plus: https://nexus.insperity.com/groups/38605/posts/3272612-climate-plu
         <protected>false</protected>
         <shortDescription>What_accounting_software_do_you_use</shortDescription>
         <value>What accounting software do you use?</value>
+    </labels>
+    <labels>
+        <fullName>What_months_does_the_client_increase_their_staff</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>What months does the client increase their staff</shortDescription>
+        <value>What months does the client increase their staff to meet their business demands?</value>
+    </labels>
+    <labels>
+        <fullName>What_months_is_the_Intern_in_school</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>What months is the Intern in school?</shortDescription>
+        <value>What months is the Intern in school?</value>
+    </labels>
+    <labels>
+        <fullName>What_months_is_the_Intern_working</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>What months is the Intern working?</shortDescription>
+        <value>What months is the Intern working?</value>
     </labels>
     <labels>
         <fullName>What_is_client_s_Active_Benefits_Continuation_Period_ABCP</fullName>
