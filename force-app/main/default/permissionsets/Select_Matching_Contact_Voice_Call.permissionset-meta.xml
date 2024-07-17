@@ -7,6 +7,10 @@
     <description>Grants the Custom Permission to control access to &quot;Select Matching Contact (Voice Call)&quot; components.</description>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Case.Case_Number_Hyperlink__c</field>
+        <readable>true</readable>
+    </fieldPermissions><fieldPermissions>
+        <editable>false</editable>
         <field>Case.First_Call_Resolution__c</field>
         <readable>true</readable>
     </fieldPermissions>
