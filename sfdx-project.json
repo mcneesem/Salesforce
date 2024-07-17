@@ -7,6 +7,6 @@
   ],
   "name": "insperity",
   "namespace": "",
-  "sfdcLoginUrl": "https://test.salesforce.com/",
-  "sourceApiVersion": "59.0"
+  "sfdcLoginUrl": "https://insperity--devservb.sandbox.lightning.force.com/",
+  "sourceApiVersion": "60.0"
 }

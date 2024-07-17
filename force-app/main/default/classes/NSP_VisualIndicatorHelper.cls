@@ -39,7 +39,7 @@ public without sharing class NSP_VisualIndicatorHelper {
                         SELECT
                             Id , NSP_Paperless__c , NSP_Workforce_Sync__c ,
                             NSP_Client_Retained_Workers_Comp__c , NSP_Pending_Termination__c ,
-                            NSP_Service_Package__c , RecordTypeId , NSP_National_Account_Group__c
+                            NSP_Service_Package__c , RecordTypeId , NSP_National_Account__c
                         FROM Assets
                     ) ,
                     (
@@ -90,7 +90,7 @@ public without sharing class NSP_VisualIndicatorHelper {
                 if(atleastAsset.RecordTypeId == woAssetRecordTypeId && atleastAsset.NSP_Paperless__c == NSP_ServiceConstants.VALUE_TRUE) {
                     accWrapper.assetPaperlessPresent = NSP_ServiceConstants.VALUE_TRUE;
                 }
-                if(atleastAsset.RecordTypeId == woAssetRecordTypeId && String.isNotBlank( atleastAsset.NSP_National_Account_Group__c )) {
+                if(atleastAsset.RecordTypeId == woAssetRecordTypeId && atleastAsset.NSP_National_Account__c == NSP_ServiceConstants.VALUE_TRUE) {
                     accWrapper.assetNationalAccount = NSP_ServiceConstants.VALUE_TRUE;
                 }
                 if(atleastAsset.NSP_Service_Package__c != null  && atleastAsset.NSP_Service_Package__c.startswith('WS') ) {
