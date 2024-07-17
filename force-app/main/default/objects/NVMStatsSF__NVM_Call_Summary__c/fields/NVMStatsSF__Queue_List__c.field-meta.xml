@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NVMStatsSF__Queue_List__c</fullName>
+    <deprecated>false</deprecated>
+    <encryptionScheme>None</encryptionScheme>
+    <externalId>false</externalId>
+    <inlineHelpText>All Queues the external party on the call spent time in, in order, with the time in each. Format [Queue Name]-[Duration(s)], [Queue Name]-[Duration(s)],...
+Excludes Agent Queue times - see &quot;Queue &amp; Agent-Queue List&quot;</inlineHelpText>
+    <label>Queue List</label>
+    <length>255</length>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>
