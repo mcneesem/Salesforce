@@ -13330,7 +13330,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Implementation_Profile__c.work_performed_the_same_as_the_rest_year__c</field>
+        <field>Implementation_Profile__c.Work_performed_the_same_as_the_rest_year__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
