@@ -884,8 +884,26 @@ public class NSP_ProjectTasksTriggerHelperTest {
         accTeam.NSP_Account__c = letterrcvdTask.NSP_AccountId__c;
         accTeam.NSP_Role__c ='Payroll Specialist';
         Insert accTeam;
-         
-         
+        
+        NSP_Account_Team__c accTeam1 = (NSP_Account_Team__c)NSP_TestExtendedDataFactory.createSObject(new NSP_Account_Team__c(), 'NSP_TestDataFactory.AccountTeamMemberDefaults', false);
+        accTeam1.NSP_Account__c = letterrcvdTask.NSP_AccountId__c;
+        accTeam1.NSP_Role__c ='Payroll Supervisor';
+        Insert accTeam1;
+        
+        NSP_Account_Team__c accTeam2 = (NSP_Account_Team__c)NSP_TestExtendedDataFactory.createSObject(new NSP_Account_Team__c(), 'NSP_TestDataFactory.AccountTeamMemberDefaults', false);
+        accTeam2.NSP_Account__c = letterrcvdTask.NSP_AccountId__c;
+        accTeam2.NSP_Role__c ='Client Liaison';
+        Insert accTeam2;
+        
+        NSP_Account_Team__c accTeam3 = (NSP_Account_Team__c)NSP_TestExtendedDataFactory.createSObject(new NSP_Account_Team__c(), 'NSP_TestDataFactory.AccountTeamMemberDefaults', false);
+        accTeam3.NSP_Account__c = letterrcvdTask.NSP_AccountId__c;
+        accTeam3.NSP_Role__c ='Manager, HR Services';
+        Insert accTeam3;
+        
+        NSP_Account_Team__c accTeam4 = (NSP_Account_Team__c)NSP_TestExtendedDataFactory.createSObject(new NSP_Account_Team__c(), 'NSP_TestDataFactory.AccountTeamMemberDefaults', false);
+        accTeam4.NSP_Account__c = letterrcvdTask.NSP_AccountId__c;
+        accTeam4.NSP_Role__c ='Business Performance Advisor';
+        Insert accTeam4;     
         Asset asseObj = [SELECT Id, AccountId,NSP_Reason_for_Term__c,NSP_Anticipated_Date_Of_Termination__c  FROM Asset Limit 1];
         asseObj.AccountId = letterrcvdTask.NSP_AccountId__c;
         asseObj.RecordTypeId =new_Asset_RT_ID;
