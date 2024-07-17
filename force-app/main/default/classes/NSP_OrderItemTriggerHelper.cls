@@ -56,9 +56,9 @@ public class NSP_OrderItemTriggerHelper {
                     oi.blng__InvoiceGroupId__c = (String)currOrder.AccountId + (String)currOrder.NSP_Billing_Account__c + (String)currOrder.ShippingPostalCode +(String)oi.NSP_Payment_Method__c;
                 }
             }
-        }
+         }
     }
-
+    
     /**
     * Iterates throught the list of new OrderItem and passes the required attributes to other methods.
     * @param newList List of New OrderItems.  
@@ -175,7 +175,7 @@ public class NSP_OrderItemTriggerHelper {
             } */
             
         }
-
+        
     //
     // Single method for before update operations for Order Item Trigger.
     // @param OrderItemNewMap Map of New OrderItems.
@@ -338,7 +338,7 @@ public class NSP_OrderItemTriggerHelper {
                      
                 }
             }
-        // STY-03076 - logic to handle multiple invoice lines grouping
+            // STY-03076 - logic to handle multiple invoice lines grouping
         if ( paymentMethodChangedLines.size() > 0 ) {
             for ( OrderItem oi : OrderItemNewMap.values() ) {
                 if ( paymentMethodChangedLines.contains( oi.Id ) ) {
@@ -358,11 +358,11 @@ public class NSP_OrderItemTriggerHelper {
                                     NSP_Payment_Method__c=oi.NSP_Payment_Method__c
                                 )
                             );
-                        }
+                    }
                     }
                 }
+                }
             }
-        }
         if ( quoteLinesToUpdate.size() > 0 ) {
             update quoteLinesToUpdate;
         }
@@ -374,9 +374,9 @@ public class NSP_OrderItemTriggerHelper {
             )
         {
             NSP_AssetUpdate.assetTermination( opTerminationMap );
-        }
+            }
     }
-
+        
         /**
         * Single method for after update operations for Order Item Trigger.
         * @param OrderItemNewMap Map of New OrderItems.
@@ -422,8 +422,7 @@ public class NSP_OrderItemTriggerHelper {
                         accId = op.Order.AccountId;
                     }
             }
-            if(OrderItemOldMap.get(op.id).NSP_TotalUsageQuantity__c != OrderItemNewMap.get(op.id).NSP_TotalUsageQuantity__c && 
-               OrderItemNewMap.get(op.id).NSP_TotalUsageQuantity__c != null && OrderItemNewMap.get(op.id).NSP_ServiceAsset__c != null){
+            if(OrderItemOldMap.get(op.id).NSP_TotalUsageQuantity__c != OrderItemNewMap.get(op.id).NSP_TotalUsageQuantity__c && OrderItemNewMap.get(op.id).NSP_TotalUsageQuantity__c != null && OrderItemNewMap.get(op.id).NSP_ServiceAsset__c != null && (OrderItemNewMap.get(op.id).Prevent_Asset_Updates__c == false && OrderItemNewMap.get(op.id).OrderType__c != 'Supplemental')){
                 if(OrderItemNewMap.get(op.id).NSP_UsageUpperBound__c > OrderItemNewMap.get(op.id).NSP_TotalUsageQuantity__c){
                     activeUserMap.put(OrderItemNewMap.get(op.id).NSP_ServiceAsset__c,OrderItemNewMap.get(op.id).NSP_UsageUpperBound__c);
                 }
@@ -445,16 +444,16 @@ public class NSP_OrderItemTriggerHelper {
             }
         }
 
-    /**
-    * Method Name : activateOrderProduct 
-    * Description : Method to activate order product based on order activation trigger
-    * Author : CPQ Team       Date : 09/06/2022
-    * @param OrderNewMap Map of New Order. 
-    * @param OrderOldMap Map of Old Order.   
-    * @return void  
-    */
-    public static void activateOrder(Set<Id> orderIdSet){
-        List<Order> orderUp = new List<Order>();
+        /**
+        * Method Name : activateOrderProduct 
+        * Description : Method to activate order product based on order activation trigger
+        * Author : CPQ Team       Date : 09/06/2022
+        * @param OrderNewMap Map of New Order. 
+        * @param OrderOldMap Map of Old Order.   
+        * @return void  
+        */
+        public static void activateOrder(Set<Id> orderIdSet){
+            List<Order> orderUp = new List<Order>();
         AggregateResult[] groupedResults = [
             SELECT COUNT(Id)Ids,OrderId
             FROM OrderItem
@@ -464,15 +463,15 @@ public class NSP_OrderItemTriggerHelper {
             )
             GROUP BY OrderId
         ];
-        
-        if(groupedResults.isEmpty()){
-            for(Id ordId : orderIdSet){
-                Order orderToUpdate = new Order();
-                orderToUpdate.ID = ordId;
-                orderToUpdate.Status = NSP_CPQConstants.ORDER_ACTIVATED;
-                orderUp.add(orderToUpdate);
-            }
-            if(orderUp != null && orderUp.size() > 0){
+           
+            if(groupedResults.isEmpty()){
+                for(Id ordId : orderIdSet){
+                    Order orderToUpdate = new Order();
+                    orderToUpdate.ID = ordId;
+                    orderToUpdate.Status = NSP_CPQConstants.ORDER_ACTIVATED;
+                    orderUp.add(orderToUpdate);
+                }
+                if(orderUp != null && orderUp.size() > 0){
                 try {
                     database.update( orderUp );
                 } catch ( Exception e ) {
@@ -481,10 +480,10 @@ public class NSP_OrderItemTriggerHelper {
                         'activateOrder' ,
                         e
                     );
+                    } 
                 }
             }
         }
-    }
             /**
 * Method Name : populateLegalEntityOnOrderItem 
 * Description : Method to copy legal entity from Proudcts to Order Products
@@ -596,20 +595,20 @@ public class NSP_OrderItemTriggerHelper {
                 }
         }
         
-        try{
+            try{
             if ( ( ordItemList != null ) && ( ordItemList.size() > 0 ) ) {
                 database.update( ordItemList );
-            }
+                }
             if ( ( updateAssetList != null ) && ( updateAssetList.size() > 0 ) ) {
                 database.update( updateAssetList );
-            }
+                }
         } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
                 NSP_OrderItemTriggerHelper.class.getName() ,
                 'updateAsset' ,
                 e
             );
-        }
+            }
     }
 
             /**

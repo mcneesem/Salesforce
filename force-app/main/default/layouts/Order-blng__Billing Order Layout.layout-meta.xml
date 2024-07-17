@@ -415,6 +415,10 @@
                 <behavior>Edit</behavior>
                 <field>Name</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Prevent_Asset_Updates__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -471,7 +475,7 @@
         <style>CustomLinks</style>
     </layoutSections>
     <platformActionList>
-    <actionListContext>Record</actionListContext>
+        <actionListContext>Record</actionListContext>
         <platformActionListItems>
             <actionName>Order.NSP_CreateProject</actionName>
             <actionType>QuickAction</actionType>
@@ -482,7 +486,7 @@
             <actionType>QuickAction</actionType>
             <sortOrder>26</sortOrder>
         </platformActionListItems>
-     </platformActionList>    
+    </platformActionList>
     <relatedLists>
         <fields>Product2</fields>
         <fields>Quantity</fields>
@@ -561,7 +565,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h8G000000NWp5</masterLabel>
+        <masterLabel>00h4x000003Ed5e</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>
