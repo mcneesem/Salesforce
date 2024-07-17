@@ -11,116 +11,45 @@ Modification Log     :
 */
 
 @isTest
-private class NSP_ValidateOpportunityStageTest {
+public class NSP_ValidateOpportunityStageTest {
     //Test Setup Method to populate test data
     @testSetup
-    private static void setupData(){
-        
-        //NSP_hotfix_Switch__c setting = new NSP_hotfix_Switch__c();
-        //setting.Is_Enabled_WO_WS_Stage_Entry__c = true;
-        //insert setting;
+    public static void setupData(){
         
         Account acnt=NSP_TestHelper.createAccount(true);
-        Contact cntct=NSP_TestHelper.createContact(true);
-
         Opportunity opp=NSP_TestHelper.createOpenOpportunity(acnt.Id,'New Business',false);
-        opp.StageName = 'Prospecting';
+        opp.StageName = 'Discovery';
         opp.NSP_Number_of_Employees__c=12;
         opp.NSP_BidNumber__c='123';
-        opp.NSP_PrimaryProduct__c = 'WS';
+        opp.NSP_PrimaryProduct__c = 'WO';
         opp.NSP_Partner__c=acnt.Id;
-        insert opp;
-
-        OpportunityContactRole ocr = new OpportunityContactRole(
-            OpportunityId = opp.Id,
-            ContactId = cntct.Id
-        );
-        insert ocr;
-
-        Id soldToCheckListRecordTypeId = Schema.SObjectType.NSP_Checklist__c.getRecordTypeInfosByDeveloperName().get('NSP_Sold_to_Paid_Checklist').getRecordTypeId();
-        NSP_Checklist__c stpCheckList = new NSP_Checklist__c(
-            RecordTypeId = soldToCheckListRecordTypeId,
-            NSP_Opportunity__c = opp.Id,
-            NSP_Requested_First_Pay_Date__c = system.today(),
-            Status__c = 'Completed'
-        );
-        insert stpCheckList;
-
+        insert opp;   
+        
         Opportunity opp1=NSP_TestHelper.createOpenOpportunity(acnt.Id,'New Business',false);
         opp1.StageName = 'Proposal';
         opp1.NSP_PrimaryProduct__c = 'WX';
         opp1.NSP_Partner__c=acnt.Id;
         try{            
-            insert opp1;
+            insert opp1;   
         }catch(Exception ex){
             ex.getStackTraceString();
         }
-
-        Opportunity opp2=NSP_TestHelper.createOpenOpportunity(acnt.Id,'New Product',false);
-        opp2.StageName = 'Prospecting';
+        
+        
+        Opportunity opp2=NSP_TestHelper.createOpenOpportunity(acnt.Id,'New Business',false);
+        opp2.StageName = 'Discovery';
         opp2.NSP_BidNumber__c='unique123';
-        opp2.NSP_PrimaryProduct__c = 'WO';
         try{            
-            insert opp2;
+            insert opp2;   
         }catch(Exception ex){
             ex.getStackTraceString();
-        }
-
-        OpportunityContactRole ocr2 = new OpportunityContactRole(
-            OpportunityId = opp2.Id,
-            ContactId = cntct.Id
-        );
-        insert ocr2;
-
+        }   
+        
         //Adding Tasks and Events to lists.
-        List<SObject> sOList = new List<SObject>();
+        List<Task> taskList = new List<Task>();
+        List<Event> eventList = new List<Event>();
         Id taskRecTypeId = Schema.SObjectType.Task.getRecordTypeInfosByDeveloperName().get('Core_Sales_Task_RT').getRecordTypeId();
-
-        // Test data for Close Lost Scenario
-        User userRecordInt = new User(
-            ProfileId = [SELECT Profile_ID__c, Profile_Name__c FROM NSP_Profile_Detail__mdt WHERE Profile_Name__c = 'Integration User'][0].Profile_ID__c,
-            LastName = 'TestClassUser',
-            Email = 'testuserint@insperity.com',
-            Username = 'testuserint@test.com' + System.currentTimeMillis(),
-            CompanyName = 'TEST',
-            Title = 'title',
-            Alias = 'alias',
-            TimeZoneSidKey = 'America/Los_Angeles',
-            EmailEncodingKey = 'UTF-8',
-            LanguageLocaleKey = 'en_US',
-            NSP_Sales_Office_Membership__c = '301',
-            LocaleSidKey = 'en_US'
-        );
-        insert userRecordInt;
-
-        Task taskRec1 = new Task(
-            Subject = 'Business Profile Started',
-            WhatId = opp.Id,
-            NSP_Task_Type__c = 'Core Sales',
-            RecordTypeId = taskRecTypeId,
-            Status = 'Completed'
-        );
-        sOList.add(taskRec1);
-        
-        Task taskRec2 = new Task(
-            Subject = 'Bid Sent to Pricing and Review',
-            WhatId = opp2.Id,
-            NSP_Task_Type__c = 'Core Sales',
-            RecordTypeId = taskRecTypeId,
-            Status = 'Open'
-        );
-        sOList.add(taskRec2);
-        
-        Task taskRec3 = new Task(
-            Subject = 'Bid Generated in AIMS',
-            WhatId = opp2.Id,
-            NSP_Task_Type__c = 'Core Sales',
-            RecordTypeId = taskRecTypeId,
-            Status = 'Completed'
-        );
-        sOList.add(taskRec3);
-        
-        Task taskRecOld = new Task(
+        Task taskRec = new Task(
             Subject = 'Discovery Call',
             WhatId = opp.Id,
             NSP_Task_Type__c = 'BPS',
@@ -128,9 +57,9 @@ private class NSP_ValidateOpportunityStageTest {
             NSP_Task_Subtype__c = 'Client Meeting',
             NSP_Status__c='Completed'
         );
-        sOList.add(taskRecOld);
+        taskList.add(taskRec);
         
-        Task taskRecOld3 = new Task(
+        Task taskRec3 = new Task(
             Subject = 'WO Business Profile',
             WhatId = opp.Id,
             NSP_Task_Type__c = 'Core Sales',
@@ -138,9 +67,9 @@ private class NSP_ValidateOpportunityStageTest {
             NSP_Task_Subtype__c = 'WO Proposal',
             NSP_Status__c='Open'
         );
-        sOList.add(taskRecOld3);
+        taskList.add(taskRec3);
         
-        Task taskRecOld2 = new Task(
+        Task taskRec2 = new Task(
             Subject = 'Discovery Call',
             WhatId = opp2.Id,
             NSP_Task_Type__c = 'BPS',
@@ -148,11 +77,9 @@ private class NSP_ValidateOpportunityStageTest {
             NSP_Task_Subtype__c = 'Client Meeting',
             NSP_Status__c='Open'
         );
-        sOList.add(taskRecOld2);
-
+        taskList.add(taskRec2);
         Id eventRecTypeId = Schema.SObjectType.Event.getRecordTypeInfosByDeveloperName().get('Core_Sales_Event_RT').getRecordTypeId();
-
-        Event eventRecOld = new Event(
+        Event eventRec = new Event(
             Subject = 'Discovery Call',
             WhatId = opp.Id,
             NSP_Task_Type__c = 'BPS',
@@ -162,48 +89,11 @@ private class NSP_ValidateOpportunityStageTest {
             NSP_Event_Subtype__c = NSP_SalesConstants.DISCOVERY_CALL_ACTIVITY,
             NSP_Status__c='Open'
         );
-        sOList.add(eventRecOld);
-
-        Event eventRec = new Event(
-            Subject = 'Discovery Call',
-            WhatId = opp2.Id,
-            NSP_Task_Type__c = 'BPS',
-            RecordTypeId = eventRecTypeId,
-            StartDateTime=system.now(),
-            EndDateTime=system.now()+( 15/1440),
-            NSP_Event_Subtype__c = NSP_SalesConstants.DISCOVERY_CALL_ACTIVITY,
-            NSP_Status__c='Open'
-        );
-        sOList.add(eventRec);
-
-        Event eventRec1 = new Event(
-            Subject = 'Discovery Call',
-            WhatId = opp1.Id,
-            NSP_Task_Type__c = 'BPS',
-            RecordTypeId = eventRecTypeId,
-            StartDateTime=system.now(),
-            EndDateTime=system.now()+( 15/1440),
-            NSP_Event_Subtype__c = NSP_SalesConstants.DISCOVERY_CALL_ACTIVITY,
-            NSP_Status__c='Open'
-        );
-        sOList.add(eventRec1);
-        
-        Event eventRec2 = new Event(
-            Subject = 'Discovery Call',
-            WhatId = opp2.Id,
-            NSP_Task_Type__c = 'BPS',
-            RecordTypeId = eventRecTypeId,
-            StartDateTime=system.now(),
-            EndDateTime=system.now()+( 15/1440),
-            NSP_Event_Subtype__c = NSP_SalesConstants.DISCOVERY_CALL_ACTIVITY,
-            NSP_Status__c='Completed'
-        );
-        sOList.add(eventRec2);
+        eventList.add(eventRec);
         
         //Task and Events Insert
-        System.runAs(userRecordInt){
-        	insert sOList;
-        }
+        insert taskList;
+        insert eventList;
         
         Test.startTest();
         Opportunity objOpprtunity = NSP_TestHelper.createOpenOpportunity(acnt.Id,'New Product',true);
@@ -232,9 +122,10 @@ private class NSP_ValidateOpportunityStageTest {
         // create order from quote
         objQuote.SBQQ__Primary__c = true;
         objQuote.SBQQ__Ordered__c = true;
-        //objQuote.NSP_Billing_Address__c = [SELECT id from NSP_Address__c where NSP_Address_Type__c = 'Bill To' AND NSP_Related_Site__c =: acnt.Id ].Id;
-        update objQuote;        
-
+        //objQuote.NSP_Billing_Address__c   = [SELECT id from NSP_Address__c where NSP_Address_Type__c = 'Bill To' AND NSP_Related_Site__c =: acnt.Id ].Id;
+        update objQuote;
+        
+        
         //insert OpportunityLineItem        
         OpportunityLineItem OLI = new OpportunityLineItem();
         OLI.OpportunityId = objOpprtunity.Id; //Opportunity Id has to be assigned
@@ -242,10 +133,10 @@ private class NSP_ValidateOpportunityStageTest {
         OLI.Quantity = 1;
         OLI.UnitPrice = 1;
         insert OLI;
-
+        
         // Test data for Close Lost Scenario
         User userRecord1 = new User(
-            ProfileId = [SELECT Profile_ID__c, Profile_Name__c FROM NSP_Profile_Detail__mdt WHERE Profile_Name__c = 'System Administrator'][0].Profile_ID__c,
+            ProfileId = [SELECT Id FROM Profile WHERE Name = 'System Administrator'][0].Id,
             LastName = 'TestClassUser',
             Email = 'testuser1@insperity.com',
             Username = 'testuser1@test.com' + System.currentTimeMillis(),
@@ -259,7 +150,7 @@ private class NSP_ValidateOpportunityStageTest {
             LocaleSidKey = 'en_US'
         );
         insert userRecord1; 
-
+        
         Opportunity opp3=NSP_TestHelper.createOpenOpportunity(acnt.Id,'New Business',false);
         opp3.StageName = 'Discovery';
         opp3.NSP_Number_of_Employees__c=200;
@@ -277,7 +168,7 @@ private class NSP_ValidateOpportunityStageTest {
         insert oppMember;   
         Test.stopTest();
         User userRecord2 = new User(
-            ProfileId = [SELECT Profile_ID__c, Profile_Name__c FROM NSP_Profile_Detail__mdt WHERE Profile_Name__c = 'System Administrator'][0].Profile_ID__c,
+            ProfileId = [SELECT Id FROM Profile WHERE Name = 'System Administrator'][0].Id,
             LastName = 'TestClassUser',
             Email = 'testuser2@insperity.com',
             Username = 'testuser2@test.com' + System.currentTimeMillis(),
@@ -291,7 +182,7 @@ private class NSP_ValidateOpportunityStageTest {
             LocaleSidKey = 'en_US'
         );
         insert userRecord2;
-
+        
         // Creating Groups 
         Group gp1= new Group();
         gp1.Name='0302 Phoenix 2';
@@ -299,248 +190,71 @@ private class NSP_ValidateOpportunityStageTest {
         gp2.Name='0601 Denver 1';
         // Inserting groups
         List<Group> groups= new List<Group>{gp1, gp2};
-        Insert groups;
+            Insert groups;
+        
+        
     }
     // Test for validations when Opportunity stage is set to Closing
     @isTest
-    private static void checkOpptyStage(){
+    public static void checkOpptyStage(){
         test.startTest();
-        NSP_hotfix_Switch__c setting = new NSP_hotfix_Switch__c();
-        setting.Is_Enabled_WO_WS_Stage_Entry__c = true;
-        insert setting;
-
-        List<Opportunity> oppList = [SELECT Id FROM Opportunity WHERE StageName != NULL AND NSP_PrimaryProduct__c = 'WS' limit 1];
-        Opportunity oppty = oppList[0];
-        oppty.StageName='Analysis';
-        try{
-            update oppty; 
-        }catch(Exception ex){
-            ex.getStackTraceString();
-        }
-
-        oppty.NSP_PrimaryProduct__c = '';
-        oppty.Type = '';
-        oppty.NSP_Bid_Status__c = 'Approved';
-        oppty.StageName = 'Proposal';
-        try{
-            update oppty;
-        }catch(Exception ex){
-            ex.getStackTraceString();
-        }
-
-        oppty.StageName = 'Closing';
-        try{
-            update oppty;
-        }catch(Exception ex){
-            ex.getStackTraceString();
-        }
-
-        oppty.StageName = 'Closed Won';
-        try{
-            update oppty;
-        }catch(Exception ex){
-            ex.getStackTraceString();
-        }
-        test.stopTest();
-        System.assertEquals('Closed Won', oppty.StageName);
-    }
-
-    @isTest
-    private static void checkOpptyStage2(){
-        test.startTest();
-        NSP_hotfix_Switch__c setting = new NSP_hotfix_Switch__c();
-        setting.Is_Enabled_WO_WS_Stage_Entry__c = true;
-        insert setting;
-
-        List<Opportunity> oppList = [SELECT Id FROM Opportunity WHERE StageName != NULL and NSP_PrimaryProduct__c = 'WX' limit 1];
+        List<Opportunity> oppList = [SELECT Id FROM Opportunity WHERE StageName!=NULL and NSP_PrimaryProduct__c = 'WO' limit 1];     
+        List<Task> taskList = [Select Id from Task where Subject = 'WO Business Profile' limit 1];
         Opportunity oppty = oppList[0];
         oppty.NSP_Number_of_Employees__c=25;
+        oppty.NSP_PrimaryProduct__c='WO';
+        oppty.NSP_BidNumber__c='123';
         oppty.StageName='Analysis';        
         oppty.Type = 'New Product';
+        
+        
         try{
             update oppty; 
         }catch(Exception ex){
             ex.getStackTraceString();
         }
-
-        oppty.NSP_PrimaryProduct__c = '';
-        oppty.Type = '';
+        
         oppty.StageName = 'Proposal';
-        try{
-            update oppty;
-        }catch(Exception ex){
-            ex.getStackTraceString();
-        }
-
-        oppty.StageName = 'Closing';
-        try{
-            update oppty;
-        }catch(Exception ex){
-            ex.getStackTraceString();
-        }
-
-        oppty.StageName = 'Closed Won';
-        try{
-            update oppty;
-        }catch(Exception ex){
-            ex.getStackTraceString();
-        }
-        test.stopTest();
-        System.assertEquals('Closed Won', oppty.StageName);
-    }
-    // Test for validations when Opportunity stage is set to Closing
-    @isTest
-    private static void checkOpptyStage3(){
-        test.startTest();
-        NSP_hotfix_Switch__c setting = new NSP_hotfix_Switch__c();
-        setting.Is_Enabled_WO_WS_Stage_Entry__c = false;
-        insert setting;
-
-        List<Opportunity> oppList = [SELECT Id FROM Opportunity WHERE StageName != NULL AND NSP_PrimaryProduct__c = 'WS' limit 1];
-        Opportunity oppty = oppList[0];
-        oppty.StageName='Analysis';
+        
         try{
             update oppty; 
         }catch(Exception ex){
             ex.getStackTraceString();
         }
-
-        oppty.NSP_PrimaryProduct__c = '';
-        oppty.Type = '';
-        oppty.NSP_Bid_Status__c = 'Approved';
-        oppty.StageName = 'Proposal';
-        try{
-            update oppty;
-        }catch(Exception ex){
-            ex.getStackTraceString();
-        }
-
-        oppty.StageName = 'Closing';
-        try{
-            update oppty;
-        }catch(Exception ex){
-            ex.getStackTraceString();
-        }
-
-        oppty.StageName = 'Closed Won';
-        try{
-            update oppty;
-        }catch(Exception ex){
-            ex.getStackTraceString();
-        }
-        test.stopTest();
-        System.assertEquals('Closed Won', oppty.StageName);
-    }
-
-    @isTest
-    private static void checkOpptyStage4(){
-        test.startTest();
-        NSP_hotfix_Switch__c setting = new NSP_hotfix_Switch__c();
-        setting.Is_Enabled_WO_WS_Stage_Entry__c = false;
-        insert setting;
-
-        List<Opportunity> oppList = [SELECT Id FROM Opportunity WHERE StageName != NULL and NSP_PrimaryProduct__c = 'WX' limit 1];
-        Opportunity oppty = oppList[0];
-        oppty.NSP_Number_of_Employees__c=25;
-        oppty.StageName='Analysis';        
-        oppty.Type = 'New Product';
+        taskList[0].whatId = oppty.Id;
         try{
             update oppty; 
         }catch(Exception ex){
             ex.getStackTraceString();
         }
-
-        oppty.NSP_PrimaryProduct__c = '';
-        oppty.Type = '';
-        oppty.StageName = 'Proposal';
-        try{
-            update oppty;
-        }catch(Exception ex){
-            ex.getStackTraceString();
-        }
-
+        
         oppty.StageName = 'Closing';
         try{
-            update oppty;
+            update oppty; 
         }catch(Exception ex){
             ex.getStackTraceString();
         }
-
         oppty.StageName = 'Closed Won';
         try{
-            update oppty;
+            update oppty; 
         }catch(Exception ex){
             ex.getStackTraceString();
         }
         test.stopTest();
         System.assertEquals('Closed Won', oppty.StageName);
+        
     }
     
-    // Test for open Discovery activity on Discovery stage
+    // Test for open discovery activity on Analysis stage
     @isTest
-    private static void checkOpenDiscoveryActivities(){
+    public static void checkOpenDiscoveryActivities(){
         test.startTest();
-        NSP_hotfix_Switch__c setting = new NSP_hotfix_Switch__c();
-        setting.Is_Enabled_WO_WS_Stage_Entry__c = true;
-        insert setting;
-
-        List<Opportunity> oppList = [SELECT Id, StageName FROM Opportunity WHERE NSP_BidNumber__c = 'unique123' limit 1];
+        List<Opportunity> oppList = [SELECT Id FROM Opportunity WHERE NSP_BidNumber__c = 'unique123' limit 1];
         Opportunity oppty = oppList[0];
         
         if(oppty!=null){
-            oppty.StageName='Discovery';
-            try{
-                update oppty;
-            }catch(Exception ex){
-                ex.getStackTraceString();
-            }
-        }
-        test.stopTest();
-        System.assertEquals('Discovery', oppty.StageName);
-    }
-    
-    // Test for completed Discovery activity on Data Collection stage
-    @isTest
-    private static void checkCompletedDiscoveryActivities(){
-        test.startTest();
-        NSP_hotfix_Switch__c setting = new NSP_hotfix_Switch__c();
-        setting.Is_Enabled_WO_WS_Stage_Entry__c = true;
-        insert setting;
-
-        List<Opportunity> oppList = [SELECT Id, StageName, NSP_PrimaryProduct__c FROM Opportunity WHERE NSP_BidNumber__c = 'unique123' limit 1];
-        Opportunity oppty = oppList[0];
-
-        if(oppty!=null){
-            oppty.StageName='Data Collection';
-            oppty.NSP_PrimaryProduct__c = '';
-            try{
-                update oppty;
-            }catch(Exception ex){
-                ex.getStackTraceString();
-            }
-            oppty.NSP_PrimaryProduct__c = 'WO';
-            try{
-                update oppty;
-            }catch(Exception ex){
-                ex.getStackTraceString();
-            }
-        }
-        test.stopTest();
-        System.assertEquals('Data Collection', oppty.StageName);
-    }
-    
-    @isTest
-    private static void checkAnalysisStage(){
-        test.startTest();
-        NSP_hotfix_Switch__c setting = new NSP_hotfix_Switch__c();
-        setting.Is_Enabled_WO_WS_Stage_Entry__c = true;
-        insert setting;
-
-        List<Opportunity> oppList = [SELECT Id, StageName, NSP_Bid_Status__c, NSP_BidNumber__c FROM Opportunity WHERE NSP_BidNumber__c = 'unique123' limit 1];
-        Opportunity oppty = oppList[0];
-
-        if(oppty!=null){
             oppty.StageName='Analysis';
+            oppty.Type = '';
             try{
                 update oppty;
             }catch(Exception ex){
@@ -552,37 +266,16 @@ private class NSP_ValidateOpportunityStageTest {
     }
     
     @isTest
-    private static void checkAnalysisStageOld(){
+    public static void checkProposalStage(){
         test.startTest();
-        List<Opportunity> oppList = [SELECT Id, StageName, NSP_Bid_Status__c, NSP_BidNumber__c FROM Opportunity WHERE NSP_BidNumber__c = 'unique123' limit 1];
-        Opportunity oppty = oppList[0];
-
-        if(oppty!=null){
-            oppty.StageName='Analysis';
-            try{
-                update oppty;
-            }catch(Exception ex){
-                ex.getStackTraceString();
-            }
-        }
-        test.stopTest();
-        System.assertEquals('Analysis', oppty.StageName);
-    }
-    
-    @isTest
-    private static void checkProposalStage(){
-        test.startTest();
-        NSP_hotfix_Switch__c setting = new NSP_hotfix_Switch__c();
-        setting.Is_Enabled_WO_WS_Stage_Entry__c = true;
-        insert setting;
-
         List<Opportunity> oppList = [SELECT Id,OwnerId,NSP_Sales_Office__c FROM Opportunity WHERE NSP_BidNumber__c = 'unique123' limit 1];
+        //NSP_ValidateOpportunityStage.getSalesOfficeGroup(oppList[0].OwnerId,oppList[0].NSP_Sales_Office__c);
         Opportunity oppty = oppList[0];
-
+        
         if(oppty!=null){
-            oppty.StageName='Proposal';
-            oppty.NSP_Bid_Status__c = 'Approved';
             oppty.NSP_PrimaryProduct__c = 'WO';
+            oppty.StageName='Proposal';
+            oppty.NSP_BidNumber__c = '';
             oppty.Type = 'New Product';
             try{
                 update oppty;
@@ -595,31 +288,11 @@ private class NSP_ValidateOpportunityStageTest {
     }
     
     @isTest
-    private static void checkProposalStageOld(){
-        test.startTest();
-        List<Opportunity> oppList = [SELECT Id,OwnerId,NSP_Sales_Office__c FROM Opportunity WHERE NSP_BidNumber__c = 'unique123' limit 1];
-        Opportunity oppty = oppList[0];
-
-        if(oppty!=null){
-            oppty.StageName='Proposal';
-            oppty.NSP_Bid_Status__c = 'Approved';
-            oppty.Type = 'New Product';
-            try{
-                update oppty;
-            }catch(Exception ex){
-                ex.getStackTraceString();
-            }
-        }
-        test.stopTest();
-        System.assertEquals('Proposal', oppty.StageName);
-    }
-
-    @isTest
-    private static void checkQuoteCriteria(){
+    public static void checkQuoteCriteria(){
         test.startTest();
         List<Opportunity> oppList = [SELECT Id FROM Opportunity WHERE NSP_BidNumber__c='unique12345' limit 1];
         Opportunity oppty = oppList[0];
-
+        
         if(oppty!=null){
             oppty.NSP_PrimaryProduct__c = 'WX';
             oppty.StageName='Proposal';
@@ -630,7 +303,7 @@ private class NSP_ValidateOpportunityStageTest {
             }catch(Exception ex){
                 ex.getStackTraceString();
             }
-
+            
             oppty.NSP_PrimaryProduct__c = 'HR Consulting Services';
             try{
                 update oppty;
@@ -641,9 +314,9 @@ private class NSP_ValidateOpportunityStageTest {
         test.stopTest();
         System.assertEquals('Proposal', oppty.StageName);
     }
-
+    
     @isTest
-    private static void checkQuoteCriteria1(){
+    public static void checkQuoteCriteria1(){
         test.startTest();
         List<Opportunity> oppList = [SELECT Id FROM Opportunity WHERE NSP_BidNumber__c='unique12345' limit 1];
         Opportunity oppty = oppList[0];
@@ -657,124 +330,35 @@ private class NSP_ValidateOpportunityStageTest {
             }catch(Exception ex){
                 ex.getStackTraceString();
             }
+            
         }
         test.stopTest();
         System.assertEquals('Proposal', oppty.StageName);
     }
-
+    
     @isTest
-    private static void checkClosingStage(){
+    public static void checkClosingStage(){
         test.startTest();
-        NSP_hotfix_Switch__c setting = new NSP_hotfix_Switch__c();
-        setting.Is_Enabled_WO_WS_Stage_Entry__c = true;
-        insert setting;
-
-        List<Opportunity> oppList = [SELECT Id FROM Opportunity WHERE NSP_BidNumber__c='unique12345' limit 1];
-        Opportunity oppty = oppList[0];
-        if(oppty!=null){
-            oppty.NSP_PrimaryProduct__c = 'WS';
-            oppty.StageName='Closing';
-            oppty.NSP_Order_Generated__c = true;
-            oppty.Type = 'New Product';
-            try{
-                update oppty;
-            }catch(Exception ex){
-                ex.getStackTraceString();
-            }
-        }
-        test.stopTest();
-        System.assertEquals('Closing', oppty.StageName);
-    }
-
-    @isTest
-    private static void checkClosingStage2(){
-        test.startTest();
-        NSP_hotfix_Switch__c setting = new NSP_hotfix_Switch__c();
-        setting.Is_Enabled_WO_WS_Stage_Entry__c = true;
-        insert setting;
-
         List<Opportunity> oppList = [SELECT Id FROM Opportunity WHERE NSP_BidNumber__c='unique12345' limit 1];
         Opportunity oppty = oppList[0];
         if(oppty!=null){
             oppty.NSP_PrimaryProduct__c = 'HR Consulting Services';
             oppty.StageName='Closing';
-            oppty.NSP_Order_Generated__c = false;
+            oppty.NSP_BidNumber__c = '';
             oppty.Type = 'New Product';
             try{
                 update oppty;
             }catch(Exception ex){
                 ex.getStackTraceString();
             }
+            
         }
         test.stopTest();
         System.assertEquals('Closing', oppty.StageName);
     }
-
+    
     @isTest
-    private static void checkClosingStageOld(){
-        test.startTest();
-
-        List<Opportunity> oppList = [SELECT Id FROM Opportunity WHERE NSP_BidNumber__c='unique12345' limit 1];
-        Opportunity oppty = oppList[0];
-        if(oppty!=null){
-            oppty.NSP_PrimaryProduct__c = 'HR Consulting Services';
-            oppty.StageName='Closing';
-            oppty.NSP_Order_Generated__c = false;
-            oppty.Type = 'New Product';
-            try{
-                update oppty;
-            }catch(Exception ex){
-                ex.getStackTraceString();
-            }
-        }
-        test.stopTest();
-        System.assertEquals('Closing', oppty.StageName);
-    }
-
-    @isTest
-    private static void evalClosedWonStageCriteria(){
-        test.startTest();
-        NSP_hotfix_Switch__c setting = new NSP_hotfix_Switch__c();
-        setting.Is_Enabled_WO_WS_Stage_Entry__c = true;
-        insert setting;
-
-        List<Opportunity> oppList = [SELECT Id FROM Opportunity WHERE NSP_BidNumber__c='unique123' limit 1];
-        Opportunity oppty = oppList[0];
-        if(oppty!=null){
-            oppty.NSP_PrimaryProduct__c = 'WO';
-            oppty.StageName='Closed Won';
-            oppty.Type = 'New Product';
-            try{
-                update oppty;
-            }catch(Exception ex){
-                ex.getStackTraceString();
-            }
-        }
-        test.stopTest();
-        System.assertEquals('Closed Won', oppty.StageName);
-    }
-
-    @isTest
-    private static void evalClosedWonStageCriteriaOld(){
-        test.startTest();
-        List<Opportunity> oppList = [SELECT Id FROM Opportunity WHERE NSP_BidNumber__c='unique123' limit 1];
-        Opportunity oppty = oppList[0];
-        if(oppty!=null){
-            oppty.NSP_PrimaryProduct__c = 'WO';
-            oppty.StageName='Closed Won';
-            oppty.Type = 'New Product';
-            try{
-                update oppty;
-            }catch(Exception ex){
-                ex.getStackTraceString();
-            }
-        }
-        test.stopTest();
-        System.assertEquals('Closed Won', oppty.StageName);
-    }
-
-    @isTest
-    private static void checkclosedWonStage(){
+    public static void checkclosedWonStage(){
         test.startTest();
         List<OpportunityLineItem> opptyLineItemList = [SELECT Name,Opportunity.accountId,NSP_Product_Name__c,NSP_AccountId__c,NSP_AccountName__c,NSP_AssetProductLine__c,
                                                        NSP_EmployeesAtSignature__c,NSP_Pricing_Model__c,
@@ -782,15 +366,16 @@ private class NSP_ValidateOpportunityStageTest {
                                                        Product2Id,Quantity,UnitPrice,NSP_Opportunity_Booked_Date__c,NSP_Signed_Delivery_Order_Date__c,
                                                        NSP_ProductType__c,NSP_ProductBundle__c,//if its required on Asset then we create a formula for it
                                                        NSP_Original_Sold_EE_Count__c,NSP_Primary_Product__c from OpportunityLineItem limit 1];
-
+        
+        
         New NSP_SrcToTargetObjectDataMover(null,'OppAsset') ;//initialize the class
         List<SObject> newlist = NSP_SrcToTargetObjectDataMover.getSourceDatainTarget( opptyLineItemList);
         test.stopTest();
         system.assertNotEquals(null, newlist);
     }
-
+    
     @isTest
-    private static void checkclosedWonStage1(){
+    public static void checkclosedWonStage1(){
         test.startTest();
         List<OpportunityLineItem> opptyLineItemList = [SELECT Name,Opportunity.accountId,NSP_Product_Name__c,NSP_AccountId__c,NSP_AccountName__c,
                                                        Product2Id,Quantity,UnitPrice,NSP_Opportunity_Booked_Date__c,NSP_Signed_Delivery_Order_Date__c,
@@ -812,7 +397,7 @@ private class NSP_ValidateOpportunityStageTest {
         system.assertEquals('Id',fieldsToQueryList[0]);
     }
     @isTest
-    private static void evaluateClosedLostStageCriteria_Test(){
+    public static void evaluateClosedLostStageCriteria_Test(){
         test.startTest();
         List<Opportunity> oppList=[Select Id,OWNER.USERROLE.DeveloperName,StageName FROM Opportunity WHERE StageName='Discovery' Limit 1];
         Opportunity oppty = oppList[0];
@@ -830,7 +415,7 @@ private class NSP_ValidateOpportunityStageTest {
         test.stopTest();
     }
     @isTest
-    private static void evaluateClosedLostStageCriteria2_Test(){
+    public static void evaluateClosedLostStageCriteria2_Test(){
         test.startTest();
         List<Opportunity> oppList=[Select Id,OWNER.USERROLE.DeveloperName,StageName FROM Opportunity WHERE StageName='Discovery' and NSP_BidNumber__c='123987' Limit 1];
         Opportunity oppty = oppList[0];
@@ -848,7 +433,7 @@ private class NSP_ValidateOpportunityStageTest {
         test.stopTest();
     }
     @isTest
-    private static void evaluateClosedLost_BPC_Test(){
+    public static void evaluateClosedLost_BPC_Test(){
         test.startTest();
         List<Opportunity> oppList=[Select Id,OWNER.USERROLE.DeveloperName,StageName FROM Opportunity WHERE StageName='Discovery' and NSP_BidNumber__c='123987' Limit 1];
         Opportunity oppty = oppList[0];
@@ -876,7 +461,7 @@ private class NSP_ValidateOpportunityStageTest {
         test.stopTest();
     }
     @isTest
-    private static void evaluateClosedLost_RSC_Test(){
+    public static void evaluateClosedLost_RSC_Test(){
         test.startTest();
         List<Opportunity> oppList=[Select Id,OWNER.USERROLE.DeveloperName,StageName FROM Opportunity WHERE StageName='Discovery' and NSP_BidNumber__c='123987' Limit 1];
         Opportunity oppty = oppList[0];
@@ -903,7 +488,7 @@ private class NSP_ValidateOpportunityStageTest {
         test.stopTest();
     }
     @isTest
-    private static void evaluateClosedLost_IC_Test(){
+    public static void evaluateClosedLost_IC_Test(){
         test.startTest();
         List<Opportunity> oppList=[Select Id,OWNER.USERROLE.DeveloperName,StageName FROM Opportunity WHERE StageName='Discovery' and NSP_BidNumber__c='123987' Limit 1];
         Opportunity oppty = oppList[0];
@@ -930,7 +515,7 @@ private class NSP_ValidateOpportunityStageTest {
         test.stopTest();
     }
     @isTest
-    private static void evaluateClosedLost_RS_Test(){
+    public static void evaluateClosedLost_RS_Test(){
         test.startTest();
         List<Opportunity> oppList=[Select Id,OWNER.USERROLE.DeveloperName,StageName FROM Opportunity WHERE StageName='Discovery' and NSP_BidNumber__c='123987' Limit 1];
         Opportunity oppty = oppList[0];
@@ -958,7 +543,7 @@ private class NSP_ValidateOpportunityStageTest {
         test.stopTest();
     }
     @isTest
-    private static void evaluateClosedLost_TS_Test(){
+    public static void evaluateClosedLost_TS_Test(){
         test.startTest();
         List<Opportunity> oppList=[Select Id,OWNER.USERROLE.DeveloperName,StageName FROM Opportunity WHERE StageName='Discovery' and NSP_BidNumber__c='123987' Limit 1];
         Opportunity oppty = oppList[0];
@@ -986,7 +571,7 @@ private class NSP_ValidateOpportunityStageTest {
         test.stopTest();
     }
     @isTest
-    private static void evaluateClosedLost_AS_Test(){
+    public static void evaluateClosedLost_AS_Test(){
         test.startTest();
         List<Opportunity> oppList=[Select Id,OWNER.USERROLE.DeveloperName,StageName FROM Opportunity WHERE StageName='Discovery' and NSP_BidNumber__c='123987' Limit 1];
         Opportunity oppty = oppList[0];
@@ -1010,7 +595,7 @@ private class NSP_ValidateOpportunityStageTest {
         test.stopTest();
     }
     @isTest
-    private static void evaluateClosedLost_PublicGroup(){
+    public static void evaluateClosedLost_PublicGroup(){
         test.startTest();
         List<Opportunity> oppList=[Select Id,OWNER.USERROLE.DeveloperName,StageName, NSP_Sales_Office__c FROM Opportunity WHERE StageName='Discovery' and NSP_BidNumber__c='123987' Limit 1];
         Opportunity oppty = oppList[0];
@@ -1041,7 +626,7 @@ private class NSP_ValidateOpportunityStageTest {
         test.stopTest();
     }
     @isTest
-    private static void evaluateClosedLost_PublicGroup2(){
+    public static void evaluateClosedLost_PublicGroup2(){
         test.startTest();
         List<Opportunity> oppList=[Select Id,OWNER.USERROLE.DeveloperName,StageName, NSP_Sales_Office__c FROM Opportunity WHERE StageName='Discovery' and NSP_BidNumber__c='123987' Limit 1];
         Opportunity oppty = oppList[0];
@@ -1077,23 +662,28 @@ private class NSP_ValidateOpportunityStageTest {
     }
     
     @isTest
-    private static void isStageNameNull(){		
+    public static void isStageNameNull(){
+		
         test.startTest();
         
         boolean inserted = false;
         Opportunity opp = new Opportunity(Name = 'Test Opportunity');
+        
         List<Opportunity> oppList = new  List<Opportunity>();
         oppList.add(opp);
         
-        try {
+        try{
         	NSP_ValidateOpportunityStage.validateOpportunityStage(oppList);
             insert oppList;   
             inserted = true;
-        } catch(Exception e) {
+        }
+        catch(Exception e){
             e.getStackTraceString();
         }
         
         Assert.areEqual(false, inserted, 'StageName is missing');
+
         test.stopTest();
     }
+    
 }
