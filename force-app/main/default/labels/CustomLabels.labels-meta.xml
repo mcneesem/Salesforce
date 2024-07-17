@@ -206,6 +206,20 @@
         <value>-22;-28</value>
     </labels>
     <labels>
+        <fullName>Eloqua_Integration_User_Id</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Eloqua Integration User Id</shortDescription>
+        <value>0054x0000057QWJAA2</value>
+    </labels>
+    <labels>
+        <fullName>Eloqua_Lead_Marketing_Priority</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Eloqua Lead Marketing Priority</shortDescription>
+        <value>High - Event,High - General</value>
+    </labels>
+    <labels>
         <fullName>ErrorMessageWhenPrimaryResourceAlreadyExist</fullName>
         <language>en_US</language>
         <protected>false</protected>
