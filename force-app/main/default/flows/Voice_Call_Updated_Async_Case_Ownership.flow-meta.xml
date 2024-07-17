@@ -4,8 +4,8 @@
     <assignments>
         <name>Set_Fault_Element_Case_Changed</name>
         <label>Set Fault Element: Case Changed</label>
-        <locationX>440</locationX>
-        <locationY>492</locationY>
+        <locationX>314</locationX>
+        <locationY>816</locationY>
         <assignmentItems>
             <assignToReference>faultElement</assignToReference>
             <operator>Assign</operator>
@@ -20,8 +20,8 @@
     <assignments>
         <name>Set_Fault_Element_Phone_Case</name>
         <label>Set Fault Element: Phone Case</label>
-        <locationX>968</locationX>
-        <locationY>492</locationY>
+        <locationX>1106</locationX>
+        <locationY>816</locationY>
         <assignmentItems>
             <assignToReference>faultElement</assignToReference>
             <operator>Assign</operator>
@@ -35,12 +35,143 @@
         </connector>
     </assignments>
     <decisions>
+        <name>Check_Case</name>
+        <label>Check Case</label>
+        <locationX>1535</locationX>
+        <locationY>276</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Found_Case</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.CaseId__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.CaseId__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Check_Case_Status</targetReference>
+            </connector>
+            <label>Found Case</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Prevent DmlExceptions.  Closed Cases can not be modified due to Case Validation Rules.</description>
+        <name>Check_Case_Status</name>
+        <label>Check Case Status</label>
+        <locationX>1172</locationX>
+        <locationY>384</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Not_Closed</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.CaseId__r.Status</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Closed</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Did_Case_Change</targetReference>
+            </connector>
+            <label>Not Closed</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Voice_Call_Owner</name>
+        <label>Check Voice Call Owner</label>
+        <locationX>314</locationX>
+        <locationY>600</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>IS_User</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.OwnerId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.OwnerId</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Owner:User.Id</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Owner:User.Id</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Case_Changed</targetReference>
+            </connector>
+            <label>IS User</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Voice_Call_User</name>
+        <label>Check Voice Call User</label>
+        <locationX>1106</locationX>
+        <locationY>600</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Has_User</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.UserId</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.UserId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.UserId</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Modify_Phone_Case</targetReference>
+            </connector>
+            <label>Has User</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Did_Case_Change</name>
         <label>Did Case Change?</label>
-        <locationX>440</locationX>
-        <locationY>276</locationY>
+        <locationX>710</locationX>
+        <locationY>492</locationY>
         <defaultConnector>
-            <targetReference>Modify_Phone_Case</targetReference>
+            <targetReference>Check_Voice_Call_User</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -54,7 +185,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Case_Changed</targetReference>
+                <targetReference>Check_Voice_Call_Owner</targetReference>
             </connector>
             <label>Yes</label>
         </rules>
@@ -84,8 +215,8 @@
     <recordUpdates>
         <name>Case_Changed</name>
         <label>Case Changed</label>
-        <locationX>176</locationX>
-        <locationY>384</locationY>
+        <locationX>50</locationX>
+        <locationY>708</locationY>
         <faultConnector>
             <targetReference>Set_Fault_Element_Case_Changed</targetReference>
         </faultConnector>
@@ -108,8 +239,8 @@
     <recordUpdates>
         <name>Modify_Phone_Case</name>
         <label>Modify Phone Case</label>
-        <locationX>704</locationX>
-        <locationY>384</locationY>
+        <locationX>842</locationX>
+        <locationY>708</locationY>
         <faultConnector>
             <targetReference>Set_Fault_Element_Phone_Case</targetReference>
         </faultConnector>
@@ -137,7 +268,7 @@
         <object>Case</object>
     </recordUpdates>
     <start>
-        <locationX>50</locationX>
+        <locationX>534</locationX>
         <locationY>0</locationY>
         <filterLogic>1 OR ( 2 AND 3 AND 4)</filterLogic>
         <filters>
@@ -172,7 +303,7 @@
         <recordTriggerType>Update</recordTriggerType>
         <scheduledPaths>
             <connector>
-                <targetReference>Did_Case_Change</targetReference>
+                <targetReference>Check_Case</targetReference>
             </connector>
             <pathType>AsyncAfterCommit</pathType>
         </scheduledPaths>
@@ -182,8 +313,8 @@
     <subflows>
         <name>Handle_Error</name>
         <label>Handle Error</label>
-        <locationX>440</locationX>
-        <locationY>600</locationY>
+        <locationX>314</locationX>
+        <locationY>924</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultElement</name>

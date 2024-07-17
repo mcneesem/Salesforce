@@ -6,9 +6,9 @@
         <label>Validating the Messaging Session</label>
         <locationX>314</locationX>
         <locationY>134</locationY>
-        <defaultConnectorLabel>Messaging Session False</defaultConnectorLabel>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>Messaging_Session_Validation_True</name>
+            <name>Is_Valid</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>messagingSessionRecord</leftValueReference>
@@ -17,10 +17,31 @@
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>messagingSessionRecord.CaseId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>messagingSessionRecord.CaseId</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>messagingSessionRecord.Case.Status</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Closed</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Update_Case_Owner</targetReference>
             </connector>
-            <label>Messaging Session True</label>
+            <label>Is Valid</label>
         </rules>
     </decisions>
     <environments>Default</environments>
