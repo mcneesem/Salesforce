@@ -26,14 +26,7 @@
     <start>
         <locationX>50</locationX>
         <locationY>0</locationY>
-        <filterLogic>1 AND (  2 OR 3 OR 4 OR 5 OR 6  )</filterLogic>
-        <filters>
-            <field>OwnerId</field>
-            <operator>IsNull</operator>
-            <value>
-                <booleanValue>false</booleanValue>
-            </value>
-        </filters>
+        <filterLogic>or</filterLogic>
         <filters>
             <field>OwnerId</field>
             <operator>EqualTo</operator>
