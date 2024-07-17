@@ -2,7 +2,7 @@
 * Represents the termination form trigger helper which handles all the logic.
 */
 public class NSP_TerminationFormTriggerHelper {
-    // test w/ NSP_TerminationFormTriggerHelperTest (89%)
+    // test w/ NSP_TerminationFormTriggerHelperTest (86%)
     
     private static final string SUPERVISOR_DENIED = 'PR Supervisor Denied';
     private static final string TERM_TEAM_DENIED = 'Term Team Denied';
@@ -53,9 +53,8 @@ public class NSP_TerminationFormTriggerHelper {
     // @return void
     //
     //
-    public void populateSubClientandAssetValues(Set<Id> sProjectTaskIds, List<NSP_Termination_Form__c> lTerminationForms){
+    public void populateSubClientandAssetValues( Set<Id> sProjectTaskIds , List<NSP_Termination_Form__c> lTerminationForms ) {
         Id woAssetRecordTypeId =  Schema.SObjectType.Asset.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.WO_ASSET_RECORDTYPE)?.getRecordTypeId();
-        String ClientRecordTypeId = Schema.SObjectType.NSP_Termination_Form__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.NSP_Client_Reinstatement).getRecordTypeId();
         Map<Id,pse__Project_Task__c> mProjectTasks = new Map<Id,pse__Project_Task__c>(
             [
                 SELECT Id , pse__Project__r.pse__Account__c
@@ -196,16 +195,11 @@ public class NSP_TerminationFormTriggerHelper {
                     pse__Project_Task__c oProjectTask  = mProjectTasks.get(oTerminationForm.NSP_Project_Task__c);
                     Id accountId = oProjectTask?.pse__Project__r?.pse__Account__c;
                     if(accountId != null){
-                        if(oTerminationForm.RecordTypeId != ClientRecordTypeId){
-                            //check if Account has Active WO Asset
-                            if(mAccountToSubClientNumbers.containsKey(accountId)){
-                                nonterminatedFormList.add(oTerminationForm);
-                            } else{
-                                terminatedFormList.add(oTerminationForm);
-                            }
-                        } else {
-                            //for ClientRecordTypeId values will come from Active WO Asset
+                        //check if Account has Active WO Asset
+                        if(mAccountToSubClientNumbers.containsKey(accountId)){
                             nonterminatedFormList.add(oTerminationForm);
+                        } else{
+                            terminatedFormList.add(oTerminationForm);
                         }
                         if(mAccountToAssetAIMSClientNumber.containsKey(accountId)){
                             oTerminationForm.NSP_Client_Number__c = mAccountToAssetAIMSClientNumber.get(accountId);
@@ -242,7 +236,7 @@ public class NSP_TerminationFormTriggerHelper {
             );
         }
     }
-    
+
     private void updateTermFormFields(
         List<NSP_Termination_Form__c> termformList , 
         Map<Id,pse__Project_Task__c> projectTasks ,

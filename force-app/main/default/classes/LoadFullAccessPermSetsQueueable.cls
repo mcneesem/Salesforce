@@ -162,40 +162,6 @@ public class LoadFullAccessPermSetsQueueable implements Queueable {
         }
     }
 
-    // ************************************ Record Type Visibility ********************************************
-    //  Description :   Upserts PermissionSetRecordTypeVisibility for all Record Types into specified Perm Set.
-    // ********************************************************************************************************
-    public static void loadRecTypeVisibility(Id permSetId) {
-        if (!String.isBlank(permSetId)) {
-            List<RecordType> recTypeList =  [SELECT DeveloperName, SobjectType, NamespacePrefix FROM RecordType WHERE IsActive = true];
-            MetadataService.MetadataPort service = NSP_PrepSandbox.createService();
-
-            String[] permissionSetNames = new String[] {[SELECT Name FROM PermissionSet WHERE Id = :permSetId LIMIT 1].Name};
-            MetadataService.PermissionSet permSet = new MetadataService.PermissionSet();
-            if (!Test.isRunningTest()) {
-                permSet = (MetadataService.PermissionSet) service.readMetadata('PermissionSet', permissionSetNames).getRecords()[0];
-            }
-
-            for (RecordType recType : recTypeList) {
-                MetadataService.PermissionSetRecordTypeVisibility recTypeVis = new MetadataService.PermissionSetRecordTypeVisibility();	
-                String prefix = (recType.NamespacePrefix == null) ? '' : recType.NamespacePrefix + '__';
-                recTypeVis.recordType = recType.SobjectType + '.' + prefix + recType.DeveloperName;
-                recTypeVis.visible = true;
-
-                if (permSet.recordTypeVisibilities != null) {
-                    permSet.recordTypeVisibilities.add(recTypeVis);
-                } else {
-                    permSet.recordTypeVisibilities = new MetadataService.PermissionSetRecordTypeVisibility[] { recTypeVis };
-                }
-            }
-
-            if (permSet != null && !Test.isRunningTest()) {
-                List<MetadataService.SaveResult> results = service.updateMetadata( new MetadataService.Metadata[] { permSet });
-                if (!results[0].success) createErrorLog('LoadFullAccessPermSetsQueueable', 'loadRecTypeVisibility', null, 'RecTypeVisibility errors: ' + results[0].errors[0].message);
-            }
-        }
-    }
-
     // ************************ Chain Completion Email ************************
     public static void sendCompletionEmail(){
         Messaging.SingleEmailMessage oEmail = new Messaging.SingleEmailMessage();

@@ -82,6 +82,11 @@
                 <default>false</default>
                 <label>RET - NSPHardship</label>
             </value>
+            <value>
+                <fullName>Payroll COE Data Visibility</fullName>
+                <default>false</default>
+                <label>Payroll COE Data Visibility</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
     <visibleLines>4</visibleLines>

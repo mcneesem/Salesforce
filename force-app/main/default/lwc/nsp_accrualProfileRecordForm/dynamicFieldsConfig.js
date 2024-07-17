@@ -277,6 +277,12 @@ const DYNAMIC_FIELDS = {
       dependentFields: ['NSP_Other_Plan__c'],
     },
   ],
+  NSP_Employee_Status_check_all_that_apply__c: [
+    {
+      expValue: ['Others'],
+      dependentFields: ['Other_Status__c'],
+    },
+  ],
   NSP_time_accrue_under_plan_fiscal_year__c: [
     {
       expValue: [

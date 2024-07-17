@@ -197,7 +197,6 @@ handleSubmit(event){
         this.template.querySelector('lightning-radio-group.NSP_StatusOfAgreement__c') != null?this.template.querySelector('lightning-radio-group.NSP_StatusOfAgreement__c').value ='':
         this.template.querySelector("div.midMarketEnterprise") !=null?this.template.querySelector("div.midMarketEnterprise").style.display='none' :'';
         this.template.querySelector('lightning-radio-group.NSP_ConfirmationOfAgreementStatement__c') != null?this.template.querySelector('lightning-radio-group.NSP_ConfirmationOfAgreementStatement__c').value ='':''
-        this.template.querySelector("div.writtenApprovalFromMhrs") !=null?this.template.querySelector("div.writtenApprovalFromMhrs").style.display='none' :'';
         this.template.querySelector("div.confirmationDiv") !=null?this.template.querySelector("div.confirmationDiv").style.display='none' :'';
         this.template.querySelector("div.statusAgreementDiv") !=null?this.template.querySelector("div.statusAgreementDiv").style.display='none' :'';
         this.NSP_ReviewType__c = null;
@@ -250,9 +249,7 @@ handleSubmit(event){
      if(event.currentTarget.name == 'NSP_Mid_Market_or_Mid_Market_Enterprise__c' && event.currentTarget.value != null){
       this.NSP_Mid_Market_or_Mid_Market_Enterprise__c = event.currentTarget.value;
       if(this.template.querySelector("div.writtenApprovalFromMhrs") !=null){
-    
         if(this.NSP_Mid_Market_or_Mid_Market_Enterprise__c ==='Yes' ){
-          this.template.querySelector("div.writtenApprovalFromMhrs").style.display='';
           this[event.currentTarget.name.slice(0,-3)] = true;
           this.template.querySelector('lightning-radio-group.NSP_Written_Approval_From_The_MHRS__c') != null? this.template.querySelector('lightning-radio-group.NSP_Written_Approval_From_The_MHRS__c').value ='':'';
           this.template.querySelector("div.statusAgreementDiv") !=null?this.template.querySelector("div.statusAgreementDiv").style.display='none' :'';
@@ -264,7 +261,6 @@ handleSubmit(event){
           
         }else{
             this.template.querySelector('lightning-radio-group.NSP_Mid_Market_or_Mid_Market_Enterprise__c') != null? this.template.querySelector('lightning-radio-group.NSP_Mid_Market_or_Mid_Market_Enterprise__c').value ='':'';
-            this.template.querySelector("div.writtenApprovalFromMhrs").style.display='none';
             this.template.querySelector("div.statusAgreementDiv").style.display='';
             this[event.currentTarget.name.slice(0,-3)] = false;
             this.template.querySelector('lightning-radio-group.NSP_Written_Approval_From_The_MHRS__c') != null? this.template.querySelector('lightning-radio-group.NSP_Written_Approval_From_The_MHRS__c').value =null:'';
@@ -300,7 +296,6 @@ handleSubmit(event){
             this.template.querySelector('lightning-radio-group.NSP_ConfirmationOfAgreementStatement__c') != null? this.template.querySelector('lightning-radio-group.NSP_ConfirmationOfAgreementStatement__c').value ='' :'';
             this.template.querySelector("div.statusAgreementDiv").style.display='none';
             this.template.querySelector("div.confirmationDiv") !=null?this.template.querySelector("div.confirmationDiv").style.display='none' :'';
-            this.template.querySelector("div.writtenApprovalFromMhrs") !=null?this.template.querySelector("div.writtenApprovalFromMhrs").style.display='none' :'';
             this.template.querySelector("div.midMarketEnterprise") !=null?this.template.querySelector("div.midMarketEnterprise").style.display='none' :'';
             this.template.querySelector("div.ChangeToCorporateReivew")!=null?this.template.querySelector("div.ChangeToCorporateReivew").style.display='block':'';
             this.NSP_Written_Approval_From_The_MHRS__c=null;
@@ -366,7 +361,6 @@ handleSubmit(event){
             this.NSP_ReviewType__c ='Corporate Review';
             this.NSP_ReviewType = false;
             this.template.querySelector("div.midMarketEnterprise").style.display='none';
-            this.template.querySelector("div.writtenApprovalFromMhrs").style.display='none';
               this.template.querySelector("div.confirmationDiv").style.display='none';
               
               this.template.querySelector("div.ChangeToCorporateReivew")!=null?this.template.querySelector("div.ChangeToCorporateReivew").style.display='':'';

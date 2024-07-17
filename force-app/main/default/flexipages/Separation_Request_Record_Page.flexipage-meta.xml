@@ -720,16 +720,6 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.NSP_AnyPreparedDocumentForTermination__c</fieldItem>
-                <identifier>RecordNSP_AnyPreparedDocumentForTermination_cField3</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
                 <fieldItem>Record.NSP_IsInsperityIncludedAsReleasedParty__c</fieldItem>
                 <identifier>RecordNSP_IsInsperityIncludedAsReleasedParty_cField2</identifier>
                 <visibilityRule>
@@ -2576,16 +2566,6 @@
                     <name>uiBehavior</name>
                     <value>readonly</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.NSP_AnyPreparedDocumentForTermination__c</fieldItem>
-                <identifier>RecordNSP_AnyPreparedDocumentForTermination_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>readonly</value>
-                </fieldInstanceProperties>
                 <fieldItem>Record.NSP_IsInsperityIncludedAsReleasedParty__c</fieldItem>
                 <identifier>RecordNSP_IsInsperityIncludedAsReleasedParty_cField</identifier>
                 <visibilityRule>
@@ -2605,16 +2585,6 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_IsInsperityDisclaimerIncluded__c</fieldItem>
                 <identifier>RecordNSP_IsInsperityDisclaimerIncluded_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>readonly</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.NSP_AnyProvisionInPreparedDocRefersStock__c</fieldItem>
-                <identifier>RecordNSP_AnyProvisionInPreparedDocRefersStock_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -3259,26 +3229,6 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_SpecialItemsNote__c</fieldItem>
                 <identifier>RecordNSP_SpecialItemsNote_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>readonly</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.NSP_AnyPreparedDocumentForTermination__c</fieldItem>
-                <identifier>RecordNSP_AnyPreparedDocumentForTermination_cField2</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>readonly</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.NSP_AnyProvisionInPreparedDocRefersStock__c</fieldItem>
-                <identifier>RecordNSP_AnyProvisionInPreparedDocRefersStock_cField2</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>

@@ -48,7 +48,7 @@
             <value>
                 <fullName>July Duty (paid)</fullName>
                 <default>false</default>
-                <label>July Duty (paid)</label>
+                <label>Jury Duty (paid)</label>
             </value>
             <value>
                 <fullName>Client Specific Pay Codes</fullName>

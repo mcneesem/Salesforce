@@ -142,7 +142,8 @@
 ISPICKVAL(NSP_Status__c, &quot;Draft&quot;),
 IF(
     RecordType.Name = &apos;Payroll Specialist Form&apos;,
-    AND( 
+    AND(
+        Total_Number_of_Files__c &gt;= Number_of_required_checkboxes__c, 
         NOT(ISBLANK(NSP_Project_Task__c)),
         NOT(ISBLANK(NSP_Client_Owner__c)),
         NSP_CSA__c,

@@ -687,6 +687,16 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>DNBConnect__D_B_Connect_Company_Profile__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>DNB_Connect_DUNS_Number__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>DnB_Domestic_Ultimate_DUNS__c</field>
             <table>Account</table>
         </columns>
@@ -1403,11 +1413,6 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>NSP_Max_Days_Overdue__c</field>
-            <table>Account</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Max_Overdue_Invoice_Date__c</field>
             <table>Account</table>
         </columns>
         <columns>
@@ -2553,6 +2558,21 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>NSP_Product_First_Pay_Date__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Has_Financial_Info__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Sandbox_Targeted__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Sandbox_AIMS_Client__c</field>
             <table>Account</table>
         </columns>
         <masterLabel>Accounts</masterLabel>

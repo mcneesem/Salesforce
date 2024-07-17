@@ -93,10 +93,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Event - Relationship Marketing</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Event - Tradeshow%2C Industry Conference</fullName>
             <default>false</default>
         </values>
@@ -133,23 +129,43 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Relationship Marketing - Alliances</fullName>
+            <fullName>RM - Affiliates</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Relationship Marketing - Brokers</fullName>
+            <fullName>RM - Alliances</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Relationship Marketing - Loyalty</fullName>
+            <fullName>RM - Brokers</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Relationship Marketing - PCM</fullName>
+            <fullName>RM - Event - Alliances</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Relationship Marketing - Sponsorships</fullName>
+            <fullName>RM - Event - Loyalty</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RM - Event - PCM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RM - Loyalty</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RM - National Accounts</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RM - PCM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RM - Sponsorships</fullName>
             <default>false</default>
         </values>
         <values>
@@ -169,11 +185,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Social - Organic - Facebook</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Social - Organic - Instagram</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Social - Organic - LinkedIn</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Social - Organic - Meta</fullName>
+            <fullName>Social - Organic - Pinterest</fullName>
             <default>false</default>
         </values>
         <values>
@@ -181,7 +205,23 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Social - Organic - YouTube</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Social - Paid - Facebook</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Social - Paid - Facebook via 6Sense</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Social - Paid - Influencer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Social - Paid - Instagram</fullName>
             <default>false</default>
         </values>
         <values>
@@ -190,14 +230,6 @@
         </values>
         <values>
             <fullName>Social - Paid - LinkedIn via 6Sense</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Social - Paid - Meta</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Social - Paid - Meta via 6Sense</fullName>
             <default>false</default>
         </values>
         <values>
@@ -210,6 +242,10 @@
         </values>
         <values>
             <fullName>Traditional Media</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Z_Archive</fullName>
             <default>false</default>
         </values>
     </picklistValues>

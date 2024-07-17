@@ -46,11 +46,6 @@
                 <label>Discovery Call</label>
             </value>
             <value>
-                <fullName>Happy Hour</fullName>
-                <default>false</default>
-                <label>Happy Hour</label>
-            </value>
-            <value>
                 <fullName>Lunch</fullName>
                 <default>false</default>
                 <label>Lunch</label>
@@ -76,6 +71,11 @@
                 <label>WO Proposal</label>
             </value>
             <value>
+                <fullName>WX Proposal</fullName>
+                <default>false</default>
+                <label>WX Proposal</label>
+            </value>
+            <value>
                 <fullName>Email</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
@@ -86,6 +86,12 @@
                 <default>false</default>
                 <isActive>false</isActive>
                 <label>Gift Mailing</label>
+            </value>
+            <value>
+                <fullName>Happy Hour</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Happy Hour</label>
             </value>
             <value>
                 <fullName>In-Person Meet</fullName>
@@ -160,12 +166,6 @@
                 <label>Voicemail</label>
             </value>
             <value>
-                <fullName>WX Proposal</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>WX Proposal</label>
-            </value>
-            <value>
                 <fullName>WX Quote</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
@@ -205,11 +205,6 @@
         <valueSettings>
             <controllingFieldValue>Core Sales</controllingFieldValue>
             <controllingFieldValue>Mid Market</controllingFieldValue>
-            <valueName>Happy Hour</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Core Sales</controllingFieldValue>
-            <controllingFieldValue>Mid Market</controllingFieldValue>
             <valueName>Lunch</valueName>
         </valueSettings>
         <valueSettings>
@@ -221,6 +216,10 @@
             <controllingFieldValue>Core Sales</controllingFieldValue>
             <controllingFieldValue>Mid Market</controllingFieldValue>
             <valueName>WO Proposal</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Core Sales</controllingFieldValue>
+            <valueName>WX Proposal</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Mid Market</controllingFieldValue>

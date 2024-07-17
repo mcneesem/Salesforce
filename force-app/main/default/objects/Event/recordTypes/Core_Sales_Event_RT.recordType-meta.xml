@@ -669,10 +669,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Happy Hour</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Lunch</fullName>
             <default>false</default>
         </values>
@@ -682,6 +678,10 @@
         </values>
         <values>
             <fullName>WO Proposal</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WX Proposal</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -2756,14 +2756,6 @@
         </values>
         <values>
             <fullName>WO Business Profile</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>WO Proposal</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>WX Proposal</fullName>
             <default>false</default>
         </values>
         <values>

@@ -33,4 +33,19 @@ const SECTION_FIELDS = [
    'What_is_client_s_ABCP__c'
 ];
 
-export { EMP_TABLE_FIELDS, SECTION_FIELDS };
+const RL_FIELDS = [
+  'Does_the_client_have_any_union_EEs__c',
+  'NSP_Any_employee_with_temporary_status__c',
+  'Does_client_have_any_Minor_EEs__c',
+  'Client_have_will_have_any_Seasonal_EEs__c',
+  'Does_client_employ_ministers_or_teachers__c',
+  'NSP_non_Insperity_paid_emps_contractors__c',
+  'Any_EEs_travel_internationally_for_work__c',
+  'Are_there_any_EEs_on_Leave_of_Absence__c',
+  'NSP_Any_active_severance_agreement__c',
+  'remove_employee_directory_from_premier__c',
+  'Told_EE_ineligble_for_active_at_work_ben__c',
+  'NSP_Any_active_severance_agreement__c'
+];
+
+export { EMP_TABLE_FIELDS, SECTION_FIELDS,RL_FIELDS };

@@ -82,9 +82,7 @@ export default class Nsp_separationWizardPageFive extends LightningElement {
                 this.NSP_HaveYouattachedPreparedAgreement__c = this.fieldsData.NSP_HaveYouattachedPreparedAgreement__c?.value =='Yes' ? ( this.fileCounts++ ,true ) : false;
                 this.NSP_Attached_Approval_Email__c = this.fieldsData.NSP_Attached_Approval_Email__c?.value =='Yes' ? ( this.fileCounts++ ,true ) : false;
                 this.NSP_WhoResponsibleForStockEquityPaymt__c = this.fieldsData.NSP_WhoResponsibleForStockEquityPaymt__c != null && this.fieldsData.NSP_WhoResponsibleForStockEquityPaymt__c.value =='Client' ? ( this.fileCounts++ ,true ) : 
-                this.fieldsData.NSP_ReviewType__c?.value == 'HRS Review' &&  this.fieldsData.NSP_AnyProvisionInPreparedDocRefersStock__c?.value=='Yes'?( this.fileCounts++ ,true ):false ;
                 this.NSP_ReferenceTospecificClientDocument__c = this.fieldsData.NSP_ReferenceTospecificClientDocument__c != null && this.fieldsData.NSP_ReferenceTospecificClientDocument__c.value ? ( this.fileCounts++ ,true ):
-                this.fieldsData.NSP_AnyPreparedDocumentForTermination__c?.value =='Yes' ? ( this.fileCounts++ ,true ) : false ; 
                
                 this.currentPageFields.forEach(key =>{
                     if( this.fieldsData[key]!= null && this.fieldsData[key].value !=null){

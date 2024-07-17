@@ -17,4 +17,11 @@ const SECTION_FIELDS = [
   'NSP_Does_the_client_offer_Stock_Options__c',
 ];
 
-export { SECTION_FIELDS };
+const RL_FIELDS = [
+  'Do_you_pay_non_exempt_employees__c',
+  'NSP_Any_special_pay_codes_Needed__c',
+  'Does_the_client_offer_a_Stock_Purchase__c',
+  'NSP_Does_the_client_offer_Stock_Options__c'
+];
+
+export { SECTION_FIELDS, RL_FIELDS };

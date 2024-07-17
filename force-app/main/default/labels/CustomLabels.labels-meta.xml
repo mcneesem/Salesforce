@@ -22,6 +22,22 @@
         <value>Are there any non-paid users?</value>
     </labels>
     <labels>
+        <fullName>BPS_Integra_Asset_Feilds</fullName>
+        <categories>Stores all the fields which BPS users can edit on Integra Asset if Create Asset Perm Set is not assigned.</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>BPS Integra Asset Feilds</shortDescription>
+        <value>Status</value>
+    </labels>
+    <labels>
+        <fullName>BPS_Non_Performance_Management_Fields</fullName>
+        <categories>Stores all the fields which BPS users can edit on Performance Management Asset if Create Asset Perm Set is not assigned.</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>BPS Non Performance Management Fields</shortDescription>
+        <value>Status</value>
+    </labels>
+    <labels>
         <fullName>BTCoreEgMinMaxRange</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -237,6 +253,13 @@
         <protected>false</protected>
         <shortDescription>Inbound  and Outbound UserRole</shortDescription>
         <value>Inbound Rep,Inbound Manager,Sales Development Rep,Sales Development Manager</value>
+    </labels>
+    <labels>
+        <fullName>InsperityWOBillingAccountName</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>InsperityWOBillingAccountName</shortDescription>
+        <value>Insperity WO Billing Account</value>
     </labels>
     <labels>
         <fullName>Integra_Implementation_Timeline</fullName>
@@ -939,7 +962,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>BPS Non-Editable Fields</shortDescription>
-        <value>NSP_Netsuite_Hardware_Item__c</value>
+        <value>NSP_Netsuite_Hardware_Item__c,Status</value>
     </labels>
     <labels>
         <fullName>NSP_BPS_Non_XML_Fields</fullName>
@@ -947,7 +970,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>BPS Non-Editable Fields</shortDescription>
-        <value>NSP_Product_Term_Reason__c,NSP_Business_Type__c,NSP_Company_Name__c,NSP_Netsuite_Hardware_Item__c</value>
+        <value>NSP_Product_Term_Reason__c,NSP_Business_Type__c,NSP_Company_Name__c,NSP_Netsuite_Hardware_Item__c,Status</value>
     </labels>
     <labels>
         <fullName>NSP_BPS_Wet_Envelope</fullName>
@@ -6000,6 +6023,13 @@ Climate Plus: https://nexus.insperity.com/groups/38605/posts/3272612-climate-plu
         <value>The account will be removed from its current group. Are you sure?</value>
     </labels>
     <labels>
+        <fullName>One_Open_Nurture_Regen_Task_Per_Opportunity</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>One Open Nurture/Regen Task Per Opportunity</shortDescription>
+        <value>An Open Nurture/Regen Task already exists on the Opportunity.</value>
+    </labels>
+    <labels>
         <fullName>Opportunity_Product_Update_Error_Message</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -6039,7 +6069,7 @@ Climate Plus: https://nexus.insperity.com/groups/38605/posts/3272612-climate-plu
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>PEO Termination Team Roles</shortDescription>
-        <value>Business Performance Advisor;Client Liaison;Manager,HR Services;Payroll Manager;Customer Success Specialist;Payroll Specialist</value>
+        <value>Business Performance Advisor;Client Liaison;Manager,HR Services;Payroll Manager;Payroll Specialist</value>
     </labels>
     <labels>
         <fullName>Payroll_submitted_frm_multiple_contacts</fullName>
@@ -6054,6 +6084,13 @@ Climate Plus: https://nexus.insperity.com/groups/38605/posts/3272612-climate-plu
         <protected>false</protected>
         <shortDescription>Premier Performance Implementation Timeline</shortDescription>
         <value>Premier Performance Implementation Timeline</value>
+    </labels>
+    <labels>
+        <fullName>Product_Invoice_Run_status</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Product Invoice Run status</shortDescription>
+        <value>Pending Billing,In Progress,Error</value>
     </labels>
     <labels>
         <fullName>ProjectTaskLongDescription</fullName>

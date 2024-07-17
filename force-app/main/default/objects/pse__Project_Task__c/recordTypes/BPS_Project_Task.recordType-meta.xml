@@ -5,6 +5,241 @@
     <compactLayoutAssignment>NSP_BPS_Compact_Layout</compactLayoutAssignment>
     <label>BPS Project Task</label>
     <picklistValues>
+        <picklist>NSP_Competitor_s_that_won_the_business__c</picklist>
+        <values>
+            <fullName>ADP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bamboo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Edge Resourcing</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Employer Flexible</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Engage PEO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G%26A Partners</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gallagher</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HR in-house</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Insperity WA%2FWX</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>JustWorks</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PEO %28undisclosed%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PEO - Sequoia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PayDay HR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Paychex</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Paycom</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>TriNet</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ultipro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vensure Employer Services</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Workday</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Dispatch_Region__c</picklist>
+        <values>
+            <fullName>Central</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSO Project Manager National</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Houston</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MM National</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>North East</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>South East</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Western</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Group_Membership_for_Plan_Projects__c</picklist>
+        <values>
+            <fullName>Group 1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Group 2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Group 3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Group 4</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Group 5</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Group 6</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Group 7</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Group 8</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Group 9</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Level_of_Effort__c</picklist>
+        <values>
+            <fullName>0</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Meeting_Type__c</picklist>
+        <values>
+            <fullName>OnSite</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Virtual</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Offset_Date__c</picklist>
+        <values>
+            <fullName>Asset Renewal Date</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Opportunity_influence_fav_decision__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Opportunity_influence_favorable_dec__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Percentage_Complete__c</picklist>
+        <values>
+            <fullName>0%25</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>100%25</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>25%25</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>50%25</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>75%25</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>NSP_Rating__c</picklist>
         <values>
             <fullName>Favorable</fullName>
@@ -29,6 +264,30 @@
     </picklistValues>
     <picklistValues>
         <picklist>Responsible_Party__c</picklist>
+        <values>
+            <fullName>Benefit Analyst</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Data Analyst</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Intake Specialist</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Project Coordinator</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Project Implementer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Project Manager</fullName>
+            <default>false</default>
+        </values>
         <values>
             <fullName>RET Compliance</fullName>
             <default>false</default>
@@ -71,6 +330,10 @@
         </values>
         <values>
             <fullName>RET Sec 125</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Time Analyst</fullName>
             <default>false</default>
         </values>
     </picklistValues>

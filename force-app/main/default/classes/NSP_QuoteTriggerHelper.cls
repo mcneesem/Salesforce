@@ -973,13 +973,16 @@ public void stampQuoteOwnerGrouponInsert(List<SBQQ__Quote__c> newQuotesList) {
         if(opportunitiesToUpdate.size()>0) {
             try{
                 database.update(opportunitiesToUpdate);
-            } catch(Exception ex){
-                NSP_CustomException.LogException(ex);
-            } 
-           
+            } catch ( Exception e ) {
+                NSP_ErrorLogHandler.logException(
+                    NSP_QuoteTriggerHelper.class.getName() ,
+                    'populateInsperitySigner' ,
+                    e
+                );
+            }
         }
     }
-    
+
     /**
 * Method Name : updateBillingAccountOnQuote 
 * Description : Method to Billing Account on Quote for STY-00478
@@ -1315,9 +1318,9 @@ public void stampQuoteOwnerGrouponInsert(List<SBQQ__Quote__c> newQuotesList) {
     // @param QuoteNewMap Map of New Quote. 
     // @param QuoteOldMap Map of Old Quote.   
     // @return void  
-    public void createEnrollmentFee(Map<Id, SBQQ__Quote__c> quoteNewMap,Map<Id, SBQQ__Quote__c> quoteOldMap)  { 
-        List<NSP_Enrollment_Fee_Payment__c> enrollmentRecs= new List<NSP_Enrollment_Fee_Payment__c>();
-        List<Opportunity> optysToupdate= new List<Opportunity>();
+    public void createEnrollmentFee( Map<Id,SBQQ__Quote__c> quoteNewMap , Map<Id,SBQQ__Quote__c> quoteOldMap ) { 
+        List<NSP_Enrollment_Fee_Payment__c> enrollmentRecs = new List<NSP_Enrollment_Fee_Payment__c>();
+        List<Opportunity> optysToupdate = new List<Opportunity>();
         Map<Id,NSP_Enrollment_Fee_Payment__c> existingEnrollments =getExistingEnrollments(quoteNewMap);
         for(SBQQ__Quote__c newQuote : quoteNewMap.values()) {
             SBQQ__Quote__c oldQuote =quoteOldMap.get(newQuote.Id);
@@ -1341,7 +1344,7 @@ public void stampQuoteOwnerGrouponInsert(List<SBQQ__Quote__c> newQuotesList) {
                 )
                 )
             {
-                NSP_Enrollment_Fee_Payment__c enrollmentFee= new NSP_Enrollment_Fee_Payment__c();
+                NSP_Enrollment_Fee_Payment__c enrollmentFee = new NSP_Enrollment_Fee_Payment__c();
                 If(existingEnrollments.containskey(newQuote.SBQQ__Opportunity2__c)){
                     enrollmentFee.Id=existingEnrollments.get(newQuote.SBQQ__Opportunity2__c).Id;
                     enrollmentFee.NSP_Opportunity__c=newQuote.SBQQ__Opportunity2__c;
@@ -1353,12 +1356,15 @@ public void stampQuoteOwnerGrouponInsert(List<SBQQ__Quote__c> newQuotesList) {
                     enrollmentFee.NSP_Docupay_Upfront_fee__c=newQuote.NSP_Docupay_Upfront_fee__c;
                     enrollmentFee.NSP_Payment_Method__c='Card';
                 }
-                enrollmentRecs.add(enrollmentFee);
+                enrollmentRecs.add( enrollmentFee );
             }
             //if set up fee is zero,set non docupay flag on Opportunity to true
             if(newQuote.NSP_WX_WA_Enrollment_Fee__c==0){
-                Opportunity opty =new Opportunity(Id=newQuote.SBQQ__Opportunity2__c,NSP_Non_docupay__c=true);
-                optysToupdate.add(opty);
+                Opportunity opty = new Opportunity(
+                    Id=newQuote.SBQQ__Opportunity2__c ,
+                    NSP_Non_docupay__c=true
+                );
+                optysToupdate.add( opty );
             } else if(newQuote.NSP_WX_WA_Enrollment_Fee__c>0 ){
                 Opportunity opty;
                 if( newQuote.SBQQ__Status__c == NSP_CPQConstants.QUOTE_STATUS_APPROVED
@@ -1379,28 +1385,30 @@ public void stampQuoteOwnerGrouponInsert(List<SBQQ__Quote__c> newQuotesList) {
                         opty =new Opportunity(Id=newQuote.SBQQ__Opportunity2__c,NSP_Non_docupay__c=false);
                     }
                 }
-                optysToupdate.add(opty);
+                if ( ( opty != null ) && ( opty.Id != null ) ) {
+                    optysToupdate.add( opty );
+                }
             }
         }
-        if(!enrollmentRecs.isEmpty()){
-            try{
+        if ( !enrollmentRecs.isEmpty() ) {
+            try {
                 upsert enrollmentRecs;
-            } catch(Exception ex){
-                NSP_ErrorLogHandler.logSaveException(
+            } catch ( Exception e ) {
+                NSP_ErrorLogHandler.logException(
                     NSP_QuoteTriggerHelper.class.getName() ,
                     'createEnrollmentFee upsert enrollmentRecs' ,
-                    ex.getMessage() + ' ~ ' + ex.getStackTraceString()
+                    e
                 );
             }
         }
-        if(!optysToupdate.isEmpty()){
-            try{
+        if ( !optysToupdate.isEmpty() ) {
+            try {
                 update optysToupdate;
-            } catch(Exception ex){
-                NSP_ErrorLogHandler.logSaveException(
+            } catch ( Exception e ) {
+                NSP_ErrorLogHandler.logException(
                     NSP_QuoteTriggerHelper.class.getName() ,
                     'createEnrollmentFee update optysToupdat' ,
-                    ex.getMessage() + ' ~ ' + ex.getStackTraceString()
+                    e
                 );
             }
         }
@@ -1476,22 +1484,31 @@ public void syncQuoteAndOptyPriceBookIfNotSame(List<SBQQ__Quote__c> quotes){
                 optysToUpdate.add(new Opportunity(Id=objQuote.SBQQ__Opportunity2__c,Pricebook2Id=objQuote.SBQQ__PriceBook__c));
             }
         }
-        if(optysToUpdate.size()>0){
-            List<Database.SaveResult> results = Database.update(optysToUpdate,false);
-            NSP_ErrorLogHandler.logSaveResultsException(CLASS_NAME,'syncQuoteAndOptyPriceBookIfNotSame', results);
+            if ( optysToUpdate.size() > 0 ) {
+                List<Database.SaveResult> results = Database.update( optysToUpdate , false );
+                NSP_ErrorLogHandler.logResults(
+                    NSP_QuoteTriggerHelper.class.getName() ,
+                    'syncQuoteAndOptyPriceBookIfNotSame' ,
+                    results
+                );
+            }
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_QuoteTriggerHelper.class.getName() ,
+                'syncQuoteAndOptyPriceBookIfNotSame' ,
+                e
+            );
         }
-    }Catch(Exception ex){
-        NSP_ErrorLogHandler.logSaveException(CLASS_NAME,'syncQuoteAndOptyPriceBookIfNotSame',ex.getMessage());
     }
-}
-/**
+
+    /**
 * Method Name : unCheckPrimaryQuotesIfExist 
 * Description : Method to mark old quotes as non primary (CPQ will take care this OOB but we are calling this before system make it non primary)
 * Author : Samba Raju       Date : 12/20/2022
 * @param quotes list;   
 * @return void  
 */
-private void unCheckPrimaryQuotesIfExist(List<SBQQ__Quote__c> quotes){
+    private void unCheckPrimaryQuotesIfExist(List<SBQQ__Quote__c> quotes){
     Set<Id> optyIds= new Set<Id>();
     for(SBQQ__Quote__c objQuote:quotes){
         if(String.isNotBlank(objQuote.SBQQ__Opportunity2__c) && objQuote.SBQQ__Primary__c==true){
@@ -1504,9 +1521,14 @@ private void unCheckPrimaryQuotesIfExist(List<SBQQ__Quote__c> quotes){
     }
     if(primaryQuotes.size()>0){
         List<Database.SaveResult> results = Database.update(primaryQuotes,false);
-        NSP_ErrorLogHandler.logSaveResultsException(CLASS_NAME,'unCheckPrimaryQuotesIfExist', results); 
+            NSP_ErrorLogHandler.logResults(
+                NSP_QuoteTriggerHelper.class.getName() ,
+                'unCheckPrimaryQuotesIfExist' ,
+                results
+            );
+        }
     }
-}
+
 /**
 * Method Name : validateQuote 
 * Description : Method to throw valdiation error if customer has an active or onboarding asset. This will enforce them to amendment

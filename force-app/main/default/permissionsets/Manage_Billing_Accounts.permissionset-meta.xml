@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Manage_Billing_Accounts</name>
+    </customPermissions>
+    <description>Grants the Custom Permission to Manage Billing Accounts</description>
+    <flowAccesses>
+        <enabled>true</enabled>
+        <flow>UpdateWOAccountOrders</flow>
+    </flowAccesses>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Manage Billing Accounts</label>
+    <license>Salesforce</license>
+</PermissionSet>

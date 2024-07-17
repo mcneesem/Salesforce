@@ -102,11 +102,6 @@
                 <label>Email</label>
             </value>
             <value>
-                <fullName>Event - Relationship Marketing</fullName>
-                <default>false</default>
-                <label>Event - Relationship Marketing</label>
-            </value>
-            <value>
                 <fullName>Event - Tradeshow, Industry Conference</fullName>
                 <default>false</default>
                 <label>Event - Tradeshow, Industry Conference</label>
@@ -152,29 +147,54 @@
                 <label>Purchased List</label>
             </value>
             <value>
-                <fullName>Relationship Marketing - Alliances</fullName>
+                <fullName>RM - Affiliates</fullName>
                 <default>false</default>
-                <label>Relationship Marketing - Alliances</label>
+                <label>RM - Affiliates</label>
             </value>
             <value>
-                <fullName>Relationship Marketing - Brokers</fullName>
+                <fullName>RM - Alliances</fullName>
                 <default>false</default>
-                <label>Relationship Marketing - Brokers</label>
+                <label>RM - Alliances</label>
             </value>
             <value>
-                <fullName>Relationship Marketing - Loyalty</fullName>
+                <fullName>RM - Brokers</fullName>
                 <default>false</default>
-                <label>Relationship Marketing - Loyalty</label>
+                <label>RM - Brokers</label>
             </value>
             <value>
-                <fullName>Relationship Marketing - PCM</fullName>
+                <fullName>RM - Event - Alliances</fullName>
                 <default>false</default>
-                <label>Relationship Marketing - PCM</label>
+                <label>RM - Event - Alliances</label>
             </value>
             <value>
-                <fullName>Relationship Marketing - Sponsorships</fullName>
+                <fullName>RM - Event - Loyalty</fullName>
                 <default>false</default>
-                <label>Relationship Marketing - Sponsorships</label>
+                <label>RM - Event - Loyalty</label>
+            </value>
+            <value>
+                <fullName>RM - Event - PCM</fullName>
+                <default>false</default>
+                <label>RM - Event - PCM</label>
+            </value>
+            <value>
+                <fullName>RM - Loyalty</fullName>
+                <default>false</default>
+                <label>RM - Loyalty</label>
+            </value>
+            <value>
+                <fullName>RM - National Accounts</fullName>
+                <default>false</default>
+                <label>RM - National Accounts</label>
+            </value>
+            <value>
+                <fullName>RM - PCM</fullName>
+                <default>false</default>
+                <label>RM - PCM</label>
+            </value>
+            <value>
+                <fullName>RM - Sponsorships</fullName>
+                <default>false</default>
+                <label>RM - Sponsorships</label>
             </value>
             <value>
                 <fullName>Search - Organic - Bing</fullName>
@@ -197,14 +217,24 @@
                 <label>Search - Paid - Google</label>
             </value>
             <value>
+                <fullName>Social - Organic - Facebook</fullName>
+                <default>false</default>
+                <label>Social - Organic - Facebook</label>
+            </value>
+            <value>
+                <fullName>Social - Organic - Instagram</fullName>
+                <default>false</default>
+                <label>Social - Organic - Instagram</label>
+            </value>
+            <value>
                 <fullName>Social - Organic - LinkedIn</fullName>
                 <default>false</default>
                 <label>Social - Organic - LinkedIn</label>
             </value>
             <value>
-                <fullName>Social - Organic - Meta</fullName>
+                <fullName>Social - Organic - Pinterest</fullName>
                 <default>false</default>
-                <label>Social - Organic - Meta</label>
+                <label>Social - Organic - Pinterest</label>
             </value>
             <value>
                 <fullName>Social - Organic - X</fullName>
@@ -212,9 +242,29 @@
                 <label>Social - Organic - X</label>
             </value>
             <value>
+                <fullName>Social - Organic - YouTube</fullName>
+                <default>false</default>
+                <label>Social - Organic - YouTube</label>
+            </value>
+            <value>
+                <fullName>Social - Paid - Facebook</fullName>
+                <default>false</default>
+                <label>Social - Paid - Facebook</label>
+            </value>
+            <value>
+                <fullName>Social - Paid - Facebook via 6Sense</fullName>
+                <default>false</default>
+                <label>Social - Paid - Facebook via 6Sense</label>
+            </value>
+            <value>
                 <fullName>Social - Paid - Influencer</fullName>
                 <default>false</default>
                 <label>Social - Paid - Influencer</label>
+            </value>
+            <value>
+                <fullName>Social - Paid - Instagram</fullName>
+                <default>false</default>
+                <label>Social - Paid - Instagram</label>
             </value>
             <value>
                 <fullName>Social - Paid - LinkedIn</fullName>
@@ -225,16 +275,6 @@
                 <fullName>Social - Paid - LinkedIn via 6Sense</fullName>
                 <default>false</default>
                 <label>Social - Paid - LinkedIn via 6Sense</label>
-            </value>
-            <value>
-                <fullName>Social - Paid - Meta</fullName>
-                <default>false</default>
-                <label>Social - Paid - Meta</label>
-            </value>
-            <value>
-                <fullName>Social - Paid - Meta via 6Sense</fullName>
-                <default>false</default>
-                <label>Social - Paid - Meta via 6Sense</label>
             </value>
             <value>
                 <fullName>Social - Paid - Quora</fullName>
@@ -252,6 +292,11 @@
                 <label>Traditional Media</label>
             </value>
             <value>
+                <fullName>Z_Archive</fullName>
+                <default>false</default>
+                <label>Z_Archive</label>
+            </value>
+            <value>
                 <fullName>Affiliate - Paid - Centerfield</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
@@ -262,6 +307,42 @@
                 <default>false</default>
                 <isActive>false</isActive>
                 <label>Delivery Mechanisms</label>
+            </value>
+            <value>
+                <fullName>Event - Relationship Marketing</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Event - Relationship Marketing</label>
+            </value>
+            <value>
+                <fullName>Relationship Marketing - Alliances</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Relationship Marketing - Alliances</label>
+            </value>
+            <value>
+                <fullName>Relationship Marketing - Brokers</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Relationship Marketing - Brokers</label>
+            </value>
+            <value>
+                <fullName>Relationship Marketing - Loyalty</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Relationship Marketing - Loyalty</label>
+            </value>
+            <value>
+                <fullName>Relationship Marketing - PCM</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Relationship Marketing - PCM</label>
+            </value>
+            <value>
+                <fullName>Relationship Marketing - Sponsorships</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Relationship Marketing - Sponsorships</label>
             </value>
         </valueSetDefinition>
         <valueSettings>
@@ -338,10 +419,6 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Child: Delivery Mechanism Type</controllingFieldValue>
-            <valueName>Event - Relationship Marketing</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Child: Delivery Mechanism Type</controllingFieldValue>
             <valueName>Event - Tradeshow, Industry Conference</valueName>
         </valueSettings>
         <valueSettings>
@@ -378,23 +455,43 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Child: Delivery Mechanism Type</controllingFieldValue>
-            <valueName>Relationship Marketing - Alliances</valueName>
+            <valueName>RM - Affiliates</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Child: Delivery Mechanism Type</controllingFieldValue>
-            <valueName>Relationship Marketing - Brokers</valueName>
+            <valueName>RM - Alliances</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Child: Delivery Mechanism Type</controllingFieldValue>
-            <valueName>Relationship Marketing - Loyalty</valueName>
+            <valueName>RM - Brokers</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Child: Delivery Mechanism Type</controllingFieldValue>
-            <valueName>Relationship Marketing - PCM</valueName>
+            <valueName>RM - Event - Alliances</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Child: Delivery Mechanism Type</controllingFieldValue>
-            <valueName>Relationship Marketing - Sponsorships</valueName>
+            <valueName>RM - Event - Loyalty</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Child: Delivery Mechanism Type</controllingFieldValue>
+            <valueName>RM - Event - PCM</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Child: Delivery Mechanism Type</controllingFieldValue>
+            <valueName>RM - Loyalty</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Child: Delivery Mechanism Type</controllingFieldValue>
+            <valueName>RM - National Accounts</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Child: Delivery Mechanism Type</controllingFieldValue>
+            <valueName>RM - PCM</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Child: Delivery Mechanism Type</controllingFieldValue>
+            <valueName>RM - Sponsorships</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Child: Delivery Mechanism Type</controllingFieldValue>
@@ -414,11 +511,19 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Child: Delivery Mechanism Type</controllingFieldValue>
+            <valueName>Social - Organic - Facebook</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Child: Delivery Mechanism Type</controllingFieldValue>
+            <valueName>Social - Organic - Instagram</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Child: Delivery Mechanism Type</controllingFieldValue>
             <valueName>Social - Organic - LinkedIn</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Child: Delivery Mechanism Type</controllingFieldValue>
-            <valueName>Social - Organic - Meta</valueName>
+            <valueName>Social - Organic - Pinterest</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Child: Delivery Mechanism Type</controllingFieldValue>
@@ -426,7 +531,23 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Child: Delivery Mechanism Type</controllingFieldValue>
+            <valueName>Social - Organic - YouTube</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Child: Delivery Mechanism Type</controllingFieldValue>
+            <valueName>Social - Paid - Facebook</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Child: Delivery Mechanism Type</controllingFieldValue>
+            <valueName>Social - Paid - Facebook via 6Sense</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Child: Delivery Mechanism Type</controllingFieldValue>
             <valueName>Social - Paid - Influencer</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Child: Delivery Mechanism Type</controllingFieldValue>
+            <valueName>Social - Paid - Instagram</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Child: Delivery Mechanism Type</controllingFieldValue>
@@ -435,14 +556,6 @@
         <valueSettings>
             <controllingFieldValue>Child: Delivery Mechanism Type</controllingFieldValue>
             <valueName>Social - Paid - LinkedIn via 6Sense</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Child: Delivery Mechanism Type</controllingFieldValue>
-            <valueName>Social - Paid - Meta</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Child: Delivery Mechanism Type</controllingFieldValue>
-            <valueName>Social - Paid - Meta via 6Sense</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Child: Delivery Mechanism Type</controllingFieldValue>
@@ -455,6 +568,10 @@
         <valueSettings>
             <controllingFieldValue>Child: Delivery Mechanism Type</controllingFieldValue>
             <valueName>Traditional Media</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Child: Delivery Mechanism Type</controllingFieldValue>
+            <valueName>Z_Archive</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>

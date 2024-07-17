@@ -5768,6 +5768,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Order.Contract_Product_Type__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Order.ContractEndDate</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -6309,6 +6314,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>OrderItem.NSP_Usage_Attribute__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>OrderItem.Preserve_Invoice_Group_ID__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

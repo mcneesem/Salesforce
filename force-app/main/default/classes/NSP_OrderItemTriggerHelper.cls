@@ -1,19 +1,16 @@
-/**
-* Represents the OrderItem trigger helper which handles all the logic.
-*/
+// Represents the OrderItem trigger helper which handles all the logic.
 public class NSP_OrderItemTriggerHelper {
     // test w/ NSP_OrderTriggerHelperTest,NSP_OrderItemTriggerHelperTest (77%)
 
     static final string RENEWABLE = 'Renewable';
-    static final String LASSO_PARTNERNAME=System.Label.NSP_Lasso_PartnerName;
-    /**
-    * Single method for before insert operations for Order Item Trigger.
-    * @param newList List of New OrderItems.  
-    * @return void             
-    *                
-    */
+    static final String LASSO_PARTNERNAME = System.Label.NSP_Lasso_PartnerName;
+
+    //
+    // Single method for before insert operations for Order Item Trigger.
+    // @param newList List of New OrderItems.
+    // @return void
+    //
     public void populateFieldValuesOnInsert(List<OrderItem> OrderItemNewList)  {
-    
         List<String> orderIds = new List<String> (); 
         Set<String> billingAccounts= new Set<String>();  
         Set<String> productsByLegalEntity = new Set<String>(System.Label.NSP_InvoiceByLegalEntityProducts.split(','));
@@ -26,7 +23,7 @@ public class NSP_OrderItemTriggerHelper {
                 oli.NSP_Scholarship_End_Date__c = System.today().addMonths(23).toStartOfMonth();
             }
         }
-            if(orderIds.size()>0) {
+        if ( orderIds.size() > 0 ) {
             Map<Id,Order> ordersMap = new Map<Id,Order>([Select Id, Status, AccountId,  NSP_Billing_Account__c, ShippingPostalCode, NSP_Partner__r.Name,blng__BillingAccount__c  FROM Order WHERE Id IN:orderIds]);
             for (OrderItem oi : OrderItemNewList) {
                 if(orderIds.contains(oi.OrderId)) {
@@ -42,20 +39,26 @@ public class NSP_OrderItemTriggerHelper {
                     }
                 }
             }
-            Map<String,blng__PaymentMethod__c> billingActPaymentMap=retrieveACHActivePaymentMethods(billingAccounts);
-            for(OrderItem oi : OrderItemNewList){
-                Order currOrder = ordersMap.get(oi.OrderId);
-                if(ordersMap.containsKey(oi.OrderId) && oi.NSP_Preferred_Payment_Method__c=='ACH' && oi.blng__BillingAccount__c!=null){
-                    oi.NSP_Payment_Method__c=billingActPaymentMap.get(oi.blng__BillingAccount__c)?.Id;
+            Map<String,blng__PaymentMethod__c> billingActPaymentMap=retrieveACHActivePaymentMethods( billingAccounts );
+            for ( OrderItem oi : OrderItemNewList ) {
+                Order currOrder = ordersMap.get( oi.OrderId );
+                if ( ordersMap.containsKey( oi.OrderId )
+                    && ( oi.NSP_Preferred_Payment_Method__c == 'ACH' )
+                    && ( oi.blng__BillingAccount__c != null )
+                    )
+                {
+                    oi.NSP_Payment_Method__c = billingActPaymentMap.get( oi.blng__BillingAccount__c )?.Id;
                 }
-                if(currOrder.NSP_Partner__r.Name != LASSO_PARTNERNAME){
+                if ( ( currOrder.NSP_Partner__r.Name != LASSO_PARTNERNAME )
+                    && ( oi.Preserve_Invoice_Group_ID__c == false )
+                    )
+                    {
                     oi.blng__InvoiceGroupId__c = (String)currOrder.AccountId + (String)currOrder.NSP_Billing_Account__c + (String)currOrder.ShippingPostalCode +(String)oi.NSP_Payment_Method__c;
                 }
             }
-         }
+        }
     }
-    
-    
+
     /**
     * Iterates throught the list of new OrderItem and passes the required attributes to other methods.
     * @param newList List of New OrderItems.  
@@ -172,15 +175,14 @@ public class NSP_OrderItemTriggerHelper {
             } */
             
         }
-        
-    /**
-    * Single method for before update operations for Order Item Trigger.
-    * @param OrderItemNewMap Map of New OrderItems.
-    * @param OrderItemOldMap Map of Old OrderItems.  
-    * @return void             
-    *                
-    */
-    public void beforeUpdateDirector(Map<Id, OrderItem> OrderItemNewMap,Map<Id, OrderItem> OrderItemOldMap) {
+
+    //
+    // Single method for before update operations for Order Item Trigger.
+    // @param OrderItemNewMap Map of New OrderItems.
+    // @param OrderItemOldMap Map of Old OrderItems.
+    // @return void
+    //
+    public void beforeUpdateDirector( Map<Id,OrderItem> OrderItemNewMap , Map<Id,OrderItem> OrderItemOldMap ) {
             Set<String> actionTypeValues = new Set<String>(System.Label.OrderItemRecalcTypes.split(';'));
             Set<Id> statusIdToChange = new Set<Id>();
             Set<Id> paymentMethodChangedLines = new Set<Id>();
@@ -217,7 +219,7 @@ public class NSP_OrderItemTriggerHelper {
                         NSP_Project_Completion_Date__c,NSP_ReCalculation_Status_Internal__c, NSP_Payment_Method__c,SBQQ__Activated__c,
                         Product2.NSP_Partial_Period_Free_Treatment__c, Product2.NSP_Legal_Entity__c,NSP_Additional_Product_Description__c,
                         SBQQ__QuoteLine__r.SBQQ__EndDate__c,SBQQ__OrderedQuantity__c,SBQQ__RevisedOrderProduct__c,SBQQ__BillingFrequency__c,
-                        EndDate,Order.Type,SBQQ__QuoteLine__r.NSP_MergeProducts__c
+                        EndDate,Order.Type,Order.NSP_Transaction_Type__c,SBQQ__QuoteLine__r.NSP_MergeProducts__c
                         FROM OrderItem
                         WHERE Id IN:OrderItemNewMap.keyset()
                     ]
@@ -336,27 +338,45 @@ public class NSP_OrderItemTriggerHelper {
                      
                 }
             }
-            // STY-03076 - logic to handle multiple invoice lines grouping
-            if(paymentMethodChangedLines.size()>0){
-                for(OrderItem oi : OrderItemNewMap.values()) {  
-                if(paymentMethodChangedLines.contains(oi.Id)){
-                    if(oi.NSP_Payment_Method__c!=null) {
-                        oi.blng__InvoiceGroupId__c = (String)oi.NSP_Order_Account__c + (String)oi.blng__BillingAccount__c +oi.NSP_Shipping_Postal_Code__c+(String)oi.NSP_Payment_Method__c;
-                    if(oi.SBQQ__QuoteLine__c!=null){
-                        quoteLinesToUpdate.add(new SBQQ__QuoteLine__c(Id=oi.SBQQ__QuoteLine__c,NSP_Payment_Method__c=oi.NSP_Payment_Method__c));
-                    }
+        // STY-03076 - logic to handle multiple invoice lines grouping
+        if ( paymentMethodChangedLines.size() > 0 ) {
+            for ( OrderItem oi : OrderItemNewMap.values() ) {
+                if ( paymentMethodChangedLines.contains( oi.Id ) ) {
+                    if ( ( oi.NSP_Payment_Method__c != null )
+                        && ( oi.Preserve_Invoice_Group_ID__c == false )
+                        )
+                    {
+                        oi.blng__InvoiceGroupId__c = (String)oi.NSP_Order_Account__c
+                            + (String)oi.blng__BillingAccount__c
+                            + oi.NSP_Shipping_Postal_Code__c
+                            + (String)oi.NSP_Payment_Method__c
+                            ;
+                        if ( oi.SBQQ__QuoteLine__c != null ) {
+                            quoteLinesToUpdate.add(
+                                new SBQQ__QuoteLine__c(
+                                    Id=oi.SBQQ__QuoteLine__c ,
+                                    NSP_Payment_Method__c=oi.NSP_Payment_Method__c
+                                )
+                            );
+                        }
                     }
                 }
-                }
             }
-    
-            if (quoteLinesToUpdate.size()>0){ update quoteLinesToUpdate;}
-            if (orderLinesForUsage.size()>0){ NSP_OrderItemFreePeriodCalculator.applyZeroUnitPriceToUsageRecords(orderLinesForUsage);}
-            if(opTerminationMap != null && opTerminationMap.size() > 0){
-                NSP_AssetUpdate.assetTermination(opTerminationMap);
-            }
+        }
+        if ( quoteLinesToUpdate.size() > 0 ) {
+            update quoteLinesToUpdate;
+        }
+        if ( orderLinesForUsage.size() > 0 ) {
+            NSP_OrderItemFreePeriodCalculator.applyZeroUnitPriceToUsageRecords( orderLinesForUsage );
+        }
+        if ( ( opTerminationMap != null )
+            && ( opTerminationMap.size() > 0 )
+            )
+        {
+            NSP_AssetUpdate.assetTermination( opTerminationMap );
+        }
     }
-        
+
         /**
         * Single method for after update operations for Order Item Trigger.
         * @param OrderItemNewMap Map of New OrderItems.
@@ -425,35 +445,46 @@ public class NSP_OrderItemTriggerHelper {
             }
         }
 
-        /**
-        * Method Name : activateOrderProduct 
-        * Description : Method to activate order product based on order activation trigger
-        * Author : CPQ Team       Date : 09/06/2022
-        * @param OrderNewMap Map of New Order. 
-        * @param OrderOldMap Map of Old Order.   
-        * @return void  
-        */
-        public static void activateOrder(Set<Id> orderIdSet){
-            List<Order> orderUp = new List<Order>();
-            AggregateResult[]  groupedResults =  [SELECT COUNT(Id)Ids,OrderId FROM OrderItem WHERE OrderId IN :orderIdSet AND SBQQ__Status__c != :NSP_CPQConstants.ORDER_ACTIVATED GROUP BY OrderId ]; 
-           
-            if(groupedResults.isEmpty()){
-                for(Id ordId : orderIdSet){
-                    Order orderToUpdate = new Order();
-                    orderToUpdate.ID = ordId;
-                    orderToUpdate.Status = NSP_CPQConstants.ORDER_ACTIVATED;
-                    orderUp.add(orderToUpdate);
-                }
-                if(orderUp != null && orderUp.size() > 0){
-                    try{
-                        database.update(orderUp);
-                    }
-                    catch(Exception ex){
-                        NSP_CustomException.LogException(ex);
-                    } 
+    /**
+    * Method Name : activateOrderProduct 
+    * Description : Method to activate order product based on order activation trigger
+    * Author : CPQ Team       Date : 09/06/2022
+    * @param OrderNewMap Map of New Order. 
+    * @param OrderOldMap Map of Old Order.   
+    * @return void  
+    */
+    public static void activateOrder(Set<Id> orderIdSet){
+        List<Order> orderUp = new List<Order>();
+        AggregateResult[] groupedResults = [
+            SELECT COUNT(Id)Ids,OrderId
+            FROM OrderItem
+            WHERE (
+                OrderId IN :orderIdSet
+                AND SBQQ__Status__c != :NSP_CPQConstants.ORDER_ACTIVATED
+            )
+            GROUP BY OrderId
+        ];
+        
+        if(groupedResults.isEmpty()){
+            for(Id ordId : orderIdSet){
+                Order orderToUpdate = new Order();
+                orderToUpdate.ID = ordId;
+                orderToUpdate.Status = NSP_CPQConstants.ORDER_ACTIVATED;
+                orderUp.add(orderToUpdate);
+            }
+            if(orderUp != null && orderUp.size() > 0){
+                try {
+                    database.update( orderUp );
+                } catch ( Exception e ) {
+                    NSP_ErrorLogHandler.logException(
+                        NSP_OrderItemTriggerHelper.class.getName() ,
+                        'activateOrder' ,
+                        e
+                    );
                 }
             }
         }
+    }
             /**
 * Method Name : populateLegalEntityOnOrderItem 
 * Description : Method to copy legal entity from Proudcts to Order Products
@@ -565,16 +596,20 @@ public class NSP_OrderItemTriggerHelper {
                 }
         }
         
-            try{
-                if(ordItemList != null && ordItemList.size() > 0){
-                    database.update(ordItemList);
-                }
-                if(updateAssetList != null && updateAssetList.size() > 0){
-                    database.update(updateAssetList);
-                }
-            } catch(Exception ex){
-                NSP_CustomException.LogException(ex);
+        try{
+            if ( ( ordItemList != null ) && ( ordItemList.size() > 0 ) ) {
+                database.update( ordItemList );
             }
+            if ( ( updateAssetList != null ) && ( updateAssetList.size() > 0 ) ) {
+                database.update( updateAssetList );
+            }
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_OrderItemTriggerHelper.class.getName() ,
+                'updateAsset' ,
+                e
+            );
+        }
     }
 
             /**

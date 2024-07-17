@@ -1112,6 +1112,40 @@
                 <identifier>RecordNSP_DocumentationofClientOwnerNamechange_cField</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Total_Number_of_Files__c</fieldItem>
+                <identifier>RecordTotal_Number_of_Files_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!$User.Profile.Name}</leftValue>
+                        <operator>CONTAINS</operator>
+                        <rightValue>System Admin</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Number_of_required_checkboxes__c</fieldItem>
+                <identifier>RecordNumber_of_required_checkboxes_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!$User.Profile.Name}</leftValue>
+                        <operator>CONTAINS</operator>
+                        <rightValue>System Admin</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-b004d63c-1bf2-4041-be9b-bc4057f67fd8</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -1162,6 +1196,16 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.LastModifiedById</fieldItem>
                 <identifier>RecordLastModifiedByIdField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Confirm_File_Upload__c</fieldItem>
+                <identifier>RecordConfirm_File_Upload_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-a08fbcc9-5c44-483e-bec2-2074c6cf24bd</name>

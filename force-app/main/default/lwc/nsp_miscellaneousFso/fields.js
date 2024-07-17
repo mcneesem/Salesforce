@@ -9,4 +9,8 @@ const SECTION_FIELDS = [
   'NSP_Payroll_Onboarding_Notes__c',
 ];
 
-export { SECTION_FIELDS };
+const RL_FIELDS=[
+  'NSP_Is_there_an_Enrollment_fee__c'
+]
+
+export { SECTION_FIELDS,RL_FIELDS };

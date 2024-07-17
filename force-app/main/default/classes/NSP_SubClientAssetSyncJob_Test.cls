@@ -1,20 +1,12 @@
-/**
-Apex Class Name      :  NSP_SubClientAssetSyncJob
-Version              :  1.0 
-Author               :  Virendra Kumar                                                                          
-Created Date         :  06/01/22 
-Function             :  Represents test class for NSP_AccountRegulatedAreaBatch class
-Story                :                                                                      
-Modification Log     :                                                                              
-*--------------------------------------------------------------------------------------------------  
-* Developer                   Date                   Description                                    
-* -------------------------------------------------------------------------------------------------  
-* Virendra                  10/20/2022                First Iteration
-*/
-
+// 2022-10-20 ~ Virendra Kumar
 @isTest(SeeAllData=false) private class NSP_SubClientAssetSyncJob_Test {
 
     @testSetup private static void createTestData() {
+        SubClientAssetStateSyncJobSettings__c settings = SubClientAssetStateSyncJobSettings__c.getOrgDefaults();
+        settings.IsEnabled__c = True;
+        settings.BatchSize__c = 200;
+        settings.SoqlAddressLimit__c = 40000;
+        upsert settings;
 
         //Account creation 
         Account acc = new Account();
@@ -87,6 +79,12 @@ Modification Log     :
         instSCCAH.ParentId = subClientConAdd1.Id;
         instSCCAH.Field = 'NSP_Address_State_Changed_Date__c';
         insert instSCCAH;
+    }
+
+    @isTest private static void testSchedule() {
+        Test.startTest();
+        NSP_SubClientAssetStateSyncJob.schedule();
+        Test.stopTest();
     }
 
     @isTest private static void shouldTestSubClientAssetSyncJob() {

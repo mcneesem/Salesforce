@@ -11,6 +11,11 @@
         <field>NSP_Accrual_Profile__c.Is_Client_MM_or_MM_Enterprise__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_Accrual_Profile__c.Other_Status__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Accrual Profile access</label>
 </PermissionSet>
