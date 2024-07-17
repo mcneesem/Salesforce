@@ -551,7 +551,7 @@ public class NSP_LeadTriggerHelperTest {
         
         User eloquaUser = [select id from User WHERE id =: Label.Eloqua_Integration_User_Id ];
         List<Group> inBoundSolutionsQueue = [SELECT Id FROM Group WHERE Type = 'Queue' AND DeveloperName = :System.label.NSP_DEVELOPERNAME_INBOUNDSOLUTIONS];
-        
+
         // Start Test
         Test.startTest();
         system.runAs(eloquaUser){
@@ -589,6 +589,5 @@ public class NSP_LeadTriggerHelperTest {
         }
         Test.stopTest();
     }
-    
+  
 }
-//
