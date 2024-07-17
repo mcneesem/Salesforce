@@ -388,13 +388,13 @@ const DYNAMIC_FIELDS = {
         "Do_the_employee_s_work_more_than_6__c",
         "What_months_client_increase_the_staff__c",
         "Is_the_work_performed_typically_the_same__c",
-        "work_performed_the_same_as_the_rest_year__c",
+        "Work_performed_the_same_as_the_rest_year__c",
         "Is_the_Employee_an_Intern__c",
       ],
     },
   ],
 
-  work_performed_the_same_as_the_rest_year__c :[
+  Work_performed_the_same_as_the_rest_year__c :[
     {
       expValue: ["Different"],
       dependentFields:[
