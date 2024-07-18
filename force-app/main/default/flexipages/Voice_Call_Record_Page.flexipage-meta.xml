@@ -215,7 +215,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>lookupFieldName</name>
-                    <value>VoiceCall.RelatedRecordId[Case]</value>
+                    <value>VoiceCall.CaseId__c</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>titleFieldName</name>
