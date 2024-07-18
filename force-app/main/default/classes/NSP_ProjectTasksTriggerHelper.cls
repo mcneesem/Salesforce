@@ -482,10 +482,10 @@ public class NSP_ProjectTasksTriggerHelper {
                             mapOfAccountAndListOfAccountTeamMemberEmailAddress.get( accTeamMember.NSP_Account__c ).add( accTeamMember.NSP_Email__c );
                             
                             if ( !mapOfAccountAndListOfAccountTeamMember.containsKey( accTeamMember.NSP_Account__c ) ) {
-                                    mapOfAccountAndListOfAccountTeamMember.put(
-                                        accTeamMember.NSP_Account__c ,
-                                        new List<NSP_Account_Team__c>()
-                                    );
+                                mapOfAccountAndListOfAccountTeamMember.put(
+                                    accTeamMember.NSP_Account__c ,
+                                    new List<NSP_Account_Team__c>()
+                                );
                             }
                             mapOfAccountAndListOfAccountTeamMember.get( accTeamMember.NSP_Account__c ).add( accTeamMember);
                         }
