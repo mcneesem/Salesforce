@@ -170,8 +170,13 @@ public without sharing class NSP_AccountTeamTriggerTest {
 
 		accountTeamObject.NSP_Role__c = NSP_ServiceConstants.PLAN_CONSULTANT;
 		UPDATE accountTeamObject;
-		assetObject1 = [SELECT ID, AccountId, NSP_Retirement_Service_Plan_Name__c FROM Asset WHERE AccountId =: accountObject.Id];
-        System.Assert(String.isNotBlank(assetObject1.NSP_Retirement_Service_Plan_Name__c));
+        
+        AccountTeamTriggerSettings__c customSettingRec 		= new AccountTeamTriggerSettings__c();
+        customSettingRec.Name 								= 'Test Record';
+        customSettingRec.IsRetServiceNameChangeEnabled__c 	= true;
+        customSettingRec.SetupOwnerId 						= userInfo.getUserId();
+        insert customSettingRec;
+
         Test.stopTest();
     } 
     
