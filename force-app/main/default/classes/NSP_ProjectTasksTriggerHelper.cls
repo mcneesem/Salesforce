@@ -553,19 +553,13 @@ public class NSP_ProjectTasksTriggerHelper {
             mailBody += 'Termination reason: '+ReasonForTerm+'<br/><br/>';
             if(!accountTeamList.isEmpty()) {
                 for(NSP_Account_Team__c accTeam : accountTeamList){
-                    if (accTeam.NSP_Role__c == 'Payroll Specialist'){
-                        mailBody += accTeam.NSP_Role__c + ': ' +accTeam.NSP_First_Name__c+' '+accTeam.NSP_Last_Name__c+'<br/>';
-                    }
-                    if (accTeam.NSP_Role__c == 'Payroll Supervisor'){
-                        mailBody += accTeam.NSP_Role__c + ': ' +accTeam.NSP_First_Name__c+' '+accTeam.NSP_Last_Name__c+'<br/>';
-                    }
-                    if (accTeam.NSP_Role__c == 'Client Liaison'){
-                        mailBody += accTeam.NSP_Role__c + ': ' +accTeam.NSP_First_Name__c+' '+accTeam.NSP_Last_Name__c+'<br/>';
-                    }
-                    if (accTeam.NSP_Role__c == 'Manager, HR Services'){
-                        mailBody += accTeam.NSP_Role__c + ': ' +accTeam.NSP_First_Name__c+' '+accTeam.NSP_Last_Name__c+'<br/>';
-                    }
-                    if (accTeam.NSP_Role__c == 'Business Performance Advisor'){
+                    if ( ( accTeam.NSP_Role__c == 'Payroll Specialist' )
+                        || ( accTeam.NSP_Role__c == 'Payroll Supervisor' )
+                        || ( accTeam.NSP_Role__c == 'Client Liaison' )
+                        || ( accTeam.NSP_Role__c == 'Manager, HR Services' )
+                        || ( accTeam.NSP_Role__c == 'Business Performance Advisor' )
+                        )
+                    {
                         mailBody += accTeam.NSP_Role__c + ': ' +accTeam.NSP_First_Name__c+' '+accTeam.NSP_Last_Name__c+'<br/>';
                     }
                 }
