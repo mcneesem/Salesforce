@@ -84,9 +84,9 @@ public class NSP_LeadTriggerHelper {
 
                 //  290445 - Inbound Solutions - Existing Lead Flow
                 if(UserInfo.getUserId().equals(Label.Eloqua_Integration_User_Id)){
-
-                    if( !Label.Eloqua_Lead_Marketing_Priority.split(',').contains(leadObject.Marketing_Priority__c) || 
-                    (String.isNotBlank(leadObject.ownerId) && !Label.Eloqua_Integration_User_Id.equals(leadObject.ownerId) )){ 
+                    
+                    if(!Label.Eloqua_Lead_Marketing_Priority.split(',').contains(leadObject.Marketing_Priority__c) || 
+                    (String.isNotBlank(leadObject.ownerId) && Label.Eloqua_Integration_User_Id.equals(leadObject.ownerId))){ 
                         inboundSolutionsList.add(leadObject);
                     }
                 }

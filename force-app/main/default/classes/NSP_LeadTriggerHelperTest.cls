@@ -566,7 +566,6 @@ public class NSP_LeadTriggerHelperTest {
                 lead1.lastName = 'Test1';
                 lead1.email = 'myemail1@yahoo.com';
                 lead1.phone = '999999';
-                lead1.ownerId = Label.Eloqua_Integration_User_Id;
                 leads.add(lead1);
                 
                 //  Lead should be assigned to Inbound Solutions
@@ -576,6 +575,7 @@ public class NSP_LeadTriggerHelperTest {
                 lead2.lastName = 'Test2';
                 lead2.email = 'myemail2@yahoo.com';
                 lead2.phone = '999999';
+                lead2.ownerId = Label.Eloqua_Integration_User_Id;
                 leads.add(lead2);
                 
                 insert leads;
