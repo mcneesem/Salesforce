@@ -182,6 +182,16 @@
                 <default>false</default>
                 <label>Oaktree</label>
             </value>
+            <value>
+                <fullName>64</fullName>
+                <default>false</default>
+                <label>24_Seven Partners</label>
+            </value>
+            <value>
+                <fullName>65</fullName>
+                <default>false</default>
+                <label>S5 Equity Solutions</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
