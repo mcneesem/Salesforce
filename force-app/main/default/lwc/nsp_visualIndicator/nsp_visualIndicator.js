@@ -60,7 +60,7 @@ export default class vi2 extends LightningElement {
                 //For Asset National Account
                 if (this.accountsDetails[0].assetNationalAccount){
                     this.showNationalAccount = true;
-                }    
+                }
                 //For workforce sync client                
                 if (this.accountsDetails[0].workSyncClientTrue){
                     this.showWorkSyncClientTrue = true; 
