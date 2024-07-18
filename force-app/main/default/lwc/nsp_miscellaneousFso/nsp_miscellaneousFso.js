@@ -68,7 +68,7 @@ export default class Nsp_miscellaneous extends LightningElement {
       ? value.join(';')
       : value;
     if(this.isDoubleClick){
-      this.field[fieldName] = undefined;
+      this.field[fieldName] = null;
       this.isDoubleClick = false;
     }
     this.updateDependentFieldVisibility(fieldName, value);

@@ -18,7 +18,8 @@
       value={field.NSP_Employee_Types__c}
       record-type-id={recordTypeId}
       data-name="NSP_Employee_Types__c"
-      onchange={handleValueChange}>
+      onchange={handleValueChange}
+      ondblclick={handleDoubleClick}>
     </c-nsp_selection-box>
 
     <c-nsp_selection-box
@@ -30,7 +31,8 @@
       value={field.NSP_SalaryExemptEmployeeReceiveOvertime__c}
       record-type-id={recordTypeId}
       data-name="NSP_SalaryExemptEmployeeReceiveOvertime__c"
-      onchange={handleValueChange}>
+      onchange={handleValueChange}
+      ondblclick={handleDoubleClick}>
     </c-nsp_selection-box>
 
     <c-nsp_selection-box
@@ -41,7 +43,8 @@
       record-type-id={recordTypeId}
       data-name="NSP_Do_you_track_hours__c"
       onchange={handleValueChange}
-      value={field.NSP_Do_you_track_hours__c}>
+      value={field.NSP_Do_you_track_hours__c}
+      ondblclick={handleDoubleClick}>
     </c-nsp_selection-box>
 
     <c-nsp_selection-box
@@ -52,7 +55,8 @@
       value={field.NSP_Employee_with_compensation_other__c}
       record-type-id={recordTypeId}
       data-name="NSP_Employee_with_compensation_other__c"
-      onchange={handleValueChange}>
+      onchange={handleValueChange}
+      ondblclick={handleDoubleClick}>
     </c-nsp_selection-box>
 
     <lightning-input-field value={field.NSP_compensation_structu_Provide_Details__c} disabled={disabledFields.NSP_compensation_structu_Provide_Details__c}
@@ -72,7 +76,8 @@
       value={field.NSP_Employees_with_multiple_types_of_pay__c}
       record-type-id={recordTypeId}
       data-name="NSP_Employees_with_multiple_types_of_pay__c"
-      onchange={handleValueChange}>
+      onchange={handleValueChange}
+      ondblclick={handleDoubleClick}>
     </c-nsp_selection-box>
 
     <div class="slds-form-element__label">
@@ -91,7 +96,8 @@
       value={field.NSP_Daily_Rate_approval_status__c}
       record-type-id={recordTypeId}
       data-name="NSP_Daily_Rate_approval_status__c"
-      onchange={handleValueChange}>
+      onchange={handleValueChange}
+      ondblclick={handleDoubleClick}>
     </c-nsp_selection-box>
 
     <c-nsp_selection-box
@@ -114,7 +120,8 @@
       value={field.NSP_DoTheEmployeeWorkA40HourWorkWeek__c}
       record-type-id={recordTypeId}
       data-name="NSP_DoTheEmployeeWorkA40HourWorkWeek__c"
-      onchange={handleValueChange}>
+      onchange={handleValueChange}
+      ondblclick={handleDoubleClick}>
     </c-nsp_selection-box>
 
     <lightning-input-field value={field.NSP_employee_40_hour_work_Week_PDetails__c} disabled={disabledFields.NSP_employee_40_hour_work_Week_PDetails__c}
@@ -133,7 +140,8 @@
       value={field.NSP_Are_there_any_OT_exceptions__c}
       record-type-id={recordTypeId}
       data-name="NSP_Are_there_any_OT_exceptions__c"
-      onchange={handleValueChange}>
+      onchange={handleValueChange}
+      ondblclick={handleDoubleClick}>
     </c-nsp_selection-box>
 
     <lightning-input-field value={field.NSP_Any_OT_Expections_Provide_Details__c} disabled={disabledFields.NSP_Any_OT_Expections_Provide_Details__c}
@@ -151,7 +159,8 @@
       record-type-id={recordTypeId}
       data-name="NSP_Do_you_have_GovernmentContracted_job__c"
       onchange={handleValueChange}
-      value={field.NSP_Do_you_have_GovernmentContracted_job__c}>
+      value={field.NSP_Do_you_have_GovernmentContracted_job__c}
+      ondblclick={handleDoubleClick}>
     </c-nsp_selection-box>
 
     <c-nsp_selection-box
@@ -163,7 +172,8 @@
       record-type-id={recordTypeId}
       data-name="NSP_Type__c"
       onchange={handleValueChange}
-      value={field.NSP_Type__c}>
+      value={field.NSP_Type__c}
+      ondblclick={handleDoubleClick}>
     </c-nsp_selection-box>
 
     <lightning-input-field value={field.NSP_Govt_Type_Other_Provide_Details__c} disabled={disabledFields.NSP_Govt_Type_Other_Provide_Details__c}
@@ -183,7 +193,8 @@
       record-type-id={recordTypeId}
       data-name="NSP_Are_Certified_Payroll_reports_needed__c"
       onchange={handleValueChange}
-      value={field.NSP_Are_Certified_Payroll_reports_needed__c}>
+      value={field.NSP_Are_Certified_Payroll_reports_needed__c}
+      ondblclick={handleDoubleClick}>
     </c-nsp_selection-box>
   </lightning-record-edit-form>
 </template>
