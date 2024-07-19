@@ -140,13 +140,6 @@
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.UserId</leftValueReference>
-                <operator>IsChanged</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.UserId</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
