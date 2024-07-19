@@ -999,10 +999,7 @@ public class NSP_ProjectTriggerHelper{
                     && !project.pse__Is_Template__c && project.recordTypeId == peoProjectRecordTypeId && 
                     (project.TemplateName__c == label.Middle_Market_Implementation_Project ||
                     project.TemplateName__c == label.FSOImplementationProject) ){
-                        String projectName = project.TemplateName__c + ' - ' + projectAccountMap.get(project.Id).pse__Account__r.Name ;
-                        if(projectName !=null && project.Name != projectName && oldProjectMap.get(project.Id).Name != projectName){
-                            project.Name = projectName.length() > 80 ? projectName.substring(0, 80) : projectName;
-                        }
+                        project.Name = projectNameAsPerNamingConvention(project.TemplateName__c,project.pse__Start_Date__c, projectAccountMap.get(project.pse__Account__c).Name);
                     }
             }
         } catch (Exception ex) {
