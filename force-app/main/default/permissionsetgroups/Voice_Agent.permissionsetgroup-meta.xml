@@ -4,6 +4,7 @@
     <hasActivationRequired>false</hasActivationRequired>
     <label>Voice Agent</label>
     <permissionSets>Address_Book_Visibility</permissionSets>
+    <permissionSets>Messaging_User_Edit</permissionSets>
     <permissionSets>NVMContactWorld__Agent</permissionSets>
     <permissionSets>Select_Matching_Contact_Voice_Call</permissionSets>
     <permissionSets>Service_Presence_Statuses_Base</permissionSets>

@@ -3,13 +3,10 @@
     <actionCalls>
         <name>Update_Contact_on_Voice_Call</name>
         <label>Update Contact on Voice Call</label>
-        <locationX>380</locationX>
-        <locationY>1922</locationY>
+        <locationX>50</locationX>
+        <locationY>1838</locationY>
         <actionName>VoiceCall.Update_Contact</actionName>
         <actionType>quickAction</actionType>
-        <connector>
-            <targetReference>Update_Case_with_Contact</targetReference>
-        </connector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>contextId</name>
@@ -37,8 +34,8 @@
         <description>Associates the selected contact with the record in Messaging User from GetMessagingUser.</description>
         <name>AssocateContactMultipleMatch</name>
         <label>Associate Contact with Messaging User</label>
-        <locationX>422</locationX>
-        <locationY>1322</locationY>
+        <locationX>50</locationX>
+        <locationY>1514</locationY>
         <assignmentItems>
             <assignToReference>GetMessagingUser.ContactId</assignToReference>
             <operator>Assign</operator>
@@ -51,42 +48,41 @@
         </connector>
     </assignments>
     <assignments>
-        <description>Associates the single matching contact with the record in Messaging User from GetMessagingUser.</description>
-        <name>AssocateContactSingleMatchAutomatically</name>
-        <label>Associate Contact with Messaging User</label>
-        <locationX>294</locationX>
-        <locationY>1214</locationY>
+        <description>Unable to add Insperity_Fault_Handler_Subflow.</description>
+        <name>Set_Fault_Message</name>
+        <label>Set Fault Message</label>
+        <locationX>314</locationX>
+        <locationY>1730</locationY>
         <assignmentItems>
-            <assignToReference>GetMessagingUser.ContactId</assignToReference>
+            <assignToReference>faultMessage</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>ProcessSingleContactRecord.Id</elementReference>
+                <elementReference>$Flow.FaultMessage</elementReference>
             </value>
         </assignmentItems>
-        <connector>
-            <targetReference>ProcessSingleContactRecord</targetReference>
-        </connector>
     </assignments>
     <assignments>
-        <name>Selected_Cases_assignment</name>
-        <label>Selected Cases assignment</label>
-        <locationX>138</locationX>
-        <locationY>2678</locationY>
+        <description>Unable to add Insperity_Fault_Handler_Subflow.</description>
+        <name>Set_Fault_Message_Search_Term</name>
+        <label>Set Fault Message (Search Term)</label>
+        <locationX>1106</locationX>
+        <locationY>1082</locationY>
         <assignmentItems>
-            <assignToReference>Selectedcaseids</assignToReference>
-            <operator>Add</operator>
+            <assignToReference>faultMessage</assignToReference>
+            <operator>Assign</operator>
             <value>
-                <elementReference>Selected_cases.Id</elementReference>
+                <elementReference>$Flow.FaultMessage</elementReference>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Selected_cases</targetReference>
+            <isGoTo>true</isGoTo>
+            <targetReference>SingleMatchPromptAgent</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Set_Record</name>
         <label>Set Record</label>
-        <locationX>621</locationX>
+        <locationX>974</locationX>
         <locationY>350</locationY>
         <assignmentItems>
             <assignToReference>record</assignToReference>
@@ -100,28 +96,11 @@
         </connector>
     </assignments>
     <assignments>
-        <description>Sets linked contact record.</description>
-        <name>SetLinkedRecord</name>
-        <label>Set Linked Record</label>
-        <locationX>380</locationX>
-        <locationY>1814</locationY>
-        <assignmentItems>
-            <assignToReference>linkedRecord</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>GetAssociatedContact</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Update_Contact_on_Voice_Call</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <description>Sets MatchingRecordCount to the number of records in matchingRecords.</description>
         <name>SetRecordCount</name>
         <label>Set Record Count</label>
-        <locationX>380</locationX>
-        <locationY>890</locationY>
+        <locationX>578</locationX>
+        <locationY>1082</locationY>
         <assignmentItems>
             <assignToReference>matchingRecordsCount</assignToReference>
             <operator>AssignCount</operator>
@@ -130,15 +109,15 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>AutoLinkIfOneResult</targetReference>
+            <targetReference>SingleMatchPromptAgent</targetReference>
         </connector>
     </assignments>
     <assignments>
         <description>Sets the SearchTerm variable to the phone number for the messaging user from the voice call.</description>
         <name>SetSearchTerm</name>
         <label>Set Search Term</label>
-        <locationX>380</locationX>
-        <locationY>674</locationY>
+        <locationX>446</locationX>
+        <locationY>782</locationY>
         <assignmentItems>
             <assignToReference>searchTerm</assignToReference>
             <operator>Assign</operator>
@@ -151,64 +130,56 @@
         </connector>
     </assignments>
     <decisions>
-        <description>Associates contact with Messaging User if one matching contact found and if auto link is set to true</description>
-        <name>AutoLinkIfOneResult</name>
-        <label>Auto Link if 1 Result?</label>
-        <locationX>380</locationX>
-        <locationY>998</locationY>
-        <defaultConnector>
-            <targetReference>SingleMatchPromptAgent</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>No (Default)</defaultConnectorLabel>
-        <rules>
-            <name>HasOneMatchingRecordAndAutoLink</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>matchingRecordsCount</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <numberValue>1.0</numberValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>associateSingleMatch</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>ProcessSingleContactRecord</targetReference>
-            </connector>
-            <label>Yes</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>check_if_case_contacts_available</name>
-        <label>check if case contacts available</label>
-        <locationX>380</locationX>
-        <locationY>2246</locationY>
+        <name>Check_Messaging_User</name>
+        <label>Check Messaging User</label>
+        <locationX>314</locationX>
+        <locationY>1406</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>X1_or_more</name>
+            <name>Found_Messaging_User</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Get_Case_First_Call_Resolution_Hours</leftValueReference>
-                <operator>IsEmpty</operator>
+                <leftValueReference>GetMessagingUser</leftValueReference>
+                <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Prompt_agent_with_Case_contacts</targetReference>
+                <targetReference>AssocateContactMultipleMatch</targetReference>
             </connector>
-            <label>1 or more</label>
+            <label>Found Messaging User</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Messaging_User_Search_Term</name>
+        <label>Check Messaging User (Search Term)</label>
+        <locationX>578</locationX>
+        <locationY>674</locationY>
+        <defaultConnector>
+            <targetReference>GetMatchingContacts</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Found_Messaging_User_Search_Term</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetMessagingUser</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>SetSearchTerm</targetReference>
+            </connector>
+            <label>Found Messaging User (Search Term)</label>
         </rules>
     </decisions>
     <decisions>
         <name>Check_Voice_Call_Record</name>
         <label>Check Voice Call Record</label>
-        <locationX>873</locationX>
+        <locationX>1304</locationX>
         <locationY>242</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -228,32 +199,10 @@
         </rules>
     </decisions>
     <decisions>
-        <name>Is_Case_Selected</name>
-        <label>Is Case Selected?</label>
-        <locationX>182</locationX>
-        <locationY>2462</locationY>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Selected</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>RelatedCases.selectedRows</leftValueReference>
-                <operator>IsEmpty</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Selected_cases</targetReference>
-            </connector>
-            <label>Selected</label>
-        </rules>
-    </decisions>
-    <decisions>
         <description>Determines whether the record passed into the flow has an associated messaging user.</description>
         <name>IsMessagingUserAssociated</name>
         <label>Is Messaging User Associated?</label>
-        <locationX>621</locationX>
+        <locationX>974</locationX>
         <locationY>458</locationY>
         <defaultConnectorLabel>No (Default)</defaultConnectorLabel>
         <rules>
@@ -276,15 +225,19 @@
         <description>Checks if a record is selected from a data table with contacts list</description>
         <name>IsRowSelected</name>
         <label>Is Row Selected?</label>
-        <locationX>554</locationX>
-        <locationY>1214</locationY>
-        <defaultConnector>
-            <targetReference>UpdateMessagingUserRecord</targetReference>
-        </defaultConnector>
+        <locationX>578</locationX>
+        <locationY>1298</locationY>
         <defaultConnectorLabel>No (Default)</defaultConnectorLabel>
         <rules>
             <name>yes</name>
             <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ContactSearchResults.firstSelectedRow</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
             <conditions>
                 <leftValueReference>ContactSearchResults.firstSelectedRow.Id</leftValueReference>
                 <operator>IsNull</operator>
@@ -293,50 +246,15 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>AssocateContactMultipleMatch</targetReference>
+                <targetReference>Check_Messaging_User</targetReference>
             </connector>
             <label>Yes</label>
         </rules>
     </decisions>
     <description>Finds a Contact record related with the phone number for the Messaging User record from the specified Voice Call record.  If the Voice Agent cancels rather than links to a Contact, then no Contact is returned.</description>
     <environments>Default</environments>
-    <formulas>
-        <description>48 hours in the past.</description>
-        <name>FirstCallResolutionHours</name>
-        <dataType>Date</dataType>
-        <expression>NOW() - 48/24</expression>
-    </formulas>
     <interviewLabel>Find Related Contact (Voice Call) {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Find Related Contact (Voice Call)</label>
-    <loops>
-        <description>Runs the loop once to process the single record in the matchingRecords record collection.</description>
-        <name>ProcessSingleContactRecord</name>
-        <label>Process Single Contact Record</label>
-        <locationX>206</locationX>
-        <locationY>1106</locationY>
-        <collectionReference>GetMatchingContacts</collectionReference>
-        <iterationOrder>Asc</iterationOrder>
-        <nextValueConnector>
-            <targetReference>AssocateContactSingleMatchAutomatically</targetReference>
-        </nextValueConnector>
-        <noMoreValuesConnector>
-            <targetReference>UpdateMessagingUserRecord</targetReference>
-        </noMoreValuesConnector>
-    </loops>
-    <loops>
-        <name>Selected_cases</name>
-        <label>Selected cases</label>
-        <locationX>50</locationX>
-        <locationY>2570</locationY>
-        <collectionReference>RelatedCases.selectedRows</collectionReference>
-        <iterationOrder>Asc</iterationOrder>
-        <nextValueConnector>
-            <targetReference>Selected_Cases_assignment</targetReference>
-        </nextValueConnector>
-        <noMoreValuesConnector>
-            <targetReference>Update_Case_Records</targetReference>
-        </noMoreValuesConnector>
-    </loops>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -351,70 +269,14 @@
     </processMetadataValues>
     <processType>IndividualObjectLinkingFlow</processType>
     <recordLookups>
-        <name>Get_Case_First_Call_Resolution_Hours</name>
-        <label>Get Case First Call Resolution Hours</label>
-        <locationX>380</locationX>
-        <locationY>2138</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>check_if_case_contacts_available</targetReference>
-        </connector>
-        <filterLogic>1 AND (2 OR 4 OR 5 ) AND 3 AND 6</filterLogic>
-        <filters>
-            <field>ContactId</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>GetAssociatedContact.Id</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>Origin</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Phone</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>CreatedDate</field>
-            <operator>GreaterThan</operator>
-            <value>
-                <elementReference>FirstCallResolutionHours</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>Origin</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Email</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>Origin</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Chat</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>Id</field>
-            <operator>NotEqualTo</operator>
-            <value>
-                <elementReference>GetVoiceCall.CaseId__c</elementReference>
-            </value>
-        </filters>
-        <getFirstRecordOnly>false</getFirstRecordOnly>
-        <object>Case</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordLookups>
         <description>Gets the contact record associated with the voice call record passed into the flow. Stores the results in the associatedContact record variable.</description>
         <name>GetAssociatedContact</name>
         <label>Get Associated Contact</label>
-        <locationX>380</locationX>
-        <locationY>1706</locationY>
+        <locationX>50</locationX>
+        <locationY>1730</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>SetLinkedRecord</targetReference>
+            <targetReference>Update_Contact_on_Voice_Call</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -432,12 +294,15 @@
         <description>Gets contacts with IDs matching the contact IDs  returned in Outputs from SearchMatchingContact. Stores the result in the matchingContacts record collection.</description>
         <name>GetMatchingContacts</name>
         <label>Get Matching Contacts</label>
-        <locationX>380</locationX>
-        <locationY>782</locationY>
+        <locationX>578</locationX>
+        <locationY>974</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>SetRecordCount</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Set_Fault_Message_Search_Term</targetReference>
+        </faultConnector>
         <filterLogic>or</filterLogic>
         <filters>
             <field>HomePhone</field>
@@ -468,11 +333,11 @@
         <description>Gets the messaging user record associated with the voice call record passed into the flow. Stores the record in the Messaging User from GetMessagingUser record variable.</description>
         <name>GetMessagingUser</name>
         <label>Get Messaging User</label>
-        <locationX>380</locationX>
+        <locationX>578</locationX>
         <locationY>566</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>SetSearchTerm</targetReference>
+            <targetReference>Check_Messaging_User_Search_Term</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -490,7 +355,7 @@
         <description>Gets the voice call record to pass into the flow. Stores the results in the Voice Call from GetVoiceCall record variable.</description>
         <name>GetVoiceCall</name>
         <label>Get Voice Call</label>
-        <locationX>873</locationX>
+        <locationX>1304</locationX>
         <locationY>134</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -511,159 +376,24 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordUpdates>
-        <name>Update_Case_Records</name>
-        <label>Update Case Records</label>
-        <locationX>50</locationX>
-        <locationY>2870</locationY>
-        <connector>
-            <targetReference>Update_Original_Case_Record</targetReference>
-        </connector>
-        <filterLogic>or</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>In</operator>
-            <value>
-                <elementReference>Selectedcaseids</elementReference>
-            </value>
-        </filters>
-        <inputAssignments>
-            <field>First_Call_Resolution__c</field>
-            <value>
-                <booleanValue>false</booleanValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>ParentId</field>
-            <value>
-                <elementReference>GetVoiceCall.CaseId__r.Id</elementReference>
-            </value>
-        </inputAssignments>
-        <object>Case</object>
-    </recordUpdates>
-    <recordUpdates>
-        <name>Update_Case_with_Contact</name>
-        <label>Update Case with Contact</label>
-        <locationX>380</locationX>
-        <locationY>2030</locationY>
-        <connector>
-            <targetReference>Get_Case_First_Call_Resolution_Hours</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>GetVoiceCall.CaseId__r.Id</elementReference>
-            </value>
-        </filters>
-        <inputAssignments>
-            <field>ContactId</field>
-            <value>
-                <elementReference>GetMessagingUser.ContactId</elementReference>
-            </value>
-        </inputAssignments>
-        <object>Case</object>
-    </recordUpdates>
-    <recordUpdates>
-        <name>Update_Original_Case_Record</name>
-        <label>Update Original Case Record</label>
-        <locationX>50</locationX>
-        <locationY>2978</locationY>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>GetVoiceCall.CaseId__c</elementReference>
-            </value>
-        </filters>
-        <inputAssignments>
-            <field>First_Call_Resolution__c</field>
-            <value>
-                <booleanValue>false</booleanValue>
-            </value>
-        </inputAssignments>
-        <object>Case</object>
-    </recordUpdates>
-    <recordUpdates>
         <description>Commits the changes to the record in Messaging User from GetMessagingUser.</description>
         <name>UpdateMessagingUserRecord</name>
         <label>Update Messaging User Record</label>
-        <locationX>380</locationX>
-        <locationY>1598</locationY>
+        <locationX>50</locationX>
+        <locationY>1622</locationY>
         <connector>
             <targetReference>GetAssociatedContact</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Set_Fault_Message</targetReference>
+        </faultConnector>
         <inputReference>GetMessagingUser</inputReference>
     </recordUpdates>
     <screens>
-        <name>Prompt_agent_with_Case_contacts</name>
-        <label>Prompt agent with Case contacts</label>
-        <locationX>182</locationX>
-        <locationY>2354</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>false</allowPause>
-        <connector>
-            <targetReference>Is_Case_Selected</targetReference>
-        </connector>
-        <fields>
-            <name>RelatedCases</name>
-            <dataTypeMappings>
-                <typeName>T</typeName>
-                <typeValue>Case</typeValue>
-            </dataTypeMappings>
-            <extensionName>flowruntime:datatable</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>label</name>
-                <value>
-                    <stringValue>Select Related Cases</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>selectionMode</name>
-                <value>
-                    <stringValue>MULTI_SELECT</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>minRowSelection</name>
-                <value>
-                    <numberValue>0.0</numberValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>tableData</name>
-                <value>
-                    <elementReference>Get_Case_First_Call_Resolution_Hours</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>columns</name>
-                <value>
-                    <stringValue>[{&quot;apiName&quot;:&quot;Case_Number_Hyperlink__c&quot;,&quot;guid&quot;:&quot;column-5ddc&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:true,&quot;customHeaderLabel&quot;:&quot;Case Number&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:0,&quot;label&quot;:&quot;Case Number Hyperlink&quot;,&quot;type&quot;:&quot;customRichText&quot;},{&quot;apiName&quot;:&quot;Subject&quot;,&quot;guid&quot;:&quot;column-17ab&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:1,&quot;label&quot;:&quot;Subject&quot;,&quot;type&quot;:&quot;text&quot;},{&quot;apiName&quot;:&quot;Origin&quot;,&quot;guid&quot;:&quot;column-62d9&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:2,&quot;label&quot;:&quot;Case Origin&quot;,&quot;type&quot;:&quot;text&quot;},{&quot;apiName&quot;:&quot;NSP_Owner__c&quot;,&quot;guid&quot;:&quot;column-e0dd&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:true,&quot;customHeaderLabel&quot;:&quot;Case Owner&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:3,&quot;label&quot;:&quot;Owner&quot;,&quot;type&quot;:&quot;customRichText&quot;},{&quot;apiName&quot;:&quot;Status&quot;,&quot;guid&quot;:&quot;column-0ccd&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:4,&quot;label&quot;:&quot;Status&quot;,&quot;type&quot;:&quot;text&quot;},{&quot;apiName&quot;:&quot;CreatedDate&quot;,&quot;guid&quot;:&quot;column-aff8&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:5,&quot;label&quot;:&quot;Created Date&quot;,&quot;type&quot;:&quot;customDateTime&quot;}]</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>shouldDisplayLabel</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
-        </fields>
-        <nextOrFinishButtonLabel>Finish</nextOrFinishButtonLabel>
-        <showFooter>true</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
-    <screens>
         <name>SingleMatchPromptAgent</name>
         <label>Prompt Agent</label>
-        <locationX>554</locationX>
-        <locationY>1106</locationY>
+        <locationX>578</locationX>
+        <locationY>1190</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -805,7 +535,7 @@
         <showHeader>true</showHeader>
     </screens>
     <start>
-        <locationX>747</locationX>
+        <locationX>1178</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>GetVoiceCall</targetReference>
@@ -813,23 +543,14 @@
     </start>
     <status>Draft</status>
     <variables>
-        <description>Stores a Boolean value passed into the flow that indicates whether to associate a contact if a single matching contact is found.</description>
-        <name>associateSingleMatch</name>
-        <dataType>Boolean</dataType>
+        <name>faultMessage</name>
+        <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <value>
-            <booleanValue>false</booleanValue>
+            <stringValue></stringValue>
         </value>
-    </variables>
-    <variables>
-        <name>linkedRecord</name>
-        <dataType>SObject</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>true</isOutput>
-        <objectType>Contact</objectType>
     </variables>
     <variables>
         <description>Stores the number of matching contact records.</description>
@@ -839,6 +560,9 @@
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <scale>0</scale>
+        <value>
+            <numberValue>0.0</numberValue>
+        </value>
     </variables>
     <variables>
         <name>record</name>
@@ -866,12 +590,5 @@
         <value>
             <stringValue></stringValue>
         </value>
-    </variables>
-    <variables>
-        <name>Selectedcaseids</name>
-        <dataType>String</dataType>
-        <isCollection>true</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
     </variables>
 </Flow>
