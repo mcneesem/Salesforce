@@ -83,16 +83,17 @@ public class NSP_LeadTriggerHelper {
             leadObject.RecordTypeId == SERVICE_REFERRAL_RECORDTYPE_ID || 
             (String.isNotBlank(createdUserName) && externalUsers.contains(createdUserName))) {
 
-                //  290445 - Inbound Solutions - Existing Lead Flow
+                //  Lead created by Eloqua
                 if(UserInfo.getUserId().equals(Label.Eloqua_Integration_User_Id)){
                     
-                    if(!Label.Eloqua_Lead_Marketing_Priority.split(',').contains(leadObject.Marketing_Priority__c) || 
-                    (String.isNotBlank(leadObject.ownerId) && Label.Eloqua_Integration_User_Id.equals(leadObject.ownerId))){ 
-                        inboundSolutionsList.add(leadObject);
-                    }
-                    else if(String.isNotBlank(leadObject.Marketing_Priority__c) && leadObject.Marketing_Priority__c.equals('General')){
-                        //  290414 - Lead Assignment flow (TC) - New Outbound leads
+                    //  290414 - Lead Assignment flow (TC) - New Outbound leads
+                    if(String.isNotBlank(leadObject.Marketing_Priority__c) && leadObject.Marketing_Priority__c.equals('General')){
                         outboundTeamList.add(leadObject);
+                    }
+                    else if(!Label.Eloqua_Lead_Marketing_Priority.split(',').contains(leadObject.Marketing_Priority__c) || 
+                    Label.Eloqua_Integration_User_Id.equals(leadObject.ownerId)){ 
+                        //  290445 - Inbound Solutions - Existing Lead Flow
+                        inboundSolutionsList.add(leadObject);
                     }
                 }
                 else{
