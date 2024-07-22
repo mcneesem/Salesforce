@@ -551,6 +551,7 @@ public class NSP_LeadTriggerHelperTest {
         
         User eloquaUser = [select id from User WHERE id =: Label.Eloqua_Integration_User_Id ];
         List<Group> inBoundSolutionsQueue = [SELECT Id FROM Group WHERE Type = 'Queue' AND DeveloperName = :System.label.NSP_DEVELOPERNAME_INBOUNDSOLUTIONS];
+        List<Group> outBoundTeamQueue = [SELECT Id FROM Group WHERE Type = 'Queue' AND DeveloperName = :System.label.Outbound_Team_DeveloperName];
         List<Account> account = [SELECT id FROM Account WHERE name = 'Test Account' LIMIT 1];
         List<User> user = [SELECT id FROM User WHERE email = 'testuser1@insperity.com'];
 
@@ -560,7 +561,7 @@ public class NSP_LeadTriggerHelperTest {
             
             List <Lead> leads = new  List <Lead>();
             
-            //  Lead should not be assigned to Inbound Solutions
+            //  Lead should not be assigned to Inbound Solutions, instead should be assigned to Outbound Team
             Lead lead1 = new  Lead();
             lead1.company = account[0].id;
             lead1.Marketing_Priority__c = 'General';
@@ -586,6 +587,7 @@ public class NSP_LeadTriggerHelperTest {
             
             List<Lead> lead3 = [SELECT ownerId FROM Lead WHERE id =: lead1.id];
             system.assertNotEquals(inBoundSolutionsQueue[0].id, lead3[0].Ownerid);
+            system.assertEquals(outBoundTeamQueue[0].id, lead3[0].Ownerid);
 
             List<Lead> lead4 = [SELECT ownerId FROM Lead WHERE id =: lead2.id];
             system.assertEquals(inBoundSolutionsQueue[0].id, lead4[0].Ownerid);

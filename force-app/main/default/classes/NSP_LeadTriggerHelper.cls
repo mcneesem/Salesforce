@@ -36,11 +36,12 @@ public class NSP_LeadTriggerHelper {
         //Set to store account ids
         Set < String > accountIdSet = new Set < String > ();
         List<Lead> inboundSolutionsList =  new List<Lead>();  // Added as part of DF-01009 
+        List<Lead> outboundTeamList =  new List<Lead>();
          /* Added to Map Sales Office on insert if Zipcode is populated*/
-      List < Lead > zipCodeLeadList = new List < Lead > ();
-      List < String > zipCodeList = new List < String > ();
-      Boolean isOwnerAssignment = true; 
-      /* Added to Map Sales Office on insert if Zipcode is populated*/   
+        List < Lead > zipCodeLeadList = new List < Lead > ();
+        List < String > zipCodeList = new List < String > ();
+        Boolean isOwnerAssignment = true; 
+        /* Added to Map Sales Office on insert if Zipcode is populated*/   
         //Iterating over the new lead list(trigger.new)
         for (Lead leadObject: newList) {
             updateAccountSegment(leadObject);
@@ -89,6 +90,10 @@ public class NSP_LeadTriggerHelper {
                     (String.isNotBlank(leadObject.ownerId) && Label.Eloqua_Integration_User_Id.equals(leadObject.ownerId))){ 
                         inboundSolutionsList.add(leadObject);
                     }
+                    else if(String.isNotBlank(leadObject.Marketing_Priority__c) && leadObject.Marketing_Priority__c.equals('General')){
+                        //  290414 - Lead Assignment flow (TC) - New Outbound leads
+                        outboundTeamList.add(leadObject);
+                    }
                 }
                 else{
                     inboundSolutionsList.add(leadObject);
@@ -128,6 +133,11 @@ public class NSP_LeadTriggerHelper {
         //Assigning to Inbound Solutions SalesQueue if the Lead is creating from Referral Form or Eloqua as per new Lead assignment rules.
         if(!inboundSolutionsList.isEmpty()){
             assignLeadToInboundSolutions(inboundSolutionsList);
+        }
+
+        //Assigning to Outbound Team 
+        if(!outboundTeamList.isEmpty()){
+            assignLeadToOutboundTeam(outboundTeamList);
         }
         
         setSalesOfficeDetails(newList,null); // added for STY-03154
@@ -628,7 +638,7 @@ if ((leadNewMap.get(leadId).NSP_Lead_Routing__c == true &&
         if(midMarketLead != null && zipBasedLocationList !=null && !zipBasedLocationList.isEmpty())
             NSP_RoundRobinAssigner.getOfficeAssignmentDetails(midMarketLead, zipBasedLocationList, true);
     }
-    /**
+/**
 * Assigns the leads to the inBound Solutions Queue 
 * @param inBoundSolutionsList List of lead for inBound Solutions 
 * @return void 
@@ -644,6 +654,24 @@ if ((leadNewMap.get(leadId).NSP_Lead_Routing__c == true &&
           leadObject.NSP_Lead_Routing__c = FALSE;
         }
     }
+
+/*
+* Assigns the leads to the Outbound Team Queue 
+* @param outboundTeamList List of lead for outbound team
+* @return void 
+*@CreatedDate: 7/22/2024
+*@Story: 290414
+*                
+*/
+    public void assignLeadToOutboundTeam(List<Lead> outboundTeamList){
+        //Fetching the queue id for the inBound SolutionsQueue queue
+        List<Group> outboundTeamListQueue = [SELECT Id FROM Group WHERE Type = 'Queue' AND DeveloperName = :System.label.Outbound_Team_DeveloperName];
+        for(Lead leadObject : outboundTeamList){
+            leadObject.OwnerId = outboundTeamListQueue[0].id;
+            leadObject.NSP_Lead_Routing__c = FALSE;
+        }
+    }
+
     /**
 * Assigns the leads to the Payroll/HCM  Queue 
 * @param payrollHCMLead List of lead for Payroll/HCM
