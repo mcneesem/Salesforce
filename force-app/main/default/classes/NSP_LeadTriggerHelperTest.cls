@@ -551,43 +551,47 @@ public class NSP_LeadTriggerHelperTest {
         
         User eloquaUser = [select id from User WHERE id =: Label.Eloqua_Integration_User_Id ];
         List<Group> inBoundSolutionsQueue = [SELECT Id FROM Group WHERE Type = 'Queue' AND DeveloperName = :System.label.NSP_DEVELOPERNAME_INBOUNDSOLUTIONS];
+        List<Account> account = [SELECT id FROM Account WHERE name = 'Test Account' LIMIT 1];
+        List<User> user = [SELECT id FROM User WHERE email = 'testuser1@insperity.com'];
 
         // Start Test
         Test.startTest();
         system.runAs(eloquaUser){
-            try{
-                
-                List <Lead> leads = new  List <Lead>();
-                
-                //  Lead should not be assigned to Inbound Solutions
-                Lead lead1 = new  Lead();
-                lead1.Marketing_Priority__c = 'High - General';
-                lead1.firstName = 'Test1';
-                lead1.lastName = 'Test1';
-                lead1.email = 'myemail1@yahoo.com';
-                lead1.phone = '999999';
-                leads.add(lead1);
-                
-                //  Lead should be assigned to Inbound Solutions
-                Lead lead2 = new  Lead();
-                lead2.Marketing_Priority__c = 'High - Direct';
-                lead2.firstName = 'Test2';
-                lead2.lastName = 'Test2';
-                lead2.email = 'myemail2@yahoo.com';
-                lead2.phone = '999999';
-                lead2.ownerId = Label.Eloqua_Integration_User_Id;
-                leads.add(lead2);
-                
-                insert leads;
+            
+            List <Lead> leads = new  List <Lead>();
+            
+            //  Lead should not be assigned to Inbound Solutions
+            Lead lead1 = new  Lead();
+            lead1.company = account[0].id;
+            lead1.Marketing_Priority__c = 'General';
+            lead1.firstName = 'Test1';
+            lead1.lastName = 'Test1';
+            lead1.email = 'myemail1@yahoo.com';
+            lead1.phone = '999999';
+            lead1.ownerId = user[0].id;
+            leads.add(lead1);
+            
+            //  Lead should be assigned to Inbound Solutions
+            Lead lead2 = new  Lead();
+            lead2.Marketing_Priority__c = 'High - Direct';
+            lead2.company = account[0].id;
+            lead2.firstName = 'Test2';
+            lead2.lastName = 'Test2';
+            lead2.email = 'myemail2@yahoo.com';
+            lead2.phone = '999999';
+            lead2.ownerId = Label.Eloqua_Integration_User_Id;
+            leads.add(lead2);
+            
+            insert leads;
+            
+            List<Lead> lead3 = [SELECT ownerId FROM Lead WHERE id =: lead1.id];
+            system.assertNotEquals(inBoundSolutionsQueue[0].id, lead3[0].Ownerid);
 
-                system.assertNotEquals(lead1.Ownerid, inBoundSolutionsQueue[0].id);
-                system.assertEquals(lead2.Ownerid, inBoundSolutionsQueue[0].id);        
-                
-            }catch(Exception ex){
-                system.assertNotEquals(null, ex);
-            }
+            List<Lead> lead4 = [SELECT ownerId FROM Lead WHERE id =: lead2.id];
+            system.assertEquals(inBoundSolutionsQueue[0].id, lead4[0].Ownerid);
+            
         }
         Test.stopTest();
     }
-  
+    
 }
