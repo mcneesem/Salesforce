@@ -217,7 +217,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Eloqua Lead Marketing Priority</shortDescription>
-        <value>High - Event,High - General</value>
+        <value>High - Event,General</value>
     </labels>
     <labels>
         <fullName>ErrorMessageWhenPrimaryResourceAlreadyExist</fullName>
