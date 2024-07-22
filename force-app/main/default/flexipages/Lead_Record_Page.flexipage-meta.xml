@@ -736,6 +736,26 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.Marketing_Priority__c</fieldItem>
+                <identifier>RecordMarketing_Priority_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Engagement_Score__c</fieldItem>
+                <identifier>RecordEngagement_Score_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Sales_Office__c</fieldItem>
                 <identifier>RecordNSP_Sales_Office_cField</identifier>
             </fieldInstance>
@@ -1042,6 +1062,26 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Account_Assignment_Method__c</fieldItem>
                 <identifier>RecordAccount_Assignment_Method_cField2</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Marketing_Priority__c</fieldItem>
+                <identifier>RecordMarketing_Priority_cField2</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Engagement_Score__c</fieldItem>
+                <identifier>RecordEngagement_Score_cField2</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1396,6 +1436,26 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Account_Assignment_Method__c</fieldItem>
                 <identifier>RecordAccount_Assignment_Method_cField3</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Marketing_Priority__c</fieldItem>
+                <identifier>RecordMarketing_Priority_cField3</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Engagement_Score__c</fieldItem>
+                <identifier>RecordEngagement_Score_cField3</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-bd99d3aa-1231-4aee-9bea-7e42f516637c</name>
