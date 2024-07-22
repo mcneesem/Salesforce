@@ -60,7 +60,7 @@ public without sharing class NSP_AccountTeamTriggerTest {
         //Added as part of STY-03667
         //Account team insertion
         NSP_Account_Team__c accTeam = (NSP_Account_Team__c)NSP_TestExtendedDataFactory.createSObject(new NSP_Account_Team__c(), 'NSP_TestDataFactory.AccountTeamMemberDefaults', true);
-		accTeam.NSP_Primary__c=true;
+        accTeam.NSP_Primary__c=true;
         accTeam.NSP_User__c=userObj.Id;
         update accTeam;
         
@@ -163,18 +163,18 @@ public without sharing class NSP_AccountTeamTriggerTest {
         Asset assetObject1 = [SELECT ID, AccountId, NSP_WX_WA_Benefits_Specialist__c FROM Asset WHERE AccountId=: accountObject.Id ];
         System.Assert(String.isNotBlank(assetObject1.NSP_WX_WA_Benefits_Specialist__c));
   
-		accountTeamObject.NSP_Role__c = NSP_ServiceConstants.WXWA_PAYROLL;
-		UPDATE accountTeamObject;
-		assetObject1 = [SELECT ID, AccountId, NSP_WA_WX_Payroll_Specialist__c FROM Asset WHERE AccountId=: accountObject.Id];
+        accountTeamObject.NSP_Role__c = NSP_ServiceConstants.WXWA_PAYROLL;
+        UPDATE accountTeamObject;
+        assetObject1 = [SELECT ID, AccountId, NSP_WA_WX_Payroll_Specialist__c FROM Asset WHERE AccountId=: accountObject.Id];
         System.Assert(String.isNotBlank(assetObject1.NSP_WA_WX_Payroll_Specialist__c));
 
-		accountTeamObject.NSP_Role__c = NSP_ServiceConstants.PLAN_CONSULTANT;
-		UPDATE accountTeamObject;
+        accountTeamObject.NSP_Role__c = NSP_ServiceConstants.PLAN_CONSULTANT;
+        UPDATE accountTeamObject;
         
-        AccountTeamTriggerSettings__c customSettingRec 		= new AccountTeamTriggerSettings__c();
-        customSettingRec.Name 								= 'Test Record';
-        customSettingRec.IsRetServiceNameChangeEnabled__c 	= true;
-        customSettingRec.SetupOwnerId 						= userInfo.getUserId();
+        AccountTeamTriggerSettings__c customSettingRec = new AccountTeamTriggerSettings__c();
+        customSettingRec.Name = 'Test Record';
+        customSettingRec.IsRetServiceNameChangeEnabled__c = true;
+        customSettingRec.SetupOwnerId = userInfo.getUserId();
         insert customSettingRec;
 
         Test.stopTest();
@@ -220,10 +220,10 @@ public without sharing class NSP_AccountTeamTriggerTest {
     }
 
     /***********************************************************************************************
-	* MethodName: testErrorOnAccountTeamInsert
-	* Description : unit test for account team insert error message
+    * MethodName: testErrorOnAccountTeamInsert
+    * Description : unit test for account team insert error message
     * Added as part of STY-03667
-	* ********************************************************************************************/    
+    * ********************************************************************************************/    
     @isTest
     static void testErrorOnAccountTeam() {
         //GIVEN
@@ -237,11 +237,11 @@ public without sharing class NSP_AccountTeamTriggerTest {
         
         Test.startTest();
         try{
-        	insert accTeam;
+            insert accTeam;
         }catch (Exception ex){
             //test positive assertion on insertion record not inserted successfully and throws validation
             system.assertEquals('System.DmlException',ex.getTypeName());
-    	}
+        }
         accTeam.NSP_Primary__c=false;
         insert accTeam;
         List<NSP_Account_Team__c> accTeamList = [SELECT Id,NSP_Role__c 
@@ -251,12 +251,12 @@ public without sharing class NSP_AccountTeamTriggerTest {
         system.assertEquals(2, accTeamList.size());
         accTeam.NSP_Primary__c=true;
         try{
-        	update accTeam;
+            update accTeam;
         }catch (Exception ex){
             //test assertion on update record not updated and throws validation
             system.assertEquals('System.DmlException',ex.getTypeName());
-    	}
-		Test.stopTest();
+        }
+        Test.stopTest();
       
     }
     
@@ -292,10 +292,10 @@ public without sharing class NSP_AccountTeamTriggerTest {
     }
 
     /***********************************************************************************************
-	* MethodName: testUserUpdateOnAccountTeam
-	* Description : unit test for account team -user Update
+    * MethodName: testUserUpdateOnAccountTeam
+    * Description : unit test for account team -user Update
     * Added as part of DF-03716
-	* ********************************************************************************************/    
+    * ********************************************************************************************/    
     @isTest
     static void testUserUpdateOnAccountTeam() {
         //GIVEN
