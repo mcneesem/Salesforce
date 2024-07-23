@@ -177,12 +177,7 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Wait_Time__c</field>
-            <table>MessagingSession</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Waiting_Time__c</field>
+            <field>EndedByType</field>
             <table>MessagingSession</table>
         </columns>
         <columns>
@@ -218,6 +213,31 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>Description__c</field>
+            <table>MessagingSession</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Messaging_Session_ID_18__c</field>
+            <table>MessagingSession</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Case.ClosedDate</field>
+            <table>MessagingSession</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Wait_Time__c</field>
+            <table>MessagingSession</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Agent_Chat_Duration_Time__c</field>
+            <table>MessagingSession</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Total_Chat_Duration_Time__c</field>
             <table>MessagingSession</table>
         </columns>
         <masterLabel>Messaging Sessions</masterLabel>
