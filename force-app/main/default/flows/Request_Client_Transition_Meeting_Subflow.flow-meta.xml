@@ -1172,11 +1172,11 @@ Bid Version: {!bidversion}
 -
 EE Count: {!eecount}
 -
-OSS Name: {!ossname}
+ Client Contact Name: {!ossname}
 -
-OSS Phone: {!ossphone.value}
+ Client Contact Phone: {!ossphone.value}
 -
-OSS Email: {!ossemail.value}
+ Client Contact Email: {!ossemail.value}
 -
 NSP Effective Date: {!nspeffectivedate}
 -
