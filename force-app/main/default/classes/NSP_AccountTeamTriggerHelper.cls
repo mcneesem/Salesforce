@@ -152,6 +152,7 @@ NSP_WX_WA_Benefits_Specialist__c, and NSP_Retirement_Service_Plan_Name__c field 
 */
     
     public void updateAccountTeamNameToAssetName(Map < Id, NSP_Account_Team__c > mapAccountIdtoAccountTeam) {
+        Boolean switchEnabled = AccountTeamTriggerSettings__c.getInstance(UserInfo.getUserId()).IsRetServiceNameChangeEnabled__c;
         List < Asset > listAssetObject = new List < Asset > ();
         
         //Iterating Asset object based on AccountId 
@@ -168,7 +169,7 @@ NSP_WX_WA_Benefits_Specialist__c, and NSP_Retirement_Service_Plan_Name__c field 
                                         assetObject.NSP_WX_WA_Benefits_Specialist__c = accountTeamObject.NSP_User__c;
                                     } else if (accountTeamObject.NSP_Role__c == NSP_ServiceConstants.WXWA_PAYROLL && String.isNotBlank(accountTeamObject.NSP_User__c)) {
                                         assetObject.NSP_WA_WX_Payroll_Specialist__c = accountTeamObject.NSP_User__c;
-                                    } else if (accountTeamObject.NSP_Role__c == NSP_ServiceConstants.PLAN_CONSULTANT && String.isNotBlank(accountTeamObject.NSP_User__c)) {
+                                    } else if (switchEnabled && accountTeamObject.NSP_Role__c == NSP_ServiceConstants.PLAN_CONSULTANT && String.isNotBlank(accountTeamObject.NSP_User__c)) {
                                         assetObject.NSP_Retirement_Service_Plan_Name__c = accountTeamObject.NSP_User__c;
                                     }
                                     listAssetObject.add(assetObject);
