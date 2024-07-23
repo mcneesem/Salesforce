@@ -788,7 +788,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Asset Record Type with Initial Status Onboarding</shortDescription>
-        <value>Applicant Tracking,Certify,Integra,Learning &amp; Development,Organizational Planning,Performance Management,Time &amp; Attendance,WX_WA</value>
+        <value>Applicant Tracking,Certify,Integra,Learning &amp; Development,Organizational Planning,Performance Management,Time &amp; Attendance,WX_WA,XML</value>
     </labels>
     <labels>
         <fullName>NSP_Asset_Status_Start_Date_Current_Month</fullName>
