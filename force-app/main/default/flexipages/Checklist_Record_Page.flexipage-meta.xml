@@ -2151,6 +2151,16 @@
                 <identifier>RecordNSP_WhereiscustomerintheSales_process__cField</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_Additional_Notes__c</fieldItem>
+                <identifier>RecordNSP_Additional_Notes_cField2</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-yefjlawglm</name>
         <type>Facet</type>
     </flexiPageRegions>
