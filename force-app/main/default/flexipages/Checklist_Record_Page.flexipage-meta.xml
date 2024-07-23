@@ -595,16 +595,6 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Opportunity__c</fieldItem>
-                <identifier>RecordNSP_Opportunity_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
                 <fieldItem>Record.CurrencyIsoCode</fieldItem>
                 <identifier>RecordCurrencyIsoCodeField</identifier>
             </fieldInstance>
@@ -2087,8 +2077,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Requested_1st_Pay_Period_Date__c</fieldItem>
-                <identifier>RecordNSP_Requested_1st_Pay_Period_Date__cField</identifier>
+                <fieldItem>Record.NSP_Requested_First_Pay_Date__c</fieldItem>
+                <identifier>RecordNSP_Requested_First_Pay_Date_cField2</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -2159,6 +2149,16 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_WhereiscustomerintheSales_process__c</fieldItem>
                 <identifier>RecordNSP_WhereiscustomerintheSales_process__cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_Additional_Notes__c</fieldItem>
+                <identifier>RecordNSP_Additional_Notes_cField2</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-yefjlawglm</name>
@@ -2263,6 +2263,16 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Govt_Contract_approval_granted__c</fieldItem>
                 <identifier>RecordNSP_Govt_Contract_approval_granted__cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_IfContractgrantedseeattachedemail__c</fieldItem>
+                <identifier>RecordNSP_IfContractgrantedseeattachedemail_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
