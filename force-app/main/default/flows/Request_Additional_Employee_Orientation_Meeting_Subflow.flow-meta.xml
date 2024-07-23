@@ -2302,11 +2302,11 @@ If yes to above question, language(s) needed: {!Language_s_Needed_EOM1}
 -
 EE Count: {!veecount}
 -
-OSS Name: {!vOSS_Name}
+Client Contact Name: {!vOSS_Name}
 -
-OSS Phone: {!vOSS_Phone}
+Client Contact Phone: {!vOSS_Phone}
 -
-OSS Email: {!vOSS_Email}
+Client Contact Email: {!vOSS_Email}
 -
 Special Instructions: {!vSpecial_Instruction}</text>
     </textTemplates>
@@ -2345,11 +2345,11 @@ If yes to above question, language(s) needed: {!Language_s_Needed_EOM2}
 -
 EE Count: {!veecount}
 -
-OSS Name: {!vOSS_Name}
+Client Contact Name: {!vOSS_Name}
 -
-OSS Phone: {!vOSS_Phone}
+Client Contact Phone: {!vOSS_Phone}
 -
-OSS Email: {!vOSS_Email}
+Client Contact Email: {!vOSS_Email}
 -
 Special Instructions: {!vSpecial_Instruction}</text>
     </textTemplates>
@@ -2399,11 +2399,11 @@ If yes to above question, language(s) needed: {!Language_s_Needed_EOM3}
 -
 EE Count: {!veecount}
 -
-OSS Name: {!vOSS_Name}
+Client Contact Name: {!vOSS_Name}
 -
-OSS Phone: {!vOSS_Phone}
+Client Contact Phone: {!vOSS_Phone}
 -
-OSS Email: {!vOSS_Email}
+Client Contact Email: {!vOSS_Email}
 -
 Special Instructions: {!vSpecial_Instruction}</text>
     </textTemplates>
@@ -2464,11 +2464,11 @@ If yes to above question, language(s) needed: {!Language_s_Needed_EOM4}
 -
 EE Count: {!veecount}
 -
-OSS Name: {!vOSS_Name}
+Client Contact Name: {!vOSS_Name}
 -
-OSS Phone: {!vOSS_Phone}
+Client Contact Phone: {!vOSS_Phone}
 -
-OSS Email: {!vOSS_Email}
+Client Contact Email: {!vOSS_Email}
 -
 Special Instructions: {!vSpecial_Instruction}</text>
     </textTemplates>
