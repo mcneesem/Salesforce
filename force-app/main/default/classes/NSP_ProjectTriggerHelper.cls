@@ -1487,7 +1487,7 @@ public class NSP_ProjectTriggerHelper{
     private String projectNameAsPerNamingConvention(String projectName ,Date startDate, String accountName  ){
         String prjName = String.isNotBlank(accountName) ? projectName + ' - ' + startDate.month() + '.' + startDate.day() + '.' + startDate.year()+' - '+ accountName
         : projectName + ' - ' + startDate.month() + '.' + startDate.day() + '.' + startDate.year();
-        return prjName.length() > 80 ? prjName.substring(0, 80) : prjName ;
+        return prjName.length() > 80 ? prjName.substring(0, 73) : prjName ;
     }
 
     /***********************************************************************************************
