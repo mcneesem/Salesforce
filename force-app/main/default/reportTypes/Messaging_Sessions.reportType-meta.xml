@@ -177,11 +177,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>EndedByType</field>
-            <table>MessagingSession</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>Case.Chat_Topic__c</field>
             <table>MessagingSession</table>
         </columns>
