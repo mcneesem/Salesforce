@@ -46,9 +46,6 @@
         <field>MessagingSession$EndTime</field>
     </columns>
     <columns>
-        <field>MessagingSession$Waiting_Time__c</field>
-    </columns>
-    <columns>
         <field>BucketField_66390516</field>
     </columns>
     <currency>USD</currency>
