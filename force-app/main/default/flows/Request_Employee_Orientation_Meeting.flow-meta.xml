@@ -2392,7 +2392,7 @@
             <targetReference>Retrieve_triggering_account_record</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <textTemplates>
         <description>Template to populate the &apos;Notes&apos; field on Task. This is to allow for creation of an Orientation Meeting Request Task and to bypass &apos;Prevent_Manual_Creation_of_OMR_Tasks&apos; validation rule.</description>
         <name>populate_notes_field_on_task</name>
