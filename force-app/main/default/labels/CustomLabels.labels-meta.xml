@@ -309,7 +309,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Middle Market Implementation Project</shortDescription>
-        <value>Middle Market - Implementation</value>
+        <value>MM - Implementation</value>
     </labels>
     <labels>
         <fullName>MinimumFeeItalic</fullName>
@@ -4535,7 +4535,7 @@ Meeting - Project Related - Fiduciary,Mutual Fund Corrections - Pricing, Manual 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>It stores the name of the  project key set names</shortDescription>
-        <value>FSO - Implementation,Middle Market - Implementation,Integra</value>
+        <value>FSO - Implementation,MM - Implementation,Integra</value>
     </labels>
     <labels>
         <fullName>NSP_ProjectOwnerError</fullName>

@@ -279,7 +279,7 @@ public class NSP_ServiceConstants {
     //Work Type Constants
     public final static String durationType = 'Hours';
     //Project Constants
-    public final static String MM_PROJECT_TEMPLATE_KEY = 'Middle Market - Implementation';
+    public final static String MM_PROJECT_TEMPLATE_KEY = 'MM - Implementation';
     public final static String FSO_PROJECT_TEMPLATE_KEY = 'FSO - Implementation';
     public final static String ImplementationProjectType = 'Implementation';
     public final static String PEOProject = 'PEO_Project';

@@ -421,7 +421,7 @@
                     <criteria>
                         <leftValue>{!Record.TemplateName__c}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>Middle Market - Implementation</rightValue>
+                        <rightValue>MM - Implementation</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
