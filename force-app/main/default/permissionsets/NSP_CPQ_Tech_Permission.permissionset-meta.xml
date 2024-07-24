@@ -10228,6 +10228,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Order.Prevent_Asset_Updates__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Order.SBQQ__Contracted__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -10350,6 +10355,10 @@
         <editable>false</editable>
         <field>OrderItem.QuoteLineItemId</field>
         <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <field>OrderItem.Prevent_Asset_Updates__c</field>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
