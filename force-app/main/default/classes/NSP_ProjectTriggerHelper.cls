@@ -1484,10 +1484,22 @@ public class NSP_ProjectTriggerHelper{
     * Params:       Id accountId 
     * Author :      Abhishek Kumar
     * ********************************************************************************************/
-    private String projectNameAsPerNamingConvention(String projectName ,Date startDate, String accountName  ){
-        String prjName = String.isNotBlank(accountName) ? projectName + ' - ' + startDate.month() + '.' + startDate.day() + '.' + startDate.year()+' - '+ accountName
-        : projectName + ' - ' + startDate.month() + '.' + startDate.day() + '.' + startDate.year();
-        return prjName.length() > 80 ? prjName.substring(0, 73) : prjName ;
+    private String projectNameAsPerNamingConvention( String projectName , Date startDate , String accountName ) {
+        String prjName = '';
+        if ( String.isNotBlank( projectName ) ) {
+            if ( projectName == Label.Middle_Market_Implementation_Project ) {
+                prjName = projectName;
+            } else if ( startDate != null ) {
+                prjName = projectName + ' - ' + startDate.month() + '.' + startDate.day() + '.' + startDate.year();
+            }
+        }
+        if ( String.isNotBlank( prjName ) && String.isNotBlank( accountName ) ) {
+            prjName = prjName + ' - '+ accountName;
+        }
+        if ( prjName.length() > 80 ) {
+            prjName = prjName.substring( 0 , 73 );
+        }
+        return prjName;
     }
 
     /***********************************************************************************************
