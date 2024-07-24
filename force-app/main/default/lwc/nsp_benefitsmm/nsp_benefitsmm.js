@@ -119,7 +119,7 @@ export default class Nsp_benefitsMm extends LightningElement {
         ? value.join(';')
         : value;
       if(this.isDoubleClick){
-        this.field[fieldName] = undefined;
+        this.field[fieldName] = null;
         this.isDoubleClick = false;
       }
       this.updateDependentFieldVisibility(fieldName, value);
@@ -230,7 +230,6 @@ export default class Nsp_benefitsMm extends LightningElement {
   get helpText() {
     return HELP_TEXT;
   }
-  
   handleDoubleClick({ detail, target }){
     this.isDoubleClick = true;
     this.handleValueChange({ detail: detail, target: target });
