@@ -18,9 +18,6 @@
     <columns>
         <field>MessagingSession$EndTime</field>
     </columns>
-    <columns>
-        <field>MessagingSession$Waiting_Time__c</field>
-    </columns>
     <currency>USD</currency>
     <description>abandoned chats (chats ended after more than 45 seconds of waiting ) - STY-258417</description>
     <filter>
