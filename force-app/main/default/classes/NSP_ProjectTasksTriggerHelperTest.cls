@@ -903,7 +903,18 @@ public class NSP_ProjectTasksTriggerHelperTest {
         NSP_Account_Team__c accTeam4 = (NSP_Account_Team__c)NSP_TestExtendedDataFactory.createSObject(new NSP_Account_Team__c(), 'NSP_TestDataFactory.AccountTeamMemberDefaults', false);
         accTeam4.NSP_Account__c = letterrcvdTask.NSP_AccountId__c;
         accTeam4.NSP_Role__c ='Business Performance Advisor';
-        Insert accTeam4;     
+        Insert accTeam4;
+        
+        NSP_Account_Team__c accTeam5 = (NSP_Account_Team__c)NSP_TestExtendedDataFactory.createSObject(new NSP_Account_Team__c(), 'NSP_TestDataFactory.AccountTeamMemberDefaults', false);
+        accTeam5.NSP_Account__c = letterrcvdTask.NSP_AccountId__c;
+        accTeam5.NSP_Role__c ='Bus. Team-HRSp/CL';
+        Insert accTeam5;
+        
+        NSP_Account_Team__c accTeam6 = (NSP_Account_Team__c)NSP_TestExtendedDataFactory.createSObject(new NSP_Account_Team__c(), 'NSP_TestDataFactory.AccountTeamMemberDefaults', false);
+        accTeam6.NSP_Account__c = letterrcvdTask.NSP_AccountId__c;
+        accTeam6.NSP_Role__c ='MidMarket Account Exec';
+        Insert accTeam6;
+        
         Asset asseObj = [SELECT Id, AccountId,NSP_Reason_for_Term__c,NSP_Anticipated_Date_Of_Termination__c  FROM Asset Limit 1];
         asseObj.AccountId = letterrcvdTask.NSP_AccountId__c;
         asseObj.RecordTypeId =new_Asset_RT_ID;
