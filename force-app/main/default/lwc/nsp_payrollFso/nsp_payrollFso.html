@@ -61,7 +61,8 @@
       record-type-id={recordTypeId}
       value={field.NSP_Weekly_Pay_Period__c}
       data-name="NSP_Weekly_Pay_Period__c"
-      onchange={handleValueChange}>
+      onchange={handleValueChange}
+      ondblclick={handleDoubleClick}>
     </c-nsp_selection-box>
 
     <c-nsp_selection-box
@@ -73,7 +74,8 @@
       record-type-id={recordTypeId}
       value={field.NSP_Biweekly_Pay_Period__c}
       data-name="NSP_Biweekly_Pay_Period__c"
-      onchange={handleValueChange}>
+      onchange={handleValueChange}
+      ondblclick={handleDoubleClick}>
     </c-nsp_selection-box>
 
     <c-nsp_selection-box
@@ -85,7 +87,8 @@
       record-type-id={recordTypeId}
       value={field.NSP_Semimonthly_Pay_Period__c}
       data-name="NSP_Semimonthly_Pay_Period__c"
-      onchange={handleValueChange}>
+      onchange={handleValueChange}
+      ondblclick={handleDoubleClick}>
     </c-nsp_selection-box>
 
     <template if:true={visibility.Non_exempt_EEs_on_semi_monthly_pay_freq__c}>
@@ -98,7 +101,8 @@
         record-type-id={recordTypeId}
         value={field.Non_exempt_EEs_on_semi_monthly_pay_freq__c}
         data-name="Non_exempt_EEs_on_semi_monthly_pay_freq__c"
-        onchange={handleValueChange}>
+        onchange={handleValueChange}
+        ondblclick={handleDoubleClick}>
       </c-nsp_selection-box>
 
       <template if:true={visibility.Current_hours_tracking_method_infolet__c}>
@@ -150,7 +154,8 @@
         record-type-id={recordTypeId}
         value={field.Semi_monthly_pay_freq_comply_w_state_law__c}
         data-name="Semi_monthly_pay_freq_comply_w_state_law__c"
-        onchange={handleValueChange}>
+        onchange={handleValueChange}
+        ondblclick={handleDoubleClick}>
       </c-nsp_selection-box>
 
       <template if:true={visibility.Semi_monthly_pay_st_law_provide_details__c}>
@@ -182,7 +187,8 @@
       record-type-id={recordTypeId}
       value={field.NSP_Monthly_Pay_Period__c}
       data-name="NSP_Monthly_Pay_Period__c"
-      onchange={handleValueChange}>
+      onchange={handleValueChange}
+      ondblclick={handleDoubleClick}>
     </c-nsp_selection-box>
 
     <template if:true={visibility.Monthly_pay_freq_comply_w_state_laws__c}>
@@ -195,7 +201,8 @@
         record-type-id={recordTypeId}
         value={field.Monthly_pay_freq_comply_w_state_laws__c}
         data-name="Monthly_pay_freq_comply_w_state_laws__c"
-        onchange={handleValueChange}>
+        onchange={handleValueChange}
+        ondblclick={handleDoubleClick}>
       </c-nsp_selection-box>
 
       <template
@@ -226,7 +233,8 @@
       record-type-id={recordTypeId}
       value={field.Is_there_a_need_for_a_subaccount__c}
       data-name="Is_there_a_need_for_a_subaccount__c"
-      onchange={handleValueChange}>
+      onchange={handleValueChange}
+      ondblclick={handleDoubleClick}>
     </c-nsp_selection-box>
     <div if:true={visibility.Why_is_subaccount_needed__c}>
       <c-nsp_selection-box
@@ -250,7 +258,8 @@
         data-name="classing_req_a_new_download_for_Subacc__c"
         value={field.classing_req_a_new_download_for_Subacc__c}
         class={styles.classing_req_a_new_download_for_Subacc__c}
-        onchange={handleValueChange}>
+        onchange={handleValueChange}
+        ondblclick={handleDoubleClick}>
       </c-nsp_selection-box>
     </div>
     <template if:true={payFrequencyRecordIds.length}>
@@ -297,7 +306,8 @@
       record-type-id={recordTypeId}
       value={field.Work_week__c}
       data-name="Work_week__c"
-      onchange={handleValueChange}>
+      onchange={handleValueChange}
+      ondblclick={handleDoubleClick}>
     </c-nsp_selection-box>
 
     <c-nsp_selection-box
@@ -307,7 +317,8 @@
       record-type-id={recordTypeId}
       value={field.Holiday_or_weekend_rule__c}
       data-name="Holiday_or_weekend_rule__c"
-      onchange={handleValueChange}>
+      onchange={handleValueChange}
+      ondblclick={handleDoubleClick}>
     </c-nsp_selection-box>
 
     <c-nsp_selection-box
@@ -317,7 +328,8 @@
       record-type-id={recordTypeId}
       value={field.Where_to_mail_EE__c}
       data-name="Where_to_mail_EE__c"
-      onchange={handleValueChange}>
+      onchange={handleValueChange}
+      ondblclick={handleDoubleClick}>
     </c-nsp_selection-box>
     <template if:true={visibility.Provide_live_check_details__c}>
       <div class="slds-form-element__label">
@@ -345,7 +357,8 @@
       record-type-id={recordTypeId}
       value={field.NSP_co_employ_100_of_client_workforce__c}
       data-name="NSP_co_employ_100_of_client_workforce__c"
-      onchange={handleValueChange}>
+      onchange={handleValueChange}
+      ondblclick={handleDoubleClick}>
     </c-nsp_selection-box>
     <c-nsp_selection-box
       disabled={disabledFields.NSP_non_Insperity_paid_emps_contractors__c}
@@ -354,7 +367,8 @@
       record-type-id={recordTypeId}
       value={field.NSP_non_Insperity_paid_emps_contractors__c}
       data-name="NSP_non_Insperity_paid_emps_contractors__c"
-      onchange={handleValueChange}>
+      onchange={handleValueChange}
+      ondblclick={handleDoubleClick}>
     </c-nsp_selection-box>
     <template if:true={visibility.Provide_non_insperity_worker_details__c}>
       <div class="slds-form-element__label">
@@ -381,7 +395,8 @@
       record-type-id={recordTypeId}
       data-name="Client_have_any_EEs_on_F1_or_J1_Visa_s__c"
       value={field.Client_have_any_EEs_on_F1_or_J1_Visa_s__c}
-      onchange={handleValueChange}>
+      onchange={handleValueChange}
+      ondblclick={handleDoubleClick}>
     </c-nsp_selection-box>
 
     <c-nsp_employee-data
@@ -400,7 +415,8 @@
       record-type-id={recordTypeId}
       data-name="Client_have_any_Commission_only_EEs__c"
       value={field.Client_have_any_Commission_only_EEs__c}
-      onchange={handleValueChange}>
+      onchange={handleValueChange}
+      ondblclick={handleDoubleClick}>
     </c-nsp_selection-box>
     <c-nsp_selection-box
       disabled={disabledFields.Has_FLSA_team_approved__c}
@@ -411,7 +427,8 @@
       field-api-name="Implementation_Profile__c.Has_FLSA_team_approved__c"
       record-type-id={recordTypeId}
       value={field.Has_FLSA_team_approved__c}
-      onchange={handleValueChange}>
+      onchange={handleValueChange}
+      ondblclick={handleDoubleClick}>
     </c-nsp_selection-box>
     <c-nsp_selection-box
       disabled={disabledFields.Does_client_have_any_Minor_EEs__c}
@@ -420,7 +437,8 @@
       record-type-id={recordTypeId}
       data-name="Does_client_have_any_Minor_EEs__c"
       value={field.Does_client_have_any_Minor_EEs__c}
-      onchange={handleValueChange}>
+      onchange={handleValueChange}
+      ondblclick={handleDoubleClick}>
     </c-nsp_selection-box>
     <c-nsp_selection-box
       disabled={disabledFields.Client_have_will_have_any_Seasonal_EEs__c}
@@ -429,7 +447,8 @@
       record-type-id={recordTypeId}
       data-name="Client_have_will_have_any_Seasonal_EEs__c"
       value={field.Client_have_will_have_any_Seasonal_EEs__c}
-      onchange={handleValueChange}>
+      onchange={handleValueChange}
+      ondblclick={handleDoubleClick}>
     </c-nsp_selection-box>
     <c-nsp_selection-box
       disabled={disabledFields.Does_client_employ_ministers_or_teachers__c}
@@ -438,7 +457,8 @@
       record-type-id={recordTypeId}
       data-name="Does_client_employ_ministers_or_teachers__c"
       value={field.Does_client_employ_ministers_or_teachers__c}
-      onchange={handleValueChange}>
+      onchange={handleValueChange}
+      ondblclick={handleDoubleClick}>
     </c-nsp_selection-box>
     <c-nsp_selection-box
       disabled={disabledFields.Check_all_tht_apply_ministers_teachers__c}
@@ -460,7 +480,8 @@
       record-type-id={recordTypeId}
       data-name="Does_the_client_have_any_union_EEs__c"
       value={field.Does_the_client_have_any_union_EEs__c}
-      onchange={handleValueChange}>
+      onchange={handleValueChange}
+      ondblclick={handleDoubleClick}>
     </c-nsp_selection-box>
 
     <c-nsp_selection-box
@@ -482,7 +503,8 @@
       field-api-name="Implementation_Profile__c.Is_the_client_a_federal_contractor__c"
       record-type-id={recordTypeId}
       value={field.Is_the_client_a_federal_contractor__c}
-      onchange={handleValueChange}>
+      onchange={handleValueChange}
+      ondblclick={handleDoubleClick}>
     </c-nsp_selection-box>
 
     <c-nsp_selection-box
@@ -494,7 +516,8 @@
       record-type-id={recordTypeId}
       data-name="Client_has_Service_Contract_Act_SCA_EEs__c"
       value={field.Client_has_Service_Contract_Act_SCA_EEs__c}
-      onchange={handleValueChange}>
+      onchange={handleValueChange}
+      ondblclick={handleDoubleClick}>
     </c-nsp_selection-box>
     <!-- <div if:true={visibility.Client_has_Service_Contract_Act_SCA_EEs__c}> -->
     <template if:true={visibility.Client_has_Service_Contract_Act_SCA_EEs__c}>
@@ -507,7 +530,8 @@
         data-name="Have_the_SCA_EEs_been_approved__c"
         value={field.Have_the_SCA_EEs_been_approved__c}
         class={styles.Have_the_SCA_EEs_been_approved__c}
-        onchange={handleValueChange}>
+        onchange={handleValueChange}
+        ondblclick={handleDoubleClick}>
       </c-nsp_selection-box>
       <c-nsp_selection-box
         if:true={visibility.SCA_EEs_get_wages_in_lieu_of_benefits__c}
@@ -518,7 +542,8 @@
         data-name="SCA_EEs_get_wages_in_lieu_of_benefits__c"
         value={field.SCA_EEs_get_wages_in_lieu_of_benefits__c}
         class={styles.SCA_EEs_get_wages_in_lieu_of_benefits__c}
-        onchange={handleValueChange}>
+        onchange={handleValueChange}
+        ondblclick={handleDoubleClick}>
       </c-nsp_selection-box>
     </template>
 
@@ -542,7 +567,8 @@
       record-type-id={recordTypeId}
       data-name="Client_have_EEO_filing_under__c"
       value={field.Client_have_EEO_filing_under__c}
-      onchange={handleValueChange}>
+      onchange={handleValueChange}
+      ondblclick={handleDoubleClick}>
     </c-nsp_selection-box>
 
     <template if:true={visibility.Can_client_provide_EEO_filing_address__c}>
@@ -554,7 +580,8 @@
         record-type-id={recordTypeId}
         data-name="Can_client_provide_EEO_filing_address__c"
         value={field.Can_client_provide_EEO_filing_address__c}
-        onchange={handleValueChange}>
+        onchange={handleValueChange}
+        ondblclick={handleDoubleClick}>
       </c-nsp_selection-box>
       <div if:true={visibility.EEO__c}>
         <lightning-input-field
@@ -602,7 +629,8 @@
       record-type-id={recordTypeId}
       data-name="Do_any_EEs_have_garnishments__c"
       value={field.Do_any_EEs_have_garnishments__c}
-      onchange={handleValueChange}>
+      onchange={handleValueChange}
+      ondblclick={handleDoubleClick}>
     </c-nsp_selection-box>
 
     <c-nsp_employee-data
@@ -622,7 +650,8 @@
       record-type-id={recordTypeId}
       data-name="Do_any_EEs_have_tax_levies__c"
       value={field.Do_any_EEs_have_tax_levies__c}
-      onchange={handleValueChange}>
+      onchange={handleValueChange}
+      ondblclick={handleDoubleClick}>
     </c-nsp_selection-box>
 
     <c-nsp_employee-data
@@ -642,7 +671,8 @@
       record-type-id={recordTypeId}
       data-name="Past_employees_crntly_getting_severance__c"
       value={field.Past_employees_crntly_getting_severance__c}
-      onchange={handleValueChange}>
+      onchange={handleValueChange}
+      ondblclick={handleDoubleClick}>
     </c-nsp_selection-box>
     <template if:true={visibility.NSP_how_future_payment_will_be_done__c}>
       <div class="slds-form-element__label">
@@ -670,7 +700,8 @@
       class={styles.Has_expenses_allowances_through_payroll__c}
       data-name="Has_expenses_allowances_through_payroll__c"
       value={field.Has_expenses_allowances_through_payroll__c}
-      onchange={handleValueChange}>
+      onchange={handleValueChange}
+      ondblclick={handleDoubleClick}>
     </c-nsp_selection-box>
     <c-nsp_selection-box
       disabled={disabledFields.Client_runs_expenses_or_payroll__c}
@@ -734,7 +765,8 @@
       record-type-id={recordTypeId}
       value={field.Client_has_any_post_tax_deductions__c}
       data-name="Client_has_any_post_tax_deductions__c"
-      onchange={handleValueChange}>
+      onchange={handleValueChange}
+      ondblclick={handleDoubleClick}>
     </c-nsp_selection-box>
     <c-nsp_selection-box
       disabled={disabledFields.Expenses__c}
@@ -773,7 +805,8 @@
       record-type-id={recordTypeId}
       value={field.Client_has_any_special_payroll_needs__c}
       data-name="Client_has_any_special_payroll_needs__c"
-      onchange={handleValueChange}>
+      onchange={handleValueChange}
+      ondblclick={handleDoubleClick}>
     </c-nsp_selection-box>
     <c-nsp_selection-box
       disabled={disabledFields.Select_all_payroll_needs_that_apply__c}
@@ -796,7 +829,8 @@
       field-api-name="Implementation_Profile__c.NSP_Job_Costing__c"
       record-type-id={recordTypeId}
       value={field.NSP_Job_Costing__c}
-      onchange={handleValueChange}>
+      onchange={handleValueChange}
+      ondblclick={handleDoubleClick}>
     </c-nsp_selection-box>
     <c-nsp_selection-box
       disabled={disabledFields.NSP_Departments_Status__c}
@@ -807,7 +841,8 @@
       field-api-name="Implementation_Profile__c.NSP_Departments_Status__c"
       record-type-id={recordTypeId}
       value={field.NSP_Departments_Status__c}
-      onchange={handleValueChange}>
+      onchange={handleValueChange}
+      ondblclick={handleDoubleClick}>
     </c-nsp_selection-box>
     <c-nsp_selection-box
       disabled={disabledFields.NSP_Locations_Status__c}
@@ -818,7 +853,8 @@
       field-api-name="Implementation_Profile__c.NSP_Locations_Status__c"
       record-type-id={recordTypeId}
       value={field.NSP_Locations_Status__c}
-      onchange={handleValueChange}>
+      onchange={handleValueChange}
+      ondblclick={handleDoubleClick}>
     </c-nsp_selection-box>
     <c-nsp_selection-box
       disabled={disabledFields.NSP_IRR_Status__c}
@@ -829,7 +865,8 @@
       field-api-name="Implementation_Profile__c.NSP_IRR_Status__c"
       record-type-id={recordTypeId}
       value={field.NSP_IRR_Status__c}
-      onchange={handleValueChange}>
+      onchange={handleValueChange}
+      ondblclick={handleDoubleClick}>
     </c-nsp_selection-box>
     <c-nsp_selection-box
       disabled={disabledFields.NSP_Billing_Groups_Status__c}
@@ -840,7 +877,8 @@
       field-api-name="Implementation_Profile__c.NSP_Billing_Groups_Status__c"
       record-type-id={recordTypeId}
       value={field.NSP_Billing_Groups_Status__c}
-      onchange={handleValueChange}>
+      onchange={handleValueChange}
+      ondblclick={handleDoubleClick}>
     </c-nsp_selection-box>
     <template if:true={visibility.NSP_Provide_Details__c}>
       <div class="slds-form-element__label">
@@ -870,7 +908,8 @@
       field-api-name="Implementation_Profile__c.Has_sample_payroll_report_been_requsted__c"
       record-type-id={recordTypeId}
       value={field.Has_sample_payroll_report_been_requsted__c}
-      onchange={handleValueChange}>
+      onchange={handleValueChange}
+      ondblclick={handleDoubleClick}>
     </c-nsp_selection-box>
     <lightning-input-field
       disabled={disabledFields.NSP_Provide_details_around_reporting__c}
@@ -890,7 +929,7 @@
       record-type-id={recordTypeId}
       value={field.What_accounting_software_do_you_use__c}
       onchange={handleValueChange}
-      >
+      ondblclick={handleDoubleClick}>
     </c-nsp_selection-box>
     <c-nsp_selection-box
       disabled={disabledFields.Would_you_like_automation_general__c}
@@ -902,7 +941,7 @@
       record-type-id={recordTypeId}
       value={field.Would_you_like_automation_general__c}
       onchange={handleValueChange}
-      >
+      ondblclick={handleDoubleClick}>
     </c-nsp_selection-box>
     <c-nsp_selection-box
       disabled={disabledFields.Is_payroll_entry_itemized_or_simple__c}
@@ -914,7 +953,7 @@
       record-type-id={recordTypeId}
       value={field.Is_payroll_entry_itemized_or_simple__c}
       onchange={handleValueChange}
-      >
+      ondblclick={handleDoubleClick}>
     </c-nsp_selection-box>
     <lightning-formatted-text
       lwc:if={visibility.Is_payroll_entry_itemized_or_simple__c}
@@ -953,7 +992,8 @@
       field-api-name="Implementation_Profile__c.Does_this_client_have_an_AWW__c"
       record-type-id={recordTypeId}
       value={field.Does_this_client_have_an_AWW__c}
-      onchange={handleValueChange}>
+      onchange={handleValueChange}
+      ondblclick={handleDoubleClick}>
     </c-nsp_selection-box>
 
     <c-nsp_selection-box
@@ -965,7 +1005,8 @@
       field-api-name="Implementation_Profile__c.Is_client_CA_docs_submitted_for_approval__c"
       record-type-id={recordTypeId}
       value={field.Is_client_CA_docs_submitted_for_approval__c}
-      onchange={handleValueChange}>
+      onchange={handleValueChange}
+      ondblclick={handleDoubleClick}>
     </c-nsp_selection-box>
 
     <c-nsp_selection-box
@@ -975,7 +1016,8 @@
       record-type-id={recordTypeId}
       data-name="Client_does_business_in_MA_NY_or_VA__c"
       value={field.Client_does_business_in_MA_NY_or_VA__c}
-      onchange={handleValueChange}>
+      onchange={handleValueChange}
+      ondblclick={handleDoubleClick}>
     </c-nsp_selection-box>
     <c-nsp_selection-box
       disabled={disabledFields.NSP_Business_Meeting_States__c}
@@ -996,7 +1038,8 @@
       record-type-id={recordTypeId}
       data-name="Any_EEs_travel_internationally_for_work__c"
       value={field.Any_EEs_travel_internationally_for_work__c}
-      onchange={handleValueChange}>
+      onchange={handleValueChange}
+      ondblclick={handleDoubleClick}>
     </c-nsp_selection-box>
     <template if:true={visibility.Provide_EE_travel_details__c}>
       <div class="slds-form-element__label">
@@ -1034,7 +1077,8 @@
       record-type-id={recordTypeId}
       data-name="Client_interested_in_NSP_tracking_PTO__c"
       value={field.Client_interested_in_NSP_tracking_PTO__c}
-      onchange={handleValueChange}>
+      onchange={handleValueChange}
+      ondblclick={handleDoubleClick}>
     </c-nsp_selection-box>
     <c-nsp_selection-box
       disabled={disabledFields.NSP_Where_will_PTO_be_tracked__c}
@@ -1045,7 +1089,8 @@
       record-type-id={recordTypeId}
       value={field.NSP_Where_will_PTO_be_tracked__c}
       data-name="NSP_Where_will_PTO_be_tracked__c"
-      onchange={handleValueChange}>
+      onchange={handleValueChange}
+      ondblclick={handleDoubleClick}>
     </c-nsp_selection-box>
     <c-nsp_selection-box
       disabled={disabledFields.Client_interested_NSP_time_attendance__c}
@@ -1056,7 +1101,8 @@
       record-type-id={recordTypeId}
       value={field.Client_interested_NSP_time_attendance__c}
       data-name="Client_interested_NSP_time_attendance__c"
-      onchange={handleValueChange}>
+      onchange={handleValueChange}
+      ondblclick={handleDoubleClick}>
     </c-nsp_selection-box>
     <lightning-input-field
       disabled={disabledFields.NSP_Provide_Tracking_details__c}
@@ -1074,7 +1120,8 @@
       record-type-id={recordTypeId}
       value={field.Gave_copy_of_PTO_sick_leave_other_policy__c}
       data-name="Gave_copy_of_PTO_sick_leave_other_policy__c"
-      onchange={handleValueChange}>
+      onchange={handleValueChange}
+      ondblclick={handleDoubleClick}>
     </c-nsp_selection-box>
     <c-nsp_selection-box
       disabled={disabledFields.Does_client_have_plan_EE_no_of_work_hrs__c}
@@ -1083,7 +1130,8 @@
       record-type-id={recordTypeId}
       value={field.Does_client_have_plan_EE_no_of_work_hrs__c}
       data-name="Does_client_have_plan_EE_no_of_work_hrs__c"
-      onchange={handleValueChange}>
+      onchange={handleValueChange}
+      ondblclick={handleDoubleClick}>
     </c-nsp_selection-box>
     <c-nsp_selection-box
       disabled={disabledFields.Client_utilizing_Insperity_s_TimeStar__c}
@@ -1092,7 +1140,8 @@
       record-type-id={recordTypeId}
       value={field.Client_utilizing_Insperity_s_TimeStar__c}
       data-name="Client_utilizing_Insperity_s_TimeStar__c"
-      onchange={handleValueChange}>
+      onchange={handleValueChange}
+      ondblclick={handleDoubleClick}>
     </c-nsp_selection-box>
 
     <template if:true={visibility.How_is_client_needing_to_implement_ITA__c}>
@@ -1153,7 +1202,8 @@
       record-type-id={recordTypeId}
       value={field.Does_client_want_NSP_to_track_hours_and__c}
       data-name="Does_client_want_NSP_to_track_hours_and__c"
-      onchange={handleValueChange}>
+      onchange={handleValueChange}
+      ondblclick={handleDoubleClick}>
     </c-nsp_selection-box>
     <div if:true={visibility.Will_all_EEs_use_ITA__c}>
       <c-nsp_selection-box
@@ -1164,7 +1214,8 @@
         record-type-id={recordTypeId}
         value={field.Will_all_EEs_use_ITA__c}
         data-name="Will_all_EEs_use_ITA__c"
-        onchange={handleValueChange}>
+        onchange={handleValueChange}
+        ondblclick={handleDoubleClick}>
       </c-nsp_selection-box>
 
       <template
@@ -1245,7 +1296,8 @@
       record-type-id={recordTypeId}
       value={field.NSP_Client_s_holiday_calendar__c}
       data-name="NSP_Client_s_holiday_calendar__c"
-      onchange={handleValueChange}>
+      onchange={handleValueChange}
+      ondblclick={handleDoubleClick}>
     </c-nsp_selection-box>
     <div if:true={visibility.Does_client_offer_paid_holidays__c}>
       <c-nsp_selection-box
@@ -1256,7 +1308,8 @@
         record-type-id={recordTypeId}
         value={field.Does_client_offer_paid_holidays__c}
         data-name="Does_client_offer_paid_holidays__c"
-        onchange={handleValueChange}>
+        onchange={handleValueChange}
+        ondblclick={handleDoubleClick}>
       </c-nsp_selection-box>
       <div if:true={visibility.Are_all_EEs_eligible_for_paid_holidays__c}>
         <c-nsp_selection-box
@@ -1267,7 +1320,8 @@
           record-type-id={recordTypeId}
           value={field.Are_all_EEs_eligible_for_paid_holidays__c}
           data-name="Are_all_EEs_eligible_for_paid_holidays__c"
-          onchange={handleValueChange}>
+          onchange={handleValueChange}
+          ondblclick={handleDoubleClick}>
         </c-nsp_selection-box>
         <div if:true={visibility.NSP_Any_EEs_work_on_holidays__c}>
           <c-nsp_selection-box
@@ -1278,7 +1332,8 @@
             record-type-id={recordTypeId}
             value={field.NSP_Any_EEs_work_on_holidays__c}
             data-name="NSP_Any_EEs_work_on_holidays__c"
-            onchange={handleValueChange}>
+            onchange={handleValueChange}
+            ondblclick={handleDoubleClick}>
           </c-nsp_selection-box>
           <div if:true={visibility.NSP_If_EE_works_holiday_are_paid_prem__c}>
             <c-nsp_selection-box
@@ -1289,7 +1344,8 @@
               record-type-id={recordTypeId}
               value={field.NSP_If_EE_works_holiday_are_paid_prem__c}
               data-name="NSP_If_EE_works_holiday_are_paid_prem__c"
-              onchange={handleValueChange}>
+              onchange={handleValueChange}
+              ondblclick={handleDoubleClick}>
             </c-nsp_selection-box>
           </div>
         </div>
@@ -1304,7 +1360,8 @@
       record-type-id={recordTypeId}
       value={field.Does_client_offer_floating_holidays__c}
       data-name="Does_client_offer_floating_holidays__c"
-      onchange={handleValueChange}>
+      onchange={handleValueChange}
+      ondblclick={handleDoubleClick}>
     </c-nsp_selection-box>
     <div if:true={visibility.Does_client_have_premium_pay_needs__c}>
       <c-nsp_selection-box
@@ -1315,7 +1372,8 @@
         record-type-id={recordTypeId}
         value={field.Does_client_have_premium_pay_needs__c}
         data-name="Does_client_have_premium_pay_needs__c"
-        onchange={handleValueChange}>
+        onchange={handleValueChange}
+        ondblclick={handleDoubleClick}>
       </c-nsp_selection-box>
       <div if:true={visibility.Select_all_premium_pay_needs_that_apply__c}>
         <c-nsp_selection-box
@@ -1341,7 +1399,8 @@
         record-type-id={recordTypeId}
         value={field.EEs_to_punch_in_out_or_use_timesheet__c}
         data-name="EEs_to_punch_in_out_or_use_timesheet__c"
-        onchange={handleValueChange}>
+        onchange={handleValueChange}
+        ondblclick={handleDoubleClick}>
       </c-nsp_selection-box>
       <div if:true={visibility.NSP_How_will_EEs_punch_in_out__c}>
         <c-nsp_selection-box
@@ -1366,7 +1425,8 @@
             record-type-id={recordTypeId}
             value={field.NSP_Has_hardware_been_ordered__c}
             data-name="NSP_Has_hardware_been_ordered__c"
-            onchange={handleValueChange}>
+            onchange={handleValueChange}
+            ondblclick={handleDoubleClick}>
           </c-nsp_selection-box>
           </div>
           <div if:true={visibility.Who_will_enter_time_worked__c}>
@@ -1378,7 +1438,8 @@
               record-type-id={recordTypeId}
               value={field.Who_will_enter_time_worked__c}
               data-name="Who_will_enter_time_worked__c"
-              onchange={handleValueChange}>
+              onchange={handleValueChange}
+              ondblclick={handleDoubleClick}>
             </c-nsp_selection-box>
           </div>
         </div>
@@ -1444,7 +1505,8 @@
       record-type-id={recordTypeId}
       value={field.NSP_Prepop_Timecards_w_Stndrd_hrs__c}
       data-name="NSP_Prepop_Timecards_w_Stndrd_hrs__c"
-      onchange={handleValueChange}>
+      onchange={handleValueChange}
+      ondblclick={handleDoubleClick}>
     </c-nsp_selection-box>
     <c-nsp_selection-box
       if:true={visibility.Does_client_require_job_costing__c}
@@ -1467,7 +1529,8 @@
       record-type-id={recordTypeId}
       value={field.Does_EDC_have_supervisors_and_work_email__c}
       data-name="Does_EDC_have_supervisors_and_work_email__c"
-      onchange={handleValueChange}>
+      onchange={handleValueChange}
+      ondblclick={handleDoubleClick}>
     </c-nsp_selection-box>
     <c-nsp_selection-box
       if:true={visibility.Day_one_start__c}
@@ -1478,7 +1541,8 @@
       record-type-id={recordTypeId}
       value={field.Day_one_start__c}
       data-name="Day_one_start__c"
-      onchange={handleValueChange}>
+      onchange={handleValueChange}
+      ondblclick={handleDoubleClick}>
     </c-nsp_selection-box>
 
     <c-nsp_selection-box
@@ -1488,7 +1552,8 @@
       record-type-id={recordTypeId}
       value={field.Has_form_8973_been_discussed__c}
       data-name="Has_form_8973_been_discussed__c"
-      onchange={handleValueChange}>
+      onchange={handleValueChange}
+      ondblclick={handleDoubleClick}>
     </c-nsp_selection-box>
     <template if:true={visibility.Form_8973_Contact__c}>
       <lightning-input-field
@@ -1515,7 +1580,8 @@
       field-api-name="Implementation_Profile__c.Arbitration_Agreement_been_discussed__c"
       record-type-id={recordTypeId}
       value={field.Arbitration_Agreement_been_discussed__c}
-      onchange={handleValueChange}>
+      onchange={handleValueChange}
+      ondblclick={handleDoubleClick}>
     </c-nsp_selection-box>
     <lightning-input-field
       disabled={disabledFields.Payroll_Notes__c}

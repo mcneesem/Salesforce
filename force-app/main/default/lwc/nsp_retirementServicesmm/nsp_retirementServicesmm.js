@@ -27,6 +27,7 @@ export default class Nsp_retirementServicesmm extends LightningElement {
   @track field = {};
   @track visibility = {};
   @track styles = getFieldStylesByHierarchy(DYNAMIC_FIELDS);
+  isDoubleClick = false;
   @track state = {
     isLoadingFirstTime: true,
   };
@@ -71,6 +72,10 @@ export default class Nsp_retirementServicesmm extends LightningElement {
       this.field[fieldName] = isMultiSelectCheckbox(target)
         ? value.join(';')
         : value;
+      if(this.isDoubleClick){
+        this.field[fieldName] = null;
+        this.isDoubleClick = false;
+      }
       this.updateDependentFieldVisibility(fieldName, value);
       this.addStyleToAnsweredQuestion(target, value);
       this.removeValuesFromHiddenFields(fieldName, value);
@@ -232,5 +237,9 @@ export default class Nsp_retirementServicesmm extends LightningElement {
 
   get checkIfIpisActive(){
     return this.userData?.Profile?.displayValue !== LABELS.SYSTEM_ADMIN && this.fieldValues && this.fieldValues?.NSP_Inactive__c?.value
+  }
+  handleDoubleClick({ detail, target }){
+    this.isDoubleClick = true;
+    this.handleValueChange({ detail: detail, target: target });
   }
 }

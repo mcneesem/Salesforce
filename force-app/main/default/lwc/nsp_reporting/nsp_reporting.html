@@ -55,7 +55,8 @@
       record-type-id={recordTypeId}
       value={field.Is_there_a_need_for_a_GL_interface__c}
       data-name="Is_there_a_need_for_a_GL_interface__c"
-      onchange={handleValueChange}>
+      onchange={handleValueChange}
+      ondblclick={handleDoubleClick}>
     </c-nsp_selection-box>
 
     <template if:true={visibility.NSP_Chart_of_Accounts_GL_codes__c}>
@@ -67,7 +68,8 @@
         value={field.NSP_Chart_of_Accounts_GL_codes__c}
         data-name="NSP_Chart_of_Accounts_GL_codes__c"
         class={styles.NSP_Chart_of_Accounts_GL_codes__c}
-        onchange={handleValueChange}>
+        onchange={handleValueChange}
+        ondblclick={handleDoubleClick}>
       </c-nsp_selection-box>
 
       <c-nsp_selection-box
@@ -78,7 +80,8 @@
         value={field.NSP_Sample_of_current_GL_report__c}
         data-name="NSP_Sample_of_current_GL_report__c"
         class={styles.NSP_Sample_of_current_GL_report__c}
-        onchange={handleValueChange}>
+        onchange={handleValueChange}
+        ondblclick={handleDoubleClick}>
       </c-nsp_selection-box>
     </template>
     <c-nsp_selection-box
@@ -89,7 +92,8 @@
         value={field.Is_there_a_need_for_Integra__c}
         data-name="Is_there_a_need_for_Integra__c"
         class={styles.Is_there_a_need_for_Integra__c}
-        onchange={handleValueChange}>
+        onchange={handleValueChange}
+        ondblclick={handleDoubleClick}>
     </c-nsp_selection-box>
     <c-nsp_selection-box
       disabled={disabledFields.What_QuickBooks_version_do_you_use__c}
@@ -100,7 +104,8 @@
       field-api-name="Implementation_Profile__c.What_QuickBooks_version_do_you_use__c"
       record-type-id={recordTypeId}
       value={field.What_QuickBooks_version_do_you_use__c}
-      onchange={handleValueChange}>
+      onchange={handleValueChange}
+      ondblclick={handleDoubleClick}>
     </c-nsp_selection-box>
     <c-nsp_selection-box
       disabled={disabledFields.Needed_payroll_entry_allocation__c}
@@ -124,7 +129,8 @@
       record-type-id={recordTypeId}
       value={field.Do_you_need_to_allocate_costs__c}
       onchange={handleValueChange}
-      help-text={label.Doyouneedtoallocatehelptext}>
+      help-text={label.Doyouneedtoallocatehelptext}
+      ondblclick={handleDoubleClick}>
     </c-nsp_selection-box>
     <div>
       <c-nsp_selection-box
@@ -136,7 +142,8 @@
         field-api-name="Implementation_Profile__c.Do_you_require_more_than_3_job_cost__c"
         record-type-id={recordTypeId}
         value={field.Do_you_require_more_than_3_job_cost__c}
-        onchange={handleValueChange}>
+        onchange={handleValueChange}
+        ondblclick={handleDoubleClick}>
       </c-nsp_selection-box>
       <div>
         <lightning-formatted-text
@@ -164,7 +171,8 @@
         field-api-name="Implementation_Profile__c.Do_you_have_a_recent_journal_entry__c"
         record-type-id={recordTypeId}
         value={field.Do_you_have_a_recent_journal_entry__c}
-        onchange={handleValueChange}>
+        onchange={handleValueChange}
+        ondblclick={handleDoubleClick}>
       </c-nsp_selection-box>
       <lightning-formatted-text
           lwc:if={visibility.showJournalMessage}

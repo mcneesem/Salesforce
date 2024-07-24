@@ -18,7 +18,8 @@
       value={field.NSP_Is_there_an_Enrollment_fee__c}
       record-type-id={recordTypeId}
       data-name="NSP_Is_there_an_Enrollment_fee__c"
-      onchange={handleValueChange}>
+      onchange={handleValueChange}
+      ondblclick={handleDoubleClick}>
     </c-nsp_selection-box>
 
     <div if:true={visibility.NSP_Provide_Details_Enrollment_fee__c}>

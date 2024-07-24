@@ -15,7 +15,8 @@
         record-type-id={recordTypeId}
         data-name="Does_the_client_have_any_union_EEs__c"
         value={field.Does_the_client_have_any_union_EEs__c}
-        onchange={handleValueChange}>
+        onchange={handleValueChange}
+        ondblclick={handleDoubleClick}>
       </c-nsp_selection-box>
       <c-nsp_selection-box
         disabled={disabledFields.Client_union_EE_Check_all_that_Apply__c}
@@ -47,7 +48,8 @@
         record-type-id={recordTypeId}
         data-name="NSP_Any_employee_with_temporary_status__c"
         value={field.NSP_Any_employee_with_temporary_status__c}
-        onchange={handleValueChange}>
+        onchange={handleValueChange}
+        ondblclick={handleDoubleClick}>
       </c-nsp_selection-box>
 
       <lightning-formatted-text
@@ -62,7 +64,8 @@
         record-type-id={recordTypeId}
         data-name="Does_client_have_any_Minor_EEs__c"
         value={field.Does_client_have_any_Minor_EEs__c}
-        onchange={handleValueChange}>
+        onchange={handleValueChange}
+        ondblclick={handleDoubleClick}>
       </c-nsp_selection-box>
       <c-nsp_selection-box
         disabled={disabledFields.Client_have_will_have_any_Seasonal_EEs__c}
@@ -71,7 +74,8 @@
         record-type-id={recordTypeId}
         data-name="Client_have_will_have_any_Seasonal_EEs__c"
         value={field.Client_have_will_have_any_Seasonal_EEs__c}
-        onchange={handleValueChange}>
+        onchange={handleValueChange}
+        ondblclick={handleDoubleClick}>
       </c-nsp_selection-box>
       <c-nsp_selection-box
         disabled={disabledFields.Does_client_employ_ministers_or_teachers__c}
@@ -80,7 +84,8 @@
         record-type-id={recordTypeId}
         data-name="Does_client_employ_ministers_or_teachers__c"
         value={field.Does_client_employ_ministers_or_teachers__c}
-        onchange={handleValueChange}>
+        onchange={handleValueChange}
+        ondblclick={handleDoubleClick}>
       </c-nsp_selection-box>
       <c-nsp_selection-box
         disabled={disabledFields.Check_all_tht_apply_ministers_teachers__c}
@@ -101,7 +106,8 @@
         record-type-id={recordTypeId}
         data-name="NSP_non_Insperity_paid_emps_contractors__c"
         value={field.NSP_non_Insperity_paid_emps_contractors__c}
-        onchange={handleValueChange}>
+        onchange={handleValueChange}
+        ondblclick={handleDoubleClick}>
       </c-nsp_selection-box>
       <lightning-input-field
         value={field.Provide_non_insperity_worker_details__c}
@@ -119,7 +125,8 @@
         record-type-id={recordTypeId}
         data-name="Any_EEs_travel_internationally_for_work__c"
         value={field.Any_EEs_travel_internationally_for_work__c}
-        onchange={handleValueChange}>
+        onchange={handleValueChange}
+        ondblclick={handleDoubleClick}>
       </c-nsp_selection-box>
 
       <template if:true={visibility.Provide_EE_travel_details__c}>
@@ -145,7 +152,8 @@
         data-name="What_is_client_s_ABCP__c"
         value={field.What_is_client_s_ABCP__c}
         class={styles.What_is_client_s_ABCP__c}
-        onchange={handleValueChange}>
+        onchange={handleValueChange}
+        ondblclick={handleDoubleClick}>
       </c-nsp_selection-box>
       <c-nsp_selection-box
         disabled={disabledFields.Are_there_any_EEs_on_Leave_of_Absence__c}
@@ -154,7 +162,8 @@
         record-type-id={recordTypeId}
         data-name="Are_there_any_EEs_on_Leave_of_Absence__c"
         value={field.Are_there_any_EEs_on_Leave_of_Absence__c}
-        onchange={handleValueChange}>
+        onchange={handleValueChange}
+        ondblclick={handleDoubleClick}>
       </c-nsp_selection-box>
       <div
         if:true={visibility.Do_you_have_the_LOA_information__c}
@@ -190,7 +199,8 @@
         record-type-id={recordTypeId}
         data-name="Told_EE_ineligble_for_active_at_work_ben__c"
         value={field.Told_EE_ineligble_for_active_at_work_ben__c}
-        onchange={handleValueChange}>
+        onchange={handleValueChange}
+        ondblclick={handleDoubleClick}>
       </c-nsp_selection-box>
       <lightning-input-field
         value={field.How_will_EE_complete_their_enrollment__c}
@@ -208,7 +218,8 @@
         record-type-id={recordTypeId}
         data-name="NSP_Any_active_severance_agreement__c"
         value={field.NSP_Any_active_severance_agreement__c}
-        onchange={handleValueChange}>
+        onchange={handleValueChange}
+        ondblclick={handleDoubleClick}>
       </c-nsp_selection-box>
       <template if:true={visibility.NSP_how_future_payment_will_be_done__c}>
         <div class="slds-form-element__label">
@@ -236,7 +247,8 @@
         record-type-id={recordTypeId}
         data-name="remove_employee_directory_from_premier__c"
         value={field.remove_employee_directory_from_premier__c}
-        onchange={handleValueChange}>
+        onchange={handleValueChange}
+        ondblclick={handleDoubleClick}>
       </c-nsp_selection-box>
       <lightning-input-field
         value={field.NSP_Employee_Notes__c}

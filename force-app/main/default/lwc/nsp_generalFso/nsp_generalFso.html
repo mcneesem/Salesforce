@@ -29,7 +29,8 @@
     record-type-id={recordTypeId}
     value={field.Is_the_client_coming_from_another_PEO__c}
     data-name="Is_the_client_coming_from_another_PEO__c"
-    onchange={handleValueChange}>
+    onchange={handleValueChange}
+    ondblclick={handleDoubleClick}>
   </c-nsp_selection-box>
 
   <lightning-input-field disabled={disabledFields.PEO_Name__c}
@@ -60,7 +61,8 @@
     field-api-name="Implementation_Profile__c.Implementing_biz_Performance_solutions__c"
     record-type-id={recordTypeId}
     value={field.Implementing_biz_Performance_solutions__c}
-    onchange={handleValueChange}>
+    onchange={handleValueChange}
+    ondblclick={handleDoubleClick}>
   </c-nsp_selection-box>
 
   <c-nsp_selection-box
@@ -142,7 +144,8 @@
     field-api-name="Implementation_Profile__c.Time_Entry_Method__c"
     record-type-id={recordTypeId}
     value={field.Time_Entry_Method__c}
-    onchange={handleValueChange}>
+    onchange={handleValueChange}
+    ondblclick={handleDoubleClick}>
   </c-nsp_selection-box>
 
   <c-nsp_selection-box
@@ -190,7 +193,8 @@
       value={field.Hush_Protocol__c}
       data-name="Hush_Protocol__c"
       class={styles.Hush_Protocol__c}
-      onchange={handleValueChange}>
+      onchange={handleValueChange}
+      ondblclick={handleDoubleClick}>
     </c-nsp_selection-box>
 
   <c-nsp_selection-box
@@ -200,7 +204,8 @@
     record-type-id={recordTypeId}
     value={field.Will_the_BPA_s_Be_attending_the_SKO__c}
     data-name="Will_the_BPA_s_Be_attending_the_SKO__c"
-    onchange={handleValueChange}>
+    onchange={handleValueChange}
+    ondblclick={handleDoubleClick}>
   </c-nsp_selection-box>
 
   <c-nsp_selection-box
@@ -210,7 +215,8 @@
     field-api-name="Implementation_Profile__c.NSP_Has_the_client_s_logo_been_collected__c"
     record-type-id={recordTypeId}
     value={field.NSP_Has_the_client_s_logo_been_collected__c}
-    onchange={handleValueChange}>
+    onchange={handleValueChange}
+    ondblclick={handleDoubleClick}>
   </c-nsp_selection-box>
 
   <c-nsp_selection-box
@@ -220,7 +226,8 @@
     record-type-id={recordTypeId}
     value={field.remove_employee_directory_from_premier__c}
     data-name="remove_employee_directory_from_premier__c"
-    onchange={handleValueChange}>
+    onchange={handleValueChange}
+    ondblclick={handleDoubleClick}>
   </c-nsp_selection-box>
 
   <lightning-input-field value={field.Business_Inception_Date__c}
@@ -259,7 +266,8 @@
     field-api-name="Implementation_Profile__c.Has_FEIN_documentation_been_collected__c"
     record-type-id={recordTypeId}
     value={field.Has_FEIN_documentation_been_collected__c}
-    onchange={handleValueChange}>
+    onchange={handleValueChange}
+    ondblclick={handleDoubleClick}>
   </c-nsp_selection-box>
 
   <c-nsp_selection-box
@@ -269,7 +277,8 @@
     field-api-name="Implementation_Profile__c.All_EEs_paid_under_same_FEIN_currently__c"
     record-type-id={recordTypeId}
     value={field.All_EEs_paid_under_same_FEIN_currently__c}
-    onchange={handleValueChange}>
+    onchange={handleValueChange}
+    ondblclick={handleDoubleClick}>
   </c-nsp_selection-box>
 
   <lightning-input-field value={field.List_additional_FEIN_s__c}
@@ -305,7 +314,8 @@
     field-api-name="Implementation_Profile__c.SUI_Tax_rate_notice_s_collected__c"
     value={field.SUI_Tax_rate_notice_s_collected__c}
     record-type-id={recordTypeId}
-    onchange={handleValueChange}>
+    onchange={handleValueChange}
+    ondblclick={handleDoubleClick}>
   </c-nsp_selection-box>
 
   <c-nsp_selection-box
@@ -315,7 +325,8 @@
     field-api-name="Implementation_Profile__c.Gotten_Cvrg_Cert_Gen_Liability_Auto__c"
     value={field.Gotten_Cvrg_Cert_Gen_Liability_Auto__c}
     record-type-id={recordTypeId}
-    onchange={handleValueChange}>
+    onchange={handleValueChange}
+    ondblclick={handleDoubleClick}>
   </c-nsp_selection-box>
 
   <template
@@ -346,7 +357,8 @@
     value={field.Recent_Payroll_Register_Collected__c}
     record-type-id={recordTypeId}
     data-name="Recent_Payroll_Register_Collected__c"
-    onchange={handleValueChange}>
+    onchange={handleValueChange}
+    ondblclick={handleDoubleClick}>
   </c-nsp_selection-box>
 
   <c-nsp_selection-box
@@ -357,7 +369,8 @@
     value={field.Employee_Data_Collection_EDC_collected__c}
     record-type-id={recordTypeId}
     class={styles.Employee_Data_Collection_EDC_collected__c}
-    onchange={handleValueChange}>
+    onchange={handleValueChange}
+    ondblclick={handleDoubleClick}>
   </c-nsp_selection-box>
 
   <div class={styles.Provide_deadline_date__c}>    
@@ -379,7 +392,8 @@
     value={field.Will_the_owner_s_be_on_payroll__c}
     record-type-id={recordTypeId}
     data-name="Will_the_owner_s_be_on_payroll__c"
-    onchange={handleValueChange}>
+    onchange={handleValueChange}
+    ondblclick={handleDoubleClick}>
   </c-nsp_selection-box>
 
   <template if:true={visibility.Sole_Proprietorship_or_partnership__c}>
@@ -391,7 +405,8 @@
       value={field.Sole_Proprietorship_or_partnership__c}
       class={styles.Sole_Proprietorship_or_partnership__c}
       record-type-id={recordTypeId}
-      onchange={handleValueChange}>
+      onchange={handleValueChange}
+      ondblclick={handleDoubleClick}>
     </c-nsp_selection-box>
 
     <c-nsp_selection-box
@@ -403,7 +418,8 @@
       value={field.Owner_aware_they_will_not_get_W2_wages__c}
       class={styles.Owner_aware_they_will_not_get_W2_wages__c}
       record-type-id={recordTypeId}
-      onchange={handleValueChange}>
+      onchange={handleValueChange}
+      ondblclick={handleDoubleClick}>
     </c-nsp_selection-box>
   </template>
 
@@ -416,7 +432,8 @@
     record-type-id={recordTypeId}
     class={styles.Owner_not_on_payroll_addendum_collected__c}
     data-name="Owner_not_on_payroll_addendum_collected__c"
-    onchange={handleValueChange}>
+    onchange={handleValueChange}
+    ondblclick={handleDoubleClick}>
   </c-nsp_selection-box>
 
   <c-nsp_selection-box
@@ -428,7 +445,8 @@
     value={field.Client_entity_owned_or_a_non_profit__c}
     class={styles.Client_entity_owned_or_a_non_profit__c}
     record-type-id={recordTypeId}
-    onchange={handleValueChange}>
+    onchange={handleValueChange}
+    ondblclick={handleDoubleClick}>
   </c-nsp_selection-box>
 
   <c-nsp_selection-box
@@ -439,7 +457,8 @@
     value={field.NSP_How_will_the_payroll_be_funded__c}
     class={styles.NSP_How_will_the_payroll_be_funded__c}
     record-type-id={recordTypeId}
-    onchange={handleValueChange}>
+    onchange={handleValueChange}
+    ondblclick={handleDoubleClick}>
   </c-nsp_selection-box>
 
   <c-nsp_selection-box
@@ -450,7 +469,8 @@
     value={field.Chngs_for_cafeteria_plan_questionnaire__c}
     class={styles.Chngs_for_cafeteria_plan_questionnaire__c}
     record-type-id={recordTypeId}
-    onchange={handleValueChange}>
+    onchange={handleValueChange}
+    ondblclick={handleDoubleClick}>
   </c-nsp_selection-box>
   <lightning-input-field 
     value={field.List_change_s__c}
@@ -470,7 +490,8 @@
     value={field.Client_part_of_entity_w_o_NSP__c}
     class={styles.Client_part_of_entity_w_o_NSP__c}
     record-type-id={recordTypeId}
-    onchange={handleValueChange}>
+    onchange={handleValueChange}
+    ondblclick={handleDoubleClick}>
   </c-nsp_selection-box>
 
   <lightning-input-field 
