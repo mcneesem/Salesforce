@@ -558,6 +558,8 @@ public class NSP_ProjectTasksTriggerHelper {
                         || ( accTeam.NSP_Role__c == 'Client Liaison' )
                         || ( accTeam.NSP_Role__c == 'Manager, HR Services' )
                         || ( accTeam.NSP_Role__c == 'Business Performance Advisor' )
+                        || ( accTeam.NSP_Role__c == 'Bus. Team-HRSp/CL' ) 
+                        || ( accTeam.NSP_Role__c == 'MidMarket Account Exec' )
                         )
                     {
                         mailBody += accTeam.NSP_Role__c + ': ' +accTeam.NSP_First_Name__c+' '+accTeam.NSP_Last_Name__c+'<br/>';
