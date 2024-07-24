@@ -1816,13 +1816,15 @@ Implementation profile related to the account of the created asset
     // Params: List<Asset> assetList
     // ********************************************************************************************
     public static void updateServiceSegmentOnAccount( Set<Id> accountIdSet ) {
-
-    List<Account> accountToUpdateList = new List<Account>();
-    Map<Id, Asset> accIdAssetMap = new Map<Id, Asset>();
-    List<String> assetStatusList = new List<String>{NSP_ServiceConstants.ASSETBLACKOUT, NSP_ServiceConstants.TERMINATED};
+        List<Account> accountToUpdateList = new List<Account>();
+        Map<Id,Asset> accIdAssetMap = new Map<Id,Asset>();
+        List<String> assetStatusList = new List<String>{
+            NSP_ServiceConstants.ASSETBLACKOUT ,
+            NSP_ServiceConstants.TERMINATED
+        };
         Set<Id> assetRecordTypeIdSet = new Set<Id>{WOAssetRecordTypeId, wxWaAssetRecordTypeId};
 
-        try{
+        try {
             if(!accountIdSet.isEmpty()){
                     for(Asset assetRec:  [SELECT Id, AccountId,
                                           RecordTypeId,
@@ -1842,13 +1844,14 @@ Implementation profile related to the account of the created asset
 
                                           }
 
+                    Boolean switchEnabled = AssetTriggerSettings__c.getInstance( UserInfo.getUserId() ).IsAccountServiceSegmentCheckEnabled__c;
                     if(!accIdAssetMap.isEmpty()){
                         for(Account acc : [SELECT Id, NSP_Service_Segment__c FROM Account WHERE Id IN: accIdAssetMap.keySet()]){
                             acc.NSP_Service_Segment__c = accIdAssetMap.get(acc.Id).recordTypeId == woAssetRecordTypeId ? accIdAssetMap.get(acc.Id).NSP_Client_Segment_type__c :
                             accIdAssetMap.get(acc.Id).NSP_Product_Segment__c;
                             accountToUpdateList.add(acc);
                         }
-                    }else{
+                    } else if( switchEnabled ) {
                         for(Account acc : [SELECT Id, NSP_Service_Segment__c FROM Account WHERE Id IN: accountIdSet]){
                             acc.NSP_Service_Segment__c = NSP_ServiceConstants.EMPTY_STRING;
                             accountToUpdateList.add(acc);
