@@ -264,6 +264,7 @@ private class NSP_ProjectTriggerHelperTest {
     private static void updateProjectNameWithAccountTest(){
         //creating Project
         pse__Proj__c project = (pse__Proj__c)NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c(), 'NSP_TestDataFactory.ProjectDefaults', false);
+        project.TemplateName__c = 'Test Template';
         project.Templates_Used__c = 'TEMP USED';
         project.RecordTypeId = peoProjectRecordType;
         project.pse__Start_Date__c = Date.today();
@@ -281,7 +282,7 @@ private class NSP_ProjectTriggerHelperTest {
         pse__Proj__c updatedProj = Database.query(queryProj);
 
         //checking the name of project other than BPS RecordType: Negative scenario
-        System.assertEquals(null + ' - ' +Date.today().month()+'.'+Date.today().day()+'.'+Date.today().year()+' - ' + accountRec.Name , updatedProj.Name, 'project name updated with start date and account name ');
+        System.assertEquals('Test Template' + ' - ' +Date.today().month()+'.'+Date.today().day()+'.'+Date.today().year()+' - ' + accountRec.Name , updatedProj.Name, 'project name updated with start date and account name ');
     }
 
     /***********************************************************************************************
@@ -345,6 +346,7 @@ private class NSP_ProjectTriggerHelperTest {
         Account oAccount = [Select Id, Name from Account WHERE Name = 'Test Account 01' LIMIT 1];
         //crating Project
         pse__Proj__c project = (pse__Proj__c)NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c(), 'NSP_TestDataFactory.ProjectDefaults', false);
+        project.TemplateName__c = 'Test Template';
         project.Templates_Used__c = 'TEMP USED';
         project.RecordTypeId = peoProjectRecordType;
         project.pse__Start_Date__c = Date.today();
@@ -359,7 +361,7 @@ private class NSP_ProjectTriggerHelperTest {
                             .addFilter('Id', project.id).addLimit(1).build();
         pse__Proj__c updatedProj = Database.query(queryProj);
 
-       System.assertEquals(null + ' - ' +Date.today().month()+'.'+Date.today().day()+'.'+Date.today().year() + ' - '+oAccount.Name, updatedProj.Name, 'project name updated with start date');
+       System.assertEquals('Test Template' + ' - ' +Date.today().month()+'.'+Date.today().day()+'.'+Date.today().year() + ' - '+oAccount.Name, updatedProj.Name, 'project name updated with start date');
 
     }
     
