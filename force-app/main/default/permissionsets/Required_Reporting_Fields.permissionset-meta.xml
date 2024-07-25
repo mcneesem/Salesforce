@@ -8,6 +8,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Account.Google_News__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.Google_Search__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Account.Has_Financial_Info__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -78,6 +88,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Contact.Engagement_Score__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Contact.Most_Recent_Activity_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -104,6 +119,16 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Lead.Account_Assignment_Method__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Lead.Engagement_Score__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Lead.Marketing_Priority__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
