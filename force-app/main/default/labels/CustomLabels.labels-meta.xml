@@ -206,6 +206,20 @@
         <value>-22;-28</value>
     </labels>
     <labels>
+        <fullName>Eloqua_Integration_User_Id</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Eloqua Integration User Id</shortDescription>
+        <value>0054x0000057QWJAA2</value>
+    </labels>
+    <labels>
+        <fullName>Eloqua_Lead_Marketing_Priority</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Eloqua Lead Marketing Priority</shortDescription>
+        <value>High - Event,General</value>
+    </labels>
+    <labels>
         <fullName>ErrorMessageWhenPrimaryResourceAlreadyExist</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -6049,6 +6063,13 @@ Climate Plus: https://nexus.insperity.com/groups/38605/posts/3272612-climate-plu
         <protected>false</protected>
         <shortDescription>Organizational Planning Imp Timeline</shortDescription>
         <value>Organizational Planning Implementation Timeline</value>
+    </labels>
+    <labels>
+        <fullName>Outbound_Team_DeveloperName</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Outbound Team DeveloperName</shortDescription>
+        <value>Outbound_Team</value>
     </labels>
     <labels>
         <fullName>PDSSyncedMessage</fullName>
