@@ -791,6 +791,16 @@
                 <identifier>RecordLastCURequestDateField</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Engagement_Score__c</fieldItem>
+                <identifier>RecordEngagement_Score_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-b3cde2de-7de8-45dc-bd7d-016ccab360d7</name>
         <type>Facet</type>
     </flexiPageRegions>
