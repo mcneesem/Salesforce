@@ -368,6 +368,8 @@ public class NSP_ProjectTasksTriggerHelper {
         List<String> peoTerminationTeamRoles = System.Label.PEO_Termination_Team_Roles.split(';');
         List<String> peoTerminationTaskList = System.Label.PEO_Termination_Tasks.split(';');
         String WRITTENTERMINATION = null;
+        Map<Id,List<NSP_Account_Team__c>>mapOfAccountAndListOfAccountTeamMember = new Map<Id,List<NSP_Account_Team__c>>();
+        
         try{
             if ( peoTerminationTaskList != null
                 && !peoTerminationTaskList.isEmpty()
@@ -456,6 +458,7 @@ public class NSP_ProjectTasksTriggerHelper {
                                 NSP_Account__c IN :mapOfProjectAndAccount.values()
                                 AND NSP_Role__c IN :peoTerminationTeamRoles
                             )
+                            ORDER BY NSP_Role__c DESC
                         ]
                     )
                 {
@@ -477,16 +480,26 @@ public class NSP_ProjectTasksTriggerHelper {
                                 );
                             }
                             mapOfAccountAndListOfAccountTeamMemberEmailAddress.get( accTeamMember.NSP_Account__c ).add( accTeamMember.NSP_Email__c );
+                            
+                            if ( !mapOfAccountAndListOfAccountTeamMember.containsKey( accTeamMember.NSP_Account__c ) ) {
+                                mapOfAccountAndListOfAccountTeamMember.put(
+                                    accTeamMember.NSP_Account__c ,
+                                    new List<NSP_Account_Team__c>()
+                                );
+                            }
+                            mapOfAccountAndListOfAccountTeamMember.get( accTeamMember.NSP_Account__c ).add( accTeamMember);
                         }
                     }
                 }
             }
+            
             if (projectTaskLetterMap.size() > 0) {
                 for (pse__Project_Task__c pTask : lProjectTasks) {
                     if ( pTask != null
                         && projectTaskLetterMap.containsKey(pTask.Id)
                         && woActiveList.containsKey(pTask.NSP_AccountId__c)
                         && pTask.Name == WRITTENTERMINATION
+                        && mapOfAccountAndListOfAccountTeamMember.containsKey(pTask.NSP_AccountId__c) 
                         )
                     {
                         String emailNSP_Termination_Team = System.Label.NSP_Termination_Team;
@@ -506,8 +519,11 @@ public class NSP_ProjectTasksTriggerHelper {
                             listOfToAddresses,
                             listOfPayrollMem,
                             woActiveList.get(pTask.NSP_AccountId__c).NSP_Reason_for_Term__c,
-                            woActiveList.get(pTask.NSP_AccountId__c).NSP_Anticipated_Date_Of_Termination__c
+                            woActiveList.get(pTask.NSP_AccountId__c).NSP_Anticipated_Date_Of_Termination__c,
+                            woActiveList.get(pTask.NSP_AccountId__c).ID,
+                            mapOfAccountAndListOfAccountTeamMember.get(pTask.NSP_AccountId__c)
                         );
+                            
                     }
                 }
             }
@@ -521,23 +537,34 @@ public class NSP_ProjectTasksTriggerHelper {
     }
 
     //Letter Received email.
-    private void letterRecievedEmail(String accountName, String accountAIMS, list<String> listOfToAddresses, List<NSP_Account_Team__c> listOfPayrollMem, String ReasonForTerm, Date TermDate){
+    private void letterRecievedEmail(String accountName, String accountAIMS, list<String> listOfToAddresses, List<NSP_Account_Team__c> listOfPayrollMem, String ReasonForTerm, Date TermDate, Id woAssetId, List<NSP_Account_Team__c> accountTeamList){
         try{
             String dtStr;
             if(TermDate!= null){
                 dtStr = TermDate.format();
             }
+            String accName = accountName+'('+accountAIMS+')';
+            String customUrl = URL.getOrgDomainURL().toExternalForm()+ '/'+woAssetId;
             String subjectString = 'Termination letter received for '+accountName+'('+accountAIMS+')';
             String mailBody = 'Hello Team,'+'<br/><br/>';
-            mailBody += accountName+'('+accountAIMS+')'+' submitted written notification of their intent to terminate their contract with Insperity. Below are the details of the termination:'+'<br/><br/>';
+            mailBody += '<a href="' +customUrl+'">'+ accName +'</a>';
+            mailBody += ' submitted written notification of their intent to terminate their contract with Insperity. Below are the details of the termination:'+'<br/><br/>';
             mailBody += 'Intended effective termination date: '+dtStr+'<br/>';
             mailBody += 'Termination reason: '+ReasonForTerm+'<br/><br/>';
-            mailBody += 'Regards,'+'<br/>';
-            for(NSP_Account_Team__c payrollTeam : listOfPayrollMem){
-                mailBody += payrollTeam.NSP_First_Name__c+' '+payrollTeam.NSP_Last_Name__c+'<br/>';  // updated as part of STY-04147
-                mailBody += payrollTeam.NSP_Role__c+'<br/>';
-                mailBody += payrollTeam.NSP_Email__c+'<br/>';
-                mailBody += payrollTeam.NSP_Work_Phone__c+'<br/>';
+            if(!accountTeamList.isEmpty()) {
+                for(NSP_Account_Team__c accTeam : accountTeamList){
+                    if ( ( accTeam.NSP_Role__c == 'Payroll Specialist' )
+                        || ( accTeam.NSP_Role__c == 'Payroll Supervisor' )
+                        || ( accTeam.NSP_Role__c == 'Client Liaison' )
+                        || ( accTeam.NSP_Role__c == 'Manager, HR Services' )
+                        || ( accTeam.NSP_Role__c == 'Business Performance Advisor' )
+                        || ( accTeam.NSP_Role__c == 'Bus. Team-HRSp/CL' ) 
+                        || ( accTeam.NSP_Role__c == 'MidMarket Account Exec' )
+                        )
+                    {
+                        mailBody += accTeam.NSP_Role__c + ': ' +accTeam.NSP_First_Name__c+' '+accTeam.NSP_Last_Name__c+'<br/>';
+                    }
+                }
             }
             Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
             email.setToAddresses(listOfToAddresses);
