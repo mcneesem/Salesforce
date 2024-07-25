@@ -256,6 +256,16 @@
                 <identifier>RecordComplexity_Score_cField2</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Onboarding_Profile__c</fieldItem>
+                <identifier>RecordOnboarding_Profile_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-50fbea8b-1834-43e2-9884-56fb6397c5c8</name>
         <type>Facet</type>
     </flexiPageRegions>
