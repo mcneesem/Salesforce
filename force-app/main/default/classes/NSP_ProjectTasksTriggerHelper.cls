@@ -1,5 +1,5 @@
 public class NSP_ProjectTasksTriggerHelper {
-    // test w/ NSP_ProjectTasksTriggerHelperTest (80%)
+    // test w/ NSP_ProjectTasksTriggerHelperTest (79%)
 
     private static final String HUNDRED_PERCENT =  '100%';
     private static final string SYS_ADMIN = 'System Administrator';
@@ -2233,25 +2233,24 @@ public class NSP_ProjectTasksTriggerHelper {
 
                 
 
-        //Added as part of story STY-04172
-        if( projectTask.NSP_Create_Work_Order__c != null && String.isNotBlank(projectTask.NSP_Dispatch_Region__c)){
-                
-                if(projectTask.pse__Start_Date_Time__c == projectTask.pse__End_Date_Time__c){
-                    projectTask.pse__End_Date_Time__c = projectTask.pse__Start_Date_Time__c.addHours(1);
-                                    
+                // added as part of story STY-04172
+                if ( ( projectTask.NSP_Create_Work_Order__c != null )
+                    && String.isNotBlank( projectTask.NSP_Dispatch_Region__c )
+                    && ( projectTask.pse__Start_Date_Time__c != null )
+                    )
+                {
+                    if ( ( projectTask.pse__End_Date_Time__c == null )
+                        || ( projectTask.pse__Start_Date_Time__c == projectTask.pse__End_Date_Time__c )
+                        )
+                    {
+                        projectTask.pse__End_Date_Time__c = projectTask.pse__Start_Date_Time__c.addHours( 1 );
+                    }
+                }
             }
-                else if (projectTask.pse__End_Date_Time__c == null){
-                    projectTask.pse__End_Date_Time__c = projectTask.pse__Start_Date_Time__c.addHours(1);
-            }
-            
-        }
-
-            }
-
             // Populate all the filtered data in the map
-            dataMap.put('scheduledProjectTasks', scheduledProjectTasks);
-            dataMap.put('scheduledProjectTaskOwnerIds', scheduledProjectTaskOwnerIds);
-            dataMap.put('projectTaskIds', projectTaskId);
+            dataMap.put( 'scheduledProjectTasks' , scheduledProjectTasks );
+            dataMap.put( 'scheduledProjectTaskOwnerIds' , scheduledProjectTaskOwnerIds );
+            dataMap.put( 'projectTaskIds' , projectTaskId );
         } catch ( Exception e ) {
             NSP_ProjectTasksTriggerHelper.handleException(
                 e ,
@@ -2400,82 +2399,71 @@ public class NSP_ProjectTasksTriggerHelper {
         return newObj != null && oldObj != null && String.isNotBlank(fieldName) ? newObj.get(fieldName) != oldObj.get(fieldName) : false;
     }
 
-    /***********************************************************************************************
-    * MethodName: createPTAIfOwnerIsChanged
-    * Description : if Project task owner is updated Check for PTA and Insert new PTA if doesnt exist
-    * Params: projectTaskIds projectTask recordIds if Owner is Updated
-    * ********************************************************************************************/ 
-    public static void createPTAIfOwnerIsChanged(Set<Id> projectTaskIds){
+    //
+    // MethodName: createPTAIfOwnerIsChanged
+    // Description : if Project task owner is updated Check for PTA and Insert new PTA if doesnt exist
+    // Params: projectTaskIds projectTask recordIds if Owner is Updated
+    //
+    public static void createPTAIfOwnerIsChanged( Set<Id> projectTaskIds ) {
         Id peoRecordTypeId = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.PROJECT_TASK_SOBJECT_TYPE,NSP_ServiceConstants.PROJECT_TASK_PEO_RECORDTYPE);
         Id bpsRecordTypeId = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.PROJECT_TASK_SOBJECT_TYPE,NSP_ServiceConstants.PROJECT_TASK_BPS_RECORDTYPE);
-        
         Map<Id,Id> projTaskIdWithOwnerIds = new Map<Id,Id>();
         Map<Id,Decimal> projTaskIdWithPTACount = new Map<Id,Decimal>();
         Map<Id,Id> userIdWithcontId = new Map<Id,Id>();
-        Map<Id, List<Id>> projTaskWithResourceLst = new Map<Id, List<Id>>();
+        Map<Id,List<Id>> projTaskWithResourceLst = new Map<Id,List<Id>>();
         List<pse__Project_Task_Assignment__c> newPTAList = new List<pse__Project_Task_Assignment__c> () ;
-        try{
-            String projTaskQuery = new NSP_QueryBuilder('pse__Project_Task__c', new List<String>{'Id', 'OwnerId', 'pse__Number_of_Assignments__c','pse__Summary__c'})
-                            .addFilter('Id', new List<Id>(projectTaskIds) , NSP_QueryBuilder.Operator.INCLUDES)
-                            .addFilter('pse__Project__r.NSP_Auto_Resource_Project__c', true , NSP_QueryBuilder.Operator.EQUALS, false)
-                            .addFilter('RecordTypeId', new List<Id>{ peoRecordTypeId, bpsRecordTypeId } , NSP_QueryBuilder.Operator.INCLUDES)
-                            .addFilter('pse__Project__r.pse__Summary__c', false , NSP_QueryBuilder.Operator.EQUALS, false)
-                            .build();
-
-            for(pse__Project_Task__c projTask : Database.query(projTaskQuery)) {
-                projTaskIdWithOwnerIds.put(projTask.Id, projTask.OwnerId);
-                projTaskIdWithPTACount.put(projTask.Id, projTask.pse__Number_of_Assignments__c);
-            }
-
-            if(!projTaskIdWithOwnerIds.isEmpty()) {
-                String contactQuery = new NSP_QueryBuilder('Contact', new List<String>{'Id', 'Name', 'pse__Salesforce_User__c'})
-                            .addFilter('pse__Salesforce_User__c', projTaskIdWithOwnerIds.values() , NSP_QueryBuilder.Operator.INCLUDES)
-                            .build();
-                        
-                for(Contact cont: Database.query(contactQuery)) {
-                    userIdWithcontId.put(cont.pse__Salesforce_User__c, cont.Id);
+        try {
+            if ( ProjectTaskTriggerSettings__c.getInstance( UserInfo.getUserId() ).IsEnabledCreatePtaIfOwnerChanged__c ) {
+                String projTaskQuery = new NSP_QueryBuilder('pse__Project_Task__c', new List<String>{'Id', 'OwnerId', 'pse__Number_of_Assignments__c','pse__Summary__c'})
+                    .addFilter('Id', new List<Id>(projectTaskIds) , NSP_QueryBuilder.Operator.INCLUDES)
+                    .addFilter('pse__Project__r.NSP_Auto_Resource_Project__c', true , NSP_QueryBuilder.Operator.EQUALS, false)
+                    .addFilter('RecordTypeId', new List<Id>{ peoRecordTypeId, bpsRecordTypeId } , NSP_QueryBuilder.Operator.INCLUDES)
+                    .addFilter('pse__Project__r.pse__Summary__c', false , NSP_QueryBuilder.Operator.EQUALS, false) // throws...  System.QueryException: No such column 'pse__Summary__c' on entity 'pse__Proj__c'. 
+                    .build();
+                for(pse__Project_Task__c projTask : Database.query(projTaskQuery)) {
+                    projTaskIdWithOwnerIds.put(projTask.Id, projTask.OwnerId);
+                    projTaskIdWithPTACount.put(projTask.Id, projTask.pse__Number_of_Assignments__c);
                 }
-            }
-
-            String projTaskAssignmtQuery = NSP_ProjectTaskAssignmentTriggerHelper.getProjectTaskAssignQuery(projectTaskIds, peoRecordTypeId, bpsRecordTypeId);
-        
-            for(pse__Project_Task_Assignment__c projTaskAssign: Database.query(projTaskAssignmtQuery)) {
-
-                if(!projTaskWithResourceLst.containsKey(projTaskAssign.pse__Project_Task__c)) {
-                    projTaskWithResourceLst.put(projTaskAssign.pse__Project_Task__c, new List<Id>{ projTaskAssign.pse__Resource__c });
-                }
-                projTaskWithResourceLst.get(projTaskAssign.pse__Project_Task__c).add(projTaskAssign.pse__Resource__c);
-
-            }
-
-            if(!projTaskWithResourceLst.isEmpty()) {
-
-                for(Id projTaskId : projTaskWithResourceLst.keySet()) {
-                    Id contResourceId = userIdWithcontId?.get(projTaskIdWithOwnerIds?.get(projTaskId));    
-                    List<Id> lstResouceListOfProjTask = projTaskWithResourceLst?.get(projTaskId);
-
-                    if(String.isNotBlank(contResourceId) && !lstResouceListOfProjTask.contains(contResourceId)){
-                        newPTAList.add(new pse__Project_Task_Assignment__c(pse__Resource__c = contResourceId,pse__Project_Task__c = projTaskId));  
+                if(!projTaskIdWithOwnerIds.isEmpty()) {
+                    String contactQuery = new NSP_QueryBuilder('Contact', new List<String>{'Id', 'Name', 'pse__Salesforce_User__c'})
+                        .addFilter('pse__Salesforce_User__c', projTaskIdWithOwnerIds.values() , NSP_QueryBuilder.Operator.INCLUDES)
+                        .build();
+                    for(Contact cont: Database.query(contactQuery)) {
+                        userIdWithcontId.put(cont.pse__Salesforce_User__c, cont.Id);
                     }
                 }
-
-            } else {
-
-                for(Id projId : projTaskIdWithPTACount.keySet()) {
-                    Id contResourceId = userIdWithcontId?.get(projTaskIdWithOwnerIds?.get(projId));
-                    if(projTaskIdWithPTACount.get(projId) == 0) {
-                        newPTAList.add(new pse__Project_Task_Assignment__c(pse__Resource__c = contResourceId, pse__Project_Task__c = projId));  
+                String projTaskAssignmtQuery = NSP_ProjectTaskAssignmentTriggerHelper.getProjectTaskAssignQuery(projectTaskIds, peoRecordTypeId, bpsRecordTypeId);
+                for(pse__Project_Task_Assignment__c projTaskAssign: Database.query(projTaskAssignmtQuery)) {
+                    if(!projTaskWithResourceLst.containsKey(projTaskAssign.pse__Project_Task__c)) {
+                        projTaskWithResourceLst.put(projTaskAssign.pse__Project_Task__c, new List<Id>{ projTaskAssign.pse__Resource__c });
                     }
+                    projTaskWithResourceLst.get(projTaskAssign.pse__Project_Task__c).add(projTaskAssign.pse__Resource__c);
                 }
-            }  
-            if ( !newPTAList.isEmpty() ) {
-                NSP_ProjectTaskAssignmentTriggerHelper.runAssignmentMethod = true;
-                Database.UpsertResult[] upsertResults = Database.upsert( newPTAList , false);
-                NSP_ErrorLogHandler.logResults(
-                    NSP_ProjectTasksTriggerHelper.class.getName() ,
-                    'createPTAIfOwnerIsChanged' ,
-                    upsertResults
-                );
+                if(!projTaskWithResourceLst.isEmpty()) {
+                    for(Id projTaskId : projTaskWithResourceLst.keySet()) {
+                        Id contResourceId = userIdWithcontId?.get(projTaskIdWithOwnerIds?.get(projTaskId));
+                        List<Id> lstResouceListOfProjTask = projTaskWithResourceLst?.get(projTaskId);
+                        if(String.isNotBlank(contResourceId) && !lstResouceListOfProjTask.contains(contResourceId)){
+                            newPTAList.add(new pse__Project_Task_Assignment__c(pse__Resource__c = contResourceId,pse__Project_Task__c = projTaskId));
+                        }
+                    }
+                } else {
+                    for(Id projId : projTaskIdWithPTACount.keySet()) {
+                        Id contResourceId = userIdWithcontId?.get(projTaskIdWithOwnerIds?.get(projId));
+                        if(projTaskIdWithPTACount.get(projId) == 0) {
+                            newPTAList.add(new pse__Project_Task_Assignment__c(pse__Resource__c = contResourceId, pse__Project_Task__c = projId));
+                        }
+                    }
+                }  
+                if ( !newPTAList.isEmpty() ) {
+                    NSP_ProjectTaskAssignmentTriggerHelper.runAssignmentMethod = true;
+                    Database.UpsertResult[] upsertResults = Database.upsert( newPTAList , false );
+                    NSP_ErrorLogHandler.logResults(
+                        NSP_ProjectTasksTriggerHelper.class.getName() ,
+                        'createPTAIfOwnerIsChanged' ,
+                        upsertResults
+                    );
+                }
             }
         } catch ( Exception e ) {
             NSP_ProjectTasksTriggerHelper.handleException(

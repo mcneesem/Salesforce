@@ -9,6 +9,10 @@ public class NSP_ProjectTasksTriggerHelperTest {
     @testSetup
     public static void setupProjectTaskdata(){
         //Test Setup
+        ProjectTaskTriggerSettings__c settings = ProjectTaskTriggerSettings__c.getOrgDefaults();
+        settings.IsEnabled__c = true;
+        settings.IsEnabledCreatePtaIfOwnerChanged__c = true;
+        upsert settings;
 
         List<Account> accList = new List<Account>();
         Account oAccount = (Account)NSP_TestExtendedDataFactory.createSObject(new Account(), 'NSP_TestDataFactory.AccountDefaults', false);
