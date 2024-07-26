@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Group of Permission Sets to be granted to Voice Agents.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Voice Agent</label>
+    <permissionSets>Address_Book_Visibility</permissionSets>
+    <permissionSets>Messaging_User_Edit</permissionSets>
+    <permissionSets>NVMContactWorld__Agent</permissionSets>
+    <permissionSets>Select_Matching_Contact_Voice_Call</permissionSets>
+    <permissionSets>Service_Presence_Statuses_Base</permissionSets>
+    <permissionSets>Service_Presence_Statuses_Voice</permissionSets>
+    <permissionSets>Vonage_Call_Recording</permissionSets>
+    <permissionSets>force__ContactCenterAgentExternalTelephony</permissionSets>
+    <status>Updated</status>
+</PermissionSetGroup>

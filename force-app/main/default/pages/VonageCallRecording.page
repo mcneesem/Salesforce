@@ -1,0 +1,3 @@
+<apex:page >
+    <apex:iframe src="{!$Setup.Vonage_Call_Recording__c.URL__c}" scrolling="false" id="theIframe"/>
+</apex:page>
