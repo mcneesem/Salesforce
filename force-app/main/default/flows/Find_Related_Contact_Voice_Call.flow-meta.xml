@@ -8,7 +8,7 @@
         <actionName>VoiceCall.Update_Contact</actionName>
         <actionType>quickAction</actionType>
         <connector>
-            <targetReference>Update_Case_Contact</targetReference>
+            <targetReference>Select_Related_Case</targetReference>
         </connector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
@@ -54,7 +54,7 @@
         <description>Unable to add Insperity_Fault_Handler_Subflow.</description>
         <name>Set_Fault_Message</name>
         <label>Set Fault Message</label>
-        <locationX>930</locationX>
+        <locationX>864</locationX>
         <locationY>1898</locationY>
         <assignmentItems>
             <assignToReference>faultMessage</assignToReference>
@@ -68,7 +68,7 @@
         <description>Unable to add Insperity_Fault_Handler_Subflow.</description>
         <name>Set_Fault_Message_Search_Term</name>
         <label>Set Fault Message (Search Term)</label>
-        <locationX>1194</locationX>
+        <locationX>1128</locationX>
         <locationY>1082</locationY>
         <assignmentItems>
             <assignToReference>faultMessage</assignToReference>
@@ -85,7 +85,7 @@
     <assignments>
         <name>Set_Record</name>
         <label>Set Record</label>
-        <locationX>897</locationX>
+        <locationX>864</locationX>
         <locationY>350</locationY>
         <assignmentItems>
             <assignToReference>record</assignToReference>
@@ -183,9 +183,38 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Check_Related_Case</name>
+        <label>Check Related Case</label>
+        <locationX>336</locationX>
+        <locationY>2222</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Found_Modifiable_Case</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Select_Related_Case</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Select_Related_Case.Status</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Closed</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Case_Contact</targetReference>
+            </connector>
+            <label>Found Modifiable Case</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Check_Voice_Call_Record</name>
         <label>Check Voice Call Record</label>
-        <locationX>1309</locationX>
+        <locationX>1260</locationX>
         <locationY>242</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -208,7 +237,7 @@
         <description>Determines whether the record passed into the flow has an associated messaging user.</description>
         <name>IsMessagingUserAssociated</name>
         <label>Is Messaging User Associated?</label>
-        <locationX>897</locationX>
+        <locationX>864</locationX>
         <locationY>458</locationY>
         <defaultConnectorLabel>No (Default)</defaultConnectorLabel>
         <rules>
@@ -376,7 +405,7 @@
         <description>Gets the voice call record to pass into the flow. Stores the results in the Voice Call from GetVoiceCall record variable.</description>
         <name>GetVoiceCall</name>
         <label>Get Voice Call</label>
-        <locationX>1309</locationX>
+        <locationX>1260</locationX>
         <locationY>134</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -396,11 +425,34 @@
         <sortOrder>Asc</sortOrder>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordLookups>
+        <name>Select_Related_Case</name>
+        <label>Select Related Case</label>
+        <locationX>336</locationX>
+        <locationY>2114</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_Related_Case</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>GetVoiceCall.CaseId__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Case</object>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Status</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <recordUpdates>
         <name>Update_Case_Contact</name>
         <label>Update Case Contact</label>
-        <locationX>336</locationX>
-        <locationY>2114</locationY>
+        <locationX>72</locationX>
+        <locationY>2330</locationY>
         <faultConnector>
             <targetReference>Update_Case_Failure</targetReference>
         </faultConnector>
@@ -582,8 +634,8 @@
     <screens>
         <name>Update_Case_Failure</name>
         <label>Update Case Failure</label>
-        <locationX>666</locationX>
-        <locationY>2222</locationY>
+        <locationX>336</locationX>
+        <locationY>2438</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -596,7 +648,7 @@
         <showHeader>true</showHeader>
     </screens>
     <start>
-        <locationX>1183</locationX>
+        <locationX>1134</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>GetVoiceCall</targetReference>
