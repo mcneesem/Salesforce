@@ -781,10 +781,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>EIN_Verifications__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>General_Ledger_Chart_of_Account_s__c</field>
             </layoutItems>
             <layoutItems>
