@@ -25,7 +25,6 @@ public with sharing class NSP_EmailMessageTriggerHelper {
         Set<Id> setOfCaseId = new Set<Id> ();
         Set<Id> employmentScreeningcaseIdSet = new Set<Id>();
         List<Case> caseToUpdate = new List<Case> ();
-        Map<Id, EmailMessage> healthWelfareInternalExternalCaseIdFromAddMap = new Map<Id, EmailMessage>();
         for(EmailMessage eMessage : newList){
             if ( ( eMessage.ParentId != null ) && incomingEmailCheck( eMessage ) ) {
                 setOfCaseId.add( eMessage.ParentId );
@@ -44,13 +43,7 @@ public with sharing class NSP_EmailMessageTriggerHelper {
             if(eMessage.ToAddress == System.Label.NSP_Customer_Service_Email ||
                eMessage.ToAddress == System.Label.NSP_Les_Drug_Screening_Email){
                    employmentScreeningcaseIdSet.add(eMessage.ParentId);
-               }
-            
-            //As a part of STY-03531
-            if(eMessage.ToAddress == System.Label.NSP_Health_Welfare_Section_125){
-                healthWelfareInternalExternalCaseIdFromAddMap.put(eMessage.ParentId, eMessage);
-            }
-               
+               }   
         }
         
         if(!setOfCaseId.isEmpty()){
@@ -63,16 +56,11 @@ public with sharing class NSP_EmailMessageTriggerHelper {
             updateConfidentialCheckBoxForEmpScreening(employmentScreeningcaseIdSet);
         }
         
-        //As a part of STY-03531
-        if(!healthWelfareInternalExternalCaseIdFromAddMap.isEmpty()){
-            sendEmailToHealthWelfareInternalExternal(healthWelfareInternalExternalCaseIdFromAddMap);
+        //Added as a part of STY-04132 
+        if(!caseToUpdate.isEmpty()){
+            List<Database.SaveResult> results1 =  Database.update( caseToUpdate , false );
+            NSP_ErrorLogHandler.logSaveResultsException('NSP_EmailMessageTriggerHelper', 'afterInsertionEmailMessage', results1 );
         }
-        
-            //Added as a part of STY-04132 
-            if(!caseToUpdate.isEmpty()){
-               List<Database.SaveResult> results1 =  Database.update( caseToUpdate , false );
-                NSP_ErrorLogHandler.logSaveResultsException('NSP_EmailMessageTriggerHelper', 'afterInsertionEmailMessage', results1 );
-            }
         
     }
     
@@ -422,70 +410,6 @@ public with sharing class NSP_EmailMessageTriggerHelper {
             NSP_ErrorLogHandler.logSaveException( CLASS_NAME, 'updateConfidentialCheckBoxForEmpScreening', exc.getMessage());
         }
         
-    }
-    
-    /***********************************************************************************************
-    * MethodName 	: sendEmailToHealthWelfareInternalExternal
-    * Story 	 	: STY-03531
-    * Description   : This method will send auto-response mail based on internal/external sender email
-    * Params 		: Map<Id, EmailMessage> healthWelfareInternalExternalCaseIdFromAddMap
-    * ********************************************************************************************/     
-    public static void sendEmailToHealthWelfareInternalExternal(Map<Id, EmailMessage> healthWelfareInternalExternalCaseIdFromAddMap){
-        try{
-            //get all the cases created from email-to-case if anybody sends email to Health & Welfare email ID
-            //send auto response email with internal email template if the from address has an '@insperity.com' domain
-            for(Case caseRec : [SELECT Id, NSP_Case_Created_From_Email_To_Case__c FROM Case WHERE Id IN: healthWelfareInternalExternalCaseIdFromAddMap.keySet()]){
-                
-                //DF-03783 - email should be triggered only when case is created
-				if(caseRec.NSP_Case_Created_From_Email_To_Case__c)
-					 continue;
-				
-                if(healthWelfareInternalExternalCaseIdFromAddMap.get(caseRec.Id).FromAddress.contains(NSP_ServiceConstants.INTERNAL_EMAIL_ADD) &&
-                  healthWelfareInternalExternalCaseIdFromAddMap.get(caseRec.Id).ToAddress.equals(System.Label.NSP_Health_Welfare_Section_125)){
-                    sendEmailToInternalExternal('NSP_Health_Welfare_Internal_Email_Template', healthWelfareInternalExternalCaseIdFromAddMap.get(caseRec.Id).FromAddress, caseRec.Id);
-                }
-                
-                else {
-                    if(healthWelfareInternalExternalCaseIdFromAddMap.get(caseRec.Id).ToAddress.equals(System.Label.NSP_Health_Welfare_Section_125)){
-                    sendEmailToInternalExternal('NSP_Health_Welfare_External_Email_Template', healthWelfareInternalExternalCaseIdFromAddMap.get(caseRec.Id).FromAddress, caseRec.Id);
-                    }
-                 }
-            }
-        }catch(Exception exc){
-            NSP_ErrorLogHandler.logSaveException('NSP_EmailMessageTriggerHelper', 'sendEmailToHealthWelfareInternalExternal', exc.getMessage());
-        }
-    }
-    
-    /***********************************************************************************************
-    * MethodName 	: sendEmailToInternalExternal
-    * Story 	 	: STY-03531
-    * Description   : Helper method for sendEmailToHealthWelfareInternalExternal
-    * Params 		: String emailTemplateName, String ToAddress, Id caseRecId
-    * ********************************************************************************************/ 
-    private static void sendEmailToInternalExternal(String emailTemplateName, String ToAddress, Id caseRecId){
-        try{
-            List<Messaging.SingleEmailMessage> lstEmailMessages = new List<Messaging.SingleEmailMessage>(); 
-            List<String> sendToList = new List<String>();
-            sendToList.add(ToAddress);
-            List<String> emailTempFields = new List<String>{'ID'};
-                EmailTemplate emailTemplate = NSP_sObjectSelector.selectByDeveloperName(emailTempFields, emailTemplateName);   
-            Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
-            email= Messaging.renderStoredEmailTemplate(emailTemplate.Id, null, caseRecId);
-            email.setTemplateId(emailTemplate.Id); 
-            email.setToAddresses(sendToList);
-            OrgWideEmailAddress orgWidAddress = NSP_GenericEmailUtility.getOrgWideAddress( System.label.NSP_no_reply );
-            if ( orgWidAddress != null ) {
-                email.setOrgWideEmailAddressId( orgWidAddress.Id );
-            }
-            email.setWhatId(caseRecId); 
-            email.setSaveAsActivity(false);
-            lstEmailMessages.add(email);
-            if(!lstEmailMessages.isEmpty()){
-                NSP_GenericEmailUtility.sendSingleEmailMessages(lstEmailMessages,false);
-            }  
-        }catch(Exception exc){
-            NSP_ErrorLogHandler.logSaveException( CLASS_NAME, 'sendEmailToInternalExternal', exc.getMessage());
-        }
     }
 
      /***********************************************************************************************
