@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>National_Account_Group__c</fullName>
+    <description>When a new value is added to National account group field on the Asset make sure to update this formula field.</description>
+    <externalId>false</externalId>
+    <formula>IF(
+ISBLANK( TEXT( Account.WO_Asset__r.NSP_National_Account_Group__c  ) ) ,
+null ,
+CASE(
+  TEXT( Account.WO_Asset__r.NSP_National_Account_Group__c  ) ,
+  &apos;48&apos; , &apos;AAA&apos; ,
+  &apos;25&apos; , &apos;Agency&apos; ,
+  &apos;44&apos; , &apos;Ameriprise&apos; ,
+  &apos;46&apos; , &apos;AtWork&apos;,
+  &apos;38&apos; , &apos;Charles Schwab&apos;,
+  &apos;43&apos; , &apos;Commonwealth&apos;,
+  &apos;47&apos;   , &apos;FreedomBoatClub&apos;,
+  &apos;39&apos;   , &apos;FSI&apos;,
+  &apos;26&apos;   , &apos;HEA Members&apos;,
+  &apos;23&apos;   , &apos;Independent Agency&apos;,
+  &apos;36&apos;   , &apos;NFP - Midwest&apos;,
+  &apos;33&apos;   , &apos;NFP - Northeast&apos;,
+  &apos;35&apos;   , &apos;NFP - Southeast&apos;,
+  &apos;34&apos;   , &apos;NFP - TZP&apos;,
+  &apos;22&apos;   , &apos;RJ Advisors&apos;,
+  &apos;31&apos;   , &apos;WO - DKG&apos;,
+  &apos;37&apos;   , &apos;WorldCom&apos;,
+  &apos;32&apos;   , &apos;WO - UFG&apos;,
+  &apos;24&apos;   , &apos;YHN Practices&apos;,
+  &apos;45&apos;   , &apos;Gradient&apos;,
+  &apos;49&apos;   , &apos;VSG&apos;,
+  &apos;50&apos;   , &apos;BRUNSWICK&apos;,
+  &apos;51&apos;   , &apos;ITDG&apos;,
+  &apos;52&apos;   , &apos;MDVIP&apos;,
+  &apos;53&apos;   , &apos;TRANE&apos;,
+  &apos;54&apos;   , &apos;Princeton Equity Advisors&apos;,
+  &apos;55&apos;   , &apos;Union for Reform Judaism&apos;,
+  &apos;56&apos;   , &apos;NSP Prism&apos;,
+  &apos;57&apos;   , &apos;NATDA&apos;,
+  &apos;58&apos;   , &apos;SCRA&apos;,
+  &apos;59&apos;   , &apos;TVC&apos;,
+  &apos;60&apos;   , &apos;Surgical Centers of America&apos;,
+  &apos;62&apos;   , &apos;Montrose Lane&apos;,
+  &apos;63&apos;   , &apos;Oaktree&apos;,
+  &apos;64&apos;   , &apos;24_Seven Partners&apos;,
+  &apos;65&apos;   , &apos;S5 Equity Solutions&apos;,
+  TEXT( Account.WO_Asset__r.NSP_National_Account_Group__c  )
+)
+)</formula>
+    <label>National Account Group</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>
