@@ -1858,6 +1858,16 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.EIN_Verifications__c</fieldItem>
+                <identifier>RecordEIN_Verifications_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.Most_Recent_941_Quarterly_Filings__c</fieldItem>
                 <identifier>RecordMost_Recent_941_Quarterly_Filings_cField</identifier>
             </fieldInstance>
@@ -2290,7 +2300,7 @@
                 <identifier>RecordYears_in_Business_cField</identifier>
             </fieldInstance>
         </itemInstances>
-        <itemInstances>
+                <itemInstances>
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
@@ -2334,7 +2344,7 @@
                 <identifier>RecordCompleted_Date_cField</identifier>
             </fieldInstance>
         </itemInstances>
-        <itemInstances>
+                <itemInstances>
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
