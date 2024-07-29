@@ -1,25 +1,11 @@
-/* Represents the AccountContactRelation trigger helper which handles all the logic.
-* 
-* Modification History:
-* -------------------------------------------------------------------------------------
-* author           | Date              | Description
-* -------------------------------------------------------------------------------------
-* Hemali Patel     Iterates through AccountContactRelation
-* Rahul Singh       10/26/2022          Create Contact Role
-* 
-* 
-*/
-public class NSP_AccountContactRelationTriggerHelper {
-    // test w/ NSP_AccountContactRelationHelperTest (80%)
+public with sharing class NSP_AccountContactRelationTriggerHelper {
+    // test w/ NSP_AccountContactRelationHelperTest (79%)
 
-    private static final Id PEO_RECORDTYPEID = NSP_GenericRecordType.getRecordTypeId('Case', NSP_ServiceConstants.PEO);
-    private static final String NSP_ACCOUNT_CONTACT_RELATIONSHIP_TRIGGER_HELPER = 'NSP_AccountContactRelationTriggerHelper';
-    private static final String BEFORE_UPSERT_DIRECTOR = 'beforeUpsertDirector';
-    private static final String UPDATE_JOB_TITLE_OF_CONTACT = 'updateJobTitleofContact';
-    private static final String RESTRICT_DELETING_ACR = 'restrictDeletingACR';
-    private static final String UPDATE_WORK_PHONE_EMAIL_ON_CONTACT = 'updateWorkPhoneEmailOnContact';
-    public static final List<String> INT_DM_PROFILES = new List<String>{NSP_ServiceConstants.INTEGRATION_USER, NSP_ServiceConstants.DATA_MIGRATION};
-  
+    public static final List<String> INT_DM_PROFILES = new List<String>{
+        NSP_ServiceConstants.INTEGRATION_USER ,
+        NSP_ServiceConstants.DATA_MIGRATION
+    };
+
     /**
      * Iterates throught the list of new AccountContactRelation and passes the required attributes to other methods.
      * @param newList List of New AccountContactRelation.
@@ -27,8 +13,7 @@ public class NSP_AccountContactRelationTriggerHelper {
      * @return void
      *                
      */
-
-    public void afterInsertDirector(List<AccountContactRelation> newList, Map<Id, AccountContactRelation> newMap) {
+    public void afterInsertDirector( List<AccountContactRelation> newList , Map<Id,AccountContactRelation> newMap ) {
         //Modified as part of SOQL fix 228901 
         String loggedInUserProfile_Name;
         List<Profile> loggedInUserProfileName = new List<Profile>();
@@ -84,11 +69,15 @@ public class NSP_AccountContactRelationTriggerHelper {
                 }
             }
            }  
-        }catch(Exception ex){
-            NSP_CustomException.LogException(ex);
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_AccountContactRelationTriggerHelper.class.getName() ,
+                'afterInsertDirector' ,
+                e
+            );
         }
     }
-    
+
     /**
      * Iterates throught the list of new AccountContactRelation and passes the required attributes to other methods.
      * @param newList List of New AccountContactRelation.
@@ -96,8 +85,8 @@ public class NSP_AccountContactRelationTriggerHelper {
      * @return void
      *                
      */
-
-    public void afterUpdateDirector(Map<Id, AccountContactRelation> newMap,Map<Id, AccountContactRelation> oldMap) {
+    public void afterUpdateDirector( Map<Id,AccountContactRelation> newMap , Map<Id,AccountContactRelation> oldMap ) {
+        Id peoRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Case' , NSP_ServiceConstants.PEO );
         //Modified as part of SOQL fix 228901 
         String loggedInUserProfile_Name;
         List<Profile> loggedInUserProfileName = new List<Profile>();
@@ -185,14 +174,23 @@ public class NSP_AccountContactRelationTriggerHelper {
             if(!ConIdACRMap.isEmpty()){
                 updateWorkPhoneEmailOnContact(ConIdACRMap);
             }
-            
-            if(!ceAccIdSet.isEmpty() && !ceConIdSet.isEmpty()){
-                for (Case cse : [SELECT Id, contactId, NSP_CorporateEmployeeEE__c, AccountId, (SELECT Id FROM Case_Contact_Roles__r) FROM Case WHERE contactId IN: ceConIdSet
-                    AND recordTypeId =: PEO_RECORDTYPEID]){
-                    if(cse.Case_Contact_Roles__r.size() <= 1){
-                        ceCaseList.add(cse);
+            if ( !ceAccIdSet.isEmpty() && !ceConIdSet.isEmpty() ) {
+                for ( Case cse : [
+                            SELECT
+                                Id , AccountId , ContactId , NSP_CorporateEmployeeEE__c ,
+                                ( SELECT Id FROM Case_Contact_Roles__r )
+                            FROM Case
+                            WHERE (
+                                ( ContactId IN :ceConIdSet )
+                                AND ( recordTypeId = :peoRecordTypeId )
+                            )
+                        ]
+                    )
+                {
+                    if ( cse.Case_Contact_Roles__r.size() <= 1 ) {
+                        ceCaseList.add( cse );
                     }
-                } 
+                }
             }
             //added as part of STY-03866
             if(!newAccountIdSet.isEmpty()){
@@ -206,18 +204,22 @@ public class NSP_AccountContactRelationTriggerHelper {
                 NSP_AccountContactRelationSharing.milestoneRecordSharing(null,oldAccountIdSet);
             }
           }
-        }catch(Exception ex){
-            NSP_CustomException.LogException(ex);
-        } 
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_AccountContactRelationTriggerHelper.class.getName() ,
+                'afterUpdateDirector' ,
+                e
+            );
+        }
     }
+
     /***********************************************************************************************
     * MethodName: beforeUpsertDirector
     * Description : This method will add the validation to not to create more than One ACR for an Account 
     * Params:       List<AccountContactRelation> newList
     * Author : Nischay Jindal
     * ********************************************************************************************/   
- 
-    public static void beforeUpsertDirector(List<AccountContactRelation> newList) {
+     public static void beforeUpsertDirector( List<AccountContactRelation> newList ) {
         Id profileId = userinfo.getProfileId();
         //228901 - For fixing SOQL changed to metadata query
         String profileName;
@@ -243,12 +245,15 @@ public class NSP_AccountContactRelationTriggerHelper {
                     }
                 }
              }
-        }catch(Exception ex){
-            NSP_ErrorLogHandler.logSaveException(NSP_ACCOUNT_CONTACT_RELATIONSHIP_TRIGGER_HELPER, BEFORE_UPSERT_DIRECTOR, ex.getMessage()); 
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_AccountContactRelationTriggerHelper.class.getName() ,
+                'beforeUpsertDirector' ,
+                e
+            );
         }
-     }
-    
-    
+    }
+
      /***********************************************************************************************
     * MethodName: updateJobTitleofContact
     * Description : This method will update the contact job title from ACR 
@@ -286,27 +291,31 @@ public class NSP_AccountContactRelationTriggerHelper {
         updateJobTitleofContact(contactIdSet);
     }
 
-    public void updateJobTitleofContact(Set<Id> contactIdset) {
+    public void updateJobTitleofContact( Set<Id> contactIdset ) {
         Map<Id, String> mapOfcontactJobTitles = new Map<Id,String>();
         List<Contact> contactList = new List<Contact>();
         try{
             if(!contactIdSet.isEmpty()){
-            for(AccountContactRelation accConObj : [SELECT Id,ContactId, NSP_Job_Title__c FROM AccountContactRelation WHERE ContactId in:contactIdSet and NSP_Job_Title__c!=null ]){
-                mapOfcontactJobTitles.put(accConObj.ContactId,accConObj.NSP_Job_Title__c);
+                for(AccountContactRelation accConObj : [SELECT Id,ContactId, NSP_Job_Title__c FROM AccountContactRelation WHERE ContactId in:contactIdSet and NSP_Job_Title__c!=null ]){
+                    mapOfcontactJobTitles.put(accConObj.ContactId,accConObj.NSP_Job_Title__c);
+                }
             }
-        }
-        if(!mapOfcontactJobTitles.isEmpty()){
-            for(Contact con: [SELECT Id, NSP_Job_Title__c FROM Contact WHERE Id in:contactIdset]){
-                con.NSP_Job_Title__c=mapOfcontactJobTitles.get(con.Id);
-                contactList.add(con);
+            if(!mapOfcontactJobTitles.isEmpty()){
+                for(Contact con: [SELECT Id, NSP_Job_Title__c FROM Contact WHERE Id in:contactIdset]){
+                    con.NSP_Job_Title__c=mapOfcontactJobTitles.get(con.Id);
+                    contactList.add(con);
+                }
             }
+            if(!contactList.isEmpty()){
+                update contactList;
+            }
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_AccountContactRelationTriggerHelper.class.getName() ,
+                'updateJobTitleofContact' ,
+                e
+            );
         }
-        if(!contactList.isEmpty()){
-            update contactList;
-        }
-    }catch(Exception ex){
-        NSP_ErrorLogHandler.logSaveException(NSP_ACCOUNT_CONTACT_RELATIONSHIP_TRIGGER_HELPER, UPDATE_JOB_TITLE_OF_CONTACT, ex.getMessage()); 
-    }
     }
 
     /**
@@ -322,7 +331,7 @@ public class NSP_AccountContactRelationTriggerHelper {
      * @description as Service user restrict ACR deletion if it is createdby IntegrationUser and as CommunityAccess value.
      * @param  lstAccConRelations trigger.Old values of AccountContactRelationshipRecords
      */
-    public static void restrictDeletingACR(List < AccountContactRelation > lstAccConRelations) {
+    public static void restrictDeletingACR( List<AccountContactRelation> lstAccConRelations ) {
         try {
             
             Set < Id > userIds = new Set < Id > {
@@ -356,12 +365,15 @@ public class NSP_AccountContactRelationTriggerHelper {
                 }
             }
             
-        } catch (Exception ex) {
-            NSP_ErrorLogHandler.logSaveException(NSP_ACCOUNT_CONTACT_RELATIONSHIP_TRIGGER_HELPER, RESTRICT_DELETING_ACR, ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_AccountContactRelationTriggerHelper.class.getName() ,
+                'restrictDeletingACR' ,
+                e
+            );
         }
     }
 
-    
     /**
     * @MethodName: updateWorkPhoneEmailOnContact
     * @Description: This method describes to update the Contact when ever Contact's Email and Work Phone.
@@ -370,7 +382,7 @@ public class NSP_AccountContactRelationTriggerHelper {
     * @Story : STY-02840
     * @return void                          
     */
-    public static void updateWorkPhoneEmailOnContact(Map<Id, AccountContactRelation> ConIdACRMap){
+    public static void updateWorkPhoneEmailOnContact( Map<Id,AccountContactRelation> ConIdACRMap ) {
         List<Contact> conList = new List<Contact>();
         Id integrationProfileId = null;
         if(NSP_Trigger_Switch__c.getOrgDefaults().NSP_SOQL_Switch_2__c){
@@ -403,14 +415,18 @@ public class NSP_AccountContactRelationTriggerHelper {
                 con.NSP_Job_Title__c = acr.NSP_Job_Title__c;
                 conList.add(con);
             }
-            if(!conList.isEmpty()){
-                update conList ;  // Don't chnage to Database.update
+            if ( !conList.isEmpty() ) {
+                update conList ;  // Do not change to Database.update...
             }
-        }catch(exception ex){
-            NSP_ErrorLogHandler.logSaveException(NSP_ACCOUNT_CONTACT_RELATIONSHIP_TRIGGER_HELPER, UPDATE_WORK_PHONE_EMAIL_ON_CONTACT, ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_AccountContactRelationTriggerHelper.class.getName() ,
+                'updateWorkPhoneEmailOnContact' ,
+                e
+            );
         }
     }
-    
+
     /**
     * @MethodName: createPlatformEventForACR
     * @Description: This method is used to Create Platform Event on after Insert Or Update
@@ -449,29 +465,20 @@ public class NSP_AccountContactRelationTriggerHelper {
                 communityEventToBeInserted.add(communityEvent);
             }
         }
-        
         // Community Access Event to be insertade
-        if(!communityEventToBeInserted.isEmpty()) {
-            List<Database.SaveResult> results = EventBus.publish(communityEventToBeInserted);
-            
-            for (Database.SaveResult sr : results) {
-                if (!sr.isSuccess()) {
-                    for(Database.Error err : sr.getErrors()) {
-                        NSP_Error_Log__c log = new NSP_Error_Log__c();
-                        log.NSP_Class__c = 'NSP_AccountContactRelationTriggerHelper';
-                        log.NSP_Method__c = 'createPlatFormEventForACR';                
-                        log.NSP_Description__c = String.valueOf(err.getMessage()) + '  '+String.valueOf(err.getStatusCode());
-                        log.NSP_Record_Id__c = sr.getId();
-                        logList.add(log); 
-                    }
-                } 
-            }
+        if ( !communityEventToBeInserted.isEmpty() ) {
+            List<Database.SaveResult> results = EventBus.publish( communityEventToBeInserted );
+            NSP_ErrorLogHandler.logResults(
+                NSP_AccountContactRelationTriggerHelper.class.getName() ,
+                'createPlatformEventForACR' ,
+                results
+            );
         }
-        if(!logList.isEmpty()){
+        if ( !logList.isEmpty() ) {
             insert logList;
         }
     }
-    
+
     /**
     * Iterates throught the list of old AccountContactRelation and passes the required attributes to other methods.
     * @param lstAccConRelations List of  AccountContactRelation.
