@@ -412,10 +412,11 @@ export default class Nsp_CustomCaseCreationPage extends NavigationMixin(Lightnin
                 this.pageNumber = state.pageNumber;
             }
         };
-        this.CaseFlag();
+        this.setReloadFlag();
     }
+
     //flag to determine if Case needs to be reloaded based on User Profile and Custom Settings
-    CaseFlag() {
+    setReloadFlag() {
         getCaseSettingFlag()
             .then(result => {
                 this.reload = result; 
