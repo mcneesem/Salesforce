@@ -252,4 +252,16 @@ Id  groupId = NSP_sObjectSelector.selectGroupByTypeAndApiName(NSP_ServiceConstan
 
     system.assert(objectNameKeyPrefixMap != null);
     }
+
+    @isTest
+    private static void testGetCaseSettingFlagWithValidRecord() {
+        Case_Settings__c settingsRecord = new Case_Settings__c(
+            Case_Reload__c = true
+        );
+        insert settingsRecord;
+		Test.startTest();
+        Boolean result = NSP_CustomCaseCreationPageController.getCaseSettingFlag();
+        Test.stopTest();
+		System.assertEquals(true, result, 'The Case_Reload__c flag should be true for the current user\'s profile.');
+    }
 }

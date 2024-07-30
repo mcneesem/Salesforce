@@ -34,6 +34,8 @@ import PARENTCASE_ACCOUNTID from '@salesforce/schema/Case.AccountId';
 import PROJECT from '@salesforce/schema/Case.Project__c';
 import CATEGORY from '@salesforce/schema/Case.NSP_Category__c';
 import SUB_CATEGORY from '@salesforce/schema/Case.NSP_SubCategory__c';
+import getCaseSettingFlag from '@salesforce/apex/NSP_CustomCaseCreationPageController.getCaseSettingFlag';
+
 import { IsConsoleNavigation, getFocusedTabInfo, closeTab } from 'lightning/platformWorkspaceApi';
 
 const ACCOUNTFIELDS = [
@@ -410,7 +412,17 @@ export default class Nsp_CustomCaseCreationPage extends NavigationMixin(Lightnin
                 this.pageNumber = state.pageNumber;
             }
         };
-
+        this.CaseFlag();
+    }
+    //flag to determine if Case needs to be reloaded based on User Profile and Custom Settings
+    CaseFlag() {
+        getCaseSettingFlag()
+            .then(result => {
+                this.reload = result; 
+            })
+            .catch(error => {
+                this.reload = true; 
+            });
     }
 
     getMapOfObjectNameAndKeyPrefix(){
@@ -800,21 +812,31 @@ export default class Nsp_CustomCaseCreationPage extends NavigationMixin(Lightnin
         // Close the modal window and display a success toast
         let successMessage = this.isMultipleContacts == true ? 'Case Created Successfully. Please Add Contacts !' : 'Case Created Successfully.';
         
-        
-      
         if(this.isMultipleContactsSelected === false){
             this.resetFormAction(event);
-            // Modified as part of DF-03869
-                this[NavigationMixin.Navigate]({
+            //if Case setting is set to reload = true for the profile, then create the case and reload the case
+            if(this.reload === true){
+                this[NavigationMixin.GenerateUrl]({
                     type: 'standard__recordPage',
                     attributes: {
                         recordId: this.recordId,
-                        objectApiName: "Case",
                         actionName: 'view',
-                        },
-                    });//.then(url => {window.open(url, '_self')});  
+                    },
+                        }).then(url => {window.open(url, '_self')});
+                } 
+                //if Case setting is set to reload = false for the profile, then create the case and open sub tab. requirement used for Contact Center
+                else if (this.reload === false){
+                        this[NavigationMixin.Navigate]({
+                            type: 'standard__recordPage',
+                            attributes: {
+                                recordId: this.recordId,
+                                objectApiName: "Case",
+                                actionName: 'view',
+                                },
+                            });
+                }
             }
-
+            // used to close the workspace API tab
             getFocusedTabInfo().then((tabInfo) => {
                 const { tabId } = tabInfo;
                 this.dispatchEvent(new CloseActionScreenEvent());
@@ -826,8 +848,8 @@ export default class Nsp_CustomCaseCreationPage extends NavigationMixin(Lightnin
                     })
                 );
                 closeTab(tabId);
-            })        
-    }
+            })    
+        }
 
     goBacktoTypeScreen(){
         this.clearAllFieldValues();

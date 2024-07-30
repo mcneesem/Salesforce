@@ -674,4 +674,9 @@ public static Boolean isMemberOfPrivateSection125Visibility(){
             throw new AuraHandledException(excep.getMessage());
         }
     }
+    
+    @AuraEnabled(cacheable=true)
+    public static Boolean getCaseSettingFlag() {
+        return Case_Settings__c.getInstance(UserInfo.getProfileId()).Case_Reload__c;
+    }
 }
