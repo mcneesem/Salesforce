@@ -4,7 +4,7 @@
         <name>Send_Email_to_IP_Coordinators</name>
         <label>Send Email to IP Coordinators (Static List)</label>
         <locationX>66</locationX>
-        <locationY>1308</locationY>
+        <locationY>1416</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
         <connector>
@@ -63,7 +63,7 @@
         <name>Send_Email_to_IP_OT_Reps</name>
         <label>Send Email to IP OT Reps</label>
         <locationX>398</locationX>
-        <locationY>2040</locationY>
+        <locationY>2148</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
         <connector>
@@ -165,6 +165,15 @@
                 <elementReference>Add_Static_List_to_Collection.NSP_Email_Address__c</elementReference>
             </value>
         </assignmentItems>
+        <connector>
+            <targetReference>Add_Static_List_to_Collection</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_Email_Recipient_Size</name>
+        <label>Assign Email Recipient Size</label>
+        <locationX>330</locationX>
+        <locationY>1200</locationY>
         <assignmentItems>
             <assignToReference>v_Collection_Size</assignToReference>
             <operator>AssignCount</operator>
@@ -173,7 +182,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Add_Static_List_to_Collection</targetReference>
+            <targetReference>Static_Email_Recipient_Size</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -245,7 +254,7 @@
         <name>Check_for_Null_IP_OT_Rep_Address_List</name>
         <label>IP OT Rep Address List (Is Null?)</label>
         <locationX>550</locationX>
-        <locationY>1824</locationY>
+        <locationY>1932</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>OT_Rep_Exisits</name>
@@ -358,7 +367,7 @@
         <name>Static_Email_Recipient_Size</name>
         <label>Static Email Recipient Size</label>
         <locationX>330</locationX>
-        <locationY>1200</locationY>
+        <locationY>1308</locationY>
         <defaultConnector>
             <targetReference>Check_for_Null_IP_OT_Rep_Address_List</targetReference>
         </defaultConnector>
@@ -394,14 +403,14 @@
             <targetReference>Assign_Collection_Filtered_List</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
-            <targetReference>Static_Email_Recipient_Size</targetReference>
+            <targetReference>Assign_Email_Recipient_Size</targetReference>
         </noMoreValuesConnector>
     </loops>
     <loops>
         <name>Send_Email_to_IP_OT_Rep</name>
         <label>Send Email to IP OT Rep</label>
         <locationX>310</locationX>
-        <locationY>1932</locationY>
+        <locationY>2040</locationY>
         <collectionReference>Get_IP_Email_List.c_ToAddressList_IP_OT_Rep_Final_List</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -568,7 +577,7 @@
         <name>Insperity_Fault_Handler_Subflow2</name>
         <label>Fault Handler</label>
         <locationX>662</locationX>
-        <locationY>2148</locationY>
+        <locationY>2256</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultElement</name>
@@ -593,7 +602,7 @@
         <name>Insperity_Fault_Handler_Subflow_Flow_1</name>
         <label>Fault Handler</label>
         <locationX>330</locationX>
-        <locationY>1416</locationY>
+        <locationY>1524</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultElement</name>
