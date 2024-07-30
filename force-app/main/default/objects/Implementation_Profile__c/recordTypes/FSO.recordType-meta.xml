@@ -1172,6 +1172,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Pending</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Yes</fullName>
             <default>false</default>
         </values>
@@ -2409,6 +2413,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Pending</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Yes</fullName>
             <default>false</default>
         </values>
@@ -2458,6 +2466,10 @@
         <picklist>Is_the_work_performed_typically_the_same__c</picklist>
         <values>
             <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pending</fullName>
             <default>false</default>
         </values>
         <values>
