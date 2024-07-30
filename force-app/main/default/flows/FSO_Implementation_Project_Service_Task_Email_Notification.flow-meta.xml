@@ -268,9 +268,11 @@
     <formulas>
         <name>f_TaskOwnerTitle</name>
         <dataType>String</dataType>
-        <expression>IF(AND(NOT(ISNULL({!$Record.Owner:User.Title})), 
-	   NOT(ISBLANK({!$Record.Owner:User.Title}))
- ),{!$Record.Owner:User.Title} ,&quot;&quot;)</expression>
+        <expression>IF(
+  NOT( ISBLANK( {!$Record.Owner:User.Title} ) ) ,
+  {!$Record.Owner:User.Title} ,
+  &quot;&quot;
+)</expression>
     </formulas>
     <interviewLabel>FSO Implementation Project Service Task Email Notification {!$Flow.CurrentDateTime}</interviewLabel>
     <label>FSO Implementation Project Service Task Email Notification</label>
