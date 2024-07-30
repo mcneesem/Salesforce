@@ -3,7 +3,7 @@
     <actionCalls>
         <name>Send_Email_To_Sender</name>
         <label>Send Email To Sender</label>
-        <locationX>644</locationX>
+        <locationX>446</locationX>
         <locationY>1200</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
@@ -108,7 +108,7 @@
     <decisions>
         <name>Validate_Case_Records</name>
         <label>Validate Case Records</label>
-        <locationX>1139</locationX>
+        <locationX>908</locationX>
         <locationY>492</locationY>
         <defaultConnectorLabel>No Case Records</defaultConnectorLabel>
         <rules>
@@ -122,7 +122,14 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>Get_RelatedCase_Records</leftValueReference>
+                <leftValueReference>$Record.FromAddress</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.FromAddress</leftValueReference>
                 <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -137,9 +144,12 @@
     <decisions>
         <name>Validate_Email</name>
         <label>Validate Email</label>
-        <locationX>644</locationX>
+        <locationX>446</locationX>
         <locationY>600</locationY>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <defaultConnector>
+            <targetReference>External_Email_Template</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>External Email</defaultConnectorLabel>
         <rules>
             <name>Internal_Email</name>
             <conditionLogic>and</conditionLogic>
@@ -154,21 +164,6 @@
                 <targetReference>Internal_Email_Template</targetReference>
             </connector>
             <label>Internal Email</label>
-        </rules>
-        <rules>
-            <name>External_Email</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>$Record.FromAddress</leftValueReference>
-                <operator>IsBlank</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>External_Email_Template</targetReference>
-            </connector>
-            <label>External Email</label>
         </rules>
     </decisions>
     <decisions>
@@ -232,7 +227,7 @@
     <decisions>
         <name>Validate_the_Switch</name>
         <label>Validate the Switch</label>
-        <locationX>1518</locationX>
+        <locationX>1271</locationX>
         <locationY>276</locationY>
         <defaultConnectorLabel>Switch Turn Off</defaultConnectorLabel>
         <rules>
@@ -311,7 +306,7 @@
     <recordLookups>
         <name>Get_RelatedCase_Records</name>
         <label>Get_RelatedCase_Records</label>
-        <locationX>1139</locationX>
+        <locationX>908</locationX>
         <locationY>384</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -360,7 +355,7 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <start>
-        <locationX>526</locationX>
+        <locationX>402</locationX>
         <locationY>0</locationY>
         <filterLogic>and</filterLogic>
         <filters>
@@ -384,7 +379,7 @@
     <subflows>
         <name>Send_Fault_Message</name>
         <label>Send Fault Message</label>
-        <locationX>1370</locationX>
+        <locationX>1106</locationX>
         <locationY>1308</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
