@@ -812,11 +812,25 @@ export default class Nsp_CustomCaseCreationPage extends NavigationMixin(Lightnin
         //Added By Sruthi - End
         // Close the modal window and display a success toast
         let successMessage = this.isMultipleContacts == true ? 'Case Created Successfully. Please Add Contacts !' : 'Case Created Successfully.';
-        
+        if ( this.reload === true ) {
+            // ADO-296933
+            // ~ previous close/toaster functionality before reload switch was created...
+            // ~ required for Phase 2 in Service Operation App
+            this.dispatchEvent(new CloseActionScreenEvent());
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Success',
+                    message: successMessage,
+                    variant: 'success'
+                })
+            );
+        }
+
         if(this.isMultipleContactsSelected === false){
             this.resetFormAction(event);
             if ( this.reload === true ) {
-                // when reload = true, then create the case and reload the case.
+                // ADO-296933
+                // ~ when reload = true, then create the case and reload the case.
                 // ~ required for Phase 2 in Service Operation App
                 this[NavigationMixin.GenerateUrl]({
                     type: 'standard__recordPage',
@@ -828,7 +842,8 @@ export default class Nsp_CustomCaseCreationPage extends NavigationMixin(Lightnin
                     window.open(url, '_self')
                 });
             } else if ( this.reload === false ) {
-                // when reload = false, then create the case and open sub tab.
+                // ADO-296933
+                // ~ when reload = false, then create the case and open sub tab.
                 // ~ required for Service Cloud Voice in Contact Center App
                 this[NavigationMixin.Navigate]({
                     type: 'standard__recordPage',
@@ -840,19 +855,25 @@ export default class Nsp_CustomCaseCreationPage extends NavigationMixin(Lightnin
                 });
             }
         }
+
         // used to close the workspace API tab
-        getFocusedTabInfo().then((tabInfo) => {
-            const { tabId } = tabInfo;
-            this.dispatchEvent(new CloseActionScreenEvent());
-            this.dispatchEvent(
-                new ShowToastEvent({
-                    title: 'Success',
-                    message: successMessage,
-                    variant: 'success'
-                })
-            );
-            closeTab(tabId);
-        })
+        if ( this.reload === false ) {
+            // ADO-296933
+            // ~ new close/toaster functionality after reload switch was created...
+            // ~ required for Phase 2 in Service Operation App
+            getFocusedTabInfo().then((tabInfo) => {
+                const { tabId } = tabInfo;
+                this.dispatchEvent(new CloseActionScreenEvent());
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Success',
+                        message: successMessage,
+                        variant: 'success'
+                    })
+                );
+                closeTab(tabId);
+            });
+        }
     }
 
     goBacktoTypeScreen(){
