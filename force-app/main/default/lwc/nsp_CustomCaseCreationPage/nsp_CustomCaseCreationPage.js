@@ -814,42 +814,45 @@ export default class Nsp_CustomCaseCreationPage extends NavigationMixin(Lightnin
         
         if(this.isMultipleContactsSelected === false){
             this.resetFormAction(event);
-            //if Case setting is set to reload = true for the profile, then create the case and reload the case
-            if(this.reload === true){
+            if ( this.reload === true ) {
+                // when reload = true, then create the case and reload the case.
+                // ~ required for Phase 2 in Service Operation App
                 this[NavigationMixin.GenerateUrl]({
                     type: 'standard__recordPage',
                     attributes: {
                         recordId: this.recordId,
                         actionName: 'view',
                     },
-                        }).then(url => {window.open(url, '_self')});
-                } 
-                //if Case setting is set to reload = false for the profile, then create the case and open sub tab. requirement used for Contact Center
-                else if (this.reload === false){
-                        this[NavigationMixin.Navigate]({
-                            type: 'standard__recordPage',
-                            attributes: {
-                                recordId: this.recordId,
-                                objectApiName: "Case",
-                                actionName: 'view',
-                                },
-                            });
-                }
+                }).then(url => {
+                    window.open(url, '_self')
+                });
+            } else if ( this.reload === false ) {
+                // when reload = false, then create the case and open sub tab.
+                // ~ required for Service Cloud Voice in Contact Center App
+                this[NavigationMixin.Navigate]({
+                    type: 'standard__recordPage',
+                    attributes: {
+                        recordId: this.recordId,
+                        objectApiName: "Case",
+                        actionName: 'view',
+                    },
+                });
             }
-            // used to close the workspace API tab
-            getFocusedTabInfo().then((tabInfo) => {
-                const { tabId } = tabInfo;
-                this.dispatchEvent(new CloseActionScreenEvent());
-                this.dispatchEvent(
-                    new ShowToastEvent({
-                        title: 'Success',
-                        message: successMessage,
-                        variant: 'success'
-                    })
-                );
-                closeTab(tabId);
-            })    
         }
+        // used to close the workspace API tab
+        getFocusedTabInfo().then((tabInfo) => {
+            const { tabId } = tabInfo;
+            this.dispatchEvent(new CloseActionScreenEvent());
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Success',
+                    message: successMessage,
+                    variant: 'success'
+                })
+            );
+            closeTab(tabId);
+        })
+    }
 
     goBacktoTypeScreen(){
         this.clearAllFieldValues();
