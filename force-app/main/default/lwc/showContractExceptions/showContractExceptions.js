@@ -1,10 +1,13 @@
 import { LightningElement, api, track, wire } from 'lwc';
 import getExceptionList from '@salesforce/apex/NSP_ShowContractExceptionsController.getExceptionList';
+import getURLTarget from '@salesforce/apex/NSP_ShowContractExceptionsController.getTargetURL';
 
 export default class ShowContractExceptions extends LightningElement {
     @api accountId;
     @api contactId;
     @api recordId;
+    @track urlTarget = '_self'; 
+
     contact;
     exceptions = [];
     showContractModal = false;
@@ -17,7 +20,7 @@ export default class ShowContractExceptions extends LightningElement {
             fieldName: 'nameUrl',
             type: 'url',
             typeAttributes: {label: { fieldName: 'Name' }, 
-            target: '_blank'},
+            target: this.urlTarget},
             sortable: true
         },
         {
@@ -47,7 +50,7 @@ export default class ShowContractExceptions extends LightningElement {
             fieldName: 'nameUrl',
             type: 'url',
             typeAttributes: {label: { fieldName: 'Name' }, 
-            target: '_blank'},
+            target: this.urlTarget},
             sortable: true
         },
         {
@@ -109,6 +112,24 @@ export default class ShowContractExceptions extends LightningElement {
     ];
 
     connectedCallback(){
+        this.fetchURLTarget();
+    }
+
+    fetchURLTarget() {
+        getURLTarget()
+            .then(result => {
+                console.log('WHAT IS MY RESULT ', JSON.stringify(result));
+                this.urlTarget = result || '_self'; // Default to '_self' if no result
+                console.log('what is my URL Target ', JSON.stringify(this.urlTarget));
+                this.updateColumnAttributes();
+            })
+            .catch(error => {
+                console.error('Error fetching URL target: ', error);
+                this.urlTarget = '_self'; // Fallback to default value on error
+                this.updateColumnAttributes();
+            });
+
+            console.log('LLOGGG', JSON.stringify(this.urlTarget));
     }
 
     @wire(getExceptionList,  {  contactId: '$contactId' })
@@ -145,6 +166,29 @@ export default class ShowContractExceptions extends LightningElement {
             }
         }
     }
+
+    updateColumnAttributes() {
+        this.mainPagecolumns = this.mainPagecolumns.map(column => {
+            if (column.fieldName === 'nameUrl') {
+                return {
+                    ...column,
+                    typeAttributes: { label: { fieldName: 'Name' }, target: this.urlTarget }
+                };
+            }
+            return column;
+        });
+
+        this.columns = this.columns.map(column => {
+            if (column.fieldName === 'nameUrl') {
+                return {
+                    ...column,
+                    typeAttributes: { label: { fieldName: 'Name' }, target: this.urlTarget }
+                };
+            }
+            return column;
+        });
+    }
+
     closeModal(){
         this.showContractModal = false;
         

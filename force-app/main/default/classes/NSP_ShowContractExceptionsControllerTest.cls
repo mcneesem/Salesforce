@@ -57,4 +57,17 @@ public class NSP_ShowContractExceptionsControllerTest {
         }
         Test.stopTest();
     }
+
+    @isTest
+    static void testGetTargetURLWithValidRecord() {
+        // Setup test data
+        NSP_Service_Exception_Target__c targetRecord = new NSP_Service_Exception_Target__c(
+            Target_URL__c = 'https://example.com'
+        );
+        insert targetRecord;
+		Test.startTest();
+        String result = NSP_ShowContractExceptionsController.getTargetURL();
+        Test.stopTest();
+		System.assertEquals('https://example.com', result, 'The target URL should match the URL in the test record.');
+    }
 }

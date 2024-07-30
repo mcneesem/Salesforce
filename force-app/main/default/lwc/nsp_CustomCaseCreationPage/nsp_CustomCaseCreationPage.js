@@ -35,6 +35,8 @@ import PROJECT from '@salesforce/schema/Case.Project__c';
 import CATEGORY from '@salesforce/schema/Case.NSP_Category__c';
 import SUB_CATEGORY from '@salesforce/schema/Case.NSP_SubCategory__c';
 
+import { IsConsoleNavigation, getFocusedTabInfo, closeTab } from 'lightning/platformWorkspaceApi';
+
 const ACCOUNTFIELDS = [
     'Account.Name',
     'Account.NSP_AIMS_Client__c'
@@ -95,8 +97,8 @@ export default class Nsp_CustomCaseCreationPage extends NavigationMixin(Lightnin
     categorySubCategoryDetailConfidentialMap = new Map();
     categorySubCategoryDetailMap = new Map();
 
-    @wire(CurrentPageReference)
-    pageRef;
+    @wire(CurrentPageReference) pageRef;
+    @wire(IsConsoleNavigation) isConsoleNavigation;
 
     enableWedgeClaim = false;
     disableButton = false;
@@ -798,28 +800,35 @@ export default class Nsp_CustomCaseCreationPage extends NavigationMixin(Lightnin
         //Added By Sruthi - End
         // Close the modal window and display a success toast
         let successMessage = this.isMultipleContacts == true ? 'Case Created Successfully. Please Add Contacts !' : 'Case Created Successfully.';
-        this.dispatchEvent(new CloseActionScreenEvent());
-        this.dispatchEvent(
-            new ShowToastEvent({
-                title: 'Success',
-                message: successMessage,
-                variant: 'success'
-            })
-        );
+        
         
       
-if(this.isMultipleContactsSelected === false){
-    this.resetFormAction(event);
-    // Modified as part of DF-03869
-    this[NavigationMixin.GenerateUrl]({
-        type: 'standard__recordPage',
-        attributes: {
-            recordId: this.recordId,
-            actionName: 'view',
-        },
-           }).then(url => {window.open(url, '_self')});  
+        if(this.isMultipleContactsSelected === false){
+            this.resetFormAction(event);
+            // Modified as part of DF-03869
+                this[NavigationMixin.Navigate]({
+                    type: 'standard__recordPage',
+                    attributes: {
+                        recordId: this.recordId,
+                        objectApiName: "Case",
+                        actionName: 'view',
+                        },
+                    });//.then(url => {window.open(url, '_self')});  
+            }
+
+            getFocusedTabInfo().then((tabInfo) => {
+                const { tabId } = tabInfo;
+                this.dispatchEvent(new CloseActionScreenEvent());
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Success',
+                        message: successMessage,
+                        variant: 'success'
+                    })
+                );
+                closeTab(tabId);
+            })        
     }
-}
 
     goBacktoTypeScreen(){
         this.clearAllFieldValues();
