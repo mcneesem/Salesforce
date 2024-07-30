@@ -5137,6 +5137,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Performance Management</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Recruiting Services</fullName>
             <default>false</default>
         </values>
