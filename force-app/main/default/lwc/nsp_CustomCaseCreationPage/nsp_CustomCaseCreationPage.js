@@ -799,7 +799,6 @@ export default class Nsp_CustomCaseCreationPage extends NavigationMixin(Lightnin
         if (this.disableButton) this.disableButton = false;
     }
 
-
     handleSuccess(event) {
         //Added By Sruthi - start
         this.recordId = event.detail.id;
@@ -816,14 +815,7 @@ export default class Nsp_CustomCaseCreationPage extends NavigationMixin(Lightnin
             // ADO-296933
             // ~ previous close/toaster functionality before reload switch was created...
             // ~ required for Phase 2 in Service Operation App
-            this.dispatchEvent(new CloseActionScreenEvent());
-            this.dispatchEvent(
-                new ShowToastEvent({
-                    title: 'Success',
-                    message: successMessage,
-                    variant: 'success'
-                })
-            );
+            this.dispatchCloseToastEvents( successMessage );
         }
 
         if(this.isMultipleContactsSelected === false){
@@ -863,17 +855,21 @@ export default class Nsp_CustomCaseCreationPage extends NavigationMixin(Lightnin
             // ~ required for Phase 2 in Service Operation App
             getFocusedTabInfo().then((tabInfo) => {
                 const { tabId } = tabInfo;
-                this.dispatchEvent(new CloseActionScreenEvent());
-                this.dispatchEvent(
-                    new ShowToastEvent({
-                        title: 'Success',
-                        message: successMessage,
-                        variant: 'success'
-                    })
-                );
+                this.dispatchCloseToastEvents( successMessage );
                 closeTab(tabId);
             });
         }
+    }
+
+    dispatchCloseToastEvents( toastMessage ) {
+        this.dispatchEvent(new CloseActionScreenEvent());
+        this.dispatchEvent(
+            new ShowToastEvent({
+                title: 'Success' ,
+                message: toastMessage ,
+                variant: 'success'
+            })
+        );
     }
 
     goBacktoTypeScreen(){
