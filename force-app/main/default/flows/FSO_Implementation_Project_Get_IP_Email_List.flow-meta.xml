@@ -706,11 +706,10 @@ NOT(ISBLANK( {!Get_IP_Record.NSP_Project_Manager__c}))
         <name>f_PM_JobTitle</name>
         <dataType>String</dataType>
         <expression>IF(AND(NOT(ISNULL({!Get_IP_Record.Id})),
-	   NOT(ISNULL({!Get_IP_Record.NSP_Project_Manager__c})),
-	   NOT(ISBLANK({!Get_IP_Record.NSP_Project_Manager__c}))
-       ),IF(AND(NOT(ISNULL({!Get_IP_Record.NSP_Project_Manager__r.NSP_Job_Title__c})),NOT(ISBLANK({!Get_IP_Record.NSP_Project_Manager__r.NSP_Job_Title__c}))),{!Get_IP_Record.NSP_Project_Manager__r.NSP_Job_Title__c},&quot;&quot;),
-	   {!Retrieve_Project.Owner:User.Title} 
-  )</expression>
+        NOT(ISNULL({!Get_IP_Record.NSP_Project_Manager__c})),
+        NOT(ISBLANK({!Get_IP_Record.NSP_Project_Manager__c}))
+        ),IF(AND(NOT(ISNULL({!Get_IP_Record.NSP_Project_Manager__r.NSP_Job_Title__c})),NOT(ISBLANK({!Get_IP_Record.NSP_Project_Manager__r.NSP_Job_Title__c}))),{!Get_IP_Record.NSP_Project_Manager__r.NSP_Job_Title__c},&quot;&quot;),
+        {!Retrieve_Project.Owner:User.Title})</expression>
     </formulas>
     <formulas>
         <name>f_Sales_Office</name>
