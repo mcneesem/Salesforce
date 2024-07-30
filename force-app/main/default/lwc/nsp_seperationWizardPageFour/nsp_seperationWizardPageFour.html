@@ -603,6 +603,26 @@
                       This section is for HR specialist notes to the separation agreement team, not for non-standard language requests.
                     </div>
                   </div>
+                    <div class="medium slds-form-element slds-form-element_horizontal">
+                      <lightning-radio-group name="AnyPreparedDocumentForTermination" 
+                        label="Did the terminated WSEE sign an Offer Letter, Employment Agreement, any Restrictive Covenants Agreements, or Retention/Stay/Bonus Agreements, etc." 
+                        options={pickValueYesNo} value={prepareDocTerminationValue} onchange={handleChange} 
+                        required 
+                        type="radio">
+                      </lightning-radio-group>
+                      <lightning-input-field style="display:none" class="slds-hidden" field-name="NSP_AnyPreparedDocumentForTermination__c" 
+                        value={prepareDocTerminationValue}  required >
+                      </lightning-input-field>
+                    </div>
+                    <div class="slds-form-element slds-form-element_horizontal">
+                      <lightning-radio-group name="AnyProvisionInPreparedDocRefersStock"
+                        label="Is there any reference to stock/equity that survives termination in the client-prepared agreements ?"
+                        options={pickValueYesNo} value={IsanyReferenceStock} onchange={handleChange} required type="radio">
+                      </lightning-radio-group>
+                        <lightning-input-field style='display:none' class="slds-hidden"
+                          field-name="NSP_AnyProvisionInPreparedDocRefersStock__c" value={IsanyReferenceStock} required >
+                        </lightning-input-field>
+                   </div>
               </div>
             </template>
           </div>
