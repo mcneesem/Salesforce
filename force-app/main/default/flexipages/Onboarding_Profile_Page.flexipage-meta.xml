@@ -2300,7 +2300,7 @@
                 <identifier>RecordYears_in_Business_cField</identifier>
             </fieldInstance>
         </itemInstances>
-                <itemInstances>
+        <itemInstances>
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
@@ -2344,7 +2344,7 @@
                 <identifier>RecordCompleted_Date_cField</identifier>
             </fieldInstance>
         </itemInstances>
-                <itemInstances>
+        <itemInstances>
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
