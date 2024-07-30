@@ -115,6 +115,10 @@
                 <behavior>Readonly</behavior>
                 <field>LastModifiedDate</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>VonageSCV__InteractionGuid__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
