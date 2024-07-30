@@ -365,6 +365,20 @@
                 <booleanValue>false</booleanValue>
             </value>
         </filters>
+        <filters>
+            <field>ToAddress</field>
+            <operator>Contains</operator>
+            <value>
+                <stringValue>section125</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>ToAddress</field>
+            <operator>Contains</operator>
+            <value>
+                <stringValue>@insperity.com</stringValue>
+            </value>
+        </filters>
         <object>EmailMessage</object>
         <recordTriggerType>Create</recordTriggerType>
         <scheduledPaths>
@@ -385,13 +399,13 @@
         <inputAssignments>
             <name>faultElement</name>
             <value>
-                <elementReference>Send_Email_To_Sender</elementReference>
+                <stringValue>Send_Email_To_Sender</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
             <name>faultFlow</name>
             <value>
-                <stringValue>Health And Welfare Email Notification</stringValue>
+                <stringValue>Health_And_Welfare_Email_Notification</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
