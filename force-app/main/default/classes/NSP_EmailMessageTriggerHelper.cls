@@ -22,7 +22,7 @@ public with sharing class NSP_EmailMessageTriggerHelper {
     /* Description: This method will be called after insert of EmailMessage
 	Date       : 17/11/2021 */
     public void afterInsertionEmailMessage(List<EmailMessage> newList, Map<Id, EmailMessage> newMap){
-        boolean switchEnabled = EmailMessageTriggerHelper__c.getInstance(UserInfo.getUserId()).IsHealthAndWelfareEmailMessageEnabled__c;
+        boolean switchEnabled = EmailMessageTriggerSettings__c.getInstance(UserInfo.getUserId()).IsHealthAndWelfareEmailMessageEnabled__c;
         Set<Id> setOfCaseId = new Set<Id> ();
         Set<Id> employmentScreeningcaseIdSet = new Set<Id>();
         List<Case> caseToUpdate = new List<Case> ();
@@ -48,7 +48,7 @@ public with sharing class NSP_EmailMessageTriggerHelper {
                }
             
             //As a part of STY-03531
-            if(switchEnabled && eMessage.ToAddress == System.Label.NSP_Health_Welfare_Section_125){
+            if(!switchEnabled && eMessage.ToAddress == System.Label.NSP_Health_Welfare_Section_125){
                 healthWelfareInternalExternalCaseIdFromAddMap.put(eMessage.ParentId, eMessage);
             }
                

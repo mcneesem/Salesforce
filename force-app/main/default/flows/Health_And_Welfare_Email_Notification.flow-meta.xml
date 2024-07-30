@@ -3,18 +3,21 @@
     <actionCalls>
         <name>Send_Email_Action_1</name>
         <label>Send Email Action 1</label>
-        <locationX>1023</locationX>
-        <locationY>1332</locationY>
+        <locationX>644</locationX>
+        <locationY>1200</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
-        <connector>
-            <targetReference>Iterate_Over_Case_Records</targetReference>
-        </connector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>emailAddresses</name>
             <value>
                 <elementReference>$Record.FromAddress</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>senderType</name>
+            <value>
+                <stringValue>OrgWideEmailAddress</stringValue>
             </value>
         </inputParameters>
         <inputParameters>
@@ -42,8 +45,8 @@
     <assignments>
         <name>External_Email_Template_Assignment</name>
         <label>External Email Template Assignment</label>
-        <locationX>1155</locationX>
-        <locationY>1140</locationY>
+        <locationX>578</locationX>
+        <locationY>924</locationY>
         <assignmentItems>
             <assignToReference>Email_Template_Id</assignToReference>
             <operator>Assign</operator>
@@ -58,8 +61,8 @@
     <assignments>
         <name>Internal_Email_Template_Assignment</name>
         <label>Internal Email Template Assignment</label>
-        <locationX>891</locationX>
-        <locationY>1140</locationY>
+        <locationX>50</locationX>
+        <locationY>924</locationY>
         <assignmentItems>
             <assignToReference>Email_Template_Id</assignToReference>
             <operator>Assign</operator>
@@ -102,11 +105,11 @@
     <decisions>
         <name>Validate_Case_Records</name>
         <label>Validate Case Records</label>
-        <locationX>935</locationX>
-        <locationY>384</locationY>
+        <locationX>644</locationX>
+        <locationY>600</locationY>
         <defaultConnectorLabel>No Case Records</defaultConnectorLabel>
         <rules>
-            <name>Case_Record_Not_Null</name>
+            <name>Case_Record_With_Internal_Email</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>Get_RelatedCase_Records</leftValueReference>
@@ -117,54 +120,11 @@
             </conditions>
             <conditions>
                 <leftValueReference>Get_RelatedCase_Records</leftValueReference>
-                <operator>IsEmpty</operator>
+                <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
-            <connector>
-                <targetReference>Internal_Email_Template</targetReference>
-            </connector>
-            <label>Case Record Not Null</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Validate_Email_to_Case</name>
-        <label>Validate Email to Case</label>
-        <locationX>1408</locationX>
-        <locationY>816</locationY>
-        <defaultConnector>
-            <targetReference>Iterate_Over_Case_Records</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Email To Case True</defaultConnectorLabel>
-        <rules>
-            <name>Email_To_Case_False</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Iterate_Over_Case_Records.NSP_Case_Created_From_Email_To_Case__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Validate_To_Email_Address</targetReference>
-            </connector>
-            <label>Email To Case False</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Validate_From_Email_Address</name>
-        <label>Validate From Email Address</label>
-        <locationX>1023</locationX>
-        <locationY>1032</locationY>
-        <defaultConnector>
-            <targetReference>External_Email_Template_Assignment</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>External Email</defaultConnectorLabel>
-        <rules>
-            <name>Internal_Email</name>
-            <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.FromAddress</leftValueReference>
                 <operator>Contains</operator>
@@ -173,50 +133,137 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Internal_Email_Template_Assignment</targetReference>
+                <targetReference>Internal_Email_Template</targetReference>
             </connector>
-            <label>Internal Email</label>
+            <label>Case Records With Internal Email</label>
         </rules>
-    </decisions>
-    <decisions>
-        <name>Validate_To_Email_Address</name>
-        <label>Validate To Email Address</label>
-        <locationX>1221</locationX>
-        <locationY>924</locationY>
-        <defaultConnector>
-            <targetReference>Iterate_Over_Case_Records</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Validation False</defaultConnectorLabel>
         <rules>
-            <name>Validation_True</name>
-            <conditionLogic>1</conditionLogic>
+            <name>Case_Records_With_External_Email</name>
+            <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>$Record.ToAddress</leftValueReference>
-                <operator>EqualTo</operator>
+                <leftValueReference>Get_RelatedCase_Records</leftValueReference>
+                <operator>IsBlank</operator>
                 <rightValue>
-                    <elementReference>$Label.NSP_Health_Welfare_Section_125</elementReference>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_RelatedCase_Records</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.FromAddress</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.FromAddress</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Validate_From_Email_Address</targetReference>
+                <targetReference>External_Email_Template</targetReference>
             </connector>
-            <label>Validation True</label>
+            <label>Case Records With External Email</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Validate_External_Email_Template</name>
+        <label>Validate External Email Template</label>
+        <locationX>710</locationX>
+        <locationY>816</locationY>
+        <defaultConnectorLabel>External Email Template False</defaultConnectorLabel>
+        <rules>
+            <name>External_Email_Template_True</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>External_Email_Template</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>External_Email_Template</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>External_Email_Template_Assignment</targetReference>
+            </connector>
+            <label>External Email Template True</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Validate_Internal_Email_Template</name>
+        <label>Validate Internal Email Template</label>
+        <locationX>182</locationX>
+        <locationY>816</locationY>
+        <defaultConnectorLabel>Internal Email Template False</defaultConnectorLabel>
+        <rules>
+            <name>Internal_Email_Template_True</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Internal_Email_Template</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Internal_Email_Template</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Internal_Email_Template_Assignment</targetReference>
+            </connector>
+            <label>Internal Email Template True</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Validate_the_Switch</name>
+        <label>Validate the Switch</label>
+        <locationX>1007</locationX>
+        <locationY>384</locationY>
+        <defaultConnectorLabel>Switch Turn Off</defaultConnectorLabel>
+        <rules>
+            <name>Switch_Turned_On</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Custom_Setting_Record</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Custom_Setting_Record</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_RelatedCase_Records</targetReference>
+            </connector>
+            <label>Switch Turned On</label>
         </rules>
     </decisions>
     <environments>Default</environments>
     <interviewLabel>Health And Welfare Email Notification {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Health And Welfare Email Notification</label>
-    <loops>
-        <name>Iterate_Over_Case_Records</name>
-        <label>Iterate Over Case Records</label>
-        <locationX>803</locationX>
-        <locationY>708</locationY>
-        <collectionReference>Get_RelatedCase_Records</collectionReference>
-        <iterationOrder>Asc</iterationOrder>
-        <nextValueConnector>
-            <targetReference>Validate_Email_to_Case</targetReference>
-        </nextValueConnector>
-    </loops>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -239,11 +286,11 @@
     <recordLookups>
         <name>External_Email_Template</name>
         <label>External Email Template</label>
-        <locationX>803</locationX>
-        <locationY>600</locationY>
+        <locationX>710</locationX>
+        <locationY>708</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Iterate_Over_Case_Records</targetReference>
+            <targetReference>Validate_External_Email_Template</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -260,10 +307,31 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
+        <name>Get_Custom_Setting_Record</name>
+        <label>Get Custom Setting Record</label>
+        <locationX>1007</locationX>
+        <locationY>276</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Validate_the_Switch</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>IsHealthAndWelfareEmailMessageEnabled__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>EmailMessageTriggerSettings__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>Get_RelatedCase_Records</name>
         <label>Get_RelatedCase_Records</label>
-        <locationX>935</locationX>
-        <locationY>276</locationY>
+        <locationX>644</locationX>
+        <locationY>492</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Validate_Case_Records</targetReference>
@@ -276,18 +344,25 @@
                 <elementReference>$Record.ParentId</elementReference>
             </value>
         </filters>
-        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <filters>
+            <field>NSP_Case_Created_From_Email_To_Case__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>Case</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
         <name>Internal_Email_Template</name>
         <label>Internal Email Template</label>
-        <locationX>803</locationX>
-        <locationY>492</locationY>
+        <locationX>182</locationX>
+        <locationY>708</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>External_Email_Template</targetReference>
+            <targetReference>Validate_Internal_Email_Template</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -304,20 +379,20 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <start>
-        <locationX>50</locationX>
+        <locationX>270</locationX>
         <locationY>0</locationY>
-        <filterFormula>{!$Record.ToAddress}={!$Label.NSP_Health_Welfare_Section_125}</filterFormula>
+        <filterFormula>NOT(ISNULL({!$Record.ParentId})) &amp;&amp; ({!$Record.ToAddress} = {!$Label.NSP_Health_Welfare_Section_125})</filterFormula>
         <object>EmailMessage</object>
         <recordTriggerType>Create</recordTriggerType>
         <scheduledPaths>
             <connector>
-                <targetReference>Get_RelatedCase_Records</targetReference>
+                <targetReference>Get_Custom_Setting_Record</targetReference>
             </connector>
             <pathType>AsyncAfterCommit</pathType>
         </scheduledPaths>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <variables>
         <name>Email_Template_Id</name>
         <dataType>String</dataType>
