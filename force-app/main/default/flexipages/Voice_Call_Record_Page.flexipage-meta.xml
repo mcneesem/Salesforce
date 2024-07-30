@@ -392,27 +392,6 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
-                <componentInstanceProperties>
-                    <name>createQuickActionName</name>
-                    <value>New_Case_Outlook</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>lookupFieldName</name>
-                    <value>VoiceCall.CaseId__c</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>titleFieldName</name>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>updateQuickActionName</name>
-                    <value>Case.Update_Case_Chat</value>
-                </componentInstanceProperties>
-                <componentName>console:relatedRecord</componentName>
-                <identifier>console_relatedRecord</identifier>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
                 <componentName>voiceCallCategorySubCategory</componentName>
                 <identifier>c_voiceCallCategorySubCategory</identifier>
                 <visibilityRule>
@@ -433,6 +412,27 @@
                         <rightValue>Inbound</rightValue>
                     </criteria>
                 </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>createQuickActionName</name>
+                    <value>New_Case_Outlook</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>lookupFieldName</name>
+                    <value>VoiceCall.CaseId__c</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>titleFieldName</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>updateQuickActionName</name>
+                    <value>Case.Update_Case_Chat</value>
+                </componentInstanceProperties>
+                <componentName>console:relatedRecord</componentName>
+                <identifier>console_relatedRecord</identifier>
             </componentInstance>
         </itemInstances>
         <name>sidebar</name>
