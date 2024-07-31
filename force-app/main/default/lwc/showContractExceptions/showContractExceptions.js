@@ -118,14 +118,13 @@ export default class ShowContractExceptions extends LightningElement {
     fetchURLTarget() {
         getURLTarget()
             .then(result => {
-                this.urlTarget = result || '_blank'; // Default to '_self' if no result
+                this.urlTarget = result || '_blank'; // Default to '_blank' if no result
             })
             .catch(error => {
-                console.error('Error fetching URL target: ', error);
                 this.urlTarget = '_blank'; // Fallback to '_blank' on error
             })
             .finally(() => {
-                this.updateColumnAttributes(); // Ensure this is always called
+                this.updateColumnAttributes(); 
             });
     }
 
