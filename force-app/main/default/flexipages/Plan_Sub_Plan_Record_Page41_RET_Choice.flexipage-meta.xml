@@ -167,8 +167,48 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Plan_Effective_Date__c</fieldItem>
-                <identifier>RecordNSP_Plan_Effective_Date_cField</identifier>
+                <fieldItem>Record.Auto_Enroll_Effective_Date__c</fieldItem>
+                <identifier>RecordAuto_Enroll_Effective_Date__cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Auto_Escalate__c</fieldItem>
+                <identifier>RecordAuto_Escalate__cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Escallation_Max__c</fieldItem>
+                <identifier>RecordEscallation_Max__cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Exception_Type__c</fieldItem>
+                <identifier>RecordException_Type__cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.LTPT_Effective_Date__c</fieldItem>
+                <identifier>RecordLTPT_Effective_Date__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-e493d6cb-94b2-405c-96ff-48a7d224623b</name>
@@ -243,6 +283,56 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Subplan_Lead_Parent__c</fieldItem>
                 <identifier>RecordNSP_Subplan_Lead_Parent_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Is_QACA__c</fieldItem>
+                <identifier>RecordIs_QACA__cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Is_Mandatory__c</fieldItem>
+                <identifier>RecordIs_Mandatory__cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Allows_LT_Employer_Contributions__c</fieldItem>
+                <identifier>RecordAllows_LT_Employer_Contributions__cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Exception_Date__c</fieldItem>
+                <identifier>RecordException_Date__cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.LTPT_Term_Date__c</fieldItem>
+                <identifier>RecordLTPT_Term_date__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-69031d32-f769-4920-b768-413276519ce2</name>

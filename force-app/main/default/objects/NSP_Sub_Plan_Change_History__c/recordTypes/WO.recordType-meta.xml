@@ -4,6 +4,21 @@
     <active>true</active>
     <label>WO</label>
     <picklistValues>
+        <picklist>Exception_Type__c</picklist>
+        <values>
+            <fullName>Grandfathered</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Less than 11 EE%27s</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Less than 3 yrs</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>NSP_Plan_Type__c</picklist>
         <values>
             <fullName>401K</fullName>
