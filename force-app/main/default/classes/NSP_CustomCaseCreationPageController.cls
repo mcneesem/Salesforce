@@ -1,4 +1,6 @@
 public with sharing class NSP_CustomCaseCreationPageController {
+    // test w/ NSP_CustomCaseCreationPageControllerTest (??%)
+
     public static final String NOCONFIGERROR = 'No Case Type Configuration Found';
     public static final String NSP_CUSTOMCASECREATIONPAGECONTROLLER = 'NSP_CustomCaseCreationPageController';   
     public static final String SERVICE_OPERATIONS = 'Service Operations';
