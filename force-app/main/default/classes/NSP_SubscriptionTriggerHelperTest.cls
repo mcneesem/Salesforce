@@ -194,6 +194,7 @@ public class NSP_SubscriptionTriggerHelperTest {
 * Author : CPQ      
 * @return void  
 */
+    
     @isTest
     static void testSubscriptionInsert(){
         
@@ -264,6 +265,7 @@ public class NSP_SubscriptionTriggerHelperTest {
 * Author : CPQ      
 * @return void  
 */
+    
     @isTest
     static void testSubscriptionInsert2(){
         
@@ -330,6 +332,161 @@ public class NSP_SubscriptionTriggerHelperTest {
         subscription1.SBQQ__BillingFrequency__c = 'Annual';
         //subscription1.NSP_Remove_Bundle_Details__c = True;
         subscription1.SBQQ__RequiredById__c = accounts[0].Id;
+         subscription1.SBQQ__HasConsumptionSchedule__c = true;
+
+        subList.add(subscription1);
+        
+        insert subList;
+        update subList;
+        test.stopTest(); 
+        List<Asset> assets = [SELECT Id, Status FROM Asset WHERE Status = :NSP_CPQConstants.TERMINATED];
+        System.assertNotEquals(Null, assets.size());
+    }
+    @isTest
+    static void testSubscriptionInsert3(){
+        
+        //List<SBQQ__Subscription__c> subscription = [SELECT Id FROM SBQQ__Subscription__c LIMIT 1];
+        Product2 product1 = [Select Id, Name from Product2 WHERE Name = :TEST_PRODUCT LIMIT 1]; //Added WHERE Condition as part of code fix
+        List<Account> accounts = [SELECT Id, Name FROM Account WHERE Name != null LIMIT 1];
+        
+        List<SBQQ__Quote__c> quote = [SELECT Id FROM SBQQ__Quote__c WHERE Id != null LIMIT 1]; 
+        quote[0].SBQQ__Type__c= NSP_CPQConstants.QUOTE_TYPE_AMENDMENT;
+        test.startTest();
+        update quote;
+        PriceBookEntry pe1 = [SELECT Id FROM PriceBookEntry WHERE Id != null LIMIT 1];
+        //create Quote Lines
+        List<SBQQ__Quoteline__c> quoteLine2 = NSP_TestHelper.createCPQQuotelines(quote[0],new List<Product2>{product1},new List<PriceBookEntry> {pe1}, false);
+        quoteLine2[0].NSP_Lock_On_QLI__c = true;
+        quoteLine2[0].NSP_Previous_Quantity__c = 3;
+        quoteLine2[0].NSP_Quoted_Quantity__c = 5;
+        insert quoteLine2[0];
+        //create Quote Lines
+        List<SBQQ__Quoteline__c> quoteLine1 = NSP_TestHelper.createCPQQuotelines(quote[0],new List<Product2>{product1},new List<PriceBookEntry> {pe1}, false);
+        quoteLine1[0].NSP_Lock_On_QLI__c = true;
+        quoteLine1[0].NSP_Previous_Quantity__c = 5;
+        quoteLine1[0].NSP_Quoted_Quantity__c = 7;
+        quoteLine1[0].SBQQ__Source__c = quoteLine2[0].Id;
+        quoteLine1[0].NSP_Action_Type__c = 'Upgrade';
+        
+        insert quoteLine1[0];
+        //creates an asset
+        Asset newAsset = new Asset();
+        newAsset.AccountId = accounts[0].Id;
+        newAsset.Name = testAssetName;
+        newAsset.SerialNumber = serialIds;
+        newAsset.Status = NSP_CPQConstants.ACTIVE;
+        newAsset.NSP_Early_Termination_Notice__c=true;
+        newAsset.RecordTypeId = assetRecordTypeId;
+        insert newAsset;
+        
+        list<OrderItem> orderItemList = new list<OrderItem>([SELECT Id,SBQQ__BillingFrequency__c,blng__RevenueRecognitionRule__r.NSP_Rev_Rec_Model__c,Order.Type FROM OrderItem WHERE Order.SBQQ__Quote__c =:quote[0].Id AND Product2Id=:product1.Id]);
+        List<SBQQ__Subscription__c> subList = new List<SBQQ__Subscription__c>();
+        //creates subscription
+        SBQQ__Subscription__c subscription = new SBQQ__Subscription__c();
+        subscription.SBQQ__Account__c = accounts[0].Id;
+        subscription.SBQQ__Quantity__c = 1;
+        subscription.NSP_SubscriptionStartDate__c = goLiveDate;
+        subscription.SBQQ__OrderProduct__c = orderItemList[0].Id;
+        subscription.SBQQ__Product__c = product1.Id;
+        subscription.NSP_Create_Entitlement__c = true;
+        subscription.SBQQ__QuoteLine__c = quoteLine1[0].Id;
+        subList.add(subscription);
+        
+        product1.NSP_Product_Type__c = 'Time & Attendance Hardware';
+        update product1;
+        //creates subscription
+        SBQQ__Subscription__c subscription1 = new SBQQ__Subscription__c();
+        subscription1.SBQQ__Account__c = accounts[0].Id;
+        subscription1.SBQQ__Quantity__c = 1;
+        subscription1.NSP_SubscriptionStartDate__c = goLiveDate;
+        subscription1.SBQQ__OrderProduct__c = orderItemList[0].Id;
+        subscription1.SBQQ__Product__c = product1.Id;
+        subscription1.NSP_Create_Entitlement__c = true;
+        subscription1.SBQQ__QuoteLine__c = quoteLine1[0].Id;
+        subscription1.NSP_Serial_Ids__c = serialIds;
+        subscription1.SBQQ__SubscriptionStartDate__c=system.today();
+        subscription1.SBQQ__TerminatedDate__c = System.today()+15;
+        subscription1.SBQQ__BillingFrequency__c = 'Annual';
+        //subscription1.NSP_Remove_Bundle_Details__c = True;
+        subscription1.SBQQ__RequiredById__c = accounts[0].Id;
+         subscription1.SBQQ__HasConsumptionSchedule__c = true;
+
+        subList.add(subscription1);
+        
+        insert subList;
+        update subList;
+        test.stopTest(); 
+        List<Asset> assets = [SELECT Id, Status FROM Asset WHERE Status = :NSP_CPQConstants.TERMINATED];
+        System.assertNotEquals(Null, assets.size());
+    }
+    @isTest
+    static void testSubscriptionInsert4(){
+        
+        //List<SBQQ__Subscription__c> subscription = [SELECT Id FROM SBQQ__Subscription__c LIMIT 1];
+        Product2 product1 = [Select Id, Name from Product2 WHERE Name = :TEST_PRODUCT LIMIT 1]; //Added WHERE Condition as part of code fix
+        List<Account> accounts = [SELECT Id, Name FROM Account WHERE Name != null LIMIT 1];
+        
+        List<SBQQ__Quote__c> quote = [SELECT Id FROM SBQQ__Quote__c WHERE Id != null LIMIT 1]; 
+        quote[0].SBQQ__Type__c= NSP_CPQConstants.QUOTE_TYPE_AMENDMENT;
+        test.startTest();
+        update quote;
+        PriceBookEntry pe1 = [SELECT Id FROM PriceBookEntry WHERE Id != null LIMIT 1];
+        //create Quote Lines
+        List<SBQQ__Quoteline__c> quoteLine2 = NSP_TestHelper.createCPQQuotelines(quote[0],new List<Product2>{product1},new List<PriceBookEntry> {pe1}, false);
+        quoteLine2[0].NSP_Lock_On_QLI__c = true;
+        quoteLine2[0].NSP_Previous_Quantity__c = 5;
+        quoteLine2[0].NSP_Quoted_Quantity__c = 3;
+        insert quoteLine2[0];
+        //create Quote Lines
+        List<SBQQ__Quoteline__c> quoteLine1 = NSP_TestHelper.createCPQQuotelines(quote[0],new List<Product2>{product1},new List<PriceBookEntry> {pe1}, false);
+        quoteLine1[0].NSP_Lock_On_QLI__c = true;
+        quoteLine1[0].NSP_Previous_Quantity__c = 5;
+        quoteLine1[0].NSP_Quoted_Quantity__c = 3;
+        quoteLine1[0].SBQQ__Source__c = quoteLine2[0].Id;
+        quoteLine1[0].NSP_Action_Type__c = 'Downgrade';
+        
+        insert quoteLine1[0];
+        //creates an asset
+        Asset newAsset = new Asset();
+        newAsset.AccountId = accounts[0].Id;
+        newAsset.Name = testAssetName;
+        newAsset.SerialNumber = serialIds;
+        newAsset.Status = NSP_CPQConstants.ACTIVE;
+        newAsset.NSP_Early_Termination_Notice__c=true;
+        newAsset.RecordTypeId = assetRecordTypeId;
+        insert newAsset;
+        
+        list<OrderItem> orderItemList = new list<OrderItem>([SELECT Id,SBQQ__BillingFrequency__c,blng__RevenueRecognitionRule__r.NSP_Rev_Rec_Model__c,Order.Type FROM OrderItem WHERE Order.SBQQ__Quote__c =:quote[0].Id AND Product2Id=:product1.Id]);
+        List<SBQQ__Subscription__c> subList = new List<SBQQ__Subscription__c>();
+        //creates subscription
+        SBQQ__Subscription__c subscription = new SBQQ__Subscription__c();
+        subscription.SBQQ__Account__c = accounts[0].Id;
+        subscription.SBQQ__Quantity__c = 1;
+        subscription.NSP_SubscriptionStartDate__c = goLiveDate;
+        subscription.SBQQ__OrderProduct__c = orderItemList[0].Id;
+        subscription.SBQQ__Product__c = product1.Id;
+        subscription.NSP_Create_Entitlement__c = true;
+        subscription.SBQQ__QuoteLine__c = quoteLine1[0].Id;
+        subList.add(subscription);
+        
+        product1.NSP_Product_Type__c = 'Time & Attendance Hardware';
+        update product1;
+        //creates subscription
+        SBQQ__Subscription__c subscription1 = new SBQQ__Subscription__c();
+        subscription1.SBQQ__Account__c = accounts[0].Id;
+        subscription1.SBQQ__Quantity__c = 1;
+        subscription1.NSP_SubscriptionStartDate__c = goLiveDate;
+        subscription1.SBQQ__OrderProduct__c = orderItemList[0].Id;
+        subscription1.SBQQ__Product__c = product1.Id;
+        subscription1.NSP_Create_Entitlement__c = true;
+        subscription1.SBQQ__QuoteLine__c = quoteLine1[0].Id;
+        subscription1.NSP_Serial_Ids__c = serialIds;
+        subscription1.SBQQ__SubscriptionStartDate__c=system.today();
+        subscription1.SBQQ__TerminatedDate__c = System.today()+15;
+        subscription1.SBQQ__BillingFrequency__c = 'Annual';
+        //subscription1.NSP_Remove_Bundle_Details__c = True;
+        subscription1.SBQQ__RequiredById__c = accounts[0].Id;
+         subscription1.SBQQ__HasConsumptionSchedule__c = true;
 
         subList.add(subscription1);
         

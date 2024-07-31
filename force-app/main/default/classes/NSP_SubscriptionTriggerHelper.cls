@@ -1,63 +1,94 @@
-/**
-* Represents the Subscription trigger helper.
-*/
-
-
 public class NSP_SubscriptionTriggerHelper {
-
+    // test w/ NSP_SubscriptionTriggerHelperTest (83%)
     private string NSP_SubscriptionTriggerHelper = 'NSP_SubscriptionTriggerHelper';
-     
-    
-    /**
-* Iterates throught the list of new subscriptions and passes the required attributes to other methods.
-* @param newList List of New subscriptions.  
-* @return void             
-*                
-*/
-    public void beforeInsertDirector(List<SBQQ__Subscription__c> newList){        
-        
-        populateFieldValuesOnInsert(newList);
+
+    //
+    // Iterates throught the list of new subscriptions and passes the required attributes to other methods.
+    // @param newList List of New subscriptions.
+    // @return void
+    //
+    public void beforeInsertDirector( List<SBQQ__Subscription__c> newList ) {
+        populateFieldValuesOnInsert( newList );
     }
-    
-    /**
-* Iterates throught the list of new subscriptions and passes the required attributes to other methods.
-* @param newList List of New subscriptions.  
-* @return void             
-*                
-*/
-    public void afterInsertDirector(List<SBQQ__Subscription__c> newList){        
+
+    //
+    // Iterates throught the list of new subscriptions and passes the required attributes to other methods.
+    // @param newList List of New subscriptions.
+    // @return void
+    //
+    public void afterInsertDirector( List<SBQQ__Subscription__c> newList ) {
         processEntitlements(newList);
+        updateSubscriptionRate(newList);
     }
-    
-    /**
-* Iterates throught the subscriptions map and identifies the records that needs to worked based on various criterias.
-* @param subscriptionsNewMap Map of New subscriptions. 
-* @param subscriptionsOldMap Map of Old subscriptions. 
-* @return void             
-*                
-*/
-    
-    public void beforeUpdateDirector(Map<Id, SBQQ__Subscription__c> subscriptionsNewMap,Map<Id, SBQQ__Subscription__c> subscriptionsOldMap){
-        populateOriginalDateAndWaivedAmount(subscriptionsNewMap.values());
-        
-    }   
-    
-    
-    /**
-* Iterates throught the list of new subscriptions and passes the required attributes to other methods.
-* @param subscriptionsNewMap Map of New subscriptions. 
-* @param subscriptionsOldMap Map of Old subscriptions.   
-* @return void             
-*                
-*/
-    
-    public void afterUpdateDirector(Map<Id,SBQQ__Subscription__c> contractNewMap,Map<Id, SBQQ__Subscription__c> contractOldMap){        
-        
-        
-        
-    }  
-    
-    
+
+    //
+    // Iterates throught the subscriptions map and identifies the records that needs to worked based on various criterias.
+    // @param subscriptionsNewMap Map of New subscriptions.
+    // @param subscriptionsOldMap Map of Old subscriptions.
+    // @return void
+    //
+    public void beforeUpdateDirector( Map<Id,SBQQ__Subscription__c> subscriptionsNewMap , Map<Id,SBQQ__Subscription__c> subscriptionsOldMap ) {
+        populateOriginalDateAndWaivedAmount( subscriptionsNewMap.values() );
+    }
+
+    //
+    // Iterates throught the list of new subscriptions and passes the required attributes to other methods.
+    // @param subscriptionsNewMap Map of New subscriptions.
+    // @param subscriptionsOldMap Map of Old subscriptions.
+    // @return void
+    //
+    public void afterUpdateDirector( Map<Id,SBQQ__Subscription__c> contractNewMap , Map<Id, SBQQ__Subscription__c> contractOldMap ) {
+    }
+
+    //
+    // Iterates throught the list of new subscriptions and update subscription rate value
+    // @param newList List of New subscriptions.
+    // @return void
+    //
+    private void updateSubscriptionRate( List<SBQQ__Subscription__c> newList ) {
+        Set<Id> setOpId = new Set<Id>();
+        if( ( newList != null ) && !newList.isEmpty() ) {
+            for ( SBQQ__Subscription__c sbsq : newList ) {
+                if ( sbsq.SBQQ__HasConsumptionSchedule__c ) {
+                    setOpId.add( sbsq.SBQQ__OrderProduct__c );
+                }
+            }
+        }
+        if ( !setOpId.isempty() ) {
+            List<SBQQ__OrderItemConsumptionRate__c> lstCSUpdate = new List<SBQQ__OrderItemConsumptionRate__c>();
+            List<SBQQ__OrderItemConsumptionSchedule__c> lstOLS = [
+                SELECT
+                    Id ,
+                    (
+                        SELECT Id
+                        FROM SBQQ__OrderItemConsumptionRates__r
+                        WHERE (
+                            ( SBQQ__PricingMethod__c = 'FlatFee' )
+                            AND ( SBQQ__LowerBound__c = 0 )
+                            AND ( SBQQ__UpperBound__c = 1 )
+                        )
+                    )
+                FROM SBQQ__OrderItemConsumptionSchedule__c
+                WHERE ( SBQQ__OrderItem__c IN :setOpId )
+            ];
+            if ( !lstOLS.isEmpty() ) {
+                for ( SBQQ__OrderItemConsumptionSchedule__c lstQCS : lstOLS ) {
+                    for ( SBQQ__OrderItemConsumptionRate__c oicr : lstQCS.SBQQ__OrderItemConsumptionRates__r ) {
+                        lstCSUpdate.add(
+                            new SBQQ__OrderItemConsumptionRate__c(
+                                Id=oicr.Id ,
+                                SBQQ__UpperBound__c=0
+                            )
+                        );
+                    }
+                }
+            }
+            if ( !lstCSUpdate.isEmpty() ) {
+                update lstCSUpdate;
+            }
+        }
+    }
+
 /**
 * Iterates throught the list of new subscriptions and populates field values before record insert.
 * @param newList List of New subscriptions.  
@@ -382,49 +413,6 @@ public static void callReparentMethod(List<String> contractIds) {
             NSP_ErrorLogHandler.logSaveResultsException('NSP_SubscriptionTriggerHelper','updateTermDateonOP', results);
         }
     }
-    
-    /**
-* Method Name : updateTermDateOnRevisedSub 
-* Description : Method to override termination date on revised Subscription
-* Author : CPQ Team      Date : 09/01/2024
-* @param  Set of Order Product Ids   
-* @return void
-*/     
-    public void updateTermDateOnRevisedSub(List<SBQQ__Subscription__c> subList,Map<Id, SBQQ__Subscription__c> subOldMap){
-        
-        Set<Id> revOrderProdIds = new Set<Id>();
-        List<SBQQ__Subscription__c> updateList = new  List<SBQQ__Subscription__c>();
-        Map<Id,Date> updateSubsMap = new Map<Id,Date>();
-        List<SBQQ__Subscription__c> updateSubList = new List<SBQQ__Subscription__c>();
-        for ( SBQQ__Subscription__c sub : subList) {
-            if(sub.SBQQ__TerminatedDate__c != null && sub.NSP_ProjectGoLiveDate__c != null && sub.SBQQ__BillingFrequency__c == 'Annual' && sub.SBQQ__RevisedSubscription__c !=null){
-                SBQQ__Subscription__c revisedSubsObj = new SBQQ__Subscription__c();
-                revisedSubsObj.Id = sub.SBQQ__RevisedSubscription__c;
-                revisedSubsObj.SBQQ__TerminatedDate__c = sub.SBQQ__SubscriptionStartDate__c - 1;
-                //Prepares a map of Revised Subscription Ids
-                if(!updateSubsMap.containsKey(revisedSubsObj.Id)){
-                    updateSubsMap.put(revisedSubsObj.Id,revisedSubsObj.SBQQ__TerminatedDate__c);
-                }
-            }
-        }
-        if(updateSubsMap.size() > 0){
-            List<SBQQ__Subscription__c> result = [SELECT Id,SBQQ__TerminatedDate__c,SBQQ__OrderProduct__c FROM SBQQ__Subscription__c WHERE Id IN :updateSubsMap.keySet()];
-            for(SBQQ__Subscription__c subObj:result){
-                subObj.SBQQ__TerminatedDate__c = updateSubsMap.get(subObj.Id);
-                //Set of order products related to the revised subscription to update termination date on order products
-                revOrderProdIds.add(subObj.SBQQ__OrderProduct__c);
-                updateList.add(subObj);
-            }
-            //DML to update termination Date on  the revised subscription 
-            if(updateList != null && updateList.size() > 0){
-                List<Database.SaveResult> results = Database.update(updateList,false);
-                NSP_ErrorLogHandler.logSaveResultsException('NSP_SubscriptionTriggerHelper','updateTermDateOnRevisedSub', results);
-            }
-            
-        }
-        //Method call to update termination date on related order products
-        if(revOrderProdIds != null && revOrderProdIds.size() > 0){
-            updateTermDateonOP(revOrderProdIds);
-        }
-    }
+
 }
+//
