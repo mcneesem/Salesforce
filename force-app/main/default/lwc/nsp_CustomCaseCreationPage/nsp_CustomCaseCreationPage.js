@@ -35,7 +35,6 @@ import PROJECT from '@salesforce/schema/Case.Project__c';
 import CATEGORY from '@salesforce/schema/Case.NSP_Category__c';
 import SUB_CATEGORY from '@salesforce/schema/Case.NSP_SubCategory__c';
 
-
 const ACCOUNTFIELDS = [
     'Account.Name',
     'Account.NSP_AIMS_Client__c'

@@ -6,7 +6,7 @@ export default class ShowContractExceptions extends LightningElement {
     @api accountId;
     @api contactId;
     @api recordId;
-    @track urlTarget = '_self'; 
+    @track urlTarget = '_blank'; 
 
     contact;
     exceptions = [];
@@ -118,18 +118,15 @@ export default class ShowContractExceptions extends LightningElement {
     fetchURLTarget() {
         getURLTarget()
             .then(result => {
-                console.log('WHAT IS MY RESULT ', JSON.stringify(result));
-                this.urlTarget = result || '_self'; // Default to '_self' if no result
-                console.log('what is my URL Target ', JSON.stringify(this.urlTarget));
-                this.updateColumnAttributes();
+                this.urlTarget = result || '_blank'; // Default to '_self' if no result
             })
             .catch(error => {
                 console.error('Error fetching URL target: ', error);
-                this.urlTarget = '_self'; // Fallback to default value on error
-                this.updateColumnAttributes();
+                this.urlTarget = '_blank'; // Fallback to '_blank' on error
+            })
+            .finally(() => {
+                this.updateColumnAttributes(); // Ensure this is always called
             });
-
-            console.log('LLOGGG', JSON.stringify(this.urlTarget));
     }
 
     @wire(getExceptionList,  {  contactId: '$contactId' })

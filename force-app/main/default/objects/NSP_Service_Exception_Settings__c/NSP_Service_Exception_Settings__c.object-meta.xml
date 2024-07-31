@@ -3,6 +3,6 @@
     <customSettingsType>Hierarchy</customSettingsType>
     <description>Service Exception Target URL</description>
     <enableFeeds>false</enableFeeds>
-    <label>Service Exception Target</label>
+    <label>Service Exception Settings</label>
     <visibility>Public</visibility>
 </CustomObject>
