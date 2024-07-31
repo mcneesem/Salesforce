@@ -19,8 +19,7 @@ export default class ShowContractExceptions extends LightningElement {
             label: 'Exception #',
             fieldName: 'nameUrl',
             type: 'url',
-            typeAttributes: {label: { fieldName: 'Name' }, 
-            target: this.urlTarget},
+            typeAttributes: {label: { fieldName: 'Name' }, target: this.urlTarget},
             sortable: true
         },
         {
@@ -49,8 +48,7 @@ export default class ShowContractExceptions extends LightningElement {
             label: 'Exception #',
             fieldName: 'nameUrl',
             type: 'url',
-            typeAttributes: {label: { fieldName: 'Name' }, 
-            target: this.urlTarget},
+            typeAttributes: {label: { fieldName: 'Name' }, target: this.urlTarget},
             sortable: true
         },
         {
