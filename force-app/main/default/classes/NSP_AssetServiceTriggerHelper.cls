@@ -18,7 +18,7 @@ Modification Log     :  11/09/2023-Suhas : Added RET Client Id for Sync WO Asset
 * Ramya Ravi                   01/16/2022          v6.0 - Create project from asset <STY-02234>
 */
 public class NSP_AssetServiceTriggerHelper {
-    // test w/ NSP_AssetServiceTriggerHelperTest (81%)
+    // test w/ NSP_AssetServiceTriggerHelperTest (80%)
 
     public final String PEORECORDTYPE = 'PEO';
     public final String HRSPECIALISTROLE = 'HR Specialist';
@@ -1874,59 +1874,61 @@ Implementation profile related to the account of the created asset
         }
     }
 
-    /***********************************************************************************************
-    * MethodName: updateAccountStatus
-    * Description : updates parent account status if new asset is added/ existing asset updated
-    * Story : DF-03777
-    * Params: List<Asset> assetList, List<Account> accountList
-    * ********************************************************************************************/
-    public void updateAccountStatus (List<Asset> assetList, List<Account> accountList){
-        Set<Id> accountIdSet = new Set<Id>();
-        List<Asset> listOfAsset = new List<Asset>();
-        Map<ID,String> acctIDStatusMap = new Map<ID,String>();
+    //
+    // MethodName: updateAccountStatus
+    // Description : updates parent account status if new asset is added/ existing asset updated
+    // Story : DF-03777
+    // Params: List<Asset> assetList, List<Account> accountList
+    //
+    public void updateAccountStatus( List<Asset> assetList , List<Account> accountList ) {
         List<Account> accountsToUpdate = new List<Account>();
-        for (Account acc : accountList){
-            boolean anyActive=false;
-            boolean anyOnBoarding=false;
-            boolean anyOnDemand=false;
-
-            for(Asset ass: acc.Assets){
-                /*Checking if Asset status is equal to null or not
-                AND CHecking if Asset status is equal to Active or not */
-                if(ass.Status!=null && ass.Status.equals(NSP_SalesConstants.ACTIVE)){
-                    anyActive=true;
-                }
-                /*Checking if Asset  status is equal to null or not
-                AND CHecking if Asset  status is equal to ONBOARDING or not */
-                else if(ass.Status!=null && ass.Status.equals(NSP_SalesConstants.ONBOARDING)){
-                    anyOnBoarding=true;
-                }
-                /*CHecking if Asset  status is equal to null or not
-                AND CHecking if Asset  status is equal to On Demand or not */
-                else if(ass.Status!=null && ass.Status.equals(NSP_ServiceConstants.AssetStatusOnDemand)){
-                    anyOnDemand=true;
+        for ( Account acc : accountList ) {
+            Boolean anyActive = false;
+            Boolean anyOnBoarding = false;
+            Boolean anyOnDemand = false;
+            for ( Asset ass: acc.Assets ) {
+                if ( String.isNotBlank( ass.Status ) ) {
+                    if ( ass.Status.equals( NSP_SalesConstants.ACTIVE ) ) {
+                        // Checking if Asset status is equal to null or not
+                        // AND CHecking if Asset status is equal to Active or not
+                        anyActive=true;
+                    } else if ( ass.Status.equals( NSP_SalesConstants.ONBOARDING ) ) {
+                        // Checking if Asset  status is equal to null or not
+                        // AND CHecking if Asset  status is equal to ONBOARDING or not
+                        anyOnBoarding=true;
+                    } else if ( ass.Status.equals( NSP_ServiceConstants.AssetStatusOnDemand ) ) {
+                        // Checking if Asset  status is equal to null or not
+                        // AND Checking if Asset  status is equal to On Demand or not
+                        anyOnDemand=true;
+                    }
                 }
             }
-
-            if(anyActive){
+            if ( anyActive ) {
                 acc.NSP_Sales_Service_Account_Status__c = NSP_SalesConstants.ACTIVE;
-            }
-            else if(anyOnBoarding){
+            } else if ( anyOnBoarding ) {
                 acc.NSP_Sales_Service_Account_Status__c = NSP_SalesConstants.ONBOARDING;
-            }
-            else if(anyOnDemand){
+            } else if ( anyOnDemand ) {
                 acc.NSP_Sales_Service_Account_Status__c = NSP_ServiceConstants.AssetStatusOnDemand;
-            }
-            else if(acc.Opportunities.size()>0){
+            } else if ( ( acc.Opportunities != null ) && !acc.Opportunities.isEmpty()  ) {
                 acc.NSP_Sales_Service_Account_Status__c = NSP_SalesConstants.PROSPECTING;
             }
-            accountsToUpdate.add(acc);
+            accountsToUpdate.add( acc );
         }
-
-        if(accountsToUpdate.size()>0){
-            update accountsToUpdate;
+        if ( accountsToUpdate.size() > 0 ) {
+            try {
+                List<Database.SaveResult> results = Database.update( accountsToUpdate , false );
+                NSP_ErrorLogHandler.logResults(
+                    NSP_AssetServiceTriggerHelper.class.getName() ,
+                    'updateAccountStatus' ,
+                    results
+                );
+            } catch ( Exception e ) {
+                NSP_AssetServiceTriggerHelper.handleException(
+                    e ,
+                    'updateAccountStatus'
+                );
+            }
         }
-
     }
 
     /***********************************************************************************************
