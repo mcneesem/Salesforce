@@ -2,25 +2,22 @@
 * Represents the EmailMessage trigger helper which handles all the logic.
 */
 public with sharing class NSP_EmailMessageTriggerHelper {
-    // test w/ NSP_EmailMessageTriggerHelperTest (92%)
+    // test w/ NSP_EmailMessageTriggerHelperTest (87%)
 
     public static boolean isFirst = false;
-    public static final String CLASS_NAME = 'NSP_EmailMessageTriggerHelper';
     public static List<String> ContactCenterEmailAddresses = System.Label.NSP_Contact_Center_Email_Addresses.split(',');
     public static final String QUEUE = 'Queue';
     public static final String CONTACTCENTER = 'NSP_ContactCenter';
+    private static final Id CONTACTCENTER_QUEUEID = '00G4x000001fXVREA2';
     public static final String REOPENED = 'ReOpened';
     public static final String CLOSED = 'Closed';
     public static final String UNASSIGNED = 'Unassigned';
-    public static final String SATURDAY = 'Saturday';
-    public static final String SUNDAY = 'Sunday';
     public static final String OPEN = 'Open';
-    
-    
-    
+    private static final Id PEO_RECORDTYPEID = NSP_GenericRecordType.getRecordTypeId( 'Case' , 'PEO' );
+    private static final Id BPS_RECORDTYPEID = NSP_GenericRecordType.getRecordTypeId( 'Case' , 'BPS' );
         
-    /* Description: This method will be called after insert of EmailMessage
-	Date       : 17/11/2021 */
+    // Description: This method will be called after insert of EmailMessage
+    // Date       : 17/11/2021
     public void afterInsertionEmailMessage(List<EmailMessage> newList, Map<Id, EmailMessage> newMap){
         Set<Id> setOfCaseId = new Set<Id> ();
         Set<Id> employmentScreeningcaseIdSet = new Set<Id>();
@@ -68,19 +65,22 @@ public with sharing class NSP_EmailMessageTriggerHelper {
             sendEmailToHealthWelfareInternalExternal(healthWelfareInternalExternalCaseIdFromAddMap);
         }
         
-            //Added as a part of STY-04132 
-            if(!caseToUpdate.isEmpty()){
-               List<Database.SaveResult> results1 =  Database.update( caseToUpdate , false );
-                NSP_ErrorLogHandler.logSaveResultsException('NSP_EmailMessageTriggerHelper', 'afterInsertionEmailMessage', results1 );
-            }
-        
+        // Added as a part of STY-04132 
+        if ( !caseToUpdate.isEmpty() ) {
+            List<Database.SaveResult> results1 =  Database.update( caseToUpdate , false );
+            NSP_ErrorLogHandler.logResults(
+                NSP_EmailMessageTriggerHelper.class.getName() ,
+                'afterInsertionEmailMessage' ,
+                results1
+            );
+        }
     }
-    
+
     /***********************************************************************************************
-    * MethodName	: beforeInsertionEmailMessage
-    * Description	: This method will be called before insert of EmailMessage
-    * Story 		: STY-03643
-    * Params		: List<EmailMessage> listOfEmailMessage
+    * MethodName: beforeInsertionEmailMessage
+    * Description: This method will be called before insert of EmailMessage
+    * Story : STY-03643
+    * Params: List<EmailMessage> listOfEmailMessage
     * ********************************************************************************************/
     public void beforeInsertionEmailMessage(List<EmailMessage> newList){
         restrictEmailFromRestrictedSenders(newList); 
@@ -95,83 +95,152 @@ public with sharing class NSP_EmailMessageTriggerHelper {
     // case (PEO) and EmailMessage date is within 5 days,else, it will create a new Case
     // ***********************************************************************************************
     private static void reOpenOrMarkResponseAfterCloseTrue( Set<Id> caseIds , List<EmailMessage> listOfEmailMessage ) {
-        Map<Id, Case> mapOfCaseIdAndCase = new Map<Id, Case> ();
-        
-        Id caseBPSRecordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('BPS').getRecordTypeId();
-        Id casePEORecordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('PEO').getRecordTypeId();
-        
-        ID contactCenterQueueId = ([SELECT ID FROM Group WHERE Type = :QUEUE AND DeveloperNAME = :CONTACTCENTER]).ID;
-        List<Case> listOfCaseReopen = new List<Case> ();
-        List<Case> insertedCaseList = new List<Case>();
-        Map<Case,String> CaseToSubjectMap = new Map<Case,String>();
-        Map<Case,EmailMessage> ParentCaseToEmailMessageMap = new Map<Case,EmailMessage>();
-        
-        for(Case caseRec : [SELECT Status, NSP_Response_After_Close__c, NSP_Case_Reopened_EmaiToCase__c, NSP_Case_Sub_Status__c, ClosedDate, NSP_Date_Closed__c, RecordTypeId, Origin, Priority, NSP_SubCategory__c, NSP_Category__c, ContactId, AccountId, AssetId, Subject 
-                            FROM Case WHERE ID IN : caseIds]){
-            if(!mapOfCaseIdAndCase.containsKey(caseRec.id)){
-                mapOfCaseIdAndCase.put(caseRec.id, caseRec);
-            }
-        }
-        List<Case> listOfCase = new List<Case>();
-        for ( EmailMessage eMessage : listOfEmailMessage ) {
-            if(mapOfCaseIdAndCase.get(eMessage.ParentId).NSP_Date_Closed__c != null){
-                Case getCase = mapOfCaseIdAndCase.get(eMessage.ParentId);
-                Date caseClosedDate = mapOfCaseIdAndCase.get(eMessage.ParentId).NSP_Date_Closed__c;
-                Datetime emailMessageDate = Datetime.newInstance(eMessage.MessageDate.year(), eMessage.MessageDate.month(), eMessage.MessageDate.day());
-                Integer daysBetween = caseClosedDate.daysBetween(Date.valueOf(emailMessageDate));
-                if ( ( mapOfCaseIdAndCase.get(eMessage.ParentId).RecordTypeId == caseBPSRecordTypeId ) && ( daysBetween <= 90 ) ) {
-                    getCase.Status = 'ReOpened';
-                    getCase.NSP_Case_Reopened_EmaiToCase__c = true;
-                    listOfCase.add( getCase );
-                } else if(
-                    ( mapOfCaseIdAndCase.get(eMessage.ParentId).RecordTypeId == casePEORecordTypeId )
-                    || ( ( mapOfCaseIdAndCase.get(eMessage.ParentId).RecordTypeId == caseBPSRecordTypeId ) && ( daysBetween > 90 ) )
-                    )
-                {
-                    getCase.NSP_Response_After_Close__c = true;
-                    listOfCase.add( getCase );
+        if ( ( caseIds != null ) && !caseIds.isEmpty() ) {
+            //
+            Map<Id,Case> mapOfCaseIdAndCase = new Map<Id,Case>([
+                SELECT
+                    Status , NSP_Response_After_Close__c , NSP_Case_Reopened_EmaiToCase__c , NSP_Case_Sub_Status__c ,
+                    ClosedDate , NSP_Date_Closed__c , RecordTypeId , Origin , Priority , NSP_SubCategory__c ,
+                    NSP_Category__c , ContactId , AccountId , AssetId , Subject , OwnerId 
+                FROM Case
+                WHERE ( Id IN : caseIds )
+            ]);
+            Map<Id,User> mapOfUserIdToUserRecord = new Map<Id,User>();
+            if ( mapOfCaseIdAndCase != null ) {
+                Set<Id> userIds = new Set<Id>();
+                for ( Case caseRecord:mapOfCaseIdAndCase.values() ) {
+                    if ( ( caseRecord.OwnerId != null )
+                        && Id.valueOf( caseRecord.OwnerId ).getSObjectType() == User.getSObjectType()
+                        )
+                    {
+                        userIds.add( caseRecord.OwnerId );
+                    }
+                }
+                if ( ( userIds != null ) && !userIds.isEmpty() ){
+                    mapOfUserIdToUserRecord = new Map<Id,User>([
+                        SELECT Id , IsActive
+                        FROM User
+                        WHERE ( Id IN :userIds )
+                    ]);
                 }
             }
-            List<String> ToAddressList = new List<String>();
-            if ( String.isNotBlank( eMessage.ToAddress ) ) { // prevent NullPointerException when ToAddress is missing a value...
-                ToAddressList = eMessage.ToAddress.split( ';' );
+            //
+            List<String> bpsCaseTier1Categories = new List<String>();
+            List<String> bpsCaseTier2Categories = new List<String>();
+            Integer tier1Days= 14;
+            Integer tier2Days = 30;
+            Case_Settings__c caseSetting = Case_Settings__c.getInstance(UserInfo.getUserId());
+            if(caseSetting != null) {
+                bpsCaseTier1Categories = String.isNotBlank(caseSetting.BPS_Case_Tier_1_Categories__c) ? caseSetting.BPS_Case_Tier_1_Categories__c.split(','): new List<String>();
+                bpsCaseTier2Categories = String.isNotBlank(caseSetting.BPS_Case_Tier_2_Categories__c) ? caseSetting.BPS_Case_Tier_2_Categories__c.split(','): new List<String>();
+                tier1Days = caseSetting.BPS_Case_Tier_1_Reopen_Days__c != null ? caseSetting.BPS_Case_Tier_1_Reopen_Days__c.intValue() : 14;
+                tier2Days = caseSetting.BPS_Case_Tier_2_Reopen_Days__c != null ? caseSetting.BPS_Case_Tier_2_Reopen_Days__c.intValue() : 30;
             }
-            if ( ( mapOfCaseIdAndCase.get(eMessage.ParentId).ClosedDate != null )
-                && ( mapOfCaseIdAndCase.get(eMessage.ParentId).Status == 'Closed' )
-                && ( mapOfCaseIdAndCase.get(eMessage.ParentId).RecordTypeId == casePEORecordTypeId )
-                && isContactCenterCase( ContactCenterEmailAddresses , ToAddressList )
-                )
-            {
-                Case getCase = mapOfCaseIdAndCase.get(eMessage.ParentId);
-                Datetime caseClosedDate = mapOfCaseIdAndCase.get(eMessage.ParentId).ClosedDate;
-                Datetime emailMessageDate = Datetime.newInstance(eMessage.MessageDate.year(), eMessage.MessageDate.month(), eMessage.MessageDate.day());
-                Integer businessDaysBetween = getNoOfBusinessDaysBetweenDates(caseClosedDate,emailMessageDate);
-                if(businessDaysBetween <= 5){
-                    getCase.Status = REOPENED;
-                    getCase.NSP_Case_Sub_Status__c = UNASSIGNED;
-                    getCase.OwnerId = contactCenterQueueId;
-                    getCase.NSP_Response_After_Close__c = False;
-                    listOfCaseReopen.add(getCase);
-                } else if (businessDaysBetween > 5){
-                    CaseToSubjectMap.put(getCase,eMessage.Subject);  
-                    ParentCaseToEmailMessageMap.put(getCase,eMessage);
+            //
+            List<Case> casesToUpdate = new List<Case>();
+            Map<Case, EmailMessage> caseToEmailMessageMap = new Map<Case, EmailMessage>();
+            Map<String,String> mapOfEmailAddressToQueueName = new Map<String,String>();
+            Map<String,String> mapOfQueueNameToQueueId = new Map<String,String>();
+            if( ( listOfEmailMessage != null ) && !listOfEmailMessage.isEmpty() ) {
+                mapOfEmailAddressToQueueName = getMapOfEmailAddressToQueueName( listOfEmailMessage );
+                mapOfQueueNameToQueueId = getMapOfQueueNameToQueueId( mapOfEmailAddressToQueueName );
+                for ( EmailMessage eMessage : listOfEmailMessage ) {
+                    if ( mapOfCaseIdAndCase.containsKey( eMessage.ParentId ) ) {
+                        Case currentCase = mapOfCaseIdAndCase.get( eMessage.ParentId );
+                        if ( ( currentCase != null )
+                            && ( currentCase.ClosedDate != null )
+                            && ( eMessage.MessageDate != null )
+                            )
+                        {
+                            Integer daysBetween = (currentCase.ClosedDate.date()).daysBetween( eMessage.MessageDate.date() );
+                            if ( currentCase.RecordTypeId == BPS_RECORDTYPEID ) {
+                                if ( ( bpsCaseTier1Categories.contains( currentCase.NSP_Category__c ) && ( daysBetween <= tier1Days ) )
+                                    || ( bpsCaseTier2Categories.contains( currentCase.NSP_Category__c ) && ( daysBetween <= tier2Days ) )
+                                    )
+                                {
+                                    currentCase.Status = REOPENED;
+                                    currentCase.NSP_Case_Reopened_EmaiToCase__c = true;
+                                    String queueName = '';
+                                    if ( mapOfEmailAddressToQueueName != null ) {
+                                        queueName = mapOfEmailAddressToQueueName.get( eMessage.ToAddress );
+                                    }
+                                    if ( String.isNotBlank( queueName ) && ( mapOfQueueNameToQueueId != null ) ) {
+                                        if ( currentCase.OwnerId != null ) {
+                                            if ( Id.valueOf(currentCase.OwnerId).getSObjectType() == User.getSObjectType() ) {
+                                                User user = mapOfUserIdToUserRecord.get( currentCase.OwnerId );
+                                                if ( ( user != null ) && !user.IsActive) {
+                                                    currentCase.OwnerId = mapOfQueueNameToQueueId.get( queueName );
+                                                }
+                                            }
+                                        } else {
+                                            currentCase.OwnerId = mapOfQueueNameToQueueId.get( queueName );
+                                        }
+                                    }
+                                    casesToUpdate.add( currentCase );
+                                } else if (
+                                    ( bpsCaseTier1Categories.contains( currentCase.NSP_Category__c ) && ( daysBetween > tier1Days ) )
+                                    || ( bpsCaseTier2Categories.contains( currentCase.NSP_Category__c ) && ( daysBetween > tier2Days ) )
+                                    )
+                                {
+                                    currentCase.NSP_Response_After_Close__c = true;
+                                    casesToUpdate.add( currentCase );
+                                    caseToEmailMessageMap.put( currentCase , eMessage );
+                                }
+                            } else if ( currentCase.RecordTypeId == NSP_EmailMessageTriggerHelper.PEO_RECORDTYPEID ) {
+                                currentCase.NSP_Response_After_Close__c = true;
+                                casesToUpdate.add( currentCase );
+                            }
+                        }
+                        //
+                        List<String> toAddressList = new List<String>();
+                        if ( String.isNotBlank( eMessage.ToAddress ) ) {
+                            toAddressList = eMessage.ToAddress.split( ';' );
+                        }
+                        if ( ( currentCase.ClosedDate != null )
+                            && ( currentCase.Status == CLOSED )
+                            && ( currentCase.RecordTypeId == NSP_EmailMessageTriggerHelper.PEO_RECORDTYPEID )
+                            && isContactCenterCase( NSP_EmailMessageTriggerHelper.ContactCenterEmailAddresses , toAddressList )
+                            )
+                        {
+                            Integer businessDaysBetween = getNoOfBusinessDaysBetweenDates(
+                                currentCase.ClosedDate.date() ,
+                                eMessage.MessageDate.date()
+                            );
+                            if ( businessDaysBetween <= 5 ) {
+                                currentCase.Status = REOPENED;
+                                currentCase.NSP_Case_Sub_Status__c = UNASSIGNED;
+                                currentCase.OwnerId = NSP_EmailMessageTriggerHelper.CONTACTCENTER_QUEUEID;
+                                currentCase.NSP_Response_After_Close__c = false;
+                                casesToUpdate.add( currentCase );
+                            } else {
+                                caseToEmailMessageMap.put( currentCase , eMessage );
+                            }
+                        }
+                    }
                 }
             }
-        }
-        if(!listOfCaseReopen.isEmpty()){
-            Database.update(listOfCaseReopen);
-        }
-        if(CaseToSubjectMap.size() > 0){
-            insertedCaseList = createCaseFromEmail(CaseToSubjectMap,contactCenterQueueId);
-        }
-        if(!insertedCaseList.isEmpty()){
-            updateRelatedCaseOnEmailMessage(ParentCaseToEmailMessageMap,insertedCaseList);
-        }
-        if ( !listOfCase.isEmpty() ) {
-            try {
-                Database.update( listOfCase );
-            } catch ( Exception e ) { // catch unhandled DmlExceptions within Case Trigger logic...
-                System.debug( ' ~ CATCH ~ e=' + e );
+            //
+            if ( !caseToEmailMessageMap.isEmpty() ) {
+                List<Case> insertedCases = createCaseFromEmail(
+                    caseToEmailMessageMap ,
+                    NSP_EmailMessageTriggerHelper.CONTACTCENTER_QUEUEID ,
+                    mapOfEmailAddressToQueueName ,
+                    mapOfQueueNameToQueueId
+                );
+                if ( !insertedCases.isEmpty() ) {
+                    updateRelatedCaseOnEmailMessage( caseToEmailMessageMap , insertedCases );
+                }
+            }
+            if ( !casesToUpdate.isEmpty() ) {
+                try {
+                    Database.update( casesToUpdate );
+                } catch ( Exception e ) {
+                    NSP_ErrorLogHandler.logException(
+                        NSP_EmailMessageTriggerHelper.class.getName() ,
+                        'reOpenOrMarkResponseAfterCloseTrue' ,
+                        e
+                    );
+                }
             }
         }
     }
@@ -203,127 +272,169 @@ public with sharing class NSP_EmailMessageTriggerHelper {
         return isPresent;
     }
 
-    /***********************************************************************************************
-    * MethodName    : getNoOfBusinessDaysBetweenDates
-    * Description   : Get number of business days between two dates
-    * Story         : STY-04647
-    * Params        : Date startDate, DateTime endDate
-    * ********************************************************************************************/
-    public static Integer getNoOfBusinessDaysBetweenDates(DateTime startDate, DateTime endDate){
-        Integer workingDays = 0;  
-         System.debug(' ** startDate' + startDate);
-		 System.debug(' ** endDate' + endDate);
-        for(Integer i=0; i <= Date.valueOf(startDate).daysBetween(Date.valueOf(endDate)); i++)  
-        {  
-            Date dt = Date.valueOf(startDate) + i;  
-            DateTime currDate = DateTime.newInstance(dt.year(), dt.month(), dt.day());  
-            String todayDay = currDate.format('EEEE');  
-            if(todayDay != SATURDAY && todayDay != SUNDAY)  
-                {  
-                    System.debug('--todayDay '+todayDay);
-                    workingDays = workingDays + 1;  
-                }     
-               
-        }  
-          system.debug('** workingDays' + workingDays);    
+    //
+    // MethodName    : getNoOfBusinessDaysBetweenDates
+    // Description   : Get number of business days between two dates
+    // Story         : STY-04647
+    // Params        : Date startDate, DateTime endDate
+    //
+    private static Integer getNoOfBusinessDaysBetweenDates(Date startDate, Date endDate){
+        Integer workingDays = 0;
+        if ( ( startDate != null ) && ( endDate != null ) ) {
+            for ( Integer i=0 ; i <= startDate.daysBetween( endDate ) ; i++ ) {
+                Date dt = startDate.addDays( i );
+                DateTime currDate = DateTime.newInstance( dt.year() , dt.month() , dt.day() );
+                String todayDay = currDate.format( 'EEEE' );
+                if ( ( todayDay != 'Saturday' ) && ( todayDay != 'Sunday' ) ) {
+                    workingDays = workingDays + 1;
+                }
+            }
+        }
         return workingDays;
     }
-    /***********************************************************************************************
-    * MethodName    : createCaseFromEmail
-    * Description   : method to Create case based on Parent Case
-    * Story         : STY-04647
-    * Params        : Map<Case,String> CaseToSubjectMap, ID contactCenterQueueId
-    * ********************************************************************************************/
-    public static List<Case> createCaseFromEmail(Map<Case,String> CaseToSubjectMap, ID contactCenterQueueId){
+
+    //
+    // MethodName    : createCaseFromEmail
+    // Description   : method to Create case based on Parent Case
+    // Story         : STY-04647
+    // Params        : Map<Case,String> CaseToSubjectMap, ID contactCenterQueueId
+    //
+    public static List<Case> createCaseFromEmail(
+        Map<Case,EmailMessage> caseToEmailMessageMap ,
+        Id contactCenterQueueId ,
+        Map<String,String> mapOfEmailAddressToQueueName ,
+        Map<String,String> mapOfQueueNameToQueueId
+        )
+    {
         List<Case> caseToInsert = new List<Case>();
-        try{
-            for(Case getCase : CaseToSubjectMap.keySet()){
-                Case newCase = new Case();
-                newCase.ParentId = getCase.Id;
-                newCase.RecordTypeId = getCase.RecordTypeId;
-                newCase.Status = OPEN;
-                newCase.NSP_Case_Sub_Status__c = UNASSIGNED;
-                newCase.OwnerId = contactCenterQueueId;
-                newCase.AccountId = getCase.AccountId;
-                newCase.AssetId = getCase.AssetId;
-                newCase.ContactId = getCase.ContactId;
-                newCase.NSP_Category__c = getCase.NSP_Category__c;
-                newCase.NSP_SubCategory__c = getCase.NSP_SubCategory__c;
-                newCase.Priority = getCase.Priority;
-                newCase.Origin = getCase.Origin;
-                newCase.Subject = CaseToSubjectMap.get(getCase);
-                caseToInsert.add(newCase);
+        try {
+            if ( caseToEmailMessageMap != null ) {
+                for ( Case getCase : caseToEmailMessageMap.keySet() ) {
+                    EmailMessage record = caseToEmailMessageMap.get( getCase );
+                    if ( record != null ) {
+                        Case newCase = new Case();
+                        if ( getCase.RecordTypeId == NSP_EmailMessageTriggerHelper.PEO_RECORDTYPEID ) {
+                            newCase.ParentId = getCase.Id;
+                            newCase.OwnerId = contactCenterQueueId;
+                        } else if ( getCase.RecordTypeId == NSP_EmailMessageTriggerHelper.BPS_RECORDTYPEID ) {
+                            String queueName = '';
+                            if ( mapOfEmailAddressToQueueName != null ) {
+                                queueName = mapOfEmailAddressToQueueName.get( record.ToAddress );
+                            }
+                            if ( String.isNotBlank( queueName )
+                                && ( mapOfQueueNameToQueueId != null )
+                                && mapOfQueueNameToQueueId.containsKey( queueName )
+                                && String.isNotBlank( mapOfQueueNameToQueueId.get( queueName ) )
+                                )
+                            {
+                                newCase.OwnerId = mapOfQueueNameToQueueId.get( queueName );
+                            }
+                        }
+                        newCase.RecordTypeId = getCase.RecordTypeId;
+                        newCase.Status = OPEN;
+                        newCase.NSP_Case_Sub_Status__c = UNASSIGNED;
+                        newCase.AccountId = getCase.AccountId;
+                        newCase.AssetId = getCase.AssetId;
+                        newCase.ContactId = getCase.ContactId;
+                        newCase.NSP_Category__c = getCase.NSP_Category__c;
+                        newCase.NSP_SubCategory__c = getCase.NSP_SubCategory__c;
+                        newCase.Priority = getCase.Priority;
+                        newCase.Origin = getCase.Origin;
+                        newCase.Subject = record.Subject;
+                        caseToInsert.add( newCase );
+                    }
+                }
             }
-            insert caseToInsert; 
-       }catch(Exception exc){
-            NSP_ErrorLogHandler.logSaveException( CLASS_NAME, 'createCaseFromEmail', exc.getMessage());
+            if ( !caseToInsert.isEmpty() ) {
+                insert caseToInsert;
+            }
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_EmailMessageTriggerHelper.class.getName() ,
+                'createCaseFromEmail' ,
+                e
+            );
         }
         return caseToInsert;
     }
-    
-    /***********************************************************************************************
-    * MethodName    : updateRelatedCaseOnEmailMessage
-    * Description   : method to clone Email Message and delete duplicate Email message
-    * Story         : STY-04647
-    * Params        : Map<Case,EmailMessage> ParentCaseToEmailMessageMap,List<Case> insertedCaseList
-    * ********************************************************************************************/
-    public static void updateRelatedCaseOnEmailMessage(Map<Case,EmailMessage> ParentCaseToEmailMessageMap,List<Case> insertedCaseList){
-            //List to keep clone Email Messages
-            List<EmailMessage> emailMessageClonedList = new List<EmailMessage>();
-            //List to delete the cloned Email Message
-            List<Id> emailMessageTobeDeleted = new List<Id>();
+
+    //
+    // MethodName    : updateRelatedCaseOnEmailMessage
+    // Description   : method to clone Email Message and delete duplicate Email message
+    // Story         : STY-04647
+    // Params        : Map<Case,EmailMessage> ParentCaseToEmailMessageMap,List<Case> insertedCaseList
+    //
+    public static void updateRelatedCaseOnEmailMessage( Map<Case,EmailMessage> ParentCaseToEmailMessageMap , List<Case> insertedCaseList ) {
+        // List to keep clone Email Messages
+        List<EmailMessage> emailMessageClonedList = new List<EmailMessage>();
+        // List to delete the cloned Email Message
+        List<Id> emailMessageTobeDeleted = new List<Id>();
         try{
-            
-            for(EmailMessage emailMessage : ParentCaseToEmailMessageMap.Values()) {
-                if(emailMessage.ParentId != Null){
-                        emailMessageTobeDeleted.add(emailMessage.Id);
-                        //Clonning the Email Message
-                        EmailMessage emailMessageCloned = emailMessage.clone(false, true, false, false);
-                        emailMessageClonedList.add(emailMessageCloned);
+            for ( EmailMessage emailMessage : ParentCaseToEmailMessageMap.Values() ) {
+                if ( emailMessage.ParentId != null ) {
+                    emailMessageTobeDeleted.add( emailMessage.Id );
+                    // Clonning the Email Message
+                    EmailMessage emailMessageCloned = emailMessage.clone( false , true , false , false );
+                    emailMessageClonedList.add( emailMessageCloned );
                 }
             }
-                
-                //insert updated cases
-                if(!emailMessageClonedList.isEmpty()) {
-                    updateParentIdOnClonedEmailMessage(emailMessageClonedList,insertedCaseList);
-                }
-        
-                //After process, delete all the Email Message Records which are cloned.
-               if(!emailMessageTobeDeleted.isEmpty()) {
-                    List<EmailMessage> emailMessageTobeD = [Select Id From EmailMessage WHERE Id =:emailMessageTobeDeleted];
+            // insert updated cases
+            if ( !emailMessageClonedList.isEmpty() ) {
+                updateParentIdOnClonedEmailMessage( emailMessageClonedList , insertedCaseList );
+            }
+            // After process, delete all the Email Message Records which are cloned.
+            if ( !emailMessageTobeDeleted.isEmpty() ) {
+                List<EmailMessage> emailMessageTobeD = [
+                    SELECT Id
+                    FROM EmailMessage
+                    WHERE ( Id = :emailMessageTobeDeleted )
+                ];
+                if ( ( emailMessageTobeD != null ) && !emailMessageTobeD.isEmpty() ) {
                     delete emailMessageTobeD;
                 }
-        }catch(Exception exc){
-            NSP_ErrorLogHandler.logSaveException( CLASS_NAME, 'updateRelatedCaseOnEmailMessage', exc.getMessage());
+            }
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_EmailMessageTriggerHelper.class.getName() ,
+                'updateRelatedCaseOnEmailMessage' ,
+                e
+            );
         }
     }
-    
-    /***********************************************************************************************
-    * MethodName    : updateParentIdOnClonedEmailMessage
-    * Description   : Method to insert updated Email Message record.
-    * Story         : STY-04647
-    * Params        : List<EmailMessage> emailMessageClonedList, List<Case> insertedCaseList
-    * ********************************************************************************************/       
-    private static void updateParentIdOnClonedEmailMessage(List<EmailMessage> emailMessageClonedList, List<Case> insertedCaseList) {
+
+    //
+    // MethodName    : updateParentIdOnClonedEmailMessage
+    // Description   : Method to insert updated Email Message record.
+    // Story         : STY-04647
+    // Params        : List<EmailMessage> emailMessageClonedList, List<Case> insertedCaseList
+    //
+    private static void updateParentIdOnClonedEmailMessage( List<EmailMessage> emailMessageClonedList , List<Case> insertedCaseList ) {
         List<EmailMessage> emailMessageToBeInserted = New List<EmailMessage>();
         Map<Id,Id> parentCaseIdToCaseIdMap = new Map<Id,Id>();
         try{
-        for(Case c : insertedCaseList){
-            parentCaseIdToCaseIdMap.put(c.ParentId,c.Id);
-        }
-        for(EmailMessage eMessage : emailMessageClonedList) {
-            if(parentCaseIdToCaseIdMap.get(eMessage.ParentId) != Null) {
-                    //Update Parent Id
-                    eMessage.ParentId = parentCaseIdToCaseIdMap.get(eMessage.ParentId);
-                    emailMessageToBeInserted.add(eMessage);
+            for ( Case c : insertedCaseList ) {
+                parentCaseIdToCaseIdMap.put( c.ParentId , c.Id );
+            }
+            for ( EmailMessage eMessage : emailMessageClonedList ) {
+                if ( parentCaseIdToCaseIdMap.containsKey( eMessage.ParentId )
+                    && ( parentCaseIdToCaseIdMap.get( eMessage.ParentId ) != null )
+                    )
+                {
+                    // Update Parent Id
+                    eMessage.ParentId = parentCaseIdToCaseIdMap.get( eMessage.ParentId );
+                    emailMessageToBeInserted.add( eMessage );
                 }
-            }            
-        //Insert Updated Email Messages
-        if(!emailMessageToBeInserted.isEmpty()) {
-            insert emailMessageToBeInserted; 
-        }
-        }catch(Exception exc){
-            NSP_ErrorLogHandler.logSaveException( CLASS_NAME, 'updateParentIdOnClonedEmailMessage', exc.getMessage());
+            }
+            // Insert Updated Email Messages
+            if ( !emailMessageToBeInserted.isEmpty() ) {
+                insert emailMessageToBeInserted;
+            }
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_EmailMessageTriggerHelper.class.getName() ,
+                'updateParentIdOnClonedEmailMessage' ,
+                e
+            );
         }
     }
 
@@ -344,7 +455,7 @@ public with sharing class NSP_EmailMessageTriggerHelper {
             }
         } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
-                CLASS_NAME ,
+                NSP_EmailMessageTriggerHelper.class.getName() ,
                 'restrictEmailFromRestrictedSenders' ,
                 e
             );
@@ -372,10 +483,10 @@ public with sharing class NSP_EmailMessageTriggerHelper {
     }
 
     // ********************************************************************************************
-    // MethodName	: incomingEmailCheck
-    // Description	: Incoming Email check for subject check
-    // Story 		: STY-03643
-    // Params		: EmailMessage eMessage
+    // MethodName: incomingEmailCheck
+    // Description: Incoming Email check for subject check
+    // Story : STY-03643
+    // Params: EmailMessage eMessage
     // ********************************************************************************************
     private static Boolean incomingEmailCheck( EmailMessage eMessage ) {
         return (
@@ -397,38 +508,49 @@ public with sharing class NSP_EmailMessageTriggerHelper {
         );
     }
 
-    /***********************************************************************************************
-    * MethodName : updateConfidentialCheckBoxForEmpScreening
-    * Story : STY-03671
-    * Description : This method will update the case fields if an email is sent to 
-    * 				'test.customer.service@insperity.com' or 'test.lesdrugscreening.service@insperity.com
-    * Params : Set<Id> caseIdSet
-    * ********************************************************************************************/ 
-    public static void updateConfidentialCheckBoxForEmpScreening(Set<Id> caseIdSet){
+    //
+    // MethodName : updateConfidentialCheckBoxForEmpScreening
+    // Story : STY-03671
+    // Description : This method will update the case fields if an email is sent to 
+    // 'test.customer.service@insperity.com' or 'test.lesdrugscreening.service@insperity.com
+    // Params : Set<Id> caseIdSet
+    //
+    public static void updateConfidentialCheckBoxForEmpScreening( Set<Id> caseIdSet ) {
         List<Case> caseListToUpdate = new List<Case>();
-        try{
-            for(Case caseRec: [SELECT Id, NSP_Confidential__c, NSP_Category__c 
-                               FROM Case
-                               WHERE Id IN: caseIdSet]){
-                                   caseRec.NSP_Confidential__c = True;
-                                   caseRec.NSP_Category__c = 'Employment Screening';
-                                   caseListToUpdate.add(caseRec);
-                               }
-            if(!caseListToUpdate.isEmpty()){
-                List<Database.SaveResult> results = Database.update(caseListToUpdate,false);
-                NSP_ErrorLogHandler.logSaveResultsException( CLASS_NAME, 'updateConfidentialCheckBoxForEmpScreening', results);
+        try {
+            for ( Case caseRec: [
+                        SELECT Id, NSP_Confidential__c, NSP_Category__c 
+                        FROM Case
+                        WHERE Id IN: caseIdSet
+                    ]
+                )
+            {
+                caseRec.NSP_Confidential__c = True;
+                caseRec.NSP_Category__c = 'Employment Screening';
+                caseListToUpdate.add(caseRec);
             }
-        }catch(Exception exc){
-            NSP_ErrorLogHandler.logSaveException( CLASS_NAME, 'updateConfidentialCheckBoxForEmpScreening', exc.getMessage());
+            if ( !caseListToUpdate.isEmpty() ) {
+                List<Database.SaveResult> results = Database.update( caseListToUpdate , false );
+                NSP_ErrorLogHandler.logResults(
+                    NSP_EmailMessageTriggerHelper.class.getName() ,
+                    'updateConfidentialCheckBoxForEmpScreening' ,
+                    results
+                );
+            }
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_EmailMessageTriggerHelper.class.getName() ,
+                'updateConfidentialCheckBoxForEmpScreening' ,
+                e
+            );
         }
-        
     }
-    
+
     /***********************************************************************************************
-    * MethodName 	: sendEmailToHealthWelfareInternalExternal
-    * Story 	 	: STY-03531
+    * MethodName : sendEmailToHealthWelfareInternalExternal
+    * Story  : STY-03531
     * Description   : This method will send auto-response mail based on internal/external sender email
-    * Params 		: Map<Id, EmailMessage> healthWelfareInternalExternalCaseIdFromAddMap
+    * Params : Map<Id, EmailMessage> healthWelfareInternalExternalCaseIdFromAddMap
     * ********************************************************************************************/     
     public static void sendEmailToHealthWelfareInternalExternal(Map<Id, EmailMessage> healthWelfareInternalExternalCaseIdFromAddMap){
         try{
@@ -437,9 +559,10 @@ public with sharing class NSP_EmailMessageTriggerHelper {
             for(Case caseRec : [SELECT Id, NSP_Case_Created_From_Email_To_Case__c FROM Case WHERE Id IN: healthWelfareInternalExternalCaseIdFromAddMap.keySet()]){
                 
                 //DF-03783 - email should be triggered only when case is created
-				if(caseRec.NSP_Case_Created_From_Email_To_Case__c)
-					 continue;
-				
+                if(caseRec.NSP_Case_Created_From_Email_To_Case__c) {
+                    continue;
+                }
+                
                 if(healthWelfareInternalExternalCaseIdFromAddMap.get(caseRec.Id).FromAddress.contains(NSP_ServiceConstants.INTERNAL_EMAIL_ADD) &&
                   healthWelfareInternalExternalCaseIdFromAddMap.get(caseRec.Id).ToAddress.equals(System.Label.NSP_Health_Welfare_Section_125)){
                     sendEmailToInternalExternal('NSP_Health_Welfare_Internal_Email_Template', healthWelfareInternalExternalCaseIdFromAddMap.get(caseRec.Id).FromAddress, caseRec.Id);
@@ -451,16 +574,20 @@ public with sharing class NSP_EmailMessageTriggerHelper {
                     }
                  }
             }
-        }catch(Exception exc){
-            NSP_ErrorLogHandler.logSaveException('NSP_EmailMessageTriggerHelper', 'sendEmailToHealthWelfareInternalExternal', exc.getMessage());
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_EmailMessageTriggerHelper.class.getName() ,
+                'sendEmailToHealthWelfareInternalExternal' ,
+                e
+            );
         }
     }
-    
+
     /***********************************************************************************************
-    * MethodName 	: sendEmailToInternalExternal
-    * Story 	 	: STY-03531
+    * MethodName : sendEmailToInternalExternal
+    * Story  : STY-03531
     * Description   : Helper method for sendEmailToHealthWelfareInternalExternal
-    * Params 		: String emailTemplateName, String ToAddress, Id caseRecId
+    * Params : String emailTemplateName, String ToAddress, Id caseRecId
     * ********************************************************************************************/ 
     private static void sendEmailToInternalExternal(String emailTemplateName, String ToAddress, Id caseRecId){
         try{
@@ -483,16 +610,20 @@ public with sharing class NSP_EmailMessageTriggerHelper {
             if(!lstEmailMessages.isEmpty()){
                 NSP_GenericEmailUtility.sendSingleEmailMessages(lstEmailMessages,false);
             }  
-        }catch(Exception exc){
-            NSP_ErrorLogHandler.logSaveException( CLASS_NAME, 'sendEmailToInternalExternal', exc.getMessage());
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_EmailMessageTriggerHelper.class.getName() ,
+                'sendEmailToInternalExternal' ,
+                e
+            );
         }
     }
 
      /***********************************************************************************************
-    * MethodName 	: UpdateEmailMessageFields
-    * Story 	 	: STY-03853
+    * MethodName : UpdateEmailMessageFields
+    * Story  : STY-03853
     * Description   : This method will update EmailMessage ParentId Based on Case External Id
-    * Params 		: List<EmailMessage> newList
+    * Params : List<EmailMessage> newList
     * ********************************************************************************************/
    
     public static void updateEmailMessageFields(List<EmailMessage> newList) {
@@ -569,4 +700,47 @@ public with sharing class NSP_EmailMessageTriggerHelper {
             insert emailMessageToBeInserted; 
         }
     }
+
+    private static Map<String,String> getMapOfEmailAddressToQueueName(List<EmailMessage> emailMessages) {
+        Map<String,String> mapOfEmailAddressToQueueName = new Map<String,String>();
+        if((emailMessages != null) && !emailMessages.isEmpty()) {
+            Set<String> allToEmailAddress = new Set<String>();
+                
+            for (EmailMessage eMessage : emailMessages) {
+                if(String.isNotBlank(eMessage.ToAddress)) {
+                    allToEmailAddress.add(eMessage.ToAddress);
+                }
+            }
+            
+            if(allToEmailAddress != null && !allToEmailAddress.isEmpty()) {
+                List<Email_Address_to_Case_Owner_Mapping__mdt> eacoList = [SELECT Id, Case_Owner_Name__c, Email_Address__c FROM Email_Address_to_Case_Owner_Mapping__mdt WHERE Email_Address__c IN :allToEmailAddress];
+                if(eacoList != null && !eacoList.isEmpty()) {
+                    for (Email_Address_to_Case_Owner_Mapping__mdt eaco:eacoList) {
+                        if(String.isNotBlank(eaco.Case_Owner_Name__c) && String.isNotBlank(eaco.Email_Address__c)) {
+                            mapOfEmailAddressToQueueName.put(eaco.Email_Address__c, eaco.Case_Owner_Name__c);
+                        }
+                    }
+                }
+            }
+        }      
+        return mapOfEmailAddressToQueueName;
+    }
+    
+    
+    private static Map<String,String> getMapOfQueueNameToQueueId(Map<String,String> mapOfEmailAddressToQueueName) {
+        Map<String,String> mapOfQueueNameToQueueId = new Map<String,String>();
+        if(mapOfEmailAddressToQueueName != null && mapOfEmailAddressToQueueName.values() != null) {
+            List<Group> queueList = [SELECT Id, DeveloperName FROM Group WHERE Type ='Queue' AND DeveloperName IN :mapOfEmailAddressToQueueName.values()];
+            if(queueList != null && !queueList.isEmpty()) {
+                for(Group queue:queueList) {
+                    if(String.isNotBlank(queue.DeveloperName)) {
+                        mapOfQueueNameToQueueId.put(queue.DeveloperName, queue.Id);
+                    }
+                }
+            }
+        }
+        return mapOfQueueNameToQueueId;
+    }
+
 }
+//
