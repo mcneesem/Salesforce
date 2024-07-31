@@ -3,38 +3,38 @@
     <fullName>First_Assigned_Queue__c</fullName>
     <externalId>false</externalId>
     <formula>IF(
-    TEXT(CallType) = &apos;Inbound&apos;,
+  ( TEXT( CallType ) = &apos;Inbound&apos; ) ,
+  CASE(
+    Contact_Center_Queue__c ,
+    &apos;401K&apos; , &apos;Contact Center 401K&apos; ,
+    &apos;1 Benefit Option&apos; , &apos;Contact Center Benefits&apos; ,
+    &apos;Web Support&apos; , &apos;Contact Center Web Support&apos; ,
+    &apos;5 Employment Verification&apos; , &apos;Contact Center Employment Verification&apos; ,
+    &apos;Section 125&apos; , &apos;Contact Center Section 125&apos; ,
+    &apos;401K Core&apos; , &apos;Contact Center 401K Core&apos; ,
+    &apos;Escalations&apos; , &apos;Contact Center Escalations&apos; ,
+    &apos;Spanish&apos; , &apos;Contact Center Spanish&apos; ,
+    &apos;NOT AVAILABLE&apos;
+  ) ,
+  IF(
+    OR(
+      ( TEXT( CallType ) = &apos;Transfer&apos; ) ,
+      ( TEXT( CallType ) = &apos;Callback&apos; )
+    ) ,
     CASE(
-        Contact_Center_Queue__c,
-        &apos;401K&apos;, &quot;Contact Center 401K&quot;,
-        &apos;1 Benefit Option&apos;, &quot;Contact Center Benefits&quot;,
-        &apos;Web Support&apos;, &quot;Contact Center Web Support&quot;,
-        &apos;5 Employment Verification&apos;, &quot;Contact Center Employment Verification&quot;,
-        &apos;Section 125&apos;, &quot;Contact Center Section 125&quot;,
-        &apos;401K Core&apos;, &quot;Contact Center 401K Core&quot;,
-        &apos;Escalations&apos;, &quot;Contact Center Escalations&quot;,
-        &apos;Spanish&apos;, &quot;Contact Center Spanish&quot;,
-        &apos;NOT AVAILABLE&apos;
-    ),
-    IF(
-        OR(
-            TEXT(CallType) = &apos;Transfer&apos;,
-            TEXT(CallType) = &apos;Callback&apos;
-        ),
-        CASE(
-            First_Assigned_Queue_for_Transfer__c,
-            &apos;401K&apos;, &quot;Contact Center 401K&quot;,
-            &apos;1 Benefit Option&apos;, &quot;Contact Center Benefits&quot;,
-            &apos;Web Support&apos;, &quot;Contact Center Web Support&quot;,
-            &apos;5 Employment Verification&apos;, &quot;Contact Center Employment Verification&quot;,
-            &apos;Section 125&apos;, &quot;Contact Center Section 125&quot;,
-            &apos;401K Core&apos;, &quot;Contact Center 401K Core&quot;,
-            &apos;Escalations&apos;, &quot;Contact Center Escalations&quot;,
-            &apos;Spanish&apos;, &quot;Contact Center Spanish&quot;,
-            &apos;NOT AVAILABLE&apos;
-        ),
-        &apos;NOT AVAILABLE&apos;
-    )
+      First_Assigned_Queue_for_Transfer__c ,
+      &apos;401K&apos; , &apos;Contact Center 401K&apos; ,
+      &apos;1 Benefit Option&apos; , &apos;Contact Center Benefits&apos; ,
+      &apos;Web Support&apos; , &apos;Contact Center Web Support&apos; ,
+      &apos;5 Employment Verification&apos; , &apos;Contact Center Employment Verification&apos; ,
+      &apos;Section 125&apos; , &apos;Contact Center Section 125&apos; ,
+      &apos;401K Core&apos; , &apos;Contact Center 401K Core&apos; ,
+      &apos;Escalations&apos; , &apos;Contact Center Escalations&apos; ,
+      &apos;Spanish&apos; , &apos;Contact Center Spanish&apos; ,
+      &apos;NOT AVAILABLE&apos;
+    ) ,
+    &apos;NOT AVAILABLE&apos;
+  )
 )</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>First Assigned Queue</label>
