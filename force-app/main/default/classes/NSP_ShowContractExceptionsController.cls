@@ -44,6 +44,6 @@ public with sharing class NSP_ShowContractExceptionsController {
 
     @AuraEnabled(cacheable=true)
     public static string getTargetURL() {
-        return NSP_Service_Exception_Settings__c.getInstance(UserInfo.getProfileId()).Target_URL__c;
+        return Service_Exception_Settings__c.getInstance(UserInfo.getProfileId()).Target_URL__c;
     }
 }

@@ -61,7 +61,7 @@ public class NSP_ShowContractExceptionsControllerTest {
     @isTest
     static void testGetTargetURLWithValidRecord() {
         // Setup test data
-        NSP_Service_Exception_Settings__c targetRecord = new NSP_Service_Exception_Settings__c(
+        Service_Exception_Settings__c targetRecord = new Service_Exception_Settings__c(
             Target_URL__c = 'https://example.com'
         );
         insert targetRecord;
