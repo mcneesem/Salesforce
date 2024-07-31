@@ -73,6 +73,9 @@ const RL_FIELDS = [
   'Non_exempt_EEs_on_semi_monthly_pay_freq__c',
   'Semi_monthly_pay_freq_comply_w_state_law__c',
   'Monthly_pay_freq_comply_w_state_laws__c',
+  'Do_the_employee_s_work_more_than_6__c',
+  'Is_the_Employee_an_Intern__c',
+  'Is_the_work_performed_typically_the_same__c',
 ];
 
 const PREFILLED_FIELDS = {
