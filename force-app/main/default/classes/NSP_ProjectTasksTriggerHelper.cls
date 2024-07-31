@@ -1,5 +1,5 @@
 public class NSP_ProjectTasksTriggerHelper {
-    // test w/ NSP_ProjectTasksTriggerHelperTest (79%)
+    // test w/ NSP_ProjectTasksTriggerHelperTest (80%)
 
     private static final String HUNDRED_PERCENT =  '100%';
     private static final string SYS_ADMIN = 'System Administrator';
@@ -514,6 +514,8 @@ public class NSP_ProjectTasksTriggerHelper {
                         }
                         listOfToAddresses.add(emailNSP_Termination_Team);
                         letterRecievedEmail(
+                            pTask.Id,
+                            pTask.Name,
                             projectTaskLetterMap.get(pTask.Id).pse__Project__r.pse__Account__r.Name,
                             projectTaskLetterMap.get(pTask.Id).pse__Project__r.pse__Account__r.NSP_AIMS_Client__c,
                             listOfToAddresses,
@@ -537,7 +539,7 @@ public class NSP_ProjectTasksTriggerHelper {
     }
 
     //Letter Received email.
-    private void letterRecievedEmail(String accountName, String accountAIMS, list<String> listOfToAddresses, List<NSP_Account_Team__c> listOfPayrollMem, String ReasonForTerm, Date TermDate, Id woAssetId, List<NSP_Account_Team__c> accountTeamList){
+    private void letterRecievedEmail(ID pTask, String pTaskName, String accountName, String accountAIMS, list<String> listOfToAddresses, List<NSP_Account_Team__c> listOfPayrollMem, String ReasonForTerm, Date TermDate, Id woAssetId, List<NSP_Account_Team__c> accountTeamList){
         try{
             String dtStr;
             if(TermDate!= null){
@@ -545,12 +547,14 @@ public class NSP_ProjectTasksTriggerHelper {
             }
             String accName = accountName+'('+accountAIMS+')';
             String customUrl = URL.getOrgDomainURL().toExternalForm()+ '/'+woAssetId;
+            String projectTaskUrl = URL.getOrgDomainURL().toExternalForm()+ '/'+pTask;
             String subjectString = 'Termination letter received for '+accountName+'('+accountAIMS+')';
             String mailBody = 'Hello Team,'+'<br/><br/>';
             mailBody += '<a href="' +customUrl+'">'+ accName +'</a>';
             mailBody += ' submitted written notification of their intent to terminate their contract with Insperity. Below are the details of the termination:'+'<br/><br/>';
             mailBody += 'Intended effective termination date: '+dtStr+'<br/>';
-            mailBody += 'Termination reason: '+ReasonForTerm+'<br/><br/>';
+            mailBody += 'Termination reason: '+ReasonForTerm+'<br/>';
+            mailBody += 'Project Task: '+'<a href="' +projectTaskUrl+'">'+pTaskName+'</a>'+'<br/><br/>';
             if(!accountTeamList.isEmpty()) {
                 for(NSP_Account_Team__c accTeam : accountTeamList){
                     if ( ( accTeam.NSP_Role__c == 'Payroll Specialist' )
