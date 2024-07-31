@@ -28,7 +28,8 @@ const RL_FIELDS = [
 'Client_has_existing_retirement_plan__c',
 'NSP_Is_the_client_working_an_NSP_RS_rep__c',
 'Client_want_to_begin_401k_w_NSP_setup__c',
-'NSP_Is_the_client_working_an_NSP_RS_rep__c'
+'NSP_Is_the_client_working_an_NSP_RS_rep__c',
+'Client_working_with_an_NSP_RS_rep__c'
 ];
 
 export { EMP_TABLE_FIELDS, SECTION_FIELDS,RL_FIELDS };
