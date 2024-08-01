@@ -3,12 +3,12 @@
     <actionCalls>
         <name>Create_Opportunity_Folder_From_Template</name>
         <label>Create Opportunity Folder From Template</label>
-        <locationX>50</locationX>
+        <locationX>314</locationX>
         <locationY>458</locationY>
         <actionName>BoxCreateFolderForRecordIdFromTemplate</actionName>
         <actionType>apex</actionType>
         <connector>
-            <targetReference>Update_Box_Folder_Created</targetReference>
+            <targetReference>Get_Opportunity</targetReference>
         </connector>
         <faultConnector>
             <isGoTo>true</isGoTo>
@@ -36,7 +36,7 @@
         <description>Conditional to check for an existing FRUP record associated with Opportunity.  If a FRUP is found the screen flow will not attempt to invoke the Create Folder flow.</description>
         <name>Check_for_existing_FRUP</name>
         <label>Check for existing FRUP</label>
-        <locationX>446</locationX>
+        <locationX>666</locationX>
         <locationY>242</locationY>
         <defaultConnector>
             <targetReference>Existing_Folder_Found_Screen</targetReference>
@@ -56,6 +56,32 @@
                 <targetReference>Create_Folders_Screen</targetReference>
             </connector>
             <label>Check Existing FRUP Not Found</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Prevent DmlException: This error occurred: INSUFFICIENT_ACCESS_OR_READONLY: insufficient access rights on object id.</description>
+        <name>Check_Opportunity</name>
+        <label>Check Opportunity</label>
+        <locationX>314</locationX>
+        <locationY>674</locationY>
+        <defaultConnector>
+            <targetReference>Folder_Creation_Complete_Screen</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Found_Opportunity</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Opportunity</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Create_Box_com_Folder_s_c</targetReference>
+            </connector>
+            <label>Found Opportunity</label>
         </rules>
     </decisions>
     <description>Added boxOptyFolderId var. Fault handler added. A flow to call the custom Apex Method BoxFolderCreationFlowClickHandler which will invoke the BoxFolderAndCollaborationUtility class for Opp Ids input. This flow will be invoked by a button on Opp page.</description>
@@ -85,7 +111,7 @@
         <description>Get FRUP records for Opportunity Id</description>
         <name>Get_Associated_FRUP</name>
         <label>Get Associated FRUP</label>
-        <locationX>446</locationX>
+        <locationX>666</locationX>
         <locationY>134</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -113,12 +139,35 @@
         <object>box__FRUP__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
-    <recordUpdates>
-        <description>Check Box_Folder_Created field to True.</description>
-        <name>Update_Box_Folder_Created</name>
-        <label>Update Box_Folder_Created</label>
-        <locationX>50</locationX>
+    <recordLookups>
+        <name>Get_Opportunity</name>
+        <label>Get Opportunity</label>
+        <locationX>314</locationX>
         <locationY>566</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_Opportunity</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Opportunity</object>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Create_Box_com_Folder_s__c</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <description>Set Create_Box_com_Folder_s__c field to True.</description>
+        <name>Update_Create_Box_com_Folder_s_c</name>
+        <label>Update Create_Box_com_Folder_s__c</label>
+        <locationX>50</locationX>
+        <locationY>782</locationY>
         <connector>
             <targetReference>Folder_Creation_Complete_Screen</targetReference>
         </connector>
@@ -145,7 +194,7 @@
     <screens>
         <name>Create_Folders_Screen</name>
         <label>Create Folders Screen</label>
-        <locationX>50</locationX>
+        <locationX>314</locationX>
         <locationY>350</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -165,7 +214,7 @@
     <screens>
         <name>Existing_Folder_Found_Screen</name>
         <label>Existing Folder Found Screen</label>
-        <locationX>842</locationX>
+        <locationX>1018</locationX>
         <locationY>350</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -182,8 +231,8 @@
     <screens>
         <name>Folder_Creation_Complete_Screen</name>
         <label>Folder Creation Complete Screen</label>
-        <locationX>50</locationX>
-        <locationY>674</locationY>
+        <locationX>314</locationX>
+        <locationY>1022</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -197,7 +246,7 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>320</locationX>
+        <locationX>540</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Associated_FRUP</targetReference>
@@ -207,7 +256,7 @@
     <subflows>
         <name>Fault_Handler_Subflow</name>
         <label>Fault Handler Subflow</label>
-        <locationX>1106</locationX>
+        <locationX>1282</locationX>
         <locationY>242</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
