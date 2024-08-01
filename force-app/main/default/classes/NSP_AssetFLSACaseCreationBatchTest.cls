@@ -82,6 +82,29 @@ public class NSP_AssetFLSACaseCreationBatchTest {
         assetRecord3.RecordTypeId = WOAssetRecordTypeId;
         assetRecord3.NSP_AIMS_First_Pay_Date__c = System.today().addDays(-24);
         assetList.add(assetRecord3);
+            
+        Asset assetRecord4 = (Asset)NSP_TestDataFactory.createSObject(new Asset(), 'NSP_TestDataFactory.AssetDefaults', false);
+        assetRecord4.AccountId = acct1.Id;
+        assetRecord4.NSP_Client_Segment_type__c = null;
+        assetRecord4.RecordTypeId = WOAssetRecordTypeId;
+        assetRecord4.NSP_AIMS_First_Pay_Date__c = System.today().addDays(-9);
+        assetList.add(assetRecord4);
+            
+        Asset assetRecord5 = (Asset)NSP_TestDataFactory.createSObject(new Asset(), 'NSP_TestDataFactory.AssetDefaults', false);
+        assetRecord5.AccountId = acct1.Id;
+        assetRecord5.NSP_Client_Segment_type__c = NSP_ServiceConstants.EG50AssetSegment;
+        assetRecord5.RecordTypeId = WOAssetRecordTypeId;
+        assetRecord5.NSP_AIMS_First_Pay_Date__c = System.today().addDays(-10);
+        assetRecord5.NSP_Unique_Active_Employee__c = 40;
+        assetList.add(assetRecord5);
+        
+        Asset assetRecord6 = (Asset)NSP_TestDataFactory.createSObject(new Asset(), 'NSP_TestDataFactory.AssetDefaults', false);
+        assetRecord6.AccountId = acct1.Id;
+        assetRecord6.NSP_Client_Segment_type__c = NSP_ServiceConstants.BTAssetSegment;
+        assetRecord6.RecordTypeId = WOAssetRecordTypeId;
+        assetRecord6.NSP_AIMS_First_Pay_Date__c = System.today().addDays(-10);
+        assetRecord6.NSP_Unique_Active_Employee__c = 50;
+        assetList.add(assetRecord6);
         
         Database.insert(assetList);
         
@@ -99,6 +122,21 @@ public class NSP_AssetFLSACaseCreationBatchTest {
         subClient3.NSP_Account__c = acct1.Id;
         subClient3.NSP_Asset__c = assetRecord3.Id;
         subClientList.add(subClient3);
+            
+        NSP_Sub_Client__c subClient4 = (NSP_Sub_Client__c)NSP_TestDataFactory.createSObject(new NSP_Sub_Client__c(), 'NSP_TestDataFactory.SubClientDefaults', false);
+        subClient4.NSP_Account__c = acct1.Id;
+        subClient4.NSP_Asset__c = assetRecord4.Id;
+        subClientList.add(subClient4);
+            
+        NSP_Sub_Client__c subClient5 = (NSP_Sub_Client__c)NSP_TestDataFactory.createSObject(new NSP_Sub_Client__c(), 'NSP_TestDataFactory.SubClientDefaults', false);
+        subClient5.NSP_Account__c = acct1.Id;
+        subClient5.NSP_Asset__c = assetRecord5.Id;
+        subClientList.add(subClient5);
+            
+        NSP_Sub_Client__c subClient6 = (NSP_Sub_Client__c)NSP_TestDataFactory.createSObject(new NSP_Sub_Client__c(), 'NSP_TestDataFactory.SubClientDefaults', false);
+        subClient6.NSP_Account__c = acct1.Id;
+        subClient6.NSP_Asset__c = assetRecord6.Id;
+        subClientList.add(subClient6);
         
         Database.insert(subClientList);
         
