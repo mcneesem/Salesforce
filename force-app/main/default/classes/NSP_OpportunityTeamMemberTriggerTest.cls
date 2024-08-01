@@ -76,6 +76,7 @@ public without sharing class NSP_OpportunityTeamMemberTriggerTest {
         System.assertEquals(true,opportunityteammember_Obj.size()>0);
         NSP_OpportunityTeamMemberTriggerHandler obj01 = new NSP_OpportunityTeamMemberTriggerHandler();
         obj01.afterDelete(new List<OpportunityTeamMember>(),new Map<Id,OpportunityTeamMember>());
+        NSP_OpportunityTeamMemberTriggerHelper.testHandleException( null , 'methodName' );
     }  
     
     
