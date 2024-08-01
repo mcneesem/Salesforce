@@ -95,7 +95,7 @@ public class NSP_LeadTriggerHelper {
                         //  297391 -  Inbound Solutions - Existing Lead Flow Modification
                         fieldMarketingTeamList.add(leadObject);
                     }
-                    if(!Label.Eloqua_Lead_Marketing_Priority.split(',').contains(leadObject.Marketing_Priority__c) &&  
+                    else if(!Label.Eloqua_Lead_Marketing_Priority.split(',').contains(leadObject.Marketing_Priority__c) &&  
                     Label.Eloqua_Integration_User_Id.equals(leadObject.ownerId)){ 
                         //  290445 - Inbound Solutions - Existing Lead Flow
                         //  297391 -  Inbound Solutions - Existing Lead Flow Modification
