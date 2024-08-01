@@ -150,6 +150,21 @@ public with sharing class ApexExceptionLogController {
                                 pageName = pageName.substringAfter( '__' );
                             }
                         }
+                    } else if ( apexExceptionBodyChunk.startsWith( 'Failed to process ' )
+                        && apexExceptionBodyChunk.substringAfter( 'Failed to process ' ).contains( ' for class ' )
+                        && apexExceptionBodyChunk.substringAfter( 'Failed to process ' ).substringAfter( ' for class ' ).containsIgnoreCase( ' for job ' )
+                        )
+                    {
+                        // found paragraph chunk: 'Failed to process XXXXXXXXXXXXXXX for class XXXXXXXXXXXXXXX for job XXXXXXXXXXXXXXX'
+                        message = apexExceptionBodyChunk;
+                        String extractedClassName = ApexExceptionLogController.extractClassName( apexExceptionBodyChunk );
+                        if ( String.isNotBlank( extractedClassName ) ) {
+                            className = extractedClassName;
+                            if ( className.contains( '.' ) ) {
+                                namespace = className.substringBefore( '.' );
+                                className = className.substringAfter( '.' );
+                            }
+                        }
                     } else if ( apexExceptionBodyChunk.startsWith( 'caused by: ' ) ) {
                         // found paragraph chunk: 'caused by: XXXXXXXXXXXXXXX'
                         cause = apexExceptionBodyChunk.substringAfter( 'caused by: ' );
@@ -180,7 +195,11 @@ public with sharing class ApexExceptionLogController {
                     }
                 }
                 // third paragraph chunk is the message when the expection did not come from a trigger or from a visualforce page...
-                if ( String.isBlank( triggerName ) && String.isBlank( pageName ) ) {
+                if ( String.isBlank( triggerName )
+                    && String.isBlank( pageName )
+                    && String.isBlank( className )
+                    )
+                {
                     if ( apexExceptionBodyChunks.size() > 2 ) {
                         message = apexExceptionBodyChunks[2];
                     }
@@ -257,12 +276,38 @@ public with sharing class ApexExceptionLogController {
         return exceptionLog;
     }
 
+    private static String extractClassName( String input ) {
+        String METHOD_NAME = 'extractClassName';
+        String DEBUG_PREFIX = CLASS_NAME + '.' + METHOD_NAME;
+        System.debug( DEBUG_PREFIX + ' ~ input=' + input );
+        String className = null;
+        if ( String.isNotBlank( input )
+            && input.startsWith( 'Failed to process ' )
+            && input.substringAfter( 'Failed to process ' ).contains( ' for class ' )
+            && input.substringAfter( 'Failed to process ' ).substringAfter( ' for class ' ).containsIgnoreCase( ' for job ' )
+            )
+        {
+            className = input.substringAfter( 'Failed to process ' )
+                .substringAfter( ' for class ' )
+                .substringBefore( ' for job ' )
+                .trim()
+                .replace( '\'' , '' )
+                .trim()
+                ;
+        }
+        System.debug( DEBUG_PREFIX + ' ~ className=' + className );
+        return className;
+    }
+
     private static String extractPageName( String input ) {
-        String METHOD_NAME = 'splitUserOrganization';
+        String METHOD_NAME = 'extractPageName';
         String DEBUG_PREFIX = CLASS_NAME + '.' + METHOD_NAME;
         System.debug( DEBUG_PREFIX + ' ~ input=' + input );
         String pageName = null;
-        if ( input.startsWith( 'Visualforce Page: ' ) ) {
+        if ( String.isNotBlank( input )
+            && input.startsWith( 'Visualforce Page: ' )
+            )
+        {
             pageName = input.substringAfter( 'Visualforce Page: ' );
             if ( pageName.contains( '/' ) ) {
                 pageName = pageName.substringAfterLast( '/' );
