@@ -552,6 +552,7 @@ public class NSP_LeadTriggerHelperTest {
         User eloquaUser = [select id from User WHERE id =: Label.Eloqua_Integration_User_Id ];
         List<Group> inBoundSolutionsQueue = [SELECT Id FROM Group WHERE Type = 'Queue' AND DeveloperName = :System.label.NSP_DEVELOPERNAME_INBOUNDSOLUTIONS];
         List<Group> outBoundTeamQueue = [SELECT Id FROM Group WHERE Type = 'Queue' AND DeveloperName = :System.label.Outbound_Team_DeveloperName];
+        List<Group> fieldMarketingTeamQueue = [SELECT Id FROM Group WHERE Type = 'Queue' AND DeveloperName = :System.label.Field_Marketing_Team_DeveloperName];
         List<Account> account = [SELECT id FROM Account WHERE name = 'Test Account' LIMIT 1];
         List<User> user = [SELECT id FROM User WHERE email = 'testuser1@insperity.com'];
 
@@ -582,16 +583,30 @@ public class NSP_LeadTriggerHelperTest {
             lead2.phone = '999999';
             lead2.ownerId = Label.Eloqua_Integration_User_Id;
             leads.add(lead2);
+
+            //  Lead should be assigned to Field Marketing Team
+            Lead lead3 = new  Lead();
+            lead3.Marketing_Priority__c = 'High - Event';
+            lead3.company = account[0].id;
+            lead3.firstName = 'Test3';
+            lead3.lastName = 'Test3';
+            lead3.email = 'myemail3@yahoo.com';
+            lead3.phone = '999999';
+            lead3.ownerId = Label.Eloqua_Integration_User_Id;
+            leads.add(lead3);
             
             insert leads;
             
-            List<Lead> lead3 = [SELECT ownerId FROM Lead WHERE id =: lead1.id];
-            system.assertNotEquals(inBoundSolutionsQueue[0].id, lead3[0].Ownerid);
-            system.assertEquals(outBoundTeamQueue[0].id, lead3[0].Ownerid);
+            List<Lead> lead_1 = [SELECT ownerId FROM Lead WHERE id =: lead1.id];
+            system.assertNotEquals(inBoundSolutionsQueue[0].id, lead_1[0].Ownerid);
+            system.assertEquals(outBoundTeamQueue[0].id, lead_1[0].Ownerid);
 
-            List<Lead> lead4 = [SELECT ownerId FROM Lead WHERE id =: lead2.id];
-            system.assertEquals(inBoundSolutionsQueue[0].id, lead4[0].Ownerid);
-            
+            List<Lead> lead_2 = [SELECT ownerId FROM Lead WHERE id =: lead2.id];
+            system.assertEquals(inBoundSolutionsQueue[0].id, lead_2[0].Ownerid);
+
+            List<Lead> lead_3 = [SELECT ownerId FROM Lead WHERE id =: lead3.id];
+            system.assertEquals(fieldMarketingTeamQueue[0].id, lead_3[0].Ownerid);
+
         }
         Test.stopTest();
     }

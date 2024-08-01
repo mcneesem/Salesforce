@@ -37,6 +37,7 @@ public class NSP_LeadTriggerHelper {
         Set < String > accountIdSet = new Set < String > ();
         List<Lead> inboundSolutionsList =  new List<Lead>();  // Added as part of DF-01009 
         List<Lead> outboundTeamList =  new List<Lead>();
+        List<Lead> fieldMarketingTeamList =  new List<Lead>();
          /* Added to Map Sales Office on insert if Zipcode is populated*/
         List < Lead > zipCodeLeadList = new List < Lead > ();
         List < String > zipCodeList = new List < String > ();
@@ -86,13 +87,18 @@ public class NSP_LeadTriggerHelper {
                 //  Lead created by Eloqua
                 if(UserInfo.getUserId().equals(Label.Eloqua_Integration_User_Id)){
                     
-                    //  290414 - Lead Assignment flow (TC) - New Outbound leads
                     if(String.isNotBlank(leadObject.Marketing_Priority__c) && leadObject.Marketing_Priority__c.equals('General')){
+                        //  290414 - Lead Assignment flow (TC) - New Outbound leads
                         outboundTeamList.add(leadObject);
                     }
-                    else if(!Label.Eloqua_Lead_Marketing_Priority.split(',').contains(leadObject.Marketing_Priority__c) || 
+                    else if(String.isNotBlank(leadObject.Marketing_Priority__c) && leadObject.Marketing_Priority__c.equals('High - Event')){
+                        //  297391 -  Inbound Solutions - Existing Lead Flow Modification
+                        fieldMarketingTeamList.add(leadObject);
+                    }
+                    if(!Label.Eloqua_Lead_Marketing_Priority.split(',').contains(leadObject.Marketing_Priority__c) &&  
                     Label.Eloqua_Integration_User_Id.equals(leadObject.ownerId)){ 
                         //  290445 - Inbound Solutions - Existing Lead Flow
+                        //  297391 -  Inbound Solutions - Existing Lead Flow Modification
                         inboundSolutionsList.add(leadObject);
                     }
                 }
@@ -139,6 +145,11 @@ public class NSP_LeadTriggerHelper {
         //Assigning to Outbound Team 
         if(!outboundTeamList.isEmpty()){
             assignLeadToOutboundTeam(outboundTeamList);
+        }
+
+        //Assigning to Field Marketing Team 
+        if(!fieldMarketingTeamList.isEmpty()){
+            assignLeadToFieldMarketingTeam(fieldMarketingTeamList);
         }
         
         setSalesOfficeDetails(newList,null); // added for STY-03154
@@ -639,12 +650,13 @@ if ((leadNewMap.get(leadId).NSP_Lead_Routing__c == true &&
         if(midMarketLead != null && zipBasedLocationList !=null && !zipBasedLocationList.isEmpty())
             NSP_RoundRobinAssigner.getOfficeAssignmentDetails(midMarketLead, zipBasedLocationList, true);
     }
+
 /**
 * Assigns the leads to the inBound Solutions Queue 
 * @param inBoundSolutionsList List of lead for inBound Solutions 
 * @return void 
-*@CreatedDate: 1/19/2022
-*@Story: DF-01009
+* @CreatedDate: 1/19/2022
+* @Story: DF-01009
 *                
 */
     public void assignLeadToInboundSolutions(List<Lead> inBoundSolutionsList){   
@@ -660,8 +672,8 @@ if ((leadNewMap.get(leadId).NSP_Lead_Routing__c == true &&
 * Assigns the leads to the Outbound Team Queue 
 * @param outboundTeamList List of lead for outbound team
 * @return void 
-*@CreatedDate: 7/22/2024
-*@Story: 290414
+* @CreatedDate: 7/22/2024
+* @Story: 290414
 *                
 */
     public void assignLeadToOutboundTeam(List<Lead> outboundTeamList){
@@ -673,7 +685,24 @@ if ((leadNewMap.get(leadId).NSP_Lead_Routing__c == true &&
         }
     }
 
-    /**
+/*
+* Assigns the leads to the Field Marketing Team Queue 
+* @param fieldMarketingTeamList List of lead for field marketing team
+* @return void 
+* @CreatedDate: 7/31/2024
+* @Story: 297391
+*                
+*/
+    public void assignLeadToFieldMarketingTeam(List<Lead> fieldMarketingTeamList){
+        //Fetching the queue id for the inBound SolutionsQueue queue
+        List<Group> fieldMarketingTeamListQueue = [SELECT Id FROM Group WHERE Type = 'Queue' AND DeveloperName = :System.label.Field_Marketing_Team_DeveloperName];
+        for(Lead leadObject : fieldMarketingTeamList){
+            leadObject.OwnerId = fieldMarketingTeamListQueue[0].id;
+            leadObject.NSP_Lead_Routing__c = FALSE;
+        }
+    }
+
+/**
 * Assigns the leads to the Payroll/HCM  Queue 
 * @param payrollHCMLead List of lead for Payroll/HCM
 * @return void             
