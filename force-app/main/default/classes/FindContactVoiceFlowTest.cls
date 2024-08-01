@@ -1,0 +1,41 @@
+@isTest
+private class FindContactVoiceFlowTest {
+    @isTest
+    private static void testGetContactsByPhone() {
+        // Create test contacts
+        Contact contact1 = new Contact(
+            FirstName = 'John',
+            LastName = 'Doe',
+          	Email = 'john.doe@example.com',
+            MobilePhone = '123-456-7890'
+        );
+        Contact contact2 = new Contact(
+            FirstName = 'Jane',
+            LastName = 'Smith',
+            Phone = '123-456-7890',
+            Email = 'jane.smith@example.com',
+            HomePhone = '123-456-7890'
+        );
+        insert new List<Contact>{contact1, contact2};
+		List<String> phoneNumbers = new List<String>{'123-456-7890'};
+        List<List<Contact>> result = FindContactVoiceFlow.getContactsByPhone(phoneNumbers);
+
+ 		System.assertEquals(1, result.size(), 'Result list size should be 1');
+	}
+
+    @isTest
+    private static void testNoPhoneNumbers() {
+        // Call the method with no phone numbers
+        List<String> phoneNumbers = new List<String>();
+        List<List<Contact>> result = FindContactVoiceFlow.getContactsByPhone(phoneNumbers);
+		System.assertEquals(0, result.size(), 'Result list size should be 0');
+    }
+
+    @isTest
+    private static void testNullPhoneNumbers() {
+        // Call the method with null phone numbers
+        List<List<Contact>> result = FindContactVoiceFlow.getContactsByPhone(null);
+		System.assertEquals(0, result.size(), 'Result list size should be 0');
+    }
+
+}
