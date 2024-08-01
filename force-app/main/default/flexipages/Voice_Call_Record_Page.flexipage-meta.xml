@@ -416,21 +416,21 @@
                 <componentName>voiceCallCategorySubCategory</componentName>
                 <identifier>c_voiceCallCategorySubCategory</identifier>
                 <visibilityRule>
-                    <booleanFilter>( 1 AND 2 ) OR 3</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.Is_Contact_Selected__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>true</rightValue>
-                    </criteria>
+                    <booleanFilter>1 OR 2 OR 3</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.CallType}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>Transfer</rightValue>
+                        <rightValue>Callback</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.CallType}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Inbound</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.CallType}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Transfer</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
