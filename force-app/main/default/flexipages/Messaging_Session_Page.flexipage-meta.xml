@@ -288,6 +288,12 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
+                <componentName>messagingSessionCaseCategory</componentName>
+                <identifier>c_messagingSessionCaseCategory</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
                 <componentInstanceProperties>
                     <name>createQuickActionName</name>
                     <value>NewCase</value>
@@ -302,12 +308,6 @@
                 </componentInstanceProperties>
                 <componentName>console:relatedRecord</componentName>
                 <identifier>console_relatedRecord2</identifier>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentName>messagingSessionCaseCategory</componentName>
-                <identifier>c_messagingSessionCaseCategory</identifier>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
