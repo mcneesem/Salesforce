@@ -11,8 +11,7 @@ Modification Log     :
 * Srushti Bikkannavar        12/13/2022           First Iteration
 */
 public class NSP_AssetFLSACaseCreationBatch implements Schedulable,Database.Stateful, Database.Batchable < sObject >{
-    // test w/ NSP_AssetFLSACaseCreationBatchTest (90%)
-
+    // test w/ NSP_AssetFLSACaseCreationBatchTest (95%)
     Integer segmentDays;
     Integer btCoreEgMinDays;
     Integer btCoreEgMaxDays;
@@ -57,13 +56,12 @@ public class NSP_AssetFLSACaseCreationBatch implements Schedulable,Database.Stat
                 NSP_ServiceConstants.MMEAssetSegment
             };
             //Query to get all the assets of WO RT and where segment in clientSegmentTypes
-            NSP_QueryBuilder queryBuilder = new NSP_QueryBuilder(NSP_ServiceConstants.ASSET_SOBJECT_TYPE, assetFields)
-                .addFilter('RecordTypeId', WOAssetRecordTypeId)
-                .addFilter('NSP_Client_Segment_type__c', clientSegmentTypes, NSP_QueryBuilder.Operator.INCLUDES)
-                .addFilter('NSP_Account_Status__c', 'Terminated', NSP_QueryBuilder.Operator.NOT_EQUALS, true)
-                .addFilter('NSP_AIMS_First_Pay_Date__c', ageDays, NSP_QueryBuilder.Operator.GREATER_THAN_OR_EQUALS, false)
-                .setSecurityEnforce(false);
-            String query = queryBuilder.build();
+            String query = 'SELECT NSP_Client_Segment_type__c, NSP_Unique_Active_Employee__c, RecordTypeId, AccountId ' +  
+               'FROM Asset ' +  
+               'WHERE RecordTypeId = \'' + WOAssetRecordTypeId + '\' ' +  
+               'AND (NSP_Client_Segment_type__c IN (\'' + String.join(clientSegmentTypes, '\',\'') + '\') OR NSP_Client_Segment_type__c = NULL) ' +  
+               'AND NSP_Account_Status__c != \'Terminated\' ' +  
+               'AND NSP_AIMS_First_Pay_Date__c >= ' + ageDays;
             queryResponse = Database.getQueryLocator(query);
         }catch(Exception ex){
             NSP_ErrorLogHandler.logSaveException('NSP_AssetFLSACaseCreationBatch', 'start', ex.getMessage());
@@ -97,11 +95,11 @@ public class NSP_AssetFLSACaseCreationBatch implements Schedulable,Database.Stat
                                                     FROM NSP_Sub_Client__c 
                                                     WHERE NSP_Asset__c IN: assetList AND 
                                                     NSP_Case_created_from_FLSA_Batch__c = false]){
-                                                        
+
                                                         if(btCoreEgMinDays!=NULL && btCoreEgMaxDays!=NULL && subClientRecord.NSP_Asset__r.NSP_AIMS_First_Pay_Date__c < System.today().addDays(btCoreEgMinDays) && 
                                                            subClientRecord.NSP_Asset__r.NSP_AIMS_First_Pay_Date__c >= System.today().addDays(btCoreEgMaxDays)){
                                                                //Condition for BT and Core Segment Type
-                                                               if(segmentList.contains(subClientRecord.NSP_Asset__r.NSP_Client_Segment_type__c)){
+                                                               if(segmentList.contains(subClientRecord.NSP_Asset__r.NSP_Client_Segment_type__c) || subClientRecord.NSP_Asset__r.NSP_Client_Segment_type__c == null){
                                                                    flsaCase = createCase(subClientRecord.NSP_Account__c, subClientRecord.NSP_Sub_Client__c, NSP_ServiceConstants.SUBCATEGORY_NOT_ON_UI , System.Label.NSP_FLSA_QueueId);
                                                                    flsaCaseList.add(flsaCase);
                                                                    subClientRecord.NSP_Case_created_from_FLSA_Batch__c = True;
@@ -142,7 +140,7 @@ public class NSP_AssetFLSACaseCreationBatch implements Schedulable,Database.Stat
                                                                             flsaCaseList.add(flsaCase);
                                                                             subClientRecord.NSP_Case_created_from_FLSA_Batch__c = True;
                                                                             subClientList.add(subClientRecord);
-                                                                    }	
+                                                                    } 
                                                         }
                                                     }
             if(!flsaCaseList.isEmpty()){
