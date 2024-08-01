@@ -5,7 +5,7 @@
         <name>Each_Task_Creation</name>
         <label>Each Task Creation</label>
         <locationX>138</locationX>
-        <locationY>971</locationY>
+        <locationY>863</locationY>
         <assignmentItems>
             <assignToReference>NewTask.NSP_Start_Date__c</assignToReference>
             <operator>Assign</operator>
@@ -24,7 +24,7 @@
             <assignToReference>NewTask.RecordTypeId</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Get_PEO_Record_Type_Id.Id</elementReference>
+                <elementReference>peoTaskRecordTypeId</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -60,10 +60,10 @@
         </connector>
     </assignments>
     <constants>
-        <name>PEO_RecordTypeName</name>
+        <name>peoTaskRecordTypeId</name>
         <dataType>String</dataType>
         <value>
-            <stringValue>PEO_Service_Task</stringValue>
+            <stringValue>0124x0000019l9yAAA</stringValue>
         </value>
     </constants>
     <decisions>
@@ -103,14 +103,14 @@
         </rules>
     </decisions>
     <decisions>
-        <name>Check_if_Task_template_matches</name>
-        <label>Check if Task template matches</label>
+        <name>Check_Task_Template</name>
+        <label>Check Task Template</label>
         <locationX>182</locationX>
         <locationY>539</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>isTaskTemplateNull</name>
-            <conditionLogic>1 AND (2 OR 3 OR 4 )</conditionLogic>
+            <name>Found_Task_Template</name>
+            <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>Get_Task_Template_Record</leftValueReference>
                 <operator>IsNull</operator>
@@ -118,31 +118,10 @@
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
-            <conditions>
-                <leftValueReference>$Record.NSP_Category__c</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <elementReference>$Record__Prior.NSP_Category__c</elementReference>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.NSP_SubCategory__c</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <elementReference>$Record__Prior.NSP_SubCategory__c</elementReference>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.NSP_Detail__c</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <elementReference>$Record__Prior.NSP_Detail__c</elementReference>
-                </rightValue>
-            </conditions>
             <connector>
                 <targetReference>Get_Activity_Template_Detail_Recs</targetReference>
             </connector>
-            <label>isTaskTemplateNull?</label>
+            <label>Found Task Template</label>
         </rules>
     </decisions>
     <description>Creates tasks on cases based on cat/Subcat/detail</description>
@@ -153,7 +132,7 @@
         <name>Over_Activity_template_Detail_Recs</name>
         <label>Over Activity template Detail Recs</label>
         <locationX>50</locationX>
-        <locationY>863</locationY>
+        <locationY>755</locationY>
         <collectionReference>Get_Activity_Template_Detail_Recs</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -186,7 +165,7 @@
         <name>Create_Tasks</name>
         <label>Create Tasks</label>
         <locationX>50</locationX>
-        <locationY>1163</locationY>
+        <locationY>1055</locationY>
         <inputReference>TaskCollection</inputReference>
     </recordCreates>
     <recordLookups>
@@ -196,7 +175,7 @@
         <locationY>647</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Get_PEO_Record_Type_Id</targetReference>
+            <targetReference>Over_Activity_template_Detail_Recs</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -211,41 +190,13 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
-        <name>Get_PEO_Record_Type_Id</name>
-        <label>Get PEO Record Type Id</label>
-        <locationX>50</locationX>
-        <locationY>755</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Over_Activity_template_Detail_Recs</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>SobjectType</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Task</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>DeveloperName</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>PEO_RecordTypeName</elementReference>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>RecordType</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordLookups>
         <name>Get_Task_Template_Record</name>
         <label>Get Task Template Record</label>
         <locationX>182</locationX>
         <locationY>431</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Check_if_Task_template_matches</targetReference>
+            <targetReference>Check_Task_Template</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -294,11 +245,18 @@
                 <booleanValue>false</booleanValue>
             </value>
         </filters>
+        <filters>
+            <field>Status</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>Closed</stringValue>
+            </value>
+        </filters>
         <object>Case</object>
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <variables>
         <name>NewTask</name>
         <dataType>SObject</dataType>
