@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
     <customSettingsType>Hierarchy</customSettingsType>
-    <description>See Flow: Find Related Contact Screen Flow</description>
+    <description>See Flow: Find Related Contact (Voice Call)
+See Flow: Find Related Contact Screen Flow
+See Apex Class: FindContactVoiceFlow</description>
     <enableFeeds>false</enableFeeds>
     <label>Find Related Contact Settings</label>
     <visibility>Public</visibility>

@@ -581,7 +581,7 @@
         <inputAssignments>
             <name>faultElement</name>
             <value>
-                <stringValue>Update Messaging User Record</stringValue>
+                <stringValue>Update_Messaging_User_Record</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -610,7 +610,7 @@
         <inputAssignments>
             <name>faultElement</name>
             <value>
-                <stringValue>Get Contact SOSL</stringValue>
+                <stringValue>Get_Contact_SOSL</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -638,7 +638,7 @@
         <inputAssignments>
             <name>faultElement</name>
             <value>
-                <stringValue>Update Case Contact</stringValue>
+                <stringValue>Update_Case_Contact</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -666,7 +666,7 @@
         <inputAssignments>
             <name>faultElement</name>
             <value>
-                <stringValue>Update Contact on Voice Call</stringValue>
+                <stringValue>Update_Contact_on_Voice_Call</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>

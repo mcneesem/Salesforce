@@ -316,21 +316,21 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>flowName</name>
-                    <value>Find_Related_Contact_Screen_Flow</value>
+                    <value>Select_Matching_Contact_Voice_Call</value>
                 </componentInstanceProperties>
                 <componentName>flowruntime:interview</componentName>
-                <identifier>flowruntime_interview</identifier>
+                <identifier>flowruntime_interview2</identifier>
                 <visibilityRule>
                     <booleanFilter>1 AND 2</booleanFilter>
+                    <criteria>
+                        <leftValue>{!$Permission.CustomPermission.Select_Matching_Contact_Voice_Call}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
                     <criteria>
                         <leftValue>{!Record.Is_Contact_Selected__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>false</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!$Permission.CustomPermission.Find_Related_Contact_Screen_Flow}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>true</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
@@ -347,21 +347,21 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>flowName</name>
-                    <value>Select_Matching_Contact_Voice_Call</value>
+                    <value>Find_Related_Contact_Screen_Flow</value>
                 </componentInstanceProperties>
                 <componentName>flowruntime:interview</componentName>
-                <identifier>flowruntime_interview2</identifier>
+                <identifier>flowruntime_interview</identifier>
                 <visibilityRule>
                     <booleanFilter>1 AND 2</booleanFilter>
+                    <criteria>
+                        <leftValue>{!$Permission.CustomPermission.Find_Related_Contact_Screen_Flow}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
                     <criteria>
                         <leftValue>{!Record.Is_Contact_Selected__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>false</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!$Permission.CustomPermission.Select_Matching_Contact_Voice_Call}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>true</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
@@ -451,7 +451,7 @@
                     <criteria>
                         <leftValue>{!Record.CallType}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>Transfer</rightValue>
+                        <rightValue>Callback</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.CallType}</leftValue>
@@ -461,7 +461,7 @@
                     <criteria>
                         <leftValue>{!Record.CallType}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>Callback</rightValue>
+                        <rightValue>Transfer</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>

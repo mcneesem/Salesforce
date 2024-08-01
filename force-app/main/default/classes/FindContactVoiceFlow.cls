@@ -1,21 +1,84 @@
-public class FindContactVoiceFlow{
-    @InvocableMethod(label = 'Get Contacts by Phone')
-    public static List<List<Contact>> getContactsByPhone(List<String> phoneNumbers){
+public class FindContactVoiceFlow {
+    // test w/ FindContactVoiceFlowTest (94%)
+
+    @InvocableMethod(label='Get Contacts by Phone')
+    public static List<List<Contact>> getContactsByPhone( List<String> phoneNumbers ) {
         List<List<Contact>> result = new List<List<Contact>>();
-        if (phoneNumbers != null && !phoneNumbers.isEmpty()){
-            String phoneNumber = phoneNumbers[0];
-            String searchString = '' + phoneNumber + '';
-            Find_Related_Contact_Settings__c settings = Find_Related_Contact_Settings__c.getInstance(UserInfo.getProfileId());
-            Integer createdDateLimitDays = settings.LimitCreatedDate__c != null ?(settings.LimitCreatedDate__c>=0?(Integer)settings.LimitCreatedDate__c :1): 1; 
-            Integer queryLimitCount = settings.LimitQuery__c != null ?(settings.LimitQuery__c>=0?(Integer)settings.LimitQuery__c :1): 1; 
-            Date limitDate = System.today().addDays(-createdDateLimitDays);
-            List<List<Contact>> searchResults = [FIND : searchString IN PHONE FIELDS RETURNING Contact(Id, Name, Email, HomePhone, NSP_Work_Phone__c, MobilePhone WHERE CreatedDate >= :(limitDate) LIMIT:QueryLimitCount)];
-            List<Contact> contacts = new List<Contact>();
-            for (List<Contact> resultList : searchResults){
-                contacts.addAll(resultList);
+        if ( ( phoneNumbers != null ) && !phoneNumbers.isEmpty() ) {
+            String searchString = '' + phoneNumbers[0] + '';
+            Date limitDate = System.today().addDays( -1 * FindContactVoiceFlow.limitCreatedDate );
+            List<List<Contact>> searchResults = [
+                FIND :searchString IN PHONE FIELDS
+                RETURNING Contact(
+                    Id , Name , Email , HomePhone , NSP_Work_Phone__c , MobilePhone
+                    WHERE ( CreatedDate >= :(limitDate) )
+                    LIMIT :FindContactVoiceFlow.limitSearch
+                )
+            ];
+            List<Contact> records = new List<Contact>();
+            for ( List<Contact> resultList : searchResults ) {
+                records.addAll( resultList );
             }
-            result.add(contacts);
+            result.add( records );
         }
         return result;
     }
+
+    //
+    // attributes controlled by Custom Settings...
+    //
+
+    private static Find_Related_Contact_Settings__c settings {
+        private get {
+            if ( settings == null ) {
+                settings = Find_Related_Contact_Settings__c.getInstance( UserInfo.getUserId() );
+            }
+            return settings;
+        }
+        private set;
+    }
+
+    private static Integer limitSearch {
+        private get {
+            if ( limitSearch == null ) {
+                Integer local = 0;
+                if ( ( FindContactVoiceFlow.settings != null )
+                    && ( FindContactVoiceFlow.settings.LimitSearch__c != null )
+                    )
+                {
+                    local = FindContactVoiceFlow.settings.LimitSearch__c.intValue();
+                }
+                // must non-negative...
+                if ( local < 0 ) {
+                    local = 0;
+                }
+                limitSearch = local;
+            }
+            return limitSearch;
+        }
+        private set;
+    }
+
+    private static Integer limitCreatedDate {
+        private get {
+            if ( limitCreatedDate == null ) {
+                Integer local = 0;
+                if ( ( FindContactVoiceFlow.settings != null )
+                    && ( FindContactVoiceFlow.settings.LimitCreatedDateSearch__c != null )
+                    )
+                {
+                    local = FindContactVoiceFlow.settings.LimitCreatedDateSearch__c.intValue();
+                }
+                // must non-negative...
+                if ( local < 0 ) {
+                    local = 0;
+                }
+                limitCreatedDate = local;
+            }
+            return limitCreatedDate;
+        }
+        private set;
+    }
+
 }
+//
