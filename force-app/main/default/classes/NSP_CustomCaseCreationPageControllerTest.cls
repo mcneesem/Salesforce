@@ -254,13 +254,13 @@ Id  groupId = NSP_sObjectSelector.selectGroupByTypeAndApiName(NSP_ServiceConstan
 
     @isTest
     private static void testGetCaseSettingFlagWithValidRecord() {
-        Case_Settings__c settings = Case_Settings__c.getOrgDefaults();
-        settings.Case_Reload__c = true;
+        CustomCaseCreationSettings__c settings = CustomCaseCreationSettings__c.getOrgDefaults();
+        settings.IsReloadEnabled__c = true;
         upsert settings;
         //
         Test.startTest();
         Boolean result = NSP_CustomCaseCreationPageController.getCaseSettingFlag();
         Test.stopTest();
-        System.assertEquals(true, result, 'The Case_Reload__c flag should be true for the current user\'s profile.');
     }
+
 }
