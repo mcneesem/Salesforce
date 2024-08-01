@@ -422,8 +422,13 @@ public class NSP_OrderItemTriggerHelper {
                         accId = op.Order.AccountId;
                     }
             }
-            if(OrderItemOldMap.get(op.id).NSP_TotalUsageQuantity__c != OrderItemNewMap.get(op.id).NSP_TotalUsageQuantity__c && 
-               OrderItemNewMap.get(op.id).NSP_TotalUsageQuantity__c != null && OrderItemNewMap.get(op.id).NSP_ServiceAsset__c != null){
+            if( OrderItemOldMap.get(op.id).NSP_TotalUsageQuantity__c != OrderItemNewMap.get(op.id).NSP_TotalUsageQuantity__c
+                && OrderItemNewMap.get(op.id).NSP_TotalUsageQuantity__c != null
+                && OrderItemNewMap.get(op.id).NSP_ServiceAsset__c != null
+                && OrderItemNewMap.get(op.id).Prevent_Asset_Updates__c == false
+                && OrderItemNewMap.get(op.id).OrderType__c != 'Supplemental'
+                )
+            {
                 if(OrderItemNewMap.get(op.id).NSP_UsageUpperBound__c > OrderItemNewMap.get(op.id).NSP_TotalUsageQuantity__c){
                     activeUserMap.put(OrderItemNewMap.get(op.id).NSP_ServiceAsset__c,OrderItemNewMap.get(op.id).NSP_UsageUpperBound__c);
                 }

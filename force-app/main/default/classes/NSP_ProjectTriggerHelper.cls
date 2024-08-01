@@ -999,10 +999,7 @@ public class NSP_ProjectTriggerHelper{
                     && !project.pse__Is_Template__c && project.recordTypeId == peoProjectRecordTypeId && 
                     (project.TemplateName__c == label.Middle_Market_Implementation_Project ||
                     project.TemplateName__c == label.FSOImplementationProject) ){
-                        String projectName = project.TemplateName__c + ' - ' + projectAccountMap.get(project.Id).pse__Account__r.Name ;
-                        if(projectName !=null && project.Name != projectName && oldProjectMap.get(project.Id).Name != projectName){
-                            project.Name = projectName.length() > 80 ? projectName.substring(0, 80) : projectName;
-                        }
+                        project.Name = projectNameAsPerNamingConvention(project.TemplateName__c,project.pse__Start_Date__c, projectAccountMap.get(project.pse__Account__c).Name);
                     }
             }
         } catch (Exception ex) {
@@ -1484,10 +1481,22 @@ public class NSP_ProjectTriggerHelper{
     * Params:       Id accountId 
     * Author :      Abhishek Kumar
     * ********************************************************************************************/
-    private String projectNameAsPerNamingConvention(String projectName ,Date startDate, String accountName  ){
-        String prjName = String.isNotBlank(accountName) ? projectName + ' - ' + startDate.month() + '.' + startDate.day() + '.' + startDate.year()+' - '+ accountName
-        : projectName + ' - ' + startDate.month() + '.' + startDate.day() + '.' + startDate.year();
-        return prjName.length() > 80 ? prjName.substring(0, 80) : prjName ;
+    private String projectNameAsPerNamingConvention( String projectName , Date startDate , String accountName ) {
+        String prjName = '';
+        if ( String.isNotBlank( projectName ) ) {
+            if ( projectName == Label.Middle_Market_Implementation_Project ) {
+                prjName = projectName;
+            } else if ( startDate != null ) {
+                prjName = projectName + ' - ' + startDate.month() + '.' + startDate.day() + '.' + startDate.year();
+            }
+        }
+        if ( String.isNotBlank( prjName ) && String.isNotBlank( accountName ) ) {
+            prjName = prjName + ' - '+ accountName;
+        }
+        if ( prjName.length() > 80 ) {
+            prjName = prjName.substring( 0 , 73 );
+        }
+        return prjName;
     }
 
     /***********************************************************************************************

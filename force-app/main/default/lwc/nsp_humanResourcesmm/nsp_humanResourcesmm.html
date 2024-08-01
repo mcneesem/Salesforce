@@ -17,7 +17,8 @@
         record-type-id={recordTypeId}
         data-name="Client_have_any_urgent_HR_needs__c"
         value={field.Client_have_any_urgent_HR_needs__c}
-        onchange={handleValueChange}>
+        onchange={handleValueChange}
+        ondblclick={handleDoubleClick}>
       </c-nsp_selection-box>
 
       <template if:true={visibility.Select_client_urgent_HR_needs__c}>
@@ -63,7 +64,8 @@
         record-type-id={recordTypeId}
         data-name="sample_new_empl_info_packet_collected__c"
         value={field.sample_new_empl_info_packet_collected__c}
-        onchange={handleValueChange}>
+        onchange={handleValueChange}
+        ondblclick={handleDoubleClick}>
       </c-nsp_selection-box>
 
       <lightning-formatted-text
@@ -86,7 +88,8 @@
         record-type-id={recordTypeId}
         data-name="Exemption_status_of_all_empl_explained__c"
         value={field.Exemption_status_of_all_empl_explained__c}
-        onchange={handleValueChange}>
+        onchange={handleValueChange}
+        ondblclick={handleDoubleClick}>
       </c-nsp_selection-box>
 
       <c-nsp_selection-box
@@ -96,7 +99,8 @@
         record-type-id={recordTypeId}
         data-name="Are_there_any_DOL_audits__c"
         value={field.Are_there_any_DOL_audits__c}
-        onchange={handleValueChange}>
+        onchange={handleValueChange}
+        ondblclick={handleDoubleClick}>
       </c-nsp_selection-box>
 
       <lightning-input-field
@@ -136,7 +140,8 @@
           record-type-id={recordTypeId}
           data-name="Does_client_perform_background_checks__c"
           value={field.Does_client_perform_background_checks__c}
-          onchange={handleValueChange}>
+          onchange={handleValueChange}
+          ondblclick={handleDoubleClick}>
         </c-nsp_selection-box>
         <lightning-input-field
           disabled={disabledFields.Who_is_the_provider__c}
@@ -154,7 +159,8 @@
           record-type-id={recordTypeId}
           data-name="Client_does_pre_employment_drug_screen__c"
           value={field.Client_does_pre_employment_drug_screen__c}
-          onchange={handleValueChange}>
+          onchange={handleValueChange}
+          ondblclick={handleDoubleClick}>
         </c-nsp_selection-box>
         <lightning-input-field
           disabled={disabledFields.Wh_is_the_provider__c}

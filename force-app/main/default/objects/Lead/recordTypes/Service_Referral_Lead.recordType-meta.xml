@@ -408,6 +408,21 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Marketing_Priority__c</picklist>
+        <values>
+            <fullName>General</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>High - Direct</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>High - Event</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>NSP_Account_Segment__c</picklist>
         <values>
             <fullName>Core</fullName>

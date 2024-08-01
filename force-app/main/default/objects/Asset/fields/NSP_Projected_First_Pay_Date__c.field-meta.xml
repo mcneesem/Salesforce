@@ -4,6 +4,7 @@
     <description>Used in asset creation - will be mapped through integration</description>
     <encryptionScheme>None</encryptionScheme>
     <externalId>false</externalId>
+    <inlineHelpText>Field only used by Sales &amp; Onboarding</inlineHelpText>
     <label>Projected First Pay Date</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>

@@ -279,7 +279,7 @@ public class NSP_ServiceConstants {
     //Work Type Constants
     public final static String durationType = 'Hours';
     //Project Constants
-    public final static String MM_PROJECT_TEMPLATE_KEY = 'Middle Market - Implementation';
+    public final static String MM_PROJECT_TEMPLATE_KEY = 'MM - Implementation';
     public final static String FSO_PROJECT_TEMPLATE_KEY = 'FSO - Implementation';
     public final static String ImplementationProjectType = 'Implementation';
     public final static String PEOProject = 'PEO_Project';
@@ -361,7 +361,7 @@ public class NSP_ServiceConstants {
     public final static String SUBJECT4='Client has an immediate need for WC Certs. See IP for certs requested';
     public final static String CATEGORY5 = 'H&W Reporting & Compliance';
     public final static String SUBCATEGORY5 ='Seasonal Employer';
-    public final static String COMMENTS ='PIS reviewed seasonal information with client.  Seasonal employees will not work greater than 6 months, they only increase staff for specific seasons for business influx, this is not project work and they were not previously using temporary employees';
+    public final static String COMMENTS ='See the Implementation Profile for Seasonal Employee details.';
     public final static String CATEGORY6 = 'Payroll Services';
     public final static String SUBCATEGORY6 ='RRP';
     public final static String SUBJECT6='RRP for'; 
@@ -559,7 +559,7 @@ public class NSP_ServiceConstants {
     public final static String JOBCOSTING='Job Costing';
     public final static String TIMEENTRY = 'Time entry method is ';
     public final static String HRSREVIEW='HRS to review accrual policy(ies) with Client/create any new policies as needed, once compliant, then submit PTO SmartForm with attached policy(ies). Once complete, close this case.';
-    public final static String SEASONALCOMMENT='Payroll reviewed seasonal information with client.  Seasonal employees will not work greater than 6 months, they only increase staff for specific seasons for business influx, this is not project work and they were not previously using temporary employees.';
+    public final static String SEASONALCOMMENT='See the Implementation Profile for Seasonal Employee details.';
 
     // IP Automation Names
     public final static String CSPDOCSNOTRECEIVED = 'CSP doc(s) not received';
@@ -632,7 +632,7 @@ public class NSP_ServiceConstants {
     public final static String MM_SRP_RET_SALES = 'NSP_MM_SRP_Notification_RetSales';
 
     //Group Names
-    public final static String HEALTH_WELFARE = 'Health & Welfare Reporting & Compliance';
+    public final static String HEALTH_WELFARE = 'Health & Welfare Benefits Compliance';
     public final static String HEALTH_WELFARE_PRODUCT = 'Health & Welfare Products';
     public final static String NATIONAL_BENEFIT_TEAM = 'National Benefits Team';
 

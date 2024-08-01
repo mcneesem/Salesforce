@@ -125,6 +125,10 @@
                 <behavior>Edit</behavior>
                 <field>ParentId</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>MidMarket_National_Account__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>

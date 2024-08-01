@@ -747,16 +747,6 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.NSP_AnyProvisionInPreparedDocRefersStock__c</fieldItem>
-                <identifier>RecordNSP_AnyProvisionInPreparedDocRefersStock_cField3</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
                 <fieldItem>Record.NSP_WhoResponsibleForStockEquityPaymt__c</fieldItem>
                 <identifier>RecordNSP_WhoResponsibleForStockEquityPaymt_cField3</identifier>
                 <visibilityRule>
@@ -1393,26 +1383,6 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_SpecialItemsNote__c</fieldItem>
                 <identifier>RecordNSP_SpecialItemsNote_cField3</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.NSP_AnyPreparedDocumentForTermination__c</fieldItem>
-                <identifier>RecordNSP_AnyPreparedDocumentForTermination_cField4</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.NSP_AnyProvisionInPreparedDocRefersStock__c</fieldItem>
-                <identifier>RecordNSP_AnyProvisionInPreparedDocRefersStock_cField4</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>

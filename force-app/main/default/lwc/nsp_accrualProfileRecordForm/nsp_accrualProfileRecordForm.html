@@ -223,7 +223,7 @@
                 multiple>
               </c-nsp_selection-box>
 
-              <lightning-input-field 
+              <lightning-input-field
                 lwc:if={visibility.Other_Status__c}
                 field-name="Other_Status__c"
                 data-name="Other_Status__c"
@@ -768,7 +768,8 @@
         onrowaction={handleApgRowAction}
         draft-values={apgDraftValues}
         hide-checkbox-column
-        oncellchange={handleCellChange}>
+        oncellchange={handleCellChange}
+        suppress-bottom-bar>
       </lightning-datatable>
     </div>
 

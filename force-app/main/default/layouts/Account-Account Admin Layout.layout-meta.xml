@@ -2466,14 +2466,12 @@
         <excludeButtons>MassChangeOwner</excludeButtons>
         <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
-        <fields>pse__Project_Manager__c</fields>
-        <fields>pse__Opportunity__c</fields>
-        <fields>pse__Region__c</fields>
-        <fields>pse__Practice__c</fields>
-        <fields>pse__Group__c</fields>
+        <fields>NSP_Account__c</fields>
+        <fields>pse__Project_Status__c</fields>
         <fields>pse__Start_Date__c</fields>
-        <fields>pse__Is_Active__c</fields>
-        <fields>pse__Is_Billable__c</fields>
+        <fields>pse__End_Date__c</fields>
+        <fields>NSP_Owner__c</fields>
+        <fields>NSP_Record_Type_Name__c</fields>
         <relatedList>pse__Proj__c.pse__Account__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -2731,6 +2729,10 @@
         <fields>LAST_UPDATE</fields>
         <fields>UPDATEDBY_USER</fields>
         <relatedList>NSP_Legacy_Client_Profile__c.NSP_Account__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>Onboarding_Profile__c.Account__c</relatedList>
     </relatedLists>
     <relatedLists>
         <relatedList>RelatedEntityHistoryList</relatedList>

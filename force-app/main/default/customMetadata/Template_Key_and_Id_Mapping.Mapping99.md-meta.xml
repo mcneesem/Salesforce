@@ -4,7 +4,7 @@
     <protected>false</protected>
     <values>
         <field>Key__c</field>
-        <value xsi:type="xsd:string">Middle Market - Implementation</value>
+        <value xsi:type="xsd:string">MM - Implementation</value>
     </values>
     <values>
         <field>NSP_From_Object__c</field>
@@ -16,6 +16,6 @@
     </values>
     <values>
         <field>Template_Name__c</field>
-        <value xsi:type="xsd:string">Middle Market - Implementation</value>
+        <value xsi:type="xsd:string">MM - Implementation</value>
     </values>
 </CustomMetadata>

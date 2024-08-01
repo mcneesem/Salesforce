@@ -18,9 +18,6 @@
     <columns>
         <field>MessagingSession$EndTime</field>
     </columns>
-    <columns>
-        <field>MessagingSession$Waiting_Time__c</field>
-    </columns>
     <currency>USD</currency>
     <description>false chats (chats ended within 1 minutes of waiting ) - STY-258416</description>
     <filter>

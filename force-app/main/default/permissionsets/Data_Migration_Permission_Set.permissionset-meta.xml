@@ -107,12 +107,12 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Account.DNB_Connect_DUNS_Number__c</field>
+        <field>Account.DNBConnect__D_B_Connect_Company_Profile__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Account.DNBConnect__D_B_Connect_Company_Profile__c</field>
+        <field>Account.DNB_Connect_DUNS_Number__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -6382,6 +6382,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Contact.Engagement_Score__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Contact.Fax</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -11213,6 +11218,16 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Implementation_Profile__c.sample_new_empl_info_packet_collected__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Lead.Engagement_Score__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Lead.Marketing_Priority__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

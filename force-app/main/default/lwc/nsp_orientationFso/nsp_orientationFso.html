@@ -22,7 +22,8 @@
       record-type-id={recordTypeId}
       value={field.Are_there_multiple_worksite_locations__c}
       data-name="Are_there_multiple_worksite_locations__c"
-      onchange={handleValueChange}>
+      onchange={handleValueChange}
+      ondblclick={handleDoubleClick}>
     </c-nsp_selection-box>
 
     <lightning-input-field value={field.Provide_multiple_worksite_details__c} disabled={disabledFields.Provide_multiple_worksite_details__c}
@@ -39,7 +40,8 @@
       record-type-id={recordTypeId}
       value={field.NSP_Is_a_translator_needed__c}
       data-name="NSP_Is_a_translator_needed__c"
-      onchange={handleValueChange}>
+      onchange={handleValueChange}
+      ondblclick={handleDoubleClick}>
     </c-nsp_selection-box>
     <template
       if:true={visibility.Wht_language_whn_is_translator_needed__c}>
@@ -66,7 +68,8 @@
       record-type-id={recordTypeId}
       value={field.Is_there_a_need_for_a_tech_package__c}
       data-name="Is_there_a_need_for_a_tech_package__c"
-      onchange={handleValueChange}>
+      onchange={handleValueChange}
+      ondblclick={handleDoubleClick}>
     </c-nsp_selection-box>
     <template
       if:true={visibility.Tech_pack_when_where_quantity_needed__c}>
