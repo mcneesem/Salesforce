@@ -7,7 +7,6 @@
     <permissionSets>BPS</permissionSets>
     <permissionSets>Bloomfire_Custom_User</permissionSets>
     <permissionSets>Bypass_Task_Event_Cancelled_Status</permissionSets>
-    <permissionSets>Checklist_Create_Sold_To_Paid</permissionSets>
     <permissionSets>Contact_View_All</permissionSets>
     <permissionSets>Convert_Leads</permissionSets>
     <permissionSets>Lead_Create</permissionSets>
