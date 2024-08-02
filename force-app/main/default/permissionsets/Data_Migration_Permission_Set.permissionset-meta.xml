@@ -11227,6 +11227,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Lead.Exclude_from_MAP__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Lead.Marketing_Priority__c</field>
         <readable>true</readable>
     </fieldPermissions>
