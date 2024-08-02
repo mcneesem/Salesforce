@@ -453,18 +453,6 @@ export default class Nsp_accrualProfileRecordViewForm extends LightningElement {
     } = APG_COLUMNS;
     const columnConfig = [completedMonthsService, accrualRate];
 
-    if (NSP_Once_limit_is_hit_they_do_not_accrue__c === YES) {
-      columnConfig.push(annualAccrualLimit);
-    }
-
-    if (NSP_Is_there_a_Maximum_Balance_Cap__c === YES) {
-      columnConfig.push(maximumBalanceCapHours);
-    }
-
-    if (NSP_Accrual_Period_Limit__c === YES) {
-      columnConfig.push(accrualPeriodLimitsHours);
-    }
-
     if (NSP_Do_balances_carry_over_into_next_yer__c === YES) {
       if (NSP_Carryover_in_Hours_or_percentage__c === 'Hours') {
         columnConfig.push(maxCarryOverHours);
@@ -476,6 +464,18 @@ export default class Nsp_accrualProfileRecordViewForm extends LightningElement {
 
     if (NSP_Does_carryover_expire__c === YES) {
       columnConfig.push(carryoverExpiresDaysDate);
+    }
+
+    if (NSP_Once_limit_is_hit_they_do_not_accrue__c === YES) {
+      columnConfig.push(annualAccrualLimit);
+    }
+
+    if (NSP_Accrual_Period_Limit__c === YES) {
+      columnConfig.push(accrualPeriodLimitsHours);
+    }
+
+    if (NSP_Is_there_a_Maximum_Balance_Cap__c === YES) {
+      columnConfig.push(maximumBalanceCapHours);
     }
 
     return columnConfig;
