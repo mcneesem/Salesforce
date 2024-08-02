@@ -257,6 +257,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Onboarding_Profile__c.EIN_Verifications__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Onboarding_Profile__c.Early_Termination_Penalties__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1035,6 +1040,7 @@
         <field>pse__Proj__c.Onboarding_Profile__c</field>
         <readable>true</readable>
     </fieldPermissions>
+
     <hasActivationRequired>false</hasActivationRequired>
     <label>Onboarding Profile Read Only</label>
     <objectPermissions>

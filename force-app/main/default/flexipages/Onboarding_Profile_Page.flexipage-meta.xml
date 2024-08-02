@@ -1858,6 +1858,16 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.EIN_Verifications__c</fieldItem>
+                <identifier>Record_EIN_Verifications_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.Most_Recent_941_Quarterly_Filings__c</fieldItem>
                 <identifier>RecordMost_Recent_941_Quarterly_Filings_cField</identifier>
             </fieldInstance>
