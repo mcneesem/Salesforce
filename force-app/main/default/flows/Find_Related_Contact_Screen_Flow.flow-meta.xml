@@ -27,42 +27,30 @@
         </outputParameters>
         <versionSegment>1</versionSegment>
     </actionCalls>
-    <actionCalls>
-        <name>Update_Contact_on_Voice_Call</name>
-        <label>Update Contact on Voice Call</label>
+    <apiVersion>61.0</apiVersion>
+    <assignments>
+        <name>Assign_Contact_to_Voice_Call</name>
+        <label>Assign Contact to Voice Call</label>
         <locationX>182</locationX>
         <locationY>1514</locationY>
-        <actionName>VoiceCall.Update_Contact</actionName>
-        <actionType>quickAction</actionType>
-        <connector>
-            <targetReference>Select_Related_Case</targetReference>
-        </connector>
-        <faultConnector>
-            <targetReference>Update_Contact_Error</targetReference>
-        </faultConnector>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
-        <inputParameters>
-            <name>contextId</name>
-            <value>
-                <elementReference>Get_Voice_Call_Record.Id</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>ContactId__c</name>
+        <assignmentItems>
+            <assignToReference>Get_Voice_Call_Record.ContactId__c</assignToReference>
+            <operator>Assign</operator>
             <value>
                 <elementReference>Get_Messaging_User.ContactId</elementReference>
             </value>
-        </inputParameters>
-        <inputParameters>
-            <name>Is_Contact_Selected__c</name>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Voice_Call_Record.Is_Contact_Selected__c</assignToReference>
+            <operator>Assign</operator>
             <value>
                 <booleanValue>true</booleanValue>
             </value>
-        </inputParameters>
-        <nameSegment>VoiceCall.Update_Contact</nameSegment>
-        <versionSegment>1</versionSegment>
-    </actionCalls>
-    <apiVersion>61.0</apiVersion>
+        </assignmentItems>
+        <connector>
+            <targetReference>update_voice_call_record</targetReference>
+        </connector>
+    </assignments>
     <assignments>
         <description>Associates the selected contact with the record in Messaging User from GetMessagingUser.</description>
         <name>Associate_Contact_with_Messaging_User</name>
@@ -116,7 +104,7 @@
         <name>check_create_contact_custom_setting</name>
         <label>check create contact custom setting</label>
         <locationX>919</locationX>
-        <locationY>2462</locationY>
+        <locationY>2570</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>True</name>
@@ -161,7 +149,7 @@
         <name>Check_Related_Case</name>
         <label>Check Related Case</label>
         <locationX>1271</locationX>
-        <locationY>2246</locationY>
+        <locationY>2354</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Found_Modifiable_Case</name>
@@ -286,7 +274,7 @@
         <name>Create_Case_Contact</name>
         <label>Create Case Contact</label>
         <locationX>655</locationX>
-        <locationY>2570</locationY>
+        <locationY>2678</locationY>
         <faultConnector>
             <targetReference>Create_Case_Contact_Error</targetReference>
         </faultConnector>
@@ -319,7 +307,7 @@
         <locationY>1406</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Update_Contact_on_Voice_Call</targetReference>
+            <targetReference>Assign_Contact_to_Voice_Call</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -385,7 +373,7 @@
         <name>Select_Related_Case</name>
         <label>Select Related Case</label>
         <locationX>1271</locationX>
-        <locationY>2138</locationY>
+        <locationY>2246</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_Related_Case</targetReference>
@@ -408,7 +396,7 @@
         <name>Update_Case</name>
         <label>Update Case</label>
         <locationX>919</locationX>
-        <locationY>2354</locationY>
+        <locationY>2462</locationY>
         <connector>
             <targetReference>check_create_contact_custom_setting</targetReference>
         </connector>
@@ -455,12 +443,25 @@
         </connector>
         <inputReference>Get_Voice_Call_Record</inputReference>
     </recordUpdates>
+    <recordUpdates>
+        <name>update_voice_call_record</name>
+        <label>update voice call</label>
+        <locationX>182</locationX>
+        <locationY>1622</locationY>
+        <connector>
+            <targetReference>Select_Related_Case</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Update_Contact_Error</targetReference>
+        </faultConnector>
+        <inputReference>Get_Voice_Call_Record</inputReference>
+    </recordUpdates>
     <runInMode>SystemModeWithSharing</runInMode>
     <screens>
         <name>Case_Contact_Fault_Screen</name>
         <label>Case Contact Fault Screen</label>
         <locationX>919</locationX>
-        <locationY>2786</locationY>
+        <locationY>2894</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -677,7 +678,7 @@
         <name>Update_Case_Failure</name>
         <label>Update Case Failure</label>
         <locationX>1359</locationX>
-        <locationY>2570</locationY>
+        <locationY>2678</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -709,7 +710,7 @@
         <name>Update_Voice_Call_Failure</name>
         <label>Update Voice Call Failure</label>
         <locationX>490</locationX>
-        <locationY>1730</locationY>
+        <locationY>1838</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -733,7 +734,7 @@
         <name>Create_Case_Contact_Error</name>
         <label>Create Case Contact Error</label>
         <locationX>919</locationX>
-        <locationY>2678</locationY>
+        <locationY>2786</locationY>
         <connector>
             <targetReference>Case_Contact_Fault_Screen</targetReference>
         </connector>
@@ -846,7 +847,7 @@
         <name>Update_Case_Error</name>
         <label>Update Case Error</label>
         <locationX>1359</locationX>
-        <locationY>2462</locationY>
+        <locationY>2570</locationY>
         <connector>
             <targetReference>Update_Case_Failure</targetReference>
         </connector>
@@ -874,7 +875,7 @@
         <name>Update_Contact_Error</name>
         <label>Update Contact Error</label>
         <locationX>490</locationX>
-        <locationY>1622</locationY>
+        <locationY>1730</locationY>
         <connector>
             <targetReference>Update_Voice_Call_Failure</targetReference>
         </connector>
@@ -882,7 +883,7 @@
         <inputAssignments>
             <name>faultElement</name>
             <value>
-                <stringValue>Update_Contact_on_Voice_Call</stringValue>
+                <stringValue>Update_Voice_Call</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
