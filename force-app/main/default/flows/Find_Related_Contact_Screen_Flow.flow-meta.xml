@@ -8,7 +8,7 @@
         <actionName>FindContactVoiceFlow</actionName>
         <actionType>apex</actionType>
         <connector>
-            <targetReference>Prompt_Agent</targetReference>
+            <targetReference>Check_SOSL_Results</targetReference>
         </connector>
         <faultConnector>
             <targetReference>Set_Fault_Message_Error</targetReference>
@@ -29,34 +29,26 @@
     </actionCalls>
     <apiVersion>61.0</apiVersion>
     <assignments>
-        <name>Assign_Contact_to_Voice_Call</name>
-        <label>Assign Contact to Voice Call</label>
+        <name>Copy_Messaing_User_Contact_to_Voice_Call_Contact</name>
+        <label>Copy Messaing User Contact to Voice Call Contact</label>
         <locationX>182</locationX>
-        <locationY>1514</locationY>
+        <locationY>1706</locationY>
         <assignmentItems>
-            <assignToReference>Get_Voice_Call_Record.ContactId__c</assignToReference>
+            <assignToReference>Get_Voice_Call.ContactId__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>Get_Messaging_User.ContactId</elementReference>
             </value>
         </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Get_Voice_Call_Record.Is_Contact_Selected__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </assignmentItems>
         <connector>
-            <targetReference>update_voice_call_record</targetReference>
+            <targetReference>Set_Contact_Selected_Flag</targetReference>
         </connector>
     </assignments>
     <assignments>
-        <description>Associates the selected contact with the record in Messaging User from GetMessagingUser.</description>
-        <name>Associate_Contact_with_Messaging_User</name>
-        <label>Associate Contact with Messaging User</label>
+        <name>Copy_Selected_Contact_to_Messaging_User</name>
+        <label>Copy Selected Contact to Messaging User</label>
         <locationX>50</locationX>
-        <locationY>1106</locationY>
+        <locationY>1406</locationY>
         <assignmentItems>
             <assignToReference>Get_Messaging_User.ContactId</assignToReference>
             <operator>Assign</operator>
@@ -65,7 +57,174 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Update_Messaging_User_Record</targetReference>
+            <targetReference>Update_Messaging_User</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Contact_Selected_Flag</name>
+        <label>Set Contact Selected Flag</label>
+        <locationX>1073</locationX>
+        <locationY>2072</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Voice_Call.Is_Contact_Selected__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Re_Select_Voice_Call</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Count_SOSL_Results</name>
+        <label>Set Count SOSL Results</label>
+        <locationX>50</locationX>
+        <locationY>998</locationY>
+        <assignmentItems>
+            <assignToReference>countSoslResults</assignToReference>
+            <operator>AssignCount</operator>
+            <value>
+                <elementReference>ContactSOSLResults</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Prompt_Agent</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Create_Case_Contact</name>
+        <label>Set Fault Element: Create_Case_Contact</label>
+        <locationX>677</locationX>
+        <locationY>3326</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Create_Case_Contact</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Fault_Handler</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Get_Messaging_User</name>
+        <label>Set Fault Element: Get_Messaging_User</label>
+        <locationX>1282</locationX>
+        <locationY>566</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Messaging_User</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Get_Voice_Call</name>
+        <label>Set Fault Element: Get_Voice_Call</label>
+        <locationX>2602</locationX>
+        <locationY>242</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Voice_Call</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Re_Select_Voice_Call</name>
+        <label>Set Fault Element: Re_Select_Voice_Call</label>
+        <locationX>2074</locationX>
+        <locationY>2288</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Re_Select_Voice_Call</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Select_Related_Case</name>
+        <label>Set Fault Element: Select_Related_Case</label>
+        <locationX>1810</locationX>
+        <locationY>2894</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Select_Related_Case</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Update_Case</name>
+        <label>Set Fault Element: Update_Case</label>
+        <locationX>1205</locationX>
+        <locationY>3110</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Update_Case</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Update_Messaging_User</name>
+        <label>Set Fault Element: Update_Messaging_User</label>
+        <locationX>490</locationX>
+        <locationY>1706</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Update_Messaging_User</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Update_Voice_Call</name>
+        <label>Set Fault Element: Update_Voice_Call</label>
+        <locationX>1073</locationX>
+        <locationY>2504</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Update_Voice_Call</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -84,30 +243,14 @@
             <targetReference>Get_Contact_SOSL</targetReference>
         </connector>
     </assignments>
-    <assignments>
-        <name>Voice_Call_Assignment</name>
-        <label>Voice Call Assignment</label>
-        <locationX>1810</locationX>
-        <locationY>566</locationY>
-        <assignmentItems>
-            <assignToReference>Get_Voice_Call_Record.Is_Contact_Selected__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Update_Voice_Call</targetReference>
-        </connector>
-    </assignments>
     <decisions>
-        <name>check_create_contact_custom_setting</name>
-        <label>check create contact custom setting</label>
-        <locationX>919</locationX>
-        <locationY>2570</locationY>
+        <name>Check_Custom_Setting</name>
+        <label>Check Custom Setting</label>
+        <locationX>677</locationX>
+        <locationY>3110</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>True</name>
+            <name>Is_Enabled</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>$Setup.Find_Related_Contact_Settings__c.CreateCaseContact__c</leftValueReference>
@@ -119,17 +262,21 @@
             <connector>
                 <targetReference>Create_Case_Contact</targetReference>
             </connector>
-            <label>True</label>
+            <label>Is Enabled</label>
         </rules>
     </decisions>
     <decisions>
-        <name>Check_Messaging_User_Search_Term</name>
-        <label>Check Messaging User (Search Term)</label>
-        <locationX>732</locationX>
+        <name>Check_Messaging_User</name>
+        <label>Check Messaging User</label>
+        <locationX>600</locationX>
         <locationY>566</locationY>
+        <defaultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Prompt_Agent_No_Messaging_User</targetReference>
+        </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>Found_Messaging_User_Search_Term</name>
+            <name>Found_Messaging_User</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>Get_Messaging_User</leftValueReference>
@@ -141,15 +288,15 @@
             <connector>
                 <targetReference>Set_Search_Term</targetReference>
             </connector>
-            <label>Found Messaging User (Search Term)</label>
+            <label>Found Messaging User</label>
         </rules>
     </decisions>
     <decisions>
         <description>Prevent DmlExceptions.  Closed Cases can not be modified due to Case Validation Rules.</description>
         <name>Check_Related_Case</name>
         <label>Check Related Case</label>
-        <locationX>1271</locationX>
-        <locationY>2354</locationY>
+        <locationX>1073</locationX>
+        <locationY>2894</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Found_Modifiable_Case</name>
@@ -175,64 +322,63 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Check_SOSL_Results</name>
+        <label>Check SOSL Results</label>
+        <locationX>182</locationX>
+        <locationY>890</locationY>
+        <defaultConnector>
+            <targetReference>Prompt_Agent</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Found_SOSL_Results</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ContactSOSLResults</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Count_SOSL_Results</targetReference>
+            </connector>
+            <label>Found SOSL Results</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Check_Voice_Call_Record</name>
         <label>Check Voice Call Record</label>
-        <locationX>1672</locationX>
+        <locationX>1705</locationX>
         <locationY>242</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Found_Voice_Call</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Get_Voice_Call_Record</leftValueReference>
+                <leftValueReference>Get_Voice_Call</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Is_Messaging_User_Associated</targetReference>
+                <targetReference>Is_Messaging_User_Related</targetReference>
             </connector>
             <label>Found Voice Call</label>
         </rules>
     </decisions>
     <decisions>
-        <name>Is_Messaging_User_Associated</name>
-        <label>Is Messaging User Associated?</label>
-        <locationX>1271</locationX>
-        <locationY>350</locationY>
-        <defaultConnector>
-            <targetReference>Copy_1_of_Prompt_Agent</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Yes</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Get_Voice_Call_Record.EndUserId</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Get_Messaging_User</targetReference>
-            </connector>
-            <label>Yes</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <description>Checks if a record is selected from a data table with contacts list</description>
-        <name>Is_Row_Selected</name>
-        <label>Is Row Selected?</label>
+        <name>Is_Contact_Selected</name>
+        <label>Is Contact Selected?</label>
         <locationX>182</locationX>
-        <locationY>998</locationY>
+        <locationY>1298</locationY>
         <defaultConnector>
-            <targetReference>Update_Messaging_User_Record</targetReference>
+            <targetReference>Update_Messaging_User</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>contactSelected</name>
+            <name>Contact_Selected</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>ContactSearchResults.firstSelectedRow.Id</leftValueReference>
@@ -242,9 +388,59 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Associate_Contact_with_Messaging_User</targetReference>
+                <targetReference>Copy_Selected_Contact_to_Messaging_User</targetReference>
             </connector>
-            <label>Yes</label>
+            <label>Contact Selected</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Is_Messaging_User_Related</name>
+        <label>Is Messaging User Related?</label>
+        <locationX>1073</locationX>
+        <locationY>350</locationY>
+        <defaultConnector>
+            <targetReference>Prompt_Agent_No_Messaging_User</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Has_Messaging_User</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Voice_Call.EndUserId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Messaging_User</targetReference>
+            </connector>
+            <label>Has Messaging User</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Re_Verify_Voice_Call</name>
+        <label>Re-Verify Voice Call</label>
+        <locationX>1073</locationX>
+        <locationY>2288</locationY>
+        <defaultConnector>
+            <targetReference>Select_Related_Case</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Verified_Voice_Call</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Re_Select_Voice_Call</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Voice_Call</targetReference>
+            </connector>
+            <label>Verified Voice Call</label>
         </rules>
     </decisions>
     <environments>Default</environments>
@@ -273,21 +469,21 @@
     <recordCreates>
         <name>Create_Case_Contact</name>
         <label>Create Case Contact</label>
-        <locationX>655</locationX>
-        <locationY>2678</locationY>
+        <locationX>413</locationX>
+        <locationY>3218</locationY>
         <faultConnector>
-            <targetReference>Create_Case_Contact_Error</targetReference>
+            <targetReference>Set_Fault_Element_Create_Case_Contact</targetReference>
         </faultConnector>
         <inputAssignments>
             <field>NSP_Case__c</field>
             <value>
-                <elementReference>Get_Voice_Call_Record.CaseId__c</elementReference>
+                <elementReference>Get_Voice_Call.CaseId__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <field>NSP_Contact__c</field>
             <value>
-                <elementReference>Get_Voice_Call_Record.ContactId__c</elementReference>
+                <elementReference>Get_Voice_Call.ContactId__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -300,46 +496,24 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
     <recordLookups>
-        <description>Gets the contact record associated with the voice call record passed into the flow. Stores the results in the associatedContact record variable.</description>
-        <name>Get_Associated_Contact</name>
-        <label>Get Associated Contact</label>
-        <locationX>182</locationX>
-        <locationY>1406</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Assign_Contact_to_Voice_Call</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>Get_Messaging_User.ContactId</elementReference>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>Contact</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordLookups>
         <description>Gets the messaging user record associated with the voice call record passed into the flow. Stores the record in the Messaging User from GetMessagingUser record variable.</description>
         <name>Get_Messaging_User</name>
         <label>Get Messaging User</label>
-        <locationX>732</locationX>
+        <locationX>600</locationX>
         <locationY>458</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Check_Messaging_User_Search_Term</targetReference>
+            <targetReference>Check_Messaging_User</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Get_Messaging_User_Fault_Message</targetReference>
+            <targetReference>Set_Fault_Element_Get_Messaging_User</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>Get_Voice_Call_Record.EndUserId</elementReference>
+                <elementReference>Get_Voice_Call.EndUserId</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
@@ -347,14 +521,17 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
-        <name>Get_Voice_Call_Record</name>
-        <label>Get Voice Call Record</label>
-        <locationX>1672</locationX>
+        <name>Get_Voice_Call</name>
+        <label>Get Voice Call</label>
+        <locationX>1705</locationX>
         <locationY>134</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_Voice_Call_Record</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_Get_Voice_Call</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -370,20 +547,49 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
-        <name>Select_Related_Case</name>
-        <label>Select Related Case</label>
-        <locationX>1271</locationX>
-        <locationY>2246</locationY>
+        <description>Prevent &quot;insufficient access rights on object id&quot; errors that occur when a Voice Call is transferred ownership before the agent completes the Screen Flow.</description>
+        <name>Re_Select_Voice_Call</name>
+        <label>Re-Select Voice Call</label>
+        <locationX>1073</locationX>
+        <locationY>2180</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Check_Related_Case</targetReference>
+            <targetReference>Re_Verify_Voice_Call</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_Re_Select_Voice_Call</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>Get_Voice_Call_Record.CaseId__c</elementReference>
+                <elementReference>Get_Voice_Call.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>VoiceCall</object>
+        <queriedFields>Id</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Select_Related_Case</name>
+        <label>Select Related Case</label>
+        <locationX>1073</locationX>
+        <locationY>2786</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_Related_Case</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_Select_Related_Case</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Voice_Call.CaseId__c</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
@@ -395,136 +601,67 @@
     <recordUpdates>
         <name>Update_Case</name>
         <label>Update Case</label>
-        <locationX>919</locationX>
-        <locationY>2462</locationY>
+        <locationX>677</locationX>
+        <locationY>3002</locationY>
         <connector>
-            <targetReference>check_create_contact_custom_setting</targetReference>
+            <targetReference>Check_Custom_Setting</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Update_Case_Error</targetReference>
+            <targetReference>Set_Fault_Element_Update_Case</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>Get_Voice_Call_Record.CaseId__c</elementReference>
+                <elementReference>Get_Voice_Call.CaseId__c</elementReference>
             </value>
         </filters>
         <inputAssignments>
             <field>ContactId</field>
             <value>
-                <elementReference>Get_Voice_Call_Record.ContactId__c</elementReference>
+                <elementReference>Get_Voice_Call.ContactId__c</elementReference>
             </value>
         </inputAssignments>
         <object>Case</object>
     </recordUpdates>
     <recordUpdates>
-        <description>Commits the changes to the record in Messaging User from GetMessagingUser.</description>
-        <name>Update_Messaging_User_Record</name>
-        <label>Update Messaging User Record</label>
+        <name>Update_Messaging_User</name>
+        <label>Update Messaging User</label>
         <locationX>182</locationX>
-        <locationY>1298</locationY>
+        <locationY>1598</locationY>
         <connector>
-            <targetReference>Get_Associated_Contact</targetReference>
+            <targetReference>Copy_Messaing_User_Contact_to_Voice_Call_Contact</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Messaging_User_Fault_Message</targetReference>
+            <targetReference>Set_Fault_Element_Update_Messaging_User</targetReference>
         </faultConnector>
         <inputReference>Get_Messaging_User</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>Update_Voice_Call</name>
         <label>Update Voice Call</label>
-        <locationX>1810</locationX>
-        <locationY>674</locationY>
-        <connector>
-            <targetReference>Select_Related_Case</targetReference>
-        </connector>
-        <inputReference>Get_Voice_Call_Record</inputReference>
-    </recordUpdates>
-    <recordUpdates>
-        <name>update_voice_call_record</name>
-        <label>update voice call</label>
-        <locationX>182</locationX>
-        <locationY>1622</locationY>
+        <locationX>809</locationX>
+        <locationY>2396</locationY>
         <connector>
             <targetReference>Select_Related_Case</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Update_Contact_Error</targetReference>
+            <targetReference>Set_Fault_Element_Update_Voice_Call</targetReference>
         </faultConnector>
-        <inputReference>Get_Voice_Call_Record</inputReference>
+        <inputReference>Get_Voice_Call</inputReference>
     </recordUpdates>
     <runInMode>SystemModeWithSharing</runInMode>
     <screens>
-        <name>Case_Contact_Fault_Screen</name>
-        <label>Case Contact Fault Screen</label>
-        <locationX>919</locationX>
-        <locationY>2894</locationY>
+        <name>Fault_Screen</name>
+        <label>Fault Screen</label>
+        <locationX>677</locationX>
+        <locationY>3542</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <fields>
-            <name>Case_Contact_Fault</name>
-            <fieldText>&lt;p&gt;{!$Flow.FaultMessage}&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
-    </screens>
-    <screens>
-        <name>Copy_1_of_Prompt_Agent</name>
-        <label>Copy 1 of Prompt Agent</label>
-        <locationX>1810</locationX>
-        <locationY>458</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
-        <connector>
-            <targetReference>Voice_Call_Assignment</targetReference>
-        </connector>
-        <fields>
-            <name>Copy_1_of_Prompt_Agent_Section1</name>
-            <fieldType>RegionContainer</fieldType>
-            <fields>
-                <name>Copy_1_of_Prompt_Agent_Section1_Column1</name>
-                <fieldType>Region</fieldType>
-                <fields>
-                    <name>Copy_1_of_create_new_contact_display_text</name>
-                    <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;No Messaging User Found.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;Alternatively, create a new contact&lt;/span&gt;&lt;/p&gt;</fieldText>
-                    <fieldType>DisplayText</fieldType>
-                </fields>
-                <inputParameters>
-                    <name>width</name>
-                    <value>
-                        <stringValue>12</stringValue>
-                    </value>
-                </inputParameters>
-                <isRequired>false</isRequired>
-            </fields>
-            <isRequired>false</isRequired>
-            <regionContainerType>SectionWithoutHeader</regionContainerType>
-        </fields>
-        <fields>
-            <fieldType>ObjectProvided</fieldType>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>false</isRequired>
-            <objectFieldReference>Get_Voice_Call_Record.ContactId__c</objectFieldReference>
-        </fields>
-        <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
-    </screens>
-    <screens>
-        <name>Messaging_User_Fault_Screen</name>
-        <label>Messaging User Fault Screen</label>
-        <locationX>1546</locationX>
-        <locationY>674</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
-        <fields>
-            <name>Messaging_User_Fault_Error_Message</name>
+            <name>Fault_Display_Text</name>
             <fieldText>&lt;p&gt;{!$Flow.FaultMessage}&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
@@ -535,22 +672,22 @@
         <name>Prompt_Agent</name>
         <label>Prompt Agent</label>
         <locationX>182</locationX>
-        <locationY>890</locationY>
+        <locationY>1190</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Is_Row_Selected</targetReference>
+            <targetReference>Is_Contact_Selected</targetReference>
         </connector>
         <fields>
             <name>zeroResultsFoundDisplayText</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;No matching contacts found.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;No matching Contacts found.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>matchingRecordsCount</leftValueReference>
-                    <operator>EqualTo</operator>
+                    <leftValueReference>countSoslResults</leftValueReference>
+                    <operator>LessThanOrEqualTo</operator>
                     <rightValue>
                         <numberValue>0.0</numberValue>
                     </rightValue>
@@ -635,10 +772,10 @@
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>Get_Contact_SOSL</leftValueReference>
-                    <operator>IsNull</operator>
+                    <leftValueReference>countSoslResults</leftValueReference>
+                    <operator>GreaterThan</operator>
                     <rightValue>
-                        <booleanValue>false</booleanValue>
+                        <numberValue>0.0</numberValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -651,8 +788,14 @@
                 <fieldType>Region</fieldType>
                 <fields>
                     <name>create_new_contact_display_text</name>
-                    <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Alternatively, create a new contact&lt;/span&gt;&lt;/p&gt;</fieldText>
+                    <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;Alternatively, create a new Contact.&lt;/span&gt;&lt;/p&gt;</fieldText>
                     <fieldType>DisplayText</fieldType>
+                </fields>
+                <fields>
+                    <fieldType>ObjectProvided</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isRequired>false</isRequired>
+                    <objectFieldReference>Get_Messaging_User.ContactId</objectFieldReference>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -665,146 +808,66 @@
             <isRequired>false</isRequired>
             <regionContainerType>SectionWithoutHeader</regionContainerType>
         </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Prompt_Agent_No_Messaging_User</name>
+        <label>Prompt Agent (No Messaging User)</label>
+        <locationX>1546</locationX>
+        <locationY>458</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Set_Contact_Selected_Flag</targetReference>
+        </connector>
+        <fields>
+            <name>No_Messaging_User_Display_Text</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;No Messaging User found.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Create_New_Contact_Display_Text_2</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;Alternatively, create a new Contact.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
         <fields>
             <fieldType>ObjectProvided</fieldType>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>false</isRequired>
-            <objectFieldReference>Get_Messaging_User.ContactId</objectFieldReference>
-        </fields>
-        <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
-    </screens>
-    <screens>
-        <name>Update_Case_Failure</name>
-        <label>Update Case Failure</label>
-        <locationX>1359</locationX>
-        <locationY>2678</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
-        <fields>
-            <name>Case_Fault_Message</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;{!$Flow.FaultMessage}&lt;/span&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
-    </screens>
-    <screens>
-        <name>Update_Messaging_User_Failure</name>
-        <label>Update Messaging User Failure</label>
-        <locationX>754</locationX>
-        <locationY>1514</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
-        <fields>
-            <name>Messaging_User_Failure_Message</name>
-            <fieldText>&lt;p&gt;{!$Flow.FaultMessage}&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
-    </screens>
-    <screens>
-        <name>Update_Voice_Call_Failure</name>
-        <label>Update Voice Call Failure</label>
-        <locationX>490</locationX>
-        <locationY>1838</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
-        <fields>
-            <name>ContactUpdateErrorMessage</name>
-            <fieldText>&lt;p&gt;{!$Flow.FaultMessage}&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
+            <objectFieldReference>Get_Voice_Call.ContactId__c</objectFieldReference>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
     </screens>
     <start>
-        <locationX>1546</locationX>
+        <locationX>1579</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Get_Voice_Call_Record</targetReference>
+            <targetReference>Get_Voice_Call</targetReference>
         </connector>
     </start>
     <status>Draft</status>
     <subflows>
-        <name>Create_Case_Contact_Error</name>
-        <label>Create Case Contact Error</label>
-        <locationX>919</locationX>
-        <locationY>2786</locationY>
+        <name>Fault_Handler</name>
+        <label>Fault Handler</label>
+        <locationX>677</locationX>
+        <locationY>3434</locationY>
         <connector>
-            <targetReference>Case_Contact_Fault_Screen</targetReference>
+            <targetReference>Fault_Screen</targetReference>
         </connector>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultElement</name>
             <value>
-                <stringValue>Create_Case_Contact</stringValue>
+                <elementReference>faultElement</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <name>faultFlow</name>
             <value>
                 <stringValue>Find_Related_Contact_Screen_Flow</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>faultMessage</name>
-            <value>
-                <elementReference>$Flow.FaultMessage</elementReference>
-            </value>
-        </inputAssignments>
-    </subflows>
-    <subflows>
-        <name>Get_Messaging_User_Fault_Message</name>
-        <label>Get Messaging User Fault Message</label>
-        <locationX>1546</locationX>
-        <locationY>566</locationY>
-        <connector>
-            <targetReference>Messaging_User_Fault_Screen</targetReference>
-        </connector>
-        <flowName>Insperity_Fault_Handler_Subflow</flowName>
-        <inputAssignments>
-            <name>faultElement</name>
-            <value>
-                <stringValue>Get_Messaging_User</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>faultFlow</name>
-            <value>
-                <stringValue>Find_Related_Contact_Screen_Flow</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>faultMessage</name>
-            <value>
-                <elementReference>$Flow.FaultMessage</elementReference>
-            </value>
-        </inputAssignments>
-    </subflows>
-    <subflows>
-        <name>Messaging_User_Fault_Message</name>
-        <label>Messaging User Fault Message</label>
-        <locationX>754</locationX>
-        <locationY>1406</locationY>
-        <connector>
-            <targetReference>Update_Messaging_User_Failure</targetReference>
-        </connector>
-        <flowName>Insperity_Fault_Handler_Subflow</flowName>
-        <inputAssignments>
-            <name>faultElement</name>
-            <value>
-                <stringValue>Update_Messaging_User_Record</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>faultFlow</name>
-            <value>
-                <stringValue>Find Related Contact Screen Flow</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -817,7 +880,7 @@
     <subflows>
         <name>Set_Fault_Message_Error</name>
         <label>Set Fault Message Error</label>
-        <locationX>1018</locationX>
+        <locationX>754</locationX>
         <locationY>890</locationY>
         <connector>
             <isGoTo>true</isGoTo>
@@ -843,62 +906,6 @@
             </value>
         </inputAssignments>
     </subflows>
-    <subflows>
-        <name>Update_Case_Error</name>
-        <label>Update Case Error</label>
-        <locationX>1359</locationX>
-        <locationY>2570</locationY>
-        <connector>
-            <targetReference>Update_Case_Failure</targetReference>
-        </connector>
-        <flowName>Insperity_Fault_Handler_Subflow</flowName>
-        <inputAssignments>
-            <name>faultElement</name>
-            <value>
-                <stringValue>Update_Case</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>faultFlow</name>
-            <value>
-                <stringValue>Find_Related_Contact_Screen_Flow</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>faultMessage</name>
-            <value>
-                <elementReference>$Flow.FaultMessage</elementReference>
-            </value>
-        </inputAssignments>
-    </subflows>
-    <subflows>
-        <name>Update_Contact_Error</name>
-        <label>Update Contact Error</label>
-        <locationX>490</locationX>
-        <locationY>1730</locationY>
-        <connector>
-            <targetReference>Update_Voice_Call_Failure</targetReference>
-        </connector>
-        <flowName>Insperity_Fault_Handler_Subflow</flowName>
-        <inputAssignments>
-            <name>faultElement</name>
-            <value>
-                <stringValue>Update_Voice_Call</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>faultFlow</name>
-            <value>
-                <stringValue>Find_Related_Contact_Screen_Flow</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>faultMessage</name>
-            <value>
-                <elementReference>$Flow.FaultMessage</elementReference>
-            </value>
-        </inputAssignments>
-    </subflows>
     <variables>
         <name>ContactSOSLResults</name>
         <dataType>SObject</dataType>
@@ -909,12 +916,25 @@
     </variables>
     <variables>
         <description>Stores the number of matching contact records.</description>
-        <name>matchingRecordsCount</name>
+        <name>countSoslResults</name>
         <dataType>Number</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <scale>0</scale>
+        <value>
+            <numberValue>0.0</numberValue>
+        </value>
+    </variables>
+    <variables>
+        <name>faultElement</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue></stringValue>
+        </value>
     </variables>
     <variables>
         <name>record</name>
