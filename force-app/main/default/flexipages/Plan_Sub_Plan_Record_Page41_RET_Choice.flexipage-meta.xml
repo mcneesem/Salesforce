@@ -157,6 +157,16 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.NSP_Plan_Effective_Date__c</fieldItem>
+                <identifier>RecordNSP_Plan_Effective_Date_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Auto_Deferral__c</fieldItem>
                 <identifier>RecordNSP_Auto_Deferral_cField</identifier>
             </fieldInstance>
@@ -197,8 +207,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Exception_Type__c</fieldItem>
-                <identifier>RecordException_Type__cField</identifier>
+                <fieldItem>Record.Exemption_Type__c</fieldItem>
+                <identifier>RecordExemption_Type__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -321,8 +331,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Exception_Date__c</fieldItem>
-                <identifier>RecordException_Date__cField</identifier>
+                <fieldItem>Record.Exemption_Date__c</fieldItem>
+                <identifier>RecordExemption_Date__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
