@@ -95,8 +95,9 @@ public class NSP_LeadTriggerHelper {
                         //  297391 -  Inbound Solutions - Existing Lead Flow Modification
                         fieldMarketingTeamList.add(leadObject);
                     }
-                    else if(!Label.Eloqua_Lead_Marketing_Priority.split(',').contains(leadObject.Marketing_Priority__c) &&  
-                    Label.Eloqua_Integration_User_Id.equals(leadObject.ownerId)){ 
+                    else if(String.isNotBlank(Label.Eloqua_Lead_Marketing_Priority) && 
+                    !Label.Eloqua_Lead_Marketing_Priority.split(',').contains(leadObject.Marketing_Priority__c) &&  
+                    String.isNotBlank(Label.Eloqua_Integration_User_Id) && Label.Eloqua_Integration_User_Id.equals(leadObject.ownerId)){ 
                         //  290445 - Inbound Solutions - Existing Lead Flow
                         //  297391 -  Inbound Solutions - Existing Lead Flow Modification
                         inboundSolutionsList.add(leadObject);
@@ -695,10 +696,14 @@ if ((leadNewMap.get(leadId).NSP_Lead_Routing__c == true &&
 */
     public void assignLeadToFieldMarketingTeam(List<Lead> fieldMarketingTeamList){
         //Fetching the queue id for the inBound SolutionsQueue queue
-        List<Group> fieldMarketingTeamListQueue = [SELECT Id FROM Group WHERE Type = 'Queue' AND DeveloperName = :System.label.Field_Marketing_Team_DeveloperName];
-        for(Lead leadObject : fieldMarketingTeamList){
-            leadObject.OwnerId = fieldMarketingTeamListQueue[0].id;
-            leadObject.NSP_Lead_Routing__c = FALSE;
+        if(String.isNotBlank(System.label.Field_Marketing_Team_DeveloperName)){
+            List<Group> fieldMarketingTeamListQueue = [SELECT Id FROM Group WHERE Type = 'Queue' AND DeveloperName = :System.label.Field_Marketing_Team_DeveloperName];
+            if(fieldMarketingTeamListQueue != null  && !fieldMarketingTeamListQueue.isEmpty()){
+                for(Lead leadObject : fieldMarketingTeamList){
+                    leadObject.OwnerId = fieldMarketingTeamListQueue[0].id;
+                    leadObject.NSP_Lead_Routing__c = FALSE;
+                }
+            }
         }
     }
 

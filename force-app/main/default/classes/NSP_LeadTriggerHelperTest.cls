@@ -35,38 +35,20 @@ public class NSP_LeadTriggerHelperTest {
         officeObj.Name ='New York';
         insert officeObj;
         
-        //Creating User
-        User userRecord = new User(
-            ProfileId = [SELECT Id FROM Profile WHERE Name = 'System Administrator'][0].Id,
-        LastName = 'TestClassUser',
-        Email = 'testuser@insperity.com',
-        Username = 'testuser@test.com' + System.currentTimeMillis(),
-        CompanyName = 'TEST',
-        Title = 'title',
-        Alias = 'alias',
-        TimeZoneSidKey = 'America/Los_Angeles',
-        EmailEncodingKey = 'UTF-8',
-        LanguageLocaleKey = 'en_US',
-        LocaleSidKey = 'en_US'
-            );
-        //Inserting users that can be used in the test class data setup
-        insert userRecord;
-        
-        User userRecord1 = new User(
-            ProfileId = [SELECT Id FROM Profile WHERE Name = 'Sales Manager'][0].Id,
-        LastName = 'TestClassUser1',
-        Email = 'testuser1@insperity.com',
-        Username = 'testuser1@test.com' + System.currentTimeMillis(),
-        CompanyName = 'TEST',
-        Title = 'title',
-        Alias = 'alias',
-        TimeZoneSidKey = 'America/Los_Angeles',
-        EmailEncodingKey = 'UTF-8',
-        LanguageLocaleKey = 'en_US',
-        LocaleSidKey = 'en_US'
-            );
-        //Inserting users that can be used in the test class data setup
-        insert userRecord1;
+        // select the oldest active User with a 'System Administrator' Profile...
+        List<User> testSystemAdministrators = [
+            SELECT Id
+            FROM User
+            WHERE (
+                ( Profile.Name = 'System Administrator' )
+                AND ( IsActive = True )
+            )
+            ORDER BY CreatedDate ASC
+            LIMIT 1
+        ];
+        Assert.isTrue( testSystemAdministrators != null , 'Null active System Administrator query results.' );
+        Assert.isTrue( !testSystemAdministrators.isEmpty() , 'No active System Administrator found.' );
+        User userRecord = testSystemAdministrators[0];
         
         //Create office assignment record
         NSP_Office_Assignment__c officeAssignmentObj =  new NSP_Office_Assignment__c();
@@ -453,7 +435,6 @@ public class NSP_LeadTriggerHelperTest {
      */
     @isTest
     static void testLeadDeleteByAdmin() {
-        User userRecord1 = [select id from User WHERE LastName = 'TestClassUser1'];
         List<Lead>  leadList = [SELECT id,nsp_fire_score__c FROM lead WHERE lastname = 'lead'];
         // Start Test
         Test.startTest();
@@ -469,11 +450,25 @@ public class NSP_LeadTriggerHelperTest {
      */
     @isTest
     static void testLeadDeleteByNonAdmin() {
-        User userRecord1 = [select id from User WHERE LastName = 'TestClassUser1'];
+        // select the oldest active User with a 'Sales Manager' Profile...
+        List<User> testSalesManagers = [
+            SELECT Id
+            FROM User
+            WHERE (
+                ( Profile.Name = 'Sales Manager' )
+                AND ( IsActive = True )
+            )
+            ORDER BY CreatedDate ASC
+            LIMIT 1
+        ];
+        Assert.isTrue( testSalesManagers != null , 'Null active Sales Manager query results.' );
+        Assert.isTrue( !testSalesManagers.isEmpty() , 'No active Sales Manager found.' );
+        User userSalesManager = testSalesManagers[0];
+        
         List<Lead>  leadList = [SELECT id,nsp_fire_score__c FROM lead WHERE lastname = 'lead'];
         // Start Test
         Test.startTest();
-        system.runAs(userRecord1){
+        system.runAs(userSalesManager){
             try{
                 delete leadList;
             }catch(Exception ex){
@@ -554,7 +549,6 @@ public class NSP_LeadTriggerHelperTest {
         List<Group> outBoundTeamQueue = [SELECT Id FROM Group WHERE Type = 'Queue' AND DeveloperName = :System.label.Outbound_Team_DeveloperName];
         List<Group> fieldMarketingTeamQueue = [SELECT Id FROM Group WHERE Type = 'Queue' AND DeveloperName = :System.label.Field_Marketing_Team_DeveloperName];
         List<Account> account = [SELECT id FROM Account WHERE name = 'Test Account' LIMIT 1];
-        List<User> user = [SELECT id FROM User WHERE email = 'testuser1@insperity.com'];
 
         // Start Test
         Test.startTest();
@@ -570,7 +564,6 @@ public class NSP_LeadTriggerHelperTest {
             lead1.lastName = 'Test1';
             lead1.email = 'myemail1@yahoo.com';
             lead1.phone = '999999';
-            lead1.ownerId = user[0].id;
             leads.add(lead1);
             
             //  Lead should be assigned to Inbound Solutions
