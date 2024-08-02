@@ -53,7 +53,10 @@ const RL_FIELDS = [
   'NSP_Any_active_severance_agreement__c',
   'remove_employee_directory_from_premier__c',
   'Told_EE_ineligble_for_active_at_work_ben__c',
-  'NSP_Any_active_severance_agreement__c'
+  'NSP_Any_active_severance_agreement__c',
+  'Do_the_employee_s_work_more_than_6__c',
+  'Is_the_Employee_an_Intern__c',
+  'Is_the_work_performed_typically_the_same__c'
 ];
 
 export { EMP_TABLE_FIELDS, SECTION_FIELDS,RL_FIELDS };
