@@ -123,7 +123,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Exception_Type__c</field>
+                <field>Exemption_Type__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -141,7 +141,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Exception_Date__c</field>
+                <field>Exemption_Date__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
