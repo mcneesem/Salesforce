@@ -35,17 +35,11 @@ public class NSP_AssetFLSACaseCreationBatch implements Schedulable,Database.Stat
             }
             //Get WO Asset Record Type Id
             Id WOAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId('Asset', 'WO');
-            String ageDays;
+            Date ageDays;
             if(segmentDays!=NULL){
-                ageDays = (System.today().addDays(segmentDays)+'').split(' ')[0];
+                ageDays = System.today().addDays(segmentDays);
             }
-            //Asset fields to query
-            List<String> assetFields = new List<String>{
-                'NSP_Client_Segment_type__c',
-                'NSP_Unique_Active_Employee__c',
-                'RecordTypeId',
-                'AccountId'
-            };
+
             //Asset client segments
             List<String> clientSegmentTypes = new List<String>{
                 NSP_ServiceConstants.BTAssetSegment,
@@ -56,13 +50,25 @@ public class NSP_AssetFLSACaseCreationBatch implements Schedulable,Database.Stat
                 NSP_ServiceConstants.MMEAssetSegment
             };
             //Query to get all the assets of WO RT and where segment in clientSegmentTypes
-            String query = 'SELECT NSP_Client_Segment_type__c, NSP_Unique_Active_Employee__c, RecordTypeId, AccountId ' +  
-               'FROM Asset ' +  
-               'WHERE RecordTypeId = \'' + WOAssetRecordTypeId + '\' ' +  
-               'AND (NSP_Client_Segment_type__c IN (\'' + String.join(clientSegmentTypes, '\',\'') + '\') OR NSP_Client_Segment_type__c = NULL) ' +  
-               'AND NSP_Account_Status__c != \'Terminated\' ' +  
-               'AND NSP_AIMS_First_Pay_Date__c >= ' + ageDays;
-            queryResponse = Database.getQueryLocator(query);
+            queryResponse = Database.getQueryLocator(
+                    [
+                        SELECT
+                        NSP_Client_Segment_type__c ,
+                        NSP_Unique_Active_Employee__c ,
+                        RecordTypeId ,
+                        AccountId 
+                        FROM Asset
+                        WHERE (
+                            ( RecordTypeId = :WOAssetRecordTypeId )
+                            AND (
+                                ( NSP_Client_Segment_type__c IN :clientSegmentTypes )
+                                OR ( NSP_Client_Segment_type__c = NULL )
+                            )
+                            AND ( NSP_Account_Status__c != 'Terminated' )
+                            AND ( NSP_AIMS_First_Pay_Date__c >= :ageDays )
+                        )
+                    ]
+                );
         }catch(Exception ex){
             NSP_ErrorLogHandler.logSaveException('NSP_AssetFLSACaseCreationBatch', 'start', ex.getMessage());
         }
