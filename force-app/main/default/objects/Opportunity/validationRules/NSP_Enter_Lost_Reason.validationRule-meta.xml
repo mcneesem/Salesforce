@@ -4,7 +4,8 @@
     <active>true</active>
     <description>Reason Lost is required if opportunity is closed lost</description>
     <errorConditionFormula>AND(
-ISPICKVAL( StageName, &quot;Closed Lost&quot; ), 
+ISCHANGED( StageName ),
+ISPICKVAL( StageName, &quot;Closed Lost&quot; ),
 ISPICKVAL( NSP_Lost_Reason__c , &quot;&quot; ))</errorConditionFormula>
     <errorDisplayField>NSP_Lost_Reason__c</errorDisplayField>
     <errorMessage>Please select a reason.</errorMessage>
