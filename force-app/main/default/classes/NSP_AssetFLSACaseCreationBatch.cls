@@ -92,63 +92,80 @@ public class NSP_AssetFLSACaseCreationBatch implements Schedulable,Database.Stat
         List<NSP_Sub_Client__c> subClientList = new List<NSP_Sub_Client__c>();
         //Query all the subclient related to the asset   
         try{     
-            for(NSP_Sub_Client__c subClientRecord: [SELECT Id, NSP_Asset__r.NSP_AIMS_First_Pay_Date__c, 
-                                                    NSP_Asset__r.NSP_Client_Segment_type__c,
-                                                    NSP_Asset__r.NSP_Unique_Active_Employee__c,
-                                                    NSP_Case_created_from_FLSA_Batch__c,
-                                                    NSP_Account__r.NSP_AIMS_Client__c,
-                                                    NSP_Sub_Client__c
-                                                    FROM NSP_Sub_Client__c 
-                                                    WHERE NSP_Asset__c IN: assetList AND 
-                                                    NSP_Case_created_from_FLSA_Batch__c = false]){
-
-                                                        if(btCoreEgMinDays!=NULL && btCoreEgMaxDays!=NULL && subClientRecord.NSP_Asset__r.NSP_AIMS_First_Pay_Date__c < System.today().addDays(btCoreEgMinDays) && 
-                                                           subClientRecord.NSP_Asset__r.NSP_AIMS_First_Pay_Date__c >= System.today().addDays(btCoreEgMaxDays)){
-                                                               //Condition for BT and Core Segment Type
-                                                               if(segmentList.contains(subClientRecord.NSP_Asset__r.NSP_Client_Segment_type__c) || subClientRecord.NSP_Asset__r.NSP_Client_Segment_type__c == null){
-                                                                   flsaCase = createCase(subClientRecord.NSP_Account__c, subClientRecord.NSP_Sub_Client__c, NSP_ServiceConstants.SUBCATEGORY_NOT_ON_UI , System.Label.NSP_FLSA_QueueId);
-                                                                   flsaCaseList.add(flsaCase);
-                                                                   subClientRecord.NSP_Case_created_from_FLSA_Batch__c = True;
-                                                                   subClientList.add(subClientRecord);
-                                                               }
-                                                               //Condition for EG Segment Types
-                                                               else if(segmentListEmpGrtFifty.contains(subClientRecord.NSP_Asset__r.NSP_Client_Segment_type__c) && 
-                                                                       subClientRecord.NSP_Asset__r.NSP_Unique_Active_Employee__c < 50){
-                                                                           flsaCase = createCase(subClientRecord.NSP_Account__c, subClientRecord.NSP_Sub_Client__c, NSP_ServiceConstants.SUBCATEGORY_NOT_ON_UI , System.Label.NSP_FLSA_QueueId);
-                                                                           flsaCaseList.add(flsaCase);
-                                                                           subClientRecord.NSP_Case_created_from_FLSA_Batch__c = True;
-                                                                           subClientList.add(subClientRecord);   
-                                                               }
-                                                        }
- 
-                                                        else if(egMmMinDays!=NULL && egMmMaxDays!=NULL && subClientRecord.NSP_Asset__r.NSP_AIMS_First_Pay_Date__c < System.today().addDays(egMmMinDays) && 
-                                                                subClientRecord.NSP_Asset__r.NSP_AIMS_First_Pay_Date__c >= System.today().addDays(egMmMaxDays)){
-                                                                    //Condition for EG Segment Types
-                                                                    if(segmentListEmpGrtFifty.contains(subClientRecord.NSP_Asset__r.NSP_Client_Segment_type__c) &&
-                                                                       subClientRecord.NSP_Asset__r.NSP_Unique_Active_Employee__c >= 50){
-                                                                           Id flsaOwner = getFLSASpecialist(subClientRecord);
-                                                                           flsaCase = createCase(subClientRecord.NSP_Account__c, subClientRecord.NSP_Sub_Client__c, NSP_ServiceConstants.FLSA_SUBCATEGORY , flsaOwner);
-                                                                           flsaCaseList.add(flsaCase);
-                                                                           subClientRecord.NSP_Case_created_from_FLSA_Batch__c = True;
-                                                                           subClientList.add(subClientRecord);
-                                                                    }
-                                                                    //For MM Segment Type Asset
-                                                                    else if(subClientRecord.NSP_Asset__r.NSP_Client_Segment_type__c == NSP_ServiceConstants.MMAssetSegment){
-                                                                            Id flsaOwner = getFLSASpecialist(subClientRecord);
-                                                                            flsaCase = createCase(subClientRecord.NSP_Account__c, subClientRecord.NSP_Sub_Client__c, NSP_ServiceConstants.FLSA_SUBCATEGORY , flsaOwner);
-                                                                            flsaCaseList.add(flsaCase);
-                                                                            subClientRecord.NSP_Case_created_from_FLSA_Batch__c = True;
-                                                                            subClientList.add(subClientRecord);
-                                                                    }
-                                                                    //For MME Segment Type Asset
-                                                                    else if(subClientRecord.NSP_Asset__r.NSP_Client_Segment_type__c == NSP_ServiceConstants.MMEAssetSegment){
-                                                                            flsaCase = createCase(subClientRecord.NSP_Account__c, subClientRecord.NSP_Sub_Client__c, NSP_ServiceConstants.FLSA_SUBCATEGORY , System.Label.NSP_Marsha_Bustos);
-                                                                            flsaCaseList.add(flsaCase);
-                                                                            subClientRecord.NSP_Case_created_from_FLSA_Batch__c = True;
-                                                                            subClientList.add(subClientRecord);
-                                                                    } 
-                                                        }
-                                                    }
+            for(NSP_Sub_Client__c subClientRecord: [
+                        SELECT
+                            Id ,
+                            NSP_Asset__r.NSP_AIMS_First_Pay_Date__c ,
+                            NSP_Asset__r.NSP_Client_Segment_type__c ,
+                            NSP_Asset__r.NSP_Unique_Active_Employee__c ,
+                            NSP_Case_created_from_FLSA_Batch__c ,
+                            NSP_Account__r.NSP_AIMS_Client__c ,
+                            NSP_Sub_Client__c
+                        FROM NSP_Sub_Client__c
+                        WHERE (
+                            ( NSP_Asset__c IN :assetList )
+                            AND ( NSP_Case_created_from_FLSA_Batch__c = false )
+                        )
+                    ]
+                )
+            {
+                if ( btCoreEgMinDays!=NULL
+                    && btCoreEgMaxDays!=NULL
+                    && subClientRecord.NSP_Asset__r.NSP_AIMS_First_Pay_Date__c < System.today().addDays(btCoreEgMinDays)
+                    && subClientRecord.NSP_Asset__r.NSP_AIMS_First_Pay_Date__c >= System.today().addDays(btCoreEgMaxDays)
+                    )
+                {
+                    if ( segmentList.contains(subClientRecord.NSP_Asset__r.NSP_Client_Segment_type__c)
+                        || subClientRecord.NSP_Asset__r.NSP_Client_Segment_type__c == null
+                        )
+                    {
+                        //Condition for BT and Core Segment Type
+                        flsaCase = createCase(subClientRecord.NSP_Account__c, subClientRecord.NSP_Sub_Client__c, NSP_ServiceConstants.SUBCATEGORY_NOT_ON_UI , System.Label.NSP_FLSA_QueueId);
+                        flsaCaseList.add(flsaCase);
+                        subClientRecord.NSP_Case_created_from_FLSA_Batch__c = True;
+                        subClientList.add(subClientRecord);
+                    } else if(segmentListEmpGrtFifty.contains(subClientRecord.NSP_Asset__r.NSP_Client_Segment_type__c)
+                        && subClientRecord.NSP_Asset__r.NSP_Unique_Active_Employee__c < 50
+                        )
+                    {
+                        //Condition for EG Segment Types
+                        flsaCase = createCase(subClientRecord.NSP_Account__c, subClientRecord.NSP_Sub_Client__c, NSP_ServiceConstants.SUBCATEGORY_NOT_ON_UI , System.Label.NSP_FLSA_QueueId);
+                        flsaCaseList.add(flsaCase);
+                        subClientRecord.NSP_Case_created_from_FLSA_Batch__c = True;
+                        subClientList.add(subClientRecord);   
+                    }
+                } else if( egMmMinDays!=NULL
+                    && egMmMaxDays!=NULL
+                    && subClientRecord.NSP_Asset__r.NSP_AIMS_First_Pay_Date__c < System.today().addDays(egMmMinDays)
+                    && subClientRecord.NSP_Asset__r.NSP_AIMS_First_Pay_Date__c >= System.today().addDays(egMmMaxDays)
+                    )
+                {
+                    if( segmentListEmpGrtFifty.contains(subClientRecord.NSP_Asset__r.NSP_Client_Segment_type__c)
+                        && subClientRecord.NSP_Asset__r.NSP_Unique_Active_Employee__c >= 50
+                        )
+                    {
+                        //Condition for EG Segment Types
+                        Id flsaOwner = getFLSASpecialist(subClientRecord);
+                        flsaCase = createCase(subClientRecord.NSP_Account__c, subClientRecord.NSP_Sub_Client__c, NSP_ServiceConstants.FLSA_SUBCATEGORY , flsaOwner);
+                        flsaCaseList.add(flsaCase);
+                        subClientRecord.NSP_Case_created_from_FLSA_Batch__c = True;
+                        subClientList.add(subClientRecord);
+                    } else if(subClientRecord.NSP_Asset__r.NSP_Client_Segment_type__c == NSP_ServiceConstants.MMAssetSegment){
+                        //For MM Segment Type Asset
+                        Id flsaOwner = getFLSASpecialist(subClientRecord);
+                        flsaCase = createCase(subClientRecord.NSP_Account__c, subClientRecord.NSP_Sub_Client__c, NSP_ServiceConstants.FLSA_SUBCATEGORY , flsaOwner);
+                        flsaCaseList.add(flsaCase);
+                        subClientRecord.NSP_Case_created_from_FLSA_Batch__c = True;
+                        subClientList.add(subClientRecord);
+                    } else if(subClientRecord.NSP_Asset__r.NSP_Client_Segment_type__c == NSP_ServiceConstants.MMEAssetSegment){
+                        //For MME Segment Type Asset
+                        flsaCase = createCase(subClientRecord.NSP_Account__c, subClientRecord.NSP_Sub_Client__c, NSP_ServiceConstants.FLSA_SUBCATEGORY , System.Label.NSP_Marsha_Bustos);
+                        flsaCaseList.add(flsaCase);
+                        subClientRecord.NSP_Case_created_from_FLSA_Batch__c = True;
+                        subClientList.add(subClientRecord);
+                    }
+                }
+            }
             if(!flsaCaseList.isEmpty()){
                 List<Database.SaveResult> results = Database.insert(flsaCaseList,false);
                 NSP_ErrorLogHandler.logSaveResultsException('NSP_AssetFLSACaseCreationBatch', 'ExecuteMethod', results );
