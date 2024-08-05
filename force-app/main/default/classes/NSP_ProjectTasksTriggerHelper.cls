@@ -984,22 +984,25 @@ public class NSP_ProjectTasksTriggerHelper {
         Map<Id, Id> mapofDiscoveryProjectTask = new Map<Id,Id>();
         Map<Id, Id> mapOfDiscoveryProjectTaskOwner = new Map<Id, Id>();
         Set<Id>hcmProjectSet = new Set<Id>();
-        Set<Id>newTaxIMPLSubProjectSet =new Set<Id>(); 
+        Set<Id>newTaxIMPLSubProjectSet =new Set<Id>();
         Set<Id>wXWADataMigrationSubProject =new Set<Id>();
         Set<Id> goLiveProjectTaskIds = new Set<Id>();
         List<Id> accountIdList = new List<Id>();
         List<string> peoTerminationTaskList = System.Label.PEO_Termination_Tasks.split(';');
         String TERMINATIONANALYSIS = null;
+        Map<Id, Id> mapOfProjectTaskAndProject = new Map<Id, Id>();
+        List<Id> listOfAccountId = new List<Id>();
+        String SubmitTerminationChecklist = 'Submit Termination Checklist';
         if ( peoTerminationTaskList != null
             && !peoTerminationTaskList.isEmpty()
             && ( peoTerminationTaskList.size() >= 2 )
-            )
+           )
         {
             TERMINATIONANALYSIS = peoTerminationTaskList[1];
         }
         if ( mNewProjectTasks != null
             && !mNewProjectTasks.values().isEmpty()
-            )
+           )
         {
             for ( pse__Project_Task__c oProjectTask : mNewProjectTasks.values() ) {
                 if ( oProjectTask.Name == TERMINATIONANALYSIS
@@ -1007,14 +1010,14 @@ public class NSP_ProjectTasksTriggerHelper {
                     && oldMapProjecttasks != null
                     && oldMapProjecttasks.containsKey(oProjectTask.Id)
                     && oldMapProjecttasks.get(oProjectTask.Id).NSP_Account_Id__c != oProjectTask.NSP_Account_Id__c
-                    )
+                   )
                 {
                     accountIdList.add(oProjectTask.NSP_Account_Id__c);
                 }
                 // FILTER COMPLETED PROJECTS
                 if ( oProjectTask.pse__Status__c == NSP_ServiceConstants.PROJECTSTATUSCOMPLETED
                     && oldMapProjecttasks.get(oProjectTask.Id).pse__Status__c != NSP_ServiceConstants.PROJECTSTATUSCOMPLETED
-                    )
+                   )
                 {
                     sProjectTasksIds.add(oProjectTask.Id);
                 }
@@ -1023,14 +1026,14 @@ public class NSP_ProjectTasksTriggerHelper {
                     && oProjectTask.pse__Status__c == NSP_ServiceConstants.PROJECTSTATUSCOMPLETED
                     && oProjectTask.NSP_Is_Status_Completed__c
                     && !oldMapProjecttasks.get(oProjectTask.Id).NSP_Is_Status_Completed__c
-                    )
+                   )
                 {
                     goLiveProjectTaskIds.add(oProjectTask.Id);
                 }
-                if ( oldMapProjecttasks.get(oProjectTask.Id).pse__Status__c!=NSP_ServiceConstants.TASKCOMPLETE 
+                if ( oldMapProjecttasks.get(oProjectTask.Id).pse__Status__c!=NSP_ServiceConstants.TASKCOMPLETE
                     && oProjectTask.pse__Status__c==NSP_ServiceConstants.TASKCOMPLETE
                     && oProjectTask.pse__Project__c!=null
-                    )
+                   )
                 {
                     //check if FEIN project task is completed
                     if(oProjectTask.Name==NSP_ServiceConstants.FEIN  ){
@@ -1049,7 +1052,7 @@ public class NSP_ProjectTasksTriggerHelper {
                     //Check if subtask first payroll approved task is completed
                     if ( oProjectTask.pse__Parent_Task__c!=null
                         && oProjectTask.Name==NSP_ServiceConstants.PAYROLLAPPROVED
-                        )
+                       )
                     {
                         projectFsoIdset.add(oProjectTask.pse__Project__c);
                         accountIdFsoProjectTaskMap.put(oProjectTask.NSP_AccountId__c, oProjectTask.Id);  
@@ -1057,7 +1060,7 @@ public class NSP_ProjectTasksTriggerHelper {
                     //Check if cobra  task is completed
                     if ( oProjectTask.Name.startsWith(NSP_ServiceConstants.COBRA_FORM_YES)
                         || oProjectTask.Name.startsWith(NSP_ServiceConstants.COBRA_FORM_NO)
-                        )
+                       )
                     {
                         projectTaskCobraIdSet.add(oProjectTask.Id);
                         projectTaskList.add(oProjectTask);
@@ -1077,7 +1080,7 @@ public class NSP_ProjectTasksTriggerHelper {
 
                 if ( oldMapProjecttasks.get(oProjectTask.Id).pse__Status__c != oProjectTask.pse__Status__c
                     && oProjectTask.pse__Status__c == NSP_ServiceConstants.TASKCOMPLETE
-                    )
+                   )
                 {
                     if(oProjectTask.Name == NSP_ServiceConstants.PROJECT_TASK_DISCOVERY){
                         hcmProjectSet.add(oProjectTask.Id);
@@ -1089,11 +1092,34 @@ public class NSP_ProjectTasksTriggerHelper {
                 }
                 if ( oldMapProjecttasks.get(oProjectTask.Id).OwnerId != oProjectTask.OwnerId
                     && oProjectTask.OwnerId.getsobjecttype() == User.sobjecttype
-                    )
+                   )
                 {
                     projectTaskidsChangedOwner.add(oProjectTask.Id);
                 }
+                //Check projectTaskName and Status
+                if ( oProjectTask != null
+                    && oProjectTask.pse__Status__c == NSP_ServiceConstants.PROJECTSTATUSCOMPLETED
+                    && oldMapProjecttasks != null
+                    && oldMapProjecttasks.containsKey(oProjectTask.Id)
+                    && oProjectTask.pse__Status__c != oldMapProjecttasks.get(oProjectTask.Id).pse__Status__c
+                   )
+                {
+                    if (oProjectTask.Name == SubmitTerminationChecklist) {
+                        if (!mapOfProjectTaskAndProject.containsKey(oProjectTask.Id)) {
+                            mapOfProjectTaskAndProject.put(
+                                oProjectTask.Id ,
+                                oProjectTask.pse__Project__c
+                            );
+                        }
+                        if (oProjectTask.NSP_AccountId__c != null) {
+                            listOfAccountId.add(oProjectTask.NSP_AccountId__c);
+                        }
+                    }
+                }
             }
+        }
+        if(!mapOfProjectTaskAndProject.isEmpty() && !listOfAccountId.isEmpty()){
+            onSubmitTaskCompletion(mapOfProjectTaskAndProject,listOfAccountId);
         }
         if(!hcmProjectSet.isEmpty() && !System.isFuture() && !System.isBatch()){
             createHCMCaseOnProjectTaskUpdate(hcmProjectSet);
@@ -1149,6 +1175,178 @@ public class NSP_ProjectTasksTriggerHelper {
         }
         if(!goLiveProjectTaskIds.isEmpty()){
             createCasesOnProjectTasksUpdate(goLiveProjectTaskIds);
+        }
+    }
+    Private void onSubmitTaskCompletion(Map<Id, Id> mapOfProjectTaskAndProject, List<Id> listOfAccountId) {  
+        List<String> listOfToAddresses = new List<String>();
+        Map<Id, Id> mapOfProjectAndAccount = new Map<Id, Id>();
+        Map<Id, List<Asset>> activeAssetList = new Map<Id, List<Asset>>();
+        Map<Id, pse__Project_Task__c> projectTaskMap = new Map<Id, pse__Project_Task__c>();
+        Map<Id, Id> projectMap = new Map<Id, Id>();
+        List<pse__Project_Task__c> optionalProjectTask = new List<pse__Project_Task__c>();
+        String optionalProjectTaskName = 'Optional: Initiate BPS Termination';
+        String optionalProjectTaskDesc = 'No active BPS Assets';
+        String SubmitTerminationChecklist = 'Submit Termination Checklist';
+        String ORGANIZATIONAL_PLANNING_ASSET = 'Organizational_Planning';
+        Id TAAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId('Asset',NSP_ServiceConstants.TIME_ATTENDANCE_ASSET);
+        Id PMAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId('Asset',NSP_ServiceConstants.PERFORMANCE_MANAGEMENT_ASSET);
+        Id OPAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId('Asset',ORGANIZATIONAL_PLANNING_ASSET);
+        Id XMLAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId('Asset',NSP_ServiceConstants.XML_ASSET);
+        Id IntegraAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId('Asset',NSP_ServiceConstants.INTEGRA_ASSET);
+        
+        try{
+            if (!mapOfProjectTaskAndProject.isEmpty()) {  
+                for ( pse__Project_Task__c projectTask : [
+                    SELECT
+                    Id , Name , pse__Project__r.pse__Account__r.Name ,
+                    pse__Project__r.pse__Account__r.NSP_AIMS_Client__c , NSP_AccountId__c
+                    FROM pse__Project_Task__c  
+                    WHERE ( Id IN :mapOfProjectTaskAndProject.keySet() )
+                ]
+                    )
+                {
+                    if (projectTask != null) {
+                        if (!projectTaskMap.containsKey(projectTask.Id)) {
+                            projectTaskMap.put(projectTask.Id, projectTask);
+                        }
+                        if (!projectMap.containsKey(projectTask.Id)) {
+                            projectMap.put(projectTask.Id, projectTask.pse__Project__c);
+                        }
+                    }
+                }
+            }
+            
+            if (!listOfAccountId.isEmpty()) {  
+                for (Asset eachAsset : [
+                    SELECT Id , AccountId, Name
+                    FROM Asset
+                    WHERE (
+                        (RecordTypeId = :TAAssetRecordTypeId
+                         OR RecordTypeId = :PMAssetRecordTypeId
+                         OR RecordTypeId = :OPAssetRecordTypeId
+                         OR RecordTypeId = :XMLAssetRecordTypeId
+                         OR RecordTypeId = :IntegraAssetRecordTypeId)
+                        AND NSP_Account_Status__c != :NSP_ServiceConstants.TERMINATED
+                        AND AccountId IN :listOfAccountId
+                    )
+                ]
+                    )
+                {
+                    if ( !activeAssetList.containsKey( eachAsset.AccountId ) ) {
+                        activeAssetList.put(
+                            eachAsset.AccountId ,
+                            new List<Asset>()
+                        );
+                    }
+                    activeAssetList.get( eachAsset.AccountId ).add( eachAsset );
+                }
+            }
+            
+            if (projectTaskMap.size() > 0 && projectMap.values().size()>0 ) {
+                List<pse__Project_Task__c> optionalTasks = [  
+                    SELECT Id,pse__Project__c  
+                    FROM pse__Project_Task__c  
+                    WHERE pse__Project__c IN :projectMap.values()  
+                    AND Name = : optionalProjectTaskName
+                ];
+                
+                Map<Id, pse__Project_Task__c> optionalTaskMap = new Map<Id, pse__Project_Task__c>();  
+                for (pse__Project_Task__c optionalTask : optionalTasks) {  
+                    optionalTaskMap.put(optionalTask.pse__Project__c, optionalTask);  
+                }  
+                for (pse__Project_Task__c pTask : projectTaskMap.Values()) {
+                    if ( pTask != null
+                        && pTask.NSP_AccountId__c != null
+                        && activeAssetList.containsKey(pTask.NSP_AccountId__c)
+                        && pTask.Name == SubmitTerminationChecklist
+                        && pTask.pse__Project__c != null
+                       )
+                    {
+                        pse__Project_Task__c optionalTask = optionalTaskMap.get(pTask.pse__Project__c);
+                        List<String> emailTermination_Task_Completion = System.Label.Termination_Task_Completion.split(',');
+                        listOfToAddresses.addAll(emailTermination_Task_Completion);
+                        assetListEmail(
+                            projectTaskMap.get(pTask.Id).pse__Project__r.pse__Account__r.Name,
+                            projectTaskMap.get(pTask.Id).pse__Project__r.pse__Account__c,
+                            projectTaskMap.get(pTask.Id).pse__Project__r.pse__Account__r.NSP_AIMS_Client__c,
+                            listOfToAddresses,
+                            activeAssetList.get(pTask.NSP_AccountId__c)
+                        );
+                        if (optionalTask != null) {  
+                            optionalTask.pse__Status__c = NSP_ServiceConstants.PROJECTSTATUSCOMPLETED;  
+                            optionalProjectTask.add(optionalTask);  
+                        }
+                    }
+                    else if ( pTask != null
+                             && pTask.NSP_AccountId__c != null
+                             && !activeAssetList.containsKey(pTask.NSP_AccountId__c)
+                             && pTask.Name == SubmitTerminationChecklist
+                             && pTask.pse__Project__c != null
+                            )
+                    {
+                        pse__Project_Task__c optionalTask = optionalTaskMap.get(pTask.pse__Project__c);
+                        if (optionalTask != null) {  
+                            optionalTask.pse__Status__c = NSP_ServiceConstants.PROJECTSTATUSCANCELLED;
+                            optionalTask.pse__Long_Description__c = optionalProjectTaskDesc;
+                            optionalProjectTask.add(optionalTask);  
+                        }
+                    }
+                }
+            }
+            if (optionalProjectTask.size() > 0){
+                UPDATE optionalProjectTask;
+            }
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_ProjectTasksTriggerHelper.class.getName() ,
+                'onSubmitTaskCompletion' ,
+                e
+            );
+        }
+    }
+    //Letter Received email.
+    Private void assetListEmail(String accountName, Id accountId, String accountAIMS, list<String> listOfToAddresses, List<Asset> assetList){
+        try{
+            String accName = accountName+'|'+accountAIMS;
+            String customUrl = URL.getOrgDomainURL().toExternalForm()+ '/'+accountId;
+            String subjectString = 'Client ' + accName + ' has been approved for termination';
+            String mailBody = 'Client ' +'<a href="' +customUrl+'">'+ accName +'</a>';
+            mailBody += ' has been approved for termination.'+'<br/><br/>';
+            mailBody += 'Please review the following Assets to determine next steps for termination.'+'<br/>';
+            for (Asset asset : assetList){
+                String assetUrl = URL.getOrgDomainURL().toExternalForm()+ '/'+asset.Id;
+                mailBody += '<a href="' +assetUrl+'">'+ asset.Name +'</a>'+'<br/>';
+            }
+            
+            sendEmail(listOfToAddresses,subjectString,mailBody);
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_ProjectTasksTriggerHelper.class.getName() ,
+                'assetListEmail' ,
+                e
+            );
+        }
+    }
+    
+    private static void sendEmail(String[] listOfToAddresses, String subject, String body){
+        NSP_Trigger_Switch__c triggerSwitch =  NSP_Trigger_Switch__c.getInstance(UserInfo.getUserId());
+        if(!triggerSwitch.SendEmailFlow__c) {
+            Map<String, Object> inputs = new Map<String, Object>();
+            inputs.put('toEmailAddresses', listOfToAddresses);
+            inputs.put('emailSubject', subject);
+            inputs.put('emailBody', body);
+            Flow.Interview.Send_Email sendEmailFlow = new Flow.Interview.Send_Email(inputs);
+            sendEmailFlow.start();  
+        } else {
+            // First, reserve email capacity for the current Apex transaction
+            Messaging.reserveSingleEmailCapacity(1);
+            Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+            // Assign the addresses for the To list to the mail object.
+            mail.setToAddresses(listOfToAddresses);
+            // Specify the subject line for your email address.
+            mail.setSubject(subject);
+            // Specify the content of the email.
+            mail.setHtmlBody(body);
         }
     }
     /**
