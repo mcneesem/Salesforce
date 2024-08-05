@@ -4,7 +4,7 @@
         <name>Send_Email_Alert_For_Case_Creation</name>
         <label>Send Email Alert For Case Creation</label>
         <locationX>1166</locationX>
-        <locationY>1584</locationY>
+        <locationY>2184</locationY>
         <actionName>Case.NSP_Case_Assignment_Email_Notification</actionName>
         <actionType>emailAlert</actionType>
         <faultConnector>
@@ -21,6 +21,22 @@
         <versionSegment>1</versionSegment>
     </actionCalls>
     <apiVersion>56.0</apiVersion>
+    <assignments>
+        <name>Add_Active_Group_Member_Id</name>
+        <label>Add Active Group Member Id</label>
+        <locationX>1540</locationX>
+        <locationY>1224</locationY>
+        <assignmentItems>
+            <assignToReference>ActiveGroupMemberds</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>Collect_Active_Group_Member_Ids.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Collect_Active_Group_Member_Ids</targetReference>
+        </connector>
+    </assignments>
     <assignments>
         <name>assign_profile_id</name>
         <label>assign profile id</label>
@@ -54,6 +70,78 @@
         </connector>
     </assignments>
     <decisions>
+        <name>Check_Active_Group_Member_Ids</name>
+        <label>Check Active Group Member Ids</label>
+        <locationX>1320</locationX>
+        <locationY>1608</locationY>
+        <defaultConnector>
+            <targetReference>Check_Group_Email</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Has_Active_Group_Member_Ids</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ActiveGroupMemberds</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Check_Active_Group_Member_Ids_Contents</targetReference>
+            </connector>
+            <label>Has Active Group Member Ids</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Active_Group_Member_Ids_Contents</name>
+        <label>Check Active Group Member Ids Contents</label>
+        <locationX>1122</locationX>
+        <locationY>1716</locationY>
+        <defaultConnector>
+            <targetReference>Send_Email_Alert_For_Case_Creation</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Contains_Creator</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ActiveGroupMemberds</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <elementReference>$Record.CreatedById</elementReference>
+                </rightValue>
+            </conditions>
+            <label>Contains Creator</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Active_Group_Members</name>
+        <label>Check Active Group Members</label>
+        <locationX>1320</locationX>
+        <locationY>1008</locationY>
+        <defaultConnector>
+            <targetReference>Collect_Active_Group_Member_Ids</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Found_Active_Group_Members</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Active_Group_Members</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>GetGroupEmail</targetReference>
+            </connector>
+            <label>Found Active Group Members</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Check_Bypass</name>
         <label>Check Bypass</label>
         <locationX>594</locationX>
@@ -79,7 +167,7 @@
         <name>Check_Group_Email</name>
         <label>Check Group Email</label>
         <locationX>1518</locationX>
-        <locationY>1116</locationY>
+        <locationY>1716</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Has_Group_Email</name>
@@ -199,56 +287,23 @@
             <label>is service user</label>
         </rules>
     </decisions>
-    <decisions>
-        <name>Check_User_Id_List</name>
-        <label>Check User Id List</label>
-        <locationX>1320</locationX>
-        <locationY>1008</locationY>
-        <defaultConnector>
-            <targetReference>Check_Group_Email</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Has_User_Id_List</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>UserIdList</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Check_User_Id_List_Contents</targetReference>
-            </connector>
-            <label>Has User Id List</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Check_User_Id_List_Contents</name>
-        <label>Check User Id List Contents</label>
-        <locationX>1122</locationX>
-        <locationY>1116</locationY>
-        <defaultConnector>
-            <targetReference>Send_Email_Alert_For_Case_Creation</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Contains_Creator</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>UserIdList</leftValueReference>
-                <operator>Contains</operator>
-                <rightValue>
-                    <elementReference>$Record.CreatedById</elementReference>
-                </rightValue>
-            </conditions>
-            <label>Contains Creator</label>
-        </rules>
-    </decisions>
     <environments>Default</environments>
     <interviewLabel>Case Custom Notification {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Case Custom Notification</label>
+    <loops>
+        <name>Collect_Active_Group_Member_Ids</name>
+        <label>Collect Active Group Member Ids</label>
+        <locationX>1452</locationX>
+        <locationY>1116</locationY>
+        <collectionReference>Get_Active_Group_Members</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Add_Active_Group_Member_Id</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>GetGroupEmail</targetReference>
+        </noMoreValuesConnector>
+    </loops>
     <loops>
         <name>Get_Group_User</name>
         <label>Get_Group_User</label>
@@ -260,7 +315,7 @@
             <targetReference>store_User_Group_Id</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
-            <targetReference>GetGroupEmail</targetReference>
+            <targetReference>Get_Active_Group_Members</targetReference>
         </noMoreValuesConnector>
     </loops>
     <loops>
@@ -296,6 +351,35 @@
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>Get_Active_Group_Members</name>
+        <label>Get Active Group Members</label>
+        <locationX>1320</locationX>
+        <locationY>900</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_Active_Group_Members</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>In</operator>
+            <value>
+                <elementReference>UserIdList</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>IsActive</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>User</object>
+        <queriedFields>Id</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <recordLookups>
         <name>Get_Profile_Id</name>
         <label>Get Profile Id</label>
@@ -384,10 +468,10 @@
         <name>GetGroupEmail</name>
         <label>GetGroupEmail</label>
         <locationX>1320</locationX>
-        <locationY>900</locationY>
+        <locationY>1500</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Check_User_Id_List</targetReference>
+            <targetReference>Check_Active_Group_Member_Ids</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -452,7 +536,7 @@
         <name>Fault_Handler</name>
         <label>Fault Handler</label>
         <locationX>2134</locationX>
-        <locationY>1692</locationY>
+        <locationY>2292</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultElement</name>
@@ -473,6 +557,13 @@
             </value>
         </inputAssignments>
     </subflows>
+    <variables>
+        <name>ActiveGroupMemberds</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
     <variables>
         <name>profilelist</name>
         <dataType>String</dataType>
