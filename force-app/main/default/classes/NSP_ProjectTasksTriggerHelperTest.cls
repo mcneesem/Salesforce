@@ -9,6 +9,9 @@ public class NSP_ProjectTasksTriggerHelperTest {
     @testSetup
     public static void setupProjectTaskdata(){
         //Test Setup
+		String projectName = 'PEO Termination';
+        String submitPtask = 'Submit Termination Checklist';
+        String optionalPtask = 'Optional: Initiate BPS Termination';
         ProjectTaskTriggerSettings__c settings = ProjectTaskTriggerSettings__c.getOrgDefaults();
         settings.IsEnabled__c = true;
         settings.IsEnabledCreatePtaIfOwnerChanged__c = true;
@@ -53,6 +56,13 @@ public class NSP_ProjectTasksTriggerHelperTest {
         oProject.pse__Project_Type__c=NSP_ServiceConstants.ImplementationProjectType;
         oProject.NSP_Asset_Implementation_Project__c =True;
         nProjectList.add(oProject);
+        
+        pse__Proj__c peoTermProject = (pse__Proj__c)NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c(), 'NSP_TestDataFactory.ProjectDefaults', false);
+        peoTermProject.Name = projectName;
+        peoTermProject.pse__Start_Date__c = Date.Today();
+        peoTermProject.pse__End_Date__c = System.Today().addDays(100);
+        peoTermProject.pse__Account__c= oAccount.Id;
+        nProjectList.add(peoTermProject);
         
         pse__Proj__c oProject1 = (pse__Proj__c) NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c(), 'NSP_TestDataFactory.ProjectDefaults');
         oProject1.Name = 'Proj2';
@@ -241,6 +251,18 @@ public class NSP_ProjectTasksTriggerHelperTest {
         scheduledTask.RecordTypeId = pEOProjectTaskRecordTypeId;
         nProjectTaskList.add(scheduledTask);
        
+        pse__Project_Task__c submitProjTask = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c());
+        submitProjTask.Name =submitPtask;
+        submitProjTask.pse__Project__c = peoTermProject.Id;
+        submitProjTask.pse__Status__c = NSP_ServiceConstants.PROJECTSTATUSNOTSTARTED;
+        nProjectTaskList.add(submitProjTask);
+        
+        pse__Project_Task__c optionalProjTask = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c());
+        optionalProjTask.Name =optionalPtask;
+        optionalProjTask.pse__Project__c = peoTermProject.Id;
+        optionalProjTask.pse__Status__c = NSP_ServiceConstants.PROJECTSTATUSNOTSTARTED;
+        nProjectTaskList.add(optionalProjTask);
+        
         insert nProjectTaskList;
         
         WorkOrder relWo = new WorkOrder();
@@ -497,6 +519,32 @@ public class NSP_ProjectTasksTriggerHelperTest {
 
        
     }
+    
+    /**
+    * Classes Covered
+    * NSP_ProjectTasksTriggerHandler.afterUpdate
+    * NSP_ProjectTasksTriggerHelper.onSubmitTaskCompletion
+    * 
+    */
+    @isTest
+    private static void submitTaskCompletion(){
+        Test.startTest();
+        Id timeRecordTypeId = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.ASSET_SOBJECT_TYPE,NSP_ServiceConstants.TIME_ATTENDANCE_ASSET);
+        Account[] accountId = [SELECT Id  FROM Account WHERE NSP_AIMS_Client__c = '8900' Limit 1];
+        Asset testAsset = (Asset)NSP_TestExtendedDataFactory.createSObject(new Asset(), 'NSP_TestDataFactory.AssetDefaults', false);  
+        testAsset.Name = NSP_ServiceConstants.TESTPAYROLL; 
+        testAsset.AccountId = accountId[0].Id;  
+        testAsset.RecordTypeId = timeRecordTypeId; 
+        testAsset.NSP_Account_Status__c = NSP_ServiceConstants.ASSET_ACTIVE_STATUS;   
+        insert testAsset;
+        
+        pse__Project_Task__c[] submitPTasks = [SELECT Id,pse__Status__c,Recordtypeid  FROM pse__Project_Task__c WHERE Name = 'Submit Termination Checklist' Limit 1];
+        submitPTasks[0].pse__Status__c = NSP_ServiceConstants.TASKCOMPLETE;
+        update submitPTasks;
+        Test.stopTest();
+        system.assertEquals(submitPTasks[0].pse__Status__c, NSP_ServiceConstants.TASKCOMPLETE);
+    }
+    
     @isTest
     public static void cobraTest(){
         Test.startTest();
