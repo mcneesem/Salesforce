@@ -23,8 +23,8 @@ public with sharing class NSP_AccountContactRelationTriggerHelper {
             loggedInUserProfile_Name = getLoggedInUserProfileName();
         }
         try{
-           	//Modified as part of SOQL fix 228901 
-			if((loggedInUserProfile_Name != null && !INT_DM_PROFILES.contains(loggedInUserProfile_Name)) 
+            //Modified as part of SOQL fix 228901 
+            if((loggedInUserProfile_Name != null && !INT_DM_PROFILES.contains(loggedInUserProfile_Name)) 
                || (loggedInUserProfileName.size() > 0 && !INT_DM_PROFILES.contains(loggedInUserProfileName[0].Name))){
 
                 Set<Id> accountIdSet = new Set<Id>();
@@ -386,10 +386,10 @@ public with sharing class NSP_AccountContactRelationTriggerHelper {
         List<Contact> conList = new List<Contact>();
         Id integrationProfileId = null;
         if(NSP_Trigger_Switch__c.getOrgDefaults().NSP_SOQL_Switch_2__c){
-        	List<Profile> integrationUser = new NSP_sObjectSelector('Profile').setSecurityEnforce(false).selectByName(NSP_ServiceConstants.INTEGRATION_USER, null, true);
-			if(integrationUser.size() > 0){
-    			integrationProfileId = integrationUser[0].Id;
-			}
+            List<Profile> integrationUser = new NSP_sObjectSelector('Profile').setSecurityEnforce(false).selectByName(NSP_ServiceConstants.INTEGRATION_USER, null, true);
+            if(integrationUser.size() > 0){
+                integrationProfileId = integrationUser[0].Id;
+            }
         } else {
             integrationProfileId = [SELECT Profile_ID__c, Profile_Name__c FROM NSP_Profile_Detail__mdt WHERE Profile_Name__c = :NSP_ServiceConstants.INTEGRATION_USER].Profile_ID__c;
         }
@@ -523,7 +523,7 @@ public with sharing class NSP_AccountContactRelationTriggerHelper {
         
         Id profileId = userinfo.getProfileId();
         String profileName;
-        List<NSP_Profile_Detail__mdt> profileDetailList = [SELECT Profile_ID__c, Profile_Name__c FROM NSP_Profile_Detail__mdt WHERE Profile_ID__c =: profileId];		
+        List<NSP_Profile_Detail__mdt> profileDetailList = [SELECT Profile_ID__c, Profile_Name__c FROM NSP_Profile_Detail__mdt WHERE Profile_ID__c =: profileId];
         if(profileDetailList.size() > 0){
             profileName = profileDetailList[0].Profile_Name__c;
         }
