@@ -9,7 +9,7 @@ public class NSP_ProjectTasksTriggerHelperTest {
     @testSetup
     public static void setupProjectTaskdata(){
         //Test Setup
-		String projectName = 'PEO Termination';
+        String projectName = 'PEO Termination';
         String submitPtask = 'Submit Termination Checklist';
         String optionalPtask = 'Optional: Initiate BPS Termination';
         ProjectTaskTriggerSettings__c settings = ProjectTaskTriggerSettings__c.getOrgDefaults();
@@ -551,13 +551,13 @@ public class NSP_ProjectTasksTriggerHelperTest {
         Account accCobra = new Account();
         accCobra.Name = 'Test Account 2_test';
         INSERT accCobra;
-		
-		pse__Proj__c oPeoProject = (pse__Proj__c) NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c(), 'NSP_TestDataFactory.ProjectDefaults');
+
+        pse__Proj__c oPeoProject = (pse__Proj__c) NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c(), 'NSP_TestDataFactory.ProjectDefaults');
         oPeoProject.Name = 'PeoProject';
         oPeoProject.pse__Start_Date__c = Date.Today();
         oPeoProject.pse__End_Date__c = System.Today().addDays(100);
         oPeoProject.pse__Account__c= accCobra.Id;
-		insert oPeoProject;
+        insert oPeoProject;
         Test.stopTest();
     }
 
@@ -1187,8 +1187,7 @@ public class NSP_ProjectTasksTriggerHelperTest {
     * MethodName: docusignAssetTest
     * Description : To test docusignAsset 
     * ********************************************************************************************/
-	@isTest
-    private static void docusignAssetTest(){
+    @isTest private static void docusignAssetTest(){
         Test.startTest();
         List<string> peoTerminationTaskList = System.Label.PEO_Termination_Tasks.split(';');
         String TERMINATIONANALYSIS = null;
@@ -1204,7 +1203,7 @@ public class NSP_ProjectTasksTriggerHelperTest {
         UPDATE asseObj;
         pse__Project_Task__c pTask = [SELECT Id, Name, pse__Status__c,NSP_AccountId__c  FROM pse__Project_Task__c WHERE Name = :TERMINATIONANALYSIS Limit 1];
         pTask.NSP_Account_Id__c = acc.Id;
-		update pTask;
+        update pTask;
         Test.stopTest();
     }
     /***********************************************************************************************
