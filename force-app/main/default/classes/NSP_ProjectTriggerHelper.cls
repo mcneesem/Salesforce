@@ -1,9 +1,7 @@
-/**
-* Represents the project trigger helper which handles all the logic.
-* V2.0              Ramya Ravi  02/10/2023   To update Project owner from quote for PEO Billable RT     <STY-04002>
-*/
-public class NSP_ProjectTriggerHelper{
-    // test w/ NSP_ProjectTriggerHelperTest (84%)
+public with sharing class NSP_ProjectTriggerHelper {
+    // test w/ NSP_ProjectTriggerHelperTest, NSP_AssetServiceTriggerHelperTest (82%)
+    // test w/ NSP_ProjectTriggerHelperTest (81%)
+    // test w/ NSP_AssetServiceTriggerHelperTest (29%)
 
     public Static Set<Id> dupPreventionSet = new Set<Id>();
     public final String PROJECTTASKSTATUSCOMPLETE = 'Complete';
@@ -14,7 +12,6 @@ public class NSP_ProjectTriggerHelper{
     public Static final List<String> PROJECTTASKNAMES = label.NSP_Project_Task_Names.split(',');
     public Static final String NEWPROJECTNAME = 'Post Implementation Payroll Follow Up';
     public Static final String NEWPROJECTTYPE = 'Implementation';
-    private static final String NSP_PROJECTTRIGGERHELPER = 'NSP_ProjectTriggerHelper';
     public static final Id WORECORDTYPEID = Schema.SObjectType.Asset.getRecordTypeInfosByName().get('WO').getRecordTypeId();
     public static final Id PEOBILLRECTYPEID = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.PROJECT, NSP_ServiceConstants.PEO_BILL_RECORDTYPE);
     public static final Id casePEORecordTypeId = NSP_GenericRecordType.getRecordTypeId('Case', NSP_ServiceConstants.PEO);
@@ -886,8 +883,12 @@ public class NSP_ProjectTriggerHelper{
             if(!implementationProfiles.isEmpty()){
                 Database.insert(implementationProfiles);
             }
-        }catch (Exception ex) {
-            NSP_ErrorLogHandler.logSaveException(NSP_PROJECTTRIGGERHELPER, 'createImplementationProfile', ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_ProjectTriggerHelper.class.getName() ,
+                'createImplementationProfile' ,
+                e
+            );
         }
     }
 
@@ -907,11 +908,15 @@ public class NSP_ProjectTriggerHelper{
                     project.OwnerId=projectManagerMap.get(project.pse__Project_Manager__c).pse__Salesforce_User__c;
                 }
             }
-    
-        }catch (Exception ex) {
-            NSP_ErrorLogHandler.logSaveException(NSP_PROJECTTRIGGERHELPER, 'updateProjectOwner', ex.getMessage());
-        } 
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_ProjectTriggerHelper.class.getName() ,
+                'updateProjectOwner' ,
+                e
+            );
+        }
     }
+
     /***********************************************************************************************
     * MethodName: createProjectTeamRoles
     * Description : This Method will create Project Team records for MM and FSO projects   
@@ -955,9 +960,13 @@ public class NSP_ProjectTriggerHelper{
             if(!projectTeamList.isEmpty()){
                 insert projectTeamList;
             }   
-        } catch (Exception ex) {
-            NSP_ErrorLogHandler.logSaveException(NSP_PROJECTTRIGGERHELPER, 'createProjectTeamRoles', ex.getMessage());
-        }   
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_ProjectTriggerHelper.class.getName() ,
+                'createProjectTeamRoles' ,
+                e
+            );
+        }
     }
 
     public static void createProjectTeamRoles(List< pse__Proj__c> projectList){
@@ -1002,10 +1011,15 @@ public class NSP_ProjectTriggerHelper{
                         project.Name = projectNameAsPerNamingConvention(project.TemplateName__c,project.pse__Start_Date__c, projectAccountMap.get(project.pse__Account__c).Name);
                     }
             }
-        } catch (Exception ex) {
-           // NSP_ErrorLogHandler.logSaveException('NSP_ProjectTriggerHelper', 'updateProjectName', ex.getMessage());
-        } 
-    } 
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_ProjectTriggerHelper.class.getName() ,
+                'updateProjectName' ,
+                e
+            );
+        }
+    }
+
     /***********************************************************************************************
     * MethodName: cloneTheOpenProjectTasks
     * Description : This Method will check whether the project is completed or not
@@ -1034,10 +1048,15 @@ public class NSP_ProjectTriggerHelper{
             if(!completedPrjctList.isEmpty() && !System.isFuture() && !System.isBatch()){
                 createProjectAndProjectTasks(completedPrjctList);
             }
-        }catch (Exception ex) {
-            NSP_ErrorLogHandler.logSaveException(NSP_PROJECTTRIGGERHELPER, 'cloneTheOpenProjectTasks', ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_ProjectTriggerHelper.class.getName() ,
+                'cloneTheOpenProjectTasks' ,
+                e
+            );
         }
     }
+
     /***********************************************************************************************
     * MethodName: createProjectAndProjectTasks
     * Description : This Method will Clone the existing project, if it is Status is completed and Create a new project with Open project Tasks
@@ -1125,8 +1144,12 @@ public class NSP_ProjectTriggerHelper{
                     Database.update(pPrctTasksToUpdate, false);
                 }
             } 
-        } catch (Exception ex) {
-            NSP_ErrorLogHandler.logSaveException(NSP_PROJECTTRIGGERHELPER, 'createProjectAndProjectTasks', ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_ProjectTriggerHelper.class.getName() ,
+                'createProjectAndProjectTasks' ,
+                e
+            );
         }
     }
 
@@ -1151,8 +1174,12 @@ public class NSP_ProjectTriggerHelper{
             if(!impProfilesToUpdate.isEmpty() && Schema.sObjectType.Implementation_Profile__c.isUpdateable()){
                 Database.update(impProfilesToUpdate,false);
             }
-        } catch (Exception ex) {
-            NSP_ErrorLogHandler.logSaveException(NSP_PROJECTTRIGGERHELPER, 'onCancelUpdateImplProfile', ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_ProjectTriggerHelper.class.getName() ,
+                'onCancelUpdateImplProfile' ,
+                e
+            );
         }
     }
 
@@ -1180,13 +1207,15 @@ public class NSP_ProjectTriggerHelper{
                     update updateAssetList; 
                 }
             }
-            
-            
-        } catch (Exception ex) {
-            NSP_ErrorLogHandler.logSaveException(NSP_PROJECTTRIGGERHELPER, 'updateAssetProductSegment', ex.getMessage());
-        } 
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_ProjectTriggerHelper.class.getName() ,
+                'updateAssetProductSegment' ,
+                e
+            );
+        }
     }
-    
+
     /***********************************************************************************************
     * MethodName:   isValidProjectAsset
     * Description : This Method updates check the valid asset Status
@@ -1225,13 +1254,16 @@ public class NSP_ProjectTriggerHelper{
                 listOfProjectTask.add(ptObj);
             }
         }
-
-        if(!listOfProjectTask.isEmpty()){
-            Database.SaveResult[] projectUpdateList = Database.update(listOfProjectTask,false);
-            NSP_ErrorLogHandler.logSaveResultsException(NSP_PROJECTTRIGGERHELPER, 'relatedProjectTaskUpdate:projectUpdateList', projectUpdateList);  
+        if ( !listOfProjectTask.isEmpty() ) {
+            Database.SaveResult[] results = Database.update( listOfProjectTask , false );
+            NSP_ErrorLogHandler.logResults(
+                NSP_ProjectTriggerHelper.class.getName() ,
+                'relatedProjectTaskUpdate' ,
+                results
+            );
         }
     }
-    
+
     /** Added as a part of STY-02064
      * Iterates throught the list of Project and Update Asset based on Project Asset and Order of Project.
          *Method Name:relatedAssetUpdate
@@ -1276,16 +1308,24 @@ public class NSP_ProjectTriggerHelper{
                                                     }
                                                 }
             }
-    
             // Update the Asset Record
-            if(!mapofAsset.isEmpty()){
-                Database.SaveResult[] assetUpdateList = Database.update(mapofAsset.values(),false);
-                NSP_ErrorLogHandler.logSaveResultsException(NSP_PROJECTTRIGGERHELPER, 'relatedAssetUpdate:AssetUpdate', assetUpdateList);  
+            if ( !mapofAsset.isEmpty() ) {
+                Database.SaveResult[] results = Database.update( mapofAsset.values() , false );
+                NSP_ErrorLogHandler.logResults(
+                    NSP_ProjectTriggerHelper.class.getName() ,
+                    'relatedAssetUpdate' ,
+                    results
+                );
             }
-        }catch(Exception ex){
-            NSP_ErrorLogHandler.logSaveException(NSP_PROJECTTRIGGERHELPER, 'relatedAssetUpdate', ex.getMessage()); 
-        } 
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_ProjectTriggerHelper.class.getName() ,
+                'relatedAssetUpdate' ,
+                e
+            );
+        }
     }
+
     /***********************************************************************************************
     * MethodName  : afterUpdateHCMField
     * Description : This Method creates a case and sends an email when the TES_HCM_Implementation_Support_Tasks__c 
@@ -1351,8 +1391,12 @@ public class NSP_ProjectTriggerHelper{
             if(!lstEmailMessages.isEmpty()){
                 Messaging.sendEmail(lstEmailMessages);
             }
-        }Catch(Exception ex){
-            NSP_ErrorLogHandler.logSaveException(NSP_PROJECTTRIGGERHELPER, 'afterUpdateHCMField', ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_ProjectTriggerHelper.class.getName() ,
+                'afterUpdateHCMField' ,
+                e
+            );
         }
     }
 
@@ -1398,23 +1442,40 @@ public class NSP_ProjectTriggerHelper{
                 wxPrjList.add(wxProject);
             }
         }
-            
-            if(!wxPrjList.isEmpty()){
-            List<Database.UpsertResult> upsertResults = Database.Upsert(wxPrjList, false);
-            for(Database.upsertResult result : upsertResults){
-            if(result.isSuccess()){
-                    sendMail(emailTemp.Subject, emailTemp.HtmlValue, toAddress, null, result.getId(), emailTemp.Id);
+            if ( !wxPrjList.isEmpty() ) {
+                List<Database.UpsertResult> results = Database.upsert( wxPrjList , false );
+                NSP_ErrorLogHandler.logResults(
+                    NSP_ProjectTriggerHelper.class.getName() ,
+                    'createWXProject:upsertResults' ,
+                    results
+                );
+                for ( Database.upsertResult result : results ) {
+                    if ( result.isSuccess() ) {
+                        sendMail(
+                            emailTemp.Subject ,
+                            emailTemp.HtmlValue ,
+                            toAddress ,
+                            null ,
+                            result.getId() ,
+                            emailTemp.Id
+                        );
+                    }
+                }
+            }
+            if ( !wxProjectIdSet.isEmpty() ) {
+                List<pse__Budget__c> budget = [
+                    SELECT Id
+                    FROM pse__Budget__c
+                    WHERE ( pse__Project__c IN :wxProjectIdSet )
+                ];
+                Database.DeleteResult[] results = Database.delete( budget , false );
+                NSP_ErrorLogHandler.logResults(
+                    NSP_ProjectTriggerHelper.class.getName() ,
+                    'createWXProject:deleteResults' ,
+                    results
+                );
             }
         }
-        NSP_ErrorLogHandler.logUpsertResultsException(NSP_PROJECTTRIGGERHELPER, 'createWXProject:upsertResults', upsertResults);
-        }
-        if(!wxProjectIdSet.isEmpty()){
-            List<pse__Budget__c> budget = [SELECT Id FROM pse__Budget__c WHERE pse__Project__c IN: wxProjectIdSet];
-            Database.DeleteResult[] DeleteResults = Database.Delete(budget, false);
-            NSP_ErrorLogHandler.logDeleteResultsException(NSP_PROJECTTRIGGERHELPER, 'createWXProject:deleteResults', DeleteResults);  
-        }
-
-        }         
     }
 
     /***********************************************************************************************
@@ -1470,7 +1531,15 @@ public class NSP_ProjectTriggerHelper{
         }
         email.setTargetObjectId(UserInfo.getUserId());
         email.setTreatTargetObjectAsRecipient(false);
-            Messaging.sendEmail(new Messaging.SingleEmailMessage[] {email});
+        try {
+            Messaging.sendEmail( new Messaging.SingleEmailMessage[]{ email } );
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_ProjectTriggerHelper.class.getName() ,
+                'sendMail' ,
+                e
+            );
+        }
     }
 
         /***********************************************************************************************
@@ -1540,17 +1609,25 @@ public class NSP_ProjectTriggerHelper{
                                 
                         }
                     }
-                    if(!peoCaseList.isEmpty()){
-                        //insert the case list and save the error to database.saveresult and store it in the handler for the cases fail to insert
-                        List<Database.SaveResult> results = Database.insert(peoCaseList, false);
-                        NSP_ErrorLogHandler.logSaveResult(NSP_PROJECTTRIGGERHELPER, 'createPEOCase', results );
+                    if ( !peoCaseList.isEmpty() ) {
+                        List<Database.SaveResult> results = Database.insert( peoCaseList , false );
+                        NSP_ErrorLogHandler.logResults(
+                            NSP_ProjectTriggerHelper.class.getName() ,
+                            'createPEOCase' ,
+                            results
+                        );
                     }
                 }
             }
-        }catch(Exception ex ){
-                NSP_ErrorLogHandler.logSaveException(NSP_PROJECTTRIGGERHELPER, 'createPEOCase', ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_ProjectTriggerHelper.class.getName() ,
+                'createPEOCase' ,
+                e
+            );
         }
     }
+
     /***********************************************************************************************
     * MethodName: createCase
     * Description : return  case fields values
@@ -1605,7 +1682,11 @@ public class NSP_ProjectTriggerHelper{
     
         if(!itaCqaCaseList.isEmpty()){
             List<Database.SaveResult> results = Database.insert(itaCqaCaseList,false); 
-            NSP_ErrorLogHandler.logSaveResultsException(NSP_PROJECTTRIGGERHELPER, 'createItaCqaCaseAndSendEmail', results );
+            NSP_ErrorLogHandler.logResults(
+                NSP_ProjectTriggerHelper.class.getName() ,
+                'createItaCqaCaseAndSendEmail' ,
+                results
+            );
     
             // get Org Wide address
             List<String> orgWideFields = new List<String>{'Id','Address','DisplayName'};
@@ -1715,12 +1796,15 @@ public class NSP_ProjectTriggerHelper{
                     project.addError('You do not have permission to delete project templates');
                 }
             }
-        }catch(Exception exp ){
-                NSP_ErrorLogHandler.logSaveException(NSP_PROJECTTRIGGERHELPER, 'handleBeforeDeleteOfProjTemp', exp.getMessage());
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_ProjectTriggerHelper.class.getName() ,
+                'handleBeforeDeleteOfProjTemp' ,
+                e
+            );
         }
     }
 
-    
      /***********************************************************************************************
     * MethodName  : updateProjOwnerForServicePlanProjectType
     * Description : Helper method to assign owner for Service Plan Project based on Account Segments.
