@@ -6359,7 +6359,7 @@ Climate Plus: https://nexus.insperity.com/groups/38605/posts/3272612-climate-plu
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Termination Task Completion</shortDescription>
-        <value>BPSTerminations@Insperity.com.invalid</value>
+        <value>BPSTerminations@Insperity.com</value>
     </labels>
     <labels>
         <fullName>Transition_Progress_Survey_Case_Owner</fullName>
