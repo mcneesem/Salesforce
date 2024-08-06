@@ -102,7 +102,7 @@
         <name>Internal_Email_Template_Name</name>
         <dataType>String</dataType>
         <value>
-            <stringValue>NSP_Health_Welfare_External_Email_Template</stringValue>
+            <stringValue>NSP_Health_Welfare_Internal_Email_Template</stringValue>
         </value>
     </constants>
     <decisions>
