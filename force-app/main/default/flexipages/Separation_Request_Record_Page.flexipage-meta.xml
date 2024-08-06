@@ -795,6 +795,40 @@
                 <identifier>RecordNSP_SpecialItemsNote_cField2</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_AnyPreparedDocumentForTermination__c</fieldItem>
+                <identifier>RecordNSP_AnyPreparedDocumentForTermination_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_AgreementType__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Client-Prepared</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_AnyProvisionInPreparedDocRefersStock__c</fieldItem>
+                <identifier>RecordNSP_AnyProvisionInPreparedDocRefersStock_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_AgreementType__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Client-Prepared</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-jru8s7dc6mn</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -1383,40 +1417,6 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_SpecialItemsNote__c</fieldItem>
                 <identifier>RecordNSP_SpecialItemsNote_cField3</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.NSP_AnyPreparedDocumentForTermination__c</fieldItem>
-                <identifier>RecordNSP_AnyPreparedDocumentForTermination_cField</identifier>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.NSP_AgreementType__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Client-Prepared</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.NSP_AnyProvisionInPreparedDocRefersStock__c</fieldItem>
-                <identifier>RecordNSP_AnyProvisionInPreparedDocRefersStock_cField</identifier>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.NSP_AgreementType__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Client-Prepared</rightValue>
-                    </criteria>
-                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -2617,6 +2617,40 @@
                 <identifier>RecordNSP_SpecialItemsNote__cField3</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_AnyPreparedDocumentForTermination__c</fieldItem>
+                <identifier>RecordNSP_AnyPreparedDocumentForTermination_cField2</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_AgreementType__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Client-Prepared</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_AnyProvisionInPreparedDocRefersStock__c</fieldItem>
+                <identifier>RecordNSP_AnyProvisionInPreparedDocRefersStock_cField2</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_AgreementType__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Client-Prepared</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-5efcc1c5-1856-4a2e-a2de-b8938d4da167</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -3205,40 +3239,6 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_SpecialItemsNote__c</fieldItem>
                 <identifier>RecordNSP_SpecialItemsNote_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.NSP_AnyPreparedDocumentForTermination__c</fieldItem>
-                <identifier>RecordNSP_AnyPreparedDocumentForTermination_cField2</identifier>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.NSP_AgreementType__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Client-Prepared</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.NSP_AnyProvisionInPreparedDocRefersStock__c</fieldItem>
-                <identifier>RecordNSP_AnyProvisionInPreparedDocRefersStock_cField2</identifier>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.NSP_AgreementType__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Client-Prepared</rightValue>
-                    </criteria>
-                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
