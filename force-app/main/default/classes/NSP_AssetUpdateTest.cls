@@ -191,4 +191,8 @@
      //     System.assertNotEquals(NSP_SalesConstants.TERMINATED_STATUS, asstUpdatedList[0].Status, 'assetTermination method is updating the asset status');
      // }
  
+     @isTest
+     static void testExceptions(){
+         NSP_AssetUpdate.testHandleException( null , 'activateAsset' );
+     }
  }
