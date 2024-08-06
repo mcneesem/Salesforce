@@ -1307,25 +1307,17 @@ public class NSP_ProjectTasksTriggerHelper {
     Private void assetListEmail(String accountName, Id accountId, String accountAIMS, list<String> listOfToAddresses, List<Asset> assetList){
         String subjectString = null;
         String mailBody = null;
-        try{
-            String accName = accountName+'|'+accountAIMS;
-            String customUrl = URL.getOrgDomainURL().toExternalForm()+ '/'+accountId;
-            subjectString = 'Client ' + accName + ' has been approved for termination';
-            mailBody = 'Client ' +'<a href="' +customUrl+'">'+ accName +'</a>';
-            mailBody += ' has been approved for termination.'+'<br/><br/>';
-            mailBody += 'Please review the following Assets to determine next steps for termination.'+'<br/>';
-            if (( assetList != null ) && !assetList.isEmpty()){
-                for (Asset asset : assetList){
-                    String assetUrl = URL.getOrgDomainURL().toExternalForm()+ '/'+asset.Id;
-                    mailBody += '<a href="' +assetUrl+'">'+ asset.Name +'</a>'+'<br/>';
-                }
+        String accName = accountName+'|'+accountAIMS;
+        String customUrl = URL.getOrgDomainURL().toExternalForm()+ '/'+accountId;
+        subjectString = 'Client ' + accName + ' has been approved for termination';
+        mailBody = 'Client ' +'<a href="' +customUrl+'">'+ accName +'</a>';
+        mailBody += ' has been approved for termination.'+'<br/><br/>';
+        mailBody += 'Please review the following Assets to determine next steps for termination.'+'<br/>';
+        if (( assetList != null ) && !assetList.isEmpty()){
+            for (Asset asset : assetList){
+                String assetUrl = URL.getOrgDomainURL().toExternalForm()+ '/'+asset.Id;
+                mailBody += '<a href="' +assetUrl+'">'+ asset.Name +'</a>'+'<br/>';
             }
-        } catch ( Exception e ) {
-            NSP_ErrorLogHandler.logException(
-                NSP_ProjectTasksTriggerHelper.class.getName() ,
-                'assetListEmail' ,
-                e
-            );
         }
         sendEmail(listOfToAddresses,subjectString,mailBody);
     }
