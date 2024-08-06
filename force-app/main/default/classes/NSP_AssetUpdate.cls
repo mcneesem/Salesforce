@@ -32,7 +32,16 @@ public class NSP_AssetUpdate {
             SELECT Id , NSP_ServiceAsset__c
             FROM OrderItem
             WHERE (
-                ( OrderId IN ( SELECT Id FROM Order WHERE id IN:orderIdSet AND Prevent_Asset_Updates__c = False ) )
+                (
+                    OrderId IN (
+                        SELECT Id
+                        FROM Order
+                        WHERE (
+                            Id IN :orderIdSet
+                            AND Prevent_Asset_Updates__c = False
+                        )
+                    )
+                )
                 AND ( NSP_ServiceAsset__c != null )
             )
         ];
@@ -64,12 +73,18 @@ public class NSP_AssetUpdate {
         List<Asset> assetList = [
             SELECT Id , Status , NSP_Termination_Date__c , RecordTypeId
             FROM Asset
-            WHERE AccountId = :accountId AND RecordTypeId IN :opActiveMap.keySet()
+            WHERE (
+                AccountId = :accountId
+                AND RecordTypeId IN :opActiveMap.keySet()
+            )
         ];
         for(Asset assetObj:assetList){
-            if(opActiveMap.get(assetObj.RecordTypeId).SBQQ__Status__c == NSP_SalesConstants.ACTIVATED_STATUS && 
-            (assetObj.status == NSP_SalesConstants.ONDEMAND_STATUS || assetObj.status == NSP_SalesConstants.ONBOARDING) &&
-                assetObj.status != NSP_SalesConstants.TERMINATED_STATUS && assetObj.status != NSP_SalesConstants.BACKOUT_STATUS){
+            if ( opActiveMap.get(assetObj.RecordTypeId).SBQQ__Status__c == NSP_SalesConstants.ACTIVATED_STATUS
+                && ( assetObj.status == NSP_SalesConstants.ONDEMAND_STATUS || assetObj.status == NSP_SalesConstants.ONBOARDING )
+                && assetObj.status != NSP_SalesConstants.TERMINATED_STATUS
+                && assetObj.status != NSP_SalesConstants.BACKOUT_STATUS
+                )
+            {
                 assetObj.NSP_ActivationDate__c = System.today();
                 assetObj.Status = NSP_SalesConstants.ACTIVE_STATUS;
                 if(assetObj.RecordTypeId == ASSET_RECORDTYPE_ID){
@@ -104,9 +119,11 @@ public class NSP_AssetUpdate {
         List<Asset> assetList = [
             SELECT Id , Status , NSP_Termination_Date__c , NSP_OrderProduct__c
             FROM Asset
-            WHERE NSP_OrderProduct__c IN :opTermMap.keySet() 
-            AND NSP_Termination_Date__c = NULL
-            AND NSP_Process_Order_Change__c = false
+            WHERE (
+                NSP_OrderProduct__c IN :opTermMap.keySet() 
+                AND NSP_Termination_Date__c = NULL
+                AND NSP_Process_Order_Change__c = false
+            )
         ];
         for(Asset assetObj:assetList){
             if(opTermMap.get(assetObj.NSP_OrderProduct__c) != null){
@@ -116,7 +133,7 @@ public class NSP_AssetUpdate {
             } 
         }
         try {
-            if(updateList != null && updateList.size() > 0){
+            if ( updateList != null && !updateList.isEmpty() ){
                 database.update(updateList);
             }
         } catch ( Exception e ) {
@@ -150,7 +167,7 @@ public class NSP_AssetUpdate {
             List<Asset> assetList = [
                 SELECT Id , Status , NSP_Termination_Date__c , NSP_OrderProduct__c
                 FROM Asset
-                WHERE NSP_OrderProduct__c IN:ordProdMap.keySet()
+                WHERE NSP_OrderProduct__c IN :ordProdMap.keySet()
                 LIMIT 1
             ];
             for(Asset assetObj:assetList){
@@ -162,7 +179,7 @@ public class NSP_AssetUpdate {
                 }
             }
             try {
-                if(updateList != null && updateList.size()>0){
+                if ( ( updateList != null ) && !updateList.isEmpty() ){
                     database.upsert(updateList);
                 }
             } catch ( Exception e ) {
