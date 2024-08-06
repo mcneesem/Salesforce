@@ -13,7 +13,7 @@ public class NSP_ProjectTasksTriggerHelper {
     private static final string TERMINATED= 'Terminated';
     private static final string RETURNED= 'Returned';
     private static final string INACTIVE= 'Inactive';
-    private static final string SubmitTerminationChecklist = 'Submit Termination Checklist';
+    private static final string SUBMIT_TERMINATION_CHECKLIST = 'Submit Termination Checklist';
 
     /**
     * Iterates throught the list of new pse__Project_Task__c and passes the required attributes to other methods.
@@ -540,7 +540,7 @@ public class NSP_ProjectTasksTriggerHelper {
     }
 
     //Letter Received email.
-    private void letterRecievedEmail(ID pTask, String pTaskName, String accountName, String accountAIMS, list<String> listOfToAddresses, List<NSP_Account_Team__c> listOfPayrollMem, String ReasonForTerm, Date TermDate, Id woAssetId, List<NSP_Account_Team__c> accountTeamList){
+    private void letterRecievedEmail(ID pTask, String pTaskName, String accountName, String accountAIMS, List<String> listOfToAddresses, List<NSP_Account_Team__c> listOfPayrollMem, String ReasonForTerm, Date TermDate, Id woAssetId, List<NSP_Account_Team__c> accountTeamList){
         try{
             String dtStr;
             if(TermDate!= null){
@@ -991,7 +991,7 @@ public class NSP_ProjectTasksTriggerHelper {
         List<Id> accountIdList = new List<Id>();
         List<string> peoTerminationTaskList = System.Label.PEO_Termination_Tasks.split(';');
         String TERMINATIONANALYSIS = null;
-        Map<Id, Id> mapOfProjectTaskAndProject = new Map<Id, Id>();
+        Map<Id,Id> mapOfProjectTaskAndProject = new Map<Id,Id>();
         List<Id> listOfAccountId = new List<Id>();
         if ( peoTerminationTaskList != null
             && !peoTerminationTaskList.isEmpty()
@@ -1030,9 +1030,9 @@ public class NSP_ProjectTasksTriggerHelper {
                 {
                     goLiveProjectTaskIds.add(oProjectTask.Id);
                 }
-                if ( oldMapProjecttasks.get(oProjectTask.Id).pse__Status__c!=NSP_ServiceConstants.TASKCOMPLETE
-                    && oProjectTask.pse__Status__c==NSP_ServiceConstants.TASKCOMPLETE
-                    && oProjectTask.pse__Project__c!=null
+                if ( ( oldMapProjecttasks.get( oProjectTask.Id ).pse__Status__c != NSP_ServiceConstants.TASKCOMPLETE )
+                    && ( oProjectTask.pse__Status__c == NSP_ServiceConstants.TASKCOMPLETE )
+                    && ( oProjectTask.pse__Project__c != null )
                     )
                 {
                     //check if FEIN project task is completed
@@ -1060,11 +1060,10 @@ public class NSP_ProjectTasksTriggerHelper {
                     //Check if cobra  task is completed
                     if ( oProjectTask.Name.startsWith(NSP_ServiceConstants.COBRA_FORM_YES)
                         || oProjectTask.Name.startsWith(NSP_ServiceConstants.COBRA_FORM_NO)
-                       )
+                        )
                     {
                         projectTaskCobraIdSet.add(oProjectTask.Id);
                         projectTaskList.add(oProjectTask);
-
                     }
                     //Check if client transition is completed
                     if(oProjectTask.Name==NSP_ServiceConstants.CLIENTTRANSITION){
@@ -1104,22 +1103,22 @@ public class NSP_ProjectTasksTriggerHelper {
                     && oProjectTask.pse__Status__c != oldMapProjecttasks.get(oProjectTask.Id).pse__Status__c
                    )
                 {
-                    if (oProjectTask.Name == SubmitTerminationChecklist) {
-                        if (!mapOfProjectTaskAndProject.containsKey(oProjectTask.Id)) {
+                    if ( oProjectTask.Name == NSP_ProjectTasksTriggerHelper.SUBMIT_TERMINATION_CHECKLIST ) {
+                        if ( !mapOfProjectTaskAndProject.containsKey(oProjectTask.Id) ) {
                             mapOfProjectTaskAndProject.put(
                                 oProjectTask.Id ,
                                 oProjectTask.pse__Project__c
                             );
                         }
-                        if (oProjectTask.NSP_AccountId__c != null) {
+                        if ( oProjectTask.NSP_AccountId__c != null ) {
                             listOfAccountId.add(oProjectTask.NSP_AccountId__c);
                         }
                     }
                 }
             }
         }
-        if(!mapOfProjectTaskAndProject.isEmpty() && !listOfAccountId.isEmpty()){
-            onSubmitTaskCompletion(mapOfProjectTaskAndProject,listOfAccountId);
+        if ( !mapOfProjectTaskAndProject.isEmpty() && !listOfAccountId.isEmpty() ) {
+            onSubmitTaskCompletion( mapOfProjectTaskAndProject , listOfAccountId );
         }
         if(!hcmProjectSet.isEmpty() && !System.isFuture() && !System.isBatch()){
             createHCMCaseOnProjectTaskUpdate(hcmProjectSet);
@@ -1177,12 +1176,13 @@ public class NSP_ProjectTasksTriggerHelper {
             createCasesOnProjectTasksUpdate(goLiveProjectTaskIds);
         }
     }
-    Private void onSubmitTaskCompletion(Map<Id, Id> mapOfProjectTaskAndProject, List<Id> listOfAccountId) {  
+
+    private void onSubmitTaskCompletion( Map<Id,Id> mapOfProjectTaskAndProject , List<Id> listOfAccountId ) {
         List<String> listOfToAddresses = new List<String>();
-        Map<Id, Id> mapOfProjectAndAccount = new Map<Id, Id>();
-        Map<Id, List<Asset>> activeAssetList = new Map<Id, List<Asset>>();
-        Map<Id, pse__Project_Task__c> projectTaskMap = new Map<Id, pse__Project_Task__c>();
-        Map<Id, Id> projectMap = new Map<Id, Id>();
+        Map<Id,Id> mapOfProjectAndAccount = new Map<Id,Id>();
+        Map<Id,List<Asset>> activeAssetList = new Map<Id,List<Asset>>();
+        Map<Id,pse__Project_Task__c> projectTaskMap = new Map<Id,pse__Project_Task__c>();
+        Map<Id,Id> projectMap = new Map<Id,Id>();
         List<pse__Project_Task__c> optionalProjectTask = new List<pse__Project_Task__c>();
         String optionalProjectTaskName = 'Optional: Initiate BPS Termination';
         String optionalProjectTaskDesc = 'No active BPS Assets';
@@ -1193,15 +1193,15 @@ public class NSP_ProjectTasksTriggerHelper {
         Id XMLAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId('Asset',NSP_ServiceConstants.XML_ASSET);
         Id IntegraAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId('Asset',NSP_ServiceConstants.INTEGRA_ASSET);
         
-        try{
-            if (!mapOfProjectTaskAndProject.isEmpty()) {  
+        try {
+            if (!mapOfProjectTaskAndProject.isEmpty()) {
                 for ( pse__Project_Task__c projectTask : [
-                    SELECT
-                    Id , Name , pse__Project__r.pse__Account__r.Name ,
-                    pse__Project__r.pse__Account__r.NSP_AIMS_Client__c , NSP_AccountId__c
-                    FROM pse__Project_Task__c  
-                    WHERE ( Id IN :mapOfProjectTaskAndProject.keySet() )
-                ]
+                            SELECT
+                                Id , Name , pse__Project__r.pse__Account__r.Name ,
+                                pse__Project__r.pse__Account__r.NSP_AIMS_Client__c , NSP_AccountId__c
+                            FROM pse__Project_Task__c
+                            WHERE ( Id IN :mapOfProjectTaskAndProject.keySet() )
+                        ]
                     )
                 {
                     if (projectTask != null) {
@@ -1214,21 +1214,22 @@ public class NSP_ProjectTasksTriggerHelper {
                     }
                 }
             }
-            
-            if (!listOfAccountId.isEmpty()) {  
-                for (Asset eachAsset : [
-                    SELECT Id , AccountId, Name
-                    FROM Asset
-                    WHERE (
-                        (RecordTypeId = :TAAssetRecordTypeId
-                         OR RecordTypeId = :PMAssetRecordTypeId
-                         OR RecordTypeId = :OPAssetRecordTypeId
-                         OR RecordTypeId = :XMLAssetRecordTypeId
-                         OR RecordTypeId = :IntegraAssetRecordTypeId)
-                        AND NSP_Account_Status__c != :NSP_ServiceConstants.TERMINATED
-                        AND AccountId IN :listOfAccountId
-                    )
-                ]
+            if ( !listOfAccountId.isEmpty() ) {
+                for ( Asset eachAsset : [
+                            SELECT Id , AccountId, Name
+                            FROM Asset
+                            WHERE (
+                                (
+                                    RecordTypeId = :TAAssetRecordTypeId
+                                    OR RecordTypeId = :PMAssetRecordTypeId
+                                    OR RecordTypeId = :OPAssetRecordTypeId
+                                    OR RecordTypeId = :XMLAssetRecordTypeId
+                                    OR RecordTypeId = :IntegraAssetRecordTypeId
+                                )
+                                AND NSP_Account_Status__c != :NSP_ServiceConstants.TERMINATED
+                                AND AccountId IN :listOfAccountId
+                            )
+                        ]
                     )
                 {
                     if ( !activeAssetList.containsKey( eachAsset.AccountId ) ) {
@@ -1241,23 +1242,24 @@ public class NSP_ProjectTasksTriggerHelper {
                 }
             }
             
-            if (projectTaskMap.size() > 0 && projectMap.values().size()>0 ) {
-                List<pse__Project_Task__c> optionalTasks = [  
-                    SELECT Id,pse__Project__c  
-                    FROM pse__Project_Task__c  
-                    WHERE pse__Project__c IN :projectMap.values()  
-                    AND Name = : optionalProjectTaskName
+            if ( !projectTaskMap.isEmpty() && !projectMap.values().isEmpty() ) {
+                List<pse__Project_Task__c> optionalTasks = [
+                    SELECT Id,pse__Project__c
+                    FROM pse__Project_Task__c
+                    WHERE (
+                        pse__Project__c IN :projectMap.values()
+                        AND Name = :optionalProjectTaskName
+                    )
                 ];
-                
-                Map<Id, pse__Project_Task__c> optionalTaskMap = new Map<Id, pse__Project_Task__c>();  
-                for (pse__Project_Task__c optionalTask : optionalTasks) {  
-                    optionalTaskMap.put(optionalTask.pse__Project__c, optionalTask);  
-                }  
+                Map<Id,pse__Project_Task__c> optionalTaskMap = new Map<Id,pse__Project_Task__c>();
+                for ( pse__Project_Task__c optionalTask : optionalTasks ) {
+                    optionalTaskMap.put( optionalTask.pse__Project__c , optionalTask );
+                }
                 for (pse__Project_Task__c pTask : projectTaskMap.Values()) {
                     if ( pTask != null
                         && pTask.NSP_AccountId__c != null
                         && activeAssetList.containsKey(pTask.NSP_AccountId__c)
-                        && pTask.Name == SubmitTerminationChecklist
+                        && pTask.Name == NSP_ProjectTasksTriggerHelper.SUBMIT_TERMINATION_CHECKLIST
                         && pTask.pse__Project__c != null
                        )
                     {
@@ -1271,29 +1273,28 @@ public class NSP_ProjectTasksTriggerHelper {
                             listOfToAddresses,
                             activeAssetList.get(pTask.NSP_AccountId__c)
                         );
-                        if (optionalTask != null) {  
-                            optionalTask.pse__Status__c = NSP_ServiceConstants.PROJECTSTATUSCOMPLETED;  
-                            optionalProjectTask.add(optionalTask);  
+                        if (optionalTask != null) {
+                            optionalTask.pse__Status__c = NSP_ServiceConstants.PROJECTSTATUSCOMPLETED;
+                            optionalProjectTask.add(optionalTask);
                         }
-                    }
-                    else if ( pTask != null
-                             && pTask.NSP_AccountId__c != null
-                             && !activeAssetList.containsKey(pTask.NSP_AccountId__c)
-                             && pTask.Name == SubmitTerminationChecklist
-                             && pTask.pse__Project__c != null
-                            )
+                    } else if ( pTask != null
+                        && pTask.NSP_AccountId__c != null
+                        && !activeAssetList.containsKey(pTask.NSP_AccountId__c)
+                        && pTask.Name == SubmitTerminationChecklist
+                        && pTask.pse__Project__c != null
+                        )
                     {
                         pse__Project_Task__c optionalTask = optionalTaskMap.get(pTask.pse__Project__c);
-                        if (optionalTask != null) {  
+                        if (optionalTask != null) {
                             optionalTask.pse__Status__c = NSP_ServiceConstants.PROJECTSTATUSCANCELLED;
                             optionalTask.pse__Long_Description__c = optionalProjectTaskDesc;
-                            optionalProjectTask.add(optionalTask);  
+                            optionalProjectTask.add(optionalTask);
                         }
                     }
                 }
             }
-            if (optionalProjectTask.size() > 0){
-                UPDATE optionalProjectTask;
+            if ( !optionalProjectTask.isEmpty() ) {
+                update optionalProjectTask;
             }
         } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
@@ -1304,7 +1305,7 @@ public class NSP_ProjectTasksTriggerHelper {
         }
     }
     //Letter Received email.
-    Private void assetListEmail(String accountName, Id accountId, String accountAIMS, list<String> listOfToAddresses, List<Asset> assetList){
+    private void assetListEmail( String accountName , Id accountId , String accountAIMS , List<String> listOfToAddresses , List<Asset> assetList ) {
         String subjectString = null;
         String mailBody = null;
         String accName = accountName+'|'+accountAIMS;
@@ -1313,7 +1314,7 @@ public class NSP_ProjectTasksTriggerHelper {
         mailBody = 'Client ' +'<a href="' +customUrl+'">'+ accName +'</a>';
         mailBody += ' has been approved for termination.'+'<br/><br/>';
         mailBody += 'Please review the following Assets to determine next steps for termination.'+'<br/>';
-        if (( assetList != null ) && !assetList.isEmpty()){
+        if ( ( assetList != null ) && !assetList.isEmpty() ) {
             for (Asset asset : assetList){
                 String assetUrl = URL.getOrgDomainURL().toExternalForm()+ '/'+asset.Id;
                 mailBody += '<a href="' +assetUrl+'">'+ asset.Name +'</a>'+'<br/>';
@@ -1321,10 +1322,10 @@ public class NSP_ProjectTasksTriggerHelper {
         }
         sendEmail(listOfToAddresses,subjectString,mailBody);
     }
-    
-    private static void sendEmail(String[] listOfToAddresses, String subject, String body){
-        try{
-            Map<String, Object> inputs = new Map<String, Object>();
+
+    private static void sendEmail( String[] listOfToAddresses , String subject , String body ) {
+        try {
+            Map<String,Object> inputs = new Map<String,Object>();
             if (!listOfToAddresses.isEmpty()){
                 inputs.put('toEmailAddresses', listOfToAddresses);
                 inputs.put('emailSubject', subject);
@@ -1332,15 +1333,15 @@ public class NSP_ProjectTasksTriggerHelper {
                 Flow.Interview.Send_Email sendEmailFlow = new Flow.Interview.Send_Email(inputs);
                 sendEmailFlow.start(); 
             }
-        }catch ( Exception e ) {
+        } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
                 NSP_ProjectTasksTriggerHelper.class.getName() ,
                 'sendEmail' ,
                 e
             );
-        }      
+        }
     }
-    
+
     /**
     * Method to Send Bell Notifications when a Client, Payroll Termination Form is Approved
     */
