@@ -996,13 +996,13 @@ public class NSP_ProjectTasksTriggerHelper {
         if ( peoTerminationTaskList != null
             && !peoTerminationTaskList.isEmpty()
             && ( peoTerminationTaskList.size() >= 2 )
-           )
+            )
         {
             TERMINATIONANALYSIS = peoTerminationTaskList[1];
         }
         if ( mNewProjectTasks != null
             && !mNewProjectTasks.values().isEmpty()
-           )
+            )
         {
             for ( pse__Project_Task__c oProjectTask : mNewProjectTasks.values() ) {
                 if ( oProjectTask.Name == TERMINATIONANALYSIS
@@ -1010,14 +1010,14 @@ public class NSP_ProjectTasksTriggerHelper {
                     && oldMapProjecttasks != null
                     && oldMapProjecttasks.containsKey(oProjectTask.Id)
                     && oldMapProjecttasks.get(oProjectTask.Id).NSP_Account_Id__c != oProjectTask.NSP_Account_Id__c
-                   )
+                    )
                 {
                     accountIdList.add(oProjectTask.NSP_Account_Id__c);
                 }
                 // FILTER COMPLETED PROJECTS
                 if ( oProjectTask.pse__Status__c == NSP_ServiceConstants.PROJECTSTATUSCOMPLETED
                     && oldMapProjecttasks.get(oProjectTask.Id).pse__Status__c != NSP_ServiceConstants.PROJECTSTATUSCOMPLETED
-                   )
+                    )
                 {
                     sProjectTasksIds.add(oProjectTask.Id);
                 }
@@ -1026,14 +1026,14 @@ public class NSP_ProjectTasksTriggerHelper {
                     && oProjectTask.pse__Status__c == NSP_ServiceConstants.PROJECTSTATUSCOMPLETED
                     && oProjectTask.NSP_Is_Status_Completed__c
                     && !oldMapProjecttasks.get(oProjectTask.Id).NSP_Is_Status_Completed__c
-                   )
+                    )
                 {
                     goLiveProjectTaskIds.add(oProjectTask.Id);
                 }
                 if ( oldMapProjecttasks.get(oProjectTask.Id).pse__Status__c!=NSP_ServiceConstants.TASKCOMPLETE
                     && oProjectTask.pse__Status__c==NSP_ServiceConstants.TASKCOMPLETE
                     && oProjectTask.pse__Project__c!=null
-                   )
+                    )
                 {
                     //check if FEIN project task is completed
                     if(oProjectTask.Name==NSP_ServiceConstants.FEIN  ){
@@ -1052,7 +1052,7 @@ public class NSP_ProjectTasksTriggerHelper {
                     //Check if subtask first payroll approved task is completed
                     if ( oProjectTask.pse__Parent_Task__c!=null
                         && oProjectTask.Name==NSP_ServiceConstants.PAYROLLAPPROVED
-                       )
+                        )
                     {
                         projectFsoIdset.add(oProjectTask.pse__Project__c);
                         accountIdFsoProjectTaskMap.put(oProjectTask.NSP_AccountId__c, oProjectTask.Id);  
@@ -1080,7 +1080,7 @@ public class NSP_ProjectTasksTriggerHelper {
 
                 if ( oldMapProjecttasks.get(oProjectTask.Id).pse__Status__c != oProjectTask.pse__Status__c
                     && oProjectTask.pse__Status__c == NSP_ServiceConstants.TASKCOMPLETE
-                   )
+                    )
                 {
                     if(oProjectTask.Name == NSP_ServiceConstants.PROJECT_TASK_DISCOVERY){
                         hcmProjectSet.add(oProjectTask.Id);
@@ -1092,7 +1092,7 @@ public class NSP_ProjectTasksTriggerHelper {
                 }
                 if ( oldMapProjecttasks.get(oProjectTask.Id).OwnerId != oProjectTask.OwnerId
                     && oProjectTask.OwnerId.getsobjecttype() == User.sobjecttype
-                   )
+                    )
                 {
                     projectTaskidsChangedOwner.add(oProjectTask.Id);
                 }
