@@ -941,23 +941,11 @@ export default class Nsp_accrualProfileRecordForm extends NavigationMixin(
       maximumBalanceCapHours,
       accrualPeriodLimitsHours,
       maxCarryOverHours,
-      maxCarryOverPercent,
+      maxCarryOverPercent, 
       carryoverExpiresDaysDate,
       action,
     } = APG_COLUMNS;
     const columnConfig = [completedMonthsService, accrualRate];
-
-    if (NSP_Once_limit_is_hit_they_do_not_accrue__c === YES) {
-      columnConfig.push(annualAccrualLimit);
-    }
-
-    if (NSP_Is_there_a_Maximum_Balance_Cap__c === YES) {
-      columnConfig.push(maximumBalanceCapHours);
-    }
-
-    if (NSP_Accrual_Period_Limit__c === YES) {
-      columnConfig.push(accrualPeriodLimitsHours);
-    }
 
     if (NSP_Do_balances_carry_over_into_next_yer__c === YES) {
       if (NSP_Carryover_in_Hours_or_percentage__c === 'Hours') {
@@ -972,6 +960,17 @@ export default class Nsp_accrualProfileRecordForm extends NavigationMixin(
       columnConfig.push(carryoverExpiresDaysDate);
     }
 
+    if (NSP_Once_limit_is_hit_they_do_not_accrue__c === YES) {
+      columnConfig.push(annualAccrualLimit);
+    }
+
+    if (NSP_Accrual_Period_Limit__c === YES) {
+      columnConfig.push(accrualPeriodLimitsHours);
+    }
+
+    if (NSP_Is_there_a_Maximum_Balance_Cap__c === YES) {
+      columnConfig.push(maximumBalanceCapHours);
+    }
     columnConfig.push(action);
 
     return columnConfig;
