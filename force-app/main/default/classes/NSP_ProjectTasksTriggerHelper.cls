@@ -1,5 +1,5 @@
 public class NSP_ProjectTasksTriggerHelper {
-    // test w/ NSP_ProjectTasksTriggerHelperTest (79%)
+    // test w/ NSP_ProjectTasksTriggerHelperTest (80%)
 
     private static final String HUNDRED_PERCENT =  '100%';
     private static final string SYS_ADMIN = 'System Administrator';
@@ -13,6 +13,7 @@ public class NSP_ProjectTasksTriggerHelper {
     private static final string TERMINATED= 'Terminated';
     private static final string RETURNED= 'Returned';
     private static final string INACTIVE= 'Inactive';
+    private static final string SubmitTerminationChecklist = 'Submit Termination Checklist';
 
     /**
     * Iterates throught the list of new pse__Project_Task__c and passes the required attributes to other methods.
@@ -992,7 +993,6 @@ public class NSP_ProjectTasksTriggerHelper {
         String TERMINATIONANALYSIS = null;
         Map<Id, Id> mapOfProjectTaskAndProject = new Map<Id, Id>();
         List<Id> listOfAccountId = new List<Id>();
-        String SubmitTerminationChecklist = 'Submit Termination Checklist';
         if ( peoTerminationTaskList != null
             && !peoTerminationTaskList.isEmpty()
             && ( peoTerminationTaskList.size() >= 2 )
@@ -1186,7 +1186,6 @@ public class NSP_ProjectTasksTriggerHelper {
         List<pse__Project_Task__c> optionalProjectTask = new List<pse__Project_Task__c>();
         String optionalProjectTaskName = 'Optional: Initiate BPS Termination';
         String optionalProjectTaskDesc = 'No active BPS Assets';
-        String SubmitTerminationChecklist = 'Submit Termination Checklist';
         String ORGANIZATIONAL_PLANNING_ASSET = 'Organizational_Planning';
         Id TAAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId('Asset',NSP_ServiceConstants.TIME_ATTENDANCE_ASSET);
         Id PMAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId('Asset',NSP_ServiceConstants.PERFORMANCE_MANAGEMENT_ASSET);
@@ -1306,19 +1305,21 @@ public class NSP_ProjectTasksTriggerHelper {
     }
     //Letter Received email.
     Private void assetListEmail(String accountName, Id accountId, String accountAIMS, list<String> listOfToAddresses, List<Asset> assetList){
+        String subjectString = null;
+        String mailBody = null;
         try{
             String accName = accountName+'|'+accountAIMS;
             String customUrl = URL.getOrgDomainURL().toExternalForm()+ '/'+accountId;
-            String subjectString = 'Client ' + accName + ' has been approved for termination';
-            String mailBody = 'Client ' +'<a href="' +customUrl+'">'+ accName +'</a>';
+            subjectString = 'Client ' + accName + ' has been approved for termination';
+            mailBody = 'Client ' +'<a href="' +customUrl+'">'+ accName +'</a>';
             mailBody += ' has been approved for termination.'+'<br/><br/>';
             mailBody += 'Please review the following Assets to determine next steps for termination.'+'<br/>';
-            for (Asset asset : assetList){
-                String assetUrl = URL.getOrgDomainURL().toExternalForm()+ '/'+asset.Id;
-                mailBody += '<a href="' +assetUrl+'">'+ asset.Name +'</a>'+'<br/>';
+            if (( assetList != null ) && !assetList.isEmpty()){
+                for (Asset asset : assetList){
+                    String assetUrl = URL.getOrgDomainURL().toExternalForm()+ '/'+asset.Id;
+                    mailBody += '<a href="' +assetUrl+'">'+ asset.Name +'</a>'+'<br/>';
+                }
             }
-            
-            sendEmail(listOfToAddresses,subjectString,mailBody);
         } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
                 NSP_ProjectTasksTriggerHelper.class.getName() ,
@@ -1326,29 +1327,28 @@ public class NSP_ProjectTasksTriggerHelper {
                 e
             );
         }
+        sendEmail(listOfToAddresses,subjectString,mailBody);
     }
     
     private static void sendEmail(String[] listOfToAddresses, String subject, String body){
-        NSP_Trigger_Switch__c triggerSwitch =  NSP_Trigger_Switch__c.getInstance(UserInfo.getUserId());
-        if(!triggerSwitch.SendEmailFlow__c) {
+        try{
             Map<String, Object> inputs = new Map<String, Object>();
-            inputs.put('toEmailAddresses', listOfToAddresses);
-            inputs.put('emailSubject', subject);
-            inputs.put('emailBody', body);
-            Flow.Interview.Send_Email sendEmailFlow = new Flow.Interview.Send_Email(inputs);
-            sendEmailFlow.start();  
-        } else {
-            // First, reserve email capacity for the current Apex transaction
-            Messaging.reserveSingleEmailCapacity(1);
-            Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-            // Assign the addresses for the To list to the mail object.
-            mail.setToAddresses(listOfToAddresses);
-            // Specify the subject line for your email address.
-            mail.setSubject(subject);
-            // Specify the content of the email.
-            mail.setHtmlBody(body);
-        }
+            if (!listOfToAddresses.isEmpty()){
+                inputs.put('toEmailAddresses', listOfToAddresses);
+                inputs.put('emailSubject', subject);
+                inputs.put('emailBody', body);
+                Flow.Interview.Send_Email sendEmailFlow = new Flow.Interview.Send_Email(inputs);
+                sendEmailFlow.start(); 
+            }
+        }catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_ProjectTasksTriggerHelper.class.getName() ,
+                'sendEmail' ,
+                e
+            );
+        }      
     }
+    
     /**
     * Method to Send Bell Notifications when a Client, Payroll Termination Form is Approved
     */
