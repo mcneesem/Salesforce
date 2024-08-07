@@ -5524,6 +5524,36 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.Number_of_Booking_Checklists__c</fieldItem>
+                <identifier>RecordNumber_of_Booking_Checklists_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Number_of_SEQ_Checklists__c</fieldItem>
+                <identifier>RecordNumber_of_SEQ_Checklists_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Number_of_STP_Checklists__c</fieldItem>
+                <identifier>RecordNumber_of_STP_Checklists_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.NSP_OneForce_External_ID__c</fieldItem>
                 <identifier>RecordNSP_OneForce_External_ID_cField</identifier>
             </fieldInstance>
@@ -5608,6 +5638,10 @@
                 <identifier>RecordSBQQ_OrderGroupID_cField</identifier>
             </fieldInstance>
         </itemInstances>
+        <name>Facet-1c2f7ecb-ca47-4c0d-a102-0b5e5b826c7f</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
         <itemInstances>
             <fieldInstance>
                 <fieldInstanceProperties>
@@ -5618,20 +5652,6 @@
                 <identifier>RecordNSP_Order_Processing_Group_Email_cField</identifier>
             </fieldInstance>
         </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Product_type__c</fieldItem>
-                <identifier>RecordNSP_Product_type_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <name>Facet-1c2f7ecb-ca47-4c0d-a102-0b5e5b826c7f</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
         <itemInstances>
             <fieldInstance>
                 <fieldInstanceProperties>
@@ -5760,6 +5780,16 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Product_Interest__c</fieldItem>
                 <identifier>RecordNSP_Product_Interest_cField2</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_Product_type__c</fieldItem>
+                <identifier>RecordNSP_Product_type_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -7235,16 +7265,10 @@
                 <componentName>flexipage:fieldSection</componentName>
                 <identifier>flexipage_fieldSection18</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 OR 2</booleanFilter>
                     <criteria>
-                        <leftValue>{!$User.Profile.Name}</leftValue>
-                        <operator>CONTAINS</operator>
-                        <rightValue>System Admin</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!$User.Profile.Name}</leftValue>
+                        <leftValue>{!$Permission.CustomPermission.Admin_Layout_Access}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>Sales Administrator</rightValue>
+                        <rightValue>true</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
