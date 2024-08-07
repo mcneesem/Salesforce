@@ -73,6 +73,9 @@ const RL_FIELDS = [
   'Non_exempt_EEs_on_semi_monthly_pay_freq__c',
   'Semi_monthly_pay_freq_comply_w_state_law__c',
   'Monthly_pay_freq_comply_w_state_laws__c',
+  'Do_the_employee_s_work_more_than_6__c',
+  'Is_the_Employee_an_Intern__c',
+  'Is_the_work_performed_typically_the_same__c',
 ];
 
 const PREFILLED_FIELDS = {
@@ -247,6 +250,14 @@ const SECTION_FIELDS = [
   'Would_you_like_automation_general__c',
   'Is_payroll_entry_itemized_or_simple__c',
   'Software_Used__c',
+  'Do_the_employee_s_work_more_than_6__c',
+  'What_months_client_increase_the_staff__c',
+  'Is_the_work_performed_typically_the_same__c',
+  'Work_performed_the_same_as_the_rest_year__c',
+  'Describe_the_type_of_work__c',
+  'Is_the_Employee_an_Intern__c',
+  'What_months_is_the_Intern_working__c',
+  'What_months_is_the_Intern_in_school__c',
 ];
 
 export {
