@@ -62,6 +62,11 @@
                 <default>false</default>
                 <label>NSP_Submitted_User_Role_L2__c</label>
             </value>
+            <value>
+                <fullName>NSP_TransactionType__c</fullName>
+                <default>false</default>
+                <label>NSP_TransactionType__c</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
