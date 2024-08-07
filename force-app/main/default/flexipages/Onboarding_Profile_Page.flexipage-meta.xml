@@ -857,7 +857,7 @@
                     <value>none</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Pay_Schedule_s__c</fieldItem>
-                <identifier>RecordPay_Schedule_s_cField</identifier>
+                <identifier>RecordPay_Schedule_s_cField2</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1300,16 +1300,6 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.iSolved_Time_Disclosure__c</fieldItem>
-                <identifier>RecordiSolved_Time_Disclosure_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
                 <fieldItem>Record.Time_Entry_Method__c</fieldItem>
                 <identifier>RecordTime_Entry_Method_cField</identifier>
             </fieldInstance>
@@ -1662,8 +1652,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Use_iBs_for_COBRA__c</fieldItem>
-                <identifier>RecordUse_iBs_for_COBRA_cField</identifier>
+                <fieldItem>Record.Other_Fringe_Benefits__c</fieldItem>
+                <identifier>RecordOther_Fringe_Benefits_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1686,8 +1676,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Other_Fringe_Benefits__c</fieldItem>
-                <identifier>RecordOther_Fringe_Benefits_cField</identifier>
+                <fieldItem>Record.Use_iBs_for_COBRA__c</fieldItem>
+                <identifier>RecordUse_iBs_for_COBRA_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -2306,6 +2296,16 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.Driver_License__c</fieldItem>
+                <identifier>RecordDriver_License_cField2</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.Address__c</fieldItem>
                 <identifier>RecordAddress_cField</identifier>
             </fieldInstance>
@@ -2342,6 +2342,16 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Completed_Date__c</fieldItem>
                 <identifier>RecordCompleted_Date_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Pay_Schedule_s__c</fieldItem>
+                <identifier>RecordPay_Schedule_s_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>

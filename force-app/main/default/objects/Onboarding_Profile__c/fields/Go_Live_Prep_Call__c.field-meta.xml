@@ -3,7 +3,7 @@
     <fullName>Go_Live_Prep_Call__c</fullName>
     <encryptionScheme>None</encryptionScheme>
     <externalId>false</externalId>
-    <label>Go Live Prep Call</label>
+    <label>Go Live Prep Call Week Of</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>true</trackHistory>

@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Other_Employees_Method__c</fullName>
     <externalId>false</externalId>
-    <label>Other Employees/Method</label>
+    <label>Current Time Tracking Method</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>true</trackHistory>
