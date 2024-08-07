@@ -324,6 +324,16 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.NSP_Account_Status__c</fieldItem>
+                <identifier>RecordNSP_Account_Status_cField2</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Sales_Service_Account_Status__c</fieldItem>
                 <identifier>RecordNSP_Sales_Service_Account_Status_cField2</identifier>
             </fieldInstance>
@@ -972,6 +982,16 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Account_Assignment_Method__c</fieldItem>
                 <identifier>RecordAccount_Assignment_Method_cField3</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_Account_Status__c</fieldItem>
+                <identifier>RecordNSP_Account_Status_cField3</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
