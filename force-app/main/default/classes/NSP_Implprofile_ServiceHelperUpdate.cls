@@ -2913,7 +2913,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
                                 eachProjecttask.NSP_Category__c=NSP_ServiceConstants.PAROLLIMP;
                                 eachProjecttask.NSP_Sub_Category__c= projectTaskName;
                                 eachProjecttask.Name= projectTaskName;
-                                eachProjecttask.pse__Order__c=93;
+                                eachProjecttask.pse__Order__c=64;
                                 
                                 Implementation_Profile__c ipwithValue=(Implementation_Profile__c) data.get(IMPL_PROFILE_IDENTIFIER).get(ipRecId);
                                 
