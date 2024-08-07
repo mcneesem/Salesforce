@@ -1178,22 +1178,14 @@ public class NSP_ProjectTasksTriggerHelper {
     }
 
     private void onSubmitTaskCompletion( Map<Id,Id> mapOfProjectTaskAndProject , List<Id> listOfAccountId ) {
-        List<String> listOfToAddresses = new List<String>();
-        Map<Id,Id> mapOfProjectAndAccount = new Map<Id,Id>();
-        Map<Id,List<Asset>> activeAssetList = new Map<Id,List<Asset>>();
-        Map<Id,pse__Project_Task__c> projectTaskMap = new Map<Id,pse__Project_Task__c>();
-        Map<Id,Id> projectMap = new Map<Id,Id>();
-        List<pse__Project_Task__c> optionalProjectTask = new List<pse__Project_Task__c>();
-        String optionalProjectTaskName = 'Optional: Initiate BPS Termination';
-        String optionalProjectTaskDesc = 'No active BPS Assets';
-        String ORGANIZATIONAL_PLANNING_ASSET = 'Organizational_Planning';
         Id TAAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId('Asset',NSP_ServiceConstants.TIME_ATTENDANCE_ASSET);
         Id PMAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId('Asset',NSP_ServiceConstants.PERFORMANCE_MANAGEMENT_ASSET);
-        Id OPAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId('Asset',ORGANIZATIONAL_PLANNING_ASSET);
+        Id OPAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId('Asset','Organizational_Planning');
         Id XMLAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId('Asset',NSP_ServiceConstants.XML_ASSET);
         Id IntegraAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId('Asset',NSP_ServiceConstants.INTEGRA_ASSET);
-        
         try {
+            Map<Id,Id> projectMap = new Map<Id,Id>();
+            Map<Id,pse__Project_Task__c> projectTaskMap = new Map<Id,pse__Project_Task__c>();
             if (!mapOfProjectTaskAndProject.isEmpty()) {
                 for ( pse__Project_Task__c projectTask : [
                             SELECT
@@ -1214,6 +1206,7 @@ public class NSP_ProjectTasksTriggerHelper {
                     }
                 }
             }
+            Map<Id,List<Asset>> activeAssetList = new Map<Id,List<Asset>>();
             if ( !listOfAccountId.isEmpty() ) {
                 for ( Asset eachAsset : [
                             SELECT Id , AccountId, Name
@@ -1241,20 +1234,26 @@ public class NSP_ProjectTasksTriggerHelper {
                     activeAssetList.get( eachAsset.AccountId ).add( eachAsset );
                 }
             }
-            
+            List<pse__Project_Task__c> optionalProjectTask = new List<pse__Project_Task__c>();
             if ( !projectTaskMap.isEmpty() && !projectMap.values().isEmpty() ) {
                 List<pse__Project_Task__c> optionalTasks = [
                     SELECT Id,pse__Project__c
                     FROM pse__Project_Task__c
                     WHERE (
                         pse__Project__c IN :projectMap.values()
-                        AND Name = :optionalProjectTaskName
+                        AND Name = 'Optional: Initiate BPS Termination'
                     )
                 ];
                 Map<Id,pse__Project_Task__c> optionalTaskMap = new Map<Id,pse__Project_Task__c>();
                 for ( pse__Project_Task__c optionalTask : optionalTasks ) {
                     optionalTaskMap.put( optionalTask.pse__Project__c , optionalTask );
                 }
+                List<String> emailTermination_Task_Completion = new List<String>();
+                if ( String.isNotBlank( System.Label.Termination_Task_Completion ) ) {
+                    emailTermination_Task_Completion = System.Label.Termination_Task_Completion.split(',');
+                }
+                List<String> listOfToAddresses = new List<String>();
+                listOfToAddresses.addAll( emailTermination_Task_Completion );
                 for (pse__Project_Task__c pTask : projectTaskMap.Values()) {
                     if ( pTask != null
                         && pTask.NSP_AccountId__c != null
@@ -1264,8 +1263,6 @@ public class NSP_ProjectTasksTriggerHelper {
                        )
                     {
                         pse__Project_Task__c optionalTask = optionalTaskMap.get(pTask.pse__Project__c);
-                        List<String> emailTermination_Task_Completion = System.Label.Termination_Task_Completion.split(',');
-                        listOfToAddresses.addAll(emailTermination_Task_Completion);
                         assetListEmail(
                             projectTaskMap.get(pTask.Id).pse__Project__r.pse__Account__r.Name,
                             projectTaskMap.get(pTask.Id).pse__Project__r.pse__Account__c,
@@ -1287,7 +1284,7 @@ public class NSP_ProjectTasksTriggerHelper {
                         pse__Project_Task__c optionalTask = optionalTaskMap.get(pTask.pse__Project__c);
                         if (optionalTask != null) {
                             optionalTask.pse__Status__c = NSP_ServiceConstants.PROJECTSTATUSCANCELLED;
-                            optionalTask.pse__Long_Description__c = optionalProjectTaskDesc;
+                            optionalTask.pse__Long_Description__c = 'No active BPS Assets';
                             optionalProjectTask.add(optionalTask);
                         }
                     }
