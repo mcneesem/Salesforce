@@ -13,7 +13,7 @@ Modification Log     :
 
 @isTest
 public class NSP_AssetFLSACaseCreationBatchTest {
-	
+
     /***********************************************************************************************
     * MethodName: setUpTestData
     * Description : Test Data Method
@@ -182,17 +182,17 @@ public class NSP_AssetFLSACaseCreationBatchTest {
         test.stopTest();
         List<String> accFields = new List<String>{'Id', 'NSP_Sales_Office__c'};
         NSP_QueryBuilder queryBuilder = new NSP_QueryBuilder('Account', accFields)
-                         .setSecurityEnforce(false)
-            			 .addFilter('NSP_Sales_Office__c', '4499')
-            			 .addLimit(1);
+            .setSecurityEnforce(false)
+            .addFilter('NSP_Sales_Office__c', '4499')
+            .addLimit(1);
         String query = queryBuilder.build();    
         Account acct = Database.query(query);
         
         List<String> caseFields = new List<String>{'Id', 'AccountId'};
         NSP_QueryBuilder caseQueryBuilder = new NSP_QueryBuilder('Case', caseFields)
-            								.setSecurityEnforce(false)
-            								.addFilter('AccountId', acct.Id)
-        									.addLimit(1);
+            .setSecurityEnforce(false)
+            .addFilter('AccountId', acct.Id)
+            .addLimit(1);
         String caseQuery = caseQueryBuilder.build();
         List<Case> caseRecList = (List<Case>)Database.query(caseQuery);
         
@@ -211,9 +211,9 @@ public class NSP_AssetFLSACaseCreationBatchTest {
         
         List<String> accFields = new List<String>{'Id', 'NSP_Sales_Office__c'};
         NSP_QueryBuilder queryBuilder = new NSP_QueryBuilder('Account', accFields)
-                         .setSecurityEnforce(false)
-            			 .addFilter('Name', 'Test FLSA Account')
-            			 .addLimit(1);
+            .setSecurityEnforce(false)
+            .addFilter('Name', 'Test FLSA Account')
+            .addLimit(1);
         String query = queryBuilder.build();    
         Account acct = Database.query(query);
         
@@ -225,25 +225,25 @@ public class NSP_AssetFLSACaseCreationBatchTest {
         };
             
         NSP_QueryBuilder assetQueryBuilder = new NSP_QueryBuilder(NSP_ServiceConstants.ASSET_SOBJECT_TYPE, assetFields)
-            								.addFilter('RecordTypeId', WOAssetRecordTypeId)
-            								.addFilter('NSP_Client_Segment_type__c', NSP_ServiceConstants.EG100AssetSegment)
-            								.addFilter('AccountId', acct.Id)
-            								.setSecurityEnforce(false)
-            								.addLimit(1);
+            .addFilter('RecordTypeId', WOAssetRecordTypeId)
+            .addFilter('NSP_Client_Segment_type__c', NSP_ServiceConstants.EG100AssetSegment)
+            .addFilter('AccountId', acct.Id)
+            .setSecurityEnforce(false)
+            .addLimit(1);
         String assetQuery = assetQueryBuilder.build();
         Asset assetRec = Database.query(assetQuery);
         assetRec.NSP_AIMS_First_Pay_Date__c = System.today().addDays(-1);
         
-		test.startTest();
+        test.startTest();
         Database.update(assetRec);
         Database.executeBatch(new NSP_AssetFLSACaseCreationBatch());
         test.stopTest();        
         
         List<String> caseFields = new List<String>{'Id', 'AccountId'};
         NSP_QueryBuilder caseQueryBuilder = new NSP_QueryBuilder('Case', caseFields)
-            								.setSecurityEnforce(false)
-            								.addFilter('AccountId', acct.Id)
-        									.addLimit(1);
+            .setSecurityEnforce(false)
+            .addFilter('AccountId', acct.Id)
+            .addLimit(1);
         String caseQuery = caseQueryBuilder.build();
         List<Case> caseRecList = (List<Case>)Database.query(caseQuery);
         
