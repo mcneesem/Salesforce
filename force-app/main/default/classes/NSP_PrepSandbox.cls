@@ -196,7 +196,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
                 MetadataService.CustomMetadataValue customField1 = new MetadataService.CustomMetadataValue();
                     customField1.field = 'NSP_Email_Address__c'; // the custom field API Name to be updated
                     switch on sandboxName {
-                         when 'merge','test','stage' {
+                         when 'merge','test','stage','devserva','devservb' {
                             customField1.value = 'monica.adams@insperity.com';
                          }
                          when else {
