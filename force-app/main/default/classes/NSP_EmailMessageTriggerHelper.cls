@@ -22,50 +22,47 @@ public with sharing class NSP_EmailMessageTriggerHelper {
     /* Description: This method will be called after insert of EmailMessage
 	Date       : 17/11/2021 */
     public void afterInsertionEmailMessage(List<EmailMessage> newList, Map<Id, EmailMessage> newMap){
+        Boolean switchEnabled = EmailMessageTriggerSettings__c.getInstance( UserInfo.getUserId() ).IsHealthAndWelfareEmailMessageEnabled__c;
         Set<Id> setOfCaseId = new Set<Id> ();
         Set<Id> employmentScreeningcaseIdSet = new Set<Id>();
-        List<Case> caseToUpdate = new List<Case> ();
-        Map<Id, EmailMessage> healthWelfareInternalExternalCaseIdFromAddMap = new Map<Id, EmailMessage>();
-        for(EmailMessage eMessage : newList){
+        List<Case> caseToUpdate = new List<Case>();
+        Map<Id,EmailMessage> healthWelfareInternalExternalCaseIdFromAddMap = new Map<Id,EmailMessage>();
+        for ( EmailMessage eMessage : newList ) {
             if ( ( eMessage.ParentId != null ) && incomingEmailCheck( eMessage ) ) {
                 setOfCaseId.add( eMessage.ParentId );
             }
             //Added as a part of STY-04132 
-            if(!setOfCaseId.isEmpty()){
-              for(Id caseID:setOfCaseId){
-                 Case caseRecord = new Case();
-                 caseRecord.ID =caseID;
-                 caseRecord.NSP_Case_Created_From_Email_To_Case__c  = true;
-                 caseToUpdate.add(caseRecord);
-              }
+            if ( !setOfCaseId.isEmpty() ) {
+                for ( Id caseID : setOfCaseId ) {
+                    Case caseRecord = new Case();
+                    caseRecord.ID = caseID;
+                    caseRecord.NSP_Case_Created_From_Email_To_Case__c = true;
+                    caseToUpdate.add(caseRecord);
+                }
             }
-                        
-            //As a part of STY-03671        
-            if(eMessage.ToAddress == System.Label.NSP_Customer_Service_Email ||
-               eMessage.ToAddress == System.Label.NSP_Les_Drug_Screening_Email){
-                   employmentScreeningcaseIdSet.add(eMessage.ParentId);
-               }
-            
+            //As a part of STY-03671
+            if ( eMessage.ToAddress == System.Label.NSP_Customer_Service_Email
+                || eMessage.ToAddress == System.Label.NSP_Les_Drug_Screening_Email
+                )
+            {
+                employmentScreeningcaseIdSet.add(eMessage.ParentId);
+            }
             //As a part of STY-03531
-            if(eMessage.ToAddress == System.Label.NSP_Health_Welfare_Section_125){
-                healthWelfareInternalExternalCaseIdFromAddMap.put(eMessage.ParentId, eMessage);
+            if ( !switchEnabled && ( eMessage.ToAddress == System.Label.NSP_Health_Welfare_Section_125 ) ) {
+                healthWelfareInternalExternalCaseIdFromAddMap.put( eMessage.ParentId , eMessage );
             }
-               
         }
-        
         if(!setOfCaseId.isEmpty()){
             NSP_WebCaseAssignment.webCaseAssign(setOfCaseId, newList);
             reOpenOrMarkResponseAfterCloseTrue(setOfCaseId, newList);
         }
-        
         //As a part of STY-03671
         if(!employmentScreeningcaseIdSet.isEmpty()){
             updateConfidentialCheckBoxForEmpScreening(employmentScreeningcaseIdSet);
         }
-        
         //As a part of STY-03531
-        if(!healthWelfareInternalExternalCaseIdFromAddMap.isEmpty()){
-            sendEmailToHealthWelfareInternalExternal(healthWelfareInternalExternalCaseIdFromAddMap);
+        if ( !switchEnabled && !healthWelfareInternalExternalCaseIdFromAddMap.isEmpty() ) {
+            sendEmailToHealthWelfareInternalExternal( healthWelfareInternalExternalCaseIdFromAddMap );
         }
         
             //Added as a part of STY-04132 
