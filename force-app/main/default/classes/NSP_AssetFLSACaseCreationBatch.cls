@@ -10,8 +10,9 @@ Modification Log     :
 * -------------------------------------------------------------------------------------------------  
 * Srushti Bikkannavar        12/13/2022           First Iteration
 */
-public class NSP_AssetFLSACaseCreationBatch implements Schedulable,Database.Stateful, Database.Batchable < sObject >{
+public class NSP_AssetFLSACaseCreationBatch implements Schedulable , Database.Stateful , Database.Batchable<sObject> {
     // test w/ NSP_AssetFLSACaseCreationBatchTest (95%)
+
     Integer segmentDays;
     Integer btCoreEgMinDays;
     Integer btCoreEgMaxDays;
@@ -69,8 +70,12 @@ public class NSP_AssetFLSACaseCreationBatch implements Schedulable,Database.Stat
                         )
                     ]
                 );
-        }catch(Exception ex){
-            NSP_ErrorLogHandler.logSaveException('NSP_AssetFLSACaseCreationBatch', 'start', ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_AssetFLSACaseCreationBatch.class.getName() ,
+                'start' ,
+                e
+            );
         }
         return queryResponse;
     }
@@ -81,7 +86,7 @@ public class NSP_AssetFLSACaseCreationBatch implements Schedulable,Database.Stat
             NSP_ServiceConstants.BTAssetSegment,
             NSP_ServiceConstants.CoreAssetSegment
         };
-	
+
         List<String> segmentListEmpGrtFifty = new List<String>{
             NSP_ServiceConstants.EG50AssetSegment,
             NSP_ServiceConstants.EG100AssetSegment
@@ -166,19 +171,31 @@ public class NSP_AssetFLSACaseCreationBatch implements Schedulable,Database.Stat
                     }
                 }
             }
-            if(!flsaCaseList.isEmpty()){
-                List<Database.SaveResult> results = Database.insert(flsaCaseList,false);
-                NSP_ErrorLogHandler.logSaveResultsException('NSP_AssetFLSACaseCreationBatch', 'ExecuteMethod', results );
+            if ( !flsaCaseList.isEmpty() ) {
+                List<Database.SaveResult> results = Database.insert( flsaCaseList , false );
+                NSP_ErrorLogHandler.logResults(
+                    NSP_AssetFLSACaseCreationBatch.class.getName() ,
+                    'execute:insert' ,
+                    results
+                );
             }
-            if(!subClientList.isEmpty()){
-                List<Database.SaveResult> results = Database.update(subClientList,false);
-                NSP_ErrorLogHandler.logSaveResultsException('NSP_AssetFLSACaseCreationBatch', 'ExecuteMethod', results );
+            if ( !subClientList.isEmpty() ) {
+                List<Database.SaveResult> results = Database.update( subClientList , false );
+                NSP_ErrorLogHandler.logResults(
+                    NSP_AssetFLSACaseCreationBatch.class.getName() ,
+                    'execute:update' ,
+                    results
+                );
             }
-        }catch(Exception ex){
-            NSP_ErrorLogHandler.logSaveException('NSP_AssetFLSACaseCreationBatch', 'execute', ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_AssetFLSACaseCreationBatch.class.getName() ,
+                'execute' ,
+                e
+            );
         }
     }
-    
+
     /***********************************************************************************************
     * MethodName: createCase
     * Description : Helper mehtod which will create a case per sub client record
@@ -195,7 +212,7 @@ public class NSP_AssetFLSACaseCreationBatch implements Schedulable,Database.Stat
         newCaseRec.Subject = subject;
         newCaseRec.NSP_FLSA_Case__c = True;
         newCaseRec.Origin = NSP_ServiceConstants.CANCELLED_REASON;
-        newCaseRec.Status = NSP_ServiceConstants.OPEN;   	
+        newCaseRec.Status = NSP_ServiceConstants.OPEN;
         newCaseRec.NSP_Opened_Date__c = System.today();
         newCaseRec.OwnerId = owner;
         return newCaseRec;
@@ -204,109 +221,105 @@ public class NSP_AssetFLSACaseCreationBatch implements Schedulable,Database.Stat
     /***********************************************************************************************
     * MethodName : getFLSASpecialist
     * Description : Helper mehtod which will return FLSA Specialist based on the sales office 
-    * 				of the account linked to sub client record
+    * of the account linked to sub client record
     * Params : NSP_Sub_Client__c subClientList
     * Return : Id flsaSpecialist
     * ********************************************************************************************/ 
-    
-   private Id getFLSASpecialist(NSP_Sub_Client__c subClientList){
-       Id flsaSpecialist;
-       List<String> midMarketsalesOffices = new List<String>{'4499', '4491', '4492', '4493', '4466'};
-           
-       //Get all the bpa mapping records
-       List<String> bpaMappingList = new List<String>{
-               'Id', 
-               'NSP_Sales_Office__c', 
-               'NSP_FLSA_Specialist__c', 
-               'NSP_BPA__c'};
-       NSP_QueryBuilder bpaQueryBuilder = new NSP_QueryBuilder('NSP_BPA_Mapping__c', bpaMappingList)
-            								.setSecurityEnforce(false);
-       String bpaMappingQuery = bpaQueryBuilder.build();
-       List<NSP_BPA_Mapping__c> flsaList = (List<NSP_BPA_Mapping__c>) Database.query(bpaMappingQuery);
-       
-       List<String> subClientFields = new List<String>{
-           	   'Id', 
-               'NSP_Account__c', 
-               'NSP_Account__r.NSP_AIMS_Client__c', 
-               'NSP_Account__r.NSP_Sales_Office__c',  
-               'NSP_Account__r.ParentId',
-               'NSP_Account__r.Parent.NSP_Sales_Office__c'
-       };
-       NSP_QueryBuilder subClientQueryBuilder = new NSP_QueryBuilder('NSP_Sub_Client__c', subClientFields)
-            								.setSecurityEnforce(false)
-           									.addFilter('Id', subClientList.Id);
-       String subClientQuery = subClientQueryBuilder.build();
-       NSP_Sub_Client__c subClientRecord = Database.query(subClientQuery);
-       
-       //get account team record where role is BPA
-       List<String> accountTeamFields = new List<String>{
+    private Id getFLSASpecialist(NSP_Sub_Client__c subClientList){
+        Id flsaSpecialist;
+        List<String> midMarketsalesOffices = new List<String>{'4499', '4491', '4492', '4493', '4466'};
+        //Get all the bpa mapping records
+        List<String> bpaMappingList = new List<String>{
+            'Id', 
+            'NSP_Sales_Office__c', 
+            'NSP_FLSA_Specialist__c', 
+            'NSP_BPA__c'
+        };
+        NSP_QueryBuilder bpaQueryBuilder = new NSP_QueryBuilder('NSP_BPA_Mapping__c', bpaMappingList)
+            .setSecurityEnforce(false);
+        String bpaMappingQuery = bpaQueryBuilder.build();
+        List<NSP_BPA_Mapping__c> flsaList = (List<NSP_BPA_Mapping__c>) Database.query(bpaMappingQuery);
+        List<String> subClientFields = new List<String>{
+            'Id', 
+            'NSP_Account__c', 
+            'NSP_Account__r.NSP_AIMS_Client__c', 
+            'NSP_Account__r.NSP_Sales_Office__c',  
+            'NSP_Account__r.ParentId',
+            'NSP_Account__r.Parent.NSP_Sales_Office__c'
+        };
+        NSP_QueryBuilder subClientQueryBuilder = new NSP_QueryBuilder('NSP_Sub_Client__c', subClientFields)
+            .setSecurityEnforce(false)
+            .addFilter('Id', subClientList.Id);
+        String subClientQuery = subClientQueryBuilder.build();
+        NSP_Sub_Client__c subClientRecord = Database.query(subClientQuery);
+        //get account team record where role is BPA
+        List<String> accountTeamFields = new List<String>{
            'Id',
            'NSP_Account__c',
            'NSP_User__c',
            'NSP_Role__c'
-       };
-       NSP_QueryBuilder bpaAccTeamQueryBuilder = new NSP_QueryBuilder('NSP_Account_Team__c', accountTeamFields)
-            								.setSecurityEnforce(false)
-           									.addFilter('NSP_Account__c', subClientRecord.NSP_Account__c)
-           									.addFilter('NSP_Role__c',  NSP_ServiceConstants.BUSINESS_PERFORMANCE_ADVISOR)
-           									.addLimit(1);
-       String bpaQuery = bpaAccTeamQueryBuilder.build();
-       List<NSP_Account_Team__c> bpaAccountTeamList = (List<NSP_Account_Team__c>) Database.query(bpaQuery);
-      
-       //get account team record where role is BPC
-       NSP_QueryBuilder bpcAccTeamQueryBuilder = new NSP_QueryBuilder('NSP_Account_Team__c', accountTeamFields)
-            								.setSecurityEnforce(false)
-           									.addFilter('NSP_Account__c', subClientRecord.NSP_Account__c)
-           									.addFilter('NSP_Role__c',  NSP_ServiceConstants.BUSINESS_PERFORMANCE_CONSULTANT)
-           									.addLimit(1);
-       String bpcQuery = bpcAccTeamQueryBuilder.build();
-       List<NSP_Account_Team__c> bpcAccountTeamList = (List<NSP_Account_Team__c>) Database.query(bpcQuery);
-       
-       //Get the sales office of the account linked to subclient record
-       //If the acc is sub acc go to it's parent acc and fetch the sales office
-       String salesOfficeOnAccount;
-       salesOfficeOnAccount = subClientRecord.NSP_Account__r.ParentId == NULL ? 
-           subClientRecord.NSP_Account__r.NSP_Sales_Office__c : subClientRecord.NSP_Account__r.Parent.NSP_Sales_Office__c;
-       
-       if(!flsaList.isEmpty()){
-           Boolean isBPCFound = false;
-           Boolean isflsaSpecialistAssigned =false;
-           for(NSP_BPA_Mapping__c flsaMapping: flsaList){
-               //if salesoffice doesn't contain 'Mid Market' OR contains 'Mid Market'
-               if(salesOfficeOnAccount != NULL && 
-                  ((!midMarketsalesOffices.contains(salesOfficeOnAccount) && flsaMapping.NSP_Sales_Office__c == salesOfficeOnAccount) ||                  
-                  (midMarketsalesOffices.contains(salesOfficeOnAccount) &&
-                   ((!bpcAccountTeamList.isEmpty() && flsaMapping.NSP_BPA__c == bpcAccountTeamList[0].NSP_User__c) ||
+        };
+        NSP_QueryBuilder bpaAccTeamQueryBuilder = new NSP_QueryBuilder('NSP_Account_Team__c', accountTeamFields)
+            .setSecurityEnforce(false)
+            .addFilter('NSP_Account__c', subClientRecord.NSP_Account__c)
+            .addFilter('NSP_Role__c',  NSP_ServiceConstants.BUSINESS_PERFORMANCE_ADVISOR)
+            .addLimit(1);
+        String bpaQuery = bpaAccTeamQueryBuilder.build();
+        List<NSP_Account_Team__c> bpaAccountTeamList = (List<NSP_Account_Team__c>) Database.query(bpaQuery);
+        //get account team record where role is BPC
+        NSP_QueryBuilder bpcAccTeamQueryBuilder = new NSP_QueryBuilder('NSP_Account_Team__c', accountTeamFields)
+            .setSecurityEnforce(false)
+            .addFilter('NSP_Account__c', subClientRecord.NSP_Account__c)
+            .addFilter('NSP_Role__c',  NSP_ServiceConstants.BUSINESS_PERFORMANCE_CONSULTANT)
+            .addLimit(1);
+        String bpcQuery = bpcAccTeamQueryBuilder.build();
+        List<NSP_Account_Team__c> bpcAccountTeamList = (List<NSP_Account_Team__c>) Database.query(bpcQuery);
+        //Get the sales office of the account linked to subclient record
+        //If the acc is sub acc go to it's parent acc and fetch the sales office
+        String salesOfficeOnAccount;
+        salesOfficeOnAccount = subClientRecord.NSP_Account__r.ParentId == NULL ? subClientRecord.NSP_Account__r.NSP_Sales_Office__c : subClientRecord.NSP_Account__r.Parent.NSP_Sales_Office__c;
+        if(!flsaList.isEmpty()){
+            Boolean isBPCFound = false;
+            Boolean isflsaSpecialistAssigned =false;
+            for(NSP_BPA_Mapping__c flsaMapping: flsaList){
+                //if salesoffice doesn't contain 'Mid Market' OR contains 'Mid Market'
+                if(salesOfficeOnAccount != NULL && 
+                    ((!midMarketsalesOffices.contains(salesOfficeOnAccount) && flsaMapping.NSP_Sales_Office__c == salesOfficeOnAccount) ||                  
+                    (midMarketsalesOffices.contains(salesOfficeOnAccount) &&
+                    ((!bpcAccountTeamList.isEmpty() && flsaMapping.NSP_BPA__c == bpcAccountTeamList[0].NSP_User__c) ||
                     (!bpaAccountTeamList.isEmpty() && flsaMapping.NSP_BPA__c == bpaAccountTeamList[0].NSP_User__c && !isBPCFound) ||
                     (!bpcAccountTeamList.isEmpty() && !bpaAccountTeamList.isEmpty() &&
-                     flsaMapping.NSP_BPA__c == bpcAccountTeamList[0].NSP_User__c && !isBPCFound))))){
-                         
-                         if(!bpcAccountTeamList.isEmpty() && NSP_ServiceConstants.BUSINESS_PERFORMANCE_CONSULTANT == bpcAccountTeamList[0].NSP_Role__c ){
-                            isBPCFound = true;                         	
-                         }
-						 flsaSpecialist = flsaMapping.NSP_FLSA_Specialist__c;
-                         isflsaSpecialistAssigned = true;
-                     }
-               
-               //Assign flsaSpecialist as Marsha Bustos salesoffice is not there or
-               //salesoffice contain 'Mid Market' and BPA/BPC is not part of FLSA Admin Table then Assign flsaSpecialist as Marsha Bustos
-               else if(salesOfficeOnAccount == NULL || 
-                       (!isflsaSpecialistAssigned && midMarketsalesOffices.contains(salesOfficeOnAccount) && 
-                       ((!bpaAccountTeamList.isEmpty() && flsaMapping.NSP_BPA__c != bpaAccountTeamList[0].NSP_User__c) || 
-                        (!bpcAccountTeamList.isEmpty() && flsaMapping.NSP_BPA__c != bpcAccountTeamList[0].NSP_User__c)))){
-                            flsaSpecialist = System.Label.NSP_Marsha_Bustos;
-                        }
-           }
-       }
-       return flsaSpecialist;
-   }
-    
+                    flsaMapping.NSP_BPA__c == bpcAccountTeamList[0].NSP_User__c && !isBPCFound))))
+                    )
+                {
+                    if(!bpcAccountTeamList.isEmpty() && NSP_ServiceConstants.BUSINESS_PERFORMANCE_CONSULTANT == bpcAccountTeamList[0].NSP_Role__c ){
+                        isBPCFound = true;
+                    }
+                    flsaSpecialist = flsaMapping.NSP_FLSA_Specialist__c;
+                    isflsaSpecialistAssigned = true;
+                } else if(salesOfficeOnAccount == NULL || 
+                        (!isflsaSpecialistAssigned && midMarketsalesOffices.contains(salesOfficeOnAccount) && 
+                        ((!bpaAccountTeamList.isEmpty() && flsaMapping.NSP_BPA__c != bpaAccountTeamList[0].NSP_User__c) || 
+                        (!bpcAccountTeamList.isEmpty() && flsaMapping.NSP_BPA__c != bpcAccountTeamList[0].NSP_User__c)))
+                    )
+                {
+                    //Assign flsaSpecialist as Marsha Bustos salesoffice is not there or
+                    //salesoffice contain 'Mid Market' and BPA/BPC is not part of FLSA Admin Table then Assign flsaSpecialist as Marsha Bustos
+                    flsaSpecialist = System.Label.NSP_Marsha_Bustos;
+                }
+            }
+        }
+        return flsaSpecialist;
+    }
+
     public void finish(Database.BatchableContext bc) {
         
     }
-    
+
     public void execute(SchedulableContext scon) {
         //Executes Batch
         Database.executeBatch(new NSP_AssetFLSACaseCreationBatch(),200);
     }
+
 }
+//
