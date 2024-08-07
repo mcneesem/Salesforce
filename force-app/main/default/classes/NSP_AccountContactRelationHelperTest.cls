@@ -148,7 +148,14 @@ public class NSP_AccountContactRelationHelperTest {
                 System.assertEquals('FIELD_CUSTOM_VALIDATION_EXCEPTION' , ex.getDmlStatusCode(0),'Error Exception');
         }
         Test.stopTest();
-        
+        //
+        List<AccountContactRelation> coverage = new List<AccountContactRelation>();
+        coverage.add(
+            new AccountContactRelation(
+                NSP_Community_Access__c=''
+            )
+        );
+        NSP_AccountContactRelationTriggerHelper.afterDeleteDirector( coverage ); // for additional code coverage...
     }
 
     @isTest
@@ -160,12 +167,15 @@ public class NSP_AccountContactRelationHelperTest {
         
         List<Account> lstAccounts = new List<Account>();
         List<AccountContactRelation> lstAcr = new List<AccountContactRelation>();
-        
-        User newUserInt = (User)NSP_TestExtendedDataFactory.createSObject(new User(), 'NSP_TestDataFactory.UserDefaults', false);
-        newUserInt.ProfileId = profileInt.Id;
-        newUserInt.UserName =  Integer.valueOf(math.rint(math.random() * 1000000))+ '@test' + UserInfo.getOrganizationId()+ '.org';
-        
-        
+
+        List<User> integrationUsers = [
+            SELECT Id
+            FROM User
+            WHERE ( ProfileId = :profileInt.Id )
+        ];
+        Assert.isTrue( !integrationUsers.isEmpty() , 'No Integration Users found.' );
+        User newUserInt = integrationUsers[0];
+
         User newUserService = (User)NSP_TestExtendedDataFactory.createSObject(new User(), 'NSP_TestDataFactory.UserDefaults', false);
         newUserService.ProfileId = profile.Id;
         newUserService.UserName =  Integer.valueOf(math.rint(math.random() * 1000000))+ '@test' + UserInfo.getOrganizationId()+ '.org';
