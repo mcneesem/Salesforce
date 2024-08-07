@@ -795,6 +795,40 @@
                 <identifier>RecordNSP_SpecialItemsNote_cField2</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_AnyPreparedDocumentForTermination__c</fieldItem>
+                <identifier>RecordNSP_AnyPreparedDocumentForTermination_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_AgreementType__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Client-Prepared</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_AnyProvisionInPreparedDocRefersStock__c</fieldItem>
+                <identifier>RecordNSP_AnyProvisionInPreparedDocRefersStock_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_AgreementType__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Client-Prepared</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-jru8s7dc6mn</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -1471,34 +1505,6 @@
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.NSP_AnyPreparedDocumentForTermination__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Yes</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.NSP_DocVerifyStockEquityEmail__c</fieldItem>
-                <identifier>RecordNSP_DocVerifyStockEquityEmail_cField2</identifier>
-                <visibilityRule>
-                    <booleanFilter>1 OR (2 AND 3)</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.NSP_WhoResponsibleForStockEquityPaymt__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Client</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.NSP_ReviewType__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>HRS Review</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.NSP_AnyProvisionInPreparedDocRefersStock__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Yes</rightValue>
                     </criteria>
@@ -2611,6 +2617,40 @@
                 <identifier>RecordNSP_SpecialItemsNote__cField3</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_AnyPreparedDocumentForTermination__c</fieldItem>
+                <identifier>RecordNSP_AnyPreparedDocumentForTermination_cField2</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_AgreementType__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Client-Prepared</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_AnyProvisionInPreparedDocRefersStock__c</fieldItem>
+                <identifier>RecordNSP_AnyProvisionInPreparedDocRefersStock_cField2</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_AgreementType__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Client-Prepared</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-5efcc1c5-1856-4a2e-a2de-b8938d4da167</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -3287,34 +3327,6 @@
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.NSP_AnyPreparedDocumentForTermination__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Yes</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>readonly</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.NSP_DocVerifyStockEquityEmail__c</fieldItem>
-                <identifier>RecordNSP_DocVerifyStockEquityEmail_cField</identifier>
-                <visibilityRule>
-                    <booleanFilter>1 OR (2 AND 3)</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.NSP_WhoResponsibleForStockEquityPaymt__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Client</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.NSP_ReviewType__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>HRS Review</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.NSP_AnyProvisionInPreparedDocRefersStock__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Yes</rightValue>
                     </criteria>
