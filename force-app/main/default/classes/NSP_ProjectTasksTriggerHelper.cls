@@ -1280,7 +1280,7 @@ public class NSP_ProjectTasksTriggerHelper {
                     } else if ( pTask != null
                         && pTask.NSP_AccountId__c != null
                         && !activeAssetList.containsKey(pTask.NSP_AccountId__c)
-                        && pTask.Name == SubmitTerminationChecklist
+                        && pTask.Name == NSP_ProjectTasksTriggerHelper.SUBMIT_TERMINATION_CHECKLIST
                         && pTask.pse__Project__c != null
                         )
                     {
