@@ -1859,7 +1859,7 @@
                     <value>none</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.EIN_Verifications__c</fieldItem>
-                <identifier>RecordEIN_Verifications_cField</identifier>
+                <identifier>Record_EIN_Verifications_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
