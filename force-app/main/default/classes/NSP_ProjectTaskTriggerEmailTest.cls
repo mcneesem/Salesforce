@@ -1,5 +1,6 @@
 /*
  * test class for NSP_ProjectTaskTriggerEmailNotification
+ * // test w/ NSP_ProjectTaskTriggerEmailTest (91%)
  */
 @isTest
 public class NSP_ProjectTaskTriggerEmailTest {

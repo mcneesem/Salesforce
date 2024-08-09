@@ -755,7 +755,7 @@ public class NSP_ProjectTaskTriggerEmailNotification {
         String mailBody ='The Client Transition Meeting for '  ;
         for(Implementation_Profile__c ip: [select Id, NSP_AIMS_Client_Name__c, NSP_AIMS_ClientNo__c,NSP_Transition_Specialist__c,NSP_Transition_Specialist__r.NSP_Work_email__c,
                                            NSP_OT_Representative__c,NSP_OT_Representative__r.NSP_Work_email__c,NSP_Client_Liaison__c,NSP_Client_Liaison__r.NSP_Work_email__c,
-                                           NSP_Payroll_Specialist__c,NSP_Payroll_Specialist__r.NSP_Work_email__c,NSP_HR_Specialist__c,NSP_HR_Specialist__r.NSP_Work_email__c   from Implementation_Profile__c WHERE NSP_Project__c =: projectId]){
+                                           NSP_Payroll_Specialist__c,NSP_Payroll_Specialist__r.NSP_Work_email__c,NSP_HR_Specialist__c,NSP_HR_Specialist__r.NSP_Work_email__c,NSP_HR_Quality_Support_Team_Member__c,NSP_HR_Quality_Support_Team_Member__r.NSP_Work_email__c   from Implementation_Profile__c WHERE NSP_Project__c =: projectId]){
             subjectString   +=  ip.NSP_AIMS_Client_Name__c +' ('+ip.NSP_AIMS_ClientNo__c+') '+' is complete';                                
             mailBody+=  ip.NSP_AIMS_Client_Name__c + ' ('+ip.NSP_AIMS_ClientNo__c+'), ';
                         if(ip.NSP_Transition_Specialist__c!=null && ip.NSP_Transition_Specialist__r.NSP_Work_email__c!=null){
@@ -773,6 +773,9 @@ public class NSP_ProjectTaskTriggerEmailNotification {
                         if(ip.NSP_HR_Specialist__c!=null && ip.NSP_HR_Specialist__r.NSP_Work_email__c!=null){
                            listOfTOAddresses.add(ip.NSP_HR_Specialist__r.NSP_Work_email__c); 
                         }
+                        if(ip.NSP_HR_Quality_Support_Team_Member__c!=null && ip.NSP_HR_Quality_Support_Team_Member__r.NSP_Work_email__c!=null){
+                            listOfTOAddresses.add(ip.NSP_HR_Quality_Support_Team_Member__r.NSP_Work_email__c); 
+                         }
         }
         mailBody+='is complete.'+'<br/>';
         mailBody += 'Please refer to the Implementation Profile in Salesforce ';
