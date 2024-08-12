@@ -1,5 +1,4 @@
 /**
- * 
 Apex Class Name      :  NSP_ServicePlanProjectTaskBatch
 Version              :  1.0                                                                          
 Created Date         :  6/1/2022  
@@ -58,10 +57,10 @@ public class NSP_ServicePlanProjectTaskBatch implements Database.Batchable<sObje
                         Id , TemplateName__c , pse__Account__c , pse__Account__r.NSP_AIMS_Renewal_Date__c ,
                         pse__Project_Type__c , RecordTypeId , pse__Start_Date__c , pse__End_Date__c ,
                         (
-                            SELECT Id , Name, pse__Start_Date_Time__c
+                            SELECT Id , Name , pse__Start_Date_Time__c
                             FROM pse__Project_Tasks__r
                             WHERE (
-                                ( Name IN (:NSP_ServiceConstants.QTP1,:NSP_ServiceConstants.QTP2) )
+                                ( Name IN ( :NSP_ServiceConstants.QTP1 , :NSP_ServiceConstants.QTP2 ) )
                                 AND ( pse__Start_Date_Time__c!=null )
                             )
                             ORDER BY pse__Start_Date_Time__c DESC
@@ -84,24 +83,27 @@ public class NSP_ServicePlanProjectTaskBatch implements Database.Batchable<sObje
                 if(renewalDate!=null){
                     Integer lookupDays = renewalDate.daysBetween(System.today());
                     if ( lookupDays <= NSP_ServicePlanProjectTaskBatch.renewalDateLookupDays ) {
-                        if ( !project.pse__Project_Tasks__r.isEmpty()){
-                            boolean taskPresent = false;
+                        if ( ( project.pse__Project_Tasks__r != null )
+                            && !project.pse__Project_Tasks__r.isEmpty()
+                            )
+                        {
+                            Boolean taskPresent = false;
                             for(pse__Project_Task__c projTask : project.pse__Project_Tasks__r){
                                 Date startDate = Date.valueOf(projTask.pse__Start_Date_Time__c);
                                 if(projTask.Name == NSP_ServiceConstants.QTP1){
-                                    if(startDate==renewalDate.addDays(90) || startDate>renewalDate){ 
+                                    if ( ( startDate == renewalDate.addDays( 90 ) ) || ( startDate > renewalDate ) ) {
                                         taskPresent = true;
                                         break;
                                     }
                                 } else {
-                                    if(startDate==renewalDate.addDays(185) || startDate>renewalDate){
+                                    if ( ( startDate == renewalDate.addDays( 185 ) ) || ( startDate > renewalDate ) ) {
                                         taskPresent = true;
                                         break;
                                     }
                                 }
                             }
                             if(!taskPresent){
-                                validProjectsSet.add(project);        
+                                validProjectsSet.add(project);
                             }
                         }else{
                             validProjectsSet.add(project);
@@ -136,7 +138,7 @@ public class NSP_ServicePlanProjectTaskBatch implements Database.Batchable<sObje
                 projectTask.NSP_Sub_Category__c = NSP_ServiceConstants.Quality_Touch_Point;
                 projectTask.pse__External_Task_ID__c = prj.Id+'-'+NSP_ServiceConstants.QTP1+'-'+randomNumber;
                 if(accountTeamMap.containskey(prj.pse__Account__c)){
-                    projectTask.OwnerId = accountTeamMap.get(prj.pse__Account__c).NSP_User__c;    
+                    projectTask.OwnerId = accountTeamMap.get(prj.pse__Account__c).NSP_User__c;
                 }
                 lstOfRecords.add(projectTask);
                 lstOfRecords.add(projTaskAssigmt);
@@ -152,7 +154,7 @@ public class NSP_ServicePlanProjectTaskBatch implements Database.Batchable<sObje
                 projectTask1.NSP_Sub_Category__c = NSP_ServiceConstants.Quality_Touch_Point;
                 projectTask1.pse__External_Task_ID__c = prj.Id+'-'+NSP_ServiceConstants.QTP2+'-'+randomNumber;
                 if(accountTeamMap.containskey(prj.pse__Account__c)){
-                    projectTask1.OwnerId = accountTeamMap.get(prj.pse__Account__c).NSP_User__c;    
+                    projectTask1.OwnerId = accountTeamMap.get(prj.pse__Account__c).NSP_User__c;
                 }
                 lstOfRecords.add(projectTask1);
                 lstOfRecords.add(projTaskAssigmt2);
@@ -175,16 +177,15 @@ public class NSP_ServicePlanProjectTaskBatch implements Database.Batchable<sObje
     
     }
     
-    /**
-    * @param accountIds Set of accountIds that is associated with project Account
-    * @return void
-    */
+    //
+    // @param accountIds Set of accountIds that is associated with project Account
+    // @return void
+    //
     public static String getAccountTeamQuery(Set<Id> accountIds){
         String accTeamQuery = new NSP_QueryBuilder('NSP_Account_Team__c', new List<String>{'NSP_Account__c','NSP_Role__c','NSP_User__c','NSP_Primary__c','NSP_First_Name__c'})
             .addFilter('NSP_Role__c', NSP_ServiceConstants.BUS_TEAM_HRSP_CL , NSP_QueryBuilder.Operator.EQUALS)
             .addFilter('NSP_Account__c', new List<Id>(accountIds) , NSP_QueryBuilder.Operator.INCLUDES)
             .build();
-
         return accTeamQuery;
     }
 
