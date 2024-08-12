@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Agent_Call_Duration_Time__c</fullName>
     <externalId>false</externalId>
-    <formula>(CallEndDateTime -  CallAcceptDateTime) * 24 *60 *60</formula>
+    <formula>( ( CallEndDateTime - CallAcceptDateTime ) * 24 * 60 * 60 )</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Agent Call Duration Time</label>
     <precision>18</precision>
