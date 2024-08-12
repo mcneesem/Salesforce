@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Wait_time__c</fullName>
     <externalId>false</externalId>
-    <formula>(CallAcceptDateTime - CallStartDateTime)*24 *60 *60</formula>
+    <formula>( ( CallAcceptDateTime - CallStartDateTime ) * 24 * 60 * 60 )</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Wait Time</label>
     <precision>18</precision>
