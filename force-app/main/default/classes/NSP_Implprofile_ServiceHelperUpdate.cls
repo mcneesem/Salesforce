@@ -2,7 +2,7 @@
 * Represents the Implementation profile tirgger for update scenario.
 */ 
 public class NSP_Implprofile_ServiceHelperUpdate {
-    // test w/ NSP_Implprofile_ServiceHelperUpdate_Test (81%)
+    // test w/ NSP_Implprofile_ServiceHelperUpdate_Test (79%)
 
     private  Boolean isRerun =false;
     private Boolean isSaveForm = false;
@@ -2445,7 +2445,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
         Map<Id, sObject> dbRec = new Map<Id, sObject>([SELECT Id,NSP_Payroll_Specialist__c,First_Pay_Date__c, NSP_Payroll_Specialist__r.pse__Salesforce_User__c,NSP_Transition_Specialist__c,NSP_OT_Representative__c,
                                                        NSP_Client_Liaison__c,NSP_HR_Specialist__c,NSP_HR_Specialist__r.NSP_Work_email__c,NSP_Client_Liaison__r.NSP_Work_email__c,NSP_OT_Representative__r.NSP_Work_email__c,
                                                        NSP_Transition_Specialist__r.NSP_Work_email__c,NSP_Payroll_Specialist__r.NSP_Work_email__c,NSP_Onboarding_Specialist_Coordinator__c,NSP_Onboarding_Specialist_Coordinator__r.pse__Salesforce_User__c,
-                                                       NSP_Onboarding_Specialist_Coordinator__r.Email,NSP_Project_Manager__c,NSP_Project_Manager__r.Name, NSP_Project_Manager__r.NSP_Work_email__c, NSP_Project_Manager__r.NSP_Job_Title__c,
+                                                       NSP_Onboarding_Specialist_Coordinator__r.Email,NSP_Project_Manager__c,NSP_Project_Manager__r.Name, NSP_Project_Manager__r.NSP_Work_email__c,NSP_HR_Quality_Support_Team_Member__c,NSP_HR_Quality_Support_Team_Member__r.NSP_Work_email__c, NSP_Project_Manager__r.NSP_Job_Title__c,
                                                        NSP_Project_Manager__r.pse__Salesforce_User__c, Account__c, Account__r.Name,NSP_Old_Benefits_Package__c,NSP_Old_Effective_Date_EPLI__c,NSP_Old_Insperity_Ben_effective_date__c
                                                        FROM Implementation_Profile__c WHERE Id IN:ipIds]);
         data.put(IMPL_PROFILE_IDENTIFIER, dbRec);
@@ -2632,7 +2632,10 @@ public class NSP_Implprofile_ServiceHelperUpdate {
                         if(ipwithValue.NSP_HR_Specialist__c!=null && ipwithValue.NSP_HR_Specialist__r.NSP_Work_email__c!=null){
                            listOfTOAddresses.add(ipwithValue.NSP_HR_Specialist__r.NSP_Work_email__c); 
                         }
-                        
+                        // Added HR QS Team Member
+                        if(ipwithValue.NSP_HR_Quality_Support_Team_Member__c!=null && ipwithValue.NSP_HR_Quality_Support_Team_Member__r.NSP_Work_email__c!=null){
+                            listOfTOAddresses.add(ipwithValue.NSP_HR_Quality_Support_Team_Member__r.NSP_Work_email__c); 
+                         }                                                 
                         //prepare email template for subject and body
                         String subjectString = ipRec.NSP_AIMS_Client_Name__c+' ('+ipRec.NSP_AIMS_ClientNo__c+')'+': Key Information updated';
                         String mailBody ='The following information for  ' +ipRec.NSP_AIMS_Client_Name__c+' ('+ipRec.NSP_AIMS_ClientNo__c+')';
