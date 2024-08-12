@@ -3,7 +3,7 @@
     <fullName>Agent_Chat_Duration_Time__c</fullName>
     <description>Difference between end time to accept time</description>
     <externalId>false</externalId>
-    <formula>(EndTime -  AcceptTime )* 24 * 60 * 60</formula>
+    <formula>( ( EndTime - AcceptTime ) * 24 * 60 * 60 )</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Agent Chat Duration Time</label>
     <precision>18</precision>
