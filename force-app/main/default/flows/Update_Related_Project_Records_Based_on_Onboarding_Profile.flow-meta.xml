@@ -130,7 +130,7 @@
         </scheduledPaths>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>InvalidDraft</status>
+    <status>Draft</status>
     <variables>
         <name>UpdateProjectRecords</name>
         <dataType>SObject</dataType>
