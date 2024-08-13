@@ -21,42 +21,41 @@ import UNEMPLOYMENT_FIELD from '@salesforce/schema/NSP_Sub_Client_Contact__c.NSP
 
 
 const COLUMNS = [
-    { label: 'All Roles', type: 'text', fieldName: 'allRoles', wrapText: true, 
-    },
+    { label: 'All Roles', type: 'text', fieldName: 'allRoles', wrapText: true, },
     {
-        label: 'Contact Name', type: 'customContactName', wrapText: true,
+        label: 'Contact Name',
+        type: 'customContactName',
+        wrapText: true,
         typeAttributes: {
             contact: { fieldName: 'contact' },
             contactName: { fieldName: 'contactName' },
         },
     },
     {
-        label: 'Preferred Name', type: 'customPreferredName', wrapText: true, 
+        label: 'Preferred Name',
+        type: 'customPreferredName',
+        wrapText: true, 
         typeAttributes: {
             contact: { fieldName: 'contact' },
             
         },
     },
+    { label: 'Job Title', type: 'text', fieldName: 'jobTitle', wrapText: false, },
+    { label: 'Employee Status', type: 'text', fieldName: 'employeeStatus', wrapText: true, },
+    { label: 'Work Phone', type: 'text', fieldName: 'workPhone', wrapText: true, },
+    { label: 'Work Email', type: 'text', fieldName: 'workEmail', wrapText: true, },
     {
-        label: 'Job Title', type:'text', fieldName:'jobTitle', wrapText:false, 
-    },
-    {
-        label:'Employee Status', type:'text',fieldName:'employeeStatus', wrapText:true, 
-    },
-    {
-        label:'Work Phone', type:'text', fieldName:'workPhone', wrapText:true, 
-    },
-    {
-        label:'Work Email', type:'text', fieldName:'workEmail', wrapText:true, 
-    },
-    {
-        label: 'Sub Client', type: 'customSubClients', wrapText: true,
+        label: 'Sub Client',
+        type: 'customSubClients',
+        wrapText: true,
         typeAttributes: {
             subClients: { fieldName: 'subClients' },
         },
     },
     {
-        label: 'Account', type: 'customAccountName', wrapText: true,
+        label: 'Account',
+        type: 'customAccountName',
+        wrapText: true,
         typeAttributes: {
             account: { fieldName: 'account' },
         },
