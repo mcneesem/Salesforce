@@ -21,11 +21,33 @@ import UNEMPLOYMENT_FIELD from '@salesforce/schema/NSP_Sub_Client_Contact__c.NSP
 
 
 const COLUMNS = [
+    { label: 'All Roles', type: 'text', fieldName: 'allRoles', wrapText: true, 
+    },
     {
-        label: 'Account', type: 'customAccountName', wrapText: true,
+        label: 'Contact Name', type: 'customContactName', wrapText: true,
         typeAttributes: {
-            account: { fieldName: 'account' },
+            contact: { fieldName: 'contact' },
+            contactName: { fieldName: 'contactName' },
         },
+    },
+    {
+        label: 'Preferred Name', type: 'customPreferredName', wrapText: true, 
+        typeAttributes: {
+            contact: { fieldName: 'contact' },
+            
+        },
+    },
+    {
+        label: 'Job Title', type:'text', fieldName:'jobTitle', wrapText:false, 
+    },
+    {
+        label:'Employee Status', type:'text',fieldName:'employeeStatus', wrapText:true, 
+    },
+    {
+        label:'Work Phone', type:'text', fieldName:'workPhone', wrapText:true, 
+    },
+    {
+        label:'Work Email', type:'text', fieldName:'workEmail', wrapText:true, 
     },
     {
         label: 'Sub Client', type: 'customSubClients', wrapText: true,
@@ -33,18 +55,10 @@ const COLUMNS = [
             subClients: { fieldName: 'subClients' },
         },
     },
-    { label: 'All Roles', type: 'text', fieldName: 'allRoles', wrapText: true, },
     {
-        label: 'Preferred Name', type: 'customPreferredName', wrapText: true,
+        label: 'Account', type: 'customAccountName', wrapText: true,
         typeAttributes: {
-            contact: { fieldName: 'contact' },
-        },
-    },
-    {
-        label: 'Contact Name', type: 'customContactName', wrapText: true,
-        typeAttributes: {
-            contact: { fieldName: 'contact' },
-            contactName: { fieldName: 'contactName' },
+            account: { fieldName: 'account' },
         },
     }
 ];
@@ -232,7 +246,7 @@ export default class Nsp_mainServiceContacts extends NavigationMixin(LightningEl
     }
 
     get sldsPanel() {
-        return 'background-color:#fafaf9;position:relative;overflow:hidden;display:flex;flex-direction:row-reverse;height: ' + (window.innerHeight - 240) + 'px;width: ' + (window.innerWidth - 30) + 'px;';
+        return 'background-color:#fafaf9;position:relative;overflow:hidden;overflow-x: scroll;display:flex;flex-direction:row-reverse;height: ' + (window.innerHeight - 240) + 'px;width: ' + (window.innerWidth - 30) + 'px;';
     }
 
     get enableInfiniteLoading() {

@@ -3,7 +3,8 @@
  * @date         : 5/19/2022
  */
 public without sharing class NSP_ContactRollupController {
-    /**
+    /** 
+     * @test coverage : NSP_ContactRollupController_Test (90%)
      * @description: Contact - Roll up visibility of all Contact roles at the Account Page from AccountContactRelation and SubClientContacts
      * @param recordId of Account.  
      * @return resultWrapper             
@@ -69,7 +70,7 @@ public without sharing class NSP_ContactRollupController {
             query += ' AND (' + subClientFilter + ') ';
         }
         query += ' AND (' + String.join(strList, ' = true OR ') + ') ORDER BY NSP_Contact__r.Name ASC LIMIT :offSetLimit OFFSET :offSetCount'; // Removing Security Enforced as part of DF-03286
-
+		
         return getSubClinetContactRecords(Database.query(query), resultsMap);
     }
 
@@ -101,8 +102,14 @@ public without sharing class NSP_ContactRollupController {
                     new List < NSP_Sub_Client__c > {
                         sc
                     },
-                    getUpdatedRoles(null, subClientCont)
+                    getUpdatedRoles(null, subClientCont),
+                    resultsMap.get(subClientCont.NSP_Sub_Client__r.NSP_Account__c).jobTitle,
+                    resultsMap.get(subClientCont.NSP_Sub_Client__r.NSP_Account__c).employeeStatus,
+                    resultsMap.get(subClientCont.NSP_Sub_Client__r.NSP_Account__c).workPhone,
+                    resultsMap.get(subClientCont.NSP_Sub_Client__r.NSP_Account__c).workEmail
                 ));
+                
+                System.debug('Prakash : ' + resultsMap);
             }
         }
 
@@ -118,7 +125,9 @@ public without sharing class NSP_ContactRollupController {
     public static Map < Id, ResultWrapper > getACR(string recordId, Map < Id, ResultWrapper > resultsMap, Integer offSetCount, Integer offSetLimit, String acrFilter) {
 
         String query = 'SELECT AccountId, Account.Name, ContactId, Contact.FirstName, Contact.LastName, Contact.Name, ' +
-            'NSP_Owner__c, NSP_Service_Roles__c, NSP_Support_Role__c, Contact.NSP_Preferred_First_Name__c FROM AccountContactRelation ' +
+            'NSP_Owner__c, NSP_Service_Roles__c, NSP_Support_Role__c, Contact.NSP_Preferred_First_Name__c, NSP_Job_Title__c, '+
+            'NSP_Employee_Status__c, NSP_Work_Phone__c, NSP_Work_email__c '+
+            'FROM AccountContactRelation ' +
             'WHERE AccountId =:recordId AND ';
 
         if (String.isBlank(acrFilter)) {
@@ -150,7 +159,11 @@ public without sharing class NSP_ContactRollupController {
                     new Contact(Id = accConRelation.ContactId, FirstName = accConRelation.Contact.FirstName, LastName = accConRelation.Contact.LastName, NSP_Preferred_First_Name__c = accConRelation.Contact.NSP_Preferred_First_Name__c),
                     accConRelation.Contact.Name,
                     null,
-                    string.join(lstRoles, '; ')
+                    string.join(lstRoles, '; '),
+                    accConRelation.NSP_Job_Title__c,
+                    accConRelation.NSP_Employee_Status__c,
+                    accConRelation.NSP_Work_Phone__c, 
+                    accConRelation.NSP_Work_email__c
                 ));
             }
 
@@ -214,13 +227,22 @@ public without sharing class NSP_ContactRollupController {
         @AuraEnabled Public string contactName { get; set; }
         @AuraEnabled Public List<NSP_Sub_Client__c> subClients { get; set; }
         @AuraEnabled Public String allRoles { get; set; }
-
-        public ResultWrapper(Account account, Contact contact, string contactName, List < NSP_Sub_Client__c > subClients, String allRoles) {
+        @AuraEnabled public string jobTitle{get; set;}
+        @AuraEnabled public string employeeStatus{get; set;}
+        @AuraEnabled public string workPhone{get; set;}
+        @AuraEnabled public string workEmail{get; set;}
+        
+        public ResultWrapper(Account account, Contact contact, string contactName, List < NSP_Sub_Client__c > subClients, 
+                             String allRoles, string jobTitle, string employeeStatus, string workPhone, string workEmail) {
             this.account = account;
             this.contact = contact;
             this.contactName = contactName;
             this.subClients = subClients;
             this.allRoles = allRoles;
+            this.jobTitle = jobTitle;
+            this.employeeStatus = employeeStatus;
+            this.workPhone = workPhone;
+            this.workEmail = workEmail;
         }
     }
 
