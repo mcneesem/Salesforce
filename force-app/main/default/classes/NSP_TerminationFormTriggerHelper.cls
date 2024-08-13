@@ -590,14 +590,28 @@ public class NSP_TerminationFormTriggerHelper {
             }
         }
 
-        if(mapOfProjectAndAccount != null){
-            for(NSP_Account_Team__c accountTeam : [SELECT NSP_Account__c, NSP_User__c, NSP_Role__c FROM NSP_Account_Team__c 
-                                                    WHERE NSP_Account__c IN : mapOfProjectAndAccount.values() 
-                                                    ]){
-                if(!mapOfAccountAndAccountTeam.containsKey(accountTeam.NSP_Account__c)){
-                    mapOfAccountAndAccountTeam.put(accountTeam.NSP_Account__c + '-' + accountTeam.NSP_Role__c, accountTeam.NSP_User__c);
-                }
-            }
+        if(mapOfProjectAndAccount.values().size() > 0){
+            for(NSP_Account_Team__c accountTeam : [SELECT NSP_Role__c , NSP_User__c , NSP_Primary__c , NSP_Last_Name__c, NSP_Account__c
+                                                   FROM NSP_Account_Team__c
+                                                   WHERE (
+                                                       NSP_Account__c IN : mapOfProjectAndAccount.values()
+                                                       AND NSP_User__c != null
+                                                       AND (
+                                                           NSP_Role__c =: NSP_ServiceConstants.PayrollSpecialist
+                                                           OR NSP_Role__c =: NSP_ServiceConstants.BUS_TEAM_HRSP_CL
+                                                           OR NSP_Role__c =: NSP_ServiceConstants.CLIENT_LIAISION
+                                                           OR NSP_Role__c =: NSP_ServiceConstants.MID_MARKET_ACC_EX
+                                                           OR NSP_Role__c =: NSP_ServiceConstants.PAYROLL_SUPERVISOR
+                                                           OR NSP_Role__c =: NSP_ServiceConstants.MANAGER_HRSERVICES
+                                                           OR NSP_Role__c =: NSP_ServiceConstants.BUSINESS_PERFORMANCE_ADVISOR
+                                                       )) ORDER BY NSP_Role__c ASC , NSP_Primary__c ASC , NSP_Last_Name__c ASC
+                                                   
+                                                   
+                                                  ]){
+                                                      if(!mapOfAccountAndAccountTeam.containsKey(accountTeam.NSP_Account__c)){
+                                                          mapOfAccountAndAccountTeam.put(accountTeam.NSP_Account__c + '-' + accountTeam.NSP_Role__c, accountTeam.NSP_User__c);
+                                                      }
+                                                  }
         }
 
         for(NSP_Termination_Form__c termForm : terminationFormList){
