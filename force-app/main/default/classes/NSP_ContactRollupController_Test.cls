@@ -19,22 +19,19 @@ public class NSP_ContactRollupController_Test
     static void prepareTestData()
     {
         // This code runs as the system user
-        Profile p 	= [SELECT Id FROM Profile WHERE Name='System Administrator']; 
-        
-        User user 	= new User
-            (
-                Alias 				= 'sysAdmin', 
-                Email				='sys.Admin@testOrg.com', 
-                EmailEncodingKey	='UTF-8', 
-                LastName			='Testing', 
-                LanguageLocaleKey	='en_US', 
-                LocaleSidKey		='en_US', 
-                ProfileId 			= p.Id, 
-                TimeZoneSidKey		='America/Los_Angeles', 
-                UserName			='sys.admin@testorg.com'
-            );
-        
-        insert user;
+        List<User> testSystemAdministrators = [
+            SELECT Id
+            FROM User
+            WHERE (
+                ( Profile.Name = 'System Administrator' )
+                AND ( IsActive = True )
+            )
+            ORDER BY CreatedDate ASC
+            LIMIT 1
+        ];
+        Assert.isTrue( testSystemAdministrators != null , 'Null active System Administrator query results.' );
+        Assert.isTrue( !testSystemAdministrators.isEmpty() , 'No active System Administrator found.' );
+        User userRecord = testSystemAdministrators[0];
         
         System.runAs(user)
         {
