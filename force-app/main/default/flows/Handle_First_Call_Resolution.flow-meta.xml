@@ -712,7 +712,7 @@
         <inputAssignments>
             <name>faultFlow</name>
             <value>
-                <stringValue>Find_Related_Contact_Screen_Flow</stringValue>
+                <stringValue>Handle_First_Call_Resolution</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
