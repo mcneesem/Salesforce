@@ -3,8 +3,9 @@
  * @date         : 5/19/2022
  */
 public without sharing class NSP_ContactRollupController {
-    /** 
-     * @test coverage : NSP_ContactRollupController_Test (90%)
+    // test w/ NSP_ContactRollupController_Test (78%)
+
+    /**
      * @description: Contact - Roll up visibility of all Contact roles at the Account Page from AccountContactRelation and SubClientContacts
      * @param recordId of Account.  
      * @return resultWrapper             
@@ -20,7 +21,7 @@ public without sharing class NSP_ContactRollupController {
             if (allFilters != null && allFilters.size() > 0) {
                 //fetch filtered result of ACR and Sub clients combined together based on all filters[] passed to regex expression
                 String regex = '^';
- 				for (string filter: allFilters) {
+                for (string filter: allFilters) {
                     regex = regex + '(?=.*\\b' + filter + '\\b)';
                 }
                 regex = regex + '.*$';
@@ -44,7 +45,7 @@ public without sharing class NSP_ContactRollupController {
     /**
      * @description : get account based record AccountContactRelation records
      * @param  recordId of Account,
-     * @param  Map<Id,ResultWrapper>	contact and allACR's and SubClientContacts
+     * @param  Map<Id,ResultWrapper> contact and allACR's and SubClientContacts
      * @return string           
      */
     public static Map < Id, ResultWrapper > getSubClientContacts(string recordId, Map < Id, ResultWrapper > resultsMap,
@@ -70,7 +71,6 @@ public without sharing class NSP_ContactRollupController {
             query += ' AND (' + subClientFilter + ') ';
         }
         query += ' AND (' + String.join(strList, ' = true OR ') + ') ORDER BY NSP_Contact__r.Name ASC LIMIT :offSetLimit OFFSET :offSetCount'; // Removing Security Enforced as part of DF-03286
-		
         return getSubClinetContactRecords(Database.query(query), resultsMap);
     }
 
@@ -108,8 +108,6 @@ public without sharing class NSP_ContactRollupController {
                     resultsMap.get(subClientCont.NSP_Sub_Client__r.NSP_Account__c).workPhone,
                     resultsMap.get(subClientCont.NSP_Sub_Client__r.NSP_Account__c).workEmail
                 ));
-                
-                System.debug('Prakash : ' + resultsMap);
             }
         }
 
@@ -119,7 +117,7 @@ public without sharing class NSP_ContactRollupController {
     /**
      * @description : get account based record AccountContactRelation records
      * @param  recordId of Account,
-     * @param  Map<Id,ResultWrapper>	contact and allACR's and SubClientContacts
+     * @param  Map<Id,ResultWrapper> contact and allACR's and SubClientContacts
      * @return string           
      */
     public static Map < Id, ResultWrapper > getACR(string recordId, Map < Id, ResultWrapper > resultsMap, Integer offSetCount, Integer offSetLimit, String acrFilter) {
