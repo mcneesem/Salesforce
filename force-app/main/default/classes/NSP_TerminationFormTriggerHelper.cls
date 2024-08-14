@@ -573,7 +573,10 @@ public class NSP_TerminationFormTriggerHelper {
         map<Id, Id> mapOfProjectTaskAndProject = new map<Id, Id>();
         map<Id, Id> mapOfProjectAndAccount     = new map<Id, Id>();
         map<String, Id> mapOfAccountAndAccountTeam = new map<String, Id>();
-
+        map<String, Id> primaryRolesMap = new map<String, Id>();
+        map<String, Id> nonPrimaryRolesMap = new map<String, Id>();
+        map<String, Id> accTeamMap = new map<String, Id>();
+		Id payrollRecordTypeId = NSP_GenericRecordType.getRecordTypeId('NSP_Termination_Form__c',NSP_ServiceConstants.NSP_Payroll_Specialist_Form );
         if(!setOfProjectTaskId.isEmpty()){
             for(pse__Project_Task__c projectTask : [SELECT pse__Project__c FROM pse__Project_Task__c WHERE ID IN : setOfProjectTaskId]){
                 if(!mapOfProjectTaskAndProject.containsKey(projectTask.id)){
@@ -590,56 +593,69 @@ public class NSP_TerminationFormTriggerHelper {
             }
         }
 
+        //Termination Form Payroll Specialist Record Type
         if(mapOfProjectAndAccount.values().size() > 0){
-            for(NSP_Account_Team__c accountTeam : [SELECT NSP_Role__c , NSP_User__c , NSP_Primary__c , NSP_Last_Name__c, NSP_Account__c
-                                                   FROM NSP_Account_Team__c
-                                                   WHERE (
-                                                       NSP_Account__c IN : mapOfProjectAndAccount.values()
-                                                       AND NSP_User__c != null
-                                                       AND (
-                                                           NSP_Role__c =: NSP_ServiceConstants.PayrollSpecialist
-                                                           OR NSP_Role__c =: NSP_ServiceConstants.BUS_TEAM_HRSP_CL
-                                                           OR NSP_Role__c =: NSP_ServiceConstants.CLIENT_LIAISION
-                                                           OR NSP_Role__c =: NSP_ServiceConstants.MID_MARKET_ACC_EX
-                                                           OR NSP_Role__c =: NSP_ServiceConstants.PAYROLL_SUPERVISOR
-                                                           OR NSP_Role__c =: NSP_ServiceConstants.MANAGER_HRSERVICES
-                                                           OR NSP_Role__c =: NSP_ServiceConstants.BUSINESS_PERFORMANCE_ADVISOR
-                                                       )) ORDER BY NSP_Role__c ASC , NSP_Primary__c ASC , NSP_Last_Name__c ASC
-                                                   
-                                                   
-                                                  ]){
-                                                      if(!mapOfAccountAndAccountTeam.containsKey(accountTeam.NSP_Account__c)){
-                                                          mapOfAccountAndAccountTeam.put(accountTeam.NSP_Account__c + '-' + accountTeam.NSP_Role__c, accountTeam.NSP_User__c);
-                                                      }
-                                                  }
+            for(NSP_Account_Team__c accountTeamPayroll : [SELECT NSP_Role__c , NSP_User__c , NSP_Primary__c , NSP_Last_Name__c, NSP_Account__c
+                                                          FROM NSP_Account_Team__c
+                                                          WHERE (
+                                                              NSP_Account__c IN : mapOfProjectAndAccount.values()
+                                                              AND NSP_User__c != null
+                                                              AND (
+                                                                  NSP_Role__c =: NSP_ServiceConstants.PayrollSpecialist
+                                                                  OR NSP_Role__c =: NSP_ServiceConstants.BUS_TEAM_HRSP_CL
+                                                                  OR NSP_Role__c =: NSP_ServiceConstants.CLIENT_LIAISION
+                                                                  OR NSP_Role__c =: NSP_ServiceConstants.MID_MARKET_ACC_EX
+                                                                  OR NSP_Role__c =: NSP_ServiceConstants.PAYROLL_SUPERVISOR
+                                                                  OR NSP_Role__c =: NSP_ServiceConstants.MANAGER_HRSERVICES
+                                                                  OR NSP_Role__c =: NSP_ServiceConstants.BUSINESS_PERFORMANCE_ADVISOR
+                                                              )) ORDER BY NSP_Role__c ASC , NSP_Primary__c ASC , NSP_Last_Name__c ASC
+                                                         ]){
+                                                             if(!primaryRolesMap.containsKey(accountTeamPayroll.NSP_Account__c)){
+                                                                 primaryRolesMap.put(accountTeamPayroll.NSP_Account__c + '-' + accountTeamPayroll.NSP_Role__c, accountTeamPayroll.NSP_User__c);
+                                                             }
+                                                             if(!accountTeamPayroll.NSP_Primary__c){  
+                                                                 if(!nonPrimaryRolesMap.containsKey(accountTeamPayroll.NSP_Account__c)){
+                                                                     nonPrimaryRolesMap.put(accountTeamPayroll.NSP_Account__c + '-' + accountTeamPayroll.NSP_Role__c, accountTeamPayroll.NSP_User__c);  
+                                                                 } 
+                                                             }
+                                                         }
         }
-
-        for(NSP_Termination_Form__c termForm : terminationFormList){
-            if(mapOfAccountAndAccountTeam != null && mapOfProjectAndAccount != null && mapOfProjectTaskAndProject != null){
-                termForm.NSP_Approver__c                = mapOfAccountAndAccountTeam.get(
-                                                                mapOfProjectAndAccount.get(
-                                                                mapOfProjectTaskAndProject.get(termForm.NSP_Project_Task__c)) + '-' + NSP_ServiceConstants.PAYROLL_SUPERVISOR);
+        if(terminationFormList.size() > 0) {
+            for(NSP_Termination_Form__c termForm : terminationFormList){
+                if(termForm.RecordTypeId == payrollRecordTypeId) {
+                    //Termination Form Payroll Specialist Record Type
+                    mapOfAccountAndAccountTeam = primaryRolesMap;
+                } else {
+                    mapOfAccountAndAccountTeam = nonPrimaryRolesMap;
+                }
+            }
+            for(NSP_Termination_Form__c termForm : terminationFormList){
+                if(mapOfAccountAndAccountTeam != null && mapOfProjectAndAccount != null && mapOfProjectTaskAndProject != null){
+                    termForm.NSP_Approver__c                = mapOfAccountAndAccountTeam.get(
+                        mapOfProjectAndAccount.get(
+                            mapOfProjectTaskAndProject.get(termForm.NSP_Project_Task__c)) + '-' + NSP_ServiceConstants.PAYROLL_SUPERVISOR);
                     termForm.NSP_Supervisor__c              = mapOfAccountAndAccountTeam.get(
-                                                                mapOfProjectAndAccount.get(
-                                                                mapOfProjectTaskAndProject.get(termForm.NSP_Project_Task__c)) + '-' + NSP_ServiceConstants.PAYROLL_SUPERVISOR);
+                        mapOfProjectAndAccount.get(
+                            mapOfProjectTaskAndProject.get(termForm.NSP_Project_Task__c)) + '-' + NSP_ServiceConstants.PAYROLL_SUPERVISOR);
                     termForm.NSP_Payroll_Specialist__c      = mapOfAccountAndAccountTeam.get(
-                                                                mapOfProjectAndAccount.get(
-                                                                mapOfProjectTaskAndProject.get(termForm.NSP_Project_Task__c)) + '-' + NSP_ServiceConstants.PAYROLL_SPECIALIST);
+                        mapOfProjectAndAccount.get(
+                            mapOfProjectTaskAndProject.get(termForm.NSP_Project_Task__c)) + '-' + NSP_ServiceConstants.PAYROLL_SPECIALIST);
                     termForm.NSP_Sales_Representative__c    = mapOfAccountAndAccountTeam.get(
-                                                                mapOfProjectAndAccount.get(
-                                                                mapOfProjectTaskAndProject.get(termForm.NSP_Project_Task__c)) + '-' + NSP_ServiceConstants.BUSINESS_PERFORMANCE_ADVISOR);
+                        mapOfProjectAndAccount.get(
+                            mapOfProjectTaskAndProject.get(termForm.NSP_Project_Task__c)) + '-' + NSP_ServiceConstants.BUSINESS_PERFORMANCE_ADVISOR);
                     termForm.NSP_Client_Liaison__c          = mapOfAccountAndAccountTeam.get(
-                                                                mapOfProjectAndAccount.get(
-                                                                mapOfProjectTaskAndProject.get(termForm.NSP_Project_Task__c)) + '-' + NSP_ServiceConstants.CLIENT_LIAISION);
+                        mapOfProjectAndAccount.get(
+                            mapOfProjectTaskAndProject.get(termForm.NSP_Project_Task__c)) + '-' + NSP_ServiceConstants.CLIENT_LIAISION);
                     termForm.NSP_Account_Executive__c       = mapOfAccountAndAccountTeam.get(
-                                                                mapOfProjectAndAccount.get(
-                                                                mapOfProjectTaskAndProject.get(termForm.NSP_Project_Task__c)) + '-' + NSP_ServiceConstants.MID_MARKET_ACC_EX);
+                        mapOfProjectAndAccount.get(
+                            mapOfProjectTaskAndProject.get(termForm.NSP_Project_Task__c)) + '-' + NSP_ServiceConstants.MID_MARKET_ACC_EX);
                     termForm.NSP_Manager_HR_Services__c     = mapOfAccountAndAccountTeam.get(
-                                                                mapOfProjectAndAccount.get(
-                                                                mapOfProjectTaskAndProject.get(termForm.NSP_Project_Task__c)) + '-' + NSP_ServiceConstants.MANAGER_HRSERVICES);
+                        mapOfProjectAndAccount.get(
+                            mapOfProjectTaskAndProject.get(termForm.NSP_Project_Task__c)) + '-' + NSP_ServiceConstants.MANAGER_HRSERVICES);
                     termForm.NSP_Insperity_Blended_Role__c  = mapOfAccountAndAccountTeam.get(
-                                                                mapOfProjectAndAccount.get(
-                                                                mapOfProjectTaskAndProject.get(termForm.NSP_Project_Task__c)) + '-' + NSP_ServiceConstants.BUS_TEAM_HRSP_CL);
+                        mapOfProjectAndAccount.get(
+                            mapOfProjectTaskAndProject.get(termForm.NSP_Project_Task__c)) + '-' + NSP_ServiceConstants.BUS_TEAM_HRSP_CL);
+                }
             }
         }
     }
