@@ -120,6 +120,13 @@
                 <stringValue>Complete</stringValue>
             </value>
         </filters>
+        <filters>
+            <field>Status__c</field>
+            <operator>IsChanged</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
         <object>Onboarding_Profile__c</object>
         <recordTriggerType>Update</recordTriggerType>
         <scheduledPaths>
