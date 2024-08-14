@@ -33,7 +33,7 @@ public class NSP_ContactRollupController_Test
         Assert.isTrue( !testSystemAdministrators.isEmpty() , 'No active System Administrator found.' );
         User userRecord = testSystemAdministrators[0];
         
-        System.runAs(user)
+        System.runAs(userRecord)
         {
             // Creating Account
             Account account 			= new Account();
