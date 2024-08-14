@@ -57,26 +57,40 @@
             <lightning-input-field disabled 
                 field-name="NSP_Account_HRS__c"
                 data-name="NSP_Account_HRS__c"
-                value={fieldValue.NSP_Account_HRS__c}>
+                value={fieldValue.NSP_Account_HRS__c}
+                class="slds-form-element__legend">
               </lightning-input-field>
 
             <lightning-input-field disabled
                 field-name="NSP_Submitted_by__c"
                 data-name="NSP_Submitted_by__c"
-                value={fieldValue.NSP_Submitted_by__c}>
+                value={fieldValue.NSP_Submitted_by__c}
+                class="slds-form-element__legend">
               </lightning-input-field>
+<<<<<<< HEAD
+=======
+
+            <lightning-input-field disabled
+                field-name="OwnerId"
+                data-name="OwnerId"
+                value={fieldValue.OwnerId}
+                class="slds-form-element__legend">
+            </lightning-input-field> 
+>>>>>>> 96d7fcf9e (250899_BoldFont)
             </div>
             <div class="slds-col slds-size_1-of-2">
             <lightning-input-field disabled
                 field-name="NSP_Contact__c"
                 data-name="NSP_Contact__c"
-                value={fieldValue.NSP_Contact__c}>
+                value={fieldValue.NSP_Contact__c}
+                class="slds-form-element__legend">
               </lightning-input-field>
 
             <lightning-input-field disabled
                 field-name="NSP_Contact_email__c"
                 data-name="NSP_Contact_email__c"
-                value={fieldValue.NSP_Contact_email__c}>
+                value={fieldValue.NSP_Contact_email__c}
+                class="slds-form-element__legend">
               </lightning-input-field>
 
               <lightning-input-field disabled
@@ -84,14 +98,14 @@
                 label="Is Client Middle Market or Middle Market Enterprise?"
                 data-name="Is_Client_MM_or_MM_Enterprise__c"
                 value={fieldValue.Is_Client_MM_or_MM_Enterprise__c}
-                >
+                class="slds-form-element__legend">
               </lightning-input-field>
 
               <lightning-input-field disabled
                 value={fieldValue.NSP_NewExisting_Client_or_Change_order__c}
                 field-name="NSP_NewExisting_Client_or_Change_order__c"
                 data-name="NSP_NewExisting_Client_or_Change_order__c"
-                >
+                class="slds-form-element__legend">
               </lightning-input-field>
 
               <lightning-input-field disabled 
@@ -114,6 +128,7 @@
             <lightning-input-field disabled
                 field-name="NSP_Type_of_Policy__c"
                 data-name="NSP_Type_of_Policy__c"
+                class="slds-form-element__legend"
                 >
               </lightning-input-field>
 
@@ -121,7 +136,8 @@
                 if:true={visibility.NSP_Policy_Type_Provide_Details__c}
                 field-name="NSP_Policy_Type_Provide_Details__c"
                 data-name="NSP_Policy_Type_Provide_Details__c"
-                value={fieldValue.NSP_Policy_Type_Provide_Details__c}>
+                value={fieldValue.NSP_Policy_Type_Provide_Details__c}
+                class="slds-form-element__legend">
               </lightning-input-field>
 
               <lightning-formatted-text
@@ -133,7 +149,8 @@
             <lightning-input-field disabled
                 field-name="NSP_Accrual_Profile_Plan_Name__c"
                 data-name="NSP_Accrual_Profile_Plan_Name__c"
-                value={fieldValue.NSP_Accrual_Profile_Plan_Name__c}>
+                value={fieldValue.NSP_Accrual_Profile_Plan_Name__c}
+                class="slds-form-element__legend">
               </lightning-input-field>
 
               <lightning-combobox
@@ -142,7 +159,7 @@
                 value={fieldValue.NSP_Status__c}
                 options={statusOptions}
                 data-name="NSP_Status__c"
-                class="slds-var-m-horizontal_x-small"
+                class="slds-var-m-horizontal_x-small slds-form-element__legend slds-form-element__label"
                 >
               </lightning-combobox>
 
@@ -153,19 +170,20 @@
                 record-type-id={fieldValue.recordTypeId}
                 value={fieldValue.NSP_New_Revised__c}
                 data-name="NSP_New_Revised__c"
-                class="slds-show slds-var-m-bottom_medium"
+                class="slds-show slds-var-m-bottom_medium slds-form-element__control slds-form-element__legend slds-form-element_vertical"
                 >
             </c-nsp_selection-box>
 
             <lightning-input-field disabled
                 field-name="NSP_Effective_date__c"
                 data-name="NSP_Effective_date__c"
-                value={fieldValue.NSP_Effective_date__c}>
+                value={fieldValue.NSP_Effective_date__c}
+                class="slds-show slds-var-m-bottom_medium slds-form-element__control slds-form-element__legend slds-form-element_vertical">
               </lightning-input-field>
 
             <lightning-formatted-text
                 value="Does this plan replace another (or other) plans?"
-                class="slds-show slds-var-m-around_xx-small slds-text-body_small">
+                class="slds-show slds-var-m-bottom_medium slds-form-element__control slds-form-element__legend slds-form-element_vertical">>
             </lightning-formatted-text>
 
             <lightning-input-field disabled 
@@ -173,7 +191,7 @@
                 data-name="NSP_Does_this_plan_replace_other_plans__c"
                 variant="label-hidden"
                 value={fieldValue.NSP_Does_this_plan_replace_other_plans__c}
-                class="slds-show slds-var-p-horizontal_xx-small">
+                class="slds-show slds-var-m-bottom_medium slds-form-element__control slds-form-element__legend slds-form-element_vertical">
               </lightning-input-field>
 
             <lightning-combobox 
@@ -183,7 +201,7 @@
                 value={nameOfThePlanBeingReplaced}
                 options={planOptions}
                 data-name="NSP_Accrual_Profile__c"
-                class="slds-var-m-horizontal_x-small"
+                class="slds-show slds-var-m-bottom_medium slds-form-element__control slds-form-element__legend slds-form-element_vertical"
                 >
               </lightning-combobox>
 
@@ -192,7 +210,7 @@
                 field-name="NSP_Other_Plan__c"
                 data-name="NSP_Other_Plan__c"
                 value={fieldValue.NSP_Other_Plan__c}
-                class="slds-show slds-var-p-horizontal_xx-small"
+                class="slds-show slds-var-m-bottom_medium slds-form-element__control slds-form-element__legend slds-form-element_vertical"
                 >
               </lightning-input-field>
 
@@ -202,7 +220,7 @@
                 record-type-id={fieldValue.recordTypeId}
                 value={fieldValue.NSP_Employee_Status_check_all_that_apply__c}
                 data-name="NSP_Employee_Status_check_all_that_apply__c"
-                class="slds-show slds-var-m-bottom_medium"
+                class="slds-show slds-var-m-bottom_medium slds-form-element__control slds-form-element__legend slds-form-element_vertical"
                 multiple>
               </c-nsp_selection-box>
 
@@ -211,7 +229,7 @@
               field-name="Other_Status__c"
               data-name="Other_Status__c"
               value={fieldValue.Other_Status__c}
-              class="slds-show slds-var-p-horizontal_xx-small"
+              class="slds-show slds-var-m-bottom_medium slds-form-element__control slds-form-element__legend slds-form-element_vertical"
               onchange={handleValueChange}>
               </lightning-input-field>
 
@@ -219,13 +237,14 @@
                 value={fieldValue.NSP_Submitted_to_satisfy_compliance_need__c}
                 field-name="NSP_Submitted_to_satisfy_compliance_need__c"
                 data-name="NSP_Submitted_to_satisfy_compliance_need__c"
+                class="slds-show slds-var-m-bottom_medium slds-form-element__control slds-form-element__legend slds-form-element_vertical"
                 >
               </lightning-input-field>
 
               <lightning-formatted-rich-text
                   lwc:if={visibility.NSP_Compliance_Location__c}
                   value="Compliance Locations (Click &lt;a href=&quot;https://serviceops.spapps.insperity.com/sites/hr/Shared%20Documents/Mandatory%20Leave%20Ordinances.docx&quot;&gt;here&lt;/a&gt; to see list of mandated sick/leave locations)."
-                  class="slds-show slds-var-m-around_xx-small slds-text-body_small">
+                  class="slds-show slds-var-m-around_xx-small slds-text-body_small slds-form-element__legend slds-form-element_vertical">
               </lightning-formatted-rich-text>
 
             <lightning-input-field disabled
@@ -234,7 +253,7 @@
                 field-name="NSP_Compliance_Location__c"
                 value={fieldValue.NSP_Compliance_Location__c}
                 data-name="NSP_Compliance_Location__c"
-                >
+                class="slds-show slds-var-p-horizontal_xx-small">
               </lightning-input-field>
 
             </div>
@@ -250,7 +269,7 @@
             <div class="slds-col slds-size_1-of-2">
             <lightning-formatted-text
                 value="How many accrual levels (0-11 months, 12-35 months, etc.) will you have in your policy?"
-                class="slds-show slds-var-m-around_xx-small slds-text-body_small">
+                class="slds-show slds-var-m-bottom_medium slds-form-element__control slds-form-element__legend slds-form-element_vertical">
             </lightning-formatted-text>
 
             <lightning-input-field disabled 
@@ -258,12 +277,12 @@
                 field-name="NSP_Accrual_Levels__c"
                 data-name="NSP_Accrual_Levels__c"
                 value={fieldValue.NSP_Accrual_Levels__c}
-                >
+                class="slds-show slds-var-m-bottom_medium slds-form-element__control slds-form-element__legend slds-form-element_vertical">
             </lightning-input-field>
 
             <lightning-formatted-text
                 value="What is the plan year or 12-month period in which time is earned?"
-                class="slds-show slds-var-m-around_xx-small slds-text-body_small">
+                class="slds-show slds-var-m-bottom_medium slds-form-element__control slds-form-element__legend slds-form-element_vertical">
             </lightning-formatted-text>
 
             <lightning-input-field disabled 
@@ -271,7 +290,7 @@
                 data-name="NSP_What_is_the_plan_year__c"
                 variant="label-hidden"
                 value={fieldValue.NSP_What_is_the_plan_year__c}
-                class="slds-show slds-var-p-horizontal_xx-small"
+                class="slds-show slds-var-m-bottom_medium slds-form-element__control slds-form-element__legend slds-form-element_vertical"
                 >
             </lightning-input-field>
 
@@ -279,13 +298,14 @@
                 <lightning-input-field disabled
                   field-name="NSP_Accrue_under_plan_cal_year__c"
                   data-name="NSP_Accrue_under_plan_cal_year__c"
-                  value={fieldValue.NSP_Accrue_under_plan_cal_year__c}>
+                  value={fieldValue.NSP_Accrue_under_plan_cal_year__c}
+                  class="slds-show slds-var-m-bottom_medium slds-form-element__control slds-form-element__legend slds-form-element_vertical">
                 </lightning-input-field>
 
                 <lightning-formatted-text
                   if:true={visibility.NSP_If_hired_midway_through_pay_period__c_ITA_CALENDAR}
                   value="If hired midway through the pay period, is a prorated accrual earned?"
-                  class="slds-show slds-var-m-around_xx-small slds-text-body_small">
+                  class="slds-show slds-var-m-bottom_medium slds-form-element__control slds-form-element__legend slds-form-element_vertical">
                 </lightning-formatted-text>
 
                 <lightning-input-field disabled
@@ -294,7 +314,8 @@
                   value={fieldValue.NSP_If_hired_midway_through_pay_period__c}
                   field-name="NSP_If_hired_midway_through_pay_period__c"
                   data-name="NSP_If_hired_midway_through_pay_period__c"
-                  data-visibility-name="NSP_If_hired_midway_through_pay_period__c_ITA_CALENDAR">
+                  data-visibility-name="NSP_If_hired_midway_through_pay_period__c_ITA_CALENDAR"
+                  class="slds-show slds-var-m-bottom_medium slds-form-element__control slds-form-element__legend slds-form-element_vertical">
                 </lightning-input-field>
 
                 <template
@@ -303,13 +324,14 @@
                     field-name="NSP_Is_there_a_frontloaded_proration__c"
                     data-name="NSP_Is_there_a_frontloaded_proration__c"
                     value={fieldValue.NSP_Is_there_a_frontloaded_proration__c}
-                    data-visibility-name="NSP_Is_there_a_frontloaded_proration__c_ITA_CALENDAR">
+                    data-visibility-name="NSP_Is_there_a_frontloaded_proration__c_ITA_CALENDAR"
+                    class="slds-show slds-var-m-bottom_medium slds-form-element__control slds-form-element__legend slds-form-element_vertical">
                   </lightning-input-field>
 
                   <lightning-formatted-rich-text
                     if:true={visibility.frontLoadITACalendar}
                     value="Complete the &lt;a href=&quot;https://serviceops.spapps.insperity.com/sites/hr/Shared%20Documents/front%20load%20proration%20tool.xlsx&quot;&gt;Frontloaded Proration&lt;/a&gt; file and attach to the Accrual Profile once approved."
-                    class="slds-show slds-text-heading_small slds-var-m-around_medium">
+                    class="slds-show slds-var-m-bottom_medium slds-form-element__control slds-form-element__legend slds-form-element_vertical">
                   </lightning-formatted-rich-text>
                 </template>
 
@@ -318,11 +340,12 @@
                   field-name="NSP_Select_Pay_Frequency__c"
                   data-name="NSP_Select_Pay_Frequency__c"
                   value={fieldValue.NSP_Select_Pay_Frequency__c}
-                  data-visibility-name="NSP_Select_Pay_Frequency__c_ITA_CALENDAR">
+                  data-visibility-name="NSP_Select_Pay_Frequency__c_ITA_CALENDAR"
+                  class="slds-show slds-var-m-bottom_medium slds-form-element__control slds-form-element__legend slds-form-element_vertical">
                 </lightning-input-field>
                 
                 <template lwc:if={visibility.NSP_Hours_paid_for_earning_accruals__c_ITA_CALENDER}>
-                <div class="slds-show slds-var-m-around_xx-small slds-text-body_small">
+                <div class="slds-show slds-var-m-around_xx-small slds-text-body_small slds-form-element__legend">
                   <label > Accrual rates are based on every 
                     <span if:true={visibility.Accrual_rates_are_based_Input_Number__c_ITA_CALENDER}>
                       <strong style="font-size: 15px; color: blue;">&nbsp;{fieldValue.Accrual_rates_are_based_Input_Number__c}&nbsp;</strong>
@@ -344,7 +367,8 @@
                   data-visibility-name="NSP_List_pay_codes__c_ITA_CALENDER"
                   field-name="NSP_List_pay_codes__c"
                   data-name="NSP_List_pay_codes__c"
-                  value={fieldValue.NSP_List_pay_codes__c}>
+                  value={fieldValue.NSP_List_pay_codes__c}
+                  class="slds-show slds-var-m-bottom_medium slds-form-element__control slds-form-element__legend slds-form-element_vertical">
                 </lightning-input-field>
               </template>
                 <lightning-input-field disabled
@@ -352,7 +376,8 @@
                   field-name="NSP_Accrual_Period_Limit__c"
                   data-visibility-name="NSP_Accrual_Period_Limit__c_ITA_CALENDAR"
                   data-name="NSP_Accrual_Period_Limit__c"
-                  value={fieldValue.NSP_Accrual_Period_Limit__c}>
+                  value={fieldValue.NSP_Accrual_Period_Limit__c}
+                  class="slds-show slds-var-m-bottom_medium slds-form-element__control slds-form-element__legend slds-form-element_vertical">
                 </lightning-input-field>
 
                 <lightning-combobox
@@ -363,7 +388,7 @@
                   options={accrualLevelChangesOptionsCalenderYear}
                   data-name="NSP_When_do_accrual_level_changes_happen__c"
                   data-visibility-name="NSP_When_do_accrual_level_changes_happen__c_ITA_CALENDAR"
-                  class="slds-var-m-horizontal_x-small">
+                  class="slds-show slds-var-m-bottom_medium slds-form-element__control slds-form-element__legend slds-form-element_vertical">
                 </lightning-combobox>
               </div>
 
@@ -372,13 +397,14 @@
                   lwc:if={visibility.NSP_time_accrue_under_plan_anniv_year__c}
                   field-name="NSP_time_accrue_under_plan_anniv_year__c"
                   data-name="NSP_time_accrue_under_plan_anniv_year__c"
-                  value={fieldValue.NSP_time_accrue_under_plan_anniv_year__c}>
+                  value={fieldValue.NSP_time_accrue_under_plan_anniv_year__c}
+                  class="slds-show slds-var-m-bottom_medium slds-form-element__control slds-form-element__legend slds-form-element_vertical">
                 </lightning-input-field>
 
                 <lightning-formatted-text
                   if:true={visibility.NSP_If_hired_midway_through_pay_period__c_ITA_ANNIVERSARY}
                   value="If hired midway through the pay period, is a prorated accrual earned?"
-                  class="slds-show slds-var-m-around_xx-small slds-text-body_small">
+                  class="slds-show slds-var-m-bottom_medium slds-form-element__control slds-form-element__legend slds-form-element_vertical">
                 </lightning-formatted-text>
 
                 <lightning-input-field disabled
@@ -387,7 +413,8 @@
                   field-name="NSP_If_hired_midway_through_pay_period__c"
                   data-name="NSP_If_hired_midway_through_pay_period__c"
                   data-visibility-name="NSP_If_hired_midway_through_pay_period__c_ITA_ANNIVERSARY"
-                  value={fieldValue.NSP_If_hired_midway_through_pay_period__c}>
+                  value={fieldValue.NSP_If_hired_midway_through_pay_period__c}
+                  class="slds-show slds-var-m-bottom_medium slds-form-element__control slds-form-element__legend slds-form-element_vertical">
                 </lightning-input-field>
 
                 <lightning-input-field disabled
@@ -395,11 +422,12 @@
                   field-name="NSP_Select_Pay_Frequency__c"
                   data-name="NSP_Select_Pay_Frequency__c"
                   data-visibility-name="NSP_Select_Pay_Frequency__c_ITA_ANNIVERSARY"
-                  value={fieldValue.NSP_Select_Pay_Frequency__c}>
+                  value={fieldValue.NSP_Select_Pay_Frequency__c}
+                  class="slds-show slds-var-m-bottom_medium slds-form-element__control slds-form-element__legend slds-form-element_vertical">
                 </lightning-input-field>
 
                 <template lwc:if={visibility.NSP_Hours_paid_for_earning_accruals__c_ITA_ANNIVERSARY}>
-                  <div class="slds-show slds-var-m-around_xx-small slds-text-body_small">
+                  <div class="slds-show slds-var-m-around_xx-small slds-text-body_small slds-form-element__legend">
                   <label> Accrual rates are based on every 
                     <span if:true={visibility.Accrual_rates_are_based_Input_Number__c_ITA_ANNIVERSARY}>
                     <strong style="font-size: 15px; color: blue;">&nbsp;{fieldValue.Accrual_rates_are_based_Input_Number__c}&nbsp;</strong>
@@ -421,7 +449,8 @@
                   data-visibility-name="NSP_List_pay_codes__c_ITA_ANNIVERSARY"
                   field-name="NSP_List_pay_codes__c"
                   data-name="NSP_List_pay_codes__c"
-                  value={fieldValue.NSP_List_pay_codes__c}>
+                  value={fieldValue.NSP_List_pay_codes__c}
+                  class="slds-show slds-var-m-bottom_medium slds-form-element__control slds-form-element__legend slds-form-element_vertical">
                 </lightning-input-field>
               </template>
 			  
@@ -430,7 +459,8 @@
                   field-name="NSP_Accrual_Period_Limit__c"
                   data-visibility-name="NSP_Accrual_Period_Limit__c_ITA_ANNIVERSARY"
                   data-name="NSP_Accrual_Period_Limit__c"
-                  value={fieldValue.NSP_Accrual_Period_Limit__c}>
+                  value={fieldValue.NSP_Accrual_Period_Limit__c}
+                  class="slds-show slds-var-m-bottom_medium slds-form-element__control slds-form-element__legend slds-form-element_vertical">
                 </lightning-input-field>
 
                 <lightning-combobox
@@ -439,40 +469,44 @@
                 value={fieldValue.NSP_When_do_accrual_level_changes_happen__c}
                 options={accrualLevelChangesOptionsAnniversaryYear}
                 data-name="NSP_When_do_accrual_level_changes_happen__c"
-                class="slds-var-m-horizontal_x-small"
+                class="slds-show slds-var-m-bottom_medium slds-form-element__control slds-form-element__legend slds-form-element_vertical"
                 >
                 </lightning-combobox>
             </div>
 
             <div if:true={visibility.isClientFiscalYear}>
-                <lightning-formatted-text value="List start of fiscal year:">
+                <lightning-formatted-text value="List start of fiscal year:"
+                class="slds-show slds-var-m-bottom_medium slds-form-element__control slds-form-element__legend slds-form-element_vertical">
                 </lightning-formatted-text>
 
               <lightning-input-field disabled
                 lwc:if={visibility.NSP_Month__c}
                 field-name="NSP_Month__c"
                 data-name="NSP_Month__c"
-                value={fieldValue.NSP_Month__c}>
+                value={fieldValue.NSP_Month__c}
+                class="slds-show slds-var-m-bottom_medium slds-form-element__control slds-form-element__legend slds-form-element_vertical">
               </lightning-input-field>
 
               <lightning-input-field disabled
                 lwc:if={visibility.NSP_Day__c}
                 field-name="NSP_Day__c"
                 data-name="NSP_Day__c"
-                value={fieldValue.NSP_Day__c}>
+                value={fieldValue.NSP_Day__c}
+                class="slds-show slds-var-m-bottom_medium slds-form-element__control slds-form-element__legend slds-form-element_vertical">
               </lightning-input-field>
 
               <lightning-input-field disabled
                 lwc:if={visibility.NSP_time_accrue_under_plan_fiscal_year__c}
                 field-name="NSP_time_accrue_under_plan_fiscal_year__c"
                 data-name="NSP_time_accrue_under_plan_fiscal_year__c"
-                value={fieldValue.NSP_time_accrue_under_plan_fiscal_year__c}>
+                value={fieldValue.NSP_time_accrue_under_plan_fiscal_year__c}
+                class="slds-show slds-var-m-bottom_medium slds-form-element__control slds-form-element__legend slds-form-element_vertical">
               </lightning-input-field>
 
               <lightning-formatted-text
                 if:true={visibility.NSP_If_hired_midway_through_pay_period__c_ITA_FISCAL}
                 value="If hired midway through the pay period, is a prorated accrual earned?"
-                class="slds-show slds-var-m-around_xx-small slds-text-body_small">
+                class="slds-show slds-var-m-bottom_medium slds-form-element__control slds-form-element__legend slds-form-element_vertical">
               </lightning-formatted-text>
 
               <lightning-input-field disabled
@@ -481,20 +515,22 @@
                 field-name="NSP_If_hired_midway_through_pay_period__c"
                 data-name="NSP_If_hired_midway_through_pay_period__c"
                 data-visibility-name="NSP_If_hired_midway_through_pay_period__c_ITA_FISCAL"
-                value={fieldValue.NSP_If_hired_midway_through_pay_period__c}>
+                value={fieldValue.NSP_If_hired_midway_through_pay_period__c}
+                class="slds-show slds-var-m-bottom_medium slds-form-element__control slds-form-element__legend slds-form-element_vertical">
               </lightning-input-field>
 
               <lightning-input-field disabled
                 if:true={visibility.NSP_Is_there_a_frontloaded_proration__c_ITA_FISCAL}
                 field-name="NSP_Is_there_a_frontloaded_proration__c"
                 data-name="NSP_Is_there_a_frontloaded_proration__c"
-                value={fieldValue.NSP_Is_there_a_frontloaded_proration__c}>
+                value={fieldValue.NSP_Is_there_a_frontloaded_proration__c}
+                class="slds-show slds-var-m-bottom_medium slds-form-element__control slds-form-element__legend slds-form-element_vertical">
               </lightning-input-field>
 
               <lightning-formatted-rich-text
                 if:true={visibility.frontLoad}
                 value="Complete the &lt;a href=&quot;https://serviceops.spapps.insperity.com/sites/hr/Shared%20Documents/front%20load%20proration%20tool.xlsx&quot;&gt;Frontloaded Proration&lt;/a&gt; file and attach to the Accrual Profile once approved."
-                class="slds-show slds-text-heading_small slds-var-m-around_medium">
+                class="slds-show slds-var-m-bottom_medium slds-form-element__control slds-form-element__legend slds-form-element_vertical">
               </lightning-formatted-rich-text>
 
               <lightning-input-field disabled
@@ -502,12 +538,13 @@
                 field-name="NSP_Select_Pay_Frequency__c"
                 data-name="NSP_Select_Pay_Frequency__c"
                 data-visibility-name="NSP_Select_Pay_Frequency__c_ITA_FISCAL"
-                value={fieldValue.NSP_Select_Pay_Frequency__c}>
+                value={fieldValue.NSP_Select_Pay_Frequency__c}
+                class="slds-show slds-var-m-bottom_medium slds-form-element__control slds-form-element__legend slds-form-element_vertical">
               </lightning-input-field>
 
               <template lwc:if={visibility.NSP_Hours_paid_for_earning_accruals__c_ITA_FISCAL}>
                 
-                <div class="slds-show slds-var-m-around_xx-small slds-text-body_small">
+                <div class="slds-show slds-var-m-around_xx-small slds-text-body_small slds-form-element__legend">
                   <label> Accrual rates are based on every 
                     <span if:true={visibility.NSP_Hours_paid_for_earning_accruals__c_ITA_FISCAL}>
                     <strong style="font-size: 15px; color: blue;">&nbsp;{fieldValue.Accrual_rates_are_based_Input_Number__c}&nbsp;</strong>
@@ -529,7 +566,8 @@
                   data-visibility-name="NSP_List_pay_codes__c_ITA_FISCAL"
                   field-name="NSP_List_pay_codes__c"
                   data-name="NSP_List_pay_codes__c"
-                  value={fieldValue.NSP_List_pay_codes__c}>
+                  value={fieldValue.NSP_List_pay_codes__c}
+                  class="slds-show slds-var-m-bottom_medium slds-form-element__control slds-form-element__legend slds-form-element_vertical">
                 </lightning-input-field>
               </template>
 
@@ -538,7 +576,8 @@
                 field-name="NSP_Accrual_Period_Limit__c"
                 data-name="NSP_Accrual_Period_Limit__c"
                 data-visibility-name="NSP_Accrual_Period_Limit__c_ITA_FISCAL"
-                value={fieldValue.NSP_Accrual_Period_Limit__c}>
+                value={fieldValue.NSP_Accrual_Period_Limit__c}
+                class="slds-show slds-var-m-bottom_medium slds-form-element__control slds-form-element__legend slds-form-element_vertical">
               </lightning-input-field>
 
               <lightning-combobox
@@ -549,25 +588,26 @@
                 options={accrualLevelChangesOptionsClientFiscalYear}
                 data-name="NSP_When_do_accrual_level_changes_happen__c"
                 data-visibility-name="NSP_When_do_accrual_level_changes_happen__c_ITA_FISCAL"
-                class="slds-var-m-horizontal_x-small">
+                class="slds-show slds-var-m-bottom_medium slds-form-element__control slds-form-element__legend slds-form-element_vertical">
               </lightning-combobox>
               </div>
 
               <lightning-formatted-text
                 value="Delay in the Accrual start time? (NOTE: THIS IS NOT RECOMMENDED FOR MANDATED SICK/LEAVE)"
-                class="slds-show slds-var-m-around_xx-small slds-text-body_small">
+                class="slds-show slds-var-m-bottom_medium slds-form-element__control slds-form-element__legend slds-form-element_vertical">
               </lightning-formatted-text>
 
               <lightning-input-field disabled
                 field-name="NSP_Delay_in_the_Accrual_start_time__c"
                 data-name="NSP_Delay_in_the_Accrual_start_time__c"
                 variant="label-hidden"
-                value={fieldValue.NSP_Delay_in_the_Accrual_start_time__c}>
+                value={fieldValue.NSP_Delay_in_the_Accrual_start_time__c}
+                class="slds-show slds-var-m-bottom_medium slds-form-element__control slds-form-element__legend slds-form-element_vertical">
               </lightning-input-field>
 
               <lightning-formatted-text
                 value={doBalancesCarryOverLabel}
-                class="slds-show slds-var-m-around_xx-small slds-text-body_small">
+                class="slds-show slds-var-m-bottom_medium slds-form-element__control slds-form-element__legend slds-form-element_vertical">
               </lightning-formatted-text>
 
               <lightning-input-field disabled
@@ -575,32 +615,33 @@
                 data-name="NSP_Do_balances_carry_over_into_next_yer__c"
                 variant="label-hidden"
                 value={fieldValue.NSP_Do_balances_carry_over_into_next_yer__c}
-                class="slds-show slds-var-p-horizontal_xx-small">
+                class="slds-show slds-var-m-bottom_medium slds-form-element__control slds-form-element__legend slds-form-element_vertical">
               </lightning-input-field>
 
               <lightning-formatted-text
                 if:true={visibility.NSP_Do_balances_carry_over_into_next_yer_info_msg}
                 value={infoMessage.NSP_Do_balances_carry_over_into_next_yer_info_msg}
-                class="slds-show slds-text-heading_small slds-var-m-around_medium">
+                class="slds-show slds-var-m-bottom_medium slds-form-element__control slds-form-element__legend slds-form-element_vertical">
               </lightning-formatted-text>
 
               <lightning-input-field disabled
                 if:true={visibility.NSP_Carryover_in_Hours_or_percentage__c}
                 field-name="NSP_Carryover_in_Hours_or_percentage__c"
                 data-name="NSP_Carryover_in_Hours_or_percentage__c"
-                value={fieldValue.NSP_Carryover_in_Hours_or_percentage__c}>
+                value={fieldValue.NSP_Carryover_in_Hours_or_percentage__c}
+                class="slds-show slds-var-m-bottom_medium slds-form-element__control slds-form-element__legend slds-form-element_vertical">
               </lightning-input-field>
 
               <lightning-formatted-text
                 lwc:if={visibility.NSP_Does_carryover_expire__c}
                 value="Does carryover expire? (NOTE: THIS IS NOT RECOMMENDED FOR MANDATED SICK/LEAVE)"
-                class="slds-show slds-var-m-around_medium">
+                class="slds-show slds-var-m-bottom_medium slds-form-element__control slds-form-element__legend slds-form-element_vertical">
               </lightning-formatted-text>
 
               <lightning-input-field disabled
                lwc:if={visibility.NSP_Does_carryover_expire__c}
                 variant="label-hidden"
-                class="slds-show slds-var-p-horizontal_xx-small"
+                class="slds-show slds-var-m-bottom_medium slds-form-element__control slds-form-element__legend slds-form-element_vertical"
                 field-name="NSP_Does_carryover_expire__c"
                 value={fieldValue.NSP_Does_carryover_expire__c}
                 data-name="NSP_Does_carryover_expire__c"
@@ -610,7 +651,7 @@
               <lightning-formatted-text
                 if:true={visibility.NSP_Days_Date_after_carryover_balance_ex__c}
                 value="How many days after the carryover or date after carryover does the balance expire?"
-                class="slds-show slds-var-m-around_medium">
+                class="slds-show slds-var-m-bottom_medium slds-form-element__control slds-form-element__legend slds-form-element_vertical">
               </lightning-formatted-text>
 
               <lightning-input-field disabled
@@ -619,12 +660,12 @@
                 value={fieldValue.NSP_Days_Date_after_carryover_balance_ex__c}
                 field-name="NSP_Days_Date_after_carryover_balance_ex__c"
                 data-name="NSP_Days_Date_after_carryover_balance_ex__c"
-                >
+                class="slds-show slds-var-m-bottom_medium slds-form-element__control slds-form-element__legend slds-form-element_vertical">
               </lightning-input-field>
 
               <lightning-formatted-text
                 value={annualAccrualLimitLabel}
-                class="slds-show slds-var-m-around_medium">
+                class="slds-show slds-var-m-bottom_medium slds-form-element__control slds-form-element__legend slds-form-element_vertical">
               </lightning-formatted-text>
 
               <lightning-input-field disabled
@@ -632,7 +673,7 @@
                 data-name="NSP_Once_limit_is_hit_they_do_not_accrue__c"
                 variant="label-hidden"
                 value={fieldValue.NSP_Once_limit_is_hit_they_do_not_accrue__c}
-                class="slds-show slds-var-p-horizontal_xx-small"
+                class="slds-show slds-var-m-bottom_medium slds-form-element__control slds-form-element__legend slds-form-element_vertical"
                 >
               </lightning-input-field>
 
@@ -640,12 +681,13 @@
                 field-name="NSP_Is_there_a_Maximum_Balance_Cap__c"
                 data-name="NSP_Is_there_a_Maximum_Balance_Cap__c"
                 value={fieldValue.NSP_Is_there_a_Maximum_Balance_Cap__c}
+                class="slds-show slds-var-m-bottom_medium slds-form-element__control slds-form-element__legend slds-form-element_vertical"
                 >
               </lightning-input-field>
 
               <lightning-formatted-text
                 value={infoMessage.NSP_Add_info_not_already_listed_on_form_info_msg}
-                class="slds-show slds-var-m-around_medium">
+                class="slds-show slds-var-m-bottom_medium slds-form-element__control slds-form-element__legend slds-form-element_vertical">
               </lightning-formatted-text>
 
               <lightning-input-field disabled
