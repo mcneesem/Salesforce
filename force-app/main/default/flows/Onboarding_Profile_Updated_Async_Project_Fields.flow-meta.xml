@@ -2,6 +2,39 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>61.0</apiVersion>
     <assignments>
+        <name>Fault_Element_For_Get_Project_Records</name>
+        <label>Fault Element For Get Project Records</label>
+        <locationX>1012</locationX>
+        <locationY>384</locationY>
+        <assignmentItems>
+            <assignToReference>Fault_Element</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Project_Records</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Flow_Error_while_updating_Project_Records</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Fault_Element_For_Update_Project_Records</name>
+        <label>Fault Element For Update Project Records</label>
+        <locationX>484</locationX>
+        <locationY>900</locationY>
+        <assignmentItems>
+            <assignToReference>Fault_Element</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Update_Project_Records</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Flow_Error_while_updating_Project_Records</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Set_Project_Fields</name>
         <label>Set Project Fields</label>
         <locationX>308</locationX>
@@ -119,6 +152,9 @@
         <connector>
             <targetReference>Validate_Project_Records</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Fault_Element_For_Get_Project_Records</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Onboarding_Profile__c</field>
@@ -143,7 +179,7 @@
         <locationX>220</locationX>
         <locationY>792</locationY>
         <faultConnector>
-            <targetReference>Flow_Error_while_updating_Project_Records</targetReference>
+            <targetReference>Fault_Element_For_Update_Project_Records</targetReference>
         </faultConnector>
         <inputReference>Get_Project_Records</inputReference>
     </recordUpdates>
@@ -180,7 +216,7 @@
         <name>Flow_Error_while_updating_Project_Records</name>
         <label>Flow Error while updating Project Records</label>
         <locationX>484</locationX>
-        <locationY>900</locationY>
+        <locationY>1008</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultElement</name>
@@ -191,14 +227,21 @@
         <inputAssignments>
             <name>faultFlow</name>
             <value>
-                <stringValue>Onboarding Profile Updated Async Project Fields</stringValue>
+                <stringValue>Onboarding_Profile_Updated_Async_Project_Fields</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
             <name>faultMessage</name>
             <value>
-                <elementReference>$Flow.FaultMessage</elementReference>
+                <elementReference>Fault_Element</elementReference>
             </value>
         </inputAssignments>
     </subflows>
+    <variables>
+        <name>Fault_Element</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
 </Flow>
