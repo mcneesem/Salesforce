@@ -3,7 +3,7 @@
  * @date         : 5/19/2022
  */
 public without sharing class NSP_ContactRollupController {
-    // test w/ NSP_ContactRollupController_Test (78%)
+    // test w/ NSP_ContactRollupController_Test (90%)
 
     /**
      * @description: Contact - Roll up visibility of all Contact roles at the Account Page from AccountContactRelation and SubClientContacts
@@ -21,7 +21,7 @@ public without sharing class NSP_ContactRollupController {
             if (allFilters != null && allFilters.size() > 0) {
                 //fetch filtered result of ACR and Sub clients combined together based on all filters[] passed to regex expression
                 String regex = '^';
-                for (string filter: allFilters) {
+ 				for (string filter: allFilters) {
                     regex = regex + '(?=.*\\b' + filter + '\\b)';
                 }
                 regex = regex + '.*$';
@@ -95,19 +95,23 @@ public without sharing class NSP_ContactRollupController {
                 resultsMap.put(subClientCont.NSP_Contact__c, wrap);
 
             } else {
-                resultsMap.put(subClientCont.NSP_Contact__c, new ResultWrapper(
-                    new Account(Id = subClientCont.NSP_Sub_Client__r.NSP_Account__c, Name = subClientCont.NSP_Sub_Client__r.NSP_Account__r.Name),
-                    new Contact(Id = subClientCont.NSP_Contact__c, FirstName = subClientCont.NSP_Contact__r.firstName, NSP_Preferred_First_Name__c = subClientCont.NSP_Contact__r.NSP_Preferred_First_Name__c),
-                    subClientCont.NSP_Contact__r.Name,
-                    new List < NSP_Sub_Client__c > {
-                        sc
-                    },
-                    getUpdatedRoles(null, subClientCont),
-                    resultsMap.get(subClientCont.NSP_Sub_Client__r.NSP_Account__c).jobTitle,
-                    resultsMap.get(subClientCont.NSP_Sub_Client__r.NSP_Account__c).employeeStatus,
-                    resultsMap.get(subClientCont.NSP_Sub_Client__r.NSP_Account__c).workPhone,
-                    resultsMap.get(subClientCont.NSP_Sub_Client__r.NSP_Account__c).workEmail
-                ));
+                if(subClientCont.NSP_Contact__c <> null && resultsMap.containsKey(subClientCont.NSP_Contact__c))
+                {
+                    ResultWrapper resultWapper = resultsMap.get(subClientCont.NSP_Contact__c);
+                    
+                    resultsMap.put(subClientCont.NSP_Contact__c, new ResultWrapper(
+                        new Account(Id = subClientCont.NSP_Sub_Client__r.NSP_Account__c, Name = subClientCont.NSP_Sub_Client__r.NSP_Account__r.Name),
+                        new Contact(Id = subClientCont.NSP_Contact__c, FirstName = subClientCont.NSP_Contact__r.firstName, NSP_Preferred_First_Name__c = subClientCont.NSP_Contact__r.NSP_Preferred_First_Name__c),
+                        subClientCont.NSP_Contact__r.Name,
+                        new List < NSP_Sub_Client__c > {
+                            sc
+                                },
+                        getUpdatedRoles(null, subClientCont),
+                        resultWapper.jobTitle,
+                        resultWapper.employeeStatus,
+                        resultWapper.workPhone,
+                        resultWapper.workEmail
+                    ));
             }
         }
 
