@@ -75,8 +75,6 @@ public without sharing class NSP_ContactRollupController {
     }
 
     private static Map < Id, ResultWrapper > getSubClinetContactRecords(list<NSP_Sub_Client_Contact__c> lstSubClientContacts, Map < Id, ResultWrapper > resultsMap, string recordId){
-        System.debug('Prakash sub client contact : ' + lstSubClientContacts);
-        
         Set<Id> contactIdSet = new Set<Id>();
         Map<Id, AccountContactRelation> acrMap = new Map<Id, AccountContactRelation>();
         
@@ -124,6 +122,8 @@ public without sharing class NSP_ContactRollupController {
             } else {
                 if(acrMap?.containsKey(subClientCont.NSP_Contact__c))
                 {
+                    AccountContactRelation subClientContAcr = acrMap.get( subClientCont.NSP_Contact__c );
+
                     resultsMap.put(subClientCont.NSP_Contact__c, new ResultWrapper(
                         new Account(Id = subClientCont.NSP_Sub_Client__r.NSP_Account__c, Name = subClientCont.NSP_Sub_Client__r.NSP_Account__r.Name),
                         new Contact(Id = subClientCont.NSP_Contact__c, FirstName = subClientCont.NSP_Contact__r.firstName, NSP_Preferred_First_Name__c = subClientCont.NSP_Contact__r.NSP_Preferred_First_Name__c),
@@ -132,10 +132,10 @@ public without sharing class NSP_ContactRollupController {
                             sc
                                 },
                         getUpdatedRoles(null, subClientCont),
-                        acrMap.get(subClientCont.NSP_Contact__c).NSP_Job_Title__c,
-                        acrMap.get(subClientCont.NSP_Contact__c).NSP_Employee_Status__c,
-                        acrMap.get(subClientCont.NSP_Contact__c).NSP_Work_Phone__c, 
-                        acrMap.get(subClientCont.NSP_Contact__c).NSP_Work_email__c
+                        subClientContAcr.NSP_Job_Title__c,
+                        subClientContAcr.NSP_Employee_Status__c,
+                        subClientContAcr.NSP_Work_Phone__c, 
+                        subClientContAcr.NSP_Work_email__c
                     ));               
                 }
             }
