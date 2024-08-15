@@ -175,7 +175,7 @@
         </scheduledPaths>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <subflows>
         <name>Flow_Error_while_updating_Project_Records</name>
         <label>Flow Error while updating Project Records</label>
