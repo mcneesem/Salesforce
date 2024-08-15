@@ -214,6 +214,8 @@
         </filters>
         <getFirstRecordOnly>false</getFirstRecordOnly>
         <object>Asset</object>
+        <sortField>CreatedDate</sortField>
+        <sortOrder>Asc</sortOrder>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <start>
@@ -243,16 +245,6 @@
     </start>
     <status>Draft</status>
     <variables>
-        <name>FaultElement</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <value>
-            <stringValue></stringValue>
-        </value>
-    </variables>
-    <variables>
         <name>WO_Asset_Record_Id</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
@@ -261,12 +253,5 @@
         <value>
             <stringValue></stringValue>
         </value>
-    </variables>
-    <variables>
-        <name>WO_Asset_Record_Type_Id</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>true</isInput>
-        <isOutput>false</isOutput>
     </variables>
 </Flow>
