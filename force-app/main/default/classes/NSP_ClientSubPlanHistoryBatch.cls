@@ -1,6 +1,6 @@
 // 2022-11-04 ~ STY-03665 ~ Srushti ~ Batch Class to update Asset record fields from client sub plan history record.
 public class NSP_ClientSubPlanHistoryBatch implements Database.Batchable<sObject>, Schedulable {
-    // test w/ NSP_ClientSubPlanHistoryBatchTest (96%)
+    // test w/ NSP_ClientSubPlanHistoryBatchTest (93%)
 
     public NSP_ClientSubPlanHistoryBatch() {
         // intentionally blank...
@@ -33,25 +33,42 @@ public class NSP_ClientSubPlanHistoryBatch implements Database.Batchable<sObject
     }
 
     public void execute( Database.BatchableContext bc , List<NSP_Client_Sub_Plan_History__c> scope ) {
-        Set<Id> assetIdSet =  new Set<Id>();
+        Set<Id> assetIdSet = new Set<Id>();
         Set<Id> nonTermAssetIdSet = new Set<Id>();
-        Map<Id, NSP_Client_Sub_Plan_History__c> assetClientSubPlanHistoryMap = new Map<Id, NSP_Client_Sub_Plan_History__c>();
+        Map<Id,NSP_Client_Sub_Plan_History__c> assetClientSubPlanHistoryMap = new Map<Id,NSP_Client_Sub_Plan_History__c>();
         //Iterate through the list of client sub plan history and add asset Ids and remove those assets which will not be terminating
-        for(NSP_Client_Sub_Plan_History__c clientSubPlanHistoryRec: scope){
-            assetIdSet.add(clientSubPlanHistoryRec.NSP_Asset__c);
-            if(clientSubPlanHistoryRec.NSP_Start_Date__c >= date.today() && clientSubPlanHistoryRec.NSP_End_Date__c == NULL){
-                assetIdSet.remove(clientSubPlanHistoryRec.NSP_Asset__c);
-                nonTermAssetIdSet.add(clientSubPlanHistoryRec.NSP_Asset__c);
+        for ( NSP_Client_Sub_Plan_History__c clientSubPlanHistoryRec : scope ) {
+            assetIdSet.add( clientSubPlanHistoryRec.NSP_Asset__c );
+            if ( ( clientSubPlanHistoryRec.NSP_Start_Date__c >= Date.today() )
+                && ( clientSubPlanHistoryRec.NSP_End_Date__c == null )
+                )
+            {
+                assetIdSet.remove( clientSubPlanHistoryRec.NSP_Asset__c );
+                nonTermAssetIdSet.add( clientSubPlanHistoryRec.NSP_Asset__c );
             }
         }
-        List<Asset> assetRecordToUpdate = [SELECT Id, NSP_Termination_Date__c, Status FROM Asset WHERE Id IN: assetIdSet];
-        List<Asset> nonTermAssetToUpdate = [SELECT Id, NSP_Termination_Date__c, Status FROM Asset WHERE Id IN: nonTermAssetIdSet];
+        List<Asset> assetRecordToUpdate = [
+            SELECT Id , NSP_Termination_Date__c , Status
+            FROM Asset
+            WHERE (
+                ( Id IN :assetIdSet )
+                AND ( OwnerId NOT IN :NSP_ClientSubPlanHistoryBatch.skewedAssetOwnerIds )
+            )
+        ];
+        List<Asset> nonTermAssetToUpdate = [
+            SELECT Id , NSP_Termination_Date__c , Status
+            FROM Asset
+            WHERE (
+                ( Id IN :nonTermAssetIdSet )
+                AND ( OwnerId NOT IN :NSP_ClientSubPlanHistoryBatch.skewedAssetOwnerIds )
+            )
+        ];
         List<NSP_Client_Sub_Plan_History__c> clientSubPlanHistoryList = [
             SELECT Id , NSP_Start_Date__c , CreatedDate , NSP_End_Date__c , NSP_Asset__c
             FROM NSP_Client_Sub_Plan_History__c
             WHERE (
-                NSP_Asset__c IN :assetIdSet
-                AND NSP_End_Date__c <= TODAY
+                ( NSP_Asset__c IN :assetIdSet )
+                AND ( NSP_End_Date__c <= TODAY )
             )
         ];
         //Link the most recently created client sub plan history to the asset 
@@ -163,6 +180,43 @@ public class NSP_ClientSubPlanHistoryBatch implements Database.Batchable<sObject
                 batchSize = local;
             }
             return batchSize;
+        }
+        private set;
+    }
+
+    //
+    // Asset Ownership Skew (July 2024)
+    // ~ 76294 ~ 0054x0000057P93AAE ~ Data Migration (PwC)
+    // ~ 38755 ~ 0054x0000057MPSAA2 ~ Insperity Integration User
+    //
+    // ignore specific Asset Owner's to prevent DmlException UNABLE_TO_LOCK_ROW
+    //
+    private static Set<Id> skewedAssetOwnerIds {
+        get {
+            if ( skewedAssetOwnerIds == null ) {
+                Set<Id> local = new Set<Id>();
+                if ( NSP_ClientSubPlanHistoryBatch.settings != null ) {
+                    String rawSkewedAssetOwnerIds = NSP_ClientSubPlanHistoryBatch.settings.SkewedAssetOwnerIds__c;
+                    if ( String.isNotBlank( rawSkewedAssetOwnerIds ) ) {
+                        List<String> splitSkewedAssetOwnerIds = rawSkewedAssetOwnerIds.split( ',' );
+                        if ( ( splitSkewedAssetOwnerIds != null ) && !splitSkewedAssetOwnerIds.isEmpty() ) {
+                            for ( String splitSkewedAssetOwnerId : splitSkewedAssetOwnerIds ) {
+                                if ( String.isNotBlank( splitSkewedAssetOwnerId )
+                                    && ( splitSkewedAssetOwnerId InstanceOf Id )
+                                    )
+                                {
+                                    Id skewedAssetOwnerId = Id.valueOf( splitSkewedAssetOwnerId );
+                                    if ( skewedAssetOwnerId.getSObjectType() == User.getSObjectType() ) {
+                                        local.add( skewedAssetOwnerId );
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                skewedAssetOwnerIds = local;
+            }
+            return skewedAssetOwnerIds;
         }
         private set;
     }

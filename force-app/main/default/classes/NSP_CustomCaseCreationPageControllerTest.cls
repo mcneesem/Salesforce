@@ -13,7 +13,7 @@ Modification Log     :
 */
 @isTest(SeeAllData=false)
 public class NSP_CustomCaseCreationPageControllerTest {
-	@testSetup
+    @testSetup
     static void testData() {
         //Inserting Category
         NSP_Category_Sub_Category_Mapping__c newCat = (NSP_Category_Sub_Category_Mapping__c)NSP_TestExtendedDataFactory.createSObject(new NSP_Category_Sub_Category_Mapping__c(), 'NSP_TestDataFactory.CatSubCatMappingDefaults', false);
@@ -130,15 +130,14 @@ public class NSP_CustomCaseCreationPageControllerTest {
         String peoRecordtypeId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('PEO').getRecordTypeId();
         String bpsRecordtypeId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('BPS').getRecordTypeId();
         Test.startTest();
-        	Contact con = [SELECT Id, AccountId FROM Contact WHERE Account.Name =: System.Label.NSP_InternalAccountName LIMIT 1];
+        Contact con = [SELECT Id, AccountId FROM Contact WHERE Account.Name =: System.Label.NSP_InternalAccountName LIMIT 1];
         //Getting Category Records
-        	Case ca = [SELECT Id, AccountId, NSP_Category__c,NSP_SubCategory__c  FROM Case WHERE Account.Name =: System.Label.NSP_InternalAccountName LIMIT 1];
+        Case ca = [SELECT Id, AccountId, NSP_Category__c,NSP_SubCategory__c  FROM Case WHERE Account.Name =: System.Label.NSP_InternalAccountName LIMIT 1];
         //Getting Asset Records
         List<NSP_Category_Sub_Category_Mapping__c> lCategoriesRecords =[SELECT Id, NSP_Detail__c, NSP_Category__c, NSP_Subcategory__c,NSP_Version__c
                                                          FROM NSP_Category_Sub_Category_Mapping__c 
                                                          WHERE  NSP_Category__c !=null];
-        	
-        	NSP_CustomCaseCreationPageController.getCategoryList(peoRecordtypeId, false);
+            NSP_CustomCaseCreationPageController.getCategoryList(peoRecordtypeId, false);
             NSP_CustomCaseCreationPageController.getInternalAccountId();
             NSP_CustomCaseCreationPageController.getAllCategoryList(peoRecordtypeId, '');
             NSP_CustomCaseCreationPageController.getAllDependenciesValues(peoRecordtypeId);
@@ -152,13 +151,13 @@ public class NSP_CustomCaseCreationPageControllerTest {
             NSP_CustomCaseCreationPageController.getContactParent(ca.Id);
             NSP_CustomCaseCreationPageController.getAssetParent(ca.Id);
             NSP_CustomCaseCreationPageController.autoPopulateAsset(ca.NSP_Category__c, ca.NSP_SubCategory__c, ca.AccountId );
-        	List<object> objList = (List<object>)json.deserializeUntyped('[{"Title":"test","FileContent":"25 lines of data added","FileType":"xml"}]');
+            List<object> objList = (List<object>)json.deserializeUntyped('[{"Title":"test","FileContent":"25 lines of data added","FileType":"xml"}]');
             NSP_CustomCaseCreationPageController.saveFiles(objList, ca.Id);
             NSP_CustomCaseCreationPageController.getDependencyWrapper(lCategoriesRecords);
-        	NSP_Category_Sub_Category_Mapping__c cat3 = [SELECT Id, NSP_Detail__c , NSP_Category__c
+            NSP_Category_Sub_Category_Mapping__c cat3 = [SELECT Id, NSP_Detail__c , NSP_Category__c
                                                          FROM NSP_Category_Sub_Category_Mapping__c 
                                                          WHERE NSP_Detail__c = 'Login' AND NSP_Category__c = 'M&A'];
-        	cat3.NSP_Version__c = 'Test';
+        cat3.NSP_Version__c = 'Test';
         //Updating Category 3
         update cat3;
         
@@ -168,7 +167,7 @@ public class NSP_CustomCaseCreationPageControllerTest {
         System.assertEquals(1, [SELECT count() FROM Case WHERE Account.Name =: System.Label.NSP_InternalAccountName]);
 
         //coverage changes
-       	NSP_CustomCaseCreationPageController.getCategoryList(bpsRecordtypeId, false);
+        NSP_CustomCaseCreationPageController.getCategoryList(bpsRecordtypeId, false);
         NSP_CustomCaseCreationPageController.getCaseFromConfig('nulls', con.AccountId);
         
         //Rob run as non Admin
@@ -252,4 +251,16 @@ Id  groupId = NSP_sObjectSelector.selectGroupByTypeAndApiName(NSP_ServiceConstan
 
     system.assert(objectNameKeyPrefixMap != null);
     }
+
+    @isTest
+    private static void testGetCaseSettingFlagWithValidRecord() {
+        CustomCaseCreationSettings__c settings = CustomCaseCreationSettings__c.getOrgDefaults();
+        settings.IsReloadEnabled__c = true;
+        upsert settings;
+        //
+        Test.startTest();
+        Boolean result = NSP_CustomCaseCreationPageController.getCaseSettingFlag();
+        Test.stopTest();
+    }
+
 }

@@ -1190,6 +1190,21 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Do_the_employee_s_work_more_than_6__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pending</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Do_you_have_a_recent_journal_entry__c</picklist>
         <values>
             <fullName>N%2FA</fullName>
@@ -2410,6 +2425,21 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Is_the_Employee_an_Intern__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pending</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Is_the_client_a_federal_contractor__c</picklist>
         <values>
             <fullName>No</fullName>
@@ -2447,6 +2477,21 @@
         </values>
         <values>
             <fullName>VETS-4212</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Is_the_work_performed_typically_the_same__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pending</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -5137,6 +5182,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Performance Management</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Recruiting Services</fullName>
             <default>false</default>
         </values>
@@ -5481,6 +5530,163 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>What_months_client_increase_the_staff__c</picklist>
+        <values>
+            <fullName>Apr</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Aug</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dec</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Feb</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Jan</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Jul</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Jun</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mar</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>May</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Nov</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Oct</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sept</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>What_months_is_the_Intern_in_school__c</picklist>
+        <values>
+            <fullName>Apr</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Aug</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dec</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Feb</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Jan</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Jul</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Jun</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mar</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>May</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>N%2FA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Nov</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Oct</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sept</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>What_months_is_the_Intern_working__c</picklist>
+        <values>
+            <fullName>Apr</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Aug</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dec</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Feb</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Jan</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Jul</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Jun</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mar</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>May</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Nov</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Oct</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sept</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>What_time_zone_do_EEs_work__c</picklist>
         <values>
             <fullName>Alaskan</fullName>
@@ -5797,6 +6003,17 @@
         </values>
         <values>
             <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Work_performed_the_same_as_the_rest_year__c</picklist>
+        <values>
+            <fullName>Different</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Same</fullName>
             <default>false</default>
         </values>
     </picklistValues>

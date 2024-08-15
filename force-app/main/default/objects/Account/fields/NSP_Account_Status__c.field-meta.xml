@@ -3,7 +3,7 @@
     <fullName>NSP_Account_Status__c</fullName>
     <description>Field to store if Account is Active or Not</description>
     <externalId>false</externalId>
-    <label>Account Status</label>
+    <label>Sales Account Status</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>true</trackHistory>
@@ -14,12 +14,12 @@
             <sorted>false</sorted>
             <value>
                 <fullName>Active</fullName>
-                <default>false</default>
-                <label>Active</label>
+                <default>true</default>
+                <label>Sales Active</label>
             </value>
             <value>
                 <fullName>Inactive</fullName>
-                <default>true</default>
+                <default>false</default>
                 <label>Inactive</label>
             </value>
         </valueSetDefinition>

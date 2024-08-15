@@ -1,4 +1,6 @@
 public with sharing class NSP_CustomCaseCreationPageController {
+    // test w/ NSP_CustomCaseCreationPageControllerTest (83%)
+
     public static final String NOCONFIGERROR = 'No Case Type Configuration Found';
     public static final String NSP_CUSTOMCASECREATIONPAGECONTROLLER = 'NSP_CustomCaseCreationPageController';   
     public static final String SERVICE_OPERATIONS = 'Service Operations';
@@ -674,4 +676,10 @@ public static Boolean isMemberOfPrivateSection125Visibility(){
             throw new AuraHandledException(excep.getMessage());
         }
     }
+    
+    @AuraEnabled(cacheable=true)
+    public static Boolean getCaseSettingFlag() {
+        return CustomCaseCreationSettings__c.getInstance(UserInfo.getProfileId()).IsReloadEnabled__c;
+    }
+
 }

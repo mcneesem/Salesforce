@@ -3,10 +3,13 @@
     <actionCalls>
         <name>Update_Contact_on_Voice_Call</name>
         <label>Update Contact on Voice Call</label>
-        <locationX>50</locationX>
-        <locationY>1838</locationY>
+        <locationX>336</locationX>
+        <locationY>2006</locationY>
         <actionName>VoiceCall.Update_Contact</actionName>
         <actionType>quickAction</actionType>
+        <connector>
+            <targetReference>Select_Related_Case</targetReference>
+        </connector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>contextId</name>
@@ -51,8 +54,8 @@
         <description>Unable to add Insperity_Fault_Handler_Subflow.</description>
         <name>Set_Fault_Message</name>
         <label>Set Fault Message</label>
-        <locationX>314</locationX>
-        <locationY>1730</locationY>
+        <locationX>864</locationX>
+        <locationY>1898</locationY>
         <assignmentItems>
             <assignToReference>faultMessage</assignToReference>
             <operator>Assign</operator>
@@ -65,7 +68,7 @@
         <description>Unable to add Insperity_Fault_Handler_Subflow.</description>
         <name>Set_Fault_Message_Search_Term</name>
         <label>Set Fault Message (Search Term)</label>
-        <locationX>1106</locationX>
+        <locationX>1128</locationX>
         <locationY>1082</locationY>
         <assignmentItems>
             <assignToReference>faultMessage</assignToReference>
@@ -82,7 +85,7 @@
     <assignments>
         <name>Set_Record</name>
         <label>Set Record</label>
-        <locationX>974</locationX>
+        <locationX>864</locationX>
         <locationY>350</locationY>
         <assignmentItems>
             <assignToReference>record</assignToReference>
@@ -99,7 +102,7 @@
         <description>Sets MatchingRecordCount to the number of records in matchingRecords.</description>
         <name>SetRecordCount</name>
         <label>Set Record Count</label>
-        <locationX>578</locationX>
+        <locationX>336</locationX>
         <locationY>1082</locationY>
         <assignmentItems>
             <assignToReference>matchingRecordsCount</assignToReference>
@@ -116,7 +119,7 @@
         <description>Sets the SearchTerm variable to the phone number for the messaging user from the voice call.</description>
         <name>SetSearchTerm</name>
         <label>Set Search Term</label>
-        <locationX>446</locationX>
+        <locationX>204</locationX>
         <locationY>782</locationY>
         <assignmentItems>
             <assignToReference>searchTerm</assignToReference>
@@ -132,8 +135,11 @@
     <decisions>
         <name>Check_Messaging_User</name>
         <label>Check Messaging User</label>
-        <locationX>314</locationX>
+        <locationX>182</locationX>
         <locationY>1406</locationY>
+        <defaultConnector>
+            <targetReference>UpdateMessagingUserRecord</targetReference>
+        </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Found_Messaging_User</name>
@@ -154,7 +160,7 @@
     <decisions>
         <name>Check_Messaging_User_Search_Term</name>
         <label>Check Messaging User (Search Term)</label>
-        <locationX>578</locationX>
+        <locationX>336</locationX>
         <locationY>674</locationY>
         <defaultConnector>
             <targetReference>GetMatchingContacts</targetReference>
@@ -177,9 +183,38 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Check_Related_Case</name>
+        <label>Check Related Case</label>
+        <locationX>336</locationX>
+        <locationY>2222</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Found_Modifiable_Case</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Select_Related_Case</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Select_Related_Case.Status</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Closed</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Case_Contact</targetReference>
+            </connector>
+            <label>Found Modifiable Case</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Check_Voice_Call_Record</name>
         <label>Check Voice Call Record</label>
-        <locationX>1304</locationX>
+        <locationX>1260</locationX>
         <locationY>242</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -202,7 +237,7 @@
         <description>Determines whether the record passed into the flow has an associated messaging user.</description>
         <name>IsMessagingUserAssociated</name>
         <label>Is Messaging User Associated?</label>
-        <locationX>974</locationX>
+        <locationX>864</locationX>
         <locationY>458</locationY>
         <defaultConnectorLabel>No (Default)</defaultConnectorLabel>
         <rules>
@@ -225,8 +260,11 @@
         <description>Checks if a record is selected from a data table with contacts list</description>
         <name>IsRowSelected</name>
         <label>Is Row Selected?</label>
-        <locationX>578</locationX>
+        <locationX>336</locationX>
         <locationY>1298</locationY>
+        <defaultConnector>
+            <targetReference>UpdateMessagingUserRecord</targetReference>
+        </defaultConnector>
         <defaultConnectorLabel>No (Default)</defaultConnectorLabel>
         <rules>
             <name>yes</name>
@@ -253,6 +291,11 @@
     </decisions>
     <description>Finds a Contact record related with the phone number for the Messaging User record from the specified Voice Call record.  If the Voice Agent cancels rather than links to a Contact, then no Contact is returned.</description>
     <environments>Default</environments>
+    <formulas>
+        <name>limitCreatedDate</name>
+        <dataType>DateTime</dataType>
+        <expression>( NOW() - {!$Setup.Find_Related_Contact_Settings__c.LimitCreatedDate__c} )</expression>
+    </formulas>
     <interviewLabel>Find Related Contact (Voice Call) {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Find Related Contact (Voice Call)</label>
     <processMetadataValues>
@@ -272,8 +315,8 @@
         <description>Gets the contact record associated with the voice call record passed into the flow. Stores the results in the associatedContact record variable.</description>
         <name>GetAssociatedContact</name>
         <label>Get Associated Contact</label>
-        <locationX>50</locationX>
-        <locationY>1730</locationY>
+        <locationX>336</locationX>
+        <locationY>1898</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Update_Contact_on_Voice_Call</targetReference>
@@ -294,7 +337,7 @@
         <description>Gets contacts with IDs matching the contact IDs  returned in Outputs from SearchMatchingContact. Stores the result in the matchingContacts record collection.</description>
         <name>GetMatchingContacts</name>
         <label>Get Matching Contacts</label>
-        <locationX>578</locationX>
+        <locationX>336</locationX>
         <locationY>974</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -303,7 +346,14 @@
         <faultConnector>
             <targetReference>Set_Fault_Message_Search_Term</targetReference>
         </faultConnector>
-        <filterLogic>or</filterLogic>
+        <filterLogic>( 1 AND ( 2 OR 3 OR 4 ) )</filterLogic>
+        <filters>
+            <field>CreatedDate</field>
+            <operator>GreaterThanOrEqualTo</operator>
+            <value>
+                <elementReference>limitCreatedDate</elementReference>
+            </value>
+        </filters>
         <filters>
             <field>HomePhone</field>
             <operator>Contains</operator>
@@ -333,7 +383,7 @@
         <description>Gets the messaging user record associated with the voice call record passed into the flow. Stores the record in the Messaging User from GetMessagingUser record variable.</description>
         <name>GetMessagingUser</name>
         <label>Get Messaging User</label>
-        <locationX>578</locationX>
+        <locationX>336</locationX>
         <locationY>566</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -355,7 +405,7 @@
         <description>Gets the voice call record to pass into the flow. Stores the results in the Voice Call from GetVoiceCall record variable.</description>
         <name>GetVoiceCall</name>
         <label>Get Voice Call</label>
-        <locationX>1304</locationX>
+        <locationX>1260</locationX>
         <locationY>134</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -375,12 +425,59 @@
         <sortOrder>Asc</sortOrder>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordLookups>
+        <name>Select_Related_Case</name>
+        <label>Select Related Case</label>
+        <locationX>336</locationX>
+        <locationY>2114</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_Related_Case</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>GetVoiceCall.CaseId__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Case</object>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Status</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <name>Update_Case_Contact</name>
+        <label>Update Case Contact</label>
+        <locationX>72</locationX>
+        <locationY>2330</locationY>
+        <faultConnector>
+            <targetReference>Update_Case_Failure</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>GetVoiceCall.CaseId__c</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>ContactId</field>
+            <value>
+                <elementReference>GetMessagingUser.ContactId</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
     <recordUpdates>
         <description>Commits the changes to the record in Messaging User from GetMessagingUser.</description>
         <name>UpdateMessagingUserRecord</name>
         <label>Update Messaging User Record</label>
-        <locationX>50</locationX>
-        <locationY>1622</locationY>
+        <locationX>336</locationX>
+        <locationY>1790</locationY>
         <connector>
             <targetReference>GetAssociatedContact</targetReference>
         </connector>
@@ -392,7 +489,7 @@
     <screens>
         <name>SingleMatchPromptAgent</name>
         <label>Prompt Agent</label>
-        <locationX>578</locationX>
+        <locationX>336</locationX>
         <locationY>1190</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -534,8 +631,24 @@
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
     </screens>
+    <screens>
+        <name>Update_Case_Failure</name>
+        <label>Update Case Failure</label>
+        <locationX>336</locationX>
+        <locationY>2438</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>Case_Fault_Message</name>
+            <fieldText>&lt;p&gt;{!$Flow.FaultMessage}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
     <start>
-        <locationX>1178</locationX>
+        <locationX>1134</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>GetVoiceCall</targetReference>

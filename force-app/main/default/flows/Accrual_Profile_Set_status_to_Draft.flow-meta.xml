@@ -42,12 +42,12 @@
         <connector>
             <targetReference>Update_status_to_draft</targetReference>
         </connector>
-        <filterLogic>and</filterLogic>
+        <filterLogic>( 1 AND 2 AND ( 3 OR 4 ) )</filterLogic>
         <filters>
             <field>NSP_Status__c</field>
-            <operator>EqualTo</operator>
+            <operator>IsNull</operator>
             <value>
-                <stringValue>AP Approved</stringValue>
+                <booleanValue>false</booleanValue>
             </value>
         </filters>
         <filters>
@@ -59,9 +59,16 @@
         </filters>
         <filters>
             <field>NSP_Status__c</field>
-            <operator>IsNull</operator>
+            <operator>EqualTo</operator>
             <value>
-                <booleanValue>false</booleanValue>
+                <stringValue>AP Approved</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>NSP_Status__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Active</stringValue>
             </value>
         </filters>
         <object>NSP_Accrual_Profile__c</object>

@@ -34,6 +34,9 @@ import PARENTCASE_ACCOUNTID from '@salesforce/schema/Case.AccountId';
 import PROJECT from '@salesforce/schema/Case.Project__c';
 import CATEGORY from '@salesforce/schema/Case.NSP_Category__c';
 import SUB_CATEGORY from '@salesforce/schema/Case.NSP_SubCategory__c';
+import getCaseSettingFlag from '@salesforce/apex/NSP_CustomCaseCreationPageController.getCaseSettingFlag';
+
+import { IsConsoleNavigation, getFocusedTabInfo, closeTab } from 'lightning/platformWorkspaceApi';
 
 const ACCOUNTFIELDS = [
     'Account.Name',
@@ -95,8 +98,8 @@ export default class Nsp_CustomCaseCreationPage extends NavigationMixin(Lightnin
     categorySubCategoryDetailConfidentialMap = new Map();
     categorySubCategoryDetailMap = new Map();
 
-    @wire(CurrentPageReference)
-    pageRef;
+    @wire(CurrentPageReference) pageRef;
+    @wire(IsConsoleNavigation) isConsoleNavigation;
 
     enableWedgeClaim = false;
     disableButton = false;
@@ -409,7 +412,18 @@ export default class Nsp_CustomCaseCreationPage extends NavigationMixin(Lightnin
                 this.pageNumber = state.pageNumber;
             }
         };
+        this.setReloadFlag();
+    }
 
+    //flag to determine if Case needs to be reloaded based on User Profile and Custom Settings
+    setReloadFlag() {
+        getCaseSettingFlag()
+            .then(result => {
+                this.reload = result; 
+            })
+            .catch(error => {
+                this.reload = true; 
+            });
     }
 
     getMapOfObjectNameAndKeyPrefix(){
@@ -785,7 +799,6 @@ export default class Nsp_CustomCaseCreationPage extends NavigationMixin(Lightnin
         if (this.disableButton) this.disableButton = false;
     }
 
-
     handleSuccess(event) {
         //Added By Sruthi - start
         this.recordId = event.detail.id;
@@ -798,28 +811,66 @@ export default class Nsp_CustomCaseCreationPage extends NavigationMixin(Lightnin
         //Added By Sruthi - End
         // Close the modal window and display a success toast
         let successMessage = this.isMultipleContacts == true ? 'Case Created Successfully. Please Add Contacts !' : 'Case Created Successfully.';
+        if ( this.reload === true ) {
+            // ADO-296933
+            // ~ previous close/toaster functionality before reload switch was created...
+            // ~ required for Phase 2 in Service Operation App
+            this.dispatchCloseToastEvents( successMessage );
+        }
+
+        if(this.isMultipleContactsSelected === false){
+            this.resetFormAction(event);
+            if ( this.reload === true ) {
+                // ADO-296933
+                // ~ when reload = true, then create the case and reload the case.
+                // ~ required for Phase 2 in Service Operation App
+                this[NavigationMixin.GenerateUrl]({
+                    type: 'standard__recordPage',
+                    attributes: {
+                        recordId: this.recordId,
+                        actionName: 'view',
+                    },
+                }).then(url => {
+                    window.open(url, '_self')
+                });
+            } else if ( this.reload === false ) {
+                // ADO-296933
+                // ~ when reload = false, then create the case and open sub tab.
+                // ~ required for Service Cloud Voice in Contact Center App
+                this[NavigationMixin.Navigate]({
+                    type: 'standard__recordPage',
+                    attributes: {
+                        recordId: this.recordId,
+                        objectApiName: "Case",
+                        actionName: 'view',
+                    },
+                });
+            }
+        }
+
+        // used to close the workspace API tab
+        if ( this.reload === false ) {
+            // ADO-296933
+            // ~ new close/toaster functionality after reload switch was created...
+            // ~ required for Phase 2 in Service Operation App
+            getFocusedTabInfo().then((tabInfo) => {
+                const { tabId } = tabInfo;
+                this.dispatchCloseToastEvents( successMessage );
+                closeTab(tabId);
+            });
+        }
+    }
+
+    dispatchCloseToastEvents( toastMessage ) {
         this.dispatchEvent(new CloseActionScreenEvent());
         this.dispatchEvent(
             new ShowToastEvent({
-                title: 'Success',
-                message: successMessage,
+                title: 'Success' ,
+                message: toastMessage ,
                 variant: 'success'
             })
         );
-        
-      
-if(this.isMultipleContactsSelected === false){
-    this.resetFormAction(event);
-    // Modified as part of DF-03869
-    this[NavigationMixin.GenerateUrl]({
-        type: 'standard__recordPage',
-        attributes: {
-            recordId: this.recordId,
-            actionName: 'view',
-        },
-           }).then(url => {window.open(url, '_self')});  
     }
-}
 
     goBacktoTypeScreen(){
         this.clearAllFieldValues();

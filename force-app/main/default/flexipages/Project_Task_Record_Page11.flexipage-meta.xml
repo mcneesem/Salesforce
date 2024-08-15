@@ -9,7 +9,7 @@
                         <valueListItems>
                             <value>pse__Project_Task__c.New_Termination_Form</value>
                             <visibilityRule>
-                                <booleanFilter>1 OR (2 AND 3)</booleanFilter>
+                                <booleanFilter>1 OR 2</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.Name}</leftValue>
                                     <operator>EQUAL</operator>
@@ -19,11 +19,6 @@
                                     <leftValue>{!Record.Name}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>Reinstatement Requested</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!$User.UserRole.Name}</leftValue>
-                                    <operator>NE</operator>
-                                    <rightValue>Credit Specialist</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
@@ -464,7 +459,7 @@
                     <criteria>
                         <leftValue>{!Record.Name}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>Termination request form</rightValue>
+                        <rightValue>Submit Termination Checklist</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
@@ -1605,7 +1600,7 @@
                     <criteria>
                         <leftValue>{!Record.Name}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>Termination request form</rightValue>
+                        <rightValue>Submit Termination Checklist</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.Name}</leftValue>

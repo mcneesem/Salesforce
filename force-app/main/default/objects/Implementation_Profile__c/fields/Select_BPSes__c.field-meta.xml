@@ -63,7 +63,6 @@
             <value>
                 <fullName>Performance Management</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>Performance Management</label>
             </value>
         </valueSetDefinition>

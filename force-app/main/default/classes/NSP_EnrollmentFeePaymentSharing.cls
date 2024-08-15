@@ -1,5 +1,8 @@
-public class NSP_EnrollmentFeePaymentSharing
-{
+public with sharing class NSP_EnrollmentFeePaymentSharing {
+    // test w/ NSP_EnrollmentFeePaymentTriggerClassTest, NSP_OpportunityTeamMemberTriggerTest (77%)
+    // test w/ NSP_EnrollmentFeePaymentTriggerClassTest (63%)
+    // test w/ NSP_OpportunityTeamMemberTriggerTest (28%)
+
     public static void onEfpRecordInsert(List<NSP_Enrollment_Fee_Payment__c> listOfEnrollmentFee)
     {
         Set<id> opportunityIds=new Set<id>();
@@ -72,13 +75,16 @@ public class NSP_EnrollmentFeePaymentSharing
                 Database.insert(efpShareList,false);
             }
             
-        } catch (Exception ex) {
-            NSP_ErrorLogHandler.logSaveException('NSP_EnrollmentFeePaymentTriggerClass', 'efpRecordSharing', ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_EnrollmentFeePaymentSharing.class.getName() ,
+                'onEfpRecordInsert' ,
+                e
+            );
         }
     }
 
-    public static void onOppTeamMemberInsert(List<OpportunityTeamMember> newList)
-    {
+    public static void onOppTeamMemberInsert( List<OpportunityTeamMember> newList ) {
         Set<Id> opportunityIds=new Set<Id>();
 
         for(OpportunityTeamMember oppTeamMemberObj : newList) {
@@ -97,19 +103,28 @@ public class NSP_EnrollmentFeePaymentSharing
                 oppIdEfpRecordsMap.put(feePayment.NSP_Opportunity__c, new List<NSP_Enrollment_Fee_Payment__c> {feePayment});
             }
         }
-        
-        for(OpportunityTeamMember oppTeamMember : newList) {
-            List<NSP_Enrollment_Fee_Payment__c> relatedEfpRecords = oppIdEfpRecordsMap.get(oppTeamMember.OpportunityId);
-
-            for(NSP_Enrollment_Fee_Payment__c feePayment : relatedEfpRecords)
+        for ( OpportunityTeamMember oppTeamMember : newList ) {
+            if ( ( oppTeamMember.OpportunityId != null )
+                && oppIdEfpRecordsMap.containsKey( oppTeamMember.OpportunityId )
+                )
             {
-                NSP_Enrollment_Fee_Payment__Share efpshare = createEFPSharing(feePayment.Id, oppTeamMember.UserId, oppTeamMember.Opportunity.StageName, oppTeamMember.TeamMemberRole, false);
-                efpShareList.add(efpshare);
+                List<NSP_Enrollment_Fee_Payment__c> relatedEfpRecords = oppIdEfpRecordsMap.get( oppTeamMember.OpportunityId );
+                if ( ( relatedEfpRecords != null ) && !relatedEfpRecords.isEmpty() ) {
+                    for ( NSP_Enrollment_Fee_Payment__c feePayment : relatedEfpRecords ) {
+                        NSP_Enrollment_Fee_Payment__Share efpshare = createEFPSharing(
+                            feePayment.Id ,
+                            oppTeamMember.UserId ,
+                            oppTeamMember.Opportunity.StageName ,
+                            oppTeamMember.TeamMemberRole ,
+                            false
+                        );
+                        efpShareList.add( efpshare );
+                    }
+                }
             }
         }
-    
-        if(!efpShareList.isEmpty()){
-            Database.insert(efpShareList,false);
+        if ( !efpShareList.isEmpty() ) {
+            Database.insert( efpShareList , false );
         }
     }
 
@@ -227,3 +242,4 @@ public class NSP_EnrollmentFeePaymentSharing
         return oppIdEfpShareRecordsMap;
     }
 }
+//

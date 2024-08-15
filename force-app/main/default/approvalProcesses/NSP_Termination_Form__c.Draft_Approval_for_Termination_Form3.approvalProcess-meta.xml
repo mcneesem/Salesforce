@@ -26,7 +26,7 @@
             <whenMultipleApprovers>Unanimous</whenMultipleApprovers>
         </assignedApprover>
         <entryCriteria>
-            <booleanFilter>1 AND (2 OR 4) AND 3</booleanFilter>
+            <booleanFilter>1 AND (2 OR (4 AND 5)) AND 3</booleanFilter>
             <criteriaItems>
                 <field>NSP_Termination_Form__c.NSP_Approver__c</field>
                 <operation>notEqual</operation>
@@ -45,6 +45,11 @@
                 <field>NSP_Termination_Form__c.RecordType</field>
                 <operation>equals</operation>
                 <value>Client Reinstatement</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>User.Profile</field>
+                <operation>notEqual</operation>
+                <value>Finance Service</value>
             </criteriaItems>
         </entryCriteria>
         <ifCriteriaNotMet>GotoNextStep</ifCriteriaNotMet>
@@ -73,7 +78,7 @@
             <whenMultipleApprovers>FirstResponse</whenMultipleApprovers>
         </assignedApprover>
         <entryCriteria>
-            <booleanFilter>1 AND (2 OR 4) AND 3</booleanFilter>
+            <booleanFilter>1 AND (2 OR (4 AND 5)) AND 3</booleanFilter>
             <criteriaItems>
                 <field>NSP_Termination_Form__c.NSP_Approver__c</field>
                 <operation>notEqual</operation>
@@ -92,6 +97,11 @@
                 <field>NSP_Termination_Form__c.RecordType</field>
                 <operation>equals</operation>
                 <value>Client Reinstatement</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>User.Profile</field>
+                <operation>notEqual</operation>
+                <value>Finance Service</value>
             </criteriaItems>
         </entryCriteria>
         <ifCriteriaNotMet>GotoNextStep</ifCriteriaNotMet>
@@ -169,13 +179,17 @@ IF(
         ), 
     IF(
         RecordType.Name = &apos;Client Reinstatement&apos;,
+        OR(
+         $User.ProfileId &lt;&gt; &apos;Finance Service&apos;,
         AND( 
+            $User.ProfileId = &apos;Finance Service&apos;,
             NOT(ISBLANK(NSP_Project_Task__c)),
             NOT(ISBLANK(TEXT(NSP_Term_Code__c))),
             NOT(ISBLANK(TEXT(NSP_Term_Reason__c))),
             NOT(ISBLANK(TEXT(NSP_Status__c))),
             NOT(ISBLANK(NSP_Approver__c)),
             NOT(ISBLANK(NSP_Client_Term_Date__c))
+)
             ),
         AND( 
             NOT(ISBLANK(NSP_Project_Task__c)),

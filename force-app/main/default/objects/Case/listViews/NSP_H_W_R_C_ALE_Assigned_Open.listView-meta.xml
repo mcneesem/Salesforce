@@ -43,6 +43,6 @@
     </filters>
     <label>H&amp;W R&amp;C-ALE Assigned Open</label>
     <sharedTo>
-        <group>NSP_H_W_Email_Templates_and_Quick_Text</group>
+        <role>NSP_L3_Support_Config</role>
     </sharedTo>
 </ListView>

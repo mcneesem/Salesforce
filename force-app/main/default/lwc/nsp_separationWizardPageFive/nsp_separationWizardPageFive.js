@@ -24,7 +24,6 @@ export default class Nsp_separationWizardPageFive extends LightningElement {
     NSP_RequestingMultipleEmployees__c=false;
     NSP_CreditApproval__c =false;
     NSP_HaveYouattachedPreparedAgreement__c=false;
-    NSP_WhoResponsibleForStockEquityPaymt__c=false;
     NSP_ReferenceTospecificClientDocument__c=false;
     NSP_Attached_Approval_Email__c=false;
     NSP_Mid_Market_or_Mid_Market_Enterprise__c = false;
@@ -34,7 +33,6 @@ export default class Nsp_separationWizardPageFive extends LightningElement {
         "NSP_CreditApproval__c",
         "NSP_HaveYouattachedPreparedAgreement__c",
         "NSP_Attached_Approval_Email__c",
-        "NSP_WhoResponsibleForStockEquityPaymt__c",
         "NSP_ReferenceTospecificClientDocument__c" ];
 
 
@@ -81,7 +79,6 @@ export default class Nsp_separationWizardPageFive extends LightningElement {
                 this.NSP_CreditApproval__c = this.fieldsData.NSP_CreditApproval__c != null && this.fieldsData.NSP_CreditApproval__c.value == "Approval Obtained" ? ( this.fileCounts++ ,true )  : false ;
                 this.NSP_HaveYouattachedPreparedAgreement__c = this.fieldsData.NSP_HaveYouattachedPreparedAgreement__c?.value =='Yes' ? ( this.fileCounts++ ,true ) : false;
                 this.NSP_Attached_Approval_Email__c = this.fieldsData.NSP_Attached_Approval_Email__c?.value =='Yes' ? ( this.fileCounts++ ,true ) : false;
-                this.NSP_WhoResponsibleForStockEquityPaymt__c = this.fieldsData.NSP_WhoResponsibleForStockEquityPaymt__c != null && this.fieldsData.NSP_WhoResponsibleForStockEquityPaymt__c.value =='Client' ? ( this.fileCounts++ ,true ) : 
                 this.NSP_ReferenceTospecificClientDocument__c = this.fieldsData.NSP_ReferenceTospecificClientDocument__c != null && this.fieldsData.NSP_ReferenceTospecificClientDocument__c.value ? ( this.fileCounts++ ,true ):
                
                 this.currentPageFields.forEach(key =>{

@@ -38,6 +38,10 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
+                <field>Has_Consumption_Schedule__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
                 <field>NSP_Status_Indicator__c</field>
             </layoutItems>
             <layoutItems>

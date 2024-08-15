@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Do_the_employee_s_work_more_than_6__c</fullName>
+    <externalId>false</externalId>
+    <label>Do the employee’s work more than 6</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetName>NSP_YesNo</valueSetName>
+    </valueSet>
+</CustomField>
