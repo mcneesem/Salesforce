@@ -71,7 +71,7 @@ public without sharing class NSP_ContactRollupController {
             query += ' AND (' + subClientFilter + ') ';
         }
         query += ' AND (' + String.join(strList, ' = true OR ') + ') ORDER BY NSP_Contact__r.Name ASC LIMIT :offSetLimit OFFSET :offSetCount'; // Removing Security Enforced as part of DF-03286
-        return getSubClinetContactRecords(Database.query(query), resultsMap);
+        return getSubClinetContactRecords(Database.query(query), resultsMap, recordId);
     }
 
     private static Map < Id, ResultWrapper > getSubClinetContactRecords(list<NSP_Sub_Client_Contact__c> lstSubClientContacts, Map < Id, ResultWrapper > resultsMap, string recordId){
