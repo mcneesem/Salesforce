@@ -576,6 +576,8 @@ public class NSP_TerminationFormTriggerHelper {
         map<String, Id> primaryRolesMap = new map<String, Id>();
         map<String, Id> nonPrimaryRolesMap = new map<String, Id>();
         map<String, Id> accTeamMap = new map<String, Id>();
+        Id mappedProjectId;
+       	Id mappedAccountId;
 		Id payrollRecordTypeId = NSP_GenericRecordType.getRecordTypeId('NSP_Termination_Form__c',NSP_ServiceConstants.NSP_Payroll_Specialist_Form );
         if(!setOfProjectTaskId.isEmpty()){
             for(pse__Project_Task__c projectTask : [SELECT pse__Project__c FROM pse__Project_Task__c WHERE ID IN : setOfProjectTaskId]){
@@ -620,8 +622,10 @@ public class NSP_TerminationFormTriggerHelper {
                                                              }
                                                          }
         }
-        if(terminationFormList.size() > 0) {
+        if ( ( terminationFormList != null ) && !terminationFormList.isEmpty() ) {
             for(NSP_Termination_Form__c termForm : terminationFormList){
+                mappedProjectId = mapOfProjectTaskAndProject.get( termForm.NSP_Project_Task__c );
+        		mappedAccountId = mapOfProjectAndAccount.get( mappedProjectId );
                 if(termForm.RecordTypeId == payrollRecordTypeId) {
                     //Termination Form Payroll Specialist Record Type
                     mapOfAccountAndAccountTeam = primaryRolesMap;
@@ -632,29 +636,21 @@ public class NSP_TerminationFormTriggerHelper {
             for(NSP_Termination_Form__c termForm : terminationFormList){
                 if(mapOfAccountAndAccountTeam != null && mapOfProjectAndAccount != null && mapOfProjectTaskAndProject != null){
                     termForm.NSP_Approver__c                = mapOfAccountAndAccountTeam.get(
-                        mapOfProjectAndAccount.get(
-                            mapOfProjectTaskAndProject.get(termForm.NSP_Project_Task__c)) + '-' + NSP_ServiceConstants.PAYROLL_SUPERVISOR);
+                        mappedAccountId + '-' + NSP_ServiceConstants.PAYROLL_SUPERVISOR);
                     termForm.NSP_Supervisor__c              = mapOfAccountAndAccountTeam.get(
-                        mapOfProjectAndAccount.get(
-                            mapOfProjectTaskAndProject.get(termForm.NSP_Project_Task__c)) + '-' + NSP_ServiceConstants.PAYROLL_SUPERVISOR);
+                        mappedAccountId + '-' + NSP_ServiceConstants.PAYROLL_SUPERVISOR);
                     termForm.NSP_Payroll_Specialist__c      = mapOfAccountAndAccountTeam.get(
-                        mapOfProjectAndAccount.get(
-                            mapOfProjectTaskAndProject.get(termForm.NSP_Project_Task__c)) + '-' + NSP_ServiceConstants.PAYROLL_SPECIALIST);
+                        mappedAccountId + '-' + NSP_ServiceConstants.PAYROLL_SPECIALIST);
                     termForm.NSP_Sales_Representative__c    = mapOfAccountAndAccountTeam.get(
-                        mapOfProjectAndAccount.get(
-                            mapOfProjectTaskAndProject.get(termForm.NSP_Project_Task__c)) + '-' + NSP_ServiceConstants.BUSINESS_PERFORMANCE_ADVISOR);
+                        mappedAccountId + '-' + NSP_ServiceConstants.BUSINESS_PERFORMANCE_ADVISOR);
                     termForm.NSP_Client_Liaison__c          = mapOfAccountAndAccountTeam.get(
-                        mapOfProjectAndAccount.get(
-                            mapOfProjectTaskAndProject.get(termForm.NSP_Project_Task__c)) + '-' + NSP_ServiceConstants.CLIENT_LIAISION);
+                        mappedAccountId + '-' + NSP_ServiceConstants.CLIENT_LIAISION);
                     termForm.NSP_Account_Executive__c       = mapOfAccountAndAccountTeam.get(
-                        mapOfProjectAndAccount.get(
-                            mapOfProjectTaskAndProject.get(termForm.NSP_Project_Task__c)) + '-' + NSP_ServiceConstants.MID_MARKET_ACC_EX);
+                        mappedAccountId + '-' + NSP_ServiceConstants.MID_MARKET_ACC_EX);
                     termForm.NSP_Manager_HR_Services__c     = mapOfAccountAndAccountTeam.get(
-                        mapOfProjectAndAccount.get(
-                            mapOfProjectTaskAndProject.get(termForm.NSP_Project_Task__c)) + '-' + NSP_ServiceConstants.MANAGER_HRSERVICES);
+                        mappedAccountId + '-' + NSP_ServiceConstants.MANAGER_HRSERVICES);
                     termForm.NSP_Insperity_Blended_Role__c  = mapOfAccountAndAccountTeam.get(
-                        mapOfProjectAndAccount.get(
-                            mapOfProjectTaskAndProject.get(termForm.NSP_Project_Task__c)) + '-' + NSP_ServiceConstants.BUS_TEAM_HRSP_CL);
+                        mappedAccountId + '-' + NSP_ServiceConstants.BUS_TEAM_HRSP_CL);
                 }
             }
         }
