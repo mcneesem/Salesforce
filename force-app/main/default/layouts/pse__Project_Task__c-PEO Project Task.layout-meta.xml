@@ -231,6 +231,10 @@
                 <behavior>Edit</behavior>
                 <field>NSP_OV_Project_Task_Contacts__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>pse__Work_Calendar__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -339,7 +343,7 @@
             <sortOrder>11</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>pse__Project_Task__c.Add_Update_Address</actionName>
+            <actionName>LogACall</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>12</sortOrder>
         </platformActionListItems>
