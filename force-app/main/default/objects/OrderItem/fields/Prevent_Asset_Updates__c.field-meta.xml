@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Prevent_Asset_Updates__c</fullName>
+    <description>Refers the field on Order object which determines if Asset is to be updated or not</description>
+    <externalId>false</externalId>
+    <formula>Order.Prevent_Asset_Updates__c</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Prevent Asset Updates</label>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

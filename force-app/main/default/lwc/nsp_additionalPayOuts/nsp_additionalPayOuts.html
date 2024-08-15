@@ -72,7 +72,8 @@
       record-type-id={recordTypeId}
       value={field.NSP_Commission_Frequency__c}
       data-name="NSP_Commission_Frequency__c"
-      onchange={handleValueChange}>
+      onchange={handleValueChange}
+      ondblclick={handleDoubleClick}>
     </c-nsp_selection-box>
 
     <lightning-input-field value={field.NSP_Commission_Provide_Details__c} disabled={disabledFields.NSP_Commission_Provide_Details__c}
@@ -123,7 +124,8 @@
       record-type-id={recordTypeId}
       value={field.Do_you_pay_non_exempt_employees__c}
       data-name="Do_you_pay_non_exempt_employees__c"
-      onchange={handleValueChange}>
+      onchange={handleValueChange}
+      ondblclick={handleDoubleClick}>
     </c-nsp_selection-box>
 
     <c-nsp_selection-box
@@ -147,7 +149,8 @@
       record-type-id={recordTypeId}
       value={field.NSP_Any_special_pay_codes_Needed__c}
       data-name="NSP_Any_special_pay_codes_Needed__c"
-      onchange={handleValueChange}>
+      onchange={handleValueChange}
+      ondblclick={handleDoubleClick}>
     </c-nsp_selection-box>
 
     <lightning-input-field value={field.NSP_Any_special_pay_code_Provide_Details__c} disabled={disabledFields.NSP_Any_special_pay_code_Provide_Details__c}
@@ -166,7 +169,8 @@
       record-type-id={recordTypeId}
       value={field.Does_the_client_offer_a_Stock_Purchase__c}
       data-name="Does_the_client_offer_a_Stock_Purchase__c"
-      onchange={handleValueChange}>
+      onchange={handleValueChange}
+      ondblclick={handleDoubleClick}>
     </c-nsp_selection-box>
 
     <c-nsp_selection-box
@@ -177,7 +181,8 @@
       record-type-id={recordTypeId}
       value={field.NSP_Does_the_client_offer_Stock_Options__c}
       data-name="NSP_Does_the_client_offer_Stock_Options__c"
-      onchange={handleValueChange}>
+      onchange={handleValueChange}
+      ondblclick={handleDoubleClick}>
     </c-nsp_selection-box>
   </lightning-record-edit-form>
 </template>

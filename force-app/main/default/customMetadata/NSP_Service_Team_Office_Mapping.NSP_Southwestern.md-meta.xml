@@ -4,9 +4,7 @@
     <protected>false</protected>
     <values>
         <field>NSP_Sales_Offices__c</field>
-        <value xsi:type="xsd:string">0301 Phoenix 1
-0302 Phoenix 2
-2901 Las Vegas 1
+        <value xsi:type="xsd:string">2901 Las Vegas 1
 4801 Seattle 1
 0501 Los Angeles 1
 0502 Los Angeles 2
@@ -15,12 +13,10 @@
 0505 Los Angeles 5
 0506 Los Angeles 6
 0507 Los Angeles 7
-0508 Los Angeles 8
-0540 San Diego 1
-0541 San Diego 2</value>
+0508 Los Angeles 8</value>
     </values>
     <values>
         <field>NSP_Service_Team_Email__c</field>
-        <value xsi:type="xsd:string">westernsouthservicenotifications@insperity.com.invalid</value>
+        <value xsi:type="xsd:string">westernsouthservicenotifications@insperity.com</value>
     </values>
 </CustomMetadata>

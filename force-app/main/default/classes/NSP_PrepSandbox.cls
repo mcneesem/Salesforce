@@ -160,6 +160,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
             allMetadataList.add(new List<MetadataService.Metadata>());
             List<NSP_DocuSign_Signers__mdt> cMdDocuSigners = [Select Id, Label, DeveloperName, NSP_Signer_Username__c FROM NSP_DocuSign_Signers__mdt WHERE Id!=null AND NSP_Signer_Username__c!=null];
             List<NSP_PEO_Implementations__mdt> cMdPEOImps = [Select Id, Label, DeveloperName, NSP_Email_Address__c FROM NSP_PEO_Implementations__mdt WHERE Id!=null AND NSP_Email_Address__c!=null];
+            List<NSP_Retirement_Services__mdt> cMdRetSvcs = [Select Id, Label, DeveloperName, NSP_Email_Address__c FROM NSP_Retirement_Services__mdt WHERE Id!=null AND NSP_Email_Address__c!=null];
 
             for (NSP_DocuSign_Signers__mdt cMdRecord : cMdDocuSigners) {
                 string name = cMdRecord.DeveloperName;
@@ -195,13 +196,36 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
                 MetadataService.CustomMetadataValue customField1 = new MetadataService.CustomMetadataValue();
                     customField1.field = 'NSP_Email_Address__c'; // the custom field API Name to be updated
                     switch on sandboxName {
-                         when 'merge','test','stage' {
+                         when 'merge','test','stage','devserva','devservb' {
                             customField1.value = 'monica.adams@insperity.com';
                          }
                          when else {
                             customField1.value = cMdRecord.NSP_Email_Address__c.substringBefore('.invalid').trim() + '.invalid';
                          }
                      }
+
+                if (cMdUpd.values != null) { //add the changes to list of changes to be deployed
+                    cMdUpd.values.add(customField1); 
+                } else {
+                    cMdUpd.values = new MetadataService.CustomMetadataValue[] { customField1 };
+                }
+
+                if (allMetadataList[batch].size() >= 200) {
+                    batch++;
+                    allMetadataList.add(new List<MetadataService.Metadata>()); // create a new batch when we fill one up
+                }
+                allMetadataList[batch].add(cMdUpd);
+            }
+
+            for (NSP_Retirement_Services__mdt cMdRecord : cMdRetSvcs) {
+                string name = cMdRecord.DeveloperName;
+                string fullName = 'NSP_Retirement_Services.' + name; //custom metadata full name
+                MetadataService.CustomMetadata cMdUpd = new MetadataService.CustomMetadata();
+                    cMdUpd.fullName = fullName;
+                    cMdUpd.label = name;
+                MetadataService.CustomMetadataValue customField1 = new MetadataService.CustomMetadataValue();
+                    customField1.field = 'NSP_Email_Address__c'; // the custom field API Name to be updated
+                    customField1.value = cMdRecord.NSP_Email_Address__c.substringBefore('.invalid').trim() + '.invalid';
 
                 if (cMdUpd.values != null) { //add the changes to list of changes to be deployed
                     cMdUpd.values.add(customField1); 
@@ -504,6 +528,8 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
     }
 
     public static void doCSettings(String sandboxName) {
+        String dSAccountId = '';
+        String cLMBaseURL = '';
         try {
             Map<String, DocuSign_Settings__c> docusignSettingsMap = DocuSign_Settings__c.getAll();
             List<DocuSign_Settings__c> updDSSettings = new List<DocuSign_Settings__c>();
@@ -512,6 +538,8 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
                 docusignSettings.IsEnabled__c = false;
                 if (sandboxName.startsWith(key.toLowerCase().left(3))) {
                     docusignSettings.IsEnabled__c = true;
+                    dSAccountId = docusignSettings.AccountNumber__c;
+                    cLMBaseURL = docusignSettings.CLMBaseUrl__c;
                 }
                 updDSSettings.add(docusignSettings);
             }            
@@ -531,21 +559,11 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
 
         try {
             NSP_Docusign_Account_Details__c cS2 = NSP_Docusign_Account_Details__c.getOrgDefaults();
-            switch on sandboxName {
-                when 'merge' {
-                    cS2.Docusign_Account_Id__c = '122677';
-                }
-                when 'test' {
-                    cS2.Docusign_Account_Id__c = '65500';
-                }
-                when 'stage' {
-                    cS2.Docusign_Account_Id__c = '48945';
-                }
-                when else {
-                    cS2.Docusign_Account_Id__c = '50202';
-                }
+            if (dSAccountId != '' && cLMBaseURL != ''){
+                cS2.Docusign_Account_Id__c = dSAccountId;
+                cS2.CLM_Base_URL__c = cLMBaseURL;
+                upsert cS2;
             }
-            upsert cS2;
         } catch(Exception e) {
             System.debug('An exception occurred in doCSettings: ' + e.getMessage());
         }

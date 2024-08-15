@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Product__c</fullName>
+    <externalId>false</externalId>
+    <label>Product</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <controllingField>Campaign_Level__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetName>NSP_Primary_Product</valueSetName>
+        <valueSettings>
+            <controllingFieldValue>Parent: Program</controllingFieldValue>
+            <valueName>WX</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Parent: Program</controllingFieldValue>
+            <valueName>WA</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Parent: Program</controllingFieldValue>
+            <valueName>WO</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Parent: Program</controllingFieldValue>
+            <valueName>WS</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Parent: Program</controllingFieldValue>
+            <valueName>Applicant Tracking</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Parent: Program</controllingFieldValue>
+            <valueName>Employment Screening</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Parent: Program</controllingFieldValue>
+            <valueName>Expense Management</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Parent: Program</controllingFieldValue>
+            <valueName>HR Consulting Services</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Parent: Program</controllingFieldValue>
+            <valueName>Insurance Services</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Parent: Program</controllingFieldValue>
+            <valueName>Learning &amp; Development</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Parent: Program</controllingFieldValue>
+            <valueName>Organizational Planning</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Parent: Program</controllingFieldValue>
+            <valueName>Performance Management</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Parent: Program</controllingFieldValue>
+            <valueName>Recruiting Services</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Parent: Program</controllingFieldValue>
+            <valueName>Retirement Services</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Parent: Program</controllingFieldValue>
+            <valueName>Time &amp; Attendance</valueName>
+        </valueSettings>
+    </valueSet>
+    <visibleLines>5</visibleLines>
+</CustomField>

@@ -133,11 +133,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>MessagingSession.Waiting_Time__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>UserServicePresence.Status_Duration__c</field>
         <readable>true</readable>
     </fieldPermissions>

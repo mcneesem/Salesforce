@@ -152,6 +152,7 @@ NSP_WX_WA_Benefits_Specialist__c, and NSP_Retirement_Service_Plan_Name__c field 
 */
     
     public void updateAccountTeamNameToAssetName(Map < Id, NSP_Account_Team__c > mapAccountIdtoAccountTeam) {
+        Boolean switchEnabled = AccountTeamTriggerSettings__c.getInstance(UserInfo.getUserId()).IsRetServiceNameChangeEnabled__c;
         List < Asset > listAssetObject = new List < Asset > ();
         
         //Iterating Asset object based on AccountId 
@@ -168,7 +169,7 @@ NSP_WX_WA_Benefits_Specialist__c, and NSP_Retirement_Service_Plan_Name__c field 
                                         assetObject.NSP_WX_WA_Benefits_Specialist__c = accountTeamObject.NSP_User__c;
                                     } else if (accountTeamObject.NSP_Role__c == NSP_ServiceConstants.WXWA_PAYROLL && String.isNotBlank(accountTeamObject.NSP_User__c)) {
                                         assetObject.NSP_WA_WX_Payroll_Specialist__c = accountTeamObject.NSP_User__c;
-                                    } else if (accountTeamObject.NSP_Role__c == NSP_ServiceConstants.PLAN_CONSULTANT && String.isNotBlank(accountTeamObject.NSP_User__c)) {
+                                    } else if (switchEnabled && accountTeamObject.NSP_Role__c == NSP_ServiceConstants.PLAN_CONSULTANT && String.isNotBlank(accountTeamObject.NSP_User__c)) {
                                         assetObject.NSP_Retirement_Service_Plan_Name__c = accountTeamObject.NSP_User__c;
                                     }
                                     listAssetObject.add(assetObject);
@@ -481,9 +482,8 @@ NSP_WX_WA_Benefits_Specialist__c, and NSP_Retirement_Service_Plan_Name__c field 
     * @param : List<NSP_Account_Team__c> newAccTeam, Map<Id, NSP_Account_Team__c> oldMap
     * @createdDate : 11/30/2022
     * @Defect : STY-02108
-    * @return void                          
+    * @return void
     */
-    
     public static void updateAssetServiceRegion(List<NSP_Account_Team__c> newAccTeam, Map<Id, NSP_Account_Team__c> oldMap ){
         //Get Record Type Id
         Id woRecordTypeId = NSP_GenericRecordType.getRecordTypeId('Asset', NSP_ServiceConstants.WO_ASSET_RECORDTYPE );
@@ -491,23 +491,40 @@ NSP_WX_WA_Benefits_Specialist__c, and NSP_Retirement_Service_Plan_Name__c field 
         Map<Id, NSP_Account_Team__c> accountTeams = new  Map<Id, NSP_Account_Team__c>();
         //Filter record based on Insert or Update
         for(NSP_Account_Team__c accTeam : newAccTeam) {
-            if(oldMap == null && accTeam.NSP_Account__c != null || oldMap != null && accTeam.NSP_Role__c != oldMap.get(accTeam.Id).NSP_Role__c) {                    
-                 accIds.add(accTeam.NSP_Account__c);
-             }            
+            if ( oldMap == null
+                && accTeam.NSP_Account__c != null
+                || ( oldMap != null
+                    && (
+                        ( accTeam.NSP_Role__c != oldMap.get(accTeam.Id).NSP_Role__c )
+                        || ( accTeam.NSP_User__c != oldMap.get(accTeam.Id).NSP_User__c )
+                    )
+                )
+            )
+            {
+                accIds.add(accTeam.NSP_Account__c);
+            }
         }
         //Get Account Team's User Serice Region field for Insert case
-        if(!accIds.isEmpty()) {            
-            for(NSP_Account_Team__c accountTeam : [SELECT Id, NSP_User__r.NSP_Service_Region__c, NSP_Role__c , NSP_Account__c FROM NSP_Account_Team__c 
-                                                   WHERE Id =: newAccTeam AND NSP_User__c != null AND NSP_Role__c != null AND NSP_Role__c = 'Manager, HR Services']) {
+        if(!accIds.isEmpty()) {
+            for(NSP_Account_Team__c accountTeam : [
+                        SELECT Id , NSP_User__r.NSP_Service_Region__c , NSP_Role__c , NSP_Account__c
+                        FROM NSP_Account_Team__c 
+                        WHERE (
+                            Id =: newAccTeam
+                            AND NSP_User__c != null
+                            AND NSP_Role__c != null
+                            AND NSP_Role__c = 'Manager, HR Services'
+                        )
+                    ]
+                )
+            {
                 accountTeams.put(accountTeam.NSP_Account__c, accountTeam);
             }
         }
-        
         //Update Asset on Insert Or Update based on AccountTeams Map
         updateAssetRegion(accIds, woRecordTypeId, accountTeams);
-        
     }
-    
+
     /** 
     * @MethodName: updateAssetRegion
     * @Description: This method is used to update Asset Fields on after Insert
@@ -517,6 +534,7 @@ NSP_WX_WA_Benefits_Specialist__c, and NSP_Retirement_Service_Plan_Name__c field 
     * @return void                          
     */
     private static void updateAssetRegion(Set<Id> accIds, Id woRecordTypeId,  Map<Id, NSP_Account_Team__c> accountTeams) {
+        Boolean switchEnabled = AccountTeamTriggerSettings__c.getInstance(UserInfo.getUserId()).IsServiceRegionChangeEnabled__c;
         List<Asset> assetToBeUpdated = new List<Asset>();
         //Get All Active asset for the account
         for(Asset asset : [SELECT Id, RecordTypeId, NSP_Service_Region__c, AccountId From Asset WHERE RecordTypeId =:woRecordTypeId AND AccountId =:accIds AND NSP_Account_Status__c = 'Active']){
@@ -524,7 +542,7 @@ NSP_WX_WA_Benefits_Specialist__c, and NSP_Retirement_Service_Plan_Name__c field 
             if(accountTeams.containsKey(asset.AccountId) && accountTeams.get(asset.AccountId).NSP_Role__c == 'Manager, HR Services') {
                 asset.NSP_Service_Region__c = accountTeams.get(asset.AccountId).NSP_User__r.NSP_Service_Region__c;
                 assetToBeUpdated.add(asset);
-            }else {
+            }else if(switchEnabled){
                 //When new Role is not equal to Manager, HR Services
                 asset.NSP_Service_Region__c = null;
                 assetToBeUpdated.add(asset);

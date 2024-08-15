@@ -12,6 +12,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Implementation_Profile__c.Does_this_client_have_an_AWW__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Implementation_Profile__c.Is_client_CA_docs_submitted_for_approval__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Implementation_Profile__c.NSP_Old_Benefits_Package__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -10094,6 +10104,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Implementation_Profile__c.Is_the_Employee_an_Intern__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Implementation_Profile__c.Is_there_a_need_for_Integra__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -11059,6 +11074,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Implementation_Profile__c.Describe_the_type_of_work__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Implementation_Profile__c.Did_the_sch_B_change_at_the_SKO__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -11085,6 +11105,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Implementation_Profile__c.Do_any_EEs_have_tax_levies__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Implementation_Profile__c.Do_the_employee_s_work_more_than_6__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -11540,6 +11565,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Implementation_Profile__c.Is_the_client_required_to_track__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Implementation_Profile__c.Is_the_work_performed_typically_the_same__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -13135,6 +13165,21 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Implementation_Profile__c.What_months_client_increase_the_staff__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Implementation_Profile__c.What_months_is_the_Intern_in_school__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Implementation_Profile__c.What_months_is_the_Intern_working__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Implementation_Profile__c.What_time_zone_do_EEs_work__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -13281,6 +13326,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Implementation_Profile__c.sample_new_empl_info_packet_collected__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Implementation_Profile__c.Work_performed_the_same_as_the_rest_year__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -20684,51 +20734,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Zip_To_City_Mapping__c.NSP_Zip__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>NS_Audit__Netskope_Audit_Log__c.NS_Audit__Activity_Done_By__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>NS_Audit__Netskope_Audit_Log__c.NS_Audit__Activity_Info__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>NS_Audit__Netskope_Audit_Log__c.NS_Audit__Activity__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>NS_Audit__Netskope_Audit_Log__c.NS_Audit__Field_Name__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>NS_Audit__Netskope_Audit_Log__c.NS_Audit__Last_Modified_Date__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>NS_Audit__Netskope_Audit_Log__c.NS_Audit__New_Value__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>NS_Audit__Netskope_Audit_Log__c.NS_Audit__Object_Name__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>NS_Audit__Netskope_Audit_Log__c.NS_Audit__Old_Value__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>NS_Audit__Netskope_Audit_Log__c.NS_Audit__Original_Id__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>

@@ -12,10 +12,11 @@ Modification Log     :
 * Harsha                       13/03/2022           Update to return service exceptions from all related accounts
 */
 public with sharing class NSP_ShowContractExceptionsController {
-    public NSP_ShowContractExceptionsController() {
+    // test w/ NSP_ShowContractExceptionsControllerTest (??%)
 
+    public NSP_ShowContractExceptionsController() {
     }
-    
+
     @AuraEnabled(Cacheable=true)
     public static List<NSP_Service_Exception__c> getExceptionList(Id contactId) {
         Set<Id> accountIdSet = new Set<Id>();
@@ -40,5 +41,10 @@ public with sharing class NSP_ShowContractExceptionsController {
            }catch(Exception Ex){
            throw new AuraHandledException('ErrorOccured' + ex.getMessage());           
         }
+    }
+
+    @AuraEnabled(cacheable=true)
+    public static string getTargetURL() {
+        return Service_Exception_Settings__c.getInstance(UserInfo.getProfileId()).Target_URL__c;
     }
 }

@@ -9,6 +9,13 @@ public class NSP_ProjectTasksTriggerHelperTest {
     @testSetup
     public static void setupProjectTaskdata(){
         //Test Setup
+        String projectName = 'PEO Termination';
+        String submitPtask = 'Submit Termination Checklist';
+        String optionalPtask = 'Optional: Initiate BPS Termination';
+        ProjectTaskTriggerSettings__c settings = ProjectTaskTriggerSettings__c.getOrgDefaults();
+        settings.IsEnabled__c = true;
+        settings.IsEnabledCreatePtaIfOwnerChanged__c = true;
+        upsert settings;
 
         List<Account> accList = new List<Account>();
         Account oAccount = (Account)NSP_TestExtendedDataFactory.createSObject(new Account(), 'NSP_TestDataFactory.AccountDefaults', false);
@@ -49,6 +56,13 @@ public class NSP_ProjectTasksTriggerHelperTest {
         oProject.pse__Project_Type__c=NSP_ServiceConstants.ImplementationProjectType;
         oProject.NSP_Asset_Implementation_Project__c =True;
         nProjectList.add(oProject);
+        
+        pse__Proj__c peoTermProject = (pse__Proj__c)NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c(), 'NSP_TestDataFactory.ProjectDefaults', false);
+        peoTermProject.Name = projectName;
+        peoTermProject.pse__Start_Date__c = Date.Today();
+        peoTermProject.pse__End_Date__c = System.Today().addDays(100);
+        peoTermProject.pse__Account__c= oAccount.Id;
+        nProjectList.add(peoTermProject);
         
         pse__Proj__c oProject1 = (pse__Proj__c) NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c(), 'NSP_TestDataFactory.ProjectDefaults');
         oProject1.Name = 'Proj2';
@@ -117,8 +131,13 @@ public class NSP_ProjectTasksTriggerHelperTest {
         goLiveProjectTask.RecordTypeId = bPS_ProjectTaskRecordTypeId;
      nProjectTaskList.add(goLiveProjectTask);
         
+        List<string> peoTerminationTaskList = System.Label.PEO_Termination_Tasks.split(';');
+        String WRITTENTERMINATION = null;
+        if(peoTerminationTaskList != null && !peoTerminationTaskList.isEmpty() && peoTerminationTaskList.size() >= 1){
+            WRITTENTERMINATION = peoTerminationTaskList[0];
+        }
         pse__Project_Task__c letterReceived = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c());
-        letterReceived.Name = 'Letter Received (Termination Letter)';
+        letterReceived.Name = WRITTENTERMINATION;
         letterReceived.pse__Project__c = hcmProject.Id;
         letterReceived.pse__Status__c = NSP_ServiceConstants.PROJECTSTATUSNOTSTARTED;
         letterReceived.NSP_Template_Generated__c = true;
@@ -139,8 +158,12 @@ public class NSP_ProjectTasksTriggerHelperTest {
         oProjectTaskRec.RecordTypeId = pEOProjectTaskRecordTypeId;
         nProjectTaskList.add(oProjectTaskRec);
         
+        String TERMINATIONANALYSIS = null;
+        if(peoTerminationTaskList != null && !peoTerminationTaskList.isEmpty() && peoTerminationTaskList.size() >= 2){
+            TERMINATIONANALYSIS = peoTerminationTaskList[1];
+        }
         pse__Project_Task__c dTask = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c());
-        dTask.Name = 'Complete termination analysis';
+        dTask.Name = TERMINATIONANALYSIS;
         dTask.pse__Project__c = hcmProject.Id;
         dTask.pse__Status__c = NSP_ServiceConstants.PROJECTSTATUSNOTSTARTED;
         dTask.RecordTypeId = pEOProjectTaskRecordTypeId;
@@ -228,6 +251,18 @@ public class NSP_ProjectTasksTriggerHelperTest {
         scheduledTask.RecordTypeId = pEOProjectTaskRecordTypeId;
         nProjectTaskList.add(scheduledTask);
        
+        pse__Project_Task__c submitProjTask = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c());
+        submitProjTask.Name =submitPtask;
+        submitProjTask.pse__Project__c = peoTermProject.Id;
+        submitProjTask.pse__Status__c = NSP_ServiceConstants.PROJECTSTATUSNOTSTARTED;
+        nProjectTaskList.add(submitProjTask);
+        
+        pse__Project_Task__c optionalProjTask = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c());
+        optionalProjTask.Name =optionalPtask;
+        optionalProjTask.pse__Project__c = peoTermProject.Id;
+        optionalProjTask.pse__Status__c = NSP_ServiceConstants.PROJECTSTATUSNOTSTARTED;
+        nProjectTaskList.add(optionalProjTask);
+        
         insert nProjectTaskList;
         
         WorkOrder relWo = new WorkOrder();
@@ -484,19 +519,45 @@ public class NSP_ProjectTasksTriggerHelperTest {
 
        
     }
+    
+    /**
+    * Classes Covered
+    * NSP_ProjectTasksTriggerHandler.afterUpdate
+    * NSP_ProjectTasksTriggerHelper.onSubmitTaskCompletion
+    * 
+    */
+    @isTest
+    private static void submitTaskCompletion(){
+        Test.startTest();
+        Id timeRecordTypeId = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.ASSET_SOBJECT_TYPE,NSP_ServiceConstants.TIME_ATTENDANCE_ASSET);
+        Account[] accountId = [SELECT Id  FROM Account WHERE NSP_AIMS_Client__c = '8900' Limit 1];
+        Asset testAsset = (Asset)NSP_TestExtendedDataFactory.createSObject(new Asset(), 'NSP_TestDataFactory.AssetDefaults', false);  
+        testAsset.Name = NSP_ServiceConstants.TESTPAYROLL; 
+        testAsset.AccountId = accountId[0].Id;  
+        testAsset.RecordTypeId = timeRecordTypeId; 
+        testAsset.NSP_Account_Status__c = NSP_ServiceConstants.ASSET_ACTIVE_STATUS;   
+        insert testAsset;
+        
+        pse__Project_Task__c[] submitPTasks = [SELECT Id,pse__Status__c,Recordtypeid  FROM pse__Project_Task__c WHERE Name = 'Submit Termination Checklist' Limit 1];
+        submitPTasks[0].pse__Status__c = NSP_ServiceConstants.TASKCOMPLETE;
+        update submitPTasks;
+        Test.stopTest();
+        system.assertEquals(submitPTasks[0].pse__Status__c, NSP_ServiceConstants.TASKCOMPLETE);
+    }
+    
     @isTest
     public static void cobraTest(){
         Test.startTest();
         Account accCobra = new Account();
         accCobra.Name = 'Test Account 2_test';
         INSERT accCobra;
-		
-		pse__Proj__c oPeoProject = (pse__Proj__c) NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c(), 'NSP_TestDataFactory.ProjectDefaults');
+
+        pse__Proj__c oPeoProject = (pse__Proj__c) NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c(), 'NSP_TestDataFactory.ProjectDefaults');
         oPeoProject.Name = 'PeoProject';
         oPeoProject.pse__Start_Date__c = Date.Today();
         oPeoProject.pse__End_Date__c = System.Today().addDays(100);
         oPeoProject.pse__Account__c= accCobra.Id;
-		insert oPeoProject;
+        insert oPeoProject;
         Test.stopTest();
     }
 
@@ -862,16 +923,50 @@ public class NSP_ProjectTasksTriggerHelperTest {
      @IsTest
     private static void testsendEmailToAccountTeamMembersIfTaskIsLetterReceived(){
         Id new_Asset_RT_ID = Schema.SObjectType.Asset.RecordTypeInfosByName.get('WO').getRecordTypeId();
+        List<string> peoTerminationTaskList = System.Label.PEO_Termination_Tasks.split(';');
+        String WRITTENTERMINATION = null;
+        if(peoTerminationTaskList != null && !peoTerminationTaskList.isEmpty() && peoTerminationTaskList.size() >= 1){
+            WRITTENTERMINATION = peoTerminationTaskList[0];
+        }
         Test.startTest();
-        pse__Project_Task__c letterrcvdTask = [SELECT Id, Name, pse__Status__c,NSP_AccountId__c  FROM pse__Project_Task__c WHERE Name ='Letter Received (Termination Letter)' Limit 1];
+        pse__Project_Task__c letterrcvdTask = [SELECT Id, Name, pse__Status__c,NSP_AccountId__c  FROM pse__Project_Task__c WHERE Name = :WRITTENTERMINATION Limit 1];
        
         
          NSP_Account_Team__c accTeam = (NSP_Account_Team__c)NSP_TestExtendedDataFactory.createSObject(new NSP_Account_Team__c(), 'NSP_TestDataFactory.AccountTeamMemberDefaults', false);
         accTeam.NSP_Account__c = letterrcvdTask.NSP_AccountId__c;
         accTeam.NSP_Role__c ='Payroll Specialist';
         Insert accTeam;
-         
-         
+        
+        NSP_Account_Team__c accTeam1 = (NSP_Account_Team__c)NSP_TestExtendedDataFactory.createSObject(new NSP_Account_Team__c(), 'NSP_TestDataFactory.AccountTeamMemberDefaults', false);
+        accTeam1.NSP_Account__c = letterrcvdTask.NSP_AccountId__c;
+        accTeam1.NSP_Role__c ='Payroll Supervisor';
+        Insert accTeam1;
+        
+        NSP_Account_Team__c accTeam2 = (NSP_Account_Team__c)NSP_TestExtendedDataFactory.createSObject(new NSP_Account_Team__c(), 'NSP_TestDataFactory.AccountTeamMemberDefaults', false);
+        accTeam2.NSP_Account__c = letterrcvdTask.NSP_AccountId__c;
+        accTeam2.NSP_Role__c ='Client Liaison';
+        Insert accTeam2;
+        
+        NSP_Account_Team__c accTeam3 = (NSP_Account_Team__c)NSP_TestExtendedDataFactory.createSObject(new NSP_Account_Team__c(), 'NSP_TestDataFactory.AccountTeamMemberDefaults', false);
+        accTeam3.NSP_Account__c = letterrcvdTask.NSP_AccountId__c;
+        accTeam3.NSP_Role__c ='Manager, HR Services';
+        Insert accTeam3;
+        
+        NSP_Account_Team__c accTeam4 = (NSP_Account_Team__c)NSP_TestExtendedDataFactory.createSObject(new NSP_Account_Team__c(), 'NSP_TestDataFactory.AccountTeamMemberDefaults', false);
+        accTeam4.NSP_Account__c = letterrcvdTask.NSP_AccountId__c;
+        accTeam4.NSP_Role__c ='Business Performance Advisor';
+        Insert accTeam4;
+        
+        NSP_Account_Team__c accTeam5 = (NSP_Account_Team__c)NSP_TestExtendedDataFactory.createSObject(new NSP_Account_Team__c(), 'NSP_TestDataFactory.AccountTeamMemberDefaults', false);
+        accTeam5.NSP_Account__c = letterrcvdTask.NSP_AccountId__c;
+        accTeam5.NSP_Role__c ='Bus. Team-HRSp/CL';
+        Insert accTeam5;
+        
+        NSP_Account_Team__c accTeam6 = (NSP_Account_Team__c)NSP_TestExtendedDataFactory.createSObject(new NSP_Account_Team__c(), 'NSP_TestDataFactory.AccountTeamMemberDefaults', false);
+        accTeam6.NSP_Account__c = letterrcvdTask.NSP_AccountId__c;
+        accTeam6.NSP_Role__c ='MidMarket Account Exec';
+        Insert accTeam6;
+        
         Asset asseObj = [SELECT Id, AccountId,NSP_Reason_for_Term__c,NSP_Anticipated_Date_Of_Termination__c  FROM Asset Limit 1];
         asseObj.AccountId = letterrcvdTask.NSP_AccountId__c;
         asseObj.RecordTypeId =new_Asset_RT_ID;
@@ -886,6 +981,20 @@ public class NSP_ProjectTasksTriggerHelperTest {
         UPDATE letterrcvdTask;
         
         Test.stopTest();
+    }
+    
+    @IsTest
+    private static void onChangeOfProjectTemplateTest(){
+       Test.startTest();
+        Account acc = [SELECT ID, NSP_AIMS_Client__c FROM Account WHERE NSP_AIMS_Client__c = '8900' LIMIT 1];
+        List<ID> accList = new List <ID>();
+        if(!accList.isEmpty()){
+            accList.add(acc.ID);
+        }
+        List<pse__Project_Task__c> letterrcvdTask = [SELECT Id, Name, pse__Status__c,NSP_AccountId__c,pse__Started__c,pse__Completed__c  FROM pse__Project_Task__c WHERE Name ='Notify ITA if term date is today' Limit 1];
+        Map<ID,pse__Project_Task__c> letterrcvdTaskMap = new Map<ID,pse__Project_Task__c>(letterrcvdTask);
+        NSP_ProjectTasksTriggerHelper.onChangeOfProjectTemplate(letterrcvdTaskMap.KeySet());
+        Test.stopTest(); 
     }
     
      @IsTest
@@ -1078,9 +1187,13 @@ public class NSP_ProjectTasksTriggerHelperTest {
     * MethodName: docusignAssetTest
     * Description : To test docusignAsset 
     * ********************************************************************************************/
-	@isTest
-    private static void docusignAssetTest(){
+    @isTest private static void docusignAssetTest(){
         Test.startTest();
+        List<string> peoTerminationTaskList = System.Label.PEO_Termination_Tasks.split(';');
+        String TERMINATIONANALYSIS = null;
+        if(peoTerminationTaskList != null && !peoTerminationTaskList.isEmpty() && peoTerminationTaskList.size() >= 2){
+            TERMINATIONANALYSIS = peoTerminationTaskList[1];
+        }
         Id AssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId('Asset','Employment_Screening');
         Account acc = [SELECT ID, NSP_AIMS_Client__c FROM Account WHERE NSP_AIMS_Client__c = '8900' LIMIT 1];
         Asset asseObj = [SELECT Id, AccountId,NSP_Reason_for_Term__c,NSP_Anticipated_Date_Of_Termination__c  FROM Asset Limit 1];
@@ -1088,9 +1201,9 @@ public class NSP_ProjectTasksTriggerHelperTest {
         asseObj.RecordTypeId =AssetRecordTypeId;
         asseObj.Status = 'Active';
         UPDATE asseObj;
-        pse__Project_Task__c pTask = [SELECT Id, Name, pse__Status__c,NSP_AccountId__c  FROM pse__Project_Task__c WHERE Name = 'Complete termination analysis' Limit 1];
+        pse__Project_Task__c pTask = [SELECT Id, Name, pse__Status__c,NSP_AccountId__c  FROM pse__Project_Task__c WHERE Name = :TERMINATIONANALYSIS Limit 1];
         pTask.NSP_Account_Id__c = acc.Id;
-		update pTask;
+        update pTask;
         Test.stopTest();
     }
     /***********************************************************************************************

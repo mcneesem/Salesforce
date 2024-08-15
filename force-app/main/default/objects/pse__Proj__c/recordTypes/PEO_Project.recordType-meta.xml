@@ -1378,6 +1378,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Service - Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Service Plan</fullName>
             <default>false</default>
         </values>

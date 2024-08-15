@@ -278,7 +278,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Interns</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Others</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Part-time</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Seasonal</fullName>
             <default>false</default>
         </values>
     </picklistValues>

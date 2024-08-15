@@ -56,7 +56,8 @@ public class NSP_AssetServiceTriggerHelper {
     Static final Id RETWOAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId(ASSET,NSP_ServiceConstants.RET_WO_ASSET_RECORDTYPE); //<STY-03527>
     private static final Id wxWaAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId(ASSET, 'NSP_Asset_Product');
     private static final Id CPQ_ASSET_RECORDTYPE_ID = NSP_GenericRecordType.getRecordTypeId(ASSET, 'NSP_CPQ_Asset');
-
+    private static final Id PERFORM_SMART_ASSET = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.ASSET_SOBJECT_TYPE,NSP_ServiceConstants.PERFORMANCE_ASSET );
+    private static final Id INTEGRA_ASSET = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.ASSET_SOBJECT_TYPE,NSP_ServiceConstants.INTEGRA );
     private static final String ASSET_TERMINATION_PAYROLL_TEMPLATE = 'NSP_Retention_Strategy_Payroll_Email';
     private static final String ASSET_TERMINATION_OTHER_ROLE_TEMPLATE = 'NSP_Asset_Retention_Strategy_Email';
     private static final String RSAP = 'Relationship Strategy Action Plan';
@@ -92,7 +93,7 @@ public class NSP_AssetServiceTriggerHelper {
         List<Asset> nonWOassetList = new List<Asset>();
         Map<Id, List<Asset>> RETBPSassets = new Map<Id, List<Asset>>();
         Map<String, String> recTypeLabelMap = new Map<String, String>();
-        Map<String, Schema.RecordTypeInfo> assetAllRecordTypes = NSP_GenericRecordType.getRecordTypeMap(ASSET);
+        Map<String, Schema.RecordTypeInfo> assetAllRecordTypes = NSP_AssetServiceTriggerHelper.ASSET_RECORD_TYPES;
         Map<Id, Account> assetAccIdNameMap;
         Set<Id> accIdSet = new Set<Id>();
 
@@ -348,8 +349,8 @@ public class NSP_AssetServiceTriggerHelper {
         List<Id> AccountIDNull = new List<Id>();
         Set<Id> assetPayrollSet = new Set<Id>();
         // check if atleast one field in WO asset is updated as per condition
-        for(Asset asset : newList)
-        {   Asset oldMapvalue =  oldMap.get(asset.id);
+        for(Asset asset : newList) {
+            Asset oldMapvalue =  oldMap.get(asset.id);
             // added as a part of DF-03798
         if(asset.AccountId!=null &&
             (asset.RecordTypeId == WOAssetRecordTypeId || asset.RecordTypeId==wxWaAssetRecordTypeId) &&
@@ -389,14 +390,19 @@ public class NSP_AssetServiceTriggerHelper {
                 isValid = true;
                 WOAssetMap.put(asset.AccountId,asset );
             }
-         // check if  WO asset is made INACTIVE
-         if(asset.RecordTypeId == WOAssetRecordTypeId &&
-            asset.NSP_Account_Status__c != oldMapvalue.NSP_Account_Status__c &&
-            asset.NSP_Account_Status__c != NSP_ServiceConstants.ASSET_ACTIVE_STATUS &&
-            asset.NSP_Client__c != null  ){
+            // check if  WO asset is made INACTIVE
+            NSP_Trigger_Switch__c triggerSwitch =  NSP_Trigger_Switch__c.getInstance(UserInfo.getUserId());
+            if ( asset.RecordTypeId == WOAssetRecordTypeId
+                && asset.NSP_Account_Status__c != oldMapvalue.NSP_Account_Status__c
+                && asset.NSP_Account_Status__c != NSP_ServiceConstants.ASSET_ACTIVE_STATUS
+                && asset.NSP_Client__c != null
+                && triggerSwitch != null
+                && triggerSwitch.Null_BPS_assets__c
+                )
+            {
                 // check if  WO asset is made INACTIVE
                 isNull = true;
-                AccountIDNull.add(asset.AccountId );
+                AccountIDNull.add( asset.AccountId );
             }
         }
 
@@ -1104,7 +1110,7 @@ public class NSP_AssetServiceTriggerHelper {
         } catch ( Exception e ) {
             NSP_AssetServiceTriggerHelper.handleException(
                 e ,
-                'createWXAssetGroups'
+                'createWXAssetGroupsonUpdate'
             );
         }
     }
@@ -1213,7 +1219,11 @@ public class NSP_AssetServiceTriggerHelper {
             if (!lstRecordsToUpsert.isEmpty()) {
                 lstRecordsToUpsert.sort();
                 List<Database.UpsertResult> results = Database.upsert(lstRecordsToUpsert, false);
-                NSP_ErrorLogHandler.logUpsertResultsException('NSP_AssetServiceTriggerHelper', 'createWXAccountGroupError', results);
+                NSP_ErrorLogHandler.logResults(
+                    NSP_AssetServiceTriggerHelper.class.getName() ,
+                    'createWXAccountGroup' ,
+                    results
+                );
             }
         }
     }
@@ -1245,11 +1255,13 @@ public class NSP_AssetServiceTriggerHelper {
 
         if (!lstAccGroupsToDelete.isEmpty()) {
             Database.DeleteResult[] lstGroupResults = Database.delete(lstAccGroupsToDelete, false);
-            NSP_ErrorLogHandler.logDeleteResultsException('NSP_AssetServiceTriggerHelper', 'deleteAccountGroups', lstGroupResults);
+            NSP_ErrorLogHandler.logResults(
+                NSP_AssetServiceTriggerHelper.class.getName() ,
+                'deleteAccountGroups' ,
+                lstGroupResults
+            );
         }
-
     }
-
 
     public class WxAssetGroup {
         public Map < String, Set < String >> mapWxParentIdAccountIds;
@@ -1689,10 +1701,10 @@ Implementation profile related to the account of the created asset
 
     private static void handleException( Exception e , String methodName ) {
         if ( e != null ) {
-            NSP_ErrorLogHandler.logSaveException(
+            NSP_ErrorLogHandler.logException(
                 NSP_AssetServiceTriggerHelper.class.getName() ,
                 methodName ,
-                e.getMessage() + ' ~ ' + e.getStackTraceString()
+                e
             );
         }
     }
@@ -1728,7 +1740,7 @@ Implementation profile related to the account of the created asset
             //update account with earliest first pay date
             if ( !mapOfAccountIdWithAccount.isEmpty() ) {
                 List<Database.SaveResult> results = Database.update( mapOfAccountIdWithAccount.values() );
-                NSP_ErrorLogHandler.logSaveResultsException(
+                NSP_ErrorLogHandler.logResults(
                     NSP_AssetServiceTriggerHelper.class.getName() ,
                     'updateEarliestProductFirstPayDateOnAccount' ,
                     results
@@ -1804,13 +1816,15 @@ Implementation profile related to the account of the created asset
     // Params: List<Asset> assetList
     // ********************************************************************************************
     public static void updateServiceSegmentOnAccount( Set<Id> accountIdSet ) {
-
-    List<Account> accountToUpdateList = new List<Account>();
-    Map<Id, Asset> accIdAssetMap = new Map<Id, Asset>();
-    List<String> assetStatusList = new List<String>{NSP_ServiceConstants.ASSETBLACKOUT, NSP_ServiceConstants.TERMINATED};
+        List<Account> accountToUpdateList = new List<Account>();
+        Map<Id,Asset> accIdAssetMap = new Map<Id,Asset>();
+        List<String> assetStatusList = new List<String>{
+            NSP_ServiceConstants.ASSETBLACKOUT ,
+            NSP_ServiceConstants.TERMINATED
+        };
         Set<Id> assetRecordTypeIdSet = new Set<Id>{WOAssetRecordTypeId, wxWaAssetRecordTypeId};
 
-        try{
+        try {
             if(!accountIdSet.isEmpty()){
                     for(Asset assetRec:  [SELECT Id, AccountId,
                                           RecordTypeId,
@@ -1830,13 +1844,14 @@ Implementation profile related to the account of the created asset
 
                                           }
 
+                    Boolean switchEnabled = AssetTriggerSettings__c.getInstance( UserInfo.getUserId() ).IsAccountServiceSegmentCheckEnabled__c;
                     if(!accIdAssetMap.isEmpty()){
                         for(Account acc : [SELECT Id, NSP_Service_Segment__c FROM Account WHERE Id IN: accIdAssetMap.keySet()]){
                             acc.NSP_Service_Segment__c = accIdAssetMap.get(acc.Id).recordTypeId == woAssetRecordTypeId ? accIdAssetMap.get(acc.Id).NSP_Client_Segment_type__c :
                             accIdAssetMap.get(acc.Id).NSP_Product_Segment__c;
                             accountToUpdateList.add(acc);
                         }
-                    }else{
+                    } else if( switchEnabled ) {
                         for(Account acc : [SELECT Id, NSP_Service_Segment__c FROM Account WHERE Id IN: accountIdSet]){
                             acc.NSP_Service_Segment__c = NSP_ServiceConstants.EMPTY_STRING;
                             accountToUpdateList.add(acc);
@@ -1845,73 +1860,75 @@ Implementation profile related to the account of the created asset
             }
             if ( !accountToUpdateList.isEmpty() ) {
                 List<Database.SaveResult> results = Database.update( accountToUpdateList , false );
-                NSP_ErrorLogHandler.logSaveResultsException(
+                NSP_ErrorLogHandler.logResults(
                     NSP_AssetServiceTriggerHelper.class.getName() ,
-                    'updateServiceSegment' ,
+                    'updateServiceSegmentOnAccount' ,
                     results
                 );
             }
         } catch ( Exception e ) {
             NSP_AssetServiceTriggerHelper.handleException(
                 e ,
-                'updateServiceSegment'
+                'updateServiceSegmentOnAccount'
             );
         }
     }
 
-    /***********************************************************************************************
-    * MethodName: updateAccountStatus
-    * Description : updates parent account status if new asset is added/ existing asset updated
-    * Story : DF-03777
-    * Params: List<Asset> assetList, List<Account> accountList
-    * ********************************************************************************************/
-    public void updateAccountStatus (List<Asset> assetList, List<Account> accountList){
-        Set<Id> accountIdSet = new Set<Id>();
-        List<Asset> listOfAsset = new List<Asset>();
-        Map<ID,String> acctIDStatusMap = new Map<ID,String>();
+    //
+    // MethodName: updateAccountStatus
+    // Description : updates parent account status if new asset is added/ existing asset updated
+    // Story : DF-03777
+    // Params: List<Asset> assetList, List<Account> accountList
+    //
+    public void updateAccountStatus( List<Asset> assetList , List<Account> accountList ) {
         List<Account> accountsToUpdate = new List<Account>();
-        for (Account acc : accountList){
-            boolean anyActive=false;
-            boolean anyOnBoarding=false;
-            boolean anyOnDemand=false;
-
-            for(Asset ass: acc.Assets){
-                /*Checking if Asset status is equal to null or not
-                AND CHecking if Asset status is equal to Active or not */
-                if(ass.Status!=null && ass.Status.equals(NSP_SalesConstants.ACTIVE)){
-                    anyActive=true;
-                }
-                /*Checking if Asset  status is equal to null or not
-                AND CHecking if Asset  status is equal to ONBOARDING or not */
-                else if(ass.Status!=null && ass.Status.equals(NSP_SalesConstants.ONBOARDING)){
-                    anyOnBoarding=true;
-                }
-                /*CHecking if Asset  status is equal to null or not
-                AND CHecking if Asset  status is equal to On Demand or not */
-                else if(ass.Status!=null && ass.Status.equals(NSP_ServiceConstants.AssetStatusOnDemand)){
-                    anyOnDemand=true;
+        for ( Account acc : accountList ) {
+            Boolean anyActive = false;
+            Boolean anyOnBoarding = false;
+            Boolean anyOnDemand = false;
+            for ( Asset ass: acc.Assets ) {
+                if ( String.isNotBlank( ass.Status ) ) {
+                    if ( ass.Status.equals( NSP_SalesConstants.ACTIVE ) ) {
+                        // Checking if Asset status is equal to null or not
+                        // AND CHecking if Asset status is equal to Active or not
+                        anyActive=true;
+                    } else if ( ass.Status.equals( NSP_SalesConstants.ONBOARDING ) ) {
+                        // Checking if Asset  status is equal to null or not
+                        // AND CHecking if Asset  status is equal to ONBOARDING or not
+                        anyOnBoarding=true;
+                    } else if ( ass.Status.equals( NSP_ServiceConstants.AssetStatusOnDemand ) ) {
+                        // Checking if Asset  status is equal to null or not
+                        // AND Checking if Asset  status is equal to On Demand or not
+                        anyOnDemand=true;
+                    }
                 }
             }
-
-            if(anyActive){
+            if ( anyActive ) {
                 acc.NSP_Sales_Service_Account_Status__c = NSP_SalesConstants.ACTIVE;
-            }
-            else if(anyOnBoarding){
+            } else if ( anyOnBoarding ) {
                 acc.NSP_Sales_Service_Account_Status__c = NSP_SalesConstants.ONBOARDING;
-            }
-            else if(anyOnDemand){
+            } else if ( anyOnDemand ) {
                 acc.NSP_Sales_Service_Account_Status__c = NSP_ServiceConstants.AssetStatusOnDemand;
-            }
-            else if(acc.Opportunities.size()>0){
+            } else if ( ( acc.Opportunities != null ) && !acc.Opportunities.isEmpty()  ) {
                 acc.NSP_Sales_Service_Account_Status__c = NSP_SalesConstants.PROSPECTING;
             }
-            accountsToUpdate.add(acc);
+            accountsToUpdate.add( acc );
         }
-
-        if(accountsToUpdate.size()>0){
-            update accountsToUpdate;
+        if ( accountsToUpdate.size() > 0 ) {
+            try {
+                List<Database.SaveResult> results = Database.update( accountsToUpdate , false );
+                NSP_ErrorLogHandler.logResults(
+                    NSP_AssetServiceTriggerHelper.class.getName() ,
+                    'updateAccountStatus' ,
+                    results
+                );
+            } catch ( Exception e ) {
+                NSP_AssetServiceTriggerHelper.handleException(
+                    e ,
+                    'updateAccountStatus'
+                );
+            }
         }
-
     }
 
     /***********************************************************************************************
@@ -1951,13 +1968,19 @@ Implementation profile related to the account of the created asset
         }
         if(!newAccountList.isEmpty()){
             List<Database.SaveResult> results = Database.update(newAccountList,false);
-            NSP_ErrorLogHandler.logSaveResultsException('NSP_AssetServiceTriggerHelper', 'updateaccountPayrollEmployee', results );
-
+            NSP_ErrorLogHandler.logResults(
+                NSP_AssetServiceTriggerHelper.class.getName() ,
+                'updateaccountPayrollEmployee:newAccountList' ,
+                results
+            );
         }
         if(!accountList.isEmpty()){
             List<Database.SaveResult> results = Database.update(accountList,false);
-            NSP_ErrorLogHandler.logSaveResultsException('NSP_AssetServiceTriggerHelper', 'updateaccountPayrollEmployee', results );
-
+            NSP_ErrorLogHandler.logResults(
+                NSP_AssetServiceTriggerHelper.class.getName() ,
+                'updateaccountPayrollEmployee:accountList' ,
+                results
+            );
         }
     }
 
@@ -2007,7 +2030,7 @@ Implementation profile related to the account of the created asset
                             if ( isBPSUserFields ) {
                                 throwErrorOnSpecificRecordTypesAndField( assetRec , oldAsset , nonEditableField );
                             }else{
-                                assetRec.addError( nonEditableField , errorMessage );
+                                assetRec.addError( nonEditableField , NSP_AssetServiceTriggerHelper.errorMessage );
                             }
                         }
                     }
@@ -2022,34 +2045,42 @@ Implementation profile related to the account of the created asset
     }
 
     // TO throw error message while editing Asset Recordtype as a BPS User
-
-private void throwErrorOnSpecificRecordTypesAndField (Asset assetRec, Asset oldAsset, String nonEditableField){
-
-    List<String> nonEditableRETFields = System.Label.NSP_RET_Non_Editable_Fields.split(',');
-    //List of all fields which BPS users cannot edit if Create Asset perm set is not assigned
-    List<String> nonEditableBPSAssetFields = System.Label.NSP_BPS_Non_Editable_Fields.split(',');
-    List<String> nonEditableHardwareLoanerBPSAssetFields = System.Label.NSP_BPS_Non_Hardware_Loaner_Fields.split(',');
-    List<string> nonEditableHardwareBPSAssetFields = System.Label.NSP_BPS_Non_Hardware_Fields.split(',');
-    List<String> nonEditableXMLBPSAssetFields = System.Label.NSP_BPS_Non_XML_Fields.split(',');
-    List<String> nonEditableInsuranceServicesBPSAssetFields = System.Label.NSP_BPS_Non_Insurance_Services_Fields.split(',');
-    List<String> nonEditableEmploymentScreeningBPSAssetFields = System.Label.NSP_BPS_Non_Employment_Screening_Fields.split(',');
-    List<String> nonEditableCertifyBPSAssetFields = System.Label.NSP_BPS_Non_Certify_Fields.split(',');
-    List<String> nonEditableApplicantTrackingBPSAssetFields = System.Label.NSP_BPS_Non_Applicant_Tracking_Fields.split(',');
-    List<String> nonEditableTimeAttendanceBPSAssetFields = System.Label.NSP_BPS_Non_Time_Attendance_Fields.split(',');
-    Id assetRecordTypeId = assetRec.RecordTypeId;
-
-    if((assetRecordTypeId == HardwareLoanerAsset && nonEditableHardwareLoanerBPSAssetFields.Contains(nonEditableField)) ||
-        (assetRecordTypeId == HardwareAsset && nonEditableHardwareBPSAssetFields.Contains(nonEditableField)) ||
-        (assetRecordTypeId == XmlAssetRecordId && nonEditableXMLBPSAssetFields.Contains(nonEditableField))||
-        (assetRecordTypeId == InsuranceServiceRT && nonEditableInsuranceServicesBPSAssetFields.Contains(nonEditableField)) ||
-        (assetRecordTypeId == ApplicantTrackingRT && nonEditableApplicantTrackingBPSAssetFields.Contains(nonEditableField)) ||
-        (assetRecordTypeId == EmploymentScreeningRT && nonEditableEmploymentScreeningBPSAssetFields.Contains(nonEditableField)) ||
-        (assetRecordTypeId == CertifyRT && nonEditableCertifyBPSAssetFields.Contains(nonEditableField)) ||
-        (assetRecordTypeId == TimeAttendanceRecordId && nonEditableTimeAttendanceBPSAssetFields.Contains(nonEditableField))){
-            return;
-        }else{
-        assetRec.addError(nonEditableField, errorMessage);
+    private void throwErrorOnSpecificRecordTypesAndField( Asset assetRec , Asset oldAsset , String nonEditableField ) {
+        List<String> nonEditableRETFields = System.Label.NSP_RET_Non_Editable_Fields.split(',');
+        //List of all fields which BPS users cannot edit if Create Asset perm set is not assigned
+        List<String> nonEditableBPSAssetFields = System.Label.NSP_BPS_Non_Editable_Fields.split(',');
+        List<String> nonEditableHardwareLoanerBPSAssetFields = System.Label.NSP_BPS_Non_Hardware_Loaner_Fields.split(',');
+        List<String> nonEditableHardwareBPSAssetFields = System.Label.NSP_BPS_Non_Hardware_Fields.split(',');
+        List<String> nonEditableXMLBPSAssetFields = System.Label.NSP_BPS_Non_XML_Fields.split(',');
+        List<String> nonEditableInsuranceServicesBPSAssetFields = System.Label.NSP_BPS_Non_Insurance_Services_Fields.split(',');
+        List<String> nonEditableEmploymentScreeningBPSAssetFields = System.Label.NSP_BPS_Non_Employment_Screening_Fields.split(',');
+        List<String> nonEditableCertifyBPSAssetFields = System.Label.NSP_BPS_Non_Certify_Fields.split(',');
+        List<String> nonEditableApplicantTrackingBPSAssetFields = System.Label.NSP_BPS_Non_Applicant_Tracking_Fields.split(',');
+        List<String> nonEditableTimeAttendanceBPSAssetFields = System.Label.NSP_BPS_Non_Time_Attendance_Fields.split(',');
+        List<String> nonEditablePerformanceBPSAssetFields = System.Label.BPS_Non_Performance_Management_Fields.split(',');
+        List<String> nonEditableIntegraBPSAssetFields = System.Label.BPS_Integra_Asset_Feilds.split(',');
+        Id assetRecordTypeId = assetRec.RecordTypeId;
+        if ( assetRecordTypeId != null ) {
+            Boolean isValid = False;
+            if ( ( assetRecordTypeId == HardwareLoanerAsset && nonEditableHardwareLoanerBPSAssetFields.size()>0 && nonEditableHardwareLoanerBPSAssetFields.Contains(nonEditableField) )
+                || ( assetRecordTypeId == HardwareAsset && nonEditableHardwareBPSAssetFields.size()>0 && nonEditableHardwareBPSAssetFields.Contains(nonEditableField) )
+                || ( assetRecordTypeId == XmlAssetRecordId && nonEditableXMLBPSAssetFields.size()>0 && nonEditableXMLBPSAssetFields.Contains(nonEditableField) )
+                || ( assetRecordTypeId == InsuranceServiceRT && nonEditableInsuranceServicesBPSAssetFields.size()>0 && nonEditableInsuranceServicesBPSAssetFields.Contains(nonEditableField) )
+                || ( assetRecordTypeId == ApplicantTrackingRT && nonEditableApplicantTrackingBPSAssetFields.size()>0 && nonEditableApplicantTrackingBPSAssetFields.Contains(nonEditableField) )
+                || ( assetRecordTypeId == EmploymentScreeningRT && nonEditableEmploymentScreeningBPSAssetFields.size()>0 && nonEditableEmploymentScreeningBPSAssetFields.Contains(nonEditableField) )
+                || ( assetRecordTypeId == CertifyRT && nonEditableCertifyBPSAssetFields.size()>0 &&nonEditableCertifyBPSAssetFields.Contains(nonEditableField) )
+                || ( assetRecordTypeId == TimeAttendanceRecordId && nonEditableTimeAttendanceBPSAssetFields.size()>0 && nonEditableTimeAttendanceBPSAssetFields.Contains(nonEditableField) )
+                || ( assetRecordTypeId == PERFORM_SMART_ASSET && nonEditablePerformanceBPSAssetFields.size()>0 && nonEditablePerformanceBPSAssetFields.Contains(nonEditableField) )
+                || ( assetRecordTypeId == INTEGRA_ASSET && nonEditableIntegraBPSAssetFields.size()>0 && nonEditableIntegraBPSAssetFields.Contains(nonEditableField))
+                )
+            {
+                isValid = True;
+            }
+            if ( !isValid ) {
+                assetRec.addError( nonEditableField , NSP_AssetServiceTriggerHelper.errorMessage );
+            }
+        }
     }
-}
+
 }
 //

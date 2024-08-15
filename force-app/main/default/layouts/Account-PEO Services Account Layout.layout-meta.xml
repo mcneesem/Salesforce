@@ -125,6 +125,10 @@
                 <behavior>Edit</behavior>
                 <field>ParentId</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>MidMarket_National_Account__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -265,7 +269,7 @@
     </layoutSections>
     <platformActionList>
         <actionListContext>Record</actionListContext>
-                <platformActionListItems>
+        <platformActionListItems>
             <actionName>Account.NSP_New_BPS_Task</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>1</sortOrder>
@@ -275,7 +279,7 @@
             <actionType>QuickAction</actionType>
             <sortOrder>2</sortOrder>
         </platformActionListItems>
-<platformActionListItems>
+        <platformActionListItems>
             <actionName>New_PEO_Task</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>0</sortOrder>
@@ -427,11 +431,11 @@
         <excludeButtons>MassChangeOwner</excludeButtons>
         <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
+        <fields>NSP_Account__c</fields>
         <fields>pse__Project_Status__c</fields>
         <fields>pse__Start_Date__c</fields>
         <fields>pse__End_Date__c</fields>
         <fields>NSP_Owner__c</fields>
-        <fields>pse__Project_Type__c</fields>
         <fields>RECORDTYPE</fields>
         <relatedList>pse__Proj__c.pse__Account__c</relatedList>
     </relatedLists>

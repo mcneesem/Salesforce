@@ -30,8 +30,16 @@
                 <behavior>Edit</behavior>
                 <field>blng__HoldBilling__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Preserve_Invoice_Group_ID__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Has_Consumption_Schedule__c</field>
+            </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>NSP_Status_Indicator__c</field>

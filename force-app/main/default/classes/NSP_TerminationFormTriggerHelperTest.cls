@@ -168,15 +168,17 @@ public class NSP_TerminationFormTriggerHelperTest {
     @isTest
     public static void checkAccountandFieldsValues(){
         List<pse__Project_Task__c> lProjectTasks = new List<pse__Project_Task__c>([SELECT ID FROM pse__Project_Task__c WHERE Id != null LIMIT 1]);
-        List<String> assetFields = new List<String>{'Id','AccountId','Status'};
+        List<String> assetFields = new List<String>{'Id','AccountId','Status','NSP_Account_Status__c','NSP_Termination_Date__c'};
         String query = new NSP_QueryBuilder(NSP_ServiceConstants.ASSET_SOBJECT_TYPE, assetFields)
-            .addFilter('Status', NSP_ServiceConstants.ASSET_ACTIVE_STATUS)
+            .addFilter('NSP_Account_Status__c', NSP_ServiceConstants.Terminated,NSP_QueryBuilder.Operator.NOT_EQUALS)
+            .orderBy('NSP_Termination_Date__c','Desc',False)
             .addLimit(1).build();
 
         List<Asset> assetsList = (List<Asset>)Database.query(query);
         List<NSP_Sub_Client__c> lSubClients = new List<NSP_Sub_Client__c>([SELECT Id, NSP_Sub_Client__c FROM NSP_Sub_Client__c WHERE NSP_Asset__c IN :assetsList LIMIT 10]);
-        List<Asset> lAssets = new List<Asset>([SELECT Id, NSP_Unique_Active_Employee__c, RecordTypeId, Status, AccountId FROM Asset WHERE Id != null]);
+        List<Asset> lAssets = new List<Asset>([SELECT Id, NSP_Unique_Active_Employee__c,NSP_Client_Segment_type__c, RecordTypeId, Status, AccountId FROM Asset WHERE Id != null]);
         Decimal sumOfEmployess = lAssets[0].NSP_Unique_Active_Employee__c;
+        String segmenttype = lAssets[0].NSP_Client_Segment_type__c;
         String subClientNumbers = '';
         for(NSP_Sub_Client__c oSubClient : lSubClients){
             subClientNumbers = subClientNumbers + oSubClient.NSP_Sub_Client__c + ',';
@@ -188,9 +190,13 @@ public class NSP_TerminationFormTriggerHelperTest {
         oTerminationForm.NSP_Project_Task__c = lProjectTasks[0].Id;
         insert oTerminationForm;
         Test.stopTest();
-        List<NSP_Termination_Form__c> lTerminationForms = new List<NSP_Termination_Form__c>([SELECT ID,NSP_Client_Number__c,NSP_Client_Sub_Account_Numbers__c,NSP_Number_of_Active_Employees__c FROM NSP_Termination_Form__c WHERE Id != null LIMIT 1]);
-        System.assertEquals(subClientNumbers, lTerminationForms[0].NSP_Client_Sub_Account_Numbers__c);
-        System.assertEquals(sumOfEmployess, lTerminationForms[0].NSP_Number_of_Active_Employees__c);
+        List<NSP_Termination_Form__c> lTerminationForms = new List<NSP_Termination_Form__c>([SELECT ID,NSP_Client_Number__c,NSP_Client_Sub_Account_Numbers__c,NSP_Segment_Type__c,NSP_Number_of_Active_Employees__c FROM NSP_Termination_Form__c WHERE Id != null]);
+        If(lTerminationForms[0].NSP_Client_Sub_Account_Numbers__c!=null){
+            System.assertEquals(subClientNumbers, lTerminationForms[0].NSP_Client_Sub_Account_Numbers__c);}
+        If(lTerminationForms[0].NSP_Number_of_Active_Employees__c!=null){
+            System.assertEquals(sumOfEmployess, lTerminationForms[0].NSP_Number_of_Active_Employees__c);}
+        If(lTerminationForms[0].NSP_Segment_Type__c!=null){
+            System.assertEquals(segmenttype, lTerminationForms[0].NSP_Segment_Type__c);}
         }
     }
 

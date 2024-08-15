@@ -1,6 +1,10 @@
 const RL_FIELDS = [
   'NSP_Chart_of_Accounts_GL_codes__c',
   'NSP_Sample_of_current_GL_report__c',
+  'Is_there_a_need_for_a_GL_interface__c',
+  'Is_there_a_need_for_Integra__c',
+  'Do_you_require_more_than_3_job_cost__c',
+  'Do_you_have_a_recent_journal_entry__c'
 ];
 
 const SECTION_FIELDS = [

@@ -193,4 +193,57 @@ public class NSP_OpportunityTriggerServiceHelperTest {
       Test.stopTest();
       system.assertEquals(impProfile.Account__c, acc.Id);
   }
+
+    @isTest
+    static void updateTimeAttendence(){
+        Test.startTest();
+        Id projectRecordType = SObjectType.pse__Proj__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.PEOProject).getRecordTypeId();
+        Account acc= [Select Id , Name from Account WHERE Name = 'Test Account' LIMIT 1];
+        
+        List<Opportunity> opportunityList = [SELECT Id,NSP_PrimaryProduct__c,AccountId,OwnerId FROM Opportunity WHERE NSP_Number_Of_Employees__c = 151 LIMIT 1];
+        opportunity oppty = opportunityList[0];
+        oppty.NSP_DM_User__c = oppty.OwnerId;
+        oppty.NSP_DA_User__c = oppty.OwnerId;
+        oppty.NSP_BPA__c = oppty.OwnerId;
+        oppty.StageName = NSP_SalesConstants.CLOSED_WON;
+        oppty.NSP_Time_Entry_Recommendation__c = NSP_ServiceConstants.Premier_Time_Att;
+        oppty.NSP_Signed_CSA_Date__c = system.today();
+        oppty.NSP_PrimaryProduct__c = NSP_ServiceConstants.TIME_ATTENDANCE;
+        oppty.NSP_Signed_CSA__c = true;
+        oppty.NSP_IPMRecommendation__c = NSP_SalesConstants.Yes;
+        oppty.AccountId = acc.Id;
+        update oppty;
+        Test.stopTest();
+        system.assertEquals(oppty.AccountId, acc.Id);
+    }
+    
+    @isTest
+    static void existingAccountTimeAttendence(){
+        Test.startTest();
+        Id TIME_ATTENDANCE_ASSET = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.ASSET_SOBJECT_TYPE,NSP_ServiceConstants.ASSET_TT_RECORDTYPE );
+        Id projectRecordType = SObjectType.pse__Proj__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.PEOProject).getRecordTypeId();
+        Account acc= [Select Id , Name from Account WHERE Name = 'Test Account' LIMIT 1];
+        
+        Asset newAsset = new Asset ();
+        newAsset.Name = NSP_ServiceConstants.WORKFORCE_ASSET;
+        newAsset.AccountId = acc.Id;
+        newAsset.RecordTypeId = TIME_ATTENDANCE_ASSET;
+        insert newAsset;
+        
+        List<Opportunity> opportunityList = [SELECT Id,NSP_PrimaryProduct__c,AccountId,OwnerId FROM Opportunity WHERE NSP_Number_Of_Employees__c = 151 LIMIT 1];
+        opportunity oppty = opportunityList[0];
+        oppty.NSP_DM_User__c = oppty.OwnerId;
+        oppty.NSP_DA_User__c = oppty.OwnerId;
+        oppty.NSP_BPA__c = oppty.OwnerId;
+        oppty.StageName = NSP_SalesConstants.CLOSED_WON;
+        oppty.NSP_Time_Entry_Recommendation__c = NSP_ServiceConstants.Premier_Time_Att;
+        oppty.NSP_Signed_CSA_Date__c = system.today();
+        oppty.NSP_PrimaryProduct__c = NSP_ServiceConstants.TIME_ATTENDANCE;
+        oppty.NSP_Signed_CSA__c = true;
+        oppty.NSP_IPMRecommendation__c = NSP_SalesConstants.Yes;
+        oppty.AccountId = acc.Id;
+        update oppty;
+        Test.stopTest();
+        system.assertEquals(oppty.AccountId, acc.Id);
+    }
 }

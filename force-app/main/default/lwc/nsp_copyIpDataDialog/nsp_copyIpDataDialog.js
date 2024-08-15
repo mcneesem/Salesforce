@@ -43,8 +43,9 @@ export default class Nsp_copyIpDataDialog extends LightningElement {
 
   handleCopyButtonClick() {
     const records = this.selectedOptions;
+    const sections = this.selectedSections;
 
-    if (isNonEmptyArray(records)) {
+    if (isNonEmptyArray(records) && isNonEmptyArray(sections)) {
       this.dispatchEvent(new CustomEvent('copy', { detail: { records } }));
     }
   }

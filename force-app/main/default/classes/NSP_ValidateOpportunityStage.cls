@@ -12,7 +12,7 @@ Modification Log     :
 */
 
 public class NSP_ValidateOpportunityStage {
-    // test w/ NSP_ValidateOpportunityStageTest (83%)
+    // test w/ NSP_ValidateOpportunityStageTest (85%)
     
     public static List<string> analysisStageCriteraTypes = System.Label.NSP_AnalysisStageCriteria.split(',');
     public static List<string> proposeStageCriteraTypes = System.Label.NSP_ProposeStageCriteria.split(',');
@@ -55,6 +55,12 @@ public class NSP_ValidateOpportunityStage {
             List<Quote> quotes=oppFromMap?.Quotes;
             
             if(opp.StageName != null){
+
+                //  Added 275639
+                if(FeatureManagement.checkPermission('Allow_Closed_Lost_Opportunity') && opp.StageName.equals(NSP_SalesConstants.CLOSED_LOST)){
+                    continue;
+                }
+
                 //Analysis
                 if ( opp.StageName.equals(NSP_SalesConstants.ANALYSIS_STAGE)
                     || opp.StageName.equals(NSP_SalesConstants.PROPOSAL_STAGE)
@@ -115,7 +121,7 @@ public class NSP_ValidateOpportunityStage {
                 //CR-031 removed Executive summary check and have added BPS Products condition
                 // 205583/208335 - bypass QuoteCriteria is Fee Inclusive is checked
                 if(!opp.Fee_Inclusive__c && opp.StageName.equals(NSP_SalesConstants.CLOSING_STAGE)){
-                    if(opp.NSP_PrimaryProduct__c!=NSP_SalesConstants.WO && !opp.NSP_Bypass_Docusign_Signature__c && !opp.NSP_Order_Generated__c){
+                    if(opp.NSP_PrimaryProduct__c != NSP_SalesConstants.WO && opp.NSP_PrimaryProduct__c != NSP_SalesConstants.WS && !opp.NSP_Bypass_Docusign_Signature__c && !opp.NSP_Order_Generated__c){
                         if(!exitCriteriaProductException.contains(opp.NSP_PrimaryProduct__c)){
                             opp.addError(System.Label.NSP_Create_Signed_Delivery_Order);
                         }else if(opp.NSP_PrimaryProduct__c == NSP_SalesConstants.HR_CONSULTING_SERVICES && opp.NSP_Client_For_Life__c != NSP_SalesConstants.WO_WS){
@@ -314,7 +320,11 @@ public class NSP_ValidateOpportunityStage {
 
         Integer canCloseLost =0;
         Map<Id,User> currentUserRoleMap = getUserRole( UserInfo.getUserId() );
-        if(OpportunityOwnerRoleMap.get(opp.OwnerId).UserRole.Name == NSP_SalesConstants.BUSINESS_PERFORMANCE_CONSULTANT && closeLostRolesforBusinessPerformanceConsultant.contains(currentUserRoleMap.get(userInfo.getUserId()).UserRole.Name)){
+
+         //  Added 275639
+        if(FeatureManagement.checkPermission('Allow_Closed_Lost_Opportunity')){
+            canCloseLost++;
+        }else if(OpportunityOwnerRoleMap.get(opp.OwnerId).UserRole.Name == NSP_SalesConstants.BUSINESS_PERFORMANCE_CONSULTANT && closeLostRolesforBusinessPerformanceConsultant.contains(currentUserRoleMap.get(userInfo.getUserId()).UserRole.Name)){
             canCloseLost++;
         }else if(OpportunityOwnerRoleMap.get(opp.OwnerId).UserRole.Name == NSP_SalesConstants.RETIREMENT_SALES_CONSULTANT && closeLostRolesforRetirementSalesConsultant.contains(currentUserRoleMap.get(userInfo.getUserId()).UserRole.Name)){
             canCloseLost++;

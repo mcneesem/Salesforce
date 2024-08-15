@@ -20,6 +20,11 @@
                 <default>false</default>
                 <label>Human Capital Goal</label>
             </value>
+            <value>
+                <fullName>Relationship Goal</fullName>
+                <default>false</default>
+                <label>Relationship Goal</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

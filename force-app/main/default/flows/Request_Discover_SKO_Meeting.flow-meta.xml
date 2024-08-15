@@ -1266,7 +1266,7 @@
         <fields>
             <name>ossname</name>
             <dataType>String</dataType>
-            <fieldText>OSS Name</fieldText>
+            <fieldText>Client Contact Name</fieldText>
             <fieldType>InputField</fieldType>
             <isRequired>true</isRequired>
         </fields>
@@ -1277,7 +1277,7 @@
             <inputParameters>
                 <name>label</name>
                 <value>
-                    <stringValue>OSS Phone</stringValue>
+                    <stringValue>Client Contact Phone</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -1321,7 +1321,7 @@
             <inputParameters>
                 <name>label</name>
                 <value>
-                    <stringValue>OSS Email</stringValue>
+                    <stringValue>Client Contact Email</stringValue>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -1446,7 +1446,7 @@
             <targetReference>Get_OMR_records</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <subflows>
         <name>Fault_Handler_Subflow</name>
         <label>Fault Handler Subflow</label>
@@ -1483,11 +1483,11 @@ Bid Version: {!bidversion}
 -
 EE Count: {!eecount}
 -
-OSS Name: {!ossname}
+Client Contact Name: {!ossname}
 -
-OSS Phone: {!ossphone.value}
+Client Contact Phone: {!ossphone.value}
 -
-OSS Email: {!ossemail.value}
+Client Contact Email: {!ossemail.value}
 -
 NSP Effective Date: {!nspeffectivedate}
 -

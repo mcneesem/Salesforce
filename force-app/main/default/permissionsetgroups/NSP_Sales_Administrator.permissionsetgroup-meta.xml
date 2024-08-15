@@ -8,6 +8,10 @@
     <permissionSets>Assets_Edit</permissionSets>
     <permissionSets>Basic_Report_Builder</permissionSets>
     <permissionSets>Bypass_Task_Event_Cancelled_Status</permissionSets>
+    <permissionSets>Checklist_Create_All_Types</permissionSets>
+    <permissionSets>Checklist_Create_Booking</permissionSets>
+    <permissionSets>Checklist_Create_Sales_Engineer_Questionnaire</permissionSets>
+    <permissionSets>Checklist_Create_Sold_To_Paid</permissionSets>
     <permissionSets>Checklist_Read_Create</permissionSets>
     <permissionSets>Checklist_View_All</permissionSets>
     <permissionSets>Contact_View_All</permissionSets>

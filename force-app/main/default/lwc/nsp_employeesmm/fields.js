@@ -30,7 +30,33 @@ const SECTION_FIELDS = [
    'remove_employee_directory_from_premier__c',
    'client_terminated_old_benefit_coverage__c',
    'prior_med_contributions_tht_Insperity__c',
-   'What_is_client_s_ABCP__c'
+   'What_is_client_s_ABCP__c',
+   'Do_the_employee_s_work_more_than_6__c',
+   'What_months_client_increase_the_staff__c',
+   'Is_the_work_performed_typically_the_same__c',
+   'Work_performed_the_same_as_the_rest_year__c',
+   'Describe_the_type_of_work__c',
+   'Is_the_Employee_an_Intern__c',
+   'What_months_is_the_Intern_working__c',
+   'What_months_is_the_Intern_in_school__c',
 ];
 
-export { EMP_TABLE_FIELDS, SECTION_FIELDS };
+const RL_FIELDS = [
+  'Does_the_client_have_any_union_EEs__c',
+  'NSP_Any_employee_with_temporary_status__c',
+  'Does_client_have_any_Minor_EEs__c',
+  'Client_have_will_have_any_Seasonal_EEs__c',
+  'Does_client_employ_ministers_or_teachers__c',
+  'NSP_non_Insperity_paid_emps_contractors__c',
+  'Any_EEs_travel_internationally_for_work__c',
+  'Are_there_any_EEs_on_Leave_of_Absence__c',
+  'NSP_Any_active_severance_agreement__c',
+  'remove_employee_directory_from_premier__c',
+  'Told_EE_ineligble_for_active_at_work_ben__c',
+  'NSP_Any_active_severance_agreement__c',
+  'Do_the_employee_s_work_more_than_6__c',
+  'Is_the_Employee_an_Intern__c',
+  'Is_the_work_performed_typically_the_same__c'
+];
+
+export { EMP_TABLE_FIELDS, SECTION_FIELDS,RL_FIELDS };

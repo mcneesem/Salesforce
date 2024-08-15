@@ -83,6 +83,13 @@
             </value>
         </assignmentItems>
         <assignmentItems>
+            <assignToReference>faultLog.FaultMessageLong__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>safeFaultMessageLong</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
             <assignToReference>faultLog.InterviewGuid__c</assignToReference>
             <operator>Assign</operator>
             <value>
@@ -260,6 +267,19 @@ Sends an email containing fault information.</description>
   IF(
     ( LEN( {!faultMessage} ) &gt; 255 ) ,
     LEFT( {!faultMessage} , 255 ) ,
+    {!faultMessage}
+  ) ,
+  &apos;&apos;
+)</expression>
+    </formulas>
+    <formulas>
+        <name>safeFaultMessageLong</name>
+        <dataType>String</dataType>
+        <expression>IF(
+  NOT( ISBLANK( {!faultMessage} ) ) ,
+  IF(
+    ( LEN( {!faultMessage} ) &gt; 32768 ) ,
+    LEFT( {!faultMessage} , 32768 ) ,
     {!faultMessage}
   ) ,
   &apos;&apos;

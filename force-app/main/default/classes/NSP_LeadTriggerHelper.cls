@@ -9,13 +9,13 @@ Modification Log     :
 * Developer                   Date                   Description                                     
 * -------------------------------------------------------------------------------------------------  
 
-*	Tejas           October 10, 2021          First Iteration
+* Tejas           October 10, 2021          First Iteration
 * Harsha Khiroya  Feb 25, 2021              DF-01321
 ***************************************************************************************************/
 
 
 public class NSP_LeadTriggerHelper {
-    // test w/ NSP_LeadTriggerHelperTest (83%)
+    // test w/ NSP_LeadTriggerHelperTest (81%)
     
     public static final List < String > reasonNurturingReasonsList = System.label.NSP_Lead_at_Nurturing_or_Unqualified.split(';');
     private static final string NEW_LEAD_RT = 'NSP_New_Lead_Record_Type';
@@ -36,11 +36,13 @@ public class NSP_LeadTriggerHelper {
         //Set to store account ids
         Set < String > accountIdSet = new Set < String > ();
         List<Lead> inboundSolutionsList =  new List<Lead>();  // Added as part of DF-01009 
+        List<Lead> outboundTeamList =  new List<Lead>();
+        List<Lead> fieldMarketingTeamList =  new List<Lead>();
          /* Added to Map Sales Office on insert if Zipcode is populated*/
-      List < Lead > zipCodeLeadList = new List < Lead > ();
-      List < String > zipCodeList = new List < String > ();
-      Boolean isOwnerAssignment = true; 
-      /* Added to Map Sales Office on insert if Zipcode is populated*/   
+        List < Lead > zipCodeLeadList = new List < Lead > ();
+        List < String > zipCodeList = new List < String > ();
+        Boolean isOwnerAssignment = true; 
+        /* Added to Map Sales Office on insert if Zipcode is populated*/   
         //Iterating over the new lead list(trigger.new)
         for (Lead leadObject: newList) {
             updateAccountSegment(leadObject);
@@ -74,14 +76,44 @@ public class NSP_LeadTriggerHelper {
                 leadObject.NSP_Lead_Stage__c = NSP_SalesConstants.LEAD_STAGE_MPL;
             }
 
-            /* As part of DF-00998 comments, While Creating Lead From ELoqua Integration user or From Referral Form, Lead should get assigned to Inbound solutions Queue */
-            List < String > externalUsers = Label.NSP_External_Users.split(',');
+            // As part of DF-00998 comments, While Creating Lead From ELoqua Integration user or From Referral Form, Lead should get assigned to Inbound solutions Queue
+            List<String> externalUsers = Label.NSP_External_Users.split(',');
             //Added as part of DF-00998
             String createdUserName = UserInfo.getFirstName();
-            if (leadObject.RecordTypeId == REFERRAL_RECORDTYPE_ID || 
-            leadObject.RecordTypeId == SERVICE_REFERRAL_RECORDTYPE_ID || 
-            (String.isNotBlank(createdUserName) && externalUsers.contains(createdUserName))) {
-                inboundSolutionsList.add(leadObject);
+            if ( ( leadObject.RecordTypeId == REFERRAL_RECORDTYPE_ID )
+                || ( leadObject.RecordTypeId == SERVICE_REFERRAL_RECORDTYPE_ID )
+                || ( String.isNotBlank(createdUserName) && externalUsers.contains( createdUserName ) )
+                )
+            {
+                //  Lead created by Eloqua
+                if ( UserInfo.getUserId().equals( Label.Eloqua_Integration_User_Id ) ) {
+                    if ( String.isNotBlank( leadObject.Marketing_Priority__c )
+                        && leadObject.Marketing_Priority__c.equals( 'General' )
+                        )
+                    {
+                        //  290414 - Lead Assignment flow (TC) - New Outbound leads
+                        outboundTeamList.add(leadObject);
+                    } else if (
+                        String.isNotBlank(leadObject.Marketing_Priority__c)
+                        && leadObject.Marketing_Priority__c.equals( 'High - Event' )
+                        )
+                    {
+                        //  297391 -  Inbound Solutions - Existing Lead Flow Modification
+                        fieldMarketingTeamList.add(leadObject);
+                    } else if (
+                        String.isNotBlank( Label.Eloqua_Lead_Marketing_Priority )
+                        && !Label.Eloqua_Lead_Marketing_Priority.split( ',' ).contains( leadObject.Marketing_Priority__c )
+                        && String.isNotBlank( Label.Eloqua_Integration_User_Id )
+                        && Label.Eloqua_Integration_User_Id.equals( leadObject.ownerId )
+                        )
+                    {
+                        //  290445 - Inbound Solutions - Existing Lead Flow
+                        //  297391 -  Inbound Solutions - Existing Lead Flow Modification
+                        inboundSolutionsList.add(leadObject);
+                    }
+                } else {
+                    inboundSolutionsList.add(leadObject);
+                }
             }
 
             //if value Discovery call time is 12 AM , set it to 12 PMto 12 PM.
@@ -116,6 +148,16 @@ public class NSP_LeadTriggerHelper {
         //Assigning to Inbound Solutions SalesQueue if the Lead is creating from Referral Form or Eloqua as per new Lead assignment rules.
         if(!inboundSolutionsList.isEmpty()){
             assignLeadToInboundSolutions(inboundSolutionsList);
+        }
+
+        //Assigning to Outbound Team 
+        if(!outboundTeamList.isEmpty()){
+            assignLeadToOutboundTeam(outboundTeamList);
+        }
+
+        //Assigning to Field Marketing Team 
+        if(!fieldMarketingTeamList.isEmpty()){
+            assignLeadToFieldMarketingTeam(fieldMarketingTeamList);
         }
         
         setSalesOfficeDetails(newList,null); // added for STY-03154
@@ -179,7 +221,7 @@ public class NSP_LeadTriggerHelper {
             // add 12 hours to time value if value is 12 AM- DF-01502
             if (leadNewMap.get(leadId).NSP_DC_SetTime__c != leadOldMap.get(leadId).NSP_DC_SetTime__c && leadNewMap.get(leadId).NSP_DC_SetTime__c == Time.newInstance(0,0,0,0)) {
                 leadNewMap.get(leadId).NSP_DC_SetTime__c += Integer.valueOf(System.Label.NSP_12_hours_Milliseconds);
-			}  
+            }  
             /* Added as part of DF-01301 */
             
             /* As part of DF-00998 comments
@@ -513,30 +555,45 @@ if ((leadNewMap.get(leadId).NSP_Lead_Routing__c == true &&
             if(parentToUpdate != null && parentToUpdate.size() > 0) {
                 update parentToUpdate;
             }
-        } catch (Exception ex) {
-            NSP_ErrorLogHandler.logSaveException('NSP_LeadTriggerHelper', 'updateChildLeadOwner', ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_LeadTriggerHelper.handleException(
+                e ,
+                'updateChildLeadOwner'
+            );
         }
       }
       
   }
-  
-  /**
-* Stamps Parent lead owner on child leads
-* @param newList List of New leads. 
-* @return void             
-*                
-*/
-  public void updateSkipValidationFlag(Lead leadToUpdate) {
-      //updating the child leads
-      try {
-          if(leadToUpdate != null) {
-              update leadToUpdate;
-          }
-      } catch (Exception ex) {
-          NSP_ErrorLogHandler.logSaveException('NSP_LeadTriggerHelper', 'updateSkipValidationFlag', ex.getMessage());
-      }
-  }   
-  
+
+    //
+    // Stamps Parent lead owner on child leads
+    // @param newList List of New leads.
+    // @return void
+    //
+    private void updateSkipValidationFlag( Lead leadToUpdate ) {
+        //updating the child leads
+        try {
+            if ( ( leadToUpdate != null ) && ( leadToUpdate.Id != null ) ) {
+                update leadToUpdate;
+            }
+        } catch ( Exception e ) {
+            NSP_LeadTriggerHelper.handleException(
+                e ,
+                'updateSkipValidationFlag'
+            );
+        }
+    }
+
+    private static void handleException( Exception e , String methodName ) {
+        if ( e != null ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_LeadTriggerHelper.class.getName() ,
+                methodName ,
+                e
+            );
+        }
+    }
+
   /**
 * Stamps partner email on lead record
 * @param newList List of New leads. 
@@ -601,14 +658,14 @@ if ((leadNewMap.get(leadId).NSP_Lead_Routing__c == true &&
         if(midMarketLead != null && zipBasedLocationList !=null && !zipBasedLocationList.isEmpty())
             NSP_RoundRobinAssigner.getOfficeAssignmentDetails(midMarketLead, zipBasedLocationList, true);
     }
-    /**
-* Assigns the leads to the inBound Solutions Queue 
-* @param inBoundSolutionsList List of lead for inBound Solutions 
-* @return void 
-*@CreatedDate: 1/19/2022
-*@Story: DF-01009
-*                
-*/
+
+    //
+    // Assigns the leads to the inBound Solutions Queue 
+    // @param inBoundSolutionsList List of lead for inBound Solutions 
+    // @return void 
+    // @CreatedDate: 1/19/2022
+    // @Story: DF-01009
+    //
     public void assignLeadToInboundSolutions(List<Lead> inBoundSolutionsList){   
         //Fetching the queue id for the inBound SolutionsQueue queue
         List<Group> inBoundSolutionsQueue = [SELECT Id,DeveloperName,name FROM Group WHERE Type = 'Queue' AND DeveloperName = :System.label.NSP_DEVELOPERNAME_INBOUNDSOLUTIONS];
@@ -617,7 +674,51 @@ if ((leadNewMap.get(leadId).NSP_Lead_Routing__c == true &&
           leadObject.NSP_Lead_Routing__c = FALSE;
         }
     }
-    /**
+
+    //
+    // Assigns the leads to the Outbound Team Queue 
+    // @param outboundTeamList List of lead for outbound team
+    // @return void 
+    // @CreatedDate: 7/22/2024
+    // @Story: 290414
+    //
+    public void assignLeadToOutboundTeam(List<Lead> outboundTeamList){
+        //Fetching the queue id for the inBound SolutionsQueue queue
+        List<Group> outboundTeamListQueue = [SELECT Id FROM Group WHERE Type = 'Queue' AND DeveloperName = :System.label.Outbound_Team_DeveloperName];
+        for(Lead leadObject : outboundTeamList){
+            leadObject.OwnerId = outboundTeamListQueue[0].id;
+            leadObject.NSP_Lead_Routing__c = FALSE;
+        }
+    }
+
+    //
+    // Assigns the leads to the Field Marketing Team Queue 
+    // @param fieldMarketingTeamList List of lead for field marketing team
+    // @return void 
+    // @CreatedDate: 7/31/2024
+    // @Story: 297391
+    //
+    public void assignLeadToFieldMarketingTeam(List<Lead> fieldMarketingTeamList){
+        //Fetching the queue id for the inBound SolutionsQueue queue
+        if(String.isNotBlank(System.label.Field_Marketing_Team_DeveloperName)){
+            List<Group> fieldMarketingTeamListQueue = [
+                SELECT Id
+                FROM Group
+                WHERE (
+                    ( Type = 'Queue' )
+                    AND ( DeveloperName = :System.label.Field_Marketing_Team_DeveloperName )
+                )
+            ];
+            if(fieldMarketingTeamListQueue != null  && !fieldMarketingTeamListQueue.isEmpty()){
+                for(Lead leadObject : fieldMarketingTeamList){
+                    leadObject.OwnerId = fieldMarketingTeamListQueue[0].id;
+                    leadObject.NSP_Lead_Routing__c = FALSE;
+                }
+            }
+        }
+    }
+
+/**
 * Assigns the leads to the Payroll/HCM  Queue 
 * @param payrollHCMLead List of lead for Payroll/HCM
 * @return void             
@@ -754,7 +855,7 @@ if ((leadNewMap.get(leadId).NSP_Lead_Routing__c == true &&
             acrObject.ContactId = leadObject.NSP_Referred_By_COI__c;
             acrObject.Roles = leadObject.NSP_Referral_Source__c;
             acrObject.NSP_isReferral__c = true;
-			acrObject.NSP_Nonprofit_Organization_Name__c = leadObject.NSP_Nonprofit_Organization_Name__c;
+            acrObject.NSP_Nonprofit_Organization_Name__c = leadObject.NSP_Nonprofit_Organization_Name__c;
             acrObject.NSP_Nonprofit_Organization_Tax_Id__c = leadObject.NSP_Nonprofit_Organization_Tax_Id__c;
             acrObject.NSP_Referralbenefitsanonprofitorg__c = leadObject.NSP_Referralbenefitsanonprofitorg__c;
             acrList.add(acrObject);
@@ -766,7 +867,7 @@ if ((leadNewMap.get(leadId).NSP_Lead_Routing__c == true &&
             ocrObject.ContactId = leadObject.NSP_Referred_By_COI__c;
             ocrObject.Role = leadObject.NSP_Referral_Source__c;
             ocrObject.NSP_isReferral__c = true;
-			ocrObject.NSP_Nonprofit_Organization_Name__c = leadObject.NSP_Nonprofit_Organization_Name__c;
+            ocrObject.NSP_Nonprofit_Organization_Name__c = leadObject.NSP_Nonprofit_Organization_Name__c;
             ocrObject.NSP_Nonprofit_Organization_Tax_Id__c = leadObject.NSP_Nonprofit_Organization_Tax_Id__c;
             ocrObject.NSP_Referralbenefitsanonprofitorg__c = leadObject.NSP_Referralbenefitsanonprofitorg__c;   
                                                           
@@ -779,11 +880,14 @@ if ((leadNewMap.get(leadId).NSP_Lead_Routing__c == true &&
             if(ocrList.size() > 0){
                 insert ocrList;
             }
-        } catch (Exception ex) {
-            NSP_ErrorLogHandler.logSaveException('NSP_LeadTriggerHelper', 'setContactasCOI', ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_LeadTriggerHelper.handleException(
+                e ,
+                'setContactasCOI'
+            );
         }
     }
-    
+
     /**
 * This method accepts all oppportunity Ids during lead conversion and defaults the
 * Opportunity fields 
@@ -972,7 +1076,7 @@ insert tasksList;
 * @param newContactList.  
 * @return void  
 */
-public void createContact(List < Lead > newLeadList) {
+    public void createContact(List < Lead > newLeadList) {
     Map < Id, Lead > parentMap = new Map < Id, Lead > ();
     Map < Id, Lead > childMap = new Map < Id, Lead > ();
     Map < Id, Id > mapLead = new Map < Id, Id > ();
@@ -1067,12 +1171,14 @@ public void createContact(List < Lead > newLeadList) {
           if (linkEventList != null && !linkEventList.isEmpty()) {
             update linkEventList;
         }
-    } catch (Exception ex) {
-        NSP_ErrorLogHandler.logSaveException('NSP_LeadTriggerHelper', 'createContact', ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_LeadTriggerHelper.handleException(
+                e ,
+                'createContact'
+            );
+        }
     }
-}
 
-    
 /**
 * @MethodName: setContactAsPrimary
 * @Description: Marks the converted contact as Primary Contact  ,added as a part of story STY-02090 
@@ -1081,7 +1187,7 @@ public void createContact(List < Lead > newLeadList) {
 * @author : Nischay Jindal  
 *-----------------------------------------------------------------------------------
 Modified History: Name : Description : date
-				 Mani Teja : Commented the If condition as we do not require it anymore and moved to future to avoid soql 101. : 3/31/2023
+Mani Teja : Commented the If condition as we do not require it anymore and moved to future to avoid soql 101. : 3/31/2023
 ------------------------------------------------------------------------------------  
 *           
 */
@@ -1122,45 +1228,15 @@ Modified History: Name : Description : date
                 }
             }
             NSP_OpportunityTriggerHelperFunctions.getAccountOwnerEmail(AccountId);
-        } catch (Exception ex) {
-            NSP_ErrorLogHandler.logSaveException('NSP_LeadTriggerHelper', 'setContactAsPrimary', ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_LeadTriggerHelper.handleException(
+                e ,
+                'setContactAsPrimary'
+            );
         }
         
     }
-     /**
-* @MethodName: updateNonProfitOrgFields
-* @Description: When Referral Lead is converted update Non Profit Organisation fields
-* @param Map<Id,Id> opportunityLeadMap. 
-* @Defect : DF-01654 removed for STY-03346
-* @return void                          
-*/
-    /*public void updateNonProfitOrgFields(Map < String, Lead > opportunityLeadMap) {
-        List<OpportunityContactRole> oppConRoleList = new List<OpportunityContactRole>();
-        try{
-            for (OpportunityContactRole oppConRole : [SELECT Id, 
-                                                      OpportunityId, 
-                                                      ContactId, 
-                                                      IsPrimary,
-                                                      NSP_Nonprofit_Organization_Name__c,
-                                                      NSP_Nonprofit_Organization_Tax_Id__c, 
-                                                      NSP_Referralbenefitsanonprofitorg__c 
-                                                      FROM OpportunityContactRole
-                                                      WHERE OpportunityId IN: opportunityLeadMap.keySet() 
-                                                      AND IsPrimary = true]) {
-                                                          Lead leadObject = opportunityLeadMap.get(oppConRole.opportunityId);
-                                                          oppConRole.NSP_Nonprofit_Organization_Name__c = leadObject.NSP_Nonprofit_Organization_Name__c;
-                                                          oppConRole.NSP_Nonprofit_Organization_Tax_Id__c = leadObject.NSP_Nonprofit_Organization_Tax_Id__c;
-                                                          oppConRole.NSP_Referralbenefitsanonprofitorg__c = leadObject.NSP_Referralbenefitsanonprofitorg__c;   
-                                                          oppConRoleList.add(oppConRole);
-                                                      }
-            if(!oppConRoleList.isEmpty()){
-                Database.update(oppConRoleList, false);
-            }
-        } catch (Exception ex) {
-            NSP_ErrorLogHandler.logSaveException('NSP_LeadTriggerHelper', 'updateNonProfitOrgFields', ex.getMessage());
-        }
-    }*/
-   
+
     /* Description: This method sets sales office details from user 
      * 
      * @param: leadList, leadMap

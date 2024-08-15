@@ -63,6 +63,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Exclude</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Marketing Generated</fullName>
             <default>false</default>
         </values>
@@ -406,11 +410,11 @@
         <picklist>NSP_Account_Status__c</picklist>
         <values>
             <fullName>Active</fullName>
-            <default>false</default>
+            <default>true</default>
         </values>
         <values>
             <fullName>Inactive</fullName>
-            <default>true</default>
+            <default>false</default>
         </values>
     </picklistValues>
     <picklistValues>

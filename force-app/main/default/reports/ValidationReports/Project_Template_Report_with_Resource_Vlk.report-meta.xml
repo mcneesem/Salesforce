@@ -52,7 +52,7 @@
             <columnToColumn>false</columnToColumn>
             <isUnlocked>true</isUnlocked>
             <operator>equals</operator>
-            <value>Middle Market - Implementation</value>
+            <value>MM - Implementation</value>
         </criteriaItems>
     </filter>
     <format>Summary</format>

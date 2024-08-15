@@ -1,17 +1,6 @@
-/**
-* 
-*
-*
-Apex Class Name      :  NSP_ProjBlngTriggerHelper
-Version              :  1.0                                                                          
-Created Date         :                                                                       
-Description    :        This represents Project trigger helper for billing team 
-*
-*--------------------------------------------------------------------------------------------------  
-*  Developer                   Date                   Description                                    
-* -------------------------------------------------------------------------------------------------  
-*/
-public class NSP_ProjBlngTriggerHelper {
+public with sharing class NSP_ProjBlngTriggerHelper {
+    // test w/ NSP_ProjBlngTriggerHelperTest (81%)
+
     private static final String PROJECT_UPDATE_ORDER='PROJECT_UPDATE_ORDER';
     
     /**
@@ -88,28 +77,11 @@ public class NSP_ProjBlngTriggerHelper {
             List<NSP_Error_Log__c> erlogs= new List<NSP_Error_Log__c>();
             // Call method to publish events
             List<Database.SaveResult> results = EventBus.publish(billingEvents);
-            for (Database.SaveResult sr : results) {
-                if(!sr.isSuccess()){
-                    for(Database.Error err : sr.getErrors()){
-                        NSP_Error_Log__c erlog= new NSP_Error_Log__c();
-                        erlog.NSP_Class__c='NSP_ProjBlngTriggerHelper';
-                        erlog.NSP_Method__c = 'publishBillingEvent';  
-                        erlog.NSP_Description__c=err.getMessage();
-                        erlog.NSP_Object__c='Process_Billing_Event__e';
-                        erlogs.add(erlog);
-                    } 
-                }
-                else{
-                    NSP_Error_Log__c erlog= new NSP_Error_Log__c();
-                    erlog.NSP_Class__c='NSP_ProjBlngTriggerHelper';
-                    erlog.NSP_Method__c = 'publishBillingEvent';
-                    erlog.NSP_Record_Id__c = sr.getId();
-                    erlogs.add(erlog);
-                }
-            }
-            if(erlogs.size()>0){
-                insert erlogs;
-            }
+            NSP_ErrorLogHandler.logResults(
+                NSP_ProjBlngTriggerHelper.class.getName() ,
+                'onProjectDateUpdates' ,
+                results
+            );
         }
     }
     /***********************************************************************************************
@@ -143,39 +115,62 @@ public class NSP_ProjBlngTriggerHelper {
         }
         if(ordersToUpdateMap.values().size()>0){
             List<Database.SaveResult> results = Database.update(ordersToUpdateMap.values(),false);
-            NSP_ErrorLogHandler.logSaveResultsException('NSP_ProjBlngTriggerHelper','updateOrderONProjectUpdates', results); 
+            NSP_ErrorLogHandler.logResults(
+                NSP_ProjBlngTriggerHelper.class.getName() ,
+                'updateOrderONProjectUpdates' ,
+                results
+            );
         }
     }
-    /***********************************************************************************************
-* MethodName:   updateBackOutOnOrder
-* Description : This Method updates the Back Out on Order
-* Params:       Map<Id,pse__Proj__c> newProjectMap ,  Map<Id,pse__Proj__c> oldProjectMap
-*return void
-*Date:
-* Author :      CPQ Team
-* ********************************************************************************************/   
-    public static void updateBackOutOnOrder(Map<Id,pse__Proj__c> newProjectMap , Map<Id,pse__Proj__c> oldProjectMap){
-        Set<Id> lostProjectIds= new Set<Id>();
-        List<Order> ordersToUpdate= new List<Order>();
+
+    //
+    // MethodName: updateBackOutOnOrder
+    // Description: This Method updates the Back Out on Order
+    // Params: Map<Id,pse__Proj__c> newProjectMap ,  Map<Id,pse__Proj__c> oldProjectMap
+    // return void
+    //
+    public static void updateBackOutOnOrder( Map<Id,pse__Proj__c> newProjectMap , Map<Id,pse__Proj__c> oldProjectMap ) {
+        Set<Id> lostProjectIds = new Set<Id>();
+        List<Order> ordersToUpdate = new List<Order>();
         try{
-            for(pse__Proj__c proj :newProjectMap.values()){
-                pse__Proj__c oldProj=oldProjectMap.get(proj.Id);
-                if(oldProj.pse__Project_Status__c!=proj.pse__Project_Status__c && proj.pse__Project_Status__c=='Close/Lost' && proj.Go_Live_Date__c<=System.today() && proj.Invoice_Ready__c==TRUE){
-                    lostProjectIds.add(proj.Id);
+            for ( pse__Proj__c proj : newProjectMap.values() ) {
+                if ( ( proj.pse__Project_Status__c == 'Close/Lost' )
+                    && ( proj.Go_Live_Date__c != null )
+                    && ( proj.Invoice_Ready__c == true )
+                    )
+                {
+                    lostProjectIds.add( proj.Id );
                 }
             }
-            if(lostProjectIds.size()>0){
-                for(Order orderObj :[SELECT Id,Status,NSP_Back_Out__c FROM Order WHERE NSP_Project__c IN :lostProjectIds AND Status!='Activated']){
-                    Order obj= new Order(Id=orderObj.Id,NSP_Back_Out__c=TRUE);
-                    ordersToUpdate.add(obj);
+            if ( lostProjectIds.size() > 0 ) {
+                for ( Order orderObj : [
+                            SELECT Id , Status,NSP_Back_Out__c
+                            FROM Order
+                            WHERE (
+                                ( NSP_Project__c IN :lostProjectIds )
+                                AND ( Status != 'Activated' )
+                            )
+                        ]
+                    )
+                {
+                    Order obj= new Order(
+                        Id=orderObj.Id ,
+                        NSP_Back_Out__c=true
+                    );
+                    ordersToUpdate.add( obj );
                 }
-                if(ordersToUpdate.size()>0){
+                if ( ordersToUpdate.size() > 0 ) {
                     update ordersToUpdate;
                 }
             }
-        }Catch(Exception ex){
-            NSP_ErrorLogHandler.logSaveException('NSP_ProjectTriggerHelper ', 'updateBackOutOnOrder', ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_ProjBlngTriggerHelper.class.getName() ,
+                'updateBackOutOnOrder' ,
+                e
+            );
         }
     } 
-    
+
 }
+//

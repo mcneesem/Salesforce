@@ -3,7 +3,7 @@
     <fullName>NSP_Invoice_Reminder_Date__c</fullName>
     <description>Date to send pending invoices reminder</description>
     <externalId>false</externalId>
-    <formula>NSP_Max_Overdue_Invoice_Date__c + 30</formula>
+    <formula>Today()+30</formula>
     <label>Invoice Reminder Date</label>
     <required>false</required>
     <trackHistory>false</trackHistory>

@@ -41,19 +41,8 @@ NSP_Commissions =false;
 NSP_COBRA = false;
 NSP_Bonus =false;
 NSP_Installments = false;
-NSP_Mid_Market_or_Mid_Market_Enterprise__c = false;
 hrsstopMsgStock = "display:none";
 
-/**
-get hrsstopMsgStock(){
-
-    if( this.reviewType =='HRS Review' && this.IsanyReferenceStock =="Yes" ){
-        return "display:''"
-    }else{
-        return "display:none"
-    }
-}
- */
 
 get NSP_NumberOfMonthsOfOutplacement_Service(){
     return (this.NSP_OutplacementServices && this.NSP_OutplacementServicesValue__c != null && this.NSP_OutplacementServicesValue__c.includes('Client to pay vendor directly') && this.enableInsperityPrepared) ? true :false;
@@ -143,7 +132,7 @@ currentPageFields=['Is_Rehire_Clause_Required__c','Is_Notary_Required__c','NSP_I
 'NSP_CommissionsSelectOne__c','NSP_CommissionAmount__c','NSP_Equipment__c','NSP_EquipmentSelection__c','NSP_ManufacturerNameandModel__c','NS_FairMarketValue__c',
 'NSP_MutualConfidentiality__c','NSP_OutplacementServices__c','NSP_OutplacementServicesValue__c',
 'NSP_NumberOfMonthsOfOutplacement_Service__c','NSP_AmountOfReimbursement__c','NSP_ExpirationDate__c','NSP_SignatureBlockforClientRequired__c','NSP_NameOnSignature__c','NSP_SignatureTitle__c',
-'NSP_VerificationOfEmploymentHotline__c','NSP_DontContestUnemployment__c','NSP_ReferenceTospecificClientDocument__c','NSP_TransitionOfDuties__c','NSP_TransitionDate__c','NSP_Mid_Market_or_Mid_Market_Enterprise__c'];
+'NSP_VerificationOfEmploymentHotline__c','NSP_DontContestUnemployment__c','NSP_ReferenceTospecificClientDocument__c','NSP_TransitionOfDuties__c','NSP_TransitionDate__c'];
 fieldValue =  { currentTarget : { name :'', value :''} };
 
 // event.currentTarget.value == true? this.template.querySelector('div.'+event.currentTarget.fieldName).style.display='':
@@ -522,12 +511,12 @@ enableInsperityPrepared =false;
 /**  Common Fields**/
 enableAddendumStock =false;
 NSPResponsible = false;
-prepareDocTerminationValue;
 NSP_Attached_Approval_Email__c='';
-IsanyReferenceStock;
 whoResponsibleStokcValue;
 adddendumValue;
 NSP_HaveYouattachedPreparedAgreement__c = '';  // need to verify later
+prepareDocTerminationValue;
+IsanyReferenceStock;
 
 isOnloaded =true ;
 connectedCallback(){
@@ -542,7 +531,6 @@ handleOnload(event){
 
         this.recordTypeId =  Object.values(JSON.parse(JSON.stringify(event.detail.records)))[0].recordTypeId;
         if(this.fieldsData != null &&  this.fieldsData != undefined && this.fieldsData !='' ){
-            this.NSP_Mid_Market_or_Mid_Market_Enterprise__c = this.fieldsData.NSP_Mid_Market_or_Mid_Market_Enterprise__c?.value =='Yes' ? ( this.fileCounts++ ,true ) : false;
             if(this.fieldsData.NSP_ReviewType__c != null  && this.fieldsData.NSP_ReviewType__c.value != null){
                     this.reviewType = this.fieldsData.NSP_ReviewType__c.value;
             }
@@ -573,44 +561,43 @@ handleOnload(event){
             
           }
 
-            if(this.fieldsData.NSP_AnyProvisionInPreparedDocRefersStock__c != null  && this.fieldsData.NSP_AnyProvisionInPreparedDocRefersStock__c.value != null){
-                this.IsanyReferenceStock = this.fieldsData.NSP_AnyProvisionInPreparedDocRefersStock__c.value;
-                this.whoResponsibleStok = (this.IsanyReferenceStock == "Yes");
-                if(this.whoResponsibleStok){
-                    if(this.isHRSReview){
-                        this.hrsstopMsgStock = "display:''";
-                        if(this.template.querySelector('div.clientResponsible')!=null)this.template.querySelector('div.clientResponsible').style.display='';
-                    }else{
-                        if(this.template.querySelector('div.WhoResponsibleForStockEquityPaymt') != null){
-                            this.template.querySelector('div.WhoResponsibleForStockEquityPaymt').style.display='';
-                        }
-                    }
+          if(this.fieldsData.NSP_AnyProvisionInPreparedDocRefersStock__c != null  && this.fieldsData.NSP_AnyProvisionInPreparedDocRefersStock__c.value != null){
+            this.IsanyReferenceStock = this.fieldsData.NSP_AnyProvisionInPreparedDocRefersStock__c.value;
+            this.whoResponsibleStok = (this.IsanyReferenceStock == "Yes");
+            if(this.whoResponsibleStok){
+                if(this.isHRSReview){
+                    this.hrsstopMsgStock = "display:''";
+                    if(this.template.querySelector('div.clientResponsible')!=null)this.template.querySelector('div.clientResponsible').style.display='';
                 }else{
-                    this.whoResponsibleStokcValue ='';
-                    this.adddendumValue =''
-                    if(this.isHRSReview){
-                        if(this.template.querySelector('div.clientResponsible')!=null)this.template.querySelector('div.clientResponsible').style.display='none';
-                            }else{
-                     
                     if(this.template.querySelector('div.WhoResponsibleForStockEquityPaymt') != null){
-                        this.template.querySelector('div.WhoResponsibleForStockEquityPaymt').style.display='none';
-                        this.whoResponsibleStokcValue ='';
-                        this.adddendumValue =''
-                        this.enableAddendumStock = false;
-                        this.template.querySelector('div.clientResponsible')!=null?this.template.querySelector('div.clientResponsible').style.display='none':'';
-
-                        this.template.querySelector('div.AaddendumNO')!=null?this.template.querySelector('div.AaddendumNO').style.display='none':'';
-
-                        this.template.querySelector('div.AaddendumYES')!=null?this.template.querySelector('div.AaddendumYES').style.display='none':'';
-
-                        if(this.template.querySelector('div.NSPResponsible')!=null)this.template.querySelector('div.NSPResponsible').style.display='none';  
-                    }
+                        this.template.querySelector('div.WhoResponsibleForStockEquityPaymt').style.display='';
                     }
                 }
+            }else{
+                this.whoResponsibleStokcValue ='';
+                this.adddendumValue =''
+                if(this.isHRSReview){
+                    if(this.template.querySelector('div.clientResponsible')!=null)this.template.querySelector('div.clientResponsible').style.display='none';
+                        }else{
+                 
+                if(this.template.querySelector('div.WhoResponsibleForStockEquityPaymt') != null){
+                    this.template.querySelector('div.WhoResponsibleForStockEquityPaymt').style.display='none';
+                    this.whoResponsibleStokcValue ='';
+                    this.adddendumValue =''
+                    this.enableAddendumStock = false;
+                    this.template.querySelector('div.clientResponsible')!=null?this.template.querySelector('div.clientResponsible').style.display='none':'';
 
+                    this.template.querySelector('div.AaddendumNO')!=null?this.template.querySelector('div.AaddendumNO').style.display='none':'';
+
+                    this.template.querySelector('div.AaddendumYES')!=null?this.template.querySelector('div.AaddendumYES').style.display='none':'';
+
+                    if(this.template.querySelector('div.NSPResponsible')!=null)this.template.querySelector('div.NSPResponsible').style.display='none';  
+                }
+                }
             }
 
-            if(this.fieldsData.NSP_WhoResponsibleForStockEquityPaymt__c != null  && this.fieldsData.NSP_WhoResponsibleForStockEquityPaymt__c.value != null){	
+        }
+        if(this.fieldsData.NSP_WhoResponsibleForStockEquityPaymt__c != null  && this.fieldsData.NSP_WhoResponsibleForStockEquityPaymt__c.value != null){	
                 this.whoResponsibleStokcValue = this.fieldsData.NSP_WhoResponsibleForStockEquityPaymt__c.value;
                 if(this.template.querySelector('div.WhoResponsibleForStockEquityPaymt')!=null)this.template.querySelector('div.WhoResponsibleForStockEquityPaymt').style.display='';
                 this.enableAddendumStock = (this.whoResponsibleStokcValue == "Insperity");
@@ -645,7 +632,6 @@ handleOnload(event){
             if( this.fieldsData.NSP_ReviewStatus__c && this.fieldsData.NSP_ReviewStatus__c.value != null ){
                this.reviewStatusValue = this.fieldsData.NSP_ReviewStatus__c .value;        
             }
-        
             if( this.fieldsData.NSP_AnyPreparedDocumentForTermination__c && this.fieldsData.NSP_AnyPreparedDocumentForTermination__c.value != null ){
                 this.prepareDocTerminationValue = this.fieldsData.NSP_AnyPreparedDocumentForTermination__c.value; 
                 if(this.isHRSReview && this.template.querySelector('div.AttachmentVerify')!= null ){
@@ -812,7 +798,6 @@ handleSubmit(event){
     if(this.filesize < 1 && this.whoResponsibleStokcValue !=null && this.whoResponsibleStokcValue == 'Client'){
         event.preventDefault(); // it will prevent the submit
     }
-
     if(this.filesize < 1 && this.prepareDocTerminationValue !=null && this.prepareDocTerminationValue == 'Yes'){
         event.preventDefault(); // it will prevent the submit
     }
@@ -840,8 +825,7 @@ handlePrev(event){
     this.dispatchEvent(new CustomEvent('prev', {detail: this.reReqId}));
   }
 
-  handleChange(event){
-
+  handleChange(event){    
     if( event.currentTarget.name == "AnyProvisionInPreparedDocRefersStock" && event.currentTarget.value != null){
         this.IsanyReferenceStock = event.currentTarget.value;
         this.whoResponsibleStok = (event.currentTarget.value === "Yes");
@@ -866,7 +850,6 @@ handlePrev(event){
             this.enableAddendumStock = false;
         }
     }
-    
     if( event.currentTarget.name == "WhoResponsibleForStockEquityPaymt" && event.currentTarget.value !=null ){
         this.whoResponsibleStokcValue = event.currentTarget.value;
         this.enableAddendumStock = (event.currentTarget.value == "Insperity");
@@ -917,7 +900,6 @@ handlePrev(event){
     if( event.currentTarget.name == "ReviewStatus" && event.currentTarget.value != null ){
        this.reviewStatusValue = event.currentTarget.value;        
     }
-
     if( event.currentTarget.name == "AnyPreparedDocumentForTermination" && event.currentTarget.value != null ){
         this.prepareDocTerminationValue = event.currentTarget.value; 
       /**  if(this.isHRSReview && this.template.querySelector('div.AttachmentVerify')!= null ){
@@ -964,19 +946,15 @@ handlePrev(event){
         if(this.whoResponsibleStokcValue !=null && this.whoResponsibleStokcValue == 'Client' && this.template.querySelector("div.clientResponsiblefile")!= null ){
             this.template.querySelector("div.clientResponsiblefile").style.display ='';
         }
-
         if(this.prepareDocTerminationValue !=null && this.prepareDocTerminationValue == 'Yes' && this.template.querySelector("div.AttachmentVerify")!= null ){
             this.template.querySelector("div.AttachmentVerify").style.display ='';
         }
-
-
         if((this.NSP_ReferenceTospecificClientDocument__c ==null || this.NSP_ReferenceTospecificClientDocument__c != true) && this.template.querySelector("div.ReferenceTospecificClientDocument")!= null ){
             this.template.querySelector("div.ReferenceTospecificClientDocument").style.display ='none';
         }
         if((this.whoResponsibleStokcValue ==null || this.whoResponsibleStokcValue != 'Client' ) && this.template.querySelector("div.clientResponsiblefile")!= null ){
             this.template.querySelector("div.clientResponsiblefile").style.display ='none';
         }
-
         if((this.prepareDocTerminationValue == null || this.prepareDocTerminationValue != 'Yes' ) && this.template.querySelector("div.AttachmentVerify")!= null ){
             this.template.querySelector("div.AttachmentVerify").style.display ='none';
         }
@@ -989,7 +967,7 @@ handlePrev(event){
         if((this.whoResponsibleStokcValue ==null || this.whoResponsibleStokcValue != 'Client' || this.filesize > 0 ) && this.template.querySelector("div.clientResponsiblefile")!= null ){
             this.template.querySelector("div.clientResponsiblefile").style.display ='none';
         }
-
+        
         if((this.prepareDocTerminationValue == null || this.prepareDocTerminationValue != 'Yes' || this.filesize > 0) && this.template.querySelector("div.AttachmentVerify")!= null ){
             this.template.querySelector("div.AttachmentVerify").style.display ='none';
         }

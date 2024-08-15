@@ -129,8 +129,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Multiple_FEINs__c</fieldItem>
-                <identifier>RecordNSP_Multiple_FEINs__cField</identifier>
+                <fieldItem>Record.NSP_Multiple_Companies_or_FEINs__c</fieldItem>
+                <identifier>RecordNSP_Multiple_Companies_or_FEINs_cField3</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -165,6 +165,16 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.OwnerId</fieldItem>
                 <identifier>RecordOwnerIdField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Status__c</fieldItem>
+                <identifier>RecordStatus_cField3</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -575,6 +585,16 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.Status__c</fieldItem>
+                <identifier>RecordStatus_cField4</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.CurrencyIsoCode</fieldItem>
                 <identifier>RecordCurrencyIsoCodeField</identifier>
             </fieldInstance>
@@ -715,8 +735,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Multiple_FEINs__c</fieldItem>
-                <identifier>RecordNSP_Multiple_FEINs__cField2</identifier>
+                <fieldItem>Record.NSP_Multiple_Companies_or_FEINs__c</fieldItem>
+                <identifier>RecordNSP_Multiple_Companies_or_FEINs_cField2</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1047,6 +1067,16 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.Status__c</fieldItem>
+                <identifier>RecordStatus_cField5</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Opportunity__c</fieldItem>
                 <identifier>RecordNSP_Opportunity__cField3</identifier>
             </fieldInstance>
@@ -1255,28 +1285,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Pleaseexplainwhytherush_is_needed__c</fieldItem>
-                <identifier>RecordNSP_Pleaseexplainwhytherush_is_needed__cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Time_collection_option__c</fieldItem>
                 <identifier>RecordNSP_Time_collection_option__cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Contact_Email__c</fieldItem>
-                <identifier>RecordNSP_Contact_Email__cField2</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1315,8 +1325,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Non_exempt_Employees__c</fieldItem>
-                <identifier>RecordNSP_Non_exempt_Employees__cField</identifier>
+                <fieldItem>Record.NSP_ExemptEmployeesDataCollectionMethod__c</fieldItem>
+                <identifier>RecordNSP_ExemptEmployeesDataCollectionMethod__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1335,8 +1345,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Web_Clock_IP_Restriction__c</fieldItem>
-                <identifier>RecordNSP_Web_Clock_IP_Restriction__cField</identifier>
+                <fieldItem>Record.NSP_Web_Clock__c</fieldItem>
+                <identifier>RecordNSP_Web_Clock__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1345,8 +1355,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Mobile_Web_Clock_IP_Restriction__c</fieldItem>
-                <identifier>RecordNSP_Mobile_Web_Clock_IP_Restriction__cField</identifier>
+                <fieldItem>Record.NSP_Web_Clock_IP_Restriction__c</fieldItem>
+                <identifier>RecordNSP_Web_Clock_IP_Restriction__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1395,6 +1405,16 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.NSP_Hardware_Shipping_Street_Address__c</fieldItem>
+                <identifier>RecordNSP_Hardware_Shipping_Street_Address__cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Hardware_Shipping_City__c</fieldItem>
                 <identifier>RecordNSP_Hardware_Shipping_City__cField</identifier>
             </fieldInstance>
@@ -1405,8 +1425,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Hardware_Shipping_ZIP__c</fieldItem>
-                <identifier>RecordNSP_Hardware_Shipping_ZIP__cField</identifier>
+                <fieldItem>Record.NSP_Hardware_Shipping_State__c</fieldItem>
+                <identifier>RecordNSP_Hardware_Shipping_State__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1415,8 +1435,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.NSP_What_alerts_does_the_client_need__c</fieldItem>
-                <identifier>RecordNSP_What_alerts_does_the_client_need__cField</identifier>
+                <fieldItem>Record.NSP_Hardware_Shipping_ZIP__c</fieldItem>
+                <identifier>RecordNSP_Hardware_Shipping_ZIP__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1485,6 +1505,16 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.NSP_TimeattendanceaddressUnionpolicies__c</fieldItem>
+                <identifier>RecordNSP_TimeattendanceaddressUnionpolicies__cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Would_you_like_to_track_attendance__c</fieldItem>
                 <identifier>RecordNSP_Would_you_like_to_track_attendance__cField</identifier>
             </fieldInstance>
@@ -1525,16 +1555,6 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Whohowwillotherdollarsbe_recorded__c</fieldItem>
-                <identifier>RecordNSP_Whohowwillotherdollarsbe_recorded__cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Diffratesofpaybasedonjob_function__c</fieldItem>
                 <identifier>RecordNSP_Diffratesofpaybasedonjob_function__cField</identifier>
             </fieldInstance>
@@ -1559,16 +1579,6 @@
                 <identifier>RecordNSP_Weighted_Average_Overtime__cField</identifier>
             </fieldInstance>
         </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Doyouhaveanyadditional_objectives__c</fieldItem>
-                <identifier>RecordNSP_Doyouhaveanyadditional_objectives__cField</identifier>
-            </fieldInstance>
-        </itemInstances>
         <name>Facet-lsj2swf9hn</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -1581,6 +1591,16 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.OwnerId</fieldItem>
                 <identifier>RecordOwnerIdField4</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Status__c</fieldItem>
+                <identifier>RecordStatus_cField6</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1639,6 +1659,16 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.NSP_Pleaseexplainwhytherush_is_needed__c</fieldItem>
+                <identifier>RecordNSP_Pleaseexplainwhytherush_is_needed__cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.NSP_CSA_Date_if_known__c</fieldItem>
                 <identifier>RecordNSP_CSA_Date_if_known__cField</identifier>
             </fieldInstance>
@@ -1669,6 +1699,16 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.NSP_Contact_Email__c</fieldItem>
+                <identifier>RecordNSP_Contact_Email__cField2</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Currently_tracking_time__c</fieldItem>
                 <identifier>RecordNSP_Currently_tracking_time__cField</identifier>
             </fieldInstance>
@@ -1689,8 +1729,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.NSP_ExemptEmployeesDataCollectionMethod__c</fieldItem>
-                <identifier>RecordNSP_ExemptEmployeesDataCollectionMethod__cField</identifier>
+                <fieldItem>Record.NSP_Non_exempt_Employees__c</fieldItem>
+                <identifier>RecordNSP_Non_exempt_Employees__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1709,8 +1749,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Web_Clock__c</fieldItem>
-                <identifier>RecordNSP_Web_Clock__cField</identifier>
+                <fieldItem>Record.NSP_Mobile_Web_Clock__c</fieldItem>
+                <identifier>RecordNSP_Mobile_Web_Clock__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1719,8 +1759,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Mobile_Web_Clock__c</fieldItem>
-                <identifier>RecordNSP_Mobile_Web_Clock__cField</identifier>
+                <fieldItem>Record.NSP_Mobile_Web_Clock_IP_Restriction__c</fieldItem>
+                <identifier>RecordNSP_Mobile_Web_Clock_IP_Restriction__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1769,28 +1809,18 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Hardware_Shipping_Street_Address__c</fieldItem>
-                <identifier>RecordNSP_Hardware_Shipping_Street_Address__cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Hardware_Shipping_State__c</fieldItem>
-                <identifier>RecordNSP_Hardware_Shipping_State__cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Does_the_client_need_alerts__c</fieldItem>
                 <identifier>RecordNSP_Does_the_client_need_alerts__cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_What_alerts_does_the_client_need__c</fieldItem>
+                <identifier>RecordNSP_What_alerts_does_the_client_need__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1819,16 +1849,6 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Additional_Notes__c</fieldItem>
-                <identifier>RecordNSP_Additional_Notes__cField3</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Do_you_pay_current__c</fieldItem>
                 <identifier>RecordNSP_Do_you_pay_current__cField</identifier>
             </fieldInstance>
@@ -1839,28 +1859,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Do_you_pay_current__c</fieldItem>
-                <identifier>RecordNSP_Do_you_pay_current__cField2</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Are_you_looking_for_DCAA_reporting__c</fieldItem>
                 <identifier>RecordNSP_Are_you_looking_for_DCAA_reporting__cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.NSP_TimeattendanceaddressUnionpolicies__c</fieldItem>
-                <identifier>RecordNSP_TimeattendanceaddressUnionpolicies__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1919,6 +1919,16 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.NSP_Whohowwillotherdollarsbe_recorded__c</fieldItem>
+                <identifier>RecordNSP_Whohowwillotherdollarsbe_recorded__cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Do_you_have_any_shift_differentials__c</fieldItem>
                 <identifier>RecordNSP_Do_you_have_any_shift_differentials__cField</identifier>
             </fieldInstance>
@@ -1951,6 +1961,16 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Any_rulesyou_arelookingtoautomate__c</fieldItem>
                 <identifier>RecordNSP_Any_rulesyou_arelookingtoautomate__cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_Doyouhaveanyadditional_objectives__c</fieldItem>
+                <identifier>RecordNSP_Doyouhaveanyadditional_objectives__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-qvaqwlh3ha</name>
@@ -2047,8 +2067,18 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Requested_1st_Pay_Period_Date__c</fieldItem>
-                <identifier>RecordNSP_Requested_1st_Pay_Period_Date__cField</identifier>
+                <fieldItem>Record.NSP_Payroll_processor_email__c</fieldItem>
+                <identifier>RecordNSP_Payroll_processor_email__cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_Requested_First_Pay_Date__c</fieldItem>
+                <identifier>RecordNSP_Requested_First_Pay_Date_cField2</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -2127,8 +2157,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Contact_Email__c</fieldItem>
-                <identifier>RecordNSP_Contact_Email__cField3</identifier>
+                <fieldItem>Record.NSP_Additional_Notes__c</fieldItem>
+                <identifier>RecordNSP_Additional_Notes_cField2</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-yefjlawglm</name>
@@ -2143,6 +2173,16 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.OwnerId</fieldItem>
                 <identifier>RecordOwnerIdField5</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Status__c</fieldItem>
+                <identifier>RecordStatus_cField7</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -2191,16 +2231,6 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Payroll_processor_email__c</fieldItem>
-                <identifier>RecordNSP_Payroll_processor_email__cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Requested_First_Check_Date__c</fieldItem>
                 <identifier>RecordNSP_Requested_First_Check_Date__cField2</identifier>
             </fieldInstance>
@@ -2233,6 +2263,16 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Govt_Contract_approval_granted__c</fieldItem>
                 <identifier>RecordNSP_Govt_Contract_approval_granted__cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_IfContractgrantedseeattachedemail__c</fieldItem>
+                <identifier>RecordNSP_IfContractgrantedseeattachedemail_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -2303,6 +2343,16 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Phone_Number__c</fieldItem>
                 <identifier>RecordNSP_Phone_Number__cField3</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_Contact_Email__c</fieldItem>
+                <identifier>RecordNSP_Contact_Email__cField3</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-77jeyfaiwco</name>
@@ -2421,6 +2471,16 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Phone_Number__c</fieldItem>
                 <identifier>RecordNSP_Phone_Number__cField4</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_Contact_Email__c</fieldItem>
+                <identifier>RecordNSP_Contact_Email__cField4</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -2553,6 +2613,16 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.Status__c</fieldItem>
+                <identifier>RecordStatus_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.RecordTypeId</fieldItem>
                 <identifier>RecordRecordTypeIdField4</identifier>
             </fieldInstance>
@@ -2613,16 +2683,6 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Contact_Email__c</fieldItem>
-                <identifier>RecordNSP_Contact_Email__cField4</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
                 <fieldItem>Record.NSP_ClientusingBenefitAdministrationMod__c</fieldItem>
                 <identifier>RecordNSP_ClientusingBenefitAdministrationMod__cField</identifier>
             </fieldInstance>
@@ -2633,8 +2693,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.NSP_What_States_to_EEs_worklive_in__c</fieldItem>
-                <identifier>RecordNSP_What_States_to_EEs_worklive_in__cField</identifier>
+                <fieldItem>Record.NSP_What_states_do_EEs_worklive_in__c</fieldItem>
+                <identifier>RecordNSP_What_states_do_EEs_worklive_in_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -2653,8 +2713,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.NSP_If_yesrequiredtoobserveACAmandates__c</fieldItem>
-                <identifier>RecordNSP_If_yesrequiredtoobserveACAmandates__cField2</identifier>
+                <fieldItem>Record.NSP_If_yes_do_you_observe_ACA_mandates__c</fieldItem>
+                <identifier>RecordNSP_If_yes_do_you_observe_ACA_mandates_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -2825,16 +2885,6 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Contact_Email__c</fieldItem>
-                <identifier>RecordNSP_Contact_Email__cField5</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Bid_Number__c</fieldItem>
                 <identifier>RecordNSP_Bid_Number__cField2</identifier>
                 <visibilityRule>
@@ -2852,8 +2902,35 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.NSP_Version_Number__c</fieldItem>
+                <identifier>RecordNSP_Version_Number__cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Opportunity_Primary_Product__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>WS</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Number_of_Employees__c</fieldItem>
                 <identifier>RecordNSP_Number_of_Employees__cField6</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_Full_Time_Employees__c</fieldItem>
+                <identifier>RecordNSP_Full_Time_Employees__cField2</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -2986,6 +3063,16 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.Status__c</fieldItem>
+                <identifier>RecordStatus_cField2</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.RecordTypeId</fieldItem>
                 <identifier>RecordRecordTypeIdField5</identifier>
             </fieldInstance>
@@ -3046,42 +3133,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Version_Number__c</fieldItem>
-                <identifier>RecordNSP_Version_Number__cField</identifier>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.NSP_Opportunity_Primary_Product__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>WS</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Full_Time_Employees__c</fieldItem>
-                <identifier>RecordNSP_Full_Time_Employees__cField2</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Account_Billling_City__c</fieldItem>
-                <identifier>RecordNSP_Account_Billling_City__cField</identifier>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.NSP_Opportunity_Primary_Product__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>WS</rightValue>
-                    </criteria>
-                </visibilityRule>
+                <fieldItem>Record.NSP_Contact_Email__c</fieldItem>
+                <identifier>RecordNSP_Contact_Email__cField5</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -3092,6 +3145,23 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Account_Billing_Street__c</fieldItem>
                 <identifier>RecordNSP_Account_Billing_Street__cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Opportunity_Primary_Product__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>WS</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_Account_Billling_City__c</fieldItem>
+                <identifier>RecordNSP_Account_Billling_City__cField</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.NSP_Opportunity_Primary_Product__c}</leftValue>

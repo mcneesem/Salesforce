@@ -1,21 +1,13 @@
-/*
-*Test class for NSP_OrderManagement
-*@Utpal Utkalit
-*/
+// Test class for NSP_OrderManagement
 @isTest(SeeAllData=false)
-public class NSP_OrderManagementTest {
+private class NSP_OrderManagementTest {
     
-    public static final String goLiveDate = 'Project go-live date';
-    public static final String TEST_PRODUCT = 'Test Product';
+    private static final String goLiveDate = 'Project go-live date';
+    private static final String TEST_PRODUCT = 'Test Product';
     
-    public class myException extends Exception {}
+    private class myException extends Exception {}
     
-    /*
-    *Test setup Data
-    *@Utpal Utkalit
-    */
-@testSetup
-    public static void makeData(){
+    @testSetup private static void makeData(){
          Account acnt=NSP_TestHelper.createAccount(true);
          Opportunity opp=NSP_TestHelper.createOpenOpportunity(acnt.Id,'New Product',true);
          SBQQ__Quote__c quote = NSP_TestHelper.createCPQQuote(acnt.Id,opp.Id,true);
@@ -60,38 +52,23 @@ public class NSP_OrderManagementTest {
         update ctrct;
         
     }
-    
-    /*
-    *Test Method : testGetContractRecord
-    *@Utpal Utkalit
-    */
-     @isTest
-    private static void testGetContractRecord(){
+
+    @isTest private static void testGetContractRecord(){
         Test.startTest();
         List<Account> accList = [SELECT Id FROM Account WHERE Name =: NSP_TestHelper.DEFAULT_COMPANY_NAME LIMIT 10]; //Added WHERE Condition as part of code fix
         List<Contract> contractList=NSP_OrderManagement.getContractRecord(accList[0].Id);
         System.assert(contractList.size() > 0);
         Test.stopTest();
     }
-    
-    /*
-    *Test Method : testGetCurrentUserInfo
-    *@Utpal Utkalit
-    */
-    @isTest
-    private static void testGetCurrentUserInfo(){
+
+    @isTest private static void testGetCurrentUserInfo(){
         Test.startTest();
         User user=NSP_OrderManagement.getCurrentUserInfo();
         System.assert(user != null);
         Test.stopTest();
     }
     
-    /*
-    *Test Method : testUpdateContract
-    *@Utpal Utkalit
-    */
-     @isTest
-    private static void testUpdateContract(){
+    @isTest private static void testUpdateContract(){
         Test.startTest();
         List<Contract> contractList = [SELECT Id FROM Contract WHERE Status = 'Activated' LIMIT 10]; //Added WHERE Condition as part of code fix
         Boolean isContractUpdated= NSP_OrderManagement.updateContract(contractList[0].Id,'Amendment/Supplemental');
@@ -99,12 +76,7 @@ public class NSP_OrderManagementTest {
         Test.stopTest();
     }
 
-    /*
-    *Test Method : testUpdateContractException
-    *@Utpal Utkalit
-    */
-     @isTest
-    private static void testUpdateContractException(){
+    @isTest private static void testUpdateContractException(){
         //For Code coverage
         Boolean isContractUpdated = true;
         Test.startTest();
@@ -116,5 +88,62 @@ public class NSP_OrderManagementTest {
         System.assert(isContractUpdated);
         Test.stopTest();
     }
- 
+
+    @isTest private static void testcheckAmendmentConditionsApex_False() {
+        Boolean ammendmentConditionsStatus;
+        Contract con = [SELECT id, NSP_Product_Type__c FROM Contract LIMIT 1];
+        con.NSP_Product_Type__c = 'Workforce Acceleration';
+        update con;
+        Account acc = [SELECT id from Account LIMIT 1];
+        Pricebook2 testPriceBook = new PriceBook2(Name = 'Test Pricebook');
+        insert testPriceBook;
+        SBQQ__Quote__c quote = [SELECT id, SBQQ__Ordered__c,SBQQ__Primary__c FROM SBQQ__Quote__c LIMIT 1];
+        Product2 product = NSP_TestHelper.createProduct('ProductA', true);
+        Order ord = New Order(NSP_Order_Product_Type__c = 'IWX Bundle',AccountId = acc.id, blng__BillingAccount__c = acc.id, /*TotalAmount = 100 + j,*/ CurrencyIsoCode = 'USD',EffectiveDate = Date.Today(),NSP_TerminationDate__c = Date.Today() + 1 ,Status = 'Draft',NSP_Back_Out__c = false,Prevent_Reassignment__c = false, Pricebook2id = testPriceBook.Id);
+        insert ord;
+        Pricebook2 stdPricebook = NSP_TestHelper.getStandardPriceBook2();
+        PricebookEntry stdPriceEntry = NSP_TestHelper.createCustomPriceBookEntry(product.id,100.00,stdPricebook.id,true);
+        PricebookEntry customEntry = NSP_TestHelper.createCustomPriceBookEntry(product.id,100.00,testPriceBook.id,true);
+        
+        blng__BillingRule__c billingRule = NSP_TestHelper.createBillingRule();
+        blng__RevenueRecognitionRule__c recognitionRule = NSP_TestHelper.createRevrecRule('recoRule');
+        blng__TaxRule__c objTaxRule = NSP_TestHelper.createRevTaxRule();
+        product.blng__BillingRule__c = billingRule.id;
+        product.blng__RevenueRecognitionRule__c = recognitionRule.id;
+        product.blng__TaxRule__c = objTaxRule.id;
+        update product;
+        OrderItem orderProduct = new OrderItem(blng__RevenueRecognitionRule__c = recognitionRule.id, OrderId = ord.id, Quantity = 1, SBQQ__SubscriptionPricing__c = 'Fixed Price',PricebookEntryId = customEntry.id, SBQQ__ChargeType__c = 'Recurring',SBQQ__BillingFrequency__c = 'Monthly', UnitPrice = 100, SBQQ__BillingType__c = 'Advance', blng__BillingRule__c = billingRule.id);
+        insert orderProduct;
+        
+        
+        Test.startTest();
+        ammendmentConditionsStatus = NSP_OrderManagement.checkAmendmentConditionsApex(con.id);
+        Test.stopTest();
+        
+        system.assertequals(false,ammendmentConditionsStatus);
+    }
+
+    @isTest private static void testcheckAmendmentConditionsApex_True() {
+        Boolean ammendmentConditionsStatus;
+        Contract con = [SELECT id, NSP_Product_Type__c FROM Contract LIMIT 1];
+        con.NSP_Product_Type__c = 'Organizational Planning';
+        update con;
+        Account acc = [SELECT id from Account LIMIT 1];
+        Pricebook2 testPriceBook = new PriceBook2(Name = 'Test Pricebook');
+        insert testPriceBook;
+        SBQQ__Quote__c quote = [SELECT id, SBQQ__Ordered__c,SBQQ__Primary__c FROM SBQQ__Quote__c LIMIT 1];
+        
+        Order ord = New Order(NSP_Order_Product_Type__c = 'Organizational Planning',AccountId = acc.id, blng__BillingAccount__c = acc.id, /*TotalAmount = 100 + j,*/ CurrencyIsoCode = 'USD',EffectiveDate = Date.Today(),NSP_TerminationDate__c = Date.Today() + 1 ,Status = 'Draft',NSP_Back_Out__c = true,Prevent_Reassignment__c = false, Pricebook2id = testPriceBook.Id);
+        insert ord;
+        
+        
+        Test.startTest();
+        ammendmentConditionsStatus = NSP_OrderManagement.checkAmendmentConditionsApex(con.id);
+        Test.stopTest();
+        
+        system.assertequals(true,ammendmentConditionsStatus);
+        
+    }
+
 }
+//

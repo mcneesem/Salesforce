@@ -182,11 +182,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Waiting_Time__c</field>
-            <table>MessagingSession</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>Case.Chat_Topic__c</field>
             <table>MessagingSession</table>
         </columns>

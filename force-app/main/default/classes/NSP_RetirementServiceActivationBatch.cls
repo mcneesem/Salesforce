@@ -59,12 +59,20 @@ public class NSP_RetirementServiceActivationBatch implements Database.Batchable<
                 }
                 if (!updateOrderItemList.isEmpty()){
                     Database.SaveResult[] srList = Database.update (updateOrderItemList, false);
-                    NSP_ErrorLogHandler.logSaveResult('NSP_RetirementServiceActivationBatch', 'execute', srList);
+                    NSP_ErrorLogHandler.logResults(
+                        NSP_RetirementServiceActivationBatch.class.getName() ,
+                        'execute' ,
+                        srList
+                    );
                 }
 
             }
-        } Catch (Exception ex){
-            NSP_CustomException.LogException(ex, 'NSP_RetirementServiceActivationBatch');
+        } catch (Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_RetirementServiceActivationBatch.class.getName() ,
+                'execute' ,
+                e
+            );
         }
     }
 

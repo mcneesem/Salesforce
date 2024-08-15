@@ -453,6 +453,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Client Unresponsive</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Customer Update</fullName>
             <default>false</default>
         </values>

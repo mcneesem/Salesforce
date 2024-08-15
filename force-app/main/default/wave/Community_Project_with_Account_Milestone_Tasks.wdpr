@@ -250,7 +250,7 @@
           "type" : "TEXT",
           "name" : "Worksite_Enabled",
           "label" : "Worksite Enabled",
-          "formulaExpression" : "case when TemplateName__c = 'Middle Market - Implementation' then 'Yes' else 'No' end",
+          "formulaExpression" : "case when TemplateName__c = 'MM - Implementation' then 'Yes' else 'No' end",
           "precision" : 255,
           "defaultValue" : ""
         } ]

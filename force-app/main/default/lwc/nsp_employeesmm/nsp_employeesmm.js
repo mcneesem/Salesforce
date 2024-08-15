@@ -9,8 +9,10 @@ import {
     isMultiSelectCheckbox,
     isSelectionBox,
     ANSWERED_CLASS_NAME,
+    RL_CLASS_NAME,
+    RL_FIELD_ACCEPTED_VALUES
 } from "c/nsp_utils";
-import { SECTION_FIELDS } from "./fields";
+import { SECTION_FIELDS,RL_FIELDS } from "./fields";
 
 export default class Nsp_employeesmm extends LightningElement {
     @api recordId;
@@ -21,6 +23,7 @@ export default class Nsp_employeesmm extends LightningElement {
     @track visibility = {};
     @api disabledFields = {};
     @track styles = getFieldStylesByHierarchy(DYNAMIC_FIELDS);
+    isDoubleClick = false;
     @track state = {
         isLoadingFirstTime: true,
     };
@@ -65,6 +68,10 @@ export default class Nsp_employeesmm extends LightningElement {
           this.field[fieldName] = isMultiSelectCheckbox(target)
               ? value.join(";")
               : value;
+          if(this.isDoubleClick){
+            this.field[fieldName] = null;
+            this.isDoubleClick = false;
+          }
           this.updateDependentFieldVisibility(fieldName, value);
           this.addStyleToAnsweredQuestion(target, value);
         }catch(error){
@@ -114,10 +121,22 @@ export default class Nsp_employeesmm extends LightningElement {
               elm.classList.remove(ANSWERED_CLASS_NAME);
             }
           }
+        const className = this.getLabelClassName(fieldName, value);
+        elm.classList.remove(ANSWERED_CLASS_NAME);
+        elm.classList.remove(RL_CLASS_NAME);
+        if (isValuePresent) {
+            elm.classList.add(className);
+        }
         }
       }
+
+    getLabelClassName(fieldName, value) {
+    return RL_FIELDS.includes(fieldName) &&
+      RL_FIELD_ACCEPTED_VALUES.includes(value)
+      ? RL_CLASS_NAME
+      : ANSWERED_CLASS_NAME;
+  }
     
-  
     getCustomLabelElm(fieldName) {
         return this.template.querySelector(
             `lightning-formatted-text[data-field=${fieldName}]`
@@ -166,5 +185,9 @@ export default class Nsp_employeesmm extends LightningElement {
     
     get helpText(){
         return HELP_TEXT;
+    }
+    handleDoubleClick({ detail, target }){
+      this.isDoubleClick = true;
+      this.handleValueChange({ detail: detail, target: target });
     }
 }

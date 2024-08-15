@@ -102,6 +102,8 @@ import wouldYouLikeAutomationForYourGeneralLedger from '@salesforce/label/c.Woul
 import isPayrollEntryItemizedOrSimpleEntry from '@salesforce/label/c.Is_payroll_entry_itemized_or_simple_entry';
 import itemized from '@salesforce/label/c.If_Itemized_they_must_use_Integra';
 import employeesWorkinFollowingStates from '@salesforce/label/c.NSP_Employees_Work_in_Following_States';
+import doesClientHaveAlternativeWorkWeek from '@salesforce/label/c.Does_this_client_have_an_AWW';
+import isClientCADocsSubmitted from '@salesforce/label/c.Is_client_CA_docs_submitted_for_approval';
 import allowances from '@salesforce/label/c.NSP_Allowances';
 import WhatQuickBooksversiondoyouuse from '@salesforce/label/c.What_QuickBooks_version_do_you_use';
 import Neededpayrollentryallocation from '@salesforce/label/c.Needed_payroll_entry_allocation';
@@ -443,6 +445,14 @@ import discretionaryBonus from '@salesforce/label/c.NSP_Discretionary_Bonus';
 import nonDiscretionaryBonus from '@salesforce/label/c.NSP_Non_Discretionary_Bonus';
 import exemptEes from '@salesforce/label/c.NSP_Exempt_EEs';
 import openEnrollmentPeriod from '@salesforce/label/c.NSP_Open_Enrollment_Period';
+import Dotheemployeesworkmorethan6months from '@salesforce/label/c.Do_the_employee_s_work_more_than_6_months';
+import Whatmonthsdoestheclientincreasetheirstaff from '@salesforce/label/c.What_months_does_the_client_increase_their_staff';
+import Istheworktypicallymonthseachyear from '@salesforce/label/c.Is_the_work_performed_typically_the_same_months_each_year';
+import Istheworksamerestoftheyear from '@salesforce/label/c.Is_the_work_performed_the_same_as_the_rest_of_the_year';
+import Describeworkdifferentthannormallyperformed from '@salesforce/label/c.Describe_the_type_of_work_that_is_different_than_work_normally_performed';
+import IstheEmployeeanIntern from '@salesforce/label/c.Is_the_Employee_an_Intern';
+import WhatmonthsistheInternworking from '@salesforce/label/c.What_months_is_the_Intern_working';
+import WhatmonthsistheInterninschool from '@salesforce/label/c.What_months_is_the_Intern_in_school';
 
 // HARD CODED VALUES
 const precentageComplete = '99% Complete';
@@ -669,6 +679,8 @@ export {
     otherDetails,
     doesClientHaveSpecialPayrollNeeds,
     employeesWorkinFollowingStates,
+    doesClientHaveAlternativeWorkWeek,
+    isClientCADocsSubmitted,
     allowances,
     expenses,
     clientBusinessMeetingQuestion,
@@ -1007,5 +1019,13 @@ export {
     discretionaryBonus,
     nonDiscretionaryBonus,
     exemptEes,
-    openEnrollmentPeriod
+    openEnrollmentPeriod,
+    Dotheemployeesworkmorethan6months,
+    Whatmonthsdoestheclientincreasetheirstaff,
+    Istheworktypicallymonthseachyear,
+    Istheworksamerestoftheyear,
+    Describeworkdifferentthannormallyperformed,
+    IstheEmployeeanIntern,
+    WhatmonthsistheInternworking,
+    WhatmonthsistheInterninschool
 };

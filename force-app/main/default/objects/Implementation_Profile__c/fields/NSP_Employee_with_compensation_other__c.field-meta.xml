@@ -22,6 +22,11 @@
                 <default>false</default>
                 <label>No</label>
             </value>
+            <value>
+                <fullName>Pending</fullName>
+                <default>false</default>
+                <label>Pending</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

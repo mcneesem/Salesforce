@@ -4,7 +4,12 @@
     <protected>false</protected>
     <values>
         <field>NSP_Sales_Offices__c</field>
-        <value xsi:type="xsd:string">4401 Houston 1
+        <value xsi:type="xsd:string">0301 Phoenix 1
+0302 Phoenix 2
+0601 Denver 1
+0602 Denver 2
+1901 Louisiana 1
+4401 Houston 1
 4405 Houston 2
 4407 Houston 3
 4409 Houston 4

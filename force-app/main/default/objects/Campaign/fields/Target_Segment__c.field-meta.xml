@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Target_Segment__c</fullName>
+    <externalId>false</externalId>
+    <label>Target Segment</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <controllingField>Campaign_Level__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetName>Account_Segment</valueSetName>
+        <valueSettings>
+            <controllingFieldValue>Parent: Program</controllingFieldValue>
+            <valueName>MidMarket</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Parent: Program</controllingFieldValue>
+            <valueName>Emerging Growth</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Parent: Program</controllingFieldValue>
+            <valueName>Core</valueName>
+        </valueSettings>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Target_Division__c</fullName>
+    <externalId>false</externalId>
+    <label>Target Division</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <controllingField>Campaign_Level__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetName>NSP_Region</valueSetName>
+        <valueSettings>
+            <controllingFieldValue>Parent: Program</controllingFieldValue>
+            <valueName>Northeast</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Parent: Program</controllingFieldValue>
+            <valueName>Central</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Parent: Program</controllingFieldValue>
+            <valueName>Eastern</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Parent: Program</controllingFieldValue>
+            <valueName>Western</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Parent: Program</controllingFieldValue>
+            <valueName>Corporate</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Parent: Program</controllingFieldValue>
+            <valueName>Inside Sales</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Parent: Program</controllingFieldValue>
+            <valueName>MidMarket</valueName>
+        </valueSettings>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

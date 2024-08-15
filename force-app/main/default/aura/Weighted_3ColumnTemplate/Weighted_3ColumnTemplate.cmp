@@ -12,11 +12,7 @@
             <meta name="description" content="" />
             <meta name="viewport" content="width=device-width, initial-scale=1.0" />
             
-            <ltng:require styles="{!join(',',  
-                                  $Resource.NSP_Cust360 + '/Resources/custom/css/left.css', 
-                                  $Resource.NSP_Cust360 + '/Resources/custom/css/case360.css', 
-                                  $Resource.NSP_Cust360 + '/Resources/custom/css/right.css')
-                                  }" />
+
         </head>
         <body>
             <div class="slds">

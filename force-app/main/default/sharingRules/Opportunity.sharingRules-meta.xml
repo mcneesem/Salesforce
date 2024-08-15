@@ -106,6 +106,20 @@
         </criteriaItems>
         <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
     </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>Sales_Enablement_Analyst</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>Sales Enablement Analyst</label>
+        <sharedTo>
+            <group>Sales_Enablement_Analyst</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>StageName</field>
+            <operation>notEqual</operation>
+            <value></value>
+        </criteriaItems>
+        <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
+    </sharingCriteriaRules>
     <sharingOwnerRules>
         <fullName>All_Opportunities_Edit_access_to_Finance_Users</fullName>
         <accessLevel>Read</accessLevel>

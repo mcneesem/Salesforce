@@ -1,14 +1,79 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
-        <name>Navigate_to_Termination_Form_record</name>
-        <label>Navigate to Termination form record</label>
-        <locationX>50</locationX>
-        <locationY>782</locationY>
-        <actionName>c:NSP_FlowNavigatetoRecord</actionName>
+        <name>Navigate_to_credit_termination_form</name>
+        <label>Navigate to credit termination form</label>
+        <locationX>4186</locationX>
+        <locationY>1706</locationY>
+        <actionName>c:NSP_NavigateToRecord</actionName>
         <actionType>component</actionType>
         <faultConnector>
             <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_subflow</targetReference>
+        </faultConnector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>recordId</name>
+            <value>
+                <elementReference>Credit_Specialist_termination_form</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>c:NSP_NavigateToRecord</nameSegment>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+        <versionSegment>1</versionSegment>
+    </actionCalls>
+    <actionCalls>
+        <name>Navigate_to_Payroll_form</name>
+        <label>Navigate to Payroll form</label>
+        <locationX>1634</locationX>
+        <locationY>1706</locationY>
+        <actionName>c:NSP_NavigateToRecord</actionName>
+        <actionType>component</actionType>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_subflow</targetReference>
+        </faultConnector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>recordId</name>
+            <value>
+                <elementReference>Create_Payroll_specialist_form</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>c:NSP_NavigateToRecord</nameSegment>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+        <versionSegment>1</versionSegment>
+    </actionCalls>
+    <actionCalls>
+        <name>Navigate_to_reinstatement_form</name>
+        <label>Navigate to reinstatement form</label>
+        <locationX>50</locationX>
+        <locationY>1706</locationY>
+        <actionName>c:NSP_NavigateToRecord</actionName>
+        <actionType>component</actionType>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_subflow</targetReference>
+        </faultConnector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>recordId</name>
+            <value>
+                <elementReference>Create_Reinstatement_form</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>c:NSP_NavigateToRecord</nameSegment>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+        <versionSegment>1</versionSegment>
+    </actionCalls>
+    <actionCalls>
+        <name>Navigate_to_Termination_Form_record</name>
+        <label>Navigate to Termination form record</label>
+        <locationX>3339</locationX>
+        <locationY>2798</locationY>
+        <actionName>c:NSP_FlowNavigatetoRecord</actionName>
+        <actionType>component</actionType>
+        <faultConnector>
             <targetReference>Fault_Handler_subflow</targetReference>
         </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -18,12 +83,22 @@
                 <elementReference>Create_Termination_Form</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>c:NSP_FlowNavigatetoRecord</nameSegment>
         <storeOutputAutomatically>true</storeOutputAutomatically>
+        <versionSegment>1</versionSegment>
     </actionCalls>
     <apiVersion>59.0</apiVersion>
     <choices>
+        <name>No</name>
+        <choiceText>No</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>No</stringValue>
+        </value>
+    </choices>
+    <choices>
         <name>NSP_Client_Reinstatement</name>
-        <choiceText>&lt;span style=&quot;font-size: 18px;&quot;&gt;Client Reinstatement&lt;/span&gt;</choiceText>
+        <choiceText>Client Reinstatement</choiceText>
         <dataType>String</dataType>
         <value>
             <stringValue>NSP_Client_Reinstatement</stringValue>
@@ -31,7 +106,7 @@
     </choices>
     <choices>
         <name>NSP_Credit_Specialist_Form</name>
-        <choiceText>&lt;span style=&quot;font-size: 18px;&quot;&gt;Credit Specialist Form&lt;/span&gt;</choiceText>
+        <choiceText>Credit Specialist form</choiceText>
         <dataType>String</dataType>
         <value>
             <stringValue>NSP_Credit_Specialist_Form</stringValue>
@@ -39,24 +114,435 @@
     </choices>
     <choices>
         <name>NSP_Payroll_Specialist_Form</name>
-        <choiceText>&lt;span style=&quot;font-size: 18px;&quot;&gt;Payroll Specialist Form﻿&lt;/span&gt;</choiceText>
+        <choiceText>Payroll Specialist Form</choiceText>
         <dataType>String</dataType>
         <value>
             <stringValue>NSP_Payroll_Specialist_Form</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Yes</name>
+        <choiceText>Yes</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Yes</stringValue>
         </value>
     </choices>
     <constants>
         <name>FlowName</name>
         <dataType>String</dataType>
         <value>
-            <stringValue>New Termination Flow</stringValue>
+            <stringValue>New_Termination_Form_Flow</stringValue>
         </value>
     </constants>
     <decisions>
+        <name>Check_asset_record</name>
+        <label>Check asset record</label>
+        <locationX>3999</locationX>
+        <locationY>458</locationY>
+        <defaultConnector>
+            <targetReference>Check_User_Role_Profile</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Asset_is_Terminated</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Asset_record</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>recordId.Name</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Reinstatement Requested</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Asset_record.NSP_Account_Status__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Asset_record.NSP_Account_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Terminated</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Check_Client_is_Terminated</targetReference>
+            </connector>
+            <label>Asset is Terminated</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_credit_specialist_recordtype</name>
+        <label>Check credit specialist recordtype</label>
+        <locationX>4846</locationX>
+        <locationY>1382</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Credit_Specialist_form1</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Credit_Specialist_Record_Type</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>recordId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Credit_Specialist_termination_form</targetReference>
+            </connector>
+            <label>Credit Specialist form</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Project_Task</name>
+        <label>Check Project Task</label>
+        <locationX>1964</locationX>
+        <locationY>1166</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Reinstatement_Requested</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>recordId.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Reinstatement Requested</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Record_type</targetReference>
+            </connector>
+            <label>Reinstatement Requested</label>
+        </rules>
+        <rules>
+            <name>Submit_Termination_Checklist</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>recordId.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Submit Termination Checklist</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Payroll_Specialist_Recordtype</targetReference>
+            </connector>
+            <label>Submit Termination Checklist</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Project_Task_name</name>
+        <label>Check Project Task name</label>
+        <locationX>3702</locationX>
+        <locationY>1166</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Reinstatement_Requested_Project_Task</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>recordId.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Reinstatement Requested</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <isGoTo>true</isGoTo>
+                <targetReference>Record_type</targetReference>
+            </connector>
+            <label>Reinstatement Requested</label>
+        </rules>
+        <rules>
+            <name>Submit_Termination_Checklist_Project_Task</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>recordId.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Submit Termination Checklist</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Select_Record_Type</targetReference>
+            </connector>
+            <label>Submit Termination Checklist</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Project_Task_name_1</name>
+        <label>Check Project Task name</label>
+        <locationX>5308</locationX>
+        <locationY>1166</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Submit_Termination_Checklist_ProjectTask</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>recordId.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Submit Termination Checklist</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Credit_Specialist_Record_Type</targetReference>
+            </connector>
+            <label>Submit Termination Checklist Project Task</label>
+        </rules>
+        <rules>
+            <name>Reinstatement_Project_Task</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>recordId.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Reinstatement Requested</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <isGoTo>true</isGoTo>
+                <targetReference>Record_type</targetReference>
+            </connector>
+            <label>Reinstatement Project Task</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Recordtype</name>
+        <label>Check Recordtype</label>
+        <locationX>5368</locationX>
+        <locationY>242</locationY>
+        <defaultConnectorLabel>Recordtype is null</defaultConnectorLabel>
+        <rules>
+            <name>Recordtype_not_null</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Recordtype</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>recordId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Asset_record</targetReference>
+            </connector>
+            <label>Recordtype not null</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Recordtype_1</name>
+        <label>Check Recordtype</label>
+        <locationX>2294</locationX>
+        <locationY>1382</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Payroll_Specialist_record_type</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Payroll_Specialist_Recordtype</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>recordId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Create_Payroll_specialist_form</targetReference>
+            </connector>
+            <label>Payroll Specialist record type</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_User_Role_Profile</name>
+        <label>Check User Role/Profile</label>
+        <locationX>3999</locationX>
+        <locationY>1058</locationY>
+        <defaultConnector>
+            <targetReference>Select_Record_Type</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Payroll_specialist_user</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>User_Role</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Payroll Specialist</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Check_Project_Task</targetReference>
+            </connector>
+            <label>Payroll specialist user</label>
+        </rules>
+        <rules>
+            <name>System_admin_admin_lite</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>User_Profile</leftValueReference>
+                <operator>StartsWith</operator>
+                <rightValue>
+                    <stringValue>System Admin</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Check_Project_Task_name</targetReference>
+            </connector>
+            <label>System admin/ admin lite</label>
+        </rules>
+        <rules>
+            <name>Credit_Specialist_Form</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>User_Role</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Credit Specialist</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>User_Role</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Finance Service User</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>User_Profile</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Finance Service</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Check_Project_Task_name_1</targetReference>
+            </connector>
+            <label>Credit Specialist Form</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Client_is_Terminated</name>
+        <label>Client is Terminated</label>
+        <locationX>3823</locationX>
+        <locationY>674</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_and_continue</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>This_client_is_Terminated_are_you_sure_you_want_to_continue</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>Yes</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Check_User_Role_Profile</targetReference>
+            </connector>
+            <label>Yes and continue</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Credit_Form_null_check</name>
+        <label>Credit Form null check</label>
+        <locationX>4450</locationX>
+        <locationY>1598</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Credit_form_not_null</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Credit_Specialist_termination_form</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Navigate_to_credit_termination_form</targetReference>
+            </connector>
+            <label>Credit form not null</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Form_Id_null_check</name>
+        <label>Form Id null check</label>
+        <locationX>314</locationX>
+        <locationY>1598</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Form_Id_not_null</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Create_Reinstatement_form</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Navigate_to_reinstatement_form</targetReference>
+            </connector>
+            <label>Form Id not null</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Form_not_null</name>
+        <label>Form not null</label>
+        <locationX>1898</locationX>
+        <locationY>1598</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>FormID_not_null</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Create_Payroll_specialist_form</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Navigate_to_Payroll_form</targetReference>
+            </connector>
+            <label>Form not null</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Formid_null_check</name>
         <label>Formid null check</label>
-        <locationX>314</locationX>
-        <locationY>674</locationY>
+        <locationX>3603</locationX>
+        <locationY>2690</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Not_null_check</name>
@@ -77,8 +563,8 @@
     <decisions>
         <name>Getrecordtype_null_check</name>
         <label>Getrecordtype null check</label>
-        <locationX>1040</locationX>
-        <locationY>350</locationY>
+        <locationX>3999</locationX>
+        <locationY>2474</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Not_Null</name>
@@ -90,21 +576,6 @@
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
-            <connector>
-                <targetReference>Record_Null_check</targetReference>
-            </connector>
-            <label>Not Null</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Record_Null_check</name>
-        <label>Record Null check</label>
-        <locationX>710</locationX>
-        <locationY>458</locationY>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Record_not_null</name>
-            <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>recordId</leftValueReference>
                 <operator>IsNull</operator>
@@ -115,14 +586,53 @@
             <connector>
                 <targetReference>Create_Termination_Form</targetReference>
             </connector>
-            <label>Record not null</label>
+            <label>Not Null</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Recordtype_null_check</name>
+        <label>Recordtype null check</label>
+        <locationX>710</locationX>
+        <locationY>1382</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Record_Type_Not_null</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Record_type</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>recordId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Create_Reinstatement_form</targetReference>
+            </connector>
+            <label>Record Type Not null</label>
         </rules>
     </decisions>
     <environments>Default</environments>
     <formulas>
         <name>Termination_Form_Name</name>
         <dataType>String</dataType>
-        <expression>IF(({!Select_Record_Type_radio}={!NSP_Client_Reinstatement})||({!Select_Record_Type_radio_2}={!NSP_Client_Reinstatement}), &quot;Reinstate Client&quot;&amp;&quot;-&quot;&amp;TEXT(MONTH(TODAY()))&amp;&quot;.&quot;&amp;TEXT(DAY(TODAY()))&amp;&quot;.&quot;&amp;TEXT(YEAR(TODAY()))&amp;&quot;-&quot;&amp;{!recordId.NSP_Account__c}, &quot;Term Request&quot;&amp;&quot;-&quot;&amp;TEXT(MONTH(TODAY()))&amp;&quot;.&quot;&amp;TEXT(DAY(TODAY()))&amp;&quot;.&quot;&amp;TEXT(YEAR(TODAY()))&amp;&quot;-&quot;&amp;{!recordId.NSP_Account__c})</expression>
+        <expression>IF(
+  OR(
+    ( {!Select_Record_Type_radio} = {!NSP_Client_Reinstatement} ) ,
+    ( {!Select_Record_Type_radio_2} = {!NSP_Client_Reinstatement} ) ,
+    ( {!Reinstatement_Requested_Project_Task} ) ,
+    ( {!Reinstatement_Requested} ) ,
+    ( {!Reinstatement_Project_Task} )
+  ) , 
+  &quot;Reinstate Client&quot;&amp;&quot;-&quot;&amp;TEXT(MONTH(TODAY()))&amp;&quot;.&quot;&amp;TEXT(DAY(TODAY()))&amp;&quot;.&quot;&amp;TEXT(YEAR(TODAY()))&amp;&quot;-&quot;&amp;{!recordId.NSP_Account__c} ,
+  &quot;Term Request&quot;&amp;&quot;-&quot;&amp;TEXT(MONTH(TODAY()))&amp;&quot;.&quot;&amp;TEXT(DAY(TODAY()))&amp;&quot;.&quot;&amp;TEXT(YEAR(TODAY()))&amp;&quot;-&quot;&amp;{!recordId.NSP_Account__c}
+)</expression>
     </formulas>
     <interviewLabel>New Termination Form {!$Flow.CurrentDateTime}</interviewLabel>
     <label>New Termination Form</label>
@@ -146,14 +656,81 @@
     </processMetadataValues>
     <processType>Flow</processType>
     <recordCreates>
+        <name>Create_Payroll_specialist_form</name>
+        <label>Create Payroll specialist form</label>
+        <locationX>1898</locationX>
+        <locationY>1490</locationY>
+        <connector>
+            <targetReference>Form_not_null</targetReference>
+        </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_subflow</targetReference>
+        </faultConnector>
+        <inputAssignments>
+            <field>NSP_Project_Task__c</field>
+            <value>
+                <elementReference>recordId.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Name</field>
+            <value>
+                <elementReference>Termination_Form_Name</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>RecordTypeId</field>
+            <value>
+                <elementReference>Payroll_Specialist_Recordtype.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <object>NSP_Termination_Form__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <recordCreates>
+        <name>Create_Reinstatement_form</name>
+        <label>Create Reinstatement form</label>
+        <locationX>314</locationX>
+        <locationY>1490</locationY>
+        <connector>
+            <targetReference>Form_Id_null_check</targetReference>
+        </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_subflow</targetReference>
+        </faultConnector>
+        <inputAssignments>
+            <field>NSP_Project_Task__c</field>
+            <value>
+                <elementReference>recordId.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Name</field>
+            <value>
+                <elementReference>Termination_Form_Name</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>RecordTypeId</field>
+            <value>
+                <elementReference>Record_type.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <object>NSP_Termination_Form__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <recordCreates>
         <name>Create_Termination_Form</name>
         <label>Create Termination Form</label>
-        <locationX>314</locationX>
-        <locationY>566</locationY>
+        <locationX>3603</locationX>
+        <locationY>2582</locationY>
         <connector>
             <targetReference>Formid_null_check</targetReference>
         </connector>
         <faultConnector>
+            <isGoTo>true</isGoTo>
             <targetReference>Fault_Handler_subflow</targetReference>
         </faultConnector>
         <inputAssignments>
@@ -177,15 +754,130 @@
         <object>NSP_Termination_Form__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
+    <recordCreates>
+        <name>Credit_Specialist_termination_form</name>
+        <label>Credit Specialist termination form</label>
+        <locationX>4450</locationX>
+        <locationY>1490</locationY>
+        <connector>
+            <targetReference>Credit_Form_null_check</targetReference>
+        </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_subflow</targetReference>
+        </faultConnector>
+        <inputAssignments>
+            <field>NSP_Project_Task__c</field>
+            <value>
+                <elementReference>recordId.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Name</field>
+            <value>
+                <elementReference>Termination_Form_Name</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>RecordTypeId</field>
+            <value>
+                <elementReference>Credit_Specialist_Record_Type.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <object>NSP_Termination_Form__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <recordLookups>
+        <name>Credit_Specialist_Record_Type</name>
+        <label>Credit Specialist Record Type</label>
+        <locationX>4846</locationX>
+        <locationY>1274</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_credit_specialist_recordtype</targetReference>
+        </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_subflow</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>NSP_Credit_Specialist_Form</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>RecordType</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Asset_record</name>
+        <label>Get Asset record</label>
+        <locationX>3999</locationX>
+        <locationY>350</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_asset_record</targetReference>
+        </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_subflow</targetReference>
+        </faultConnector>
+        <filterLogic>(1 AND 2 AND (3 OR 4) AND 5)</filterLogic>
+        <filters>
+            <field>AccountId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId.NSP_Account_Id__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>RecordTypeId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Recordtype.Id</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>NSP_Account_Status__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Active</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>NSP_Account_Status__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Inactive</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>RecordTypeId</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Asset</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <recordLookups>
         <name>Get_Record_type</name>
         <label>Get Record type</label>
-        <locationX>1040</locationX>
-        <locationY>242</locationY>
+        <locationX>3999</locationX>
+        <locationY>2366</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Getrecordtype_null_check</targetReference>
         </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_subflow</targetReference>
+        </faultConnector>
         <filterLogic>or</filterLogic>
         <filters>
             <field>DeveloperName</field>
@@ -198,14 +890,96 @@
             <field>DeveloperName</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>Select_Record_Type_radio_1</elementReference>
+                <elementReference>Select_Record_Type_radio_2</elementReference>
             </value>
         </filters>
         <filters>
             <field>DeveloperName</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>Select_Record_Type_radio_2</elementReference>
+                <elementReference>Select_Record_Type_Radio_3</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>RecordType</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Recordtype</name>
+        <label>Get Recordtype</label>
+        <locationX>5368</locationX>
+        <locationY>134</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_Recordtype</targetReference>
+        </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_subflow</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>WO</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>SobjectType</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Asset</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>RecordType</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Payroll_Specialist_Recordtype</name>
+        <label>Payroll Specialist Recordtype</label>
+        <locationX>2294</locationX>
+        <locationY>1274</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_Recordtype_1</targetReference>
+        </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_subflow</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>NSP_Payroll_Specialist_Form</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>RecordType</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Record_type</name>
+        <label>Record type</label>
+        <locationX>710</locationX>
+        <locationY>1274</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Recordtype_null_check</targetReference>
+        </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_subflow</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>NSP_Client_Reinstatement</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
@@ -213,10 +987,34 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <screens>
+        <name>Check_Client_is_Terminated</name>
+        <label>Check Client is Terminated</label>
+        <locationX>3823</locationX>
+        <locationY>566</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Client_is_Terminated</targetReference>
+        </connector>
+        <fields>
+            <name>This_client_is_Terminated_are_you_sure_you_want_to_continue</name>
+            <choiceReferences>Yes</choiceReferences>
+            <choiceReferences>No</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>This client is Terminated, are you sure you want to continue?</fieldText>
+            <fieldType>RadioButtons</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
         <name>Select_Record_Type</name>
         <label>Select Record Type</label>
-        <locationX>1040</locationX>
-        <locationY>134</locationY>
+        <locationX>3999</locationX>
+        <locationY>2258</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -245,11 +1043,12 @@
                     <choiceReferences>NSP_Payroll_Specialist_Form</choiceReferences>
                     <choiceReferences>NSP_Client_Reinstatement</choiceReferences>
                     <dataType>String</dataType>
-                    <fieldText>&lt;span style= &quot;font-size: 18px;&quot;&gt;Select Record Type&lt;span class=&quot;ql=cursor&quot;&gt;&lt;/span&gt;&lt;/span&gt;</fieldText>
+                    <fieldText>Select Record Type</fieldText>
                     <fieldType>RadioButtons</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                     <visibilityRule>
-                        <conditionLogic>(1 OR 2 OR 3 OR 4) AND 5 AND 6</conditionLogic>
+                        <conditionLogic>(1 OR 2 OR 3) AND 4 AND 5</conditionLogic>
                         <conditions>
                             <leftValueReference>User_Role</leftValueReference>
                             <operator>EqualTo</operator>
@@ -262,13 +1061,6 @@
                             <operator>EqualTo</operator>
                             <rightValue>
                                 <stringValue>Payroll Implementation</stringValue>
-                            </rightValue>
-                        </conditions>
-                        <conditions>
-                            <leftValueReference>User_Role</leftValueReference>
-                            <operator>EqualTo</operator>
-                            <rightValue>
-                                <stringValue>Payroll Specialist</stringValue>
                             </rightValue>
                         </conditions>
                         <conditions>
@@ -334,33 +1126,29 @@
                 <name>Select_Record_Type_Section2_Column2</name>
                 <fieldType>Region</fieldType>
                 <fields>
-                    <name>Select_Record_Type_radio_1</name>
+                    <name>Select_Record_Type_radio_2</name>
+                    <choiceReferences>NSP_Payroll_Specialist_Form</choiceReferences>
                     <choiceReferences>NSP_Credit_Specialist_Form</choiceReferences>
+                    <choiceReferences>NSP_Client_Reinstatement</choiceReferences>
                     <dataType>String</dataType>
-                    <fieldText>&lt;span style= &quot;font-size: 18px;&quot;&gt;Select Record Type&lt;span class=&quot;ql=cursor&quot;&gt;&lt;/span&gt;&lt;/span&gt;</fieldText>
+                    <fieldText>Select Record Type</fieldText>
                     <fieldType>RadioButtons</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                     <visibilityRule>
-                        <conditionLogic>1 AND 2 AND 3</conditionLogic>
+                        <conditionLogic>1 AND 2</conditionLogic>
+                        <conditions>
+                            <leftValueReference>User_Role</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <stringValue>Termination Team</stringValue>
+                            </rightValue>
+                        </conditions>
                         <conditions>
                             <leftValueReference>User_Profile</leftValueReference>
                             <operator>EqualTo</operator>
                             <rightValue>
-                                <stringValue>Finance Service</stringValue>
-                            </rightValue>
-                        </conditions>
-                        <conditions>
-                            <leftValueReference>User_Role</leftValueReference>
-                            <operator>EqualTo</operator>
-                            <rightValue>
-                                <stringValue>Finance Service User</stringValue>
-                            </rightValue>
-                        </conditions>
-                        <conditions>
-                            <leftValueReference>User_Role</leftValueReference>
-                            <operator>IsNull</operator>
-                            <rightValue>
-                                <booleanValue>false</booleanValue>
+                                <stringValue>PEO Service</stringValue>
                             </rightValue>
                         </conditions>
                     </visibilityRule>
@@ -405,42 +1193,28 @@
                 <name>Select_Record_Type_Section3_Column2</name>
                 <fieldType>Region</fieldType>
                 <fields>
-                    <name>Select_Record_Type_radio_2</name>
+                    <name>Select_Record_Type_Radio_3</name>
                     <choiceReferences>NSP_Payroll_Specialist_Form</choiceReferences>
                     <choiceReferences>NSP_Credit_Specialist_Form</choiceReferences>
-                    <choiceReferences>NSP_Client_Reinstatement</choiceReferences>
                     <dataType>String</dataType>
-                    <fieldText>&lt;span style= &quot;font-size: 18px;&quot;&gt;Select Record Type&lt;span class=&quot;ql=cursor&quot;&gt;&lt;/span&gt;&lt;/span&gt;</fieldText>
+                    <fieldText>Select Record Type</fieldText>
                     <fieldType>RadioButtons</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                     <visibilityRule>
-                        <conditionLogic>1 OR 2 OR (3 AND 4)</conditionLogic>
+                        <conditionLogic>and</conditionLogic>
                         <conditions>
                             <leftValueReference>User_Profile</leftValueReference>
-                            <operator>EqualTo</operator>
+                            <operator>StartsWith</operator>
                             <rightValue>
-                                <stringValue>System Administrator</stringValue>
+                                <stringValue>System Admin</stringValue>
                             </rightValue>
                         </conditions>
                         <conditions>
-                            <leftValueReference>User_Profile</leftValueReference>
+                            <leftValueReference>recordId.Name</leftValueReference>
                             <operator>EqualTo</operator>
                             <rightValue>
-                                <stringValue>System Admin Lite</stringValue>
-                            </rightValue>
-                        </conditions>
-                        <conditions>
-                            <leftValueReference>User_Role</leftValueReference>
-                            <operator>EqualTo</operator>
-                            <rightValue>
-                                <stringValue>Termination Team</stringValue>
-                            </rightValue>
-                        </conditions>
-                        <conditions>
-                            <leftValueReference>User_Profile</leftValueReference>
-                            <operator>EqualTo</operator>
-                            <rightValue>
-                                <stringValue>PEO Service</stringValue>
+                                <stringValue>Submit Termination Checklist</stringValue>
                             </rightValue>
                         </conditions>
                     </visibilityRule>
@@ -472,18 +1246,18 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>914</locationX>
+        <locationX>5242</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Select_Record_Type</targetReference>
+            <targetReference>Get_Recordtype</targetReference>
         </connector>
     </start>
     <status>Draft</status>
     <subflows>
         <name>Fault_Handler_subflow</name>
         <label>Fault Handler subflow</label>
-        <locationX>842</locationX>
-        <locationY>674</locationY>
+        <locationX>3603</locationX>
+        <locationY>2906</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultMessage</name>
@@ -492,7 +1266,7 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <name>triggeringFlow</name>
+            <name>faultFlow</name>
             <value>
                 <elementReference>FlowName</elementReference>
             </value>
@@ -525,13 +1299,5 @@
         <value>
             <elementReference>$UserRole.Name</elementReference>
         </value>
-    </variables>
-    <variables>
-        <name>varTermination</name>
-        <dataType>SObject</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>NSP_Termination_Form__c</objectType>
     </variables>
 </Flow>

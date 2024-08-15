@@ -60,7 +60,7 @@ public class NSP_ProjectAssetTriggerHelperTest {
             'Go_Live_Date__c'
         };
         String queryPrj = new NSP_QueryBuilder('pse__Proj__c', projectFields)
-                            .addFilter('TemplateName__c', 'Middle Market - Implementation').addLimit(1).setSecurityEnforce(false).build();
+                            .addFilter('TemplateName__c', NSP_ServiceConstants.MM_PROJECT_TEMPLATE_KEY).addLimit(1).setSecurityEnforce(false).build();
         pse__Proj__c oProject = Database.query(queryPrj);
 
         Project_Asset__c prjAsset = (Project_Asset__c)NSP_TestExtendedDataFactory.createSObject(new Project_Asset__c(), false);
@@ -93,7 +93,7 @@ public class NSP_ProjectAssetTriggerHelperTest {
             'Go_Live_Date__c'
         };
         String queryPrj = new NSP_QueryBuilder('pse__Proj__c', projectFields)
-                            .addFilter('TemplateName__c', 'Middle Market - Implementation').addLimit(1).setSecurityEnforce(false).build();
+                            .addFilter('TemplateName__c', NSP_ServiceConstants.MM_PROJECT_TEMPLATE_KEY).addLimit(1).setSecurityEnforce(false).build();
         pse__Proj__c oProject = Database.query(queryPrj);
 
         Project_Asset__c prjAsset = (Project_Asset__c)NSP_TestExtendedDataFactory.createSObject(new Project_Asset__c(), false);

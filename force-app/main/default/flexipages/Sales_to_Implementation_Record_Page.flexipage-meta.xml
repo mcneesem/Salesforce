@@ -32,7 +32,7 @@
                         </valueListItems>
                         <valueListItems>
                             <value>Global.NewLead</value>
-                        </valueListItems> 
+                        </valueListItems>
                         <valueListItems>
                             <value>FeedItem.PollPost</value>
                         </valueListItems>
@@ -236,6 +236,16 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Opportunity__c</fieldItem>
                 <identifier>RecordNSP_Opportunity_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.AIMS_Client__c</fieldItem>
+                <identifier>RecordAIMS_Client_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>

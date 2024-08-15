@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Admin_Layout_Access</name>
+    </customPermissions>
+    <description>Provides flexipage access to Admin page sections</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Admin Layout Access</label>
+</PermissionSet>

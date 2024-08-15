@@ -8,8 +8,10 @@ import {
   isMultiSelectCheckbox,
   isSelectionBox,
   ANSWERED_CLASS_NAME,
+  RL_CLASS_NAME,
+  RL_FIELD_ACCEPTED_VALUES
 } from 'c/nsp_utils';
-import { SECTION_FIELDS, SYNC_FIELDS } from './fields';
+import { SECTION_FIELDS, SYNC_FIELDS, RL_FIELDS } from './fields';
 
 export default class Nsp_generalPayInformation extends LightningElement {
   @api recordId;
@@ -20,6 +22,7 @@ export default class Nsp_generalPayInformation extends LightningElement {
   @track field = {};
   @track visibility = {};
   @track styles = getFieldStylesByHierarchy(DYNAMIC_FIELDS);
+  isDoubleClick = false;
   @track state = {
     isLoadingFirstTime: true,
   };
@@ -81,6 +84,10 @@ export default class Nsp_generalPayInformation extends LightningElement {
     this.field[fieldName] = isMultiSelectCheckbox(target)
       ? value.join(';')
       : value;
+    if(this.isDoubleClick){
+      this.field[fieldName] = null;
+      this.isDoubleClick = false;
+    }
     this.updateDependentFieldVisibility(fieldName, value);
     this.addStyleToAnsweredQuestion(target, value);
   }
@@ -134,7 +141,19 @@ export default class Nsp_generalPayInformation extends LightningElement {
           elm.classList.remove(ANSWERED_CLASS_NAME);
         }
       }
+      const className = this.getLabelClassName(fieldName, value);
+      elm.classList.remove(ANSWERED_CLASS_NAME);
+      elm.classList.remove(RL_CLASS_NAME);
+      if (isValuePresent) {
+          elm.classList.add(className);
+      }
     }
+  }
+  getLabelClassName(fieldName, value) {
+    return RL_FIELDS.includes(fieldName) &&
+      RL_FIELD_ACCEPTED_VALUES.includes(value)
+      ? RL_CLASS_NAME
+      : ANSWERED_CLASS_NAME;
   }
 
   getCustomLabelElm(fieldName) {
@@ -186,5 +205,9 @@ export default class Nsp_generalPayInformation extends LightningElement {
 
     this.multiplePay = this.field.NSP_Employees_with_multiple_types_of_pay__c.split(';');
     return this.multiplePay.includes('Piece Rate') && this.field.employeeStates.split(';').includes('CA');
+  }
+  handleDoubleClick({ detail, target }){
+    this.isDoubleClick = true;
+    this.handleValueChange({ detail: detail, target: target });
   }
 }

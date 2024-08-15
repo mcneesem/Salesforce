@@ -27,7 +27,8 @@
             field-api-name="Implementation_Profile__c.Any_Special_Agreements_Addendum_in_CSA__c"
             record-type-id={recordTypeId}
             value={field.Any_Special_Agreements_Addendum_in_CSA__c} 
-            onchange={handleValueChange}>
+            onchange={handleValueChange}
+            ondblclick={handleDoubleClick}>
         </c-nsp_selection-box>
         
         <lightning-input-field value={field.Special_Agreement_Addendum_details__c} disabled={disabledFields.Special_Agreement_Addendum_details__c} if:true={visibility.Special_Agreement_Addendum_details__c} field-name="Special_Agreement_Addendum_details__c"
@@ -37,19 +38,22 @@
             field-api-name="Implementation_Profile__c.Insperity_Empl_contrib_rate_determined__c"
             record-type-id={recordTypeId}
             value={field.Insperity_Empl_contrib_rate_determined__c} 
-            onchange={handleValueChange}>
+            onchange={handleValueChange}
+            ondblclick={handleDoubleClick}>
         </c-nsp_selection-box>
         <c-nsp_selection-box disabled={disabledFields.Received_Section_125_Questionnaire__c} label={objFields.Received_Section_125_Questionnaire__c.label} data-name="Received_Section_125_Questionnaire__c"
             field-api-name="Implementation_Profile__c.Received_Section_125_Questionnaire__c"
             record-type-id={recordTypeId}
             value={field.Received_Section_125_Questionnaire__c} 
-            onchange={handleValueChange}>
+            onchange={handleValueChange}
+            ondblclick={handleDoubleClick}>
          </c-nsp_selection-box> 
          <c-nsp_selection-box disabled={disabledFields.Gotten_Cvrg_Cert_Gen_Liability_Auto__c} label={label.CrtofGnlLbltyAuto} data-name="Gotten_Cvrg_Cert_Gen_Liability_Auto__c"
             field-api-name="Implementation_Profile__c.Gotten_Cvrg_Cert_Gen_Liability_Auto__c"
             record-type-id={recordTypeId}
             value={field.Gotten_Cvrg_Cert_Gen_Liability_Auto__c} 
-            onchange={handleValueChange}>
+            onchange={handleValueChange}
+            ondblclick={handleDoubleClick}>
          </c-nsp_selection-box>                                                        
         <lightning-input-field value={field.Gen_liability_auto_coverage_details__c} disabled={disabledFields.Gen_liability_auto_coverage_details__c} if:true={visibility.Gen_liability_auto_coverage_details__c} field-name="Gen_liability_auto_coverage_details__c"
             class={styles.Gen_liability_auto_coverage_details__c} data-name="Gen_liability_auto_coverage_details__c" onchange={handleValueChange}></lightning-input-field>
@@ -57,13 +61,15 @@
             field-api-name="Implementation_Profile__c.Received_Enrollment_Fee__c"
             record-type-id={recordTypeId}
             value={field.Received_Enrollment_Fee__c} 
-            onchange={handleValueChange}>
+            onchange={handleValueChange}
+            ondblclick={handleDoubleClick}>
         </c-nsp_selection-box>
         <c-nsp_selection-box disabled={disabledFields.Will_there_be_benefits_classing__c} label={objFields.Will_there_be_benefits_classing__c.label} data-name="Will_there_be_benefits_classing__c"
             field-api-name="Implementation_Profile__c.Will_there_be_benefits_classing__c"
             record-type-id={recordTypeId}
             value={field.Will_there_be_benefits_classing__c}
-            onchange={handleValueChange}>
+            onchange={handleValueChange}
+            ondblclick={handleDoubleClick}>
         </c-nsp_selection-box>    
         <c-nsp_selection-box disabled={disabledFields.Employees_work_in_the_following_states__c} label={objFields.Employees_work_in_the_following_states__c.label} data-name="Employees_work_in_the_following_states__c"
             field-api-name="Implementation_Profile__c.Employees_work_in_the_following_states__c"

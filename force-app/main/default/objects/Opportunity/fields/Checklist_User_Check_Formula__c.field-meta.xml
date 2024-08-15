@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Checklist_User_Check_Formula__c</fullName>
+    <description>Checks user role/profile and permissions to create checklist</description>
+    <externalId>false</externalId>
+    <formula>IF(
+AND( 
+$Permission.Checklist_Create_Sold_To_Paid,
+Number_of_STP_Checklists__c = 0,
+OR(
+ISPICKVAL(StageName, &quot;Proposal&quot;),
+ISPICKVAL(StageName, &quot;Closing&quot;)),
+OR(
+ISPICKVAL(NSP_PrimaryProduct__c,&quot;WX&quot;),
+ISPICKVAL(NSP_PrimaryProduct__c,&quot;WO&quot;),
+ISPICKVAL(NSP_PrimaryProduct__c,&quot;WS&quot;))),&quot;STP&quot;,
+
+IF(
+AND( 
+$Permission.Checklist_Create_Sales_Engineer_Questionnaire,
+Number_of_SEQ_Checklists__c = 0,
+OR(
+ISPICKVAL(StageName, &quot;Analysis&quot;),
+ISPICKVAL(StageName, &quot;Proposal&quot;),
+ISPICKVAL(StageName, &quot;Closing&quot;)),
+OR(
+ISPICKVAL(NSP_PrimaryProduct__c,&quot;WX&quot;),
+ISPICKVAL(NSP_PrimaryProduct__c,&quot;Performance Management&quot;),
+ISPICKVAL(NSP_PrimaryProduct__c,&quot;Time &amp; Attendance&quot;))),&quot;SEQ&quot;,
+
+
+IF(
+AND( 
+$Permission.Checklist_Create_Booking,
+Number_of_Booking_Checklists__c = 0,
+OR(
+ISPICKVAL(StageName, &quot;Proposal&quot;),
+ISPICKVAL(StageName, &quot;Closing&quot;)),
+OR(
+ISPICKVAL(NSP_PrimaryProduct__c,&quot;WX&quot;),
+ISPICKVAL(NSP_PrimaryProduct__c,&quot;WO&quot;))),&quot;Booking&quot;,
+null)))</formula>
+    <label>Checklist User Check Formula</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

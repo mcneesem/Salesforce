@@ -879,6 +879,11 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>Named_Account_Group__c</field>
+            <table>User.Account$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>Sic</field>
             <table>User.Account$OwnerId</table>
         </columns>
@@ -974,6 +979,11 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>NSP_ICP_Percent__c</field>
+            <table>User.Account$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>PersonActionCadenceState</field>
             <table>User.Account$OwnerId</table>
         </columns>
@@ -1060,6 +1070,11 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>fferpcore__ValidatedShippingCity__c</field>
+            <table>User.Account$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Account_Assignment_Method__c</field>
             <table>User.Account$OwnerId</table>
         </columns>
         <columns>
@@ -1194,16 +1209,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>DNBoptimizer__DNB_D_U_N_S_Number__c</field>
-            <table>User.Account$OwnerId</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>DNBoptimizer__DnBCompanyRecord__c</field>
-            <table>User.Account$OwnerId</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>Account_Owner_Role__c</field>
             <table>User.Account$OwnerId</table>
         </columns>
@@ -1220,6 +1225,16 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>DnB_Confidence_Code__c</field>
+            <table>User.Account$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>DNBConnect__D_B_Connect_Company_Profile__c</field>
+            <table>User.Account$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>DNB_Connect_DUNS_Number__c</field>
             <table>User.Account$OwnerId</table>
         </columns>
         <columns>
@@ -3429,11 +3444,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>NSP_Max_Overdue_Invoice_Date__c</field>
-            <table>User.Account$OwnerId</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>NSP_Account_Health_Rate_Number__c</field>
             <table>User.Account$OwnerId</table>
         </columns>
@@ -4407,11 +4417,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>DNBoptimizer__DnBContactRecord__c</field>
-            <table>User.Account$OwnerId.Contacts</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>DnB_Email_Deliverability_Score__c</field>
             <table>User.Account$OwnerId.Contacts</table>
         </columns>
@@ -4950,6 +4955,29 @@
             <field>contactUpdateDate6sense__c</field>
             <table>User.Account$OwnerId.Contacts</table>
         </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Related_User_Active__c</field>
+            <table>User.Account$OwnerId.Contacts</table>
+        </columns>
         <masterLabel>Contacts</masterLabel>
+    </sections>
+    <sections>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Has_Financial_Info__c</field>
+            <table>User.Account$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Sandbox_Targeted__c</field>
+            <table>User.Account$OwnerId</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Sandbox_AIMS_Client__c</field>
+            <table>User.Account$OwnerId</table>
+        </columns>
+        <masterLabel>Accounts</masterLabel>
     </sections>
 </ReportType>

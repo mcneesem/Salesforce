@@ -5,6 +5,8 @@
 * Name : NSP_AutomaticProjectBatchClass 
 */
 public class NSP_AutomaticProjectBatchClass implements Database.Batchable<sObject>, Database.Stateful {
+    // test w/ NSP_AutomaticProjectBatchTest (88%)
+
     private Map<String, pse__proj__c> templateNameProjectMap = new Map<String, pse__proj__c>();
 
     @TestVisible
@@ -236,35 +238,43 @@ public class NSP_AutomaticProjectBatchClass implements Database.Batchable<sObjec
             //create a project and deleting Budget
             
             newProjectId = opp.createProjectAndDeleteBudget(lProjRequests);
-            newProjectIdList.addAll(newProjectId);
-            //querying related project created by the NSP_OpportunityTriggerServiceHelper method
-            List<String> projField = new List<String>{'Id','Name','OwnerId', 'RecordTypeId','Template_Name__c','pse__Is_Billable__c',
-                'pse__Account__c', 'pse__End_Date__c', 'pse__Start_Date__c'};
-        	String query = new NSP_QueryBuilder(NSP_ServiceConstants.PROJECT_SOBJECT_NAME, projField)
-            					.addFilter('pse__Is_Template__c', false)
-                                .addFilter('pse__Is_Active__c', True)
-                                .addFilter('pse__Account__c', String.valueOf(oaccount.Id))
-                    			.addFilter('Id',newProjectIdList[0] ,NSP_QueryBuilder.Operator.INCLUDES)
-                                .addFilter('OwnerId', userId).build();
-        	oproject  = (List<pse__proj__c>) Database.query(query);
-            if(!oproject.isEmpty()){
-                //updating the values
-                if(oproject[0].pse__Start_Date__c != null && oproject[0].pse__End_Date__c != null){
-                    Integer numberDays = oproject[0].pse__Start_Date__c.daysBetween(oproject[0].pse__End_Date__c);
-
-                    oproject[0].pse__Start_Date__c = System.today(); 
-                    oproject[0].pse__End_Date__c = System.today() + numberDays; 
-                    oproject[0].pse__Is_Billable__c = False;
-                }else{
-                    oproject[0].pse__Start_Date__c = System.today(); 
-                    oproject[0].pse__End_Date__c = null;
-                    oproject[0].pse__Is_Billable__c = False;
+            if ( ( newProjectId != null ) && !newProjectId.isEmpty() ) {
+                newProjectIdList.addAll(newProjectId);
+                if ( !newProjectIdList.isEmpty() ) { // prevent System.ListException: List index out of bounds: 0
+                    //querying related project created by the NSP_OpportunityTriggerServiceHelper method
+                    List<String> projField = new List<String>{
+                        'Id' , 'Name' , 'OwnerId' ,
+                        'RecordTypeId' , 'Template_Name__c' ,
+                        'pse__Is_Billable__c' , 'pse__Account__c' ,
+                        'pse__End_Date__c' , 'pse__Start_Date__c'
+                    };
+                    String query = new NSP_QueryBuilder(NSP_ServiceConstants.PROJECT_SOBJECT_NAME, projField)
+                        .addFilter('pse__Is_Template__c', false)
+                        .addFilter('pse__Is_Active__c', True)
+                        .addFilter('pse__Account__c', String.valueOf(oaccount.Id))
+                        .addFilter('Id',newProjectIdList[0] ,NSP_QueryBuilder.Operator.INCLUDES)
+                        .addFilter('OwnerId', userId)
+                        .build();
+                    oproject = (List<pse__proj__c>)Database.query(query);
+                    if(!oproject.isEmpty()){
+                        //updating the values
+                        if(oproject[0].pse__Start_Date__c != null && oproject[0].pse__End_Date__c != null){
+                            Integer numberDays = oproject[0].pse__Start_Date__c.daysBetween(oproject[0].pse__End_Date__c);
+                            oproject[0].pse__Start_Date__c = System.today();
+                            oproject[0].pse__End_Date__c = System.today() + numberDays;
+                            oproject[0].pse__Is_Billable__c = False;
+                        }else{
+                            oproject[0].pse__Start_Date__c = System.today();
+                            oproject[0].pse__End_Date__c = null;
+                            oproject[0].pse__Is_Billable__c = False;
+                        }
+                        updateProject = oproject[0];
+                    }
                 }
-                updateProject = oproject[0];
             }
         }
-      
-      return updateProject;
+        return updateProject;
     }
 
 }
+//

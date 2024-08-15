@@ -8,8 +8,10 @@ import {
   isMultiSelectCheckbox,
   isSelectionBox,
   ANSWERED_CLASS_NAME,
+  RL_CLASS_NAME,
+  RL_FIELD_ACCEPTED_VALUES
 } from 'c/nsp_utils';
-import { SECTION_FIELDS, SYNC_FIELDS } from './fields';
+import { SECTION_FIELDS, SYNC_FIELDS,RL_FIELDS } from './fields';
 import { DYNAMIC_FIELDS } from './dynamicFieldsConfig';
 
 export default class Nsp_payRollInfo extends LightningElement {
@@ -24,7 +26,7 @@ export default class Nsp_payRollInfo extends LightningElement {
   @track state = {
     isLoadingFirstTime: true,
   };
-
+  isDoubleClick = false;
   _objectInfo;
   @api get objectInfo() {
     return this._objectInfo;
@@ -73,12 +75,17 @@ export default class Nsp_payRollInfo extends LightningElement {
   }
 
   handleValueChange({ detail, target }) {
+    debugger;
     const fieldName = target.dataset.name;
     const { value } = detail;
 
     this.field[fieldName] = isMultiSelectCheckbox(target)
       ? value.join(';')
       : value;
+    if(this.isDoubleClick){
+      this.field[fieldName] = null;
+      this.isDoubleClick = false;
+    }
     this.updateDependentFieldVisibility(fieldName, value);
     this.addStyleToAnsweredQuestion(target, value);
   }
@@ -121,7 +128,6 @@ export default class Nsp_payRollInfo extends LightningElement {
     const fieldName = target.dataset.name;
     const elm = this.getCustomLabelElm(fieldName) || target;
     const isValuePresent = Array.isArray(value) ? !!value.length : !!value;
-
     if (elm) {
       if (isSelectionBox(target)) {
         elm.className = isValuePresent ? ANSWERED_CLASS_NAME : null;
@@ -132,7 +138,20 @@ export default class Nsp_payRollInfo extends LightningElement {
           elm.classList.remove(ANSWERED_CLASS_NAME);
         }
       }
+      const className = this.getLabelClassName(fieldName, value);
+
+      elm.classList.remove(ANSWERED_CLASS_NAME);
+      elm.classList.remove(RL_CLASS_NAME);
+      if (isValuePresent) {
+          elm.classList.add(className);
+      }
     }
+  }
+  getLabelClassName(fieldName, value) {
+    return RL_FIELDS.includes(fieldName) &&
+      RL_FIELD_ACCEPTED_VALUES.includes(value)
+      ? RL_CLASS_NAME
+      : ANSWERED_CLASS_NAME;
   }
 
   getCustomLabelElm(fieldName) {
@@ -174,5 +193,9 @@ export default class Nsp_payRollInfo extends LightningElement {
 
   get label() {
     return LABELS;
+  }
+  handleDoubleClick({ detail, target }){
+    this.isDoubleClick = true;
+    this.handleValueChange({ detail: detail, target: target });
   }
 }

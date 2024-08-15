@@ -1,7 +1,7 @@
 import { LightningElement, api, track } from 'lwc';
 import IP_OBJECT from '@salesforce/schema/Implementation_Profile__c';
 import IP_EMP_DATA_OBJECT from '@salesforce/schema/NSP_Employee_Data__c';
-import { EMP_TABLE_FIELDS, SECTION_FIELDS } from './fields';
+import { EMP_TABLE_FIELDS, SECTION_FIELDS,RL_FIELDS } from './fields';
 import { DYNAMIC_FIELDS } from './dynamicFieldsConfig';
 import { LABEL } from './constants';
 import * as LABELS from 'c/nsp_implementationLabels';
@@ -11,7 +11,9 @@ import {
   isMultiSelectCheckbox,
   isSelectionBox,
   ANSWERED_CLASS_NAME,
-  isNonEmptyArray
+  isNonEmptyArray,
+  RL_CLASS_NAME,
+  RL_FIELD_ACCEPTED_VALUES
 } from 'c/nsp_utils';
 
 export default class Nsp_retirementServicesmm extends LightningElement {
@@ -25,6 +27,7 @@ export default class Nsp_retirementServicesmm extends LightningElement {
   @track field = {};
   @track visibility = {};
   @track styles = getFieldStylesByHierarchy(DYNAMIC_FIELDS);
+  isDoubleClick = false;
   @track state = {
     isLoadingFirstTime: true,
   };
@@ -69,6 +72,10 @@ export default class Nsp_retirementServicesmm extends LightningElement {
       this.field[fieldName] = isMultiSelectCheckbox(target)
         ? value.join(';')
         : value;
+      if(this.isDoubleClick){
+        this.field[fieldName] = null;
+        this.isDoubleClick = false;
+      }
       this.updateDependentFieldVisibility(fieldName, value);
       this.addStyleToAnsweredQuestion(target, value);
       this.removeValuesFromHiddenFields(fieldName, value);
@@ -105,6 +112,7 @@ export default class Nsp_retirementServicesmm extends LightningElement {
   addStyleToAnsweredQuestion(target, value) {
     const fieldName = target.dataset.name;
     const elm = this.getCustomLabelElm(fieldName) || target;
+    const isValuePresent = Array.isArray(value) ? !!value.length : !!value;
 
     if (elm) {
       if (isSelectionBox(target)) {
@@ -116,7 +124,20 @@ export default class Nsp_retirementServicesmm extends LightningElement {
           elm.classList.remove(ANSWERED_CLASS_NAME);
         }
       }
+      const className = this.getLabelClassName(fieldName, value);
+        elm.classList.remove(ANSWERED_CLASS_NAME);
+        elm.classList.remove(RL_CLASS_NAME);
+        if (isValuePresent) {
+            elm.classList.add(className);
+        }
     }
+  }
+
+  getLabelClassName(fieldName, value) {
+    return RL_FIELDS.includes(fieldName) &&
+      RL_FIELD_ACCEPTED_VALUES.includes(value)
+      ? RL_CLASS_NAME
+      : ANSWERED_CLASS_NAME;
   }
 
   getCustomLabelElm(fieldName) {
@@ -216,5 +237,9 @@ export default class Nsp_retirementServicesmm extends LightningElement {
 
   get checkIfIpisActive(){
     return this.userData?.Profile?.displayValue !== LABELS.SYSTEM_ADMIN && this.fieldValues && this.fieldValues?.NSP_Inactive__c?.value
+  }
+  handleDoubleClick({ detail, target }){
+    this.isDoubleClick = true;
+    this.handleValueChange({ detail: detail, target: target });
   }
 }

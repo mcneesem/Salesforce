@@ -2046,16 +2046,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Account.DNBoptimizer__DNB_D_U_N_S_Number__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Account.DNBoptimizer__DnBCompanyRecord__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Account.DOZISF__ZoomInfo_Enrich_Status__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -4291,11 +4281,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Contact.DNBoptimizer__DnBContactRecord__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Contact.DOZISF__ZoomInfo_Company_ID__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -5562,21 +5547,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Lead.Current_Medical_Carrier__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Lead.DNBoptimizer__DNB_D_U_N_S_Number__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Lead.DNBoptimizer__DnBCompanyRecord__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Lead.DNBoptimizer__DnBContactRecord__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -10258,6 +10228,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Order.Prevent_Asset_Updates__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Order.SBQQ__Contracted__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -10380,6 +10355,10 @@
         <editable>false</editable>
         <field>OrderItem.QuoteLineItemId</field>
         <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <field>OrderItem.Prevent_Asset_Updates__c</field>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -14120,6 +14099,11 @@
         <editable>false</editable>
         <field>SBQQ__QuoteLine__c.NSP_WX_Threshold_Pct_Approval__c</field>
         <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SBQQ__QuoteLine__c.Price_Update_Stable_Quantity__c</field>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>

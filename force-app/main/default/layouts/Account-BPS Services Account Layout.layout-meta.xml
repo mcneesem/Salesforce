@@ -106,6 +106,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>MidMarket_National_Account__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>NSP_Sales_Office__c</field>
             </layoutItems>
             <layoutItems>
@@ -503,6 +507,7 @@
         <fields>NSP_Category__c</fields>
         <fields>NSP_SubCategory__c</fields>
         <fields>CASES.STATUS</fields>
+        <fields>OWNER_NAME</fields>
         <fields>CASES.CREATED_DATE_DATE_ONLY</fields>
         <relatedList>RelatedCaseList</relatedList>
     </relatedLists>
@@ -511,8 +516,12 @@
         <excludeButtons>MassChangeOwner</excludeButtons>
         <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
-        <fields>pse__Start_Date__c</fields>
+        <fields>NSP_Account__c</fields>
         <fields>pse__Project_Status__c</fields>
+        <fields>pse__Start_Date__c</fields>
+        <fields>pse__End_Date__c</fields>
+        <fields>NSP_Owner__c</fields>
+        <fields>RECORDTYPE</fields>
         <relatedList>pse__Proj__c.pse__Account__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -786,6 +795,10 @@
         <fields>CORE.USERS.FULL_NAME</fields>
         <fields>TASK.WHAT_NAME</fields>
         <relatedList>RelatedHistoryList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>Onboarding_Profile__c.Account__c</relatedList>
     </relatedLists>
     <relatedObjects>ParentId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>

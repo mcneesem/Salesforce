@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Is_Contact_Selected__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>To be used in contact selection flow on voice call page</description>
+    <externalId>false</externalId>
+    <label>Is Contact Selected</label>
+    <type>Checkbox</type>
+</CustomField>

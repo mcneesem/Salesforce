@@ -3,7 +3,7 @@
     <fullName>NSP_Max_Days_Overdue__c</fullName>
     <description>Shows the maximum days overdue of pending invoices</description>
     <externalId>false</externalId>
-    <formula>TODAY() -  NSP_Max_Overdue_Invoice_Date__c</formula>
+    <formula>136</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Max Days Overdue</label>
     <precision>18</precision>

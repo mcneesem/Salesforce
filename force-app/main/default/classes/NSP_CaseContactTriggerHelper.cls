@@ -6,7 +6,7 @@
 
 */
 public class NSP_CaseContactTriggerHelper {
-    // test w/ NSP_CaseContactTriggerHelperTest (??%)
+    // test w/ NSP_CaseContactTriggerHelperTest (82%)
 
     private static final string NSP_CASE_TRIGGERHELPER = 'NSP_CaseContactTriggerHelper';
     /***********************************************************************************************
@@ -74,14 +74,22 @@ public class NSP_CaseContactTriggerHelper {
             for(Case cse : caseList){
                 cse.NSP_CorporateEmployeeEE__c = false;
             }
-            try{
-                List<Database.SaveResult> results = Database.update(caseList,false); 
-                NSP_ErrorLogHandler.logSaveResultsException(NSP_CASE_TRIGGERHELPER, 'updateCorporateEmployeecheckBox', results );
-            }catch (Exception ex) {
-                NSP_ErrorLogHandler.logSaveException(NSP_CASE_TRIGGERHELPER, 'updateCorporateEmployeecheckBox', ex.getMessage());
+            try {
+                List<Database.SaveResult> results = Database.update( caseList , false ); 
+                NSP_ErrorLogHandler.logResults(
+                    NSP_CaseContactTriggerHelper.class.getName() ,
+                    'updateCorporateEmployeecheckBox' ,
+                    results
+                );
+            } catch ( Exception e ) {
+                NSP_CaseContactTriggerHelper.handleException(
+                    e ,
+                    'updateCorporateEmployeecheckBox'
+                );
             }
         }
     }
+
     /***********************************************************************************************
 * MethodName: beforeUpdateDirector
 * Description : Iterates throught the list of new Case COntacts Records and passes the Case Ids and Case Contacts to other methods.
@@ -119,27 +127,55 @@ public class NSP_CaseContactTriggerHelper {
             updateContactonCase(caseConIdMap);
         } 
     }
-    
-    /***********************************************************************************************
-* MethodName: updateContactonCase
-* Description : If Case Contact Primary Checkbox is updated to true, then that contact will be mapped on the respective Case.
-* Params:       Map < Id,Id > caseConIdMap
-* ********************************************************************************************/
-    public void updateContactonCase(Map < Id,Id > caseConIdMap){
-        List<Case> caseToUpdateList = new List<Case>();
-        try{
-            for(Case cse : [SELECT Id, ContactId FROM Case WHERE Id IN: caseConIdMap.keySet()]){
-                cse.ContactId = caseConIdMap.get(cse.Id);
-                caseToUpdateList.add(cse);
-            }
 
-            if(!caseToUpdateList.isEmpty()){
-                Database.update(caseToUpdateList);
+    //
+    // MethodName: updateContactonCase
+    // Description : If Case Contact Primary Checkbox is updated to true, then that contact will be mapped on the respective Case.
+    // Params: caseConIdMap
+    //
+    private void updateContactonCase( Map<Id,Id> caseConIdMap ) {
+        if ( caseConIdMap != null ) {
+            try{
+                List<Case> caseToUpdateList = new List<Case>();
+                for ( Case cse : [
+                            SELECT Id , ContactId
+                            FROM Case
+                            WHERE ( Id IN :caseConIdMap.keySet() )
+                        ]
+                    )
+                {
+                    if ( caseConIdMap.containsKey( cse.Id ) ) {
+                        cse.ContactId = caseConIdMap.get( cse.Id );
+                        caseToUpdateList.add( cse );
+                    }
+                }
+                if ( !caseToUpdateList.isEmpty() ) {
+                    List<Database.SaveResult> results = Database.update( caseToUpdateList , False );
+                    NSP_ErrorLogHandler.logResults(
+                        NSP_CaseContactTriggerHelper.class.getName() ,
+                        'updateContactonCase' ,
+                        results
+                    );
+                }
+            } catch ( Exception e ) {
+                NSP_CaseContactTriggerHelper.handleException(
+                    e ,
+                    'updateContactonCase'
+                );
             }
-        }catch (Exception ex) {
-            NSP_ErrorLogHandler.logSaveException(NSP_CASE_TRIGGERHELPER, 'updateContactonCase', ex.getMessage());
         }
     }
+
+    private static void handleException( Exception e , String methodName ) {
+        if ( e != null ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_CaseContactTriggerHelper.class.getName() ,
+                methodName ,
+                e
+            );
+        }
+    }
+
     /***********************************************************************************************
 * MethodName: checkCaseContactIsPrimary
 * Description : Check the current IsPrimary checkbox on Case Contact Record if it matches the criteria mentioned in the story.
@@ -183,11 +219,14 @@ public class NSP_CaseContactTriggerHelper {
             if(!checkedcaseContactRecList.isEmpty()){
                 Database.update(checkedcaseContactRecList);
             }
-        }catch (Exception ex) {
-            NSP_ErrorLogHandler.logSaveException(NSP_CASE_TRIGGERHELPER, 'checkCaseContactIsPrimary', ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_CaseContactTriggerHelper.handleException(
+                e ,
+                'checkCaseContactIsPrimary'
+            );
         }
     }
-    
+
     /***********************************************************************************************
     * MethodName   : beforeDeleteDirector
     * Description  : Iterates throught the list of Case Contacts Records and displays error if it is primary WSEE on wizard

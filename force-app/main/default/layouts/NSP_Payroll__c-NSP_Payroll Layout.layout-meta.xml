@@ -60,6 +60,10 @@
                 <behavior>Edit</behavior>
                 <field>NSP_Primary_Payroll_Contact_Methods__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Primary_Payroll_Contact_Notes__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -73,6 +77,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>NSP_Primary_Payroll_Con_Located_Outside__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Primary_View_Payroll_Paperwork__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -103,6 +111,10 @@
                 <behavior>Edit</behavior>
                 <field>NSP_BackUpPayrollContactBest_Time_Of_Day__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Back_Up_Payroll_Contact_Notes__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -116,6 +128,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>NSP_BackUpPayroll_Contact_Contact_Method__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Back_Up_View_Payroll_Paperwork__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -145,6 +161,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>NSP_HR_Contact_Best_Time_Of_Day_to_Reach__c</field>
+        </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>HR_Contact_Notes_Txt__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -159,6 +179,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>NSP_HR_Contact_Methods__c</field>
+        </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>View_Payroll_Paperwork__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -189,6 +213,10 @@
                 <behavior>Edit</behavior>
                 <field>NSP_OnsiteSupervisor_Best_TimeOfDay_to_R__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>On_site_Supervisor_Notes_Txt__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -202,6 +230,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>NSP_Onsite_Super_Located_Outside_Unite__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>On_Site_View_Payroll_Paperwork__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>

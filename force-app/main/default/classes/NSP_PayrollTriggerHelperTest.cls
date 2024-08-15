@@ -42,7 +42,7 @@ public class NSP_PayrollTriggerHelperTest {
         insert scIns1 ;
         
         NSP_Sub_Client_Contact__c subClientCon = new NSP_Sub_Client_Contact__c();
-        subClientCon.NSP_Sub_Client__c = scIns.Id;
+        subClientCon.NSP_Sub_Client__c = scIns1.Id;
         subClientCon.NSP_Contact__c = con.Id;
         subClientCon.NSP_On_Site_Supervisor__c = true;
         subClientCon.NSP_Payroll_Contact__c = true;
@@ -117,7 +117,7 @@ public class NSP_PayrollTriggerHelperTest {
         
         List<Id> payrollIds = new List<Id>();
         List<NSP_Sub_Client__c> subClientDetails = [SELECT Id FROM NSP_Sub_Client__c WHERE Id != null];
-        List<NSP_Payroll__c> payrollDetails = [SELECT Id FROM NSP_Payroll__c WHERE Id != null];
+        List<NSP_Payroll__c> payrollDetails = [SELECT Id FROM NSP_Payroll__c WHERE Id = :pdsIns.Id];
         payrollIds.Add(payrollDetails[0].Id);
         try {
             NSP_PayrollTriggerHelper.deepCloneRec(payrollDetails[0].Id,subClientDetails[0].Id);

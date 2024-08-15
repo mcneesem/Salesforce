@@ -4,8 +4,8 @@
     <assignments>
         <name>Add_Contact_Id_in_Collection</name>
         <label>Add Contact Id in Collection</label>
-        <locationX>264</locationX>
-        <locationY>758</locationY>
+        <locationX>1183</locationX>
+        <locationY>890</locationY>
         <assignmentItems>
             <assignToReference>existingCaseContacts</assignToReference>
             <operator>Add</operator>
@@ -20,8 +20,8 @@
     <assignments>
         <name>Add_one_more_record</name>
         <label>Add one more record</label>
-        <locationX>1144</locationX>
-        <locationY>2942</locationY>
+        <locationX>2173</locationX>
+        <locationY>3038</locationY>
         <assignmentItems>
             <assignToReference>values</assignToReference>
             <operator>Add</operator>
@@ -36,7 +36,7 @@
     <assignments>
         <name>addCaseContactToList</name>
         <label>addCaseContactToList</label>
-        <locationX>1408</locationX>
+        <locationX>2591</locationX>
         <locationY>2054</locationY>
         <assignmentItems>
             <assignToReference>caseContactList</assignToReference>
@@ -52,8 +52,8 @@
     <assignments>
         <name>assignCaseContact</name>
         <label>assignCaseContact</label>
-        <locationX>1276</locationX>
-        <locationY>1814</locationY>
+        <locationX>2305</locationX>
+        <locationY>1838</locationY>
         <assignmentItems>
             <assignToReference>varCaseContact.NSP_Case__c</assignToReference>
             <operator>Assign</operator>
@@ -103,8 +103,8 @@
     <assignments>
         <name>AssignValues</name>
         <label>AssignValues</label>
-        <locationX>176</locationX>
-        <locationY>158</locationY>
+        <locationX>1431</locationX>
+        <locationY>134</locationY>
         <assignmentItems>
             <assignToReference>values</assignToReference>
             <operator>Add</operator>
@@ -119,8 +119,8 @@
     <assignments>
         <name>Copy_1_of_addCaseContactToList</name>
         <label>Copy 1 of addCaseContactToList</label>
-        <locationX>1144</locationX>
-        <locationY>2606</locationY>
+        <locationX>2327</locationX>
+        <locationY>2654</locationY>
         <assignmentItems>
             <assignToReference>caseContactList</assignToReference>
             <operator>Add</operator>
@@ -135,8 +135,8 @@
     <assignments>
         <name>Copy_1_of_populateErrorMessage</name>
         <label>Copy 1 of populateErrorMessage</label>
-        <locationX>264</locationX>
-        <locationY>1454</locationY>
+        <locationX>1183</locationX>
+        <locationY>1514</locationY>
         <assignmentItems>
             <assignToReference>errorMessage</assignToReference>
             <operator>Assign</operator>
@@ -152,8 +152,8 @@
     <assignments>
         <name>ErrorMessageForSeparationWizardCases</name>
         <label>ErrorMessageForSeparationWizardCases</label>
-        <locationX>792</locationX>
-        <locationY>1946</locationY>
+        <locationX>1711</locationX>
+        <locationY>2162</locationY>
         <assignmentItems>
             <assignToReference>errorMessage</assignToReference>
             <operator>Assign</operator>
@@ -168,8 +168,8 @@
     <assignments>
         <name>getAccountRecId</name>
         <label>getAccountRecId</label>
-        <locationX>176</locationX>
-        <locationY>398</locationY>
+        <locationX>1095</locationX>
+        <locationY>566</locationY>
         <assignmentItems>
             <assignToReference>caseAccRecId</assignToReference>
             <operator>Assign</operator>
@@ -184,8 +184,8 @@
     <assignments>
         <name>populateErrorMessage</name>
         <label>populateErrorMessage</label>
-        <locationX>528</locationX>
-        <locationY>1814</locationY>
+        <locationX>1447</locationX>
+        <locationY>1838</locationY>
         <assignmentItems>
             <assignToReference>errorMessage</assignToReference>
             <operator>Assign</operator>
@@ -201,8 +201,8 @@
     <assignments>
         <name>Remove_Contact_Id</name>
         <label>Remove Contact Id</label>
-        <locationX>792</locationX>
-        <locationY>2054</locationY>
+        <locationX>1711</locationX>
+        <locationY>2270</locationY>
         <assignmentItems>
             <assignToReference>currentFlowContactIds</assignToReference>
             <operator>RemoveFirst</operator>
@@ -218,8 +218,8 @@
     <assignments>
         <name>removeErrorMessage</name>
         <label>removeErrorMessage</label>
-        <locationX>902</locationX>
-        <locationY>1454</locationY>
+        <locationX>1876</locationX>
+        <locationY>1514</locationY>
         <assignmentItems>
             <assignToReference>errorMessage</assignToReference>
             <operator>Assign</operator>
@@ -234,8 +234,8 @@
     <assignments>
         <name>removePrimaryCheckbox</name>
         <label>removePrimaryCheckbox</label>
-        <locationX>1232</locationX>
-        <locationY>2294</locationY>
+        <locationX>2415</locationX>
+        <locationY>2378</locationY>
         <assignmentItems>
             <assignToReference>caseContactList</assignToReference>
             <operator>RemoveFirst</operator>
@@ -278,8 +278,8 @@
     <decisions>
         <name>alreadySelectedContactsIsPrimary</name>
         <label>alreadySelectedContactsIsPrimary</label>
-        <locationX>1364</locationX>
-        <locationY>2174</locationY>
+        <locationX>2547</locationX>
+        <locationY>2270</locationY>
         <defaultConnector>
             <targetReference>LoopAlreadyContacts</targetReference>
         </defaultConnector>
@@ -301,10 +301,75 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Check_Category_Sub_Category</name>
+        <label>Check Category Sub Category</label>
+        <locationX>572</locationX>
+        <locationY>458</locationY>
+        <defaultConnector>
+            <targetReference>getAccountRecId</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>are_Blank</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>getCaserecord.NSP_Category__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>getCaserecord.NSP_SubCategory__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>getCaserecord.NSP_Category__c</leftValueReference>
+                <operator>EqualTo</operator>
+            </conditions>
+            <conditions>
+                <leftValueReference>getCaserecord.NSP_SubCategory__c</leftValueReference>
+                <operator>EqualTo</operator>
+            </conditions>
+            <connector>
+                <targetReference>Category_Sub_Category_Blank</targetReference>
+            </connector>
+            <label>are Blank</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_for_Case</name>
+        <label>Check for Case</label>
+        <locationX>1431</locationX>
+        <locationY>350</locationY>
+        <defaultConnector>
+            <targetReference>Case_Not_Found</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Case_is_not_null</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>getCaserecord</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Check_Category_Sub_Category</targetReference>
+            </connector>
+            <label>Case is not null</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Check_For_Separation_Agreement_Cases</name>
         <label>Check For Separation Agreement Cases</label>
-        <locationX>1100</locationX>
-        <locationY>1838</locationY>
+        <locationX>2019</locationX>
+        <locationY>2054</locationY>
         <defaultConnector>
             <targetReference>LoopAlreadyContacts</targetReference>
         </defaultConnector>
@@ -335,8 +400,8 @@
     <decisions>
         <name>checkForDuplicateContacts</name>
         <label>checkForDuplicateContacts</label>
-        <locationX>902</locationX>
-        <locationY>1694</locationY>
+        <locationX>1876</locationX>
+        <locationY>1730</locationY>
         <defaultConnector>
             <targetReference>assignCaseContact</targetReference>
         </defaultConnector>
@@ -367,8 +432,8 @@
     <decisions>
         <name>checkIsPrimaryCheckBoxChecked</name>
         <label>checkIsPrimaryCheckBoxChecked</label>
-        <locationX>1276</locationX>
-        <locationY>1934</locationY>
+        <locationX>2305</locationX>
+        <locationY>1946</locationY>
         <defaultConnector>
             <targetReference>addCaseContactToList</targetReference>
         </defaultConnector>
@@ -392,8 +457,8 @@
     <decisions>
         <name>Is_Add_More_Button_Clicked</name>
         <label>Is Add More Button Clicked</label>
-        <locationX>1276</locationX>
-        <locationY>2822</locationY>
+        <locationX>2305</locationX>
+        <locationY>2930</locationY>
         <defaultConnector>
             <targetReference>IterateValues</targetReference>
         </defaultConnector>
@@ -417,8 +482,8 @@
     <decisions>
         <name>isContactSelected</name>
         <label>isContactSelected</label>
-        <locationX>583</locationX>
-        <locationY>1334</locationY>
+        <locationX>1529</locationX>
+        <locationY>1406</locationY>
         <defaultConnector>
             <targetReference>removeErrorMessage</targetReference>
         </defaultConnector>
@@ -452,8 +517,8 @@
     <loops>
         <name>Extract_Contact_Ids</name>
         <label>Extract Contact Ids</label>
-        <locationX>176</locationX>
-        <locationY>638</locationY>
+        <locationX>1095</locationX>
+        <locationY>782</locationY>
         <collectionReference>getExistingCaseContacts</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -466,8 +531,8 @@
     <loops>
         <name>IterateValues</name>
         <label>IterateValues</label>
-        <locationX>176</locationX>
-        <locationY>1094</locationY>
+        <locationX>1095</locationX>
+        <locationY>1190</locationY>
         <collectionReference>values</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -480,8 +545,8 @@
     <loops>
         <name>LoopAlreadyContacts</name>
         <label>LoopAlreadyContacts</label>
-        <locationX>1144</locationX>
-        <locationY>2054</locationY>
+        <locationX>2327</locationX>
+        <locationY>2162</locationY>
         <collectionReference>caseContactList</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -513,19 +578,22 @@
     <recordCreates>
         <name>Create_Case_Contacts</name>
         <label>Create Case Contacts</label>
-        <locationX>176</locationX>
-        <locationY>3446</locationY>
+        <locationX>1095</locationX>
+        <locationY>3482</locationY>
+        <faultConnector>
+            <targetReference>handle_flow_fault</targetReference>
+        </faultConnector>
         <inputReference>caseContactList</inputReference>
     </recordCreates>
     <recordLookups>
         <description>Used to get the Contact Details details on Case</description>
         <name>getCaserecord</name>
         <label>getCaserecord</label>
-        <locationX>176</locationX>
-        <locationY>278</locationY>
+        <locationX>1431</locationX>
+        <locationY>242</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>getAccountRecId</targetReference>
+            <targetReference>Check_for_Case</targetReference>
         </connector>
         <filterLogic>or</filterLogic>
         <filters>
@@ -547,8 +615,8 @@
     <recordLookups>
         <name>getContactRecordFromCase</name>
         <label>getContactRecordFromCase</label>
-        <locationX>176</locationX>
-        <locationY>974</locationY>
+        <locationX>1095</locationX>
+        <locationY>1082</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>IterateValues</targetReference>
@@ -568,8 +636,8 @@
     <recordLookups>
         <name>getExistingCaseContacts</name>
         <label>getExistingCaseContacts</label>
-        <locationX>176</locationX>
-        <locationY>518</locationY>
+        <locationX>1095</locationX>
+        <locationY>674</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Extract_Contact_Ids</targetReference>
@@ -591,8 +659,8 @@
     <recordLookups>
         <name>getSelectedContactRecordValues</name>
         <label>getSelectedContactRecordValues</label>
-        <locationX>902</locationX>
-        <locationY>1574</locationY>
+        <locationX>1876</locationX>
+        <locationY>1622</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>checkForDuplicateContacts</targetReference>
@@ -610,10 +678,43 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <screens>
+        <description>Case Not Found!</description>
+        <name>Case_Not_Found</name>
+        <label>Case Not Found</label>
+        <locationX>2290</locationX>
+        <locationY>458</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>MissingCase</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;color: rgb(247, 4, 28); font-size: 16px;&quot;&gt;Case Not Found!&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Category_Sub_Category_Blank</name>
+        <label>Category Sub Category Blank</label>
+        <locationX>50</locationX>
+        <locationY>566</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>BlankMessage</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 16px; color: rgb(247, 4, 28);&quot;&gt;Category or subcategory is/are blank&lt;span class=&quot;ql-cursor&quot;&gt;﻿&lt;/span&gt;&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
         <name>New_Contact_Screen</name>
         <label>New Contact Screen</label>
-        <locationX>583</locationX>
-        <locationY>1214</locationY>
+        <locationX>1529</locationX>
+        <locationY>1298</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -749,13 +850,32 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>50</locationX>
+        <locationX>1305</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>AssignValues</targetReference>
         </connector>
     </start>
     <status>Draft</status>
+    <subflows>
+        <name>handle_flow_fault</name>
+        <label>handle flow fault</label>
+        <locationX>2026</locationX>
+        <locationY>3590</locationY>
+        <flowName>Insperity_Fault_Handler_Subflow</flowName>
+        <inputAssignments>
+            <name>faultMessage</name>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultFlow</name>
+            <value>
+                <stringValue>NSP_Add_Multiple_Contacts_On_Case</stringValue>
+            </value>
+        </inputAssignments>
+    </subflows>
     <variables>
         <name>AddMore</name>
         <dataType>Boolean</dataType>
@@ -806,7 +926,7 @@
         <isInput>false</isInput>
         <isOutput>false</isOutput>
     </variables>
-        <variables>
+    <variables>
         <name>errorMessage</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>

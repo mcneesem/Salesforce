@@ -182,6 +182,10 @@
                 <behavior>Readonly</behavior>
                 <field>NSP_Government_Contractor__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Equity_Processing_Approved__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>

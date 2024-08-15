@@ -2,6 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_Work_Week__c</fullName>
     <externalId>false</externalId>
+    <inlineHelpText>Work Week for TED clients is set in AIMS and integrated to Salesforce. Although you can edit this field in Salesforce, any updates will not write back to AIMS and will be overwritten by the nightly update. Work Week information for Non-TED clients will not be overwritten as this data is not captured in AIMS.</inlineHelpText>
     <label>Work Week</label>
     <required>false</required>
     <trackHistory>true</trackHistory>

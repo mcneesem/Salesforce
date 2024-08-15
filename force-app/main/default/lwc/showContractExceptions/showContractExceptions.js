@@ -1,10 +1,13 @@
 import { LightningElement, api, track, wire } from 'lwc';
 import getExceptionList from '@salesforce/apex/NSP_ShowContractExceptionsController.getExceptionList';
+import getURLTarget from '@salesforce/apex/NSP_ShowContractExceptionsController.getTargetURL';
 
 export default class ShowContractExceptions extends LightningElement {
     @api accountId;
     @api contactId;
     @api recordId;
+    @track urlTarget = '_blank'; 
+
     contact;
     exceptions = [];
     showContractModal = false;
@@ -16,8 +19,7 @@ export default class ShowContractExceptions extends LightningElement {
             label: 'Exception #',
             fieldName: 'nameUrl',
             type: 'url',
-            typeAttributes: {label: { fieldName: 'Name' }, 
-            target: '_blank'},
+            typeAttributes: {label: { fieldName: 'Name' }, target: this.urlTarget},
             sortable: true
         },
         {
@@ -46,8 +48,7 @@ export default class ShowContractExceptions extends LightningElement {
             label: 'Exception #',
             fieldName: 'nameUrl',
             type: 'url',
-            typeAttributes: {label: { fieldName: 'Name' }, 
-            target: '_blank'},
+            typeAttributes: {label: { fieldName: 'Name' }, target: this.urlTarget},
             sortable: true
         },
         {
@@ -109,6 +110,20 @@ export default class ShowContractExceptions extends LightningElement {
     ];
 
     connectedCallback(){
+        this.fetchURLTarget();
+    }
+
+    fetchURLTarget() {
+        getURLTarget()
+            .then(result => {
+                this.urlTarget = result || '_blank'; // Default to '_blank' if no result
+            })
+            .catch(error => {
+                this.urlTarget = '_blank'; // Fallback to '_blank' on error
+            })
+            .finally(() => {
+                this.updateColumnAttributes(); 
+            });
     }
 
     @wire(getExceptionList,  {  contactId: '$contactId' })
@@ -145,6 +160,29 @@ export default class ShowContractExceptions extends LightningElement {
             }
         }
     }
+
+    updateColumnAttributes() {
+        this.mainPagecolumns = this.mainPagecolumns.map(column => {
+            if (column.fieldName === 'nameUrl') {
+                return {
+                    ...column,
+                    typeAttributes: { label: { fieldName: 'Name' }, target: this.urlTarget }
+                };
+            }
+            return column;
+        });
+
+        this.columns = this.columns.map(column => {
+            if (column.fieldName === 'nameUrl') {
+                return {
+                    ...column,
+                    typeAttributes: { label: { fieldName: 'Name' }, target: this.urlTarget }
+                };
+            }
+            return column;
+        });
+    }
+
     closeModal(){
         this.showContractModal = false;
         

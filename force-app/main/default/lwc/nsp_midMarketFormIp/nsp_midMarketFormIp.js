@@ -77,6 +77,7 @@ export default class NSP_MidMarketFormIp extends NavigationMixin(
   disabledFields = {};
   relatedRecords = {};
   @track ipAutomationTable = [];
+  copySectionChanged = false;
 
   connectedCallback() {
     this.disableFieldsIfIpInActive();
@@ -205,6 +206,7 @@ export default class NSP_MidMarketFormIp extends NavigationMixin(
 
   handleCopySectionChange({ detail }) {
     this.state.selectedSections = detail.value;
+    this.copySectionChanged = true;
   }
 
   generateCopyRequest(records) {
@@ -223,6 +225,7 @@ export default class NSP_MidMarketFormIp extends NavigationMixin(
       sourceId: recordId,
       recType: 'MM',
       userEmail: userData?.Email?.value,
+      relatedObjnames: JSON.stringify(fieldValues.relatedObjects),
       postUpsertRecords: JSON.stringify(fieldValues.postUpsertRecords),
     };
 
@@ -301,7 +304,7 @@ export default class NSP_MidMarketFormIp extends NavigationMixin(
           ...sectionFields,
         };
       },
-      { postUpsertRecords: [] }
+      { postUpsertRecords: [], relatedObjects: [] }
     );
 
     NON_COPY_ABLE_FIELDS.forEach((fieldName) => {
@@ -312,10 +315,12 @@ export default class NSP_MidMarketFormIp extends NavigationMixin(
   }
 
   sanitizePostUpsertRecords(sectionPostUpsertRecs, fieldValues, targetRecordIds) {
+    const uniqueRelatedObjSet = new Set();
     Object.keys(sectionPostUpsertRecs)
       .filter((objName) => COPY_ABLE_IP_CHILD_OBJECTS.includes(objName))
       .forEach((objName) => {
         const objWiseChildRecs = sectionPostUpsertRecs[objName];
+        uniqueRelatedObjSet.add(objName);
         fieldValues.postUpsertRecords = [
           ...fieldValues.postUpsertRecords,
           ...this.getChildRecordsForAllTargetIpRecords(
@@ -325,6 +330,8 @@ export default class NSP_MidMarketFormIp extends NavigationMixin(
           ),
         ];
       });
+      // Storing a list of IP's related object names
+      fieldValues.relatedObjects = [...fieldValues.relatedObjects,...uniqueRelatedObjSet];
   }
 
   saveForm() {
@@ -745,7 +752,7 @@ export default class NSP_MidMarketFormIp extends NavigationMixin(
   get selectedCopySections() {
     const { state, fieldValues } = this;
 
-    if (isNonEmptyArray(state.selectedSections)) {
+    if (isNonEmptyArray(state.selectedSections) || this.copySectionChanged) {
       return state.selectedSections;
     }
 

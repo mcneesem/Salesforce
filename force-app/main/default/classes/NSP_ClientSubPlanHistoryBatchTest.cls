@@ -1,30 +1,23 @@
-/**
-Apex Class Name      :  NSP_ClientSubPlanHistoryBatchTest for NSP_ClientSubPlanHistoryBatch
-Version              :  1.0                                                                          
-Created Date         :  11/04/2022   
-Function             :  Test class for NSP_ClientSubPlanHistoryBatch 
-Story                :                                                                      
-Modification Log     :                                                                              
-*--------------------------------------------------------------------------------------------------  
-* Developer                   Date                   Description                                    
-* -------------------------------------------------------------------------------------------------  
-* Srushti                     11/04/2022            First Iteration
-*/
-
+// 2022-11-04 ~ STY-03665 ~ Srushti ~ NSP_ClientSubPlanHistoryBatchTest for NSP_ClientSubPlanHistoryBatch
 @isTest
 private class NSP_ClientSubPlanHistoryBatchTest {
     private static final Id CHOICECLIENTSUBPLANRECORDTYPEID = NSP_GenericRecordType.getRecordTypeId('NSP_Client_Sub_Plan_History__c', 'Choice');
-	private static final Id RETCHOICEASSETRECORDTYPE = NSP_GenericRecordType.getRecordTypeId('Asset', 'RET_Choice');
+    private static final Id RETCHOICEASSETRECORDTYPE = NSP_GenericRecordType.getRecordTypeId('Asset', 'RET_Choice');
     private static final Id RETWOASSETRECORDTYPE = NSP_GenericRecordType.getRecordTypeId('Asset', 'RET_WO');
-	
+
     /***********************************************************************************************
     * MethodName: setUpTestData
     * Description : Test Data Method
     * ********************************************************************************************/
-	@testSetUp
-    private static void setUpTestData(){
+    @testSetUp private static void setUpTestData(){
+        ClientSubPlanHistoryBatchSettings__c settings = ClientSubPlanHistoryBatchSettings__c.getOrgDefaults();
+        settings.IsEnabled__c = True;
+        settings.BatchSize__c = 200;
+        settings.SkewedAssetOwnerIds__c = 'INVALIDID';
+        upsert settings;
+
         Id choicePlanSubPlanRecordTypeId = NSP_GenericRecordType.getRecordTypeId('NSP_Plan_SubPlan__c', 'Choice');
-    	Id choicePlanRecordTypeId = NSP_GenericRecordType.getRecordTypeId('NSP_Plan__c', 'Choice');
+        Id choicePlanRecordTypeId = NSP_GenericRecordType.getRecordTypeId('NSP_Plan__c', 'Choice');
         
         //Create a new Asset Record
         Asset newAsset = (Asset)NSP_TestExtendedDataFactory.createSObject(new Asset(), 'NSP_TestDataFactory.AssetDefaults', false);
@@ -55,10 +48,10 @@ private class NSP_ClientSubPlanHistoryBatchTest {
         Database.insert(planSubPlanRec);
                 
         //Create Client Sub Plan History Records and link it to Asset and Plan Sub Plan
-		List<NSP_Client_Sub_Plan_History__c> clientSubPlanHistoryList = new List<NSP_Client_Sub_Plan_History__c>();
+        List<NSP_Client_Sub_Plan_History__c> clientSubPlanHistoryList = new List<NSP_Client_Sub_Plan_History__c>();
         NSP_Client_Sub_Plan_History__c clientSubPlanHistRec = (NSP_Client_Sub_Plan_History__c)NSP_TestExtendedDataFactory.createSObject(new NSP_Client_Sub_Plan_History__c(), 'NSP_TestDataFactory.clientSubPlanHistoryDefaults', false);
         clientSubPlanHistRec.RecordTypeId = CHOICECLIENTSUBPLANRECORDTYPEID;
-		clientSubPlanHistRec.NSP_Asset__c = newAsset.Id;
+        clientSubPlanHistRec.NSP_Asset__c = newAsset.Id;
         clientSubPlanHistRec.NSP_End_Date__c = System.today();
         clientSubPlanHistRec.NSP_Start_Date__c = System.today().addDays(+1);
         clientSubPlanHistRec.NSP_Plan_Subplan_Relationship__c = planSubPlanRec.Id;
@@ -66,7 +59,7 @@ private class NSP_ClientSubPlanHistoryBatchTest {
 
         NSP_Client_Sub_Plan_History__c clientSubPlanHistRec1 = (NSP_Client_Sub_Plan_History__c)NSP_TestExtendedDataFactory.createSObject(new NSP_Client_Sub_Plan_History__c(), 'NSP_TestDataFactory.clientSubPlanHistoryDefaults', false);
         clientSubPlanHistRec1.RecordTypeId = CHOICECLIENTSUBPLANRECORDTYPEID;
-		clientSubPlanHistRec1.NSP_Asset__c = newAsset.Id;
+        clientSubPlanHistRec1.NSP_Asset__c = newAsset.Id;
         clientSubPlanHistRec1.NSP_End_Date__c = System.today();
         clientSubPlanHistRec1.NSP_Start_Date__c = System.today().addDays(+1);
         clientSubPlanHistRec1.NSP_Plan_Subplan_Relationship__c = planSubPlanRec.Id;
@@ -74,7 +67,7 @@ private class NSP_ClientSubPlanHistoryBatchTest {
         
         NSP_Client_Sub_Plan_History__c clientSubPlanHistRec2 = (NSP_Client_Sub_Plan_History__c)NSP_TestExtendedDataFactory.createSObject(new NSP_Client_Sub_Plan_History__c(), 'NSP_TestDataFactory.clientSubPlanHistoryDefaults', false);
         clientSubPlanHistRec2.RecordTypeId = CHOICECLIENTSUBPLANRECORDTYPEID;
-		clientSubPlanHistRec2.NSP_Asset__c = newAsset1.Id;
+        clientSubPlanHistRec2.NSP_Asset__c = newAsset1.Id;
         clientSubPlanHistRec2.NSP_End_Date__c = NULL;
         clientSubPlanHistRec2.NSP_Start_Date__c = System.today().addDays(+1);
         clientSubPlanHistRec2.NSP_Plan_Subplan_Relationship__c = planSubPlanRec.Id;
@@ -82,7 +75,13 @@ private class NSP_ClientSubPlanHistoryBatchTest {
 
         Database.insert(clientSubPlanHistoryList);
     }
-    
+
+    @isTest private static void testSchedule() {
+        Test.startTest();
+        NSP_ClientSubPlanHistoryBatch.schedule();
+        Test.stopTest();
+    }
+
     /***********************************************************************************************
     * MethodName: updateFieldsOnAssetRecord
     * Description : Test method to check if asset status is updated

@@ -1,4 +1,11 @@
-const RL_FIELDS = ['sample_new_empl_info_packet_collected__c'];
+const RL_FIELDS = [
+  'sample_new_empl_info_packet_collected__c',
+  'Client_have_any_urgent_HR_needs__c',
+  'Exemption_status_of_all_empl_explained__c',
+  'Are_there_any_DOL_audits__c',
+  'Does_client_perform_background_checks__c',
+  'Client_does_pre_employment_drug_screen__c'
+];
 
 const SECTION_FIELDS = [
   'Client_have_any_urgent_HR_needs__c',

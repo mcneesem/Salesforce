@@ -3,6 +3,17 @@
     <custom>true</custom>
     <description>A modified version of the Sysem Administrator Profile that removes various Permissions for compliance purposes.</description>
     <layoutAssignments>
+        <layout>Campaign-Campaign Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Campaign-Marketing Campaign Layout</layout>
+        <recordType>Campaign.Marketing_Record_Type</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Campaign-Campaign Layout</layout>
+        <recordType>Campaign.Sales_Record_Type</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>AccountContactRelation-Admin Support Layout</layout>
     </layoutAssignments>
     <layoutAssignments>

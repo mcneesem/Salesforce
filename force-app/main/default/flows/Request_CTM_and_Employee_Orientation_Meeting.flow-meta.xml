@@ -4,8 +4,8 @@
     <assignments>
         <name>Add_CTM_Tasks</name>
         <label>Add CTM Tasks</label>
-        <locationX>1128</locationX>
-        <locationY>1598</locationY>
+        <locationX>864</locationX>
+        <locationY>782</locationY>
         <assignmentItems>
             <assignToReference>rc_tasks</assignToReference>
             <operator>Add</operator>
@@ -20,8 +20,8 @@
     <assignments>
         <name>Add_OT_Tasks</name>
         <label>Add OT Tasks</label>
-        <locationX>1546</locationX>
-        <locationY>2030</locationY>
+        <locationX>1282</locationX>
+        <locationY>1214</locationY>
         <assignmentItems>
             <assignToReference>rc_tasks</assignToReference>
             <operator>Add</operator>
@@ -31,6 +31,99 @@
         </assignmentItems>
         <connector>
             <targetReference>Create_Task_Records</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_Input</name>
+        <label>Assign Input</label>
+        <locationX>319</locationX>
+        <locationY>242</locationY>
+        <assignmentItems>
+            <assignToReference>vbidversion</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Request_Onboarding_Process_Opportunity_STP_Info.vbidversion</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>veecount</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Request_Onboarding_Process_Opportunity_STP_Info.veecount</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>vfirst_pay_period</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Request_Onboarding_Process_Opportunity_STP_Info.vfirst_pay_period</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>vmedical_plan</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Request_Onboarding_Process_Opportunity_STP_Info.vmedical_plan</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>vmedicaleffectivedate</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Request_Onboarding_Process_Opportunity_STP_Info.vmedicaleffectivedate</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>vnspeffectivedate</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Request_Onboarding_Process_Opportunity_STP_Info.vnspeffectivedate</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>AccountName</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Request_Onboarding_Process_Opportunity_STP_Info.AccountName</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Account_Sales_Office</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Request_Onboarding_Process_Opportunity_STP_Info.Account_Sales_Office</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>AIMSClientNum</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Request_Onboarding_Process_Opportunity_STP_Info.AIMSClientNum</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>recordId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Request_Onboarding_Process_Opportunity_STP_Info.recordId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>vfirstpaydate</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Request_Onboarding_Process_Opportunity_STP_Info.vfirstpaydate</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>vpayfrequency</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Request_Onboarding_Process_Opportunity_STP_Info.vpayfrequency</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Account_or_Asset_Exist</targetReference>
         </connector>
     </assignments>
     <choices>
@@ -78,54 +171,39 @@
         </value>
     </constants>
     <decisions>
-        <name>Account_Exist</name>
-        <label>Account Exist?</label>
-        <locationX>385</locationX>
-        <locationY>242</locationY>
+        <name>Account_or_Asset_Exist</name>
+        <label>Account or Asset Exist?</label>
+        <locationX>319</locationX>
+        <locationY>350</locationY>
         <defaultConnector>
-            <targetReference>Retrieve_Related_Asset</targetReference>
+            <targetReference>Get_Related_Discovery_SKO_Task</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Yes-Default Outcome</defaultConnectorLabel>
         <rules>
             <name>account_not_exist</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Retrieve_triggering_account_record.Id</leftValueReference>
+                <leftValueReference>Request_Onboarding_Process_Opportunity_STP_Info.Error_Message</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
-                    <booleanValue>true</booleanValue>
+                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Error_Account_Not_Found</targetReference>
+                <targetReference>Error_Screen1</targetReference>
             </connector>
             <label>No</label>
         </rules>
     </decisions>
     <decisions>
-        <name>Active_WO_Asset</name>
-        <label>Active WO Asset</label>
-        <locationX>721</locationX>
+        <name>CTM_Already_Exist</name>
+        <label>CTM Already Exist?</label>
+        <locationX>589</locationX>
         <locationY>566</locationY>
         <defaultConnector>
-            <targetReference>Retrieve_Most_Recent_Open_Opportunity</targetReference>
+            <targetReference>Request_Client_Transition_Meeting_Subflow</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>No_Active_WO_Asset</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Retrieve_Related_Asset</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>ErrorMessage1</targetReference>
-            </connector>
-            <label>No Active WO Asset</label>
-        </rules>
         <rules>
             <name>OMR_Task_Already_Exist</name>
             <conditionLogic>and</conditionLogic>
@@ -143,60 +221,10 @@
         </rules>
     </decisions>
     <decisions>
-        <name>Closed_Won_Opportunity_Exist</name>
-        <label>Closed Won Opportunity Exist</label>
-        <locationX>1128</locationX>
-        <locationY>1190</locationY>
-        <defaultConnector>
-            <targetReference>Retrieve_Closed_Won_Opportunity_Checklist</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Yes-Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>No_Closed_Won_Opportunity</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Retrieve_Most_Recent_Closed_Won_Opportunity</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Request_Client_Transition_Meeting_Subflow</targetReference>
-            </connector>
-            <label>No</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Open_Opportunity_Exist</name>
-        <label>Open Opportunity Exist?</label>
-        <locationX>1128</locationX>
-        <locationY>782</locationY>
-        <defaultConnector>
-            <targetReference>Retrieve_Checklist_from_Open_Opportunity</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Yes-Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>No_Open_Opportunity</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Retrieve_Most_Recent_Open_Opportunity</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Retrieve_Most_Recent_Closed_Won_Opportunity</targetReference>
-            </connector>
-            <label>No</label>
-        </rules>
-    </decisions>
-    <decisions>
         <name>OT_Tasks_Sub_flow_Success</name>
         <label>OT Tasks Sub flow Success?</label>
-        <locationX>1414</locationX>
-        <locationY>1922</locationY>
+        <locationX>1150</locationX>
+        <locationY>1106</locationY>
         <defaultConnector>
             <targetReference>Add_OT_Tasks</targetReference>
         </defaultConnector>
@@ -220,8 +248,8 @@
     <decisions>
         <name>SPOT</name>
         <label>SPOT</label>
-        <locationX>1128</locationX>
-        <locationY>1706</locationY>
+        <locationX>864</locationX>
+        <locationY>890</locationY>
         <defaultConnector>
             <targetReference>Request_Employee_Orientation_Meeting_Subflow</targetReference>
         </defaultConnector>
@@ -257,50 +285,8 @@
             <label>CTM Task</label>
         </rules>
     </decisions>
-    <description>Master Flow</description>
+    <description>Master Flow - Improved Version</description>
     <environments>Default</environments>
-    <formulas>
-        <description>Added for Combo option</description>
-        <name>bidversionformula</name>
-        <dataType>Number</dataType>
-        <expression>IF(NOT(ISBLANK({!Retrieve_Checklist_from_Open_Opportunity.Id})), {!Retrieve_Checklist_from_Open_Opportunity.NSP_Version_Number__c}, IF(NOT(ISBLANK({!Retrieve_Closed_Won_Opportunity_Checklist.Id})),{!Retrieve_Closed_Won_Opportunity_Checklist.NSP_Version_Number__c},null))</expression>
-        <scale>2</scale>
-    </formulas>
-    <formulas>
-        <description>Added for combo option</description>
-        <name>eecountformula</name>
-        <dataType>Number</dataType>
-        <expression>IF(NOT(ISBLANK({!Retrieve_Checklist_from_Open_Opportunity.Id})),{!Retrieve_Checklist_from_Open_Opportunity.NSP_Number_of_Employees__c}, IF(NOT(ISBLANK({!Retrieve_Closed_Won_Opportunity_Checklist.Id})),{!Retrieve_Closed_Won_Opportunity_Checklist.NSP_Number_of_Employees__c},null))</expression>
-        <scale>0</scale>
-    </formulas>
-    <formulas>
-        <description>added for combo option</description>
-        <name>first_pay_period_formula</name>
-        <dataType>String</dataType>
-        <expression>IF(NOT(ISBLANK({!Retrieve_Checklist_from_Open_Opportunity.Id})),TEXT(MONTH({!Retrieve_Checklist_from_Open_Opportunity.NSP_Initial_Covered_Pay_Period__c})), IF(NOT(ISBLANK({!Retrieve_Closed_Won_Opportunity_Checklist.Id})),TEXT(MONTH({!Retrieve_Closed_Won_Opportunity_Checklist.NSP_Initial_Covered_Pay_Period__c})),null)) + &quot;/&quot; + IF(NOT(ISBLANK({!Retrieve_Checklist_from_Open_Opportunity.Id})),TEXT(DAY({!Retrieve_Checklist_from_Open_Opportunity.NSP_Initial_Covered_Pay_Period__c})), IF(NOT(ISBLANK({!Retrieve_Closed_Won_Opportunity_Checklist.Id})),TEXT(DAY({!Retrieve_Closed_Won_Opportunity_Checklist.NSP_Initial_Covered_Pay_Period__c})),null)) + &quot;/&quot; + IF(NOT(ISBLANK({!Retrieve_Checklist_from_Open_Opportunity.Id})),TEXT(YEAR({!Retrieve_Checklist_from_Open_Opportunity.NSP_Initial_Covered_Pay_Period__c})), IF(NOT(ISBLANK({!Retrieve_Closed_Won_Opportunity_Checklist.Id})),TEXT(YEAR({!Retrieve_Closed_Won_Opportunity_Checklist.NSP_Initial_Covered_Pay_Period__c})),null)) + &quot; - &quot; + IF(NOT(ISBLANK({!Retrieve_Checklist_from_Open_Opportunity.Id})),TEXT(MONTH({!Retrieve_Checklist_from_Open_Opportunity.NSP_Initial_Covered_Pay_Period_End__c})), IF(NOT(ISBLANK({!Retrieve_Closed_Won_Opportunity_Checklist.Id})),TEXT(MONTH({!Retrieve_Closed_Won_Opportunity_Checklist.NSP_Initial_Covered_Pay_Period_End__c})),null)) + &quot;/&quot; + IF(NOT(ISBLANK({!Retrieve_Checklist_from_Open_Opportunity.Id})),TEXT(DAY({!Retrieve_Checklist_from_Open_Opportunity.NSP_Initial_Covered_Pay_Period_End__c})), IF(NOT(ISBLANK({!Retrieve_Closed_Won_Opportunity_Checklist.Id})),TEXT(DAY({!Retrieve_Closed_Won_Opportunity_Checklist.NSP_Initial_Covered_Pay_Period_End__c})),null)) + &quot;/&quot; + IF(NOT(ISBLANK({!Retrieve_Checklist_from_Open_Opportunity.Id})),TEXT(YEAR({!Retrieve_Checklist_from_Open_Opportunity.NSP_Initial_Covered_Pay_Period_End__c})), IF(NOT(ISBLANK({!Retrieve_Closed_Won_Opportunity_Checklist.Id})),TEXT(YEAR({!Retrieve_Closed_Won_Opportunity_Checklist.NSP_Initial_Covered_Pay_Period_End__c})),null))</expression>
-    </formulas>
-    <formulas>
-        <name>medical_plan_formula</name>
-        <dataType>String</dataType>
-        <expression>IF(NOT(ISBLANK({!Retrieve_Checklist_from_Open_Opportunity.Id})),TEXT({!Retrieve_Checklist_from_Open_Opportunity.WO_Benefit_Package__c}), IF(NOT(ISBLANK({!Retrieve_Closed_Won_Opportunity_Checklist.Id})),TEXT({!Retrieve_Closed_Won_Opportunity_Checklist.WO_Benefit_Package__c}),null))</expression>
-    </formulas>
-    <formulas>
-        <description>added for combo option</description>
-        <name>medicaleffectivedateformula</name>
-        <dataType>Date</dataType>
-        <expression>IF(NOT(ISBLANK({!Retrieve_Checklist_from_Open_Opportunity.Id})),{!Retrieve_Checklist_from_Open_Opportunity.NSP_Requested_Medical_Effective_Date__c}, IF(NOT(ISBLANK({!Retrieve_Closed_Won_Opportunity_Checklist.Id})),{!Retrieve_Closed_Won_Opportunity_Checklist.NSP_Requested_Medical_Effective_Date__c},null))</expression>
-    </formulas>
-    <formulas>
-        <description>added for combo option</description>
-        <name>nspeffectivedateformula</name>
-        <dataType>Date</dataType>
-        <expression>IF(NOT(ISBLANK({!Retrieve_Checklist_from_Open_Opportunity.Id})),{!Retrieve_Checklist_from_Open_Opportunity.NSP_Requested_Insperity_Effective_Date__c}, IF(NOT(ISBLANK({!Retrieve_Closed_Won_Opportunity_Checklist.Id})),{!Retrieve_Closed_Won_Opportunity_Checklist.NSP_Requested_Insperity_Effective_Date__c},null))</expression>
-    </formulas>
-    <formulas>
-        <name>payfrequencyformula</name>
-        <dataType>String</dataType>
-        <expression>IF(NOT(ISBLANK({!Retrieve_Checklist_from_Open_Opportunity.Id})),TEXT({!Retrieve_Checklist_from_Open_Opportunity.NSP_Pay_Frequency__c}), IF(NOT(ISBLANK({!Retrieve_Closed_Won_Opportunity_Checklist.Id})),TEXT({!Retrieve_Closed_Won_Opportunity_Checklist.NSP_Pay_Frequency__c}),null))</expression>
-    </formulas>
     <interviewLabel>Request CTM and Employee Orientation Meeting {!$Flow.CurrentDateTime}</interviewLabel>
     <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
     <label>Request CTM and Employee Orientation Meeting</label>
@@ -326,8 +312,8 @@
     <recordCreates>
         <name>Create_Task_Records</name>
         <label>Create Task Records</label>
-        <locationX>1128</locationX>
-        <locationY>2414</locationY>
+        <locationX>864</locationX>
+        <locationY>1598</locationY>
         <connector>
             <targetReference>Request_Confirmation_Screen</targetReference>
         </connector>
@@ -339,12 +325,16 @@
     <recordLookups>
         <name>Get_Related_Discovery_SKO_Task</name>
         <label>Get Related Discovery/SKO Task</label>
-        <locationX>721</locationX>
+        <locationX>589</locationX>
         <locationY>458</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Active_WO_Asset</targetReference>
+            <targetReference>CTM_Already_Exist</targetReference>
         </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Error_Create_Task_Records</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>RecordTypeId</field>
@@ -364,7 +354,7 @@
             <field>WhatId</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>Retrieve_triggering_account_record.Id</elementReference>
+                <elementReference>recordId</elementReference>
             </value>
         </filters>
         <filters>
@@ -381,244 +371,12 @@
         <sortOrder>Desc</sortOrder>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
-    <recordLookups>
-        <name>Retrieve_Checklist_from_Open_Opportunity</name>
-        <label>Retrieve Checklist from Open Opportunity</label>
-        <locationX>1216</locationX>
-        <locationY>890</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Retrieve_Most_Recent_Closed_Won_Opportunity</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>NSP_Opportunity__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>Retrieve_Most_Recent_Open_Opportunity.Id</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>RecordTypeId</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>STPChecklistRecordTypeId</elementReference>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>NSP_Checklist__c</object>
-        <sortField>CreatedDate</sortField>
-        <sortOrder>Desc</sortOrder>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordLookups>
-        <name>Retrieve_Closed_Won_Opportunity_Checklist</name>
-        <label>Retrieve Closed Won Opportunity Checklist</label>
-        <locationX>1216</locationX>
-        <locationY>1298</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Request_Client_Transition_Meeting_Subflow</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>NSP_Opportunity__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>Retrieve_Most_Recent_Closed_Won_Opportunity.Id</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>RecordTypeId</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>STPChecklistRecordTypeId</elementReference>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>NSP_Checklist__c</object>
-        <sortField>CreatedDate</sortField>
-        <sortOrder>Desc</sortOrder>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordLookups>
-        <name>Retrieve_Most_Recent_Closed_Won_Opportunity</name>
-        <label>Retrieve Most Recent Closed Won Opportunity</label>
-        <locationX>1128</locationX>
-        <locationY>1082</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Closed_Won_Opportunity_Exist</targetReference>
-        </connector>
-        <filterLogic>1 AND 2 AND (3 OR 4)</filterLogic>
-        <filters>
-            <field>AccountId</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>Retrieve_triggering_account_record.Id</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>StageName</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Closed Won</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>NSP_PrimaryProduct__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>WO</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>NSP_PrimaryProduct__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>WS</stringValue>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>Opportunity</object>
-        <sortField>CreatedDate</sortField>
-        <sortOrder>Desc</sortOrder>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordLookups>
-        <name>Retrieve_Most_Recent_Open_Opportunity</name>
-        <label>Retrieve Most Recent Open Opportunity</label>
-        <locationX>1128</locationX>
-        <locationY>674</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Open_Opportunity_Exist</targetReference>
-        </connector>
-        <filterLogic>1 AND 2 AND 3 AND (4 OR 5)</filterLogic>
-        <filters>
-            <field>AccountId</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>Retrieve_triggering_account_record.Id</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>StageName</field>
-            <operator>NotEqualTo</operator>
-            <value>
-                <stringValue>Closed Won</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>StageName</field>
-            <operator>NotEqualTo</operator>
-            <value>
-                <stringValue>Closed Lost</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>NSP_PrimaryProduct__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>WO</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>NSP_PrimaryProduct__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>WS</stringValue>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>Opportunity</object>
-        <sortField>CreatedDate</sortField>
-        <sortOrder>Desc</sortOrder>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordLookups>
-        <name>Retrieve_Related_Asset</name>
-        <label>Retrieve Related Asset</label>
-        <locationX>721</locationX>
-        <locationY>350</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Get_Related_Discovery_SKO_Task</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>AccountId</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>Retrieve_triggering_account_record.Id</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>NSP_Account_Status__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Active</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>RecordTypeId</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>WOAssetRecordTypeId</elementReference>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>Asset</object>
-        <queriedFields>Id</queriedFields>
-        <queriedFields>NSP_Client__c</queriedFields>
-        <sortField>LastModifiedDate</sortField>
-        <sortOrder>Desc</sortOrder>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordLookups>
-        <name>Retrieve_triggering_account_record</name>
-        <label>Retrieve triggering account record</label>
-        <locationX>385</locationX>
-        <locationY>134</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Account_Exist</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>recordId</elementReference>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>Account</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
     <runInMode>SystemModeWithSharing</runInMode>
-    <screens>
-        <name>Error_Account_Not_Found</name>
-        <label>Error Account Not Found</label>
-        <locationX>50</locationX>
-        <locationY>350</locationY>
-        <allowBack>false</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>false</allowPause>
-        <fields>
-            <name>Error_Message_Account_Not_Found</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(244, 7, 7); font-size: 14px; background-color: rgb(255, 255, 255);&quot;&gt;Account not found (Id={!recordId}).&lt;/span&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <nextOrFinishButtonLabel>Close</nextOrFinishButtonLabel>
-        <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
-    </screens>
     <screens>
         <name>Error_Create_Task_Records</name>
         <label>Error Create Task Records</label>
-        <locationX>1810</locationX>
-        <locationY>2522</locationY>
+        <locationX>1546</locationX>
+        <locationY>1706</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -632,13 +390,13 @@
         </fields>
         <nextOrFinishButtonLabel>Close</nextOrFinishButtonLabel>
         <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
+        <showHeader>false</showHeader>
     </screens>
     <screens>
         <name>Error_CTM_Task_Not_Found</name>
         <label>Error CTM Task Not Found</label>
-        <locationX>1018</locationX>
-        <locationY>1814</locationY>
+        <locationX>754</locationX>
+        <locationY>998</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -649,13 +407,13 @@
         </fields>
         <nextOrFinishButtonLabel>Close</nextOrFinishButtonLabel>
         <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
+        <showHeader>false</showHeader>
     </screens>
     <screens>
         <name>Error_OT_Task_Not_Found</name>
         <label>Error OT Task Not Found</label>
-        <locationX>1282</locationX>
-        <locationY>2030</locationY>
+        <locationX>1018</locationX>
+        <locationY>1214</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -666,53 +424,53 @@
         </fields>
         <nextOrFinishButtonLabel>Close</nextOrFinishButtonLabel>
         <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
+        <showHeader>false</showHeader>
     </screens>
     <screens>
-        <name>ErrorMessage1</name>
-        <label>Error No Active WO Asset</label>
+        <name>Error_Screen1</name>
+        <label>Error Screen</label>
+        <locationX>50</locationX>
+        <locationY>458</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>Account_Asset_Not_Found_Error</name>
+            <fieldText>&lt;p&gt;{!Request_Onboarding_Process_Opportunity_STP_Info.Error_Message}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <nextOrFinishButtonLabel>Close</nextOrFinishButtonLabel>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>ErrorMessage2</name>
+        <label>CTM has Already been Requested</label>
         <locationX>314</locationX>
         <locationY>674</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <fields>
-            <name>err_no_active_wo_asset</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 14px; color: rgb(244, 7, 7);&quot;&gt;Client Transition Meeting cannot be requested until a WO Asset is created for Account ({!Retrieve_triggering_account_record.Name}).&lt;/span&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <nextOrFinishButtonLabel>Close</nextOrFinishButtonLabel>
-        <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
-    </screens>
-    <screens>
-        <name>ErrorMessage2</name>
-        <label>Discovery/SKO Meeting has Already been Requested</label>
-        <locationX>578</locationX>
-        <locationY>674</locationY>
-        <allowBack>false</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>false</allowPause>
-        <fields>
             <name>err_discovery_sko_already_exist</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(244, 4, 4); font-size: 14px; background-color: rgb(255, 255, 255);&quot;&gt;Client Transition Meeting has already been requested for Account &lt;/span&gt;&lt;span style=&quot;color: rgb(244, 7, 7); font-size: 14px; background-color: rgb(255, 255, 255);&quot;&gt;({!Retrieve_triggering_account_record.Name}).&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(244, 4, 4); font-size: 14px; background-color: rgb(255, 255, 255);&quot;&gt;Client Transition Meeting has already been requested for Account (&lt;/span&gt;&lt;span style=&quot;color: rgb(244, 7, 7); font-size: 14px; background-color: rgb(255, 255, 255);&quot;&gt;{!AccountName}).&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <nextOrFinishButtonLabel>Close</nextOrFinishButtonLabel>
         <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
+        <showHeader>false</showHeader>
     </screens>
     <screens>
         <name>Request_Confirmation_Screen</name>
         <label>CTM and OT Request Confirmation Screen</label>
-        <locationX>1128</locationX>
-        <locationY>2522</locationY>
+        <locationX>864</locationX>
+        <locationY>1706</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <fields>
             <name>ctm_spot_confirmation_message</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(18, 17, 17); font-size: 14px; background-color: rgb(255, 255, 255);&quot;&gt;Client Transition Meeting Request have been successfully submitted. Meeting tasks may be found in the Account&apos;s Activity timeline.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 14px; color: rgb(18, 17, 17);&quot;&gt;The Client Transition Meeting has been successfully submitted. Meeting task may be found in the Account&apos;s Activity timeline.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -742,21 +500,21 @@
         </fields>
         <nextOrFinishButtonLabel>Close</nextOrFinishButtonLabel>
         <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
+        <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>259</locationX>
+        <locationX>193</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Retrieve_triggering_account_record</targetReference>
+            <targetReference>Request_Onboarding_Process_Opportunity_STP_Info</targetReference>
         </connector>
     </start>
     <status>Draft</status>
     <subflows>
         <name>Fault_Handler_Subflow</name>
         <label>Fault_Handler_Subflow</label>
-        <locationX>1810</locationX>
-        <locationY>2630</locationY>
+        <locationX>1546</locationX>
+        <locationY>1814</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultMessage</name>
@@ -774,8 +532,8 @@
     <subflows>
         <name>Request_Client_Transition_Meeting_Subflow</name>
         <label>Request Client Transition Meeting Subflow</label>
-        <locationX>1128</locationX>
-        <locationY>1490</locationY>
+        <locationX>864</locationX>
+        <locationY>674</locationY>
         <connector>
             <targetReference>Add_CTM_Tasks</targetReference>
         </connector>
@@ -783,19 +541,19 @@
         <inputAssignments>
             <name>Account_Sales_Office</name>
             <value>
-                <elementReference>Retrieve_triggering_account_record.NSP_Sales_Office__c</elementReference>
+                <elementReference>Account_Sales_Office</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <name>AccountName</name>
             <value>
-                <elementReference>Retrieve_triggering_account_record.Name</elementReference>
+                <elementReference>AccountName</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <name>AIMSClientNum</name>
             <value>
-                <elementReference>Retrieve_Related_Asset.NSP_Client__c</elementReference>
+                <elementReference>AIMSClientNum</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -807,43 +565,49 @@
         <inputAssignments>
             <name>vbidversion</name>
             <value>
-                <elementReference>bidversionformula</elementReference>
+                <elementReference>vbidversion</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <name>veecount</name>
             <value>
-                <elementReference>eecountformula</elementReference>
+                <elementReference>veecount</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <name>vfirst_pay_period</name>
             <value>
-                <elementReference>first_pay_period_formula</elementReference>
+                <elementReference>vfirst_pay_period</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>vfirstpaydate</name>
+            <value>
+                <elementReference>vfirstpaydate</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <name>vmedical_plan</name>
             <value>
-                <elementReference>medical_plan_formula</elementReference>
+                <elementReference>vmedical_plan</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <name>vmedicaleffectivedate</name>
             <value>
-                <elementReference>medicaleffectivedateformula</elementReference>
+                <elementReference>vmedicaleffectivedate</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <name>vnspeffectivedate</name>
             <value>
-                <elementReference>nspeffectivedateformula</elementReference>
+                <elementReference>vnspeffectivedate</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <name>vpayfrequency</name>
             <value>
-                <elementReference>payfrequencyformula</elementReference>
+                <elementReference>vpayfrequency</elementReference>
             </value>
         </inputAssignments>
         <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -851,8 +615,8 @@
     <subflows>
         <name>Request_Employee_Orientation_Meeting_Subflow</name>
         <label>Request Employee Orientation Meeting Subflow</label>
-        <locationX>1414</locationX>
-        <locationY>1814</locationY>
+        <locationX>1150</locationX>
+        <locationY>998</locationY>
         <connector>
             <targetReference>OT_Tasks_Sub_flow_Success</targetReference>
         </connector>
@@ -860,19 +624,19 @@
         <inputAssignments>
             <name>Account_Name</name>
             <value>
-                <elementReference>Retrieve_triggering_account_record.Name</elementReference>
+                <elementReference>AccountName</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <name>Account_Sales_Office</name>
             <value>
-                <elementReference>Retrieve_triggering_account_record.NSP_Sales_Office__c</elementReference>
+                <elementReference>Account_Sales_Office</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <name>AIMSClientNum</name>
             <value>
-                <elementReference>Retrieve_Related_Asset.NSP_Client__c</elementReference>
+                <elementReference>AIMSClientNum</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -961,6 +725,49 @@
         </inputAssignments>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </subflows>
+    <subflows>
+        <name>Request_Onboarding_Process_Opportunity_STP_Info</name>
+        <label>Request Onboarding Process Opportunity STP Info</label>
+        <locationX>319</locationX>
+        <locationY>134</locationY>
+        <connector>
+            <targetReference>Assign_Input</targetReference>
+        </connector>
+        <flowName>Request_Onboarding_Process_Opportunity_STP_Info</flowName>
+        <inputAssignments>
+            <name>recordId</name>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </inputAssignments>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </subflows>
+    <textTemplates>
+        <name>Request_Header</name>
+        <isViewedAsPlainText>false</isViewedAsPlainText>
+        <text>&lt;p&gt;&lt;strong style=&quot;font-size: 16px;&quot;&gt;Request CTM and Employee Orientation Meeting&lt;/strong&gt;&lt;/p&gt;</text>
+    </textTemplates>
+    <variables>
+        <name>Account_Sales_Office</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>AccountName</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>AIMSClientNum</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
     <variables>
         <name>rc_tasks</name>
         <dataType>SObject</dataType>
@@ -971,6 +778,64 @@
     </variables>
     <variables>
         <name>recordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>vbidversion</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <scale>0</scale>
+    </variables>
+    <variables>
+        <name>veecount</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <scale>0</scale>
+    </variables>
+    <variables>
+        <name>vfirst_pay_period</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>vfirstpaydate</name>
+        <dataType>Date</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>vmedical_plan</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>vmedicaleffectivedate</name>
+        <dataType>Date</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>vnspeffectivedate</name>
+        <dataType>Date</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>vpayfrequency</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>

@@ -1,11 +1,66 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>59.0</apiVersion>
+    <assignments>
+        <name>Set_Fault_Element_Get_Case_Record</name>
+        <label>Set Fault Element (Get_Case_Record)</label>
+        <locationX>1106</locationX>
+        <locationY>384</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Case_Record</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Update_Case_L2_Fields</name>
+        <label>Set Fault Element (Update_Case_L2_Fields)</label>
+        <locationX>314</locationX>
+        <locationY>708</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Update_Case_L2_Fields</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Fault_Handler</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>Check_Case_Record</name>
+        <label>Check Case Record</label>
+        <locationX>578</locationX>
+        <locationY>384</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Found_Record</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Case_Record</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Check_L2_First_Reply_Date</targetReference>
+            </connector>
+            <label>Found Record</label>
+        </rules>
+    </decisions>
     <decisions>
         <name>Check_L2_First_Reply_Date</name>
         <label>Check L2 First Reply Date</label>
-        <locationX>182</locationX>
-        <locationY>431</locationY>
+        <locationX>314</locationX>
+        <locationY>492</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>L2_First_Reply_Date_is_Null</name>
@@ -55,12 +110,15 @@
     <recordLookups>
         <name>Get_Case_Record</name>
         <label>Get Case Record</label>
-        <locationX>182</locationX>
-        <locationY>323</locationY>
+        <locationX>578</locationX>
+        <locationY>276</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Check_L2_First_Reply_Date</targetReference>
+            <targetReference>Check_Case_Record</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_Get_Case_Record</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -74,13 +132,18 @@
         <queriedFields>Id</queriedFields>
         <queriedFields>NSP_First_Level2_Reply_Date__c</queriedFields>
         <queriedFields>NSP_Level_2__c</queriedFields>
+        <sortField>Id</sortField>
+        <sortOrder>Asc</sortOrder>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordUpdates>
         <name>Update_Case_L2_Fields</name>
         <label>Update Case L2 Fields</label>
         <locationX>50</locationX>
-        <locationY>539</locationY>
+        <locationY>600</locationY>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_Update_Case_L2_Fields</targetReference>
+        </faultConnector>
         <inputAssignments>
             <field>NSP_First_Level2_Reply_Date__c</field>
             <value>
@@ -92,9 +155,6 @@
     <start>
         <locationX>56</locationX>
         <locationY>0</locationY>
-        <connector>
-            <targetReference>Get_Case_Record</targetReference>
-        </connector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Incoming</field>
@@ -112,7 +172,48 @@
         </filters>
         <object>EmailMessage</object>
         <recordTriggerType>Create</recordTriggerType>
+        <scheduledPaths>
+            <connector>
+                <targetReference>Get_Case_Record</targetReference>
+            </connector>
+            <pathType>AsyncAfterCommit</pathType>
+        </scheduledPaths>
         <triggerType>RecordAfterSave</triggerType>
     </start>
     <status>Draft</status>
+    <subflows>
+        <name>Fault_Handler</name>
+        <label>Fault Handler</label>
+        <locationX>314</locationX>
+        <locationY>816</locationY>
+        <flowName>Insperity_Fault_Handler_Subflow</flowName>
+        <inputAssignments>
+            <name>faultElement</name>
+            <value>
+                <elementReference>faultElement</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultFlow</name>
+            <value>
+                <stringValue>NSP_Update_Case_Level_2_Metrics</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultMessage</name>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <variables>
+        <name>faultElement</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue></stringValue>
+        </value>
+    </variables>
 </Flow>

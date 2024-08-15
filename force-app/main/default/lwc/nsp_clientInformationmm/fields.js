@@ -1,6 +1,23 @@
 const RL_FIELDS = [
   'Has_FEIN_documentation_been_collected__c',
   'Are_sample_intro_letters_being_provided__c',
+  'All_EEs_paid_under_same_FEIN_currently__c',
+  'Has_FEIN_documentation_been_collected__c',
+  'Has_form_8973_been_discussed__c',
+  'Client_expect_chnges_in_the_organization__c',
+  'Is_the_client_a_federal_contractor__c',
+  'Client_previously_filed_an_EEO_1_Report__c',
+  'Client_needs_to_e_verify_all_employees__c',
+  'Client_have_EEO_filing_under__c',
+  'NSP_co_employ_100_of_client_workforce__c',
+  'Client_part_of_entity_w_o_NSP__c',
+  'Direct_deposit_offered_to_employees__c',
+  'Arbitration_Agreement_been_discussed__c',
+  'Client_has_Service_Contract_Act_SCA_EEs__c',
+  'Have_the_SCA_EEs_been_approved__c',
+  'SCA_EEs_get_wages_in_lieu_of_benefits__c',
+  'Can_client_provide_EEO_filing_address__c',
+  'NSP_Are_Certified_Payroll_reports_needed__c'
 ];
 
 const FIELD_CHANGE_HANDLER_MAPPING = {

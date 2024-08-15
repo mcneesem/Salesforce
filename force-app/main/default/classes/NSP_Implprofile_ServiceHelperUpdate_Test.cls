@@ -178,6 +178,7 @@ public class NSP_Implprofile_ServiceHelperUpdate_Test {
         ip.NSP_Form_Completed__c=true;
         ip.Client_Implementing_Premier_Performance__c ='Yes';
         ip.Is_there_a_need_for_Integra__c = NSP_ServiceConstants.YES;
+        ip.Does_this_client_have_an_AWW__c = NSP_ServiceConstants.YES;
         ip.First_Pay_Date__c = system.today();
         Test.startTest();
         update ip;
@@ -234,6 +235,15 @@ public class NSP_Implprofile_ServiceHelperUpdate_Test {
         ip.Insperity_benefits_effective_date__c=system.today()+1;
         ip.Benefits_Package__c='Independence';
         ip.Is_there_a_need_for_Integra__c = NSP_ServiceConstants.YES;
+        
+        pse__Project_Task__c pt3 = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c(), 'NSP_TestDataFactory.ProjectTaskDefaults', false);
+        pt3.pse__Status__c = NSP_ServiceConstants.PROJECT_TASK_NOT_STARTED;
+        pt3.RecordTypeId = PEOProjectTaskRecordTypeId;
+        pt3.Name = NSP_ServiceConstants.INTERNALDISCOVERY;
+        pt3.pse__Project__c = proj.Id;
+        pt3.Implementation_Profile__c = ip.Id;
+        insert pt3;
+        
         Test.startTest();
         if(projTaskList.size()>0){
        	projTaskList[0].pse__Status__c=NSP_ServiceConstants.TASKCOMPLETE;
@@ -249,6 +259,11 @@ public class NSP_Implprofile_ServiceHelperUpdate_Test {
             
         }
         update ip;
+        ip.Is_there_a_need_for_Integra__c = NSP_ServiceConstants.NO;
+        update ip;
+        pt3.pse__Status__c = NSP_ServiceConstants.PROJECT_TASK_CANCELLED;
+        update pt3;
+        System.assert(pt3.pse__Status__c == NSP_ServiceConstants.PROJECT_TASK_CANCELLED);
         System.assert(ip.Benefits_Package__c == 'Independence');
         Test.stopTest();
     }

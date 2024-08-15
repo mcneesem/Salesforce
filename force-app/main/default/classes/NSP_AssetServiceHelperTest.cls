@@ -154,6 +154,45 @@ public class NSP_AssetServiceHelperTest {
         // THEN
         System.assertEquals(1, assetList.size());
     }
+    @isTest
+    static void createTimeAndAttendence(){
+        Test.startTest();
+        // GIVEN
+        
+        List<Asset> assetList = new List<Asset>();
+        List<Opportunity> opportunityList = [SELECT Id,NSP_PrimaryProduct__c,AccountId,OwnerId FROM Opportunity WHERE NSP_Number_Of_Employees__c = 151 LIMIT 1];
+            opportunity oppty = opportunityList[0];
+            oppty.NSP_DM_User__c = oppty.OwnerId;
+            oppty.NSP_DA_User__c = oppty.OwnerId;
+            oppty.NSP_BPA__c = oppty.OwnerId;
+            oppty.StageName = NSP_ServiceConstants.CLOSED_WON;
+      		oppty.NSP_PrimaryProduct__c = NSP_ServiceConstants.TIME_ATTENDANCE;
+            oppty.NSP_Time_Entry_Recommendation__c = NSP_ServiceConstants.Premier_Time_Att;
+            oppty.NSP_Signed_CSA__c = true;
+            oppty.NSP_Signed_CSA_Date__c = system.today();
+            update oppty;
+        
+        Account oAccount = [SELECT Id, Name, NSP_Sales_Service_Account_Status__c  FROM Account WHERE Name='Test Account' LIMIT 1];
+        oAccount.NSP_Sales_Service_Account_Status__c = NSP_ServiceConstants.STATUS_ACTIVE;
+        update oAccount;
+        
+        Asset timeAttendenceAsset = (Asset) NSP_TestExtendedDataFactory.createSObject(new Asset(), 'NSP_TestDataFactory.AssetDefaults', false);
+        timeAttendenceAsset.AccountId = oAccount.Id;
+        timeAttendenceAsset.Opportunity__c = oppty.Id;
+        timeAttendenceAsset.recordTypeId = TIME_ATTENDANCE_ASSET;
+        
+        assetList.add(timeAttendenceAsset);
+        
+        // WHEN
+        
+        if(!assetList.isEmpty()){
+        	insert assetList;
+        }
+        Test.stopTest();
+        
+        System.assertEquals(1, assetList.size());
+     
+    }
     
     @isTest
     public static void testUpdateAssetTerminationForm(){
@@ -175,6 +214,25 @@ public class NSP_AssetServiceHelperTest {
         System.assertEquals(null, asset[0].NSP_Written_Term_Date__c);
         
         
+    }
+    @isTest
+    private static void testBPSUserPerformSmartFields(){
+        Test.startTest();
+        Profile profile = [SELECT Id FROM Profile WHERE Name =: NSP_ServiceConstants.BPSSERVICE];
+        User newBPSUser = (User)NSP_TestExtendedDataFactory.createSObject(new User(), 'NSP_TestDataFactory.UserDefaults', false);
+        newBPSUser.ProfileId = profile.Id;
+        System.runAs(newBPSUser){
+            Asset assetObject = (Asset) NSP_TestExtendedDataFactory.createSObject(new Asset(), 'NSP_TestDataFactory.AssetDefaults', false);
+            assetObject.NSP_Company_Name__c=NSP_ServiceConstants.TESTPAYROLL;
+            assetObject.recordTypeId = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.ASSET_SOBJECT_TYPE,NSP_ServiceConstants.PERFORMANCE_ASSET);
+            assetObject.Status =NSP_ServiceConstants.ASSET_ONBOARDING_STATUS ;
+            insert assetObject;
+            
+            assetObject.Status = NSP_ServiceConstants.ASSET_ACTIVE_STATUS ;
+            update assetObject;
+            System.assertEquals(assetObject.Status,NSP_ServiceConstants.ASSET_ACTIVE_STATUS);
+        }
+        Test.stopTest();  
     }
 
 }
