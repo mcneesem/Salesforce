@@ -74,7 +74,34 @@ public without sharing class NSP_ContactRollupController {
         return getSubClinetContactRecords(Database.query(query), resultsMap);
     }
 
-    private static Map < Id, ResultWrapper > getSubClinetContactRecords(list<NSP_Sub_Client_Contact__c> lstSubClientContacts, Map < Id, ResultWrapper > resultsMap){
+    private static Map < Id, ResultWrapper > getSubClinetContactRecords(list<NSP_Sub_Client_Contact__c> lstSubClientContacts, Map < Id, ResultWrapper > resultsMap, string recordId){
+        System.debug('Prakash sub client contact : ' + lstSubClientContacts);
+        
+        Set<Id> contactIdSet = new Set<Id>();
+        Map<Id, AccountContactRelation> acrMap = new Map<Id, AccountContactRelation>();
+        
+        for(NSP_Sub_Client_Contact__c subClientCont: lstSubClientContacts)
+        {
+            if (!resultsMap.containsKey(subClientCont.NSP_Contact__c) && subClientCont.NSP_Sub_Client__c<> null &&  recordId == subClientCont.NSP_Sub_Client__r.NSP_Account__c) 
+            {
+                contactIdSet.add(subClientCont.NSP_Contact__c);
+            }
+        }
+        
+        if(contactIdSet?.size() > 0)
+        {
+            List<AccountContactRelation> acrList = [SELECT AccountId, Account.Name, ContactId, Contact.FirstName, Contact.LastName, Contact.Name,
+                                                NSP_Owner__c, NSP_Service_Roles__c, NSP_Support_Role__c, Contact.NSP_Preferred_First_Name__c, NSP_Job_Title__c, 
+                                                NSP_Employee_Status__c, NSP_Work_Phone__c, NSP_Work_email__c 
+                                                FROM AccountContactRelation 
+                                                WHERE AccountId =:recordId AND ContactId =:contactIdSet];
+            
+            for(AccountContactRelation acr : acrList)
+            {
+                acrMap.put(acr.contactId, acr);
+            }
+        }
+        
         for (NSP_Sub_Client_Contact__c subClientCont: lstSubClientContacts) {
  
             NSP_Sub_Client__c sc = new NSP_Sub_Client__c(Id = subClientCont.NSP_Sub_Client__c, Name = subClientCont.NSP_Sub_Client__r.Name);
@@ -95,10 +122,8 @@ public without sharing class NSP_ContactRollupController {
                 resultsMap.put(subClientCont.NSP_Contact__c, wrap);
 
             } else {
-                if(subClientCont.NSP_Contact__c <> null && resultsMap.containsKey(subClientCont.NSP_Contact__c))
+                if(acrMap?.containsKey(subClientCont.NSP_Contact__c))
                 {
-                    ResultWrapper resultWapper = resultsMap.get(subClientCont.NSP_Contact__c);
-                    
                     resultsMap.put(subClientCont.NSP_Contact__c, new ResultWrapper(
                         new Account(Id = subClientCont.NSP_Sub_Client__r.NSP_Account__c, Name = subClientCont.NSP_Sub_Client__r.NSP_Account__r.Name),
                         new Contact(Id = subClientCont.NSP_Contact__c, FirstName = subClientCont.NSP_Contact__r.firstName, NSP_Preferred_First_Name__c = subClientCont.NSP_Contact__r.NSP_Preferred_First_Name__c),
@@ -107,11 +132,12 @@ public without sharing class NSP_ContactRollupController {
                             sc
                                 },
                         getUpdatedRoles(null, subClientCont),
-                        resultWapper.jobTitle,
-                        resultWapper.employeeStatus,
-                        resultWapper.workPhone,
-                        resultWapper.workEmail
-                    ));
+                        acrMap.get(subClientCont.NSP_Contact__c).NSP_Job_Title__c,
+                        acrMap.get(subClientCont.NSP_Contact__c).NSP_Employee_Status__c,
+                        acrMap.get(subClientCont.NSP_Contact__c).NSP_Work_Phone__c, 
+                        acrMap.get(subClientCont.NSP_Contact__c).NSP_Work_email__c
+                    ));               
+                }
             }
         }
 
