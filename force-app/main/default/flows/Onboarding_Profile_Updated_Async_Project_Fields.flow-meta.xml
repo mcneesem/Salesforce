@@ -221,7 +221,7 @@
         <inputAssignments>
             <name>faultElement</name>
             <value>
-                <elementReference>Update_Project_Records</elementReference>
+                <elementReference>Fault_Element</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -233,7 +233,7 @@
         <inputAssignments>
             <name>faultMessage</name>
             <value>
-                <elementReference>Fault_Element</elementReference>
+                <elementReference>$Flow.FaultMessage</elementReference>
             </value>
         </inputAssignments>
     </subflows>
@@ -243,5 +243,8 @@
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
+        <value>
+            <stringValue></stringValue>
+        </value>
     </variables>
 </Flow>
