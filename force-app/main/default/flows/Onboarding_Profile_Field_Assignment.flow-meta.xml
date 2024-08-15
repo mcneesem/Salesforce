@@ -32,7 +32,7 @@
     <formulas>
         <name>X1stPayrollProcessingDatePlusFour</name>
         <dataType>Date</dataType>
-        <expression>{!$Record.X1st_Payroll_Processing_Date__c}+3</expression>
+        <expression>{!$Record.X1st_Payroll_Processing_Date__c}+4</expression>
     </formulas>
     <interviewLabel>Onboarding Profile Field Assignment {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Onboarding Profile Field Assignment</label>
@@ -80,5 +80,5 @@
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
         <triggerType>RecordBeforeSave</triggerType>
     </start>
-    <status>Obsolete</status>
+    <status>Draft</status>
 </Flow>
