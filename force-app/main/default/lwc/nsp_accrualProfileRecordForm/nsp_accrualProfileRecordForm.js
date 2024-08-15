@@ -269,6 +269,7 @@ export default class Nsp_accrualProfileRecordForm extends NavigationMixin(
   handleAccountSelection({ detail }) {
     const selectedOption = this.accountMap[detail];
 
+    selectedOption.label = this.appendInfoInOptionLabel(selectedOption);
     this.selectedAccounts = [...this.selectedAccounts, selectedOption];
     this.accountSearchResults = this.accountSearchResults.filter(
       (option) => option.value !== detail
@@ -580,13 +581,24 @@ export default class Nsp_accrualProfileRecordForm extends NavigationMixin(
       preSelectedRecs: JSON.stringify(selectedAccountIds),
       objectApiName: 'Account',
       searchCategory: 'Name',
+      additionalInfoField: [
+        'NSP_Client_AIMS__c',
+      ].join(','),
       resultSize: 10,
     });
 
     searchRecordsByFilters({ searchConfig })
       .then((results) => {
-        this.accountSearchResults = [...results];
-        this.accountMap = prepareMapByValue(results);
+        const options = results.map((option) => {
+          const infoObj = JSON.parse(option.info);
+          const accName = infoObj['NSP_Client_AIMS__c'];
+          const accId = infoObj.NSP_Account__c;
+          const info =
+            (infoObj.NSP_Client_AIMS__c || '');
+          return { ...option, info, accName, accId };
+        });
+        this.accountSearchResults = options;
+        this.accountMap = prepareMapByValue(options);
       })
       .catch((e) => this.showErrorToast(e.body.message));
   }, 100);
