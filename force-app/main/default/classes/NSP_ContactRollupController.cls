@@ -21,7 +21,7 @@ public without sharing class NSP_ContactRollupController {
             if (allFilters != null && allFilters.size() > 0) {
                 //fetch filtered result of ACR and Sub clients combined together based on all filters[] passed to regex expression
                 String regex = '^';
- 				for (string filter: allFilters) {
+                for (string filter: allFilters) {
                     regex = regex + '(?=.*\\b' + filter + '\\b)';
                 }
                 regex = regex + '.*$';
@@ -71,76 +71,90 @@ public without sharing class NSP_ContactRollupController {
             query += ' AND (' + subClientFilter + ') ';
         }
         query += ' AND (' + String.join(strList, ' = true OR ') + ') ORDER BY NSP_Contact__r.Name ASC LIMIT :offSetLimit OFFSET :offSetCount'; // Removing Security Enforced as part of DF-03286
-        return getSubClinetContactRecords(Database.query(query), resultsMap, recordId);
+        return getSubClinetContactRecords(
+            Database.query(query) ,
+            resultsMap ,
+            recordId
+        );
     }
 
-    private static Map < Id, ResultWrapper > getSubClinetContactRecords(list<NSP_Sub_Client_Contact__c> lstSubClientContacts, Map < Id, ResultWrapper > resultsMap, string recordId){
+    private static Map<Id,ResultWrapper> getSubClinetContactRecords( List<NSP_Sub_Client_Contact__c> lstSubClientContacts , Map<Id,ResultWrapper> resultsMap , String recordId ) {
         Set<Id> contactIdSet = new Set<Id>();
-        Map<Id, AccountContactRelation> acrMap = new Map<Id, AccountContactRelation>();
-        
-        for(NSP_Sub_Client_Contact__c subClientCont: lstSubClientContacts)
-        {
-            if (!resultsMap.containsKey(subClientCont.NSP_Contact__c) && subClientCont.NSP_Sub_Client__c<> null &&  recordId == subClientCont.NSP_Sub_Client__r.NSP_Account__c) 
+        for ( NSP_Sub_Client_Contact__c subClientCont : lstSubClientContacts ) {
+            if ( !resultsMap.containsKey( subClientCont.NSP_Contact__c )
+                && ( subClientCont.NSP_Sub_Client__c != null )
+                && ( subClientCont.NSP_Sub_Client__r != null )
+                && ( recordId == subClientCont.NSP_Sub_Client__r.NSP_Account__c )
+                )
             {
-                contactIdSet.add(subClientCont.NSP_Contact__c);
+                contactIdSet.add( subClientCont.NSP_Contact__c );
             }
         }
-        
-        if(contactIdSet?.size() > 0)
-        {
-            List<AccountContactRelation> acrList = [SELECT AccountId, Account.Name, ContactId, Contact.FirstName, Contact.LastName, Contact.Name,
-                                                NSP_Owner__c, NSP_Service_Roles__c, NSP_Support_Role__c, Contact.NSP_Preferred_First_Name__c, NSP_Job_Title__c, 
-                                                NSP_Employee_Status__c, NSP_Work_Phone__c, NSP_Work_email__c 
-                                                FROM AccountContactRelation 
-                                                WHERE AccountId =:recordId AND ContactId =:contactIdSet];
-            
-            for(AccountContactRelation acr : acrList)
-            {
-                acrMap.put(acr.contactId, acr);
+        Map<Id,AccountContactRelation> acrMap = new Map<Id,AccountContactRelation>();
+        if ( !contactIdSet.isEmpty() ) {
+            List<AccountContactRelation> acrList = [
+                SELECT
+                    AccountId , Account.Name ,
+                    ContactId , Contact.FirstName , Contact.LastName , Contact.Name ,
+                    NSP_Owner__c , NSP_Service_Roles__c , NSP_Support_Role__c ,
+                    Contact.NSP_Preferred_First_Name__c , NSP_Job_Title__c ,
+                    NSP_Employee_Status__c , NSP_Work_Phone__c, NSP_Work_email__c
+                FROM AccountContactRelation 
+                WHERE (
+                    ( AccountId = :recordId )
+                    AND ( ContactId = :contactIdSet )
+                )
+            ];
+            for ( AccountContactRelation acr : acrList ) {
+                acrMap.put( acr.contactId , acr);
             }
         }
-        
-        for (NSP_Sub_Client_Contact__c subClientCont: lstSubClientContacts) {
- 
-            NSP_Sub_Client__c sc = new NSP_Sub_Client__c(Id = subClientCont.NSP_Sub_Client__c, Name = subClientCont.NSP_Sub_Client__r.Name);
-
-            if (resultsMap.containsKey(subClientCont.NSP_Contact__c)) {
-
-                ResultWrapper wrap = resultsMap.get(subClientCont.NSP_Contact__c);
-                wrap.allRoles = getUpdatedRoles(wrap.allRoles, subClientCont);
-
-                if (wrap.subClients == null) {
-                    List < NSP_Sub_Client__c > subClientContacts = new List < NSP_Sub_Client__c > ();
-                    subClientContacts.add(sc);
-                    wrap.subClients = subClientContacts;
-                } else if (!wrap.subClients.contains(sc)) {
-                    wrap.subClients.add(sc);
+        for ( NSP_Sub_Client_Contact__c subClientCont : lstSubClientContacts ) {
+            NSP_Sub_Client__c sc = new NSP_Sub_Client__c(
+                Id=subClientCont.NSP_Sub_Client__c ,
+                Name=subClientCont.NSP_Sub_Client__r.Name
+            );
+            if ( resultsMap.containsKey( subClientCont.NSP_Contact__c ) ) {
+                ResultWrapper wrap = resultsMap.get( subClientCont.NSP_Contact__c );
+                if ( wrap != null ) {
+                    wrap.allRoles = getUpdatedRoles( wrap.allRoles , subClientCont );
+                    if ( wrap.subClients == null ) {
+                        wrap.subClients = new List<NSP_Sub_Client__c>();
+                    }
+                    if ( !wrap.subClients.contains( sc ) ) {
+                        wrap.subClients.add( sc );
+                    }
+                    resultsMap.put( subClientCont.NSP_Contact__c , wrap );
                 }
-
-                resultsMap.put(subClientCont.NSP_Contact__c, wrap);
-
             } else {
-                if(acrMap?.containsKey(subClientCont.NSP_Contact__c))
-                {
+                if ( acrMap.containsKey( subClientCont.NSP_Contact__c ) ) {
                     AccountContactRelation subClientContAcr = acrMap.get( subClientCont.NSP_Contact__c );
-
-                    resultsMap.put(subClientCont.NSP_Contact__c, new ResultWrapper(
-                        new Account(Id = subClientCont.NSP_Sub_Client__r.NSP_Account__c, Name = subClientCont.NSP_Sub_Client__r.NSP_Account__r.Name),
-                        new Contact(Id = subClientCont.NSP_Contact__c, FirstName = subClientCont.NSP_Contact__r.firstName, NSP_Preferred_First_Name__c = subClientCont.NSP_Contact__r.NSP_Preferred_First_Name__c),
-                        subClientCont.NSP_Contact__r.Name,
-                        new List < NSP_Sub_Client__c > {
-                            sc
-                                },
-                        getUpdatedRoles(null, subClientCont),
-                        subClientContAcr.NSP_Job_Title__c,
-                        subClientContAcr.NSP_Employee_Status__c,
-                        subClientContAcr.NSP_Work_Phone__c, 
-                        subClientContAcr.NSP_Work_email__c
-                    ));               
+                    if ( subClientContAcr != null ) {
+                        resultsMap.put(
+                            subClientCont.NSP_Contact__c ,
+                            new ResultWrapper(
+                                new Account(
+                                    Id=subClientCont.NSP_Sub_Client__r.NSP_Account__c ,
+                                    Name=subClientCont.NSP_Sub_Client__r.NSP_Account__r.Name
+                                ) ,
+                                new Contact(
+                                    Id=subClientCont.NSP_Contact__c ,
+                                    FirstName = subClientCont.NSP_Contact__r.FirstName ,
+                                    NSP_Preferred_First_Name__c=subClientCont.NSP_Contact__r.NSP_Preferred_First_Name__c
+                                ) ,
+                                subClientCont.NSP_Contact__r.Name ,
+                                new List<NSP_Sub_Client__c>{ sc } ,
+                                getUpdatedRoles( null , subClientCont ) ,
+                                subClientContAcr.NSP_Job_Title__c ,
+                                subClientContAcr.NSP_Employee_Status__c ,
+                                subClientContAcr.NSP_Work_Phone__c ,
+                                subClientContAcr.NSP_Work_email__c
+                            )
+                        );
+                    }
                 }
             }
         }
-
         return resultsMap;
     }
 
