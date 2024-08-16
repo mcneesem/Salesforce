@@ -33,13 +33,34 @@ private class NSP_AccrualProfileControllerTest {
         
         insert contVersion;
 
+        List<NSP_Accrual_Profile__c> lstAccProfile = new List<NSP_Accrual_Profile__c>();
         
         NSP_Accrual_Profile__c accProfile = (NSP_Accrual_Profile__c)NSP_TestExtendedDataFactory.createSObject(new NSP_Accrual_Profile__c(), 'NSP_TestDataFactory.AccrualProfileDefaults', false);
         accProfile.NSP_Accrual_Profile_Plan_Name__c = 'Test Accrual Profile';
-        insert accProfile;
+        lstAccProfile.add(accProfile);
+        
+        NSP_Accrual_Profile__c accProfileAttachment = (NSP_Accrual_Profile__c)NSP_TestExtendedDataFactory.createSObject(new NSP_Accrual_Profile__c(), 'NSP_TestDataFactory.AccrualProfileDefaults', false);
+        accProfileAttachment.NSP_Accrual_Profile_Plan_Name__c = 'Test Accrual Profile Attachment';
+        lstAccProfile.add(accProfileAttachment);
+        insert lstAccProfile;
+        
+        ContentVersion accProfileAttachmentContentVersion = (ContentVersion)NSP_TestExtendedDataFactory.createSObject(new ContentVersion(), 'NSP_TestDataFactory.ContentVersionDefaults', false);
+        accProfileAttachmentContentVersion.Title='Header_Picture1'; 
+		accProfileAttachmentContentVersion.PathOnClient='/' + accProfileAttachmentContentVersion.Title + '.jpg'; 
+		Blob bodyBlob=Blob.valueOf('Unit Test ContentVersion Body'); 
+        accProfileAttachmentContentVersion.VersionData=bodyBlob; 
+        accProfileAttachmentContentVersion.origin = 'H';
+        insert accProfileAttachmentContentVersion;
+        
+        ContentDocumentLink accProfileAttachmentContentDocumentLink = (ContentDocumentLink)NSP_TestExtendedDataFactory.createSObject(new ContentDocumentLink(), 'NSP_TestDataFactory.ContentDocumentLinkDefaults', false);
+        accProfileAttachmentContentDocumentLink.LinkedEntityId=lstAccProfile[1].id;
+        accProfileAttachmentContentDocumentLink.contentdocumentid=[select contentdocumentid from contentversion where id =: accProfileAttachmentContentVersion.id].contentdocumentid;
+        accProfileAttachmentContentDocumentLink.ShareType = 'I';
+        accProfileAttachmentContentDocumentLink.Visibility = 'AllUsers';
+        insert accProfileAttachmentContentDocumentLink;
         
         NSP_Accrual_Profile_Account_Relationship__c accProfileAccRelationship = (NSP_Accrual_Profile_Account_Relationship__c)NSP_TestExtendedDataFactory.createSObject(new NSP_Accrual_Profile_Account_Relationship__c(), 'NSP_TestDataFactory.AccrualProfileAccountRelationshipDefaults', false);
-		accProfileAccRelationship.NSP_Accrual_Profile__c = accProfile.Id;
+		accProfileAccRelationship.NSP_Accrual_Profile__c = lstAccProfile[0].Id;
         accProfileAccRelationship.NSP_Account__c= accoutObject.Id;
         insert accProfileAccRelationship;
     }
@@ -126,5 +147,17 @@ private class NSP_AccrualProfileControllerTest {
         //THEN
         System.assertEquals(accProfilePlanName , 'Test Accrual Profile');
         System.assertEquals(recId , NSP_AccrualProfileController.getrecId());
+    }
+    
+    // description : This test method is used to cover NSP_AccrualProfileController.getAttachedFiles method.
+    @isTest
+    static void getAttachedFilesNameTest (){ 
+        Test.startTest();
+        //GIVEN
+        List<NSP_Accrual_Profile__c> lstAccProfile = [SELECT Id,Name FROM NSP_Accrual_Profile__c LIMIT 2];
+        NSP_AccrualProfileController.getAttachedFiles(lstAccProfile[0].Id);
+        List<String> lstAttachmentName = NSP_AccrualProfileController.getAttachedFiles(lstAccProfile[1].Id);
+        System.assertEquals(lstAttachmentName[0],'Header_Picture1.jpg');
+        Test.stopTest();
     }
 }
