@@ -29,26 +29,26 @@
       <div class="slds-grid slds-gutters slds-p-top_x-small">
         <div class="slds-col slds-size_1-of-2">
                 <lightning-formatted-text
-                    value="Sub Clients :">
+                    value="Accounts :">
                 </lightning-formatted-text>
             <div class="customPadding">
                 <ul>
-                    <template for:each={selectedSubClients} for:item="subClient">
-                        <li key={subClient.value}>
-                            <a href="#" data-value={subClient.value} onclick={handleSubClientClick}>{subClient.label}</a>
+                    <template for:each={selectedAccounts} for:item="account">
+                        <li key={account.value}>
+                            <a href="#" data-value={account.value} onclick={handleSubClientClick}>{account.label}</a>
                     </li>
                     </template>
                 </ul>
                 </div>
             <div class="slds-p-top_small slds-p-bottom_small">
                 <lightning-formatted-text
-                    value="Accounts : ">
+                    value="Sub Clients : ">
                 </lightning-formatted-text>
             <div class="customPad">
                 <ul>
-                    <template for:each={selectedAccounts} for:item="account">
-                        <li key={account.value}>
-                            <a href="#" data-value={account.value} onclick={handleSubClientClick}>{account.label}</a>
+                    <template for:each={selectedSubClients} for:item="subClient">
+                        <li key={subClient.value}>
+                            <a href="#" data-value={subClient.value} onclick={handleSubClientClick}>{subClient.label}</a>
                     </li>
                     </template>
                 </ul>
