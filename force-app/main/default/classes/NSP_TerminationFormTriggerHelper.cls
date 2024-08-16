@@ -576,8 +576,6 @@ public class NSP_TerminationFormTriggerHelper {
         map<String, Id> primaryRolesMap = new map<String, Id>();
         map<String, Id> nonPrimaryRolesMap = new map<String, Id>();
         map<String, Id> accTeamMap = new map<String, Id>();
-        Id mappedProjectId;
-       	Id mappedAccountId;
 		Id payrollRecordTypeId = NSP_GenericRecordType.getRecordTypeId('NSP_Termination_Form__c',NSP_ServiceConstants.NSP_Payroll_Specialist_Form );
         if(!setOfProjectTaskId.isEmpty()){
             for(pse__Project_Task__c projectTask : [SELECT pse__Project__c FROM pse__Project_Task__c WHERE ID IN : setOfProjectTaskId]){
@@ -624,8 +622,6 @@ public class NSP_TerminationFormTriggerHelper {
         }
         if ( ( terminationFormList != null ) && !terminationFormList.isEmpty() ) {
             for(NSP_Termination_Form__c termForm : terminationFormList){
-                mappedProjectId = mapOfProjectTaskAndProject.get( termForm.NSP_Project_Task__c );
-        		mappedAccountId = mapOfProjectAndAccount.get( mappedProjectId );
                 if(termForm.RecordTypeId == payrollRecordTypeId) {
                     //Termination Form Payroll Specialist Record Type
                     mapOfAccountAndAccountTeam = primaryRolesMap;
@@ -635,6 +631,8 @@ public class NSP_TerminationFormTriggerHelper {
             }
             for(NSP_Termination_Form__c termForm : terminationFormList){
                 if(mapOfAccountAndAccountTeam != null && mapOfProjectAndAccount != null && mapOfProjectTaskAndProject != null){
+                    Id mappedProjectId = mapOfProjectTaskAndProject.get( termForm.NSP_Project_Task__c );
+                    Id mappedAccountId = mapOfProjectAndAccount.get( mappedProjectId );
                     termForm.NSP_Approver__c                = mapOfAccountAndAccountTeam.get(
                         mappedAccountId + '-' + NSP_ServiceConstants.PAYROLL_SUPERVISOR);
                     termForm.NSP_Supervisor__c              = mapOfAccountAndAccountTeam.get(
