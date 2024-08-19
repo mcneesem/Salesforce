@@ -1,25 +1,31 @@
 public class FindContactVoiceFlow {
-    // test w/ FindContactVoiceFlowTest (94%)
+    // test w/ FindContactVoiceFlowTest (95%)
 
     @InvocableMethod(label='Get Contacts by Phone')
     public static List<List<Contact>> getContactsByPhone( List<String> phoneNumbers ) {
         List<List<Contact>> result = new List<List<Contact>>();
-        if ( ( phoneNumbers != null ) && !phoneNumbers.isEmpty() ) {
-            String searchString = '' + phoneNumbers[0] + '';
-            Date limitDate = System.today().addDays( -1 * FindContactVoiceFlow.limitCreatedDate );
-            List<List<Contact>> searchResults = [
-                FIND :searchString IN PHONE FIELDS
-                RETURNING Contact(
-                    Id , Name , Email , HomePhone , NSP_Work_Phone__c , MobilePhone
-                    WHERE ( CreatedDate >= :(limitDate) )
-                    LIMIT :FindContactVoiceFlow.limitSearch
-                )
-            ];
-            List<Contact> records = new List<Contact>();
-            for ( List<Contact> resultList : searchResults ) {
-                records.addAll( resultList );
+        if ( ( phoneNumbers != null )
+            && !phoneNumbers.isEmpty()
+            && String.isNotBlank( phoneNumbers[0] )
+            )
+        {
+            String input = String.valueOf( phoneNumbers[0] ).trim();
+            if ( input.length() > 1 ) {
+                Date limitDate = System.today().addDays( -1 * FindContactVoiceFlow.limitCreatedDate );
+                List<List<Contact>> searchResults = [
+                    FIND :input IN PHONE FIELDS
+                    RETURNING Contact(
+                        Id , Name , Email , HomePhone , NSP_Work_Phone__c , MobilePhone
+                        WHERE ( CreatedDate >= :(limitDate) )
+                        LIMIT :FindContactVoiceFlow.limitSearch
+                    )
+                ];
+                List<Contact> records = new List<Contact>();
+                for ( List<Contact> resultList : searchResults ) {
+                    records.addAll( resultList );
+                }
+                result.add( records );
             }
-            result.add( records );
         }
         return result;
     }
