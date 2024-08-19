@@ -8,7 +8,7 @@
     <permissionSets>NSP_Read_Access_on_Sub_client_contact_addresses</permissionSets>
     <permissionSets>NSP_Termination_Form_Access</permissionSets>
     <permissionSets>RET_Services_Sales_to_Implementation</permissionSets>
-    <permissionSets>Task_Task_Record_Type_Assignment</permissionSets>
+    <permissionSets>Task_Record_Type_Task</permissionSets>
     <permissionSets>Termination_form_field_access</permissionSets>
     <permissionSets>bloomfirex__Bloomfire_User</permissionSets>
     <status>Updated</status>
