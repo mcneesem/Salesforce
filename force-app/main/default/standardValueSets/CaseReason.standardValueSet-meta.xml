@@ -235,4 +235,22 @@
         <label>Wages Raised</label>
         <cssExposed>false</cssExposed>
     </standardValue>
+    <standardValue>
+        <fullName>Left Voicemail</fullName>
+        <default>false</default>
+        <label>Left Voicemail</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>No Voicemail</fullName>
+        <default>false</default>
+        <label>No Voicemail</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>Referred to Vendor</fullName>
+        <default>false</default>
+        <label>Referred to Vendor</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
 </StandardValueSet>
