@@ -498,6 +498,21 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>VoiceCall.Agent_Call_Duration_Time__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>VoiceCall.Total_Call_Duration_Time__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>VoiceCall.Wait_time__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>pse__Assignment__c.Assignment_Id_18__c</field>
         <readable>true</readable>
     </fieldPermissions>
