@@ -26,8 +26,13 @@ public with sharing class NSP_AccrualProfileController {
         List<String> lstAttachedFilesName=new List<String>();
         try {
             for(ContentDocumentLink cdlink : [SELECT contentDocument.Title, contentDocument.FileExtension FROM ContentDocumentLink WHERE LinkedEntityId=:recordId]){
-                String fileName=cdlink.contentDocument.Title+'.'+cdlink.contentDocument.FileExtension;
-                lstAttachedFilesName.add(fileName);
+                if ( ( cdlink.contentDocument != null ) && String.isNotBlank( cdlink.contentDocument.Title ) ) {
+                    String fileName = cdlink.contentDocument.Title;
+                    if ( String.isNotBlank( cdlink.contentDocument.FileExtension ) ) {
+                        fileName += '.' + cdlink.contentDocument.FileExtension;
+                    }
+                    lstAttachedFilesName.add( fileName );
+                }
             }
         } catch (Exception ex) {
             throw NSP_Utilities.getAuraException(ex);
