@@ -5,6 +5,16 @@
         <name>Find_Related_Contact_Screen_Flow</name>
     </customPermissions>
     <description>Grants the Custom Permission to control access to &quot;Find Related Contact Screen Flow&quot; components.</description>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.Case_Number_Hyperlink__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.First_Call_Resolution__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <flowAccesses>
         <enabled>true</enabled>
         <flow>Find_Related_Contact_Screen_Flow</flow>
