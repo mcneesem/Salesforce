@@ -138,6 +138,11 @@
         </rules>
     </decisions>
     <environments>Default</environments>
+    <formulas>
+        <name>Go_Live_Date</name>
+        <dataType>Date</dataType>
+        <expression>{!$Record.Targeted_1st_Payroll_Processing__c}+ 4</expression>
+    </formulas>
     <interviewLabel>Onboarding Profile Updated Async Project Fields {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Onboarding Profile Updated Async Project Fields</label>
     <loops>
