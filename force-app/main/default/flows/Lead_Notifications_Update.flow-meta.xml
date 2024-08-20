@@ -182,10 +182,38 @@
             <name>Notify_CSS_Rep_Yes</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>formulaNotifyCSSRep</leftValueReference>
+                <leftValueReference>$Record.RecordType.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Referral</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.IsConverted</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.CreatedById</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>$Record.OwnerId</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.CreatedBy.IsActive</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.CreatedBy.Email</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -207,10 +235,17 @@
             <name>Notify_Lead_Owner_Yes</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>formulaNotifyLeadOwner</leftValueReference>
-                <operator>EqualTo</operator>
+                <leftValueReference>$Record.OwnerId</leftValueReference>
+                <operator>IsBlank</operator>
                 <rightValue>
-                    <booleanValue>true</booleanValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.OwnerId</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>$User.Id</elementReference>
                 </rightValue>
             </conditions>
             <connector>
@@ -233,14 +268,14 @@
             <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.Owner:Group.Email</leftValueReference>
-                <operator>IsNull</operator>
+                <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
                 <leftValueReference>$Record.Owner:User.Email</leftValueReference>
-                <operator>IsNull</operator>
+                <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
@@ -254,16 +289,6 @@
     <description>Migrated from the Notify Lead Owner of Assignment process using multiple criteria.
 The PB notifies the lead record owner whenever a record is assigned to them.</description>
     <environments>Default</environments>
-    <formulas>
-        <name>formulaNotifyCSSRep</name>
-        <dataType>Boolean</dataType>
-        <expression>AND({!$Record.RecordType.Name} =&quot;Referral&quot;, {!$Record.IsConverted}, {!$Record.CreatedById} &lt;&gt; {!$Record.OwnerId}, {!$Record.CreatedBy.IsActive}, NOT(ISBLANK({!$Record.CreatedBy.Email})))</expression>
-    </formulas>
-    <formulas>
-        <name>formulaNotifyLeadOwner</name>
-        <dataType>Boolean</dataType>
-        <expression>AND (LEFT($User.Id,15) &lt;&gt; LEFT({!$Record.OwnerId},15), NOT(ISBLANK({!$Record.OwnerId})))</expression>
-    </formulas>
     <interviewLabel>Lead Notifications - Update {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Lead Notifications - Update - Async</label>
     <processMetadataValues>
@@ -306,12 +331,19 @@ The PB notifies the lead record owner whenever a record is assigned to them.</de
     <start>
         <locationX>50</locationX>
         <locationY>0</locationY>
-        <filterLogic>1 OR (2 AND 3)</filterLogic>
+        <filterLogic>(1 AND 2) OR (3 AND 4)</filterLogic>
         <filters>
             <field>OwnerId</field>
             <operator>IsChanged</operator>
             <value>
                 <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>OwnerId</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
             </value>
         </filters>
         <filters>
@@ -397,7 +429,7 @@ The PB notifies the lead record owner whenever a record is assigned to them.</de
         <inputAssignments>
             <name>faultFlow</name>
             <value>
-                <stringValue>Notifiy Lead Owner of Assignment</stringValue>
+                <stringValue>Lead Notification - Update</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
