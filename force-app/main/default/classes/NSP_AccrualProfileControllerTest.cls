@@ -46,8 +46,8 @@ private class NSP_AccrualProfileControllerTest {
         
         ContentVersion accProfileAttachmentContentVersion = (ContentVersion)NSP_TestExtendedDataFactory.createSObject(new ContentVersion(), 'NSP_TestDataFactory.ContentVersionDefaults', false);
         accProfileAttachmentContentVersion.Title='Header_Picture1'; 
-		accProfileAttachmentContentVersion.PathOnClient='/' + accProfileAttachmentContentVersion.Title + '.jpg'; 
-		Blob bodyBlob=Blob.valueOf('Unit Test ContentVersion Body'); 
+        accProfileAttachmentContentVersion.PathOnClient='/' + accProfileAttachmentContentVersion.Title + '.jpg'; 
+        Blob bodyBlob=Blob.valueOf('Unit Test ContentVersion Body'); 
         accProfileAttachmentContentVersion.VersionData=bodyBlob; 
         accProfileAttachmentContentVersion.origin = 'H';
         insert accProfileAttachmentContentVersion;
@@ -60,7 +60,7 @@ private class NSP_AccrualProfileControllerTest {
         insert accProfileAttachmentContentDocumentLink;
         
         NSP_Accrual_Profile_Account_Relationship__c accProfileAccRelationship = (NSP_Accrual_Profile_Account_Relationship__c)NSP_TestExtendedDataFactory.createSObject(new NSP_Accrual_Profile_Account_Relationship__c(), 'NSP_TestDataFactory.AccrualProfileAccountRelationshipDefaults', false);
-		accProfileAccRelationship.NSP_Accrual_Profile__c = lstAccProfile[0].Id;
+        accProfileAccRelationship.NSP_Accrual_Profile__c = lstAccProfile[0].Id;
         accProfileAccRelationship.NSP_Account__c= accoutObject.Id;
         insert accProfileAccRelationship;
     }
