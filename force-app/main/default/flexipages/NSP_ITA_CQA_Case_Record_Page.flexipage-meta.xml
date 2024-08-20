@@ -166,7 +166,7 @@
                 <visibilityRule>
                     <booleanFilter>1 AND (2 OR 3 OR 4 OR 5 OR 6)</booleanFilter>
                     <criteria>
-                        <leftValue>{!Record.National_Account_Group__c}</leftValue>
+                        <leftValue>{!Record.National_Account_Type__c}</leftValue>
                         <operator>NE</operator>
                     </criteria>
                     <criteria>
