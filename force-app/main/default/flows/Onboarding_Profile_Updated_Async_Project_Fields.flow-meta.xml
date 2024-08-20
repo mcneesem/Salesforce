@@ -22,7 +22,7 @@
         <name>Fault_Element_For_Update_Project_Records</name>
         <label>Fault Element For Update Project Records</label>
         <locationX>484</locationX>
-        <locationY>900</locationY>
+        <locationY>1008</locationY>
         <assignmentItems>
             <assignToReference>Fault_Element</assignToReference>
             <operator>Assign</operator>
@@ -32,6 +32,22 @@
         </assignmentItems>
         <connector>
             <targetReference>Flow_Error_while_updating_Project_Records</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Modified_Project_Collection</name>
+        <label>Set Modified Project Collection</label>
+        <locationX>308</locationX>
+        <locationY>708</locationY>
+        <assignmentItems>
+            <assignToReference>Modified_Project_Records</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>Iterate_Over_The_Project_Records</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Iterate_Over_The_Project_Records</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -74,8 +90,22 @@
                 <elementReference>$Record.Pay_Frequency__c</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Iterate_Over_The_Project_Records.FEIN__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.FEIN_Number__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Iterate_Over_The_Project_Records.Go_Live_Date__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Pay_Days__c</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
-            <targetReference>Iterate_Over_The_Project_Records</targetReference>
+            <targetReference>Set_Modified_Project_Collection</targetReference>
         </connector>
     </assignments>
     <decisions>
@@ -166,22 +196,24 @@
         <getFirstRecordOnly>false</getFirstRecordOnly>
         <object>pse__Proj__c</object>
         <queriedFields>Id</queriedFields>
+        <queriedFields>Processing_Date__c</queriedFields>
+        <queriedFields>Time_and_Labor_Effective_date__c</queriedFields>
         <queriedFields>Benefit_Effective_date__c</queriedFields>
         <queriedFields>Complexity_Score__c</queriedFields>
         <queriedFields>Pay_Frequency__c</queriedFields>
-        <queriedFields>Processing_Date__c</queriedFields>
-        <queriedFields>Time_and_Labor_Effective_date__c</queriedFields>
+        <queriedFields>FEIN__c</queriedFields>
+        <queriedFields>Go_Live_Date__c</queriedFields>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordUpdates>
         <name>Update_Project_Records</name>
         <label>Update Project Records</label>
         <locationX>220</locationX>
-        <locationY>792</locationY>
+        <locationY>900</locationY>
         <faultConnector>
             <targetReference>Fault_Element_For_Update_Project_Records</targetReference>
         </faultConnector>
-        <inputReference>Get_Project_Records</inputReference>
+        <inputReference>Modified_Project_Records</inputReference>
     </recordUpdates>
     <start>
         <locationX>50</locationX>
@@ -216,7 +248,7 @@
         <name>Flow_Error_while_updating_Project_Records</name>
         <label>Flow Error while updating Project Records</label>
         <locationX>484</locationX>
-        <locationY>1008</locationY>
+        <locationY>1116</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultElement</name>
@@ -246,5 +278,13 @@
         <value>
             <stringValue></stringValue>
         </value>
+    </variables>
+    <variables>
+        <name>Modified_Project_Records</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>pse__Proj__c</objectType>
     </variables>
 </Flow>
