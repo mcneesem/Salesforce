@@ -582,7 +582,7 @@ export default class Nsp_accrualProfileRecordForm extends NavigationMixin(
       objectApiName: 'Account',
       searchCategory: 'Name',
       additionalInfoField: [
-        'NSP_Client_AIMS__c',
+        'NSP_AIMS_Client__c',
       ].join(','),
       resultSize: 10,
     });
@@ -591,10 +591,10 @@ export default class Nsp_accrualProfileRecordForm extends NavigationMixin(
       .then((results) => {
         const options = results.map((option) => {
           const infoObj = JSON.parse(option.info);
-          const accName = infoObj['NSP_Client_AIMS__c'];
+          const accName = infoObj['NSP_AIMS_Client__c'];
           const accId = infoObj.NSP_Account__c;
           const info =
-            (infoObj.NSP_Client_AIMS__c || '');
+            (infoObj.NSP_AIMS_Client__c || '');
           return { ...option, info, accName, accId };
         });
         this.accountSearchResults = options;
