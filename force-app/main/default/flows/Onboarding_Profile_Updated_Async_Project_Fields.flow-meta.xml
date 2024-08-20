@@ -101,7 +101,7 @@
             <assignToReference>Iterate_Over_The_Project_Records.Go_Live_Date__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>$Record.Pay_Days__c</elementReference>
+                <elementReference>$Record.Pay_Day__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -138,11 +138,6 @@
         </rules>
     </decisions>
     <environments>Default</environments>
-    <formulas>
-        <name>Go_Live_Date</name>
-        <dataType>Date</dataType>
-        <expression>{!$Record.Targeted_1st_Payroll_Processing__c}+ 4</expression>
-    </formulas>
     <interviewLabel>Onboarding Profile Updated Async Project Fields {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Onboarding Profile Updated Async Project Fields</label>
     <loops>
