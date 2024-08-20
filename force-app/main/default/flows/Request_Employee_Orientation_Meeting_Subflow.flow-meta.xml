@@ -4,7 +4,7 @@
     <assignments>
         <name>Add_Task1</name>
         <label>Add Task1</label>
-        <locationX>3482</locationX>
+        <locationX>5066</locationX>
         <locationY>1430</locationY>
         <assignmentItems>
             <assignToReference>rc_tasks_eom</assignToReference>
@@ -20,7 +20,7 @@
     <assignments>
         <name>Add_Task2</name>
         <label>Add Task2</label>
-        <locationX>2426</locationX>
+        <locationX>3482</locationX>
         <locationY>1970</locationY>
         <assignmentItems>
             <assignToReference>rc_tasks_eom</assignToReference>
@@ -36,7 +36,7 @@
     <assignments>
         <name>Add_Task3</name>
         <label>Add Task3</label>
-        <locationX>1370</locationX>
+        <locationX>1898</locationX>
         <locationY>2510</locationY>
         <assignmentItems>
             <assignToReference>rc_tasks_eom</assignToReference>
@@ -68,7 +68,7 @@
     <assignments>
         <name>Assign_OMR_Task1</name>
         <label>Assign OMR Task1</label>
-        <locationX>3482</locationX>
+        <locationX>5066</locationX>
         <locationY>1322</locationY>
         <assignmentItems>
             <assignToReference>rec_task_eom.Description</assignToReference>
@@ -147,7 +147,7 @@
     <assignments>
         <name>Assign_OMR_Task2</name>
         <label>Assign OMR Task2</label>
-        <locationX>2426</locationX>
+        <locationX>3482</locationX>
         <locationY>1862</locationY>
         <assignmentItems>
             <assignToReference>rec_task_eom.Description</assignToReference>
@@ -226,7 +226,7 @@
     <assignments>
         <name>Assign_OMR_Task3</name>
         <label>Assign OMR Task3</label>
-        <locationX>1370</locationX>
+        <locationX>1898</locationX>
         <locationY>2402</locationY>
         <assignmentItems>
             <assignToReference>rec_task_eom.Description</assignToReference>
@@ -384,7 +384,7 @@
     <assignments>
         <name>Set_Fault_Element_Decrement_1st_Selected_OMR_Record</name>
         <label>Set Fault Element: Decrement_1st_Selected_OMR_Record</label>
-        <locationX>4010</locationX>
+        <locationX>6650</locationX>
         <locationY>890</locationY>
         <assignmentItems>
             <assignToReference>faultElement</assignToReference>
@@ -401,7 +401,7 @@
     <assignments>
         <name>Set_Fault_Element_Decrement_2nd_Selected_OMR_Record</name>
         <label>Set Fault Element: Decrement_2nd_Selected_OMR_Record</label>
-        <locationX>2954</locationX>
+        <locationX>4274</locationX>
         <locationY>1754</locationY>
         <assignmentItems>
             <assignToReference>faultElement</assignToReference>
@@ -418,7 +418,7 @@
     <assignments>
         <name>Set_Fault_Element_Decrement_3rd_Selected_OMR_Record</name>
         <label>Set Fault Element: Decrement_3rd_Selected_OMR_Record</label>
-        <locationX>1898</locationX>
+        <locationX>2690</locationX>
         <locationY>2294</locationY>
         <assignmentItems>
             <assignToReference>faultElement</assignToReference>
@@ -435,7 +435,7 @@
     <assignments>
         <name>Set_Fault_Element_Decrement_4th_Selected_OMR_Record</name>
         <label>Set Fault Element: Decrement_4th_Selected_OMR_Record</label>
-        <locationX>842</locationX>
+        <locationX>1106</locationX>
         <locationY>2834</locationY>
         <assignmentItems>
             <assignToReference>faultElement</assignToReference>
@@ -450,9 +450,230 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Set_Fault_Element_Get_entity_definition_of_account</name>
+        <label>Set Fault Element: Get_entity_definition_of_account</label>
+        <locationX>6386</locationX>
+        <locationY>998</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_entity_definition_of_account</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Get_field_definition_of_sales_office_on_account</name>
+        <label>Set Fault Element : Get_field_definition_of_sales_office_on_account</label>
+        <locationX>6122</locationX>
+        <locationY>1106</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_field_definition_of_sales_office_on_account</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Get_OMR_Dates_in_Time_Parameters_After_SKO</name>
+        <label>Set Fault Element : Get_OMR_Dates_in_Time_Parameters_After_SKO</label>
+        <locationX>6914</locationX>
+        <locationY>566</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_OMR_Dates_in_Time_Parameters_After_SKO</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Get_OMR_Dates_in_Time_Parameters_After_SKO_2</name>
+        <label>Set Fault Element: Get_OMR_Dates_in_Time_Parameters_After_SKO_2</label>
+        <locationX>4538</locationX>
+        <locationY>1430</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_OMR_Dates_in_Time_Parameters_After_SKO_2</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Get_OMR_Dates_in_Time_Parameters_After_SKO_3</name>
+        <label>Set Fault Element: Get_OMR_Dates_in_Time_Parameters_After_SKO_3</label>
+        <locationX>2954</locationX>
+        <locationY>1970</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_OMR_Dates_in_Time_Parameters_After_SKO_3</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Get_OMR_Dates_in_Time_Parameters_After_SKO_4</name>
+        <label>Set Fault Element: Get_OMR_Dates_in_Time_Parameters_After_SKO_4</label>
+        <locationX>1370</locationX>
+        <locationY>2510</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_OMR_Dates_in_Time_Parameters_After_SKO_4</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Get_OMR_Task_Record_Type_ID</name>
+        <label>Set Fault Element: Get_OMR_Task_Record_Type_ID</label>
+        <locationX>7442</locationX>
+        <locationY>242</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_OMR_Task_Record_Type_ID</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Get_Onboarding_Meeting_Request_Queue</name>
+        <label>Set Fault Element: Get_Onboarding_Meeting_Request_Queue</label>
+        <locationX>7178</locationX>
+        <locationY>350</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Onboarding_Meeting_Request_Queue</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Get_picklistvalueinfo_of_sales_office_on_account</name>
+        <label>Set Fault Element: Get_picklistvalueinfo_of_sales_office_on_account</label>
+        <locationX>5858</locationX>
+        <locationY>1214</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_picklistvalueinfo_of_sales_office_on_account</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Select_1st_Account</name>
+        <label>Set Fault Element : Select_1st_Account</label>
+        <locationX>5594</locationX>
+        <locationY>1646</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Select_1st_Account</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Select_2nd_Account</name>
+        <label>Set Fault Element: Select_2nd_Account</label>
+        <locationX>4010</locationX>
+        <locationY>2186</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Select_2nd_Account</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Select_3rd_Account</name>
+        <label>Set Fault Element: Select_3rd_Account</label>
+        <locationX>2426</locationX>
+        <locationY>2726</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Select_3rd_Account</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Select_4th_Account</name>
+        <label>Set Fault Element: Select_4th_Account</label>
+        <locationX>842</locationX>
+        <locationY>3158</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Select_4th_Account</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Set_Fault_Element_Stamp_Account_with_1st_Selected_Orientation_OMR_Record</name>
         <label>Set Fault Element: Stamp_Account_with_1st_Selected_Orientation_OMR_Record</label>
-        <locationX>3482</locationX>
+        <locationX>5066</locationX>
         <locationY>1862</locationY>
         <assignmentItems>
             <assignToReference>faultElement</assignToReference>
@@ -469,7 +690,7 @@
     <assignments>
         <name>Set_Fault_Element_Stamp_Account_with_2nd_Selected_Orientation_OMR_Record</name>
         <label>Set Fault Element: Stamp_Account_with_2nd_Selected_Orientation_OMR_Record</label>
-        <locationX>2426</locationX>
+        <locationX>3482</locationX>
         <locationY>2402</locationY>
         <assignmentItems>
             <assignToReference>faultElement</assignToReference>
@@ -486,7 +707,7 @@
     <assignments>
         <name>Set_Fault_Element_Stamp_Account_with_3rd_Selected_Orientation_OMR_Record</name>
         <label>Set Fault Element: Stamp_Account_with_3rd_Selected_Orientation_OMR_Record</label>
-        <locationX>1370</locationX>
+        <locationX>1898</locationX>
         <locationY>2942</locationY>
         <assignmentItems>
             <assignToReference>faultElement</assignToReference>
@@ -517,22 +738,6 @@
         </connector>
     </assignments>
     <choices>
-        <name>Client_Location</name>
-        <choiceText>Client Location</choiceText>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>Client Location</stringValue>
-        </value>
-    </choices>
-    <choices>
-        <name>Employee_Home</name>
-        <choiceText>Employee Home</choiceText>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>Employee Home</stringValue>
-        </value>
-    </choices>
-    <choices>
         <name>No</name>
         <choiceText>No</choiceText>
         <dataType>String</dataType>
@@ -546,30 +751,6 @@
         <dataType>String</dataType>
         <value>
             <stringValue>On-Site</stringValue>
-        </value>
-    </choices>
-    <choices>
-        <name>PDF</name>
-        <choiceText>PDF</choiceText>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>PDF</stringValue>
-        </value>
-    </choices>
-    <choices>
-        <name>PDF_and_Shipped</name>
-        <choiceText>PDF and Shipped</choiceText>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>PDF and Shipped</stringValue>
-        </value>
-    </choices>
-    <choices>
-        <name>Shipped</name>
-        <choiceText>Shipped</choiceText>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>Shipped</stringValue>
         </value>
     </choices>
     <choices>
@@ -624,7 +805,7 @@
         <name>Sort_OMRs_by_date_and_time_1</name>
         <elementSubtype>SortCollectionProcessor</elementSubtype>
         <label>Sort OMRs by date and time 1</label>
-        <locationX>2558</locationX>
+        <locationX>3680</locationX>
         <locationY>566</locationY>
         <collectionProcessorType>SortCollectionProcessor</collectionProcessorType>
         <collectionReference>Get_OMR_Dates_in_Time_Parameters_After_SKO</collectionReference>
@@ -646,7 +827,7 @@
         <name>Sort_OMRs_by_date_and_time_2</name>
         <elementSubtype>SortCollectionProcessor</elementSubtype>
         <label>Sort OMRs by date and time 2</label>
-        <locationX>1634</locationX>
+        <locationX>2294</locationX>
         <locationY>1430</locationY>
         <collectionProcessorType>SortCollectionProcessor</collectionProcessorType>
         <collectionReference>Get_OMR_Dates_in_Time_Parameters_After_SKO_2</collectionReference>
@@ -668,7 +849,7 @@
         <name>Sort_OMRs_by_date_and_time_3</name>
         <elementSubtype>SortCollectionProcessor</elementSubtype>
         <label>Sort OMRs by date and time 3</label>
-        <locationX>842</locationX>
+        <locationX>1106</locationX>
         <locationY>1970</locationY>
         <collectionProcessorType>SortCollectionProcessor</collectionProcessorType>
         <collectionReference>Get_OMR_Dates_in_Time_Parameters_After_SKO_3</collectionReference>
@@ -711,7 +892,7 @@
     <decisions>
         <name>Check_1st_Account</name>
         <label>Check 1st Account</label>
-        <locationX>3482</locationX>
+        <locationX>5066</locationX>
         <locationY>1646</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -733,7 +914,7 @@
     <decisions>
         <name>Check_2nd_Account</name>
         <label>Check 2nd Account</label>
-        <locationX>2426</locationX>
+        <locationX>3482</locationX>
         <locationY>2186</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -755,7 +936,7 @@
     <decisions>
         <name>Check_3rd_Account</name>
         <label>Check 3rd Account</label>
-        <locationX>1370</locationX>
+        <locationX>1898</locationX>
         <locationY>2726</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -799,7 +980,7 @@
     <decisions>
         <name>More_than_1_requested_EOM</name>
         <label>More than 1 requested EOM?</label>
-        <locationX>2558</locationX>
+        <locationX>3680</locationX>
         <locationY>1214</locationY>
         <defaultConnector>
             <targetReference>Assign_OMR_Task1</targetReference>
@@ -824,7 +1005,7 @@
     <decisions>
         <name>More_than_2_requested_EOM</name>
         <label>More than 2 requested EOM?</label>
-        <locationX>1634</locationX>
+        <locationX>2294</locationX>
         <locationY>1754</locationY>
         <defaultConnector>
             <targetReference>Assign_OMR_Task2</targetReference>
@@ -856,7 +1037,7 @@
     <decisions>
         <name>More_than_3_requested_EOM</name>
         <label>More than 3 requested EOM?</label>
-        <locationX>842</locationX>
+        <locationX>1106</locationX>
         <locationY>2294</locationY>
         <defaultConnector>
             <targetReference>Assign_OMR_Task3</targetReference>
@@ -892,6 +1073,7 @@
             <label>Greater than 3 EOM Requested</label>
         </rules>
     </decisions>
+    <description>Removed unused Variable/Screen Components , added exception handling</description>
     <environments>Default</environments>
     <formulas>
         <name>decrement_omr_1</name>
@@ -962,12 +1144,15 @@
     <recordLookups>
         <name>Get_entity_definition_of_account</name>
         <label>Get entity definition of account</label>
-        <locationX>2558</locationX>
+        <locationX>3680</locationX>
         <locationY>890</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_field_definition_of_sales_office_on_account</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_Get_entity_definition_of_account</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>DeveloperName</field>
@@ -983,12 +1168,15 @@
     <recordLookups>
         <name>Get_field_definition_of_sales_office_on_account</name>
         <label>Get field definition of sales office on account</label>
-        <locationX>2558</locationX>
+        <locationX>3680</locationX>
         <locationY>998</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_picklistvalueinfo_of_sales_office_on_account</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_Get_field_definition_of_sales_office_on_account</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>QualifiedApiName</field>
@@ -1011,12 +1199,15 @@
     <recordLookups>
         <name>Get_OMR_Dates_in_Time_Parameters_After_SKO</name>
         <label>Get OMR Dates in Time Parameters After SKO</label>
-        <locationX>2558</locationX>
+        <locationX>3680</locationX>
         <locationY>458</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Sort_OMRs_by_date_and_time_1</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_Get_OMR_Dates_in_Time_Parameters_After_SKO</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Date_Valid__c</field>
@@ -1062,12 +1253,15 @@
     <recordLookups>
         <name>Get_OMR_Dates_in_Time_Parameters_After_SKO_2</name>
         <label>Get OMR Dates in Time Parameters After SKO 2</label>
-        <locationX>1634</locationX>
+        <locationX>2294</locationX>
         <locationY>1322</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Sort_OMRs_by_date_and_time_2</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_Get_OMR_Dates_in_Time_Parameters_After_SKO_2</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Date_Valid__c</field>
@@ -1113,12 +1307,15 @@
     <recordLookups>
         <name>Get_OMR_Dates_in_Time_Parameters_After_SKO_3</name>
         <label>Get OMR Dates in Time Parameters After SKO 3</label>
-        <locationX>842</locationX>
+        <locationX>1106</locationX>
         <locationY>1862</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Sort_OMRs_by_date_and_time_3</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_Get_OMR_Dates_in_Time_Parameters_After_SKO_3</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Date_Valid__c</field>
@@ -1170,6 +1367,9 @@
         <connector>
             <targetReference>Sort_OMRs_by_date_and_time_4</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_Get_OMR_Dates_in_Time_Parameters_After_SKO_4</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Date_Valid__c</field>
@@ -1215,12 +1415,15 @@
     <recordLookups>
         <name>Get_OMR_Task_Record_Type_ID</name>
         <label>Get OMR Task Record Type ID</label>
-        <locationX>2558</locationX>
+        <locationX>3680</locationX>
         <locationY>134</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Onboarding_Meeting_Request_Queue</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_Get_OMR_Task_Record_Type_ID</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>DeveloperName</field>
@@ -1243,12 +1446,15 @@
     <recordLookups>
         <name>Get_Onboarding_Meeting_Request_Queue</name>
         <label>Get Onboarding Meeting Request Queue</label>
-        <locationX>2558</locationX>
+        <locationX>3680</locationX>
         <locationY>242</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Employee_Orientation_Meeting_Type_Start_Screen</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_Get_Onboarding_Meeting_Request_Queue</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Type</field>
@@ -1271,12 +1477,15 @@
     <recordLookups>
         <name>Get_picklistvalueinfo_of_sales_office_on_account</name>
         <label>Get picklistvalueinfo of sales office on account</label>
-        <locationX>2558</locationX>
+        <locationX>3680</locationX>
         <locationY>1106</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>More_than_1_requested_EOM</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_Get_picklistvalueinfo_of_sales_office_on_account</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>EntityParticleId</field>
@@ -1299,12 +1508,15 @@
     <recordLookups>
         <name>Select_1st_Account</name>
         <label>Select 1st Account</label>
-        <locationX>3482</locationX>
+        <locationX>5066</locationX>
         <locationY>1538</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_1st_Account</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_Select_1st_Account</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -1322,12 +1534,15 @@
     <recordLookups>
         <name>Select_2nd_Account</name>
         <label>Select 2nd Account</label>
-        <locationX>2426</locationX>
+        <locationX>3482</locationX>
         <locationY>2078</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_2nd_Account</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_Select_2nd_Account</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -1345,12 +1560,15 @@
     <recordLookups>
         <name>Select_3rd_Account</name>
         <label>Select 3rd Account</label>
-        <locationX>1370</locationX>
+        <locationX>1898</locationX>
         <locationY>2618</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_3rd_Account</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_Select_3rd_Account</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -1374,6 +1592,9 @@
         <connector>
             <targetReference>Check_4th_Account</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_Select_4th_Account</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -1391,7 +1612,7 @@
     <recordUpdates>
         <name>Decrement_1st_Selected_OMR_Record</name>
         <label>Decrement 1st Selected OMR Record</label>
-        <locationX>2558</locationX>
+        <locationX>3680</locationX>
         <locationY>782</locationY>
         <connector>
             <targetReference>Get_entity_definition_of_account</targetReference>
@@ -1418,7 +1639,7 @@
     <recordUpdates>
         <name>Decrement_2nd_Selected_OMR_Record</name>
         <label>Decrement 2nd Selected OMR Record</label>
-        <locationX>1634</locationX>
+        <locationX>2294</locationX>
         <locationY>1646</locationY>
         <connector>
             <targetReference>More_than_2_requested_EOM</targetReference>
@@ -1445,7 +1666,7 @@
     <recordUpdates>
         <name>Decrement_3rd_Selected_OMR_Record</name>
         <label>Decrement 3rd Selected OMR Record</label>
-        <locationX>842</locationX>
+        <locationX>1106</locationX>
         <locationY>2186</locationY>
         <connector>
             <targetReference>More_than_3_requested_EOM</targetReference>
@@ -1499,7 +1720,7 @@
     <recordUpdates>
         <name>Stamp_Account_with_1st_Selected_Orientation_OMR_Record</name>
         <label>Stamp Account with 1st Selected Orientation OMR Record</label>
-        <locationX>3218</locationX>
+        <locationX>4802</locationX>
         <locationY>1754</locationY>
         <faultConnector>
             <targetReference>Set_Fault_Element_Stamp_Account_with_1st_Selected_Orientation_OMR_Record</targetReference>
@@ -1523,7 +1744,7 @@
     <recordUpdates>
         <name>Stamp_Account_with_2nd_Selected_Orientation_OMR_Record</name>
         <label>Stamp Account with 2nd Selected Orientation OMR Record</label>
-        <locationX>2162</locationX>
+        <locationX>3218</locationX>
         <locationY>2294</locationY>
         <faultConnector>
             <targetReference>Set_Fault_Element_Stamp_Account_with_2nd_Selected_Orientation_OMR_Record</targetReference>
@@ -1553,7 +1774,7 @@
     <recordUpdates>
         <name>Stamp_Account_with_3rd_Selected_Orientation_OMR_Record</name>
         <label>Stamp Account with 3rd Selected Orientation OMR Record</label>
-        <locationX>1106</locationX>
+        <locationX>1634</locationX>
         <locationY>2834</locationY>
         <faultConnector>
             <targetReference>Set_Fault_Element_Stamp_Account_with_3rd_Selected_Orientation_OMR_Record</targetReference>
@@ -1632,7 +1853,7 @@
     <screens>
         <name>Employee_Orientation_Meeting_Type_Start_Screen</name>
         <label>Employee Orientation Meeting Type Start Screen</label>
-        <locationX>2558</locationX>
+        <locationX>3680</locationX>
         <locationY>350</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -1685,7 +1906,7 @@
     <screens>
         <name>Select_1st_Employee_Orientation_Meeting</name>
         <label>Select 1st Employee Orientation Meeting</label>
-        <locationX>2558</locationX>
+        <locationX>3680</locationX>
         <locationY>674</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -1839,96 +2060,13 @@
                 </conditions>
             </visibilityRule>
         </fields>
-        <fields>
-            <name>OT_Materials_Delivered_EOM1</name>
-            <choiceReferences>PDF</choiceReferences>
-            <choiceReferences>Shipped</choiceReferences>
-            <choiceReferences>PDF_and_Shipped</choiceReferences>
-            <dataType>String</dataType>
-            <fieldText>How would the Client like the OT Materials Delivered?</fieldText>
-            <fieldType>DropdownBox</fieldType>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>false</isRequired>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>vHIDE</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>false</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>Ship_the_Materials_EOM1</name>
-            <choiceReferences>Client_Location</choiceReferences>
-            <choiceReferences>Employee_Home</choiceReferences>
-            <dataType>String</dataType>
-            <fieldText>Where do we Ship the Materials?</fieldText>
-            <fieldType>DropdownBox</fieldType>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>false</isRequired>
-            <visibilityRule>
-                <conditionLogic>or</conditionLogic>
-                <conditions>
-                    <leftValueReference>OT_Materials_Delivered_EOM1</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <elementReference>Shipped</elementReference>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>OT_Materials_Delivered_EOM1</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <elementReference>PDF_and_Shipped</elementReference>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>Client_Contact_EOM1</name>
-            <dataType>String</dataType>
-            <fieldText>Client Contact</fieldText>
-            <fieldType>InputField</fieldType>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>false</isRequired>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>Ship_the_Materials_EOM1</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <elementReference>Client_Location</elementReference>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>Client_Address_EOM1</name>
-            <fieldText>Client Address</fieldText>
-            <fieldType>LargeTextArea</fieldType>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>false</isRequired>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>Ship_the_Materials_EOM1</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <elementReference>Client_Location</elementReference>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
     <screens>
         <name>Select_2nd_Employee_Orientation_Meeting</name>
         <label>Select 2nd Employee Orientation Meeting</label>
-        <locationX>1634</locationX>
+        <locationX>2294</locationX>
         <locationY>1538</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -2082,96 +2220,13 @@
                 </conditions>
             </visibilityRule>
         </fields>
-        <fields>
-            <name>OT_Materials_Delivered_EOM2</name>
-            <choiceReferences>PDF</choiceReferences>
-            <choiceReferences>Shipped</choiceReferences>
-            <choiceReferences>PDF_and_Shipped</choiceReferences>
-            <dataType>String</dataType>
-            <fieldText>How would the Client like the OT Materials Delivered?</fieldText>
-            <fieldType>DropdownBox</fieldType>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>vHIDE</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>false</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>Ship_the_Materials_EOM2</name>
-            <choiceReferences>Client_Location</choiceReferences>
-            <choiceReferences>Employee_Home</choiceReferences>
-            <dataType>String</dataType>
-            <fieldText>Where do we Ship the Materials?</fieldText>
-            <fieldType>DropdownBox</fieldType>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>false</isRequired>
-            <visibilityRule>
-                <conditionLogic>or</conditionLogic>
-                <conditions>
-                    <leftValueReference>OT_Materials_Delivered_EOM2</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <elementReference>Shipped</elementReference>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>OT_Materials_Delivered_EOM2</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <elementReference>PDF_and_Shipped</elementReference>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>Client_Contact_EOM2</name>
-            <dataType>String</dataType>
-            <fieldText>Client Contact</fieldText>
-            <fieldType>InputField</fieldType>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>false</isRequired>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>Ship_the_Materials_EOM2</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <elementReference>Client_Location</elementReference>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>Client_Address_EOM2</name>
-            <fieldText>Client Address</fieldText>
-            <fieldType>LargeTextArea</fieldType>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>false</isRequired>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>Ship_the_Materials_EOM2</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <elementReference>Client_Location</elementReference>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
     <screens>
         <name>Select_3rd_Employee_Orientation_Meeting</name>
         <label>Select 3rd Employee Orientation Meeting</label>
-        <locationX>842</locationX>
+        <locationX>1106</locationX>
         <locationY>2078</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -2299,89 +2354,6 @@
                     <operator>EqualTo</operator>
                     <rightValue>
                         <elementReference>Yes</elementReference>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>OT_Materials_Delivered_EOM3</name>
-            <choiceReferences>PDF</choiceReferences>
-            <choiceReferences>Shipped</choiceReferences>
-            <choiceReferences>PDF_and_Shipped</choiceReferences>
-            <dataType>String</dataType>
-            <fieldText>How would the Client like the OT Materials Delivered?</fieldText>
-            <fieldType>DropdownBox</fieldType>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>vHIDE</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>false</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>Ship_the_Materials_EOM3</name>
-            <choiceReferences>Client_Location</choiceReferences>
-            <choiceReferences>Employee_Home</choiceReferences>
-            <dataType>String</dataType>
-            <fieldText>Where do we Ship the Materials?</fieldText>
-            <fieldType>DropdownBox</fieldType>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>false</isRequired>
-            <visibilityRule>
-                <conditionLogic>or</conditionLogic>
-                <conditions>
-                    <leftValueReference>OT_Materials_Delivered_EOM3</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <elementReference>Shipped</elementReference>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>OT_Materials_Delivered_EOM3</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <elementReference>PDF_and_Shipped</elementReference>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>Client_Contact_EOM3</name>
-            <dataType>String</dataType>
-            <fieldText>Client Contact</fieldText>
-            <fieldType>InputField</fieldType>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>false</isRequired>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>Ship_the_Materials_EOM3</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <elementReference>Client_Location</elementReference>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>Client_Address_EOM3</name>
-            <fieldText>Client Address</fieldText>
-            <fieldType>LargeTextArea</fieldType>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>false</isRequired>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>Ship_the_Materials_EOM3</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <elementReference>Client_Location</elementReference>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -2546,94 +2518,11 @@
                 </conditions>
             </visibilityRule>
         </fields>
-        <fields>
-            <name>OT_Materials_Delivered_EOM4</name>
-            <choiceReferences>PDF</choiceReferences>
-            <choiceReferences>Shipped</choiceReferences>
-            <choiceReferences>PDF_and_Shipped</choiceReferences>
-            <dataType>String</dataType>
-            <fieldText>How would the Client like the OT Materials Delivered?</fieldText>
-            <fieldType>DropdownBox</fieldType>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>vHIDE</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>false</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>Ship_the_Materials_EOM4</name>
-            <choiceReferences>Client_Location</choiceReferences>
-            <choiceReferences>Employee_Home</choiceReferences>
-            <dataType>String</dataType>
-            <fieldText>Where do we Ship the Materials?</fieldText>
-            <fieldType>DropdownBox</fieldType>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>false</isRequired>
-            <visibilityRule>
-                <conditionLogic>or</conditionLogic>
-                <conditions>
-                    <leftValueReference>OT_Materials_Delivered_EOM4</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <elementReference>Shipped</elementReference>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>OT_Materials_Delivered_EOM4</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <elementReference>PDF_and_Shipped</elementReference>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>Client_Contact_EOM4</name>
-            <dataType>String</dataType>
-            <fieldText>Client Contact</fieldText>
-            <fieldType>InputField</fieldType>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>false</isRequired>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>Ship_the_Materials_EOM4</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <elementReference>Client_Location</elementReference>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>Client_Address_EOM4</name>
-            <fieldText>Client Address</fieldText>
-            <fieldType>LargeTextArea</fieldType>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>false</isRequired>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>Ship_the_Materials_EOM4</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <elementReference>Client_Location</elementReference>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>2432</locationX>
+        <locationX>3554</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_OMR_Task_Record_Type_ID</targetReference>
@@ -2938,16 +2827,6 @@ Special Instructions: {!vSpecial_Instruction}</text>
         <isInput>true</isInput>
         <isOutput>true</isOutput>
         <scale>0</scale>
-    </variables>
-    <variables>
-        <name>vHIDE</name>
-        <dataType>Boolean</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <value>
-            <booleanValue>true</booleanValue>
-        </value>
     </variables>
     <variables>
         <name>vOSS_Email</name>
