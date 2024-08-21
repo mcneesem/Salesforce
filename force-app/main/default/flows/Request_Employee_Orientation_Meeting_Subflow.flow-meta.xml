@@ -2925,6 +2925,14 @@ Special Instructions: {!vSpecial_Instruction}</text>
         <isOutput>false</isOutput>
     </variables>
     <variables>
+        <name>vbidversion</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+        <scale>2</scale>
+    </variables>
+    <variables>
         <name>vCTM_Date</name>
         <dataType>Date</dataType>
         <isCollection>false</isCollection>
@@ -2940,6 +2948,20 @@ Special Instructions: {!vSpecial_Instruction}</text>
         <scale>0</scale>
     </variables>
     <variables>
+        <name>vfirst_pay_period</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>vfirstpaydate</name>
+        <dataType>Date</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
         <name>vHIDE</name>
         <dataType>Boolean</dataType>
         <isCollection>false</isCollection>
@@ -2948,6 +2970,27 @@ Special Instructions: {!vSpecial_Instruction}</text>
         <value>
             <booleanValue>true</booleanValue>
         </value>
+    </variables>
+    <variables>
+        <name>vmedical_plan</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>vmedicaleffectivedate</name>
+        <dataType>Date</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>vnspeffectivedate</name>
+        <dataType>Date</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
     </variables>
     <variables>
         <name>vOSS_Email</name>
@@ -2969,6 +3012,13 @@ Special Instructions: {!vSpecial_Instruction}</text>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>vpayfrequency</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
     </variables>
     <variables>
         <name>vSpecial_Instruction</name>
