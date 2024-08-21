@@ -3,7 +3,7 @@
     <actionCalls>
         <name>Get_Contact_SOSL</name>
         <label>Get Contact SOSL</label>
-        <locationX>182</locationX>
+        <locationX>347</locationX>
         <locationY>782</locationY>
         <actionName>FindContactVoiceFlow</actionName>
         <actionType>apex</actionType>
@@ -31,7 +31,7 @@
     <assignments>
         <name>Copy_Messaing_User_Contact_to_Voice_Call_Contact</name>
         <label>Copy Messaing User Contact to Voice Call Contact</label>
-        <locationX>182</locationX>
+        <locationX>347</locationX>
         <locationY>1706</locationY>
         <assignmentItems>
             <assignToReference>Get_Voice_Call.ContactId__c</assignToReference>
@@ -41,13 +41,13 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Set_Contact_Selected_Flag</targetReference>
+            <targetReference>Check_Voice_Call_Contact</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Copy_Selected_Contact_to_Messaging_User</name>
         <label>Copy Selected Contact to Messaging User</label>
-        <locationX>50</locationX>
+        <locationX>215</locationX>
         <locationY>1406</locationY>
         <assignmentItems>
             <assignToReference>Get_Messaging_User.ContactId</assignToReference>
@@ -63,8 +63,8 @@
     <assignments>
         <name>Re_Open_Current_Case</name>
         <label>Re-Open Current Case</label>
-        <locationX>589</locationX>
-        <locationY>3110</locationY>
+        <locationX>182</locationX>
+        <locationY>3218</locationY>
         <assignmentItems>
             <assignToReference>currentCase.Status</assignToReference>
             <operator>Assign</operator>
@@ -86,8 +86,8 @@
     <assignments>
         <name>Set_Contact_Selected_Flag</name>
         <label>Set Contact Selected Flag</label>
-        <locationX>1073</locationX>
-        <locationY>2072</locationY>
+        <locationX>666</locationX>
+        <locationY>2180</locationY>
         <assignmentItems>
             <assignToReference>Get_Voice_Call.Is_Contact_Selected__c</assignToReference>
             <operator>Assign</operator>
@@ -102,7 +102,7 @@
     <assignments>
         <name>Set_Count_SOSL_Results</name>
         <label>Set Count SOSL Results</label>
-        <locationX>50</locationX>
+        <locationX>215</locationX>
         <locationY>998</locationY>
         <assignmentItems>
             <assignToReference>countSoslResults</assignToReference>
@@ -118,8 +118,8 @@
     <assignments>
         <name>Set_Current_Case_Contact_Id</name>
         <label>Set Current Case Contact Id</label>
-        <locationX>721</locationX>
-        <locationY>3302</locationY>
+        <locationX>314</locationX>
+        <locationY>3410</locationY>
         <assignmentItems>
             <assignToReference>currentCase.ContactId</assignToReference>
             <operator>Assign</operator>
@@ -134,8 +134,8 @@
     <assignments>
         <name>Set_Fault_Element_Close_Re_Opened_Case</name>
         <label>Set Fault Element: Close_Re_Opened_Case</label>
-        <locationX>721</locationX>
-        <locationY>3734</locationY>
+        <locationX>314</locationX>
+        <locationY>3842</locationY>
         <assignmentItems>
             <assignToReference>faultElement</assignToReference>
             <operator>Assign</operator>
@@ -151,8 +151,8 @@
     <assignments>
         <name>Set_Fault_Element_Create_Case_Contact</name>
         <label>Set Fault Element: Create_Case_Contact</label>
-        <locationX>721</locationX>
-        <locationY>4232</locationY>
+        <locationX>314</locationX>
+        <locationY>4340</locationY>
         <assignmentItems>
             <assignToReference>faultElement</assignToReference>
             <operator>Assign</operator>
@@ -168,7 +168,7 @@
     <assignments>
         <name>Set_Fault_Element_Get_Messaging_User</name>
         <label>Set Fault Element: Get_Messaging_User</label>
-        <locationX>1282</locationX>
+        <locationX>1447</locationX>
         <locationY>566</locationY>
         <assignmentItems>
             <assignToReference>faultElement</assignToReference>
@@ -185,7 +185,7 @@
     <assignments>
         <name>Set_Fault_Element_Get_Voice_Call</name>
         <label>Set Fault Element: Get_Voice_Call</label>
-        <locationX>2602</locationX>
+        <locationX>2338</locationX>
         <locationY>242</locationY>
         <assignmentItems>
             <assignToReference>faultElement</assignToReference>
@@ -201,8 +201,8 @@
     <assignments>
         <name>Set_Fault_Element_Re_Select_Voice_Call</name>
         <label>Set Fault Element: Re_Select_Voice_Call</label>
-        <locationX>2074</locationX>
-        <locationY>2288</locationY>
+        <locationX>1546</locationX>
+        <locationY>2396</locationY>
         <assignmentItems>
             <assignToReference>faultElement</assignToReference>
             <operator>Assign</operator>
@@ -218,8 +218,8 @@
     <assignments>
         <name>Set_Fault_Element_Select_Current_Case</name>
         <label>Set Fault Element: Select_Current_Case</label>
-        <locationX>1810</locationX>
-        <locationY>2894</locationY>
+        <locationX>1282</locationX>
+        <locationY>3002</locationY>
         <assignmentItems>
             <assignToReference>faultElement</assignToReference>
             <operator>Assign</operator>
@@ -235,8 +235,8 @@
     <assignments>
         <name>Set_Fault_Element_Update_Current_Case_ContactId</name>
         <label>Set Fault Element: Update_Current_Case_ContactId</label>
-        <locationX>1161</locationX>
-        <locationY>3518</locationY>
+        <locationX>754</locationX>
+        <locationY>3626</locationY>
         <assignmentItems>
             <assignToReference>faultElement</assignToReference>
             <operator>Assign</operator>
@@ -252,7 +252,7 @@
     <assignments>
         <name>Set_Fault_Element_Update_Messaging_User</name>
         <label>Set Fault Element: Update_Messaging_User</label>
-        <locationX>490</locationX>
+        <locationX>655</locationX>
         <locationY>1706</locationY>
         <assignmentItems>
             <assignToReference>faultElement</assignToReference>
@@ -269,8 +269,8 @@
     <assignments>
         <name>Set_Fault_Element_Update_Voice_Call</name>
         <label>Set Fault Element: Update_Voice_Call</label>
-        <locationX>1073</locationX>
-        <locationY>2504</locationY>
+        <locationX>666</locationX>
+        <locationY>2612</locationY>
         <assignmentItems>
             <assignToReference>faultElement</assignToReference>
             <operator>Assign</operator>
@@ -286,7 +286,7 @@
     <assignments>
         <name>Set_Search_Term</name>
         <label>Set SearchTerm</label>
-        <locationX>182</locationX>
+        <locationX>347</locationX>
         <locationY>674</locationY>
         <assignmentItems>
             <assignToReference>searchTerm</assignToReference>
@@ -302,8 +302,8 @@
     <decisions>
         <name>Check_Current_Case</name>
         <label>Check Current Case</label>
-        <locationX>1073</locationX>
-        <locationY>2894</locationY>
+        <locationX>666</locationX>
+        <locationY>3002</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Found_Current_Case</name>
@@ -325,8 +325,8 @@
         <description>Prevent DmlExceptions.  Closed Cases can not be modified due to Case Validation Rules.</description>
         <name>Check_Current_Case_Status</name>
         <label>Check Current Case Status</label>
-        <locationX>721</locationX>
-        <locationY>3002</locationY>
+        <locationX>314</locationX>
+        <locationY>3110</locationY>
         <defaultConnector>
             <targetReference>Set_Current_Case_Contact_Id</targetReference>
         </defaultConnector>
@@ -350,7 +350,7 @@
     <decisions>
         <name>Check_Messaging_User</name>
         <label>Check Messaging User</label>
-        <locationX>600</locationX>
+        <locationX>765</locationX>
         <locationY>566</locationY>
         <defaultConnector>
             <isGoTo>true</isGoTo>
@@ -376,8 +376,8 @@
     <decisions>
         <name>Check_Re_Opened_Current_Case</name>
         <label>Check  Re-Opened Current Case</label>
-        <locationX>721</locationX>
-        <locationY>3518</locationY>
+        <locationX>314</locationX>
+        <locationY>3626</locationY>
         <defaultConnector>
             <targetReference>Is_Case_Contacts_Enabled</targetReference>
         </defaultConnector>
@@ -401,7 +401,7 @@
     <decisions>
         <name>Check_SOSL_Results</name>
         <label>Check SOSL Results</label>
-        <locationX>182</locationX>
+        <locationX>347</locationX>
         <locationY>890</locationY>
         <defaultConnector>
             <targetReference>Prompt_Agent</targetReference>
@@ -424,9 +424,38 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Check_Voice_Call_Contact</name>
+        <label>Check Voice Call Contact</label>
+        <locationX>1238</locationX>
+        <locationY>2072</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Has_Contact</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Voice_Call.ContactId__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Voice_Call.ContactId__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Contact_Selected_Flag</targetReference>
+            </connector>
+            <label>Has Contact</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Check_Voice_Call_Record</name>
         <label>Check Voice Call Record</label>
-        <locationX>1705</locationX>
+        <locationX>1656</locationX>
         <locationY>242</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -448,8 +477,8 @@
     <decisions>
         <name>Is_Case_Contacts_Enabled</name>
         <label>Is Case Contacts Enabled</label>
-        <locationX>721</locationX>
-        <locationY>4016</locationY>
+        <locationX>314</locationX>
+        <locationY>4124</locationY>
         <defaultConnector>
             <targetReference>Is_First_Call_Resolution_Enabled</targetReference>
         </defaultConnector>
@@ -473,7 +502,7 @@
     <decisions>
         <name>Is_Contact_Selected</name>
         <label>Is Contact Selected?</label>
-        <locationX>182</locationX>
+        <locationX>347</locationX>
         <locationY>1298</locationY>
         <defaultConnector>
             <targetReference>Update_Messaging_User</targetReference>
@@ -505,8 +534,8 @@
     <decisions>
         <name>Is_First_Call_Resolution_Enabled</name>
         <label>Is First Call Resolution Enabled</label>
-        <locationX>721</locationX>
-        <locationY>4514</locationY>
+        <locationX>314</locationX>
+        <locationY>4622</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Is_Enabled_First_Call_Resolution</name>
@@ -541,7 +570,7 @@
     <decisions>
         <name>Is_Messaging_User_Related</name>
         <label>Is Messaging User Related?</label>
-        <locationX>1073</locationX>
+        <locationX>1238</locationX>
         <locationY>350</locationY>
         <defaultConnector>
             <targetReference>Prompt_Agent_No_Messaging_User</targetReference>
@@ -566,8 +595,8 @@
     <decisions>
         <name>Re_Verify_Voice_Call</name>
         <label>Re-Verify Voice Call</label>
-        <locationX>1073</locationX>
-        <locationY>2288</locationY>
+        <locationX>666</locationX>
+        <locationY>2396</locationY>
         <defaultConnector>
             <targetReference>Select_Current_Case</targetReference>
         </defaultConnector>
@@ -614,8 +643,8 @@
     <recordCreates>
         <name>Create_Case_Contact</name>
         <label>Create Case Contact</label>
-        <locationX>457</locationX>
-        <locationY>4124</locationY>
+        <locationX>50</locationX>
+        <locationY>4232</locationY>
         <connector>
             <targetReference>Is_First_Call_Resolution_Enabled</targetReference>
         </connector>
@@ -647,7 +676,7 @@
         <description>Gets the messaging user record associated with the voice call record passed into the flow. Stores the record in the Messaging User from GetMessagingUser record variable.</description>
         <name>Get_Messaging_User</name>
         <label>Get Messaging User</label>
-        <locationX>600</locationX>
+        <locationX>765</locationX>
         <locationY>458</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -671,7 +700,7 @@
     <recordLookups>
         <name>Get_Voice_Call</name>
         <label>Get Voice Call</label>
-        <locationX>1705</locationX>
+        <locationX>1656</locationX>
         <locationY>134</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -698,8 +727,8 @@
         <description>Prevent &quot;insufficient access rights on object id&quot; errors that occur when a Voice Call is transferred ownership before the agent completes the Screen Flow.</description>
         <name>Re_Select_Voice_Call</name>
         <label>Re-Select Voice Call</label>
-        <locationX>1073</locationX>
-        <locationY>2180</locationY>
+        <locationX>666</locationX>
+        <locationY>2288</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Re_Verify_Voice_Call</targetReference>
@@ -723,8 +752,8 @@
     <recordLookups>
         <name>Select_Current_Case</name>
         <label>Select Current Case</label>
-        <locationX>1073</locationX>
-        <locationY>2786</locationY>
+        <locationX>666</locationX>
+        <locationY>2894</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_Current_Case</targetReference>
@@ -749,8 +778,8 @@
     <recordUpdates>
         <name>Close_Re_Opened_Case</name>
         <label>Close Re-Opened Case</label>
-        <locationX>457</locationX>
-        <locationY>3626</locationY>
+        <locationX>50</locationX>
+        <locationY>3734</locationY>
         <connector>
             <targetReference>Is_Case_Contacts_Enabled</targetReference>
         </connector>
@@ -776,8 +805,8 @@
     <recordUpdates>
         <name>Update_Current_Case_ContactId</name>
         <label>Update Current Case (ContactId)</label>
-        <locationX>721</locationX>
-        <locationY>3410</locationY>
+        <locationX>314</locationX>
+        <locationY>3518</locationY>
         <connector>
             <targetReference>Check_Re_Opened_Current_Case</targetReference>
         </connector>
@@ -789,7 +818,7 @@
     <recordUpdates>
         <name>Update_Messaging_User</name>
         <label>Update Messaging User</label>
-        <locationX>182</locationX>
+        <locationX>347</locationX>
         <locationY>1598</locationY>
         <connector>
             <targetReference>Copy_Messaing_User_Contact_to_Voice_Call_Contact</targetReference>
@@ -802,8 +831,8 @@
     <recordUpdates>
         <name>Update_Voice_Call</name>
         <label>Update Voice Call</label>
-        <locationX>809</locationX>
-        <locationY>2396</locationY>
+        <locationX>402</locationX>
+        <locationY>2504</locationY>
         <connector>
             <targetReference>Select_Current_Case</targetReference>
         </connector>
@@ -816,7 +845,7 @@
     <screens>
         <name>Fault_Screen</name>
         <label>Fault Screen</label>
-        <locationX>2602</locationX>
+        <locationX>2338</locationX>
         <locationY>458</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -832,7 +861,7 @@
     <screens>
         <name>Prompt_Agent</name>
         <label>Prompt Agent</label>
-        <locationX>182</locationX>
+        <locationX>347</locationX>
         <locationY>1190</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -954,7 +983,7 @@
                 </fields>
                 <fields>
                     <fieldType>ObjectProvided</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <inputsOnNextNavToAssocScrn>ResetValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <objectFieldReference>Get_Messaging_User.ContactId</objectFieldReference>
                 </fields>
@@ -975,13 +1004,13 @@
     <screens>
         <name>Prompt_Agent_No_Messaging_User</name>
         <label>Prompt Agent (No Messaging User)</label>
-        <locationX>1546</locationX>
+        <locationX>1711</locationX>
         <locationY>458</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Set_Contact_Selected_Flag</targetReference>
+            <targetReference>Check_Voice_Call_Contact</targetReference>
         </connector>
         <fields>
             <name>No_Messaging_User_Display_Text</name>
@@ -995,7 +1024,7 @@
         </fields>
         <fields>
             <fieldType>ObjectProvided</fieldType>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <inputsOnNextNavToAssocScrn>ResetValues</inputsOnNextNavToAssocScrn>
             <isRequired>false</isRequired>
             <objectFieldReference>Get_Voice_Call.ContactId__c</objectFieldReference>
         </fields>
@@ -1003,7 +1032,7 @@
         <showHeader>true</showHeader>
     </screens>
     <start>
-        <locationX>1579</locationX>
+        <locationX>1530</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Voice_Call</targetReference>
@@ -1013,7 +1042,7 @@
     <subflows>
         <name>Fault_Handler</name>
         <label>Fault Handler</label>
-        <locationX>2602</locationX>
+        <locationX>2338</locationX>
         <locationY>350</locationY>
         <connector>
             <targetReference>Fault_Screen</targetReference>
@@ -1041,8 +1070,8 @@
     <subflows>
         <name>Handle_First_Call_Resolution</name>
         <label>Handle First Call Resolution</label>
-        <locationX>589</locationX>
-        <locationY>4622</locationY>
+        <locationX>182</locationX>
+        <locationY>4730</locationY>
         <flowName>Handle_First_Call_Resolution</flowName>
         <inputAssignments>
             <name>firstCallResolutionHours</name>
@@ -1060,7 +1089,7 @@
     <subflows>
         <name>Save_Flow_Fault_Error</name>
         <label>Save Flow Fault Error</label>
-        <locationX>754</locationX>
+        <locationX>919</locationX>
         <locationY>890</locationY>
         <connector>
             <isGoTo>true</isGoTo>
