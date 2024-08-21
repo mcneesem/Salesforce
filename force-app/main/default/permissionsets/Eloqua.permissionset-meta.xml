@@ -1963,6 +1963,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Campaign.Parent_Campaign_Name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Campaign.Status</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -12130,6 +12135,14 @@
     </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Eloqua</label>
+     <recordTypeVisibilities>
+     <recordType>Campaign.Marketing_Record_Type</recordType>
+     <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+     <recordType>Campaign.Sales_Record_Type</recordType>
+     <visible>true</visible>
+    </recordTypeVisibilities>
     <recordTypeVisibilities>
         <recordType>Task.Eloqua_Task_RT</recordType>
         <visible>true</visible>
