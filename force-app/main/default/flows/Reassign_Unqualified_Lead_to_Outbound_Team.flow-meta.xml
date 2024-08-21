@@ -230,7 +230,7 @@
         </scheduledPaths>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <subflows>
         <name>Insperity_Fault_Handler_Subflow_Flow</name>
         <label>Insperity Fault Handler Subflow Flow</label>
