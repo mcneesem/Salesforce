@@ -11,7 +11,7 @@
             <targetReference>Check_SOSL_Results</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Set_Fault_Message_Error</targetReference>
+            <targetReference>Save_Flow_Fault_Error</targetReference>
         </faultConnector>
         <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
@@ -61,6 +61,29 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Re_Open_Current_Case</name>
+        <label>Re-Open Current Case</label>
+        <locationX>589</locationX>
+        <locationY>3110</locationY>
+        <assignmentItems>
+            <assignToReference>currentCase.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>ReOpened</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>isCurrentCaseReOpened</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Set_Current_Case_Contact_Id</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Set_Contact_Selected_Flag</name>
         <label>Set Contact Selected Flag</label>
         <locationX>1073</locationX>
@@ -93,10 +116,43 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Set_Current_Case_Contact_Id</name>
+        <label>Set Current Case Contact Id</label>
+        <locationX>721</locationX>
+        <locationY>3302</locationY>
+        <assignmentItems>
+            <assignToReference>currentCase.ContactId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Voice_Call.ContactId__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Current_Case_ContactId</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Close_Re_Opened_Case</name>
+        <label>Set Fault Element: Close_Re_Opened_Case</label>
+        <locationX>721</locationX>
+        <locationY>3734</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Close_Re_Opened_Case</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Set_Fault_Element_Create_Case_Contact</name>
         <label>Set Fault Element: Create_Case_Contact</label>
-        <locationX>677</locationX>
-        <locationY>3326</locationY>
+        <locationX>721</locationX>
+        <locationY>4232</locationY>
         <assignmentItems>
             <assignToReference>faultElement</assignToReference>
             <operator>Assign</operator>
@@ -105,6 +161,7 @@
             </value>
         </assignmentItems>
         <connector>
+            <isGoTo>true</isGoTo>
             <targetReference>Fault_Handler</targetReference>
         </connector>
     </assignments>
@@ -138,7 +195,6 @@
             </value>
         </assignmentItems>
         <connector>
-            <isGoTo>true</isGoTo>
             <targetReference>Fault_Handler</targetReference>
         </connector>
     </assignments>
@@ -160,15 +216,15 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Set_Fault_Element_Select_Related_Case</name>
-        <label>Set Fault Element: Select_Related_Case</label>
+        <name>Set_Fault_Element_Select_Current_Case</name>
+        <label>Set Fault Element: Select_Current_Case</label>
         <locationX>1810</locationX>
         <locationY>2894</locationY>
         <assignmentItems>
             <assignToReference>faultElement</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Select_Related_Case</stringValue>
+                <stringValue>Select_Current_Case</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -177,15 +233,15 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Set_Fault_Element_Update_Case</name>
-        <label>Set Fault Element: Update_Case</label>
-        <locationX>1205</locationX>
-        <locationY>3110</locationY>
+        <name>Set_Fault_Element_Update_Current_Case_ContactId</name>
+        <label>Set Fault Element: Update_Current_Case_ContactId</label>
+        <locationX>1161</locationX>
+        <locationY>3518</locationY>
         <assignmentItems>
             <assignToReference>faultElement</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Update_Case</stringValue>
+                <stringValue>Update_Current_Case_ContactId</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -244,25 +300,51 @@
         </connector>
     </assignments>
     <decisions>
-        <name>Check_Custom_Setting</name>
-        <label>Check Custom Setting</label>
-        <locationX>677</locationX>
-        <locationY>3110</locationY>
+        <name>Check_Current_Case</name>
+        <label>Check Current Case</label>
+        <locationX>1073</locationX>
+        <locationY>2894</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>Is_Enabled</name>
+            <name>Found_Current_Case</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>$Setup.Find_Related_Contact_Settings__c.CreateCaseContact__c</leftValueReference>
-                <operator>EqualTo</operator>
+                <leftValueReference>currentCase</leftValueReference>
+                <operator>IsNull</operator>
                 <rightValue>
-                    <booleanValue>true</booleanValue>
+                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Create_Case_Contact</targetReference>
+                <targetReference>Check_Current_Case_Status</targetReference>
             </connector>
-            <label>Is Enabled</label>
+            <label>Found Current Case</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Prevent DmlExceptions.  Closed Cases can not be modified due to Case Validation Rules.</description>
+        <name>Check_Current_Case_Status</name>
+        <label>Check Current Case Status</label>
+        <locationX>721</locationX>
+        <locationY>3002</locationY>
+        <defaultConnector>
+            <targetReference>Set_Current_Case_Contact_Id</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Is_Closed_Current</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>currentCase.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Closed</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Re_Open_Current_Case</targetReference>
+            </connector>
+            <label>Is Closed (Current)</label>
         </rules>
     </decisions>
     <decisions>
@@ -292,33 +374,28 @@
         </rules>
     </decisions>
     <decisions>
-        <description>Prevent DmlExceptions.  Closed Cases can not be modified due to Case Validation Rules.</description>
-        <name>Check_Related_Case</name>
-        <label>Check Related Case</label>
-        <locationX>1073</locationX>
-        <locationY>2894</locationY>
+        <name>Check_Re_Opened_Current_Case</name>
+        <label>Check  Re-Opened Current Case</label>
+        <locationX>721</locationX>
+        <locationY>3518</locationY>
+        <defaultConnector>
+            <targetReference>Is_Case_Contacts_Enabled</targetReference>
+        </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>Found_Modifiable_Case</name>
+            <name>Current_Case_Is_Re_Opened</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Select_Related_Case</leftValueReference>
-                <operator>IsNull</operator>
+                <leftValueReference>isCurrentCaseReOpened</leftValueReference>
+                <operator>EqualTo</operator>
                 <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Select_Related_Case.Status</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <stringValue>Closed</stringValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Update_Case</targetReference>
+                <targetReference>Close_Re_Opened_Case</targetReference>
             </connector>
-            <label>Found Modifiable Case</label>
+            <label>Current Case Is Re-Opened</label>
         </rules>
     </decisions>
     <decisions>
@@ -369,6 +446,31 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Is_Case_Contacts_Enabled</name>
+        <label>Is Case Contacts Enabled</label>
+        <locationX>721</locationX>
+        <locationY>4016</locationY>
+        <defaultConnector>
+            <targetReference>Is_First_Call_Resolution_Enabled</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Is_Enabled_Case_Contacts</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Setup.Find_Related_Contact_Settings__c.CreateCaseContact__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Create_Case_Contact</targetReference>
+            </connector>
+            <label>Is Enabled (Case Contacts)</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Is_Contact_Selected</name>
         <label>Is Contact Selected?</label>
         <locationX>182</locationX>
@@ -381,6 +483,13 @@
             <name>Contact_Selected</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
+                <leftValueReference>ContactSearchResults.firstSelectedRow</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
                 <leftValueReference>ContactSearchResults.firstSelectedRow.Id</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
@@ -391,6 +500,42 @@
                 <targetReference>Copy_Selected_Contact_to_Messaging_User</targetReference>
             </connector>
             <label>Contact Selected</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Is_First_Call_Resolution_Enabled</name>
+        <label>Is First Call Resolution Enabled</label>
+        <locationX>721</locationX>
+        <locationY>4514</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Is_Enabled_First_Call_Resolution</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Setup.Find_Related_Contact_Settings__c.IsFirstCallResolutionEnabled__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Setup.Find_Related_Contact_Settings__c.FirstCallResolutionHours__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Setup.Find_Related_Contact_Settings__c.FirstCallResolutionHours__c</leftValueReference>
+                <operator>GreaterThanOrEqualTo</operator>
+                <rightValue>
+                    <numberValue>0.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Handle_First_Call_Resolution</targetReference>
+            </connector>
+            <label>Is Enabled (First Call Resolution)</label>
         </rules>
     </decisions>
     <decisions>
@@ -424,7 +569,7 @@
         <locationX>1073</locationX>
         <locationY>2288</locationY>
         <defaultConnector>
-            <targetReference>Select_Related_Case</targetReference>
+            <targetReference>Select_Current_Case</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -469,8 +614,11 @@
     <recordCreates>
         <name>Create_Case_Contact</name>
         <label>Create Case Contact</label>
-        <locationX>413</locationX>
-        <locationY>3218</locationY>
+        <locationX>457</locationX>
+        <locationY>4124</locationY>
+        <connector>
+            <targetReference>Is_First_Call_Resolution_Enabled</targetReference>
+        </connector>
         <faultConnector>
             <targetReference>Set_Fault_Element_Create_Case_Contact</targetReference>
         </faultConnector>
@@ -573,16 +721,16 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
-        <name>Select_Related_Case</name>
-        <label>Select Related Case</label>
+        <name>Select_Current_Case</name>
+        <label>Select Current Case</label>
         <locationX>1073</locationX>
         <locationY>2786</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Check_Related_Case</targetReference>
+            <targetReference>Check_Current_Case</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Set_Fault_Element_Select_Related_Case</targetReference>
+            <targetReference>Set_Fault_Element_Select_Current_Case</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -592,38 +740,51 @@
                 <elementReference>Get_Voice_Call.CaseId__c</elementReference>
             </value>
         </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>Case</object>
+        <outputReference>currentCase</outputReference>
         <queriedFields>Id</queriedFields>
         <queriedFields>Status</queriedFields>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
+        <queriedFields>ContactId</queriedFields>
     </recordLookups>
     <recordUpdates>
-        <name>Update_Case</name>
-        <label>Update Case</label>
-        <locationX>677</locationX>
-        <locationY>3002</locationY>
+        <name>Close_Re_Opened_Case</name>
+        <label>Close Re-Opened Case</label>
+        <locationX>457</locationX>
+        <locationY>3626</locationY>
         <connector>
-            <targetReference>Check_Custom_Setting</targetReference>
+            <targetReference>Is_Case_Contacts_Enabled</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Set_Fault_Element_Update_Case</targetReference>
+            <targetReference>Set_Fault_Element_Close_Re_Opened_Case</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>Get_Voice_Call.CaseId__c</elementReference>
+                <elementReference>currentCase.Id</elementReference>
             </value>
         </filters>
         <inputAssignments>
-            <field>ContactId</field>
+            <field>Status</field>
             <value>
-                <elementReference>Get_Voice_Call.ContactId__c</elementReference>
+                <stringValue>Closed</stringValue>
             </value>
         </inputAssignments>
         <object>Case</object>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_Current_Case_ContactId</name>
+        <label>Update Current Case (ContactId)</label>
+        <locationX>721</locationX>
+        <locationY>3410</locationY>
+        <connector>
+            <targetReference>Check_Re_Opened_Current_Case</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_Update_Current_Case_ContactId</targetReference>
+        </faultConnector>
+        <inputReference>currentCase</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>Update_Messaging_User</name>
@@ -644,7 +805,7 @@
         <locationX>809</locationX>
         <locationY>2396</locationY>
         <connector>
-            <targetReference>Select_Related_Case</targetReference>
+            <targetReference>Select_Current_Case</targetReference>
         </connector>
         <faultConnector>
             <targetReference>Set_Fault_Element_Update_Voice_Call</targetReference>
@@ -655,8 +816,8 @@
     <screens>
         <name>Fault_Screen</name>
         <label>Fault Screen</label>
-        <locationX>677</locationX>
-        <locationY>3542</locationY>
+        <locationX>2602</locationX>
+        <locationY>458</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -852,8 +1013,8 @@
     <subflows>
         <name>Fault_Handler</name>
         <label>Fault Handler</label>
-        <locationX>677</locationX>
-        <locationY>3434</locationY>
+        <locationX>2602</locationX>
+        <locationY>350</locationY>
         <connector>
             <targetReference>Fault_Screen</targetReference>
         </connector>
@@ -878,8 +1039,27 @@
         </inputAssignments>
     </subflows>
     <subflows>
-        <name>Set_Fault_Message_Error</name>
-        <label>Set Fault Message Error</label>
+        <name>Handle_First_Call_Resolution</name>
+        <label>Handle First Call Resolution</label>
+        <locationX>589</locationX>
+        <locationY>4622</locationY>
+        <flowName>Handle_First_Call_Resolution</flowName>
+        <inputAssignments>
+            <name>firstCallResolutionHours</name>
+            <value>
+                <elementReference>$Setup.Find_Related_Contact_Settings__c.FirstCallResolutionHours__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>record</name>
+            <value>
+                <elementReference>currentCase</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>Save_Flow_Fault_Error</name>
+        <label>Save Flow Fault Error</label>
         <locationX>754</locationX>
         <locationY>890</locationY>
         <connector>
@@ -927,6 +1107,14 @@
         </value>
     </variables>
     <variables>
+        <name>currentCase</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Case</objectType>
+    </variables>
+    <variables>
         <name>faultElement</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
@@ -934,6 +1122,16 @@
         <isOutput>false</isOutput>
         <value>
             <stringValue></stringValue>
+        </value>
+    </variables>
+    <variables>
+        <name>isCurrentCaseReOpened</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
         </value>
     </variables>
     <variables>

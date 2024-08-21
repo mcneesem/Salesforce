@@ -3,7 +3,6 @@
     <fullName>CreateCaseContact__c</fullName>
     <defaultValue>false</defaultValue>
     <description>create junction case contact  object record if true</description>
-    <externalId>false</externalId>
     <label>CreateCaseContact</label>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
