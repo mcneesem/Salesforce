@@ -4026,6 +4026,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Left Voicemail</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No Voicemail</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Other Exemption</fullName>
             <default>false</default>
         </values>
@@ -4071,6 +4079,10 @@
         </values>
         <values>
             <fullName>Referred to Service Team</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Referred to Vendor</fullName>
             <default>false</default>
         </values>
         <values>
