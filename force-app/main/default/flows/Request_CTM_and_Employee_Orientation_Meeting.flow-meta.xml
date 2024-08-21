@@ -35,7 +35,7 @@
     </assignments>
     <assignments>
         <name>Assign_Input</name>
-        <label>Assign Input</label>
+        <label>Input Parameters for CTM Request</label>
         <locationX>319</locationX>
         <locationY>242</locationY>
         <assignmentItems>
@@ -122,8 +122,48 @@
                 <elementReference>Request_Onboarding_Process_Opportunity_STP_Info.vpayfrequency</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>vbenefitswaitingperiod</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Request_Onboarding_Process_Opportunity_STP_Info.vbenefitswaitingperiod</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Account_or_Asset_Exist</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Create_Task_Records</name>
+        <label>Set Fault Element : Create_Task_Records</label>
+        <locationX>1546</locationX>
+        <locationY>1706</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Create_Task_Records</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Error_Create_Task_Records</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Get_Related_Discovery_SKO_Task</name>
+        <label>Set Fault Element : Get_Related_Discovery_SKO_Task</label>
+        <locationX>1810</locationX>
+        <locationY>566</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Related_Discovery_SKO_Task</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Error_Create_Task_Records</targetReference>
         </connector>
     </assignments>
     <choices>
@@ -143,31 +183,10 @@
         </value>
     </choices>
     <constants>
-        <name>flowName</name>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>Request_CTM_and_Employee_Orientation_Meeting</stringValue>
-        </value>
-    </constants>
-    <constants>
         <name>OMRTaskRecordTypeId</name>
         <dataType>String</dataType>
         <value>
             <stringValue>0124x0000019l9xAAA</stringValue>
-        </value>
-    </constants>
-    <constants>
-        <name>STPChecklistRecordTypeId</name>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>0124x000000yRvBAAU</stringValue>
-        </value>
-    </constants>
-    <constants>
-        <name>WOAssetRecordTypeId</name>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>0124x000000yRuzAAE</stringValue>
         </value>
     </constants>
     <decisions>
@@ -285,7 +304,7 @@
             <label>CTM Task</label>
         </rules>
     </decisions>
-    <description>Master Flow - Improved Version</description>
+    <description>Master Flow - Improved Version - Removed Unused Variable/Parameters, added exception handling</description>
     <environments>Default</environments>
     <interviewLabel>Request CTM and Employee Orientation Meeting {!$Flow.CurrentDateTime}</interviewLabel>
     <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
@@ -318,7 +337,7 @@
             <targetReference>Request_Confirmation_Screen</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Error_Create_Task_Records</targetReference>
+            <targetReference>Set_Fault_Element_Create_Task_Records</targetReference>
         </faultConnector>
         <inputReference>rc_tasks</inputReference>
     </recordCreates>
@@ -332,8 +351,7 @@
             <targetReference>CTM_Already_Exist</targetReference>
         </connector>
         <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Error_Create_Task_Records</targetReference>
+            <targetReference>Set_Fault_Element_Get_Related_Discovery_SKO_Task</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -376,7 +394,7 @@
         <name>Error_Create_Task_Records</name>
         <label>Error Create Task Records</label>
         <locationX>1546</locationX>
-        <locationY>1706</locationY>
+        <locationY>1814</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -514,18 +532,24 @@
         <name>Fault_Handler_Subflow</name>
         <label>Fault_Handler_Subflow</label>
         <locationX>1546</locationX>
-        <locationY>1814</locationY>
+        <locationY>1922</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
+        <inputAssignments>
+            <name>faultElement</name>
+            <value>
+                <elementReference>faultElement</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultFlow</name>
+            <value>
+                <stringValue>Request_CTM_and_Employee_Orientation_Meeting</stringValue>
+            </value>
+        </inputAssignments>
         <inputAssignments>
             <name>faultMessage</name>
             <value>
                 <elementReference>$Flow.FaultMessage</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>triggeringFlow</name>
-            <value>
-                <elementReference>flowName</elementReference>
             </value>
         </inputAssignments>
     </subflows>
@@ -560,6 +584,12 @@
             <name>recordId</name>
             <value>
                 <elementReference>recordId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>vbenefitswaitingperiod</name>
+            <value>
+                <elementReference>vbenefitswaitingperiod</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -646,12 +676,6 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <name>vbidversion</name>
-            <value>
-                <elementReference>Request_Client_Transition_Meeting_Subflow.vbidversion</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
             <name>vCTM_Date</name>
             <value>
                 <elementReference>Request_Client_Transition_Meeting_Subflow.vClient_Transition_Meeting_Date</elementReference>
@@ -661,36 +685,6 @@
             <name>veecount</name>
             <value>
                 <elementReference>Request_Client_Transition_Meeting_Subflow.veecount</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>vfirst_pay_period</name>
-            <value>
-                <elementReference>Request_Client_Transition_Meeting_Subflow.vfirst_pay_period</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>vfirstpaydate</name>
-            <value>
-                <elementReference>Request_Client_Transition_Meeting_Subflow.vfirstpaydate</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>vmedical_plan</name>
-            <value>
-                <elementReference>Request_Client_Transition_Meeting_Subflow.vmedical_plan</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>vmedicaleffectivedate</name>
-            <value>
-                <elementReference>Request_Client_Transition_Meeting_Subflow.vmedicaleffectivedate</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>vnspeffectivedate</name>
-            <value>
-                <elementReference>Request_Client_Transition_Meeting_Subflow.vnspeffectivedate</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -709,12 +703,6 @@
             <name>vOSS_Phone</name>
             <value>
                 <elementReference>Request_Client_Transition_Meeting_Subflow.vOSS_Phone</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>vpayfrequency</name>
-            <value>
-                <elementReference>Request_Client_Transition_Meeting_Subflow.vpayfrequency</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -742,11 +730,6 @@
         </inputAssignments>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </subflows>
-    <textTemplates>
-        <name>Request_Header</name>
-        <isViewedAsPlainText>false</isViewedAsPlainText>
-        <text>&lt;p&gt;&lt;strong style=&quot;font-size: 16px;&quot;&gt;Request CTM and Employee Orientation Meeting&lt;/strong&gt;&lt;/p&gt;</text>
-    </textTemplates>
     <variables>
         <name>Account_Sales_Office</name>
         <dataType>String</dataType>
@@ -769,6 +752,13 @@
         <isOutput>false</isOutput>
     </variables>
     <variables>
+        <name>faultElement</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
         <name>rc_tasks</name>
         <dataType>SObject</dataType>
         <isCollection>true</isCollection>
@@ -781,6 +771,13 @@
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>vbenefitswaitingperiod</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
         <isOutput>false</isOutput>
     </variables>
     <variables>

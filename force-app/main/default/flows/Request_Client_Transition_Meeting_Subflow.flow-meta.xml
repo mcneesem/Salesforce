@@ -95,52 +95,10 @@
         <locationX>314</locationX>
         <locationY>1106</locationY>
         <assignmentItems>
-            <assignToReference>vbidversion</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>bidversion</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
             <assignToReference>veecount</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>eecount</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>vfirst_pay_period</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>First_Pay_Period</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>vfirstpaydate</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>FirstPayDate</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>vmedical_plan</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Medical_Plan</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>vmedicaleffectivedate</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>medicaleffectivedate</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>vnspeffectivedate</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>nspeffectivedate</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -465,6 +423,14 @@
             <label>Update Required</label>
         </rules>
     </decisions>
+    <dynamicChoiceSets>
+        <name>checklistbenefitswaitingperiod</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>NSP_Benefits_Waiting_Period__c</picklistField>
+        <picklistObject>NSP_Checklist__c</picklistObject>
+    </dynamicChoiceSets>
     <dynamicChoiceSets>
         <name>checklistWOBenefitPlanPicklist</name>
         <dataType>Picklist</dataType>
@@ -1056,6 +1022,18 @@
             <isRequired>true</isRequired>
         </fields>
         <fields>
+            <name>Benefits_Waiting_Period</name>
+            <choiceReferences>checklistbenefitswaitingperiod</choiceReferences>
+            <dataType>String</dataType>
+            <defaultValue>
+                <elementReference>vbenefitswaitingperiod</elementReference>
+            </defaultValue>
+            <fieldText>Benefits Waiting Period</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>false</isRequired>
+        </fields>
+        <fields>
             <name>Translator_Needed_for_OT</name>
             <choiceReferences>Yes</choiceReferences>
             <choiceReferences>No</choiceReferences>
@@ -1214,6 +1192,8 @@ Medical Effective Date: {!medicaleffectivedate}
 -
 Medical Plan: {!Medical_Plan}
 -
+Benefits Waiting Period: {!Benefits_Waiting_Period}
+-
 Translator Needed for OT: {!Translator_Needed_for_OT}
 If yes to above question, language(s) needed: {!Language_s_Needed}
 -
@@ -1245,21 +1225,21 @@ Special Instructions: {!Special_Instructions}</text>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
-        <isOutput>true</isOutput>
+        <isOutput>false</isOutput>
     </variables>
     <variables>
         <name>AccountName</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
-        <isOutput>true</isOutput>
+        <isOutput>false</isOutput>
     </variables>
     <variables>
         <name>AIMSClientNum</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
-        <isOutput>true</isOutput>
+        <isOutput>false</isOutput>
     </variables>
     <variables>
         <name>faultElement</name>
@@ -1295,18 +1275,25 @@ Special Instructions: {!Special_Instructions}</text>
         <isOutput>false</isOutput>
     </variables>
     <variables>
+        <name>vbenefitswaitingperiod</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
         <name>vbidversion</name>
         <dataType>Number</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
-        <isOutput>true</isOutput>
+        <isOutput>false</isOutput>
         <scale>2</scale>
     </variables>
     <variables>
         <name>vClient_Transition_Meeting_Date</name>
         <dataType>Date</dataType>
         <isCollection>false</isCollection>
-        <isInput>true</isInput>
+        <isInput>false</isInput>
         <isOutput>true</isOutput>
     </variables>
     <variables>
@@ -1329,55 +1316,55 @@ Special Instructions: {!Special_Instructions}</text>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
-        <isOutput>true</isOutput>
+        <isOutput>false</isOutput>
     </variables>
     <variables>
         <name>vfirstpaydate</name>
         <dataType>Date</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
-        <isOutput>true</isOutput>
+        <isOutput>false</isOutput>
     </variables>
     <variables>
         <name>vmedical_plan</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
-        <isOutput>true</isOutput>
+        <isOutput>false</isOutput>
     </variables>
     <variables>
         <name>vmedicaleffectivedate</name>
         <dataType>Date</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
-        <isOutput>true</isOutput>
+        <isOutput>false</isOutput>
     </variables>
     <variables>
         <name>vnspeffectivedate</name>
         <dataType>Date</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
-        <isOutput>true</isOutput>
+        <isOutput>false</isOutput>
     </variables>
     <variables>
         <name>vOSS_Email</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
-        <isInput>true</isInput>
+        <isInput>false</isInput>
         <isOutput>true</isOutput>
     </variables>
     <variables>
         <name>vOSS_Name</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
-        <isInput>true</isInput>
+        <isInput>false</isInput>
         <isOutput>true</isOutput>
     </variables>
     <variables>
         <name>vOSS_Phone</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
-        <isInput>true</isInput>
+        <isInput>false</isInput>
         <isOutput>true</isOutput>
     </variables>
     <variables>
@@ -1385,7 +1372,7 @@ Special Instructions: {!Special_Instructions}</text>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
-        <isOutput>true</isOutput>
+        <isOutput>false</isOutput>
     </variables>
     <variables>
         <name>vSpecial_Instruction</name>
