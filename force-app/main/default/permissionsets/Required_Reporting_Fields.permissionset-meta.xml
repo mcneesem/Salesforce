@@ -38,6 +38,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Account.NSP_Account_Status__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Account.NSP_ICP_Percent__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -134,6 +139,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Contact.Engagement_Score__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Contact.Exclude_from_MAP__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -474,6 +484,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Opportunity.Number_of_STP_Checklists__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Opportunity.Promotion_Code__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
