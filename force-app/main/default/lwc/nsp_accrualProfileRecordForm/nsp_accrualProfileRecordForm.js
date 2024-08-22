@@ -52,7 +52,7 @@ import searchRecordsByFilters from '@salesforce/apex/NSP_sObjectOperationControl
 import upsertAndDeleteRecords from '@salesforce/apex/NSP_sObjectOperationController.upsertAndDeleteRecords';
 import linkFilesToRecord from '@salesforce/apex/NSP_AccrualProfileController.linkFilesToRecord';
 import getPlanOptions from '@salesforce/apex/NSP_AccrualProfileController.getPlanOptions';
-
+import getAttachedFiles from '@salesforce/apex/NSP_AccrualProfileController.getAttachedFiles';
 export default class Nsp_accrualProfileRecordForm extends NavigationMixin(
   LightningElement
 ) {
@@ -79,6 +79,7 @@ export default class Nsp_accrualProfileRecordForm extends NavigationMixin(
   };
   @track apgDraftValues = [];
   @track unlinkedFiles = [];
+  @track uploadedAttachments=[];
   createableFields = [];
   referenceFields = [];
   multipicklistFields = [];
@@ -90,7 +91,7 @@ export default class Nsp_accrualProfileRecordForm extends NavigationMixin(
   filesUploadedCount = 0;
 
   @track _apgData = [
-    { NSP_From__c: 0, NSP_Completed_Months_of_Service__c: 0, uid: 0 },
+    { NSP_From__c: 0, NSP_Through__c: 99999, NSP_Completed_Months_of_Service__c: 0, uid: 0 },
   ];
   _apgDataToDelete = [];
   _apscrRecords = [];
@@ -174,6 +175,20 @@ export default class Nsp_accrualProfileRecordForm extends NavigationMixin(
       this.planOptions = data;
     }
     if (error) {
+      this.showErrorToast(error.body.message);
+    }
+  }
+
+  @wire(getAttachedFiles, {
+    recordId: '$recordId',
+  })
+  getAttachedFileNames({ data, error }) {
+    if(data){
+      data.forEach((fileName)=>{
+        this.uploadedAttachments.push(fileName);
+      })
+    }
+    if(error){
       this.showErrorToast(error.body.message);
     }
   }
@@ -384,11 +399,12 @@ export default class Nsp_accrualProfileRecordForm extends NavigationMixin(
   handleFileUploadFinished({ detail }) {
     // Get the list of uploaded files
     const uploadedFiles = detail.files;
-    if (!this.recordId) {
-      uploadedFiles.forEach(({ documentId }) => {
-        this.unlinkedFiles.push(documentId);
-      });
-    }
+    uploadedFiles.forEach((uploadedFile) => {
+      this.uploadedAttachments.push(uploadedFile.name);
+      if (!this.recordId) {
+        this.unlinkedFiles.push(uploadedFile.documentId);
+      }
+    });
 
     this.showSuccessToast('No. of files uploaded : ' + uploadedFiles.length);
     this.filesUploadedCount = uploadedFiles.length;
@@ -610,6 +626,8 @@ export default class Nsp_accrualProfileRecordForm extends NavigationMixin(
 
     if (index !== -1) {
       this._apgData.splice(index + 1, 0, { uid: this.uniqueId });
+      this._apgData[index+1].NSP_From__c = parseInt(this._apgData[index].NSP_Through__c)+1;
+      this._apgData[index+1].NSP_Through__c = 99999;
       this._apgData = [...this._apgData];
       this.updateAccrualLevelValue();
     }
@@ -953,7 +971,7 @@ export default class Nsp_accrualProfileRecordForm extends NavigationMixin(
       maximumBalanceCapHours,
       accrualPeriodLimitsHours,
       maxCarryOverHours,
-      maxCarryOverPercent, 
+      maxCarryOverPercent,
       carryoverExpiresDaysDate,
       action,
     } = APG_COLUMNS;

@@ -6,6 +6,7 @@ Modification Log     :
 **/
 
 public with sharing class NSP_AccrualProfileController {
+    // test w/ NSP_AccrualProfileControllerTest (88%)
     public static String recId;
     public static void setrecId (String recordId) {
         recId = recordId;
@@ -13,6 +14,32 @@ public with sharing class NSP_AccrualProfileController {
      public static String getrecId() {
         return recId;
     }
+
+    /***********************************************************************************************
+    * MethodName: getAttachedFiles
+    * Description : It gets uploaded files name attched with a given record
+    * Params: String recordId
+    * ********************************************************************************************/ 
+
+    @AuraEnabled(cacheable=true)
+    public static List<String> getAttachedFiles(String recordId){
+        List<String> lstAttachedFilesName=new List<String>();
+        try {
+            for(ContentDocumentLink cdlink : [SELECT contentDocument.Title, contentDocument.FileExtension FROM ContentDocumentLink WHERE LinkedEntityId=:recordId]){
+                if ( ( cdlink.contentDocument != null ) && String.isNotBlank( cdlink.contentDocument.Title ) ) {
+                    String fileName = cdlink.contentDocument.Title;
+                    if ( String.isNotBlank( cdlink.contentDocument.FileExtension ) ) {
+                        fileName += '.' + cdlink.contentDocument.FileExtension;
+                    }
+                    lstAttachedFilesName.add( fileName );
+                }
+            }
+        } catch (Exception ex) {
+            throw NSP_Utilities.getAuraException(ex);
+        }
+        return lstAttachedFilesName;
+    }
+
      /***********************************************************************************************
     * MethodName: linkFilesToRecord
     * Description : It links uploaded files to given record

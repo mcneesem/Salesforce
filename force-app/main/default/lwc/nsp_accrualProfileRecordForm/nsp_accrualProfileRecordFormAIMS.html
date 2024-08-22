@@ -636,6 +636,14 @@
           onuploadfinished={handleFileUploadFinished}
           multiple>
         </lightning-file-upload>
+        <lightning-card variant="Narrow" title="Attachments" icon-name="standard:file" class="slds-p-bottom_large">
+          <template for:each={uploadedAttachments} for:item="attachment">
+            <div class="slds-p-left_medium slds-p-bottom_x-small" key={attachment.name}>
+              <lightning-icon icon-name="doctype:unknown" size="small"></lightning-icon>
+              {attachment}
+            </div>
+          </template>
+        </lightning-card>
       </div>
   
       <div slot="footer">
