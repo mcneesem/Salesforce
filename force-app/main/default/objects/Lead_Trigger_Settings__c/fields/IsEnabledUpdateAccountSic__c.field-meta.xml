@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IsEnabledUpdateAccountSic__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Prevent unhandled Flow Errors (UNABLE_TO_LOCK_ROW) within the Lead_Conversion_Update_Fields_on_Account Flow within the Update_Related_Account_Record Flow Element.</description>
+    <inlineHelpText>See Flow: Lead_Conversion_Update_Fields_on_Account</inlineHelpText>
+    <label>IsEnabledUpdateAccountSic</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

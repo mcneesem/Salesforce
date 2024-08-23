@@ -32,6 +32,39 @@
         <versionSegment>1</versionSegment>
     </actionCalls>
     <apiVersion>60.0</apiVersion>
+    <assignments>
+        <name>Set_Fault_Element_Get_Associated_FRUP</name>
+        <label>Set Fault Element: Get_Associated_FRUP</label>
+        <locationX>1282</locationX>
+        <locationY>242</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Associated_FRUP</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Update_Create_Box_com_Folder_s_c</name>
+        <label>Set Fault Element: Update_Create_Box_com_Folder_s_c</label>
+        <locationX>314</locationX>
+        <locationY>890</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Update_Create_Box_com_Folder_s_c</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
     <decisions>
         <description>Conditional to check for an existing FRUP record associated with Opportunity.  If a FRUP is found the screen flow will not attempt to invoke the Create Folder flow.</description>
         <name>Check_for_existing_FRUP</name>
@@ -118,7 +151,7 @@
             <targetReference>Check_for_existing_FRUP</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Fault_Handler_Subflow</targetReference>
+            <targetReference>Set_Fault_Element_Get_Associated_FRUP</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -172,8 +205,7 @@
             <targetReference>Folder_Creation_Complete_Screen</targetReference>
         </connector>
         <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Fault_Handler_Subflow</targetReference>
+            <targetReference>Set_Fault_Element_Update_Create_Box_com_Folder_s_c</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -229,10 +261,26 @@
         <showHeader>false</showHeader>
     </screens>
     <screens>
+        <name>Fault_Screen</name>
+        <label>Fault Screen</label>
+        <locationX>1282</locationX>
+        <locationY>458</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>Fault_Display_Text</name>
+            <fieldText>&lt;p&gt;Fault Element: {!faultElement}&lt;/p&gt;&lt;p&gt;Fault Message: {!$Flow.FaultMessage}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
         <name>Folder_Creation_Complete_Screen</name>
         <label>Folder Creation Complete Screen</label>
         <locationX>314</locationX>
-        <locationY>1022</locationY>
+        <locationY>1172</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -257,18 +305,27 @@
         <name>Fault_Handler_Subflow</name>
         <label>Fault Handler Subflow</label>
         <locationX>1282</locationX>
-        <locationY>242</locationY>
+        <locationY>350</locationY>
+        <connector>
+            <targetReference>Fault_Screen</targetReference>
+        </connector>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
-            <name>faultMessage</name>
+            <name>faultElement</name>
             <value>
-                <elementReference>$Flow.FaultMessage</elementReference>
+                <elementReference>faultElement</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <name>faultFlow</name>
             <value>
                 <stringValue>Box_Create_Folder_and_Collabs_Flow</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultMessage</name>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
             </value>
         </inputAssignments>
     </subflows>
@@ -288,6 +345,16 @@
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>faultElement</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue></stringValue>
+        </value>
     </variables>
     <variables>
         <description>A variable to hold associated Opportunity record Id</description>

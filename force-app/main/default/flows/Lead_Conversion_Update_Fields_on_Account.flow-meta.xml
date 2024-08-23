@@ -53,7 +53,7 @@
     <assignments>
         <name>Set_Update_Path_Business_Description_Update_Required</name>
         <label>Set Update Path: Business_Description_Update_Required</label>
-        <locationX>842</locationX>
+        <locationX>314</locationX>
         <locationY>1608</locationY>
         <assignmentItems>
             <assignToReference>accountUpdatePath</assignToReference>
@@ -69,7 +69,7 @@
     <assignments>
         <name>Set_Update_Path_SIC_Code_Update_Required</name>
         <label>Set Update Path: SIC_Code_Update_Required</label>
-        <locationX>314</locationX>
+        <locationX>578</locationX>
         <locationY>1608</locationY>
         <assignmentItems>
             <assignToReference>accountUpdatePath</assignToReference>
@@ -85,7 +85,7 @@
     <assignments>
         <name>Set_Update_Path_SIC_Description_Update_Required</name>
         <label>Set Update Path: SIC_Description_Update_Required</label>
-        <locationX>578</locationX>
+        <locationX>842</locationX>
         <locationY>1608</locationY>
         <assignmentItems>
             <assignToReference>accountUpdatePath</assignToReference>
@@ -371,8 +371,37 @@ Further consideration in another node: if current Account Status is Networking, 
             <label>Status Update Required</label>
         </rules>
         <rules>
+            <name>Business_Description_Update_Required</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>varAccountDescription</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Account_Record.Description</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>varAccountDescription</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Update_Path_Business_Description_Update_Required</targetReference>
+            </connector>
+            <label>Business Description Update Required</label>
+        </rules>
+        <rules>
             <name>SIC_Code_Update_Required</name>
             <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Setup.Lead_Trigger_Settings__c.IsEnabledUpdateAccountSic__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
             <conditions>
                 <leftValueReference>$Record.NSP_SIC__c</leftValueReference>
                 <operator>IsBlank</operator>
@@ -396,6 +425,13 @@ Further consideration in another node: if current Account Status is Networking, 
             <name>SIC_Description_Update_Required</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
+                <leftValueReference>$Setup.Lead_Trigger_Settings__c.IsEnabledUpdateAccountSic__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
                 <leftValueReference>safeSicDesc</leftValueReference>
                 <operator>IsBlank</operator>
                 <rightValue>
@@ -413,28 +449,6 @@ Further consideration in another node: if current Account Status is Networking, 
                 <targetReference>Set_Update_Path_SIC_Description_Update_Required</targetReference>
             </connector>
             <label>SIC Description Update Required</label>
-        </rules>
-        <rules>
-            <name>Business_Description_Update_Required</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>varAccountDescription</leftValueReference>
-                <operator>IsBlank</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Get_Account_Record.Description</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <elementReference>varAccountDescription</elementReference>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Set_Update_Path_Business_Description_Update_Required</targetReference>
-            </connector>
-            <label>Business Description Update Required</label>
         </rules>
     </decisions>
     <decisions>
