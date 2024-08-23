@@ -161,7 +161,7 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>NSP_HR_Contact_Best_Time_Of_Day_to_Reach__c</field>
-        </layoutItems>
+            </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>HR_Contact_Notes_Txt__c</field>
@@ -179,7 +179,7 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>NSP_HR_Contact_Methods__c</field>
-        </layoutItems>
+            </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>View_Payroll_Paperwork__c</field>
@@ -662,7 +662,6 @@
             <actionType>QuickAction</actionType>
             <sortOrder>4</sortOrder>
         </platformActionListItems>
-        
         <platformActionListItems>
             <actionName>FeedItem.TextPost</actionName>
             <actionType>QuickAction</actionType>
@@ -708,33 +707,33 @@
             <actionType>StandardButton</actionType>
             <sortOrder>13</sortOrder>
         </platformActionListItems>
-       
         <platformActionListItems>
             <actionName>Clone</actionName>
             <actionType>StandardButton</actionType>
-            <sortOrder>19</sortOrder>
+            <sortOrder>14</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
             <actionName>Delete</actionName>
             <actionType>StandardButton</actionType>
-            <sortOrder>21</sortOrder>
+            <sortOrder>15</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
             <actionName>Edit</actionName>
             <actionType>StandardButton</actionType>
-            <sortOrder>22</sortOrder>
+            <sortOrder>16</sortOrder>
         </platformActionListItems>
     </platformActionList>
     <relatedLists>
+        <fields>Record_ID__c</fields>
         <fields>Contact.CNTC_FIRST_NAME</fields>
         <fields>Contact.NAME</fields>
         <fields>Contact_Type__c</fields>
         <fields>NSP_Contact_Cell__c</fields>
         <fields>NSP_Contact_Office_Phone__c</fields>
         <fields>NSP_Contact_Email__c</fields>
-        <fields>NSP_Contact_Outside_US__c</fields>
-        <fields>NSP_Contact_International_Phone__c</fields>
         <fields>NSP_Contact_Time_to_Reach__c</fields>
+        <fields>View_Payroll_Paperwork__c</fields>
+        <fields>Notes__c</fields>
         <relatedList>Additional_Payroll_Contact__c.Payroll__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -783,7 +782,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h8G000000NT34</masterLabel>
+        <masterLabel>00h4x000003Eh4X</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>
