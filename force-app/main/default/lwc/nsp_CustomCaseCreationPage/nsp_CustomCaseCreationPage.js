@@ -803,6 +803,9 @@ export default class Nsp_CustomCaseCreationPage extends NavigationMixin(Lightnin
         //Added By Sruthi - start
         this.recordId = event.detail.id;
         this.isMultipleContactsSelected = this.isMultipleContacts;
+        if(this.filesUploaded==undefined || this.filesUploaded==null || this.filesUploaded == ''){
+          this.filesUploaded = this.template.querySelector('c-nsp_file-upload-component').filesUploaded;
+        }
         saveFiles({filesToInsert: this.filesUploaded, recordId: this.recordId});
         if(this.noteButtonClicked){
            this.handleNotesInsertion(this.recordId);

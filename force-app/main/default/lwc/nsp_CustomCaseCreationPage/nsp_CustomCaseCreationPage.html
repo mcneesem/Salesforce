@@ -602,22 +602,27 @@
                     <!--Attachment Code by Sruthi - Start-->
                     <div class="slds-p-around_small">
                     <template if:true={showCaseForm}>
-                        <lightning-card title="Attachment" icon-name="custom:custom14">
-                            <div class="slds-m-around_medium">
-                                <lightning-input type="file" 
-                                accept=".xlsx, .xls, .csv, .png, .doc, .docx, .pdf"
-                                label="" onchange={openfileUpload} multiple></lightning-input>
-                            </div>
-                            <div class="slds-p-left_medium">
-                                Uploaded File/s: <br/>
-                                <template for:each={attachmentFilesName} for:item="fileIterator">
-                                    <div key={fileIterator} style="margin-top:10px;">
-                                        <lightning-icon icon-name="doctype:image" size="small" title="Image"></lightning-icon>
-                                          {fileIterator}
-                                    </div>
-                                </template>
-                            </div>
-                        </lightning-card>
+                        <template if:false={isSubCompPermissionEnabled}>
+                            <lightning-card title="Attachment" icon-name="custom:custom14">
+                                <div class="slds-m-around_medium">
+                                    <lightning-input type="file" 
+                                    accept=".xlsx, .xls, .csv, .png, .doc, .docx, .pdf"
+                                    label="" onchange={openfileUpload} multiple></lightning-input>
+                                </div>
+                                <div class="slds-p-left_medium">
+                                    Uploaded File/s: <br/>
+                                    <template for:each={attachmentFilesName} for:item="fileIterator">
+                                        <div key={fileIterator} style="margin-top:10px;">
+                                            <lightning-icon icon-name="doctype:image" size="small" title="Image"></lightning-icon>
+                                            {fileIterator}
+                                        </div>
+                                    </template>
+                                </div>
+                            </lightning-card>
+                        </template>
+                        <template if:true={isSubCompPermissionEnabled}>
+                            <c-nsp_file-upload-component></c-nsp_file-upload-component>
+                        </template>
                     </template>
                 </div>
                     <!--Attachment Code by Sruthi - Start-->
