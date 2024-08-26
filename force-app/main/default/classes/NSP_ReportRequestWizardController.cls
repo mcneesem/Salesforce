@@ -1,5 +1,5 @@
 public with sharing class NSP_ReportRequestWizardController {
-    // test w/ NSP_ReportRequestWizardControllerTest (85%)
+    // test w/ NSP_ReportRequestWizardControllerTest (87%)
 
     public static final Id WO_ASSET = NSP_GenericRecordType.getRecordTypeId('Asset',NSP_ServiceConstants.WO_ASSET_RECORDTYPE );
     private static final String NOT_FOUND = 'Not Found';
@@ -101,7 +101,6 @@ public with sharing class NSP_ReportRequestWizardController {
                  				 assetFields)
                                  .addFilter('RecordTypeId', WO_ASSET)
                                  .addFilter('AccountId', accountID)
-                                 .addFilter('NSP_Account_Status__c', NSP_ServiceConstants.ASSET_ACTIVE_STATUS)
                                  .setSecurityEnforce(false)
                                  .build();
             assetQuery += ' AND (NSP_Financial_Guidelines__c!=NULL OR NSP_Client_Segment_type__c!=null OR NSP_Service_Region__c!=null) ' ;
@@ -110,7 +109,12 @@ public with sharing class NSP_ReportRequestWizardController {
 
             if(asset.size()>0){
                 financeLevel= asset[0].NSP_Financial_Guidelines__c;
-                segment=asset[0].NSP_Client_Segment_type__c;
+                if(asset[0]?.NSP_Account_Status__c.equalsIgnoreCase(NSP_ServiceConstants.ASSET_ACTIVE_STATUS) || 
+                   asset[0]?.NSP_Account_Status__c.equalsIgnoreCase(NSP_ServiceConstants.TERMINATED))
+                {
+                    segment=asset[0].NSP_Client_Segment_type__c;
+                }
+                
                 region = asset[0].NSP_Service_Region__c;
             } 
             //map finance level, region and segment of wizard output to credit level and segment type of wo asset respecitvely
