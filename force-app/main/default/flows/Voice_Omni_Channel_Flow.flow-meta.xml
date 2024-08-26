@@ -364,7 +364,7 @@ Routes each call to the default queue (Basic Queue) and, if the agent accepts, s
             <targetReference>Custom_Setting_Voice_Omni_Channel</targetReference>
         </connector>
     </start>
-    <status>InvalidDraft</status>
+    <status>Draft</status>
     <subflows>
         <name>Fault_Handler</name>
         <label>Fault Handler</label>
