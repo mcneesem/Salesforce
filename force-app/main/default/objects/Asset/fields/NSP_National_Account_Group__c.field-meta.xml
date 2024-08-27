@@ -192,6 +192,21 @@
                 <default>false</default>
                 <label>S5 Equity Solutions</label>
             </value>
+            <value>
+                <fullName>66</fullName>
+                <default>false</default>
+                <label>First Hyperion</label>
+            </value>
+            <value>
+                <fullName>67</fullName>
+                <default>false</default>
+                <label>Paragon Therapeutics</label>
+            </value>
+            <value>
+                <fullName>68</fullName>
+                <default>false</default>
+                <label>BIP Aligned Equity Holdings</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
