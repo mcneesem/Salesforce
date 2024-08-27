@@ -3,6 +3,7 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { CloseActionScreenEvent } from 'lightning/actions';
 import { CurrentPageReference, NavigationMixin } from 'lightning/navigation';
 import hasPermission from '@salesforce/customPermission/NSP_DisplayTypeScreenOnCase';
+import hasSubCompPerm from '@salesforce/customPermission/Enable_Case_Creation_Sub_Components';
 import getCategoryList from '@salesforce/apex/NSP_CustomCaseCreationPageController.getCategoryList';
 import getAllCategoryList from '@salesforce/apex/NSP_CustomCaseCreationPageController.getAllCategoryList';
 import getFieldSetFieldsBySobject from '@salesforce/apex/NSP_Utilities.getAllFieldSetFieldsBySObjectName';
@@ -46,6 +47,9 @@ const ACCOUNTFIELDS = [
 export default class Nsp_CustomCaseCreationPage extends NavigationMixin(LightningElement) {
     get isCustomPermissionEnabled() {
         return hasPermission;
+    }
+    get isSubCompPermissionEnabled() {
+        return hasSubCompPerm;
     }
 
     label = {
@@ -803,8 +807,10 @@ export default class Nsp_CustomCaseCreationPage extends NavigationMixin(Lightnin
         //Added By Sruthi - start
         this.recordId = event.detail.id;
         this.isMultipleContactsSelected = this.isMultipleContacts;
-        if(this.filesUploaded==undefined || this.filesUploaded==null || this.filesUploaded == ''){
-          this.filesUploaded = this.template.querySelector('c-nsp_file-upload-component').filesUploaded;
+        if(this.isSubCompPermissionEnabled){
+            if(this.filesUploaded==undefined || this.filesUploaded==null || this.filesUploaded == ''){
+            this.filesUploaded = this.template.querySelector('c-case-file-upload').filesUploaded;
+            }
         }
         saveFiles({filesToInsert: this.filesUploaded, recordId: this.recordId});
         if(this.noteButtonClicked){
@@ -954,8 +960,7 @@ export default class Nsp_CustomCaseCreationPage extends NavigationMixin(Lightnin
         this.showError = false;
         this.errorMessageToDisplay = '';
         let requiredFields = ['Status', 'Origin','Subject'];
-        const inputFields = this.template.querySelectorAll('lightning-input-field');
-        
+        const inputFields = this.template.querySelectorAll('lightning-input-field');        
         if(this.selectedRecordTypeName === 'BPS'){
             requiredFields = [...requiredFields, 'Priority'];
             requiredFields = [...requiredFields, 'NSP_Case_Sub_Status__c'];
