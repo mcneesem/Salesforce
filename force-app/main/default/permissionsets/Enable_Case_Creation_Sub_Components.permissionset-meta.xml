@@ -2,8 +2,8 @@
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <customPermissions>
         <enabled>true</enabled>
-        <name>NSP_CaseCreationSubComponent</name>
+        <name>Enable_Case_Creation_Sub_Components</name>
     </customPermissions>
     <hasActivationRequired>false</hasActivationRequired>
-    <label>Case Cat Subcat Permission Set</label>
+    <label>Enable Case Creation Sub Components</label>
 </PermissionSet>

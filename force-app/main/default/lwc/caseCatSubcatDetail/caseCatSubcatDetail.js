@@ -6,11 +6,9 @@ import getRelatedSubCategory from '@salesforce/apex/NSP_CustomCaseCreationPageCo
 import getCategoryList from '@salesforce/apex/NSP_CustomCaseCreationPageController.getCategoryList';
 import getAllCategoryList from '@salesforce/apex/NSP_CustomCaseCreationPageController.getAllCategoryList';
 import getCategoryDependenciesMap from '@salesforce/apex/NSP_CustomCaseCreationPageController.getCategoryDependenciesMap';
-
-
 import { IsConsoleNavigation, getFocusedTabInfo, closeTab } from 'lightning/platformWorkspaceApi';
+export default class CaseCatSubcatDetail extends LightningElement {
 
-export default class Nsp_catSubcatDetail extends LightningElement {
 @api oCase = {};
 profileName = '' ;
 recordTypeID;
@@ -329,5 +327,4 @@ getCatDependenciesMap(){
     getAllComboboxes() {
         return this.template.querySelectorAll('lightning-combobox');
     }
-
 }

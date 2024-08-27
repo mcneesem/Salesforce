@@ -27,11 +27,17 @@
                     </lightning-layout>
                 </template>
 
-                <template if:true={showCaseForm}>
-                    <template if:true={isSubCompPermissionEnabled}>  
-                        <c-nsp_cat-subcat-detail rec-type-id={selectedRecTypeId} cqa-child-case={isCQAChildCase} selected-category={selectedCategory} selected-sub-category={selectedSubCategory} o-case={oCase}></c-nsp_cat-subcat-detail>                   
+                <template lwc:if={showCaseForm}>
+                    <template lwc:if={isSubCompPermissionEnabled}>  
+                        <c-case-cat-subcat-detail 
+                            rec-type-id={selectedRecTypeId} 
+                            cqa-child-case={isCQAChildCase} 
+                            selected-category={selectedCategory} 
+                            selected-sub-category={selectedSubCategory} 
+                            o-case={oCase}>
+                        </c-case-cat-subcat-detail>                   
                     </template>
-                    <template if:false={isSubCompPermissionEnabled}>  
+                    <template lwc:else>  
                         <lightning-layout>
                             <lightning-layout-item flexibility="auto" padding="horizontal-medium">
                                 <div class="custom-box">Select Category, Subcategory and Detail</div>
