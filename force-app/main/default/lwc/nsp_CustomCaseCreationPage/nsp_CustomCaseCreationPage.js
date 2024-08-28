@@ -3,7 +3,6 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { CloseActionScreenEvent } from 'lightning/actions';
 import { CurrentPageReference, NavigationMixin } from 'lightning/navigation';
 import hasPermission from '@salesforce/customPermission/NSP_DisplayTypeScreenOnCase';
-import hasSubCompPerm from '@salesforce/customPermission/Enable_Case_Creation_Sub_Components';
 import getCategoryList from '@salesforce/apex/NSP_CustomCaseCreationPageController.getCategoryList';
 import getAllCategoryList from '@salesforce/apex/NSP_CustomCaseCreationPageController.getAllCategoryList';
 import getFieldSetFieldsBySobject from '@salesforce/apex/NSP_Utilities.getAllFieldSetFieldsBySObjectName';
@@ -47,9 +46,6 @@ const ACCOUNTFIELDS = [
 export default class Nsp_CustomCaseCreationPage extends NavigationMixin(LightningElement) {
     get isCustomPermissionEnabled() {
         return hasPermission;
-    }
-    get isSubCompPermissionEnabled() {
-        return hasSubCompPerm;
     }
 
     label = {
