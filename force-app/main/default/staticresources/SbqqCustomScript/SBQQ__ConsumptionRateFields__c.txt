@@ -1,0 +1,2 @@
+SBQQ__ProcessingOrder__c
+SBQQ__PricingMethod__c
