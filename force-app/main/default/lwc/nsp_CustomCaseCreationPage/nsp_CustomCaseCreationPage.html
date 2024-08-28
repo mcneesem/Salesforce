@@ -28,20 +28,20 @@
                 </template>
 
                 <template lwc:if={showCaseForm}>
-                    <template lwc:if={isSubCompPermissionEnabled}>  
-                        <c-case-cat-subcat-detail 
+                    <template lwc:if={isSubCompPermissionEnabled}>
+                        <c-case-cat-subcat-detail
                             rec-type-id={selectedRecTypeId} 
                             cqa-child-case={isCQAChildCase} 
                             selected-category={selectedCategory} 
                             selected-sub-category={selectedSubCategory} 
-                            o-case={oCase}>
-                        </c-case-cat-subcat-detail>                   
+                            o-case={oCase}
+                            >
+                        </c-case-cat-subcat-detail>
                     </template>
-                    <template lwc:else>  
+                    <template lwc:else>
                         <lightning-layout>
                             <lightning-layout-item flexibility="auto" padding="horizontal-medium">
                                 <div class="custom-box">Select Category, Subcategory and Detail</div>
-                                
                             </lightning-layout-item>
                         </lightning-layout>
                         <lightning-layout>
@@ -61,13 +61,13 @@
                                                 <lightning-combobox data-fname="category" name="Category" label="Category"
                                                     value={selectedCategory} placeholder="Select a Category"
                                                     options={categoryArray} onchange={handleChange} required>
-                                                </lightning-combobox> 
-                                                <!-- Added By Sruthi start --> 
-                                                <template if:false={isBPSUser}>  
+                                                </lightning-combobox>
+                                                <!-- Added By Sruthi start -->
+                                                <template if:false={isBPSUser}>
                                                     <lightning-button variant="brand" label="View All" 
                                                         class="slds-m-top_small" onclick={handleCategoryViewAll}>
-                                                    </lightning-button> 
-                                                </template> 
+                                                    </lightning-button>
+                                                </template>
                                                 <!-- Added By Sruthi start -->
                                             </div>
                                         </template>
@@ -82,16 +82,15 @@
                                                     onchange={handleChange1}
                                                     options={categoryOptions} required>
                                                 </lightning-combobox>
-                                                <template if:false={isBPSUser}> 
+                                                <template if:false={isBPSUser}>
                                                     <lightning-button variant="brand" label="View Filtered" 
                                                         class="slds-m-top_small" onclick={handleCategoryFilteredView}>
-                                                    </lightning-button> 
+                                                    </lightning-button>
                                                 </template>
                                             </div>
                                         </template>
-                                        <!-- Added By Sruthi end --> 
-                                        
-                                        <template if:true={showDetail}>    
+                                        <!-- Added By Sruthi end -->
+                                        <template if:true={showDetail}>
                                             <div class="slds-p-around_medium slds-form_horizontal">
                                                 <lightning-combobox data-fname="detail" name="Detail" label="Detail"
                                                     value={selectedDetail} placeholder="Select a Detail" options={detailOptions}
@@ -99,7 +98,7 @@
                                                 </lightning-combobox>
                                             </div>
                                         </template>
-                                        <template if:true={showAllDetail}>    
+                                        <template if:true={showAllDetail}>
                                             <div class="slds-p-around_medium slds-form_horizontal">
                                                 <lightning-combobox data-fname="detail" name="Detail" label="Detail"
                                                     value={selectedDetail} placeholder="Select a Detail" options={detailOptions}
@@ -107,7 +106,6 @@
                                                 </lightning-combobox>
                                             </div>
                                         </template>
-                                        
                                     </div>
                                 </lightning-layout-item>
                                 <lightning-layout-item size="6">
@@ -118,10 +116,10 @@
                                                     value={selectedSubCategory} placeholder="Select a Sub Category"
                                                     options={subCategoryOptions} onchange={handleChange} required>
                                                 </lightning-combobox>
-                                                <template if:true={showAllSubCategoryButton}>  
+                                                <template if:true={showAllSubCategoryButton}>
                                                     <lightning-button variant="brand" label="View All" 
                                                         class="slds-m-top_small" onclick={handleSubCategoryViewAll}>
-                                                    </lightning-button> 
+                                                    </lightning-button>
                                                 </template>
                                             </div>
                                         </template>
@@ -131,20 +129,20 @@
                                                     value={selectedSubCategory} placeholder="Select a Sub Category"
                                                     options={subCategoryOptions} onchange={handleChange1} required>
                                                 </lightning-combobox>
-                                                <template if:true={showFilterSubCategoryButton}> 
+                                                <template if:true={showFilterSubCategoryButton}>
                                                     <lightning-button variant="brand" label="View Filtered" 
                                                         class="slds-m-top_small" onclick={handleSubCategoryFiltered}>
-                                                    </lightning-button> 
+                                                    </lightning-button>
                                                 </template>
-                                                <template if:false={showFilterSubCategoryButton}> 
+                                                <template if:false={showFilterSubCategoryButton}>
                                                     <lightning-button variant="brand"
                                                         class="slds-m-top_small" label="Hidden" style="
                                                         visibility: hidden;">
-                                                    </lightning-button> 
+                                                    </lightning-button>
                                                 </template>
                                             </div>
                                         </template>
-                                        <template if:true={showVersion}>    
+                                        <template if:true={showVersion}>
                                             <div class="slds-p-around_medium slds-form_horizontal">
                                                 <lightning-combobox data-fname="version" name="Version" label="Version"
                                                     value={selectedVersion} placeholder="Select a Version" options={versionOptions}
@@ -174,22 +172,22 @@
                                         <lightning-input-field field-name="OwnerId" value={oCase.OwnerId}
                                             class="slds-hidden"></lightning-input-field>
                                         <lightning-input-field field-name="AccountId">
-                                            </lightning-input-field>   
+                                            </lightning-input-field>
                                         <lightning-input-field field-name="ContactId">
-                                        </lightning-input-field>   
+                                        </lightning-input-field>
                                         <lightning-input-field field-name="ParentId">
-                                        </lightning-input-field> 
+                                        </lightning-input-field>
                                         <lightning-input-field field-name="NSP_Case_Issue__c">
-                                        </lightning-input-field>  
-                                        <lightning-input-field field-name='AssetId' value={assetId}> 
+                                        </lightning-input-field>
+                                        <lightning-input-field field-name='AssetId' value={assetId}>
                                         </lightning-input-field>
                                         <lightning-input-field field-name="NSP_Show_Confidential_Checkbox__c"
                                         class="slds-hidden">
-                                        </lightning-input-field>                                    
+                                        </lightning-input-field>
                                     </div>
                                 </div>
                             </lightning-layout-item>
-                        </lightning-layout> 
+                        </lightning-layout>
                     </template>
                     <lightning-layout>
                         <lightning-layout-item flexibility="auto" padding="horizontal-medium">

@@ -951,16 +951,14 @@ export default class Nsp_CustomCaseCreationPage extends NavigationMixin(Lightnin
     }
 
     handleButtonClick() {
-        if(this.isSubCompPermissionEnabled){
-          this.getCatSubCatValues();
+        if ( this.isSubCompPermissionEnabled ) {
+            this.getCatSubCatValues();
         }
         let errorFields = '';
         this.showError = false;
         this.errorMessageToDisplay = '';
         let requiredFields = ['Status', 'Origin','Subject'];
         const inputFields = this.template.querySelectorAll('lightning-input-field');
-
-        
         
         if(this.selectedRecordTypeName === 'BPS'){
             requiredFields = [...requiredFields, 'Priority'];
@@ -1007,7 +1005,7 @@ export default class Nsp_CustomCaseCreationPage extends NavigationMixin(Lightnin
             errorFields += "Case Owner,"
         }
         this.getAllInputFields = event.detail.fields;
-        if(this.isSubCompPermissionEnabled){
+        if ( this.isSubCompPermissionEnabled ) {
             this.getAllInputFields.NSP_Category__c = this.selectedCategory; 
             this.getAllInputFields.NSP_SubCategory__c = this.selectedSubCategory; 
             this.getAllInputFields.NSP_Detail__c = this.selectedDetail; 
@@ -1096,7 +1094,7 @@ export default class Nsp_CustomCaseCreationPage extends NavigationMixin(Lightnin
                 field.reset();
             });
         }
-        if(this.isSubCompPermissionEnabled){
+        if ( this.isSubCompPermissionEnabled ) {
             const catSubCatComponent = this.template.querySelector('c-nsp_cat-subcat-detail');
             if(catSubCatComponent){
                 const comboBoxFields = catSubCatComponent.getAllComboboxes();
@@ -1458,11 +1456,15 @@ export default class Nsp_CustomCaseCreationPage extends NavigationMixin(Lightnin
     render(){
         return ((this.selectedRecordTypeName === 'BPS') ? bpsTemplate : (this.selectedRecordTypeName === 'RET Time Tracking') ? retTemplate : defaultTemplate);
     } 
-    getCatSubCatValues(){
-        const childComponent = this.template.querySelector('c-case-cat-subcat-detail');
-        this.selectedCategory = childComponent.selectedCategory; 
-        this.selectedSubCategory = childComponent.selectedSubCategory;
-        this.selectedDetail = childComponent.selectedDetail;
-        this.selectedVersion = childComponent.selectedVersion;
+
+    getCatSubCatValues() {
+        if ( this.isSubCompPermissionEnabled ) {
+            const childComponent = this.template.querySelector( 'c-case-cat-subcat-detail' );
+            this.selectedCategory = childComponent.selectedCategory; 
+            this.selectedSubCategory = childComponent.selectedSubCategory;
+            this.selectedDetail = childComponent.selectedDetail;
+            this.selectedVersion = childComponent.selectedVersion;
+        }
     }
+
 }
