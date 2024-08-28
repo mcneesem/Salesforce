@@ -1,11 +1,11 @@
 import { LightningElement, api, track} from 'lwc';
+
 export default class CaseFileUpload extends LightningElement {
-   @track attachmentFilesName = [];
+    @track attachmentFilesName = [];
     @api filesUploaded = [];
 
-
     openfileUpload(event) {
-        if(event && event.target && event.target.files && event.target.files.length > 0) {
+        if ( event && event.target && event.target.files && ( event.target.files.length > 0 ) ) {
             let fileSize = event.target.files.length;
             for(let i=0; i<fileSize; i++){
                 let filesName = '';
@@ -24,8 +24,8 @@ export default class CaseFileUpload extends LightningElement {
                     });
                 };
                 freader.readAsDataURL(file);
-            }  
-            
+            }
         }
     }
+
 }

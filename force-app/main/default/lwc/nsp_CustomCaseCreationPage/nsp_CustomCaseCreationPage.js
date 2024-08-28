@@ -807,9 +807,9 @@ export default class Nsp_CustomCaseCreationPage extends NavigationMixin(Lightnin
         //Added By Sruthi - start
         this.recordId = event.detail.id;
         this.isMultipleContactsSelected = this.isMultipleContacts;
-        if(this.isSubCompPermissionEnabled){
-            if(this.filesUploaded==undefined || this.filesUploaded==null || this.filesUploaded == ''){
-            this.filesUploaded = this.template.querySelector('c-case-file-upload').filesUploaded;
+        if ( this.isSubCompPermissionEnabled ) {
+            if ( ( this.filesUploaded == undefined ) || ( this.filesUploaded == null ) || ( this.filesUploaded == '' ) ) {
+                this.filesUploaded = this.template.querySelector('c-case-file-upload').filesUploaded;
             }
         }
         saveFiles({filesToInsert: this.filesUploaded, recordId: this.recordId});
@@ -960,7 +960,8 @@ export default class Nsp_CustomCaseCreationPage extends NavigationMixin(Lightnin
         this.showError = false;
         this.errorMessageToDisplay = '';
         let requiredFields = ['Status', 'Origin','Subject'];
-        const inputFields = this.template.querySelectorAll('lightning-input-field');        
+        const inputFields = this.template.querySelectorAll('lightning-input-field');
+        
         if(this.selectedRecordTypeName === 'BPS'){
             requiredFields = [...requiredFields, 'Priority'];
             requiredFields = [...requiredFields, 'NSP_Case_Sub_Status__c'];
