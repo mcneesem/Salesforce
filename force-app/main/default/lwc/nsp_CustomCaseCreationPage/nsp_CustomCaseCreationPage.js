@@ -1460,10 +1460,12 @@ export default class Nsp_CustomCaseCreationPage extends NavigationMixin(Lightnin
     getCatSubCatValues() {
         if ( this.isSubCompPermissionEnabled ) {
             const childComponent = this.template.querySelector( 'c-case-cat-subcat-detail' );
-            this.selectedCategory = childComponent.selectedCategory; 
-            this.selectedSubCategory = childComponent.selectedSubCategory;
-            this.selectedDetail = childComponent.selectedDetail;
-            this.selectedVersion = childComponent.selectedVersion;
+            if(childComponent!==undefined && childComponent!==null){
+                this.selectedCategory = childComponent.selectedCategory; 
+                this.selectedSubCategory = childComponent.selectedSubCategory;
+                this.selectedDetail = childComponent.selectedDetail;
+                this.selectedVersion = childComponent.selectedVersion;
+            }
         }
     }
 
