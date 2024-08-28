@@ -11,17 +11,17 @@
 public class NSP_AccountTriggerHelper {
     // test w/ NSP_AccountTriggerHelperTest, NSP_AccountContactRelationHelperTest, NSP_AccountContactServiceHelperTest (77%)
     // test w/ NSP_AccountTriggerHelperTest, NSP_LeadTriggerHelperTest (77%)
-    // test w/ NSP_AccountTriggerHelperTest (76%)
+    // test w/ NSP_AccountTriggerHelperTest (77%)
     // test w/ NSP_AccountContactRelationHelperTest (34%)
     // test w/ NSP_AccountContactServiceHelperTest (38%)
 
     private static final string PARTNER_RECORDTYPE = 'NSP_Partner_Client';
     private static final Id PARTNER_RECORDTYPE_ID = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get(PARTNER_RECORDTYPE).getRecordTypeId();
     private static final string DA_ROLE = 'District Administrator';
-//Added as part of 128176
-public static List<string> salesRoles = System.Label.Sales_Roles.split(',');
-// Added as part of 194459
-public static List<string> MMRoles = System.Label.NSP_MidMarket_Roles.split(',');
+    //Added as part of 128176
+    public static List<string> salesRoles = System.Label.Sales_Roles.split(',');
+    // Added as part of 194459
+    public static List<string> MMRoles = System.Label.NSP_MidMarket_Roles.split(',');
     // Added as part of 215091
     public static List<string> allowedAssignAvailableRoles = System.Label.NSP_Assign_Avail_Roles.split(',');
     
@@ -31,7 +31,7 @@ public static List<string> MMRoles = System.Label.NSP_MidMarket_Roles.split(',')
      * @return void
      *
      */
-    public void beforeInsertDirector(List < Account > newList) {
+    public void beforeInsertDirector( List<Account> newList ) {
         try {
             //List < Account > partnerAccountList = new List < Account > ();
             //Set < Id > userIdsSet = new Set < Id > ();
@@ -74,12 +74,12 @@ if(accountObj.RecordTypeId==PARTNER_RECORDTYPE_ID
             if (acctListToStampDocusignTemplateId.size() > 0) {
                 setDummyUsers(acctListToStampDocusignTemplateId);
             }
-        } catch (Exception ex) {
-            NSP_CustomException.LogException(ex);
+        } catch ( Exception e ) {
+            NSP_AccountTriggerHelper.handleException( e , 'beforeInsertDirector' );
         }
         setSalesOfficeDetails(newList, null);
     }
-    
+
     /**
      * Iterates throught the Account map and identifies the records that needs to worked based on various criterias.
      * @param accountNewMap Map of New Account.
@@ -88,7 +88,7 @@ if(accountObj.RecordTypeId==PARTNER_RECORDTYPE_ID
      *
      */    
     //Moved out of beforeUpdateDirector to fix SOQL issue _ DF-04068    
-    public void accountUpdate(Map < Id, Account > accountNewMap, Map < Id, Account > accountOldMap) {
+    public void accountUpdate( Map<Id,Account> accountNewMap , Map<Id,Account> accountOldMap ) {
         try {
             User userDetails =[SELECT Id, Name, UserRoleId, UserRole.Name, Profile.Name, ToLabel(NSP_Sales_Office__c) FROM User WHERE Id =: userinfo.getUserId() ];
             //modified for user story 191911    
@@ -111,8 +111,8 @@ if(accountObj.RecordTypeId==PARTNER_RECORDTYPE_ID
                     restrictAccountChange(accountNewMap, accountOldMap, userDetails);
                 }
             }
-        }catch(Exception ex){
-            NSP_ErrorLogHandler.logSaveException(NSP_AccountTriggerHelper.class.getName(),'updateAddressOnCheckList',ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_AccountTriggerHelper.handleException( e , 'accountUpdate' );
         }
     }
 
@@ -123,35 +123,18 @@ if(accountObj.RecordTypeId==PARTNER_RECORDTYPE_ID
      * @return void
      *
      */
-    public void beforeUpdateDirector(Map < Id, Account > accountNewMap, Map < Id, Account > accountOldMap) {
+    public void beforeUpdateDirector( Map<Id,Account> accountNewMap , Map<Id,Account> accountOldMap ) {
         try {
             List < Account > accountList = new List < Account > ();
             List < Account > accountownerChangedList = new List < Account > ();
-        List<Account> partnerAccountList = new List<Account>();
-        Set<Id> userIdsSet = new Set<Id>();
+            List<Account> partnerAccountList = new List<Account>();
+            Set<Id> userIdsSet = new Set<Id>();
             List < Account > acctListToStampDocusignTemplateId = new List < Account > ();
-//DA ISSUE
-/*
-        User userDetails =[SELECT Id, Name, UserRoleId, UserRole.Name, Profile.Name, ToLabel(NSP_Sales_Office__c) FROM User where Id =: userinfo.getUserId() ];
-            //modified for user story 191911    
-            List<PermissionSetAssignment> getPermSet = new List<PermissionSetAssignment>();
-        if(userDetails.Profile.Name == NSP_SalesConstants.SalesManager){ // 207829 modified to include perm set group and profile
-            getPermSet = [SELECT Id, PermissionSetId, PermissionSet.Name, AssigneeId
-                FROM PermissionSetAssignment WHERE Assignee.IsActive = true AND AssigneeId =: userDetails.Id AND PermissionSetId IN 
-                    (SELECT ParentId FROM ObjectPermissions WHERE SobjectType = 'Account' AND PermissionsModifyAllRecords = true )];
-            }
-        //Added as part of 128176
-        if(userDetails.Profile.Name == NSP_SalesConstants.SalesManager){
-            if(!getPermSet.isEmpty() || Test.isRunningTest()){
-                restrictAccountChange(accountNewMap, accountOldMap, userDetails);
-            }
-        }  
-        */
             //Iterating over the new Account map
             for (Id accountId: accountNewMap.keySet()) {
                 Account newAccount = accountNewMap.get(accountId);
                 Account oldAccount = accountOldMap.get(accountId);
-                If(String.isNotBlank(accountNewMap.get(accountId).NSP_Account_Status__c)) {
+                if (String.isNotBlank(accountNewMap.get(accountId).NSP_Account_Status__c)) {
                     if (accountNewMap.get(accountId).NSP_Account_Status__c.equals(NSP_SalesConstants.ACTIVE) &&
                         (accountNewMap.get(accountId).NSP_Account_Status__c != accountOldMap.get(accountId).NSP_Account_Status__c)) {
                         accountList.add(accountNewMap.get(accountId));
@@ -181,23 +164,30 @@ if(accountObj.RecordTypeId==PARTNER_RECORDTYPE_ID
                 setAccountStageWhenOwnerChanged(accountownerChangedList);
             }
             //call updateTriggerclass for metadata check ad update integration sync field on account
-            Set < Id > accountIdSetToUpdateResyncFLag = new Set < Id > ();
+            Set<Id> accountIdSetToUpdateResyncFlag = new Set<Id>();
             NSP_SObjectUpdateTriggerHelper sObjectUpdateObj = new NSP_SObjectUpdateTriggerHelper();
-            accountIdSetToUpdateResyncFLag.addAll(sObjectUpdateObj.fetchUpdFieldsLst(NSP_IntegrationConstants.SOBJECT_ACCOUNT, accountNewMap, accountOldMap));
-            if (accountIdSetToUpdateResyncFLag.size() > 0) {
-                for (Id accountId: accountIdSetToUpdateResyncFLag) {
-                    accountNewMap.get(accountId).NSP_Ready_for_Integration_Sync__c = true;
+            accountIdSetToUpdateResyncFlag.addAll(
+                sObjectUpdateObj.fetchUpdFieldsLst(
+                    NSP_IntegrationConstants.SOBJECT_ACCOUNT ,
+                    accountNewMap ,
+                    accountOldMap
+                )
+            );
+            if ( !accountIdSetToUpdateResyncFlag.isEmpty() ) {
+                for ( Id accountId : accountIdSetToUpdateResyncFlag ) {
+                    accountNewMap.get( accountId ).NSP_Ready_for_Integration_Sync__c = true;
                 }
             }
             //call method to populate template id
             if (acctListToStampDocusignTemplateId.size() > 0) {
                 setDummyUsers(acctListToStampDocusignTemplateId);
             }
-        } catch (Exception ex) {
-            NSP_CustomException.LogException(ex);
+        } catch ( Exception e ) {
+            NSP_AccountTriggerHelper.handleException( e , 'beforeUpdateDirector' );
         }
         setSalesOfficeDetails(accountNewMap.values(), accountOldMap);
     }
+
     /**
      * Iterates throught the list of new Account and passes the required attributes to other methods.
      * @param newList List of New Account.
@@ -205,13 +195,13 @@ if(accountObj.RecordTypeId==PARTNER_RECORDTYPE_ID
      * @return void
      *
      */
-    public void afterInsertDirector(List < Account > newList, Map < Id, Account > newMap) {
+    public void afterInsertDirector( List<Account> newList , Map<Id,Account> newMap ) {
         try {
             List < Integration_Account_Event__e > accountEventList = New List < Integration_Account_Event__e > ();
             List < Account > updateResyncFlagAccountList = new List < Account > ();
             // Iterating Trigger.new to feed the Account Id to Event List
             for (Account accObj: newList) {
-                if (accObj.NSP_Ready_for_Integration_Sync__c) {
+                if ( accObj.NSP_Ready_for_Integration_Sync__c ) {
                     accountEventList.add(New Integration_Account_Event__e(Id__c = accObj.Id));
                     updateResyncFlagAccountList.add(accObj);
                 }
@@ -219,15 +209,14 @@ if(accountObj.RecordTypeId==PARTNER_RECORDTYPE_ID
             // Send the list to publish event bus
             if (accountEventList.size() > 0) {
                 if (PlatformEventSettings__c.getInstance(UserInfo.getUserId()).IsEnabled_IntegrationAccountEvent__c) {
-                    publishEventBus(accountEventList, updateResyncFlagAccountList);
+                    this.publishEventBus( accountEventList , updateResyncFlagAccountList );
                 }
             }
             
-        } catch (Exception ex) {
-            NSP_CustomException.LogException(ex);
+        } catch ( Exception e ) {
+            NSP_AccountTriggerHelper.handleException( e , 'afterInsertDirector' );
         }
     }
-
 
     /**
      * Iterates throught the list of new Account and passes the required attributes to other methods.
@@ -246,7 +235,7 @@ if(accountObj.RecordTypeId==PARTNER_RECORDTYPE_ID
             //Added for User Story - 194644
             List<Account> updateAddressAccountList = new List<Account>();
             for (Account accObj: newMap.values()) {
-                if (accObj.NSP_Ready_for_Integration_Sync__c) {
+                if ( accObj.NSP_Ready_for_Integration_Sync__c ) {
                     accountEvent.add(New Integration_Account_Event__e(Id__c = accObj.Id));
                     updateAccountList.add(accObj);
                 }
@@ -281,7 +270,7 @@ if(accountObj.RecordTypeId==PARTNER_RECORDTYPE_ID
             // Send the list to publish event bus
             if (updateAccountList.size() > 0) {
                 if (PlatformEventSettings__c.getInstance(UserInfo.getUserId()).IsEnabled_IntegrationAccountEvent__c) {
-                    publishEventBus(accountEvent, updateAccountList);
+                    this.publishEventBus( accountEvent , updateAccountList );
                 }
             }
             NSP_OpportunityTriggerHelperFunctions.updateOppOwnerPremier(newMap, oldMap); //Added as part of 569324 charwell request.
@@ -293,8 +282,8 @@ if(accountObj.RecordTypeId==PARTNER_RECORDTYPE_ID
             if(updateAddressAccountList.size() > 0) {
                 updateAddressOnCheckList(updateAddressAccountList, newMap);
             }
-        } catch (Exception ex) {
-            NSP_CustomException.LogException(ex);
+        } catch ( Exception e ) {
+            NSP_AccountTriggerHelper.handleException( e , 'afterUpdateDirector' );
         }
     }
 
@@ -332,28 +321,20 @@ if(accountObj.RecordTypeId==PARTNER_RECORDTYPE_ID
      * @return void
      *
      */
-    public void publishEventBus(List<SObject> eventList, List<Account> objectList) {
+    private void publishEventBus( List<SObject> eventList , List<Account> objectList ) {
         List < Account > updateResyncFlagAccountList = new List < Account > ();
         if (!eventList.isEmpty()) {
             // Publishing records Event
-            List < Database.SaveResult > results = EventBus.publish(eventList);
-            // Inspect publishing result for each event
-            List < NSP_Error_Log__c > logList = new List < NSP_Error_Log__c > ();
-            for (Database.SaveResult sr: results) {
-                NSP_Error_Log__c log = new NSP_Error_Log__c();
-                log.NSP_Class__c = NSP_AccountTriggerHelper.class.getName();
-                log.NSP_Method__c = 'publishEventBus';
-                log.NSP_Description__c = String.valueOf(sr.getErrors()[0].getMessage()) + '  ' + String.valueOf(sr.getErrors()[0].getStatusCode());
-                log.NSP_Record_Id__c = sr.getId();
-                logList.add(log);
-            }
-            if (logList.size() > 0) {
-                insert logList;
-            }
+            List<Database.SaveResult> results = EventBus.publish( eventList );
+            NSP_ErrorLogHandler.logResults(
+                NSP_AccountTriggerHelper.class.getName() ,
+                'publishEventBus' ,
+                results
+            );
             for (Account accObj: objectList) {
                 Account tempAccObj = new Account();
                 tempAccObj.Id = accObj.Id;
-                tempAccObj.NSP_Ready_for_Integration_Sync__c = FALSE;
+                tempAccObj.NSP_Ready_for_Integration_Sync__c = false;
                 updateResyncFlagAccountList.add(tempAccObj);
             }
             if (updateResyncFlagAccountList.size() > 0) {
@@ -376,22 +357,6 @@ if(accountObj.RecordTypeId==PARTNER_RECORDTYPE_ID
         }
     }
 
-    /**
-     * Iterates throught the Account Id set and update successfully publish Account records.
-     * @param idSet Map of New Account.
-     * @return void
-     *
-     */
-public void updatePublishAccount(set<Id> idSet) {
-        List < Account > successAccountList = [SELECT Id, NSP_Ready_for_Integration_Sync__c from Account WHERE Id =: idSet];
-        // Iterating Success set Id to
-        for (Account accountObj: successAccountList) {
-            accountObj.NSP_Ready_for_Integration_Sync__c = FALSE;
-        }
-        // Account records update.
-        Update successAccountList;
-    }
-
     /*
 * Description: Method updates Address on CheckList
 * @Param : List of New Accounts: accountsList, newMap
@@ -399,46 +364,44 @@ public void updatePublishAccount(set<Id> idSet) {
 * User Story - 194644
 * Created By- Ruchi   Date- 12/17/2022
 */
-public static void updateAddressOnCheckList(List<Account> accountList, Map<Id, Account> newMap){
-    List<NSP_Checklist__c> checklistToUpdate = new List<NSP_Checklist__c>();
-    List<NSP_Checklist__c> checklistList = [SELECT Id, NSP_Account_Billling_City__c, NSP_Billing_Postal_Code__c, NSP_Account_Billing_State__c, NSP_Account_Billing_Country__c, NSP_Account_Billing_Street__c, NSP_Account_Billing_State_Code__c, NSP_Opportunity__c, NSP_Opportunity__r.AccountId FROM NSP_Checklist__c WHERE NSP_Opportunity__r.AccountId =: accountList];
+    public static void updateAddressOnCheckList( List<Account> accountList , Map<Id, Account> newMap ) {
+        List<NSP_Checklist__c> checklistToUpdate = new List<NSP_Checklist__c>();
+        List<NSP_Checklist__c> checklistList = [SELECT Id, NSP_Account_Billling_City__c, NSP_Billing_Postal_Code__c, NSP_Account_Billing_State__c, NSP_Account_Billing_Country__c, NSP_Account_Billing_Street__c, NSP_Account_Billing_State_Code__c, NSP_Opportunity__c, NSP_Opportunity__r.AccountId FROM NSP_Checklist__c WHERE NSP_Opportunity__r.AccountId =: accountList];
     
-    try{
-        if(checklistList.size() > 0) {
-            // Iterating checklistList
-            for(NSP_Checklist__c updateChecklist : checklistList){
-                Account acc = newMap.get(updateChecklist.NSP_Opportunity__r.AccountId);
-                updateChecklist.NSP_Account_Billling_City__c = acc.BillingCity;
-                updateChecklist.NSP_Account_Billing_State__c = acc.BillingState;
-                updateChecklist.NSP_Account_Billing_Country__c = acc.BillingCountry;
-                updateChecklist.NSP_Account_Billing_Street__c = acc.BillingStreet;
-                updateChecklist.NSP_Billing_Postal_Code__c = acc.BillingPostalCode;
-                updateChecklist.NSP_Account_Billing_State_Code__c = acc.BillingStateCode;
-                checklistToUpdate.add(updateChecklist);
+        try {
+            if ( !checklistList.isEmpty() ) {
+                // Iterating checklistList
+                for ( NSP_Checklist__c updateChecklist : checklistList ) {
+                    Account acc = newMap.get( updateChecklist.NSP_Opportunity__r.AccountId );
+                    updateChecklist.NSP_Account_Billling_City__c = acc.BillingCity;
+                    updateChecklist.NSP_Account_Billing_State__c = acc.BillingState;
+                    updateChecklist.NSP_Account_Billing_Country__c = acc.BillingCountry;
+                    updateChecklist.NSP_Account_Billing_Street__c = acc.BillingStreet;
+                    updateChecklist.NSP_Billing_Postal_Code__c = acc.BillingPostalCode;
+                    updateChecklist.NSP_Account_Billing_State_Code__c = acc.BillingStateCode;
+                    checklistToUpdate.add( updateChecklist );
                 }
-                }
-                if(checklistToUpdate.size() > 0) {
-                    update checklistToUpdate;
-                    }
-        }catch(Exception ex){
-            NSP_ErrorLogHandler.logSaveException(NSP_AccountTriggerHelper.class.getName(),'updateAddressOnCheckList',ex.getMessage());
+            }
+            if ( !checklistToUpdate.isEmpty() ) {
+                update checklistToUpdate;
+            }
+        } catch ( Exception e ) {
+            NSP_AccountTriggerHelper.handleException( e , 'updateAddressOnCheckList' );
         }
     }
-/*
+
+    /*
      * Description: Method takes all Account records WHERE partner lifecycle is
      * set to Onboarding or Active and creates a new task or marks existing task complete based on
      * partner lifecycle value
      * @Param : List of New Accounts: accountsList
      * @return type: void
      */
-    public static void handleTaskForPartnerContracts(List < Account > accountList) {
+    public static void handleTaskForPartnerContracts( List<Account> accountList ) {
         List < Task > tasksToUpsert = new List < Task > ();
         Set < Id > accountIdsSet = new Set < Id > ();
         for (Account accountRecord: accountList) {
             if (accountRecord.NSP_Partner_Lifecycle__c.equals(NSP_SalesConstants.ONBOARDING)) {
-                /*Task taskRecord = NSP_UtilityClass.instantiateTaskRecord(NSP_SalesConstants.PARTNER_CONTRACT_GENERATED, accountRecord.Id, '',
-                accountRecord.OwnerId,'',NSP_SalesConstants.OPEN,
-                NSP_SalesConstants.PARTNER_AGREEMENT,null);*/
                 Task taskRecord = new Task(
                     Subject = NSP_SalesConstants.PARTNER_CONTRACT_GENERATED,
                     WhatId = accountRecord.Id,
@@ -465,18 +428,19 @@ AND Status != :NSP_SalesConstants.COMPLETED];
         if (tasksToUpsert.size() > 0) {
             try {
                 upsert tasksToUpsert;
-            } catch (Exception ex) {
-                NSP_CustomException.LogException(ex);
+            } catch ( Exception e ) {
+                NSP_AccountTriggerHelper.handleException( e , 'handleTaskForPartnerContracts' );
             }
         }
     }
+
     /*
      * Description: This method is used to populate CPM and LA on Account on insertion based on BPA sales office group
      * @Param : List of New Accounts: accountsList and salesOfficeSet
      * @return type: void
      * Defect: DF-01906
      */
-    public static void setChannelPartnerAndLoyaltyAdvisor(List < Account > accList, Set < String > salesOfficeSet) {
+    public static void setChannelPartnerAndLoyaltyAdvisor( List<Account> accList , Set<String> salesOfficeSet ) {
         Map < String, string > grpIdGrpMemMap = new Map < String, string > ();
         Map < String, string > grpNameCPMUserMap = new Map < String, string > ();
         Map < String, string > grpNameLAUserMap = new Map < String, string > ();
@@ -507,8 +471,8 @@ WHERE (userRole.Name = 'Loyalty Advisor' OR userRole.Name = 'Channel Program Man
                     }
                 }
             }
-        } catch (Exception ex) {
-            NSP_ErrorLogHandler.logSaveException(NSP_AccountTriggerHelper.class.getName(), 'setChannelPartnerAndLoyaltyAdvisor', ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_AccountTriggerHelper.handleException( e , 'setChannelPartnerAndLoyaltyAdvisor' );
         }
     }
 
@@ -540,9 +504,9 @@ WHERE (userRole.Name = 'Loyalty Advisor' OR userRole.Name = 'Channel Program Man
      *
      *
      */
-    public void setDummyUsers(List < Account > accountList) {
+    public void setDummyUsers( List<Account> accountList ) {
         try {
-            List < User > dummyUser = [SELECT Id FROM User WHERE Name =: NSP_SalesConstants.DUMMY_USER_SIGNER limit 1];
+            List<User> dummyUser = [SELECT Id FROM User WHERE Name = :NSP_SalesConstants.DUMMY_USER_SIGNER LIMIT 1];
             for (Account accountObj: accountList) {
                 //if Opportunity owner is BPA
                 //set BPA as owner or set as dummy user
@@ -562,9 +526,9 @@ WHERE (userRole.Name = 'Loyalty Advisor' OR userRole.Name = 'Channel Program Man
                 if (accountObj.NSP_Channel_Program_Manager__c == null) {
                     accountObj.NSP_Channel_Program_Manager__c = dummyUser[0].Id;
                 }
-        }
-  } catch(Exception ex) {
-            NSP_CustomException.LogException(ex);
+            }
+        } catch ( Exception e ) {
+            NSP_AccountTriggerHelper.handleException( e , 'setDummyUsers' );
         }
     }
 
@@ -580,7 +544,7 @@ WHERE (userRole.Name = 'Loyalty Advisor' OR userRole.Name = 'Channel Program Man
     // Rahul Singh       11/29/2022       	 Modified for user story 191911
     // Modified on 02/2023-part of 194459- Bypass for MM roles
     // Matt McNeese      05/26/2023       	 Modified for user story 215091
-    public void restrictAccountChange (Map<Id, Account> accountNewMap, Map<Id, Account> accountOldMap, User loggedinUser){
+    public void restrictAccountChange( Map<Id,Account> accountNewMap , Map<Id,Account> accountOldMap , User loggedinUser ) {
         Map<String, string> accOwnerSalesOfficeMap = new Map<String, string>();
         Set<Id> accOwnerIdSet = new Set<Id>();
         List<String> loggedInUserGrpName = new List<String>();
@@ -613,7 +577,7 @@ WHERE (userRole.Name = 'Loyalty Advisor' OR userRole.Name = 'Channel Program Man
         {
             accountTeamMemberId.add(accTeam.NSP_User__c);
         }
-        try{
+        try {
             for(Account acc : accountNewMap.values()){
                 Integer isallowUpdate = 0;
                 if(accountOldMap.get(acc.Id).Zip_Based_Location__c != acc.Zip_Based_Location__c){
@@ -629,35 +593,10 @@ WHERE (userRole.Name = 'Loyalty Advisor' OR userRole.Name = 'Channel Program Man
                     acc.addError(system.label.NSP_AccountTriggerError);
                 }
             }
-        } catch(Exception e) {
-            NSP_ErrorLogHandler.logSaveException(
-                NSP_AccountTriggerHelper.class.getName() ,
-                'restrictAccountChange' ,
-                e.getMessage() + ' ~ ' + e.getStackTraceString()
-            );
+        } catch ( Exception e ) {
+            NSP_AccountTriggerHelper.handleException( e , 'restrictAccountChange' );
         }
     }
-
-/**
-* Description: This method returns AccountTeamMember.
-* @param userId.
-* @param accountId.
-* @return AccountTeamMember.
-* Ticket 190991
-* author           | Date              | Description
-* -------------------------------------------------------------------------------------
-* Ruchi Roy         11/17/2022           Created this method
-* Commented as this is not needed               
-*/
-/*    
-public static String getTeamMember(Id userId, Id accountId){
-    List<NSP_Account_Team__c> accountTeamList=  [SELECT ID, NSP_User__c,NSP_Account__c FROM NSP_Account_Team__c WHERE NSP_User__c =: userId AND NSP_Account__c =:accountId];
-    if(!accountTeamList.isEmpty()){
-        return accountTeamList[0].NSP_User__c;
-    }
-    return '';
-}
-*/
 
     /* Description: This method sets sales office details from user 
      * 
@@ -746,29 +685,32 @@ public static String getTeamMember(Id userId, Id accountId){
     * Matt M.         01/19/2023           Created this method
     *                
     */    
-    public void afterDeleteDirector(List<Account> oldList, Map < Id, Account > oldMap) {
-        try{
-        List<Integration_Account_Delete_Event__e> accountDeleteEventList = New List<Integration_Account_Delete_Event__e>();
-        List<Account> updateResyncFlagAccountList = new List<Account>();
-        // Iterating Trigger.new to feed the Account Id to Event List
-        for(Account accObj : oldList) {
-            if(accObj.MasterRecordId != null) { // result of Account merge
-                accountDeleteEventList.add(New Integration_Account_Delete_Event__e(Id__c = accObj.Id, MasterRecordId__c = accObj.MasterRecordId));
+    public void afterDeleteDirector( List<Account> oldList , Map<Id,Account> oldMap ) {
+        try {
+            List<Integration_Account_Delete_Event__e> accountDeleteEventList = New List<Integration_Account_Delete_Event__e>();
+            // Iterating Trigger.new to feed the Account Id to Event List
+            for ( Account accObj : oldList ) {
+                if ( accObj.MasterRecordId != null ) { // result of Account merge
+                    accountDeleteEventList.add(
+                        new Integration_Account_Delete_Event__e(
+                            Id__c=accObj.Id,
+                            MasterRecordId__c=accObj.MasterRecordId
+                        )
+                    );
+                }
             }
-        }
-        // Send the list to publish event bus
-        if(accountDeleteEventList.size() > 0){
-            if(PlatformEventSettings__c.getInstance(UserInfo.getUserId()).IsEnabled_IntegrationAccountDeleteEvent__c) { // see also "Trigger Switch" Custom Setting
-                publishEventBus(accountDeleteEventList, updateResyncFlagAccountList);
+            // Send the list to publish event bus
+            if ( !accountDeleteEventList.isEmpty() ) {
+                if ( PlatformEventSettings__c.getInstance( UserInfo.getUserId() ).IsEnabled_IntegrationAccountDeleteEvent__c ) { // see also "Trigger Switch" Custom Setting
+                    this.publishEventBus( accountDeleteEventList , new List<Account>() );
+                }
             }
-        }
-        } catch(Exception ex) {
-            NSP_CustomException.LogException(ex);
+        } catch ( Exception e ) {
+            NSP_AccountTriggerHelper.handleException( e , 'afterDeleteDirector' );
         }
     }
-    
 
-     /* Description: This method create for update field Payroll Employee Of Account Group Member From Payroll Employee Of Account 
+    /* Description: This method create for update field Payroll Employee Of Account Group Member From Payroll Employee Of Account 
      * 
      * @param: Map <Id, Account> newMap, Map <Id, Account> oldMap
      * @return: void
@@ -806,4 +748,21 @@ public static String getTeamMember(Id userId, Id accountId){
             update accGroupMemberToBeUpdated;
         }
     }
+
+    // for test code coverage only...
+    public static void testHandleException( Exception e , String methodName ) {
+        if ( Test.isRunningTest() ) {
+            NSP_AccountTriggerHelper.handleException( e , methodName );
+        }
+    }
+    
+    private static void handleException( Exception e , String methodName ) {
+        NSP_ErrorLogHandler.logException(
+            NSP_AccountTriggerHelper.class.getName() ,
+            methodName ,
+            e
+        );
+    }
+
 }
+//
