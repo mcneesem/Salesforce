@@ -1021,6 +1021,16 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.Retirement_Services_Plan_Name__c</fieldItem>
+                <identifier>RecordRetirement_Services_Plan_Name_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Worksheet_Type__c</fieldItem>
                 <identifier>RecordNSP_Worksheet_Type__cField</identifier>
                 <visibilityRule>
