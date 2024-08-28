@@ -805,9 +805,9 @@ export default class Nsp_CustomCaseCreationPage extends NavigationMixin(Lightnin
         this.isMultipleContactsSelected = this.isMultipleContacts;
         if ( this.isSubCompPermissionEnabled ) {
             if ( ( this.filesUploaded == undefined ) || ( this.filesUploaded == null ) || ( this.filesUploaded == '' ) ) {
-                const fileComponet = this.template.querySelector('c-case-file-upload');
-                if(fileComponet!==undefined && fileComponet!==null){
-                    this.filesUploaded = fileComponet.filesUploaded;
+                const fileComponent = this.template.querySelector('c-case-file-upload');
+                if(fileComponent!==undefined && fileComponent!==null){
+                    this.filesUploaded = fileComponent.filesUploaded;
                 }
             }
         }
