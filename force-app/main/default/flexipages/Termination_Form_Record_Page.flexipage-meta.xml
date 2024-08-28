@@ -9,7 +9,7 @@
                         <valueListItems>
                             <value>Submit</value>
                             <visibilityRule>
-                                <booleanFilter>1 AND 2</booleanFilter>
+                                <booleanFilter>(1 AND 2) OR 3</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.NSP_Approver__r.Username}</leftValue>
                                     <operator>NE</operator>
@@ -18,6 +18,11 @@
                                     <leftValue>{!Record.NSP_Hide_Submit_For_Approval__c}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>true</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!$User.Profile.Name}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Finance Service</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
