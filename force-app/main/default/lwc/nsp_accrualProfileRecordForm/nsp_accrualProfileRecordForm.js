@@ -976,7 +976,7 @@ export default class Nsp_accrualProfileRecordForm extends NavigationMixin(
       maximumBalanceCapHours,
       accrualPeriodLimitsHours,
       maxCarryOverHours,
-      maxCarryOverPercent, 
+      maxCarryOverPercent,
       carryoverExpiresDaysDate,
       action,
     } = APG_COLUMNS;
