@@ -5,6 +5,7 @@
 
 @isTest(SeeAllData=false)
 public class NSP_ServicePlanProjectTaskBatch_Test {
+    public static pse__Proj__c projectRecord;
     @testSetup
     static void testData() {
         
@@ -43,7 +44,8 @@ public class NSP_ServicePlanProjectTaskBatch_Test {
         INSERT subClientRecord;
         
         //Creating Project record
-        pse__Proj__c projectRecord = (pse__Proj__c)NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c());
+        projectRecord = new pse__Proj__c();
+        projectRecord = (pse__Proj__c)NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c());
         projectRecord.pse__Account__c = accountRecord.Id;
         projectRecord.TemplateName__c = NSP_ServiceConstants.PROJECT_TEMPLATE_NAME;
         projectRecord.pse__Is_Template__c = False;
@@ -51,10 +53,18 @@ public class NSP_ServicePlanProjectTaskBatch_Test {
         projectRecord.pse__Start_Date__c = Date.Today();
         projectRecord.pse__Project_Type__c = NSP_ServiceConstants.PROJECT_TYPE_SERVICE;
         INSERT projectRecord;
+        pse__Project_Task__c projTaskRecord = new pse__Project_Task__c();
+        projTaskRecord.pse__Project__c = projectRecord.Id;
+        projTaskRecord.Name = NSP_ServiceConstants.QTP1;
+        //projTaskRecord.pse__Start_Date_Time__c = system.today();
+        INSERT projTaskRecord;
+        
     }
     //@ Method Name: testServicePlanProjectTaskBatch
     @IsTest
     static void testServicePlanProjectTaskBatch() {
+        pse__Project_Task__c projTask = [Select Id,Name,pse__Project__c from pse__Project_Task__c];
+        DELETE projTask;
         Test.startTest();
         Database.executeBatch(new NSP_ServicePlanProjectTaskBatch()); //executes the batch class
         Test.stopTest();
@@ -67,6 +77,10 @@ public class NSP_ServicePlanProjectTaskBatch_Test {
         NSP_Sub_Client__c subClient= [SELECT Id, NSP_Renewal_Date__c FROM NSP_Sub_Client__c WHERE NSP_Account_Status__c =:NSP_ServiceConstants.AIMS_STATUS LIMIT 1];
         subClient.NSP_Renewal_Date__c = system.Today().addDays(1);
         UPDATE subClient;
+        pse__Project_Task__c projTask = [Select Id,Name,pse__Project__c from pse__Project_Task__c];
+        projTask.pse__Start_Date_Time__c = system.Today().addDays(1);
+        UPDATE projTask;
+        
         Test.startTest();
         Database.executeBatch(new NSP_ServicePlanProjectTaskBatch()); //executes the batch class
         Test.stopTest();

@@ -35,7 +35,7 @@
         <name>Assign_STP_Properties</name>
         <label>Assign STP Properties</label>
         <locationX>842</locationX>
-        <locationY>1406</locationY>
+        <locationY>1604</locationY>
         <assignmentItems>
             <assignToReference>vbidversion</assignToReference>
             <operator>Assign</operator>
@@ -92,6 +92,13 @@
                 <elementReference>payfrequencyformula</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>vbenefitswaitingperiod</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>benefitswaitingperiodformula</elementReference>
+            </value>
+        </assignmentItems>
     </assignments>
     <assignments>
         <name>No_Account</name>
@@ -110,7 +117,7 @@
         <name>No_Closed_Won_Opty</name>
         <label>No Closed-Won Opty</label>
         <locationX>578</locationX>
-        <locationY>1298</locationY>
+        <locationY>1496</locationY>
         <assignmentItems>
             <assignToReference>Error_Message</assignToReference>
             <operator>Assign</operator>
@@ -132,36 +139,107 @@
             </value>
         </assignmentItems>
     </assignments>
-    <choices>
-        <name>No</name>
-        <choiceText>No</choiceText>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>No</stringValue>
-        </value>
-    </choices>
-    <choices>
-        <name>Yes</name>
-        <choiceText>Yes</choiceText>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>Yes</stringValue>
-        </value>
-    </choices>
-    <constants>
-        <name>flowName</name>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>Request_CTM_and_Employee_Orientation_Meeting</stringValue>
-        </value>
-    </constants>
-    <constants>
-        <name>OMRTaskRecordTypeId</name>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>0124x0000019l9xAAA</stringValue>
-        </value>
-    </constants>
+    <assignments>
+        <name>Set_Fault_Element_Retrieve_Checklist_from_Open_Opportunity</name>
+        <label>Set Fault Element : Retrieve_Checklist_from_Open_Opportunity</label>
+        <locationX>1062</locationX>
+        <locationY>998</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Retrieve_Checklist_from_Open_Opportunity</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Retrieve_Closed_Won_Opportunity_Checklist</name>
+        <label>Set Fault Element : Retrieve_Closed_Won_Opportunity_Checklist</label>
+        <locationX>1106</locationX>
+        <locationY>1604</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Retrieve_Closed_Won_Opportunity_Checklist</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Retrieve_Most_Recent_Closed_Won_Opportunity</name>
+        <label>Set Fault Element : Retrieve_Most_Recent_Closed_Won_Opportunity</label>
+        <locationX>1370</locationX>
+        <locationY>1388</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Retrieve_Most_Recent_Closed_Won_Opportunity</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Retrieve_Most_Recent_Open_Opportunity</name>
+        <label>Set Fault Element : Retrieve_Most_Recent_Open_Opportunity</label>
+        <locationX>1634</locationX>
+        <locationY>674</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Retrieve_Most_Recent_Open_Opportunity</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Retrieve_Related_Asset</name>
+        <label>Set Fault Element : Retrieve_Related_Asset</label>
+        <locationX>1898</locationX>
+        <locationY>458</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Retrieve_Related_Asset</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Retrieve_triggering_account_record</name>
+        <label>Set Fault Element : Retrieve_triggering_account_record</label>
+        <locationX>2162</locationX>
+        <locationY>242</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Retrieve_triggering_account_record</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
     <constants>
         <name>STPChecklistRecordTypeId</name>
         <dataType>String</dataType>
@@ -230,7 +308,7 @@
         <name>Closed_Won_Opportunity_Exist</name>
         <label>Closed Won Opportunity Exist</label>
         <locationX>710</locationX>
-        <locationY>1190</locationY>
+        <locationY>1388</locationY>
         <defaultConnector>
             <targetReference>Retrieve_Closed_Won_Opportunity_Checklist</targetReference>
         </defaultConnector>
@@ -276,7 +354,13 @@
             <label>No</label>
         </rules>
     </decisions>
+    <description>Added exception handling</description>
     <environments>Default</environments>
+    <formulas>
+        <name>benefitswaitingperiodformula</name>
+        <dataType>String</dataType>
+        <expression>IF(NOT(ISBLANK({!Retrieve_Checklist_from_Open_Opportunity.Id})),TEXT({!Retrieve_Checklist_from_Open_Opportunity.NSP_Benefits_Waiting_Period__c}), IF(NOT(ISBLANK({!Retrieve_Closed_Won_Opportunity_Checklist.Id})),TEXT({!Retrieve_Closed_Won_Opportunity_Checklist.NSP_Benefits_Waiting_Period__c}),null))</expression>
+    </formulas>
     <formulas>
         <description>Added for Combo option</description>
         <name>bidversionformula</name>
@@ -354,6 +438,9 @@
         <connector>
             <targetReference>Retrieve_Most_Recent_Closed_Won_Opportunity</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_Retrieve_Checklist_from_Open_Opportunity</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>NSP_Opportunity__c</field>
@@ -379,11 +466,14 @@
         <name>Retrieve_Closed_Won_Opportunity_Checklist</name>
         <label>Retrieve Closed Won Opportunity Checklist</label>
         <locationX>842</locationX>
-        <locationY>1298</locationY>
+        <locationY>1496</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Assign_STP_Properties</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_Retrieve_Closed_Won_Opportunity_Checklist</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>NSP_Opportunity__c</field>
@@ -409,11 +499,14 @@
         <name>Retrieve_Most_Recent_Closed_Won_Opportunity</name>
         <label>Retrieve Most Recent Closed Won Opportunity</label>
         <locationX>710</locationX>
-        <locationY>1082</locationY>
+        <locationY>1280</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Closed_Won_Opportunity_Exist</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_Retrieve_Most_Recent_Closed_Won_Opportunity</targetReference>
+        </faultConnector>
         <filterLogic>1 AND 2 AND (3 OR 4)</filterLogic>
         <filters>
             <field>AccountId</field>
@@ -458,6 +551,9 @@
         <connector>
             <targetReference>Assign_Account_Properties</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_Retrieve_Most_Recent_Open_Opportunity</targetReference>
+        </faultConnector>
         <filterLogic>1 AND 2 AND 3 AND (4 OR 5)</filterLogic>
         <filters>
             <field>AccountId</field>
@@ -509,6 +605,9 @@
         <connector>
             <targetReference>Active_WO_Asset</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_Retrieve_Related_Asset</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>AccountId</field>
@@ -548,6 +647,9 @@
         <connector>
             <targetReference>Account_Exist</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_Retrieve_triggering_account_record</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -569,6 +671,31 @@
         </connector>
     </start>
     <status>Draft</status>
+    <subflows>
+        <name>Fault_Handler_Subflow</name>
+        <label>Fault Handler Subflow</label>
+        <locationX>2162</locationX>
+        <locationY>350</locationY>
+        <flowName>Insperity_Fault_Handler_Subflow</flowName>
+        <inputAssignments>
+            <name>faultElement</name>
+            <value>
+                <elementReference>faultElement</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultFlow</name>
+            <value>
+                <stringValue>Request_Onboarding_Process_Opportunity_STP_Info</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultMessage</name>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
     <textTemplates>
         <name>Account_Not_Found</name>
         <isViewedAsPlainText>false</isViewedAsPlainText>
@@ -606,13 +733,6 @@
         <isOutput>true</isOutput>
     </variables>
     <variables>
-        <name>Error_Code</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>true</isOutput>
-    </variables>
-    <variables>
         <name>Error_Message</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
@@ -620,18 +740,24 @@
         <isOutput>true</isOutput>
     </variables>
     <variables>
-        <name>rc_tasks</name>
-        <dataType>SObject</dataType>
-        <isCollection>true</isCollection>
-        <isInput>true</isInput>
+        <name>faultElement</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
         <isOutput>false</isOutput>
-        <objectType>Task</objectType>
     </variables>
     <variables>
         <name>recordId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>vbenefitswaitingperiod</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
         <isOutput>true</isOutput>
     </variables>
     <variables>
@@ -691,15 +817,5 @@
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>true</isOutput>
-    </variables>
-    <variables>
-        <name>vStatus</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>true</isOutput>
-        <value>
-            <stringValue>Success</stringValue>
-        </value>
     </variables>
 </Flow>

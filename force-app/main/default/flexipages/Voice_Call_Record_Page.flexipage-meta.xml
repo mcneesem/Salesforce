@@ -33,6 +33,12 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
+                <componentName>opencti:acwTimer</componentName>
+                <identifier>opencti_acwTimer</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
                 <componentName>force:detailPanel</componentName>
                 <identifier>force_detailPanel</identifier>
             </componentInstance>

@@ -3,5 +3,7 @@
     <description>Group of Permission Sets to be granted to Data Migration Users.</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Data Migration</label>
+    <permissionSets>Bypass_Lead_Email_Alerts</permissionSets>
+    <permissionSets>Data_Migration_Permission_Set</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>

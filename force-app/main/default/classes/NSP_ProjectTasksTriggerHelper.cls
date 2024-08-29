@@ -565,6 +565,7 @@ public class NSP_ProjectTasksTriggerHelper {
                         || ( accTeam.NSP_Role__c == 'Business Performance Advisor' )
                         || ( accTeam.NSP_Role__c == 'Bus. Team-HRSp/CL' ) 
                         || ( accTeam.NSP_Role__c == 'MidMarket Account Exec' )
+                        || ( accTeam.NSP_Role__c == '401k Plan Consultant' )
                         )
                     {
                         mailBody += accTeam.NSP_Role__c + ': ' +accTeam.NSP_First_Name__c+' '+accTeam.NSP_Last_Name__c+'<br/>';
@@ -1017,6 +1018,7 @@ public class NSP_ProjectTasksTriggerHelper {
                 // FILTER COMPLETED PROJECTS
                 if ( oProjectTask.pse__Status__c == NSP_ServiceConstants.PROJECTSTATUSCOMPLETED
                     && oldMapProjecttasks.get(oProjectTask.Id).pse__Status__c != NSP_ServiceConstants.PROJECTSTATUSCOMPLETED
+                    && oProjectTask.Name != NSP_ProjectTasksTriggerHelper.SUBMIT_TERMINATION_CHECKLIST
                     )
                 {
                     sProjectTasksIds.add(oProjectTask.Id);
@@ -1305,12 +1307,12 @@ public class NSP_ProjectTasksTriggerHelper {
     private void assetListEmail( String accountName , Id accountId , String accountAIMS , List<String> listOfToAddresses , List<Asset> assetList ) {
         String subjectString = null;
         String mailBody = null;
-        String accName = accountName+'|'+accountAIMS;
+        String accName = accountName+' | '+accountAIMS;
         String customUrl = URL.getOrgDomainURL().toExternalForm()+ '/'+accountId;
-        subjectString = 'Client ' + accName + ' has been approved for termination';
-        mailBody = 'Client ' +'<a href="' +customUrl+'">'+ accName +'</a>';
+        subjectString = 'WO Client ' + accName + ' has been approved for termination';
+        mailBody = 'WO Client ' +'<a href="' +customUrl+'">'+ accName +'</a>';
         mailBody += ' has been approved for termination.'+'<br/><br/>';
-        mailBody += 'Please review the following Assets to determine next steps for termination.'+'<br/>';
+        mailBody += 'Please review the following Assets to determine next steps for termination.'+'<br/><br/>';
         if ( ( assetList != null ) && !assetList.isEmpty() ) {
             for (Asset asset : assetList){
                 String assetUrl = URL.getOrgDomainURL().toExternalForm()+ '/'+asset.Id;
