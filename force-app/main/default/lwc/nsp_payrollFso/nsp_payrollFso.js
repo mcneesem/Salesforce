@@ -350,6 +350,10 @@ export default class Nsp_payrollFso extends LightningElement {
         empDataRecords,
         fields[0]
       );
+      this.field.Document_Levies__c = empDataRecords
+      .map((rec) => `${rec[fields[0]]}~${rec[fields[1]]}`)
+      .join(',');
+      console.log('357: ',this.field.Document_Levies__c);
     }
   }
 

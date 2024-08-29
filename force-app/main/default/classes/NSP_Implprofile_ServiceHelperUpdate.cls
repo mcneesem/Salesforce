@@ -2,7 +2,7 @@
 * Represents the Implementation profile tirgger for update scenario.
 */ 
 public class NSP_Implprofile_ServiceHelperUpdate {
-    // test w/ NSP_Implprofile_ServiceHelperUpdate_Test (79%)
+    // test w/ NSP_Implprofile_ServiceHelperUpdate_Test (81%)
 
     private  Boolean isRerun =false;
     private Boolean isSaveForm = false;
@@ -2359,49 +2359,77 @@ public class NSP_Implprofile_ServiceHelperUpdate {
         Map<Id,Implementation_Profile__c> impProfMap = new  Map<Id,Implementation_Profile__c>();
         Map<Id,Id> mapProjectIdIPId = new Map<Id,Id>();
         Map<Id,pse__Proj__c> projectMap = new Map<Id,pse__Proj__c>();
-        for(Id ipRecId : ipRecordsByAutomation.get(SUBTASK_LEVIES_FN)){
-            Implementation_Profile__c ipwithValue=(Implementation_Profile__c) data.get(IMPL_PROFILE_IDENTIFIER).get(ipRecId);
-            Implementation_Profile__c ipRec = newIPs.get(ipRecId);
-            if((isRerun || ipRec.NSP_Form_Completed__c) && !isSaveForm){
-                pse__Proj__c proj = (pse__Proj__c) data.get(PROJECT_IDENTIFIER).get(ipRec.NSP_Project__c);
-                projectMap.put(proj.Id,proj);
-                mapProjectIdIPId.put(proj.Id,ipRec.Id);
-                if( proj.pse__Project_Tasks__r.size()>0){
-                    taskList.addAll(proj.pse__Project_Tasks__r);
-                }
-                    if(ipwithValue.Id ==ipRec.Id){
-                        impProfMap.put(proj.Id,ipwithValue);
-                    }
-            }
+        Map<String, String> documentMap = new Map<String, String>(); 
         
-            List<String> lstNamesEmployess = new List<String>();
-            if(!String.isBlank(ipRec.NSP_List_Employee_Names_Levies__c)){
-                        lstNamesEmployess= ipRec.NSP_List_Employee_Names_Levies__c.split(',');
-            }
-        if(lstNamesEmployess.size()>0){
-                for(pse__Project_Task__c pt: taskList){
-                    pse__Proj__c proj = projectMap.get(pt.pse__Project__c);
-                    if(pt.Name==NSP_ServiceConstants.LEVIEIS){
-                        for(String empName: lstNamesEmployess){
-                            pse__Project_Task__c eachProjecttask = createProjectTaskfromIP(proj,  NSP_ServiceConstants.PAROLLIMP,null);
-                             ipwithValue=impProfMap.get(pt.pse__Project__c);
-                            if(ipwithValue.NSP_Project_Manager__c!=null && ipwithValue.NSP_Project_Manager__r.pse__Salesforce_User__c!=null){
-                                eachProjecttask.OwnerId=ipwithValue.NSP_Project_Manager__r.pse__Salesforce_User__c;
+        if(ipRecordsByAutomation != null){
+            for(Id ipRecId : ipRecordsByAutomation.get(SUBTASK_LEVIES_FN)){
+                Implementation_Profile__c ipwithValue=(Implementation_Profile__c) data.get(IMPL_PROFILE_IDENTIFIER).get(ipRecId);
+                Implementation_Profile__c ipRec = newIPs.get(ipRecId);
+                if(ipRec != null) {
+                    if((isRerun || ipRec.NSP_Form_Completed__c) && !isSaveForm){
+                        pse__Proj__c proj = (pse__Proj__c) data.get(PROJECT_IDENTIFIER).get(ipRec.NSP_Project__c);
+                        if(proj != null){
+                            projectMap.put(proj.Id,proj);
+                            mapProjectIdIPId.put(proj.Id,ipRec.Id);
+                            if( proj.pse__Project_Tasks__r.size()>0){
+                                taskList.addAll(proj.pse__Project_Tasks__r);
                             }
-                            if(ipwithValue.Account__c!=null && ipwithValue.Account__r.Name!=null){
-                                eachProjecttask.NSP_Implementation_Profile_Account__c=ipwithValue.Account__r.Name;
+                            if(ipwithValue != null) {
+                                if(ipwithValue.Id ==ipRec.Id){
+                                    impProfMap.put(proj.Id,ipwithValue);
+                                }
                             }
-                            if(ipwithValue.Account__c!=null && ipwithValue.Account__r.Id!=null){
-                                eachProjecttask.NSP_Implementation_Account_Id__c=ipwithValue.Account__r.Id;
+                        }
+                    }
+                    
+                    List<String> lstNamesEmployess = new List<String>();
+                    if(!String.isBlank(ipRec.NSP_List_Employee_Names_Levies__c)){
+                        List<String> documentList = ipRec.Document_Levies__c.split(',');
+                        //lstNamesEmployess= ipRec.NSP_Employee_Names_List_garnishments__c.split(',');
+                        if(!documentList.isEmpty()){
+                            for (String documents : documentList) {  
+                                // Split each key-value pair by tilde (~)  
+                                List<String> documentSplit = documents.split('~');  
+                                
+                                // Ensure we have exactly two documentSplit, key and value  
+                                if (documentSplit.size() == 2) {  
+                                    String documentKey = documentSplit[0].trim();  
+                                    String documentValue = documentSplit[1].trim();  
+                                    documentMap.put(documentKey, documentValue);  
+                                }
                             }
-                            eachProjecttask.NSP_Sub_Category__c=NSP_ServiceConstants.STATUTORY;
-                            eachProjecttask.Name=empName+NSP_ServiceConstants.LEVYDOC;
-                            eachProjecttask.pse__Parent_Task__c=pt.Id;
-                            eachProjecttask.pse__Hierarchy_Depth__c=1;
-                            eachProjecttask.pse__Milestone__c=pt.pse__Milestone__c;
-                            eachProjecttask.pse__Order__c=45;
-                            projectTaskList.add(eachProjecttask);  
-                        } 
+                        }
+                    }
+                }
+                if(documentMap.keyset().size()>0){
+                    for(pse__Project_Task__c pt: taskList){
+                        pse__Proj__c proj = projectMap.get(pt.pse__Project__c);
+                        if(pt.Name==NSP_ServiceConstants.LEVIEIS){
+                            for(String documentKey: documentMap.keyset()){
+                                if(documentMap.get(documentKey)== NSP_ServiceConstants.NOTCOLLECTED){
+                                    if(proj != null){
+                                        pse__Project_Task__c eachProjecttask = createProjectTaskfromIP(proj,  NSP_ServiceConstants.PAROLLIMP,null);
+                                        ipwithValue=impProfMap.get(pt.pse__Project__c);
+                                        if(ipwithValue.NSP_Project_Manager__c!=null && ipwithValue.NSP_Project_Manager__r.pse__Salesforce_User__c!=null){
+                                            eachProjecttask.OwnerId=ipwithValue.NSP_Project_Manager__r.pse__Salesforce_User__c;
+                                        }
+                                        if(ipwithValue.Account__c!=null && ipwithValue.Account__r.Name!=null){
+                                            eachProjecttask.NSP_Implementation_Profile_Account__c=ipwithValue.Account__r.Name;
+                                        }
+                                        if(ipwithValue.Account__c!=null && ipwithValue.Account__r.Id!=null){
+                                            eachProjecttask.NSP_Implementation_Account_Id__c=ipwithValue.Account__r.Id;
+                                        }
+                                        eachProjecttask.NSP_Sub_Category__c=NSP_ServiceConstants.STATUTORY;
+                                        eachProjecttask.Name=documentKey+NSP_ServiceConstants.LEVYDOC;
+                                        eachProjecttask.pse__Parent_Task__c=pt.Id;
+                                        eachProjecttask.pse__Hierarchy_Depth__c=1;
+                                        eachProjecttask.pse__Milestone__c=pt.pse__Milestone__c;
+                                        eachProjecttask.pse__Order__c=45;
+                                        projectTaskList.add(eachProjecttask);  
+                                    }
+                                }
+                            } 
+                        }
                     }
                 }
             }

@@ -5,7 +5,8 @@ public class NSP_Implprofile_ServiceHelperUpdate_Test {
     public static Id ipMMRecordTypeId = SObjectType.Implementation_Profile__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.MMProfile).getRecordTypeId();
     public static Id projectPEORecordTypeId = SObjectType.pse__Proj__c.getRecordTypeInfosByDeveloperName().get('PEO_Project').getRecordTypeId();
     public final static String PEOProjectTaskRecordTypeId = Schema.SObjectType.pse__Project_Task__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.PROJECT_TASK_PEO_RECORDTYPE).getRecordTypeId();
-
+	public final static String employeeName = 'Test';
+    public final static String documents = 'Test~Requested - Not Collected';
 
 	@testSetup
     public static void setUpData(){
@@ -188,7 +189,8 @@ public class NSP_Implprofile_ServiceHelperUpdate_Test {
     }
     
     @isTest
-    public static void checkforPayrollJobCostingTest(){
+    private static void checkforPayrollJobCostingTest(){    
+        Test.startTest();
     	pse__Proj__c project  = [SELECT Id, Name, pse__Project_Type__c FROM pse__Proj__c WHERE TemplateName__c=:label.FSOImplementationProject LIMIT 1];
         Implementation_Profile__c ip = [SELECT Id, NSP_Project__c FROM Implementation_Profile__c WHERE NSP_Project__c=: project.Id LIMIT 1];
         ip.Client_has_any_special_payroll_needs__c = NSP_ServiceConstants.YES ;
@@ -198,7 +200,8 @@ public class NSP_Implprofile_ServiceHelperUpdate_Test {
         ip.Do_any_EEs_have_garnishments__c = NSP_ServiceConstants.YES ;
         ip.NSP_Employee_Names_List_garnishments__c = 'employee1,employee2';
         ip.Do_any_EEs_have_tax_levies__c = NSP_ServiceConstants.YES;
-        ip.NSP_List_Employee_Names_Levies__c = 'employee1,employee2';
+        ip.NSP_List_Employee_Names_Levies__c = employeeName;
+        ip.Document_Levies__c = documents;
         ip.Spnsrd_pln_when_Insperity_hndles_payroll__c = NSP_ServiceConstants.YES;
         ip.Client_has_any_post_tax_deductions__c = NSP_ServiceConstants.YES;
         ip.Type_of_retirement_plan_client_has_today__c = NSP_ServiceConstants.CLIENTB ;
@@ -206,11 +209,27 @@ public class NSP_Implprofile_ServiceHelperUpdate_Test {
         ip.NSP_Any_special_pay_codes_Needed__c = NSP_ServiceConstants.YES ;
         ip.NSP_Select_all_that_apply__c = NSP_ServiceConstants.COSTING ;
         ip.NSP_Form_Completed__c=true;
-        
-        Test.startTest();
+
         update ip;
 		List<pse__Project_Task__c> projTaskList = [Select Id from pse__Project_Task__c WHERE pse__Project__c=: project.id];
-        system.assertEquals(projTaskList.size()>0, true);        
+        system.assertEquals(true,projTaskList.size()>0);        
+        Test.stopTest();
+    }
+    
+    @isTest
+    private static void createSubtaskIp(){
+        Test.startTest();
+    	pse__Proj__c project  = [SELECT Id, Name, pse__Project_Type__c FROM pse__Proj__c WHERE TemplateName__c=:label.FSOImplementationProject LIMIT 1];
+        Implementation_Profile__c ip = [SELECT Id, NSP_Project__c FROM Implementation_Profile__c WHERE NSP_Project__c=: project.Id LIMIT 1];
+        ip.Do_any_EEs_have_tax_levies__c = NSP_ServiceConstants.YES;
+        ip.NSP_Form_Completed__c=true;
+        update ip;
+        ip.NSP_List_Employee_Names_Levies__c = employeeName;
+        ip.Document_Levies__c = documents;
+        ip.NSP_Form_Completed__c=true;
+        update ip;
+		List<pse__Project_Task__c> projTaskList = [Select Id from pse__Project_Task__c WHERE pse__Project__c=: project.id];
+        system.assertEquals(true,projTaskList.size()>0);        
         Test.stopTest();
     }
     
