@@ -85,22 +85,22 @@ public class NSP_LeadTriggerHelper {
                 || ( String.isNotBlank(createdUserName) && externalUsers.contains( createdUserName ) )
                 )
             {
-                //  Lead created by Eloqua
-                //  300021 = Eloqua Lead assigned to FMT queue instead of specified owner
-                if (String.isNotBlank( Label.Eloqua_Integration_User_Id ) 
+                // Lead created by Eloqua
+                // 300021 = Eloqua Lead assigned to FMT queue instead of specified owner
+                if ( String.isNotBlank( Label.Eloqua_Integration_User_Id )
                     && UserInfo.getUserId().equals( Label.Eloqua_Integration_User_Id )
                     )
                 {
-                    if(Label.Eloqua_Integration_User_Id.equals( leadObject.ownerId)){
-                        if(String.isNotBlank( leadObject.Marketing_Priority__c )){
+                    if ( Label.Eloqua_Integration_User_Id.equals( leadObject.ownerId ) ) {
+                        if ( String.isNotBlank( leadObject.Marketing_Priority__c ) ) {
                             if (leadObject.Marketing_Priority__c.equals( 'General' )){
                                 outboundTeamList.add(leadObject);
                             } else if (leadObject.Marketing_Priority__c.equals( 'High - Event' )){
                                 fieldMarketingTeamList.add(leadObject);
-                            } else if(leadObject.Marketing_Priority__c.equals( 'High - Direct' )){
+                            } else if (leadObject.Marketing_Priority__c.equals( 'High - Direct' )){
                                 inboundSolutionsList.add(leadObject);
                             }
-                        } else if(String.isBlank( leadObject.Marketing_Priority__c )  ){
+                        } else if ( String.isBlank( leadObject.Marketing_Priority__c ) ){
                             //  Salesforce sets the owner to Eloqua when lead owner is not specified.
                             inboundSolutionsList.add(leadObject);
                         }
