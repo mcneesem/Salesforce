@@ -2382,10 +2382,8 @@ public class NSP_Implprofile_ServiceHelperUpdate {
                         }
                     }
                     
-                    List<String> lstNamesEmployess = new List<String>();
                     if(!String.isBlank(ipRec.NSP_List_Employee_Names_Levies__c)){
                         List<String> documentList = ipRec.Document_Levies__c.split(',');
-                        //lstNamesEmployess= ipRec.NSP_Employee_Names_List_garnishments__c.split(',');
                         if(!documentList.isEmpty()){
                             for (String documents : documentList) {  
                                 // Split each key-value pair by tilde (~)  
