@@ -4,6 +4,7 @@
     <defaultValue>false</defaultValue>
     <description>This is flag is to notify if primary product on parent opportunity is changed from WO to WX or vice Versa</description>
     <externalId>false</externalId>
+    <inlineHelpText>If box is checked and you need to re-trigger the email notification due to another product change on parent opportunity, you need to uncheck the box, save, then recheck the box and save again.</inlineHelpText>
     <label>Parent Primary Product Changed</label>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>true</trackHistory>
