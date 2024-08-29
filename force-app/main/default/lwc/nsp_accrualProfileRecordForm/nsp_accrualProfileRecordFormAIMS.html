@@ -79,6 +79,14 @@
                   value={fieldValue.NSP_Submitted_by__c}
                   onchange={handleLookUpChange}>
                 </lightning-input-field>
+
+                <lightning-input-field
+                  field-name="CustomOwnerId__c"
+                  data-name="CustomOwnerId__c"
+                  required="true"
+                  value={fieldValue.CustomOwnerId__c}
+                  onchange={handleLookUpChange}>
+                </lightning-input-field>
               </div>
               <div class="slds-col slds-size_1-of-2">
                 <lightning-input-field
@@ -643,7 +651,7 @@
               {attachment}
             </div>
           </template>
-        </lightning-card>
+      </lightning-card>
       </div>
   
       <div slot="footer">

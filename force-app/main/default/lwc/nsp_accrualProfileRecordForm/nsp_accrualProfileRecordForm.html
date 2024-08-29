@@ -80,6 +80,14 @@
                 value={fieldValue.NSP_Submitted_by__c}
                 onchange={handleLookUpChange}>
               </lightning-input-field>
+
+              <lightning-input-field
+                field-name="CustomOwnerId__c"
+                data-name="CustomOwnerId__c"
+                required="true"
+                value={fieldValue.CustomOwnerId__c}
+                onchange={handleLookUpChange}>
+              </lightning-input-field>
             </div>
             <div class="slds-col slds-size_1-of-2">
               <lightning-input-field
@@ -783,13 +791,13 @@
         multiple>
       </lightning-file-upload>
       <lightning-card variant="Narrow" title="Attachments" icon-name="standard:file" class="slds-p-bottom_large">
-          <template for:each={uploadedAttachments} for:item="attachment">
-            <div class="slds-p-left_medium slds-p-bottom_x-small" key={attachment}>
-              <lightning-icon icon-name="doctype:unknown" size="small"></lightning-icon>
-              {attachment}
-            </div>
-          </template>
-      </lightning-card>
+        <template for:each={uploadedAttachments} for:item="attachment">
+          <div class="slds-p-left_medium slds-p-bottom_x-small" key={attachment}>
+            <lightning-icon icon-name="doctype:unknown" size="small"></lightning-icon>
+            {attachment}
+          </div>
+        </template>
+    </lightning-card>
     </div>
 
     <div slot="footer">
