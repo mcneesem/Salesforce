@@ -2352,15 +2352,15 @@ public class NSP_Implprofile_ServiceHelperUpdate {
         //check for existing project task and store the new tasks
         recToInsert.addAll(getnewTaskstoInsert(projectTaskList));
     }
-    
-    public  void createSubtaskforLevies(){
+
+    public void createSubtaskforLevies(){
         List<pse__Project_Task__c> projectTaskList = new List<pse__Project_Task__c>();
         List<pse__Project_Task__c> taskList = new List<pse__Project_Task__c>  (); 
         Map<Id,Implementation_Profile__c> impProfMap = new  Map<Id,Implementation_Profile__c>();
         Map<Id,Id> mapProjectIdIPId = new Map<Id,Id>();
         Map<Id,pse__Proj__c> projectMap = new Map<Id,pse__Proj__c>();
         Map<String, String> documentMap = new Map<String, String>(); 
-        
+
         if(ipRecordsByAutomation != null){
             for(Id ipRecId : ipRecordsByAutomation.get(SUBTASK_LEVIES_FN)){
                 Implementation_Profile__c ipwithValue=(Implementation_Profile__c) data.get(IMPL_PROFILE_IDENTIFIER).get(ipRecId);
@@ -2381,19 +2381,18 @@ public class NSP_Implprofile_ServiceHelperUpdate {
                             }
                         }
                     }
-                    
                     if(!String.isBlank(ipRec.NSP_List_Employee_Names_Levies__c)){
                         List<String> documentList = ipRec.Document_Levies__c.split(',');
                         if(!documentList.isEmpty()){
-                            for (String documents : documentList) {  
-                                // Split each key-value pair by tilde (~)  
-                                List<String> documentSplit = documents.split('~');  
+                            for (String documents : documentList) {
+                                // Split each key-value pair by tilde (~)
+                                List<String> documentSplit = documents.split('~');
                                 
-                                // Ensure we have exactly two documentSplit, key and value  
-                                if (documentSplit.size() == 2) {  
-                                    String documentKey = documentSplit[0].trim();  
-                                    String documentValue = documentSplit[1].trim();  
-                                    documentMap.put(documentKey, documentValue);  
+                                // Ensure we have exactly two documentSplit, key and value
+                                if (documentSplit.size() == 2) {
+                                    String documentKey = documentSplit[0].trim();
+                                    String documentValue = documentSplit[1].trim();
+                                    documentMap.put(documentKey, documentValue);
                                 }
                             }
                         }
@@ -2423,7 +2422,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
                                         eachProjecttask.pse__Hierarchy_Depth__c=1;
                                         eachProjecttask.pse__Milestone__c=pt.pse__Milestone__c;
                                         eachProjecttask.pse__Order__c=45;
-                                        projectTaskList.add(eachProjecttask);  
+                                        projectTaskList.add(eachProjecttask);
                                     }
                                 }
                             } 
