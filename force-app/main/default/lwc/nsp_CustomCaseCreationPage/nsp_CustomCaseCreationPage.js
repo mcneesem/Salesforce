@@ -1005,12 +1005,14 @@ export default class Nsp_CustomCaseCreationPage extends NavigationMixin(Lightnin
             errorFields += "Case Owner,"
         }
         this.getAllInputFields = event.detail.fields;
-        if ( this.isSubCompPermissionEnabled ) {
-            this.getAllInputFields.NSP_Category__c = this.selectedCategory; 
-            this.getAllInputFields.NSP_SubCategory__c = this.selectedSubCategory; 
-            this.getAllInputFields.NSP_Detail__c = this.selectedDetail; 
-            this.getAllInputFields.NSP_Version__c = this.selectedVersion;
+        if(this.isSubCompPermissionEnabled){
+            this.getCatSubCatValues();
         }
+        this.getAllInputFields.NSP_Category__c = this.selectedCategory; 
+        this.getAllInputFields.NSP_SubCategory__c = this.selectedSubCategory; 
+        this.getAllInputFields.NSP_Detail__c = this.selectedDetail; 
+        this.getAllInputFields.NSP_Version__c = this.selectedVersion;
+        
         const inputFields = this.template.querySelectorAll('lightning-input-field');
         if(errorFields == '' && inputFields){
             if(this.getDisplayConfidentialCheckBox === true){
