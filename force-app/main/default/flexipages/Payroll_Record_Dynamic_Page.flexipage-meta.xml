@@ -94,6 +94,16 @@
                 <identifier>RecordNameField</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Additional_Insperity_Resources__c</fieldItem>
+                <identifier>RecordAdditional_Insperity_Resources_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-19063b8d-594b-4a3f-a642-07729ade5e00</name>
         <type>Facet</type>
     </flexiPageRegions>
