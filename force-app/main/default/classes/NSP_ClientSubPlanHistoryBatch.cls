@@ -1,6 +1,6 @@
 // 2022-11-04 ~ STY-03665 ~ Srushti ~ Batch Class to update Asset record fields from client sub plan history record.
 public class NSP_ClientSubPlanHistoryBatch implements Database.Batchable<sObject>, Schedulable {
-    // test w/ NSP_ClientSubPlanHistoryBatchTest (93%)
+    // test w/ NSP_ClientSubPlanHistoryBatchTest (87%)
 
     public NSP_ClientSubPlanHistoryBatch() {
         // intentionally blank...
@@ -88,16 +88,48 @@ public class NSP_ClientSubPlanHistoryBatch implements Database.Batchable<sObject
                 eachAssetRecordToUpdate.Status = NSP_ServiceConstants.TERMINATED;
             }
         }
-        if(!assetRecordToUpdate.isEmpty()){
-            Database.update(assetRecordToUpdate);
+        if ( !assetRecordToUpdate.isEmpty() ) {
+            try {
+                List<Database.SaveResult> results = Database.update(
+                    assetRecordToUpdate ,
+                    NSP_ClientSubPlanHistoryBatch.isAllOrNone
+                );
+                NSP_ErrorLogHandler.logResults(
+                    NSP_ClientSubPlanHistoryBatch.class.getName() ,
+                    'execute:update:TermAssets' ,
+                    results
+                );
+            } catch ( Exception e ) {
+                NSP_ErrorLogHandler.logException(
+                    NSP_ClientSubPlanHistoryBatch.class.getName() ,
+                    'execute:update:TermAssets' ,
+                    e
+                );
+            }
         }
         //if the asset was already terminated and a future dated client sub plan history was created then update the asset status and termination date
         for(Asset eachNonTermAsset: nonTermAssetToUpdate){
             eachNonTermAsset.Status = NSP_ServiceConstants.ASSET_ACTIVE_STATUS;
             eachNonTermAsset.NSP_Termination_Date__c = NULL;
         }
-        if(!nonTermAssetToUpdate.isEmpty()){
-            Database.update(nonTermAssetToUpdate);
+        if ( !nonTermAssetToUpdate.isEmpty() ) {
+            try {
+                List<Database.SaveResult> results = Database.update(
+                    nonTermAssetToUpdate ,
+                    NSP_ClientSubPlanHistoryBatch.isAllOrNone
+                );
+                NSP_ErrorLogHandler.logResults(
+                    NSP_ClientSubPlanHistoryBatch.class.getName() ,
+                    'execute:update:NonTermAssets' ,
+                    results
+                );
+            } catch ( Exception e ) {
+                NSP_ErrorLogHandler.logException(
+                    NSP_ClientSubPlanHistoryBatch.class.getName() ,
+                    'execute:update:NonTermAssets' ,
+                    e
+                );
+            }
         }
     }
 
@@ -155,6 +187,20 @@ public class NSP_ClientSubPlanHistoryBatch implements Database.Batchable<sObject
                 isEnabled = local;
             }
             return isEnabled;
+        }
+        private set;
+    }
+
+    private static Boolean isAllOrNone {
+        private get {
+            if ( isAllOrNone == null ) {
+                Boolean local = False;
+                if ( NSP_ClientSubPlanHistoryBatch.settings != null ) {
+                    local = NSP_ClientSubPlanHistoryBatch.settings.IsAllOrNone__c;
+                }
+                isAllOrNone = local;
+            }
+            return isAllOrNone;
         }
         private set;
     }
