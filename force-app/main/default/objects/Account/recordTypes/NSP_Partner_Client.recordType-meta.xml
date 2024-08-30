@@ -416,6 +416,14 @@
             <fullName>Inactive</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Out of Business</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sales Disqualified</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>NSP_Accounting_Software__c</picklist>
