@@ -523,16 +523,26 @@ public class NSP_PayrollTriggerHelper {
         }
         if(!subClientIds.isEmpty()) {
             
-            for(NSP_Sub_Client_Contact__c existingSCC : [SELECT Id, NSP_Contact__c,NSP_Paid_Non_Paid__c,NSP_Employee_Status__c , 
-                                                         NSP_Is_Primary__c, NSP_On_Site_Supervisor__c, NSP_Payroll_Contact__c, 
-                                                         NSP_HR_Contact__c, NSP_Sub_Client__c FROM NSP_Sub_Client_Contact__c 
-                                                         WHERE NSP_Sub_Client__c =: subClientIds AND NSP_Is_Primary__c = true ORDER BY LastModifiedDate DESC ] ){
-                                                             if(subClienBySCC.containskey(existingSCC.NSP_Sub_Client__c ) ) {
-                                                                 subClienBySCC.get(existingSCC.NSP_Sub_Client__c).Add(existingSCC);                    
-                                                             } else {
-                                                                 subClienBySCC.put(existingSCC.NSP_Sub_Client__c , new list<NSP_Sub_Client_Contact__c> {existingSCC});
-                                                             } 
-                                                         }
+            for ( NSP_Sub_Client_Contact__c existingSCC : [
+                        SELECT
+                            Id , NSP_Contact__c , NSP_Paid_Non_Paid__c , NSP_Employee_Status__c ,
+                            NSP_On_Site_Supervisor__c , NSP_Payroll_Contact__c ,
+                            NSP_HR_Contact__c , NSP_Sub_Client__c
+                        FROM NSP_Sub_Client_Contact__c
+                        WHERE ( NSP_Sub_Client__c = :subClientIds )
+                        ORDER BY LastModifiedDate DESC
+                    ]
+                )
+            {
+                if ( subClienBySCC.containskey(existingSCC.NSP_Sub_Client__c ) ) {
+                    subClienBySCC.get( existingSCC.NSP_Sub_Client__c ).add( existingSCC );
+                } else {
+                    subClienBySCC.put(
+                        existingSCC.NSP_Sub_Client__c ,
+                        new list<NSP_Sub_Client_Contact__c>{ existingSCC }
+                    );
+                }
+            }
             
             if( !subClienBySCC.isEmpty() ){                
                 for(NSP_Payroll__c payroll : newList) {  
