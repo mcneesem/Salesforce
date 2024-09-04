@@ -136,6 +136,9 @@ export default class Nsp_accrualProfileRecordForm extends NavigationMixin(
       Object.keys(fields).map((fieldApiName) => {
         const { value } = fields[fieldApiName];
         this.fieldValue[fieldApiName] = value;
+        if(fieldApiName=='OwnerId'){
+          this.fieldValue['CustomOwnerId__c'] = value;
+        }
       });
 
       this.isFirstTimeCopyAction = true;
@@ -365,8 +368,10 @@ export default class Nsp_accrualProfileRecordForm extends NavigationMixin(
   handleLookUpChange({ detail, target }) {
     const fieldName = target.dataset.name;
     const value = detail?.value[0] || null;
-
     this.fieldValue[fieldName] = value;
+    if(fieldName=='CustomOwnerId__c'){
+      this.fieldValue['OwnerId'] = value;
+    }
   }
 
   handleApgRowAction({ detail }) {

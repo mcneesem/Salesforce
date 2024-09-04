@@ -1,5 +1,5 @@
 <template>
-    <lightning-card
+  <lightning-card
     title="ITA Accrual Profile"
     class="slds-show slds-p-bottom">
       <c-nsp_alert-message
@@ -69,9 +69,9 @@
               </lightning-input-field>
 
             <lightning-input-field disabled
-                field-name="OwnerId"
-                data-name="OwnerId"
-                value={fieldValue.OwnerId}
+                field-name="CustomOwnerId__c"
+                data-name="CustomOwnerId__c"
+                value={fieldValue.CustomOwnerId__c}
                 class="slds-form-element__legend">
             </lightning-input-field> 
 
@@ -348,7 +348,7 @@
                     <span if:true={visibility.Accrual_rates_are_based_Input_Number__c_ITA_CALENDER}>
                       <strong style="font-size: 15px; color: blue;">&nbsp;{fieldValue.Accrual_rates_are_based_Input_Number__c}&nbsp;</strong>
                     </span>
-                     hours worked. Check each earning category that is considered hours worked/hours paid for the purpose of earning accruals</label>
+                    hours worked. Check each earning category that is considered hours worked/hours paid for the purpose of earning accruals</label>
                   <c-nsp_selection-box disabled
                     field-api-name="NSP_Accrual_Profile__c.NSP_Hours_paid_for_earning_accruals__c"
                     record-type-id={fieldValue.recordTypeId}
@@ -430,7 +430,7 @@
                     <span if:true={visibility.Accrual_rates_are_based_Input_Number__c_ITA_ANNIVERSARY}>
                     <strong style="font-size: 15px; color: blue;">&nbsp;{fieldValue.Accrual_rates_are_based_Input_Number__c}&nbsp;</strong>
                     </span>
-                     hours worked. Check each earning category that is considered hours worked/hours paid for the purpose of earning accruals</label>
+                    hours worked. Check each earning category that is considered hours worked/hours paid for the purpose of earning accruals</label>
                     <c-nsp_selection-box disabled
                       if:true={visibility.NSP_Hours_paid_for_earning_accruals__c_ITA_ANNIVERSARY}
                       field-api-name="NSP_Accrual_Profile__c.NSP_Hours_paid_for_earning_accruals__c"
@@ -451,7 +451,7 @@
                   class="slds-show slds-var-m-bottom_medium slds-form-element__control slds-form-element__legend slds-form-element_vertical">
                 </lightning-input-field>
               </template>
-			  
+        
                 <lightning-input-field disabled
                   if:true={visibility.NSP_Accrual_Period_Limit__c_ITA_ANNIVERSARY}
                   field-name="NSP_Accrual_Period_Limit__c"
@@ -637,7 +637,7 @@
               </lightning-formatted-text>
 
               <lightning-input-field disabled
-               lwc:if={visibility.NSP_Does_carryover_expire__c}
+              lwc:if={visibility.NSP_Does_carryover_expire__c}
                 variant="label-hidden"
                 class="slds-show slds-var-m-bottom_medium slds-form-element__control slds-form-element__legend slds-form-element_vertical"
                 field-name="NSP_Does_carryover_expire__c"
@@ -747,6 +747,5 @@
             </lightning-datatable>
         </div>
     </lightning-record-edit-form>
-</lightning-card>
-
+  </lightning-card>
 </template>

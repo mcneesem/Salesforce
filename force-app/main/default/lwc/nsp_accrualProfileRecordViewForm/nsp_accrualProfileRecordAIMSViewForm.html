@@ -1,5 +1,5 @@
 <template>
-    <lightning-card
+  <lightning-card
     title="AIMS Accrual Profile"
     class="slds-show slds-p-bottom">
       <c-nsp_alert-message
@@ -17,7 +17,6 @@
         if:true={state.isLoading}
         alternative-text="Loading">
       </lightning-spinner>
-      
     <lightning-accordion
       if:true={isRecordTypeSelected}
       active-section-name={activeSections}
@@ -72,10 +71,12 @@
           </lightning-input-field>
 
           <lightning-input-field disabled
-            field-name="OwnerId"
-            data-name="OwnerId"
-            value={fieldValue.OwnerId}>
-          </lightning-input-field>
+            field-name="CustomOwnerId__c"
+            data-name="CustomOwnerId__c"
+            value={fieldValue.CustomOwnerId__c}
+            class="slds-form-element__legend"
+            >
+          </lightning-input-field> 
         </div>
         <div class="slds-col slds-size_1-of-2">
           <lightning-input-field disabled
@@ -295,7 +296,7 @@
                   <span if:true={visibility.Accrual_rates_are_based_Input_Number__c_AIMS_CALENDAR}>
                     <strong>&nbsp;{fieldValue.Accrual_rates_are_based_Input_Number__c}&nbsp;</strong>
                   </span>
-                   hours worked. Check each earning category that is considered hours worked/hours paid for the purpose of earning accruals
+                  hours worked. Check each earning category that is considered hours worked/hours paid for the purpose of earning accruals
                   </label>
                   <c-nsp_selection-box disabled
                     field-api-name="NSP_Accrual_Profile__c.NSP_Hours_paid_for_earning_accruals__c"
@@ -347,7 +348,7 @@
                   <span if:true={visibility.Accrual_rates_are_based_Input_Number__c_AIMS_ANNIVERSARY}>
                     <strong>&nbsp;{fieldValue.Accrual_rates_are_based_Input_Number__c}&nbsp;</strong>
                   </span>
-                   hours worked. Check each earning category that is considered hours worked/hours paid for the purpose of earning accruals
+                  hours worked. Check each earning category that is considered hours worked/hours paid for the purpose of earning accruals
                 </label>
                 <c-nsp_selection-box disabled
                   if:true={visibility.NSP_Hours_paid_for_earning_accruals__c_AIMS_ANNIVERSARY}
