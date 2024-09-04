@@ -1,12 +1,5 @@
-/**
-* Represents the Asset trigger helper which handles all the logic.
-* Modification History
-* Rahul Singh        Sept  30 2022    
-* Rahul Singh        June  02 2023   
-*/
-
-public class NSP_AssetTriggerHelper {
-    // test w/ NSP_AssetTriggerHelperTest (87%)
+public with sharing class NSP_AssetTriggerHelper {
+    // test w/ NSP_AssetTriggerHelperTest (84%)
 
     private static final string assetWoType = 'WO';
     private static final string assetwxType = 'WX_WA';
@@ -14,7 +7,6 @@ public class NSP_AssetTriggerHelper {
     private static final string onboardingStatus = 'Onboarding';    
     private static final Id new_Asset_RT_ID = Schema.SObjectType.Asset.RecordTypeInfosByName.get(assetWoType).getRecordTypeId();
     private static final Id asset_RT_ID = Schema.SObjectType.Asset.RecordTypeInfosByName.get(assetwxType).getRecordTypeId();
-    private static final String ASSET_TRIGGER_HELPER = 'NSP_AssetTriggerHelper';
     Static final Id WOAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId('Asset',NSP_ServiceConstants.WO_ASSET_RECORDTYPE);
     Static final Id CPQAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId('Asset','NSP_CPQ_Asset');
     private static final string BACKOUT= 'Backout';
@@ -22,121 +14,62 @@ public class NSP_AssetTriggerHelper {
     private static final string RETURNED= 'Returned';
     private static final string INACTIVE= 'Inactive';
 
-    
-    /**
-* Iterates throught the list of new Account and passes the required attributes to other methods.
-* @param newList List of New Accounts.  
-* @return void             
-*                
-*/       
-    public void beforeInsertDirector(List<Asset> newList){ 
-     
-     /*  try{
-            List<Asset> assetListToUpdate = new List<Asset>();
-            Set<String> aimsClientSet = new Set<String>();              
-            
-            for(Asset assetObj : newList) {
-                if(assetObj.NSP_Need_Rollup_Recalculation__c != null && 
-                   assetObj.NSP_Need_Rollup_Recalculation__c){
-                       assetListToUpdate.add(assetObj);
-                       aimsClientSet.add(assetObj.NSP_Client__c);
-                   }                                                                     
-            }    
-           //check assetListToUpdate size
-            //if(aimsClientSet.size() > 0){
-              //  rollUpSubClientToAsset(aimsClientSet,assetListToUpdate);
-            //}
-        }catch(Exception ex){
-            NSP_CustomException.LogException(ex);
-        } */
-		
-       try {
-       
-       updatePayDateonAsset(newList,null); // added for STY-03387
-            
-            // Added for STY-02728 
-            //Moved the parent Id update code to NSP_UpdateAsset class
-        }catch(Exception ex){
-            NSP_ErrorLogHandler.logSaveException(ASSET_TRIGGER_HELPER, 'beforeInsertDirector', ex.getMessage());
-        } 
-        
-        
+    //
+    // Iterates throught the list of new Account and passes the required attributes to other methods.
+    // @param newList List of New Accounts.
+    // @return void
+    //
+    public void beforeInsertDirector( List<Asset> newList ) { 
+        try {
+            updatePayDateonAsset( newList , null ); // added for STY-03387
+        } catch ( Exception e ) {
+            NSP_AssetTriggerHelper.handleException( e , 'beforeInsertDirector' );
+        }
     }
-    
-/**
-* Iterates throught the list of new Account and passes the required attributes to other methods.
-* @param newList List of New Account.
-* @param newMap List of New Account.
-* @return void
-*                
-*/    
-    public void afterInsertDirector(List<Asset> newList, Map<Id, Asset> newMap) {
+
+    //
+    // Iterates throught the list of new Account and passes the required attributes to other methods.
+    // @param newList List of New Account.
+    // @param newMap List of New Account.
+    // @return void
+    //
+    public void afterInsertDirector( List<Asset> newList , Map<Id,Asset> newMap ) {
         List<Asset> ast = new List<Asset>();
         updateInvoiceDate(newList,newMap);
         peoTESClientStatus(newList,newMap);
         updateRETAsset(newList,newMap);
         List<Asset> docusignAsset = new List<Asset>();
         try {
-           for(Asset assetObj: newList){              
-                if(assetObj.Status != null && (assetObj.Status == activeStatus || assetObj.Status == onboardingStatus))
-                {
-                 ast.add(assetObj);
+            for(Asset assetObj: newList){              
+                if(assetObj.Status != null && (assetObj.Status == activeStatus || assetObj.Status == onboardingStatus)){
+                    ast.add(assetObj);
                 }
                 if(assetObj.Status != null && assetObj.RecordTypeId != WOAssetRecordTypeId && assetObj.RecordTypeId != CPQAssetRecordTypeId){
-                      docusignAsset.add(assetObj); 
-                   }
+                    docusignAsset.add(assetObj); 
+                }
             }
             if(!docusignAsset.isEmpty()){
                 updateAssetInDocusign(docusignAsset);
             }
-       if(!ast.isEmpty()){
-           updateActiveAssets(ast);
-       }
-        
-        
-            }catch(Exception ex){
-            NSP_ErrorLogHandler.logSaveException('NSP_AssetTriggerHelper', 'beforeInsertDirector', ex.getMessage());
+            if ( !ast.isEmpty() ) {
+                updateActiveAssets( ast );
+            }
+        } catch ( Exception e ) {
+            NSP_AssetTriggerHelper.handleException( e , 'afterInsertDirector' );
         }
     }
-    
-    
-    /**
-* Iterates throught the list of new Assets and passes the required attributes to other methods.
-* @param newMap, oldMap List of Assets.  
-* @return void             
-*                
-*/
-    public void beforeUpdateDirector(Map<Id, Asset> newMap, Map<Id, Asset> oldMap){ 
-        try{
-            List<Asset> assetListToUpdate = new List<Asset>();
-            Set<String> aimsClientSet = new Set<String>();
 
-            // Looping through Asset records
-            for(Asset assetObj : newMap.values()) {
-                if(assetObj.NSP_Need_Rollup_Recalculation__c != null && 
-                   assetObj.NSP_Need_Rollup_Recalculation__c != oldMap.get(assetObj.Id).NSP_Need_Rollup_Recalculation__c &&
-                   assetObj.NSP_Need_Rollup_Recalculation__c && assetObj.NSP_Client__c != null){
-                       assetListToUpdate.add(assetObj);
-                       aimsClientSet.add(assetObj.NSP_Client__c);
-                   }
-                //if client segment type(future value to be assigned on effective date/client Segment date - backup the old value in current client segment type)
-                   /* if(assetObj.NSP_Client_Segment_type__c != null &&
-                   assetObj.NSP_Client_Segment_type__c != oldMap.get(assetObj.Id).NSP_Client_Segment_type__c && 
-                   assetObj.NSP_Client_SegmentDate__c > system.today()){
-                       assetObj.NSP_Current_Client_Segment_type__c = oldMap.get(assetObj.Id).NSP_Client_Segment_type__c;
-                    }*/
-
-                   } 
-            
-            //if(aimsClientSet.size() > 0){
-               // rollUpSubClientToAsset(aimsClientSet,assetListToUpdate);
-            //}
-            }                      
-        catch(Exception ex){
-            NSP_CustomException.LogException(ex);
+    //
+    // Iterates throught the list of new Assets and passes the required attributes to other methods.
+    // @param newMap, oldMap List of Assets.
+    // @return void
+    //
+    public void beforeUpdateDirector( Map<Id,Asset> newMap , Map<Id,Asset> oldMap ) { 
+        try {
+            updatePayDateonAsset( newMap.values() , oldMap ); // added for STY-03387
+        } catch ( Exception e ) {
+            NSP_AssetTriggerHelper.handleException( e , 'beforeUpdateDirector' );
         }
-		updatePayDateonAsset(newMap.values(),oldMap); // added for STY-03387
-
     }
 
     //
@@ -190,137 +123,151 @@ public class NSP_AssetTriggerHelper {
         }
     }
 
-    /**
-    * @MethodName: updateAssetInDocusign
-    * @Description: Active asset for docusign use
-    * @param :List<Asset> ast
-    * @return void                          
-    */    
-    public static void updateAssetInDocusign(List<Asset> ast) {
-    Map<Id, Set<String>> accountToAssetRecordtypeMap = new Map<Id, Set<String>>();
-    Map<Id, RecordTypeInfo> rtinfos = Asset.sObjectType.getDescribe().getRecordTypeInfosById();
-    List<Id> accountList = new List<Id>();
-    try{    
-    for (Asset eachAsset : ast) {
-        if (eachAsset.AccountId != null ) {
-            accountList.add(eachAsset.AccountId);
-        }
-    }
-        
-    List <Asset> assetList = new List<Asset>();
-    assetList = [SELECT ID, recordtypeId, recordtype.name, AccountId, Status from Asset WHERE AccountId IN:accountList 
-                 AND RecordTypeId != :WOAssetRecordTypeId AND RecordTypeId != :CPQAssetRecordTypeId AND Status != :TERMINATED AND Status != :BACKOUT AND Status != :RETURNED AND Status != :INACTIVE
-                 ];
-        
-    for (Asset eachAsset : assetList) {
-        if (eachAsset.AccountId != null) { 
-            if (!accountToAssetRecordtypeMap.containsKey(eachAsset.AccountId)) {
-                accountToAssetRecordtypeMap.put(eachAsset.AccountId, new Set<String>());
+    //
+    // @MethodName: updateAssetInDocusign
+    // @Description: Active asset for docusign use
+    // @param :List<Asset> ast
+    // @return void
+    //
+    public static void updateAssetInDocusign( List<Asset> ast ) {
+        Map<Id, Set<String>> accountToAssetRecordtypeMap = new Map<Id, Set<String>>();
+        Map<Id, RecordTypeInfo> rtinfos = Asset.sObjectType.getDescribe().getRecordTypeInfosById();
+        List<Id> accountList = new List<Id>();
+        try {
+            for (Asset eachAsset : ast) {
+                if (eachAsset.AccountId != null ) {
+                    accountList.add(eachAsset.AccountId);
+                }
             }
-          
-          String rtName;
-          if(rtinfos.containsKey(eachAsset.RecordTypeId)) {
-                 rtName = rtinfos.get(eachAsset.RecordTypeId).getName();
-             }
-            // Adding all recordtype here from all related assets
-            accountToAssetRecordtypeMap.get(eachAsset.AccountId).addAll(rtName.split(','));
-
-           
-        }
-    }
-
-    List<Account> acctLst = new List<Account>();
-
-    for (Account eachAccount : [SELECT Id, Docusign_Assets__c FROM Account WHERE ID IN :accountList]) {
-        //Clearing old value for Docusign_Assets__c
-        eachAccount.Docusign_Assets__c = Null;
-        if (accountToAssetRecordtypeMap.containsKey(eachAccount.Id)) {
-			//Adding value into Set for dedupe
-            Set<String> existingassetsrecordtype = accountToAssetRecordtypeMap.get(eachAccount.Id);
-            //Adding value from set to List
-            List<String> ActiveAssetList = new List<String>();
-            ActiveAssetList.addAll(existingassetsrecordtype);
-			//Updating the Docusign_Assets__c
-            if(ActiveAssetList.size() > 0){
-                eachAccount.Docusign_Assets__c = String.join(ActiveAssetList, ', ');
+            List <Asset> assetList = new List<Asset>();
+            assetList = [
+                SELECT ID, recordtypeId, recordtype.name, AccountId, Status
+                FROM Asset
+                WHERE (
+                    AccountId IN :accountList 
+                    AND RecordTypeId != :WOAssetRecordTypeId
+                    AND RecordTypeId != :CPQAssetRecordTypeId
+                    AND Status != :TERMINATED
+                    AND Status != :BACKOUT
+                    AND Status != :RETURNED
+                    AND Status != :INACTIVE
+                )
+            ];
+            for (Asset eachAsset : assetList) {
+                if (eachAsset.AccountId != null) { 
+                    if (!accountToAssetRecordtypeMap.containsKey(eachAsset.AccountId)) {
+                        accountToAssetRecordtypeMap.put(eachAsset.AccountId, new Set<String>());
+                    }
+                    String rtName;
+                    if(rtinfos.containsKey(eachAsset.RecordTypeId)) {
+                        rtName = rtinfos.get(eachAsset.RecordTypeId).getName();
+                    }
+                    // Adding all recordtype here from all related assets
+                    accountToAssetRecordtypeMap.get(eachAsset.AccountId).addAll(rtName.split(','));
+                }
             }
-            
-        }
-            acctLst.add(eachAccount);
-    }
-    	update acctLst;
-    }catch (exception ex) {
-                NSP_ErrorLogHandler.logSaveException(ASSET_TRIGGER_HELPER, 'updateAssetInDocusign', ex.getMessage());
+            List<Account> acctLst = new List<Account>();
+            for (Account eachAccount : [SELECT Id, Docusign_Assets__c FROM Account WHERE ID IN :accountList]) {
+                //Clearing old value for Docusign_Assets__c
+                eachAccount.Docusign_Assets__c = Null;
+                if (accountToAssetRecordtypeMap.containsKey(eachAccount.Id)) {
+                    //Adding value into Set for dedupe
+                    Set<String> existingassetsrecordtype = accountToAssetRecordtypeMap.get(eachAccount.Id);
+                    //Adding value from set to List
+                    List<String> ActiveAssetList = new List<String>();
+                    ActiveAssetList.addAll(existingassetsrecordtype);
+                    //Updating the Docusign_Assets__c
+                    if(ActiveAssetList.size() > 0){
+                        eachAccount.Docusign_Assets__c = String.join(ActiveAssetList, ', ');
+                    }
+                    
+                }
+                acctLst.add(eachAccount);
             }
-    }
-    
-   /**
-    * @MethodName: updateActiveAssets
-    * @Description: This method is used to Update Active Asset on Account
-    * @param :List<Asset> ast
-    * @Defect : STY-04435
-    * @return void                          
-    */    
-    public static void updateActiveAssets(List<Asset> ast) {
-    Map<Id, Set<String>> mp = new Map<Id, Set<String>>();
-    Map<Id, RecordTypeInfo> rtinfos = Asset.sObjectType.getDescribe().getRecordTypeInfosById();
-    
-    List<Id> accountList = new List<Id>();
-    for (Asset eachAsset : ast) {
-        if (eachAsset.AccountId != null ) {
-            accountList.add(eachAsset.AccountId);
+            update acctLst;
+        } catch ( Exception e ) {
+            NSP_AssetTriggerHelper.handleException( e , 'updateAssetInDocusign' );
         }
     }
-        List<Account> accList =[SELECT id, NSP_Active_Assets__c from account WHERE ID IN:accountList];
-            for(Account acc: accList){
-                acc.NSP_Active_Assets__c = '';
+
+    //
+    // @MethodName: updateActiveAssets
+    // @Description: This method is used to Update Active Asset on Account
+    // @param :List<Asset> ast
+    // @Defect : STY-04435
+    // @return void
+    //    
+    public static void updateActiveAssets( List<Asset> ast ) {
+        Map<Id, Set<String>> mp = new Map<Id, Set<String>>();
+        Map<Id, RecordTypeInfo> rtinfos = Asset.sObjectType.getDescribe().getRecordTypeInfosById();
+        List<Id> accountList = new List<Id>();
+        for (Asset eachAsset : ast) {
+            if (eachAsset.AccountId != null ) {
+                accountList.add(eachAsset.AccountId);
             }
-            update accList;
-        
-    List <Asset> assetList = new List<Asset>();
-    assetList = [SELECT id, recordtypeId, recordtype.name, AccountId, Status from Asset WHERE AccountId IN:accountList AND (Status = :activeStatus OR Status = :onboardingStatus)];
- 
-    for (Asset eachAsset : assetList) {
-        if (eachAsset.AccountId != null ) { 
-        
-            if (!mp.containsKey(eachAsset.AccountId)) {
-                mp.put(eachAsset.AccountId, new Set<String>());
+        }
+        List<Account> accList =[
+            SELECT Id, NSP_Active_Assets__c
+            FROM Account
+            WHERE ID IN :accountList
+        ];
+        for(Account acc: accList){
+            acc.NSP_Active_Assets__c = '';
+        }
+        update accList;
+        List <Asset> assetList = new List<Asset>();
+        assetList = [
+            SELECT id, recordtypeId, recordtype.name, AccountId, Status
+            FROM Asset
+            WHERE (
+                AccountId IN :accountList
+                AND (
+                    Status = :activeStatus
+                    OR Status = :onboardingStatus
+                )
+            )
+        ];
+        for (Asset eachAsset : assetList) {
+            if (eachAsset.AccountId != null ) { 
+                if (!mp.containsKey(eachAsset.AccountId)) {
+                    mp.put(eachAsset.AccountId, new Set<String>());
+                }
+                String rtName;
+                if(rtinfos.containsKey(eachAsset.RecordTypeId)) {
+                    rtName = rtinfos.get(eachAsset.RecordTypeId).getName();
+                }
+
+                // Adding all recordtype here from all related assets
+                mp.get(eachAsset.AccountId).addAll(rtName.split(';'));
             }
-          
-          String rtName;
-          if(rtinfos.containsKey(eachAsset.RecordTypeId)) {
-                 rtName = rtinfos.get(eachAsset.RecordTypeId).getName();
-             }
-
-            // Adding all recordtype here from all related assets
-            mp.get(eachAsset.AccountId).addAll(rtName.split(';'));
         }
+        List<Account> acctLst = [
+            SELECT Id, NSP_Active_Assets__c
+            FROM Account
+            WHERE ID IN :mp.KeySet()
+        ];
+        for (Account a : acctLst) {
+            if (mp.ContainsKey(a.Id)) {
+                Set<String> existingassetsrecordtype = mp.get(a.Id);
+
+                //Updating the NSP_Active_Assets__c
+                List<String> ActiveAssetList = new List<String>();
+                ActiveAssetList.addAll(existingassetsrecordtype);
+                a.NSP_Active_Assets__c = String.join(ActiveAssetList, ';');
+            }
+        }
+        update acctLst; 
     }
 
-    List<Account> acctLst = [SELECT Id, NSP_Active_Assets__c FROM Account WHERE ID IN :mp.KeySet()];
-
-    for (Account a : acctLst) {
-        if (mp.ContainsKey(a.Id)) {
-            Set<String> existingassetsrecordtype = mp.get(a.Id);
-
-            //Updating the NSP_Active_Assets__c
-            List<String> ActiveAssetList = new List<String>();
-            ActiveAssetList.addAll(existingassetsrecordtype);
-            a.NSP_Active_Assets__c = String.join(ActiveAssetList, ';');
-        }
-    }
-    update acctLst; 
-}
-     
-   /**
-    * @MethodName: mapGovernmentContratcorOnPDS
-    * @Description: This method is used to map Government Contractor checkbox on PDS after Asset Update
-    * @param :Set<Id> assetIdSet
-    * @createdDate : 10/11/2022
-    * @Defect : STY-03277
-    * @return void                          
-    */
-    public void mapGovernmentContratcorOnPDS(Set<Id> assetIdSet){
+    //
+    // @MethodName: mapGovernmentContratcorOnPDS
+    // @Description: This method is used to map Government Contractor checkbox on PDS after Asset Update
+    // @param :Set<Id> assetIdSet
+    // @createdDate : 10/11/2022
+    // @Defect : STY-03277
+    // @return void
+    //
+    public void mapGovernmentContratcorOnPDS( Set<Id> assetIdSet ) {
         Map<Id, Boolean> isSubClientGovConMap = new Map<Id, Boolean>();
         List<NSP_Payroll__c> payRollList = new List<NSP_Payroll__c>();
         for(NSP_Sub_Client__c  subClient :[SELECT Id, 
@@ -339,30 +286,28 @@ public class NSP_AssetTriggerHelper {
                                             pRoll.NSP_Government_Contractor__c = isSubClientGovConMap.get(pRoll.NSP_Sub_Client_Name__c);
                                             payRollList.add(pRoll);
                                         }
-            try{
-                if(!payRollList.isEmpty()){
-                    Database.update(payRollList);
+            try {
+                if( !payRollList.isEmpty() ) {
+                    Database.update( payRollList );
                 }
-            } catch (exception ex) {
-                NSP_ErrorLogHandler.logSaveException(ASSET_TRIGGER_HELPER, 'mapGovernmentContratcorOnPDS', ex.getMessage());
+            } catch ( Exception e ) {
+                NSP_AssetTriggerHelper.handleException( e , 'mapGovernmentContratcorOnPDS' );
             }
         }
-    } 
+    }
 
-    /**
-    * @MethodName: createPlatformEventForAsset
-    * @Description: This method is used to fire platform event for Asset field change based on metadata.
-    * @param :List<Asset> newAssets, map<Id, Asset> oldAssets
-    * @createdDate : 11/03/2022
-    * @Defect : STY-03624
-    * @return void                          
-    */
-  
-    public static void createPlatformEventForAsset(List<Asset> newAssets, map<Id, Asset> oldAssets) {
+    //
+    // @MethodName: createPlatformEventForAsset
+    // @Description: This method is used to fire platform event for Asset field change based on metadata.
+    // @param :List<Asset> newAssets, map<Id, Asset> oldAssets
+    // @createdDate : 11/03/2022
+    // @Defect : STY-03624
+    // @return void                          
+    //
+    public static void createPlatformEventForAsset( List<Asset> newAssets , Map<Id,Asset> oldAssets ) {
         //Boolean to check if any field is changed
         Boolean isAssetFIeldChanged = false;
         List<Asset_Event__e> assetEventToBeInserted = New List<Asset_Event__e>();
-        List<NSP_Error_Log__c> logList = new List<NSP_Error_Log__c>();
         List<string> assetFieldDetails = new List<string>();
         
         // get record type Id Of 'WO' 
@@ -389,211 +334,64 @@ public class NSP_AssetTriggerHelper {
                 assetEventToBeInserted.add(assetEventToBeCreated);
             }
         }
-        
-        if(!assetEventToBeInserted.isEmpty()) {
-            List<Database.SaveResult> results = EventBus.publish(assetEventToBeInserted);
-            // Inspect publishing result for each event
-            
-            for (Database.SaveResult sr : results) {
-                NSP_Error_Log__c log = new NSP_Error_Log__c();
-                log.NSP_Class__c = ASSET_TRIGGER_HELPER;
-                log.NSP_Method__c = 'publishEventBus';                
-                log.NSP_Description__c = String.valueOf(sr.getErrors()[0].getMessage()) + '  '+String.valueOf(sr.getErrors()[0].getStatusCode());
-                log.NSP_Record_Id__c = sr.getId();
-                logList.add(log);  
-            }
-            
-            if(logList.size() > 0){
-                insert logList;
-            }
+        if ( !assetEventToBeInserted.isEmpty() ) {
+            List<Database.SaveResult> results = EventBus.publish( assetEventToBeInserted );
+            NSP_ErrorLogHandler.logResults(
+                NSP_AssetTriggerHelper.class.getName() ,
+                'createPlatformEventForAsset' ,
+                results
+            );
         }
-        
     }
-    /*
-    public void rollUpSubClientToAsset(Set<String> aimsClientSet,List<Asset> assetListToUpdate){
-        //check assetListToUpdate size
-        if(assetListToUpdate.size() > 0){
-            Map<String,List<NSP_Sub_Client__c>> aimsClientSubClientMap = new Map<String,List<NSP_Sub_Client__c>>();
-            Map<String,Set<String>> aimsClientWSEEEmployeeStateMap = new Map<String,Set<String>>();
-            List<NSP_Sub_Client__c> subClientList = [Select Id,NSP_Client__c, NSP_Paid_Employees_Last_Month__c,
-                                                     NSP_Actual_Full_Time_EE_Count__c,NSP_Actual_Part_Time_EE_Count__c,
-                                                     NSP_Actual_Seasonal_Time_EE_Count__c ,NSP_Contractual_Full_time_EE_Count__c ,
-                                                     NSP_Contractual_Part_time_EE_Count__c ,NSP_Contractual_Seasonal_Time_EE_Count__c,
-                                                     NSP_Union_Employees__c, (Select NSP_State__c FROM WSEE_Employees__r where NSP_State__c != null)
-                                                     FROM NSP_Sub_Client__c 
-                                                     where NSP_Client__c IN: aimsClientSet];
-            
-            //prepare map
-            for(NSP_Sub_Client__c subClientObj : subClientList){
-                if(aimsClientSubClientMap.containsKey(subClientObj.NSP_Client__c)){
-                    List<NSP_Sub_Client__c> subClientTempList = aimsClientSubClientMap.get(subClientObj.NSP_Client__c);
-                    subClientTempList.add(subClientObj);
-                    aimsClientSubClientMap.put(subClientObj.NSP_Client__c,subClientTempList);
-                    Set<String> wseeStateList = aimsClientWSEEEmployeeStateMap.get(subClientObj.NSP_Client__c);
-                    for(NSP_WSEE_Employee__c wseeEmployeeObj : subClientObj.WSEE_Employees__r){
-                        wseeStateList.add(wseeEmployeeObj.NSP_State__c);
-                    }
-                    aimsClientWSEEEmployeeStateMap.put(subClientObj.NSP_Client__c,wseeStateList);
-                }else{
-                    List<NSP_Sub_Client__c> subClientTempList = new List<NSP_Sub_Client__c>();
-                    subClientTempList.add(subClientObj);
-                    aimsClientSubClientMap.put(subClientObj.NSP_Client__c,subClientTempList);
-                    Set<String> wseeStateList = new Set<String>();
-                    for(NSP_WSEE_Employee__c wseeEmployeeObj : subClientObj.WSEE_Employees__r){
-                        wseeStateList.add(wseeEmployeeObj.NSP_State__c);
-                    }
-                    aimsClientWSEEEmployeeStateMap.put(subClientObj.NSP_Client__c,wseeStateList);
-                }
-                
-            }
-            
-            //update values in Asset
-            for(Asset assetObj : assetListToUpdate) {
-                decimal paidEmployessLastMonth = 0;
-                decimal actualfullTimeEECount = 0;
-                decimal actualpartTimeEECount = 0;
-                decimal actualsesonalEECount = 0;
-                decimal contractualfullTimeEECount = 0;
-                decimal contractualpartTimeEECount = 0;
-                decimal contractualsesonalEECount = 0;
-                
-                if(aimsClientSubClientMap.containsKey(assetObj.NSP_Client__c)){
-                    boolean hasUnionEmployees = false;
-                    for(NSP_Sub_Client__c subClientObj : aimsClientSubClientMap.get(assetObj.NSP_Client__c)){
-                        if(subClientObj.NSP_Paid_Employees_Last_Month__c != null)
-                        	paidEmployessLastMonth = paidEmployessLastMonth + subClientObj.NSP_Paid_Employees_Last_Month__c;
-                        if(subClientObj.NSP_Actual_Full_Time_EE_Count__c != null)
-                        actualfullTimeEECount = actualfullTimeEECount + subClientObj.NSP_Actual_Full_Time_EE_Count__c;
-                        if(subClientObj.NSP_Actual_Part_Time_EE_Count__c != null)
-                        actualpartTimeEECount = actualpartTimeEECount + subClientObj.NSP_Actual_Part_Time_EE_Count__c;
-                        if(subClientObj.NSP_Actual_Seasonal_Time_EE_Count__c != null)
-                        actualsesonalEECount = actualsesonalEECount + subClientObj.NSP_Actual_Seasonal_Time_EE_Count__c;
-                        if(subClientObj.NSP_Contractual_Full_time_EE_Count__c != null)
-                        contractualfullTimeEECount = contractualfullTimeEECount + subClientObj.NSP_Contractual_Full_time_EE_Count__c;
-                        if(subClientObj.NSP_Contractual_Part_time_EE_Count__c != null)
-                        contractualpartTimeEECount = contractualpartTimeEECount + subClientObj.NSP_Contractual_Part_time_EE_Count__c;
-                        if(subClientObj.NSP_Contractual_Seasonal_Time_EE_Count__c != null)
-                        contractualsesonalEECount = contractualsesonalEECount + subClientObj.NSP_Contractual_Seasonal_Time_EE_Count__c;
-                        if(!hasUnionEmployees && subClientObj.NSP_Union_Employees__c)
-                            hasUnionEmployees = true;
-                    }
-                    assetObj.NSP_Paid_Employees_Last_Month__c =  paidEmployessLastMonth;
-                    assetObj.NSP_Actual_Full_Time_EE_Count__c = actualfullTimeEECount;
-                    assetObj.NSP_Actual_Part_Time_EE_Count__c = actualpartTimeEECount;
-                    assetObj.NSP_Actual_Seasonal_Time_EE_Count__c =  actualsesonalEECount;
-                    assetObj.NSP_Contractual_Full_time_EE_Count__c = contractualfullTimeEECount;
-                    assetObj.NSP_Contractual_Part_time_EE_Count__c = contractualpartTimeEECount;
-                    assetObj.NSP_Contractual_Seasonal_time_EE_Count__c =  contractualsesonalEECount;
-                    assetObj.NSP_Union_Employees__c = hasUnionEmployees;
-                    assetObj.NSP_Need_Rollup_Recalculation__c = false;
-                }
-                
-                //for states
-                if(aimsClientWSEEEmployeeStateMap.containsKey(assetObj.NSP_Client__c)){
-                    String strState = '';
-                    integer i = 0;
-                    for(String stateStr : aimsClientWSEEEmployeeStateMap.get(assetObj.NSP_Client__c)){
-                        if(i == 0)
-                        	strState = strState + stateStr;
-                        else
-                           strState = strState + ' , ' +stateStr;
-                        i++;
-                    }
-                    assetObj.NSP_States_of_Operations__c = strState;
-                }
-                
-            }  
-            
-            
-            /*Map<String,AggregateResult> aggregrateMap = new Map<String,AggregateResult>();
-            
-            List<AggregateResult> subClientList = [Select NSP_Client__c, SUM(NSP_Paid_Employees_Last_Month__c),
-                                                   SUM(NSP_Actual_Full_Time_EE_Count__c),SUM(NSP_Actual_Part_Time_EE_Count__c),
-                                                   SUM(NSP_Actual_Seasonal_EE_Count__c) ,SUM(NSP_Contractual_Full_time_EE_Count__c) ,
-                                                   SUM(NSP_Contractual_Part_time_EE_Count__c) ,SUM(NSP_Contractual_Seasonal_EE_Count__c)
-                                                   FROM NSP_Sub_Client__c 
-                                                   GROUP BY NSP_Client__c HAVING NSP_Client__c IN: aimsClientSet ];
-            
-            for(AggregateResult arObj : subClientList){
-                aggregrateMap.put((String)arObj.get('NSP_Client__c'),arObj);
-            }
-            
-            for(Asset assetObj : assetListToUpdate) {
-                if(aggregrateMap.containsKey(assetObj.NSP_Client__c)){
-                    AggregateResult arObj = aggregrateMap.get(assetObj.NSP_Client__c);
-                    assetObj.NSP_Paid_Employees_Last_Month__c =  (decimal)arObj.get('expr0');
-                    assetObj.NSP_Actual_Full_Time_EE_Count__c = (decimal)arObj.get('expr1');
-                    assetObj.NSP_Actual_Part_Time_EE_Count__c = (decimal)arObj.get('expr2');
-                    assetObj.NSP_Actual_Seasonal_EE_Count__c =  (decimal)arObj.get('expr3');
-                    assetObj.NSP_Contractual_Full_time_EE_Count__c = (decimal)arObj.get('expr4');
-                    assetObj.NSP_Contractual_Part_time_EE_Count__c = (decimal)arObj.get('expr5');
-                    assetObj.NSP_Contractual_Seasonal_EE_Count__c =  (decimal)arObj.get('expr6');
-                    assetObj.NSP_Need_Rollup_Recalculation__c = false;
-                }
-            }*/
-      //  }
-   // } */
-   // 
-   
-/**
 
-* Iterates throught the list of new Assets and passes the required attributes to other methods.
-* @param newList, oldMap List of Assets.  
-* @return void             
-* Created By: Rahul Singh
-* Date :8/29/2022
-*/
-    public void updateInvoiceDate(List<Asset> newList,Map<Id, Asset> oldMap){
-        
-      set<Id> idSet = new set<Id>();
-      set<Id> idwxset = new set<Id>();   
+    //
+    // Iterates throught the list of new Assets and passes the required attributes to other methods.
+    // @param newList, oldMap List of Assets.
+    // @return void
+    // Created By: Rahul Singh
+    // Date :8/29/2022
+    //
+    public void updateInvoiceDate( List<Asset> newList , Map<Id,Asset> oldMap ) {
+        set<Id> idSet = new set<Id>();
+        set<Id> idwxset = new set<Id>();   
         List <opportunity> oppList = new List<opportunity> (); 
         if(newList.size() > 0){
             for(Asset newAsset :newList){
                 if(newAsset.opportunity__c!=null){
-          		Asset oldAsset = oldMap != null ? oldMap.get(newAsset.Id):null;
-				if((Trigger.isInsert && newAsset.RecordTypeId == new_Asset_RT_ID && newAsset.NSP_AIMS_First_Pay_Date__c != NULL)
-                  ||(newAsset.NSP_AIMS_First_Pay_Date__c != oldAsset.NSP_AIMS_First_Pay_Date__c && newAsset.RecordTypeId == new_Asset_RT_ID && newAsset.NSP_AIMS_First_Pay_Date__c != NULL) 
-                  ||(newAsset.opportunity__c != oldAsset.opportunity__c && newAsset.RecordTypeId == new_Asset_RT_ID && newAsset.NSP_AIMS_First_Pay_Date__c != NULL) ){
-					idSet.add(newAsset.opportunity__c);
-				}
-				else if((Trigger.isInsert && newAsset.RecordTypeId == asset_RT_ID && newAsset.NSP_First_Pay_Date__c != NULL)
-                       ||(newAsset.NSP_First_Pay_Date__c != oldAsset.NSP_First_Pay_Date__c  && newAsset.RecordTypeId == asset_RT_ID && newAsset.NSP_First_Pay_Date__c != NULL)
-                       ||(newAsset.opportunity__c != oldAsset.opportunity__c  && newAsset.RecordTypeId == asset_RT_ID && newAsset.NSP_First_Pay_Date__c != NULL)){
-					idwxset.add(newAsset.opportunity__c);
-                   
-				}
+                    Asset oldAsset = oldMap != null ? oldMap.get(newAsset.Id):null;
+                    if ( ( Trigger.isInsert && newAsset.RecordTypeId == new_Asset_RT_ID && newAsset.NSP_AIMS_First_Pay_Date__c != NULL )
+                        || ( newAsset.NSP_AIMS_First_Pay_Date__c != oldAsset.NSP_AIMS_First_Pay_Date__c && newAsset.RecordTypeId == new_Asset_RT_ID && newAsset.NSP_AIMS_First_Pay_Date__c != NULL )
+                        || ( newAsset.opportunity__c != oldAsset.opportunity__c && newAsset.RecordTypeId == new_Asset_RT_ID && newAsset.NSP_AIMS_First_Pay_Date__c != NULL )
+                        )
+                    {
+                        idSet.add(newAsset.opportunity__c);
+                    } else if ( ( Trigger.isInsert && newAsset.RecordTypeId == asset_RT_ID && newAsset.NSP_First_Pay_Date__c != NULL )
+                        || ( newAsset.NSP_First_Pay_Date__c != oldAsset.NSP_First_Pay_Date__c  && newAsset.RecordTypeId == asset_RT_ID && newAsset.NSP_First_Pay_Date__c != NULL )
+                        || ( newAsset.opportunity__c != oldAsset.opportunity__c  && newAsset.RecordTypeId == asset_RT_ID && newAsset.NSP_First_Pay_Date__c != NULL )
+                        )
+                    {
+                        idwxset.add(newAsset.opportunity__c);
+                    }
                 }
-		}
+            }
 
-        if(idSet.Size() > 0) {
-            List<Asset> assetResult = [SELECT Id, NSP_AIMS_First_Pay_Date__c,opportunity__c FROM Asset WHERE opportunity__c In :IdSet AND NSP_AIMS_First_Pay_Date__c !=NULL order by NSP_AIMS_First_Pay_Date__c DESC limit 1];
-            for(Asset assetWo: assetResult){
-                oppList.add(new Opportunity(id = assetWo.opportunity__c,Nsp_1st_Pay_Invoice_Date_Reporting__c = assetWo.NSP_AIMS_First_Pay_Date__c));
+            if(idSet.Size() > 0) {
+                List<Asset> assetResult = [SELECT Id, NSP_AIMS_First_Pay_Date__c,opportunity__c FROM Asset WHERE opportunity__c In :IdSet AND NSP_AIMS_First_Pay_Date__c !=NULL order by NSP_AIMS_First_Pay_Date__c DESC limit 1];
+                for(Asset assetWo: assetResult){
+                    oppList.add(new Opportunity(id = assetWo.opportunity__c,Nsp_1st_Pay_Invoice_Date_Reporting__c = assetWo.NSP_AIMS_First_Pay_Date__c));
+                }
+            }
+            try {
+                if ( !oppList.isEmpty() ) {
+                    update oppList;
+                }
+            } catch ( Exception e ) {
+                NSP_AssetTriggerHelper.handleException( e , 'updateInvoiceDate' );
             }
         }
-	
-	    // if(idwxset.Size() > 0) {
-        //     List<Asset> assetWxResult = [SELECT Id, NSP_First_Pay_Date__c, opportunity__c FROM Asset WHERE opportunity__c In :idwxset AND NSP_First_Pay_Date__c !=NULL order by NSP_First_Pay_Date__c DESC limit 1];
-        //     for(Asset assetWx: assetWxResult){
-        //         oppList.add(new Opportunity(id = assetWx.opportunity__c,Nsp_1st_Pay_Invoice_Date_Reporting__c = assetWx.NSP_First_Pay_Date__c));
-        //     }	
-		// }
-
-       try{
-        if(!oppList.isEmpty()){
-            update oppList;
-        }
-    }
-    catch(Exception ex){
-        NSP_ErrorLogHandler.logSaveException(ASSET_TRIGGER_HELPER, 'updateInvoiceDate', ex.getMessage());
     }
 
-        }
-    }
-
-
-/**
+    /**
 * Iterates throught the list of new Assets and passes the required attributes to other methods.
 * @param newList, oldMap List of Assets.  
 * @return void   
@@ -682,14 +480,14 @@ public class NSP_AssetTriggerHelper {
         NSP_ProcessAssetforLeadParent.processLeadParent(new set<Id>(assetIds));
     }
 
-/**
-* Iterates throught the list of new Assets and passes the required attributes to other methods.
-* @param newList, oldMap List of Assets.  
-* @return void   
-* description: logic to populate peoTESClientStatus          
-* Date :6/2/2023 for STY-04442
-*/    
-    public void peoTESClientStatus(List<Asset> newList,Map<Id, Asset> oldMap){
+    //
+    // Iterates throught the list of new Assets and passes the required attributes to other methods.
+    // @param newList, oldMap List of Assets.
+    // @return void
+    // description: logic to populate peoTESClientStatus
+    // Date :6/2/2023 for STY-04442
+    //
+    public void peoTESClientStatus ( List<Asset> newList , Map<Id,Asset> oldMap ) {
         List <Account> accListLookup = new List<Account> ();
 		set<id> assetIdSet = new set<id>();
         set<id> accIdSet = new set<id>(); 
@@ -867,29 +665,23 @@ public class NSP_AssetTriggerHelper {
             
             
         }
-        
-        try{
-        if(!accListLookup.isEmpty()){           
-            update accListLookup;            
+        try {
+            if ( !accListLookup.isEmpty() ) {
+                update accListLookup;
+            }
+        } catch ( Exception e ) {
+            NSP_AssetTriggerHelper.handleException( e , 'peoTESClientStatus' );
         }
-       
-    	}
-    	catch(Exception ex){
-        	NSP_ErrorLogHandler.logSaveException(ASSET_TRIGGER_HELPER, 'peoTESClientStatus', ex.getMessage());
-    	}
-        
+    }
 
-}
-    
-/**
-* Iterates throught the list of new Assets and passes the required attributes to other methods.
-* @param newList, oldMap List of Assets.  
-* @return void   
-* description: logic to populate updateRETAsset          
-* Date :6/2/2023 for STY-04442
-*/   
-    public void updateRETAsset(List<Asset> newList,Map<Id, Asset> oldMap){
-        
+    //
+    // Iterates throught the list of new Assets and passes the required attributes to other methods.
+    // @param newList, oldMap List of Assets.
+    // @return void
+    // description: logic to populate updateRETAsset
+    // Date :6/2/2023 for STY-04442
+    //
+    public void updateRETAsset( List<Asset> newList , Map<Id,Asset> oldMap ) {
         List <ID> onRetList = new List<ID> ();
 		List <Account> retList = new List<Account> ();
         List <Account> accListLookup = new List<Account> ();
@@ -961,18 +753,29 @@ public class NSP_AssetTriggerHelper {
             
             
         }
-        
-        try{
-        if(!retList.isEmpty()){
-            update retList;
-            
+        try {
+            if ( !retList.isEmpty() ) {
+                update retList;
+            }
+        } catch ( Exception e ) {
+            NSP_AssetTriggerHelper.handleException( e , 'updateRETAsset' );
         }
-        
-    	}
-    	catch(Exception ex){
-        	NSP_ErrorLogHandler.logSaveException(ASSET_TRIGGER_HELPER, 'updateRETAsset', ex.getMessage());
-    	}
-        
+    }
+
+    // for test code coverage only...
+    public static void testHandleException( Exception e , String methodName ) {
+        if ( Test.isRunningTest() ) {
+            NSP_AssetTriggerHelper.handleException( e , methodName );
+        }
+    }
+    
+    private static void handleException( Exception e , String methodName ) {
+        NSP_ErrorLogHandler.logException(
+            NSP_AssetTriggerHelper.class.getName() ,
+            methodName ,
+            e
+        );
+    }
 
 }
-}
+//
