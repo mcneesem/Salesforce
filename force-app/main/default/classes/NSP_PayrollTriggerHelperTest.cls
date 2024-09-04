@@ -16,6 +16,17 @@ public class NSP_PayrollTriggerHelperTest {
         accoutObject.Name = 'Test Account';
         accoutObject.NSP_AIMS_Client__c = '52000';
         insert accoutObject;
+            
+        User oUser = (User)NSP_TestExtendedDataFactory.createSObject(new User(), 'NSP_TestDataFactory.UserDefaults', false);
+        oUser.EmployeeNumber = System.Label.NSP_User_Employee_Number;
+        oUser.userName = 'testpallavi257045@testpallavi.testpallavi';
+        insert oUser;
+        
+        NSP_Account_Team__c accteam = new NSP_Account_Team__c();
+        accteam.NSP_Account__c = accoutObject.Id;
+        accteam.NSP_Role__c = 'Payroll Specialist';
+        accteam.NSP_User__c = oUser.Id;
+        insert accteam;
 
         Contact con = new Contact();
         con.AccountId = accoutObject.Id ;
@@ -173,5 +184,25 @@ public class NSP_PayrollTriggerHelperTest {
         Test.stopTest();
         NSP_Payroll__c assertPDS = [SELECT Id, NSP_Payroll_SCC__c  FROM NSP_Payroll__c WHERE Id != null LIMIT 1];
         system.assert(subClientCon.NSP_Is_Primary__c);
-    }
+    } 
+    /**
+    * @Description: This test method is used to cover updatePayrollSpecialistField method
+    * @Created date: 28/08/2024
+    * @return void             
+    */
+    @isTest
+     static void updatePayrollSpecialistField() {
+        
+        Test.startTest();
+        Account acc = [Select Id from Account Where Name = 'Test Account' LIMIT 1];
+        NSP_Payroll__c pds = [SELECT Id, Account__c FROM NSP_Payroll__c WHERE Id != null LIMIT 1];
+        pds.Account__c = acc.Id;
+        update pds;
+        
+        Test.stopTest();
+        NSP_Payroll__c assertpds = [SELECT Id, Payroll_Specialist__c FROM NSP_Payroll__c WHERE Id != null LIMIT 1];
+        User userobj = [Select Id, Name From User WHERE userName = 'testpallavi257045@testpallavi.testpallavi' LIMIT 1];
+        system.assertEquals(assertpds.Payroll_Specialist__c,userobj.Name);
+		system.assertNotEquals(assertpds.Payroll_Specialist__c,null);
+        }
 }

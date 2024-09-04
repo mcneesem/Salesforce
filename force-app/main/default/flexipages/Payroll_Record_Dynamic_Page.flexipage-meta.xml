@@ -34,16 +34,6 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Payroll_Data_Sheet_Name__c</fieldItem>
-                <identifier>RecordNSP_Payroll_Data_Sheet_Name__cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Sub_Client_Name__c</fieldItem>
                 <identifier>RecordNSP_Sub_Client_Name__cField</identifier>
                 <visibilityRule>
@@ -70,6 +60,26 @@
                 </visibilityRule>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_Sub_Client_Number__c</fieldItem>
+                <identifier>RecordNSP_Sub_Client_Number_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Payroll_Specialist__c</fieldItem>
+                <identifier>RecordPayroll_Specialist_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-5d49aaac-3f85-422c-ab25-b1078767ab11</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -80,8 +90,18 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Sub_Client_Number__c</fieldItem>
-                <identifier>RecordNSP_Sub_Client_Number_cField</identifier>
+                <fieldItem>Record.Account__c</fieldItem>
+                <identifier>RecordAccount_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_Payroll_Data_Sheet_Name__c</fieldItem>
+                <identifier>RecordNSP_Payroll_Data_Sheet_Name__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
