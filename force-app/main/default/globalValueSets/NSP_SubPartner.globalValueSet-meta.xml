@@ -1811,6 +1811,11 @@
         <label>HUB Puerto Rico</label>
     </customValue>
     <customValue>
+        <fullName>HUB SCRA</fullName>
+        <default>false</default>
+        <label>HUB SCRA</label>
+    </customValue>
+    <customValue>
         <fullName>HUB Southern California</fullName>
         <default>false</default>
         <label>HUB Southern California</label>
@@ -1994,6 +1999,11 @@
         <fullName>Paradigm Group/One Digital</fullName>
         <default>false</default>
         <label>Paradigm Group/One Digital</label>
+    </customValue>
+    <customValue>
+        <fullName>Patriot Growth Insurance - Bay Area Benefits</fullName>
+        <default>false</default>
+        <label>Patriot Growth Insurance - Bay Area Benefits</label>
     </customValue>
     <customValue>
         <fullName>Patriot Growth Insurance – Cap</fullName>
@@ -2251,6 +2261,31 @@
         <label>USI Agency</label>
     </customValue>
     <customValue>
+        <fullName>USI Dallas/FW</fullName>
+        <default>false</default>
+        <label>USI Dallas/FW</label>
+    </customValue>
+    <customValue>
+        <fullName>USI Houston</fullName>
+        <default>false</default>
+        <label>USI Houston</label>
+    </customValue>
+    <customValue>
+        <fullName>USI Northern California</fullName>
+        <default>false</default>
+        <label>USI Northern California</label>
+    </customValue>
+    <customValue>
+        <fullName>USI Southern California</fullName>
+        <default>false</default>
+        <label>USI Southern California</label>
+    </customValue>
+    <customValue>
+        <fullName>USI St. Louis</fullName>
+        <default>false</default>
+        <label>USI St. Louis</label>
+    </customValue>
+    <customValue>
         <fullName>Venture Atlanta</fullName>
         <default>false</default>
         <label>Venture Atlanta</label>
@@ -2436,10 +2471,10 @@
         <label>Vistage Worldwide</label>
     </customValue>
     <customValue>
-        <fullName>Acisure</fullName>
+        <fullName>FSI- CADARET, GRANT &amp; CO., INC.</fullName>
         <default>false</default>
         <isActive>false</isActive>
-        <label>Acisure</label>
+        <label>FSI- CADARET, GRANT &amp; CO., INC.</label>
     </customValue>
     <customValue>
         <fullName>FSI-  JW Cole</fullName>
@@ -2454,10 +2489,10 @@
         <label>FSI- Not Registered with FSI</label>
     </customValue>
     <customValue>
-        <fullName>FSI- Grove Point Invesmtents</fullName>
+        <fullName>FSI- Atlas Brown, Inc.</fullName>
         <default>false</default>
         <isActive>false</isActive>
-        <label>FSI- Grove Point Invesmtents</label>
+        <label>FSI- Atlas Brown, Inc.</label>
     </customValue>
     <customValue>
         <fullName>Alera Group – Forum</fullName>
@@ -2472,16 +2507,16 @@
         <label>Alera Group – TRISURE</label>
     </customValue>
     <customValue>
-        <fullName>FSI- Atlas Brown, Inc.</fullName>
+        <fullName>FSI- Grove Point Invesmtents</fullName>
         <default>false</default>
         <isActive>false</isActive>
-        <label>FSI- Atlas Brown, Inc.</label>
+        <label>FSI- Grove Point Invesmtents</label>
     </customValue>
     <customValue>
-        <fullName>FSI- CADARET, GRANT &amp; CO., INC.</fullName>
+        <fullName>Acisure</fullName>
         <default>false</default>
         <isActive>false</isActive>
-        <label>FSI- CADARET, GRANT &amp; CO., INC.</label>
+        <label>Acisure</label>
     </customValue>
     <masterLabel>Sub Partner</masterLabel>
     <sorted>false</sorted>
