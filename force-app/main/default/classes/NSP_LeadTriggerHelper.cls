@@ -966,16 +966,18 @@ insert tasksList;
                 }
             }
         }
-        
         try {
-            if(tasksList.Size() > 0){
+            if ( !tasksList.isEmpty() ) {
                 upsert tasksList;
             }
-        } catch (Exception ex) {
-            NSP_CustomException.LogException(ex);
+        } catch ( Exception e ) {
+            NSP_LeadTriggerHelper.handleException(
+                e ,
+                'createTasks'
+            );
         }
     }
-    
+
     /**
 * Based on the number of employees, Account segmentation field is populated.
 * @return void
