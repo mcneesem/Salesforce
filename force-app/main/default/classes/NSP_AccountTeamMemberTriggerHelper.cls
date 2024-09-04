@@ -1,19 +1,12 @@
-/**
- * Represents the AccountTeamMember trigger helper which handles all the logic.
- */
-
 public with sharing class NSP_AccountTeamMemberTriggerHelper {
-	
-   
+    // test w/ NSP_AccountTeamMemberTriggerHelperTest (91%)
 
-	/**
-     * Iterates throught the list of new AccountTeamMember and passes the required attributes to other methods.
-     * @param newList List of New AccountTeamMember.
-     * @return void
-     *                
-     */
-
-    public void beforeInsertDirector(List<AccountTeamMember> newList) {
+    //
+    // Iterates throught the list of new AccountTeamMember and passes the required attributes to other methods.
+    // @param newList List of New AccountTeamMember.
+    // @return void
+    //
+    public void beforeInsertDirector( List<AccountTeamMember> newList ) {
         try{
             boolean integrationUser = false;
             Id profileId = userinfo.getProfileId();
@@ -50,93 +43,82 @@ public with sharing class NSP_AccountTeamMemberTriggerHelper {
             if(integrationUser && (accountTeamMemberEmployeePerIdSet.size() > 0 || accountTeamMemberAIMSClientSet.size() > 0) ){
                 populateEmployeePerIdOnATMBasedOnEmployeePerId(newList,accountTeamMemberEmployeePerIdSet,accountTeamMemberAIMSClientSet);
             }
-        }catch(Exception ex){
-            NSP_CustomException.LogException(ex);
+        } catch ( Exception e ) {
+            NSP_AccountTeamMemberTriggerHelper.handleException( e , 'beforeInsertDirector' );
         }
     }
-    
-    
-    /**
-     * Iterates throught the list of new AccountTeamMember and passes the required attributes to other methods.
-     * @param newList List of New AccountTeamMember.
-     * @param newMap List of New AccountTeamMember.
-     * @return void
-     *                
-     */
 
-    public void afterInsertDirector(List<AccountTeamMember> newList, Map<Id, AccountTeamMember> newMap) {
-        try{
+    //
+    // Iterates throught the list of new AccountTeamMember and passes the required attributes to other methods.
+    // @param newList List of New AccountTeamMember.
+    // @param newMap List of New AccountTeamMember.
+    // @return void
+    //
+    public void afterInsertDirector( List<AccountTeamMember> newList , Map<Id,AccountTeamMember> newMap ) {
+        try {
             Set<Id> accountIdSet = new Set<Id>();
-            
-            for(AccountTeamMember accTeamMemberObj : newList) {
-                accountIdSet.add(accTeamMemberObj.AccountId);
+            for ( AccountTeamMember accTeamMemberObj : newList ) {
+                accountIdSet.add( accTeamMemberObj.AccountId );
             }
-            
-            if(accountIdSet.size() > 0){
+            if ( !accountIdSet.isEmpty() ) {
                 List<Account> accountList = new List<Account>();
-                for(ID accountId : accountIdSet){
+                for( Id accountId : accountIdSet ) {
                     Account accountObj = new Account();
                     accountObj.Id = accountId;
                     accountObj.NSP_Ready_for_Integration_Sync__c = true;
-                    accountList.add(accountObj);
+                    accountList.add( accountObj );
                 }
-                
-                if(accountList.size() > 0){
-                    update accountList;                    
+                if ( !accountList.isEmpty() ) {
+                    update accountList;
                 }
-                
             }
-        }catch(Exception ex){
-            NSP_CustomException.LogException(ex);
+        } catch ( Exception e ) {
+            NSP_AccountTeamMemberTriggerHelper.handleException( e , 'afterInsertDirector' );
         }
     }
-	
-    
-    /**
-     * Iterates throught the list of new AccountTeamMember and passes the required attributes to other methods.
-     * @param newMap Map of AccountTeamMember.
-     * @param oldMap Map of AccountTeamMember.
-     * @return void
-     *                
-     */
 
-    public void beforeUpdateDirector(Map<Id, AccountTeamMember> newMap,Map<Id, AccountTeamMember> oldMap) {
-        
+    //
+    // Iterates throught the list of new AccountTeamMember and passes the required attributes to other methods.
+    // @param newMap Map of AccountTeamMember.
+    // @param oldMap Map of AccountTeamMember.
+    // @return void
+    //
+    public void beforeUpdateDirector( Map<Id,AccountTeamMember> newMap , Map<Id,AccountTeamMember> oldMap ) {
 	}
-    
-    
-    /**
-     * Iterates throught the list of new AccountTeamMember and passes the required attributes to other methods.
-     * @param newMap Map of AccountTeamMember.
-     * @param oldMap Map of AccountTeamMember.
-     * @return void
-     *                
-     */
 
-    public void afterUpdateDirector(Map<Id, AccountTeamMember> newMap,Map<Id, AccountTeamMember> oldMap) {
-        try{
-            Set<Id> accountIdSetToUpdateResyncFLag = new Set<Id>();
+    //
+    // Iterates throught the list of new AccountTeamMember and passes the required attributes to other methods.
+    // @param newMap Map of AccountTeamMember.
+    // @param oldMap Map of AccountTeamMember.
+    // @return void
+    //
+    public void afterUpdateDirector( Map<Id,AccountTeamMember> newMap , Map<Id,AccountTeamMember> oldMap ) {
+        try {
+            Set<Id> accountIdSetToUpdateResyncFlag = new Set<Id>();
             NSP_SObjectUpdateTriggerHelper sObjectUpdateObj = new NSP_SObjectUpdateTriggerHelper();
-            accountIdSetToUpdateResyncFLag.addAll(sObjectUpdateObj.fetchUpdFieldsLst(NSP_IntegrationConstants.SOBJECT_ACCOUNTTEAMMEMBER, newMap, oldMap));
-            
-            if(accountIdSetToUpdateResyncFLag.size() > 0){
+            accountIdSetToUpdateResyncFlag.addAll(
+                sObjectUpdateObj.fetchUpdFieldsLst(
+                    NSP_IntegrationConstants.SOBJECT_ACCOUNTTEAMMEMBER ,
+                    newMap ,
+                    oldMap
+                )
+            );
+            if ( !accountIdSetToUpdateResyncFlag.isEmpty() ) {
                 List<Account> updateAccountList = new List<Account>();
-                for(Id accountId : accountIdSetToUpdateResyncFLag){
+                for ( Id accountId : accountIdSetToUpdateResyncFlag ) {
                     Account accountObj = new Account();	
                     accountObj.NSP_Ready_for_Integration_Sync__c = true;
-                    accountObj.Id = accountId; 
-                    updateAccountList.add(accountObj);
+                    accountObj.Id = accountId;
+                    updateAccountList.add( accountObj );
                 }
-                if(updateAccountList.size() > 0){
-                    update updateAccountList;                    
+                if ( !updateAccountList.isEmpty() ) {
+                    update updateAccountList;
                 }
             }
-        }catch(Exception ex){
-            NSP_CustomException.LogException(ex);
+        } catch ( Exception e ) {
+            NSP_AccountTeamMemberTriggerHelper.handleException( e , 'afterUpdateDirector' );
         }
     }
-    
-    
     /**
      * Iterates throught the AccountTeamMember to populate Employee_Per_Id based on User Id
      * @param newList of New AccountTeamMember.
@@ -189,4 +171,21 @@ public with sharing class NSP_AccountTeamMemberTriggerHelper {
         }
         
     }
+
+    // for test code coverage only...
+    public static void testHandleException( Exception e , String methodName ) {
+        if ( Test.isRunningTest() ) {
+            NSP_AccountTeamMemberTriggerHelper.handleException( e , methodName );
+        }
+    }
+    
+    private static void handleException( Exception e , String methodName ) {
+        NSP_ErrorLogHandler.logException(
+            NSP_AccountTeamMemberTriggerHelper.class.getName() ,
+            methodName ,
+            e
+        );
+    }
+
 }
+//
