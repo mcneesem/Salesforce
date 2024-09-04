@@ -10,6 +10,6 @@
 &apos;Global&apos; Resources can enter time for any Project, even if that Project normally requires Assignments for Time Entry.</inlineHelpText>
     <label>Allow Timecards Without Assignment</label>
     <trackFeedHistory>false</trackFeedHistory>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <type>Checkbox</type>
 </CustomField>

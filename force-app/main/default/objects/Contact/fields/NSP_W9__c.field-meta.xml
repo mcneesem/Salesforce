@@ -6,6 +6,6 @@
     <externalId>false</externalId>
     <label>W9</label>
     <trackFeedHistory>false</trackFeedHistory>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <type>Checkbox</type>
 </CustomField>
