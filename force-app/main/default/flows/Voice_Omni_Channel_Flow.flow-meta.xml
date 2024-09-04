@@ -3,8 +3,8 @@
     <actionCalls>
         <name>Open_Case</name>
         <label>Open Case</label>
-        <locationX>204</locationX>
-        <locationY>734</locationY>
+        <locationX>567</locationX>
+        <locationY>1484</locationY>
         <actionName>addScreenPop</actionName>
         <actionType>addScreenPop</actionType>
         <connector>
@@ -28,8 +28,8 @@
         <description>Route all the Voice Calls to Salesforce SCV Basic Queue</description>
         <name>Route_to_Basic_Queue</name>
         <label>Route to Basic Queue</label>
-        <locationX>204</locationX>
-        <locationY>842</locationY>
+        <locationX>567</locationX>
+        <locationY>1592</locationY>
         <actionName>routeWork</actionName>
         <actionType>routeWork</actionType>
         <connector>
@@ -124,8 +124,8 @@
     <assignments>
         <name>Set_Fault_Element_Create_Case</name>
         <label>Set Fault Element: Create Case</label>
-        <locationX>1326</locationX>
-        <locationY>734</locationY>
+        <locationX>1766</locationX>
+        <locationY>1484</locationY>
         <assignmentItems>
             <assignToReference>faultElement</assignToReference>
             <operator>Assign</operator>
@@ -139,10 +139,27 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Set_Fault_Element_Get_Callback_Case</name>
+        <label>Set Fault Element: Get_Callback_Case</label>
+        <locationX>358</locationX>
+        <locationY>950</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Callback_Case</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Set_Fault_Element_Open_Case</name>
         <label>Set Fault Element: Open Case</label>
-        <locationX>1062</locationX>
-        <locationY>842</locationY>
+        <locationX>1502</locationX>
+        <locationY>1592</locationY>
         <assignmentItems>
             <assignToReference>faultElement</assignToReference>
             <operator>Assign</operator>
@@ -158,8 +175,8 @@
     <assignments>
         <name>Set_Fault_Element_Route_to_Basic_Queue</name>
         <label>Set Fault Element: Route to Basic Queue</label>
-        <locationX>798</locationX>
-        <locationY>950</locationY>
+        <locationX>1238</locationX>
+        <locationY>1700</locationY>
         <assignmentItems>
             <assignToReference>faultElement</assignToReference>
             <operator>Assign</operator>
@@ -175,8 +192,8 @@
     <assignments>
         <name>Set_Fault_Element_Update_Voice_Call</name>
         <label>Set Fault Element: Update Voice Call</label>
-        <locationX>534</locationX>
-        <locationY>1166</locationY>
+        <locationX>974</locationX>
+        <locationY>1916</locationY>
         <assignmentItems>
             <assignToReference>faultElement</assignToReference>
             <operator>Assign</operator>
@@ -191,8 +208,8 @@
     <assignments>
         <name>Set_Related_Case</name>
         <label>Set Related Case</label>
-        <locationX>204</locationX>
-        <locationY>950</locationY>
+        <locationX>567</locationX>
+        <locationY>1700</locationY>
         <assignmentItems>
             <assignToReference>input_record.CaseId__c</assignToReference>
             <operator>Assign</operator>
@@ -204,45 +221,92 @@
             <targetReference>Update_Voice_Call</targetReference>
         </connector>
     </assignments>
-    <constants>
-        <name>peoCaseRecordTypeId</name>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>0124x0000019l99AAA</stringValue>
-        </value>
-    </constants>
     <decisions>
-        <name>Custom_Setting_Voice_Omni_Channel</name>
-        <label>Custom Setting : Voice Omni Channel</label>
-        <locationX>204</locationX>
-        <locationY>134</locationY>
+        <name>Check_Callback_Case</name>
+        <label>Check Callback Case</label>
+        <locationX>336</locationX>
+        <locationY>734</locationY>
         <defaultConnector>
             <targetReference>Create_Case</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>Is_True</name>
+            <name>Take_Callback_Case</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>$Setup.VoiceOmniChannelSettings__c.IsEnabledCheckVonageQueue__c</leftValueReference>
+                <leftValueReference>input_record.CallType</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <booleanValue>true</booleanValue>
+                    <stringValue>Callback</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>input_record.PreviousCallId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>input_record.PreviousCallId</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>input_record.PreviousCall.CaseId__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>input_record.PreviousCall.CaseId__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Exclude_Voice_Calls_for_Cases</targetReference>
+                <targetReference>Get_Callback_Case</targetReference>
             </connector>
-            <label>Is True</label>
+            <label>Take Callback Case</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Callback_Case_Selection</name>
+        <label>Check Callback Case Selection</label>
+        <locationX>50</locationX>
+        <locationY>950</locationY>
+        <defaultConnector>
+            <targetReference>Create_Case</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Found_Callback_Case</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>caseRecord</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <isGoTo>true</isGoTo>
+                <targetReference>Open_Case</targetReference>
+            </connector>
+            <label>Found Callback Case</label>
         </rules>
     </decisions>
     <decisions>
         <name>Exclude_Voice_Calls_for_Cases</name>
         <label>Exclude Voice Calls for Cases</label>
-        <locationX>50</locationX>
+        <locationX>413</locationX>
         <locationY>242</locationY>
         <defaultConnector>
-            <targetReference>Create_Case</targetReference>
+            <targetReference>Is_Enabled_Check_Callback_Case</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -279,7 +343,58 @@
             <label>Exclude Vonage Queues</label>
         </rules>
     </decisions>
+    <decisions>
+        <name>Is_Enabled_Check_Callback_Case</name>
+        <label>Is Enabled Check Callback Case?</label>
+        <locationX>567</locationX>
+        <locationY>626</locationY>
+        <defaultConnector>
+            <targetReference>Create_Case</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Check_Callback_Case_Enabled</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Setup.VoiceOmniChannelSettings__c.IsEnabledCheckCallbackCase__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Check_Callback_Case</targetReference>
+            </connector>
+            <label>Check Callback Case Enabled</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Is_Enabled_Check_Vonage_Queue</name>
+        <label>Is Enabled Check Vonage Queue?</label>
+        <locationX>567</locationX>
+        <locationY>134</locationY>
+        <defaultConnector>
+            <targetReference>Is_Enabled_Check_Callback_Case</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Check_Vonage_Queue_Enabled</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Setup.VoiceOmniChannelSettings__c.IsEnabledCheckVonageQueue__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Exclude_Voice_Calls_for_Cases</targetReference>
+            </connector>
+            <label>Check Vonage Queue Enabled</label>
+        </rules>
+    </decisions>
     <description>8/22/2024 - Added Check for - Exclude Voice Calls for Cases for option 4, 5 or 0
+8/27/2024 - Add Check for - Exclude Case for Callback Voice Call Records
 Routes each call to the default queue (Basic Queue) and, if the agent accepts, screen pops the new case for this call and identifies the caller.</description>
     <environments>Default</environments>
     <interviewLabel>Voice Omni Channel Flow {!$Flow.CurrentDateTime}</interviewLabel>
@@ -304,10 +419,11 @@ Routes each call to the default queue (Basic Queue) and, if the agent accepts, s
     </processMetadataValues>
     <processType>RoutingFlow</processType>
     <recordCreates>
+        <description>PEO Case Record Type (Id=0124x0000019l99AAA)</description>
         <name>Create_Case</name>
         <label>Create Case</label>
-        <locationX>204</locationX>
-        <locationY>626</locationY>
+        <locationX>567</locationX>
+        <locationY>1376</locationY>
         <assignRecordIdToReference>caseRecord.Id</assignRecordIdToReference>
         <connector>
             <targetReference>Open_Case</targetReference>
@@ -324,7 +440,7 @@ Routes each call to the default queue (Basic Queue) and, if the agent accepts, s
         <inputAssignments>
             <field>RecordTypeId</field>
             <value>
-                <elementReference>peoCaseRecordTypeId</elementReference>
+                <stringValue>0124x0000019l99AAA</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -347,29 +463,58 @@ Routes each call to the default queue (Basic Queue) and, if the agent accepts, s
         </inputAssignments>
         <object>Case</object>
     </recordCreates>
+    <recordLookups>
+        <name>Get_Callback_Case</name>
+        <label>Get Callback Case</label>
+        <locationX>50</locationX>
+        <locationY>842</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_Callback_Case_Selection</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_Get_Callback_Case</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>input_record.PreviousCall.CaseId__c</elementReference>
+            </value>
+        </filters>
+        <object>Case</object>
+        <outputReference>caseRecord</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Origin</queriedFields>
+        <queriedFields>RecordTypeId</queriedFields>
+        <queriedFields>Status</queriedFields>
+        <queriedFields>Subject</queriedFields>
+        <queriedFields>Transfer_Queue__c</queriedFields>
+    </recordLookups>
     <recordUpdates>
         <name>Update_Voice_Call</name>
         <label>Update Voice Call</label>
-        <locationX>204</locationX>
-        <locationY>1058</locationY>
+        <locationX>567</locationX>
+        <locationY>1808</locationY>
         <faultConnector>
             <targetReference>Set_Fault_Element_Update_Voice_Call</targetReference>
         </faultConnector>
         <inputReference>input_record</inputReference>
     </recordUpdates>
     <start>
-        <locationX>78</locationX>
+        <locationX>441</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Custom_Setting_Voice_Omni_Channel</targetReference>
+            <targetReference>Is_Enabled_Check_Vonage_Queue</targetReference>
         </connector>
     </start>
     <status>Draft</status>
     <subflows>
         <name>Fault_Handler</name>
         <label>Fault Handler</label>
-        <locationX>534</locationX>
-        <locationY>1274</locationY>
+        <locationX>974</locationX>
+        <locationY>2024</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultElement</name>
