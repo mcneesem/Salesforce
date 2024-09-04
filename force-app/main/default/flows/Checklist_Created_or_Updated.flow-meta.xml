@@ -5,12 +5,12 @@
         <description>Has the &quot;Requested First Pay Date&quot; field been entered/changed on the Checklist that needs to then be mapped to/updated on the related Opportunity?</description>
         <name>Has_the_Requested_First_Pay_Date_been_changed</name>
         <label>Has the Requested First Pay Date been changed?</label>
-        <locationX>182</locationX>
-        <locationY>455</locationY>
+        <locationX>314</locationX>
+        <locationY>431</locationY>
         <defaultConnectorLabel>Date not changed</defaultConnectorLabel>
         <rules>
             <name>Yes_Requested_First_Pay_Date_changed</name>
-            <conditionLogic>(1 OR (2 AND 3)) AND 4</conditionLogic>
+            <conditionLogic>( ( 1 OR ( 2 AND 3 ) ) AND 4 AND 5 )</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.NSP_Requested_First_Pay_Date__c</leftValueReference>
                 <operator>IsChanged</operator>
@@ -39,6 +39,13 @@
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>$Record.NSP_Opportunity__r.NSP_Lock_Opportunity__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Update_Related_Opty</targetReference>
             </connector>
@@ -49,8 +56,8 @@
         <description>Checks to see if the Checklist is the &quot;Sold To Paid&quot; type before moving on.</description>
         <name>Is_this_an_STP_Checklist</name>
         <label>Is this an STP Checklist?</label>
-        <locationX>380</locationX>
-        <locationY>335</locationY>
+        <locationX>578</locationX>
+        <locationY>323</locationY>
         <defaultConnectorLabel>Not STP Checklist</defaultConnectorLabel>
         <rules>
             <name>Yes_STP_Checklist</name>
@@ -102,7 +109,10 @@
         <name>Update_Related_Opty</name>
         <label>Update Related Opty</label>
         <locationX>50</locationX>
-        <locationY>575</locationY>
+        <locationY>539</locationY>
+        <faultConnector>
+            <targetReference>Fault_Handler</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -120,14 +130,54 @@
         <object>Opportunity</object>
     </recordUpdates>
     <start>
-        <locationX>254</locationX>
+        <locationX>452</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Is_this_an_STP_Checklist</targetReference>
         </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>RecordTypeId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>0124x000000yRvBAAU</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>NSP_Opportunity__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
         <object>NSP_Checklist__c</object>
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
+    <subflows>
+        <name>Fault_Handler</name>
+        <label>Fault Handler</label>
+        <locationX>314</locationX>
+        <locationY>647</locationY>
+        <flowName>Insperity_Fault_Handler_Subflow</flowName>
+        <inputAssignments>
+            <name>faultElement</name>
+            <value>
+                <elementReference>Update_Related_Opty</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultFlow</name>
+            <value>
+                <stringValue>Checklist_Created_or_Updated</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultMessage</name>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
 </Flow>
