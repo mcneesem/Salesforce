@@ -37116,10 +37116,6 @@
         <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>
-        <tab>standard-VoiceCall</tab>
-        <visibility>Hidden</visibility>
-    </tabVisibilities>
-    <tabVisibilities>
         <tab>standard-WorkPlanTemplate</tab>
         <visibility>Hidden</visibility>
     </tabVisibilities>
