@@ -1,0 +1,4 @@
+Name
+SBQQ__MatchingAttribute__c
+SBQQ__RatingMethod__c
+SBQQ__Type__c

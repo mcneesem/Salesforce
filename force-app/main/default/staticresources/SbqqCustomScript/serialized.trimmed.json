@@ -1,0 +1,26 @@
+{
+  "attributes" : {
+    "type" : "SBQQ__CustomScript__c",
+    "url" : "/services/data/v61.0/sobjects/SBQQ__CustomScript__c/a65O3000000HM2dIAG"
+  },
+  "Id" : "a65O3000000HM2dIAG",
+  "OwnerId" : "0054x0000093OjeAAE",
+  "IsDeleted" : false,
+  "Name" : "QCP_Script_VXX36",
+  "CurrencyIsoCode" : "USD",
+  "CreatedDate" : "2024-08-12T00:28:08.000+0000",
+  "CreatedById" : "0054x0000093OjeAAE",
+  "LastModifiedDate" : "2024-08-12T00:28:08.000+0000",
+  "LastModifiedById" : "0054x0000093OjeAAE",
+  "SystemModstamp" : "2024-08-12T00:28:08.000+0000",
+  "LastViewedDate" : "2024-08-28T18:16:57.000+0000",
+  "LastReferencedDate" : "2024-08-28T18:16:57.000+0000",
+  "SBQQ__Code__c" : "...",
+  "SBQQ__ConsumptionRateFields__c" : "...",
+  "SBQQ__ConsumptionScheduleFields__c" : "...",
+  "SBQQ__QuoteFields__c" : "...",
+  "SBQQ__QuoteLineFields__c" : "...",
+  "SBQQ__TranspiledCode__c" : "...",
+  "NSP_External_Id__c" : "a654x000000pBYfAAM",
+  "GearsetExternalId__c" : "2AAMIG2000000g756a"
+}}

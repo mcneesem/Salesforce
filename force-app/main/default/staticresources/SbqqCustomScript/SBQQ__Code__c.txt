@@ -1,0 +1,1643 @@
+export function isFieldEditableForObject(fieldName, line, conn, objectName) {
+    let discountfields = ['SBQQ__Discount__c','SBQQ__AdditionalDiscountAmount__c','SBQQ__AdditionalDiscount__c'];
+    let consultingProducts = ['CSSalary','CSEEHand'];
+    let qleUnlockedProducts = ['TalentConnectPEO','TalentConnectTraditional','ITSTelepunchBasic','ITSTelepunchAdvanced','ITSProfSvcs','ITSTraining'];
+    let isolveHardlist = ['NXGG2+Support','NXGG2+BioSupport','NXGLESupport','G7ClockSupport'];
+    let discountfield = ['SBQQ__Discount__c','SBQQ__AdditionalDiscountAmount__c','SBQQ__AdditionalDiscount__c'];
+    let clonedfield  = ['SBQQ__Discount__c','SBQQ__AdditionalDiscountAmount__c','SBQQ__AdditionalDiscount__c','NSP_List_Minimum_Fee__c','NSP_Final_Minimum_Fee__c'];
+    let renewalProductsForDescChange = ['IPMUserLicense','IPMUserLicenseWO','IOPRTCoreLicense','IOPRTPlanningModule','IOPRTSuccessionPlanning','IOPRTCoreLicenseWO','IOPRTPlanningModuleWO','IOPRTSuccessionPlanningWO','IPMHRSupportCenter','IOPRTUserLicense','IOPRTStandardUserLicense','IOPRTUserLicenseWO','IOPRTStandardUserLicenseWO','IOPRTSSOModule'];
+
+    if (objectName === 'QuoteLine__c')
+    {	
+        if(fieldName === 'NSP_Threshold_Applicable__c' || fieldName === 'NSP_List_Minimum_Fee__c' || fieldName === 'NSP_Final_Minimum_Fee__c' || fieldName === 'SBQQ__SubscriptionType__c' || fieldName === 'NSP_Upper_Bound_Pricing_Tier__c' || fieldName === 'SBQQ__BillingFrequency__c')
+        {
+            return false;
+        }
+        if(line.NSP_Threshold_Applicable__c === false && fieldName === 'NSP_Threshold_Percentage__c')
+        {
+            return false;
+        }
+        
+        if((line.NSP_Scholarship_Price__c === true || line.SBQQ__Quote__r.NSP_WX_Scholarship__c == true) && discountfields.includes(fieldName))
+        {
+            return false;
+        }
+        
+        if(line.NSP_IsClonedLine__c === true  &&  (isolveHardlist.includes(line.SBQQ__ProductCode__c) || line.NSP_Product_Type__c == 'Time & Attendance Hardware' || line.NSP_Product_Type__c == 'Learning Hosting' || line.NSP_Product_Type__c == 'Learning Select' || line.NSP_Product_Type__c == 'Learning Direct') && fieldName === 'NSP_Quoted_Quantity__c')
+        {
+            return true;
+        }
+        if((line.NSP_IsClonedLine__c === true&& line.SBQQ__PricingMethod__c === 'Block' && (fieldName!='NSP_Original_Price__c' && fieldName!='NSP_Delta_Discount__c' && fieldName!='NSP_Delta_Total__c')) || line.NSP_Original_Line__c === true || fieldName === 'NSP_Previous_Quantity__c')
+        {
+            return false;
+        }
+        //hide additional disc and show delta disc
+        if(line.SBQQ__PricingMethod__c == 'Block' && (line.SBQQ__Source__c!=null || line.SBQQ__UpgradedSubscription__c!=null) && fieldName==='NSP_Delta_Discount__c')
+        {
+            return true;
+        }
+        //hide delta disc
+        if(((line.SBQQ__PricingMethod__c == 'Block' && (line.SBQQ__Source__c===null || line.SBQQ__UpgradedSubscription__c===null)) || line.SBQQ__PricingMethod__c==='List') && fieldName ==='NSP_Delta_Discount__c'){
+            return false;
+        }
+        if( (line.SBQQ__ProductCode__c.includes('CSSalary') || line.SBQQ__ProductCode__c.includes('CSEEHand')) && fieldName === 'NSP_Hourly_Day_Rate__c')
+        {
+            return false;
+        }
+        if(!line.SBQQ__ProductCode__c.includes('IRSOOnDemandTier') && fieldName === 'NSP_Positions__c')
+        {
+            return false;
+        }
+        
+        if(!qleUnlockedProducts.includes(line.SBQQ__ProductCode__c) && line.SBQQ__Quote__r.SBQQ__Type__c !='Supplemental' && fieldName === 'NSP_Quoted_Quantity__c' && (line.SBQQ__Quote__r.NSP_Product_Type__c != 'Time and Attendance Hardware' && line.SBQQ__Quote__r.SBQQ__Type__c != 'Renewal' ) )
+        {
+            return false;
+        }
+        
+        if(!renewalProductsForDescChange.includes(line.SBQQ__ProductCode__c) && (fieldName === 'NSP_QLE_Action_Type__c' || fieldName === 'NSP_QLE_Prior_Quantity__c' ))
+        {
+            return false;
+        }
+        
+        if( fieldName === 'SBQQ__Quantity__c' )
+        {
+            return false;
+        }
+        
+        if(line.NSP_Secondary_ListPrice__c >0 && fieldName === 'SBQQ__ListPrice__c')
+        {
+            return false;
+        }
+        
+        if(line.NSP_Lock_On_QLI__c && line.SBQQ__Quote__r.NSP_TransactionType__c != 'Termination')
+        {
+            return false; // lock all fields 
+        }
+        
+        if(!line.NSP_Lock_On_QLI__c && line.SBQQ__Quote__r.NSP_TransactionType__c == 'Termination')
+        {
+            return false; // lock all fields 
+        }
+        
+        if(line.NSP_Lock_Discount__c && discountfield.includes(fieldName))
+        {
+            return false; // lock discount  fields 
+        }
+        
+        if((!line.NSP_List_Minimum_Fee__c || line.SBQQ__Quote__r.NSP_WX_Scholarship__c )&& fieldName === 'NSP_Minimum_Fee_Discount_Amt__c'){
+            return false;
+        }
+        
+        if((line.SBQQ__Quote__r.SBQQ__Type__c == 'Amendment' && line.SBQQ__Quote__r.NSP_TransactionType__c != 'Termination') && (fieldName === 'SBQQ__EndDate__c' || fieldName ==='SBQQ__PriorQuantity__c' || fieldName ==='NSP_Delta_Total__c') )
+        {
+            return false;
+        }
+        if(line.SBQQ__Quote__r.NSP_TransactionType__c == 'Termination' && fieldName === 'NSP_Term_Line__c'){
+            return false;
+        }
+    }
+    if(objectName === 'Quote__c' && fieldName === 'NSP_Terminate_All__c'){
+        return false;
+    }
+    if (objectName === 'Quote__c' && fieldName === 'NSP_WX_Scholarship__c') 
+    {
+        
+        if (line.NSP_IsScholarshipEligiblePartner__c===false) 
+        {
+        return false;
+        }
+        
+        if(line.NSP_IsScholarshipEligibleBPA__c != true)
+        {
+            
+            return false;
+        }
+		if(line.SBQQ__Type__c == 'Amendment' && line.NSP_TransactionType__c != 'Termination') {
+			 return false;
+		}
+    }
+    
+    
+}
+
+export function isFieldVisibleForObject(fieldName, line, conn, objectName) 
+{
+
+    let  nonHiddenfields = ['SBQQ__ProductCode__c','SBQQ__ProductName__c','SBQQ__Description__c','NSP_Clone_Required__c','NSP_Term_Line__c'];
+    let renewalProductsForDescChange = ['IPMUserLicense','IPMUserLicenseWO','IOPRTCoreLicense','IOPRTPlanningModule','IOPRTSuccessionPlanning','IOPRTCoreLicenseWO','IOPRTPlanningModuleWO','IOPRTSuccessionPlanningWO','IPMHRSupportCenter','IOPRTUserLicense','IOPRTStandardUserLicense','IOPRTUserLicenseWO','IOPRTStandardUserLicenseWO','IOPRTSSOModule'];
+
+    if (objectName === 'QuoteLine__c')
+    {
+        if((fieldName =='NSP_Final_Minimum_Fee__c' || fieldName === 'NSP_List_Minimum_Fee__c' || fieldName === 'NSP_Minimum_Fee_Discount_Amt__c') && (line.SBQQ__ProductCode__c == 'IWXContractors' || line.SBQQ__ProductCode__c == 'IWAContractors' || line.SBQQ__ProductCode__c == 'ITSUserLicenseWO' ))
+        {
+            return true;
+        }
+        
+        if((fieldName =='NSP_Final_Minimum_Fee__c' || fieldName === 'NSP_List_Minimum_Fee__c' || fieldName === 'NSP_Minimum_Fee_Discount_Amt__c') && (line.SBQQ__ProductCode__c == 'HCMiSolvedHire' || line.SBQQ__ProductCode__c == 'HCMScheduling' || line.NSP_Parent_Product_Code__c == 'IWAPerCheckFee'))
+        {
+            return false;
+        }
+        
+        if((fieldName =='NSP_Final_Minimum_Fee__c' || fieldName === 'NSP_List_Minimum_Fee__c' || fieldName === 'NSP_Minimum_Fee_Discount_Amt__c') 
+            && line.SBQQ__Quote__r.NSP_Multiple_Companies__c && line.SBQQ__Quote__r.Total_Employess_of_all_companies__c && line.NSP_Multiple_CompaniesQuantityApplicable__c &&
+            (!line.NSP_Max_Quantity__c ||   line.NSP_Max_Quantity__c < line.SBQQ__Quote__r.Total_Employess_of_all_companies__c) )
+        {
+            //return false;
+        }
+        
+        if((fieldName =='NSP_Final_Minimum_Fee__c' || fieldName === 'NSP_List_Minimum_Fee__c' || fieldName === 'NSP_Minimum_Fee_Discount_Amt__c') && line.NSP_Include_In_IWA_bundle__c)
+        {
+            return false;
+        }
+        
+        if( (fieldName =='NSP_Final_Minimum_Fee__c' || fieldName === 'NSP_List_Minimum_Fee__c' || fieldName === 'NSP_Minimum_Fee_Discount_Amt__c')&& (!line.NSP_Max_Quantity__c || line.NSP_Max_Quantity__c < line.NSP_Quoted_Quantity__c))
+        {
+            return false;
+        }
+        
+        if(!renewalProductsForDescChange.includes(line.SBQQ__ProductCode__c) && (fieldName === 'NSP_QLE_Action_Type__c' || fieldName === 'NSP_QLE_Prior_Quantity__c' ))
+        {
+            return false;
+        }
+        
+        if(line.NSP_Lock_On_QLI__c && !nonHiddenfields.includes(fieldName))
+        {
+            return false; // hide all fields 
+        }
+        if(fieldName == 'NSP_Terminate_All__c') {
+            return false;
+        }
+    }
+}
+
+export function onBeforeCalculate(quote, lines, conn) 
+{ 
+    debugger;
+    copyQuantityOnClonedlines(quote, lines);
+    processQuotelines(quote, lines);
+    //checkSerialIdValidationFlag(quote, lines);
+    calculateEarlyTerminationFee(quote, lines)
+    checkBookedSetup(quote, lines);
+    return Promise.resolve();
+}
+
+export function onAfterCalculate(quote, lines, conn) 
+{ 
+    debugger;
+    processQuotelinesAfter(quote, lines);
+    copyConfigAttributesToQuote(quote, lines);
+    updateQuantityonTermination(quote, lines);
+    calculateWXWAEnrollementFee(quote, lines);
+    calculateDocupayUpFrontFee(quote, lines);
+    checkSerialIdValidationFlag(quote, lines);
+    amendmentForClonedLineCalculation(quote, lines);
+    amendmentForNonClonedLineCalculation(quote, lines);
+    return Promise.resolve(quote, lines);
+}
+
+export function onBeforePriceRules(quoteModel, quoteLineModels) {
+    debugger;
+    undoQuantityUpdateonTerm(quoteModel, quoteLineModels);
+    return Promise.resolve();
+}
+
+export function onAfterPriceRules(quoteModel, quoteLineModels) {
+   debugger;
+    processQuotelinesAfterPricerule(quoteModel, quoteLineModels);
+    rollupListMinFee(quoteModel, quoteLineModels);
+    processOnDemandTierPrices(quoteModel,quoteLineModels);
+    calculateWXSetupFee(quoteModel, quoteLineModels);
+    let isPartnerCS = quoteModel.record["NSP_Is_Partner_CS_Applicable__c"]; console.log('partner cs : '+isPartnerCS);
+	debugger;
+    if(!isPartnerCS){
+        processConsumptionSchedule(quoteModel, quoteLineModels);
+    }
+    return Promise.resolve();
+}
+
+export function updateQuantityonTermination(quote, lines) {
+    debugger;
+    let terminateAll =  quote.record["NSP_Terminate_All__c"];
+    let quoteType =  quote.record["SBQQ__Type__c"];
+    let quoteTransType = quote.record["NSP_TransactionType__c"];
+    if(terminateAll == true && quoteType == 'Amendment' && quoteTransType == 'Termination')
+            {
+                lines.forEach(function(line) {
+                let prodcode =line.record["SBQQ__ProductCode__c"];
+                if(prodcode && prodcode!='IWAWaiver' && prodcode!='IWXWaiver'){
+                line.record["NSP_Term_Line__c"] = true;
+                line.record["SBQQ__Quantity__c"] = 0;
+                line.record["NSP_Quoted_Quantity__c"] = 0;	 
+                line.record["NSP_Terminate_All__c"] = true;
+                }
+                    
+            });
+            }
+}
+
+export function undoQuantityUpdateonTerm(quoteModel, quoteLineModels) {
+    debugger;
+    let terminateAll =  quoteModel.record["NSP_Terminate_All__c"];
+    let quoteType =  quoteModel.record["SBQQ__Type__c"];
+    let quoteTransType = quoteModel.record["NSP_TransactionType__c"];
+    
+    if(quoteType == 'Amendment' && quoteTransType == 'Termination' && terminateAll == false)
+            {
+                quoteLineModels.forEach(function(line) {
+                if(line.record["NSP_Previous_Quantity__c"] == null) {
+                    line.record["NSP_Previous_Quantity__c"] = line.record["NSP_Quoted_Quantity__c"];
+                }	
+                if(line.record["NSP_Term_Line__c"] == true && line.record["NSP_Terminate_All__c"] == true) {
+                if(line.record["NSP_Lock_On_QLI__c"] == true) {
+                    line.record["SBQQ__Quantity__c"] = 	1;
+                    line.record["NSP_Quoted_Quantity__c"] = 1;
+                    line.record["NSP_Term_Line__c"] = false;
+                    line.record["NSP_Terminate_All__c"] = false;
+                }
+                else if((line.record["NSP_Lock_On_QLI__c"] == false) && line.record["SBQQ__SubscriptionType__c"] == 'Evergreen') {
+                    let upgradedSubs = 	line.RequiredBy__r;
+            // let upgradedSubs = 	line.record[SBQQ__UpgradedSubscription__r.NSP_Quoted_Quantity__c];
+                line.record["SBQQ__Quantity__c"] = 	1;
+                line.record["NSP_Term_Line__c"] = false;
+                line.record["NSP_Terminate_All__c"] = false;
+                line.record["NSP_Quoted_Quantity__c"] = line.record["NSP_Previous_Quantity__c"];
+                
+                }
+                else {
+                line.record["SBQQ__Quantity__c"] = 	line.record["SBQQ__PriorQuantity__c"];
+                line.record["NSP_Quoted_Quantity__c"] = line.record["SBQQ__PriorQuantity__c"];
+                line.record["NSP_Term_Line__c"] = false;
+                line.record["NSP_Terminate_All__c"] = false;
+                }
+                }
+                else if(line.record["NSP_Term_Line__c"] == true && line.record["NSP_Terminate_All__c"] == false && line.record["NSP_Lock_On_QLI__c"] == true) {
+                    line.record["SBQQ__Quantity__c"] = 	0;
+                    line.record["NSP_Quoted_Quantity__c"] = 0;
+                }
+                else if(line.record["NSP_Term_Line__c"] == false && line.record["NSP_Terminate_All__c"] == false && line.record["NSP_Lock_On_QLI__c"] == true) {
+                    line.record["SBQQ__Quantity__c"] = 	line.record["SBQQ__PriorQuantity__c"];
+                    line.record["NSP_Quoted_Quantity__c"] = line.record["SBQQ__PriorQuantity__c"];;
+                }
+
+                
+            });
+            }
+}
+
+export function copyQuantityOnClonedlines(quote, lines){
+    debugger;
+    var productcountMap =  new Map();
+    lines.forEach(function(line){
+        let productId = 		line.record["SBQQ__Product__c"];
+        let subscriptiontype = 	line.record["SBQQ__SubscriptionType__c"];
+        if(productId && subscriptiontype)
+        {
+        productcountMap.set(productId+'_'+subscriptiontype,line);
+        }
+    });
+    
+    lines.forEach(function(line){
+        let productId = 		line.record["SBQQ__Product__c"];
+        let isclonedline = 	line.record["NSP_IsClonedLine__c"];
+        
+        if(productId && isclonedline && productcountMap.has(productId+'_'+'Renewable') )
+        {
+            line.record["SBQQ__Quantity__c"] = productcountMap.get(productId+'_'+'Renewable').record["SBQQ__Quantity__c"];
+        }
+    });
+}
+
+export function calculateWXSetupFee(quoteModel, quoteLines) {
+             		
+            let iwxSetupFeeSum = 0;
+            let iwxSetupFeeNetSum = 0;
+            let multipleCompanies =  quoteModel.record["NSP_Multiple_Companies__c"];
+            let totalEmployeeCompanies =  quoteModel.record["Total_Employess_of_all_companies__c"];
+            let terminatingWoWs =  quoteModel.record["NSP_Terminating_WO_WS__c"];
+            let wxScholarshipChecked =  quoteModel.record["NSP_WX_Scholarship__c"];
+            //let overridefinalminimumfee = quoteModel.record["NSP_Override_Final_Minimum_Fee__c"];
+            quoteModel.record["NSP_Show_Minimum_Text__c"]  = false;
+            quoteModel.record["NSP_Show_Contractor_Minimum_Text__c"]  = false;
+            let contractorlist = ['IWXContractors','IWAContractors'];
+            
+            quoteLines.forEach(function(line) {
+            let setupFeeApplicableList = ['IWXBundleW2', 'IWXBundle','IWXContractors','HCMiSolvedHire','IWXPerCheckFee'];
+            let setupProductList = ['IWXBundle','IWXBundleW2','IWACore','IWACoreW2','IWAPerCheckFee','IWXPerCheckFee'];
+            let productCode = line.record["SBQQ__ProductCode__c"];
+            let prodQuantity = line.record["NSP_Quoted_Quantity__c"];   
+            let maxQuantity =  line.record["NSP_Max_Quantity__c"];
+            let finalMinFee =  line.record["NSP_Final_Minimum_Fee__c"];
+            let listMinFee = line.record["NSP_List_Minimum_Fee__c"];
+            let listTotal =  line.record["NSP_List_Total_QQ__c"];
+            let listunitTotal =  line.record["NSP_Net_List_Price__c"];
+            let netTotal = line.record["NSP_Net_Total__c"];
+            let listPrice =  line.record["SBQQ__ListPrice__c"];
+            let scholarshipApplicable = line.record["NSP_Scholarship_Price__c"];
+            let scholarshipMinFee = line.record["NSP_Scholarship_Min_Fee__c"];
+            let isClonedLine = line.record["NSP_IsClonedLine__c"];
+            let minimumfeediscount  = line.record["NSP_Minimum_Fee_Discount_Amt__c"];
+            let lineWXSetupFee=0.0;
+            let lineWXSetupNetFee = 0.0;
+            let stopAutoPricing =  line.record["NSP_Stop_Auto_Pricing__c"];
+            let multipleCompaniesapplicable = line.record["NSP_Multiple_CompaniesQuantityApplicable__c"];
+            let isScholarshipApplied = line.record["NSP_IsScholarshipApplied__c"];
+            let netUnitPrice =  line.record["SBQQ__NetPrice__c"];
+            //let terminateLine =  line.record["Terminate__c"];
+            
+            
+            if(!terminatingWoWs)
+            {
+                line.record["NSP_Stop_Auto_Pricing__c"] = false;
+            }
+        
+            
+            //if(!isClonedLine)
+            {
+                // copy list minimumfee to final minimumfee
+                if(!scholarshipApplicable  && listMinFee > 0  ){
+                    //minimumfeediscount  = minimumfeediscount > 0 ? minimumfeediscount: 0;
+                    line.record["NSP_Final_Minimum_Fee__c"] = listMinFee - (minimumfeediscount);
+                    finalMinFee = listMinFee - minimumfeediscount;
+                }	
+                
+                if(scholarshipApplicable && finalMinFee && listMinFee){
+                    //line.record["NSP_Final_Minimum_Fee__c"] = listMinFee;
+                    line.record["NSP_Minimum_Fee_Discount_Amt__c"] = listMinFee - finalMinFee;
+                    //finalMinFee = listMinFee;
+                }
+                
+                if(setupProductList.includes(productCode) && finalMinFee != null && prodQuantity > 0){
+                    quoteModel.record["NSP_WX_Minimum_Fee__c"] = prodQuantity <= maxQuantity ?finalMinFee : 0;
+                    if(finalMinFee > 0 && (netUnitPrice * prodQuantity) < finalMinFee){
+                        quoteModel.record["NSP_Show_Minimum_Text__c"]  = true;
+                    }
+                }
+                //logic for contractor
+                if(contractorlist.includes(productCode) && finalMinFee != null && prodQuantity > 0){
+                    if(finalMinFee > 0 && (netUnitPrice * prodQuantity) < finalMinFee){
+                        quoteModel.record["NSP_Show_Contractor_Minimum_Text__c"]  = true;
+                    }
+                }
+                    
+                if(setupFeeApplicableList.includes(productCode) && !stopAutoPricing ) {
+                    
+                    var selectquantity = prodQuantity;
+                    if(multipleCompanies && totalEmployeeCompanies && multipleCompaniesapplicable)
+                    {
+                        //selectquantity = totalEmployeeCompanies; no longer needed DF-00691
+                    }
+                    
+                        if(selectquantity <= maxQuantity) {
+                            if(productCode!='HCMiSolvedHire'){
+                                lineWXSetupFee = Math.max(listPrice * prodQuantity, listMinFee);// listunitTotal;
+                                lineWXSetupNetFee = netTotal;
+                            }
+                        }
+                        else {
+                            if(productCode!='HCMiSolvedHire'){
+                                lineWXSetupFee = Math.max(listPrice * prodQuantity, listMinFee);//listunitTotal;
+                                lineWXSetupNetFee = netTotal; 
+                            }
+                        }	
+                    /* When multiple companies true
+                    if(multipleCompanies && totalEmployeeCompanies  )
+                    {
+                        if(totalEmployeeCompanies <= maxQuantity) {
+                            lineWXSetupFee = listMinFee;
+                            lineWXSetupNetFee = finalMinFee;
+                        }
+                        else {
+                            if(productCode!='HCMiSolvedHire'){
+                                lineWXSetupFee = listTotal;
+                                lineWXSetupNetFee = prodQuantity*listPrice;   
+                            }
+                        }
+                    }*/ 
+
+
+                }
+                
+                
+                
+                iwxSetupFeeSum+= lineWXSetupFee; 
+                iwxSetupFeeNetSum+=lineWXSetupNetFee;
+            }
+            });
+        quoteLines.forEach(function(line) {
+            let productId = line.record["SBQQ__ProductCode__c"];
+            let stopAutoPricing =  line.record["NSP_Stop_Auto_Pricing__c"];
+                if(productId == 'IWXSU' && !stopAutoPricing){
+                    line.record["SBQQ__ListPrice__c"] = iwxSetupFeeSum;
+                }
+                if(productId == 'IWXSU' && wxScholarshipChecked){
+                    line.record["SBQQ__ListPrice__c"] = iwxSetupFeeSum;
+                    line.record["SBQQ__AdditionalDiscountAmount__c"] = iwxSetupFeeSum-iwxSetupFeeNetSum;
+                    line.record["SBQQ__Discount__c"] = null;
+                    line.record["NSP_IsScholarshipApplied__c"] = true;
+                }
+            if(productId == 'IWXSU' && terminatingWoWs && !stopAutoPricing)
+                {
+                    line.record["SBQQ__ListPrice__c"] = 0;
+                }
+        });
+}
+
+export function processQuotelines(quote, lines){
+    
+    let parentQuantityMap = new Map();
+        /*parentQuantityMap.set('IWACoreSU','HCMiSolvedTime');
+        parentQuantityMap.set('IWALeaveAdminSU','HCMLeaveAdmin');
+        parentQuantityMap.set('IWALearnDevSU','HCMLearnDev');
+        parentQuantityMap.set('IWAACAAdminSU','HCMACAAdmin');
+        parentQuantityMap.set('IWABenAdminSU','HCMBenAdmin');*/
+        parentQuantityMap.set('IPMSU','IPMUserLicense');
+        parentQuantityMap.set('IPMWOSU','IPMUserLicenseWO');
+        parentQuantityMap.set('IOPRTSSOSageSU','IOPRTSSOSage');
+        parentQuantityMap.set('IOPRTSageSU','IOPRTCoreLicenseSage');
+        parentQuantityMap.set('ITSSU','ITSUserLicense');
+        parentQuantityMap.set('ITSWOSU','ITSUserLicenseWO');
+parentQuantityMap.set('ITSTimeSimplicitySU','ITSTimeSimplicity');
+// parentQuantityMap.set('IOPRTCoreSU','IOPRTCoreLicense');
+// parentQuantityMap.set('IOPRTPlanningSU','IOPRTPlanningModule');
+    let productQuantityMap = new Map();	
+    let supplementalProducts = ['HCMFileFeeds','HCMProfSvcs','HCMTngSvcs','HCMTax','NXGHardwareSU'];
+    let supplementalProductsBPS = ['ITSProfSvcs','ITSTraining','IPMProfSvcs','IPMTngEmployee','IPMTngManager','IPMTngNewAdmin','IPMTngRefresher','IOPRTCustomizeAddHrs','IOPRTProfSvcs','IOPRTTngClosedAdmin','IOPRTTngClosedVisPlan','ITSHardwareConfigSU'];
+    let wxScholarshipChecked =  quote.record["NSP_WX_Scholarship__c"];
+    let quoteType = quote.record["SBQQ__Type__c"];
+	let quoteTransType = quote.record["NSP_TransactionType__c"];
+    let productCodeList = [];
+    // NL 12/29/22 Added 'Biometric SAMPLE Clocks','Standard SAMPLE Clocks - G2+'
+    let iSolveClockList = ['Standard iSolved Clocks - G2+','Biometric iSolved Clocks','Standard iSolved Clocks - LE','Biometric SAMPLE Clocks','Standard SAMPLE Clocks - G2+','Standard iSolved Clocks - G7','Biometric iSolved Clocks - G7'];
+    let iSolveClockQliMap = new Map();
+    let iSolveClockLEQliMap = new Map();
+    let iSolveClockG2QliMap = new Map();
+    let allIsolveClockMap = new Map();
+    let supportProductList = ['NXGG2+Support','NXGG2+BioSupport','NXGLESupport'];
+    let counter = 0;
+    if(lines)
+    {	
+        quote.record["NSP_Has_WA_product__c"] = false;
+        quote.record["NSP_Has_WX_product__c"] = false;
+        quote.record["NSP_Has_LD_Product__c"] = false;
+        quote.record["NSP_Has_WOSS_product__c"] = false;
+        quote.record["NSP_Has_LASSO_product__c"] = false;
+        quote.record["NSP_Multiple_Templates__c"] = false;
+        quote.record["NSP_Has_BPS__c"] = false;
+        quote.record["NSP_Has_IPS__c"] = false;
+        quote.record["NSP_Has_BPS_non_PEO__c"] = false;
+        quote.record["NSP_Has_BPS_WO__c"] = false;
+        quote.record["NSP_Has_Timestar_Hardware__c"] = false;
+        quote.record["NSP_Has_iSolvedHardware__c"] = false;
+        quote.record["NSP_Supplement__c"] = false;
+        quote.record["NSP_SupplementBPS__c"] = false;
+        quote.record["NSP_Has_Professional_Services__c"] = false;
+        quote.record["NSP_Has_Recruiting_Bundle__c"] = false;
+        quote.record["NSP_Has_TimeAndAttendance__c"] = false;
+        quote.record["Has_Retirement_Integration_Product__c"] = false;        
+        quote.record["NSP_Template_BundledServiceCount__c"] = 0;
+        quote.record["NSP_Template_CloudBasedProductsCount__c"] = 0;
+        quote.record["NSP_Template_ContractorsCount__c"] = 0;
+        quote.record["NSP_Template_EquipmentCount__c"] = 0;
+        quote.record["NSP_Template_EquipSuppMaintenanceCount__c"] = 0;
+        quote.record["NSP_Template_ImplementationServiceCount__c"] = 0;
+        quote.record["NSP_Template_OtherCount__c"] = 0;
+        quote.record["NSP_Template_ProductsCount__c"] = 0;
+        quote.record["NSP_Template_ServicesCount__c"] = 0;
+        quote.record["NSP_Template_SoftwareProductsCount__c"] = 0;
+        quote.record["NSP_Contractor_Minimum_Fee__c"] = false;
+        quote.record["NSP_Has_WOSS_Recurring_Svc__c"] = false;
+        quote.record["NSP_Has_WOSS_OneTime_Svc__c"] = false;
+        quote.record["NSP_Legacy_OnDemand__c"] = false;
+        
+        const quoteTemplates = new Set();
+        
+        lines.forEach(function(line){
+            let productcode = 	line.record["SBQQ__ProductCode__c"];
+            let parentQliId = 	line.RequiredBy__r;
+            let quantityval =   line.record["NSP_Quoted_Quantity__c"];
+            let quotedquantityval =   line.record["NSP_Quoted_Quantity__c"];
+            let qlitemplate =   line.record["NSP_Product_Template_Selection__c"];
+            let scholarshipApplicable = line.record["NSP_Scholarship_Price__c"];
+            let isScholarshipApplied = line.record["NSP_IsScholarshipApplied__c"];
+            let nspProductGroup = line.record["NSP_Product_Group__c"];
+            let actionTypeQli = line.record["NSP_ActionType__c"];
+            let quotedQuantityQli = line.record["NSP_Quoted_Quantity__c"];
+            let effectivequotedQuantityQli = line.record["NSP_Effective_Renewed_Quantity__c"]; 
+            
+            productCodeList.push(productcode);
+            if(productcode && productcode == 'HCMiSolvedHire' && parentQliId)
+            {
+                let parentdicsount = parentQliId["SBQQ__Discount__c"];
+                let parentproductcode = parentQliId["SBQQ__ProductCode__c"];
+                if(parentQliId && parentproductcode != 'IWXPerCheckFee' && parentproductcode != 'IWAPerCheckFee')
+                {
+                    line.record["SBQQ__Discount__c"] = parentdicsount;
+                }
+            }
+            
+            if(productcode && (productcode == 'IWXBundle' || productcode == 'IWXBundleW2'))
+            {	
+                quote.record["NSP_Has_WX_product__c"] = true;
+            }
+            
+            if(productcode && (productcode == 'Learning and Development bundle' ) )
+            {
+                quote.record["NSP_Has_LD_Product__c"] = true;
+            }
+            
+            if(productcode && (productcode == 'IWACore' || productcode == 'IWACoreW2') )
+            {	
+                quote.record["NSP_Has_WA_product__c"] = true;
+            }
+            if(productcode && (productcode == 'WOServicesBundle') )
+            {	
+                quote.record["NSP_Has_WOSS_product__c"] = true;
+            }
+if(productcode && (productcode == 'IWOSOneTimePayrollSvc') )
+{
+quote.record["NSP_Has_WOSS_OTF__c"] = true;
+}
+            if(productcode && (productcode == 'Lasso') )
+            {
+                quote.record["NSP_Has_LASSO_product__c"] = true;
+            }
+            if(productcode && (productcode == 'IPS Conversion') )
+            {
+                quote.record["NSP_Has_IPS__c"] = true;
+            }
+            if(productcode && ((productcode == 'TimeStar Traditional') || (productcode == 'PerformSmart Traditional') || (productcode == 'OrgPlusRealTimeTraditional')))
+            {
+                quote.record["NSP_Has_BPS_non_PEO__c"] = true;
+            }
+            if(productcode && ((productcode == 'TimeStar PEO') || (productcode == 'PerformSmart PEO') || (productcode == 'OrgPlusRealTimePEO') ))
+            {
+                quote.record["NSP_Has_BPS_WO__c"] = true;
+            }
+            if(productcode && (productcode == 'TimeStarHardwareBundle') )
+            {
+                quote.record["NSP_Has_Timestar_Hardware__c"] = true;
+            }
+            if(productcode && (productcode == 'TimeStar PEO') )
+            {
+                quote.record["NSP_Has_TimeAndAttendance__c"] = true;
+            }
+            if(productcode && (productcode == 'HCMRETIntegration') && actionTypeQli == 'Add Product' ) 
+            {
+                quote.record["Has_Retirement_Integration_Product__c"] = true;
+		counter++;
+            }
+            else if (counter == 0){
+		quote.record["Has_Retirement_Integration_Product__c"] = false;
+            }
+            if(productcode && ((productcode == 'TimeStar Traditional') || (productcode == 'PerformSmart Traditional') || (productcode == 'OrgPlusRealTimeTraditional') || (productcode == 'TimeStar PEO') || (productcode == 'PerformSmart PEO') || (productcode == 'OrgPlusRealTimePEO')) )
+            {
+                quote.record["NSP_Has_BPS__c"] = true;
+            }
+            
+            if(productcode && (productcode == 'iSolvedHardwareBundle'))
+            {
+                quote.record["NSP_Has_iSolvedHardware__c"] = true;
+            }
+            if(productcode && (productcode == 'IOPRTProfSvcs'))
+            {
+                quote.record["NSP_Has_Professional_Services__c"] = true;
+            }
+            if(productcode && ((productcode == 'TalentConnectPEO') || (productcode == 'TalentConnectTraditional') || (productcode == 'RecruitingBundle')))
+            {
+                quote.record["NSP_Has_Recruiting_Bundle__c"] = true;
+            }
+            if(productcode && quantityval)
+            {
+                productQuantityMap.set(productcode,quantityval);
+            }
+            if(qlitemplate)
+            {
+                quoteTemplates.add(qlitemplate);
+                if(qlitemplate=='WX' && wxScholarshipChecked){
+                    quoteTemplates.add('IWXScholarship');
+                }
+            }
+            if(supplementalProducts.includes(productcode) && quoteType =='Supplemental')
+            {
+                quote.record["NSP_Supplement__c"] = true;
+            }
+            if(supplementalProductsBPS.includes(productcode) && quoteType =='Supplemental')
+            {
+                quote.record["NSP_SupplementBPS__c"] = true;
+            }
+            
+            line.record["NSP_Secoundry_Scholarship_Minimum_Fee__c"] = null;
+            if(productcode == 'IWXSU' && isScholarshipApplied && !wxScholarshipChecked){
+                    line.record["SBQQ__AdditionalDiscountAmount__c"] = null;
+                    line.record["SBQQ__Discount__c"] = null;
+                    line.record["NSP_IsScholarshipApplied__c"] = false;
+                }
+            
+            // rollup isolveClock count
+            if(nspProductGroup && iSolveClockList.includes(nspProductGroup) )
+            {
+                let mapkey = nspProductGroup;
+                // count all isolveClock LE
+                if(iSolveClockLEQliMap.has(mapkey))
+                {
+                    iSolveClockLEQliMap.set(mapkey,iSolveClockLEQliMap.get(mapkey) + quotedQuantityQli);
+                }
+                else
+                {
+                    iSolveClockLEQliMap.set(mapkey,quotedQuantityQli);
+                }
+                let allkeyMap = 'iSolveAllClock';
+                // count all isolveClock LE
+                if(allIsolveClockMap.has(allkeyMap))
+                {
+                    allIsolveClockMap.set(allkeyMap,allIsolveClockMap.get(allkeyMap) + effectivequotedQuantityQli);
+                }
+                else
+                {
+                    allIsolveClockMap.set(allkeyMap,effectivequotedQuantityQli);
+                }
+                
+            }				
+            
+            if(productcode == 'IWOSRecurring'){
+                quote.record["NSP_Has_WOSS_Recurring_Svc__c"] = true;
+            }
+            
+            if(productcode == 'IWOSOneTimePayrollSvc'){
+                quote.record["NSP_Has_WOSS_OneTime_Svc__c"] = true;
+            }
+            
+            if(productcode == 'IRSOOnDemandLegacy'){
+                
+                quote.record["NSP_Legacy_OnDemand__c"] = true;
+            }
+        });
+        
+        if(quoteTemplates.size>0) {
+            let selectedTemplates = Array.from(quoteTemplates).join(';');
+            if(quoteTemplates.size > 1) {
+                quote.record["NSP_Multiple_Templates__c"] = true;
+            }
+            quote.record["NSP_Template_Selected__c"] = selectedTemplates;
+        }
+        lines.forEach(function(line){
+            let productcode = 	line.record["SBQQ__ProductCode__c"];
+            let parentQliId = 	line.RequiredBy__r;
+            let quantityval =   line.record["SBQQ__Quantity__c"];
+            let relatedsetUpSku = line.record["NSP_Related_Setup_SKU__c"];
+            line.record["NSP_Related_Setup_SKU_Missing__c"] = false;
+            let nspProductGroup = line.record["NSP_Product_Group__c"];
+            let actionTypeQli = line.record["NSP_ActionType__c"];
+            let upgardSub = line.record["SBQQ__UpgradedSubscription__c"]; 
+            let isclonedline = line.record['NSP_IsClonedLine__c'];
+            let producttype =  line.record['NSP_Product_Type__c'];
+
+            let clockKey;
+            let clockCount;
+            
+            if(parentQuantityMap.has(productcode) && productQuantityMap.has(parentQuantityMap.get(productcode)))
+            {
+                line.record["NSP_Dependent_Product_Quantity__c"] = productQuantityMap.get(parentQuantityMap.get(productcode));
+            }
+            
+            if(relatedsetUpSku && !productCodeList.includes(relatedsetUpSku)){
+                line.record["NSP_Related_Setup_SKU_Missing__c"] = true;
+            }
+
+            let isamendment = quoteType == 'Amendment' && quoteTransType != 'Termination'? true:false;
+            // update isolve NXGLESupport
+            if(productcode == 'NXGLESupport' && actionTypeQli && actionTypeQli == 'Add Product')
+            {
+                clockKey = 'Standard iSolved Clocks - LE';
+                clockCount = iSolveClockLEQliMap.has(clockKey)? iSolveClockLEQliMap.get(clockKey):0;
+                line.record["SBQQ__Quantity__c"]  = clockCount;
+                line.record["NSP_Quoted_Quantity__c"]  = clockCount;
+            }
+            // update isolve NXGG2+BioSupport
+            if(productcode == 'NXGG2+BioSupport' && actionTypeQli && actionTypeQli == 'Add Product')
+            {
+                clockKey = 'Biometric iSolved Clocks';
+                clockCount = iSolveClockLEQliMap.has(clockKey)? iSolveClockLEQliMap.get(clockKey):0;
+                line.record["SBQQ__Quantity__c"]  = clockCount;
+                line.record["NSP_Quoted_Quantity__c"]  = clockCount;
+            }
+            // update isolve NXGG2+Support
+            if(productcode == 'NXGG2+Support' && actionTypeQli && actionTypeQli == 'Add Product')
+            {
+                clockKey = 'Standard iSolved Clocks - G2+';
+                clockCount = iSolveClockLEQliMap.has(clockKey)? iSolveClockLEQliMap.get(clockKey):0;
+                line.record["SBQQ__Quantity__c"]  = clockCount;
+                line.record["NSP_Quoted_Quantity__c"]  = clockCount;
+            }
+            // update isolve G7ClockSupport
+            if(productcode == 'G7ClockSupport' && actionTypeQli && actionTypeQli == 'Add Product')
+            {
+                clockKey = 'Standard iSolved Clocks - G7';
+                clockCount = iSolveClockLEQliMap.has(clockKey)? iSolveClockLEQliMap.get(clockKey):0;
+                line.record["SBQQ__Quantity__c"]  = clockCount;
+                line.record["NSP_Quoted_Quantity__c"]  = clockCount;
+            }
+            // update isolve NXGHardwareSU,NXGShipping
+            if(( ( productcode == 'NXGHardwareSU'  && quoteType != 'Supplemental') || productcode == 'NXGShipping') )
+            {
+                clockKey = 'iSolveAllClock';
+                clockCount = allIsolveClockMap.has(clockKey)? allIsolveClockMap.get(clockKey):0;
+                line.record["SBQQ__Quantity__c"]  = clockCount;
+                line.record["NSP_Quoted_Quantity__c"]  = clockCount;
+            }
+            
+            // to validate missing sku for isolvehardware
+            if(productcode == 'iSolvedHardwareBundle' && !upgardSub){
+                clockKey = 'iSolveAllClock';
+                clockCount = allIsolveClockMap.has(clockKey)? allIsolveClockMap.get(clockKey):0;
+                if(clockCount > 0 && (!productCodeList.includes('NXGHardwareSU') || !productCodeList.includes('NXGShipping'))){
+                    line.record["NSP_Related_Setup_SKU_Missing__c"] = true;
+                }
+            }
+
+            line.record["NSP_Throw_Quantity_Validation__c"] = null;
+            if((supportProductList.includes(productcode) || producttype == 'Time & Attendance Hardware')&& actionTypeQli && actionTypeQli == 'Add Product')
+            {
+                line.record["NSP_Original_Line_Quantity__c"] = line.record["NSP_Quoted_Quantity__c"] ;
+            }
+
+            let lineQQuantity  = line.record["NSP_Quoted_Quantity__c"] ;
+            let lineOriginalQuantity = line.record["NSP_Original_Line_Quantity__c"];
+
+            if(lineQQuantity && lineOriginalQuantity && lineQQuantity > lineOriginalQuantity && isclonedline)
+            {
+                line.record["NSP_Throw_Quantity_Validation__c"] = 'amendment quantity mismatch';
+            }
+
+            if(producttype == 'Time & Attendance Hardware' && lineQQuantity && lineOriginalQuantity && lineQQuantity > lineOriginalQuantity )
+            {
+                line.record["NSP_Throw_Quantity_Validation__c"] = 'amendment quantity mismatch';
+            }
+            
+            
+            
+            // validate support quanitity in amendment
+            if(productcode == 'NXGLESupport'  && isamendment && !upgardSub && !isclonedline)
+            {
+                clockKey = 'Standard iSolved Clocks - LE';
+                clockCount = iSolveClockLEQliMap.has(clockKey)? iSolveClockLEQliMap.get(clockKey):0;
+                let ququantityval = line.record["NSP_Quoted_Quantity__c"];
+                if(ququantityval && ququantityval > clockCount)
+                {
+                    line.record["NSP_Throw_Quantity_Validation__c"]  = 'isolve hardware amendment support quantity error';
+                }
+            }
+            // validate support quanitity in amendment
+            if(productcode == 'NXGG2+BioSupport'  && isamendment && !upgardSub && !isclonedline)
+            {
+                clockKey = 'Biometric iSolved Clocks';
+                clockCount = iSolveClockLEQliMap.has(clockKey)? iSolveClockLEQliMap.get(clockKey):0;
+                let ququantityval = line.record["NSP_Quoted_Quantity__c"];
+                if(ququantityval && ququantityval > clockCount)
+                {
+                    line.record["NSP_Throw_Quantity_Validation__c"]  = 'isolve hardware amendment support quantity error';
+                }
+            }
+            // validate support quanitity in amendment
+            if(productcode == 'NXGG2+Support' && isamendment && !upgardSub && !isclonedline)
+            {
+                
+                clockKey = 'Standard iSolved Clocks - G2+';
+                clockCount = iSolveClockLEQliMap.has(clockKey)? iSolveClockLEQliMap.get(clockKey):0;
+                let ququantityval = line.record["NSP_Quoted_Quantity__c"];
+                if(ququantityval && ququantityval > clockCount)
+                {
+                    line.record["NSP_Throw_Quantity_Validation__c"]  = 'isolve hardware amendment support quantity error';
+                }
+            }
+
+        });	
+    }
+}
+
+export function rollupListMinFee(quote,lines){
+    let quoteType = quote.record["SBQQ__Type__c"];
+	let quoteTransType = quote.record["NSP_TransactionType__c"];
+    let rollUpValue=0;
+    let productCodeList = ['IWXBundle','IWXBundleW2'];
+    if(quoteType =='Amendment' && quoteTransType != 'Termination'){
+        lines.forEach(function(line){
+            if(line.record["SBQQ__UpgradedSubscription__c"]== null && line.record["NSP_Include_in_IWX_bundle_Rollup__c"]){
+                rollUpValue+=line.record["NSP_Secondary_List_Minimum_Fee__c"];
+            }
+        });
+        console.log('rollUpValue : '+rollUpValue);
+        lines.forEach(function(line){
+            if(line.record["SBQQ__UpgradedSubscription__c"] == null && productCodeList.includes(line.record["SBQQ__ProductCode__c"]) && rollUpValue>0 ){
+                line.record["NSP_List_Minimum_Fee__c"] = rollUpValue;
+            }
+        });
+    }
+}
+
+export function processQuotelinesAfterPricerule(quote, lines){
+    //let setUplist = ['IWACoreSU','IWALeaveAdminSU','IWALearnDevSU','IWAACAAdminSU','IWABenAdminSU','IWAContractorSU'];
+    let setUplist = ['HCMiSolvedTime','HCMLeaveAdmin','HCMLearnDev','HCMACAAdmin','HCMBenAdmin','IWAContractorSU'];
+    let productsForDescChange = ['IPMUserLicense','IPMUserLicenseWO','IOPRTCoreLicense','IOPRTPlanningModule','IOPRTSuccessionPlanning','IOPRTCoreLicenseWO','IOPRTPlanningModuleWO','IOPRTSuccessionPlanningWO'];
+    let renewalProductsForDescChange = ['IPMUserLicense','IPMUserLicenseWO','IOPRTCoreLicense','IOPRTPlanningModule','IOPRTSuccessionPlanning','IOPRTCoreLicenseWO','IOPRTPlanningModuleWO',
+										'IOPRTSuccessionPlanningWO','IPMHRSupportCenter','IOPRTUserLicense','IOPRTStandardUserLicense','IOPRTUserLicenseWO','IOPRTStandardUserLicenseWO','IOPRTSSOModule','G7ClockSupport','NXGG2+Support','NXGG2+BioSupport','NXGLESupport',
+										'ITSIT11MiFareSupport','ITSIT11HIDSupport','ITSGT4BarcodeSupport','ITSGT4HIDProxSupport','ITSGT4iClassSupport','ITSGT4IndalaSupport',
+										'ITSGT4KeyPunchSupport','ITSGT4LumidigmSupport','ITSGT4MagStripeSupport','ITSGT4SupremaSupport','ITSIT51BarcodeSupport','ITSIT51HIDProxSupport',
+										'ITSIT51iClassSupport','ITSIT51IndalaSupport','ITSIT51KeyPunchSupport','ITST51LumidigmSupport','ITSIT51MagStripeSupport','ITSIT51SupremaSupport'];
+
+    let wasetupMap = new Map();
+    let quoteType = quote.record["SBQQ__Type__c"];
+	let quoteTransType = quote.record["NSP_TransactionType__c"];
+    
+    let iwaCoresubooked = quote.record["NSP_IWACoreSU_booked__c"];
+    let iwaleaveAdminsubooked = quote.record["NSP_IWALeaveAdminSU_Booked__c"];
+    let iwaleardevsubooked = quote.record["NSP_IWALearnDevSU_Booked__c"];
+    let iwaAcaadminSubooked = quote.record["NSP_IWAACAAdminSU_Booked__c"];
+    let iwaBenAdminSubooked = quote.record["NSP_IWABenAdminSU_Booked__c"];
+    let iwaContractorSUbooked =  quote.record["NSP_IWAContractorSU_Booked__c"];
+    
+    let setUpSkuMap = new Map();
+        setUpSkuMap.set('HCMiSolvedTime',iwaCoresubooked);
+        setUpSkuMap.set('HCMLeaveAdmin',iwaleaveAdminsubooked);
+        setUpSkuMap.set('HCMLearnDev',iwaleardevsubooked);
+        setUpSkuMap.set('HCMACAAdmin',iwaAcaadminSubooked);
+        setUpSkuMap.set('HCMBenAdmin',iwaBenAdminSubooked);
+        setUpSkuMap.set('IWAContractorSU',iwaContractorSUbooked);
+    
+    lines.forEach(function(line){
+            let productcode = 	line.record["SBQQ__ProductCode__c"];
+            let parentQliId = 	line.RequiredBy__r;
+            let quantityval =   line.record["SBQQ__Quantity__c"];
+            let listprice   =   line.record["NSP_Setup_Price__c"];
+            
+
+            let stopAutoPricing =  line.record["NSP_Stop_Auto_Pricing__c"];
+            
+            if(setUplist.includes(productcode) && listprice && setUpSkuMap.has(productcode) && !setUpSkuMap.get(productcode))
+            {
+                if(wasetupMap.has('WASUTotal'))
+                {
+                    wasetupMap.set('WASUTotal',wasetupMap.get('WASUTotal')+listprice);
+                }
+                else{
+                    wasetupMap.set('WASUTotal',listprice);
+                }
+            }
+            
+        
+        });
+    lines.forEach(function(line){
+        let productcode = 	line.record["SBQQ__ProductCode__c"];
+        let quantityval =   line.record["SBQQ__Quantity__c"];
+        let stopAutoPricing =  line.record["NSP_Stop_Auto_Pricing__c"];
+        //12/21/22 NL Added this line**************************************************
+        let billingfrequency = line.record["SBQQ__BillingFrequency__c"];
+        let priorQty 	= 	line.record["SBQQ__PriorQuantity__c"];
+        if(productcode && productcode =='IWASU' && wasetupMap.has('WASUTotal') && !stopAutoPricing )
+        {
+            line.record["SBQQ__ListPrice__c"] = wasetupMap.get('WASUTotal');
+        }
+
+        if(productcode && productsForDescChange.includes(productcode) )
+        {   
+            let qtystr = quantityval.toString()+" ";
+            let descstr = line.record["NSP_Description_To_Store_Internal__c"];
+            let part2pos = 0;
+            if(descstr && descstr.indexOf("From") === -1){
+                if(productcode == 'IPMUserLicense' || productcode == 'IPMUserLicenseWO') {
+                    part2pos= descstr.indexOf("users");
+                }
+                else {
+                    part2pos= descstr.indexOf("boxes");
+                }
+                let numberposition = descstr.indexOf("Up to");
+                let strpart1 = descstr.substr(0,numberposition+6);
+                let strpart2 = descstr.substr(part2pos);
+                let descstrnew = strpart1+qtystr+strpart2;
+                line.record["SBQQ__Description__c"] = descstrnew;
+                if(productcode == 'IPMUserLicense') {
+                    let hrqty=1;
+                    if(quantityval>99) { 
+                        hrqty=2;
+                    }
+                    let hrqtystr = hrqty.toString() + ' HR';
+                    let hrtextpos = descstrnew.indexOf("HR");
+                    line.record["SBQQ__Description__c"] = descstrnew.substr(0,hrtextpos-2)+hrqtystr+descstrnew.substr(hrtextpos+2);
+                }
+            } 
+        } 
+            if(((quoteType == 'Amendment' && quoteTransType != 'Termination') || quoteType == 'Renewal') && productcode && renewalProductsForDescChange.includes(productcode)) {
+                let qlepriorqty = null;
+                if(priorQty){
+                    qlepriorqty = line.record["SBQQ__PriorQuantity__c"];
+                } else {
+                    qlepriorqty = line.record["NSP_QLE_Prior_Quantity__c"];
+                }
+                let amenddescstr = line.record["NSP_Product_Amendment_Description__c"];
+                let qleactiontype = line.record["NSP_ActionType__c"];
+                if(amenddescstr!=null && qleactiontype!='Amend' && qleactiontype!=null && productcode!='IOPRTSSOModule' && ((qlepriorqty>=0 && quoteType == 'Amendment') || (qlepriorqty>=0 && quoteType == 'Renewal'))) {
+                        let newdesc = amenddescstr.replace(/Additional OR Renewal/g, "Additional");
+                        newdesc = newdesc.replace(/XXX/g,quantityval.toString());
+                        if(qlepriorqty>0 && renewalProductsForDescChange.includes(productcode)){
+                        if(productsForDescChange.includes(productcode)) {
+                        let bracketposition = newdesc.indexOf("(");
+                        let strpart1 = newdesc.substr(0,bracketposition);
+                        let strpart3="";
+                        if(productcode == 'IPMUserLicense' || productcode == 'IPMUserLicenseWO') {
+                            strpart3= " users";
+                        }
+                        else {
+                            strpart3= " boxes";
+                    }
+                        newdesc = strpart1 + '(From '+ qlepriorqty.toString() + ' to ' + quantityval.toString() + strpart3 + ' )';
+                }
+                        
+                else {
+                            newdesc = newdesc +  '(From '+ qlepriorqty.toString() + ' to ' + quantityval.toString() + ' )';
+                        }
+                        }
+                        line.record["SBQQ__Description__c"] = newdesc;
+                    }
+                if(amenddescstr!=null && line.record["SBQQ__RenewedSubscription__c"]!= null &&  qlepriorqty==null && quoteType == 'Renewal'){
+                        let newdesc = amenddescstr.replace(/Additional OR Renewal/g, "Renewal");
+                        newdesc = newdesc.replace(/XXX/g,quantityval.toString());
+                        if(productcode == 'IPMUserLicense') {
+                            let hrqty=1;
+                            if(quantityval>99) { 
+                                hrqty=2;
+                            }
+                            let strpart4 = "users, includes "+ hrqty.toString() + " HR Support Center User";
+                            newdesc = newdesc.replace(/users/g,strpart4);
+                            //12/21/22 NL Added this line**************************************************
+                            newdesc = newdesc.replace(/Annual/g,billingfrequency);
+                            }
+                        line.record["SBQQ__Description__c"] = newdesc;
+                    
+                }          
+            }
+            
+            if(line.record["SBQQ__Description__c"])
+            {
+                line.record["NSP_Product_Description__c"] = line.record["SBQQ__Description__c"].slice(0, 250);
+            }
+            
+                    
+
+    });	
+}
+
+export function processOnDemandTierPrices(quote, lines){
+
+let onDemandPriceMap = new Map();
+let onDemandListPriceMap = new Map();
+let upfrontPerc = quote.record["NSP_UpFront_Payment__c"];
+let atHirePerc = quote.record["NSP_At_Hire_Payment__c"];
+let retentionPerc = quote.record["NSP_Retention_Payment__c"];
+let irsoOnDemandList = ['IRSOOnDemandUpFront','IRSOOnDemandAtHire','IRSOOnDemandRetention'];
+
+lines.forEach(function(line){
+    let productcode = 	line.record["SBQQ__ProductCode__c"];
+    let parentQliId = 	line.RequiredBy__r;
+    let quantityval =   line.record["SBQQ__Quantity__c"];
+    
+    
+    if(parentQliId) {
+        let parentProductCode = parentQliId["SBQQ__ProductCode__c"];
+    /* below lines commented for changes as per STY-02174
+    if(productcode.includes("IRSOOnDemand") && parentProductCode.includes("IRSOOnDemandTier") && quantityval >0 ) {
+        let parentNetPrice = parentQliId["SBQQ__NetTotal__c"];
+        let listprice   =   parentQliId["SBQQ__ListPrice__c"];
+        let calcListPrice = 0.0;
+        let ondemandListPrice = 0.0;
+        console.log(parentNetPrice);
+        if(productcode.includes("AtHire")) {
+            calcListPrice = (atHirePerc/100)*parentNetPrice;
+            ondemandListPrice = (atHirePerc/100)*listprice;
+        }
+        if(productcode.includes("Retention")) {
+            calcListPrice = (retentionPerc/100)*parentNetPrice;
+            ondemandListPrice = (retentionPerc/100)*listprice;
+        }
+        if(productcode.includes("UpFront")) {
+            calcListPrice = (upfrontPerc/100)*parentNetPrice;
+            ondemandListPrice = (upfrontPerc/100)*listprice;
+        }
+        console.log(calcListPrice);
+        onDemandPriceMap.set(productcode,calcListPrice);
+        onDemandListPriceMap.set(productcode,ondemandListPrice);
+
+    }*/
+    if(irsoOnDemandList && irsoOnDemandList.includes(productcode)){
+        line.record["NSP_Quoted_Quantity__c"] = quantityval;
+    }
+    // New logic as per STY-02174
+    if(productcode.includes("IRSOOnDemand") && parentProductCode.includes("IRSOOnDemand") && quantityval >0 ) {
+        let parentNetPrice = parentQliId["SBQQ__NetTotal__c"];
+        let listprice   =   parentQliId["SBQQ__NetPrice__c"];
+        let calcListPrice = 0.0;
+        let ondemandListPrice = 0.0;
+        //if(parentProductCode == 'IRSOOnDemandLegacy'){
+            if(productcode.includes("AtHire")) {
+                calcListPrice = (atHirePerc/100)*parentNetPrice;
+                ondemandListPrice = (atHirePerc/100)*listprice;
+}
+            if(productcode.includes("Retention")) {
+                calcListPrice = (retentionPerc/100)*parentNetPrice;
+                ondemandListPrice = (retentionPerc/100)*listprice;
+            }
+            if(productcode.includes("UpFront")) {
+                calcListPrice = (upfrontPerc/100)*parentNetPrice;
+                ondemandListPrice = (upfrontPerc/100)*listprice;
+            }
+        
+        onDemandPriceMap.set(productcode,calcListPrice);
+        onDemandListPriceMap.set(productcode,ondemandListPrice);
+
+    }
+    
+
+}
+
+});
+
+lines.forEach(function(line){
+let productcode = 	line.record["SBQQ__ProductCode__c"];
+let quantityval =   line.record["SBQQ__Quantity__c"];
+if(productcode && onDemandPriceMap.has(productcode)){
+    //line.record["SBQQ__ListPrice__c"] = onDemandPriceMap.get(productcode);
+    //line.record["NSP_On_Demand_List_Price__c"] = (onDemandListPriceMap.get(productcode) * quantityval);
+    line.record["SBQQ__ListPrice__c"] = onDemandListPriceMap.get(productcode);
+    line.record["NSP_On_Demand_List_Price__c"] = onDemandPriceMap.get(productcode);
+}
+});
+
+}
+
+export function processQuotelinesAfter(quote, lines)
+{
+    let iwxcontractorprice;
+    if(lines)
+    {
+        lines.forEach(function(line){
+            let productcode = 	line.record["SBQQ__ProductCode__c"];
+            let parentQliId = 	line.RequiredBy__r;
+            let quantityval =   line.record["NSP_Quoted_Quantity__c"];
+            let maxQuantity =  line.record["NSP_Max_Quantity__c"];
+            let finalMinFee =  line.record["NSP_List_Minimum_Fee__c"];
+            let packageTotal =  line.record["NSP_Net_Total__c"];
+            
+            
+            // logic to copy the IWAContractors price to IWAContractorsSU
+            if(productcode && productcode == 'IWAContractors')
+            {
+                if(maxQuantity &&  quantityval <= maxQuantity)
+                {
+                    iwxcontractorprice = finalMinFee;	
+                }
+                else{
+                    iwxcontractorprice = packageTotal;
+                }
+            }
+
+            
+        });
+        
+        lines.forEach(function(line){
+            let productcode = 	line.record["SBQQ__ProductCode__c"];
+            
+            if(productcode && productcode == 'IWAContractorSU' && iwxcontractorprice)
+            {
+                line.record["SBQQ__ListPrice__c"] = iwxcontractorprice;
+                line.record["NSP_Setup_Price__c"] = iwxcontractorprice;
+            }
+        });
+        
+        
+    }
+}
+
+export function copyConfigAttributesToQuote(quote, lines) {
+    let rpoStartDate = null;		
+    let rpoEndDate = null;
+    let projRecStartDate = null;		
+    let projRecEndDate = null;
+    let targetDate = null;		
+    let hiringManagers = null;
+    let terminateLine = null;
+        
+    quote.record["NSP_RPO_Start_Date__c"] = rpoStartDate;
+                quote.record["NSP_RPO_End_Date__c"] = rpoEndDate;
+                quote.record["NSP_ProjRec_Start_Date__c"] = projRecStartDate;
+                quote.record["NSP_ProjRec_End_Date__c"] = projRecEndDate;
+                quote.record["NSP_Target_Date__c"] = targetDate;
+                quote.record["NSP_No_of_Hiring_Managers__c"] = hiringManagers;
+                quote.record["NSP_Talent_Connect_Subscription_Date__c"] = null;
+                quote.record["NSP_Talent_Connect_Subscription_End_Date__c"] = null;
+                
+    lines.forEach(function(line){
+        let rbproductcode = 	line.record["SBQQ__ProductCode__c"];
+        if(rbproductcode && rbproductcode == 'RecruitingBundle'){
+            rpoStartDate = line.record["NSP_RPO_Start_Date__c"];
+            rpoEndDate = line.record["NSP_RPO_End_Date__c"];
+            projRecStartDate = line.record["NSP_ProjRec_Start_Date__c"];
+            projRecEndDate = line.record["NSP_ProjRec_End_Date__c"];
+            targetDate = line.record["NSP_Target_Date__c"];
+            hiringManagers = line.record["NSP_No_of_Hiring_Managers__c"];
+            terminateLine = line.record["NSP_Term_Line__c"];
+        }
+        if(terminateLine)
+            {
+                line.record["SBQQ__Quantity__c"] = 0;
+                line.record["NSP_Quoted_Quantity__c"] = 0;
+            }
+        if(rbproductcode && (rbproductcode == 'TalentConnectPEO' || rbproductcode == 'TalentConnectTraditional' ) ){
+            let qliTalentConectSubStartDate = line.record["NSP_Talent_ConnectSubscription_StartDate__c"];
+            let qliTalentConectSubEndDate = line.record["NSP_Talent_Connect_Subscription_End_Date__c"];
+            let implementationStartDate = line.record["NSP_Implementation_Start_Date__c"];
+            if(qliTalentConectSubStartDate){
+                quote.record["NSP_Talent_Connect_Subscription_Date__c"] = qliTalentConectSubStartDate;
+            }
+            
+            if(qliTalentConectSubEndDate){
+                quote.record["NSP_Talent_Connect_Subscription_End_Date__c"] = qliTalentConectSubEndDate;
+            }
+            
+            if(implementationStartDate){
+                quote.record["NSP_Implementation_Start_Date__c"] = implementationStartDate;
+            }
+        }
+    });
+    lines.forEach(function(line){
+        let productcode = 	line.record["SBQQ__ProductCode__c"];
+        if(productcode && productcode == 'IRSORPO')
+            {
+                quote.record["NSP_RPO_Start_Date__c"] = rpoStartDate;
+                quote.record["NSP_RPO_End_Date__c"] = rpoEndDate;
+            }
+        if(productcode && productcode == 'IRSOProjectRecruiting')
+            {
+                quote.record["NSP_ProjRec_Start_Date__c"] = projRecStartDate;
+                quote.record["NSP_ProjRec_End_Date__c"] = projRecEndDate;
+            }
+        if(productcode && (productcode == 'IRSOBehavioralTrainingManuals' || productcode == 'IRSOBehavioralTraining'))
+            {
+                quote.record["NSP_No_of_Hiring_Managers__c"] = hiringManagers;
+            }
+        if(productcode && (productcode == 'IRSOEmpBrandingInitConsult' || productcode == 'IRSOEmpBranding1Page' || productcode == 'IRSOEmpBranding2Pages'))
+            {
+                quote.record["NSP_Target_Date__c"] = targetDate;
+            }
+
+});
+}
+
+export function processConsumptionSchedule(quote, lines)
+{
+    let thresholdPercentage = quote.record["NSP_Threshold_Percentage__c"];
+    let wxscholarship = quote.record["NSP_WX_Scholarship__c"]; 
+    let applicableProductlist = ['IWXBundle','IWXBundleW2','IWACore','IWACoreW2','IWAPerCheckFee','IWXPerCheckFee','ITSUserLicenseWO'];
+    let contractorProductlist = ['IWAContractors','IWXContractors'];
+    
+    lines.forEach(function(line){
+        let minmumfeeVal =  line.record["NSP_List_Minimum_Fee__c"];
+        let finalMinFee  =  line.record["NSP_Final_Minimum_Fee__c"];
+        let netUnitPrice =  line.record["SBQQ__NetPrice__c"];
+        let scholarshipApplicable = line.record["NSP_Scholarship_Price__c"];
+        let listPrice = line.record["SBQQ__ListPrice__c"];
+        let originalMinFee = line.record["NSP_Original_List_Minimum_Fee__c"];
+        let linequantity = line.record["NSP_Quoted_Quantity__c"];
+        let maxquantity = line.record["NSP_Max_Quantity__c"];
+        let productcode = 	line.record["SBQQ__ProductCode__c"];
+        let thresholdapplicable = line.record["NSP_Threshold_Applicable__c"];
+        let flatfeeUpperbondvalue;
+        let flatfeeprice = finalMinFee;
+        let unitPriceThresholduantity;
+
+        if(maxquantity && linequantity && linequantity <= maxquantity && finalMinFee >= 0){
+            if(finalMinFee == 0 && thresholdPercentage >= 0) {
+                flatfeeUpperbondvalue = 1;
+                flatfeeprice = 0;
+            } else {
+                flatfeeUpperbondvalue = parseInt(finalMinFee/netUnitPrice)+1;
+            }
+        }
+        else if(thresholdapplicable && thresholdPercentage && linequantity){
+            flatfeeUpperbondvalue = parseInt(0.01*thresholdPercentage * linequantity)+1;
+            flatfeeprice = (0.01*thresholdPercentage * linequantity) * netUnitPrice;
+            unitPriceThresholduantity = (0.01*thresholdPercentage * linequantity) * listPrice;
+        }
+        else if(contractorProductlist.includes(productcode) && maxquantity && linequantity && linequantity > maxquantity && finalMinFee >= 0){
+            flatfeeUpperbondvalue = parseInt(finalMinFee/netUnitPrice)+1;
+        }
+        else if(maxquantity && linequantity && linequantity > maxquantity && finalMinFee>=0){
+            if(finalMinFee == 0 && thresholdPercentage >= 0) {
+                flatfeeUpperbondvalue = 1;
+                flatfeeprice = 0;
+            }else{
+                flatfeeUpperbondvalue = parseInt(finalMinFee/netUnitPrice)+1;
+            }
+            
+        }
+        if(maxquantity && linequantity && linequantity > maxquantity && thresholdPercentage == 0 && thresholdapplicable){
+            flatfeeUpperbondvalue = 1;
+                flatfeeprice = 0;
+        }
+
+        if(applicableProductlist.includes(productcode) && productcode != 'ITSUserLicenseWO'  ){
+                quote.record["NSP_WX_Upper_Bound__c"] = flatfeeUpperbondvalue ? flatfeeUpperbondvalue : null;
+                line.record["NSP_UsageUpperBound__c"] = flatfeeUpperbondvalue ? flatfeeUpperbondvalue - 1 : null;
+            }
+        
+        if (line.consumptionSchedules) {
+            
+            line.consumptionSchedules.forEach(function(cs){
+                const rates = cs.getRates();
+                let ratecount = rates.length;
+                let matchingattribute = cs.get('SBQQ__MatchingAttribute__c');
+                if(!matchingattribute || !matchingattribute.toLowerCase().includes('partner')){
+
+                    rates.forEach(function(csrate,index){
+                        let upperbond = csrate.get('SBQQ__UpperBound__c');
+                        let lowerbond = csrate.get('SBQQ__LowerBound__c');
+                        let processingorder = csrate.get('SBQQ__ProcessingOrder__c');
+                        let pricingMethod = csrate.get('SBQQ__PricingMethod__c');
+                        
+						debugger;
+                        if(!minmumfeeVal && productcode && !applicableProductlist.includes(productcode))// for product with non min fee
+                        {
+                            if(lowerbond <= linequantity && upperbond > linequantity)
+                            {	
+                                csrate.set('SBQQ__Price__c', netUnitPrice);
+                            }
+                        }
+                        else if(productcode && applicableProductlist.includes(productcode) && !scholarshipApplicable )
+                        { // scholarship not applicable
+                            
+                            if( pricingMethod == 'FlatFee' && flatfeeprice >= 0 && flatfeeUpperbondvalue)
+                            {
+                                csrate.set('SBQQ__Price__c', flatfeeprice);
+                                csrate.set('SBQQ__UpperBound__c', flatfeeUpperbondvalue);
+                                
+                            }
+                            else if(pricingMethod == 'PerUnit' && flatfeeUpperbondvalue){
+                                csrate.set('SBQQ__Price__c', netUnitPrice);
+                                csrate.set('SBQQ__LowerBound__c', flatfeeUpperbondvalue);
+                            }
+                            
+                            if(!wxscholarship && matchingattribute == 'Scholarship'){ // update price of scholarschip cs ro zero
+                                    csrate.set('SBQQ__Price__c', 0); // setting scholarship CS price to zero when Wx scholarhip is false STY-01818
+                            }
+                            
+                        }
+                        else if(productcode && applicableProductlist.includes(productcode) && scholarshipApplicable )
+                        { // scholarship  applicable
+                            
+                            let flatfeeval = flatfeeprice;
+                            let perunitval = netUnitPrice;
+                            let nonSchFlatfee = unitPriceThresholduantity;
+                            
+                                if(maxquantity && linequantity && linequantity <= maxquantity && finalMinFee)
+                                {
+                                    //flatfeeval = minmumfeeVal;
+                                    perunitval = listPrice;
+                                    nonSchFlatfee = minmumfeeVal;
+                                }
+                                
+                                if(!matchingattribute)
+                                {
+                                    if( pricingMethod == 'FlatFee' && flatfeeprice >= 0 && flatfeeUpperbondvalue   ) // update non scholarship cs
+                                    {
+                                        csrate.set('SBQQ__Price__c', nonSchFlatfee);
+                                            csrate.set('SBQQ__UpperBound__c', parseInt(nonSchFlatfee/listPrice)+1);
+                                        
+                                    }
+                                    else if(pricingMethod == 'PerUnit' && flatfeeUpperbondvalue){
+                                        csrate.set('SBQQ__Price__c', listPrice);
+                                            csrate.set('SBQQ__LowerBound__c', parseInt(nonSchFlatfee/listPrice)+1);
+                                    }
+                                }
+                                else if(matchingattribute == 'Scholarship')
+                                {
+                                    if( pricingMethod == 'FlatFee' && flatfeeprice >= 0 && flatfeeUpperbondvalue  ) // update scholarship cs
+                                    {
+                                        csrate.set('SBQQ__Price__c', flatfeeval);
+                                            csrate.set('SBQQ__UpperBound__c', parseInt(flatfeeval/netUnitPrice)+1);
+                                        
+                                    }
+                                    else if(pricingMethod == 'PerUnit' && flatfeeUpperbondvalue){
+                                        csrate.set('SBQQ__Price__c', netUnitPrice);
+                                            csrate.set('SBQQ__LowerBound__c', parseInt(flatfeeval/netUnitPrice)+1);
+                                    }
+                                }	
+                        }
+                        else if(productcode && contractorProductlist.includes(productcode)){ // for contractors
+                            
+                            if( pricingMethod == 'FlatFee' && finalMinFee >= 0 && flatfeeUpperbondvalue)
+                            {
+                                csrate.set('SBQQ__Price__c', finalMinFee);
+                                csrate.set('SBQQ__UpperBound__c', flatfeeUpperbondvalue);
+                            }
+                            else if(pricingMethod == 'PerUnit' && flatfeeUpperbondvalue){
+                                csrate.set('SBQQ__Price__c', netUnitPrice);
+                                csrate.set('SBQQ__LowerBound__c', flatfeeUpperbondvalue);
+                            }
+                        }
+                        else{
+                            csrate.set('SBQQ__Price__c', netUnitPrice);
+                        }
+                    });
+                }
+            });
+        }
+
+    });
+}
+
+export function checkBookedSetup(quote, lines){
+    let setUplist = ['HCMiSolved','HCMLeaveAdmin','HCMLearnDev','HCMACAAdmin','HCMBenAdmin','IWAContractor'];
+    let iwaCoreProduct = ['IWACore','IWACoreW2','IWAPerCheckFee'];
+    let ipsSetUpCore = ['IPS Conversion'];
+    let ipsSetuplist = ['IPSPerCheck','IPSBaseFee','IPSW2','IPSVendor'];
+    let ipsetUpQuantityMap = new Map();
+    let zeroQuantityProduct = [];
+    quote.record["NSP_IWACoreSU_booked__c"] = false;
+    quote.record["NSP_IWALeaveAdminSU_Booked__c"] = false;
+    quote.record["NSP_IWALearnDevSU_Booked__c"] = false;
+    quote.record["NSP_IWAACAAdminSU_Booked__c"] = false;
+    quote.record["NSP_IWABenAdminSU_Booked__c"] = false;
+    quote.record["NSP_IWAContractorSU_Booked__c"] = false;
+    
+    let primaryproduct = quote.record["NSP_Opportunity_Primary_Product__c"];
+    let parentQuantityMap = new Map();
+        parentQuantityMap.set('HCMiSolved','IWACoreSU');
+        parentQuantityMap.set('HCMLeaveAdmin','IWALeaveAdminSU');
+        parentQuantityMap.set('HCMLearnDev','IWALearnDevSU');
+        parentQuantityMap.set('HCMACAAdmin','IWAACAAdminSU');
+        parentQuantityMap.set('HCMBenAdmin','IWABenAdminSU');
+        parentQuantityMap.set('HCMBenAdmin','IWABenAdminSU');
+        parentQuantityMap.set('IWAContractors','IWAContractorSU');
+    let bookedSetuStr;
+    let setupSkuSet = [];
+    
+    if(primaryproduct == 'WA')
+    {
+        lines.forEach(function(line){
+            let linequantity = line.record["NSP_Quoted_Quantity__c"];
+            let maxquantity = line.record["NSP_Max_Quantity__c"];
+            let productcode = 	line.record["SBQQ__ProductCode__c"];
+            let parentProductCode = line.record["NSP_Parent_Product_Code__c"];
+            let actionType = line.record["NSP_ActionType__c"];
+            let zeroProductMap = new Map();
+            let zeroQuantityProduct = [];
+            // for IWA 
+            if(linequantity == 0 && actionType && actionType == 'Amendment' && parentQuantityMap.has(productcode)){
+                
+                let setupCode = parentQuantityMap.get(productcode);
+                if(setupCode == 'IWACoreSU'){
+                    quote.record["NSP_IWACoreSU_booked__c"] = true;
+                }
+                else if(setupCode == 'IWALeaveAdminSU'){
+                    quote.record["NSP_IWALeaveAdminSU_Booked__c"] = true;
+                }
+                else if(setupCode == 'IWALearnDevSU'){
+                    quote.record["NSP_IWALearnDevSU_Booked__c"] = true;
+                }
+                else if(setupCode == 'IWAACAAdminSU'){
+                    quote.record["NSP_IWAACAAdminSU_Booked__c"] = true;
+                }
+                else if(setupCode == 'IWABenAdminSU'){
+                    quote.record["NSP_IWABenAdminSU_Booked__c"] = true;
+                }
+                
+                if(setupCode == 'IWAContractorSU'){
+                    quote.record["NSP_IWAContractorSU_Booked__c"] = true;
+                }
+                
+            }
+            
+            
+        });
+    }
+    
+    lines.forEach(function(line){
+            let linequantity = line.record["NSP_Quoted_Quantity__c"];
+            let maxquantity = line.record["NSP_Max_Quantity__c"];
+            let productcode = 	line.record["SBQQ__ProductCode__c"];
+            let parentProductCode = line.record["NSP_Parent_Product_Code__c"];
+            let actionType = line.record["NSP_ActionType__c"];
+            
+            
+            // for IPS Conversion
+            if(actionType && actionType == 'Amendment' && linequantity == 0 && ipsSetUpCore.includes(parentProductCode)){
+                zeroQuantityProduct.push(productcode);
+            }
+        });
+    lines.forEach(function(line){
+            let linequantity = line.record["NSP_Quoted_Quantity__c"];
+            let maxquantity = line.record["NSP_Max_Quantity__c"];
+            let productcode = 	line.record["SBQQ__ProductCode__c"];
+            let parentProductCode = line.record["NSP_Parent_Product_Code__c"];
+            let actionType = line.record["NSP_ActionType__c"];
+            
+            
+            // for IPS Conversion
+            if(actionType && actionType == 'Add Product' && linequantity > 0 && ipsSetuplist.includes(productcode) && ipsSetUpCore.includes(parentProductCode)){
+                
+                if(zeroQuantityProduct.includes(productcode) && !ipsetUpQuantityMap.has('IPSSU')){
+                    ipsetUpQuantityMap.set('IPSSU',0);
+                }
+                else if(!zeroQuantityProduct.includes(productcode)){
+                    ipsetUpQuantityMap.set('IPSSU',1);
+                }
+                else{
+                    
+                }
+            }
+        });
+        // set the setup quantity
+        lines.forEach(function(line){
+            let linequantity = line.record["NSP_Quoted_Quantity__c"];
+            let maxquantity = line.record["NSP_Max_Quantity__c"];
+            let productcode = 	line.record["SBQQ__ProductCode__c"];
+            let parentProductCode = line.record["NSP_Parent_Product_Code__c"];
+            let actionType = line.record["NSP_ActionType__c"];
+            
+            
+            // for IPS Conversion
+            if(productcode == 'IPSSU' && ipsetUpQuantityMap.has('IPSSU')){
+                line.record["SBQQ__Quantity__c"] = ipsetUpQuantityMap.get('IPSSU');
+                line.record["NSP_Quoted_Quantity__c"] = ipsetUpQuantityMap.get('IPSSU');
+                
+            }
+        });
+    
+    
+    
+}
+export function calculateWXWAEnrollementFee(quote, lines){
+    let quoteType = quote.record["SBQQ__Type__c"];
+    lines.forEach(function(line){
+            let productcode = 	line.record["SBQQ__ProductCode__c"];
+            if(quoteType && quoteType=='New Product'&& (productcode=='IWXSU'||productcode =='IWASU')){
+        quote.record["NSP_WX_WA_Enrollment_Fee__c"]=line.record["SBQQ__NetTotal__c"];
+            }
+    });
+}
+export function calculateDocupayUpFrontFee(quote, lines){
+    let quoteType = quote.record["SBQQ__Type__c"];
+    let upFrontFee=0.0;
+    lines.forEach(function(line){
+    let chargeType=line.record["SBQQ__ChargeType__c"];
+    let invoicePlan=line.record["NSP_Default_Invoice_Plan__c"];
+        let billingFrequency=line.record["SBQQ__BillingFrequency__c"];
+        if(quoteType=='New Product' && chargeType && billingFrequency && (chargeType=='One-Time'||billingFrequency=='Annual'||(billingFrequency=='Invoice Plan'&& invoicePlan && invoicePlan=='Invoice Upfront Plan'))){
+            upFrontFee=upFrontFee+line.record["SBQQ__NetTotal__c"];
+                }
+    });
+    quote.record["NSP_Docupay_Upfront_fee__c"]=upFrontFee;
+}
+export function calculateEarlyTerminationFee(quote, lines){
+    let applicableWXProductlist = ['IWXBundle','IWXBundleW2','IWXContractors'];
+    let applicableWAProductlist = ['IWACore','IWACoreW2','IWAContractors'];
+    let wxWaiverFee=0.0;
+    let waWaiverFee=0.0;
+    let quoteType = quote.record["SBQQ__Type__c"];
+    if(quoteType=='Termination'){
+        lines.forEach(function(line){
+            let productcode =line.record["SBQQ__ProductCode__c"];
+            if(applicableWXProductlist.includes(productcode)){
+                wxWaiverFee=wxWaiverFee+line.record["NSP_Original_waived_Amount__c"];
+            }
+            if(applicableWAProductlist.includes(productcode)){
+                waWaiverFee=waWaiverFee+line.record["NSP_Original_waived_Amount__c"];
+            }
+        });
+        lines.forEach(function(line){
+            if(line.record["SBQQ__ProductCode__c"]=='IWXWaiver'){
+                line.record["SBQQ__ListPrice__c"]=wxWaiverFee;
+            }
+            if(line.record["SBQQ__ProductCode__c"]=='IWAWaiver'){
+                line.record["SBQQ__ListPrice__c"]=waWaiverFee;
+            }
+        });
+    }
+    
+}
+
+export function amendmentForClonedLineCalculation (quote, lines){
+    let quoteType = quote.record["SBQQ__Type__c"];
+	let quoteTransType = quote.record["NSP_TransactionType__c"];
+    let productMap = new Map();
+    if(quoteType == 'Amendment' && quoteTransType != 'Termination'){
+        lines.forEach(function(line){
+            if(line.record["SBQQ__UpgradedSubscription__c"]!=null && line.record["SBQQ__Bundle__c"]== false && line.record["SBQQ__PricingMethod__c"]=='Block'){
+                //getting source line's list price
+                productMap.set(line.record["SBQQ__ProductCode__c"],line.record["SBQQ__ListPrice__c"]);
+            }
+        });
+
+        lines.forEach(function(line){
+            
+            if(productMap.has(line.record["SBQQ__ProductCode__c"]) && line.record["SBQQ__Source__c"]!=null){
+                let deltaPrice = productMap.get(line.record["SBQQ__ProductCode__c"])<0?line.record["SBQQ__ListPrice__c"]+productMap.get(line.record["SBQQ__ProductCode__c"]):line.record["SBQQ__ListPrice__c"]-productMap.get(line.record["SBQQ__ProductCode__c"]);
+                line.record["NSP_Delta_Total__c"] = deltaPrice;
+                let disc = line.record["NSP_Delta_Discount__c"];
+                let discountedValue  = deltaPrice-[disc];
+
+                if(line.record["SBQQ__DefaultSubscriptionTerm__c"]==1 && line.record["SBQQ__BillingFrequency__c"] !='Annual'){    
+                    let netPrice  = discountedValue + line.record["NSP_Original_Price__c"];
+                    line.record["SBQQ__CustomerPrice__c"] = netPrice;
+                    line.record["SBQQ__NetPrice__c"] = netPrice;
+					line.record["NSP_Delta_Total__c"] = line.record["NSP_Delta_Total__c"] - disc;
+                    
+                }
+                if(line.record["SBQQ__DefaultSubscriptionTerm__c"]>1 && line.record["SBQQ__BillingFrequency__c"] !='Annual'){
+                    let subTerm = line.record["SBQQ__SubscriptionTerm__c"]!=null?line.record["SBQQ__SubscriptionTerm__c"]:1;
+                    let netPrice  = discountedValue*subTerm/12 + line.record["NSP_Original_Price__c"];
+                    line.record["SBQQ__CustomerPrice__c"] = netPrice;
+                    line.record["SBQQ__NetPrice__c"] = netPrice;
+					line.record["NSP_Delta_Total__c"] = line.record["NSP_Delta_Total__c"] - disc;
+                }
+                if(line.record["SBQQ__BillingFrequency__c"] == 'Annual'){
+                    let netPriceAnnual = discountedValue - productMap.get(line.record["SBQQ__ProductCode__c"])*line.record["SBQQ__ProrateMultiplier__c"];
+                    line.record["SBQQ__NetPrice__c"] =netPriceAnnual;
+					line.record["NSP_Delta_Total__c"] = line.record["NSP_Delta_Total__c"] - disc;
+                    
+                }
+            }
+
+        });
+    }
+}
+
+export function amendmentForNonClonedLineCalculation(quote,lines){
+    let quoteType = quote.record["SBQQ__Type__c"];
+	let quoteTransType = quote.record["NSP_TransactionType__c"];
+	
+    let deltaPrice;
+    let CustomerPrice;
+    let disc;
+    let discountedValue;
+    if(quoteType == 'Amendment' && quoteTransType != 'Termination'){
+        let clone = lines[0].record["NSP_Clone_Required__c"];
+        console.log('----test--'+clone + (clone.includes('Red')));
+        lines.forEach(function(line){
+            
+            if(line.record["SBQQ__UpgradedSubscription__c"]!=null && line.record["SBQQ__Bundle__c"]== false && clone.includes('Red') && line.record["SBQQ__PricingMethod__c"] == 'Block'){
+                CustomerPrice = line.record["SBQQ__CustomerPrice__c"];
+                 deltaPrice = line.record["SBQQ__SpecialPrice__c"];
+               line.record["NSP_Delta_Total__c"] =  deltaPrice; 
+                disc = line.record["NSP_Delta_Discount__c"];
+                discountedValue = CustomerPrice -[disc];
+                line.record["SBQQ__NetPrice__c"] =discountedValue;
+				line.record["NSP_Delta_Total__c"] = line.record["NSP_Delta_Total__c"] - disc;
+                
+            }
+			if(  line._innerModel.record.SBQQ__Product__r.Family == 'Support' &&  line.record["SBQQ__BillingFrequency__c"] == 'Annual' && line.record["NSP_ActionType__c"] == 'Add Product')
+			{
+				console.log('--inside hardware--');
+				line.record["NSP_Delta_Total__c"] =   (line.record["NSP_Quoted_Quantity__c"]) * (line.record["SBQQ__ListPrice__c"] - line.record["SBQQ__AdditionalDiscountAmount__c"]);
+				console.log('--inside hardware--'+ line.record["NSP_Delta_Total__c"]);
+			}
+
+        });
+    }
+}
+export function checkSerialIdValidationFlag(quote, lines){
+    let quoteType = quote.record["SBQQ__Type__c"];
+	let quoteTransType = quote.record["NSP_TransactionType__c"];
+    if((quoteType=='Amendment' && quoteTransType != 'Termination') ||quoteType=='Renewal' ){
+        lines.forEach(function(line){
+            let actionType=line.record["NSP_Action_Type__c"];
+            let actionTypeF=line.record["NSP_ActionType__c"];
+            let createEntitlement=line.record["NSP_Create_Entitlement__c"];
+            let quotedQty=line.record["NSP_Quoted_Quantity__c"];
+            let serialIds=line.record["NSP_Serial_Ids__c"];
+            let prevQty=line.record["NSP_Previous_Quantity__c"];
+            let prevSubQty=line.record["NSP_Previous_subQty__c"];
+            line.record["NSP_SerialId_Validation__c"]=false;	//clearing the value initially
+
+            if(actionType=='Renewal' && createEntitlement===true){
+                let diffQty=Math.abs(prevSubQty-quotedQty);
+                if((serialIds=='' ||serialIds==undefined||serialIds==null) && diffQty>0){
+                    line.record["NSP_SerialId_Validation__c"]=true;
+                }
+                if(serialIds!='' && serialIds){
+                    let serialArray=serialIds.split(",").length;
+                    line.record["NSP_SerialId_Validation__c"]=serialArray!=diffQty?true:false;
+                }
+            }
+            if(createEntitlement==true && (actionTypeF=='Downgrade'||actionTypeF=='Upsell')){
+                let diffQty1=Math.abs(quotedQty-prevQty);
+                if(serialIds=='' ||serialIds==undefined ||serialIds==null){
+                    line.record["NSP_SerialId_Validation__c"]=true;
+                }
+                if(serialIds!='' && serialIds){
+                    let serialArray1=serialIds.split(",").length;
+                    line.record["NSP_SerialId_Validation__c"]=serialArray1!=diffQty1?true:false;
+                }
+            }
+            
+        })
+    }
+}
