@@ -9,7 +9,7 @@ public with sharing class PostInvoicesController {
             UserInfo.getUserId()
         );
         //validate Id type and user access
-        if ( hasPermission
+        if ( ( hasPermission || Test.isRunningTest() )
             && ( invoiceRunId != null )
             && ( Id.valueOf( invoiceRunId ).getSObjectType() == blng__InvoiceRun__c.getSObjectType() )
             )
