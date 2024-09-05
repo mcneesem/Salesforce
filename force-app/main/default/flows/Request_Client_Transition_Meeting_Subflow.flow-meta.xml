@@ -1031,7 +1031,7 @@
             <fieldText>Benefits Waiting Period</fieldText>
             <fieldType>DropdownBox</fieldType>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>false</isRequired>
+            <isRequired>true</isRequired>
         </fields>
         <fields>
             <name>Translator_Needed_for_OT</name>
