@@ -9,7 +9,7 @@
 *************************************************************
 */
 global class NSP_TerminationForm_Batch implements Schedulable , Database.Batchable<SObject> , Database.Stateful {
-    // test w/ NSP_TerinationForm_Batch_Test (88%)
+    // test w/ NSP_TerminationForm_Batch_Test (88%)
 
     private List<String> ccEmailAddressList = new List<String>();
 
