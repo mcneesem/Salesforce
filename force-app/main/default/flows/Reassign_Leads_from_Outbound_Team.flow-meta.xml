@@ -2,179 +2,36 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>61.0</apiVersion>
     <assignments>
-        <name>Assign_varFaultElement_Get_Queues</name>
-        <label>Assign varFaultElement - Get_Queues</label>
-        <locationX>1507</locationX>
-        <locationY>384</locationY>
-        <assignmentItems>
-            <assignToReference>varFaultElement</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Get_Queues</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Insperity_Fault_Handler_Subflow_Flow</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Assign_varFaultElement_Update_Lead_Owner</name>
-        <label>Assign varFaultElement - Update_Lead_Owner</label>
-        <locationX>451</locationX>
-        <locationY>1308</locationY>
-        <assignmentItems>
-            <assignToReference>varFaultElement</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Update_Lead_Owner</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Insperity_Fault_Handler_Subflow_Flow</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Inbound_Queue_Id</name>
-        <label>Inbound Queue Id</label>
-        <locationX>1199</locationX>
-        <locationY>708</locationY>
-        <assignmentItems>
-            <assignToReference>groupId_Inbound</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Get_Queue_Ids.Id</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Get_Queue_Ids</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Marketing_Queue_Id</name>
-        <label>Marketing Queue Id</label>
-        <locationX>935</locationX>
-        <locationY>708</locationY>
-        <assignmentItems>
-            <assignToReference>groupId_FieldMarketing</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Get_Queue_Ids.Id</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Get_Queue_Ids</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>New_Owner_Inbound</name>
         <label>New Owner Inbound</label>
-        <locationX>187</locationX>
-        <locationY>1092</locationY>
+        <locationX>50</locationX>
+        <locationY>395</locationY>
         <assignmentItems>
-            <assignToReference>newOwnerId</assignToReference>
+            <assignToReference>$Record.OwnerId</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>groupId_Inbound</elementReference>
             </value>
         </assignmentItems>
-        <connector>
-            <targetReference>Update_Lead_Owner</targetReference>
-        </connector>
     </assignments>
     <assignments>
         <name>New_Owner_Marketing</name>
         <label>New Owner Marketing</label>
-        <locationX>715</locationX>
-        <locationY>1092</locationY>
+        <locationX>314</locationX>
+        <locationY>395</locationY>
         <assignmentItems>
-            <assignToReference>newOwnerId</assignToReference>
+            <assignToReference>$Record.OwnerId</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>groupId_FieldMarketing</elementReference>
             </value>
         </assignmentItems>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Update_Lead_Owner</targetReference>
-        </connector>
     </assignments>
-    <assignments>
-        <name>Outbound_Queue_Id</name>
-        <label>Outbound Queue Id</label>
-        <locationX>671</locationX>
-        <locationY>708</locationY>
-        <assignmentItems>
-            <assignToReference>groupId_Outbound</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Get_Queue_Ids.Id</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Get_Queue_Ids</targetReference>
-        </connector>
-    </assignments>
-    <decisions>
-        <name>Assign_Queue_Ids</name>
-        <label>Assign Queue Ids</label>
-        <locationX>1067</locationX>
-        <locationY>600</locationY>
-        <defaultConnector>
-            <targetReference>Get_Queue_Ids</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Outbound_Team</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Get_Queue_Ids.DeveloperName</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Outbound_Team</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Outbound_Queue_Id</targetReference>
-            </connector>
-            <label>Outbound_Team</label>
-        </rules>
-        <rules>
-            <name>Field_Marketing_Team</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Get_Queue_Ids.DeveloperName</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Field_Marketing_Team</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Marketing_Queue_Id</targetReference>
-            </connector>
-            <label>Field_Marketing_Team</label>
-        </rules>
-        <rules>
-            <name>NSP_Inbound_Solutions</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Get_Queue_Ids.DeveloperName</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>NSP_Inbound_Solutions</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Inbound_Queue_Id</targetReference>
-            </connector>
-            <label>NSP_Inbound_Solutions</label>
-        </rules>
-    </decisions>
     <decisions>
         <name>Does_Lead_Owner_need_updating</name>
         <label>Does Lead Owner need updating?</label>
-        <locationX>583</locationX>
-        <locationY>984</locationY>
+        <locationX>314</locationX>
+        <locationY>287</locationY>
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
             <name>Yes_Inbound_Solutions</name>
@@ -195,7 +52,7 @@
             </conditions>
             <conditions>
                 <leftValueReference>groupId_Inbound</leftValueReference>
-                <operator>IsNull</operator>
+                <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
@@ -224,7 +81,7 @@
             </conditions>
             <conditions>
                 <leftValueReference>groupId_FieldMarketing</leftValueReference>
-                <operator>IsNull</operator>
+                <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
@@ -235,46 +92,10 @@
             <label>Yes - Field Marketing</label>
         </rules>
     </decisions>
-    <decisions>
-        <name>Find_any_Queues</name>
-        <label>Find any Queues?</label>
-        <locationX>913</locationX>
-        <locationY>384</locationY>
-        <defaultConnectorLabel>No</defaultConnectorLabel>
-        <rules>
-            <name>Yes</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Get_Queues</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Get_Queue_Ids</targetReference>
-            </connector>
-            <label>Yes</label>
-        </rules>
-    </decisions>
     <description>Reassign Leads from Outbound Team</description>
     <environments>Default</environments>
     <interviewLabel>Reassign Leads from Outbound Team {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Reassign Leads from Outbound Team</label>
-    <loops>
-        <name>Get_Queue_Ids</name>
-        <label>Get Queue Ids</label>
-        <locationX>583</locationX>
-        <locationY>492</locationY>
-        <collectionReference>Get_Queues</collectionReference>
-        <iterationOrder>Asc</iterationOrder>
-        <nextValueConnector>
-            <targetReference>Assign_Queue_Ids</targetReference>
-        </nextValueConnector>
-        <noMoreValuesConnector>
-            <targetReference>Does_Lead_Owner_need_updating</targetReference>
-        </noMoreValuesConnector>
-    </loops>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -294,70 +115,12 @@
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
-    <recordLookups>
-        <name>Get_Queues</name>
-        <label>Get Queues</label>
-        <locationX>913</locationX>
-        <locationY>276</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Find_any_Queues</targetReference>
-        </connector>
-        <faultConnector>
-            <targetReference>Assign_varFaultElement_Get_Queues</targetReference>
-        </faultConnector>
-        <filterLogic>1 AND (2 OR 3 OR 4)</filterLogic>
-        <filters>
-            <field>Type</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Queue</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>DeveloperName</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Outbound_Team</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>DeveloperName</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Field_Marketing_Team</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>DeveloperName</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>NSP_Inbound_Solutions</stringValue>
-            </value>
-        </filters>
-        <getFirstRecordOnly>false</getFirstRecordOnly>
-        <object>Group</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordUpdates>
-        <name>Update_Lead_Owner</name>
-        <label>Update Lead Owner</label>
-        <locationX>187</locationX>
-        <locationY>1200</locationY>
-        <faultConnector>
-            <targetReference>Assign_varFaultElement_Update_Lead_Owner</targetReference>
-        </faultConnector>
-        <inputAssignments>
-            <field>OwnerId</field>
-            <value>
-                <elementReference>newOwnerId</elementReference>
-            </value>
-        </inputAssignments>
-        <inputReference>$Record</inputReference>
-    </recordUpdates>
     <start>
-        <locationX>50</locationX>
+        <locationX>188</locationX>
         <locationY>0</locationY>
+        <connector>
+            <targetReference>Does_Lead_Owner_need_updating</targetReference>
+        </connector>
         <filterLogic>(1 OR 2) AND (3 OR 6) AND (4 OR 5)</filterLogic>
         <filters>
             <field>Status</field>
@@ -403,46 +166,18 @@
         </filters>
         <object>Lead</object>
         <recordTriggerType>Update</recordTriggerType>
-        <scheduledPaths>
-            <connector>
-                <targetReference>Get_Queues</targetReference>
-            </connector>
-            <pathType>AsyncAfterCommit</pathType>
-        </scheduledPaths>
-        <triggerType>RecordAfterSave</triggerType>
+        <triggerType>RecordBeforeSave</triggerType>
     </start>
     <status>Draft</status>
-    <subflows>
-        <name>Insperity_Fault_Handler_Subflow_Flow</name>
-        <label>Insperity Fault Handler Subflow Flow</label>
-        <locationX>1507</locationX>
-        <locationY>492</locationY>
-        <flowName>Insperity_Fault_Handler_Subflow</flowName>
-        <inputAssignments>
-            <name>faultElement</name>
-            <value>
-                <elementReference>varFaultElement</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>faultFlow</name>
-            <value>
-                <stringValue>Reassign Leads from Outbound Team</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>faultMessage</name>
-            <value>
-                <elementReference>$Flow.FaultMessage</elementReference>
-            </value>
-        </inputAssignments>
-    </subflows>
     <variables>
         <name>groupId_FieldMarketing</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
+        <value>
+            <elementReference>$Setup.Reassign_Lead_Settings__c.Field_Marketing_Team__c</elementReference>
+        </value>
     </variables>
     <variables>
         <name>groupId_Inbound</name>
@@ -450,6 +185,9 @@
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
+        <value>
+            <elementReference>$Setup.Reassign_Lead_Settings__c.NSP_Inbound_Solutions__c</elementReference>
+        </value>
     </variables>
     <variables>
         <name>groupId_Outbound</name>
@@ -457,19 +195,8 @@
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>newOwnerId</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>varFaultElement</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>true</isOutput>
+        <value>
+            <elementReference>$Setup.Reassign_Lead_Settings__c.Outbound_Team__c</elementReference>
+        </value>
     </variables>
 </Flow>
