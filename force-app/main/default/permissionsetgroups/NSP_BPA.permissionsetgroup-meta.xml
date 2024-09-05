@@ -26,6 +26,7 @@
     <permissionSets>Opportunity_Spits_Elevated_Read_Edit</permissionSets>
     <permissionSets>Opportunity_Splits_Elevated_Create_Read_Edit</permissionSets>
     <permissionSets>Sales_Service_Object_Permission</permissionSets>
+    <permissionSets>Task_Due_Date_Required</permissionSets>
     <permissionSets>Upsell_Task</permissionSets>
     <permissionSets>Xactly_Permission_Set</permissionSets>
     <permissionSets>bloomfirex__Bloomfire_User</permissionSets>
