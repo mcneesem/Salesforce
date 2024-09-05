@@ -73,7 +73,7 @@
                 <behavior>Edit</behavior>
                 <field>NSP_Asset_Implementation_Project__c</field>
             </layoutItems>
-           <layoutItems>
+            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>NSP_Rating__c</field>
             </layoutItems>
@@ -289,6 +289,7 @@
         <fields>pse__Parent_Task__c</fields>
         <fields>pse__Milestone__c</fields>
         <fields>pse__Order__c</fields>
+        <fields>Task_Order__c</fields>
         <relatedList>pse__Project_Task__c.pse__Project__c</relatedList>
         <sortField>pse__Order__c</sortField>
         <sortOrder>Asc</sortOrder>

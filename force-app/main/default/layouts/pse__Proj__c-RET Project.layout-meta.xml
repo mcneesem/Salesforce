@@ -216,6 +216,7 @@
         <fields>pse__Start_Date__c</fields>
         <fields>pse__Status__c</fields>
         <fields>pse__Order__c</fields>
+        <fields>Task_Order__c</fields>
         <fields>pse__Long_Description__c</fields>
         <relatedList>pse__Project_Task__c.pse__Project__c</relatedList>
     </relatedLists>
