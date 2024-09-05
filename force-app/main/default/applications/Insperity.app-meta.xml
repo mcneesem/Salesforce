@@ -1812,6 +1812,24 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
+        <content>Termination_Form_Record_Page</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>NSP_Termination_Form__c</pageOrSobjectType>
+        <recordType>NSP_Termination_Form__c.NSP_Client_Reinstatement</recordType>
+        <type>Flexipage</type>
+        <profile>Finance Service</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Termination_Form_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>NSP_Termination_Form__c</pageOrSobjectType>
+        <recordType>NSP_Termination_Form__c.NSP_Client_Reinstatement</recordType>
+        <type>Flexipage</type>
+        <profile>Finance Service</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
         <content>Account_Record_Service_Page</content>
         <formFactor>Small</formFactor>
         <pageOrSobjectType>Account</pageOrSobjectType>
