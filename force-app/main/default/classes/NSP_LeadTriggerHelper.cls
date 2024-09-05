@@ -85,31 +85,25 @@ public class NSP_LeadTriggerHelper {
                 || ( String.isNotBlank(createdUserName) && externalUsers.contains( createdUserName ) )
                 )
             {
-                //  Lead created by Eloqua
-                if ( UserInfo.getUserId().equals( Label.Eloqua_Integration_User_Id ) ) {
-                    if ( String.isNotBlank( leadObject.Marketing_Priority__c )
-                        && leadObject.Marketing_Priority__c.equals( 'General' )
-                        )
-                    {
-                        //  290414 - Lead Assignment flow (TC) - New Outbound leads
-                        outboundTeamList.add(leadObject);
-                    } else if (
-                        String.isNotBlank(leadObject.Marketing_Priority__c)
-                        && leadObject.Marketing_Priority__c.equals( 'High - Event' )
-                        )
-                    {
-                        //  297391 -  Inbound Solutions - Existing Lead Flow Modification
-                        fieldMarketingTeamList.add(leadObject);
-                    } else if (
-                        String.isNotBlank( Label.Eloqua_Lead_Marketing_Priority )
-                        && !Label.Eloqua_Lead_Marketing_Priority.split( ',' ).contains( leadObject.Marketing_Priority__c )
-                        && String.isNotBlank( Label.Eloqua_Integration_User_Id )
-                        && Label.Eloqua_Integration_User_Id.equals( leadObject.ownerId )
-                        )
-                    {
-                        //  290445 - Inbound Solutions - Existing Lead Flow
-                        //  297391 -  Inbound Solutions - Existing Lead Flow Modification
-                        inboundSolutionsList.add(leadObject);
+                // Lead created by Eloqua
+                // 300021 = Eloqua Lead assigned to FMT queue instead of specified owner
+                if ( String.isNotBlank( Label.Eloqua_Integration_User_Id )
+                    && UserInfo.getUserId().equals( Label.Eloqua_Integration_User_Id )
+                    )
+                {
+                    if ( Label.Eloqua_Integration_User_Id.equals( leadObject.ownerId ) ) {
+                        if ( String.isNotBlank( leadObject.Marketing_Priority__c ) ) {
+                            if (leadObject.Marketing_Priority__c.equals( 'General' )){
+                                outboundTeamList.add(leadObject);
+                            } else if (leadObject.Marketing_Priority__c.equals( 'High - Event' )){
+                                fieldMarketingTeamList.add(leadObject);
+                            } else if (leadObject.Marketing_Priority__c.equals( 'High - Direct' )){
+                                inboundSolutionsList.add(leadObject);
+                            }
+                        } else if ( String.isBlank( leadObject.Marketing_Priority__c ) ){
+                            //  Salesforce sets the owner to Eloqua when lead owner is not specified.
+                            inboundSolutionsList.add(leadObject);
+                        }
                     }
                 } else {
                     inboundSolutionsList.add(leadObject);

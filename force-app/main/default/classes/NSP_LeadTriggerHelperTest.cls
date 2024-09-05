@@ -549,6 +549,7 @@ public class NSP_LeadTriggerHelperTest {
         List<Group> outBoundTeamQueue = [SELECT Id FROM Group WHERE Type = 'Queue' AND DeveloperName = :System.label.Outbound_Team_DeveloperName];
         List<Group> fieldMarketingTeamQueue = [SELECT Id FROM Group WHERE Type = 'Queue' AND DeveloperName = :System.label.Field_Marketing_Team_DeveloperName];
         List<Account> account = [SELECT id FROM Account WHERE name = 'Test Account' LIMIT 1];
+        ID userId = UserInfo.getUserId();
 
         // Start Test
         Test.startTest();
@@ -556,7 +557,7 @@ public class NSP_LeadTriggerHelperTest {
             
             List <Lead> leads = new  List <Lead>();
             
-            //  Lead should not be assigned to Inbound Solutions, instead should be assigned to Outbound Team
+            //  Lead should be assigned to Outbound Team
             Lead lead1 = new  Lead();
             lead1.company = account[0].id;
             lead1.Marketing_Priority__c = 'General';
@@ -564,6 +565,7 @@ public class NSP_LeadTriggerHelperTest {
             lead1.lastName = 'Test1';
             lead1.email = 'myemail1@yahoo.com';
             lead1.phone = '999999';
+            lead1.ownerId = Label.Eloqua_Integration_User_Id;
             leads.add(lead1);
             
             //  Lead should be assigned to Inbound Solutions
@@ -587,11 +589,52 @@ public class NSP_LeadTriggerHelperTest {
             lead3.phone = '999999';
             lead3.ownerId = Label.Eloqua_Integration_User_Id;
             leads.add(lead3);
+
+            //  Lead should not be assigned to any queue
+            Lead lead4 = new  Lead();
+            lead4.Marketing_Priority__c = 'High - Event';
+            lead4.company = account[0].id;
+            lead4.firstName = 'Test4';
+            lead4.lastName = 'Test4';
+            lead4.email = 'myemail4@yahoo.com';
+            lead4.phone = '999999';
+            lead4.ownerId = userId;
+            leads.add(lead4);
+
+            //  Lead should not be assigned to any queue
+            Lead lead5 = new  Lead();
+            lead5.Marketing_Priority__c = 'General';
+            lead5.company = account[0].id;
+            lead5.firstName = 'Test5';
+            lead5.lastName = 'Test5';
+            lead5.email = 'myemail5@yahoo.com';
+            lead5.phone = '999999';
+            lead5.ownerId = userId;
+            leads.add(lead5);
             
+            //  Lead should not be assigned to any queue
+            Lead lead6 = new  Lead();
+            lead6.Marketing_Priority__c = 'High - Direct';
+            lead6.company = account[0].id;
+            lead6.firstName = 'Test6';
+            lead6.lastName = 'Test6';
+            lead6.email = 'myemail6@yahoo.com';
+            lead6.phone = '999999';
+            lead6.ownerId = userId;
+            leads.add(lead6);
+
+            //  Lead should be assigned to Inbound Solutions
+            Lead lead7 = new  Lead();
+            lead7.company = account[0].id;
+            lead7.firstName = 'Test6';
+            lead7.lastName = 'Test6';
+            lead7.email = 'myemail6@yahoo.com';
+            lead7.phone = '999999';
+            leads.add(lead7);
+
             insert leads;
             
             List<Lead> lead_1 = [SELECT ownerId FROM Lead WHERE id =: lead1.id];
-            system.assertNotEquals(inBoundSolutionsQueue[0].id, lead_1[0].Ownerid);
             system.assertEquals(outBoundTeamQueue[0].id, lead_1[0].Ownerid);
 
             List<Lead> lead_2 = [SELECT ownerId FROM Lead WHERE id =: lead2.id];
@@ -600,6 +643,17 @@ public class NSP_LeadTriggerHelperTest {
             List<Lead> lead_3 = [SELECT ownerId FROM Lead WHERE id =: lead3.id];
             system.assertEquals(fieldMarketingTeamQueue[0].id, lead_3[0].Ownerid);
 
+            List<Lead> lead_4 = [SELECT ownerId FROM Lead WHERE id =: lead4.id];
+            system.assertEquals(userId, lead_4[0].Ownerid);
+
+            List<Lead> lead_5 = [SELECT ownerId FROM Lead WHERE id =: lead5.id];
+            system.assertEquals(userId, lead_5[0].Ownerid);
+
+            List<Lead> lead_6 = [SELECT ownerId FROM Lead WHERE id =: lead6.id];
+            system.assertEquals(userId, lead_6[0].Ownerid);
+                       
+            List<Lead> lead_7 = [SELECT ownerId FROM Lead WHERE id =: lead7.id];
+            system.assertEquals(inBoundSolutionsQueue[0].id, lead_7[0].Ownerid);
         }
         Test.stopTest();
     }
