@@ -11,7 +11,7 @@
     <permissionSets>Field_Access_to_System_Admin_Lite</permissionSets>
     <permissionSets>NSP_Termination_Form_Access</permissionSets>
     <permissionSets>NVMStatsSF__View_NVM_Stats</permissionSets>
-    <permissionSets>Project_Task_Permission</permissionSets>
+    <permissionSets>Project_Task_Access</permissionSets>
     <permissionSets>Resource_Absence_record_type_access</permissionSets>
     <permissionSets>Sales_Enablement</permissionSets>
     <permissionSets>force__PipelineInspectionIncluded</permissionSets>

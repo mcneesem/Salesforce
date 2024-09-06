@@ -7,6 +7,6 @@
     <permissionSets>Bypass_Opportunity_Email_Alerts</permissionSets>
     <permissionSets>Data_Migration_Permission_Set</permissionSets>
     <permissionSets>Legacy_Data_Migration_Object_Permissions</permissionSets>
-    <permissionSets>Project_Task_Permission</permissionSets>
+    <permissionSets>Project_Task_Access</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>
