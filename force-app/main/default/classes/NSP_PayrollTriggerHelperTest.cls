@@ -1,9 +1,8 @@
 @isTest
-public class NSP_PayrollTriggerHelperTest {
-    public Static final Id WOASSETRECTYPEID = Schema.SObjectType.Asset.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.WO_ASSET_RECORDTYPE).getRecordTypeId();
+private class NSP_PayrollTriggerHelperTest {
+    private Static final Id WOASSETRECTYPEID = Schema.SObjectType.Asset.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.WO_ASSET_RECORDTYPE).getRecordTypeId();
     
-    @testSetup
-    private static void setupTestData(){
+    @testSetup private static void setupTestData(){
         
         Contact newContact = (Contact)NSP_TestExtendedDataFactory.createSObject(new Contact(), 'NSP_TestDataFactory.ContactDefaultsLight', false);
         newContact.NSP_Work_email__c = 'Test@email.com';
@@ -69,7 +68,7 @@ public class NSP_PayrollTriggerHelperTest {
 
     }
     
-    static testMethod void shouldPublishEvent() {
+    @isTest private static void shouldPublishEvent() {
         
         Test.startTest();
         Contact con = [SELECT Id, Email, MobilePhone, Phone, NSP_Work_Phone__c FROM Contact WHERE Contact.MobilePhone = '876657787'];
@@ -84,8 +83,8 @@ public class NSP_PayrollTriggerHelperTest {
         Test.stopTest();
         System.assert(NSP_PayrollTriggerHelper.payrollDataSheetEventListToBeInserted.size()==1 );
     }
-    @isTest
-    public static void deepCloneRec() {
+
+    @isTest private static void deepCloneRec() {
         Test.StartTest();
         Account acc = new Account();
         acc.Name='Test Account';
@@ -147,8 +146,7 @@ public class NSP_PayrollTriggerHelperTest {
     * @return void             
     */ 
     
-    @isTest
-    static void checkForGovernmentContractorTest() {
+    @isTest private static void checkForGovernmentContractorTest() {
         Asset woAsset = [SELECT Id, NSP_Government_Contractor__c FROM Asset WHERE recordTypeId =: WOASSETRECTYPEID LIMIT 1];
         woAsset.NSP_Government_Contractor__c = true;
         Test.startTest();
@@ -164,8 +162,7 @@ public class NSP_PayrollTriggerHelperTest {
     * @Created date: 11/23/2022. 
     * @return void             
     */
-    @isTest
-    static void updatePDSRelatedContactFieldsTest() {
+    @isTest private static void updatePDSRelatedContactFieldsTest() {
         
         Test.startTest();
         NSP_Sub_Client__c subCli = [SELECT Id, NSP_Account__c ,NSP_Account__r.NSP_AIMS_Client__c FROM NSP_Sub_Client__c LIMIT 1];
@@ -190,8 +187,7 @@ public class NSP_PayrollTriggerHelperTest {
     * @Created date: 28/08/2024
     * @return void             
     */
-    @isTest
-     static void updatePayrollSpecialistField() {
+    @isTest private static void updatePayrollSpecialistField() {
         
         Test.startTest();
         Account acc = [Select Id from Account Where Name = 'Test Account' LIMIT 1];
@@ -203,6 +199,6 @@ public class NSP_PayrollTriggerHelperTest {
         NSP_Payroll__c assertpds = [SELECT Id, Payroll_Specialist__c FROM NSP_Payroll__c WHERE Id != null LIMIT 1];
         User userobj = [Select Id, Name From User WHERE userName = 'testpallavi257045@testpallavi.testpallavi' LIMIT 1];
         system.assertEquals(assertpds.Payroll_Specialist__c,userobj.Name);
-		system.assertNotEquals(assertpds.Payroll_Specialist__c,null);
+        system.assertNotEquals(assertpds.Payroll_Specialist__c,null);
         }
 }
