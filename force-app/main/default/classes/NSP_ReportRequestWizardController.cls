@@ -1,5 +1,5 @@
 public with sharing class NSP_ReportRequestWizardController {
-    // test w/ NSP_ReportRequestWizardControllerTest (85%)
+    // test w/ NSP_ReportRequestWizardControllerTest (87%)
 
     public static final Id WO_ASSET = NSP_GenericRecordType.getRecordTypeId('Asset',NSP_ServiceConstants.WO_ASSET_RECORDTYPE );
     private static final String NOT_FOUND = 'Not Found';
@@ -57,30 +57,42 @@ public with sharing class NSP_ReportRequestWizardController {
         }
     }
 
-    /**
-	* @MethodName: getHRspecialistAndFinanceLevel
-	* @Description: This method fetch HR specialist from Account team and Finance level, segment, service region from WO asset
-	* @param : String accountID
-	* @modifiedDate : 12/09/2022
-	* @return Map<String,String>                          
-	*/
-
+    //
+    // @MethodName: getHRspecialistAndFinanceLevel
+    // @Description: This method fetch HR specialist from Account team and Finance level, segment, service region from WO asset
+    // @param : String accountID
+    // @modifiedDate : 12/09/2022
+    // @return Map<String,String>
+    //
     @AuraEnabled
     public static Map<String,String> getHRspecialistAndFinanceLevel(String accountID){
-        
         try {
-            
             Map<String,String> jSONmap =new Map<String,String>();
             String userId,financeLevel,segment,region;
-            List <String> accountTeamFields = new List <String> {'Id', 'NSP_Primary__c', 'NSP_User__r.Name',
-                												'NSP_User__c', 'NSP_Role__c','NSP_Account__c'};
-            List <String> assetFields       = new List <String> {'Id', 'AccountId','NSP_Service_Region__c', 'NSP_Account_Status__c',
-                												'toLabel(NSP_Financial_Guidelines__c)','NSP_Client_Segment_type__c'};
+            List <String> accountTeamFields = new List <String> {
+                'Id', 'NSP_Primary__c', 'NSP_User__r.Name',
+                'NSP_User__c', 'NSP_Role__c','NSP_Account__c'
+            };
+            List <String> assetFields = new List <String> {
+                'Id', 'AccountId','NSP_Service_Region__c', 'NSP_Account_Status__c',
+                'toLabel(NSP_Financial_Guidelines__c)','NSP_Client_Segment_type__c'
+            };
             //fetch Primary HR specialist from Account team associated with the accountid
-            List<NSP_Account_Team__c> accountTeam = [SELECT Id,NSP_Primary__c,NSP_User__r.Name,NSP_User__c,NSP_Role__c,NSP_Account__c
-                                                    FROM NSP_Account_Team__c WHERE NSP_Account__c=:accountID 
-                                                    AND ( NSP_Role__c =: NSP_ServiceConstants.HRSpecialist OR NSP_Role__c =: NSP_ServiceConstants.BUS_TEAM_HRSP_CL)
-                                                    AND NSP_User__c !=null   ];
+            List<NSP_Account_Team__c> accountTeam = [
+                SELECT
+                    Id , NSP_Primary__c ,
+                    NSP_User__r.Name , NSP_User__c ,
+                    NSP_Role__c , NSP_Account__c
+                FROM NSP_Account_Team__c
+                WHERE (
+                    NSP_Account__c = :accountID 
+                    AND (
+                        NSP_Role__c = :NSP_ServiceConstants.HRSpecialist
+                        OR NSP_Role__c = :NSP_ServiceConstants.BUS_TEAM_HRSP_CL
+                    )
+                    AND NSP_User__c != null
+                )
+            ];
             
             //Map HR specialist of wizard output to Account team HR Specialist
             if(accountTeam.size()>0){
@@ -95,30 +107,34 @@ public with sharing class NSP_ReportRequestWizardController {
                 }
             }
             jSONmap.put('UserId', (userId != null?userId:NOT_FOUND) );
-			// fetch credit level, service region and client segment type from wo asset associated with client name selected
-			String assetQuery = new NSP_QueryBuilder(
-                				'Asset',
-                 				 assetFields)
-                                 .addFilter('RecordTypeId', WO_ASSET)
-                                 .addFilter('AccountId', accountID)
-                                 .addFilter('NSP_Account_Status__c', NSP_ServiceConstants.ASSET_ACTIVE_STATUS)
-                                 .setSecurityEnforce(false)
-                                 .build();
+            // fetch credit level, service region and client segment type from wo asset associated with client name selected
+            String assetQuery = new NSP_QueryBuilder(
+                    'Asset',
+                    assetFields
+                )
+                .addFilter('RecordTypeId', WO_ASSET)
+                .addFilter('AccountId', accountID)
+                .setSecurityEnforce(false)
+                .build();
             assetQuery += ' AND (NSP_Financial_Guidelines__c!=NULL OR NSP_Client_Segment_type__c!=null OR NSP_Service_Region__c!=null) ' ;
             assetQuery += 'ORDER BY LastModifiedDate ASC LIMIT 1';
             Asset[] asset = Database.query(assetQuery);
-
             if(asset.size()>0){
                 financeLevel= asset[0].NSP_Financial_Guidelines__c;
-                segment=asset[0].NSP_Client_Segment_type__c;
+                if ( String.isNotBlank( asset[0]?.NSP_Account_Status__c ) ) {
+                    if ( asset[0]?.NSP_Account_Status__c.equalsIgnoreCase( NSP_ServiceConstants.ASSET_ACTIVE_STATUS )
+                        || asset[0]?.NSP_Account_Status__c.equalsIgnoreCase( NSP_ServiceConstants.TERMINATED )
+                        )
+                    {
+                        segment=asset[0].NSP_Client_Segment_type__c;
+                    }
+                }
                 region = asset[0].NSP_Service_Region__c;
             } 
             //map finance level, region and segment of wizard output to credit level and segment type of wo asset respecitvely
             jSONmap.put('FinanceLevel', ( financeLevel!= null? financeLevel:NOT_FOUND) );
             jSONmap.put('segment', ( segment!= null? segment: NOT_FOUND) );
             jSONmap.put('region', ( region!= null? region: NOT_FOUND) );
-
-
             return jSONmap;
         } catch (Exception excep) {
               throw new AuraHandledException(excep.getMessage());
