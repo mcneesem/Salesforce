@@ -1,9 +1,8 @@
 @isTest
-public class NSP_PayrollTriggerHelperTest {
-    public Static final Id WOASSETRECTYPEID = Schema.SObjectType.Asset.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.WO_ASSET_RECORDTYPE).getRecordTypeId();
+private class NSP_PayrollTriggerHelperTest {
+    private Static final Id WOASSETRECTYPEID = Schema.SObjectType.Asset.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.WO_ASSET_RECORDTYPE).getRecordTypeId();
     
-    @testSetup
-    private static void setupTestData(){
+    @testSetup private static void setupTestData(){
         
         Contact newContact = (Contact)NSP_TestExtendedDataFactory.createSObject(new Contact(), 'NSP_TestDataFactory.ContactDefaultsLight', false);
         newContact.NSP_Work_email__c = 'Test@email.com';
@@ -16,6 +15,17 @@ public class NSP_PayrollTriggerHelperTest {
         accoutObject.Name = 'Test Account';
         accoutObject.NSP_AIMS_Client__c = '52000';
         insert accoutObject;
+            
+        User oUser = (User)NSP_TestExtendedDataFactory.createSObject(new User(), 'NSP_TestDataFactory.UserDefaults', false);
+        oUser.EmployeeNumber = System.Label.NSP_User_Employee_Number;
+        oUser.userName = 'testpallavi257045@testpallavi.testpallavi';
+        insert oUser;
+        
+        NSP_Account_Team__c accteam = new NSP_Account_Team__c();
+        accteam.NSP_Account__c = accoutObject.Id;
+        accteam.NSP_Role__c = 'Payroll Specialist';
+        accteam.NSP_User__c = oUser.Id;
+        insert accteam;
 
         Contact con = new Contact();
         con.AccountId = accoutObject.Id ;
@@ -58,7 +68,7 @@ public class NSP_PayrollTriggerHelperTest {
 
     }
     
-    static testMethod void shouldPublishEvent() {
+    @isTest private static void shouldPublishEvent() {
         
         Test.startTest();
         Contact con = [SELECT Id, Email, MobilePhone, Phone, NSP_Work_Phone__c FROM Contact WHERE Contact.MobilePhone = '876657787'];
@@ -73,8 +83,8 @@ public class NSP_PayrollTriggerHelperTest {
         Test.stopTest();
         System.assert(NSP_PayrollTriggerHelper.payrollDataSheetEventListToBeInserted.size()==1 );
     }
-    @isTest
-    public static void deepCloneRec() {
+
+    @isTest private static void deepCloneRec() {
         Test.StartTest();
         Account acc = new Account();
         acc.Name='Test Account';
@@ -136,8 +146,7 @@ public class NSP_PayrollTriggerHelperTest {
     * @return void             
     */ 
     
-    @isTest
-    static void checkForGovernmentContractorTest() {
+    @isTest private static void checkForGovernmentContractorTest() {
         Asset woAsset = [SELECT Id, NSP_Government_Contractor__c FROM Asset WHERE recordTypeId =: WOASSETRECTYPEID LIMIT 1];
         woAsset.NSP_Government_Contractor__c = true;
         Test.startTest();
@@ -153,8 +162,7 @@ public class NSP_PayrollTriggerHelperTest {
     * @Created date: 11/23/2022. 
     * @return void             
     */
-    @isTest
-    static void updatePDSRelatedContactFieldsTest() {
+    @isTest private static void updatePDSRelatedContactFieldsTest() {
         
         Test.startTest();
         NSP_Sub_Client__c subCli = [SELECT Id, NSP_Account__c ,NSP_Account__r.NSP_AIMS_Client__c FROM NSP_Sub_Client__c LIMIT 1];
@@ -173,5 +181,24 @@ public class NSP_PayrollTriggerHelperTest {
         Test.stopTest();
         NSP_Payroll__c assertPDS = [SELECT Id, NSP_Payroll_SCC__c  FROM NSP_Payroll__c WHERE Id != null LIMIT 1];
         system.assert(subClientCon.NSP_Is_Primary__c);
-    }
+    } 
+    /**
+    * @Description: This test method is used to cover updatePayrollSpecialistField method
+    * @Created date: 28/08/2024
+    * @return void             
+    */
+    @isTest private static void updatePayrollSpecialistField() {
+        
+        Test.startTest();
+        Account acc = [Select Id from Account Where Name = 'Test Account' LIMIT 1];
+        NSP_Payroll__c pds = [SELECT Id, Account__c FROM NSP_Payroll__c WHERE Id != null LIMIT 1];
+        pds.Account__c = acc.Id;
+        update pds;
+        
+        Test.stopTest();
+        NSP_Payroll__c assertpds = [SELECT Id, Payroll_Specialist__c FROM NSP_Payroll__c WHERE Id != null LIMIT 1];
+        User userobj = [Select Id, Name From User WHERE userName = 'testpallavi257045@testpallavi.testpallavi' LIMIT 1];
+        system.assertEquals(assertpds.Payroll_Specialist__c,userobj.Name);
+        system.assertNotEquals(assertpds.Payroll_Specialist__c,null);
+        }
 }
