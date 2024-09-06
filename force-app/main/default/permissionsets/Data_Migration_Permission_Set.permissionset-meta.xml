@@ -14117,16 +14117,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>NSP_Payroll__c.Account__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>NSP_Payroll__c.Payroll_Specialist__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>NSP_Plan_SubPlan__c.NSP_Annual_Profit_Sharing__c</field>
         <readable>true</readable>
     </fieldPermissions>
