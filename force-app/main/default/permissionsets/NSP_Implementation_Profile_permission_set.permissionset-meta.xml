@@ -47908,6 +47908,11 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>pse__Project_Task__c.Implementation_Profile__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>pse__Project_Task__c.NSP_AIMS_Account__c</field>
         <readable>false</readable>
