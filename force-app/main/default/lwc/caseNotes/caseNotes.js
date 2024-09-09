@@ -2,7 +2,7 @@ import { LightningElement,api } from 'lwc';
 
 export default class CaseNotes extends LightningElement {
     noteButtonClicked = false;
-    @api showfields;
+    @api showfields = false;
     @api recordId;
 
     handleNotes(){
