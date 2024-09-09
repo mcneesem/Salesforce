@@ -1452,7 +1452,7 @@ public class NSP_ProjectTasksTriggerHelper {
         }
     }
     //Letter Received email.
-private void assetListEmail( String accountName , Id accountId , String accountAIMS , List<String> listOfToAddresses , List<Asset> assetList ) {
+    private void assetListEmail( String accountName , Id accountId , String accountAIMS , List<String> listOfToAddresses , List<Asset> assetList ) {
         String subjectString = null;
         String mailBody = null;
         String accName = accountName+' | '+accountAIMS;
