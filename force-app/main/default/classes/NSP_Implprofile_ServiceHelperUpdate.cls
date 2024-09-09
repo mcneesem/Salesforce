@@ -1470,7 +1470,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
         
     }
     
-public  void createProjecttaskforGarnishment(){
+    public void createProjecttaskforGarnishment() {
         
         //		If Do any EEs have garnishments? 
         List<pse__Project_Task__c> projectTaskList = new List<pse__Project_Task__c>();
@@ -1521,7 +1521,7 @@ public  void createProjecttaskforGarnishment(){
     }
     
     public  void createProjecttaskforTaxlevis(){
-
+        
         //			If Do any EEs tax levies? 
         List<pse__Project_Task__c> projectTaskList = new List<pse__Project_Task__c>();
         List<NSP_Implementation_Profile_Automation__c> ipAutomationRecords = new List<NSP_Implementation_Profile_Automation__c>();
@@ -2301,7 +2301,7 @@ public  void createProjecttaskforGarnishment(){
         
     }
   
-    public  void createSubtaskforGarnishments(){
+    public void createSubtaskforGarnishments() {
         List<pse__Project_Task__c> projectTaskList = new List<pse__Project_Task__c>();
         List<pse__Project_Task__c> taskList = new List<pse__Project_Task__c>  (); 
         Map<Id,Implementation_Profile__c> impProfMap = new  Map<Id,Implementation_Profile__c>();
@@ -2330,9 +2330,8 @@ public  void createProjecttaskforGarnishment(){
                         }
                     }
                     List<String> lstNamesEmployess = new List<String>();
-                    if(!String.isBlank(ipRec.NSP_Documents_garnishments__c)){
+                    if ( String.isNotBlank( ipRec.NSP_Documents_garnishments__c ) ) {
                         List<String> documentList = ipRec.NSP_Documents_garnishments__c.split(',');
-                        //lstNamesEmployess= ipRec.NSP_Employee_Names_List_garnishments__c.split(',');
                         if(!documentList.isEmpty()){
                             for (String documents : documentList) {
                                 // Split each key-value pair by tilde (~)
@@ -2418,7 +2417,6 @@ public  void createProjecttaskforGarnishment(){
                             for (String documents : documentList) {
                                 // Split each key-value pair by tilde (~)
                                 List<String> documentSplit = documents.split('~');
-                                
                                 // Ensure we have exactly two documentSplit, key and value
                                 if (documentSplit.size() == 2) {
                                     String documentKey = documentSplit[0].trim();

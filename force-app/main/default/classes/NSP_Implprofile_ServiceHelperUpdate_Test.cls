@@ -10,8 +10,7 @@ private class NSP_Implprofile_ServiceHelperUpdate_Test {
     private final static String employeeNameParentTask = 'Parent';
     private final static String documentParentTask = 'Parent~Requested - Not Collected';
 
-    @testSetup
-    private static void setUpData(){
+    @testSetup private static void setUpData() {
         
        User userRec = (User)NSP_TestExtendedDataFactory.createSObject(new User(), 'NSP_TestDataFactory.UserDefaults', true);
        Contact oContact = (Contact)NSP_TestExtendedDataFactory.createSObject(new Contact(), 'NSP_TestDataFactory.ContactDefaultsLight', true);
@@ -103,8 +102,7 @@ private class NSP_Implprofile_ServiceHelperUpdate_Test {
     
     
     
-    @isTest
-    private static void allFalseTest(){
+    @isTest private static void allFalseTest() {
         pse__Proj__c project = [SELECT Id, Name FROM pse__Proj__c WHERE pse__Project_Type__c =:  NSP_ServiceConstants.ImplementationProjectType LIMIT 1];
         Implementation_Profile__c ip = [SELECT Id, NSP_Project__c, NSP_Project__r.Name FROM Implementation_Profile__c WHERE NSP_Project__c =:project.Id LIMIT 1];
         //Implementation_Profile__c ip = new Implementation_Profile__c();
@@ -124,8 +122,7 @@ private class NSP_Implprofile_ServiceHelperUpdate_Test {
         Test.stopTest();
     }
     
-    @isTest
-    private static void checkForClientSposoredPlansTest(){
+    @isTest private static void checkForClientSposoredPlansTest() {
         
         Contact cc =[SELECT Id from Contact WHERE Name != null limit 1];
         pse__Proj__c project = [SELECT Id, Name FROM pse__Proj__c WHERE TemplateName__c=:label.FSOImplementationProject LIMIT 1];
@@ -164,8 +161,7 @@ private class NSP_Implprofile_ServiceHelperUpdate_Test {
     
     
     
-    @isTest
-    private static void checkforPayrollDepartments(){
+    @isTest private static void checkforPayrollDepartments() {
         
         pse__Proj__c project  = [SELECT Id, Name, pse__Project_Type__c FROM pse__Proj__c WHERE TemplateName__c=:label.FSOImplementationProject LIMIT 1];
         Implementation_Profile__c ip = [SELECT Id,Name, NSP_Project__c, NSP_Project__r.Name,Client_has_any_special_payroll_needs__c, Select_all_payroll_needs_that_apply__c  FROM Implementation_Profile__c WHERE NSP_Project__c =: project.Id LIMIT 1];
@@ -190,8 +186,7 @@ private class NSP_Implprofile_ServiceHelperUpdate_Test {
         Test.stopTest();
     }
     
-    @isTest
-    private static void checkforPayrollJobCostingTest(){
+    @isTest private static void checkforPayrollJobCostingTest() {
         Test.startTest();
         pse__Proj__c project  = [SELECT Id, Name, pse__Project_Type__c FROM pse__Proj__c WHERE TemplateName__c=:label.FSOImplementationProject LIMIT 1];
         Implementation_Profile__c ip = [SELECT Id, NSP_Project__c FROM Implementation_Profile__c WHERE NSP_Project__c=: project.Id LIMIT 1];
@@ -219,10 +214,9 @@ private class NSP_Implprofile_ServiceHelperUpdate_Test {
         Test.stopTest();
     }
 
-@isTest
-    private static void createSubtaskIp(){
+    @isTest private static void createSubtaskIp() {
         Test.startTest();
-    	pse__Proj__c project  = [SELECT Id, Name, pse__Project_Type__c FROM pse__Proj__c WHERE TemplateName__c=:label.FSOImplementationProject LIMIT 1];
+        pse__Proj__c project  = [SELECT Id, Name, pse__Project_Type__c FROM pse__Proj__c WHERE TemplateName__c=:label.FSOImplementationProject LIMIT 1];
         Implementation_Profile__c ip = [SELECT Id, NSP_Project__c FROM Implementation_Profile__c WHERE NSP_Project__c=: project.Id LIMIT 1];
         ip.Do_any_EEs_have_garnishments__c = NSP_ServiceConstants.YES ;
         ip.Do_any_EEs_have_tax_levies__c = NSP_ServiceConstants.YES;
@@ -238,7 +232,7 @@ private class NSP_Implprofile_ServiceHelperUpdate_Test {
         ip.Document_Levies__c = documents;
         ip.NSP_Form_Completed__c=true;
         update ip;
-		List<pse__Project_Task__c> projTaskList = [Select Id,name,Implementation_Profile__c from pse__Project_Task__c WHERE pse__Project__c=: project.id];
+        List<pse__Project_Task__c> projTaskList = [Select Id,name,Implementation_Profile__c from pse__Project_Task__c WHERE pse__Project__c=: project.id];
         system.assertEquals(true,projTaskList.size()>0);        
         Test.stopTest();
     }
