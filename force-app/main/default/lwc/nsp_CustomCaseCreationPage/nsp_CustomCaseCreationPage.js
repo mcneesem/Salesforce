@@ -905,20 +905,20 @@ export default class Nsp_CustomCaseCreationPage extends NavigationMixin(Lightnin
     handleCancelNotes(){
         this.noteButtonClicked = false;
     }
-    handleNotesInsertion(createdCaseId){
+    handleNotesInsertion( createdCaseId ) {
         if ( this.isSubCompPermissionEnabled ) {
             const notesComp = this.template.querySelector( "c-case-notes" );
-            if(notesComp !== undefined && notesComp !== null){
+            if ( ( notesComp !== undefined ) && ( notesComp !== null ) ) {
                 notesComp.submit( createdCaseId );
             }
         } else {
-            const notesFields = this.template.querySelectorAll("lightning-input-field");
-            notesFields.forEach(field => {
-                if (field.fieldName === 'Case__c') {
+            const notesFields = this.template.querySelectorAll( "lightning-input-field" );
+            notesFields.forEach( field => {
+                if ( field.fieldName === 'Case__c' ) {
                     field.value = createdCaseId;
                 }
             });
-            this.template.querySelector('[data-id = "note-record-form"]').submit();
+            this.template.querySelector( '[data-id = "note-record-form"]' ).submit();
         }
     }
     handleCancel(event) {

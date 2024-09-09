@@ -567,49 +567,45 @@
                             </lightning-layout>
                         </div>
                     </template>
-
-                    <!-- Add New Notes Component -->
+                    <!-- Notes -->
                     <template lwc:if={isSubCompPermissionEnabled}>
-                        <c-case-notes 
+                        <c-case-notes
                             onselected={handleNotes}
                             oncanceled={handleCancelNotes} 
-                            showfields>
+                            showfields
+                            >
                         </c-case-notes>
                     </template>
-                    <!-- Add New Notes Component -->
-                    <!-- Add Old Notes -->
                     <template lwc:else>
                         <div class="slds-p-around_small">
-                        <lightning-card title="Notes" icon-name="custom:custom19">
-                            <lightning-button label="Add Notes" class="slds-p-around_small" slot="actions" onclick={handleNotes}></lightning-button>
-                            <lightning-button label="Cancel" class="slds-p-around_small" slot="actions" onclick={handleCancelNotes}></lightning-button>
-                            <lightning-record-edit-form 
-                            density="compact"
-                            object-api-name="NSP_Note__c"
-                            data-id="note-record-form"
-                            lwc:if = {noteButtonClicked}>
-                            <div class="slds-grid slds-wrap slds-p-around--medium">
-                                <div class="slds-col slds-size_6-of-12">
-                                    <lightning-input-field field-name='Case__c' data-id = "notesCaseId" class="slds-hidden"></lightning-input-field>
-                                </div>
-                                <div class="slds-col slds-size_6-of-12">
-                                    <lightning-input-field field-name='NSP_Parent_Type__c' class="slds-hidden"></lightning-input-field> 
-                                </div>   
-                                <lightning-input-field field-name='Case__c' data-id = "notesCaseId" class="slds-hidden"> 
-                                </lightning-input-field>  
-                                <div class="slds-col slds-size_6-of-12 slds-p-horizontal_medium">
-                                    <lightning-input-field field-name='Note_Type__c'> </lightning-input-field>
-                                </div>
-                                <div class="slds-col slds-size_6-of-12 slds-p-horizontal_medium">
-                                    <lightning-input-field field-name='Note__c'> </lightning-input-field>
-                                </div>
-                                </div>
-                            </lightning-record-edit-form>
-                        </lightning-card>  
-                        </div> 
-                    </template>                 
-                    <!-- Add Old Notes -->
-
+                            <lightning-card title="Notes" icon-name="custom:custom19">
+                                <lightning-button label="Add Notes" class="slds-p-around_small" slot="actions" onclick={handleNotes}></lightning-button>
+                                <lightning-button label="Cancel" class="slds-p-around_small" slot="actions" onclick={handleCancelNotes}></lightning-button>
+                                <lightning-record-edit-form
+                                    density="compact"
+                                    object-api-name="NSP_Note__c"
+                                    data-id="note-record-form"
+                                    lwc:if = {noteButtonClicked}
+                                    >
+                                    <div class="slds-grid slds-wrap slds-p-around--medium">
+                                        <div class="slds-col slds-size_6-of-12">
+                                            <lightning-input-field field-name='Case__c' data-id = "notesCaseId" class="slds-hidden"></lightning-input-field>
+                                        </div>
+                                        <div class="slds-col slds-size_6-of-12">
+                                            <lightning-input-field field-name='NSP_Parent_Type__c' class="slds-hidden"></lightning-input-field>
+                                        </div>
+                                        <lightning-input-field field-name='Case__c' data-id = "notesCaseId" class="slds-hidden"></lightning-input-field>
+                                        <div class="slds-col slds-size_6-of-12 slds-p-horizontal_medium">
+                                            <lightning-input-field field-name='Note_Type__c'></lightning-input-field>
+                                        </div>
+                                        <div class="slds-col slds-size_6-of-12 slds-p-horizontal_medium">
+                                            <lightning-input-field field-name='Note__c'></lightning-input-field>
+                                        </div>
+                                    </div>
+                                </lightning-record-edit-form>
+                            </lightning-card>  
+                        </div>
+                    </template>
                     <!--Attachment Code by Sruthi - Start-->
                     <div class="slds-p-around_small">
                     <template if:true={showCaseForm}>

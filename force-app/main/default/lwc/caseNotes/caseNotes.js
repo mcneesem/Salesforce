@@ -1,16 +1,16 @@
-import { LightningElement,api } from 'lwc';
+import { LightningElement , api } from 'lwc';
 
 export default class CaseNotes extends LightningElement {
     noteButtonClicked = false;
     @api showfields = false;
     @api recordId;
 
-    handleNotes(){
+    handleNotes() {
         this.noteButtonClicked = true;
         this.dispatchEvent( new CustomEvent( "selected" ) );
     }
 
-    handleCancelNotes(){
+    handleCancelNotes() {
         this.noteButtonClicked = false;
         this.dispatchEvent( new CustomEvent( "canceled" ) );
     }
@@ -19,7 +19,7 @@ export default class CaseNotes extends LightningElement {
             const notesFields = this.template.querySelectorAll( "lightning-input-field" );
             if ( notesFields ) {
                 notesFields.forEach( field => {
-                    if ( field.fieldName === 'Case__c' ) {
+                    if ( field.fieldName === "Case__c" ) {
                         field.value = createdCaseId;
                     }
                 });
@@ -27,8 +27,9 @@ export default class CaseNotes extends LightningElement {
             }
         }
 
-    handleSuccess(event){
+    handleSuccess( event ) {
         event.preventDefault();
         event.stopPropagation();
     }
+
 }
