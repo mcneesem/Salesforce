@@ -18,7 +18,7 @@ public class NSP_ImpAutomationsController {
                     All_EEs_paid_under_same_FEIN_currently__c, Allowances__c, Any_EEs_in_clients_waiting_period__c, Any_EEs_travel_internationally_for_work__c,
                     Any_EEs_with_urgent_medical_needs__c, Any_employees_currently_enrolled__c, Any_employer_contributions_to_EE_HSA__c, Any_special_needs_for_EE_orientation__c,
                     Any_users_who_cannot_see_salary__c, Arbitration_Agreement_been_discussed__c, Are_there_any_EEs_on_Leave_of_Absence__c, Are_there_any_non_paid_users__c,
-                    Are_there_multiple_worksite_locations__c, NSP_Documents_Collected_Leviesd__c,NSP_BPA_BPC__c,NSP_BPA_BPC_Ids__c,  NSP_Documents_garnishments__c,
+                    Are_there_multiple_worksite_locations__c, NSP_Documents_Collected_Leviesd__c,NSP_BPA_BPC__c,NSP_BPA_BPC_Ids__c,  NSP_Documents_garnishments__c, Document_Levies__c,
                     Benefit_effective_date_carry_from_tab_4__c, Benefits_Package__c, Brief_description_of_client__c, Business_Inception_Date__c,
                     Can_client_show_EEO_filing_address__c, Carrier_notified_of_termination__c, Check_all_changes_that_apply__c, Check_all_sch_B_changes_that_apply__c,
                     Check_all_tht_apply_ministers_teachers__c, Chngs_for_cafeteria_plan_questionnaire__c, Client_Address__c, Client_Contact_Notes__c, Client_FEIN__c,
