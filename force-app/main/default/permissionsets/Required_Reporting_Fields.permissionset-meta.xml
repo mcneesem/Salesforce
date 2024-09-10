@@ -273,6 +273,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>NSP_Account_Group_Member__c.Account_Group_Member_ID_18__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NSP_Account_Group__c.Account_Group_ID_18__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>NSP_Account_Team__c.NSP_Logged_in_User_check__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -564,6 +574,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Task.NSP_Activity_ID_18__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>User.NSP_Service_Region__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
