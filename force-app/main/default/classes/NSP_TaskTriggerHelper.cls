@@ -1,5 +1,5 @@
 public class NSP_TaskTriggerHelper {
-    // test w/ NSP_TaskTriggerHelperTest (85%)
+    // test w/ NSP_TaskTriggerHelperTest (86%)
 
     /**
     * Iterates throught the list of new tasks/ activity and passes the required attributes to other methods.
@@ -11,7 +11,8 @@ public class NSP_TaskTriggerHelper {
     public static Id peoTaskRecordType = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.Task,NSP_ServiceConstants.peoTask);
     public String wordSaperator = ' : ';
     public String blankString = '';   
-    public static String NSP_TASKTRIGGERHELPER = 'NSP_TaskTriggerHelper';
+    private static Boolean Is_Enabled_WO_WS_Stage_Entry = OpportunityStageSettings__c.getInstance(UserInfo.getUserId()).Is_Enabled_WO_WS_Stage_Entry__c;
+
     public void beforeInsertDirector(List<Task> newList){
         List<Task> lstRefferalTask = new List<Task>();
         Set<Id> accountIds = new Set<Id>();
@@ -58,120 +59,121 @@ public class NSP_TaskTriggerHelper {
         if(!refTaskList.isEmpty()){
            removePermissionSet();
         }
+        checkOpportunityStageCriteria(newList);
     }    
 
-        /**
-* Iterates throught the task/activity map and identifies the records that needs to worked based on various criterias.
-* @param taskNewMap of New tasks. 
-* @param taskOldMap of Old taska. 
-* @return void             
-*                
-*/
+    // Iterates throught the task/activity map and identifies the records that needs to worked based on various criterias.
+    // @param taskNewMap of New tasks. 
+    // @param taskOldMap of Old taska. 
+    // @return void
     
-public void beforeUpdateDirector(Map<Id, Task> taskNewMap,Map<Id, Task> taskOldMap){
+    public void beforeUpdateDirector(Map<Id, Task> taskNewMap,Map<Id, Task> taskOldMap) {
         List<User> userdetails = [SELECT id, NSP_Sales_Office__c from User WHERE id = : UserInfo.getUserId()];
-    List<Task> lstRefferalTask = new List<Task>();
-    Set<Id> accountIds = new Set<Id>();
-    List<Task> orientationMeetingRequestTaskList = new List<Task>();
-    Id orientationMeetingReqRecTypeId = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.Task,NSP_ServiceConstants.ORIENTATION_MEETING_REQUEST);
-    for(Id taskId : taskNewMap.keySet()){
-        if(String.isBlank(taskNewMap.get(taskId).NSP_Sales_Office__c) && String.isBlank(taskNewMap.get(taskId).NSP_OneForce_External_ID__c)){
-            taskNewMap.get(taskId).NSP_Sales_Office__c = userdetails[0].NSP_Sales_Office__c;
-        }
-        // Added as Part of STY-00624
-        Task oTask = taskNewMap.get(taskId);
-        Task oldTask = taskOldMap.get(oTask.Id);
-        oTask.NSP_Last_Assigned_Owner__c = oTask.OwnerId; //Added as part of STY-01774
-        if(isReferralTask(oTask, oldTask, referralRecordTypeId) && pIMappingQueue.containsKey(oTask.Upsell_Product_of_Interest__c)){
-        	lstRefferalTask.add(oTask);
-        }else if(isReferralTask(oTask, oldTask, referralRecordTypeId) &&  oTask.Upsell_Product_of_Interest__c == NSP_ServiceConstants.PAYROLL_HR_MANAGEMENT_WA || oTask.Upsell_Product_of_Interest__c == NSP_ServiceConstants.FULL_SERVICE_HR_WO){
-        	accountIds.add(oTask.AccountId);
-        }
+        List<Task> lstRefferalTask = new List<Task>();
+        Set<Id> accountIds = new Set<Id>();
+        List<Task> orientationMeetingRequestTaskList = new List<Task>();
+        Id orientationMeetingReqRecTypeId = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.Task,NSP_ServiceConstants.ORIENTATION_MEETING_REQUEST);
+        for(Id taskId : taskNewMap.keySet()){
+            if(String.isBlank(taskNewMap.get(taskId).NSP_Sales_Office__c) && String.isBlank(taskNewMap.get(taskId).NSP_OneForce_External_ID__c)){
+                taskNewMap.get(taskId).NSP_Sales_Office__c = userdetails[0].NSP_Sales_Office__c;
+            }
+            // Added as Part of STY-00624
+            Task oTask = taskNewMap.get(taskId);
+            Task oldTask = taskOldMap.get(oTask.Id);
+            oTask.NSP_Last_Assigned_Owner__c = oTask.OwnerId; //Added as part of STY-01774
+            if(isReferralTask(oTask, oldTask, referralRecordTypeId) && pIMappingQueue.containsKey(oTask.Upsell_Product_of_Interest__c)){
+                lstRefferalTask.add(oTask);
+            }else if(isReferralTask(oTask, oldTask, referralRecordTypeId) &&  oTask.Upsell_Product_of_Interest__c == NSP_ServiceConstants.PAYROLL_HR_MANAGEMENT_WA || oTask.Upsell_Product_of_Interest__c == NSP_ServiceConstants.FULL_SERVICE_HR_WO){
+                accountIds.add(oTask.AccountId);
+            }
 
-        //added as a part of STY-03227
-        if(oTask.recordTypeId == peoTaskRecordType){
-            updatePEOTaskSubject(oTask);
+            //added as a part of STY-03227
+            if(oTask.recordTypeId == peoTaskRecordType){
+                updatePEOTaskSubject(oTask);
+            }
+
+            //Added as part of DF-04782
+            if(oTask.RecordTypeId == orientationMeetingReqRecTypeId){
+                orientationMeetingRequestTaskList.add(oTask);
+            }
+        } 
+        
+        if(!accountIds.isEmpty() || !lstRefferalTask.isEmpty()){
+            assignReferralTaskOwner(lstRefferalTask,accountIds);
         }
+        updateActivitySales(taskNewMap.values(),taskOldMap);
+        tasksFieldsToUpdate(taskOldMap, taskNewMap.values());
 
         //Added as part of DF-04782
-        if(oTask.RecordTypeId == orientationMeetingReqRecTypeId){
-            orientationMeetingRequestTaskList.add(oTask);
+        if(!orientationMeetingRequestTaskList.isEmpty()){
+            showMessageWhenTaskIsUpdated(orientationMeetingRequestTaskList);
         }
-    } 
-    
-    if(!accountIds.isEmpty() || !lstRefferalTask.isEmpty()){
-    	assignReferralTaskOwner(lstRefferalTask,accountIds);
     }
-    updateActivitySales(taskNewMap.values(),taskOldMap);
-    tasksFieldsToUpdate(taskOldMap, taskNewMap.values());
 
-    //Added as part of DF-04782
-    if(!orientationMeetingRequestTaskList.isEmpty()){
-        showMessageWhenTaskIsUpdated(orientationMeetingRequestTaskList);
-    }
-   }   
 
-    /**
-    * Iterates throught the list of new Events and passes the required attributes to other methods.
-    * @param taskNewMap Map of New Task. 
-    * @param taskOldMap Map of Old Task.   
-    * @return void             
-    *                
-    */
+    // Iterates throught the list of new Events and passes the required attributes to other methods.
+    // @param taskNewMap Map of New Task. 
+    // @param taskOldMap Map of Old Task.   
+    // @return void
         
     public void afterUpdateDirector(Map<Id, Task> taskNewMap, Map<Id, Task> taskOldMap){ 
         updateActivityDate(taskNewMap.values(),taskOldMap);
+        checkOpportunityStageCriteria(taskNewMap.values());
     }
-    /**
-* Method Name : updateActivityDate 
-* Description : Method to update last activity date on all related leads with same DUNS.
-* Date : 31/03/2021
-* @param newList List of New Event. 
-* @param eventOldMap Map of Old Event.   
-* @return void  
-*/
-public void updateActivityDate(List<Task> newList,Map<Id,Task> eventOldMap){
-    Set < Id > leadIdSet = new Set < Id > ();
-    List < Lead > leadResult = new List<Lead> ();
-    List < Lead > leadWithDuns = new List<Lead> ();
-    Map < String, Date > lastActivityDateMap = new Map < String, Date > ();
-    List < Lead > leadToUpdate = new List<Lead> ();
-    for(Task event : newList){
-        Task oldEvent = eventOldMap != null ? eventOldMap.get(event.Id):null;
-        if((Trigger.isInsert || event.Status != oldEvent.Status) && event.Status == NSP_SalesConstants.COMPLETED && event.WhoId!= null){
-            leadIdSet.add(event.WhoId);
-        }
-    }
-    if(!leadIdSet.isEmpty()){
-        leadResult = [SELECT Id, Salutation, FirstName, MiddleName, LastName, NSP_Parent_Lead__c, DNB_Connect_DUNS_Number__c,LastActivityDate FROM Lead WHERE Id IN: leadIdSet];
-        if(!leadResult.isEmpty()) {
-            for(Lead leadObj :leadResult){
-                if(leadObj.LastActivityDate != null && leadObj.DNB_Connect_DUNS_Number__c !=null) {
-                    lastActivityDateMap.put(leadObj.DNB_Connect_DUNS_Number__c,leadObj.LastActivityDate);
-                }
-            }
-            if(!lastActivityDateMap.isEmpty()) {
-                leadWithDuns = [SELECT Id, Salutation, FirstName, NSP_Last_Activity__c, LastName, NSP_Parent_Lead__c, DNB_Connect_DUNS_Number__c,LastActivityDate FROM Lead WHERE DNB_Connect_DUNS_Number__c IN: lastActivityDateMap.keySet()];
-                Lead lastActive = [SELECT LastActivityDate FROM Lead WHERE DNB_Connect_DUNS_Number__c IN: lastActivityDateMap.keySet() AND LastActivityDate != null ORDER BY LastActivityDate DESC LIMIT 1];
-                if(!leadWithDuns.isEmpty()){
-                    for(Lead leadObject : leadWithDuns){
-                         leadObject.NSP_Last_Activity__c = lastActive.LastActivityDate;
-                         leadToUpdate.add(leadObject);
-                       }
-                }
+
+
+    // Method Name : updateActivityDate 
+    // Description : Method to update last activity date on all related leads with same DUNS.
+    // Date : 31/03/2021
+    // @param newList List of New Event. 
+    // @param eventOldMap Map of Old Event.   
+    // @return void  
+
+    public void updateActivityDate(List<Task> newList,Map<Id,Task> eventOldMap) {
+        Set < Id > leadIdSet = new Set < Id > ();
+        List < Lead > leadResult = new List<Lead> ();
+        List < Lead > leadWithDuns = new List<Lead> ();
+        Map < String, Date > lastActivityDateMap = new Map < String, Date > ();
+        List < Lead > leadToUpdate = new List<Lead> ();
+        for(Task event : newList){
+            Task oldEvent = eventOldMap != null ? eventOldMap.get(event.Id):null;
+            if((Trigger.isInsert || event.Status != oldEvent.Status) && event.Status == NSP_SalesConstants.COMPLETED && event.WhoId!= null){
+                leadIdSet.add(event.WhoId);
             }
         }
-    }
-    try{
-        if(!leadToUpdate.isEmpty()){
-            update leadToUpdate;
+        if(!leadIdSet.isEmpty()){
+            leadResult = [SELECT Id, Salutation, FirstName, MiddleName, LastName, NSP_Parent_Lead__c, DNB_Connect_DUNS_Number__c,LastActivityDate FROM Lead WHERE Id IN: leadIdSet];
+            if(!leadResult.isEmpty()) {
+                for(Lead leadObj :leadResult){
+                    if(leadObj.LastActivityDate != null && leadObj.DNB_Connect_DUNS_Number__c !=null) {
+                        lastActivityDateMap.put(leadObj.DNB_Connect_DUNS_Number__c,leadObj.LastActivityDate);
+                    }
+                }
+                if(!lastActivityDateMap.isEmpty()) {
+                    leadWithDuns = [SELECT Id, Salutation, FirstName, NSP_Last_Activity__c, LastName, NSP_Parent_Lead__c, DNB_Connect_DUNS_Number__c,LastActivityDate FROM Lead WHERE DNB_Connect_DUNS_Number__c IN: lastActivityDateMap.keySet()];
+                    Lead lastActive = [SELECT LastActivityDate FROM Lead WHERE DNB_Connect_DUNS_Number__c IN: lastActivityDateMap.keySet() AND LastActivityDate != null ORDER BY LastActivityDate DESC LIMIT 1];
+                    if(!leadWithDuns.isEmpty()){
+                        for(Lead leadObject : leadWithDuns){
+                            leadObject.NSP_Last_Activity__c = lastActive.LastActivityDate;
+                            leadToUpdate.add(leadObject);
+                        }
+                    }
+                }
+            }
+        }
+        try{
+            if(!leadToUpdate.isEmpty()){
+                update leadToUpdate;
+            }
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_TaskTriggerHelper.class.getName() ,
+                'updateActivityDate' ,
+                e
+            );
         }
     }
-    catch(Exception ex){
-        NSP_ErrorLogHandler.logSaveException(NSP_TASKTRIGGERHELPER, 'updateActivityDate', ex.getMessage());
-    }
-}
-    
+
      /**
 * Method Name : updateActivitySales 
 * Description : Method to update sales region, sales devison and sales office.
@@ -289,12 +291,33 @@ public void updateActivitySales(List<Task> newList,Map<Id,Task> OldTaskMap){
             if(pIMappingQueue.containsKey(oTask.Upsell_Product_of_Interest__c)){
                 oTask.OwnerId = mapQueueMapping?.get(pIMappingQueue?.get(oTask.Upsell_Product_of_Interest__c));
             }else if(mapAccounts.containsKey(oTask.AccountId)){
-                oTask.OwnerId  = mapAccounts.get(oTask.AccountId)?.OwnerId;
+                oTask.OwnerId = mapAccounts.get(oTask.AccountId)?.OwnerId;
             }
         }
-        
     }
-    
+
+    private void checkOpportunityStageCriteria(List<Task> newList) {
+        List<Id> updateOpportunityIds = new List<Id>();
+        if ( NSP_TaskTriggerHelper.Is_Enabled_WO_WS_Stage_Entry ) {
+            for(Task task : newList) {
+                if(task != NULL && task.WhatId != NULL && task.Subject != NULL) {
+                    if ( task.Status == NSP_SalesConstants.COMPLETED
+                        && ( task.WhatId.getSObjectType() == Opportunity.getSObjectType() )
+                        && (
+                            task.Subject.equalsIgnoreCase( System.Label.Business_Profile_Started )
+                            || task.Subject.equalsIgnoreCase( System.Label.Bid_Generated_in_AIMS )
+                            || task.Subject.equalsIgnoreCase( System.Label.Bid_Sent_to_Pricing_and_Review )
+                            )
+                        )
+                    {
+                        updateOpportunityIds.add(task.WhatId);
+                    }
+                }
+            }
+            AutomateOpportunityStage.automateOpportunityStageAsync(updateOpportunityIds);
+        }
+    }
+
     /**
     * @MethodName: isReferralTask
     * @Description: Checking if the Task is Referral Task to update Task Owner
@@ -370,10 +393,13 @@ public void updateActivitySales(List<Task> newList,Map<Id,Task> OldTaskMap){
                        task.addError(label.NSP_CRMTaskError);
                    }
             }
-        }catch(Exception ex){
-             NSP_ErrorLogHandler.logSaveException(NSP_TASKTRIGGERHELPER, 'beforeDeleteDirector', ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_TaskTriggerHelper.class.getName() ,
+                'beforeDeleteDirector' ,
+                e
+            );
         }
-        
     }
 
      /**
@@ -429,39 +455,46 @@ public void populateWhatAndWhoNames(List<Task> newTaskList) {
             taskToBeUpdateRecord.NSP_What_Name__c = String.isNotBlank(taskToBeUpdateRecord.WhatId) ? targetRelatedObjectsMap.get(taskToBeUpdateRecord.WhatId) : blankString;
             taskToBeUpdateRecord.NSP_Who_Name__c  = String.isNotBlank(taskToBeUpdateRecord.WhoId) ? targetRelatedObjectsMap.get(taskToBeUpdateRecord.WhoId) : blankString;
         }
-    }catch(Exception ex){
-            NSP_ErrorLogHandler.logSaveException(NSP_TASKTRIGGERHELPER, 'populateWhatAndWhoNames', ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_TaskTriggerHelper.class.getName() ,
+                'populateWhatAndWhoNames' ,
+                e
+            );
         }
-}
+    }
 
-/**
-* Method Name : tasksFieldsToUpdate 
-* Description : Method to update NSP_What_Name__c and/or NSP_Who_Name__c on Task on update
-* Date : 17/02/2023
-* @param newList List of new tasks 
-* @param oldTaskMap Map on old tasks
-* @return void  
-*/
+    /**
+    * Method Name : tasksFieldsToUpdate 
+    * Description : Method to update NSP_What_Name__c and/or NSP_Who_Name__c on Task on update
+    * Date : 17/02/2023
+    * @param newList List of new tasks 
+    * @param oldTaskMap Map on old tasks
+    * @return void  
+    */
 
-public void tasksFieldsToUpdate(Map<Id,Task> oldTaskMap, List<Task> newList) {
-    try{
+    public void tasksFieldsToUpdate(Map<Id,Task> oldTaskMap, List<Task> newList) {
+        try{
         
-        List<Task> eligibleTasks = new List<Task>();
-        for(Task newTaskRecord : newList) {
-            Task oldTaskRecord = oldTaskMap?.get(newTaskRecord.Id);
-            if(oldTaskRecord?.WhatId != newTaskRecord.WhatId || oldTaskRecord?.WhoId != newTaskRecord.WhoId) {
-                eligibleTasks.add(newTaskRecord);
+            List<Task> eligibleTasks = new List<Task>();
+            for(Task newTaskRecord : newList) {
+                Task oldTaskRecord = oldTaskMap?.get(newTaskRecord.Id);
+                if(oldTaskRecord?.WhatId != newTaskRecord.WhatId || oldTaskRecord?.WhoId != newTaskRecord.WhoId) {
+                    eligibleTasks.add(newTaskRecord);
+                }
             }
-        }
-        if(!eligibleTasks.isEmpty()) {
-            populateWhatAndWhoNames(eligibleTasks);
-        }
+            if(!eligibleTasks.isEmpty()) {
+                populateWhatAndWhoNames(eligibleTasks);
+            }
     
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_TaskTriggerHelper.class.getName() ,
+                'tasksFieldsToUpdate' ,
+                e
+            );
+        }
     }
-    catch(Exception ex){
-        NSP_ErrorLogHandler.logSaveException(NSP_TASKTRIGGERHELPER, 'populateWhatAndWhoNames', ex.getMessage());
-    }
-}
 
 
 
@@ -495,8 +528,13 @@ public Map<Id, String> getRelatedRecordDetails(String objectName, String fieldNa
                     newTask.addError(System.Label.NSP_PreventOreintationMeetingTaskUpdate);
                 }
             }
-        } catch (Exception exc) {
-            NSP_ErrorLogHandler.logSaveException(NSP_TASKTRIGGERHELPER, 'showMessageWhenTaskIsUpdated', exc.getMessage());
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_TaskTriggerHelper.class.getName() ,
+                'showMessageWhenTaskIsUpdated' ,
+                e
+            );
         }
     }
+
 }
