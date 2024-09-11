@@ -8,6 +8,15 @@ public with sharing class NSP_CreateProjectUsingKey {
     Date: 02/11/2021 */
     
     public static Id createProject(String Key, Date projectStartdate, String objApiName){
+        pse__Region__c myRegionForMapping = [Select Id from pse__Region__c where Name =: NSP_ServiceConstants.UnitedStatesRegion LIMIT 1];
+        pse.SObjectCloneMapper mapp;
+        if (myRegionForMapping != null) {  
+            pse.SObjectCloneMapper.Field mapperField4 = new pse.SObjectCloneMapper.Field(Schema.pse__Proj__c.pse__Region__c);  
+            mapperField4.DefaultValue = myRegionForMapping.Id;   
+            Set<pse.SObjectCloneMapper.Field> setMapperFields = new Set<pse.SObjectCloneMapper.Field>{mapperField4};  
+            mapp = new pse.SObjectCloneMapper(pse__Proj__c.SObjectType, setMapperFields);  
+        }
+        
         List<Template_Key_and_Id_Mapping__mdt> keyWithTemplateId = [SELECT Key__c, Template_ID__c, Template_Name__c 
                                                                     FROM Template_Key_and_Id_Mapping__mdt
                                                                     WHERE Key__c = : key AND NSP_From_Object__c =: objApiName];
@@ -16,7 +25,7 @@ public with sharing class NSP_CreateProjectUsingKey {
         new pse.CreateProjectFromTemplateService.CreateProjectFromTemplateRequest(keyWithTemplateId[0].Template_ID__c, projectStartdate);
         //Set new project name to specified name
         projRequest.ProjectName = keyWithTemplateId[0].Template_Name__c;
-
+		projRequest.Mappers = new List<pse.SObjectCloneMapper> { mapp };
         //Call the service and create project
         List<pse.CreateProjectFromTemplateService.CreateProjectResponse> projResponse =
         pse.CreateProjectFromTemplateService.createProjectsFromTemplates( 
@@ -39,11 +48,21 @@ public with sharing class NSP_CreateProjectUsingKey {
     * @return: FinacialForce API of creating a project from template request
    */
     public static pse.CreateProjectFromTemplateService.CreateProjectFromTemplateRequest createProjectFromTemplate(Id templateProjectId, Date startDateForProject, String projectName){
+        pse__Region__c myRegionForMapping = [Select Id from pse__Region__c where Name =: NSP_ServiceConstants.UnitedStatesRegion LIMIT 1];
+        pse.SObjectCloneMapper mapp;
+        if (myRegionForMapping != null) {  
+            pse.SObjectCloneMapper.Field mapperField4 = new pse.SObjectCloneMapper.Field(Schema.pse__Proj__c.pse__Region__c);  
+            mapperField4.DefaultValue = myRegionForMapping.Id;   
+            Set<pse.SObjectCloneMapper.Field> setMapperFields = new Set<pse.SObjectCloneMapper.Field>{mapperField4};  
+            mapp = new pse.SObjectCloneMapper(pse__Proj__c.SObjectType, setMapperFields);  
+        }
+        
         pse.CreateProjectFromTemplateService.CreateProjectFromTemplateRequest projRequest =
                         new pse.CreateProjectFromTemplateService.CreateProjectFromTemplateRequest(templateProjectId, startDateForProject);
         //assigning the values
         projRequest.ProjectName = projectName;
 		projRequest.IsActive = true;
+        projRequest.Mappers = new List<pse.SObjectCloneMapper> { mapp };
         return projRequest;
     }
     
