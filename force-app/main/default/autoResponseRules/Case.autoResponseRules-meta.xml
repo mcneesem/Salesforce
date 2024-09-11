@@ -129,5 +129,26 @@
             <senderName>WX COS Team</senderName>
             <template>Services_Emails/WX_COS_Team</template>
         </ruleEntry>
+        <ruleEntry>
+            <criteriaItems>
+                <field>Case.Origin</field>
+                <operation>equals</operation>
+                <value>Email</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.NSP_Assigned_Queue__c</field>
+                <operation>equals</operation>
+                <value>International Support Desk</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.SuppliedEmail</field>
+                <operation>notEqual</operation>
+                <value>null</value>
+            </criteriaItems>
+            <notifyCcRecipients>false</notifyCcRecipients>
+            <senderEmail>no-reply@insperity.com</senderEmail>
+            <senderName>International Support Desk</senderName>
+            <template>All/ISD_Case_Created</template>
+        </ruleEntry>
     </autoResponseRule>
 </AutoResponseRules>
