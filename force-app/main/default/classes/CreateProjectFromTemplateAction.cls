@@ -51,7 +51,7 @@ public class CreateProjectFromTemplateAction {
     * @return: projectId
    */
     public static Id createProjectFromAsset(Account oaccount, pse__proj__c oprojectTemplate, User ouser){
-        pse__Region__c myRegionForMapping = [Select Id from pse__Region__c where Name = NSP_ServiceConstants.UnitedStatesRegion LIMIT 1];
+        pse__Region__c myRegionForMapping = [Select Id from pse__Region__c where Name =: NSP_ServiceConstants.UnitedStatesRegion LIMIT 1];
         pse.SObjectCloneMapper.Field mapperField4;
         if (myRegionForMapping != null) {  
             mapperField4 = new pse.SObjectCloneMapper.Field(Schema.pse__Proj__c.pse__Region__c);  
