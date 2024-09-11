@@ -1292,7 +1292,7 @@ public class NSP_AssetServiceTriggerHelper {
     }
 
     public Id createProjectWithTemplateFromAsset(Template_Key_and_Id_Mapping__mdt oTempKey, Id assetId){
-        pse__Region__c myRegionForMapping = [Select Id from pse__Region__c where Name = NSP_ServiceConstants.UnitedStatesRegion LIMIT 1];
+        pse__Region__c myRegionForMapping = [Select Id from pse__Region__c where Name =: NSP_ServiceConstants.UnitedStatesRegion LIMIT 1];
         pse.SObjectCloneMapper mapp;
         if (myRegionForMapping != null) {  
             pse.SObjectCloneMapper.Field mapperField4 = new pse.SObjectCloneMapper.Field(Schema.pse__Proj__c.pse__Region__c);  
