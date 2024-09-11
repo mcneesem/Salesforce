@@ -20,6 +20,14 @@ public class NSP_CreateProjFromFlow {
         pse__Proj__c projObj = new pse__Proj__c();
         List<Order> orderList = [SELECT Id,NSP_Project_Name__c,AccountId,NSP_Project_Key__c,NSP_Project__c,Name FROM Order WHERE Id IN :records];
         List<NSP_ProjectTemplateMapping__mdt> keyWithTemplateId = NSP_ProjectTemplateMapping__mdt.getAll().values();
+
+        pse__Region__c myRegionForMapping = [Select Id from pse__Region__c where Name =: NSP_ServiceConstants.UnitedStatesRegion LIMIT 1];
+        pse.SObjectCloneMapper.Field mapperField4;
+        if (myRegionForMapping != null) {  
+            mapperField4 = new pse.SObjectCloneMapper.Field(Schema.pse__Proj__c.pse__Region__c);  
+            mapperField4.DefaultValue = myRegionForMapping.Id;   
+        }
+        
         for(NSP_ProjectTemplateMapping__mdt projectMdt: keyWithTemplateId){
             projectIdMap.put(projectMdt.Key__c+projectMdt.Template_Name__c,projectMdt.Template_ID__c);
         }
@@ -35,7 +43,7 @@ public class NSP_CreateProjFromFlow {
                     //copy recordTypeId & Owner
                     pse.SObjectCloneMapper.Field mapperFieldRT = new pse.SObjectCloneMapper.Field(Schema.pse__Proj__c.RecordTypeId);
                     pse.SObjectCloneMapper.Field mapperFieldOwner = new pse.SObjectCloneMapper.Field(Schema.pse__Proj__c.OwnerId);
-                    Set<pse.SObjectCloneMapper.Field> setMapperFields = new Set<pse.SObjectCloneMapper.Field>{mapperFieldRT,mapperFieldOwner};
+                    Set<pse.SObjectCloneMapper.Field> setMapperFields = new Set<pse.SObjectCloneMapper.Field>{mapperFieldRT,mapperFieldOwner,mapperField4};
                     pse.SObjectCloneMapper mapp = new pse.SObjectCloneMapper(pse__Proj__c.SObjectType, setMapperFields);
                     projRequest.Mappers = new List<pse.SObjectCloneMapper> { mapp };
 
