@@ -184,10 +184,18 @@ public class NSP_OpportunityTriggerServiceHelper {
 */
     
     public Set<Id> createProjectAndDeleteBudget(List<pse.CreateProjectFromTemplateService.CreateProjectFromTemplateAndAccountRequest> lProjRequests){
-       
-      
-        //Call the service and create project      
-        List<pse.CreateProjectFromTemplateService.CreateProjectResponse> projResponse = this.implInstance.createProjectFromTemplate(new List<pse.CreateProjectFromTemplateService.CreateProjectFromTemplateAndAccountRequest>{lProjRequests[0]});
+        pse__Region__c myRegionForMapping = [Select Id from pse__Region__c where Name = 'United States' LIMIT 1];
+        pse.SObjectCloneMapper mapp;
+        if (myRegionForMapping != null) {  
+            pse.SObjectCloneMapper.Field mapperField4 = new pse.SObjectCloneMapper.Field(Schema.pse__Proj__c.pse__Region__c);  
+            mapperField4.DefaultValue = myRegionForMapping.Id;   
+            Set<pse.SObjectCloneMapper.Field> setMapperFields = new Set<pse.SObjectCloneMapper.Field>{mapperField4};  
+                mapp = new pse.SObjectCloneMapper(pse__Proj__c.SObjectType, setMapperFields);  
+        }
+        
+        lProjRequests[0].Mappers = new List<pse.SObjectCloneMapper> { mapp };
+            //Call the service and create project      
+            List<pse.CreateProjectFromTemplateService.CreateProjectResponse> projResponse = this.implInstance.createProjectFromTemplate(new List<pse.CreateProjectFromTemplateService.CreateProjectFromTemplateAndAccountRequest>{lProjRequests[0]});
         Set<Id> newProjectId = this.implInstance.getProjectIdSet(projResponse);
         
         // Deleting all Budgets Created with Projects
