@@ -61,11 +61,6 @@
                 <label>Learning Portal Admin</label>
             </value>
             <value>
-                <fullName>ITA Key Decision Maker</fullName>
-                <default>false</default>
-                <label>ITA Key Decision Maker</label>
-            </value>
-            <value>
                 <fullName>ITA Primary</fullName>
                 <default>false</default>
                 <label>ITA Primary</label>
@@ -74,6 +69,35 @@
                 <fullName>ITA Auth. Support</fullName>
                 <default>false</default>
                 <label>ITA Auth. Support</label>
+            </value>
+            <value>
+                <fullName>ITA KDM</fullName>
+                <default>false</default>
+                <label>ITA KDM</label>
+            </value>
+            <value>
+                <fullName>Authorized Support</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Authorized Support</label>
+            </value>
+            <value>
+                <fullName>Decision Maker</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Decision Maker</label>
+            </value>
+            <value>
+                <fullName>Main Admin</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Main Admin</label>
+            </value>
+            <value>
+                <fullName>Secondary Admin</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Secondary Admin</label>
             </value>
         </valueSetDefinition>
     </valueSet>
