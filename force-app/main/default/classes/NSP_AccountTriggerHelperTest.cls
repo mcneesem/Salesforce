@@ -663,8 +663,9 @@ public class NSP_AccountTriggerHelperTest {
 
         Test.startTest();
 
-        List<User> users = [SELECT Id, NSP_Sales_Office__c,UserRole.Name FROM User WHERE Profile.Name = 'Sales Manager' 
-        AND NSP_Sales_Office__c != null AND IsActive = true LIMIT 2];
+        List<User> users = [SELECT Id, NSP_Sales_Office__c,UserRole.Name FROM User WHERE 
+                            (UserRole.Name = 'Sales Support Specialist' OR UserRole.Name = 'Business Performance Advisor') 
+                            AND NSP_Sales_Office__c != null AND IsActive = true LIMIT 2];
 
         Account acct = new Account();
         acct.name = 'Test Office';
@@ -692,7 +693,7 @@ public class NSP_AccountTriggerHelperTest {
 
         Test.stopTest();
         
-        //  The Opportuniry Sales Office should be the same as Account SO
+        //  The Opportuniry Sales Office should be the same as the Account SO
         System.assertEquals(acct2.NSP_Sales_Office__c,  opp2.NSP_Sales_Office__c);
    }
 }
