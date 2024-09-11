@@ -209,6 +209,12 @@ public class NSP_AutomaticProjectBatchClass implements Database.Batchable<sObjec
     * @return: project record
    */
     private static pse__proj__c createEngagementProject(Account oaccount, List<Template_Key_and_Id_Mapping__mdt> templateKeyList, String clientType, NSP_OpportunityTriggerServiceHelper opp){
+        pse__Region__c myRegionForMapping = [Select Id from pse__Region__c where Name =: NSP_ServiceConstants.UnitedStatesRegion LIMIT 1];
+        pse.SObjectCloneMapper.Field mapperField4;
+        if (myRegionForMapping != null) {  
+            mapperField4 = new pse.SObjectCloneMapper.Field(Schema.pse__Proj__c.pse__Region__c);  
+            mapperField4.DefaultValue = myRegionForMapping.Id;   
+        }
         
         //getting the project template based on name of project
         List<pse__proj__c> oproject;
@@ -226,7 +232,7 @@ public class NSP_AutomaticProjectBatchClass implements Database.Batchable<sObjec
         pse.SObjectCloneMapper.Field mapperFieldRT = new pse.SObjectCloneMapper.Field(Schema.pse__Proj__c.RecordTypeId);
         pse.SObjectCloneMapper.Field mapperFieldStartDate = new pse.SObjectCloneMapper.Field(Schema.pse__Proj__c.pse__Start_Date__c);
         pse.SObjectCloneMapper.Field mapperFieldEndDate = new pse.SObjectCloneMapper.Field(Schema.pse__Proj__c.pse__End_Date__c);
-        Set<pse.SObjectCloneMapper.Field> setMapperFields = new Set<pse.SObjectCloneMapper.Field>{mapperFieldRT, mapperFieldStartDate, mapperFieldEndDate};
+        Set<pse.SObjectCloneMapper.Field> setMapperFields = new Set<pse.SObjectCloneMapper.Field>{mapperFieldRT, mapperFieldStartDate, mapperFieldEndDate, mapperField4};
         pse.SObjectCloneMapper mapp = new pse.SObjectCloneMapper(pse__Proj__c.SObjectType, setMapperFields);
         projectrequest.Mappers = new List<pse.SObjectCloneMapper> { mapp };
         
