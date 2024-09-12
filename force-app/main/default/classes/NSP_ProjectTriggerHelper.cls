@@ -8,12 +8,12 @@ public with sharing class NSP_ProjectTriggerHelper {
     public final String PROJECTTASKSTATUSCANCELLED = 'Canceled';
     public final String PROJECTSERVICEPLAN3 = 'Service_Plan_Level_3';
     public final String PROJECTSERVICEPLAN4 = 'Service_Plan_Level_4';
-    public Static final Id PEOPROJECTTECORDTYPEID = SObjectType.pse__Proj__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.PEOProject).getRecordTypeId();
-    public Static final Id TESBPSPROJECTTECORDTYPEID = SObjectType.pse__Proj__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.PROJECT_BPS_RECORDTYPE).getRecordTypeId();
+    public Static final Id PEOPROJECTTECORDTYPEID = NSP_GenericRecordType.getRecordTypeId( 'pse__Proj__c' , 'PEO_Project' );
+    public Static final Id TESBPSPROJECTTECORDTYPEID = NSP_GenericRecordType.getRecordTypeId( 'pse__Proj__c' , 'TES_BPS' );
     public Static final List<String> PROJECTTASKNAMES = label.NSP_Project_Task_Names.split(',');
     public Static final String NEWPROJECTNAME = 'Post Implementation Payroll Follow Up';
     public Static final String NEWPROJECTTYPE = 'Implementation';
-    public static final Id WORECORDTYPEID = Schema.SObjectType.Asset.getRecordTypeInfosByName().get('WO').getRecordTypeId();
+    public Static final Id WORECORDTYPEID = NSP_GenericRecordType.getRecordTypeId( 'Asset' , 'WO' );
     public static final Id PEOBILLRECTYPEID = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.PROJECT, NSP_ServiceConstants.PEO_BILL_RECORDTYPE);
     public static final Id casePEORecordTypeId = NSP_GenericRecordType.getRecordTypeId('Case', NSP_ServiceConstants.PEO);
     private static final Id itaCqaRecordTypeId = NSP_GenericRecordType.getRecordTypeId('Case', NSP_ServiceConstants.NSP_ITA_CQA);
