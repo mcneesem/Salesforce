@@ -9,6 +9,7 @@ public with sharing class NSP_ProjectTriggerHelper {
     public final String PROJECTSERVICEPLAN3 = 'Service_Plan_Level_3';
     public final String PROJECTSERVICEPLAN4 = 'Service_Plan_Level_4';
     public Static final Id PEOPROJECTTECORDTYPEID = SObjectType.pse__Proj__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.PEOProject).getRecordTypeId();
+    public Static final Id TESBPSPROJECTTECORDTYPEID = SObjectType.pse__Proj__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.PROJECT_BPS_RECORDTYPE).getRecordTypeId();
     public Static final List<String> PROJECTTASKNAMES = label.NSP_Project_Task_Names.split(',');
     public Static final String NEWPROJECTNAME = 'Post Implementation Payroll Follow Up';
     public Static final String NEWPROJECTTYPE = 'Implementation';
@@ -57,6 +58,11 @@ public with sharing class NSP_ProjectTriggerHelper {
             if(project.recordTypeId == PEOPROJECTTECORDTYPEID && project.TemplateName__c == NSP_ServiceConstants.WO_WX_TEMPLATE){
                 project.pse__Start_Date__c = System.today();
                 project.pse__End_Date__c = System.today().addDays(30);
+            }
+
+            if(project.recordTypeId == TESBPSPROJECTTECORDTYPEID && project.TemplateName__c == NSP_ServiceConstants.ITA_IMPLEMENTATION){
+                project.pse__Start_Date__c = System.today();
+                project.pse__End_Date__c = system.today().addmonths(12);
             }
         
         	updatePrjNameList.add(project);           
