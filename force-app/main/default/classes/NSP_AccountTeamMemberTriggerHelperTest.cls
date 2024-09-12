@@ -41,7 +41,12 @@
         List<User> integrationUsers = [
             SELECT Id
             FROM User
-            WHERE ( Profile.Name = 'Integration User' )
+            WHERE (
+                ( Profile.Name = 'Integration User' )
+                AND ( IsActive = True )
+            )
+            ORDER BY CreatedDate ASC
+            LIMIT 1
         ];
         Assert.isTrue( !integrationUsers.isEmpty() , 'No Integration Users found.' );
         User integrationUser = integrationUsers[0];
