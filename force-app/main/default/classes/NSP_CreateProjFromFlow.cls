@@ -43,7 +43,7 @@ public class NSP_CreateProjFromFlow {
                     //copy recordTypeId & Owner
                     pse.SObjectCloneMapper.Field mapperFieldRT = new pse.SObjectCloneMapper.Field(Schema.pse__Proj__c.RecordTypeId);
                     pse.SObjectCloneMapper.Field mapperFieldOwner = new pse.SObjectCloneMapper.Field(Schema.pse__Proj__c.OwnerId);
-                    Set<pse.SObjectCloneMapper.Field> setMapperFields = new Set<pse.SObjectCloneMapper.Field>{mapperFieldRT,mapperFieldOwner,mapperField4};
+                    Set<pse.SObjectCloneMapper.Field> setMapperFields = new Set<pse.SObjectCloneMapper.Field>{mapperFieldRT,mapperFieldOwner,NSP_CreateProjFromFlow.getDefaultRegionMapperField()};
                     pse.SObjectCloneMapper mapp = new pse.SObjectCloneMapper(pse__Proj__c.SObjectType, setMapperFields);
                     projRequest.Mappers = new List<pse.SObjectCloneMapper> { mapp };
 
