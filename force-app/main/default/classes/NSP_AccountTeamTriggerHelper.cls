@@ -1,13 +1,6 @@
-/**
-* Represents the NSP_Account_Team__c trigger helper which handles the logic with all objects.
-* Created by : Hemali
-* Date : 24/08/2021
-*/
-public class NSP_AccountTeamTriggerHelper {
-    // test w/ NSP_AccountTeamTriggerTest (87%)
+public with sharing class NSP_AccountTeamTriggerHelper {
+    // test w/ NSP_AccountTeamTriggerTest (81%)
 
-    private static final String NSP_ACCOUNT_TEAM_TRIGGER_HELPER = 'NSP_AccountTeamTriggerHelper';
-    
     /**
 * Iterates throught the list of new NSP_Account_Team__c and passes the required attributes to other methods.
 * @param newList List of New NSP_Account_Team__c.
@@ -54,8 +47,12 @@ public class NSP_AccountTeamTriggerHelper {
                 populateEmployeePerIdOnATMBasedOnUserId(newAccountTeamList, accountTeamMemberEmployeePerIdSet, accountTeamMemberUserIdSet);
             }
             
-        }catch(Exception ex){
-            NSP_CustomException.LogException(ex);
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_AccountTeamMemberTriggerHelper.class.getName() ,
+                'beforeInsertDirector' ,
+                e
+            );
         }
     }
     
@@ -138,11 +135,15 @@ public class NSP_AccountTeamTriggerHelper {
                 updateAccountTeamNameToAssetName(mapAccountIdtoAccountTeam);
             }
             
-        }catch(Exception ex){
-            NSP_ErrorLogHandler.logSaveException(NSP_ACCOUNT_TEAM_TRIGGER_HELPER,'afterInsertDirector',ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_AccountTeamMemberTriggerHelper.class.getName() ,
+                'afterInsertDirector' ,
+                e
+            );
         }
     }
-    
+
     /*STY-03187: 
 * Description: update the account team userId to asset to respective NSP_WX_WA_Benefits_Specialist__c
 NSP_WX_WA_Benefits_Specialist__c, and NSP_Retirement_Service_Plan_Name__c field based on AccountTeam record role
@@ -180,11 +181,15 @@ NSP_WX_WA_Benefits_Specialist__c, and NSP_Retirement_Service_Plan_Name__c field 
             if (listAssetObject.size() > 0) {
                 Database.update(listAssetObject);
             }
-        } catch (Exception ex) {
-            NSP_ErrorLogHandler.logSaveException(NSP_ACCOUNT_TEAM_TRIGGER_HELPER, 'updateAccountTeamNameToAssetName', ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_AccountTeamMemberTriggerHelper.class.getName() ,
+                'updateAccountTeamNameToAssetName' ,
+                e
+            );
         }
     }
-    
+
     /**
 * Iterates throught the list of new NSP_Account_Team__c and passes the required attributes to other methods.
 * @param newMap Map of NSP_Account_Team__c.
@@ -250,12 +255,15 @@ NSP_WX_WA_Benefits_Specialist__c, and NSP_Retirement_Service_Plan_Name__c field 
                 updatePerIdonUserUpdate(newAccountTeamList, accountTeamMemberUserIdSet);
             } 
             
-        }catch(Exception ex){
-            NSP_ErrorLogHandler.logSaveException(NSP_ACCOUNT_TEAM_TRIGGER_HELPER,'beforeUpdateDirector',ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_AccountTeamMemberTriggerHelper.class.getName() ,
+                'beforeUpdateDirector' ,
+                e
+            );
         }
-        
     }
-	
+
 	/**
 * MethodName  : populateUserIdOnATMBasedOnPerId
 * Description : This Method populates NSP User if there is a change on the PER Id.
@@ -326,11 +334,15 @@ NSP_WX_WA_Benefits_Specialist__c, and NSP_Retirement_Service_Plan_Name__c field 
             if(mapAccountIdtoAccountTeam.size()>0 && !mapAccountIdtoAccountTeam.isEmpty()){
                 updateAccountTeamNameToAssetName(mapAccountIdtoAccountTeam);
             }
-        }catch(Exception ex){
-            NSP_CustomException.LogException(ex);
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_AccountTeamMemberTriggerHelper.class.getName() ,
+                'afterUpdateDirector' ,
+                e
+            );
         }
     }
-    
+
     /***********************************************************************************************
     * MethodName  : updateProjectTaskEmailFields 
     * Description : Method to update Project Task Email field
@@ -470,12 +482,15 @@ NSP_WX_WA_Benefits_Specialist__c, and NSP_Retirement_Service_Plan_Name__c field 
                     }
                 }                    
             }
-        }catch (Exception ex) {
-            NSP_ErrorLogHandler.logSaveException(NSP_ACCOUNT_TEAM_TRIGGER_HELPER, 'showErrorOnPrimaryCheckRole', ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_AccountTeamMemberTriggerHelper.class.getName() ,
+                'showErrorOnPrimaryCheckRole' ,
+                e
+            );
         }
     }
 
-    
     /** 
     * @MethodName: updateAssetServiceRegion
     * @Description: This method is used to update Asset Fields on after Insert
@@ -599,8 +614,14 @@ NSP_WX_WA_Benefits_Specialist__c, and NSP_Retirement_Service_Plan_Name__c field 
                     accTeam.addError(System.Label.NSP_Account_Team_Deletion_Validation);
                 }
             }
-        }catch(Exception ex){
-            NSP_ErrorLogHandler.logSaveException(NSP_ACCOUNT_TEAM_TRIGGER_HELPER, 'validationOnDeletionOfAccountTeam', ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_AccountTeamMemberTriggerHelper.class.getName() ,
+                'validationOnDeletionOfAccountTeam' ,
+                e
+            );
         }
     }
+
 }
+//

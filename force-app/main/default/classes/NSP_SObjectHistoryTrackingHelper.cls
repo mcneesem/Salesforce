@@ -3,17 +3,17 @@ Component Name :  NSP_SObjectHistoryTrackingHelper class
 Version              :  1.0                                                                          
 Created Date         :  November, 2021                                                             
 Function             :  Imported from generic utility
-					 : Used in custom history tracking  	
+                     :  Used in custom history tracking
 Story                :                                                                             
 Modification Log     :                                                                               
-*	Hemali           November 10, 2021          First IterationH
+*   Hemali           November 10, 2021          First Iteration
 *   Harsha Khiroya   March 3, 2022              DF-01347
 *   Anil             March 31, 2023             DF-03332
 
 ***************************************************************************************************
 */
 public class NSP_SObjectHistoryTrackingHelper implements Queueable {
-    // test w/ NSP_SObjectHistoryTrackingHelperTest (83%)
+    // test w/ NSP_SObjectHistoryTrackingHelperTest (93%)
 
     // unified entry point...
     public static void enqueueJob( Map<Id,sObject> newRecords , Map<Id,sObject> oldRecords ) {
@@ -24,15 +24,19 @@ public class NSP_SObjectHistoryTrackingHelper implements Queueable {
                 localSObjectName = String.valueOf( localSObjectType );
             }
         }
-        Boolean isEnabled = False;
+        Boolean isAllowedSObjectName = False;
         if ( String.isNotBlank( localSObjectName )
             && ( NSP_SObjectHistoryTrackingHelper.allowedSObjectNames != null )
             && NSP_SObjectHistoryTrackingHelper.allowedSObjectNames.contains( localSObjectName )
            )
         {
-            isEnabled = True;
+            isAllowedSObjectName = True;
         }
-        if ( isEnabled && ( Limits.getQueueableJobs() != Limits.getLimitQueueableJobs() ) ) {
+        if ( isAllowedSObjectName
+            && NSP_SObjectHistoryTrackingHelper.isEnabled
+            && ( Limits.getQueueableJobs() < Limits.getLimitQueueableJobs() )
+            )
+        {
             System.enqueueJob(
                 new NSP_SObjectHistoryTrackingHelper(
                     newRecords ,
@@ -42,14 +46,43 @@ public class NSP_SObjectHistoryTrackingHelper implements Queueable {
         }
     }
 
+    //
+    //
+    //
+
+    private static HistoryTrackingSettings__c settings {
+        get {
+            if ( settings == null ) {
+                settings = HistoryTrackingSettings__c.getInstance( UserInfo.getUserId() );
+            }
+            return settings;
+        }
+        private set;
+    }
+
+    private static Boolean isEnabled {
+        get {
+            if ( isEnabled == null ) {
+                Boolean local = False;
+                if ( NSP_SObjectHistoryTrackingHelper.settings != null ) {
+                    local = NSP_SObjectHistoryTrackingHelper.settings.IsEnabled__c;
+                }
+                isEnabled = local;
+            }
+            return isEnabled;
+        }
+        private set;
+    }
+
     private static Set<String> allowedSObjectNames {
         private get {
             if ( allowedSObjectNames == null ) {
                 Set<String> local = null;
-                // Account , Asset , Contact , Implementation_Profile__c , Lead , NSP_Account_Group__c , Opportunity
-                String allowedSObjectNamesSetting = 'Account,Asset,Contact,Implementation_Profile__c,Lead,NSP_Account_Group__c,Opportunity';
-                if ( String.isNotBlank( allowedSObjectNamesSetting ) ) {
-                    List<String> allowedSObjectNamesList = allowedSObjectNamesSetting.split( ',' );
+                if ( ( NSP_SObjectHistoryTrackingHelper.settings != null )
+                    && String.isNotBlank( NSP_SObjectHistoryTrackingHelper.settings.AllowedSObjectNames__c )
+                    )
+                {
+                    List<String> allowedSObjectNamesList = NSP_SObjectHistoryTrackingHelper.settings.AllowedSObjectNames__c.split( ',' );
                     if ( ( allowedSObjectNamesList != null ) && !allowedSObjectNamesList.isEmpty() ) {
                         local = new Set<String>( allowedSObjectNamesList );
                     }
@@ -65,16 +98,16 @@ public class NSP_SObjectHistoryTrackingHelper implements Queueable {
     //
     //
 
-    private Map<Id, sObject> newMapSObject;
-    private Map<Id, sObject> oldMapSObject;
-    private Map<Id, Decimal> recIdHistoryCountMap = new Map<Id, Decimal>();
+    private Map<Id,sObject> newMapSObject;
+    private Map<Id,sObject> oldMapSObject;
+    private Map<Id,Decimal> recIdHistoryCountMap = new Map<Id,Decimal>();
     private List<NSP_SObject_Field_History__mdt> objFields = new List<NSP_SObject_Field_History__mdt>();
 
-    public NSP_SObjectHistoryTrackingHelper(Map<Id, sObject> newMapSObject,Map<Id, sObject> oldMapSObject) {
+    private NSP_SObjectHistoryTrackingHelper( Map<Id,sObject> newMapSObject , Map<Id,sObject> oldMapSObject ) {
         this.newMapSObject = newMapSObject;
         this.oldMapSObject = oldMapSObject;
     }
-	
+
      /*
      * Here we insert the Customer Interaction big object records,
      * or log an error if insertion fails.
@@ -141,7 +174,7 @@ public class NSP_SObjectHistoryTrackingHelper implements Queueable {
         oht.NSP_Old_Value__c = String.valueOf(oldRec.get(ofh.NSP_Field_API_Name__c));
         oht.NSP_New_Value__c = String.valueOf(newRec.get(ofh.NSP_Field_API_Name__c));
         // for now - get the userid and modify date out of the new record
-        oht.NSP_Modified_By__c	 = (Id) newRec.get('LastModifiedById');
+        oht.NSP_Modified_By__c = (Id) newRec.get('LastModifiedById');
         oht.NSP_Modified_Date__c = (Datetime) newRec.get('LastModifiedDate');
         //poulate Effective date if NSP_Client_Segment_type__c is changed on asset
         if ( oht.NSP_Field_Name__c == String.valueOf( 'Client Segment type' ) ) {
@@ -149,7 +182,7 @@ public class NSP_SObjectHistoryTrackingHelper implements Queueable {
         }
         return oht;
     }
-    
+
     /***********************************************************************************************
     * MethodName: newIPHistoryTrackingRec
     * Description : prepare bigobject IP history record
@@ -165,7 +198,7 @@ public class NSP_SObjectHistoryTrackingHelper implements Queueable {
         oht.NSP_Old_Value__c = String.valueOf(oldRec.get(ofh.NSP_Field_API_Name__c));
         oht.NSP_New_Value__c = String.valueOf(newRec.get(ofh.NSP_Field_API_Name__c));
         // for now - get the userid and modify date out of the new record
-        oht.NSP_Modified_By__c	 = (Id) newRec.get('LastModifiedById');
+        oht.NSP_Modified_By__c = (Id) newRec.get('LastModifiedById');
         oht.NSP_Modified_Date__c = (Datetime) newRec.get('LastModifiedDate');
         //this is set for pagination
         if(recIdHistoryCountMap.containsKey((String)newRec.get('Id'))){
@@ -197,7 +230,7 @@ public class NSP_SObjectHistoryTrackingHelper implements Queueable {
         }
         private set;
     }
-    
+
     private String sObjectName {
         private get {
             if ( ( sObjectName == null ) && ( this.soType != null ) ) {
@@ -231,5 +264,6 @@ public class NSP_SObjectHistoryTrackingHelper implements Queueable {
             }
         }
     }
-    
+
 }
+//

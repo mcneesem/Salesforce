@@ -7,6 +7,6 @@
     <inlineHelpText>Whether to exclude this resource from the resource planner.</inlineHelpText>
     <label>Exclude from Resource Planner</label>
     <trackFeedHistory>false</trackFeedHistory>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <type>Checkbox</type>
 </CustomField>

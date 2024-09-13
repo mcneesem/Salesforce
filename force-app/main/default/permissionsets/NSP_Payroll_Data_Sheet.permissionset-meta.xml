@@ -47,6 +47,31 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Additional_Payroll_Contact__c.Notes__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Additional_Payroll_Contact__c.Record_ID__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Additional_Payroll_Contact__c.View_Payroll_Paperwork__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NSP_Payroll__c.Account__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_Payroll__c.Additional_Insperity_Resources__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>NSP_Payroll__c.Back_Up_Payroll_Contact_Notes__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -706,13 +731,8 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
-        <field>NSP_Payroll__c.On_Site_View_Payroll_Paperwork__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>NSP_Payroll__c.On_site_Supervisor_Notes_Txt__c</field>
+        <editable>false</editable>
+        <field>NSP_Payroll__c.Payroll_Specialist__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

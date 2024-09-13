@@ -8,6 +8,7 @@
     <permissionSets>NSP_Termination_Form_Access</permissionSets>
     <permissionSets>PEO_Service_Task_Owner</permissionSets>
     <permissionSets>Task_Record_Type_Task</permissionSets>
+    <permissionSets>Project_Task_Access</permissionSets>
     <permissionSets>Termination_form_field_access</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>

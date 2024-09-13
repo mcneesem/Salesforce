@@ -7,6 +7,6 @@
     <inlineHelpText>Whether the user should be excluded from timecard calculations like utilization</inlineHelpText>
     <label>Exclude from Time Calculations</label>
     <trackFeedHistory>false</trackFeedHistory>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <type>Checkbox</type>
 </CustomField>

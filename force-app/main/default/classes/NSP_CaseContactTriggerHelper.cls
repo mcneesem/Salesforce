@@ -140,7 +140,10 @@ public class NSP_CaseContactTriggerHelper {
                 for ( Case cse : [
                             SELECT Id , ContactId
                             FROM Case
-                            WHERE ( Id IN :caseConIdMap.keySet() )
+                            WHERE (
+                                ( Id IN :caseConIdMap.keySet() )
+                                AND ( Status != 'Closed' )
+                            )
                         ]
                     )
                 {

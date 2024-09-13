@@ -549,6 +549,16 @@
                 <identifier>Recordpse_Order_cField</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Task_Order__c</fieldItem>
+                <identifier>RecordTask_Order_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-ced60570-af49-4f0d-b8d0-a3e9c7b10b21</name>
         <type>Facet</type>
     </flexiPageRegions>

@@ -333,6 +333,7 @@
         <fields>pse__Milestone__c</fields>
         <fields>NSP_Percentage_Complete__c</fields>
         <fields>pse__Order__c</fields>
+        <fields>Task_Order__c</fields>
         <relatedList>pse__Project_Task__c.pse__Project__c</relatedList>
         <sortField>pse__Order__c</sortField>
         <sortOrder>Asc</sortOrder>

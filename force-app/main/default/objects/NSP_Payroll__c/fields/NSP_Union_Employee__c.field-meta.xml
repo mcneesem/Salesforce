@@ -4,7 +4,7 @@
     <externalId>false</externalId>
     <formula>NSP_Sub_Client_Name__r.NSP_Union_Employees__c</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-    <label>Sub-Client Union</label>
+    <label>Sub Client has Union EEs</label>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>

@@ -19,7 +19,10 @@
           ( NSP_Quoted_Quantity__c &gt; 0 ) ,
           ( NSP_Max_Quantity__c &gt;= NSP_Quoted_Quantity__c )
         ) ,
-        MAX( ( SBQQ__NetPrice__c * NSP_Quoted_Quantity__c ) , NSP_Final_Minimum_Fee__c ) ,
+        MAX(
+          ( SBQQ__NetPrice__c * NSP_Quoted_Quantity__c ) ,
+          NSP_Final_Minimum_Fee__c
+        ) ,
         IF(
           SBQQ__HasConsumptionSchedule__c ,
           ( SBQQ__NetPrice__c * NSP_Quoted_Quantity__c ) ,
@@ -35,7 +38,17 @@
         )
       )
     ) ,
-    0
+    IF(
+      AND(
+        OR(
+          ( SBQQ__Discount__c != 0 ) ,
+          ( SBQQ__AdditionalDiscountAmount__c != 0 )
+        ) ,
+        ( NSP_Quoted_Quantity__c = NSP_Previous_Quantity__c )
+      ) ,
+      ( SBQQ__NetPrice__c * NSP_Quoted_Quantity__c ) ,
+      0
+    )
   )
 )</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>

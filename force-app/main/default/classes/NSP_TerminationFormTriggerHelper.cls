@@ -8,6 +8,7 @@ public class NSP_TerminationFormTriggerHelper {
     private static final string TERM_TEAM_DENIED = 'Term Team Denied';
     private static final string TERM_TEAM_APPROVED = 'Term Team Approved';
     public static final String NSP_Credit_Specialist_Form = 'NSP_Credit_Specialist_Form';
+    public static final String NSP_Client_Reinstatement = 'NSP_Client_Reinstatement';
     public static final String Termination_Form_Approved = 'Termination_Form_Approved';
 
     // Description : This method will run before inserting Termination Form
@@ -364,8 +365,18 @@ public class NSP_TerminationFormTriggerHelper {
         Set<Id> processedTerm = new Set<Id>();
         Set<Id> termFormSet = new Set<Id>();
         Set<ID> terminationFormBellNotificationSet = new Set<ID>();
-        String PayrollRecordTypeId = Schema.SObjectType.NSP_Termination_Form__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.NSP_Payroll_Specialist_Form).getRecordTypeId();
-        String CreditRecordTypeId = Schema.SObjectType.NSP_Termination_Form__c.getRecordTypeInfosByDeveloperName().get(NSP_Credit_Specialist_Form).getRecordTypeId();
+        Id PayrollRecordTypeId = NSP_GenericRecordType.getRecordTypeId(
+            'NSP_Termination_Form__c' ,
+            'NSP_Payroll_Specialist_Form'
+        );
+        Id CreditRecordTypeId = NSP_GenericRecordType.getRecordTypeId(
+            'NSP_Termination_Form__c' ,
+            'NSP_Credit_Specialist_Form'
+        );
+        Id ReinstateRecordTypeId = NSP_GenericRecordType.getRecordTypeId(
+            'NSP_Termination_Form__c' ,
+            'NSP_Client_Reinstatement'
+        );
         
         for(NSP_Termination_Form__c terminationForm : terminationFormList){
             if(terminationForm.NSP_Project_Task__c != null 
@@ -414,17 +425,28 @@ public class NSP_TerminationFormTriggerHelper {
                 mTFToUsers.remove(terminationForm.Id);
             }
     
-            if(terminationForm.NSP_Status__c != null && terminationForm.NSP_Status__c != oldMap.get(terminationForm.Id).NSP_Status__c 
-               && ((terminationForm.RecordTypeId == PayrollRecordTypeId && terminationForm.NSP_Status__c == SUPERVISOR_DENIED)
-                   || (terminationForm.RecordTypeId == CreditRecordTypeId && terminationForm.NSP_Status__c == TERM_TEAM_DENIED) 
-                   || (terminationForm.RecordTypeId == CreditRecordTypeId && terminationForm.NSP_Status__c == TERM_TEAM_APPROVED) 
-                   || (terminationForm.RecordTypeId == PayrollRecordTypeId && terminationForm.NSP_Status__c == TERM_TEAM_APPROVED) )){
-                       terminationFormBellNotificationSet.add(terminationForm.Id);
-                   }
-            if(terminationForm.NSP_Status__c != null && terminationForm.NSP_Status__c != oldMap.get(terminationForm.Id).NSP_Status__c 
-               && terminationForm.RecordTypeId == PayrollRecordTypeId && terminationForm.NSP_Status__c == TERM_TEAM_APPROVED){
-                   termFormSet.add(terminationForm.Id);
-               }
+            if ( ( terminationForm.NSP_Status__c != null )
+                && ( terminationForm.NSP_Status__c != oldMap.get(terminationForm.Id).NSP_Status__c )
+                && (
+                    ( terminationForm.RecordTypeId == PayrollRecordTypeId && terminationForm.NSP_Status__c == SUPERVISOR_DENIED )
+                    || ( terminationForm.RecordTypeId == CreditRecordTypeId && terminationForm.NSP_Status__c == TERM_TEAM_DENIED )
+                    || ( terminationForm.RecordTypeId == CreditRecordTypeId && terminationForm.NSP_Status__c == TERM_TEAM_APPROVED )
+                    || ( terminationForm.RecordTypeId == PayrollRecordTypeId && terminationForm.NSP_Status__c == TERM_TEAM_APPROVED )
+                    || ( terminationForm.RecordTypeId == ReinstateRecordTypeId && terminationForm.NSP_Status__c == TERM_TEAM_DENIED )
+                    || ( terminationForm.RecordTypeId == ReinstateRecordTypeId && terminationForm.NSP_Status__c == TERM_TEAM_APPROVED )
+                    )
+                )
+            {
+                terminationFormBellNotificationSet.add( terminationForm.Id );
+            }
+            if ( terminationForm.NSP_Status__c != null
+                && terminationForm.NSP_Status__c != oldMap.get(terminationForm.Id).NSP_Status__c 
+                && terminationForm.RecordTypeId == PayrollRecordTypeId
+                && terminationForm.NSP_Status__c == TERM_TEAM_APPROVED
+                )
+            {
+                termFormSet.add(terminationForm.Id);
+            }
         }
         if (!queueNewTerm.isEmpty() && Limits.getQueueableJobs() < Limits.getLimitQueueableJobs()) {
             System.enqueueJob(
@@ -461,8 +483,19 @@ public class NSP_TerminationFormTriggerHelper {
     */
     @future
     public static void sendBellNotificationToSpecialist(Set<ID> terminationFormSet){
-        String PayrollRecordTypeId = Schema.SObjectType.NSP_Termination_Form__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.NSP_Payroll_Specialist_Form).getRecordTypeId();
-        String CreditRecordTypeId = Schema.SObjectType.NSP_Termination_Form__c.getRecordTypeInfosByDeveloperName().get(NSP_Credit_Specialist_Form).getRecordTypeId();
+        Id PayrollRecordTypeId = NSP_GenericRecordType.getRecordTypeId(
+            'NSP_Termination_Form__c' ,
+            'NSP_Payroll_Specialist_Form'
+        );
+        Id CreditRecordTypeId = NSP_GenericRecordType.getRecordTypeId(
+            'NSP_Termination_Form__c' ,
+            'NSP_Credit_Specialist_Form'
+        );
+        Id ReinstateRecordTypeId = NSP_GenericRecordType.getRecordTypeId(
+            'NSP_Termination_Form__c' ,
+            'NSP_Client_Reinstatement'
+        );
+        
         Set<String> specialistIds = new Set<String>();
         Map<NSP_Termination_Form__c,Set<String>> termFormToSpecialistIdsMap = new Map<NSP_Termination_Form__c,Set<String>>();
         List<NSP_Termination_Form__c> terminationFormBellNotificationList = [
@@ -479,7 +512,10 @@ public class NSP_TerminationFormTriggerHelper {
             }else if(term.RecordTypeId == CreditRecordTypeId && term.NSP_Status__c == TERM_TEAM_DENIED && term.Credit_Specialist__c != Null){
                 specialistIds.add(term.Credit_Specialist__r.pse__Salesforce_User__c);
                 termFormToSpecialistIdsMap.put(term, specialistIds);
-            }else if(term.RecordTypeId == CreditRecordTypeId && term.NSP_Status__c == TERM_TEAM_APPROVED && term.OwnerId != Null){
+            }else if(term.RecordTypeId == ReinstateRecordTypeId && term.NSP_Status__c == TERM_TEAM_DENIED && term.OwnerId != Null){
+                specialistIds.add(term.OwnerId);
+                termFormToSpecialistIdsMap.put(term, specialistIds);
+            }else if((term.RecordTypeId == CreditRecordTypeId||term.RecordTypeId == ReinstateRecordTypeId) && term.NSP_Status__c == TERM_TEAM_APPROVED && term.OwnerId != Null){
                 specialistIds.add(term.OwnerId);
                 specialistIds.add(term.CreatedById);
                 termFormToSpecialistIdsMap.put(term, specialistIds);

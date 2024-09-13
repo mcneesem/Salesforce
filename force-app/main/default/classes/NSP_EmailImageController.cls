@@ -11,6 +11,21 @@ public class NSP_EmailImageController {
         return getDocumentUrl( 'Insperity_Footer_Logo' );
     }
 
+    // referenced by NSP_TerminationFormTemplate.component...
+    public String getServiceOperationsLogoUrl() {
+        return getDocumentUrl( 'Insperity_Service_Operations' );
+    }
+
+    // referenced by NSP_TerminationFormTemplate.component...
+    public String getCopyWriteLogoUrl() {
+        return getDocumentUrl( 'Insperity_Copy_write_logo' );
+    }
+
+    // referenced by NSP_TerminationFormTemplate.component...
+    public String getHRLogoLogoUrl() {
+        return getDocumentUrl( 'Insperity_HR_Logo' );
+    }
+
     // build the Document Url....
     private String getDocumentUrl( String documentName ) {
         return System.URL.getSalesforceBaseUrl().toExternalForm()
@@ -26,7 +41,7 @@ public class NSP_EmailImageController {
             WHERE ( DeveloperName = :documentName )
         ];
         Id documentId = null;
-        if ( ( records != null ) && ( records.size() > 0 ) ) {
+        if ( ( records != null ) && !records.isEmpty() ) {
             documentId = records[0].Id;
         }
         return documentId;

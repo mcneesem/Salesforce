@@ -603,6 +603,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Business Profile Expired</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Client</fullName>
             <default>false</default>
         </values>
@@ -3697,6 +3701,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>HUB SCRA</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>HUB South Florida</fullName>
             <default>false</default>
         </values>
@@ -3905,6 +3913,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Patriot Growth Insurance - Bay Area Benefits</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Patriot Growth Insurance TATCH</fullName>
             <default>false</default>
         </values>
@@ -4070,6 +4082,26 @@
         </values>
         <values>
             <fullName>USI Agency</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>USI Dallas%2FFW</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>USI Houston</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>USI Northern California</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>USI Southern California</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>USI St%2E Louis</fullName>
             <default>false</default>
         </values>
         <values>
@@ -4466,6 +4498,49 @@
         </values>
         <values>
             <fullName>Workforce Optimization</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Promotion_Code__c</picklist>
+        <values>
+            <fullName>2024 2-year Admin Cap</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2024 2-year Agreement</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2024 August Credit Promotion</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2024 Credit Promotion</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2024 Enrollment Fee Promotion</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2024 Fall Credit Promotion</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2024 Inc 5000 Promotion</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2024 Recruiting Promotion</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2024 September Credit Promotion</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2024 WX Free Months</fullName>
             <default>false</default>
         </values>
     </picklistValues>

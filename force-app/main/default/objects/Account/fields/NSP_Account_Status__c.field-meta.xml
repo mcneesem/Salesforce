@@ -13,14 +13,24 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
+                <fullName>Inactive</fullName>
+                <default>false</default>
+                <label>Inactive</label>
+            </value>
+            <value>
+                <fullName>Out of Business</fullName>
+                <default>false</default>
+                <label>Out of Business</label>
+            </value>
+            <value>
                 <fullName>Active</fullName>
                 <default>true</default>
                 <label>Sales Active</label>
             </value>
             <value>
-                <fullName>Inactive</fullName>
+                <fullName>Sales Disqualified</fullName>
                 <default>false</default>
-                <label>Inactive</label>
+                <label>Sales Disqualified</label>
             </value>
         </valueSetDefinition>
     </valueSet>

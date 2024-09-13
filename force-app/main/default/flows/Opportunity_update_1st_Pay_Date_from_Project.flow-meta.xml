@@ -14,7 +14,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Update_related_Opty</targetReference>
+            <targetReference>Update_Related_Opportunities</targetReference>
         </connector>
     </assignments>
     <decisions>
@@ -23,7 +23,7 @@
         <locationX>374</locationX>
         <locationY>276</locationY>
         <defaultConnector>
-            <targetReference>Update_related_Opty</targetReference>
+            <targetReference>Update_Related_Opportunities</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>No - Invoice Ready Unchecked</defaultConnectorLabel>
         <rules>
@@ -66,14 +66,22 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <recordUpdates>
-        <name>Update_related_Opty</name>
-        <label>Update related Opty</label>
+        <description>Prevent DmlExceptions by ignoring &quot;Locked&quot; Opportunities (NSP_Lock_Opportunity__c).</description>
+        <name>Update_Related_Opportunities</name>
+        <label>Update Related Opportunities</label>
         <locationX>374</locationX>
         <locationY>576</locationY>
         <faultConnector>
             <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
         </faultConnector>
-        <filterLogic>or</filterLogic>
+        <filterLogic>( 1 AND ( 2 OR 3 ) )</filterLogic>
+        <filters>
+            <field>NSP_Lock_Opportunity__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
         <filters>
             <field>NSP_PrimaryProduct__c</field>
             <operator>EqualTo</operator>
@@ -167,15 +175,21 @@
         <locationY>684</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
-            <name>faultMessage</name>
+            <name>faultElement</name>
             <value>
-                <elementReference>$Flow.FaultMessage</elementReference>
+                <stringValue>Update_Related_Opportunities</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
-            <name>triggeringFlow</name>
+            <name>faultFlow</name>
             <value>
-                <stringValue>Opportunity update 1st Pay Date from Project</stringValue>
+                <stringValue>Opportunity_update_1st_Pay_Date_from_Project</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultMessage</name>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
             </value>
         </inputAssignments>
     </subflows>

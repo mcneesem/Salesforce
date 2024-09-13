@@ -32,8 +32,8 @@
     ),
     AND(
       AND(
-        $Profile.Name != &apos;Sales Operations&apos;,
-        $Profile.Name == &apos;Sales Admin&apos;
+        ( $Profile.Name != &apos;Sales Operations&apos; ) ,
+        ( $Profile.Name == &apos;Sales Admin&apos; )
       ),
       CONTAINS( $Profile.Name , &apos;System Admin&apos; )
     )

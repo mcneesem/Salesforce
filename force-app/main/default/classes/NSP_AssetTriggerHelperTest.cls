@@ -314,6 +314,7 @@ public class NSP_AssetTriggerHelperTest {
         assetObj.recordTypeId = wX_WARecordTypeId;
         assetObj.NSP_Product_Line__c = 'Learning & Development';
         insert assetObj;
+        NSP_AssetTriggerHelper.testHandleException( null , null ); // for increased code coverage...
         Test.stopTest();
         system.assertEquals(assetObj.NSP_Product_Line__c, 'Learning & Development');
         

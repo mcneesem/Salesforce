@@ -4,5 +4,5 @@
     <encryptionScheme>None</encryptionScheme>
     <inlineHelpText>This email is used by Sales, Marketing, and Finance/CPQ for their processes. Do not update unless directed to do so by one of those groups.</inlineHelpText>
     <trackFeedHistory>false</trackFeedHistory>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
 </CustomField>

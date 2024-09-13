@@ -7,21 +7,26 @@
 public with sharing class NSP_SObjectHistoryTrackingHelperTest {
     @testSetup
     static void testData() {
+        HistoryTrackingSettings__c settings = HistoryTrackingSettings__c.getOrgDefaults();
+        settings.IsEnabled__c = true;
+        settings.AllowedSObjectNames__c = 'Account,Asset,Contact,Implementation_Profile__c,Lead,NSP_Account_Group__c,Opportunity';
+        upsert settings;
+
         Id peoProjectRecordTypeId = SObjectType.pse__Proj__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.PEOProject).getRecordTypeId();
 
         //insert Account
         Account acc = (Account)NSP_TestExtendedDataFactory.createSObject(new Account(), 'NSP_TestDataFactory.AccountDefaults', false);
-		insert acc;
+        insert acc;
         //insert Project
         List<pse__Proj__c> lstProject = new List<pse__Proj__c>();
         pse__Proj__c oProject = (pse__Proj__c)NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c(), 'NSP_TestDataFactory.ProjectDefaults', false);
-		oProject.pse__Account__c = acc.Id;
+        oProject.pse__Account__c = acc.Id;
         oProject.pse__Project_Type__c = NSP_ServiceConstants.ImplementationProjectType;
         oProject.TemplateName__c = label.Middle_Market_Implementation_Project;
         oProject.RecordTypeId = peoProjectRecordTypeId;
         lstProject.add(oProject);
         pse__Proj__c oProject1 = (pse__Proj__c)NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c(), 'NSP_TestDataFactory.ProjectDefaults', false);
-		oProject1.pse__Account__c = acc.Id;
+        oProject1.pse__Account__c = acc.Id;
         oProject1.pse__Project_Type__c = NSP_ServiceConstants.ImplementationProjectType;
         oProject1.TemplateName__c = label.FSOImplementationProject;
         oProject1.RecordTypeId = peoProjectRecordTypeId;
@@ -48,7 +53,7 @@ public with sharing class NSP_SObjectHistoryTrackingHelperTest {
    
     static testMethod void testSObjectHistoryTracking() {  
         Test.startTest();
-		//GIVEN
+        //GIVEN
         List<Implementation_Profile__c> lstIPToUpdate = new List<Implementation_Profile__c>();
         for(Implementation_Profile__c ip: [SELECT Id,PEO_Name__c FROM Implementation_Profile__c LIMIT 2]){
             //WHEN

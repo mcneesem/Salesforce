@@ -112,6 +112,10 @@
                 <field>pse__Order__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Task_Order__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>NSP_Orientation_Address__c</field>
             </layoutItems>
@@ -372,6 +376,7 @@
         <fields>NSP_Percentage_Complete__c</fields>
         <fields>pse__Status__c</fields>
         <fields>pse__Order__c</fields>
+        <fields>Task_Order__c</fields>
         <relatedList>pse__Project_Task__c.pse__Parent_Task__c</relatedList>
         <sortField>pse__Order__c</sortField>
         <sortOrder>Asc</sortOrder>
