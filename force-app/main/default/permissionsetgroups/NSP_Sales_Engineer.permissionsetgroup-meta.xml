@@ -8,9 +8,7 @@
     <permissionSets>Bypass_Task_Event_Cancelled_Status</permissionSets>
     <permissionSets>Checklist_Create_Sales_Engineer_Questionnaire</permissionSets>
     <permissionSets>Contact_View_All</permissionSets>
-    <permissionSets>Convert_Leads</permissionSets>
     <permissionSets>Core_Sales</permissionSets>
-    <permissionSets>Lead_Create</permissionSets>
     <permissionSets>List_View_Enhanced_Access</permissionSets>
     <permissionSets>NSPSteelBrickCPQUser</permissionSets>
     <permissionSets>NSP_Billing_View_All</permissionSets>

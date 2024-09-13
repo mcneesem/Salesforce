@@ -12,7 +12,6 @@
     <permissionSets>Checklist_Read_Create</permissionSets>
     <permissionSets>Checklist_View_All</permissionSets>
     <permissionSets>Contact_View_All</permissionSets>
-    <permissionSets>Convert_Leads</permissionSets>
     <permissionSets>Core_Sales</permissionSets>
     <permissionSets>DOZISF__ZoomInfo_User</permissionSets>
     <permissionSets>Edit_Closed_Won_Create_Box_Folder</permissionSets>
