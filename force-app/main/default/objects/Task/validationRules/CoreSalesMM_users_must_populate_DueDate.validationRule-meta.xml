@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CoreSalesMM_users_must_populate_DueDate</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+  OR(
+    ISNEW() ,
+    ISCHANGED( ActivityDate )
+  ) ,
+  OR(
+    ( RecordType.DeveloperName = &apos;Core_Sales_Task_RT&apos; ) ,
+    ( RecordType.DeveloperName = &apos;Mid_Market_Task_RT&apos; )
+  ) ,
+  $Permission.Task_Due_Date_Required ,
+  ISPICKVAL( Status , &quot;Open&quot; ) ,
+  ISBLANK( ActivityDate )
+)</errorConditionFormula>
+    <errorMessage>Due Date must be populated</errorMessage>
+</ValidationRule>

@@ -11,10 +11,8 @@
     <permissionSets>Contact_Modify_All</permissionSets>
     <permissionSets>Contact_View_All</permissionSets>
     <permissionSets>Convert_Leads</permissionSets>
-    <permissionSets>Delegated_Admin_User_Provisioning</permissionSets>
     <permissionSets>Edit_Integrated_Fields</permissionSets>
     <permissionSets>Lead_Create</permissionSets>
-    <permissionSets>Manage_Internal_Users</permissionSets>
     <permissionSets>NSP_Billing_View_All</permissionSets>
     <permissionSets>NSP_Finance_Service_Objects_Permission</permissionSets>
     <permissionSets>NSP_Main_Service_Contacts</permissionSets>

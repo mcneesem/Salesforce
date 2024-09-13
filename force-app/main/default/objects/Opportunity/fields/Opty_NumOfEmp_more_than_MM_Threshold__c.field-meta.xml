@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Opty_NumOfEmp_more_than_MM_Threshold__c</fullName>
+    <externalId>false</externalId>
+    <formula>NSP_Number_of_Employees__c  &gt; VALUE($Label.NSP_MidMarket_Threshold )</formula>
+    <label>Opty NumOfEmp more than MM Threshold</label>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

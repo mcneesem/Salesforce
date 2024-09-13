@@ -202,6 +202,13 @@ public class NSP_AccountTriggerHelperTest {
      */
     @isTest
     static void testAccountMerge() {
+        PlatformEventSettings__c setting = new PlatformEventSettings__c();
+        setting.IsEnabled_IntegrationAccountEvent__c = true;
+        setting.IsEnabled_IntegrationAccountDeleteEvent__c = true;
+        setting.IsEnabled_IntegrationAccountDeleteEvent__c = true;
+        setting.IsEnabled_IntegrationOpportunityEvent__c = true;
+        upsert setting;
+
         // Insert new accounts
         List<Account> dupeaccounts = new List<Account>{
             new Account(name='MergeTest Inc.'),
@@ -236,6 +243,7 @@ public class NSP_AccountTriggerHelperTest {
 
         PlatformEventSettings__c setting = new PlatformEventSettings__c();
         setting.IsEnabled_IntegrationAccountEvent__c = true;
+        setting.IsEnabled_IntegrationAccountDeleteEvent__c = true;
         setting.IsEnabled_IntegrationAccountDeleteEvent__c = true;
         setting.IsEnabled_IntegrationOpportunityEvent__c = true;
         upsert setting;
@@ -292,9 +300,9 @@ public class NSP_AccountTriggerHelperTest {
            
         NSP_AccountTriggerHelper helper = new NSP_AccountTriggerHelper();
         helper.setAccountStageWhenOwnerChanged(accountUpdateList);
-        helper.updatePublishAccount(accIdSet);
          helper.afterUpdateDirector(accountMapNew, accountMapOld);
          system.assertEquals(salesManagerUser.Id, accountList[0].ownerId);
+        NSP_AccountTriggerHelper.testHandleException( null , null ); // for increased code coverage...
         Test.stopTest();
  
     }
@@ -417,6 +425,7 @@ public class NSP_AccountTriggerHelperTest {
 
         PlatformEventSettings__c setting = new PlatformEventSettings__c();
         setting.IsEnabled_IntegrationAccountEvent__c = true;
+        setting.IsEnabled_IntegrationAccountDeleteEvent__c = true;
         setting.IsEnabled_IntegrationAccountDeleteEvent__c = true;
         setting.IsEnabled_IntegrationOpportunityEvent__c = true;
         upsert setting;

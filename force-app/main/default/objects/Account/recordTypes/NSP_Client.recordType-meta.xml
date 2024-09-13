@@ -416,6 +416,14 @@
             <fullName>Inactive</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Out of Business</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sales Disqualified</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>NSP_Accounting_Software__c</picklist>
@@ -6750,6 +6758,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>HUB SCRA</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>HUB South Florida</fullName>
             <default>false</default>
         </values>
@@ -6958,6 +6970,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Patriot Growth Insurance - Bay Area Benefits</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Patriot Growth Insurance TATCH</fullName>
             <default>false</default>
         </values>
@@ -7123,6 +7139,26 @@
         </values>
         <values>
             <fullName>USI Agency</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>USI Dallas%2FFW</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>USI Houston</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>USI Northern California</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>USI Southern California</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>USI St%2E Louis</fullName>
             <default>false</default>
         </values>
         <values>

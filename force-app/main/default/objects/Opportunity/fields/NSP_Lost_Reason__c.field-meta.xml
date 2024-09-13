@@ -23,6 +23,11 @@
                 <label>Backout</label>
             </value>
             <value>
+                <fullName>Business Profile Expired</fullName>
+                <default>false</default>
+                <label>Business Profile Expired</label>
+            </value>
+            <value>
                 <fullName>Client</fullName>
                 <default>false</default>
                 <label>Client</label>

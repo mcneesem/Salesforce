@@ -43,17 +43,7 @@
           label="Client Information">
           <div class="slds-grid slds-gutters slds-p-top_x-small">
             <div class="slds-col slds-size_1-of-2">
-              <c-nsp_multi-select-lookup
-                options={subClientSearchResults}
-                selected-options={selectedSubClients}
-                label="Sub Client"
-                placeholder="Search Sub Client by Name"
-                class="slds-show slds-m-horizontal_xx-small"
-                onsearchtermchange={handleSubClientSearchTermChange}
-                onlookupselect={handleSubClientSelection}
-                onlookupdeselect={handleSubClientDeselection}>
-              </c-nsp_multi-select-lookup>
-
+              
               <c-nsp_multi-select-lookup
                 options={accountSearchResults}
                 selected-options={selectedAccounts}
@@ -64,6 +54,17 @@
                 onsearchtermchange={handleAccountSearchTermChange}
                 onlookupselect={handleAccountSelection}
                 onlookupdeselect={handleAccountDeselection}>
+              </c-nsp_multi-select-lookup>
+                          
+              <c-nsp_multi-select-lookup
+                options={subClientSearchResults}
+                selected-options={selectedSubClients}
+                label="Sub Client"
+                placeholder="Search Sub Client by Name"
+                class="slds-show slds-m-horizontal_xx-small"
+                onsearchtermchange={handleSubClientSearchTermChange}
+                onlookupselect={handleSubClientSelection}
+                onlookupdeselect={handleSubClientDeselection}>
               </c-nsp_multi-select-lookup>
 
               <lightning-input-field
@@ -77,6 +78,14 @@
                 field-name="NSP_Submitted_by__c"
                 data-name="NSP_Submitted_by__c"
                 value={fieldValue.NSP_Submitted_by__c}
+                onchange={handleLookUpChange}>
+              </lightning-input-field>
+
+              <lightning-input-field
+                field-name="CustomOwnerId__c"
+                data-name="CustomOwnerId__c"
+                required="true"
+                value={fieldValue.CustomOwnerId__c}
                 onchange={handleLookUpChange}>
               </lightning-input-field>
             </div>
@@ -781,6 +790,14 @@
         onuploadfinished={handleFileUploadFinished}
         multiple>
       </lightning-file-upload>
+      <lightning-card variant="Narrow" title="Attachments" icon-name="standard:file" class="slds-p-bottom_large">
+        <template for:each={uploadedAttachments} for:item="attachment">
+          <div class="slds-p-left_medium slds-p-bottom_x-small" key={attachment}>
+            <lightning-icon icon-name="doctype:unknown" size="small"></lightning-icon>
+            {attachment}
+          </div>
+        </template>
+    </lightning-card>
     </div>
 
     <div slot="footer">

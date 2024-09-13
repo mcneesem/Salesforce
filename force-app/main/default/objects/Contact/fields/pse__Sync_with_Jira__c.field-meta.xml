@@ -8,6 +8,6 @@
     <inlineHelpText>Controls whether the resource is synchronized with Jira.</inlineHelpText>
     <label>Sync with Jira</label>
     <trackFeedHistory>false</trackFeedHistory>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <type>Checkbox</type>
 </CustomField>

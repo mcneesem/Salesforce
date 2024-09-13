@@ -273,10 +273,52 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.National_Account_Type__c</fieldItem>
+                <identifier>RecordNational_Account_Type__cField</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 AND (2 OR 3 OR 4 OR 5 OR 6)</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.National_Account_Type__c}</leftValue>
+                        <operator>NE</operator>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.RecordType.Name}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>PEO</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.RecordType.Name}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Wage Claims</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.RecordType.Name}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>DOL Audits</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.RecordType.Name}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>ITA CQA</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.RecordType.Name}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>BPS</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.National_Account_Group__c</fieldItem>
                 <identifier>RecordNational_Account_Group_cField</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 AND (2 OR 3 OR 4)</booleanFilter>
+                    <booleanFilter>1 AND (2 OR 3 OR 4 OR 5 OR 6)</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.National_Account_Group__c}</leftValue>
                         <operator>NE</operator>
@@ -295,6 +337,16 @@
                         <leftValue>{!Record.RecordType.Name}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>DOL Audits</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.RecordType.Name}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>ITA CQA</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.RecordType.Name}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>BPS</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -394,6 +446,16 @@
                         <rightValue>Separation Agreement Request</rightValue>
                     </criteria>
                 </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.First_Call_Resolution__c</fieldItem>
+                <identifier>RecordFirst_Call_Resolution_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-79755648-616d-468a-8dd0-c0a157c43521</name>

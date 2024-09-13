@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Manage_Posted_Invoices</name>
+    </customPermissions>
+    <description>Used for the &apos;Rollback Unposted Lines&apos; Button on the invoice run object</description>
+    <flowAccesses>
+        <enabled>true</enabled>
+        <flow>Rollback_Unposted_Lines</flow>
+    </flowAccesses>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Manage Posted Invoices</label>
+</PermissionSet>

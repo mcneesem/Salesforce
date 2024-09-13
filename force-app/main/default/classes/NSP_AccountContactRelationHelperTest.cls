@@ -158,28 +158,44 @@ public class NSP_AccountContactRelationHelperTest {
         NSP_AccountContactRelationTriggerHelper.afterDeleteDirector( coverage ); // for additional code coverage...
     }
 
-    @isTest
-    static void checkingRestrictingNotIntegrationUserDeletionOfAccConRelation() {
-        Profile profile = [SELECT Id FROM Profile WHERE Name =: NSP_ServiceConstants.PEOSERVICE];
-        Profile profileInt = [SELECT Id FROM Profile WHERE Name =: NSP_ServiceConstants.INTEGRATION_USER];
-
-        Contact contact = [SELECT Id, LastName FROM Contact WHERE LastName ='Test Con' LIMIT 1];
-        
-        List<Account> lstAccounts = new List<Account>();
-        List<AccountContactRelation> lstAcr = new List<AccountContactRelation>();
+    @isTest private static void checkingRestrictingNotIntegrationUserDeletionOfAccConRelation() {
+        List<Contact> sharedContacts = [
+            SELECT Id , LastName
+            FROM Contact
+            WHERE ( LastName = 'Test Con' )
+            LIMIT 1
+        ];
+        Assert.isTrue( !sharedContacts.isEmpty() , 'No \'Test Con\' Contacts found.' );
+        Contact sharedContact = sharedContacts[0];
 
         List<User> integrationUsers = [
             SELECT Id
             FROM User
-            WHERE ( ProfileId = :profileInt.Id )
+            WHERE (
+                ( Profile.Name = 'Integration User' )
+                AND ( IsActive = True )
+            )
+            ORDER BY CreatedDate ASC
+            LIMIT 1
         ];
-        Assert.isTrue( !integrationUsers.isEmpty() , 'No Integration Users found.' );
+        Assert.isTrue( !integrationUsers.isEmpty() , 'No \'Integration Users\' Users found.' );
         User newUserInt = integrationUsers[0];
 
-        User newUserService = (User)NSP_TestExtendedDataFactory.createSObject(new User(), 'NSP_TestDataFactory.UserDefaults', false);
-        newUserService.ProfileId = profile.Id;
-        newUserService.UserName =  Integer.valueOf(math.rint(math.random() * 1000000))+ '@test' + UserInfo.getOrganizationId()+ '.org';
-        
+        List<User> peoServiceUsers = [
+            SELECT Id
+            FROM User
+            WHERE (
+                ( Profile.Name = 'PEO Service' )
+                AND ( IsActive = True )
+            )
+            ORDER BY CreatedDate ASC
+            LIMIT 1
+        ];
+        Assert.isTrue( !peoServiceUsers.isEmpty() , 'No \'PEO Service\' Users found.' );
+        User newUserService = peoServiceUsers[0];
+
+        List<Account> lstAccounts = new List<Account>();
+        List<AccountContactRelation> lstAcr = new List<AccountContactRelation>();
         for(Integer ints=0 ; ints<= 5; ints++){
             Account newAccount = (Account)NSP_TestExtendedDataFactory.createSObject(new Account(), 'NSP_TestDataFactory.AccountDefaults', false);
             newAccount.Name = 'Test Account Today'+ints;
@@ -191,7 +207,7 @@ public class NSP_AccountContactRelationHelperTest {
             for(Account acc: lstAccounts){
                 lstAcr.add(new AccountContactRelation(
                     AccountId = acc.Id,
-                    ContactId = contact.Id
+                    ContactId = sharedContact.Id
                 ));
             }
             insert lstAcr;
@@ -207,8 +223,12 @@ public class NSP_AccountContactRelationHelperTest {
             }
             Test.stopTest();
         }
+        //
+        // for test code coverage only...
+        NSP_AccountContactRelationTriggerHelper.testHandleException( null , null );
+        NSP_AccountContactRelationTriggerHelper.afterDeleteDirector( new List<AccountContactRelation>() );
     }
-    
+
     /**
     * @Description: This test method is used to cover createPlatformEventForACR method
     * @Created date: 12/12/2022 

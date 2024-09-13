@@ -26,12 +26,12 @@
                                 <criteria>
                                     <leftValue>{!$User.Profile.Name}</leftValue>
                                     <operator>CONTAINS</operator>
-                                    <rightValue>System Admin</rightValue>
+                                    <rightValue>Sales Administrator</rightValue>
                                 </criteria>
                                 <criteria>
-                                    <leftValue>{!$User.Profile.Name}</leftValue>
-                                    <operator>CONTAINS</operator>
-                                    <rightValue>Sales Administrator</rightValue>
+                                    <leftValue>{!$Permission.CustomPermission.Admin_Layout_Access}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>true</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
@@ -50,11 +50,6 @@
                                     <rightValue>Sales Support</rightValue>
                                 </criteria>
                                 <criteria>
-                                    <leftValue>{!$User.Profile.Name}</leftValue>
-                                    <operator>CONTAINS</operator>
-                                    <rightValue>System Admin</rightValue>
-                                </criteria>
-                                <criteria>
                                     <leftValue>{!$User.UserRole.DeveloperName}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>New_Client_Sales</rightValue>
@@ -63,6 +58,11 @@
                                     <leftValue>{!$User.Profile.Name}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>BPS Service</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!$Permission.CustomPermission.Admin_Layout_Access}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>true</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
@@ -83,12 +83,12 @@
                                 <criteria>
                                     <leftValue>{!$User.Profile.Name}</leftValue>
                                     <operator>CONTAINS</operator>
-                                    <rightValue>System Admin</rightValue>
+                                    <rightValue>Sales Administrator</rightValue>
                                 </criteria>
                                 <criteria>
-                                    <leftValue>{!$User.Profile.Name}</leftValue>
-                                    <operator>CONTAINS</operator>
-                                    <rightValue>Sales Administrator</rightValue>
+                                    <leftValue>{!$Permission.CustomPermission.Admin_Layout_Access}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>true</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
@@ -132,13 +132,13 @@
                                 </criteria>
                                 <criteria>
                                     <leftValue>{!$User.Profile.Name}</leftValue>
-                                    <operator>CONTAINS</operator>
-                                    <rightValue>System Admin</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!$User.Profile.Name}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>BPS Service</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!$Permission.CustomPermission.Admin_Layout_Access}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>true</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
@@ -163,7 +163,7 @@
                         <valueListItems>
                             <value>Opportunity.Financial_Analysis_Tool</value>
                             <visibilityRule>
-                                <booleanFilter>1 OR 2 OR 3 OR 4 OR 5 OR 6</booleanFilter>
+                                <booleanFilter>1 OR 2 OR 3 OR 4 OR 5</booleanFilter>
                                 <criteria>
                                     <leftValue>{!$User.Profile.Name}</leftValue>
                                     <operator>EQUAL</operator>
@@ -185,14 +185,9 @@
                                     <rightValue>Sales Operations</rightValue>
                                 </criteria>
                                 <criteria>
-                                    <leftValue>{!$User.Profile.Name}</leftValue>
-                                    <operator>CONTAINS</operator>
-                                    <rightValue>System Admin</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!$User.Profile.Name}</leftValue>
+                                    <leftValue>{!$Permission.CustomPermission.Admin_Layout_Access}</leftValue>
                                     <operator>EQUAL</operator>
-                                    <rightValue>Support</rightValue>
+                                    <rightValue>true</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
@@ -2668,6 +2663,16 @@
                 <identifier>RecordNSP_OrientationDate_cField2</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Promotion_Code__c</fieldItem>
+                <identifier>RecordPromotion_Code_cField3</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-1c68ae86-7ba8-42c8-9314-964f18d18e9d</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -2786,6 +2791,16 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_PendingStatus__c</fieldItem>
                 <identifier>RecordNSP_PendingStatus_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Promotion_Code__c</fieldItem>
+                <identifier>RecordPromotion_Code_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-52b26f3c-0263-49c2-b1d1-8e4c727e8f6a</name>
@@ -4051,6 +4066,16 @@
                 </visibilityRule>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Promotion_Code__c</fieldItem>
+                <identifier>RecordPromotion_Code_cField2</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-2f1acadb-6535-45f3-9018-3423f9a806e7</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -5206,6 +5231,16 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_DiscoveryCallApptDate__c</fieldItem>
                 <identifier>RecordNSP_DiscoveryCallApptDate_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Discovery_Call_Completed_Date__c</fieldItem>
+                <identifier>RecordDiscovery_Call_Completed_Date_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>

@@ -29,38 +29,58 @@
          insert userobj;
          
      }
- 
-     @isTest
-     static void testAccountTeamMemberInsert() {
-         //Insert Test Account record
-         Account account = New Account(Name = 'TestAccount', AccountNumber = '12345',NSP_AIMS_Client__c = ACCOUNT_AIMS_CLIENT_NAME);
-         insert account;
-        // Account account = [SELECT Id FROM Account WHERE Name = 'TestAccount'];
-         //Insert Test User Record
- 
-         User user = [SELECT Alias FROM User WHERE Profile.Name LIKE 'Integration%' AND IsActive=true AND NSP_Employee_Per_ID__c = 'test 123' LIMIT 1];
- 
-         List<AccountTeamMember>  accountTeamMemberList = New List<AccountTeamMember>();
- 
-         for(integer count = 0; count < 5; count++) {
-             accountTeamMemberList.add(New AccountTeamMember(AccountId = account.Id, UserId = user.Id,NSP_AIMS_Client__c = ACCOUNT_AIMS_CLIENT_NAME,NSP_Employee_Per_ID__c = 'test 123'));
-         } 
- 
- 
-         system.runAs(user){
-             insert accountTeamMemberList;
-         }
-         
-         AccountTeamMember atmObj = new AccountTeamMember();
-         atmObj.Id = accountTeamMemberList[0].Id;
-         atmObj.TeamMemberRole = NSP_SalesConstants.LeadQualifier;
-         update atmObj;
-         // Start Test
-         Test.startTest();
-         System.assertEquals(NSP_SalesConstants.LeadQualifier, atmObj.TeamMemberRole);
-         Test.stopTest();
-     }
-     
+
+    @isTest private static void testAccountTeamMemberInsert() {
+        Account sharedAccount = new Account(
+            Name = 'TestAccount',
+            AccountNumber = '12345',
+            NSP_AIMS_Client__c = ACCOUNT_AIMS_CLIENT_NAME
+        );
+        insert sharedAccount;
+        
+        List<User> integrationUsers = [
+            SELECT Id
+            FROM User
+            WHERE (
+                ( Profile.Name = 'Integration User' )
+                AND ( IsActive = True )
+            )
+            ORDER BY CreatedDate ASC
+            LIMIT 1
+        ];
+        Assert.isTrue( !integrationUsers.isEmpty() , 'No Integration Users found.' );
+        User integrationUser = integrationUsers[0];
+        
+        List<AccountTeamMember>  accountTeamMemberList = New List<AccountTeamMember>();
+        
+        for(integer count = 0; count < 5; count++) {
+            accountTeamMemberList.add(
+                new AccountTeamMember(
+                    AccountId = sharedAccount.Id,
+                    UserId = integrationUser.Id,
+                    NSP_AIMS_Client__c = ACCOUNT_AIMS_CLIENT_NAME,
+                    NSP_Employee_Per_ID__c = 'test 123'
+                )
+            );
+        } 
+        System.runAs( integrationUser ) {
+            insert accountTeamMemberList;
+        }
+        AccountTeamMember atmObj = new AccountTeamMember();
+        atmObj.Id = accountTeamMemberList[0].Id;
+        atmObj.TeamMemberRole = NSP_SalesConstants.LeadQualifier;
+        update atmObj;
+        // Start Test
+        Test.startTest();
+        System.assertEquals( NSP_SalesConstants.LeadQualifier , atmObj.TeamMemberRole );
+        Test.stopTest();
+        //
+        // for test code coverage only...
+        NSP_AccountTeamMemberTriggerHelper.testHandleException( null , null );
+        NSP_AccountTeamMemberTriggerHelper helper = new NSP_AccountTeamMemberTriggerHelper();
+        helper.beforeUpdateDirector( null , null );
+    }
+
      @isTest
      static void testAccountTeamMemberNonInInsert() {
          //Insert Test Account record

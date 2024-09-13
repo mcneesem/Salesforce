@@ -52,9 +52,9 @@
                 <label>Terms of Participation TOP Alliance General Agent</label>
             </value>
             <value>
-                <fullName>TOP Insurance Broker Alliance – CoSelling</fullName>
+                <fullName>TOP Insurance Broker Alliance - CoSelling</fullName>
                 <default>false</default>
-                <label>TOP Insurance Broker Alliance – CoSelling</label>
+                <label>TOP Insurance Broker Alliance - CoSelling</label>
             </value>
             <value>
                 <fullName>MarketingReferalAllianceAgreement</fullName>
@@ -103,6 +103,12 @@
                 <default>false</default>
                 <isActive>false</isActive>
                 <label>TOP Alliance CoSelling Broker Rev</label>
+            </value>
+            <value>
+                <fullName>TOP Insurance Broker Alliance – CoSelling</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>TOP Insurance Broker Alliance – CoSelling</label>
             </value>
             <value>
                 <fullName>referralProgramAF-I</fullName>

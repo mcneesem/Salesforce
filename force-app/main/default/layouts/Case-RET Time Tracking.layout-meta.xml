@@ -50,7 +50,7 @@
                 <field>Status</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Required</behavior>
                 <field>NSP_Case_Sub_Status__c</field>
             </layoutItems>
             <layoutItems>
@@ -249,44 +249,19 @@
     <platformActionList>
         <actionListContext>Record</actionListContext>
         <platformActionListItems>
-            <actionName>NewOpportunity</actionName>
+            <actionName>New_PEO_Task</actionName>
             <actionType>QuickAction</actionType>
-            <sortOrder>1</sortOrder>
+            <sortOrder>19</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>NewLead</actionName>
+            <actionName>FeedItem.TextPost</actionName>
             <actionType>QuickAction</actionType>
-            <sortOrder>2</sortOrder>
+            <sortOrder>20</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>NewContact</actionName>
+            <actionName>LogACall</actionName>
             <actionType>QuickAction</actionType>
-            <sortOrder>0</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>ChangeOwnerOne</actionName>
-            <actionType>StandardButton</actionType>
-            <sortOrder>3</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Clone</actionName>
-            <actionType>StandardButton</actionType>
-            <sortOrder>4</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Share</actionName>
-            <actionType>StandardButton</actionType>
-            <sortOrder>5</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Delete</actionName>
-            <actionType>StandardButton</actionType>
-            <sortOrder>6</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>StartOutboundConversation</actionName>
-            <actionType>StandardButton</actionType>
-            <sortOrder>7</sortOrder>
+            <sortOrder>21</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
             <actionName>MassAccept</actionName>
@@ -329,6 +304,11 @@
             <sortOrder>15</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
+            <actionName>StartOutboundConversation</actionName>
+            <actionType>StandardButton</actionType>
+            <sortOrder>7</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
             <actionName>PrintableView</actionName>
             <actionType>StandardButton</actionType>
             <sortOrder>16</sortOrder>
@@ -344,14 +324,39 @@
             <sortOrder>18</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>New_PEO_Task</actionName>
+            <actionName>NewContact</actionName>
             <actionType>QuickAction</actionType>
-            <sortOrder>19</sortOrder>
+            <sortOrder>0</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>FeedItem.TextPost</actionName>
+            <actionName>NewOpportunity</actionName>
             <actionType>QuickAction</actionType>
-            <sortOrder>21</sortOrder>
+            <sortOrder>1</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>NewLead</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>2</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>ChangeOwnerOne</actionName>
+            <actionType>StandardButton</actionType>
+            <sortOrder>3</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Clone</actionName>
+            <actionType>StandardButton</actionType>
+            <sortOrder>4</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Share</actionName>
+            <actionType>StandardButton</actionType>
+            <sortOrder>5</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Delete</actionName>
+            <actionType>StandardButton</actionType>
+            <sortOrder>6</sortOrder>
         </platformActionListItems>
     </platformActionList>
     <quickActionList>
@@ -451,6 +456,9 @@
         <fields>NSP_IsPrimary__c</fields>
         <relatedList>NSP_Case_Contacts__c.NSP_Case__c</relatedList>
     </relatedLists>
+    <relatedLists>
+        <relatedList>RelatedEntityHistoryList</relatedList>
+    </relatedLists>
     <relatedObjects>ContactId</relatedObjects>
     <relatedObjects>AccountId</relatedObjects>
     <runAssignmentRulesDefault>false</runAssignmentRulesDefault>
@@ -461,7 +469,7 @@
     <showRunAssignmentRulesCheckbox>true</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>true</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h3C000001901k</masterLabel>
+        <masterLabel>00h4x000003Eh6D</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

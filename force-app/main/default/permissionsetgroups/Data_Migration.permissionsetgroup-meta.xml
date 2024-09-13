@@ -3,5 +3,12 @@
     <description>Group of Permission Sets to be granted to Data Migration Users.</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Data Migration</label>
+    <permissionSets>Bypass_Lead_Email_Alerts</permissionSets>
+    <permissionSets>Bypass_Opportunity_Email_Alerts</permissionSets>
+    <permissionSets>Data_Migration_Permission_Set</permissionSets>
+    <permissionSets>Edit_Integrated_Fields</permissionSets>
+    <permissionSets>Legacy_Data_Migration_Object_Permissions</permissionSets>
+    <permissionSets>NSP_Payroll_Data_Sheet</permissionSets>
+    <permissionSets>Project_Task_Access</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>

@@ -4,16 +4,64 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
+                    <name>actionNames</name>
+                    <valueList>
+                        <valueListItems>
+                            <value>Edit</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Delete</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Clone</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>ChangeOwnerOne</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>PrintableView</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Share</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>RecordShareHierarchy</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Submit</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>AssignRecordLabel</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>CustomButton.blng__InvoiceRun__c.blng__CleanUpInvoiceRun</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>CustomButton.blng__InvoiceRun__c.blng__Post_All_Invoices</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>blng__InvoiceRun__c.Rollback_Unposted_Lines</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!$Permission.CustomPermission.Manage_Posted_Invoices}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>true</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                    </valueList>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>collapsed</name>
                     <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>enableActionsConfiguration</name>
-                    <value>false</value>
+                    <value>true</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>enableActionsInNative</name>
-                    <value>false</value>
+                    <value>true</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>hideChatterActions</name>

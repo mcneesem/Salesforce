@@ -1,5 +1,5 @@
 public class NSP_Implementationprofile_ServiceHelper {
-    // test w/ NSP_FSOImplementationControllerTest, NSP_ImpprofileServiceHelper_Test, NSP_MMImplProfile_UpdateTest (83%)
+    // test w/ NSP_FSOImplementationControllerTest, NSP_ImpprofileServiceHelper_Test, NSP_MMImplProfile_UpdateTest (82%)
 
     private String impRecordId;
     private String  impAutomationName;
@@ -131,18 +131,18 @@ public class NSP_Implementationprofile_ServiceHelper {
         this.automationsToExecute.add(automationName);
     }
 
-    public Map<String, Set<Id>> executeAutomation() {
-        Map<String, Set<Id>> ipRecordsByAutomationMap = new Map<String,Set<Id>>();
-        try{
+    public Map<String,Set<Id>> executeAutomation() {
+        Map<String,Set<Id>> ipRecordsByAutomationMap = new Map<String,Set<Id>>();
+        try {
             start();
             execute();
             finish();
             ipRecordsByAutomationMap = ipRecordsByAutomation;
-        } catch ( Exception ex ) {
-            NSP_ErrorLogHandler.logSaveException(
-                'NSP_Implementationprofile_ServiceHelper' ,
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_Implementationprofile_ServiceHelper.class.getName() ,
                 'executeAutomation' ,
-                ex.getMessage() + ' ~ ' + ex.getStackTraceString()
+                e
             );
        }
        return ipRecordsByAutomationMap;
@@ -3039,8 +3039,13 @@ public class NSP_Implementationprofile_ServiceHelper {
     // Automation Section: General
     // Automation Name: Additional BPSes
     // Automation icon: Email
-    private void checkforBpses(Implementation_Profile__c newIp, Implementation_Profile__c existingRec){
-        if ( newIp != null && newIp.Select_BPSes__c != null) {
+    private void checkforBpses( Implementation_Profile__c newIp , Implementation_Profile__c existingRec ) {
+        if ( ( newIp != null )
+            && ( newIp.Select_BPSes__c != null )
+            && ( newIp.RecordTypeId != null )
+            && ( newIp.RecordTypeId == NSP_Implementationprofile_ServiceHelper.ipFSORecordTypeId )
+            )
+        {
             String[] selectedValues = newIp.Select_BPSes__c.split(';');
             Set<String> selectedSet = new Set<String>(selectedValues);
             Set<String> excludeValues = new Set <String>{NSP_ServiceConstants.INTEGRA, NSP_ServiceConstants.PremierPerformance};
@@ -3157,8 +3162,8 @@ public class NSP_Implementationprofile_ServiceHelper {
         }
     }
 
-    private void sendMailUsingFlowAction(List<String> emailAddress, String subject, String body) {
-        Map<String, Object> inputs = new Map<String, Object>();
+    private void sendMailUsingFlowAction( List<String> emailAddress , String subject , String body ) {
+        Map<String,Object> inputs = new Map<String,Object>();
         inputs.put('toEmailAddresses', emailAddress);
         inputs.put('emailSubject', subject);
         inputs.put('emailBody', body);
@@ -3166,9 +3171,12 @@ public class NSP_Implementationprofile_ServiceHelper {
         try {
             Flow.Interview.Send_Email sendEmailFlow = new Flow.Interview.Send_Email(inputs);
             sendEmailFlow.start();
-        }
-        catch(Exception exc) {
-            NSP_ErrorLogHandler.logException(NSP_Implementationprofile_ServiceHelper.class.getName(), 'sendMailUsingFlowAction', exc);
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_Implementationprofile_ServiceHelper.class.getName() ,
+                'sendMailUsingFlowAction' ,
+                e
+            );
         }
     }
 

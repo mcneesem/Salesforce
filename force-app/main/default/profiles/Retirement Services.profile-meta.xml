@@ -33815,7 +33815,7 @@
         <recordType>Task.RET_Task_RT</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Task-Task Layout</layout>
+        <layout>Task-Service Task Layout</layout>
         <recordType>Task.Task</recordType>
     </layoutAssignments>
     <layoutAssignments>
@@ -36140,10 +36140,6 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>standard-Pricebook2</tab>
-        <visibility>Hidden</visibility>
-    </tabVisibilities>
-    <tabVisibilities>
-        <tab>standard-VoiceCall</tab>
         <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>

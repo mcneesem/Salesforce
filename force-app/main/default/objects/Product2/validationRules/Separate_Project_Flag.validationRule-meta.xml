@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Separate_Project_Flag</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+  ISCHANGED( Separate_Project__c ) ,
+  Separate_Project__c ,
+  NOT(
+    OR(
+      ISPICKVAL( SBQQ__BillingFrequency__c , &quot;Invoice Plan&quot; ) ,
+      AND(
+        ISPICKVAL( SBQQ__BillingType__c , &quot;Arrears&quot; ) ,
+        ISPICKVAL( SBQQ__BillingFrequency__c , &quot;Monthly&quot; )
+      )
+    )
+  )
+)</errorConditionFormula>
+    <errorMessage>The &apos;Separate Project&apos; flag can only be checked if the Billing Frequency is either &apos;Invoice Plan&apos; or if the Billing Type is &apos;Arrears&apos; and the Billing Frequency is &apos;Monthly&apos;.</errorMessage>
+</ValidationRule>

@@ -101,6 +101,9 @@ export default class Nsp_accrualProfileRecordViewForm extends LightningElement {
         const { value } = fields[fieldApiName];
         if(value){
           this.fieldValue[fieldApiName] = value;
+          if(fieldApiName=='OwnerId'){
+            this.fieldValue['CustomOwnerId__c'] = value;
+          }
           const dataType = this._objectInfo[fieldApiName]?.dataType;
             const updatedValue =
               dataType == 'MultiPicklist' ? value.split(';') : value;

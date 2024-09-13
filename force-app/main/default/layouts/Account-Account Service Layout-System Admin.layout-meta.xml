@@ -484,10 +484,6 @@
         <relatedList>RelatedEntityHistoryList</relatedList>
     </relatedLists>
     <relatedLists>
-        <fields>NAME</fields>
-        <relatedList>NSP_SObject_History_Tracking__c.NSP_Account__c</relatedList>
-    </relatedLists>
-    <relatedLists>
         <fields>TASK.SUBJECT</fields>
         <fields>TASK.WHO_NAME</fields>
         <fields>TASK.WHAT_NAME</fields>
@@ -775,6 +771,12 @@
         <fields>NSP_Open_Enrollment_Begin_Date__c</fields>
         <fields>NSP_Open_Enrollment_End_Date__c</fields>
         <relatedList>NSP_Sub_Client__c.NSP_Account__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <excludeButtons>MassChangeOwner</excludeButtons>
+        <excludeButtons>New</excludeButtons>
+        <fields>NAME</fields>
+        <relatedList>NSP_Payroll__c.Account__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>

@@ -1082,6 +1082,16 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.Task_Order__c</fieldItem>
+                <identifier>RecordTask_Order_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.pse__Hierarchy_Depth__c</fieldItem>
                 <identifier>Recordpse_Hierarchy_Depth_cField</identifier>
                 <visibilityRule>
