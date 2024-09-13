@@ -837,7 +837,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>Complexity_Score_Total_f__c</field>
+                <field>Complexity_Score_Total_Formula__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
