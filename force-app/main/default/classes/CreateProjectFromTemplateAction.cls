@@ -51,13 +51,6 @@ public class CreateProjectFromTemplateAction {
     * @return: projectId
    */
     public static Id createProjectFromAsset(Account oaccount, pse__proj__c oprojectTemplate, User ouser){
-        pse__Region__c myRegionForMapping = [Select Id from pse__Region__c where Name =: NSP_ServiceConstants.UnitedStatesRegion LIMIT 1];
-        pse.SObjectCloneMapper.Field mapperField4;
-        if (myRegionForMapping != null) {  
-            mapperField4 = new pse.SObjectCloneMapper.Field(Schema.pse__Proj__c.pse__Region__c);  
-            mapperField4.DefaultValue = myRegionForMapping.Id;   
-        }
-        
         pse.CreateProjectFromTemplateService.CreateProjectFromTemplateAndAccountRequest projRequest = new pse.CreateProjectFromTemplateService.CreateProjectFromTemplateAndAccountRequest(oaccount.Id, oprojectTemplate.Id , System.Today());
         //assigning the values
         projRequest.ProjectName = oprojectTemplate.Template_Name__c;
@@ -72,7 +65,7 @@ public class CreateProjectFromTemplateAction {
         pse.SObjectCloneMapper.Field recordtypeMapper1 = new pse.SObjectCloneMapper.Field(Schema.pse__Proj__c.NSP_Exclusively_Assign_Owner__c);
         recordtypeMapper1.DefaultValue = TRUE;
             
-        Set<pse.SObjectCloneMapper.Field> setOfFields = new Set<pse.SObjectCloneMapper.Field>{recordtypeMapper,recordtypeMapper1,mapperField4};
+        Set<pse.SObjectCloneMapper.Field> setOfFields = new Set<pse.SObjectCloneMapper.Field>{recordtypeMapper,recordtypeMapper1,NSP_CreateProjFromFlow.getDefaultRegionMapperField()};
 
         //Make a mapper for the Project object
         pse.SObjectCloneMapper itemCloneMap = new pse.SObjectCloneMapper(pse__Proj__c.SObjectType, setOfFields);
