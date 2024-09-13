@@ -206,13 +206,6 @@ public without sharing class Nps_CloneServicePlanProjectController {
      Helper method for createProjectFromTemplate method that sets the fields on the newly created project
      */
      private static pse.CreateProjectFromTemplateService.CreateProjectFromTemplateAndAccountRequest generateProjectCreationRequest(Id templateId, pse__Proj__c projField){
-        pse__Region__c myRegionForMapping = [Select Id from pse__Region__c where Name =: NSP_ServiceConstants.UnitedStatesRegion LIMIT 1];
-        pse.SObjectCloneMapper.Field mapperField4;
-        if (myRegionForMapping != null) {  
-            mapperField4 = new pse.SObjectCloneMapper.Field(Schema.pse__Proj__c.pse__Region__c);  
-            mapperField4.DefaultValue = myRegionForMapping.Id;   
-        }
-        
         //creating a project request
         pse.CreateProjectFromTemplateService.CreateProjectFromTemplateAndAccountRequest projectrequest;
         projectrequest = new pse.CreateProjectFromTemplateService.CreateProjectFromTemplateAndAccountRequest(projField.pse__Account__c, templateId, projField.pse__Start_Date__c);
@@ -226,7 +219,7 @@ public without sharing class Nps_CloneServicePlanProjectController {
         mapperFieldEndDate.DefaultValue = projField.pse__End_Date__c;
         pse.SObjectCloneMapper.Field mapperFieldStatus = new pse.SObjectCloneMapper.Field(Schema.pse__Proj__c.pse__Project_Status__c);
         mapperFieldStatus.DefaultValue = projField.pse__Project_Status__c;
-        Set<pse.SObjectCloneMapper.Field> setMapperFields = new Set<pse.SObjectCloneMapper.Field>{mapperFieldEndDate, mapperFieldStatus, mapperFieldRT,mapperField4};
+        Set<pse.SObjectCloneMapper.Field> setMapperFields = new Set<pse.SObjectCloneMapper.Field>{mapperFieldEndDate, mapperFieldStatus, mapperFieldRT,NSP_CreateProjFromFlow.getDefaultRegionMapperField()};
         pse.SObjectCloneMapper mapp = new pse.SObjectCloneMapper(pse__Proj__c.SObjectType, setMapperFields);
         projectrequest.Mappers = new List<pse.SObjectCloneMapper> { mapp };
         return projectrequest;
