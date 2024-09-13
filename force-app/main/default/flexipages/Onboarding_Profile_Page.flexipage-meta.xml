@@ -212,6 +212,12 @@
                 <identifier>RecordComplexity_Score_Total_cField</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldItem>Record.Complexity_Score_Total_f__c</fieldItem>
+                <identifier>RecordComplexity_Score_Total_f__cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-8987b675-bcc0-4a7a-9405-3c0c852ee224</name>
         <type>Facet</type>
     </flexiPageRegions>

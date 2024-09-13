@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Complexity_Score_Total_f__c</fullName>
+    <externalId>false</externalId>
+    <formula>FEIN_Complexity_Score__c 
++ Headcount_Complexity_Score__c 
++ Union_Employees_Complexity_Score__c
++ Prevailing_Wages_Complexity_Score__c 
++ X3rd_Party_Complexity_Score__c  
++ Job_Costing_Complexity__c
++ SIT_SUI_Complexity_Score__c
++ Open_Enrollment_Complexity_Score__c 
++ Number_of_Plans_Complexity_Score__c</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Complexity Score Total</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>
