@@ -316,13 +316,10 @@ public with sharing class NSP_EmailMessageTriggerHelper {
                         if ( getCase.RecordTypeId == NSP_EmailMessageTriggerHelper.PEO_RECORDTYPEID ) {
                             newCase.OwnerId = contactCenterQueueId;
                         } else if ( getCase.RecordTypeId == NSP_EmailMessageTriggerHelper.BPS_RECORDTYPEID ) {
-                            Integer textBodyLength = record.TextBody.length();
-                            if(textBodyLength > 131072) {
-                                newCase.Description = record.TextBody.left(131072);
-                            }
-                            else{
-                                newCase.Description = record.TextBody;
-                            }
+                            newCase.Description = SchemaController.safeText(
+                                record.TextBody ,
+                                sObjectType.Case.Fields.Description
+                            );
                             String queueName = '';
                             if ( mapOfEmailAddressToQueueName != null ) {
                                 queueName = mapOfEmailAddressToQueueName.get( record.ToAddress );
