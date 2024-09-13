@@ -1509,18 +1509,10 @@ public with sharing class NSP_ProjectTriggerHelper {
     */
 
     public static pse.CreateProjectFromTemplateService.CreateProjectFromTemplateAndAccountRequest createProjectFromAsset(Account oaccount, pse__proj__c oprojectTemplate, NSP_Account_Team__c oaccountTeam){
-        pse__Region__c myRegionForMapping = [Select Id from pse__Region__c where Name =: NSP_ServiceConstants.UnitedStatesRegion LIMIT 1];
-        pse.SObjectCloneMapper mapp;
-        if (myRegionForMapping != null) {  
-            pse.SObjectCloneMapper.Field mapperField4 = new pse.SObjectCloneMapper.Field(Schema.pse__Proj__c.pse__Region__c);  
-            mapperField4.DefaultValue = myRegionForMapping.Id;   
-            Set<pse.SObjectCloneMapper.Field> setMapperFields = new Set<pse.SObjectCloneMapper.Field>{mapperField4};  
-                mapp = new pse.SObjectCloneMapper(pse__Proj__c.SObjectType, setMapperFields);  
-        }
         pse.CreateProjectFromTemplateService.CreateProjectFromTemplateAndAccountRequest projRequest = new pse.CreateProjectFromTemplateService.CreateProjectFromTemplateAndAccountRequest(oaccount.Id, oprojectTemplate.Id , System.Today());
         //assigning the values
         projRequest.ProjectName = oprojectTemplate.Template_Name__c;
-        projRequest.Mappers = new List<pse.SObjectCloneMapper> { mapp };
+        projRequest.Mappers = new List<pse.SObjectCloneMapper> { NSP_CreateProjFromFlow.getDefaultMappers()};
         projRequest.IsActive = true;
         projRequest.ProjectOwnerId = oaccountTeam.NSP_User__c;
         return projRequest;
