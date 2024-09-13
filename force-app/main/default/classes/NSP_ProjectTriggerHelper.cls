@@ -1490,20 +1490,11 @@ public with sharing class NSP_ProjectTriggerHelper {
     * Author :      Nischay Jindal
     * ********************************************************************************************/
     public static Id createProjectwithTemplate(Template_Key_and_Id_Mapping__mdt keyWithTemplateId, Date projectStartdate){
-        pse__Region__c myRegionForMapping = [Select Id from pse__Region__c where Name =: NSP_ServiceConstants.UnitedStatesRegion LIMIT 1];
-        pse.SObjectCloneMapper mapp;
-        if (myRegionForMapping != null) {  
-            pse.SObjectCloneMapper.Field mapperField4 = new pse.SObjectCloneMapper.Field(Schema.pse__Proj__c.pse__Region__c);  
-            mapperField4.DefaultValue = myRegionForMapping.Id;   
-            Set<pse.SObjectCloneMapper.Field> setMapperFields = new Set<pse.SObjectCloneMapper.Field>{mapperField4};  
-                mapp = new pse.SObjectCloneMapper(pse__Proj__c.SObjectType, setMapperFields);  
-        }
-        
         pse.CreateProjectFromTemplateService.CreateProjectFromTemplateRequest projRequest =
         new pse.CreateProjectFromTemplateService.CreateProjectFromTemplateRequest(keyWithTemplateId.Template_ID__c, projectStartdate);
         //Set new project name to specified name
         projRequest.ProjectName = keyWithTemplateId.Template_Name__c;
-        projRequest.Mappers = new List<pse.SObjectCloneMapper> { mapp };
+        projRequest.Mappers = new List<pse.SObjectCloneMapper> { NSP_CreateProjFromFlow.getDefaultMappers()};
         //Call the service and create project
         List<pse.CreateProjectFromTemplateService.CreateProjectResponse> projResponse =
         pse.CreateProjectFromTemplateService.createProjectsFromTemplates( 
