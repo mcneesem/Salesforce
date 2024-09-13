@@ -696,7 +696,7 @@ WHERE (userRole.Name = 'Loyalty Advisor' OR userRole.Name = 'Channel Program Man
     private static void updateRelatedOpportunity(Map<Id, Account> accountSalesOffice){
 
         List<Opportunity> opps = [SELECT id, AccountId, NSP_Sales_Office__c FROM Opportunity WHERE  
-        (StageName != 'Closed/Lost' AND  StageName != 'Closed/Won' AND StageName != 'Closing' ) AND AccountId IN :accountSalesOffice.values()];
+        (StageName != 'Closed Lost' AND  StageName != 'Closed Won' AND StageName != 'Closing' ) AND AccountId IN :accountSalesOffice.values()];
 
         for(Opportunity opp : opps){
             opp.NSP_Sales_Office__c = accountSalesOffice.get(opp.AccountId).NSP_Sales_Office__c;
