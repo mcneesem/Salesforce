@@ -98,7 +98,7 @@ public with sharing class NSP_EmailMessageTriggerHelper {
                 SELECT
                     Status , NSP_Response_After_Close__c , NSP_Case_Reopened_EmaiToCase__c , NSP_Case_Sub_Status__c ,
                     ClosedDate , NSP_Date_Closed__c , RecordTypeId , Origin , Priority , NSP_SubCategory__c ,
-                    NSP_Category__c , ContactId , AccountId , AssetId , Subject , OwnerId 
+                    NSP_Category__c , ContactId , AccountId , AssetId , Subject , OwnerId , Description
                 FROM Case
                 WHERE ( Id IN : caseIds )
             ]);
@@ -149,8 +149,8 @@ public with sharing class NSP_EmailMessageTriggerHelper {
                             && ( eMessage.MessageDate != null )
                             )
                         {
-                            Integer daysBetween = (currentCase.ClosedDate.date()).daysBetween( eMessage.MessageDate.date() );
                             if ( currentCase.RecordTypeId == BPS_RECORDTYPEID ) {
+                                Integer daysBetween = (currentCase.ClosedDate.date()).daysBetween( eMessage.MessageDate.date() );
                                 if ( ( bpsCaseTier1Categories.contains( currentCase.NSP_Category__c ) && ( daysBetween <= tier1Days ) )
                                     || ( bpsCaseTier2Categories.contains( currentCase.NSP_Category__c ) && ( daysBetween <= tier2Days ) )
                                     )
@@ -183,34 +183,37 @@ public with sharing class NSP_EmailMessageTriggerHelper {
                                     casesToUpdate.add( currentCase );
                                     caseToEmailMessageMap.put( currentCase , eMessage );
                                 }
-                            } else if ( currentCase.RecordTypeId == NSP_EmailMessageTriggerHelper.PEO_RECORDTYPEID ) {
-                                currentCase.NSP_Response_After_Close__c = true;
-                                casesToUpdate.add( currentCase );
                             }
-                        }
-                        //
-                        List<String> toAddressList = new List<String>();
-                        if ( String.isNotBlank( eMessage.ToAddress ) ) {
-                            toAddressList = eMessage.ToAddress.split( ';' );
-                        }
-                        if ( ( currentCase.ClosedDate != null )
-                            && ( currentCase.Status == CLOSED )
-                            && ( currentCase.RecordTypeId == NSP_EmailMessageTriggerHelper.PEO_RECORDTYPEID )
-                            && isContactCenterCase( NSP_EmailMessageTriggerHelper.ContactCenterEmailAddresses , toAddressList )
-                            )
-                        {
-                            Integer businessDaysBetween = getNoOfBusinessDaysBetweenDates(
-                                currentCase.ClosedDate.date() ,
-                                eMessage.MessageDate.date()
-                            );
-                            if ( businessDaysBetween <= 5 ) {
-                                currentCase.Status = REOPENED;
-                                currentCase.NSP_Case_Sub_Status__c = UNASSIGNED;
-                                currentCase.OwnerId = NSP_EmailMessageTriggerHelper.CONTACTCENTER_QUEUEID;
-                                currentCase.NSP_Response_After_Close__c = false;
-                                casesToUpdate.add( currentCase );
-                            } else {
-                                caseToEmailMessageMap.put( currentCase , eMessage );
+                            else if ( currentCase.RecordTypeId == NSP_EmailMessageTriggerHelper.PEO_RECORDTYPEID ) {
+                                List<String> toAddressList = new List<String>();
+                                if ( String.isNotBlank( eMessage.ToAddress ) ) {
+                                    toAddressList = eMessage.ToAddress.split( ';' );
+                                }
+                                
+                                if (!isContactCenterCase( NSP_EmailMessageTriggerHelper.ContactCenterEmailAddresses , toAddressList )) {
+                                    currentCase.NSP_Response_After_Close__c = true;
+                                    casesToUpdate.add( currentCase );
+                                }
+                                else if ( ( currentCase.Status == CLOSED ) 
+                                         && isContactCenterCase( NSP_EmailMessageTriggerHelper.ContactCenterEmailAddresses , toAddressList )
+                                        )
+                                {
+                                    Integer businessDaysBetween = getNoOfBusinessDaysBetweenDates(
+                                        currentCase.ClosedDate.date() ,
+                                        eMessage.MessageDate.date()
+                                    );
+                                    if ( businessDaysBetween <= 5 ) {
+                                        currentCase.Status = REOPENED;
+                                        currentCase.NSP_Case_Sub_Status__c = UNASSIGNED;
+                                        currentCase.OwnerId = NSP_EmailMessageTriggerHelper.CONTACTCENTER_QUEUEID;
+                                        currentCase.NSP_Response_After_Close__c = false;
+                                        casesToUpdate.add( currentCase );
+                                    } else {
+                                        caseToEmailMessageMap.put( currentCase , eMessage );
+                                        currentCase.NSP_Response_After_Close__c = true;
+                                        casesToUpdate.add( currentCase );
+                                    }
+                                }
                             }
                         }
                     }
@@ -311,9 +314,15 @@ public with sharing class NSP_EmailMessageTriggerHelper {
                     if ( record != null ) {
                         Case newCase = new Case();
                         if ( getCase.RecordTypeId == NSP_EmailMessageTriggerHelper.PEO_RECORDTYPEID ) {
-                            newCase.ParentId = getCase.Id;
                             newCase.OwnerId = contactCenterQueueId;
                         } else if ( getCase.RecordTypeId == NSP_EmailMessageTriggerHelper.BPS_RECORDTYPEID ) {
+                            Integer textBodyLength = record.TextBody.length();
+                            if(textBodyLength > 131072) {
+                                newCase.Description = record.TextBody.left(131072);
+                            }
+                            else{
+                                newCase.Description = record.TextBody;
+                            }
                             String queueName = '';
                             if ( mapOfEmailAddressToQueueName != null ) {
                                 queueName = mapOfEmailAddressToQueueName.get( record.ToAddress );
@@ -327,6 +336,7 @@ public with sharing class NSP_EmailMessageTriggerHelper {
                                 newCase.OwnerId = mapOfQueueNameToQueueId.get( queueName );
                             }
                         }
+                        newCase.ParentId = getCase.Id;
                         newCase.RecordTypeId = getCase.RecordTypeId;
                         newCase.Status = OPEN;
                         newCase.NSP_Case_Sub_Status__c = UNASSIGNED;
