@@ -61,10 +61,7 @@ public class NSP_OpportunityTriggerServiceHelperTest {
         quoteLineItem.SBQQ__Product__c = newProd.id;
         insert quoteLineItem;
         
-        //Insert Region
-        pse__Region__c region = (pse__Region__c)NSP_TestExtendedDataFactory.createSObject(new pse__Region__c(), 'NSP_TestDataFactory.RegionDefaults', false);
-        region.Name = NSP_ServiceConstants.UnitedStatesRegion;
-        insert region;
+         
         
        
     }
