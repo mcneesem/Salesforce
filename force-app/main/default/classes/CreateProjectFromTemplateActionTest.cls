@@ -24,11 +24,6 @@ public class CreateProjectFromTemplateActionTest {
     userObj.NSP_Employee_Per_ID__c = 'EMP 1234';
     userObj.Username = 'testuser2@test.com' + System.currentTimeMillis();
     insert userObj;
-
-    //Insert Region
-        pse__Region__c region = (pse__Region__c)NSP_TestExtendedDataFactory.createSObject(new pse__Region__c(), 'NSP_TestDataFactory.RegionDefaults', false);
-        region.Name = NSP_ServiceConstants.UnitedStatesRegion;
-        insert region;
     }
 
     /***************************************************************************************************
