@@ -219,7 +219,12 @@ public without sharing class Nps_CloneServicePlanProjectController {
         mapperFieldEndDate.DefaultValue = projField.pse__End_Date__c;
         pse.SObjectCloneMapper.Field mapperFieldStatus = new pse.SObjectCloneMapper.Field(Schema.pse__Proj__c.pse__Project_Status__c);
         mapperFieldStatus.DefaultValue = projField.pse__Project_Status__c;
-        Set<pse.SObjectCloneMapper.Field> setMapperFields = new Set<pse.SObjectCloneMapper.Field>{mapperFieldEndDate, mapperFieldStatus, mapperFieldRT,NSP_CreateProjFromFlow.getDefaultRegionMapperField()};
+        Set<pse.SObjectCloneMapper.Field> setMapperFields = new Set<pse.SObjectCloneMapper.Field>{
+            mapperFieldEndDate ,
+            mapperFieldStatus ,
+            mapperFieldRT ,
+            NSP_CreateProjFromFlow.getDefaultRegionMapperField()
+        };
         pse.SObjectCloneMapper mapp = new pse.SObjectCloneMapper(pse__Proj__c.SObjectType, setMapperFields);
         projectrequest.Mappers = new List<pse.SObjectCloneMapper> { mapp };
         return projectrequest;
