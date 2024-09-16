@@ -7,7 +7,7 @@
 *			Updates Order with NSP_Project__c
 */
 public class NSP_CreateProjFromFlow {
-    // test w/ NSP_CreateProjFromFlowTest / NSP_AssetServiceTriggerHelperTest (96%)
+    // test w/ NSP_CreateProjFromFlowTest, NSP_AssetServiceTriggerHelperTest (96%)
 
     @InvocableMethod(label='Create Project' description='Create Project for Order')
     public static void createProject( List<String> records ) {
@@ -20,7 +20,6 @@ public class NSP_CreateProjFromFlow {
         pse__Proj__c projObj = new pse__Proj__c();
         List<Order> orderList = [SELECT Id,NSP_Project_Name__c,AccountId,NSP_Project_Key__c,NSP_Project__c,Name FROM Order WHERE Id IN :records];
         List<NSP_ProjectTemplateMapping__mdt> keyWithTemplateId = NSP_ProjectTemplateMapping__mdt.getAll().values();
-
         for(NSP_ProjectTemplateMapping__mdt projectMdt: keyWithTemplateId){
             projectIdMap.put(projectMdt.Key__c+projectMdt.Template_Name__c,projectMdt.Template_ID__c);
         }
@@ -36,7 +35,11 @@ public class NSP_CreateProjFromFlow {
                     //copy recordTypeId & Owner
                     pse.SObjectCloneMapper.Field mapperFieldRT = new pse.SObjectCloneMapper.Field(Schema.pse__Proj__c.RecordTypeId);
                     pse.SObjectCloneMapper.Field mapperFieldOwner = new pse.SObjectCloneMapper.Field(Schema.pse__Proj__c.OwnerId);
-                    Set<pse.SObjectCloneMapper.Field> setMapperFields = new Set<pse.SObjectCloneMapper.Field>{mapperFieldRT,mapperFieldOwner,NSP_CreateProjFromFlow.getDefaultRegionMapperField()};
+                    Set<pse.SObjectCloneMapper.Field> setMapperFields = new Set<pse.SObjectCloneMapper.Field>{
+                        mapperFieldRT ,
+                        mapperFieldOwner ,
+                        NSP_CreateProjFromFlow.getDefaultRegionMapperField()
+                    };
                     pse.SObjectCloneMapper mapp = new pse.SObjectCloneMapper(pse__Proj__c.SObjectType, setMapperFields);
                     projRequest.Mappers = new List<pse.SObjectCloneMapper> { mapp };
 
@@ -178,6 +181,7 @@ public static Boolean linkProjectToOrderLines(String orderId){
     }
     return res;
 }
+
     private static ProjectCreationSettings__c settings {
         get {
             if ( settings == null ) {
@@ -187,23 +191,24 @@ public static Boolean linkProjectToOrderLines(String orderId){
         }
         private set;
     }
+
     private static Id defaultRegionId {
-    get {
-        if ( defaultRegionId == null ) {
-            ID local ;
-            if ( NSP_CreateProjFromFlow.settings != null
-                && String.isNotBlank( NSP_CreateProjFromFlow.settings.DefaultRegionId__c )
-                && (NSP_CreateProjFromFlow.settings.DefaultRegionId__c InstanceOf Id)
-                )
-            {
-                local = NSP_CreateProjFromFlow.settings.DefaultRegionId__c;
+        get {
+            if ( defaultRegionId == null ) {
+                ID local ;
+                if ( NSP_CreateProjFromFlow.settings != null
+                    && String.isNotBlank( NSP_CreateProjFromFlow.settings.DefaultRegionId__c )
+                    && (NSP_CreateProjFromFlow.settings.DefaultRegionId__c InstanceOf Id)
+                    )
+                {
+                    local = NSP_CreateProjFromFlow.settings.DefaultRegionId__c;
+                }
+                defaultRegionId = local;
             }
-            defaultRegionId = local;
+            return defaultRegionId;
         }
-        return defaultRegionId;
+        private set;
     }
-    private set;
-}
 
     public static pse.SObjectCloneMapper.Field getDefaultRegionMapperField() {
         pse.SObjectCloneMapper.Field mapperField = new pse.SObjectCloneMapper.Field(
@@ -214,15 +219,16 @@ public static Boolean linkProjectToOrderLines(String orderId){
         }
         return mapperField;
     }
-    
-    public static pse.SObjectCloneMapper getDefaultMappers() {  
-        pse.SObjectCloneMapper mapper = new pse.SObjectCloneMapper(  
-            pse__Proj__c.SObjectType,  
-            new Set<pse.SObjectCloneMapper.Field>{  
-                NSP_CreateProjFromFlow.getDefaultRegionMapperField()  
-                    }  
-        );  
+
+    public static pse.SObjectCloneMapper getDefaultMappers() {
+        pse.SObjectCloneMapper mapper = new pse.SObjectCloneMapper(
+            pse__Proj__c.SObjectType ,
+            new Set<pse.SObjectCloneMapper.Field>{
+                NSP_CreateProjFromFlow.getDefaultRegionMapperField()
+            }
+        );
         return mapper ;
-    }  
+    }
 
 }
+//
