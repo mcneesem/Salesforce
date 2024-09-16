@@ -60,11 +60,6 @@ public class NSP_AutomaticProjectBatchTest {
             Database.insert(assetList);
         }
 
-        //Insert Region
-        pse__Region__c region = (pse__Region__c)NSP_TestExtendedDataFactory.createSObject(new pse__Region__c(), 'NSP_TestDataFactory.RegionDefaults', false);
-        region.Name = NSP_ServiceConstants.UnitedStatesRegion;
-        insert region; 
-
     }
     
     /**
