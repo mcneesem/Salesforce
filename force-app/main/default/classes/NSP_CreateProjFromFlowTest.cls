@@ -37,11 +37,6 @@ public class NSP_CreateProjFromFlowTest{
         objQuote.SBQQ__Status__c = 'Approved';
         objQuote.SBQQ__Ordered__c = true;
         Update objQuote;
-
-        //Insert Region
-        pse__Region__c region = (pse__Region__c)NSP_TestExtendedDataFactory.createSObject(new pse__Region__c(), 'NSP_TestDataFactory.RegionDefaults', false);
-        region.Name = NSP_ServiceConstants.UnitedStatesRegion;
-        insert region; 
     }
 
     @IsTest
