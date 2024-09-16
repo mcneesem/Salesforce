@@ -1494,7 +1494,9 @@ public with sharing class NSP_ProjectTriggerHelper {
         new pse.CreateProjectFromTemplateService.CreateProjectFromTemplateRequest(keyWithTemplateId.Template_ID__c, projectStartdate);
         //Set new project name to specified name
         projRequest.ProjectName = keyWithTemplateId.Template_Name__c;
-        projRequest.Mappers = new List<pse.SObjectCloneMapper> { NSP_CreateProjFromFlow.getDefaultMappers()};
+        projRequest.Mappers = new List<pse.SObjectCloneMapper>{
+            NSP_CreateProjFromFlow.getDefaultMappers()
+        };
         //Call the service and create project
         List<pse.CreateProjectFromTemplateService.CreateProjectResponse> projResponse =
         pse.CreateProjectFromTemplateService.createProjectsFromTemplates( 
@@ -1512,7 +1514,9 @@ public with sharing class NSP_ProjectTriggerHelper {
         pse.CreateProjectFromTemplateService.CreateProjectFromTemplateAndAccountRequest projRequest = new pse.CreateProjectFromTemplateService.CreateProjectFromTemplateAndAccountRequest(oaccount.Id, oprojectTemplate.Id , System.Today());
         //assigning the values
         projRequest.ProjectName = oprojectTemplate.Template_Name__c;
-        projRequest.Mappers = new List<pse.SObjectCloneMapper> { NSP_CreateProjFromFlow.getDefaultMappers()};
+        projRequest.Mappers = new List<pse.SObjectCloneMapper>{
+            NSP_CreateProjFromFlow.getDefaultMappers()
+        };
         projRequest.IsActive = true;
         projRequest.ProjectOwnerId = oaccountTeam.NSP_User__c;
         return projRequest;
