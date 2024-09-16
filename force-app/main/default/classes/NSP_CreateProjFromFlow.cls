@@ -7,7 +7,7 @@
 *			Updates Order with NSP_Project__c
 */
 public class NSP_CreateProjFromFlow {
-    // test w/ NSP_CreateProjFromFlowTest (96%)
+    // test w/ NSP_CreateProjFromFlowTest / NSP_AssetServiceTriggerHelperTest (96%)
 
     @InvocableMethod(label='Create Project' description='Create Project for Order')
     public static void createProject( List<String> records ) {
