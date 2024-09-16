@@ -175,29 +175,38 @@ public class NSP_OpportunityTriggerServiceHelper {
         }
         
     }
-   
-    /**
-* Create Project And Delete Budget
-* @param lProjRequests Response received from FinancialForce APIs).    
-* @return void             
-*                
-*/
-    
-    public Set<Id> createProjectAndDeleteBudget(List<pse.CreateProjectFromTemplateService.CreateProjectFromTemplateAndAccountRequest> lProjRequests){
-        lProjRequests[0].Mappers = new List<pse.SObjectCloneMapper> { NSP_CreateProjFromFlow.getDefaultMappers()};
-            //Call the service and create project      
-            List<pse.CreateProjectFromTemplateService.CreateProjectResponse> projResponse = this.implInstance.createProjectFromTemplate(new List<pse.CreateProjectFromTemplateService.CreateProjectFromTemplateAndAccountRequest>{lProjRequests[0]});
-        Set<Id> newProjectId = this.implInstance.getProjectIdSet(projResponse);
-        
-        // Deleting all Budgets Created with Projects
-        if(!newProjectId.isEmpty()){
-            List<pse__Budget__c> lBudgets = [SELECT id FROM pse__Budget__c WHERE pse__Project__c in : newProjectId];
-            delete lBudgets;
+
+    //
+    // Create Project And Delete Budget
+    // @param lProjRequests Response received from FinancialForce APIs).
+    // @return void
+    //
+    public Set<Id> createProjectAndDeleteBudget( List<pse.CreateProjectFromTemplateService.CreateProjectFromTemplateAndAccountRequest> lProjRequests ) {
+        Set<Id> newProjectId = new Set<Id>();
+        if ( ( lProjRequests != null ) && !lProjRequests.isEmpty() ) {
+            // Call the service and create project
+            lProjRequests[0].Mappers = new List<pse.SObjectCloneMapper>{
+                NSP_CreateProjFromFlow.getDefaultMappers()
+            };
+            List<pse.CreateProjectFromTemplateService.CreateProjectResponse> projResponse = this.implInstance.createProjectFromTemplate(
+                new List<pse.CreateProjectFromTemplateService.CreateProjectFromTemplateAndAccountRequest>{
+                    lProjRequests[0]
+                }
+            );
+            newProjectId = this.implInstance.getProjectIdSet( projResponse );
+            // Deleting all Budgets Created with Projects
+            if ( !newProjectId.isEmpty() ) {
+                List<pse__Budget__c> lBudgets = [
+                    SELECT Id
+                    FROM pse__Budget__c
+                    WHERE pse__Project__c IN :newProjectId
+                ];
+                delete lBudgets;
+            }
         }
-        
         return newProjectId;
     }
-    
+
     /***********************************************************************************************
 * MethodName: updateImplementationProfile
 * Description : This Method will update Opportunity related account ProjectId on the Implementation Profile for the Closed Opportunities 
