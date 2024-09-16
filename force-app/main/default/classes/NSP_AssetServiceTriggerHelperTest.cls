@@ -73,7 +73,7 @@ public class NSP_AssetServiceTriggerHelperTest {
         
         //Insert Region
         pse__Region__c region = (pse__Region__c)NSP_TestExtendedDataFactory.createSObject(new pse__Region__c(), 'NSP_TestDataFactory.RegionDefaults', false);
-		region.Name = NSP_ServiceConstants.UnitedStatesRegion;
+        region.Name = NSP_ServiceConstants.UnitedStatesRegion;
         insert region;
         
         //create Plan Record
@@ -138,6 +138,7 @@ public class NSP_AssetServiceTriggerHelperTest {
     @isTest
     static void createImplementationProjectwithFSOWOAssetcreatesProject(){
         // GIVEN
+        pse__Region__c myRegionForMapping = [Select Id from pse__Region__c where Name =: NSP_ServiceConstants.UnitedStatesRegion LIMIT 1];
         Account oAccount = [SELECT Id, Name, NSP_Sales_Service_Account_Status__c  FROM Account WHERE Name=:ACCOUNT_NAME];
         Asset woAsset = (Asset) NSP_TestExtendedDataFactory.createSObject(new Asset(), ASSET_DEFAULT, false);
         woAsset.AccountId = oAccount.Id;
@@ -151,6 +152,11 @@ public class NSP_AssetServiceTriggerHelperTest {
         
         // WHEN
         Test.startTest();
+        if(myRegionForMapping.id != null){
+            ProjectCreationSettings__c projSettings = new ProjectCreationSettings__c();
+            projSettings.DefaultRegionId__c = myRegionForMapping.id;
+            upsert projSettings; 
+        }
         insert woAsset;
         Test.stopTest();
         
