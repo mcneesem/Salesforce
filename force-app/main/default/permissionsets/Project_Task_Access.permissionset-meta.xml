@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
-    <description>Enables Field Permissions on Project Task.</description>
+    <description>Enables Field Permissions on Project Task</description>
     <fieldPermissions>
         <editable>true</editable>
         <field>pse__Project_Task__c.Task_Order__c</field>

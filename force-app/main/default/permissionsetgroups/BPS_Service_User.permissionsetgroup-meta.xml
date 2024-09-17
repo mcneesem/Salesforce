@@ -3,6 +3,7 @@
     <description>Permission set group for BPS Service</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>BPS Service User</label>
+    <permissionSets>Account_Profile_Access</permissionSets>
     <permissionSets>Accrual_Profile_access</permissionSets>
     <permissionSets>Case_Record_Type_WX_IMPL</permissionSets>
     <permissionSets>NSP_Main_Service_Contacts</permissionSets>
