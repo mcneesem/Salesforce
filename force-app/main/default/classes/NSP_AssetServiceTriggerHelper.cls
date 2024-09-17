@@ -1292,20 +1292,14 @@ public class NSP_AssetServiceTriggerHelper {
     }
 
     public Id createProjectWithTemplateFromAsset(Template_Key_and_Id_Mapping__mdt oTempKey, Id assetId){
-        pse__Region__c myRegionForMapping = [Select Id from pse__Region__c where Name =: NSP_ServiceConstants.UnitedStatesRegion LIMIT 1];
-        pse.SObjectCloneMapper mapp;
-        if (myRegionForMapping != null) {  
-            pse.SObjectCloneMapper.Field mapperField4 = new pse.SObjectCloneMapper.Field(Schema.pse__Proj__c.pse__Region__c);  
-            mapperField4.DefaultValue = myRegionForMapping.Id;   
-            Set<pse.SObjectCloneMapper.Field> setMapperFields = new Set<pse.SObjectCloneMapper.Field>{mapperField4};  
-                mapp = new pse.SObjectCloneMapper(pse__Proj__c.SObjectType, setMapperFields);  
-        }
         pse.CreateProjectFromTemplateService.CreateProjectFromTemplateRequest projRequest =
             new pse.CreateProjectFromTemplateService.CreateProjectFromTemplateRequest(oTempKey.Template_ID__c, System.Today());
 
         projRequest.ProjectName = oTempKey.Template_Name__c;
         projRequest.IsActive = true;
-        projRequest.Mappers = new List<pse.SObjectCloneMapper> { mapp };
+        projRequest.Mappers = new List<pse.SObjectCloneMapper>{
+            NSP_CreateProjFromFlow.getDefaultMappers()
+        };
         List<pse.CreateProjectFromTemplateService.CreateProjectResponse> projResponse = this.implInstance.createProjectwithTemplate(new List<pse.CreateProjectFromTemplateService.CreateProjectFromTemplateRequest>{ projRequest });
         ID newProjectId = this.implInstance.getProjectId(projResponse);
         //Delete Budget
