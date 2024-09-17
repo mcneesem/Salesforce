@@ -11,7 +11,7 @@
 public class NSP_AccountTriggerHelper {
     // test w/ NSP_AccountTriggerHelperTest, NSP_AccountContactRelationHelperTest, NSP_AccountContactServiceHelperTest (77%)
     // test w/ NSP_AccountTriggerHelperTest, NSP_LeadTriggerHelperTest (77%)
-    // test w/ NSP_AccountTriggerHelperTest (77%)
+    // test w/ NSP_AccountTriggerHelperTest (78%)
     // test w/ NSP_AccountContactRelationHelperTest (34%)
     // test w/ NSP_AccountContactServiceHelperTest (38%)
 
