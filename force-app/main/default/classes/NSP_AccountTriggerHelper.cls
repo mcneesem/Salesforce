@@ -124,6 +124,7 @@ if(accountObj.RecordTypeId==PARTNER_RECORDTYPE_ID
      *
      */
     public void beforeUpdateDirector( Map<Id,Account> accountNewMap , Map<Id,Account> accountOldMap ) {
+
         try {
             List < Account > accountList = new List < Account > ();
             List < Account > accountownerChangedList = new List < Account > ();
@@ -615,7 +616,8 @@ WHERE (userRole.Name = 'Loyalty Advisor' OR userRole.Name = 'Channel Program Man
         set < Id > ownerIdSet = new set < Id > ();
         set < Id > accountIdSet = new set < Id > ();
         set < String > salesOfficeSet = new set < String > ();
-        Map<Id, Account> accountSalesOffice = new Map<Id, Account>();
+        Map<Id, Account> newSalesOffice = new Map<Id, Account>();
+        Map<Id, Id> oldAccountUserId = new Map<Id, Id>();
         
         for(Account newAccount: newList){
             Account oldAccount = accountOldMap != null ? accountOldMap.get(newAccount.Id) : null;
@@ -648,7 +650,8 @@ WHERE (userRole.Name = 'Loyalty Advisor' OR userRole.Name = 'Channel Program Man
                     newAccount.NSP_Sales_Division__c = eachUser.NSP_SalesDivision__c; // sales division
                     newAccount.NSP_Sales_Office__c = eachUser.NSP_Sales_Office__c; // sales office
                     if(Trigger.isUpdate){
-                        accountSalesOffice.put(newAccount.Id, newAccount);
+                        newSalesOffice.put(newAccount.Id, newAccount);
+                        oldAccountUserId.put(newAccount.Id, oldAccount.OwnerId);
                     }
                 }
             }
@@ -677,8 +680,8 @@ WHERE (userRole.Name = 'Loyalty Advisor' OR userRole.Name = 'Channel Program Man
             }
         }
 
-        if(accountSalesOffice.size() > 0){
-            updateRelatedOpportunity(accountSalesOffice);
+        if(newSalesOffice.size() > 0){
+            updateRelatedOpportunity(newSalesOffice, oldAccountUserId);
         }
     }
     
@@ -693,13 +696,15 @@ WHERE (userRole.Name = 'Loyalty Advisor' OR userRole.Name = 'Channel Program Man
      * -------------------------------------------------------------------------------------
      *  09/10/2024          ADO-301313
      */
-    private static void updateRelatedOpportunity(Map<Id, Account> accountSalesOffice){
+    private static void updateRelatedOpportunity(Map<Id, Account> newSalesOffice, Map<Id, Id> oldAccountUserId){
 
-        List<Opportunity> opps = [SELECT id, AccountId, NSP_Sales_Office__c FROM Opportunity WHERE  
-        (StageName != 'Closed Lost' AND  StageName != 'Closed Won' AND StageName != 'Closing' ) AND AccountId IN :accountSalesOffice.values()];
+        List<Opportunity> opps = [SELECT id, OwnerId,  AccountId, NSP_Sales_Office__c FROM Opportunity WHERE  
+        (StageName != 'Closed Lost' AND  StageName != 'Closed Won' AND StageName != 'Closing' ) AND AccountId IN :newSalesOffice.values()];
 
         for(Opportunity opp : opps){
-            opp.NSP_Sales_Office__c = accountSalesOffice.get(opp.AccountId).NSP_Sales_Office__c;
+            if(opp.OwnerId == oldAccountUserId.get(opp.AccountId)){
+              opp.NSP_Sales_Office__c = newSalesOffice.get(opp.AccountId).NSP_Sales_Office__c;
+            }
         }
 
         //  Update Sales Office
