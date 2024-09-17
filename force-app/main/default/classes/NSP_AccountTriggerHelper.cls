@@ -649,6 +649,7 @@ WHERE (userRole.Name = 'Loyalty Advisor' OR userRole.Name = 'Channel Program Man
                     newAccount.NSP_SalesRegion__c = eachUser.NSP_SalesRegion__c;  // sales region
                     newAccount.NSP_Sales_Division__c = eachUser.NSP_SalesDivision__c; // sales division
                     newAccount.NSP_Sales_Office__c = eachUser.NSP_Sales_Office__c; // sales office
+                    //  301313 - Opportunity Sales Office not Update on Reassign Account
                     if(Trigger.isUpdate){
                         newSalesOffice.put(newAccount.Id, newAccount);
                         oldAccountUserId.put(newAccount.Id, oldAccount.OwnerId);
@@ -694,7 +695,7 @@ WHERE (userRole.Name = 'Loyalty Advisor' OR userRole.Name = 'Channel Program Man
      * -------------------------------------------------------------------------------------
      *  Date              | Description
      * -------------------------------------------------------------------------------------
-     *  09/10/2024          ADO-301313
+     *  09/10/2024          ADO-301313 - Opportunity Sales Office not Update on Reassign Account
      */
     private static void updateRelatedOpportunity(Map<Id, Account> newSalesOffice, Map<Id, Id> oldAccountUserId){
 
