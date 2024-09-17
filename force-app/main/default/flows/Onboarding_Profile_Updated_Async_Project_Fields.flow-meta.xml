@@ -101,7 +101,7 @@
             <assignToReference>Iterate_Over_The_Project_Records.Go_Live_Date__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>$Record.Pay_Day__c</elementReference>
+                <elementReference>$Record.Pay_Days__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
