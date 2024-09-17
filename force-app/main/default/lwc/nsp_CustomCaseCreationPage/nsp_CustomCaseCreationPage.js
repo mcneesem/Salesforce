@@ -35,6 +35,8 @@ import PARENTCASE_ACCOUNTID from '@salesforce/schema/Case.AccountId';
 import PROJECT from '@salesforce/schema/Case.Project__c';
 import CATEGORY from '@salesforce/schema/Case.NSP_Category__c';
 import SUB_CATEGORY from '@salesforce/schema/Case.NSP_SubCategory__c';
+import DETAIL from '@salesforce/schema/Case.NSP_Detail__c';
+import VERSION from '@salesforce/schema/Case.NSP_Version__c';
 import getCaseSettingFlag from '@salesforce/apex/NSP_CustomCaseCreationPageController.getCaseSettingFlag';
 
 import { IsConsoleNavigation, getFocusedTabInfo, closeTab } from 'lightning/platformWorkspaceApi';
@@ -473,7 +475,7 @@ export default class Nsp_CustomCaseCreationPage extends NavigationMixin(Lightnin
     }
 
     // Added as part of DF-03856 to populate the account Id, if the child case is created from the parent Case
-    @wire(getRecord , { recordId : '$caseParentId', fields: [PARENTCASE_ACCOUNTID, PROJECT, CATEGORY, SUB_CATEGORY] })
+    @wire(getRecord , { recordId : '$caseParentId', fields: [PARENTCASE_ACCOUNTID, PROJECT, CATEGORY, SUB_CATEGORY, DETAIL, VERSION] })
     getParentCaseFields(value){
         const { error, data} = value;
         if(data){
@@ -481,10 +483,23 @@ export default class Nsp_CustomCaseCreationPage extends NavigationMixin(Lightnin
             this.projectId = data.fields.Project__c.value;
             this.selectedCategory = data.fields.NSP_Category__c.value;
             this.selectedSubCategory = data.fields.NSP_SubCategory__c.value;
+            this.selectedDetail = data.fields.NSP_Detail__c.value;
+            this.selectedVersion = data.fields.NSP_Version__c.value;
             let accountLookupEle = this.template.querySelector('c-nsp_case-custom-look-up[data-id="accountLookup"]');
             if(accountLookupEle){
                 accountLookupEle.getDefaultRecord(this.accountID, 'Account', '');
-            }             
+            }            
+            this.handleSubCategoryFiltered();
+            if(this.selectedDetail!==undefined && this.selectedDetail!==null)
+            {
+                this.showDetail = true;
+                this.detailOptions = this.createOptions(this.categoryWrapper.mCatSubToDetails[this.selectedCategory + '-' + this.selectedSubCategory]);
+                
+            }
+            if(this.selectedVersion!==undefined && this.selectedVersion!==null){
+                this.showVersion = true;
+                this.versionOptions = this.createOptions(this.categoryWrapper.mCatSubDetailToVersions[this.selectedCategory + '-' + this.selectedSubCategory + '-' + this.selectedDetail]);
+            }
         }else if(error){
             this.data = null;
             this.error = error;

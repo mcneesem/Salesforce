@@ -47,6 +47,7 @@ export default class CaseCatSubcatDetail extends LightningElement {
     categorySubCategoryDetailConfidentialMap = new Map();
     selectedAllRecordTypeMap = new Map();
     recordTypeMap = new Map();
+    renderCallOnce = false;
 
     @wire(getAllCategoryList, {recordTypeId: '$recTypeId'})
     wiredgetAllCategoryList(result){
@@ -320,6 +321,23 @@ export default class CaseCatSubcatDetail extends LightningElement {
     @api
     getAllComboboxes() {
         return this.template.querySelectorAll('lightning-combobox');
+    }
+    
+    renderedCallback(){
+        if(this.selectedCategory!==undefined && this.selectedSubCategory!==undefined && this.renderCallOnce==false){
+            this.renderCallOnce = true;
+            this.handleSubCategoryFiltered();
+            if(this.selectedDetail!==undefined && this.selectedDetail!==null)
+            {
+            this.showDetail = true;
+            this.detailOptions = this.createOptions(this.categoryWrapper.mCatSubToDetails[this.selectedCategory + '-' + this.selectedSubCategory]);
+            console.log('detailOptions '+JSON.stringify(this.detailOptions));
+            }
+            if(this.selectedVersion!==undefined && this.selectedVersion!==null){
+            this.showVersion = true;
+            this.versionOptions = this.createOptions(this.categoryWrapper.mCatSubDetailToVersions[this.selectedCategory + '-' + this.selectedSubCategory + '-' + this.selectedDetail]);
+            }
+        }
     }
 
 }
