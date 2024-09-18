@@ -9799,6 +9799,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Implementation_Profile__c.Document_Levies__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Implementation_Profile__c.Documentation_Status__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -47901,6 +47906,11 @@
         <editable>false</editable>
         <field>pse__Project_Task_Points_History__c.pse__Change_in_Value__c</field>
         <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>pse__Project_Task__c.Implementation_Profile__c</field>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
