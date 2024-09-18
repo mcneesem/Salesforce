@@ -15,9 +15,7 @@
     <permissionSets>Checklist_Read_Create</permissionSets>
     <permissionSets>Checklist_View_All</permissionSets>
     <permissionSets>Contact_View_All</permissionSets>
-    <permissionSets>Convert_Leads</permissionSets>
     <permissionSets>Grant_Modify_All_on_Lead_Object_for_DA</permissionSets>
-    <permissionSets>Lead_Create</permissionSets>
     <permissionSets>NSP_Billing_View_All</permissionSets>
     <permissionSets>NSP_Finance_Service_Objects_Permission</permissionSets>
     <permissionSets>NSP_Main_Service_Contacts</permissionSets>
