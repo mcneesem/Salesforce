@@ -46,15 +46,6 @@
     </columns>
     <currency>USD</currency>
     <description>Invoice lines with Statuses from Invoice run</description>
-    <filter>
-        <criteriaItems>
-            <column>blng__InvoiceLine__c$blng__InvoiceRun__c.Id</column>
-            <columnToColumn>false</columnToColumn>
-            <isUnlocked>false</isUnlocked>
-            <operator>equals</operator>
-            <value>aA2040000004W4W</value>
-        </criteriaItems>
-    </filter>
     <format>Summary</format>
     <groupingsDown>
         <dateGranularity>Day</dateGranularity>
