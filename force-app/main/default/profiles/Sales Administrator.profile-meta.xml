@@ -1047,7 +1047,7 @@
         <name>Allow_Delete_Accounts</name>
     </customPermissions>
     <customPermissions>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
         <name>Allow_Delete_Leads</name>
     </customPermissions>
     <fieldPermissions>
@@ -15002,7 +15002,7 @@
         <name>ListEmailSend</name>
     </userPermissions>
     <userPermissions>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
         <name>ManageLeads</name>
     </userPermissions>
     <userPermissions>
