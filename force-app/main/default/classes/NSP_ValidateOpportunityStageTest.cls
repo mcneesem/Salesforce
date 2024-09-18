@@ -89,7 +89,7 @@ private class NSP_ValidateOpportunityStageTest {
         // );
         // insert userRecordInt;
 
-        User userRecordInt = [Select Id, Email from User where Name = 'Insperity Integration User'];
+        User userRecordInt = [Select Id, Email from User where Id = '0054x0000057MPSAA2'];
 
         Task taskRec1 = new Task(
             Subject = 'Business Profile Started',
