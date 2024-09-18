@@ -67,13 +67,6 @@
                     <stringValue>0124x0000019l99AAA</stringValue>
                 </rightValue>
             </conditions>
-            <conditions>
-                <leftValueReference>$Record.NSP_Assigned_Queue__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Contact Center</stringValue>
-                </rightValue>
-            </conditions>
             <connector>
                 <targetReference>Corp_EE_Flag_TRUE</targetReference>
             </connector>
