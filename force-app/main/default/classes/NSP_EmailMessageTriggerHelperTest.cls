@@ -17,6 +17,7 @@ private class NSP_EmailMessageTriggerHelperTest {
     public static final String CONTACTCENTER = 'contact_center@insperity.com';
     public static final String QUEUE = 'Queue';
     public static final String CONTACTCENTERQUEUE = 'NSP_ContactCenter';
+   	private static final Id BPS_RECORDTYPEID = NSP_GenericRecordType.getRecordTypeId( 'Case' , 'BPS' );
     
     @testSetup
     static void setupTestData(){
@@ -54,9 +55,8 @@ private class NSP_EmailMessageTriggerHelperTest {
     }     
 
     @isTest  
-    static void reOpenCaseForBPSTest() {  
+    private static void reOpenCaseForBPSTest() {  
         test.startTest();
-        Id caseBPSRecordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('BPS').getRecordTypeId();
         Case_Settings__c settings = Case_Settings__c.getOrgDefaults();
         settings.BPS_Case_Tier_1_Categories__c = 'Integra';
         settings.BPS_Case_Tier_2_Categories__c = 'Test';
@@ -67,7 +67,7 @@ private class NSP_EmailMessageTriggerHelperTest {
         Case caseRecord = [SELECT id, Status FROM Case WHERE Status = 'Open' LIMIT 1];
         caseRecord.NSP_Rating__c = 'Neutral';
         caseRecord.Status = 'Closed';
-        caseRecord.RecordTypeId = caseBPSRecordTypeId;
+        caseRecord.RecordTypeId = BPS_RECORDTYPEID;
         caseRecord.NSP_Category__c = 'Integra';
         update caseRecord;
         //Email message creation
@@ -78,6 +78,7 @@ private class NSP_EmailMessageTriggerHelperTest {
         eMsg.Subject = 'Test email Subject';
         eMsg.HtmlBody = 'Test email body';
         eMsg.ParentId = caseRecord.id;
+        eMsg.TextBody = 'Test email Body';
         
         //inserting Email message
         insert eMsg;
@@ -85,6 +86,38 @@ private class NSP_EmailMessageTriggerHelperTest {
         System.assertEquals('ReOpened', updatedCase.Status);
         test.stopTest();
         
+    }
+    
+    @isTest  
+    private static void createCaseForBPSTest() {  
+        test.startTest();
+        
+        Case_Settings__c settings = Case_Settings__c.getOrgDefaults();
+        settings.BPS_Case_Tier_1_Categories__c = 'Integra';
+        settings.BPS_Case_Tier_2_Categories__c = 'Test';
+        settings.BPS_Case_Tier_1_Reopen_Days__c = -1;
+        settings.BPS_Case_Tier_2_Reopen_Days__c = -1;
+        upsert settings;
+        
+        Case caseRecord = [SELECT id, Status FROM Case WHERE Status = 'Open' LIMIT 1];
+        caseRecord.NSP_Rating__c = 'Neutral';
+        caseRecord.Status = 'Closed';
+        caseRecord.RecordTypeId = BPS_RECORDTYPEID;
+        caseRecord.NSP_Category__c = 'Integra';       
+        update caseRecord;
+        //Email message creation
+        EmailMessage eMsg = new EmailMessage ();
+        eMsg.FromAddress = 'test@test.com';
+        eMsg.Incoming = True;
+        eMsg.ToAddress= 'test@xyz.com';
+        eMsg.Subject = 'Test email Subject';
+        eMsg.HtmlBody = 'Test email body';
+        eMsg.ParentId = caseRecord.id;
+        eMsg.TextBody = 'Test email Body';
+        
+        //inserting Email message
+        insert eMsg;
+        test.stopTest();
     }
     
      /**
