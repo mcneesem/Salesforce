@@ -807,6 +807,14 @@ export default class Nsp_CustomCaseCreationPage extends NavigationMixin(Lightnin
         //Added By Sruthi - start
         this.recordId = event.detail.id;
         this.isMultipleContactsSelected = this.isMultipleContacts;
+        if ( this.isSubCompPermissionEnabled ) {
+            if ( ( this.filesUploaded == undefined ) || ( this.filesUploaded == null ) || ( this.filesUploaded == '' ) ) {
+                const fileComponent = this.template.querySelector('c-case-file-upload');
+                if(fileComponent!==undefined && fileComponent!==null){
+                    this.filesUploaded = fileComponent.filesUploaded;
+                }
+            }
+        }
         saveFiles({filesToInsert: this.filesUploaded, recordId: this.recordId});
         if(this.noteButtonClicked){
            this.handleNotesInsertion(this.recordId);
