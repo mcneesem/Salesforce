@@ -3,6 +3,7 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { CloseActionScreenEvent } from 'lightning/actions';
 import { CurrentPageReference, NavigationMixin } from 'lightning/navigation';
 import hasPermission from '@salesforce/customPermission/NSP_DisplayTypeScreenOnCase';
+import hasSubCompPerm from '@salesforce/customPermission/Enable_Case_Creation_Sub_Components';
 import getCategoryList from '@salesforce/apex/NSP_CustomCaseCreationPageController.getCategoryList';
 import getAllCategoryList from '@salesforce/apex/NSP_CustomCaseCreationPageController.getAllCategoryList';
 import getFieldSetFieldsBySobject from '@salesforce/apex/NSP_Utilities.getAllFieldSetFieldsBySObjectName';
@@ -46,6 +47,9 @@ const ACCOUNTFIELDS = [
 export default class Nsp_CustomCaseCreationPage extends NavigationMixin(LightningElement) {
     get isCustomPermissionEnabled() {
         return hasPermission;
+    }
+    get isSubCompPermissionEnabled() {
+        return hasSubCompPerm;
     }
 
     label = {
@@ -947,6 +951,9 @@ export default class Nsp_CustomCaseCreationPage extends NavigationMixin(Lightnin
     }
 
     handleButtonClick() {
+        if ( this.isSubCompPermissionEnabled ) {
+            this.getCatSubCatValues();
+        }
         let errorFields = '';
         this.showError = false;
         this.errorMessageToDisplay = '';
@@ -998,6 +1005,14 @@ export default class Nsp_CustomCaseCreationPage extends NavigationMixin(Lightnin
             errorFields += "Case Owner,"
         }
         this.getAllInputFields = event.detail.fields;
+        if(this.isSubCompPermissionEnabled){
+            this.getCatSubCatValues();        
+            this.getAllInputFields.NSP_Category__c = this.selectedCategory; 
+            this.getAllInputFields.NSP_SubCategory__c = this.selectedSubCategory; 
+            this.getAllInputFields.NSP_Detail__c = this.selectedDetail; 
+            this.getAllInputFields.NSP_Version__c = this.selectedVersion;
+        }
+        
         const inputFields = this.template.querySelectorAll('lightning-input-field');
         if(errorFields == '' && inputFields){
             if(this.getDisplayConfidentialCheckBox === true){
@@ -1081,15 +1096,16 @@ export default class Nsp_CustomCaseCreationPage extends NavigationMixin(Lightnin
                 field.reset();
             });
         }
-
-        const comboBoxFields = this.template.querySelectorAll(
-            'lightning-combobox'
-        );
-
-        if (comboBoxFields) {
-            comboBoxFields.forEach(field => {
-                field.value = "";
-            });
+        if ( this.isSubCompPermissionEnabled ) {
+            const catSubCatComponent = this.template.querySelector('c-nsp_cat-subcat-detail');
+            if(catSubCatComponent){
+                const comboBoxFields = catSubCatComponent.getAllComboboxes();
+                if (comboBoxFields) {
+                    comboBoxFields.forEach(field => {
+                        field.value = "";
+                    });
+                }
+            }
         }
     }
 
@@ -1442,4 +1458,17 @@ export default class Nsp_CustomCaseCreationPage extends NavigationMixin(Lightnin
     render(){
         return ((this.selectedRecordTypeName === 'BPS') ? bpsTemplate : (this.selectedRecordTypeName === 'RET Time Tracking') ? retTemplate : defaultTemplate);
     } 
+
+    getCatSubCatValues() {
+        if ( this.isSubCompPermissionEnabled ) {
+            const childComponent = this.template.querySelector( 'c-case-cat-subcat-detail' );
+            if(childComponent!==undefined && childComponent!==null){
+                this.selectedCategory = childComponent.selectedCategory; 
+                this.selectedSubCategory = childComponent.selectedSubCategory;
+                this.selectedDetail = childComponent.selectedDetail;
+                this.selectedVersion = childComponent.selectedVersion;
+            }
+        }
+    }
+
 }
