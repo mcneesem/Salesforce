@@ -80,7 +80,7 @@
             <assignToReference>Iterate_Over_The_Project_Records.Complexity_Score__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>$Record.Complexity_Score_Total__c</elementReference>
+                <elementReference>$Record.Complexity_Score_Total_Formula__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
