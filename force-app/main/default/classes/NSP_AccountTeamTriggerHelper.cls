@@ -1,5 +1,5 @@
 public with sharing class NSP_AccountTeamTriggerHelper {
-    // test w/ NSP_AccountTeamTriggerTest (86%)
+    // test w/ NSP_AccountTeamTriggerTest (81%)
 
     /**
 * Iterates throught the list of new NSP_Account_Team__c and passes the required attributes to other methods.
@@ -622,65 +622,6 @@ NSP_WX_WA_Benefits_Specialist__c, and NSP_Retirement_Service_Plan_Name__c field 
             );
         }
     }
-     //
-    // @MethodName: updatePayrollDataSheetRecords
-    // @Description: This method is used to update Payroll_Specialist__c field on Payroll Data sheet records
-    // @param : List<NSP_Account_Team__c> newAccountTeamList, Map<Id,NSP_Account_Team__c> newMap, Map<Id,NSP_Account_Team__c> oldMap
-    // @createdDate : 09/05/2024
-    // @User story : 304232
-    // @return void
-    //
-    public static void updatePayrollDataSheetRecords( List<NSP_Account_Team__c> newAccountTeamList , Map<Id,NSP_Account_Team__c> oldMap ) {
-        Set<Id> accountIds = new Set<Id>();
-        List<NSP_Payroll__c> lstOfPayrolls = new List<NSP_Payroll__c>();
-        if ( ( newAccountTeamList != null ) && !newAccountTeamList.isEmpty() ) {
-            // Loop through each accountteam member in the new list  
-            for ( NSP_Account_Team__c accountTeam : newAccountTeamList ) {
-                if ( accountTeam.NSP_Account__c != null ) {
-                    NSP_Account_Team__c oldAccountTeam = null;
-                    if ( ( oldMap != null ) && oldMap.containsKey(accountTeam.Id) ) {
-                        oldAccountTeam = oldMap.get( accountTeam.Id );
-                    }
-                    if ( ( accountTeam.NSP_Role__c == NSP_ServiceConstants.PayrollSpecialist )
-                        || ( ( oldAccountTeam != null )
-                            && ( ( oldAccountTeam.NSP_Role__c != accountTeam.NSP_Role__c )
-                                || ( oldAccountTeam.NSP_Account__c != accountTeam.NSP_Account__c )
-                                )
-                            )
-                        )
-                    {
-                        accountIds.add( accountTeam.NSP_Account__c );
-                    }
-                }
-            }
-        }
-        if ( accountIds != null && !accountIds.isEmpty() ) {
-            // Query the PDS records for the identified account IDs
-            for ( NSP_Payroll__c pdsRecord : [
-                        SELECT
-                            Id , Name , NSP_Sub_Client_Name__c , Account__c , NSP_on_Site_Supervisor__c ,
-                            NSP_Primary_Payroll_Contact__c , NSP_HR_Contact__c , NSP_Back_Up_Payroll_Contact__c ,
-                            Back_Up_View_Payroll_Paperwork__c , Primary_View_Payroll_Paperwork__c ,
-                            View_Payroll_Paperwork__c , On_Site_View_Payroll_Paperwork__c
-                        FROM NSP_Payroll__c
-                        WHERE ( Account__c IN :accountIds )
-                    ]
-                )
-            {
-                if ( pdsRecord.Account__c != null ) { 
-                    lstOfPayrolls.add( pdsRecord );
-                }
-            }
-            if ( !lstOfPayrolls.isEmpty() ) {
-                // Call the helper method to update fields after insert/update
-                NSP_PayrollTriggerHelper payrollTriggerHelper = new NSP_PayrollTriggerHelper();
-                payrollTriggerHelper.fieldUpdatesAfterInsertUpdate(
-                    lstOfPayrolls ,
-                    null ,
-                    null ,
-                    false
-                );
-            }
-        }
-    }
+
 }
+//
