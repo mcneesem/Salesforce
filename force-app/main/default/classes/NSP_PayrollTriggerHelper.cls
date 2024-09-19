@@ -84,7 +84,7 @@ public class NSP_PayrollTriggerHelper {
             );
         }
         if(isPayrollSpecialist){
-            updatePayrollSpecialistField(newPayrollList,skipPayrollUpdate);
+            updatePayrollSpecialistField(newPayrollList);
         }
         if(!relatedSubClientsMap.isEmpty()){
             for(NSP_Payroll__c payrolls : newPayrollList){
@@ -529,8 +529,7 @@ public class NSP_PayrollTriggerHelper {
     // @Defect       :
     // @return void
     //
-    private void updatePayrollSpecialistField( List<NSP_Payroll__c> newPayrollList , Boolean skipPayrollUpdate ) {
-        List<NSP_Payroll__c> lstOfUpdatePayrolls = new List<NSP_Payroll__c>();
+    private void updatePayrollSpecialistField( List<NSP_Payroll__c> newPayrollList ) {
         // All account IDs from the payroll list
         if ( ( newPayrollList != null ) && !newPayrollList.isEmpty() ) {
             Set<Id> accountIds = new Set<Id>();
@@ -568,24 +567,6 @@ public class NSP_PayrollTriggerHelper {
                 for ( NSP_Payroll__c payroll : newPayrollList ) {
                     if ( accountTeamMap.containsKey( payroll.Account__c ) ) {
                         payroll.Payroll_Specialist__c = accountTeamMap.get( payroll.Account__c );
-                        if(!skipPayrollUpdate){
-                            lstOfUpdatePayrolls.add(payroll);
-                        }
-                    }
-                }
-                if ( ( lstOfUpdatePayrolls != null )
-                    && !lstOfUpdatePayrolls.isEmpty()
-                    && !skipPayrollUpdate
-                    )
-                    {
-                    try {
-                        update lstOfUpdatePayrolls;
-                    } catch ( DmlException e ) {
-                        NSP_ErrorLogHandler.logException(
-                            NSP_PayrollTriggerHelper.class.getName() ,
-                            'updatePayrollSpecialistField' ,
-                            e
-                        );
                     }
                 }
             }

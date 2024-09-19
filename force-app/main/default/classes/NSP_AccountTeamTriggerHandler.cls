@@ -43,7 +43,6 @@ public class NSP_AccountTeamTriggerHandler  implements NSP_ITriggerHandler {
        NSP_salesOfficeRecordSharing.accountTeamRecordSharing((Map<Id, NSP_Account_Team__c>) newMap);
        NSP_AccountTeamTriggerHelper.updateProjectTaskEmailFields((List<NSP_Account_Team__c>) newList,null);
        NSP_AccountTeamTriggerHelper.updateAssetServiceRegion((List<NSP_Account_Team__c>) newList, null);
-       NSP_AccountTeamTriggerHelper.updatePayrollDataSheetRecords((List<NSP_Account_Team__c>) newList,null);  
     }
 
     /**
@@ -73,9 +72,6 @@ public class NSP_AccountTeamTriggerHandler  implements NSP_ITriggerHandler {
         accountTeamMemberTriggerHelperObject.afterUpdateDirector((Map<Id,NSP_Account_Team__c>) newMap,(Map<Id,NSP_Account_Team__c>) oldMap);
         NSP_AccountTeamTriggerHelper.updateProjectTaskEmailFields((List<NSP_Account_Team__c>) newMap.values(),(Map<Id,NSP_Account_Team__c>) oldMap);
         NSP_AccountTeamTriggerHelper.updateAssetServiceRegion((List<NSP_Account_Team__c>) newMap.values(),(Map<Id,NSP_Account_Team__c>) oldMap);
-        if ( newMap != null ) {
-            NSP_AccountTeamTriggerHelper.updatePayrollDataSheetRecords((List<NSP_Account_Team__c>) newMap.values(),(Map<Id,NSP_Account_Team__c>) oldMap);
-        }
     }
     
     /**
@@ -99,8 +95,5 @@ public class NSP_AccountTeamTriggerHandler  implements NSP_ITriggerHandler {
      public void afterDelete(List<sObject> oldList,Map<Id, sObject> oldMap) {
         // Added as a part of STY-02768
         NSP_salesOfficeRecordSharing.updateAccessOnATMRemoval((List<NSP_Account_Team__c>) oldList,(Map<Id,NSP_Account_Team__c>) oldMap);
-         if ( oldmap != null ) {
-            NSP_AccountTeamTriggerHelper.updatePayrollDataSheetRecords(oldMap.values(), null);
-        } 
    }
 }
