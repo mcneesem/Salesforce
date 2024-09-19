@@ -1297,6 +1297,9 @@ public class NSP_AssetServiceTriggerHelper {
 
         projRequest.ProjectName = oTempKey.Template_Name__c;
         projRequest.IsActive = true;
+        projRequest.Mappers = new List<pse.SObjectCloneMapper>{
+            NSP_CreateProjFromFlow.getDefaultMappers()
+        };
         List<pse.CreateProjectFromTemplateService.CreateProjectResponse> projResponse = this.implInstance.createProjectwithTemplate(new List<pse.CreateProjectFromTemplateService.CreateProjectFromTemplateRequest>{ projRequest });
         ID newProjectId = this.implInstance.getProjectId(projResponse);
         //Delete Budget
