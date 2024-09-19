@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_Client_Mission__c</fullName>
+    <description>Field Label changed as part of azd story 304651
+     Old Label : Client Mission 
+     New Label : Client Mission Statement</description>
     <encryptionScheme>None</encryptionScheme>
     <externalId>false</externalId>
-    <label>Client Mission</label>
+    <label>Client Mission Statement</label>
     <length>32768</length>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>true</trackHistory>

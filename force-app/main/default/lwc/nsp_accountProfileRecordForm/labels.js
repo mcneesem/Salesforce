@@ -6,7 +6,7 @@ const LABEL = {
   NSP_PerceivedMeasure_of_InsperitySuccess__c:
     "Client’s perceived measure of Insperity Success",
   NSP_gain_from_Insperity_Partnership__c:
-    "What hoping to gain from Insperity Partnership?",
+    "What hoping to gain from Insperity Partnership (Value)?",
   NSP_ownersOfCompanyAndOwnershipTheyHave__c:
     "Who are the owners of the company and how much ownership do they have?",
   NSP_Recently_used_ACA_Report__c:
@@ -18,15 +18,15 @@ const LABEL = {
   NSP_MostRecentFinancialsRequestAndClient__c:
     "Most recent financials request and client contact",
   NSP_Do_they_hv_any_policies_thrgh_Insty__c:
-    "Do they have any policies through Insperity Insurance Services?",
+    "Any 3rd party policies outside NSP PEO",
   NSP_Any_WOSS_services_wch_ones_how_freqt__c:
     "Do they use any WOSS services and which ones and how frequently?",
   NSP_last_benefits_benchmarkg_reprt_date__c:
     "Date of last benefits benchmarking report",
   NSP_SEO_wht_benefits_enrolled_in_coverge__c:
     "SEO - what benefits are they enrolled in and their coverage level",
-  NSP_usng_third_pary_timekeeping_system__c:
-    "Is the client using a third party (non-Insperity) timekeeping system?",
+  NSP_Which_software_are_they_using__c:
+    "Is the client using a third party (non-Insperity) timekeeping system? If so, which?",
   NSP_Wht_custom_fields_they_hv_in_Premier__c:
     "What custom fields do they have in Premier?",
   NSP_Any_APIs_or_File_Feeds_frm_Insperity__c:
@@ -37,7 +37,7 @@ const LABEL = {
     "Are they part of any technology pilots?",
   NSP_Are_thy_usng_Client_Docs_EE_Folder__c:
     "Are they using Client Documents/EE Folder?",
-  NSP_Clint_prof_sec_arnd_extrnl_HRTechgy__c:
+  Clint_prof_sec_and_extrnl_HRTechgy__c:
     "Client profile section around external HR Technology (ATS, Performance Management, Accounting, LMS)",
   NSP_Learng_Portal_Clint_Administrator__c:
     "Who is the Learning Portal Client Administrator?",
@@ -48,7 +48,7 @@ const LABEL = {
   NSP_Do_they_offer_training__c: "Do they offer training? ",
   NSP_PTO_Tracking_in_AIMS_Y_N__c: "PTO Tracking in AIMS?",
   NSP_AccessRealTimeWorkersCompLossRuns__c:
-    "Access to Real time workers comp loss runs ",
+    "Receives WC data regularly? If yes, how often and to whom?",
   NSP_PremierEmployeeDirectoryViewSetup__c:
     "Does client have Premier Employee Directory View set up?",
   NSP_Did_thy_brng_historicalData_into_IPA__c:
@@ -60,9 +60,8 @@ const LABEL = {
   NSP_What_type_of_corporation_is_it__c: "What type of corporation is it? (C Corp, S Corp, etc)",
   NSP_Who_are_they__c: "Who are they?",
   NSP_Do_they_have_SEOs__c: "Do they have SEOs?",
-  NSP_Company_Recognition_and_Rewards__c: "Company Recognition and Rewards?",
   NSP_PD_Company_Recognition_Rewards__c:
-    "Information about their Recognition and Rewards Program",
+    "Company Recognition and Rewards? RSU's etc?",
   NSP_Any_client_specific_links__c:
     "Any client-specific links on the Home page of Premier?",
   NSP_PD_client_specific_links__c: "Provide Details",
@@ -101,9 +100,27 @@ const LABEL = {
   NSP_Premier_stats__c: "Premier stats: Frequency with which their employees logon to Premier",
   NSP_Comp_Culture_Emp_perspective__c: "Comp Culture-Employee perspective",
   NSP_Contribution_management__c: "Contribution management? (ex. front loaded or by pay period)",
-  NSP_Exceptions_Tracking__c: " “Exceptions” Tracking – ex; Billing dept waives initial COBRA enrollment fees for a client that has dynamic client ID’s move in/move out due to business model (ex: receivership model)",
   NSP_Performance_Management__c: "Performance Management? (i.e., Insperity Template? PerformSmart? Etc.)",
   NSP_last_employee_401k_education_webinar__c:"When was their last employee 401k education webinar if on the NSP plan",
+  NSP_Other_CSP_plans__c:"Client-sponsored plans (CSP) and carriers (not 401K)",
+  How_does_IPA_drive_Value_for_this_client__c:"How does IPA drive Value for this client?",
+  NSP_Top_3_Pain_Points_Priorities__c:"Top 3 Pain Points/Priorities i.e. Technology, fast growth, turnover, etc.",
+  Renewal_Highlights__c:"Renewal Highlights (issues, negotiations, who involved)",
+  What_is_the_clients_in_house_capability__c:"What is the client's in-house capability? (Staff, technology, etc.)",
+  VOC_Results__c:"VOC Results (date of VOC, pos/neg), mitigating actions",
+
+  NSP_How_does_client_generate_revenue__c:"Business Description (Brief history, ownership, revenue drivers etc.)",
+  NSP_Union_Employees__c:"Union Employees- If so, percentage of workforce?",
+  Is_client_HQ_located_internationallly__c:"Is the client's headquarters located internationally?",
+  Country_HQ_is_located_one_location_only__c:"Country HQ is located (one location only)",
+  Does_the_client_have_KDM_internationally__c:"Does the client have a KDM or KDMs located internationally?",
+  Which_countries_KDM_International__c:"Which country(ies) located?",
+  Percentage_of_Union_Employees_workforce__c:"If have Union Employees, what percentage of workforce?",
+  Name_of_PE_firm_or_Investment_Entity__c:"Name of PE firm or Investment Entity (if applicable)",
+  NSP_Board_of_Directors__c:"Board of Directors? (no. of members, level of influence, etc.)",
+  NSP_Special_client_accessibility_needs__c:"Special client accessibility needs (Global or unpaid user access? Language?)",
+  NSP_Exceptions_Tracking__c:"“Exceptions” Tracking - History of types and who set up",
+  NSP_What_custom_reports_do_they_have__c:"What area of business does custom report impact eg. Finance, DEI, Gov, etc.",
 
 };
 
