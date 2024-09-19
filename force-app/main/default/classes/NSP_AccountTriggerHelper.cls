@@ -11,7 +11,7 @@
 public class NSP_AccountTriggerHelper {
     // test w/ NSP_AccountTriggerHelperTest, NSP_AccountContactRelationHelperTest, NSP_AccountContactServiceHelperTest (77%)
     // test w/ NSP_AccountTriggerHelperTest, NSP_LeadTriggerHelperTest (77%)
-    // test w/ NSP_AccountTriggerHelperTest (77%)
+    // test w/ NSP_AccountTriggerHelperTest (78%)
     // test w/ NSP_AccountContactRelationHelperTest (34%)
     // test w/ NSP_AccountContactServiceHelperTest (38%)
 
@@ -124,6 +124,7 @@ if(accountObj.RecordTypeId==PARTNER_RECORDTYPE_ID
      *
      */
     public void beforeUpdateDirector( Map<Id,Account> accountNewMap , Map<Id,Account> accountOldMap ) {
+
         try {
             List < Account > accountList = new List < Account > ();
             List < Account > accountownerChangedList = new List < Account > ();
@@ -615,6 +616,9 @@ WHERE (userRole.Name = 'Loyalty Advisor' OR userRole.Name = 'Channel Program Man
         set < Id > ownerIdSet = new set < Id > ();
         set < Id > accountIdSet = new set < Id > ();
         set < String > salesOfficeSet = new set < String > ();
+        Map<Id, Account> newSalesOffice = new Map<Id, Account>();
+        Map<Id, Id> oldAccountUserId = new Map<Id, Id>();
+        
         for(Account newAccount: newList){
             Account oldAccount = accountOldMap != null ? accountOldMap.get(newAccount.Id) : null;
             if((Trigger.isInsert || newAccount.OwnerId != oldAccount.OwnerId) && newAccount.OwnerId != null){
@@ -622,7 +626,6 @@ WHERE (userRole.Name = 'Loyalty Advisor' OR userRole.Name = 'Channel Program Man
                 if(newAccount.Id  != null){
                     accountIdSet.add(newAccount.Id);
                 }
-
             }
             else if(Trigger.isUpdate && string.isNotBlank(newAccount.NSP_Sales_Office__c) && !system.isQueueable() &&
                 (newAccount.NSP_Sales_Office__c != oldAccount.NSP_Sales_Office__c ||
@@ -630,7 +633,6 @@ WHERE (userRole.Name = 'Loyalty Advisor' OR userRole.Name = 'Channel Program Man
                      newAccount.NSP_SalesRegion__c != oldAccount.NSP_SalesRegion__c )){
                 salesOfficeSet.add(newAccount.NSP_Sales_Office__c);
             }
-
         }
 
         if(ownerIdSet.Size() > 0){
@@ -647,6 +649,11 @@ WHERE (userRole.Name = 'Loyalty Advisor' OR userRole.Name = 'Channel Program Man
                     newAccount.NSP_SalesRegion__c = eachUser.NSP_SalesRegion__c;  // sales region
                     newAccount.NSP_Sales_Division__c = eachUser.NSP_SalesDivision__c; // sales division
                     newAccount.NSP_Sales_Office__c = eachUser.NSP_Sales_Office__c; // sales office
+                    //  301313 - Opportunity Sales Office not Update on Reassign Account
+                    if(Trigger.isUpdate){
+                        newSalesOffice.put(newAccount.Id, newAccount);
+                        oldAccountUserId.put(newAccount.Id, oldAccount.OwnerId);
+                    }
                 }
             }
         }
@@ -672,6 +679,38 @@ WHERE (userRole.Name = 'Loyalty Advisor' OR userRole.Name = 'Channel Program Man
                     }
                 }            
             }
+        }
+
+        if(newSalesOffice.size() > 0){
+            updateRelatedOpportunity(newSalesOffice, oldAccountUserId);
+        }
+    }
+    
+     /* Description: This method updates the Opportunity Sales Office when
+     *  Account is reassigned
+     * 
+     * @param: accountSalesOffice
+     * @return: void
+     * Modification History:
+     * -------------------------------------------------------------------------------------
+     *  Date              | Description
+     * -------------------------------------------------------------------------------------
+     *  09/10/2024          ADO-301313 - Opportunity Sales Office not Update on Reassign Account
+     */
+    private static void updateRelatedOpportunity(Map<Id, Account> newSalesOffice, Map<Id, Id> oldAccountUserId){
+
+        List<Opportunity> opps = [SELECT id, OwnerId,  AccountId, NSP_Sales_Office__c FROM Opportunity WHERE  
+        (StageName != 'Closed Lost' AND  StageName != 'Closed Won' AND StageName != 'Closing' ) AND AccountId IN :newSalesOffice.values()];
+
+        for(Opportunity opp : opps){
+            if(opp.OwnerId == oldAccountUserId.get(opp.AccountId)){
+              opp.NSP_Sales_Office__c = newSalesOffice.get(opp.AccountId).NSP_Sales_Office__c;
+            }
+        }
+
+        //  Update Sales Office
+        if(opps.size() > 0){
+            update opps;
         }
     }
     
