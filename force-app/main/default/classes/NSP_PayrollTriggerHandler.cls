@@ -18,7 +18,7 @@ public class NSP_PayrollTriggerHandler implements NSP_ITriggerHandler {
     */
     public void beforeInsert(List<sObject> newList) {
     	NSP_PayrollTriggerHelper helperObj = new NSP_PayrollTriggerHelper();
-        helperObj.fieldUpdatesAfterInsertUpdate((List<NSP_Payroll__c>) newList, null, null);  	   
+        helperObj.fieldUpdatesAfterInsertUpdate((List<NSP_Payroll__c>) newList , null , null , true);  	   
         helperObj.checkForGovernmentContractor((List<NSP_Payroll__c>) newList);  // Added as part of STY-03277  
         helperObj.updatePDSContactRelatedFields((List<NSP_Payroll__c>) newList, null);
         NSP_PayrollTriggerHelper.updatePDSRelatedContactFields((List<NSP_Payroll__c>) newList);
@@ -45,7 +45,7 @@ public class NSP_PayrollTriggerHandler implements NSP_ITriggerHandler {
     */
     public void beforeUpdate(Map<Id, sObject> newMap,Map<Id, sObject> oldMap) {
     	NSP_PayrollTriggerHelper helperObj = new NSP_PayrollTriggerHelper();
-        helperObj.fieldUpdatesAfterInsertUpdate(null, (Map<Id, NSP_Payroll__c>) newMap, (Map<Id, NSP_Payroll__c>) oldMap);
+        helperObj.fieldUpdatesAfterInsertUpdate(null , (Map<Id, NSP_Payroll__c>) newMap , (Map<Id, NSP_Payroll__c>) oldMap , true);
         helperObj.updatePDSContactRelatedFields((List<NSP_Payroll__c>) newMap.values(), (Map<Id, NSP_Payroll__c>) oldMap);
     }    
     /**

@@ -2,6 +2,7 @@
 * Represents the Additional Payroll Contact helper which handles all the logic.
 */
 public class NSP_AdditionalPayrollContactHelper {
+   // test w/ NSP_AdditionalPayrollContactHelperTest (91%)
     
     /**
 * This method will populate Email, Phone, International Phone and Office Phone from selected Contact
@@ -43,5 +44,44 @@ public class NSP_AdditionalPayrollContactHelper {
         }
     } 
     
+    public void updateRelatedPayrollDataSheetRecords(List<Additional_Payroll_Contact__c> listOfAdditionalPayrollContact, Map<Id,Additional_Payroll_Contact__c> oldMap){
+        Set<Id> setPayrollsId = new Set<Id>();
+        List<NSP_Payroll__c> lstOfPayrolls = new List<NSP_Payroll__c>();
+        if(listOfAdditionalPayrollContact != null){
+            for(Additional_Payroll_Contact__c apContact : listOfAdditionalPayrollContact){
+                Additional_Payroll_Contact__c oldMapAPC = null;
+                if(oldMap != null){
+                    oldMapAPC = oldMap.get(apContact.Id);
+                }
+                if ( (apContact.Payroll__c != null && apContact.View_Payroll_Paperwork__c)
+                    || (
+                        oldMapAPC != null
+                        && (
+                            (oldMapAPC.Payroll__c != apContact.Payroll__c)
+                            || (oldMapAPC.View_Payroll_Paperwork__c != apContact.View_Payroll_Paperwork__c)
+                            )
+                        )
+                    )
+                {
+                    setPayrollsId.add(apContact.Payroll__c);
+                }
+            }
+            if(!setPayrollsId.isEmpty()){
+                lstOfPayrolls = [
+                    SELECT
+                        Id, Name, NSP_Back_Up_Payroll_Contact__c, Back_Up_View_Payroll_Paperwork__c,
+                        NSP_On_site_Supervisor__c, On_Site_View_Payroll_Paperwork__c,
+                        NSP_Primary_Payroll_Contact__c, Primary_View_Payroll_Paperwork__c,
+                        NSP_HR_Contact__c, View_Payroll_Paperwork__c, NSP_Sub_Client_Name__c, Account__c
+                    FROM NSP_Payroll__c
+                    WHERE Id IN :setPayrollsId
+                ];
+                if(lstOfPayrolls != null){
+                    NSP_PayrollTriggerHelper payrollTriggerHelper = new NSP_PayrollTriggerHelper();
+                    payrollTriggerHelper.fieldUpdatesAfterInsertUpdate(lstOfPayrolls , null , null , false);
+                }
+            }
+        }
+    }
     
 }

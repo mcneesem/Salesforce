@@ -31,7 +31,8 @@ public class NSP_AdditionalPayrollContactHandler implements NSP_ITriggerHandler{
    *                
    */
     public void afterInsert(List<sObject> newList , Map<Id, sObject> newMap) {
-        
+        NSP_AdditionalPayrollContactHelper additionalPayrollContact  = new NSP_AdditionalPayrollContactHelper();
+        additionalPayrollContact.updateRelatedPayrollDataSheetRecords((List<Additional_Payroll_Contact__c>) newList,null);
     }
     
   /**
@@ -55,7 +56,10 @@ public class NSP_AdditionalPayrollContactHandler implements NSP_ITriggerHandler{
    */
 
     public void afterUpdate(Map<Id, sObject> newMap,Map<Id, sObject> oldMap) {
-        
+        NSP_AdditionalPayrollContactHelper additionalPayrollContact  = new NSP_AdditionalPayrollContactHelper();
+        if(newMap != null){
+        	additionalPayrollContact.updateRelatedPayrollDataSheetRecords((List<Additional_Payroll_Contact__c>) newMap.values(),(Map<Id,Additional_Payroll_Contact__c>) oldMap);
+        }
     }
 
     /**
@@ -67,7 +71,8 @@ public class NSP_AdditionalPayrollContactHandler implements NSP_ITriggerHandler{
    */
 
   public void afterDelete(List<sObject> oldList,Map<Id, sObject> oldMap) {
-        
+      NSP_AdditionalPayrollContactHelper additionalPayrollContact  = new NSP_AdditionalPayrollContactHelper();
+      additionalPayrollContact.updateRelatedPayrollDataSheetRecords((List<Additional_Payroll_Contact__c>) oldList, null);
   }
 
    /**
