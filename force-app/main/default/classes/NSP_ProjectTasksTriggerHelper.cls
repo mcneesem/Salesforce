@@ -278,7 +278,7 @@ public class NSP_ProjectTasksTriggerHelper {
             );
         }
     }
-
+        
     /**
     * @MethodName: updateDocusignAsset
     * @Description: Populate related Active asset for docusign use
@@ -291,6 +291,23 @@ public class NSP_ProjectTasksTriggerHelper {
         List<Asset> assetList = new List<Asset>();
         List<Account> acctList = new List<Account>();
         List<String> ActiveAssetList = new List<String>();
+        List<String> excludeStatusValues = new List<String>();
+        List<String> excluderecordTypeWithStatusValues = new List<String>();
+        List<String> excluderecordTypeValues = new List<String>();
+        
+        AssetTriggerSettings__c settings = AssetTriggerSettings__c.getInstance( UserInfo.getUserId() );
+        if ( settings != null ) {
+            if ( String.isNotBlank( settings.Exclude_Status__c ) ) {
+                excludeStatusValues = settings.Exclude_Status__c.split('\\R');
+            }
+            if ( String.isNotBlank( settings.Exclude_Record_Types_WRT_Status__c ) ) {
+                excluderecordTypeWithStatusValues = settings.Exclude_Record_Types_WRT_Status__c.split('\\R');
+            }
+            if(String.isNotBlank(settings.Exclude_Record_Types__c))
+            {
+                excluderecordTypeValues = (settings.Exclude_Record_Types__c.split('\\R'));
+            }
+        }
         
         try {
             assetList = [
@@ -298,12 +315,12 @@ public class NSP_ProjectTasksTriggerHelper {
                 FROM Asset
                 WHERE (
                     AccountId IN:accountList
-                    AND RecordTypeId != :NSP_ProjectTasksTriggerHelper.WOAssetRecordTypeId
-                    AND RecordTypeId != :CPQAssetRecordTypeId
-                    AND Status != :TERMINATED
-                    AND Status != :BACKOUT
-                    AND Status != :RETURNED
-                    AND Status != :INACTIVE
+                    AND (NOT(
+                        (RecordType.Name =: excluderecordTypeWithStatusValues 
+                         AND Status =: excludeStatusValues) 
+                        OR (RecordType.Name =: excluderecordTypeValues))
+                         
+                        )
                 )
             ];
             for (Asset eachAsset : assetList) {
@@ -1298,7 +1315,7 @@ public class NSP_ProjectTasksTriggerHelper {
         if(!projectTaskIdSet.isEmpty()){
             NSP_ProjectTaskTriggerEmailNotification.emailNotifyforFEIN(projectTaskIdSet,mapofProjecttasks);
         }
-        if (accountIdList.size() > 0){
+        if (ProjectTaskTriggerSettings__c.getInstance(UserInfo.getUserId()).IsUpdateDocusignAsset__c && accountIdList.size() > 0){
             updateDocusignAsset(accountIdList);
         }
         if(!fundingprojectTaskIdSet.isEmpty()){

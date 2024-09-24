@@ -19,6 +19,17 @@ public class NSP_AssetTriggerHelperTest {
     
     @testSetup
     static void testData() {
+        // Custtom settings related to Asset
+        AssetTriggerSettings__c assetSettings =  AssetTriggerSettings__c.getOrgDefaults();
+        assetSettings.Exclude_Record_Types__c  = ('WOCPQ'+'\n'+
+                                                  'AssetHardware'+'\n'+
+                                                  'Asset');
+        assetSettings.Exclude_Status__c = ('Backout'+'\n'+
+                                           'Terminated'+'\n'+
+                                           'Returned'+'\n'+
+                                           'Inactive');
+        assetSettings.Exclude_Record_Types_WRT_Status__c = 'Certify';
+        upsert assetSettings;
         
         Profile profile = [SELECT Id FROM Profile WHERE Name =: NSP_ServiceConstants.PEOSERVICE];
         List<Account> accList = new List<Account>();
