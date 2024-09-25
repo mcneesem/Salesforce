@@ -278,7 +278,7 @@ public class NSP_ProjectTasksTriggerHelper {
             );
         }
     }
-        
+
     /**
     * @MethodName: updateDocusignAsset
     * @Description: Populate related Active asset for docusign use
@@ -286,43 +286,40 @@ public class NSP_ProjectTasksTriggerHelper {
     * @return void                          
     */    
     public static void updateDocusignAsset(List<ID> accountList) {
-        Map<Id, Set<String>> accountToAssetRecordtypeMap = new Map<Id, Set<String>>();
-        Map<Id, RecordTypeInfo> recTypeMap = Asset.sObjectType.getDescribe().getRecordTypeInfosById();
-        List<Asset> assetList = new List<Asset>();
-        List<Account> acctList = new List<Account>();
-        List<String> ActiveAssetList = new List<String>();
         List<String> excludeStatusValues = new List<String>();
         List<String> excluderecordTypeWithStatusValues = new List<String>();
         List<String> excluderecordTypeValues = new List<String>();
-        
         AssetTriggerSettings__c settings = AssetTriggerSettings__c.getInstance( UserInfo.getUserId() );
         if ( settings != null ) {
             if ( String.isNotBlank( settings.Exclude_Status__c ) ) {
-                excludeStatusValues = settings.Exclude_Status__c.split('\\R');
+                excludeStatusValues = settings.Exclude_Status__c.split( '\\R' );
             }
             if ( String.isNotBlank( settings.Exclude_Record_Types_WRT_Status__c ) ) {
-                excluderecordTypeWithStatusValues = settings.Exclude_Record_Types_WRT_Status__c.split('\\R');
+                excluderecordTypeWithStatusValues = settings.Exclude_Record_Types_WRT_Status__c.split( '\\R' );
             }
-            if(String.isNotBlank(settings.Exclude_Record_Types__c))
-            {
-                excluderecordTypeValues = (settings.Exclude_Record_Types__c.split('\\R'));
+            if ( String.isNotBlank( settings.Exclude_Record_Types__c ) ) {
+                excluderecordTypeValues = settings.Exclude_Record_Types__c.split( '\\R' );
             }
         }
-        
         try {
-            assetList = [
+            List<Asset> assetList = [
                 SELECT Id , RecordTypeId , RecordType.Name , AccountId , Status
                 FROM Asset
                 WHERE (
-                    AccountId IN:accountList
-                    AND (NOT(
-                        (RecordType.Name =: excluderecordTypeWithStatusValues 
-                         AND Status =: excludeStatusValues) 
-                        OR (RecordType.Name =: excluderecordTypeValues))
-                         
+                    ( AccountId IN :accountList )
+                    AND (
+                        NOT (
+                            (
+                                ( RecordType.Name = :excluderecordTypeWithStatusValues )
+                                AND ( Status = :excludeStatusValues )
+                            )
+                            OR ( RecordType.Name = :excluderecordTypeValues )
                         )
+                    )
                 )
             ];
+            Map<Id,Set<String>> accountToAssetRecordtypeMap = new Map<Id,Set<String>>();
+            Map<Id,RecordTypeInfo> recTypeMap = Asset.sObjectType.getDescribe().getRecordTypeInfosById();
             for (Asset eachAsset : assetList) {
                 if (eachAsset.AccountId != null) { 
                     if (!accountToAssetRecordtypeMap.containsKey(eachAsset.AccountId)) {
@@ -336,7 +333,8 @@ public class NSP_ProjectTasksTriggerHelper {
                     accountToAssetRecordtypeMap.get(eachAsset.AccountId).addAll(recordTypeName.split(','));
                 }
             }
-            
+            List<Account> acctList = new List<Account>();
+            List<String> activeAssetList = new List<String>();
             for (Account eachAccount : [SELECT Id, Docusign_Assets__c FROM Account WHERE ID IN :accountList]) {
                 //Clearing old value for Docusign_Assets__c
                 eachAccount.Docusign_Assets__c = Null;
@@ -344,10 +342,10 @@ public class NSP_ProjectTasksTriggerHelper {
                     //Adding value into Set for deduplication
                     Set<String> existingassetsrecordtype = accountToAssetRecordtypeMap.get(eachAccount.Id);
                     //Adding value from set to List
-                    ActiveAssetList.addAll(existingassetsrecordtype);
+                    activeAssetList.addAll(existingassetsrecordtype);
                     //Updating the Docusign_Assets__c
-                    if (ActiveAssetList.size() > 0){
-                        eachAccount.Docusign_Assets__c = String.join(ActiveAssetList, ', ');
+                    if (activeAssetList.size() > 0){
+                        eachAccount.Docusign_Assets__c = String.join(activeAssetList, ', ');
                     }
                 }
                 acctList.add(eachAccount);
