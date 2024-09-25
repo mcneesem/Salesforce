@@ -87,7 +87,7 @@ public class NSP_PayrollTriggerHelper {
         //If there is no contact(Primary, Backup, HR or Onsite) available
         //Or if it is called from Additional Payroll Contact Trigger.
         if(contactidsSet.isEmpty() || !skipPayrollUpdate){
-        	updatePDSPayrollReviewersField(newPayrollList,skipPayrollUpdate);   
+            updatePDSPayrollReviewersField(newPayrollList,skipPayrollUpdate);   
         }
         if(isPayrollSpecialist){
             updatePayrollSpecialistField(newPayrollList);
@@ -487,7 +487,7 @@ public class NSP_PayrollTriggerHelper {
                                         payroll.NSP_Backup_Payroll_Contact_SCC__c = subClientCon.id;
                                         isBackupFound = true;
                                         if(!isPayrollReviewer){
-                                        	isPayrollReviewer = true;   
+                                            isPayrollReviewer = true;   
                                         }
                                     }
                                 }else {
@@ -500,7 +500,7 @@ public class NSP_PayrollTriggerHelper {
                                         payroll.NSP_Primary_Payroll_Contact__c = subClientCon.NSP_Contact__c;
                                         isPrimaryFound = true;
                                         if(!isPayrollReviewer){
-                                        	isPayrollReviewer = true;   
+                                            isPayrollReviewer = true;   
                                         }
                                     }
                                 }else{
@@ -513,7 +513,7 @@ public class NSP_PayrollTriggerHelper {
                                         payroll.NSP_HR_Contact__c = subClientCon.NSP_Contact__c;
                                         isHrConFound = true;
                                         if(!isPayrollReviewer){
-                                        	isPayrollReviewer = true;   
+                                            isPayrollReviewer = true;   
                                         }
                                     }
                                 }else{
@@ -526,7 +526,7 @@ public class NSP_PayrollTriggerHelper {
                                         payroll.NSP_On_site_Supervisor__c = subClientCon.NSP_Contact__c;
                                         isSupervisorFound = true;
                                         if(!isPayrollReviewer){
-                                        	isPayrollReviewer = true;   
+                                            isPayrollReviewer = true;   
                                         }
                                     }
                                 }else{
@@ -538,7 +538,7 @@ public class NSP_PayrollTriggerHelper {
                 }
                 //If any contact out of Primary, Backup, HR and Onsite contact available.
                 if(isPayrollReviewer){
-                	updatePDSPayrollReviewersField(newList,isPayrollReviewer);
+                    updatePDSPayrollReviewersField(newList,isPayrollReviewer);
                 }
             }
         }
@@ -652,10 +652,10 @@ public class NSP_PayrollTriggerHelper {
                         mapOfAPCReviewers.put(apContact.Payroll__r.Id, apContact.Contact__r.Name);
                     }
                 }
-            }     
-			for(NSP_Payroll__c payroll : newPayrollList){
-				String payrollReviewers='';
-				if ( !mapOfContacts.isEmpty() || !mapOfAPCReviewers.isEmpty() ) {
+            }
+            for(NSP_Payroll__c payroll : newPayrollList){
+                String payrollReviewers='';
+                if ( !mapOfContacts.isEmpty() || !mapOfAPCReviewers.isEmpty() ) {
                     String APCReviewers = '';
                     if ( !mapOfAPCReviewers.isEmpty() && ( mapOfAPCReviewers.get(payroll.Id) != null ) ) {
                         APCReviewers = mapOfAPCReviewers.get(payroll.Id);
@@ -716,25 +716,25 @@ public class NSP_PayrollTriggerHelper {
                             }
                         }
                     }
-				}
-				payroll.Payroll_Reviewers__c = payrollReviewers;
-				if(!skipPayrollUpdate){
-					lstOfUpdatePayrolls.add(payroll);
-				}
-			}
-			if(lstOfUpdatePayrolls != null && !skipPayrollUpdate){
-				try {
-					update lstOfUpdatePayrolls;
-				} catch(DmlException e) {
-					NSP_ErrorLogHandler.logException(
-						NSP_PayrollTriggerHelper.class.getName() ,
-						'updatePDSPayrollReviewersField' ,
-						e
-					);
-				}
-			}
-            
+                }
+                payroll.Payroll_Reviewers__c = payrollReviewers;
+                if(!skipPayrollUpdate){
+                    lstOfUpdatePayrolls.add(payroll);
+                }
+            }
+            if ( !lstOfUpdatePayrolls.isEmpty() && !skipPayrollUpdate ) {
+                try {
+                    update lstOfUpdatePayrolls;
+                } catch ( Exception e ) {
+                    NSP_ErrorLogHandler.logException(
+                        NSP_PayrollTriggerHelper.class.getName() ,
+                        'updatePDSPayrollReviewersField' ,
+                        e
+                    );
+                }
+            }
         }
     }
 
 }
+//
