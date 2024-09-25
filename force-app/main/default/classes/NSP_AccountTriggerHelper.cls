@@ -74,10 +74,10 @@ if(accountObj.RecordTypeId==PARTNER_RECORDTYPE_ID
             if (acctListToStampDocusignTemplateId.size() > 0) {
                 setDummyUsers(acctListToStampDocusignTemplateId);
             }
+            setSalesOfficeDetails(newList, null);
         } catch ( Exception e ) {
             NSP_AccountTriggerHelper.handleException( e , 'beforeInsertDirector' );
         }
-        setSalesOfficeDetails(newList, null);
     }
 
     /**
@@ -183,10 +183,10 @@ if(accountObj.RecordTypeId==PARTNER_RECORDTYPE_ID
             if (acctListToStampDocusignTemplateId.size() > 0) {
                 setDummyUsers(acctListToStampDocusignTemplateId);
             }
+            setSalesOfficeDetails(accountNewMap.values(), accountOldMap);
         } catch ( Exception e ) {
             NSP_AccountTriggerHelper.handleException( e , 'beforeUpdateDirector' );
         }
-        setSalesOfficeDetails(accountNewMap.values(), accountOldMap);
     }
 
     /**
@@ -616,9 +616,9 @@ WHERE (userRole.Name = 'Loyalty Advisor' OR userRole.Name = 'Channel Program Man
         set < Id > ownerIdSet = new set < Id > ();
         set < Id > accountIdSet = new set < Id > ();
         set < String > salesOfficeSet = new set < String > ();
-        Map<Id, Account> newSalesOffice = new Map<Id, Account>();
-        Map<Id, Id> oldAccountUserId = new Map<Id, Id>();
-        
+        Map<Id, String> newSalesOffice = new Map<Id, String>();
+        Map<Id, String> oldAccountUserId = new Map<Id, Id>();
+
         for(Account newAccount: newList){
             Account oldAccount = accountOldMap != null ? accountOldMap.get(newAccount.Id) : null;
             if((Trigger.isInsert || newAccount.OwnerId != oldAccount.OwnerId) && newAccount.OwnerId != null){
@@ -651,7 +651,7 @@ WHERE (userRole.Name = 'Loyalty Advisor' OR userRole.Name = 'Channel Program Man
                     newAccount.NSP_Sales_Office__c = eachUser.NSP_Sales_Office__c; // sales office
                     //  301313 - Opportunity Sales Office not Update on Reassign Account
                     if(Trigger.isUpdate){
-                        newSalesOffice.put(newAccount.Id, newAccount);
+                        newSalesOffice.put(newAccount.Id, newAccount.NSP_Sales_Office__c);
                         oldAccountUserId.put(newAccount.Id, oldAccount.OwnerId);
                     }
                 }
@@ -697,20 +697,54 @@ WHERE (userRole.Name = 'Loyalty Advisor' OR userRole.Name = 'Channel Program Man
      * -------------------------------------------------------------------------------------
      *  09/10/2024          ADO-301313 - Opportunity Sales Office not Update on Reassign Account
      */
-    private static void updateRelatedOpportunity(Map<Id, Account> newSalesOffice, Map<Id, Id> oldAccountUserId){
+    private static void updateRelatedOpportunity(Map<Id, String> newSalesOffice, Map<Id, Id> oldAccountUserId){
 
-        List<Opportunity> opps = [SELECT id, OwnerId,  AccountId, NSP_Sales_Office__c FROM Opportunity WHERE  
-        (StageName != 'Closed Lost' AND  StageName != 'Closed Won' AND StageName != 'Closing' ) AND AccountId IN :newSalesOffice.values()];
+        try{
 
-        for(Opportunity opp : opps){
-            if(opp.OwnerId == oldAccountUserId.get(opp.AccountId)){
-              opp.NSP_Sales_Office__c = newSalesOffice.get(opp.AccountId).NSP_Sales_Office__c;
+            Map<Id, String> oppsChangeOffice = new Map<Id, String>(); 
+            List<Opportunity> opps = [SELECT id, OwnerId,  AccountId, NSP_Sales_Office__c FROM Opportunity WHERE  
+            (StageName != 'Closed Lost' AND  StageName != 'Closed Won' AND StageName != 'Closing' ) AND AccountId IN :newSalesOffice.keySet()];
+    
+            for(Opportunity opp : opps){
+                //  If Opportunity owner is the same as Account owner then update the Sales Office
+                if(opp.OwnerId == oldAccountUserId.get(opp.AccountId)){
+                    oppsChangeOffice.put(opp.Id, newSalesOffice.get(opp.AccountId));
+                }
             }
+    
+            //  Update Sales Office
+            if(oppsChangeOffice.size() > 0){
+                updateRelatedOpportunityAsync(JSON.serialize(oppsChangeOffice));
+            }
+    
         }
+        catch(Exception e){
+            NSP_AccountTriggerHelper.handleException( e , 'updateRelatedOpportunity' );
+        }
+    }
 
-        //  Update Sales Office
-        if(opps.size() > 0){
-            update opps;
+    @future
+    private static void updateRelatedOpportunityAsync(String soppsChangeOffice){
+
+        try{
+
+            List<Opportunity> oppsToUpdate = new List<Opportunity>();
+            Map<Id, String> oppsChangeOffice = (Map<Id, String>)JSON.deserialize(soppsChangeOffice, Map<Id, String>.class);
+
+            List<Opportunity> opps = [SELECT id, NSP_Sales_Office__c FROM Opportunity WHERE Id IN :oppsChangeOffice.keySet()];
+
+            for(Opportunity opp : opps){
+                opp.NSP_Sales_Office__c = oppsChangeOffice.get(opp.Id);
+                oppsToUpdate.add(opp);
+            }
+
+            if(oppsToUpdate.size() > 0){
+                update oppsToUpdate;
+            }
+
+        }
+        catch(Exception e){
+            NSP_AccountTriggerHelper.handleException( e , 'updateRelatedOpportunityAsync' );
         }
     }
     
