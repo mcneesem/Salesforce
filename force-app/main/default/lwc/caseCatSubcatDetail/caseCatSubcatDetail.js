@@ -327,15 +327,18 @@ export default class CaseCatSubcatDetail extends LightningElement {
         if(this.selectedCategory!==undefined && this.selectedSubCategory!==undefined && this.renderCallOnce==false){
             this.renderCallOnce = true;
             this.handleSubCategoryFiltered();
-            if(this.selectedDetail!==undefined && this.selectedDetail!==null)
-            {
-            this.showDetail = true;
-            this.detailOptions = this.createOptions(this.categoryWrapper.mCatSubToDetails[this.selectedCategory + '-' + this.selectedSubCategory]);
-            console.log('detailOptions '+JSON.stringify(this.detailOptions));
+            const localKey = this.selectedCategory + '-' + this.selectedSubCategory;
+            if(this.selectedDetail!==undefined && this.selectedDetail!==null){
+                this.showDetail = true;
+                this.detailOptions = this.createOptions(
+                    this.categoryWrapper.mCatSubToDetails[localKey]
+                );
             }
             if(this.selectedVersion!==undefined && this.selectedVersion!==null){
-            this.showVersion = true;
-            this.versionOptions = this.createOptions(this.categoryWrapper.mCatSubDetailToVersions[this.selectedCategory + '-' + this.selectedSubCategory + '-' + this.selectedDetail]);
+                this.showVersion = true;
+                this.versionOptions = this.createOptions(
+                    this.categoryWrapper.mCatSubDetailToVersions[localKey + '-' + this.selectedDetail]
+                );
             }
         }
     }
