@@ -1,17 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
-        <name>Send_Email_to_email_sender</name>
-        <label>Send Email to email sender</label>
-        <locationX>50</locationX>
-        <locationY>539</locationY>
+        <name>Send_Notification</name>
+        <label>Send Notification</label>
+        <locationX>182</locationX>
+        <locationY>900</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
-        <connector>
-            <targetReference>Update_Case</targetReference>
-        </connector>
         <faultConnector>
-            <targetReference>log_fault_flow</targetReference>
+            <targetReference>Set_Fault_Element_Send_Notification</targetReference>
         </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
@@ -29,7 +26,7 @@
         <inputParameters>
             <name>senderAddress</name>
             <value>
-                <elementReference>senderEmail</elementReference>
+                <stringValue>wxbusinessteam@insperity.com</stringValue>
             </value>
         </inputParameters>
         <inputParameters>
@@ -51,6 +48,12 @@
             </value>
         </inputParameters>
         <inputParameters>
+            <name>useLineBreaks</name>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
             <name>relatedRecordId</name>
             <value>
                 <elementReference>$Record.Id</elementReference>
@@ -62,26 +65,112 @@
                 <booleanValue>true</booleanValue>
             </value>
         </inputParameters>
+        <nameSegment>emailSimple</nameSegment>
+        <versionSegment>1</versionSegment>
     </actionCalls>
     <apiVersion>61.0</apiVersion>
-    <constants>
-        <name>senderEmail</name>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>wxbusinessteam@insperity.com</stringValue>
-        </value>
-    </constants>
+    <assignments>
+        <name>Assign_Document_Id</name>
+        <label>Assign Document Id</label>
+        <locationX>50</locationX>
+        <locationY>708</locationY>
+        <assignmentItems>
+            <assignToReference>documentId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Document_Record.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Send_Notification</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Get_Document_Record</name>
+        <label>Set Fault Element: Get_Document_Record</label>
+        <locationX>754</locationX>
+        <locationY>600</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Document_Record</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Handle_Fault</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Get_WX_Business_Queue</name>
+        <label>Set Fault Element: Get_WX_Business_Queue</label>
+        <locationX>1282</locationX>
+        <locationY>384</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_WX_Business_Queue</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Handle_Fault</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Send_Notification</name>
+        <label>Set Fault Element: Send_Notification</label>
+        <locationX>490</locationX>
+        <locationY>1008</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Send_Notification</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Handle_Fault</targetReference>
+        </connector>
+    </assignments>
     <decisions>
-        <name>Check_for_Queue</name>
-        <label>Check for Queue</label>
-        <locationX>314</locationX>
-        <locationY>431</locationY>
+        <name>Check_Document</name>
+        <label>Check Document</label>
+        <locationX>182</locationX>
+        <locationY>600</locationY>
+        <defaultConnector>
+            <targetReference>Send_Notification</targetReference>
+        </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>Queue_not_null</name>
+            <name>Found_Document</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Get_Queue_Id</leftValueReference>
+                <leftValueReference>Get_Document_Record</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_Document_Id</targetReference>
+            </connector>
+            <label>Found Document</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Queue</name>
+        <label>Check Queue</label>
+        <locationX>600</locationX>
+        <locationY>384</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Found_Match</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_WX_Business_Queue</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -91,16 +180,21 @@
                 <leftValueReference>$Record.OwnerId</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <elementReference>Get_Queue_Id.Id</elementReference>
+                    <elementReference>Get_WX_Business_Queue.Id</elementReference>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Send_Email_to_email_sender</targetReference>
+                <targetReference>Get_Document_Record</targetReference>
             </connector>
-            <label>Queue not null</label>
+            <label>Found Match</label>
         </rules>
     </decisions>
     <environments>Default</environments>
+    <formulas>
+        <name>emailSignatureLogo</name>
+        <dataType>String</dataType>
+        <expression>LEFT({!$Api.Partner_Server_URL_260}, FIND( &apos;/services&apos;, {!$Api.Partner_Server_URL_260}))&amp;&apos;servlet/servlet.ImageServer?id=&apos;&amp;{!documentId}&amp;&apos;&amp;oid=&apos;&amp;{!$Organization.Id}</expression>
+    </formulas>
     <formulas>
         <name>emailSubjectFormula</name>
         <dataType>String</dataType>
@@ -128,14 +222,43 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <recordLookups>
-        <name>Get_Queue_Id</name>
-        <label>Get Queue Id</label>
-        <locationX>314</locationX>
-        <locationY>323</locationY>
+        <name>Get_Document_Record</name>
+        <label>Get Document Record</label>
+        <locationX>182</locationX>
+        <locationY>492</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Check_for_Queue</targetReference>
+            <targetReference>Check_Document</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_Get_Document_Record</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>InsperityEmailSignatureLogo</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Document</object>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Name</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_WX_Business_Queue</name>
+        <label>Get WX Business Queue</label>
+        <locationX>600</locationX>
+        <locationY>276</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_Queue</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_Get_WX_Business_Queue</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>DeveloperName</field>
@@ -157,25 +280,9 @@
         <queriedFields>Name</queriedFields>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
-    <recordUpdates>
-        <name>Update_Case</name>
-        <label>Update Case</label>
-        <locationX>50</locationX>
-        <locationY>647</locationY>
-        <inputAssignments>
-            <field>Description</field>
-            <value>
-                <stringValue>Email Sent</stringValue>
-            </value>
-        </inputAssignments>
-        <inputReference>$Record</inputReference>
-    </recordUpdates>
     <start>
-        <locationX>188</locationX>
+        <locationX>67</locationX>
         <locationY>0</locationY>
-        <connector>
-            <targetReference>Get_Queue_Id</targetReference>
-        </connector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>OwnerId</field>
@@ -200,19 +307,31 @@
         </filters>
         <object>Case</object>
         <recordTriggerType>Create</recordTriggerType>
+        <scheduledPaths>
+            <connector>
+                <targetReference>Get_WX_Business_Queue</targetReference>
+            </connector>
+            <pathType>AsyncAfterCommit</pathType>
+        </scheduledPaths>
         <triggerType>RecordAfterSave</triggerType>
     </start>
     <status>Draft</status>
     <subflows>
-        <name>log_fault_flow</name>
-        <label>log fault flow</label>
-        <locationX>314</locationX>
-        <locationY>647</locationY>
+        <name>Handle_Fault</name>
+        <label>Handle Fault</label>
+        <locationX>490</locationX>
+        <locationY>1116</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
+        <inputAssignments>
+            <name>faultElement</name>
+            <value>
+                <stringValue>Send_Email_to_email_sender</stringValue>
+            </value>
+        </inputAssignments>
         <inputAssignments>
             <name>faultFlow</name>
             <value>
-                <stringValue>WX Business Team Auto Response Email</stringValue>
+                <stringValue>WX_Business_Team_Auto_Response_Email</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -224,14 +343,27 @@
     </subflows>
     <textTemplates>
         <name>emailBody</name>
-        <isViewedAsPlainText>false</isViewedAsPlainText>
-        <text>&lt;p&gt;Thank you for contacting the WX Business Team. Your email has been received and a case has been created for you and the case number is {!$Record.CaseNumber}. A team member will respond to you shortly.&lt;/p&gt;&lt;p&gt;Thank you for allowing Insperity to serve your business!&lt;/p&gt;&lt;p&gt;WX Business Team&lt;/p&gt;</text>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>&lt;p&gt;Thank you for contacting the WX Business Team. Your email has been received and a case has been created for you and the case number is {!$Record.CaseNumber}. A team member will respond to you shortly.&lt;/p&gt;&lt;p&gt;Thank you for allowing Insperity to serve your business!&lt;/p&gt;&lt;p&gt;WX Business Team&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;https://help.insperity.com/hcm/&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot;&gt;WX Help Center Website&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;img src=&quot;{!emailSignatureLogo}&quot;&gt;&lt;/p&gt;</text>
     </textTemplates>
     <variables>
-        <name>emailSubject</name>
+        <name>documentId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
+        <value>
+            <stringValue></stringValue>
+        </value>
+    </variables>
+    <variables>
+        <name>faultElement</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue></stringValue>
+        </value>
     </variables>
 </Flow>
