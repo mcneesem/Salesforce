@@ -56,7 +56,7 @@ private class NSP_SubPlanChangeHistoryBatchTest {
     * MethodName: shouldTestUpdateOfSubPlanFieldsFromSubPlanChangeHistory
     * Description : Unit test for updating NSP_Auto_Deferral__c, NSP_Status__c, NSP_Plan_Effective_Date__c,NSP_Plan_Type__c ,NSP_Original_PE_Date__c FROM SubPlanChangeHistory On Insert
     * ********************************************************************************************/
-    private static testmethod void shouldTestUpdateOfSubPlanFieldsFromSubPlanChangeHistory(){
+    @isTest private static void shouldTestUpdateOfSubPlanFieldsFromSubPlanChangeHistory(){
         Test.startTest();     
         
         NSP_SubPlanChangeHistoryBatch subPlanChangeHistoryBatch = new NSP_SubPlanChangeHistoryBatch();
