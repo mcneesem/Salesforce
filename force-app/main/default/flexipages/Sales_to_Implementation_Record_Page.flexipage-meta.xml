@@ -214,14 +214,14 @@
                 <identifier>RecordNSP_Contact_Notes_cField</identifier>
             </fieldInstance>
         </itemInstances>
-		<itemInstances>
+        <itemInstances>
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Booked_Date__c</fieldItem>
-				<identifier>RecordBooked_Date__cField</identifier>
+                <identifier>RecordBooked_Date__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-a6a65078-81e8-43a7-a928-a9dc5b499f39</name>
