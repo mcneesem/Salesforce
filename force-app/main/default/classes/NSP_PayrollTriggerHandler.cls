@@ -1,5 +1,7 @@
 public class NSP_PayrollTriggerHandler implements NSP_ITriggerHandler {
-	//Use this variable to disable this trigger from transaction
+    // test w/ NSP_PayrollTriggerHelperTest (??%)
+
+    //Use this variable to disable this trigger from transaction
     public static Boolean TriggerDisabled = false;
     /**
     * Represents whether the trigger is disabled or not
@@ -17,8 +19,8 @@ public class NSP_PayrollTriggerHandler implements NSP_ITriggerHandler {
     *                
     */
     public void beforeInsert(List<sObject> newList) {
-    	NSP_PayrollTriggerHelper helperObj = new NSP_PayrollTriggerHelper();
-        helperObj.fieldUpdatesAfterInsertUpdate((List<NSP_Payroll__c>) newList, null, null);  	   
+        NSP_PayrollTriggerHelper helperObj = new NSP_PayrollTriggerHelper();
+        helperObj.fieldUpdatesAfterInsertUpdate((List<NSP_Payroll__c>) newList, null, null , true);
         helperObj.checkForGovernmentContractor((List<NSP_Payroll__c>) newList);  // Added as part of STY-03277  
         helperObj.updatePDSContactRelatedFields((List<NSP_Payroll__c>) newList, null);
         NSP_PayrollTriggerHelper.updatePDSRelatedContactFields((List<NSP_Payroll__c>) newList);
@@ -44,9 +46,19 @@ public class NSP_PayrollTriggerHandler implements NSP_ITriggerHandler {
     *                
     */
     public void beforeUpdate(Map<Id, sObject> newMap,Map<Id, sObject> oldMap) {
-    	NSP_PayrollTriggerHelper helperObj = new NSP_PayrollTriggerHelper();
-        helperObj.fieldUpdatesAfterInsertUpdate(null, (Map<Id, NSP_Payroll__c>) newMap, (Map<Id, NSP_Payroll__c>) oldMap);
-        helperObj.updatePDSContactRelatedFields((List<NSP_Payroll__c>) newMap.values(), (Map<Id, NSP_Payroll__c>) oldMap);
+        NSP_PayrollTriggerHelper helperObj = new NSP_PayrollTriggerHelper();
+        helperObj.fieldUpdatesAfterInsertUpdate(
+            null ,
+            (Map<Id,NSP_Payroll__c>)newMap ,
+            (Map<Id,NSP_Payroll__c>)oldMap ,
+            true
+        );
+        if ( newMap != null ) {
+            helperObj.updatePDSContactRelatedFields(
+                (List<NSP_Payroll__c>)newMap.values() ,
+                (Map<Id,NSP_Payroll__c>)oldMap
+            );
+        }
     }    
     /**
     * Handles after update for Payroll Data Sheet
