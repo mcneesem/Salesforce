@@ -1,7 +1,3 @@
-/**
-* Represents the case trigger helper which handles all the logic.
-*
-*/
 public class NSP_CaseTriggerHelper {
     // test w/ NSP_CaseTriggerHelperTest (78%)
 
@@ -1241,7 +1237,10 @@ createdDate : 6/13/2023
                 }
             }
         } catch ( Exception e ) {
-            NSP_CustomException.logException( e );
+            NSP_CaseTriggerHelper.handleException(
+                e ,
+                'updateContactSupportRole'
+            );
         }
     }
 
@@ -1884,34 +1883,39 @@ Story:        STY-01785
             for(Case newCase : newMap.values()) {
                 NSP_Case_History__c caseHistory = new NSP_Case_History__c();
                 caseHistory.NSP_Case__c = newCase.Id;
-                Case caseRec = caseMap!= null && caseMap.get(newCase.Id) != null ? caseMap.get(newCase.Id) : null;
-                String name;
-                String queueName;
-                if(String.valueOf(newCase.OwnerId).startsWith(STARTSWITHGROUP)){
-                    Group grp = caseRec.Owner;
-                    name = grp.Name;
-                    queueName = grp.DeveloperName;
-                    if(queueName == NSP_ReportingConstants.Time_H_W_B_P_C_Queue){
-                        caseHistory.Time_H_W_B_P_C_Queue__c=0;
-                    }
-                    else if(queueName == NSP_ReportingConstants.Time_H_W_Communications_Queue){
-                        caseHistory.Time_H_W_Communications_Queue_Spent__c=0;
-                    }
-                    else if(queueName == NSP_ReportingConstants.Time_Health_Welfare_Products_Queue){
-                        caseHistory.Time_Health_Welfare_Products_Queue__c=0;
-                    }
-                    else{
-                        caseHistory.NSP_Time_in_Queue__c = 0;
-                    }
-                }else{
-                    User userRec = caseRec.Owner;
-                    name = userRec.name;
-                    caseHistory.NSP_Case_Current_Owners_Manager_Text__c = userRec.Manager != null && userRec.Manager.Name != null? userRec.Manager.name:'';
-                    caseHistory.NSP_Case_Current_Service_Region_Text__c = userRec.nsp_service_region__c != null ? userRec.nsp_service_region__c :'';
-                    caseHistory.NSP_Case_Current_Job_Title__c = userRec.Title != null ? userRec.Title :'';
+                String ownerName = null;
+                Case caseRec = null;
+                if ( ( caseMap != null )
+                    && caseMap.containsKey( newCase.Id )
+                    && ( caseMap.get( newCase.Id ) != null )
+                    )
+                {
+                    caseRec = caseMap.get(newCase.Id);
                 }
-                caseHistory.NSP_Case_Current_Owner_Text__c = name;
-                caseHistory.NSP_Case_Previous_Owner_Text__c = name;
+                if ( caseRec != null ) {
+                    if ( newCase.OwnerId.getSObjectType() == Group.getSObjectType() ) {
+                        Group grp = caseRec.Owner;
+                        ownerName = grp.Name;
+                        String queueName = grp.DeveloperName;
+                        if ( queueName == NSP_ReportingConstants.Time_H_W_B_P_C_Queue ) {
+                            caseHistory.Time_H_W_B_P_C_Queue__c = 0;
+                        } else if ( queueName == NSP_ReportingConstants.Time_H_W_Communications_Queue ) {
+                            caseHistory.Time_H_W_Communications_Queue_Spent__c = 0;
+                        } else if ( queueName == NSP_ReportingConstants.Time_Health_Welfare_Products_Queue ) {
+                            caseHistory.Time_Health_Welfare_Products_Queue__c = 0;
+                        } else {
+                            caseHistory.NSP_Time_in_Queue__c = 0;
+                        }
+                    } else {
+                        User userRec = caseRec.Owner;
+                        ownerName = userRec.name;
+                        caseHistory.NSP_Case_Current_Owners_Manager_Text__c = userRec.Manager != null && userRec.Manager.Name != null? userRec.Manager.name:'';
+                        caseHistory.NSP_Case_Current_Service_Region_Text__c = userRec.nsp_service_region__c != null ? userRec.nsp_service_region__c :'';
+                        caseHistory.NSP_Case_Current_Job_Title__c = userRec.Title != null ? userRec.Title :'';
+                    }
+                }
+                caseHistory.NSP_Case_Current_Owner_Text__c = ownerName;
+                caseHistory.NSP_Case_Previous_Owner_Text__c = ownerName;
                 //caseHistory.NSP_Case_Current_Owner_Text__c = newCase.Status;
                 caseHistory.NSP_Case_Current_status__c = newCase.Status;
                 caseHistory.NSP_Case_Previous_Status__c = newCase.Status;
@@ -1923,10 +1927,10 @@ Story:        STY-01785
                 caseHistory.NSP_Case_Current_Detail__c = newCase.NSP_Detail__c;
                 caseHistory.NSP_Case_Current_Category__c = newCase.NSP_Category__c;
                 caseHistory.NSP_Case_Current_Sub_Category__c = newCase.NSP_SubCategory__c;
-            newCaseHistoryToBeCreatedList.add(caseHistory);
-        }
-        insert newCaseHistoryToBeCreatedList;
-    } else {
+                newCaseHistoryToBeCreatedList.add(caseHistory);
+            }
+            insert newCaseHistoryToBeCreatedList;
+        } else {
         Set<Id> caseIds = new Set<Id>();
         for(Case newCaseRecord : newMap.values()) {
             if(newCaseRecord.OwnerId != oldMap.get(newCaseRecord.Id).OwnerId || newCaseRecord.Status != oldMap.get(newCaseRecord.Id).Status) {
