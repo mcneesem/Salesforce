@@ -873,7 +873,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
             if (existingRec == null || newRec.NSP_Form_Completed__c ||
                 newRec.Have_name_s_of_COBRA_takeovr_employees__c != existingRec.Have_name_s_of_COBRA_takeovr_employees__c) {
                   
-                if (newRec.NSP_COBRA_Takeover_Emp_Details__c != null) {
+                if (String.isNotBlank( newRec.NSP_COBRA_Takeover_Emp_Details__c )) {
                     List<String> employeeNames = newRec.NSP_COBRA_Takeover_Emp_Details__c.split(',');
                     for (String employee : employeeNames) {
                         String[] parts = employee.split('~');
