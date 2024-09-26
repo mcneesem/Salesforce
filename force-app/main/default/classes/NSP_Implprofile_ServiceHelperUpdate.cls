@@ -2125,7 +2125,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
         
     } 
     
-    public void createProjectTaskForCOBRAForm(String cobraFormKey, String formCollectedTemplate, String yesOrNoConstant, Integer order, String automationType) {  
+    private void createProjectTaskForCOBRAForm(String cobraFormKey, String formCollectedTemplate, String yesOrNoConstant, Integer order, String automationType) {  
         List<pse__Project_Task__c> projectTaskList = new List<pse__Project_Task__c>();  
         List<NSP_Implementation_Profile_Automation__c> ipAutomationRecords = new List<NSP_Implementation_Profile_Automation__c>();  
         Map<Id, Id> mapProjectIdIPId = new Map<Id, Id>();  
