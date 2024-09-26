@@ -2166,7 +2166,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
                 if(lstNamesEmployees.size() > 0){  
                     for(String empName : lstNamesEmployees){  
                         List<String> empDetails = empName?.split('~');  
-                        if(empDetails[1] == yesOrNoConstant){
+                        if(empDetails.size() > 1 && empDetails[1] == yesOrNoConstant){
                             pse__Project_Task__c eachProjectTask = createProjectTaskfromIP(proj, NSP_ServiceConstants.COBRA, milestoneKey);  
                             eachProjectTask.NSP_Sub_Category__c = NSP_ServiceConstants.COBRASubcat;  
                             eachProjectTask.Name = formCollectedTemplate.replace('<WSEE Name>', empDetails[0]);  
