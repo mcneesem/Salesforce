@@ -871,7 +871,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
             newRec.Have_name_s_of_COBRA_takeovr_employees__c == NSP_ServiceConstants.YES) {
               
             if (existingRec == null || newRec.NSP_Form_Completed__c ||
-                newRec.Have_name_s_of_COBRA_takeovr_employees__c != existingRec.Have_name_s_of_COBRA_takeovr_employees__c) {  
+                newRec.Have_name_s_of_COBRA_takeovr_employees__c != existingRec.Have_name_s_of_COBRA_takeovr_employees__c) {
                   
                 if (newRec.NSP_COBRA_Takeover_Emp_Details__c != null) {
                     List<String> employeeNames = newRec.NSP_COBRA_Takeover_Emp_Details__c.split(',');
