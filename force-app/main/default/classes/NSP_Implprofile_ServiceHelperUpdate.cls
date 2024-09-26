@@ -877,10 +877,12 @@ public class NSP_Implprofile_ServiceHelperUpdate {
                     List<String> employeeNames = newRec.NSP_COBRA_Takeover_Emp_Details__c.split(',');
                     for (String employee : employeeNames) {
                         String[] parts = employee.split('~');
-                        String value = parts[1];
-                        if (expectedValue == value) {
-                            updateEligibleRecordsMap(ipRecordsByAutomation, newRec.Id, formType);
-                            break;
+                        if ( parts.size() > 1 ){
+                            String value = parts[1];
+                            if (expectedValue == value) {
+                                updateEligibleRecordsMap(ipRecordsByAutomation, newRec.Id, formType);
+                                break;
+                            }
                         }
                     }
                 }
