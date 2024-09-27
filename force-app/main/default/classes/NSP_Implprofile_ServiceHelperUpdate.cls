@@ -70,24 +70,37 @@ public class NSP_Implprofile_ServiceHelperUpdate {
     private static Id projectTaskPEORecordTypeId = Schema.SObjectType.pse__Project_Task__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.PROJECT_TASK_PEO_RECORDTYPE).getRecordTypeId();
     private static final List<String> MILESTONE_NAMES = new List<String>{
         NSP_ServiceConstants.MILESTONE,
-            NSP_ServiceConstants.EMPLOYEEPRIMING,
-            NSP_ServiceConstants.EMPLOYEEDEDUCTION,
-            NSP_ServiceConstants.REPORITNTNEED,
-            NSP_ServiceConstants.PAYSETUP,
-            NSP_ServiceConstants.BENEFITS,
-            NSP_ServiceConstants.AM
-            };
-                
-                public NSP_Implprofile_ServiceHelperUpdate(Map<Id, Implementation_Profile__c> newIPs, Map<Id, Implementation_Profile__c> oldIPs){
-                    this.newIPs = newIPs;
-                    this.oldIPs = oldIPs;
-                    this.automationsToExecute.addAll(new List<String>{ CT_SPONSORED_PLAN_FN,GENERAL_LIABILITY_FN,EEO_FILING_FN,CLIENT_HANDBOOK_FN,EDC_FN,
-                        PAYROLL_LOCATIONS_FN,PAYROLL_DEPARTMENTS_FN,PAYROLL_JOBCOSTING_FN,PAYROLL_REGISTER_FN,GARNISHMENT_FN,
-                        TAX_LEVIES_FN,POST_DEDUCTION_FN,RETIRE_PLAN_FN,POSTTAX_LOANS_FN,SPECIAL_RELABEL_FN,REPORT_Integra_FN,REPORT_Custom401k_FN,
-                        REPORT_JOBCOSTING_FN,INTEGRA_RESPONSE,REPORT_OTHER_FN,COBRA_FN,LOA_INFO_FN,MISSING_LOA_FN,COBRA_FORM_COLLECTED_FN,COBRA_FORM_NOT_COLLECTED_FN,SUBTASK_GARNISH_FN,
-                        SUBTASK_LEVIES_FN,INTERNAL_DISCOVERY_FN,ONSITE_DISCOVERY_FN,premierPerformance_FN,enrollFee_FN,DATA_VERIFICATION});
-                }
-    
+        NSP_ServiceConstants.EMPLOYEEPRIMING,
+        NSP_ServiceConstants.EMPLOYEEDEDUCTION,
+        NSP_ServiceConstants.REPORITNTNEED,
+        NSP_ServiceConstants.PAYSETUP,
+        NSP_ServiceConstants.BENEFITS,
+        NSP_ServiceConstants.AM
+        };
+
+    public NSP_Implprofile_ServiceHelperUpdate(Map<Id, Implementation_Profile__c> newIPs, Map<Id, Implementation_Profile__c> oldIPs){
+        this.newIPs = newIPs;
+        this.oldIPs = oldIPs;
+        this.automationsToExecute.addAll(
+            new List<String>{
+                CT_SPONSORED_PLAN_FN , GENERAL_LIABILITY_FN ,
+                EEO_FILING_FN , CLIENT_HANDBOOK_FN , EDC_FN ,
+                PAYROLL_LOCATIONS_FN , PAYROLL_DEPARTMENTS_FN ,
+                PAYROLL_JOBCOSTING_FN , PAYROLL_REGISTER_FN ,
+                GARNISHMENT_FN , TAX_LEVIES_FN , POST_DEDUCTION_FN ,
+                RETIRE_PLAN_FN , POSTTAX_LOANS_FN , SPECIAL_RELABEL_FN ,
+                REPORT_Integra_FN , REPORT_Custom401k_FN ,
+                REPORT_JOBCOSTING_FN , INTEGRA_RESPONSE ,
+                REPORT_OTHER_FN , COBRA_FN , LOA_INFO_FN ,
+                MISSING_LOA_FN , COBRA_FORM_COLLECTED_FN ,
+                COBRA_FORM_NOT_COLLECTED_FN , SUBTASK_GARNISH_FN ,
+                SUBTASK_LEVIES_FN , INTERNAL_DISCOVERY_FN ,
+                ONSITE_DISCOVERY_FN , premierPerformance_FN ,
+                enrollFee_FN , DATA_VERIFICATION
+            }
+        );
+    }
+
     public NSP_Implprofile_ServiceHelperUpdate(Id ipRecord, String automationName){
         this.newIPs =  NSP_ImpAutomationsController.getIpRecord(ipRecord);
         this.isRerun=true;
@@ -202,11 +215,23 @@ public class NSP_Implprofile_ServiceHelperUpdate {
         if(ipRecordsByAutomation.containsKey(MISSING_LOA_FN)){
             createProjecttaskforLOAInfo();
         }
-        if (ipRecordsByAutomation.containsKey(COBRA_FORM_COLLECTED_FN)) {  
-            createProjectTaskForCOBRAForm(COBRA_FORM_COLLECTED_FN, NSP_ServiceConstants.COBRA_FORM_COLLECTED_YES, NSP_ServiceConstants.Yes, 89, NSP_ServiceConstants.COBRAELIGIBITY);
+        if ( ipRecordsByAutomation.containsKey( COBRA_FORM_COLLECTED_FN ) ) {
+            createProjectTaskForCOBRAForm(
+                COBRA_FORM_COLLECTED_FN ,
+                NSP_ServiceConstants.COBRA_FORM_COLLECTED_YES ,
+                NSP_ServiceConstants.Yes ,
+                89 ,
+                NSP_ServiceConstants.COBRAELIGIBITY
+            );
         }
-        if (ipRecordsByAutomation.containsKey(COBRA_FORM_NOT_COLLECTED_FN)) {  
-            createProjectTaskForCOBRAForm(COBRA_FORM_NOT_COLLECTED_FN, NSP_ServiceConstants.COBRA_FORM_COLLECTED_NO, NSP_ServiceConstants.No, 88, NSP_ServiceConstants.COBRAFOLLOWUP);
+        if ( ipRecordsByAutomation.containsKey( COBRA_FORM_NOT_COLLECTED_FN ) ) {
+            createProjectTaskForCOBRAForm(
+                COBRA_FORM_NOT_COLLECTED_FN ,
+                NSP_ServiceConstants.COBRA_FORM_COLLECTED_NO ,
+                NSP_ServiceConstants.No ,
+                88 ,
+                NSP_ServiceConstants.COBRAFOLLOWUP
+            );
         }
         if(ipRecordsByAutomation.containsKey(SUBTASK_GARNISH_FN)){
            createSubtaskforGarnishments();
@@ -390,11 +415,21 @@ public class NSP_Implprofile_ServiceHelperUpdate {
             if(automationsToExecute.contains(MISSING_LOA_FN)){
                 checkforLOAInfo(ipRec, existingRec);
             }
-            if (automationsToExecute.contains(COBRA_FORM_COLLECTED_FN)) {
-                checkforCOBRAForm(ipRec, existingRec, COBRA_FORM_COLLECTED_FN, NSP_ServiceConstants.YES);
+            if ( automationsToExecute.contains( COBRA_FORM_COLLECTED_FN ) ) {
+                checkforCOBRAForm(
+                    ipRec ,
+                    existingRec ,
+                    COBRA_FORM_COLLECTED_FN ,
+                    NSP_ServiceConstants.YES
+                );
             }
-            if (automationsToExecute.contains(COBRA_FORM_NOT_COLLECTED_FN)) {
-                checkforCOBRAForm(ipRec, existingRec, COBRA_FORM_NOT_COLLECTED_FN, NSP_ServiceConstants.NO);
+            if ( automationsToExecute.contains( COBRA_FORM_NOT_COLLECTED_FN ) ) {
+                checkforCOBRAForm(
+                    ipRec ,
+                    existingRec ,
+                    COBRA_FORM_NOT_COLLECTED_FN ,
+                    NSP_ServiceConstants.NO
+                );
             }
             if(automationsToExecute.contains(SUBTASK_GARNISH_FN)){
                 checkforGarnishmentSubtask(ipRec, existingRec);
@@ -866,20 +901,29 @@ public class NSP_Implprofile_ServiceHelperUpdate {
         }
     }
     
-     private void checkforCOBRAForm(Implementation_Profile__c newRec, Implementation_Profile__c existingRec, String formType, String expectedValue) {  
-        if (newRec.RecordTypeId == ipFSORecordTypeId &&
-            newRec.Have_name_s_of_COBRA_takeovr_employees__c == NSP_ServiceConstants.YES) {
-              
-            if (existingRec == null || newRec.NSP_Form_Completed__c ||
-                newRec.Have_name_s_of_COBRA_takeovr_employees__c != existingRec.Have_name_s_of_COBRA_takeovr_employees__c) {
-                  
-                if (String.isNotBlank( newRec.NSP_COBRA_Takeover_Emp_Details__c )) {
+    private void checkforCOBRAForm(
+        Implementation_Profile__c newRec ,
+        Implementation_Profile__c existingRec ,
+        String formType ,
+        String expectedValue
+    )
+    {
+        if ( newRec.RecordTypeId == ipFSORecordTypeId
+            && newRec.Have_name_s_of_COBRA_takeovr_employees__c == NSP_ServiceConstants.YES
+            )
+        {
+            if ( existingRec == null
+                || newRec.NSP_Form_Completed__c
+                || newRec.Have_name_s_of_COBRA_takeovr_employees__c != existingRec.Have_name_s_of_COBRA_takeovr_employees__c
+                )
+            {
+                if ( String.isNotBlank( newRec.NSP_COBRA_Takeover_Emp_Details__c ) ) {
                     List<String> employeeNames = newRec.NSP_COBRA_Takeover_Emp_Details__c.split(',');
-                    for (String employee : employeeNames) {
+                    for ( String employee : employeeNames ) {
                         String[] parts = employee.split('~');
-                        if ( parts.size() > 1 ){
+                        if ( parts.size() > 1 ) {
                             String value = parts[1];
-                            if (expectedValue == value) {
+                            if ( expectedValue == value ) {
                                 updateEligibleRecordsMap(ipRecordsByAutomation, newRec.Id, formType);
                                 break;
                             }
@@ -889,6 +933,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
             }
         }
     }
+
     //STY-02163 
     /*Automation Section: Benefits
     Automation Name: Missing LOA Info
@@ -2125,16 +2170,23 @@ public class NSP_Implprofile_ServiceHelperUpdate {
         
     } 
     
-    private void createProjectTaskForCOBRAForm(String cobraFormKey, String formCollectedTemplate, String yesOrNoConstant, Integer order, String automationType) {  
-        List<pse__Project_Task__c> projectTaskList = new List<pse__Project_Task__c>();  
-        List<NSP_Implementation_Profile_Automation__c> ipAutomationRecords = new List<NSP_Implementation_Profile_Automation__c>();  
-        Map<Id, Id> mapProjectIdIPId = new Map<Id, Id>();  
-        Map<Id, pse__Proj__c> projectMap = new Map<Id,pse__Proj__c>();
+    private void createProjectTaskForCOBRAForm(
+        String cobraFormKey ,
+        String formCollectedTemplate ,
+        String yesOrNoConstant ,
+        Integer order ,
+        String automationType
+    )
+    {
+        List<pse__Project_Task__c> projectTaskList = new List<pse__Project_Task__c>();
+        List<NSP_Implementation_Profile_Automation__c> ipAutomationRecords = new List<NSP_Implementation_Profile_Automation__c>();
+        Map<Id,Id> mapProjectIdIPId = new Map<Id,Id>();
+        Map<Id,pse__Proj__c> projectMap = new Map<Id,pse__Proj__c>();
         
         for (Id ipRecId : ipRecordsByAutomation.get(cobraFormKey)){
             Implementation_Profile__c ipRec = newIPs.get(ipRecId);
             if ((isRerun || ipRec.NSP_Form_Completed__c) && !isSaveForm){
-                pse__Proj__c proj = (pse__Proj__c) data.get(PROJECT_IDENTIFIER).get(ipRec.NSP_Project__c);  
+                pse__Proj__c proj = (pse__Proj__c) data.get(PROJECT_IDENTIFIER).get(ipRec.NSP_Project__c);
                 projectMap.put(proj.Id, proj);
                 mapProjectIdIPId.put(proj.Id, ipRec.Id);
             }
@@ -2150,40 +2202,62 @@ public class NSP_Implprofile_ServiceHelperUpdate {
                 String milestoneKey = proj.Id + '~' + NSP_ServiceConstants.BENEFITS;
 
                 if(milestoneId == null && !mileStonesToInsert.containsKey(milestoneKey)){
-                    pse__Milestone__c eachMilestone = new pse__Milestone__c(Name=NSP_ServiceConstants.BENEFITS, RecordTypeId=milestonePEORecordtypeId, pse__Project__c=proj.Id, pse__Target_Date__c=proj.pse__End_Date__c);  
-                    Implementation_Profile__c ipWithValue = (Implementation_Profile__c) data.get(IMPL_PROFILE_IDENTIFIER).get(ipRecId);  
-                    if (ipWithValue.NSP_Project_Manager__r != null && ipWithValue.NSP_Project_Manager__r.pse__Salesforce_User__c != null) {  
-                        eachMilestone.OwnerId = ipWithValue.NSP_Project_Manager__r.pse__Salesforce_User__c;  
+                    pse__Milestone__c eachMilestone = new pse__Milestone__c(
+                        Name=NSP_ServiceConstants.BENEFITS ,
+                        RecordTypeId=milestonePEORecordtypeId ,
+                        pse__Project__c=proj.Id ,
+                        pse__Target_Date__c=proj.pse__End_Date__c
+                    );
+                    Implementation_Profile__c ipWithValue = (Implementation_Profile__c)data.get(IMPL_PROFILE_IDENTIFIER).get(ipRecId);
+                    if ( ipWithValue.NSP_Project_Manager__r != null
+                        && ipWithValue.NSP_Project_Manager__r.pse__Salesforce_User__c != null
+                        )
+                    {
+                        eachMilestone.OwnerId = ipWithValue.NSP_Project_Manager__r.pse__Salesforce_User__c;
                     }
                     mileStonesToInsert.put(milestoneKey, eachMilestone);
                 }
                 
-                List<String> lstNamesEmployees = new List<String>();  
+                List<String> lstNamesEmployees = new List<String>();
                 if (!String.isBlank(ipRec.NSP_COBRA_Takeover_Emp_Details__c)) {
                     lstNamesEmployees = ipRec.NSP_COBRA_Takeover_Emp_Details__c.split(',');
                 }
                 
-                if(lstNamesEmployees.size() > 0){  
-                    for(String empName : lstNamesEmployees){  
-                        List<String> empDetails = empName?.split('~');  
+                if(lstNamesEmployees.size() > 0){
+                    for(String empName : lstNamesEmployees){
+                        List<String> empDetails = empName?.split('~');
                         if(empDetails.size() > 1 && empDetails[1] == yesOrNoConstant){
-                            pse__Project_Task__c eachProjectTask = createProjectTaskfromIP(proj, NSP_ServiceConstants.COBRA, milestoneKey);  
-                            eachProjectTask.NSP_Sub_Category__c = NSP_ServiceConstants.COBRASubcat;  
-                            eachProjectTask.Name = formCollectedTemplate.replace('<WSEE Name>', empDetails[0]);  
+                            pse__Project_Task__c eachProjectTask = createProjectTaskfromIP(proj, NSP_ServiceConstants.COBRA, milestoneKey);
+                            eachProjectTask.NSP_Sub_Category__c = NSP_ServiceConstants.COBRASubcat;
+                            eachProjectTask.Name = formCollectedTemplate.replace('<WSEE Name>', empDetails[0]);
                             eachProjectTask.pse__Order__c = order;
-                            Implementation_Profile__c ipWithValue = (Implementation_Profile__c) data.get(IMPL_PROFILE_IDENTIFIER).get(ipRecId);
-                            if(ipWithValue.NSP_Project_Manager__r != null && ipWithValue.NSP_Project_Manager__r.pse__Salesforce_User__c != null){
+                            Implementation_Profile__c ipWithValue = (Implementation_Profile__c)data.get(IMPL_PROFILE_IDENTIFIER).get(ipRecId);
+                            if ( ipWithValue.NSP_Project_Manager__r != null
+                                && ipWithValue.NSP_Project_Manager__r.pse__Salesforce_User__c != null
+                                )
+                            {
                                 eachProjectTask.OwnerId = ipWithValue.NSP_Project_Manager__r.pse__Salesforce_User__c;
                             }
-                            if(ipWithValue.Account__r != null && ipWithValue.Account__r.Name != null){
+                            if ( ipWithValue.Account__r != null
+                                && ipWithValue.Account__r.Name != null
+                                )
+                            {
                                 eachProjectTask.NSP_Implementation_Profile_Account__c = ipWithValue.Account__r.Name;
                             }
-                            if(ipWithValue.Account__c != null){  
+                            if ( ipWithValue.Account__c != null ) {
                                 eachProjectTask.NSP_Implementation_Account_Id__c = ipwithValue.Account__c;
                             }
                             eachProjectTask.pse__Milestone__c = milestoneId;
                             projectTaskList.add(eachProjectTask);
-                            ipAutomationRecords.add(NSP_Implprofile_ServiceHelperUpdate.createIPAutomation(ipRecId, automationType, cobraFormKey, NSP_ServiceConstants.BENEFITS, NSP_ServiceConstants.FSOProfile));
+                            ipAutomationRecords.add(
+                                NSP_Implprofile_ServiceHelperUpdate.createIPAutomation(
+                                    ipRecId ,
+                                    automationType ,
+                                    cobraFormKey ,
+                                    NSP_ServiceConstants.BENEFITS ,
+                                    NSP_ServiceConstants.FSOProfile
+                                )
+                            );
                         }
                     }
                 }
@@ -2191,7 +2265,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
         }
         //Check for existing Automation records and store the new Automation records
         recToInsert.addAll(getnewTaskstoInsert(projectTaskList));
-        getnewAutomationListtoInsert(ipAutomationRecords, recToInsert, recToUpdate);  
+        getnewAutomationListtoInsert(ipAutomationRecords, recToInsert, recToUpdate);
     }
     
     public  void createProjecttaskforLOAInfo(){
