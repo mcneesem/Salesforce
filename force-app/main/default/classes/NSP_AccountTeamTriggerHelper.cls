@@ -93,11 +93,13 @@ public with sharing class NSP_AccountTeamTriggerHelper {
     
     public void afterInsertDirector(List<NSP_Account_Team__c> newList, Map<Id, NSP_Account_Team__c> newMap) {
         try{
-            List<Account> accountList = new List<Account>();
             List<AccountTeamMember> accountTeamMemberList = new List<AccountTeamMember>();
             Map<Id,NSP_Account_Team__c> mapAccountIdtoAccountTeam = new Map<Id,NSP_Account_Team__c>();
             
-            for(NSP_Account_Team__c accTeamMemberObj : newList) {
+            Set<Id> accountIdSet = new Set<Id>();
+            for ( NSP_Account_Team__c accTeamMemberObj : newList ) {
+                // prepare to sync Account...
+                accountIdSet.add( accTeamMemberObj.NSP_Account__c );
                 //insert AccountTeamMeber
                 AccountTeamMember accountTeamMemberObj = new AccountTeamMember();
                 accountTeamMemberObj.AccountId = accTeamMemberObj.NSP_Account__c;
@@ -105,15 +107,8 @@ public with sharing class NSP_AccountTeamTriggerHelper {
                 accountTeamMemberObj.TeamMemberRole = NSP_IntegrationConstants.TEAMMEMBERROLE;
                 accountTeamMemberObj.UserId = accTeamMemberObj.NSP_User__c;
                 accountTeamMemberList.add(accountTeamMemberObj);
-                
-                //update Account
-                Account accountObj = new Account();
-                accountObj.Id = accTeamMemberObj.NSP_Account__c;
-                accountObj.NSP_Ready_for_Integration_Sync__c = true;
-                accountList.add(accountObj);
-                
-                /*STY-03187: Checking if NSP_Role__c field in AccountTeam object is WX/WA Benefits Specialist or WA/WX Payroll Specialist or
-401k Plan Consultant then mapping AccountId and accountTeamObject */
+                // STY-03187: Checking if NSP_Role__c field in AccountTeam object is WX/WA Benefits Specialist
+                // or WA/WX Payroll Specialist or 401k Plan Consultant then mapping AccountId and accountTeamObject
                 if(String.isNotBlank(accTeamMemberObj.NSP_Role__c) && 
                    (accTeamMemberObj.NSP_Role__c == NSP_ServiceConstants.WXWA_BENEFITS || 
                     accTeamMemberObj.NSP_Role__c == NSP_ServiceConstants.WXWA_PAYROLL ||
@@ -126,9 +121,8 @@ public with sharing class NSP_AccountTeamTriggerHelper {
                 insert accountTeamMemberList;
             }
             
-            if(accountList.size() > 0){
-                update accountList;                    
-            }
+            // ready to sync Accounts...
+            IntegrationSyncController.setReadyForIntegrationSync( accountIdSet );
             
             //Checking if map of accountId and Account Team is greater than zero or not
             if(mapAccountIdtoAccountTeam.size()>0 && !mapAccountIdtoAccountTeam.isEmpty()){
@@ -299,9 +293,6 @@ NSP_WX_WA_Benefits_Specialist__c, and NSP_Retirement_Service_Plan_Name__c field 
     
     public void afterUpdateDirector(Map<Id, NSP_Account_Team__c> newMap,Map<Id, NSP_Account_Team__c> oldMap) {
         try{
-            Set<Id> accountIdSetToUpdateResyncFLag = new Set<Id>();
-            NSP_SObjectUpdateTriggerHelper sObjectUpdateObj = new NSP_SObjectUpdateTriggerHelper();
-            accountIdSetToUpdateResyncFLag.addAll(sObjectUpdateObj.fetchUpdFieldsLst(NSP_IntegrationConstants.SOBJECT_ACCOUNTTEAM, newMap, oldMap));
             Map<Id,NSP_Account_Team__c> mapAccountIdtoAccountTeam = new Map<Id,NSP_Account_Team__c>();
             
             /*STY-03187 : Checking if NSP_Role__c field in AccountTeam object is WX/WA Benefits Specialist or WA/WX Payroll Specialist or
@@ -317,19 +308,18 @@ NSP_WX_WA_Benefits_Specialist__c, and NSP_Retirement_Service_Plan_Name__c field 
                         mapAccountIdtoAccountTeam.put(accTeamMemberObj.NSP_Account__c, accTeamMemberObj);
                     }
             }
-            
-            if(accountIdSetToUpdateResyncFLag.size() > 0){
-                List<Account> updateAccountList = new List<Account>();
-                for(Id accountId : accountIdSetToUpdateResyncFLag){
-                    Account accountObj = new Account(); 
-                    accountObj.NSP_Ready_for_Integration_Sync__c = true;
-                    accountObj.Id = accountId; 
-                    updateAccountList.add(accountObj);
-                }
-                if(updateAccountList.size() > 0){
-                    update updateAccountList;                    
-                }
-            }
+
+            Set<Id> accountIdSetToUpdateResyncFlag = new Set<Id>();
+            NSP_SObjectUpdateTriggerHelper sObjectUpdateObj = new NSP_SObjectUpdateTriggerHelper();
+            accountIdSetToUpdateResyncFlag.addAll(
+                sObjectUpdateObj.fetchUpdFieldsLst(
+                    NSP_IntegrationConstants.SOBJECT_ACCOUNTTEAM ,
+                    newMap ,
+                    oldMap
+                )
+            );
+            IntegrationSyncController.setReadyForIntegrationSync( accountIdSetToUpdateResyncFlag );
+
             //Checking if map of accountId and Account Team is greater than zero or not
             if(mapAccountIdtoAccountTeam.size()>0 && !mapAccountIdtoAccountTeam.isEmpty()){
                 updateAccountTeamNameToAssetName(mapAccountIdtoAccountTeam);
