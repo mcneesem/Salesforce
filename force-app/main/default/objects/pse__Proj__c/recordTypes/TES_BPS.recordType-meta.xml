@@ -16,6 +16,183 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>COVID_19__c</picklist>
+        <values>
+            <fullName>COVID-19</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Client_Type__c</picklist>
+        <values>
+            <fullName>Choice</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>White Label</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>HRS_Config_Call_Attendance__c</picklist>
+        <values>
+            <fullName>Attended Config Call</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Did Not Attend Config Call</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>HRS_Config_Confirmation__c</picklist>
+        <values>
+            <fullName>Confirmed Config Notes</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Did Not Confirm Config Notes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Hold_Status__c</picklist>
+        <values>
+            <fullName>Account Under Review</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>COVID-19</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Client Request</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No Client Involvement</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Waiting on Order Documents</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Waiting on Payment</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Waiting on SKO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Waiting on other Product Implementations</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>ICS_Service_Category__c</picklist>
+        <values>
+            <fullName>Assessments %26 Analytics</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Business Strategy</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Compensation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Compliance</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Culture Design and Management</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Discovery</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Discovery %26 Impact</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Leadership</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Structure</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Asset_Type__c</picklist>
+        <values>
+            <fullName>Applicant_Tracking</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Certify</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Employment_Screening</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hardware_Asset</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Insurance_Service</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Integra</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NSP_Asset_Product</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Organizational_Planning</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Performance_Management</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RET_Choice</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RET_WO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Recruiting_Services</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Time_Attendance</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>XML</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>NSP_BPS_Project_Template__c</picklist>
         <values>
             <fullName>Abra - HR</fullName>
@@ -219,183 +396,6 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>COVID_19__c</picklist>
-        <values>
-            <fullName>COVID-19</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>Client_Type__c</picklist>
-        <values>
-            <fullName>Choice</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>WO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>White Label</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>HRS_Config_Call_Attendance__c</picklist>
-        <values>
-            <fullName>Attended Config Call</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Did Not Attend Config Call</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>HRS_Config_Confirmation__c</picklist>
-        <values>
-            <fullName>Confirmed Config Notes</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Did Not Confirm Config Notes</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>Hold_Status__c</picklist>
-        <values>
-            <fullName>Account Under Review</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>COVID-19</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Client Request</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>No Client Involvement</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Waiting on Order Documents</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Waiting on Payment</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Waiting on SKO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Waiting on other Product Implementations</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>ICS_Service_Category__c</picklist>
-        <values>
-            <fullName>Assessments %26 Analytics</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Business Strategy</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Compensation</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Compliance</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Culture Design and Management</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Discovery</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Discovery %26 Impact</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Leadership</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Structure</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>NSP_Asset_Type__c</picklist>
-        <values>
-            <fullName>Applicant_Tracking</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Certify</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Employment_Screening</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Hardware_Asset</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Insurance_Service</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Integra</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>NSP_Asset_Product</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Organizational_Planning</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Performance_Management</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>RET_Choice</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>RET_WO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Recruiting_Services</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Time_Attendance</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>XML</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>NSP_Cancelled_Reason__c</picklist>
         <values>
             <fullName>Benefits not currently offered</fullName>
@@ -463,6 +463,130 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>NSP_Change_Order_Classification__c</picklist>
+        <values>
+            <fullName>Audit</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CAM Changes</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Config - Accruals</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Config - Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Config - Pay Group</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Data Import</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hardware</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ITA Termination</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Special Projects</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>System Optimization %26 Review</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>TED</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Training</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Client_Size__c</picklist>
+        <values>
+            <fullName>Business Team %281-30 EE%27s%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Core %2831-49 EE%27s%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Emerging Growth %28100%2B EE%27s%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Emerging Growth %2850-99 EE%27s%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MidMarket %28150 - 749 EE%27s%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Middle Market Enterprise %28750 %2B EEs%29</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_HRQST_Review_Status__c</picklist>
+        <values>
+            <fullName>Approved</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Assigned</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Open</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Waiting on Client</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_On_Hold_Reason__c</picklist>
+        <values>
+            <fullName>Client Determined %E2%80%93 Capacity</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Client Determined %E2%80%93 Readiness</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Client Determined %E2%80%93 Sequencing</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Insperity Determined %E2%80%93 Capacity</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Insperity Determined %E2%80%93 Readiness</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Insperity Determined %E2%80%93 Sequencing</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>NSP_Rating__c</picklist>
         <values>
             <fullName>Favorable</fullName>
@@ -482,6 +606,21 @@
         </values>
         <values>
             <fullName>Unfavorable</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_TimeStar_Accrual_Status__c</picklist>
+        <values>
+            <fullName>Implemented after Go Live</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Implemented at Go Live</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not Required</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -745,6 +884,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>FEIN Addition</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FEIN%2FName Change</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Genuine Care %26 Concern</fullName>
             <default>false</default>
         </values>
@@ -821,6 +968,17 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Support_Team__c</picklist>
+        <values>
+            <fullName>Cost</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Traditional</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>TES_HCM_Implementation_Support_Tasks__c</picklist>
         <values>
             <fullName>Bank Audit Task</fullName>
@@ -865,6 +1023,25 @@
         </values>
         <values>
             <fullName>Time and Materials</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>pse__Estimate_Approval_Status__c</picklist>
+        <values>
+            <fullName>Approved</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Draft</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rejected</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Submitted</fullName>
             <default>false</default>
         </values>
     </picklistValues>

@@ -54,9 +54,6 @@
                 <behavior>Edit</behavior>
                 <field>pse__Project_Manager__c</field>
             </layoutItems>
-            
-            
-            
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Project_Access_Type__c</field>
