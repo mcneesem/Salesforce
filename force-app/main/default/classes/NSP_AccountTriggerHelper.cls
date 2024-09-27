@@ -616,8 +616,8 @@ WHERE (userRole.Name = 'Loyalty Advisor' OR userRole.Name = 'Channel Program Man
         set < Id > ownerIdSet = new set < Id > ();
         set < Id > accountIdSet = new set < Id > ();
         set < String > salesOfficeSet = new set < String > ();
-        Map<Id, String> newSalesOffice = new Map<Id, String>();
-        Map<Id, String> oldAccountUserId = new Map<Id, Id>();
+        Map<Id,String> newSalesOffice = new Map<Id,String>();
+        Map<Id,Id> oldAccountUserId = new Map<Id,Id>();
 
         for(Account newAccount: newList){
             Account oldAccount = accountOldMap != null ? accountOldMap.get(newAccount.Id) : null;
@@ -697,13 +697,19 @@ WHERE (userRole.Name = 'Loyalty Advisor' OR userRole.Name = 'Channel Program Man
      * -------------------------------------------------------------------------------------
      *  09/10/2024          ADO-301313 - Opportunity Sales Office not Update on Reassign Account
      */
-    private static void updateRelatedOpportunity(Map<Id, String> newSalesOffice, Map<Id, Id> oldAccountUserId){
-
-        try{
-
+    private static void updateRelatedOpportunity( Map<Id,String> newSalesOffice , Map<Id,Id> oldAccountUserId ) {
+        try {
             Map<Id, String> oppsChangeOffice = new Map<Id, String>(); 
-            List<Opportunity> opps = [SELECT id, OwnerId,  AccountId, NSP_Sales_Office__c FROM Opportunity WHERE  
-            (StageName != 'Closed Lost' AND  StageName != 'Closed Won' AND StageName != 'Closing' ) AND AccountId IN :newSalesOffice.keySet()];
+            List<Opportunity> opps = [
+                SELECT Id , OwnerId , AccountId , NSP_Sales_Office__c
+                FROM Opportunity
+                WHERE (
+                    StageName != 'Closed Lost'
+                    AND  StageName != 'Closed Won'
+                    AND StageName != 'Closing'
+                    AND AccountId IN :newSalesOffice.keySet()
+                )
+            ];
     
             for(Opportunity opp : opps){
                 //  If Opportunity owner is the same as Account owner then update the Sales Office
@@ -713,41 +719,45 @@ WHERE (userRole.Name = 'Loyalty Advisor' OR userRole.Name = 'Channel Program Man
             }
     
             //  Update Sales Office, adding extra condition checking the limits
-            if(oppsChangeOffice.size() > 0 && Limits.getFutureCalls() < Limits.getLimitFutureCalls()){
+            if ( !oppsChangeOffice.isEmpty()
+                && Limits.getFutureCalls() < Limits.getLimitFutureCalls()
+                )
+            {
                 updateRelatedOpportunityAsync(JSON.serialize(oppsChangeOffice));
             }
-    
-        }
-        catch(Exception e){
+        } catch ( Exception e ) {
             NSP_AccountTriggerHelper.handleException( e , 'updateRelatedOpportunity' );
         }
     }
 
     @future
     private static void updateRelatedOpportunityAsync(String soppsChangeOffice){
-
-        try{
-
+        try {
             List<Opportunity> oppsToUpdate = new List<Opportunity>();
-            Map<Id, String> oppsChangeOffice = (Map<Id, String>)JSON.deserialize(soppsChangeOffice, Map<Id, String>.class);
+            Map<Id,String> oppsChangeOffice = (Map<Id,String>)JSON.deserialize(
+                soppsChangeOffice ,
+                Map<Id,String>.class
+            );
 
-            List<Opportunity> opps = [SELECT id, NSP_Sales_Office__c FROM Opportunity WHERE Id IN :oppsChangeOffice.keySet()];
+            List<Opportunity> opps = [
+                SELECT Id , NSP_Sales_Office__c
+                FROM Opportunity
+                WHERE Id IN :oppsChangeOffice.keySet()
+            ];
 
             for(Opportunity opp : opps){
                 opp.NSP_Sales_Office__c = oppsChangeOffice.get(opp.Id);
                 oppsToUpdate.add(opp);
             }
 
-            if(oppsToUpdate.size() > 0){
+            if ( !oppsToUpdate.isEmpty() ) {
                 update oppsToUpdate;
             }
-
-        }
-        catch(Exception e){
+        } catch ( Exception e ) {
             NSP_AccountTriggerHelper.handleException( e , 'updateRelatedOpportunityAsync' );
         }
     }
-    
+
         /*** Publishes events for Accounts deleted by merge.
     * @param oldList List of Account.
     * @param oldMap List of Account.
