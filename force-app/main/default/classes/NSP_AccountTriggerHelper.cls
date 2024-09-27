@@ -712,7 +712,7 @@ WHERE (userRole.Name = 'Loyalty Advisor' OR userRole.Name = 'Channel Program Man
                 }
             }
     
-            //  Update Sales Office
+            //  Update Sales Office, adding extra condition checking the limits
             if(oppsChangeOffice.size() > 0 && Limits.getFutureCalls() < Limits.getLimitFutureCalls()){
                 updateRelatedOpportunityAsync(JSON.serialize(oppsChangeOffice));
             }
