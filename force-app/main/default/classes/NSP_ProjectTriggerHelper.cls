@@ -8,11 +8,12 @@ public with sharing class NSP_ProjectTriggerHelper {
     public final String PROJECTTASKSTATUSCANCELLED = 'Canceled';
     public final String PROJECTSERVICEPLAN3 = 'Service_Plan_Level_3';
     public final String PROJECTSERVICEPLAN4 = 'Service_Plan_Level_4';
-    public Static final Id PEOPROJECTTECORDTYPEID = SObjectType.pse__Proj__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.PEOProject).getRecordTypeId();
+    public Static final Id PEOPROJECTTECORDTYPEID = NSP_GenericRecordType.getRecordTypeId( 'pse__Proj__c' , 'PEO_Project' );
+    public Static final Id TESBPSPROJECTTECORDTYPEID = NSP_GenericRecordType.getRecordTypeId( 'pse__Proj__c' , 'TES_BPS' );
     public Static final List<String> PROJECTTASKNAMES = label.NSP_Project_Task_Names.split(',');
     public Static final String NEWPROJECTNAME = 'Post Implementation Payroll Follow Up';
     public Static final String NEWPROJECTTYPE = 'Implementation';
-    public static final Id WORECORDTYPEID = Schema.SObjectType.Asset.getRecordTypeInfosByName().get('WO').getRecordTypeId();
+    public Static final Id WORECORDTYPEID = NSP_GenericRecordType.getRecordTypeId( 'Asset' , 'WO' );
     public static final Id PEOBILLRECTYPEID = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.PROJECT, NSP_ServiceConstants.PEO_BILL_RECORDTYPE);
     public static final Id casePEORecordTypeId = NSP_GenericRecordType.getRecordTypeId('Case', NSP_ServiceConstants.PEO);
     private static final Id itaCqaRecordTypeId = NSP_GenericRecordType.getRecordTypeId('Case', NSP_ServiceConstants.NSP_ITA_CQA);
@@ -57,6 +58,11 @@ public with sharing class NSP_ProjectTriggerHelper {
             if(project.recordTypeId == PEOPROJECTTECORDTYPEID && project.TemplateName__c == NSP_ServiceConstants.WO_WX_TEMPLATE){
                 project.pse__Start_Date__c = System.today();
                 project.pse__End_Date__c = System.today().addDays(30);
+            }
+
+            if(project.recordTypeId == TESBPSPROJECTTECORDTYPEID && project.TemplateName__c == NSP_ServiceConstants.ITA_IMPLEMENTATION){
+                project.pse__Start_Date__c = System.today();
+                project.pse__End_Date__c = system.today().addmonths(12);
             }
         
         	updatePrjNameList.add(project);           
@@ -1488,6 +1494,9 @@ public with sharing class NSP_ProjectTriggerHelper {
         new pse.CreateProjectFromTemplateService.CreateProjectFromTemplateRequest(keyWithTemplateId.Template_ID__c, projectStartdate);
         //Set new project name to specified name
         projRequest.ProjectName = keyWithTemplateId.Template_Name__c;
+        projRequest.Mappers = new List<pse.SObjectCloneMapper>{
+            NSP_CreateProjFromFlow.getDefaultMappers()
+        };
         //Call the service and create project
         List<pse.CreateProjectFromTemplateService.CreateProjectResponse> projResponse =
         pse.CreateProjectFromTemplateService.createProjectsFromTemplates( 
@@ -1505,6 +1514,9 @@ public with sharing class NSP_ProjectTriggerHelper {
         pse.CreateProjectFromTemplateService.CreateProjectFromTemplateAndAccountRequest projRequest = new pse.CreateProjectFromTemplateService.CreateProjectFromTemplateAndAccountRequest(oaccount.Id, oprojectTemplate.Id , System.Today());
         //assigning the values
         projRequest.ProjectName = oprojectTemplate.Template_Name__c;
+        projRequest.Mappers = new List<pse.SObjectCloneMapper>{
+            NSP_CreateProjFromFlow.getDefaultMappers()
+        };
         projRequest.IsActive = true;
         projRequest.ProjectOwnerId = oaccountTeam.NSP_User__c;
         return projRequest;

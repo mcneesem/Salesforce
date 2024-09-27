@@ -177,7 +177,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Onboarding_Profile__c.Complexity_Score_Total__c</field>
+        <field>Onboarding_Profile__c.Complexity_Score_Total_Formula__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1040,7 +1040,6 @@
         <field>pse__Proj__c.Onboarding_Profile__c</field>
         <readable>true</readable>
     </fieldPermissions>
-
     <hasActivationRequired>false</hasActivationRequired>
     <label>Onboarding Profile Read Only</label>
     <objectPermissions>

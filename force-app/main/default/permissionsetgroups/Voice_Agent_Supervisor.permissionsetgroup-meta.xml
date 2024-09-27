@@ -3,6 +3,7 @@
     <description>Group of Permission Sets to be granted to Voice Agent Supervisors.</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Voice Agent Supervisor</label>
+    <permissionSets>Address_Book_Management</permissionSets>
     <permissionSets>NVMStatsSF__View_NVM_Stats</permissionSets>
     <permissionSets>Omni_Supervisor</permissionSets>
     <permissionSets>Work_Summary_Visibility</permissionSets>

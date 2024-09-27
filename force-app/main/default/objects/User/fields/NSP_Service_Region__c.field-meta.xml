@@ -2,6 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_Service_Region__c</fullName>
     <externalId>false</externalId>
+    <inlineHelpText>Service Region will only display when User is a Manager, HR Services</inlineHelpText>
     <label>Service Region</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>

@@ -1047,7 +1047,7 @@
         <name>Allow_Delete_Accounts</name>
     </customPermissions>
     <customPermissions>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
         <name>Allow_Delete_Leads</name>
     </customPermissions>
     <fieldPermissions>
@@ -14426,9 +14426,9 @@
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
-        <allowCreate>true</allowCreate>
-        <allowDelete>true</allowDelete>
-        <allowEdit>true</allowEdit>
+        <allowCreate>false</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>false</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
         <object>Lead</object>
@@ -14850,7 +14850,7 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>standard-Lead</tab>
-        <visibility>DefaultOn</visibility>
+        <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>standard-Opportunity</tab>
@@ -14918,7 +14918,7 @@
         <name>ContentWorkspaces</name>
     </userPermissions>
     <userPermissions>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
         <name>ConvertLeads</name>
     </userPermissions>
     <userPermissions>
@@ -15002,7 +15002,7 @@
         <name>ListEmailSend</name>
     </userPermissions>
     <userPermissions>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
         <name>ManageLeads</name>
     </userPermissions>
     <userPermissions>
@@ -15063,7 +15063,7 @@
         <name>TransactionalEmailSend</name>
     </userPermissions>
     <userPermissions>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
         <name>TransferAnyLead</name>
     </userPermissions>
     <userPermissions>

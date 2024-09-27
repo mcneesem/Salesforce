@@ -311,6 +311,31 @@
                 <default>false</default>
                 <label>WX/WA Benefits Specialist</label>
             </value>
+            <value>
+                <fullName>WX/WA Manager</fullName>
+                <default>false</default>
+                <label>WX/WA Manager</label>
+            </value>
+            <value>
+                <fullName>WX/WA Supervisor</fullName>
+                <default>false</default>
+                <label>WX/WA Supervisor</label>
+            </value>
+            <value>
+                <fullName>WX/WA Customer Success Specialist</fullName>
+                <default>false</default>
+                <label>WX/WA Customer Success Specialist</label>
+            </value>
+            <value>
+                <fullName>WX Time Specialist</fullName>
+                <default>false</default>
+                <label>WX Time Specialist</label>
+            </value>
+            <value>
+                <fullName>WX Business Team</fullName>
+                <default>false</default>
+                <label>WX Business Team</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

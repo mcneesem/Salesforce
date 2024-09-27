@@ -2,6 +2,7 @@
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Hardware_Asset</fullName>
     <active>true</active>
+    <compactLayoutAssignment>Hardware_Asset</compactLayoutAssignment>
     <label>Hardware Asset</label>
     <picklistValues>
         <picklist>ConsequenceOfFailure</picklist>

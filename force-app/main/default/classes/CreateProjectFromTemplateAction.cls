@@ -2,7 +2,8 @@
 Date : 06/21/2023 */
 
 public class CreateProjectFromTemplateAction {
-    
+    // test w/ CreateProjectFromTemplateActionTest (100%)
+
     @InvocableMethod(label='Create Project from Template Service' 
                      description='Leverage Financial Force Service API to create a Project from a Project Template'
                      category ='Create Project')
@@ -66,7 +67,11 @@ public class CreateProjectFromTemplateAction {
         pse.SObjectCloneMapper.Field recordtypeMapper1 = new pse.SObjectCloneMapper.Field(Schema.pse__Proj__c.NSP_Exclusively_Assign_Owner__c);
         recordtypeMapper1.DefaultValue = TRUE;
             
-        Set<pse.SObjectCloneMapper.Field> setOfFields = new Set<pse.SObjectCloneMapper.Field>{recordtypeMapper,recordtypeMapper1};
+        Set<pse.SObjectCloneMapper.Field> setOfFields = new Set<pse.SObjectCloneMapper.Field>{
+            recordtypeMapper ,
+            recordtypeMapper1 ,
+            NSP_CreateProjFromFlow.getDefaultRegionMapperField()
+        };
 
         //Make a mapper for the Project object
         pse.SObjectCloneMapper itemCloneMap = new pse.SObjectCloneMapper(pse__Proj__c.SObjectType, setOfFields);

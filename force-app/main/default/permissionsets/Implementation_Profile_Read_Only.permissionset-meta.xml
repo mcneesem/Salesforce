@@ -11129,6 +11129,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Implementation_Profile__c.Document_Levies__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Implementation_Profile__c.Documentation_Status__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -49155,6 +49160,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>pse__Project_Task_Assignment__c.pse__Start_Date__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>pse__Project_Task__c.Implementation_Profile__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>

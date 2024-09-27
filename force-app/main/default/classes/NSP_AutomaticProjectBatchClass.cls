@@ -226,7 +226,12 @@ public class NSP_AutomaticProjectBatchClass implements Database.Batchable<sObjec
         pse.SObjectCloneMapper.Field mapperFieldRT = new pse.SObjectCloneMapper.Field(Schema.pse__Proj__c.RecordTypeId);
         pse.SObjectCloneMapper.Field mapperFieldStartDate = new pse.SObjectCloneMapper.Field(Schema.pse__Proj__c.pse__Start_Date__c);
         pse.SObjectCloneMapper.Field mapperFieldEndDate = new pse.SObjectCloneMapper.Field(Schema.pse__Proj__c.pse__End_Date__c);
-        Set<pse.SObjectCloneMapper.Field> setMapperFields = new Set<pse.SObjectCloneMapper.Field>{mapperFieldRT, mapperFieldStartDate, mapperFieldEndDate};
+        Set<pse.SObjectCloneMapper.Field> setMapperFields = new Set<pse.SObjectCloneMapper.Field>{
+            mapperFieldRT ,
+            mapperFieldStartDate ,
+            mapperFieldEndDate ,
+            NSP_CreateProjFromFlow.getDefaultRegionMapperField()
+        };
         pse.SObjectCloneMapper mapp = new pse.SObjectCloneMapper(pse__Proj__c.SObjectType, setMapperFields);
         projectrequest.Mappers = new List<pse.SObjectCloneMapper> { mapp };
         
