@@ -785,6 +785,10 @@
                 <behavior>Edit</behavior>
                 <field>SBQQ__UpgradeRatio__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Separate_Project__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
