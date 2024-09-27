@@ -117,11 +117,6 @@
                     required></lightning-input-field>
                 </div>
               </div>
-
-              <div class="slds-text-color_error slds-p-vertical_medium slds-form-element NSP_Attached_Approval_Email__c"
-                style="display:none">
-                STOP! Attach the document to the right
-              </div>
             </div>
             <!--above only for HRS Review-->
             <!--********************************************************* Insperity-Prepared ************************************************************************* -->
@@ -323,27 +318,6 @@
                   <lightning-input-field class="slds-p-vertical_medium NSP_Equipment__c" style="display:none"
                     field-name="NSP_FairMarketValue__c" required={NSP_Equipment}>
                   </lightning-input-field>
-                </lightning-layout-item>
-                <lightning-layout-item size="12">
-                  <div class="slds-p-vertical_medium ">
-                    <div class="slds-form-element_horizontal">
-                      <label class="slds-form-element__label " for="NSP_MutualConfidentiality__c">
-                        Mutual Confidentiality – Not applicable for IL, WA, or OR employees <div class="Illinois">
-                          (REMINDER: client approval should be obtained) </div> </label>
-                      <lightning-input-field variant="label-hidden" id="NSP_MutualConfidentiality__c"
-                        field-name="NSP_MutualConfidentiality__c" onchange={radioOnChange}
-                        disabled={NSP_MutualConfidentiality}>
-                      </lightning-input-field>
-                    </div>
-                  </div>
-                  <div
-                    class="slds-text-color_error slds-form-element__label  slds-p-vertical_medium NSP_MutualConfidentiality__c"
-                    style="display:none">
-                    <div class="Illinois">
-                      Reminder: Confidentiality language will not be included if the Employees’ Work State is Illinois,
-                      Washington and Oregon!
-                    </div>
-                  </div>
                 </lightning-layout-item>
                 <lightning-layout-item size="12">
                   <lightning-input-field class="slds-p-vertical_medium" field-name="NSP_OutplacementServices__c"
