@@ -238,6 +238,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Lead.GCLID__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Lead.Marketing_Priority__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -479,6 +484,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Opportunity.Discovery_Call_Completed_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Opportunity.GCLID__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
