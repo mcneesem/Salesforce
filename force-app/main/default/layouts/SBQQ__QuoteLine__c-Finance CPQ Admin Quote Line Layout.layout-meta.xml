@@ -211,6 +211,10 @@
                 <behavior>Readonly</behavior>
                 <field>SBQQ__ProratedListPrice__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Seasonal_Pricing__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

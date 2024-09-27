@@ -77,6 +77,11 @@
                 <default>false</default>
                 <label>NSP_Start_Date__c</label>
             </value>
+            <value>
+                <fullName>Seasonal_Pricing__c</fullName>
+                <default>false</default>
+                <label>Seasonal_Pricing__c</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
