@@ -21,7 +21,10 @@ public without sharing class NSP_UpdateRelatedAccounts {
         for ( Account accountObj : [
                     SELECT Id , NSP_Last_Updated__c
                     FROM Account
-                    WHERE ( Id IN :accountIdSet )
+                    WHERE (
+                        ( Id IN :accountIdSet )
+                        AND ( NSP_Last_Updated__c != TODAY )
+                    )
                 ]
             )
         {
@@ -54,7 +57,10 @@ public without sharing class NSP_UpdateRelatedAccounts {
                             WHERE ( StageName NOT IN ( 'Closed Won' , 'Closed Lost' ) )
                         )
                     FROM Account
-                    WHERE ( Id IN :accountIdSet )
+                    WHERE (
+                        ( Id IN :accountIdSet )
+                        AND ( NSP_Sales_Service_Account_Status__c != :NSP_SalesConstants.PROSPECTING )
+                    )
                 ]
             )
         {
