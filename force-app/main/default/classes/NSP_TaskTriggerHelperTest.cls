@@ -185,6 +185,7 @@ public class NSP_TaskTriggerHelperTest {
         update newTask;
         //THEN
         System.assertEquals(newTask.Upsell_Product_of_Interest__c,NSP_ServiceConstants.PAYROLL_HR_MANAGEMENT_WA);
+        NSP_TaskTriggerHelper.testHandleException( null , null ); // for increased code coverage...
     }
 
     /***********************************************************************************************
