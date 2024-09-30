@@ -18,6 +18,10 @@ Global class NSP_AssetTerminateBatch implements Schedulable, Database.Batchable<
         'Asset' ,
         NSP_ServiceConstants.WO_ASSET_RECORDTYPE
     );
+    private static final Id RET_WO_ASSET_RECORDTYPE = NSP_GenericRecordType.getRecordTypeId(
+        'Asset' ,
+        NSP_ServiceConstants.RET_WO_ASSET_RECORDTYPE
+    );
     global Database.QueryLocator start(Database.BatchableContext bc) {
         Date last30Days = system.Today()-30;
         String finalDate = String.valueOf(last30Days).removeEnd(' 00:00:00');
@@ -47,7 +51,16 @@ Global class NSP_AssetTerminateBatch implements Schedulable, Database.Batchable<
             accountIds.add( record.AccountId );
         }
         List<Account> parents = [
-            SELECT Id , ( SELECT Id FROM Assets WHERE ( ( NSP_Account_Status__c !=: NSP_ServiceConstants.TERMINATED ) AND ( RecordTypeId =: NSP_AssetTerminateBatch.WO_ASSET_RECORDTYPE ) ) )
+            SELECT
+                Id ,
+                (
+                    SELECT Id
+                    FROM Assets
+                    WHERE (
+                        ( NSP_Account_Status__c != :NSP_ServiceConstants.TERMINATED )
+                        AND ( RecordTypeId = :NSP_AssetTerminateBatch.WO_ASSET_RECORDTYPE )
+                    )
+                )
             FROM Account
             WHERE ( Id IN :accountIds )
         ];
@@ -77,14 +90,31 @@ Global class NSP_AssetTerminateBatch implements Schedulable, Database.Batchable<
             }
         }        
         //update Status AND Termination Date for RT other then WO
-        for(Asset asst : [SELECT Id, AccountId, RecordTypeId, Status, NSP_Termination_Date__c FROM Asset WHERE  AccountId =: accIds AND RecordTypeId IN : assetRecordIDList AND NSP_ProductBundle__c =: NSP_ServiceConstants.WoWSAsset AND Status != : NSP_ServiceConstants.TERMINATED]) {
-            asst.Status = 'Terminated';
-            asst.NSP_Termination_Date__c = accountIDTermDateMap.get(asst.AccountId);
-            assetToBeUpdated.add(asst);            
+        for ( Asset asst : [
+                    SELECT
+                        Id , AccountId , RecordTypeId , Status ,
+                        NSP_Termination_Date__c , NSP_ProductBundle__c
+                    FROM Asset
+                    WHERE (
+                        AccountId = :accIds
+                        AND RecordTypeId IN :assetRecordIDList
+                        AND Status != :NSP_ServiceConstants.TERMINATED
+                    )
+                ]
+            )
+        {
+            if ( asst.RecordTypeId == NSP_AssetTerminateBatch.RET_WO_ASSET_RECORDTYPE
+                || asst.NSP_ProductBundle__c == NSP_ServiceConstants.WoWSAsset
+                )
+            {
+                asst.Status = 'Terminated';
+                asst.NSP_Termination_Date__c = accountIDTermDateMap.get( asst.AccountId );
+                assetToBeUpdated.add(asst);
+            }
         }
-        // update the asset list        
-        if(!assetToBeUpdated.isEmpty()) {
-            UpdateAsset(assetToBeUpdated);        
+        // update the asset list
+        if ( !assetToBeUpdated.isEmpty() ) {
+            updateAsset(assetToBeUpdated );
         }
     }
     
@@ -106,20 +136,33 @@ Global class NSP_AssetTerminateBatch implements Schedulable, Database.Batchable<
             assetRecordIDList.add(NSP_GenericRecordType.getRecordTypeId('Asset',NSP_ServiceConstants.ASSET_RECRUITING_SERVICES ));
             assetRecordIDList.add(NSP_GenericRecordType.getRecordTypeId('Asset',NSP_ServiceConstants.XML_ASSET ));
             assetRecordIDList.add(NSP_GenericRecordType.getRecordTypeId('Asset',NSP_ServiceConstants.LEARNING_DEVELOPMENT ));
-        }catch (Exception ex) {
-            NSP_ErrorLogHandler.logSaveException('NSP_AssetTerminateBatch', 'getAssetRecordID', ex.getMessage());
-        } 
+            assetRecordIDList.add(NSP_GenericRecordType.getRecordTypeId('Asset',NSP_ServiceConstants.RET_WO_ASSET_RECORDTYPE ));
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_AssetTerminateBatch.class.getName() ,
+                'getAssetRecordID' ,
+                e
+            );
+        }
         return assetRecordIDList;
     }
-    
-    public static void updateAsset(List<Asset> assetToBeUpdated){       
-        try{                        
-            // update the asset records           
-                Database.SaveResult[] result =  Database.update(assetToBeUpdated,false);
-                NSP_ErrorLogHandler.logSaveResultsException('NSP_AssetTerminateBatch', 'updateAsset:assetToBeUpdated', result);                                      
-        }catch (Exception ex) {
-            NSP_ErrorLogHandler.logSaveException('NSP_AssetTerminateBatch', 'updateAsset', ex.getMessage());
-        }             
-    } 
-    
+
+    public static void updateAsset( List<Asset> assetToBeUpdated ) {
+        try {
+            // update the asset records
+            Database.SaveResult[] result =  Database.update( assetToBeUpdated , false );
+            NSP_ErrorLogHandler.logResults(
+                NSP_AssetTerminateBatch.class.getName() ,
+                'updateAsset:assetToBeUpdated' ,
+                result
+            );
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_AssetTerminateBatch.class.getName() ,
+                'updateAsset' ,
+                e
+            );
+        }
+    }
+
 }
