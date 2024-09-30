@@ -123,7 +123,7 @@
           label="Policy Information">
           <div class="slds-grid slds-gutters slds-p-top_x-small">
             <div class="slds-col slds-size_1-of-2">
-            <lightning-input-field disabled
+              <lightning-input-field disabled
                 field-name="NSP_Type_of_Policy__c"
                 data-name="NSP_Type_of_Policy__c"
                 class="slds-form-element__legend"
@@ -144,7 +144,7 @@
                 class="slds-show slds-text-heading_small slds-var-m-around_medium">
               </lightning-formatted-text>
 
-            <lightning-input-field disabled
+              <lightning-input-field disabled
                 field-name="NSP_Accrual_Profile_Plan_Name__c"
                 data-name="NSP_Accrual_Profile_Plan_Name__c"
                 value={fieldValue.NSP_Accrual_Profile_Plan_Name__c}
@@ -170,21 +170,23 @@
                 data-name="NSP_New_Revised__c"
                 class="slds-show slds-var-m-bottom_medium slds-form-element__control slds-form-element__legend slds-form-element_vertical"
                 >
-            </c-nsp_selection-box>
+              </c-nsp_selection-box>
 
-            <lightning-input-field disabled
+              <lightning-input-field disabled
                 field-name="NSP_Effective_date__c"
                 data-name="NSP_Effective_date__c"
                 value={fieldValue.NSP_Effective_date__c}
                 class="slds-show slds-var-m-bottom_medium slds-form-element__control slds-form-element__legend slds-form-element_vertical">
               </lightning-input-field>
 
-            <lightning-formatted-text
+            </div>
+            <div class="slds-col slds-size_1-of-2">
+              <lightning-formatted-text
                 value="Does this plan replace another (or other) plans?"
                 class="slds-show slds-var-m-bottom_medium slds-form-element__control slds-form-element__legend slds-form-element_vertical">>
-            </lightning-formatted-text>
+              </lightning-formatted-text>
 
-            <lightning-input-field disabled 
+              <lightning-input-field disabled 
                 field-name="NSP_Does_this_plan_replace_other_plans__c"
                 data-name="NSP_Does_this_plan_replace_other_plans__c"
                 variant="label-hidden"
@@ -192,7 +194,7 @@
                 class="slds-show slds-var-m-bottom_medium slds-form-element__control slds-form-element__legend slds-form-element_vertical">
               </lightning-input-field>
 
-            <lightning-combobox 
+              <lightning-combobox 
                 read-only
                 lwc:if={visibility.NSP_Accrual_Profile__c}
                 label="Name of the plan being replaced"
@@ -203,7 +205,7 @@
                 >
               </lightning-combobox>
 
-            <lightning-input-field disabled
+              <lightning-input-field disabled
                 if:true={visibility.NSP_Other_Plan__c}
                 field-name="NSP_Other_Plan__c"
                 data-name="NSP_Other_Plan__c"
@@ -212,7 +214,7 @@
                 >
               </lightning-input-field>
 
-            <c-nsp_selection-box disabled
+              <c-nsp_selection-box disabled
                 label="Employee Status (check all that apply)"
                 field-api-name="NSP_Accrual_Profile__c.NSP_Employee_Status_check_all_that_apply__c"
                 record-type-id={fieldValue.recordTypeId}
@@ -245,7 +247,7 @@
                   class="slds-show slds-var-m-around_xx-small slds-text-body_small slds-form-element__legend slds-form-element_vertical">
               </lightning-formatted-rich-text>
 
-            <lightning-input-field disabled
+              <lightning-input-field disabled
                 if:true={visibility.NSP_Compliance_Location__c}
                 variant="label-hidden"
                 field-name="NSP_Compliance_Location__c"
@@ -255,8 +257,7 @@
               </lightning-input-field>
 
             </div>
-            <div class="slds-col slds-size_1-of-2"></div>
-        </div>
+          </div>
         </lightning-accordion-section>
 
         <!-- Policy Details -->
@@ -603,6 +604,8 @@
                 class="slds-show slds-var-m-bottom_medium slds-form-element__control slds-form-element__legend slds-form-element_vertical">
               </lightning-input-field>
 
+            </div>
+            <div class="slds-col slds-size_1-of-2">
               <lightning-formatted-text
                 value={doBalancesCarryOverLabel}
                 class="slds-show slds-var-m-bottom_medium slds-form-element__control slds-form-element__legend slds-form-element_vertical">
@@ -711,7 +714,6 @@
               </lightning-output-field>
               
             </div>
-            <div class="slds-col slds-size_1-of-2"></div>
           </div>
         </lightning-accordion-section>
         </lightning-accordion>
