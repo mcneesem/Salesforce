@@ -6380,6 +6380,258 @@
         <type>Flexipage</type>
         <profile>Sales Member</profile>
     </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>NSP_Accrual_Profile_Service_ITA</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>NSP_Accrual_Profile__c</pageOrSobjectType>
+        <recordType>NSP_Accrual_Profile__c.ITA</recordType>
+        <type>Flexipage</type>
+        <profile>Retirement Services</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>NSP_Accrual_Profile_Service_ITA</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>NSP_Accrual_Profile__c</pageOrSobjectType>
+        <recordType>NSP_Accrual_Profile__c.ITA</recordType>
+        <type>Flexipage</type>
+        <profile>Retirement Services</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>NSP_Accrual_Profile_Service_ITA</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>NSP_Accrual_Profile__c</pageOrSobjectType>
+        <recordType>NSP_Accrual_Profile__c.ITA</recordType>
+        <type>Flexipage</type>
+        <profile>PEO Service</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>NSP_Accrual_Profile_Service_ITA</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>NSP_Accrual_Profile__c</pageOrSobjectType>
+        <recordType>NSP_Accrual_Profile__c.ITA</recordType>
+        <type>Flexipage</type>
+        <profile>PEO Service</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>NSP_Accrual_Profile_Service_ITA</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>NSP_Accrual_Profile__c</pageOrSobjectType>
+        <recordType>NSP_Accrual_Profile__c.ITA</recordType>
+        <type>Flexipage</type>
+        <profile>BPS Service</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>NSP_Accrual_Profile_Service_ITA</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>NSP_Accrual_Profile__c</pageOrSobjectType>
+        <recordType>NSP_Accrual_Profile__c.ITA</recordType>
+        <type>Flexipage</type>
+        <profile>BPS Service</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>NSP_Accrual_Profile_Service_ITA</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>NSP_Accrual_Profile__c</pageOrSobjectType>
+        <recordType>NSP_Accrual_Profile__c.ITA</recordType>
+        <type>Flexipage</type>
+        <profile>Contact Center</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>NSP_Accrual_Profile_Service_ITA</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>NSP_Accrual_Profile__c</pageOrSobjectType>
+        <recordType>NSP_Accrual_Profile__c.ITA</recordType>
+        <type>Flexipage</type>
+        <profile>Contact Center</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>NSP_Accrual_Profile_Service_ITA</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>NSP_Accrual_Profile__c</pageOrSobjectType>
+        <recordType>NSP_Accrual_Profile__c.ITA</recordType>
+        <type>Flexipage</type>
+        <profile>Data Migration</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>NSP_Accrual_Profile_Service_ITA</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>NSP_Accrual_Profile__c</pageOrSobjectType>
+        <recordType>NSP_Accrual_Profile__c.ITA</recordType>
+        <type>Flexipage</type>
+        <profile>Data Migration</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>NSP_Accrual_Profile_Service_ITA</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>NSP_Accrual_Profile__c</pageOrSobjectType>
+        <recordType>NSP_Accrual_Profile__c.ITA</recordType>
+        <type>Flexipage</type>
+        <profile>Developer</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>NSP_Accrual_Profile_Service_ITA</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>NSP_Accrual_Profile__c</pageOrSobjectType>
+        <recordType>NSP_Accrual_Profile__c.ITA</recordType>
+        <type>Flexipage</type>
+        <profile>Developer</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>NSP_Accrual_Profile_Service_ITA</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>NSP_Accrual_Profile__c</pageOrSobjectType>
+        <recordType>NSP_Accrual_Profile__c.ITA</recordType>
+        <type>Flexipage</type>
+        <profile>Finance Service</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>NSP_Accrual_Profile_Service_ITA</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>NSP_Accrual_Profile__c</pageOrSobjectType>
+        <recordType>NSP_Accrual_Profile__c.ITA</recordType>
+        <type>Flexipage</type>
+        <profile>Finance Service</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>NSP_Accrual_Profile_Service_ITA</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>NSP_Accrual_Profile__c</pageOrSobjectType>
+        <recordType>NSP_Accrual_Profile__c.ITA</recordType>
+        <type>Flexipage</type>
+        <profile>Integration User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>NSP_Accrual_Profile_Service_ITA</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>NSP_Accrual_Profile__c</pageOrSobjectType>
+        <recordType>NSP_Accrual_Profile__c.ITA</recordType>
+        <type>Flexipage</type>
+        <profile>Integration User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>NSP_Accrual_Profile_Service_ITA</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>NSP_Accrual_Profile__c</pageOrSobjectType>
+        <recordType>NSP_Accrual_Profile__c.ITA</recordType>
+        <type>Flexipage</type>
+        <profile>Minimum Access - Salesforce</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>NSP_Accrual_Profile_Service_ITA</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>NSP_Accrual_Profile__c</pageOrSobjectType>
+        <recordType>NSP_Accrual_Profile__c.ITA</recordType>
+        <type>Flexipage</type>
+        <profile>Minimum Access - Salesforce</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>NSP_Accrual_Profile_Service_ITA</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>NSP_Accrual_Profile__c</pageOrSobjectType>
+        <recordType>NSP_Accrual_Profile__c.ITA</recordType>
+        <type>Flexipage</type>
+        <profile>OneTrust Integration</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>NSP_Accrual_Profile_Service_ITA</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>NSP_Accrual_Profile__c</pageOrSobjectType>
+        <recordType>NSP_Accrual_Profile__c.ITA</recordType>
+        <type>Flexipage</type>
+        <profile>OneTrust Integration</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>NSP_Accrual_Profile_Service_ITA</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>NSP_Accrual_Profile__c</pageOrSobjectType>
+        <recordType>NSP_Accrual_Profile__c.ITA</recordType>
+        <type>Flexipage</type>
+        <profile>Read Only</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>NSP_Accrual_Profile_Service_ITA</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>NSP_Accrual_Profile__c</pageOrSobjectType>
+        <recordType>NSP_Accrual_Profile__c.ITA</recordType>
+        <type>Flexipage</type>
+        <profile>Read Only</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>NSP_Accrual_Profile_Service_ITA</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>NSP_Accrual_Profile__c</pageOrSobjectType>
+        <recordType>NSP_Accrual_Profile__c.ITA</recordType>
+        <type>Flexipage</type>
+        <profile>SolutionManager</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>NSP_Accrual_Profile_Service_ITA</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>NSP_Accrual_Profile__c</pageOrSobjectType>
+        <recordType>NSP_Accrual_Profile__c.ITA</recordType>
+        <type>Flexipage</type>
+        <profile>SolutionManager</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>NSP_Accrual_Profile_Service_ITA</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>NSP_Accrual_Profile__c</pageOrSobjectType>
+        <recordType>NSP_Accrual_Profile__c.ITA</recordType>
+        <type>Flexipage</type>
+        <profile>System Admin Lite</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>NSP_Accrual_Profile_Service_ITA</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>NSP_Accrual_Profile__c</pageOrSobjectType>
+        <recordType>NSP_Accrual_Profile__c.ITA</recordType>
+        <type>Flexipage</type>
+        <profile>System Admin Lite</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>NSP_Accrual_Profile_Service_ITA</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>NSP_Accrual_Profile__c</pageOrSobjectType>
+        <recordType>NSP_Accrual_Profile__c.ITA</recordType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>NSP_Accrual_Profile_Service_ITA</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>NSP_Accrual_Profile__c</pageOrSobjectType>
+        <recordType>NSP_Accrual_Profile__c.ITA</recordType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
     <tabs>standard-home</tabs>
     <tabs>standard-Account</tabs>
     <tabs>standard-Asset</tabs>
