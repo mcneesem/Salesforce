@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QuickAction xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>9/26/2024 - Revised Action Created for Onboarding Meeting Request functionality . Access to new set of flows which creates OMD Records.</description>
+    <flowDefinition>Create_OMD_for_CTM_and_Employee_Orientation_Meeting</flowDefinition>
+    <label>Request CTM and Employee Orientation Meeting Detail</label>
+    <optionsCreateFeedItem>false</optionsCreateFeedItem>
+    <type>Flow</type>
+</QuickAction>

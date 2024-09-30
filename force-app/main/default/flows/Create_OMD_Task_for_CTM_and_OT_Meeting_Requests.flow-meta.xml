@@ -1,0 +1,674 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>61.0</apiVersion>
+    <assignments>
+        <name>Assign_Task_Fields</name>
+        <label>Assign Task Fields</label>
+        <locationX>440</locationX>
+        <locationY>1206</locationY>
+        <assignmentItems>
+            <assignToReference>r_TaskRecord.Description</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>f_taskdescriptiontemplate</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>r_TaskRecord.Notes__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>populate_notes_field_on_task</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>r_TaskRecord.OwnerId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_OMR_Queue.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>r_TaskRecord.Priority</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Medium</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>r_TaskRecord.RecordTypeId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Orientation_Meeting_Request_Task_RecordTypeId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>r_TaskRecord.NSP_Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Open</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>r_TaskRecord.Type</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>f_task_type</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>r_TaskRecord.WhatId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Account__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>r_TaskRecord.Subject</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>omr_task_subject</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Is_Task_Record_Exists</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Assign Task ID to identify the Task Record and update</description>
+        <name>Assign_Task_Id</name>
+        <label>Assign Task Id</label>
+        <locationX>176</locationX>
+        <locationY>1422</locationY>
+        <assignmentItems>
+            <assignToReference>r_TaskRecord.Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Task_Record.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Task_Record</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Copy_1_of_Copy_1_of_Set_Fault_Element_Get_field_definition_of_sales_office_on_ac</name>
+        <label>Set Fault Element : Get_field_definition_of_sales_office_on_account</label>
+        <locationX>2024</locationX>
+        <locationY>492</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_field_definition_of_sales_office_on_account</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Copy_1_of_Set_Fault_Element_Get_entity_definition_of_account</name>
+        <label>Set Fault Element : Get_entity_definition_of_account</label>
+        <locationX>2288</locationX>
+        <locationY>384</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_entity_definition_of_account</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Create_Task_Record</name>
+        <label>Set Fault Element : Create_Task_Record</label>
+        <locationX>1232</locationX>
+        <locationY>1530</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Create_Task_Record</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Get_field_definition_of_sales_office_on_account</name>
+        <label>Set Fault Element : Get_field_definition_of_sales_office_on_account</label>
+        <locationX>1760</locationX>
+        <locationY>600</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_picklistvalueinfo_of_sales_office_on_account</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Get_OMR_Queue</name>
+        <label>Set Fault Element : Get_OMR_Queue</label>
+        <locationX>1496</locationX>
+        <locationY>708</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_OMR_Queue</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Get_Task_Record</name>
+        <label>Set Fault Element : Get_Task_Record</label>
+        <locationX>792</locationX>
+        <locationY>924</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Task_Record</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Update_OMD_Record</name>
+        <label>Set Fault Element : Update_OMD_Record</label>
+        <locationX>968</locationX>
+        <locationY>1638</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Update_OMD_Record</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Update_Task_Record</name>
+        <label>Set Fault Element : Update_Task_Record</label>
+        <locationX>440</locationX>
+        <locationY>1638</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Update_Task_Record</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <constants>
+        <name>Orientation_Meeting_Request_Task_RecordTypeId</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>0124x0000019l9xAAA</stringValue>
+        </value>
+    </constants>
+    <decisions>
+        <name>Is_Task_Record_Exists</name>
+        <label>Is Task Record Exists?</label>
+        <locationX>440</locationX>
+        <locationY>1314</locationY>
+        <defaultConnector>
+            <targetReference>Create_Task_Record</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Task_Already_Exist</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Task_Record.Id</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_Task_Id</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Verify if Task is created for OMD Record : If No -&gt; then Create Task , if Yes-&gt; then Update Task</description>
+        <name>Task_Created_For_OMD</name>
+        <label>Task Created For OMD</label>
+        <locationX>440</locationX>
+        <locationY>708</locationY>
+        <defaultConnector>
+            <targetReference>Get_Task_Record</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Yes - Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>No_Task_not_created</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.TaskId__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.TaskId__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_Task_Fields</targetReference>
+            </connector>
+            <label>No - Task not created</label>
+        </rules>
+    </decisions>
+    <description>Create/Update Task Record for CTM and Employee/Additional OT Meeting Requests</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>f_AccountName</name>
+        <dataType>String</dataType>
+        <expression>{!$Record.Account__r.Name}</expression>
+    </formulas>
+    <formulas>
+        <name>f_AIMSClientNum</name>
+        <dataType>String</dataType>
+        <expression>{!$Record.Account__r.NSP_AIMS_Client__c}</expression>
+    </formulas>
+    <formulas>
+        <name>f_meeting_request_type</name>
+        <dataType>String</dataType>
+        <expression>IF(TEXT({!$Record.Meeting_Request_Type__c}) = &quot;New Client Orientation Request&quot;, &quot;CTM and Employee Orientation Meeting&quot;,TEXT({!$Record.Meeting_Request_Type__c}))</expression>
+    </formulas>
+    <formulas>
+        <name>f_task_type</name>
+        <dataType>String</dataType>
+        <expression>IF(TEXT({!$Record.Onboarding_Meeting_Request__r.Meeting_Type__c}) = &apos;Discovery/SKO&apos;,&apos;Client Transition Meeting Request&apos;, TEXT({!$Record.Onboarding_Meeting_Request__r.Meeting_Type__c})+&apos; Request&apos;)</expression>
+    </formulas>
+    <formulas>
+        <name>f_taskdescriptiontemplate</name>
+        <dataType>String</dataType>
+        <expression>CASE(TEXT({!$Record.Onboarding_Meeting_Request__r.Meeting_Type__c}), &apos;Discovery/SKO&apos;, {!CTM_taskdescriptiontemplate}, &apos;Employee Orientation Meeting&apos;, {!OT_taskdescriptiontemplate} ,&quot;&quot;)</expression>
+    </formulas>
+    <formulas>
+        <name>omr_task_subject</name>
+        <dataType>String</dataType>
+        <expression>TEXT({!$Record.Meeting_Request_Type__c})+&quot; | &quot; + {!Get_picklistvalueinfo_of_sales_office_on_account.Label}</expression>
+    </formulas>
+    <interviewLabel>Create OMD Task for for CTM and OT Meeting Requests {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Create OMD Task for CTM and OT Meeting Requests</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordCreates>
+        <name>Create_Task_Record</name>
+        <label>Create Task Record</label>
+        <locationX>704</locationX>
+        <locationY>1422</locationY>
+        <connector>
+            <targetReference>Update_OMD_Record</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_Create_Task_Record</targetReference>
+        </faultConnector>
+        <inputReference>r_TaskRecord</inputReference>
+    </recordCreates>
+    <recordLookups>
+        <name>Get_entity_definition_of_account</name>
+        <label>Get entity definition of account</label>
+        <locationX>440</locationX>
+        <locationY>276</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_field_definition_of_sales_office_on_account</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Copy_1_of_Set_Fault_Element_Get_entity_definition_of_account</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Account</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>EntityDefinition</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_field_definition_of_sales_office_on_account</name>
+        <label>Get field definition of sales office on account</label>
+        <locationX>440</locationX>
+        <locationY>384</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_picklistvalueinfo_of_sales_office_on_account</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Copy_1_of_Copy_1_of_Set_Fault_Element_Get_field_definition_of_sales_office_on_ac</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>QualifiedApiName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>NSP_Sales_Office__c</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>EntityDefinitionId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_entity_definition_of_account.DurableId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>FieldDefinition</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_OMR_Queue</name>
+        <label>Get OMR Queue</label>
+        <locationX>440</locationX>
+        <locationY>600</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Task_Created_For_OMD</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_Get_OMR_Queue</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Type</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Queue</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Onboarding_Meeting_Request</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Group</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_picklistvalueinfo_of_sales_office_on_account</name>
+        <label>Get picklistvalueinfo of sales office on account</label>
+        <locationX>440</locationX>
+        <locationY>492</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_OMR_Queue</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_Get_field_definition_of_sales_office_on_account</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>EntityParticleId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_field_definition_of_sales_office_on_account.DurableId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Value</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Account__r.NSP_Sales_Office__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>PicklistValueInfo</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <description>Verify  Task Record exist in database</description>
+        <name>Get_Task_Record</name>
+        <label>Get Task Record</label>
+        <locationX>528</locationX>
+        <locationY>816</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Assign_Task_Fields</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_Get_Task_Record</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.TaskId__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Task</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <name>Update_OMD_Record</name>
+        <label>Update OMD Record</label>
+        <locationX>704</locationX>
+        <locationY>1530</locationY>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_Update_OMD_Record</targetReference>
+        </faultConnector>
+        <inputAssignments>
+            <field>TaskId__c</field>
+            <value>
+                <elementReference>r_TaskRecord.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_Task_Record</name>
+        <label>Update Task Record</label>
+        <locationX>176</locationX>
+        <locationY>1530</locationY>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_Update_Task_Record</targetReference>
+        </faultConnector>
+        <inputReference>r_TaskRecord</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Status__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Active</stringValue>
+            </value>
+        </filters>
+        <object>Onboarding_Meeting_Detail__c</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <scheduledPaths>
+            <connector>
+                <targetReference>Get_entity_definition_of_account</targetReference>
+            </connector>
+            <pathType>AsyncAfterCommit</pathType>
+        </scheduledPaths>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Draft</status>
+    <subflows>
+        <name>Fault_Handler_Subflow</name>
+        <label>Fault_Handler_Subflow</label>
+        <locationX>1232</locationX>
+        <locationY>1638</locationY>
+        <flowName>Insperity_Fault_Handler_Subflow</flowName>
+        <inputAssignments>
+            <name>faultElement</name>
+            <value>
+                <elementReference>faultElement</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultFlow</name>
+            <value>
+                <stringValue>Request_Task_for_Onboarding_Meeting_Detail</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultMessage</name>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <textTemplates>
+        <name>CTM_taskdescriptiontemplate</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>{!f_meeting_request_type} for {!f_AccountName}
+-
+Client Number: {!f_AIMSClientNum}
+-
+Time Block Selected:  {!$Record.Onboarding_Meeting_Request__r.Date_Valid__c} , {!$Record.Onboarding_Meeting_Request__r.Start_Time_picklist__c} - {!$Record.Onboarding_Meeting_Request__r.End_Time_picklist__c}
+-
+Preferred Transition Meeting Time within Selected Block: {!$Record.Preferred_Meeting_Time__c}
+-
+Alternate Transition Meeting Date/Time(s): {!$Record.Alternate_Meeting_Date_Time__c}
+-
+Bid Version: {!$Record.Bid_Version__c}
+-
+EE Count: {!$Record.EE_Count__c}
+-
+Client Contact Name: {!$Record.Client_Contact_Name__c}
+-
+Client Contact Phone: {!$Record.Client_Contact_Phone__c}
+-
+Client Contact Email: {!$Record.Client_Contact_Phone__c}
+-
+NSP Effective Date: {!$Record.Effective_Date__c}
+-
+Medical Effective Date: {!$Record.Medical_Effective_Date__c}
+-
+Medical Plan: {!$Record.Medical_Plan__c}
+-
+Benefits Waiting Period: {!$Record.Benefits_Waiting_Period__c}
+-
+Translator Needed for OT: {!$Record.Translator_Needed_for_OT__c}
+If yes to above question, language(s) needed: {!$Record.Language_s_Needed__c}
+-
+Pay Frequency: {!$Record.Pay_Frequency__c}
+-
+First Pay Period: {!$Record.First_Pay_Period__c}
+-
+First Pay Date: {!$Record.First_Pay_Date__c}
+-
+Time Entry Method: {!$Record.Time_Entry_Method__c}
+-
+Will the client use Self-Paced Orientation (SPOT) in place of a live Employee Orientation Meeting: {!$Record.Self_Paced_Orientation_SPOT__c}
+-
+Special Instructions: {!$Record.Special_Instructions__c}</text>
+    </textTemplates>
+    <textTemplates>
+        <name>OT_taskdescriptiontemplate</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>Account: {!f_AccountName}
+-
+Client Number: {!f_AIMSClientNum}
+-
+Number of Employee Orientation Meetings Requested: {!$Record.No_of_Emp_OT_Meetings_Requested__c}
+-
+Meeting Type : {!f_meeting_request_type}
+
+***** Meeting {!$Record.Meeting_Request_Number__c} Info *********
+#1 Time Block Selected: {!$Record.Onboarding_Meeting_Request__r.Date_Valid__c} , {!$Record.Onboarding_Meeting_Request__r.Start_Time_picklist__c} - {!$Record.Onboarding_Meeting_Request__r.End_Time_picklist__c}
+-
+Preferred Time within #1 Selected Time Block: {!$Record.Preferred_Meeting_Time__c}
+-
+Meeting Participant Count: {!$Record.Meeting_Participant_Count__c}
+If Meeting Participant Count is Greater than or Equal to 50, Meeting Type: {!$Record.Meeting_Type__c}
+-
+Translator needed for OT: {!$Record.Translator_Needed_for_OT__c}
+If yes to above question, language(s) needed: {!$Record.Language_s_Needed__c}
+-
+EE Count: {!$Record.EE_Count__c}
+-
+Client Contact Name: {!$Record.Client_Contact_Name__c}
+-
+Client Contact Phone: {!$Record.Client_Contact_Phone__c}
+-
+Client Contact Email: {!$Record.Client_Contact_Email__c}
+-
+Special Instructions: {!$Record.Special_Instructions__c}</text>
+    </textTemplates>
+    <textTemplates>
+        <description>Template to populate the &apos;Notes&apos; field on Task. This is to allow for creation of an Orientation Meeting Request Task and to bypass &apos;Prevent_Manual_Creation_of_OMR_Tasks&apos; validation rule.</description>
+        <name>populate_notes_field_on_task</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>Task created for TEXT({!$Record.Onboarding_Meeting_Request__r.Meeting_Type__c})</text>
+    </textTemplates>
+    <variables>
+        <name>faultElement</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>r_TaskRecord</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Task</objectType>
+    </variables>
+</Flow>
