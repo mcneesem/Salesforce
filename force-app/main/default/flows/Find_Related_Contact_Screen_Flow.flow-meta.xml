@@ -64,7 +64,7 @@
         <name>Re_Open_Current_Case</name>
         <label>Re-Open Current Case</label>
         <locationX>182</locationX>
-        <locationY>3218</locationY>
+        <locationY>3518</locationY>
         <assignmentItems>
             <assignToReference>currentCase.Status</assignToReference>
             <operator>Assign</operator>
@@ -119,7 +119,7 @@
         <name>Set_Current_Case_Contact_Id</name>
         <label>Set Current Case Contact Id</label>
         <locationX>314</locationX>
-        <locationY>3410</locationY>
+        <locationY>3710</locationY>
         <assignmentItems>
             <assignToReference>currentCase.ContactId</assignToReference>
             <operator>Assign</operator>
@@ -135,7 +135,7 @@
         <name>Set_Fault_Element_Close_Re_Opened_Case</name>
         <label>Set Fault Element: Close_Re_Opened_Case</label>
         <locationX>314</locationX>
-        <locationY>3842</locationY>
+        <locationY>4142</locationY>
         <assignmentItems>
             <assignToReference>faultElement</assignToReference>
             <operator>Assign</operator>
@@ -152,7 +152,7 @@
         <name>Set_Fault_Element_Create_Case_Contact</name>
         <label>Set Fault Element: Create_Case_Contact</label>
         <locationX>314</locationX>
-        <locationY>4340</locationY>
+        <locationY>4640</locationY>
         <assignmentItems>
             <assignToReference>faultElement</assignToReference>
             <operator>Assign</operator>
@@ -175,6 +175,23 @@
             <operator>Assign</operator>
             <value>
                 <stringValue>Get_Messaging_User</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Get_User_Record_Access</name>
+        <label>Set Fault Element: Get_User_Record_Access</label>
+        <locationX>754</locationX>
+        <locationY>2612</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_User_Record_Access</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -219,7 +236,7 @@
         <name>Set_Fault_Element_Select_Current_Case</name>
         <label>Set Fault Element: Select_Current_Case</label>
         <locationX>1282</locationX>
-        <locationY>3002</locationY>
+        <locationY>3302</locationY>
         <assignmentItems>
             <assignToReference>faultElement</assignToReference>
             <operator>Assign</operator>
@@ -236,7 +253,7 @@
         <name>Set_Fault_Element_Update_Current_Case_ContactId</name>
         <label>Set Fault Element: Update_Current_Case_ContactId</label>
         <locationX>754</locationX>
-        <locationY>3626</locationY>
+        <locationY>3926</locationY>
         <assignmentItems>
             <assignToReference>faultElement</assignToReference>
             <operator>Assign</operator>
@@ -269,8 +286,8 @@
     <assignments>
         <name>Set_Fault_Element_Update_Voice_Call</name>
         <label>Set Fault Element: Update_Voice_Call</label>
-        <locationX>666</locationX>
-        <locationY>2612</locationY>
+        <locationX>314</locationX>
+        <locationY>2828</locationY>
         <assignmentItems>
             <assignToReference>faultElement</assignToReference>
             <operator>Assign</operator>
@@ -303,7 +320,7 @@
         <name>Check_Current_Case</name>
         <label>Check Current Case</label>
         <locationX>666</locationX>
-        <locationY>3002</locationY>
+        <locationY>3302</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Found_Current_Case</name>
@@ -326,7 +343,7 @@
         <name>Check_Current_Case_Status</name>
         <label>Check Current Case Status</label>
         <locationX>314</locationX>
-        <locationY>3110</locationY>
+        <locationY>3410</locationY>
         <defaultConnector>
             <targetReference>Set_Current_Case_Contact_Id</targetReference>
         </defaultConnector>
@@ -377,7 +394,7 @@
         <name>Check_Re_Opened_Current_Case</name>
         <label>Check  Re-Opened Current Case</label>
         <locationX>314</locationX>
-        <locationY>3626</locationY>
+        <locationY>3926</locationY>
         <defaultConnector>
             <targetReference>Is_Case_Contacts_Enabled</targetReference>
         </defaultConnector>
@@ -421,6 +438,45 @@
                 <targetReference>Set_Count_SOSL_Results</targetReference>
             </connector>
             <label>Found SOSL Results</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_User_Record_Access</name>
+        <label>Check User Record Access</label>
+        <locationX>314</locationX>
+        <locationY>2612</locationY>
+        <defaultConnector>
+            <targetReference>Select_Current_Case</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Is_Editable</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>editableRecordId</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>editableRecordId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>editableRecordId</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Voice_Call</targetReference>
+            </connector>
+            <label>Is Editable</label>
         </rules>
     </decisions>
     <decisions>
@@ -478,7 +534,7 @@
         <name>Is_Case_Contacts_Enabled</name>
         <label>Is Case Contacts Enabled</label>
         <locationX>314</locationX>
-        <locationY>4124</locationY>
+        <locationY>4424</locationY>
         <defaultConnector>
             <targetReference>Is_First_Call_Resolution_Enabled</targetReference>
         </defaultConnector>
@@ -535,7 +591,7 @@
         <name>Is_First_Call_Resolution_Enabled</name>
         <label>Is First Call Resolution Enabled</label>
         <locationX>314</locationX>
-        <locationY>4622</locationY>
+        <locationY>4922</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Is_Enabled_First_Call_Resolution</name>
@@ -612,7 +668,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Update_Voice_Call</targetReference>
+                <targetReference>Get_User_Record_Access</targetReference>
             </connector>
             <label>Verified Voice Call</label>
         </rules>
@@ -644,7 +700,7 @@
         <name>Create_Case_Contact</name>
         <label>Create Case Contact</label>
         <locationX>50</locationX>
-        <locationY>4232</locationY>
+        <locationY>4532</locationY>
         <connector>
             <targetReference>Is_First_Call_Resolution_Enabled</targetReference>
         </connector>
@@ -696,6 +752,47 @@
         <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>MessagingEndUser</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <description>Ensure current User has &apos;Edit&apos; record access to prevent DmlExceptions.</description>
+        <name>Get_User_Record_Access</name>
+        <label>Get User Record Access</label>
+        <locationX>314</locationX>
+        <locationY>2504</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_User_Record_Access</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_Get_User_Record_Access</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>RecordId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Voice_Call.Id</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>UserId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$User.Id</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>HasEditAccess</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <object>UserRecordAccess</object>
+        <outputAssignments>
+            <assignToReference>editableRecordId</assignToReference>
+            <field>RecordId</field>
+        </outputAssignments>
     </recordLookups>
     <recordLookups>
         <name>Get_Voice_Call</name>
@@ -753,7 +850,7 @@
         <name>Select_Current_Case</name>
         <label>Select Current Case</label>
         <locationX>666</locationX>
-        <locationY>2894</locationY>
+        <locationY>3194</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_Current_Case</targetReference>
@@ -779,7 +876,7 @@
         <name>Close_Re_Opened_Case</name>
         <label>Close Re-Opened Case</label>
         <locationX>50</locationX>
-        <locationY>3734</locationY>
+        <locationY>4034</locationY>
         <connector>
             <targetReference>Is_Case_Contacts_Enabled</targetReference>
         </connector>
@@ -806,7 +903,7 @@
         <name>Update_Current_Case_ContactId</name>
         <label>Update Current Case (ContactId)</label>
         <locationX>314</locationX>
-        <locationY>3518</locationY>
+        <locationY>3818</locationY>
         <connector>
             <targetReference>Check_Re_Opened_Current_Case</targetReference>
         </connector>
@@ -831,8 +928,8 @@
     <recordUpdates>
         <name>Update_Voice_Call</name>
         <label>Update Voice Call</label>
-        <locationX>402</locationX>
-        <locationY>2504</locationY>
+        <locationX>50</locationX>
+        <locationY>2720</locationY>
         <connector>
             <targetReference>Select_Current_Case</targetReference>
         </connector>
@@ -1071,7 +1168,7 @@
         <name>Handle_First_Call_Resolution</name>
         <label>Handle First Call Resolution</label>
         <locationX>182</locationX>
-        <locationY>4730</locationY>
+        <locationY>5030</locationY>
         <flowName>Handle_First_Call_Resolution</flowName>
         <inputAssignments>
             <name>firstCallResolutionHours</name>
@@ -1142,6 +1239,16 @@
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <objectType>Case</objectType>
+    </variables>
+    <variables>
+        <name>editableRecordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue></stringValue>
+        </value>
     </variables>
     <variables>
         <name>faultElement</name>
