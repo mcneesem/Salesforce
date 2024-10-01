@@ -1,4 +1,4 @@
-public without sharing class CancelCoreSalesEventsTasksBatch implements Database.Batchable<sObject>  {
+public class CancelCoreSalesEventsTasksBatch implements Database.Batchable<sObject>  {
     // test w/ CancelCoreSalesEventsTasksBatchTest (89%)
 
     private static Id evtRecTypeId = Schema.SObjectType.Event.getRecordTypeInfosByDeveloperName().get('Core_Sales_Event_RT').getRecordTypeId();
