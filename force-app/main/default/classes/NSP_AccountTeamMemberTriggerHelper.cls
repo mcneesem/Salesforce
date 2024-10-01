@@ -60,18 +60,7 @@ public with sharing class NSP_AccountTeamMemberTriggerHelper {
             for ( AccountTeamMember accTeamMemberObj : newList ) {
                 accountIdSet.add( accTeamMemberObj.AccountId );
             }
-            if ( !accountIdSet.isEmpty() ) {
-                List<Account> accountList = new List<Account>();
-                for( Id accountId : accountIdSet ) {
-                    Account accountObj = new Account();
-                    accountObj.Id = accountId;
-                    accountObj.NSP_Ready_for_Integration_Sync__c = true;
-                    accountList.add( accountObj );
-                }
-                if ( !accountList.isEmpty() ) {
-                    update accountList;
-                }
-            }
+            IntegrationSyncController.setReadyForIntegrationSync( accountIdSet );
         } catch ( Exception e ) {
             NSP_AccountTeamMemberTriggerHelper.handleException( e , 'afterInsertDirector' );
         }
@@ -103,18 +92,7 @@ public with sharing class NSP_AccountTeamMemberTriggerHelper {
                     oldMap
                 )
             );
-            if ( !accountIdSetToUpdateResyncFlag.isEmpty() ) {
-                List<Account> updateAccountList = new List<Account>();
-                for ( Id accountId : accountIdSetToUpdateResyncFlag ) {
-                    Account accountObj = new Account();	
-                    accountObj.NSP_Ready_for_Integration_Sync__c = true;
-                    accountObj.Id = accountId;
-                    updateAccountList.add( accountObj );
-                }
-                if ( !updateAccountList.isEmpty() ) {
-                    update updateAccountList;
-                }
-            }
+            IntegrationSyncController.setReadyForIntegrationSync( accountIdSetToUpdateResyncFlag );
         } catch ( Exception e ) {
             NSP_AccountTeamMemberTriggerHelper.handleException( e , 'afterUpdateDirector' );
         }

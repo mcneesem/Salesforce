@@ -44,18 +44,7 @@ public with sharing class NSP_AccountContactRelationTriggerHelper {
                     NSP_AccountContactRelationSharing.projectTaskRecordSharing( accountsWithCommunityAccess , null );
                     NSP_AccountContactRelationSharing.milestoneRecordSharing( accountsWithCommunityAccess , null );
                 }
-                if ( !accountIdSet.isEmpty() ) {
-                    List<Account> accountList = new List<Account>();
-                    for ( Id accountId : accountIdSet ) {
-                        Account accountObj = new Account();
-                        accountObj.Id = accountId;
-                        accountObj.NSP_Ready_for_Integration_Sync__c = true;
-                        accountList.add( accountObj );
-                    }
-                    if ( !accountList.isEmpty() ) {
-                        update accountList;
-                    }
-                }
+                IntegrationSyncController.setReadyForIntegrationSync( accountIdSet );
             }
         } catch ( Exception e ) {
             NSP_AccountContactRelationTriggerHelper.handleException( e , 'afterInsertDirector' );
@@ -138,18 +127,7 @@ public with sharing class NSP_AccountContactRelationTriggerHelper {
                     contactNewMap ,
                     contactOldMap
                 );
-                if ( !accountIdSetToUpdateResyncFlag.isEmpty() ) {
-                    List<Account> accountList = new List<Account>();
-                    for ( Id accountId : accountIdSetToUpdateResyncFlag ) {
-                        Account accountObj = new Account();
-                        accountObj.Id = accountId;
-                        accountObj.NSP_Ready_for_Integration_Sync__c = true;
-                        accountList.add( accountObj );
-                    }
-                    if ( !accountList.isEmpty() ) {
-                        update accountList;
-                    }
-                }
+                IntegrationSyncController.setReadyForIntegrationSync( accountIdSetToUpdateResyncFlag );
                 if ( !ConIdACRMap.isEmpty() ) {
                     updateWorkPhoneEmailOnContact( ConIdACRMap );
                 }

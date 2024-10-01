@@ -199,19 +199,7 @@ public with sharing class NSP_ContactTriggerHelper {
                     newMap ,
                     oldMap
                 );
-                if ( !accountIdSetToUpdateResyncFlag.isEmpty() ) {
-                    List<Account> accountList = new List<Account>();
-                    for ( Id accountId : accountIdSetToUpdateResyncFlag ) {
-                        Account accountObj = new Account();
-                        accountObj.Id = accountId;
-                        accountObj.NSP_Ready_for_Integration_Sync__c = true;
-                        accountList.add( accountObj );
-                    }
-                    if ( !accountList.isEmpty() ) {
-                        NSP_AccountTriggerHandler.TriggerDisabled = true; // added for 195356
-                        update accountList; 
-                    }
-                }
+                IntegrationSyncController.setReadyForIntegrationSync( accountIdSetToUpdateResyncFlag , true );
                 // handle office details...
                 setSalesOfficeDetails( newMap.values() , oldMap );
             }
