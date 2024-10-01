@@ -2,7 +2,7 @@
  * Represents the AccountTeam trigger handler.
  */
 public class NSP_AccountTeamTriggerHandler  implements NSP_ITriggerHandler {
-    // test w/ NSP_AccountTeamTriggerTest (??%)
+    // test w/ NSP_AccountTeamTriggerTest (100%)
 
     //Use this variable to disable this trigger from transaction.
     public static Boolean TriggerDisabled = false;
