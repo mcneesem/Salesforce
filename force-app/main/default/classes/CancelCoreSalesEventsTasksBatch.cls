@@ -108,12 +108,20 @@ public without sharing class CancelCoreSalesEventsTasksBatch implements Database
                 recordsToUpdate.add(record);
             }
 
-            if(!recordsToUpdate.isEmpty()){
-                Database.update(recordsToUpdate, false);
+            if ( !recordsToUpdate.isEmpty() ) {
+                List<Database.SaveResult> results = Database.update( recordsToUpdate , false );
+                NSP_ErrorLogHandler.logResults(
+                    CancelCoreSalesEventsTasksBatch.class.getName() ,
+                    'execute:update' ,
+                    results
+                );
             }
-
-        } catch (Exception ex) {
-            NSP_ErrorLogHandler.logSaveException('CancelCoreSalesEventsTasksBatch', 'execute', ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                CancelCoreSalesEventsTasksBatch.class.getName() ,
+                'execute' ,
+                e
+            );
         }
     }
     
