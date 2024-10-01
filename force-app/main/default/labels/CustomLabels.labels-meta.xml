@@ -2263,7 +2263,7 @@
         <categories>nsp_benefitsIp</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>Did the schedule B change at SKO</shortDescription>
+        <shortDescription>Did the schedule B change at CTM</shortDescription>
         <value>Did the Schedule B change at the Client Transition Meeting?</value>
     </labels>
     <labels>
@@ -5798,8 +5798,8 @@ Climate Plus: https://nexus.insperity.com/groups/38605/posts/3272612-climate-plu
         <categories>nsp_generalIp</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>Will BPA attending SKO</shortDescription>
-        <value>Will the BPA(s) be attending the SKO?</value>
+        <shortDescription>Will BPA attending CTM</shortDescription>
+        <value>Will the BPA(s) be attending the CTM?</value>
     </labels>
     <labels>
         <fullName>NSP_Will_Client_be_maintaining_client_sponspored_plan</fullName>
