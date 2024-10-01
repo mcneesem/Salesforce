@@ -1,5 +1,4 @@
 public interface ISelfSchedulable {
-    
-  String schedule();
-  
-  }
+    String schedule();
+}
+//

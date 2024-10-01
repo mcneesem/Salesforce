@@ -2,22 +2,26 @@
 private class RulesOfEngagement_SchedulerTest {
     private static final String sch = '0 0 3 * * ? *';
     
-    @isTest
-    private static void runRules() {
+    @isTest private static void runRules() {
 
-        User userDeployerManager = [SELECT Id, Name FROM User WHERE UserName LIKE 'deployment.manager@insperity.com%' LIMIT 1];
+        User userDeployerManager = [
+            SELECT Id, Name
+            FROM User
+            WHERE UserName LIKE 'deployment.manager@insperity.com%'
+            LIMIT 1
+        ];
         
-        //	Custom settings
+        // Custom settings
         Rules_Of_Engagement__c roeSettings = new Rules_Of_Engagement__c();
-		roeSettings.Available_User_Id__c = '0054x000008PgqNAAS';
-		insert roeSettings;        
+        roeSettings.Available_User_Id__c = '0054x000008PgqNAAS';
+        insert roeSettings;        
 
         Test.startTest();
 
         System.runAs(userDeployerManager){
             
-            //	Run as Deployer Manager 
-            //	Important: permisison set - > Set audit field on record creation
+            // Run as Deployer Manager 
+            // Important: permisison set - > Set audit field on record creation
             
             List<SObject> contactList = new List<SObject>();
             List<AccountContactRelation> acrList = new List<AccountContactRelation>();
@@ -41,13 +45,21 @@ private class RulesOfEngagement_SchedulerTest {
             contactList.add(contact2);
             insert contactList;
             
-            AccountContactRelation acr1  = [Select Id from AccountContactRelation WHERE AccountId =: account.Id AND contactId =: contact1.Id];
+            AccountContactRelation acr1  = [
+                SELECT Id
+                FROM AccountContactRelation
+                WHERE AccountId =: account.Id AND contactId =: contact1.Id
+            ];
             acr1.NSP_Is_Primary__c = true;
             acr1.IsActive = true;
             acr1.Roles = 'Agency';
             acrList.add(acr1);
 
-            AccountContactRelation acr2  = [Select Id from AccountContactRelation WHERE AccountId =: account.Id AND contactId =: contact2.Id];
+            AccountContactRelation acr2  = [
+                SELECT Id
+                FROM AccountContactRelation
+                WHERE AccountId =: account.Id AND contactId =: contact2.Id
+            ];
             acr2.Roles = 'COI';
             acrList.add(acr2);
             update acrList;
@@ -65,9 +77,9 @@ private class RulesOfEngagement_SchedulerTest {
             opp.CreatedDate = Date.newInstance(2023, 01, 09);
             insert opp;
 
-             //	Create a task in the past -> 200 days ago
+            // Create a task in the past -> 200 days ago
             Task task = new Task();
-			task.Subject = 'Test Task';
+            task.Subject = 'Test Task';
             task.Status = 'Completed';
             task.WhatId = opp.id;
             task.ActivityDate = Date.newInstance(2023, 01, 09);
@@ -76,8 +88,14 @@ private class RulesOfEngagement_SchedulerTest {
 
             RulesOfEngagement_Scheduler.runRulesOfEngagement();
 
-            Opportunity opp1 = [SELECT StageName, NSP_Lost_Reason__c, NSP_Forecast__c, NSP_ForecastPercent__c, NSP_Forecast_Status__c
-                                FROM Opportunity WHERE id =: opp.id LIMIT 1];
+            Opportunity opp1 = [
+                SELECT
+                    StageName, NSP_Lost_Reason__c, NSP_Forecast__c,
+                    NSP_ForecastPercent__c, NSP_Forecast_Status__c
+                FROM Opportunity
+                WHERE id =: opp.id
+                LIMIT 1
+            ];
             
             System.assertEquals(opp1.StageName, 'Closed Lost');
             System.assertEquals(opp1.NSP_Lost_Reason__c, 'Abandoned');
@@ -99,13 +117,18 @@ private class RulesOfEngagement_SchedulerTest {
     }
 
     //Static Test Method to Call the Scheduler Class
-    @isTest 
-    private static void testRulesOfEngagement_Scheduler_schedule() {
+    @isTest private static void testRulesOfEngagement_Scheduler_schedule() {
         Test.startTest();
         String jobId = RulesOfEngagement_Scheduler.schedule();
-        CronTrigger ct = [SELECT Id, CronExpression, TimesTriggered, NextFireTime FROM CronTrigger WHERE id = :jobId];
+        CronTrigger ct = [
+            SELECT Id, CronExpression, TimesTriggered, NextFireTime
+            FROM CronTrigger
+            WHERE id = :jobId
+        ];
         System.assertEquals(sch, ct.CronExpression);
         System.assertEquals(0, ct.TimesTriggered);
         Test.stopTest();
    }
+
 }
+//

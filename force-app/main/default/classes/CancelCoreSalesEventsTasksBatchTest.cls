@@ -1,11 +1,11 @@
 @isTest(SeeAllData=false)
 
 private class CancelCoreSalesEventsTasksBatchTest {
-    private static Id taskRecTypeId = Schema.SObjectType.Task.getRecordTypeInfosByDeveloperName().get('Core_Sales_Task_RT').getRecordTypeId();
-    private static Id evtRecTypeId = Schema.SObjectType.Event.getRecordTypeInfosByDeveloperName().get('Core_Sales_Event_RT').getRecordTypeId();
 
-    @testSetup
-    private static void setupData() {
+    private static Id taskRecTypeId = NSP_GenericRecordType.getRecordTypeId( 'Task' , 'Core_Sales_Task_RT' );
+    private static Id evtRecTypeId = NSP_GenericRecordType.getRecordTypeId( 'Event' , 'Core_Sales_Event_RT' );
+
+    @testSetup private static void setupData() {
 
         List<Task> taskList = new List<Task>();
         List<Event> eventList = new List<Event>();
@@ -56,20 +56,30 @@ private class CancelCoreSalesEventsTasksBatchTest {
         }
     }
 
-    @isTest 
-    private static void testCancelCoreSalesEventsTasks1() {
+    @isTest private static void testCancelCoreSalesEventsTasks1() {
         Test.startTest();
         Database.executeBatch(new CancelCoreSalesEventsTasksBatch(null));
         Test.stopTest();
-        List<Task> taskList = [SELECT Id, RecordTypeId, Status, ActivityDate, CreatedDate, NSP_Status__c
-                        FROM Task WHERE RecordTypeId = :taskRecTypeId
-                        AND (Status = null OR Status = 'Open') AND (ActivityDate < N_DAYS_AGO:45
-                        OR (ActivityDate = null AND CreatedDate < N_DAYS_AGO:45))];
-        List<Event> eventList = [SELECT Id, RecordTypeId, EndDateTime, CreatedDate, NSP_Status__c
-                         FROM Event WHERE RecordTypeId = :evtRecTypeId
-                         AND IsRecurrence2 = false AND FSL__Event_Type__c = null
-                         AND (NSP_Status__c = null OR NSP_Status__c = 'Open') AND (EndDateTime < N_DAYS_AGO:30
-                         OR (EndDateTime = null AND CreatedDate < N_DAYS_AGO:30))];
+        List<Task> taskList = [
+            SELECT Id, RecordTypeId, Status, ActivityDate, CreatedDate, NSP_Status__c
+            FROM Task
+            WHERE (
+                RecordTypeId = :taskRecTypeId
+                AND (Status = null OR Status = 'Open')
+                AND (ActivityDate < N_DAYS_AGO:45 OR (ActivityDate = null AND CreatedDate < N_DAYS_AGO:45))
+            )
+        ];
+        List<Event> eventList = [
+            SELECT Id, RecordTypeId, EndDateTime, CreatedDate, NSP_Status__c
+            FROM Event
+            WHERE (
+                RecordTypeId = :evtRecTypeId
+                AND IsRecurrence2 = false
+                AND FSL__Event_Type__c = null
+                AND (NSP_Status__c = null OR NSP_Status__c = 'Open')
+                AND (EndDateTime < N_DAYS_AGO:30 OR (EndDateTime = null AND CreatedDate < N_DAYS_AGO:30))
+            )
+        ];
         System.assertEquals(0, taskList.size());
         System.assertEquals(0, eventList.size());
    }
@@ -80,14 +90,28 @@ private class CancelCoreSalesEventsTasksBatchTest {
         List<Id> parentIds = new List<Id>{[SELECT Id FROM Account WHERE Name = :NSP_TestHelper.DEFAULT_COMPANY_NAME LIMIT 1].Id};
         Database.executeBatch(new CancelCoreSalesEventsTasksBatch(parentIds));
         Test.stopTest();
-        List<Task> taskList = [SELECT Id, RecordTypeId, Status, ActivityDate, CreatedDate, NSP_Status__c
-                        FROM Task WHERE RecordTypeId = :taskRecTypeId
-                        AND (Status = null OR Status = 'Open') AND WhatId = :parentIds[0]];
-        List<Event> eventList = [SELECT Id, RecordTypeId, EndDateTime, CreatedDate, NSP_Status__c
-                         FROM Event WHERE RecordTypeId = :evtRecTypeId
-                         AND IsRecurrence2 = false AND FSL__Event_Type__c = null
-                         AND (NSP_Status__c = null OR NSP_Status__c = 'Open') AND WhatId = :parentIds[0]];
+        List<Task> taskList = [
+            SELECT Id, RecordTypeId, Status, ActivityDate, CreatedDate, NSP_Status__c
+            FROM Task
+            WHERE (
+                RecordTypeId = :taskRecTypeId
+                AND (Status = null OR Status = 'Open')
+                AND WhatId = :parentIds[0]
+            )
+        ];
+        List<Event> eventList = [
+            SELECT Id, RecordTypeId, EndDateTime, CreatedDate, NSP_Status__c
+            FROM Event
+            WHERE (
+                RecordTypeId = :evtRecTypeId
+                AND IsRecurrence2 = false AND FSL__Event_Type__c = null
+                AND (NSP_Status__c = null OR NSP_Status__c = 'Open')
+                AND WhatId = :parentIds[0]
+            )
+        ];
         System.assertEquals(0, taskList.size());
         System.assertEquals(0, eventList.size());
    }
+
 }
+//
