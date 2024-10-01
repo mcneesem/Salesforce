@@ -625,6 +625,7 @@ static void createAssetTest(){
     update oppty;
 
     Test.stopTest();
+    NSP_ChildOpportunitiesHelperFunctions.testHandleException( null , null );
 }
 
 @isTest
