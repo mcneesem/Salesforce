@@ -1,5 +1,5 @@
-global interface ISelfSchedulable {
+public interface ISelfSchedulable {
     
-    String schedule();
+  String schedule();
   
   }

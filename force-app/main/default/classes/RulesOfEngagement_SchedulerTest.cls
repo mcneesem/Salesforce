@@ -3,7 +3,7 @@ private class RulesOfEngagement_SchedulerTest {
     private static final String sch = '0 0 3 * * ? *';
     
     @isTest
-    public static void runRules() {
+    private static void runRules() {
 
         User userDeployerManager = [SELECT Id, Name FROM User WHERE UserName LIKE 'deployment.manager@insperity.com%' LIMIT 1];
         
@@ -74,7 +74,7 @@ private class RulesOfEngagement_SchedulerTest {
             task.CreatedDate = Date.newInstance(2023, 01, 09);
             insert task;
 
-            RulesOfEngagement_Scheduler.RulesOfEngagement();
+            RulesOfEngagement_Scheduler.runRulesOfEngagement();
 
             Opportunity opp1 = [SELECT StageName, NSP_Lost_Reason__c, NSP_Forecast__c, NSP_ForecastPercent__c, NSP_Forecast_Status__c
                                 FROM Opportunity WHERE id =: opp.id LIMIT 1];

@@ -2,10 +2,10 @@ public with sharing class RulesOfEngagement_Scheduler implements ISelfSchedulabl
     // test w/ RulesOfEngagement_SchedulerTest (93%)
     
     public void execute( SchedulableContext context ) {
-        RulesOfEngagement();
+        runRulesOfEngagement();
     }
 
-    public static void RulesOfEngagement() {        
+    public static void runRulesOfEngagement() {        
         Id availableUserId = Rules_Of_Engagement__c.getInstance(UserInfo.getUserId()).Available_User_Id__c;
         List<Id> parentIds = new List<Id>();
         List<Id> accountIds = new List<Id>();
@@ -57,9 +57,44 @@ public with sharing class RulesOfEngagement_Scheduler implements ISelfSchedulabl
             }
         }
 
-        if (opps != null && !opps.isEmpty()) update opps;
-        if (accountsToUpdate != null && !accountsToUpdate.isEmpty()) update accountsToUpdate;
-        if (contactsToUpdate != null && !contactsToUpdate.isEmpty()) update contactsToUpdate;
+        try {
+            
+            if (opps != null && !opps.isEmpty()) {
+                List<Database.SaveResult> results = Database.update( opps , true );
+                NSP_ErrorLogHandler.logResults(
+                    RulesOfEngagement_Scheduler.class.getName() ,
+                    'runRulesOfEngagement:update:Opportunity' ,
+                    results
+                );
+            }
+
+            if (accountsToUpdate != null && !accountsToUpdate.isEmpty()) {
+                update accountsToUpdate;
+                List<Database.SaveResult> results = Database.update( accountsToUpdate , true );
+                NSP_ErrorLogHandler.logResults(
+                    RulesOfEngagement_Scheduler.class.getName() ,
+                    'runRulesOfEngagement:update:Account' ,
+                    results
+                );
+            }
+            
+            if (contactsToUpdate != null && !contactsToUpdate.isEmpty()) {
+                update contactsToUpdate;
+                List<Database.SaveResult> results = Database.update( contactsToUpdate , true );
+                NSP_ErrorLogHandler.logResults(
+                    RulesOfEngagement_Scheduler.class.getName() ,
+                    'runRulesOfEngagement:update:Contact' ,
+                    results
+                );
+            }
+            
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                RulesOfEngagement_Scheduler.class.getName() ,
+                'runRulesOfEngagement' ,
+                e
+            );
+        }
 
         if (parentIds != null && !parentIds.isEmpty()) {
             Database.executeBatch(new CancelCoreSalesEventsTasksBatch(parentIds), 200);
