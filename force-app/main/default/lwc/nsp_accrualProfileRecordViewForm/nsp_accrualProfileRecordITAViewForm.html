@@ -120,35 +120,42 @@
         <!-- Policy Information -->
         <lightning-accordion-section
           name="PolicyInformation"
-          label="Policy Information">
+          label="Policy Information"
+          >
           <div class="slds-grid slds-gutters slds-p-top_x-small">
             <div class="slds-col slds-size_1-of-2">
-              <lightning-input-field disabled
+              <lightning-input-field
+                disabled
                 field-name="NSP_Type_of_Policy__c"
                 data-name="NSP_Type_of_Policy__c"
                 class="slds-form-element__legend"
                 >
               </lightning-input-field>
 
-              <lightning-input-field disabled
+              <lightning-input-field
+                disabled
                 if:true={visibility.NSP_Policy_Type_Provide_Details__c}
                 field-name="NSP_Policy_Type_Provide_Details__c"
                 data-name="NSP_Policy_Type_Provide_Details__c"
                 value={fieldValue.NSP_Policy_Type_Provide_Details__c}
-                class="slds-form-element__legend">
+                class="slds-form-element__legend"
+                >
               </lightning-input-field>
 
               <lightning-formatted-text
                 if:true={visibility.NSP_Type_of_Policy_info_msg}
                 value="This will not show on the paystub."
-                class="slds-show slds-text-heading_small slds-var-m-around_medium">
+                class="slds-show slds-text-heading_small slds-var-m-around_medium"
+                >
               </lightning-formatted-text>
 
-              <lightning-input-field disabled
+              <lightning-input-field
+                disabled
                 field-name="NSP_Accrual_Profile_Plan_Name__c"
                 data-name="NSP_Accrual_Profile_Plan_Name__c"
                 value={fieldValue.NSP_Accrual_Profile_Plan_Name__c}
-                class="slds-form-element__legend">
+                class="slds-form-element__legend"
+                >
               </lightning-input-field>
 
               <lightning-combobox
@@ -172,26 +179,31 @@
                 >
               </c-nsp_selection-box>
 
-              <lightning-input-field disabled
+              <lightning-input-field
+                disabled
                 field-name="NSP_Effective_date__c"
                 data-name="NSP_Effective_date__c"
                 value={fieldValue.NSP_Effective_date__c}
-                class="slds-show slds-var-m-bottom_medium slds-form-element__control slds-form-element__legend slds-form-element_vertical">
+                class="slds-show slds-var-m-bottom_medium slds-form-element__control slds-form-element__legend slds-form-element_vertical"
+                >
               </lightning-input-field>
 
             </div>
             <div class="slds-col slds-size_1-of-2">
               <lightning-formatted-text
                 value="Does this plan replace another (or other) plans?"
-                class="slds-show slds-var-m-bottom_medium slds-form-element__control slds-form-element__legend slds-form-element_vertical">>
+                class="slds-show slds-var-m-bottom_medium slds-form-element__control slds-form-element__legend slds-form-element_vertical"
+                >
               </lightning-formatted-text>
 
-              <lightning-input-field disabled 
+              <lightning-input-field
+                disabled 
                 field-name="NSP_Does_this_plan_replace_other_plans__c"
                 data-name="NSP_Does_this_plan_replace_other_plans__c"
                 variant="label-hidden"
                 value={fieldValue.NSP_Does_this_plan_replace_other_plans__c}
-                class="slds-show slds-var-m-bottom_medium slds-form-element__control slds-form-element__legend slds-form-element_vertical">
+                class="slds-show slds-var-m-bottom_medium slds-form-element__control slds-form-element__legend slds-form-element_vertical"
+                >
               </lightning-input-field>
 
               <lightning-combobox
@@ -205,7 +217,8 @@
                 >
               </lightning-combobox>
 
-              <lightning-input-field disabled
+              <lightning-input-field
+                disabled
                 if:true={visibility.NSP_Other_Plan__c}
                 field-name="NSP_Other_Plan__c"
                 data-name="NSP_Other_Plan__c"
@@ -214,26 +227,31 @@
                 >
               </lightning-input-field>
 
-              <c-nsp_selection-box disabled
+              <c-nsp_selection-box
+                disabled
                 label="Employee Status (check all that apply)"
                 field-api-name="NSP_Accrual_Profile__c.NSP_Employee_Status_check_all_that_apply__c"
                 record-type-id={fieldValue.recordTypeId}
                 value={fieldValue.NSP_Employee_Status_check_all_that_apply__c}
                 data-name="NSP_Employee_Status_check_all_that_apply__c"
                 class="slds-show slds-var-m-bottom_medium slds-form-element__control slds-form-element__legend slds-form-element_vertical"
-                multiple>
+                multiple
+                >
               </c-nsp_selection-box>
 
-              <lightning-input-field disabled
-              lwc:if={visibility.Other_Status__c}
-              field-name="Other_Status__c"
-              data-name="Other_Status__c"
-              value={fieldValue.Other_Status__c}
-              class="slds-show slds-var-m-bottom_medium slds-form-element__control slds-form-element__legend slds-form-element_vertical"
-              onchange={handleValueChange}>
+              <lightning-input-field
+                disabled
+                lwc:if={visibility.Other_Status__c}
+                field-name="Other_Status__c"
+                data-name="Other_Status__c"
+                value={fieldValue.Other_Status__c}
+                class="slds-show slds-var-m-bottom_medium slds-form-element__control slds-form-element__legend slds-form-element_vertical"
+                onchange={handleValueChange}
+                >
               </lightning-input-field>
 
-              <lightning-input-field disabled
+              <lightning-input-field
+                disabled
                 value={fieldValue.NSP_Submitted_to_satisfy_compliance_need__c}
                 field-name="NSP_Submitted_to_satisfy_compliance_need__c"
                 data-name="NSP_Submitted_to_satisfy_compliance_need__c"
@@ -242,18 +260,21 @@
               </lightning-input-field>
 
               <lightning-formatted-rich-text
-                  lwc:if={visibility.NSP_Compliance_Location__c}
-                  value="Compliance Locations (Click &lt;a href=&quot;https://serviceops.spapps.insperity.com/sites/hr/Shared%20Documents/Mandatory%20Leave%20Ordinances.docx&quot;&gt;here&lt;/a&gt; to see list of mandated sick/leave locations)."
-                  class="slds-show slds-var-m-around_xx-small slds-text-body_small slds-form-element__legend slds-form-element_vertical">
+                lwc:if={visibility.NSP_Compliance_Location__c}
+                value="Compliance Locations (Click &lt;a href=&quot;https://serviceops.spapps.insperity.com/sites/hr/Shared%20Documents/Mandatory%20Leave%20Ordinances.docx&quot;&gt;here&lt;/a&gt; to see list of mandated sick/leave locations)."
+                class="slds-show slds-var-m-around_xx-small slds-text-body_small slds-form-element__legend slds-form-element_vertical"
+                >
               </lightning-formatted-rich-text>
 
-              <lightning-input-field disabled
+              <lightning-input-field
+                disabled
                 if:true={visibility.NSP_Compliance_Location__c}
                 variant="label-hidden"
                 field-name="NSP_Compliance_Location__c"
                 value={fieldValue.NSP_Compliance_Location__c}
                 data-name="NSP_Compliance_Location__c"
-                class="slds-show slds-var-p-horizontal_xx-small">
+                class="slds-show slds-var-p-horizontal_xx-small"
+                >
               </lightning-input-field>
 
             </div>
