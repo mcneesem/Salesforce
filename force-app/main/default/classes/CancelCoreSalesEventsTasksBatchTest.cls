@@ -5,7 +5,7 @@ private class CancelCoreSalesEventsTasksBatchTest {
     private static Id evtRecTypeId = Schema.SObjectType.Event.getRecordTypeInfosByDeveloperName().get('Core_Sales_Event_RT').getRecordTypeId();
 
     @testSetup
-    public static void setupData() {
+    private static void setupData() {
 
         List<Task> taskList = new List<Task>();
         List<Event> eventList = new List<Event>();
