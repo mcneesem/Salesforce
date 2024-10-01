@@ -139,8 +139,8 @@
         </rules>
     </decisions>
     <environments>Default</environments>
-    <interviewLabel>Project Task Before Create WO Asset {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Project Task Before Create WO Asset</label>
+    <interviewLabel>Project Task Before Save WO Asset {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Project Task Before Save WO Asset</label>
     <loops>
         <name>Iterate_Over_Assets</name>
         <label>Iterate Over Assets</label>
@@ -239,8 +239,22 @@
                 <booleanValue>false</booleanValue>
             </value>
         </filters>
+        <filters>
+            <field>WO_Asset__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>WO_Asset__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
         <object>pse__Project_Task__c</object>
-        <recordTriggerType>Create</recordTriggerType>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
         <triggerType>RecordBeforeSave</triggerType>
     </start>
     <status>Draft</status>
