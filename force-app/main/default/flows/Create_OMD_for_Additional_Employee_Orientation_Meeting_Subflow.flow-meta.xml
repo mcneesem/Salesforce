@@ -252,6 +252,9 @@
                 <stringValue>Get_OMR_Dates_in_Time_Parameters_After_SKO</stringValue>
             </value>
         </assignmentItems>
+        <connector>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
     </assignments>
     <choices>
         <name>Yes</name>
@@ -636,6 +639,22 @@ Added OMD as record Input</description>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
+    <screens>
+        <name>Error_Processing_Request</name>
+        <label>Error Processing Request</label>
+        <locationX>578</locationX>
+        <locationY>458</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>Error_Message_Error_Processing_Request</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(18, 17, 17); font-size: 14px; background-color: rgb(255, 255, 255);&quot;&gt;There is an error submitting the  Request. Please contact System Admin for more information.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
     <start>
         <locationX>56</locationX>
         <locationY>0</locationY>
@@ -644,6 +663,34 @@ Added OMD as record Input</description>
         </connector>
     </start>
     <status>Draft</status>
+    <subflows>
+        <name>Fault_Handler_Subflow</name>
+        <label>Fault Handler Subflow</label>
+        <locationX>578</locationX>
+        <locationY>350</locationY>
+        <connector>
+            <targetReference>Error_Processing_Request</targetReference>
+        </connector>
+        <flowName>Insperity_Fault_Handler_Subflow</flowName>
+        <inputAssignments>
+            <name>faultElement</name>
+            <value>
+                <elementReference>faultElement</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultFlow</name>
+            <value>
+                <stringValue>Create_OMD_for_Additional_Employee_Orientation_Meeting_Subflow</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultMessage</name>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
     <variables>
         <name>currentItem_Filter_Blocks</name>
         <dataType>SObject</dataType>

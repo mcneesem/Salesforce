@@ -91,40 +91,6 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Copy_1_of_Copy_1_of_Set_Fault_Element_Get_field_definition_of_sales_office_on_ac</name>
-        <label>Set Fault Element : Get_field_definition_of_sales_office_on_account</label>
-        <locationX>2024</locationX>
-        <locationY>492</locationY>
-        <assignmentItems>
-            <assignToReference>faultElement</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Get_field_definition_of_sales_office_on_account</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Fault_Handler_Subflow</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Copy_1_of_Set_Fault_Element_Get_entity_definition_of_account</name>
-        <label>Set Fault Element : Get_entity_definition_of_account</label>
-        <locationX>2288</locationX>
-        <locationY>384</locationY>
-        <assignmentItems>
-            <assignToReference>faultElement</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Get_entity_definition_of_account</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Fault_Handler_Subflow</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>Set_Fault_Element_Create_Task_Record</name>
         <label>Set Fault Element : Create_Task_Record</label>
         <locationX>1232</locationX>
@@ -141,15 +107,32 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Set_Fault_Element_Get_field_definition_of_sales_office_on_account</name>
-        <label>Set Fault Element : Get_field_definition_of_sales_office_on_account</label>
-        <locationX>1760</locationX>
-        <locationY>600</locationY>
+        <name>Set_Fault_Element_Get_entity_definition_of_account</name>
+        <label>Set Fault Element : Get_entity_definition_of_account</label>
+        <locationX>2288</locationX>
+        <locationY>384</locationY>
         <assignmentItems>
             <assignToReference>faultElement</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Get_picklistvalueinfo_of_sales_office_on_account</stringValue>
+                <stringValue>Get_entity_definition_of_account</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Get_field_definition_of_sales_office_on_ac</name>
+        <label>Set Fault Element : Get_field_definition_of_sales_office_on_account</label>
+        <locationX>2024</locationX>
+        <locationY>492</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_field_definition_of_sales_office_on_account</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -167,6 +150,23 @@
             <operator>Assign</operator>
             <value>
                 <stringValue>Get_OMR_Queue</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Get_picklistvalueinfo_of_sales_office_on_account</name>
+        <label>Set Fault Element : Get_picklistvalueinfo_of_sales_office_on_account</label>
+        <locationX>1760</locationX>
+        <locationY>600</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_picklistvalueinfo_of_sales_office_on_account</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -366,7 +366,7 @@
             <targetReference>Get_field_definition_of_sales_office_on_account</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Copy_1_of_Set_Fault_Element_Get_entity_definition_of_account</targetReference>
+            <targetReference>Set_Fault_Element_Get_entity_definition_of_account</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -390,7 +390,7 @@
             <targetReference>Get_picklistvalueinfo_of_sales_office_on_account</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Copy_1_of_Copy_1_of_Set_Fault_Element_Get_field_definition_of_sales_office_on_ac</targetReference>
+            <targetReference>Set_Fault_Element_Get_field_definition_of_sales_office_on_ac</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -452,7 +452,7 @@
             <targetReference>Get_OMR_Queue</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Set_Fault_Element_Get_field_definition_of_sales_office_on_account</targetReference>
+            <targetReference>Set_Fault_Element_Get_picklistvalueinfo_of_sales_office_on_account</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -562,7 +562,7 @@
         <inputAssignments>
             <name>faultFlow</name>
             <value>
-                <stringValue>Request_Task_for_Onboarding_Meeting_Detail</stringValue>
+                <stringValue>Create_OMD_Task_for_CTM_and_OT_Meeting_Requests</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>

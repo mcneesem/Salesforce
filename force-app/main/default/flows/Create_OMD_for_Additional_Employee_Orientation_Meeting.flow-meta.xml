@@ -88,7 +88,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Error_Processing_Request</targetReference>
+            <targetReference>Fault_Handler_Subflow</targetReference>
         </connector>
     </assignments>
     <choices>
@@ -335,13 +335,10 @@ Added OMD as record Input</description>
         <name>Error_Processing_Request</name>
         <label>Error Processing Request</label>
         <locationX>1106</locationX>
-        <locationY>1214</locationY>
+        <locationY>1322</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
-        <connector>
-            <targetReference>Fault_Handler_Subflow</targetReference>
-        </connector>
         <fields>
             <name>Error_Message_Create_Task_Records</name>
             <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(18, 17, 17); font-size: 14px; background-color: rgb(255, 255, 255);&quot;&gt;There is an error submitting the  Request. Please contact System Admin for more information.&lt;/span&gt;&lt;/p&gt;</fieldText>
@@ -667,7 +664,10 @@ Added OMD as record Input</description>
         <name>Fault_Handler_Subflow</name>
         <label>Fault Handler Subflow</label>
         <locationX>1106</locationX>
-        <locationY>1322</locationY>
+        <locationY>1214</locationY>
+        <connector>
+            <targetReference>Error_Processing_Request</targetReference>
+        </connector>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultElement</name>
@@ -678,7 +678,7 @@ Added OMD as record Input</description>
         <inputAssignments>
             <name>faultFlow</name>
             <value>
-                <stringValue>Request_Additional_Employee_Orientation_Meeting</stringValue>
+                <stringValue>Create_OMD_for_Additional_Employee_Orientation_Meeting</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>

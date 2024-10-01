@@ -132,7 +132,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Error_Processing_Request</targetReference>
+            <targetReference>Fault_Handler_Subflow</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -149,7 +149,7 @@
         </assignmentItems>
         <connector>
             <isGoTo>true</isGoTo>
-            <targetReference>Error_Processing_Request</targetReference>
+            <targetReference>Fault_Handler_Subflow</targetReference>
         </connector>
     </assignments>
     <constants>
@@ -440,13 +440,10 @@ Updated for OMD Record Input Param</description>
         <name>Error_Processing_Request</name>
         <label>Error Processing Request</label>
         <locationX>1546</locationX>
-        <locationY>1814</locationY>
+        <locationY>1922</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
-        <connector>
-            <targetReference>Fault_Handler_Subflow</targetReference>
-        </connector>
         <fields>
             <name>Error_Message_Error_Processing_Request</name>
             <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(18, 17, 17); font-size: 14px; background-color: rgb(255, 255, 255);&quot;&gt;There is an error submitting the  Request. Please contact System Admin for more information.&lt;/span&gt;&lt;/p&gt;</fieldText>
@@ -574,7 +571,10 @@ Updated for OMD Record Input Param</description>
         <name>Fault_Handler_Subflow</name>
         <label>Fault_Handler_Subflow</label>
         <locationX>1546</locationX>
-        <locationY>1922</locationY>
+        <locationY>1814</locationY>
+        <connector>
+            <targetReference>Error_Processing_Request</targetReference>
+        </connector>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultElement</name>

@@ -173,6 +173,9 @@
                 <stringValue>Get_OMR_records</stringValue>
             </value>
         </assignmentItems>
+        <connector>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
     </assignments>
     <choices>
         <name>Yes</name>
@@ -347,6 +350,22 @@ Added OMD as record Input</description>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <runInMode>SystemModeWithSharing</runInMode>
+    <screens>
+        <name>Error_Processing_Request</name>
+        <label>Error Processing Request</label>
+        <locationX>440</locationX>
+        <locationY>458</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>Error_Message_Error_Processing_Request</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 14px; color: rgb(18, 17, 17);&quot;&gt;There is an error submitting the  Request. Please contact System Admin for more information.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
     <screens>
         <name>Request_Discover_SKO_Meeting</name>
         <label>Request Discovery/SKO Meeting</label>
@@ -716,6 +735,34 @@ Added OMD as record Input</description>
         </connector>
     </start>
     <status>Draft</status>
+    <subflows>
+        <name>Fault_Handler_Subflow</name>
+        <label>Fault Handler Subflow</label>
+        <locationX>440</locationX>
+        <locationY>350</locationY>
+        <connector>
+            <targetReference>Error_Processing_Request</targetReference>
+        </connector>
+        <flowName>Insperity_Fault_Handler_Subflow</flowName>
+        <inputAssignments>
+            <name>faultElement</name>
+            <value>
+                <elementReference>faultElement</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultFlow</name>
+            <value>
+                <stringValue>Create_OMD_for_Client_Transition_Meeting_Subflow</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultMessage</name>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
     <textTemplates>
         <name>Request_Header</name>
         <isViewedAsPlainText>false</isViewedAsPlainText>
