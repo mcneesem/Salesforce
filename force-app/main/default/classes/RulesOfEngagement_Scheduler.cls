@@ -58,7 +58,6 @@ public with sharing class RulesOfEngagement_Scheduler implements ISelfSchedulabl
         }
 
         try {
-            
             if (opps != null && !opps.isEmpty()) {
                 List<Database.SaveResult> results = Database.update( opps , true );
                 NSP_ErrorLogHandler.logResults(
@@ -67,9 +66,7 @@ public with sharing class RulesOfEngagement_Scheduler implements ISelfSchedulabl
                     results
                 );
             }
-
             if (accountsToUpdate != null && !accountsToUpdate.isEmpty()) {
-                update accountsToUpdate;
                 List<Database.SaveResult> results = Database.update( accountsToUpdate , true );
                 NSP_ErrorLogHandler.logResults(
                     RulesOfEngagement_Scheduler.class.getName() ,
@@ -77,9 +74,7 @@ public with sharing class RulesOfEngagement_Scheduler implements ISelfSchedulabl
                     results
                 );
             }
-            
             if (contactsToUpdate != null && !contactsToUpdate.isEmpty()) {
-                update contactsToUpdate;
                 List<Database.SaveResult> results = Database.update( contactsToUpdate , true );
                 NSP_ErrorLogHandler.logResults(
                     RulesOfEngagement_Scheduler.class.getName() ,
@@ -87,7 +82,6 @@ public with sharing class RulesOfEngagement_Scheduler implements ISelfSchedulabl
                     results
                 );
             }
-            
         } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
                 RulesOfEngagement_Scheduler.class.getName() ,
