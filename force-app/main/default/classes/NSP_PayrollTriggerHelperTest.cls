@@ -181,8 +181,70 @@ private class NSP_PayrollTriggerHelperTest {
         Test.stopTest();
         NSP_Payroll__c assertPDS = [SELECT Id, NSP_Payroll_SCC__c  FROM NSP_Payroll__c WHERE Id != null LIMIT 1];
         system.assert(subClientCon.NSP_Is_Primary__c);
-    } 
+    }
+   /**
+    * @Description: This test method is used to cover updatePDSPayrollReviewersField method 
+    * when Payroll Data Sheet record insert/update
+    * @Created date: 28/08/2022. 
+    * @return void             
+    */
+    @isTest
+    private static void updatePayrollReviewersTest(){
+        Test.startTest();
+        //GIVEN
+        Contact contact = [SELECT Id,LastName FROM Contact WHERE LastName = 'Test con' LIMIT 1];
+        NSP_Payroll__c pds = [SELECT Id, NSP_Primary_Payroll_Contact__c,NSP_Back_Up_Payroll_Contact__c,NSP_HR_Contact__c,NSP_On_site_Supervisor__c, Primary_View_Payroll_Paperwork__c,Back_Up_View_Payroll_Paperwork__c,On_Site_View_Payroll_Paperwork__c,View_Payroll_Paperwork__c FROM NSP_Payroll__c WHERE Id != null LIMIT 1];
+        //WHEN
+        pds.NSP_Primary_Payroll_Contact__c = null;
+        pds.NSP_Back_Up_Payroll_Contact__c = null;
+        pds.NSP_HR_Contact__c = null;
+        pds.NSP_On_site_Supervisor__c = null;
+        update pds;
+        
+        pds.NSP_Primary_Payroll_Contact__c = contact.Id;
+        pds.NSP_Back_Up_Payroll_Contact__c = contact.Id;
+        pds.NSP_HR_Contact__c = contact.Id;
+        pds.NSP_On_site_Supervisor__c = contact.Id;
+        pds.Primary_View_Payroll_Paperwork__c = true;
+        pds.Back_Up_View_Payroll_Paperwork__c = true;
+        pds.On_Site_View_Payroll_Paperwork__c = true;
+        pds.View_Payroll_Paperwork__c = true;
+        update pds;
+        
+        Test.stopTest();
+        NSP_Payroll__c assertPDS = [SELECT Id, Payroll_Reviewers__c  FROM NSP_Payroll__c WHERE Id != null LIMIT 1];
+        system.assertEquals(assertPDS.Payroll_Reviewers__c,'Test con');
+        system.assertNotEquals(assertPDS.Payroll_Reviewers__c,null);
+    }
+    
     /**
+    * @Description: This test method is used to cover updatePDSPayrollReviewersField method 
+    * when Additional Payroll Contact record insert, update or delete.
+    * @Created date: 28/08/2022. 
+    * @return void             
+    */
+    @isTest
+    private static void updatePayrollReviewersTest2(){
+        Test.startTest();
+        //GIVEN
+        Contact contact = [SELECT Id,LastName FROM Contact WHERE LastName = 'Test con' LIMIT 1];
+        NSP_Payroll__c pds = [SELECT Id,Name FROM NSP_Payroll__c WHERE Id != null LIMIT 1];
+        //WHEN
+        Additional_Payroll_Contact__c newAdditionalPayrollContact = (Additional_Payroll_Contact__c)NSP_TestExtendedDataFactory.createSObject(new Additional_Payroll_Contact__c(), 'NSP_TestDataFactory.AdditionalPayrollContactDefaults', false);
+        newAdditionalPayrollContact.Contact__c = contact.Id ;
+        newAdditionalPayrollContact.Payroll__c = pds.Id;
+        newAdditionalPayrollContact.View_Payroll_Paperwork__c = true;
+        insert newAdditionalPayrollContact;
+
+        Test.stopTest();
+        
+        Additional_Payroll_Contact__c APcontact=[SELECT Id,Payroll__r.Id,Contact__r.Name FROM Additional_Payroll_Contact__c LIMIT 1];
+        NSP_Payroll__c assertPDS = [SELECT Id, Payroll_Reviewers__c  FROM NSP_Payroll__c WHERE Id != null LIMIT 1];
+        system.assertEquals(assertPDS.Payroll_Reviewers__c,'Test con');
+        system.assertNotEquals(assertPDS.Payroll_Reviewers__c,null);
+        
+    }
+     /**
     * @Description: This test method is used to cover updatePayrollSpecialistField method
     * @Created date: 28/08/2024
     * @return void             
