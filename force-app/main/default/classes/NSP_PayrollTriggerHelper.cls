@@ -2,7 +2,7 @@
 * Represents the Payroll trigger helper which handles all the logic.
 */
 public class NSP_PayrollTriggerHelper {
-    // test w/ NSP_PayrollTriggerHelperTest (84%)
+    // test w/ NSP_PayrollTriggerHelperTest (85%)
 
     public static list<NSP_Payroll_Data_Sheet_Event__e> payrollDataSheetEventListToBeInserted = new list <NSP_Payroll_Data_Sheet_Event__e>();
     public Static final Id WOASSETRECTYPEID = Schema.SObjectType.Asset.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.WO_ASSET_RECORDTYPE).getRecordTypeId();
@@ -18,7 +18,8 @@ public class NSP_PayrollTriggerHelper {
     public void fieldUpdatesAfterInsertUpdate(
         List<NSP_Payroll__c> newPayrollList ,
         Map<Id,NSP_Payroll__c> newPayrollMap ,
-        Map<Id,NSP_Payroll__c> oldPayrollMap
+        Map<Id,NSP_Payroll__c> oldPayrollMap ,
+        Boolean skipPayrollUpdate
         )
     {
         if(newPayrollList == null){
@@ -84,7 +85,7 @@ public class NSP_PayrollTriggerHelper {
             );
         }
         if(isPayrollSpecialist){
-            updatePayrollSpecialistField(newPayrollList);
+            updatePayrollSpecialistField(newPayrollList,skipPayrollUpdate);
         }
         if(!relatedSubClientsMap.isEmpty()){
             for(NSP_Payroll__c payrolls : newPayrollList){
@@ -529,7 +530,7 @@ public class NSP_PayrollTriggerHelper {
     // @Defect       :
     // @return void
     //
-    private void updatePayrollSpecialistField( List<NSP_Payroll__c> newPayrollList ) {
+    private void updatePayrollSpecialistField( List<NSP_Payroll__c> newPayrollList , Boolean skipPayrollUpdate ) {
         // All account IDs from the payroll list
         if ( ( newPayrollList != null ) && !newPayrollList.isEmpty() ) {
             Set<Id> accountIds = new Set<Id>();
@@ -564,9 +565,28 @@ public class NSP_PayrollTriggerHelper {
                     }
                 }
                 //Update Payroll Specialist field in the payroll list
+                List<NSP_Payroll__c> lstOfUpdatePayrolls = new List<NSP_Payroll__c>();
                 for ( NSP_Payroll__c payroll : newPayrollList ) {
                     if ( accountTeamMap.containsKey( payroll.Account__c ) ) {
                         payroll.Payroll_Specialist__c = accountTeamMap.get( payroll.Account__c );
+                        if(!skipPayrollUpdate){
+                            lstOfUpdatePayrolls.add(payroll);
+                        }
+                    }
+                }
+                if ( ( lstOfUpdatePayrolls != null )
+                    && !lstOfUpdatePayrolls.isEmpty()
+                    && !skipPayrollUpdate
+                    )
+                    {
+                    try {
+                        update lstOfUpdatePayrolls;
+                    } catch ( DmlException e ) {
+                        NSP_ErrorLogHandler.logException(
+                            NSP_PayrollTriggerHelper.class.getName() ,
+                            'updatePayrollSpecialistField' ,
+                            e
+                        );
                     }
                 }
             }
