@@ -34,6 +34,8 @@
                             cqa-child-case={isCQAChildCase}
                             selected-category={selectedCategory}
                             selected-sub-category={selectedSubCategory}
+                            selected-detail={selectedDetail}
+                            selected-version={selectedVersion}
                             o-case={oCase}
                             >
                         </c-case-cat-subcat-detail>
@@ -112,7 +114,7 @@
                                     <div class="slds-m-top_medium slds-p-around_medium">
                                         <template if:false={showAllSubCategory}>
                                             <div class="slds-p-around_medium slds-form_horizontal">
-                                                <lightning-combobox name="Sub Category" label="Sub Category"
+                                                <lightning-combobox data-fname="subCategory" name="Sub Category" label="Sub Category"
                                                     value={selectedSubCategory} placeholder="Select a Sub Category"
                                                     options={subCategoryOptions} onchange={handleChange} required>
                                                 </lightning-combobox>
