@@ -5459,6 +5459,16 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.Max_Orientation_Date__c</fieldItem>
+                <identifier>RecordMax_Orientation_Date_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.NSP_MedicalRenewal__c</fieldItem>
                 <identifier>RecordNSP_MedicalRenewal_cField</identifier>
             </fieldInstance>

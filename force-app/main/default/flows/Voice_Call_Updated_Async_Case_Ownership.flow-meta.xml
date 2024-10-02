@@ -328,7 +328,6 @@
             </value>
         </inputAssignments>
     </subflows>
-    <triggerOrder>500</triggerOrder>
     <variables>
         <name>faultElement</name>
         <dataType>String</dataType>
