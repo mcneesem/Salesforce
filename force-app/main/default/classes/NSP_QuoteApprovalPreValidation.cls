@@ -3,10 +3,10 @@ Component Name :  NSP_QuoteApprovalPreValidation class
 Version              :  1.0                                                                          
 Created Date         :  July 2021                                                             
 Function             :  This class validates the quotes against multiple business rules checks before submitting for approval.
-					 :  Includes all Notes field validations   	
+                     :  Includes all Notes field validations   
 Story                :  STY-00450                                                                           
 Modification Log     :                                                                               
-*	Utpal           July 2021          First Iteration
+* Utpal           July 2021          First Iteration
 *
 ***************************************************************************************************
 */
@@ -18,7 +18,7 @@ public class NSP_QuoteApprovalPreValidation {
     private NSP_QuoteApprovalPreValidation(){}
     
     //Static strings for storing error messages from labels.
-    Static final String IRSO_ONDEMAND='IRSOOnDemand';	
+    Static final String IRSO_ONDEMAND='IRSOOnDemand';
     Static final String ERR_MESSAGE=System.Label.NSP_QuoteApprovalPreValidationMessage;
     Static final String NO_PRODUCTS_ERR_MESSAGE=System.Label.NSP_No_Products_Added_Error;
     Static final String INVALID_NOTES_ERR_MSG = System.Label.NSP_Invalid_Notes_Error;
@@ -27,13 +27,14 @@ public class NSP_QuoteApprovalPreValidation {
     Static final String INVOICE_EMAIL_ERR_MESSAGE=System.Label.NSP_InvoiceToEmailonQuote;
     Static final String QUOTE_EXPIRATION_DATE_ERR_MESSAGE=System.Label.NSP_QuoteExpirationDate;
     Static final String QUOTE_OWNER_MISMATCH_ERR_MESSAGE=System.Label.NSP_Quote_Owner_Mismatch_Message;
-	Static final String INVOICE_BILLING_ERR=System.Label.NSP_InvoiceEmailBilling;
+    Static final String INVOICE_BILLING_ERR=System.Label.NSP_InvoiceEmailBilling;
     Static final String INVOICE_SHIPPING_ERR=System.Label.NSP_InvoiceEmailShipping;
-	
-	Static final String BILLING_ADDRESS_ERR=System.Label.NSP_QuoteBillingAddressValidationMessage;
-	Static final String SHIPPING_ADDRESS_ERR=System.Label.NSP_QuoteShippingAddressValidationMessage;
-	Static final String CUSTOMER_BILLING_ADDRESS_ERR=System.Label.NSP_QuoteCustomerBillingAddressValidationMessage;
-	Static final String CUSTOMER_SHIPPING_ADDRESS_ERR=System.Label.NSP_QuoteCustomerShippingAddressValidationMessage;
+    static final String SEASONAL_ERR = System.label.Seasonal_Pricing_Error;
+
+    Static final String BILLING_ADDRESS_ERR=System.Label.NSP_QuoteBillingAddressValidationMessage;
+    Static final String SHIPPING_ADDRESS_ERR=System.Label.NSP_QuoteShippingAddressValidationMessage;
+    Static final String CUSTOMER_BILLING_ADDRESS_ERR=System.Label.NSP_QuoteCustomerBillingAddressValidationMessage;
+    Static final String CUSTOMER_SHIPPING_ADDRESS_ERR=System.Label.NSP_QuoteCustomerShippingAddressValidationMessage;
     Static final String BENCHMARK_JOB_DATE_ERR=System.Label.NSP_Benchmark_Date_Validation;
     Static final String SERIAL_IDS_ERR=System.Label.NSP_SerialId_Validation;
     Static final String ET_SERIAL_IDS_ERR=System.Label.NSP_ET_Serial_Id_Validation;
@@ -58,7 +59,7 @@ public class NSP_QuoteApprovalPreValidation {
             
         public static String validateRetirementServiceQuote(Id QuoteId)  {
             SBQQ__Quote__c quoteRecord=[SELECT Id,Name,SBQQ__Account__c,SBQQ__Opportunity2__c,SBQQ__Primary__c,
-                                        SBQQ__StartDate__c,SBQQ__EndDate__c,SBQQ__ExpirationDate__c,NSP_At_Hire_Payment__c,	
+                                        SBQQ__StartDate__c,SBQQ__EndDate__c,SBQQ__ExpirationDate__c,NSP_At_Hire_Payment__c,
                                         NSP_UpFront_Payment__c,NSP_Retention_Payment__c ,NSP_Product_Type__c,
                                         NSP_OnDemand_Notes__c,NSP_Personality_Assessment_Notes__c,NSP_Skills_Based_Assessment_Notes__c,
                                         NSP_Sourcing_Notes__c,NSP_Talent_Connect_Notes__c,NSP_Employment_Screening_Notes__c,
@@ -136,7 +137,7 @@ public class NSP_QuoteApprovalPreValidation {
         Set<String> profilesToSkip = new Set<String>(System.label.NSP_CPQ_Profiles_Skip_Validation.split(','));
         Set<String> groupname = new Set<String>(System.label.NSP_ApprovalSubmitterGroups.split(','));
         List<String>  groupList = new List<String>();
-		String invoiceToEmail = null;
+        String invoiceToEmail = null;
         String descriptionOfService = null;
         String customerStakeHolder = null;
         String customerRole = null;
@@ -151,18 +152,26 @@ public class NSP_QuoteApprovalPreValidation {
         //current user profile info fetch
         Id userprofileId=userinfo.getProfileId();
         String userprofileName=[SELECT Id,Name FROM Profile WHERE Id=:userprofileId].Name;
-        
-        List<SBQQ__Quote__c> quoteRecord=[SELECT Id,Name,NSP_Requested_First_Check_Date__c,NSP_Has_WA_product__c,NSP_Has_WX_product__c,NSP_Has_WOSS_product__c,SBQQ__ExpirationDate__c,SBQQ__Type__c,NSP_Submitted_User_Role_L2__c,
-                                          SBQQ__Account__r.Id,NSP_Invoice_To_Email__r.Id,NSP_Billing_Account__r.Id,NSP_DO_Signed_By_Billing_Account__c,
-										  SBQQ__BillingStreet__c,SBQQ__BillingState__c,SBQQ__BillingCity__c,SBQQ__BillingPostalCode__c,SBQQ__BillingCountry__c,
-										  SBQQ__ShippingStreet__c,SBQQ__ShippingState__c,SBQQ__ShippingCity__c,SBQQ__ShippingPostalCode__c,SBQQ__ShippingCountry__c,
-										  NSP_Bill_To_Street__c,NSP_Bill_To_State__c,NSP_Bill_To_City__c,NSP_Bill_To_Postal_Code__c,NSP_Bill_To_Country__c,
-                                          NSP_Ship_To_Street__c,NSP_Ship_To_State__c,NSP_Ship_To_City__c,NSP_Ship_To_Postal_Code__c,NSP_Ship_To_Country__c,
-                                          NSP_Benchmark_Job_End_Date__c,NSP_Benchmark_Job_Start_Date__c,NSP_Implementation_Start_Date__c,NSP_Talent_Connect_Subscription_End_Date__c,NSP_Talent_Connect_Subscription_Date__c,
-                                          NSP_RPO_End_Date__c,NSP_RPO_Start_Date__c,NSP_ProjRec_Start_Date__c,NSP_ProjRec_End_Date__c,NSP_Target_Date__c,NSP_Customer_Stakeholder__c,NSP_Authorized_Purchaser_1__c,
-                                          NSP_Authorized_Purchaser_2__c,NSP_Customer_Role__c,SBQQ__PrimaryContact__c,NSP_TerminationDate__c,NSP_TransactionType__c FROM SBQQ__Quote__c WHERE Id=:QuoteId];
 
-        
+        List<SBQQ__Quote__c> quoteRecord = [
+            SELECT
+                Id, Ready_for_Approval__c, Seasonal_Pricing__c,Name,NSP_Requested_First_Check_Date__c,NSP_Has_WA_product__c,
+                NSP_Has_WX_product__c,NSP_Has_WOSS_product__c,SBQQ__ExpirationDate__c,SBQQ__Type__c,NSP_Submitted_User_Role_L2__c,
+                SBQQ__Account__r.Id,NSP_Invoice_To_Email__r.Id,NSP_Billing_Account__r.Id,NSP_DO_Signed_By_Billing_Account__c,
+                SBQQ__BillingStreet__c,SBQQ__BillingState__c,SBQQ__BillingCity__c,SBQQ__BillingPostalCode__c,SBQQ__BillingCountry__c,
+                SBQQ__ShippingStreet__c,SBQQ__ShippingState__c,SBQQ__ShippingCity__c,SBQQ__ShippingPostalCode__c,SBQQ__ShippingCountry__c,
+                NSP_Bill_To_Street__c,NSP_Bill_To_State__c,NSP_Bill_To_City__c,NSP_Bill_To_Postal_Code__c,NSP_Bill_To_Country__c,
+                NSP_Ship_To_Street__c,NSP_Ship_To_State__c,NSP_Ship_To_City__c,NSP_Ship_To_Postal_Code__c,NSP_Ship_To_Country__c,
+                NSP_Benchmark_Job_End_Date__c,NSP_Benchmark_Job_Start_Date__c,NSP_Implementation_Start_Date__c,
+                NSP_Talent_Connect_Subscription_End_Date__c,NSP_Talent_Connect_Subscription_Date__c,
+                NSP_RPO_End_Date__c,NSP_RPO_Start_Date__c,NSP_ProjRec_Start_Date__c,NSP_ProjRec_End_Date__c,
+                NSP_Target_Date__c,NSP_Customer_Stakeholder__c,NSP_Authorized_Purchaser_1__c,
+                NSP_Authorized_Purchaser_2__c,NSP_Customer_Role__c,SBQQ__PrimaryContact__c,
+                NSP_TerminationDate__c,NSP_TransactionType__c
+            FROM SBQQ__Quote__c
+            WHERE ( Id = :QuoteId )
+        ];
+
         for(SBQQ__Quote__c quoteRec: quoteRecord) {
             //sequential execution of validations conditions for that specific quote
             if(quoteRec.NSP_Invoice_To_Email__c == null && quoteRec.NSP_TransactionType__c!=NSP_CPQConstants.QUOTE_TYPE_TERMINATION){
@@ -250,27 +259,27 @@ public class NSP_QuoteApprovalPreValidation {
                     errorMessageList.add(primaryContact);
                 }
             }
-			
-			/* check for billing address validation*/
-			if(String.isBlank(quoteRec.SBQQ__BillingStreet__c) ||String.isBlank(quoteRec.SBQQ__BillingState__c) ||String.isBlank(quoteRec.SBQQ__BillingCity__c) ||String.isBlank(quoteRec.SBQQ__BillingPostalCode__c) || String.isBlank(quoteRec.SBQQ__BillingCountry__c) ){
-				errorMessageList.add(BILLING_ADDRESS_ERR);
-			}
-			
-			/* check for shipping address validation*/
-			if(String.isBlank(quoteRec.SBQQ__ShippingStreet__c) ||String.isBlank(quoteRec.SBQQ__ShippingState__c) ||String.isBlank(quoteRec.SBQQ__ShippingCity__c) ||String.isBlank(quoteRec.SBQQ__ShippingPostalCode__c) || String.isBlank(quoteRec.SBQQ__ShippingCountry__c) ){
-				errorMessageList.add(SHIPPING_ADDRESS_ERR);
-			}
-			
-			/* check for Customer billing address validation*/
-			if(String.isBlank(quoteRec.NSP_Bill_To_Street__c) ||String.isBlank(quoteRec.NSP_Bill_To_State__c) ||String.isBlank(quoteRec.NSP_Bill_To_City__c) ||String.isBlank(quoteRec.NSP_Bill_To_Postal_Code__c) || String.isBlank(quoteRec.NSP_Bill_To_Country__c) ){
-				errorMessageList.add(CUSTOMER_BILLING_ADDRESS_ERR);
-			}
-			
-			/* check for billing address validation*/
-			if(String.isBlank(quoteRec.NSP_Ship_To_Street__c) ||String.isBlank(quoteRec.NSP_Ship_To_State__c) ||String.isBlank(quoteRec.NSP_Ship_To_City__c) ||String.isBlank(quoteRec.NSP_Ship_To_Postal_Code__c) || String.isBlank(quoteRec.NSP_Ship_To_Country__c) ){
-				errorMessageList.add(CUSTOMER_SHIPPING_ADDRESS_ERR);
-			}
-			
+            
+            /* check for billing address validation*/
+            if(String.isBlank(quoteRec.SBQQ__BillingStreet__c) ||String.isBlank(quoteRec.SBQQ__BillingState__c) ||String.isBlank(quoteRec.SBQQ__BillingCity__c) ||String.isBlank(quoteRec.SBQQ__BillingPostalCode__c) || String.isBlank(quoteRec.SBQQ__BillingCountry__c) ){
+                errorMessageList.add(BILLING_ADDRESS_ERR);
+            }
+            
+            /* check for shipping address validation*/
+            if(String.isBlank(quoteRec.SBQQ__ShippingStreet__c) ||String.isBlank(quoteRec.SBQQ__ShippingState__c) ||String.isBlank(quoteRec.SBQQ__ShippingCity__c) ||String.isBlank(quoteRec.SBQQ__ShippingPostalCode__c) || String.isBlank(quoteRec.SBQQ__ShippingCountry__c) ){
+                errorMessageList.add(SHIPPING_ADDRESS_ERR);
+            }
+            
+            /* check for Customer billing address validation*/
+            if(String.isBlank(quoteRec.NSP_Bill_To_Street__c) ||String.isBlank(quoteRec.NSP_Bill_To_State__c) ||String.isBlank(quoteRec.NSP_Bill_To_City__c) ||String.isBlank(quoteRec.NSP_Bill_To_Postal_Code__c) || String.isBlank(quoteRec.NSP_Bill_To_Country__c) ){
+                errorMessageList.add(CUSTOMER_BILLING_ADDRESS_ERR);
+            }
+            
+            /* check for billing address validation*/
+            if(String.isBlank(quoteRec.NSP_Ship_To_Street__c) ||String.isBlank(quoteRec.NSP_Ship_To_State__c) ||String.isBlank(quoteRec.NSP_Ship_To_City__c) ||String.isBlank(quoteRec.NSP_Ship_To_Postal_Code__c) || String.isBlank(quoteRec.NSP_Ship_To_Country__c) ){
+                errorMessageList.add(CUSTOMER_SHIPPING_ADDRESS_ERR);
+            }
+            
             if(quoteRec.SBQQ__Type__c == NSP_CPQConstants.QUOTE_TYPE_NEW){
                 /* Validate NSP_Benchmark_Job_End_Date__c > NSP_Benchmark_Job_Start_Date__c*/
                 if(quoteRec.NSP_Benchmark_Job_End_Date__c != null &&  quoteRec.NSP_Benchmark_Job_Start_Date__c != null 
@@ -306,14 +315,24 @@ public class NSP_QuoteApprovalPreValidation {
             if(quoteRec.NSP_TransactionType__c == NSP_CPQConstants.QUOTE_TYPE_TERMINATION && quoteRec.NSP_TerminationDate__c == null){
                 errorMessageList.add(QuoteExtController.TERMINATION_DATE_ERROR);
             }
-            
-        }						   
-        descriptionOfService = 	validateDescriptionOfServices(QuoteId);
+            //validate seasonal calculation
+            Seasonal_Pricing_Setting__c seasonalSettings = Seasonal_Pricing_Setting__c.getOrgDefaults();
+            Boolean seasonalEnabled = seasonalSettings.Enabled__c;
+            if ( quoteRec.Seasonal_Pricing__c != 'Not Applicable'
+                && quoteRec.Seasonal_Pricing__c != ''
+                && seasonalEnabled
+                && quoteRec.Ready_for_Approval__c == False
+                )
+            {
+                errorMessageList.add(QuoteExtController.SEASONAL_ERR);
+            }
+        }
+        descriptionOfService = validateDescriptionOfServices(QuoteId);
         serialIds=validateSerialIds(QuoteId);
-        if(descriptionOfService!= null)	{
+        if(descriptionOfService!= null){
             errorMessageList.add(DESC_SERVICES_ERR_MESSAGE);
         }
-        if(serialIds!= null)	{
+        if(serialIds!= null){
             errorMessageList.add(serialIds);
         }
         return errorMessageList;
@@ -328,18 +347,18 @@ public class NSP_QuoteApprovalPreValidation {
 */                                                                          
     
     public static String validateDescriptionOfServices(Id QuoteId) {
-        List<SBQQ__QuoteLine__c> quoteLineList=[Select 	Id,NSP_Applicable_Transaction_Type__c,SBQQ__ProductCode__c,SBQQ__Quote__c,SBQQ__Quote__r.SBQQ__Opportunity2__r.Type,SBQQ__PriorQuantity__c,SBQQ__Quote__r.NSP_Description_Of_Services__c
+        List<SBQQ__QuoteLine__c> quoteLineList=[Select Id,NSP_Applicable_Transaction_Type__c,SBQQ__ProductCode__c,SBQQ__Quote__c,SBQQ__Quote__r.SBQQ__Opportunity2__r.Type,SBQQ__PriorQuantity__c,SBQQ__Quote__r.NSP_Description_Of_Services__c
                                                 FROM SBQQ__QuoteLine__c WHERE SBQQ__Quote__c=:QuoteId AND (SBQQ__Quote__r.SBQQ__Type__c = :NSP_CPQConstants.SUPPLEMENTAL) AND (NSP_Applicable_Transaction_Type__c = :NSP_CPQConstants.APPLICABLE_TRANSACTION_TYPE)];
         
-        for(SBQQ__QuoteLine__c quoteLineRec: quoteLineList)	 {
+        for(SBQQ__QuoteLine__c quoteLineRec: quoteLineList) {
             if(quoteLineRec.SBQQ__Quote__r.NSP_Description_Of_Services__c == null) {
                 return DESC_SERVICES_ERR_MESSAGE;
             }
-        }						   
+        }
         return null;
         
     }
-	
+
 /**
 * Method for querying all quoteline assocaited to a quote to check 
 * billing account address,shipping account address
@@ -368,7 +387,7 @@ public static String validateContacts(Id cId,Id accountId,String errMessage,Bool
 }  
 public static string validateSerialIds(Id QuoteId){
     List<SBQQ__QuoteLine__c> quoteLineList=[SELECT Id,NSP_SerialId_Validation__c,NSP_ET_Checked_Serial_Ids__c,NSP_Serial_Ids__c FROM SBQQ__QuoteLine__c WHERE SBQQ__Quote__c=:QuoteId];
-    for(SBQQ__QuoteLine__c quoteLineRec: quoteLineList)	 {
+    for(SBQQ__QuoteLine__c quoteLineRec: quoteLineList) {
         if(quoteLineRec.NSP_SerialId_Validation__c == true) {
             return SERIAL_IDS_ERR;
         }
@@ -388,7 +407,7 @@ public static string validateSerialIds(Id QuoteId){
                 }
             }
         }
-    }						           
+    }
     return null;
 }
     

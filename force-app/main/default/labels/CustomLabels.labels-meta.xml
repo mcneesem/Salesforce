@@ -6415,6 +6415,13 @@ Climate Plus: https://nexus.insperity.com/groups/38605/posts/3272612-climate-plu
         <value>Regional Manager,Regional Administrator,District Manager,District Administrator,Business Performance Advisor,Business Performance Consultant</value>
     </labels>
     <labels>
+        <fullName>Seasonal_Pricing_Error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>To force recalculation before submit for approval</shortDescription>
+        <value>Please check the &quot;Ready for Approval&quot; flag before submitting Seasonal Pricing Quotes for approvals.</value>
+    </labels>
+    <labels>
         <fullName>Segment_Days</fullName>
         <language>en_US</language>
         <protected>false</protected>

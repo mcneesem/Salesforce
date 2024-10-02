@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Seasonal_Pricing__c</fullName>
+    <description>This field is used to capture if Seasonal pricing is applicable on the line item depending on the product and quote. Used in Custom Script version 37. Also works as a Twin field with Order product.</description>
+    <externalId>false</externalId>
+    <formula>IF(
+ SBQQ__Product__r.Has_Seasonal_Pricing__c,
+  TEXT(SBQQ__Quote__r.Seasonal_Pricing__c),
+ &quot;&quot;
+)</formula>
+    <label>Seasonal Pricing</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

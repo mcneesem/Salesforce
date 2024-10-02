@@ -89,6 +89,10 @@
                 <behavior>Edit</behavior>
                 <field>NSP_End_Date__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Seasonal_Pricing__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
