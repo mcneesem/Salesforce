@@ -38,7 +38,7 @@ const LABEL = {
   NSP_Are_thy_usng_Client_Docs_EE_Folder__c:
     "Are they using Client Documents/EE Folder?",
   Clint_prof_sec_and_extrnl_HRTechgy__c:
-    "Client profile section around external HR Technology (ATS, Performance Management, Accounting, LMS)",
+    "Client profile section around external HR Technology",
   NSP_Learng_Portal_Clint_Administrator__c:
     "Who is the Learning Portal Client Administrator?",
   NSP_clint_usng_Custom_Hostng_fr_Training__c:
