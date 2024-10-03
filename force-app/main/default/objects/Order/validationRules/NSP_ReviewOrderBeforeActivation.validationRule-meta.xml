@@ -4,6 +4,6 @@
     <active>true</active>
     <description>This validation ensures the order is reviewed by Order Management team before order activation</description>
     <errorConditionFormula>AND(ISPICKVAL( Status , &apos;Activated&apos;),ISCHANGED(Status), ISPICKVAL(PRIORVALUE(Status),&quot;Draft&quot;),
- NOT(SBQQ__Quote__r.NSP_Change_Order_Process_Quote__c) )</errorConditionFormula>
+ NOT(SBQQ__Quote__r.NSP_Change_Order_Process_Quote__c), NOT(ISBLANK(NSP_Project__c )),NOT(ISBLANK(( NSP_Project_Name__c))) )</errorConditionFormula>
     <errorMessage>The order should be reviewed before activation</errorMessage>
 </ValidationRule>

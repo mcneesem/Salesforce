@@ -5,6 +5,6 @@
     <description>Flag for Marking a seperate project</description>
     <externalId>false</externalId>
     <label>Separate Project</label>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <type>Checkbox</type>
 </CustomField>
