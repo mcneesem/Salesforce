@@ -16,6 +16,7 @@
     <permissionSets>NSP_Termination_Form_Access</permissionSets>
     <permissionSets>NVMStatsSF__View_NVM_Stats</permissionSets>
     <permissionSets>Project_Task_Access</permissionSets>
+    <permissionSets>Onbording_Meeting_Request_Detail_Edit</permissionSets>
     <permissionSets>Resource_Absence_record_type_access</permissionSets>
     <permissionSets>Sales_Enablement</permissionSets>
     <permissionSets>force__PipelineInspectionIncluded</permissionSets>
