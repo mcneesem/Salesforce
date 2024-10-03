@@ -867,8 +867,8 @@
         <categories>nsp_benefitsIp</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>Are there any Employer contributions to EEs HSA</shortDescription>
-        <value>Are there any employer contributions to EEs HSA?</value>
+        <shortDescription>Are there any employer contributions to EEs Insperity HSA?</shortDescription>
+        <value>Are there any employer contributions to EEs Insperity HSA?</value>
     </labels>
     <labels>
         <fullName>NSP_Are_there_any_other_EE_orientation_need</fullName>
