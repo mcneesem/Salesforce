@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomPermission xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>9/26/2024 - Revised Permission Set Created for Onboarding Meeting Request functionality .Access to new set of flows which creates OMD Records,</description>
+    <isLicensed>false</isLicensed>
+    <label>Request CTM and Employee Orientation Meeting Detail</label>
+</CustomPermission>
