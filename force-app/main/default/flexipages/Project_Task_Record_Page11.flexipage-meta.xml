@@ -1196,6 +1196,23 @@
                 <identifier>Recordpse_Work_Calendar_cField</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.WO_Asset__c</fieldItem>
+                <identifier>RecordWO_Asset_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!$User.Profile.Name}</leftValue>
+                        <operator>CONTAINS</operator>
+                        <rightValue>System Admin</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-b2e6c84a-2a3a-4f7a-94ba-bcc2ec8947b9</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -1285,6 +1302,10 @@
                     <value>Facet-6e9e709f-ebfa-4a85-ba67-39db1ae7f76f</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>label</name>
                     <value>Information</value>
                 </componentInstanceProperties>
@@ -1297,6 +1318,10 @@
                 <componentInstanceProperties>
                     <name>columns</name>
                     <value>Facet-21098d79-a22b-4e76-9b1d-57059d73d0ab</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>label</name>
@@ -1336,6 +1361,10 @@
                     <value>Facet-9771f64d-2d53-4d38-856d-81e2e3ae95de</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>label</name>
                     <value>Account</value>
                 </componentInstanceProperties>
@@ -1348,6 +1377,10 @@
                 <componentInstanceProperties>
                     <name>columns</name>
                     <value>Facet-ac1910da-693b-43c9-98dc-9cb7087de787</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>label</name>
@@ -1371,6 +1404,10 @@
                     <value>Facet-58624caf-f721-418d-86c3-f8fb079df205</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>label</name>
                     <value>Task Hierarchy</value>
                 </componentInstanceProperties>
@@ -1383,6 +1420,10 @@
                 <componentInstanceProperties>
                     <name>columns</name>
                     <value>Facet-465ba932-8e04-4f8c-b371-ec189f40450b</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>label</name>
