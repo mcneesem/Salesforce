@@ -5386,8 +5386,8 @@ Meeting - Project Related - Fiduciary,Mutual Fund Corrections - Pricing, Manual 
         <fullName>NSP_Spl_Payroll_Needs</fullName>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>Any special payroll needs</shortDescription>
-        <value>Does the client have any special payroll needs (i.e. job costing, IRR, departments)?</value>
+        <shortDescription>Any custom reporting needs</shortDescription>
+        <value> Does the client have any custom reporting needs (i.e. job costing, IRR, departments)?</value>
     </labels>
     <labels>
         <fullName>NSP_Standard_Worked_Hours</fullName>
