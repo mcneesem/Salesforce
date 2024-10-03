@@ -103,7 +103,7 @@ public class NSP_RetAssetWithClntSubPlnControllerTest {
             //Then
             System.assertEquals(true, isAssociated);
         }catch(Exception ex){
-            NSP_CustomException.LogException(ex);
+            System.debug( ' ~ ex=' + ex );
         }   
     }
 
