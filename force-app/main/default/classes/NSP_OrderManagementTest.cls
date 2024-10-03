@@ -83,7 +83,7 @@ private class NSP_OrderManagementTest {
         try{
              isContractUpdated= NSP_OrderManagement.updateContract(null,'Amendment/Supplemental');
         }catch(Exception ex){
-            NSP_CustomException.LogException(ex);
+            System.debug( ' ~ ex=' + ex );
         }
         System.assert(isContractUpdated);
         Test.stopTest();

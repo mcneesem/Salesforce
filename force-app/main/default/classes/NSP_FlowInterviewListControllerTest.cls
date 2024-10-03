@@ -25,7 +25,7 @@ public class NSP_FlowInterviewListControllerTest {
         try{
             NSP_FlowInterviewListController.deleteInterview(null);
         }catch (Exception ex) {
-            NSP_CustomException.LogException(ex);
+            System.debug( ' ~ ex=' + ex );
         }
         Test.stopTest();
         system.assertEquals(OPP_TYPE, opportuniytObject.Type);
