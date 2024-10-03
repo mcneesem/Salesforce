@@ -4,7 +4,7 @@
 * Constructor : Public 
 * Description: Create project based on the order project name
 * Purpose: Updates Order Items with NSP_Project__c
-*			Updates Order with NSP_Project__c
+* Updates Order with NSP_Project__c
 */
 public class NSP_CreateProjFromFlow {
     // test w/ NSP_CreateProjFromFlowTest, NSP_AssetServiceTriggerHelperTest (96%)
