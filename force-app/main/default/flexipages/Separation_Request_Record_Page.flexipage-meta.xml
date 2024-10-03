@@ -1209,16 +1209,6 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.NSP_MutualConfidentiality__c</fieldItem>
-                <identifier>RecordNSP_MutualConfidentiality_cField2</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Termination_Date__c</fieldItem>
                 <identifier>RecordNSP_Termination_Date_cField4</identifier>
                 <visibilityRule>
@@ -3023,16 +3013,6 @@
                         <rightValue>true</rightValue>
                     </criteria>
                 </visibilityRule>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>readonly</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.NSP_MutualConfidentiality__c</fieldItem>
-                <identifier>RecordNSP_MutualConfidentiality_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
