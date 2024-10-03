@@ -169,7 +169,6 @@
                 <identifier>RecordNSP_Visible_to_Client__cField</identifier>
             </fieldInstance>
         </itemInstances>
-        
         <name>Facet-50fbea8b-1834-43e2-9884-56fb6397c5c8</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -486,7 +485,6 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.pse__Copy_Child_Records_from_Template_Async__c</fieldItem>
                 <identifier>Recordpse_Copy_Child_Records_from_Template_Async_cField</identifier>
-                
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -603,7 +601,6 @@
                         <valueListItems>
                             <value>NSP_Assignee__c</value>
                         </valueListItems>
-                        
                     </valueList>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
@@ -647,7 +644,6 @@
                 <identifier>flexipage_fieldSection2</identifier>
             </componentInstance>
         </itemInstances>
-        
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>

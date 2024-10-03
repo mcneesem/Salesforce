@@ -908,6 +908,17 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Support_Team__c</picklist>
+        <values>
+            <fullName>Cost</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Traditional</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>TES_HCM_Implementation_Support_Tasks__c</picklist>
         <values>
             <fullName>Bank Audit Task</fullName>
