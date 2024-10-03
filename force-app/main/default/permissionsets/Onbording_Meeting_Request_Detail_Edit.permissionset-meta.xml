@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
-    <customPermissions>
-        <enabled>true</enabled>
-        <name>Request_CTM_and_Employee_Orientation_Meeting_Detail</name>
-    </customPermissions>
     <description>Users with this permission can edit the OMR detail records.</description>
     <fieldPermissions>
         <editable>true</editable>
