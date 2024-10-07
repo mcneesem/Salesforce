@@ -214,6 +214,10 @@
         </itemInstances>
         <itemInstances>
             <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.Complexity_Score_Total_Formula__c</fieldItem>
                 <identifier>RecordComplexity_Score_Total_Formula__cField</identifier>
             </fieldInstance>
@@ -2028,8 +2032,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Required_Document_Note__c</fieldItem>
-                <identifier>RecordRequired_Document_Note_cField</identifier>
+                <fieldItem>Record.Required_Document_Notes__c</fieldItem>
+                <identifier>RecordRequired_Document_Notes_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-ef182a36-5b75-4023-8e14-d091301e16d1</name>
