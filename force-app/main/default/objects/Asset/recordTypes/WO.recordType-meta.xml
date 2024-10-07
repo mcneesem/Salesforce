@@ -2250,6 +2250,18 @@
             <fullName>MMSO -%C2%A0Enterprise</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>WO - WD Bundle Plus</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WO - WD Full Bundle</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WS - WD Bundle Plus</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>NSP_Support_Allowance__c</picklist>
