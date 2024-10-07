@@ -243,6 +243,6 @@
     </initialSubmissionActions>
     <label>Resubmit Approval for Termination Form2</label>
     <processOrder>4</processOrder>
-    <recordEditability>AdminOnly</recordEditability>
+    <recordEditability>AdminOrCurrentApprover</recordEditability>
     <showApprovalHistory>false</showApprovalHistory>
 </ApprovalProcess>

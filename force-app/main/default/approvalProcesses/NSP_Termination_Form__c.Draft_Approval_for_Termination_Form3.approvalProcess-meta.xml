@@ -240,6 +240,6 @@ IF(
     </initialSubmissionActions>
     <label>Draft Approval for Termination Form3</label>
     <processOrder>2</processOrder>
-    <recordEditability>AdminOnly</recordEditability>
+    <recordEditability>AdminOrCurrentApprover</recordEditability>
     <showApprovalHistory>false</showApprovalHistory>
 </ApprovalProcess>

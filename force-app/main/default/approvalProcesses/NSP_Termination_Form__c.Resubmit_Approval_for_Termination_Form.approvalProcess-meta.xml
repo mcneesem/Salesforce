@@ -248,6 +248,6 @@ NOT(ISBLANK(Name))
     </initialSubmissionActions>
     <label>Resubmit Approval for Termination Form</label>
     <processOrder>3</processOrder>
-    <recordEditability>AdminOnly</recordEditability>
+    <recordEditability>AdminOrCurrentApprover</recordEditability>
     <showApprovalHistory>false</showApprovalHistory>
 </ApprovalProcess>

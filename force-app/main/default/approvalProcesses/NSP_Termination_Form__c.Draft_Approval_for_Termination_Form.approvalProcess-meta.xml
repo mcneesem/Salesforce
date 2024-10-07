@@ -245,6 +245,6 @@ NOT(ISBLANK(Name))
     </initialSubmissionActions>
     <label>Draft Approval for Termination Form</label>
     <processOrder>1</processOrder>
-    <recordEditability>AdminOnly</recordEditability>
+    <recordEditability>AdminOrCurrentApprover</recordEditability>
     <showApprovalHistory>false</showApprovalHistory>
 </ApprovalProcess>
