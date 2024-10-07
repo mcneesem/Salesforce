@@ -232,6 +232,10 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
+                    <name>maxRecordsToDisplay</name>
+                    <value>10</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>parentFieldApiName</name>
                     <value>Asset.Id</value>
                 </componentInstanceProperties>
@@ -638,6 +642,16 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Comm_Type__c</fieldItem>
                 <identifier>RecordNSP_Comm_Type_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_SKU__c</fieldItem>
+                <identifier>RecordNSP_SKU_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-9692e182-6265-4a40-b96f-82c3d9b89b2a</name>
