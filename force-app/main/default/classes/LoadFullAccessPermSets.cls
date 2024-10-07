@@ -1,5 +1,5 @@
 public class LoadFullAccessPermSets {
-    // test w/ LoadFullAccessPermSetsQueueableTest (91%)
+    // test w/ LoadFullAccessPermSetsQueueableTest (89%)
 
     // ********************************************************************************************************
     //  Author:        Matthew McNeese
@@ -33,10 +33,10 @@ public class LoadFullAccessPermSets {
         }
 
         if (!mPermSets.containsKey(readPermSetName)) {
-            LoadFullAccessPermSetsQueueable.createErrorLog('LoadFullAccessPermSetsQueueable', 'runLoadFullAccessPermSets', null, 'PermissionSet not found: ' + readPermSetName);
+            LoadFullAccessPermSetsQueueable.createErrorLog( 'runLoadFullAccessPermSets' , null , 'PermissionSet not found: ' + readPermSetName );
         }
         if (!mPermSets.containsKey(editPermSetName)) {
-            LoadFullAccessPermSetsQueueable.createErrorLog('LoadFullAccessPermSetsQueueable', 'runLoadFullAccessPermSets', null, 'PermissionSet not found: ' + editPermSetName);
+            LoadFullAccessPermSetsQueueable.createErrorLog( 'runLoadFullAccessPermSets' , null , 'PermissionSet not found: ' + editPermSetName );
         }
 
         if ( objectApiNames.isEmpty() ) {
@@ -63,8 +63,8 @@ public class LoadFullAccessPermSets {
         if (!Test.isRunningTest()) {
             System.enqueueJob(new LoadFullAccessPermSetsQueueable(objectApiNames, mPermSets.get(readPermSetName), mPermSets.get(editPermSetName), depRetry));
         }
-        LoadFullAccessPermSetsQueueable.createErrorLog('LoadFullAccessPermSetsQueueable', 'runLoadFullAccessPermSets', null, 'Loading RecTypeVisibilities');
-        LoadFullAccessPermSetsQueueable.createErrorLog('LoadFullAccessPermSetsQueueable', 'runLoadFullAccessPermSets', null, 'Launching LoadFullAccessPermSetsQueueable; objectCount=' + objectApiNames.size() );
+        LoadFullAccessPermSetsQueueable.createErrorLog( 'runLoadFullAccessPermSets' , null , 'Loading RecTypeVisibilities' );
+        LoadFullAccessPermSetsQueueable.createErrorLog( 'runLoadFullAccessPermSets' , null , 'Launching LoadFullAccessPermSetsQueueable; objectCount=' + objectApiNames.size() );
     }
 
     // ************************************ Record Type Visibility ************************************
@@ -98,7 +98,9 @@ public class LoadFullAccessPermSets {
 
             if (permSet != null && !Test.isRunningTest()) {
                 List<MetadataService.SaveResult> results = service.updateMetadata( new MetadataService.Metadata[] { permSet });
-                if (!results[0].success) LoadFullAccessPermSetsQueueable.createErrorLog('LoadFullAccessPermSetsQueueable', 'loadRecTypeVisibility', null, 'RecTypeVisibility errors: ' + results[0].errors[0].message);
+                if ( !results[0].success ) {
+                    LoadFullAccessPermSetsQueueable.createErrorLog( 'loadRecTypeVisibility' , null , 'RecTypeVisibility errors: ' + results[0].errors[0].message );
+                }
             }
         }
     }

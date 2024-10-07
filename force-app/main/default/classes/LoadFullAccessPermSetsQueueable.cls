@@ -1,5 +1,5 @@
 public class LoadFullAccessPermSetsQueueable implements Queueable {
-    // test w/ LoadFullAccessPermSetsQueueableTest (81%)
+    // test w/ LoadFullAccessPermSetsQueueableTest (78%)
 
     // **************************************************************************************************
     //  Author:         Matthew McNeese
@@ -28,11 +28,11 @@ public class LoadFullAccessPermSetsQueueable implements Queueable {
 
         String currObjName = objectApiNames.remove(0); // remove top item from objectApiNames in each link in chain
 
-        createErrorLog('LoadFullAccessPermSetsQueueable', 'execute', currObjName, 'Loading ObjectPermissions');
+        createErrorLog( 'execute' , currObjName , 'Loading ObjectPermissions' );
         loadObjectPermissions(readPermSetId, false, objectApiNames, currObjName, depRetry, true); // upsert read Object Permissions for first object in list
         loadObjectPermissions(editPermSetId, true, objectApiNames, currObjName, depRetry, true); // upsert edit Object Permissions for first object in list
 
-        createErrorLog('LoadFullAccessPermSetsQueueable', 'execute', currObjName, 'Loading FieldPermissions');
+        createErrorLog( 'execute' , currObjName , 'Loading FieldPermissions' );
         loadFieldPermissions(readPermSetId, false, currObjName); // upsert read Field Permissions for first object in list
         loadFieldPermissions(editPermSetId, true, currObjName); // upsert edit Field Permissions for first object in list
 
@@ -40,13 +40,13 @@ public class LoadFullAccessPermSetsQueueable implements Queueable {
             if (QueueableSettings__c.getOrgDefaults().EnableLoadPermSetChain__c) {
                 if ( objectApiNames.size() > 0 ) { // chain new job for next object
                     System.enqueueJob(new LoadFullAccessPermSetsQueueable(objectApiNames, readPermSetId, editPermSetId, depRetry));
-                    createErrorLog('LoadFullAccessPermSetsQueueable', 'execute', null, 'objectCount remaining=' + objectApiNames.size() );
+                    createErrorLog( 'execute' , null , 'objectCount remaining=' + objectApiNames.size() );
                 } else {
                     sendCompletionEmail();
-                    createErrorLog('LoadFullAccessPermSetsQueueable', 'execute', null, 'This was the final job for LoadFullAccessPermSetsQueueable');
+                    createErrorLog( 'execute' , null , 'This was the final job for LoadFullAccessPermSetsQueueable' );
                 }
             } else {
-                createErrorLog('LoadFullAccessPermSetsQueueable', 'execute', null, 'QueueableSettings__c.EnableLoadPermSetChain__c is disabled');
+                createErrorLog( 'execute' , null , 'QueueableSettings__c.EnableLoadPermSetChain__c is disabled' );
             }
         }
     }
@@ -93,16 +93,16 @@ public class LoadFullAccessPermSetsQueueable implements Queueable {
                     if ( err.getMessage().contains('depends on')) {
                         depRetry.put(currObjName, depRetry.containsKey(currObjName) ? depRetry.get(currObjName)+1 : 1);
                         if (depRetry.get(currObjName) > 5) {
-                            createErrorLog('LoadFullAccessPermSetsQueueable', 'loadObjectPermissions', currObjName, 'exceeded retry limit');
+                            createErrorLog( 'loadObjectPermissions' , currObjName , 'exceeded retry limit' );
                         } else if (!objectApiNames.contains(currObjName)) {
                             objectApiNames.add(currObjName);
-                            createErrorLog('LoadFullAccessPermSetsQueueable', 'loadObjectPermissions', currObjName, 'object dependency found; moving to bottom of list');
+                            createErrorLog( 'loadObjectPermissions' , currObjName , 'object dependency found; moving to bottom of list' );
                         }
                     } else if ( err.getMessage().contains('The following permission isn\'t allowed: View All')) {
-                        createErrorLog('LoadFullAccessPermSetsQueueable', 'loadObjectPermissions', currObjName, 'View All error found; disabling allPermFlag');
+                        createErrorLog( 'loadObjectPermissions' , currObjName , 'View All error found; disabling allPermFlag' );
                         loadObjectPermissions(permSetId, editFlag, objectApiNames, currObjName, depRetry, false);
                     } else if (!err.getMessage().contains('bad value for restricted picklist field')) {
-                        createErrorLog('LoadFullAccessPermSetsQueueable', 'loadObjectPermissions', currObjName, 'ObjectPermissions error occurred for Perm Set: ' + permSetId + ' : ' + err.getMessage());
+                        createErrorLog( 'loadObjectPermissions' , currObjName , 'ObjectPermissions error occurred for Perm Set: ' + permSetId + ' : ' + err.getMessage() );
                     }
                 }
             }
@@ -153,12 +153,16 @@ public class LoadFullAccessPermSetsQueueable implements Queueable {
                     for (Database.Error err : fpr.getErrors()) {
                         if (!err.getMessage().contains('bad value for restricted picklist field') && // ignore ineligible field names
                             !err.getMessage().contains('Read only field')) {
-                            if (errLogCount++ < 1) createErrorLog('LoadFullAccessPermSetsQueueable', 'loadFieldPermissions', currObjName, 'FieldPermissions error occurred on Perm Set: ' + permSetId + ' : ' + err.getMessage());
+                            if ( errLogCount++ < 1 ) {
+                                createErrorLog( 'loadFieldPermissions' , currObjName , 'FieldPermissions error occurred on Perm Set: ' + permSetId + ' : ' + err.getMessage() );
+                            }
                         }
                     }
                 }
             }
-            if (errLogCount > 0) createErrorLog('LoadFullAccessPermSetsQueueable', 'loadFieldPermissions', currObjName, errLogCount + ' FieldPermissions errors occurred on Perm Set: ' + permSetId);
+            if ( errLogCount > 0 ) {
+                createErrorLog( 'loadFieldPermissions' , currObjName , errLogCount + ' FieldPermissions errors occurred on Perm Set: ' + permSetId );
+            }
         }
     }
 
@@ -178,13 +182,28 @@ public class LoadFullAccessPermSetsQueueable implements Queueable {
     }
 
     // ************************ Write Error Log ************************
-    @future
-    public static void createErrorLog(String className, String methName, String objName, String descText){
-        NSP_Error_Log__c log = new NSP_Error_Log__c();
-        log.NSP_Class__c = className;
-        log.NSP_Method__c = methName;
-        log.NSP_Object__c = objName;
-        log.NSP_Description__c = descText;
-        Insert log;
+    public static void createErrorLog( String methodName , String objectName , String info ) {
+        if ( QueueableSettings__c.getOrgDefaults().EnableLogging__c
+            && ( Limits.getFutureCalls() < Limits.getLimitFutureCalls() )
+            )
+        {
+            createErrorLogFuture( methodName , objectName , info );
+        }
     }
+
+    @future
+    public static void createErrorLogFuture( String methodName , String objectName , String info ) {
+        if ( QueueableSettings__c.getOrgDefaults().EnableLogging__c
+            || Test.isRunningTest()
+           )
+        {
+            NSP_ErrorLogHandler.logInfo(
+                LoadFullAccessPermSetsQueueable.class.getName() ,
+                methodName ,
+                objectName ,
+                info
+            );
+        }
+    }
+
 }
