@@ -1574,7 +1574,7 @@ public with sharing class NSP_ProjectTriggerHelper {
         if ( String.isNotBlank( prjName ) && String.isNotBlank( accountName ) ) {
             prjName = prjName + ' - '+ accountName;
         }
-        if ( prjName.length() > 80 ) {
+        if ( prjName.length() > 73 ) {
             prjName = prjName.substring( 0 , 73 );
         }
         return prjName;
