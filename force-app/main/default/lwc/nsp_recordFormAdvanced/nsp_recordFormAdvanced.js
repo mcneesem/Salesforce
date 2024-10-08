@@ -49,7 +49,6 @@ export default class Nsp_recordFormAdvanced extends LightningElement {
   @track accountFieldInfo = {};
   @track updatedFormValues = {};
   @track error = null;
-
   @track state = {
     isLoading: true,
     isFirstTimeLoad: true,
@@ -110,6 +109,9 @@ export default class Nsp_recordFormAdvanced extends LightningElement {
 
   handleSuccess({ detail }) {
     this.recordId = detail.id;
+    this.dispatchEvent(
+      new CustomEvent('recordsaved')
+    );
     this.showSuccessToast('Data saved successfully.');
     this.state.isLoading = false;
   }

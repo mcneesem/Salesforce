@@ -1,31 +1,42 @@
 import { api, LightningElement, track, wire } from 'lwc';
 import { FIELDS } from './fields';
-import getAccountProfileRelatedInfo from '@salesforce/apex/NSP_AccountProfileController.getAccountProfileRelatedInfo';
-import getRecentlyUpdatedFields from '@salesforce/apex/NSP_AccountProfileController.getRecentlyUpdatedFields';
 import { FIELD_VISIBILITY_CONFIG } from './fieldVisibilityConfig';
 import { LABEL } from './labels';
+import getAccountProfileRelatedInfo from '@salesforce/apex/NSP_AccountProfileController.getAccountProfileRelatedInfo';
+import getRecentlyUpdatedFields from '@salesforce/apex/NSP_AccountProfileController.getRecentlyUpdatedFields';
+import getRecordWithAllFields from '@salesforce/apex/NSP_AccountProfileController.getRecordWithAllFields';
+import { refreshApex } from '@salesforce/apex';
 
 import cssResource from '@salesforce/resourceUrl/StandardFieldStyles';
 import { loadStyle } from 'lightning/platformResourceLoader';
+import { createMapWithValueProperty } from 'c/nsp_utils';
 
 export default class Nsp_accountProfileRecordForm extends LightningElement {
   @api recordId;
 
   error = null;
+  @track allFieldsValue = {};
+  @track recordWithAllFields = {};
   @track fieldsConfig = {};
 
-  @wire(getAccountProfileRelatedInfo, { accId: '$recordId' })
-  getInfo({ data, error }) {
-    if (data) {
-      getRecentlyUpdatedFields({ accId: this.recordId })
-        .then((res) => {
-          this.createFieldConfig(data, res);
-        })
-        .catch((error) => {
-          this.error = error.body.message;
+  @wire(getRecordWithAllFields, { recordId: '$recordId' })
+  getInfo(value) {
+    this.recordWithAllFields=value;
+    if(this.recordWithAllFields.data){
+      this.allFieldsValue = createMapWithValueProperty(this.recordWithAllFields.data);
+      getAccountProfileRelatedInfo({ accId: this.recordId })
+        .then((relatedInfo) => {
+          getRecentlyUpdatedFields({ accId: this.recordId })
+            .then((updatedInfo) => {
+              this.createFieldConfig(relatedInfo, updatedInfo);
+          }).catch((error) => {
+              this.error = error;
         });
-    } else if (error) {
-      this.error = error.body.message;
+      }).catch((error) => {
+        this.error = error;
+      });
+    }else if (this.recordWithAllFields.error) {
+      this.error = this.recordWithAllFields.error;
     }
   }
 
@@ -35,6 +46,7 @@ export default class Nsp_accountProfileRecordForm extends LightningElement {
 
   createFieldConfig(relatedFieldValueMap, recentlyUpdatedFields) {
     const fieldsConfig = {};
+    let configDependentFields = JSON.parse(JSON.stringify(this.configDependentFields));
     let childFields = JSON.parse(JSON.stringify(this.childFields));
 
     Object.keys(relatedFieldValueMap).forEach((fieldName) => {
@@ -45,7 +57,9 @@ export default class Nsp_accountProfileRecordForm extends LightningElement {
       if (isHidden) {
         childFields = childFields.filter((f) => f !== fieldName);
       }
-
+      if (configDependentFields.includes(fieldName)) {
+        configDependentFields = configDependentFields.filter((f) => f != fieldName);
+      }
       fieldsConfig[fieldName] = {
         value,
         isCustom: true,
@@ -58,9 +72,39 @@ export default class Nsp_accountProfileRecordForm extends LightningElement {
         isURL,
         isChecked : isChecked == 'TRUE',
       };
-      
     });
+    Object.keys(recentlyUpdatedFields).forEach((fieldName) => {
+      if (configDependentFields.includes(fieldName)) {
+        configDependentFields = configDependentFields.filter((f) => f != fieldName);
+      }
 
+      if(fieldName in Object.keys(FIELD_VISIBILITY_CONFIG)){
+        if( FIELD_VISIBILITY_CONFIG[fieldName][0].expValue[0] === recentlyUpdatedFields[fieldName]){
+          //Adding dependent fields to configDependentFields to allow visibility.
+          FIELD_VISIBILITY_CONFIG[fieldName].forEach(({ dependentFields }) => {
+            if (! configDependentFields.includes(dependentFields)) {
+              configDependentFields = [...configDependentFields, ...dependentFields];
+            }
+          });
+        }else{
+          //Adding dependent fields to childFields to remove visibility.
+          FIELD_VISIBILITY_CONFIG[fieldName].forEach(({ dependentFields }) => {
+            if (! childFields.includes(dependentFields)) {
+              childFields = [...childFields, ...dependentFields];
+            }
+          });
+        }
+      }
+      //Either field is not dependent field, or parent value matches with expected value
+      if (!childFields.includes(fieldName)) {
+        const config = fieldsConfig[fieldName] || {};
+        config.isHidden = false;
+        config.className = 'nsp-highlight';
+        fieldsConfig[fieldName] = config;
+      }
+    });
+    
+    //dependent fields, where parent field value does not match with expected value.
     childFields.forEach((fieldName) => {
       fieldsConfig[fieldName] = {
         isHidden: true,
@@ -75,24 +119,52 @@ export default class Nsp_accountProfileRecordForm extends LightningElement {
         fieldsConfig[fieldName] = config;
       }
     });
-
-    recentlyUpdatedFields.forEach((fieldName) => {
-      const config = fieldsConfig[fieldName] || {};
-
-      config.className = 'nsp-highlight';
-      fieldsConfig[fieldName] = config;
+    configDependentFields.forEach((fieldName) => {
+      if(!(Object.keys(recentlyUpdatedFields).includes(fieldName))){
+        const isHidden = childFields.includes(fieldName);
+        if (isHidden) {
+          childFields = childFields.filter((f) => f !== fieldName);
+        }
+        const config = fieldsConfig[fieldName] || {};
+        config.isHidden = false;
+        fieldsConfig[fieldName] = config;
+      }
     });
 
     this.fieldsConfig = fieldsConfig;
+  }
+
+  get configDependentFields() {
+    let configDependentFields = [];
+    Object.keys(FIELD_VISIBILITY_CONFIG).forEach((parentField) => {
+      const {expValue, dependentFields} = FIELD_VISIBILITY_CONFIG[parentField][0];
+      if(parentField in this.allFieldsValue){
+        if(expValue[0] === this.allFieldsValue[parentField].value){
+                configDependentFields = [...configDependentFields, ...dependentFields];
+        }
+      }
+    });
+    return configDependentFields;
   }
 
   get childFields() {
     let childFields = [];
 
     Object.keys(FIELD_VISIBILITY_CONFIG).forEach((parentField) => {
-      FIELD_VISIBILITY_CONFIG[parentField].forEach(({ dependentFields }) => {
-        childFields = [...childFields, ...dependentFields];
-      });
+      const {expValue, dependentFields} = FIELD_VISIBILITY_CONFIG[parentField][0];
+      let addChilds=false;
+      if(!(parentField in this.allFieldsValue)){
+        addChilds=true;
+      }else if(parentField in this.allFieldsValue){
+        if(expValue[0] !== this.allFieldsValue[parentField].value){
+          addChilds=true;
+        }
+      }
+      if(addChilds){
+        FIELD_VISIBILITY_CONFIG[parentField].forEach(({ dependentFields }) => {
+          childFields = [...childFields, ...dependentFields];
+        });
+      }
     });
 
     return childFields;
@@ -106,5 +178,9 @@ export default class Nsp_accountProfileRecordForm extends LightningElement {
     const { fieldsConfig, fieldVisibilityConfig } = this;
 
     return { fieldsConfig, fieldVisibilityConfig, columns: 2, fields: FIELDS };
+  }
+
+  refreshData() {
+    refreshApex(this.recordWithAllFields);
   }
 }

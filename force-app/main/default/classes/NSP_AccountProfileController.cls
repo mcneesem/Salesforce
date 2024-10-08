@@ -5,7 +5,7 @@
 * Name : NSP_AccountProfileController
 */
 public with sharing class NSP_AccountProfileController {
-    // test w/ NSP_AccountProfileControllerTest (90%)
+    // test w/ NSP_AccountProfileControllerTest (89%)
 
     // Only for testing purpose
     @TestVisible
@@ -61,24 +61,57 @@ public with sharing class NSP_AccountProfileController {
         }
     }
 
-    /**
-     * @description - Returns a set of API names of fields that have been updated recently.
-     * @param {String} - accId - Id of the account
-     * @return List<String> - List of recently updated field names.
-     */
+    //
+    // This method retrieves the specific record from Account object with the provided Id and returns a sObject.
+    // We have created this method to fetch get record with all fields value(UI load fails when there is a lot more
+    // number of fields and on load we need to check condition for each field.).
+    // STY - 304650
+    // @param recordId - Id - unique identifier of the record to retrieve.
+    // @return SObject - the sObject representation of the record returned.
+    // @throws AuraHandledException - if any exception occurred while fetching the record.
+    //
     @AuraEnabled(cacheable=true)
-    public static List<String> getRecentlyUpdatedFields(String accId){
-        try{
-        Integer noOfDays = Integer.valueOf(System.Label.NSP_Ap_Changes_Tracking_Duration_In_Days);
-        Date lastDate = System.today() - noOfDays;
-        Set<String> fieldNames = new Set<String>();
-        for (AccountHistory accHistory : [SELECT Id, Field FROM AccountHistory WHERE AccountId = :accId AND CreatedDate > :lastDate WITH SECURITY_ENFORCED]) {
-            fieldNames.add(accHistory.Field);            
+    public static SObject getRecordWithAllFields( Id recordId ) {
+        try {
+            // Get the object's describe information
+            Schema.DescribeSObjectResult accountDescribe = Account.sObjectType.getDescribe();
+            Map<String,Schema.SObjectField> accountFieldMap = accountDescribe.fields.getMap();
+            List<String> allFields = new List<String>( accountFieldMap.keySet() );
+            return new NSP_sObjectSelector( 'Account' , allFields )
+                .setSecurityEnforce( false )
+                .selectById( recordId );
+        } catch ( Exception e ) {
+            throw NSP_Utilities.getAuraException( e );
         }
+    }
 
-        return new List<String>(fieldNames);
-        }catch (Exception ex) {
-            throw NSP_Utilities.getAuraException(ex);
+    //
+    // @description - Returns a set of API names of fields that have been updated recently.
+    // @param {String} - accId - Id of the account
+    // @return List<String> - List of recently updated field names.
+    //
+    @AuraEnabled(cacheable=true)
+    public static Map<String,String> getRecentlyUpdatedFields( String accId ) {
+        try{
+            Integer noOfDays = Integer.valueOf(System.Label.NSP_Ap_Changes_Tracking_Duration_In_Days);
+            Date lastDate = System.today() - noOfDays;
+            Map<String,String> mapOfFieldValues = new Map<String,String>();
+            for ( AccountHistory accHistory : [
+                        SELECT Id , Field , NewValue
+                        FROM AccountHistory
+                        WHERE (
+                            AccountId = :accId
+                            AND CreatedDate > :lastDate
+                        )
+                        WITH SECURITY_ENFORCED
+                    ]
+                )
+            {
+                mapOfFieldValues.put(accHistory.Field,String.valueOf(accHistory.NewValue));
+            }
+            return mapOfFieldValues;
+        } catch ( Exception e ) {
+            throw NSP_Utilities.getAuraException( e );
         }
     }
     
