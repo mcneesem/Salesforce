@@ -5,7 +5,7 @@
 * Name : NSP_SubPlanChangeHistoryBatchTest
 */
 @isTest
-private class NSP_SubPlanChangeHistoryBatchTest {
+public class NSP_SubPlanChangeHistoryBatchTest {
     
     /***********************************************************************************************
     * MethodName: createTestData
@@ -13,7 +13,7 @@ private class NSP_SubPlanChangeHistoryBatchTest {
     * ********************************************************************************************/
     
     @testSetup
-    private static void createTestData (){
+    public static void createTestData (){
 
         //Get Record Types Id for WO
         Id WOPlanRT = Schema.SObjectType.NSP_Plan__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.WO_RT_NAME).getRecordTypeId();
@@ -29,7 +29,6 @@ private class NSP_SubPlanChangeHistoryBatchTest {
         NSP_Plan_SubPlan__c subPlan = (NSP_Plan_SubPlan__c)NSP_TestExtendedDataFactory.createSObject(new NSP_Plan_SubPlan__c(), 'NSP_TestDataFactory.SubPlanDefaults', false);
         subPlan.NSP_Parent_Plan_ID__c = plan.Id;
         subPlan.RecordTypeId = WOSubPlanRT;
-        subPlan.NSP_Status__c = 'Frozen';
         insert subPlan ;
         
         //Insert new Sub Plan Change History with WO Record Type
@@ -37,17 +36,6 @@ private class NSP_SubPlanChangeHistoryBatchTest {
         subPlanHist.NSP_Plan_ID__c = plan.Id;
         subPlanHist.NSP_Plan_Subplan_Relationship__c = subPlan.Id;
         subPlanHist.RecordTypeId = WOSubPlanHisRT;
-        subPlanHist.Auto_Enroll_Effective_Date__c = Date.today() - 5;
-        subPlanHist.Auto_Escalate__c = 1.1;
-        subPlanHist.Escalation_Max__c = 2.0;
-        subPlanHist.Is_QACA__c = true;
-        subPlanHist.Is_Mandatory__c = true;
-        subPlanHist.Allows_LT_Employer_Contributions__c= true;
-        subPlanHist.LTPT_Effective_Date__c = Date.today() - 4;
-        subPlanHist.LTPT_Term_Date__c = Date.today() - 3;
-        subPlanHist.Exception_Type__c = 'Less than 11 EE\'s';
-        subPlanHist.Exception_Date__c = Date.Today() + 5;
-        subPlanHist.NSP_Status__c = 'Active';
         insert subPlanHist ;
         
     } 
@@ -56,7 +44,7 @@ private class NSP_SubPlanChangeHistoryBatchTest {
     * MethodName: shouldTestUpdateOfSubPlanFieldsFromSubPlanChangeHistory
     * Description : Unit test for updating NSP_Auto_Deferral__c, NSP_Status__c, NSP_Plan_Effective_Date__c,NSP_Plan_Type__c ,NSP_Original_PE_Date__c FROM SubPlanChangeHistory On Insert
     * ********************************************************************************************/
-    @isTest private static void shouldTestUpdateOfSubPlanFieldsFromSubPlanChangeHistory(){
+    public static testmethod void shouldTestUpdateOfSubPlanFieldsFromSubPlanChangeHistory(){
         Test.startTest();     
         
         NSP_SubPlanChangeHistoryBatch subPlanChangeHistoryBatch = new NSP_SubPlanChangeHistoryBatch();
