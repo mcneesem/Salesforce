@@ -61,6 +61,11 @@
                 <label>Safety Meeting</label>
             </value>
             <value>
+                <fullName>WA Proposal</fullName>
+                <default>false</default>
+                <label>WA Proposal</label>
+            </value>
+            <value>
                 <fullName>WO Business Profile</fullName>
                 <default>false</default>
                 <label>WO Business Profile</label>
@@ -69,6 +74,11 @@
                 <fullName>WO Proposal</fullName>
                 <default>false</default>
                 <label>WO Proposal</label>
+            </value>
+            <value>
+                <fullName>WS Proposal</fullName>
+                <default>false</default>
+                <label>WS Proposal</label>
             </value>
             <value>
                 <fullName>WX Proposal</fullName>
@@ -215,10 +225,21 @@
         <valueSettings>
             <controllingFieldValue>Core Sales</controllingFieldValue>
             <controllingFieldValue>Mid Market</controllingFieldValue>
+            <valueName>WA Proposal</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Core Sales</controllingFieldValue>
+            <controllingFieldValue>Mid Market</controllingFieldValue>
             <valueName>WO Proposal</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Core Sales</controllingFieldValue>
+            <controllingFieldValue>Mid Market</controllingFieldValue>
+            <valueName>WS Proposal</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Core Sales</controllingFieldValue>
+            <controllingFieldValue>Mid Market</controllingFieldValue>
             <valueName>WX Proposal</valueName>
         </valueSettings>
         <valueSettings>
