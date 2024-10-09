@@ -6,7 +6,7 @@
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>true</trackHistory>
-    <type>Picklist</type>
+    <type>MultiselectPicklist</type>
     <valueSet>
         <restricted>true</restricted>
         <valueSetDefinition>
@@ -22,9 +22,9 @@
                 <label>ATS</label>
             </value>
             <value>
-                <fullName>LMS HRIS etc</fullName>
+                <fullName>LMS HRIS etc.</fullName>
                 <default>false</default>
-                <label>LMS HRIS etc</label>
+                <label>LMS HRIS etc.</label>
             </value>
             <value>
                 <fullName>Track API&apos;s</fullName>
@@ -33,4 +33,5 @@
             </value>
         </valueSetDefinition>
     </valueSet>
+    <visibleLines>4</visibleLines>
 </CustomField>

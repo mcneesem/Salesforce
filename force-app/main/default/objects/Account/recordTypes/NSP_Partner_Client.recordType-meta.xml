@@ -84,6 +84,25 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Clint_prof_sec_and_extrnl_HRTechgy__c</picklist>
+        <values>
+            <fullName>ATS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Accounting Software</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>LMS HRIS etc%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Track API%27s</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>DOZISF__ZoomInfo_Enrich_Status__c</picklist>
         <values>
             <fullName>Enriched</fullName>
