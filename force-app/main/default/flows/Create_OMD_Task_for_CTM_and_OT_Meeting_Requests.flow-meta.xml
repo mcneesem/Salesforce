@@ -349,7 +349,7 @@
         <locationX>704</locationX>
         <locationY>1422</locationY>
         <connector>
-            <targetReference>Update_OMD_Record</targetReference>
+            <targetReference>Update_OMD_Record_Create_Task</targetReference>
         </connector>
         <faultConnector>
             <targetReference>Set_Fault_Element_Create_Task_Record</targetReference>
@@ -499,13 +499,40 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordUpdates>
-        <name>Update_OMD_Record</name>
+        <description>Update TaskId and Status</description>
+        <name>Update_OMD_Record_Create_Task</name>
         <label>Update OMD Record</label>
         <locationX>704</locationX>
         <locationY>1530</locationY>
         <faultConnector>
             <targetReference>Set_Fault_Element_Update_OMD_Record</targetReference>
         </faultConnector>
+        <inputAssignments>
+            <field>Status__c</field>
+            <value>
+                <stringValue>Active</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>TaskId__c</field>
+            <value>
+                <elementReference>r_TaskRecord.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <description>Update OMD Record Status</description>
+        <name>Update_OMD_Record_Update_Task</name>
+        <label>Update OMD Record</label>
+        <locationX>176</locationX>
+        <locationY>1638</locationY>
+        <inputAssignments>
+            <field>Status__c</field>
+            <value>
+                <stringValue>Active</stringValue>
+            </value>
+        </inputAssignments>
         <inputAssignments>
             <field>TaskId__c</field>
             <value>
@@ -519,6 +546,9 @@
         <label>Update Task Record</label>
         <locationX>176</locationX>
         <locationY>1530</locationY>
+        <connector>
+            <targetReference>Update_OMD_Record_Update_Task</targetReference>
+        </connector>
         <faultConnector>
             <targetReference>Set_Fault_Element_Update_Task_Record</targetReference>
         </faultConnector>
@@ -533,7 +563,7 @@
             <field>Status__c</field>
             <operator>EqualTo</operator>
             <value>
-                <stringValue>Active</stringValue>
+                <stringValue>Draft</stringValue>
             </value>
         </filters>
         <object>Onboarding_Meeting_Detail__c</object>
@@ -630,9 +660,9 @@ Number of Employee Orientation Meetings Requested: {!$Record.No_of_Emp_OT_Meetin
 Meeting Type : {!f_meeting_request_type}
 
 ***** Meeting {!$Record.Meeting_Request_Number__c} Info *********
-#1 Time Block Selected: {!$Record.Onboarding_Meeting_Request__r.Date_Valid__c} , {!$Record.Onboarding_Meeting_Request__r.Start_Time_picklist__c} - {!$Record.Onboarding_Meeting_Request__r.End_Time_picklist__c}
+Time Block Selected: {!$Record.Onboarding_Meeting_Request__r.Date_Valid__c} , {!$Record.Onboarding_Meeting_Request__r.Start_Time_picklist__c} - {!$Record.Onboarding_Meeting_Request__r.End_Time_picklist__c}
 -
-Preferred Time within #1 Selected Time Block: {!$Record.Preferred_Meeting_Time__c}
+Preferred Time within Selected Time Block: {!$Record.Preferred_Meeting_Time__c}
 -
 Meeting Participant Count: {!$Record.Meeting_Participant_Count__c}
 If Meeting Participant Count is Greater than or Equal to 50, Meeting Type: {!$Record.Meeting_Type__c}

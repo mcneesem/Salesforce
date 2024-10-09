@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QuickAction xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Record Page- Orientation Meeting Request Task Record Page , Action to Update Final OMR Meeting Info</description>
+    <flowDefinition>Enter_Update_Final_OMR_Meeting_Information_for_OMD</flowDefinition>
+    <label>Update Final OMR Meeting Info</label>
+    <optionsCreateFeedItem>false</optionsCreateFeedItem>
+    <type>Flow</type>
+</QuickAction>
