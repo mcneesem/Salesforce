@@ -301,7 +301,9 @@ NSP_WX_WA_Benefits_Specialist__c, and NSP_Retirement_Service_Plan_Name__c field 
 401k Plan Consultant then mapping AccountId and accountTeamObject */
             for(NSP_Account_Team__c accTeamMemberObj : newMap.values()) {
                 accountIdSet.add(accTeamMemberObj.NSP_Account__c);
-                newRolesMap.put(accTeamMemberObj.NSP_Role__c, accTeamMemberObj.NSP_User__c);
+                if(String.isNotBlank( accTeamMemberObj.NSP_Role__c )){
+                    newRolesMap.put(accTeamMemberObj.NSP_Role__c, accTeamMemberObj.NSP_User__c);
+                }
                 if(String.isNotBlank(accTeamMemberObj.NSP_Role__c) && 
                    (accTeamMemberObj.NSP_Role__c != oldMap.get(accTeamMemberObj.Id).NSP_Role__c || 
                     accTeamMemberObj.NSP_User__c != oldMap.get(accTeamMemberObj.Id).NSP_User__c) &&
@@ -311,7 +313,7 @@ NSP_WX_WA_Benefits_Specialist__c, and NSP_Retirement_Service_Plan_Name__c field 
                         mapAccountIdtoAccountTeam.put(accTeamMemberObj.NSP_Account__c, accTeamMemberObj);
                     }
             }
-            if(accountIdSet.size() > 0 && newRolesMap != null && oldMap != null) {
+            if(!accountIdSet.isEmpty() && newRolesMap != null && oldMap != null) {
                 updateUserLookups(accountIdSet,newRolesMap, oldMap.values());
             }
             Set<Id> accountIdSetToUpdateResyncFlag = new Set<Id>();
