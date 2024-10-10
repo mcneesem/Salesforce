@@ -293,12 +293,15 @@ NSP_WX_WA_Benefits_Specialist__c, and NSP_Retirement_Service_Plan_Name__c field 
     
     public void afterUpdateDirector(Map<Id, NSP_Account_Team__c> newMap,Map<Id, NSP_Account_Team__c> oldMap) {
         try{
+            Set<Id> accountIdSet = new Set<Id>();
+            Map<String,Id> newRolesMap = new Map<String,Id>();
             Map<Id,NSP_Account_Team__c> mapAccountIdtoAccountTeam = new Map<Id,NSP_Account_Team__c>();
             
             /*STY-03187 : Checking if NSP_Role__c field in AccountTeam object is WX/WA Benefits Specialist or WA/WX Payroll Specialist or
 401k Plan Consultant then mapping AccountId and accountTeamObject */
             for(NSP_Account_Team__c accTeamMemberObj : newMap.values()) {
-                
+                accountIdSet.add(accTeamMemberObj.NSP_Account__c);
+                newRolesMap.put(accTeamMemberObj.NSP_Role__c, accTeamMemberObj.NSP_User__c);
                 if(String.isNotBlank(accTeamMemberObj.NSP_Role__c) && 
                    (accTeamMemberObj.NSP_Role__c != oldMap.get(accTeamMemberObj.Id).NSP_Role__c || 
                     accTeamMemberObj.NSP_User__c != oldMap.get(accTeamMemberObj.Id).NSP_User__c) &&
@@ -308,7 +311,9 @@ NSP_WX_WA_Benefits_Specialist__c, and NSP_Retirement_Service_Plan_Name__c field 
                         mapAccountIdtoAccountTeam.put(accTeamMemberObj.NSP_Account__c, accTeamMemberObj);
                     }
             }
-
+            if(accountIdSet.size() > 0 && newRolesMap != null && oldMap != null) {
+                updateUserLookups(accountIdSet,newRolesMap, oldMap.values());
+            }
             Set<Id> accountIdSetToUpdateResyncFlag = new Set<Id>();
             NSP_SObjectUpdateTriggerHelper sObjectUpdateObj = new NSP_SObjectUpdateTriggerHelper();
             accountIdSetToUpdateResyncFlag.addAll(
@@ -330,6 +335,90 @@ NSP_WX_WA_Benefits_Specialist__c, and NSP_Retirement_Service_Plan_Name__c field 
                 'afterUpdateDirector' ,
                 e
             );
+        }
+    }
+
+    /***********************************************************************************************
+    * MethodName  : updateUserLookups 
+    * Description : Method to update Termination Form Roles
+    * Params	  : Set<Id> accountId, Map<String,Id> newRolesMap, List<NSP_Account_Team__c> oldMap
+    * Story       : ADO-306830
+* ********************************************************************************************/
+    public static void updateUserLookups(Set<Id> accountId, Map<String,Id> newRolesMap, List<NSP_Account_Team__c> oldMap){
+        //Null check accountId
+        Map<Id, NSP_Termination_Form__c> accountToTerminationFormMap = new Map<Id, NSP_Termination_Form__c>();
+        Map<String,List<Id>> oldRolesMap = new Map<String,List<Id>>();
+        List<Id> oldRolesList;
+
+        List<NSP_Termination_Form__c> updateTermForm = new List<NSP_Termination_Form__c>();
+        List<NSP_Termination_Form__c> terminationForms = [SELECT Id, NSP_Account__c,NSP_Payroll_Specialist__c, NSP_Insperity_Blended_Role__c,NSP_Supervisor__c,NSP_Client_Liaison__c,NSP_Manager_HR_Services__c,NSP_Account_Executive__c,NSP_Credit_Specialist__c,NSP_Sales_Representative__c
+                                                          FROM NSP_Termination_Form__c  
+                                                          WHERE NSP_Account__c IN: accountId
+                                                          AND NSP_Status__c !=: NSP_ServiceConstants.TERM_SUPERVISOR_APPROVED
+                                                          AND NSP_Project_Task__c NOT IN (SELECT Id FROM	pse__Project_Task__c WHERE pse__Status__c =: NSP_ServiceConstants.TASKCOMPLETE)];
+        
+        //Get previous Role values
+        if(oldMap !=null) {
+            for ( NSP_Account_Team__c oldAccTeam : oldMap)
+            {
+                if ( !oldRolesMap.containsKey( oldAccTeam.NSP_Role__c)){        
+                    oldRolesMap.put(oldAccTeam.NSP_Role__c, new List<Id>());    
+                }
+                oldRolesMap.get(oldAccTeam.NSP_Role__c).add(oldAccTeam.NSP_User__c);
+            }
+        }
+
+        if(terminationForms != null && !terminationForms.isEmpty()) {
+            //Iterate through Account key
+            for(NSP_Termination_Form__c mapTermForm: terminationForms) {
+                if(oldRolesMap.containsKey(NSP_ServiceConstants.PAYROLL_SUPERVISOR) && newRolesMap.containsKey(NSP_ServiceConstants.PAYROLL_SUPERVISOR) && mapTermForm.NSP_Supervisor__c != null) {
+                    if(oldRolesMap.get(NSP_ServiceConstants.PAYROLL_SUPERVISOR).contains(mapTermForm.NSP_Supervisor__c)){
+                        mapTermForm.NSP_Supervisor__c = newRolesMap.get(NSP_ServiceConstants.PAYROLL_SUPERVISOR);
+                    }
+                }
+                if(oldRolesMap.containsKey(NSP_ServiceConstants.PAYROLL_SPECIALIST) && newRolesMap.containsKey(NSP_ServiceConstants.PAYROLL_SPECIALIST) && mapTermForm.NSP_Payroll_Specialist__c != null) {
+                    if(oldRolesMap.get(NSP_ServiceConstants.PAYROLL_SPECIALIST).contains(mapTermForm.NSP_Payroll_Specialist__c)){
+                        mapTermForm.NSP_Payroll_Specialist__c = newRolesMap.get(NSP_ServiceConstants.PAYROLL_SPECIALIST);
+                    }
+                }
+                if(oldRolesMap.containsKey(NSP_ServiceConstants.BUSINESS_PERFORMANCE_ADVISOR) && newRolesMap.containsKey(NSP_ServiceConstants.BUSINESS_PERFORMANCE_ADVISOR) && mapTermForm.NSP_Sales_Representative__c != null) {
+                    if(oldRolesMap.get(NSP_ServiceConstants.BUSINESS_PERFORMANCE_ADVISOR).contains(mapTermForm.NSP_Sales_Representative__c)){
+                        mapTermForm.NSP_Sales_Representative__c = newRolesMap.get(NSP_ServiceConstants.BUSINESS_PERFORMANCE_ADVISOR);
+                    }
+                }
+                if(oldRolesMap.containsKey(NSP_ServiceConstants.CLIENT_LIAISION) && newRolesMap.containsKey(NSP_ServiceConstants.CLIENT_LIAISION) && mapTermForm.NSP_Client_Liaison__c != null) {
+                    if(oldRolesMap.get(NSP_ServiceConstants.CLIENT_LIAISION).contains(mapTermForm.NSP_Client_Liaison__c)){
+                        mapTermForm.NSP_Client_Liaison__c = newRolesMap.get(NSP_ServiceConstants.CLIENT_LIAISION);
+                    }
+                }
+                if(oldRolesMap.containsKey(NSP_ServiceConstants.MID_MARKET_ACC_EX) && newRolesMap.containsKey(NSP_ServiceConstants.MID_MARKET_ACC_EX) && mapTermForm.NSP_Account_Executive__c != null) {
+                    if(oldRolesMap.get(NSP_ServiceConstants.MID_MARKET_ACC_EX).contains(mapTermForm.NSP_Account_Executive__c)){
+                        mapTermForm.NSP_Account_Executive__c = newRolesMap.get(NSP_ServiceConstants.MID_MARKET_ACC_EX);
+                    }
+                }
+                if(oldRolesMap.containsKey(NSP_ServiceConstants.MANAGER_HRSERVICES) && newRolesMap.containsKey(NSP_ServiceConstants.MANAGER_HRSERVICES) && mapTermForm.NSP_Manager_HR_Services__c != null) {
+                    if(oldRolesMap.get(NSP_ServiceConstants.MANAGER_HRSERVICES).contains(mapTermForm.NSP_Manager_HR_Services__c)){
+                        mapTermForm.NSP_Manager_HR_Services__c = newRolesMap.get(NSP_ServiceConstants.MANAGER_HRSERVICES);
+                    }
+                }
+                if(oldRolesMap.containsKey(NSP_ServiceConstants.BUS_TEAM_HRSP_CL) && newRolesMap.containsKey(NSP_ServiceConstants.BUS_TEAM_HRSP_CL) && mapTermForm.NSP_Insperity_Blended_Role__c != null) {
+                    if(oldRolesMap.get(NSP_ServiceConstants.BUS_TEAM_HRSP_CL).contains(mapTermForm.NSP_Insperity_Blended_Role__c)){
+                        mapTermForm.NSP_Insperity_Blended_Role__c = newRolesMap.get(NSP_ServiceConstants.BUS_TEAM_HRSP_CL);
+                    }
+                }
+                updateTermForm.add(mapTermForm); 
+            }
+        }
+        if ( !updateTermForm.isEmpty() ) {
+            try {
+                update updateTermForm;
+            } catch ( Exception e ) {
+                NSP_ErrorLogHandler.logException(
+                    NSP_AccountTeamTriggerHelper.class.getName() ,
+                    'updateUserLookups' ,
+                    e
+                );
+            }
         }
     }
 
