@@ -314,13 +314,15 @@ NSP_WX_WA_Benefits_Specialist__c, and NSP_Retirement_Service_Plan_Name__c field 
                     }
             }
             if(!accountIdSet.isEmpty() && newRolesMap != null && oldMap != null) {
-                System.enqueueJob(
-                    new QueueableTermFormLookUps(
-                        accountIdSet ,
-                        newRolesMap ,
-                        oldMap.values()
-                    )
-                );
+                if ( Limits.getQueueableJobs() < Limits.getLimitQueueableJobs() ) {
+                    System.enqueueJob(
+                        new QueueableTermFormLookUps(
+                            accountIdSet ,
+                            newRolesMap ,
+                            oldMap.values()
+                        )
+                    );
+                }
             }
             Set<Id> accountIdSetToUpdateResyncFlag = new Set<Id>();
             NSP_SObjectUpdateTriggerHelper sObjectUpdateObj = new NSP_SObjectUpdateTriggerHelper();
