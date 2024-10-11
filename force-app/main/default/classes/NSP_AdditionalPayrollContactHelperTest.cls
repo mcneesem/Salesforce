@@ -12,7 +12,7 @@ Modification Log     :
 */
 
 @isTest
-public class NSP_AdditionalPayrollContactHelperTest {
+private class NSP_AdditionalPayrollContactHelperTest {
     @testSetup
     private static void setupTestData(){
         //contact creation
@@ -22,7 +22,7 @@ public class NSP_AdditionalPayrollContactHelperTest {
         newContact.Phone = '67763478';
         newContact.NSP_Work_Phone__c = '87278483';
         // inserting created new contact
-   		insert newContact;
+        insert newContact;
 
         NSP_Sub_Client__c newSubClient = (NSP_Sub_Client__c)NSP_TestDataFactory.createSObject(new NSP_Sub_Client__c(), 'NSP_TestDataFactory.SubClientDefaults',true);
 
@@ -48,6 +48,7 @@ public class NSP_AdditionalPayrollContactHelperTest {
         Additional_Payroll_Contact__c newAdditionalPayrollContact = (Additional_Payroll_Contact__c)NSP_TestExtendedDataFactory.createSObject(new Additional_Payroll_Contact__c(), 'NSP_TestDataFactory.AdditionalPayrollContactDefaults', false);
         newAdditionalPayrollContact.Contact__c = con.Id ;
         newAdditionalPayrollContact.Payroll__c = Payroll.Id;
+        newAdditionalPayrollContact.View_Payroll_Paperwork__c = true;
         insert newAdditionalPayrollContact;
         newAdditionalPayrollContact = [SELECT Id,NSP_Contact_Email__c,NSP_Contact_Cell__c,NSP_Contact_International_Phone__c,NSP_Contact_Office_Phone__c FROM Additional_Payroll_Contact__c WHERE ID =: newAdditionalPayrollContact.ID];
         
@@ -60,12 +61,12 @@ public class NSP_AdditionalPayrollContactHelperTest {
         test.stopTest();
     }
     @IsTest
-    static void beforeDelete() {
+    private static void beforeDelete() {
         new NSP_AdditionalPayrollContactHandler().beforeDelete(null, null);
          System.assert(new NSP_AdditionalPayrollContactHandler().beforeDelete(null, null) == null);
     }
     @IsTest
-    static void afterDelete() {
+    private static void afterDelete() {
         new NSP_AdditionalPayrollContactHandler().afterDelete(null, null);
          System.assert(new NSP_AdditionalPayrollContactHandler().afterDelete(null, null) == null);
     }

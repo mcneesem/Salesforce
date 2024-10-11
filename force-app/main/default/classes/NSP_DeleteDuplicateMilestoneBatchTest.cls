@@ -71,7 +71,7 @@ public class NSP_DeleteDuplicateMilestoneBatchTest {
             System.assertEquals(projectTaskRec.pse__Milestone__c,milestoneOrig.Id,'Project tasks milestone updated');
 
         } catch(Exception ex){
-            NSP_CustomException.LogException(ex);
+            System.debug( ' ~ ex=' + ex );
         }
     }
     /***********************************************************************************************
@@ -96,7 +96,7 @@ public class NSP_DeleteDuplicateMilestoneBatchTest {
             System.assertEquals(1,milestoneRecs.size(),'Duplicate Milestone Deleted');
 
         } catch(Exception ex){
-            NSP_CustomException.LogException(ex);
+            System.debug( ' ~ ex=' + ex );
         }
     }
     /***********************************************************************************************
@@ -128,7 +128,7 @@ public class NSP_DeleteDuplicateMilestoneBatchTest {
             System.assertEquals(1,milestoneRecs.size(),'Not a Duplicate Milestone ');
 
         } catch(Exception ex){
-            NSP_CustomException.LogException(ex);
+            System.debug( ' ~ ex=' + ex );
         }
     }
     

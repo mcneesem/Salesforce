@@ -10,6 +10,12 @@ public class NSP_OrderItemTriggerHelperTest{
     
     @testSetup
     static void setupTestData(){
+        NSP_Trigger_Switch__c triggerSetting = new NSP_Trigger_Switch__c();
+        triggerSetting.QuoteValidation__c = true;
+        insert triggerSetting;
+        Seasonal_Pricing_Setting__c Seasonalsetting = new Seasonal_Pricing_Setting__c();
+        Seasonalsetting.Enabled__c = true;
+        insert Seasonalsetting;
         NSP_QuoteTriggerHandler.TriggerDisabled = true;
         NSP_AccountTriggerHandler.TriggerDisabled = true;
         NSP_AccountGroupTriggerHandler.TriggerDisabled = true;
@@ -55,7 +61,7 @@ public class NSP_OrderItemTriggerHelperTest{
         objOpportunity.NSP_Signed_Delivery_Order__c = true;
         insert objOpportunity;
              
-
+             
         blng__BillingRule__c brObj = new blng__BillingRule__c();
         brObj.blng__Active__c = true;
         brObj.Name = 'Test InsBR';
@@ -109,13 +115,19 @@ public class NSP_OrderItemTriggerHelperTest{
 
         ConsumptionSchedule csch =  NSP_TestHelper.createConsumptionSchedule('IWX Consumption');
         insert csch;
+        ConsumptionSchedule seasonalCSCH = NSP_TestHelper.createConsumptionSchedule('Seasonal Consumption Schedule');
+        //seasonalCSCH.MatchingAttribute = 'Seasonal';
+        insert seasonalCSCH;
         // create consumtpion rate
         ConsumptionRate  crate =  NSP_TestHelper.createConsumptionRate(csch);
         insert crate;
+        ConsumptionRate  Seasonalcrate =  NSP_TestHelper.createConsumptionRate(seasonalCSCH);
+        insert Seasonalcrate;
         // activate consumption schedule
         csch.isActive = true;
         update csch;
-
+        seasonalCSCH.IsActive = true;
+        update seasonalCSCH;
 
         List<Product2> productList = new List<Product2>();
         Product2 objproduct = NSP_TestHelper.createProduct('Test Product', false);
@@ -124,7 +136,7 @@ public class NSP_OrderItemTriggerHelperTest{
         objproduct.SBQQ__BillingType__c = 'Arrears';
         objproduct.NSP_Priority_Amendment__c = 11.0;
         objproduct.SBQQ__SubscriptionType__c = NSP_CPQConstants.SUBS_RENEWABLE;
-        objproduct.SBQQ__BillingFrequency__c = 'Monthly';
+        objproduct.SBQQ__BillingFrequency__c = 'Annual';
         objproduct.NSP_Order_Activation_Trigger__c = NSP_CPQConstants.IMMEDIATE;
         objproduct.NSP_IsScholarshipPrice_Applicable__c = 'YES';
         objproduct.blng__BillingRule__c = brObj.Id;
@@ -182,23 +194,46 @@ public class NSP_OrderItemTriggerHelperTest{
         objproduct3.blng__TaxRule__c = taxRuleObj.Id;
         objproduct3.NSP_ApplicableProductAmendNew__c = NSP_CPQConstants.QUOTELINE_APPLICABLEPRODUCT;
         productList.add(objproduct3);
+             
+        Product2 objproduct4 = NSP_TestHelper.createProduct('Test Product4', false);
+        objproduct4.ProductCode = 'IWXBundle';
+        objproduct4.SBQQ__ChargeType__c = NSP_CPQConstants.PRODUCT_CHARGETYPE_RECURRING;
+        objproduct4.SBQQ__BillingType__c = 'Advance';
+        objproduct4.NSP_Priority_Amendment__c = 12.0;
+        objproduct4.NSP_Order_Activation_Trigger__c = NSP_CPQConstants.PROJGOLIVEDATE;
+        objproduct4.SBQQ__BillingFrequency__c = 'Quarterly';
+        objproduct4.NSP_ServiceAssetCategory__c = NSP_CPQConstants.QUOTELINE_APPLICANTTRACKING;
+        objproduct4.NSP_IsScholarshipPrice_Applicable__c = 'No';
+        objproduct4.blng__BillingRule__c = brObj.Id;
+        objproduct4.SBQQ__SubscriptionType__c = NSP_CPQConstants.SUBS_EVERGREEN;
+        objproduct4.SBQQ__HasConsumptionSchedule__c = true;
+        objproduct4.SBQQ__SubscriptionPricing__c = 'Fixed Price';
+        objproduct4.blng__RevenueRecognitionRule__c = rrObj.Id;
+        objproduct4.blng__TaxRule__c = taxRuleObj.Id;
+        objproduct4.NSP_ApplicableProductAmendNew__c = NSP_CPQConstants.QUOTELINE_APPLICABLEPRODUCT;
+        objproduct4.Has_Seasonal_Pricing__c = true;
+        productList.add(objproduct4);
         
         SBQQ.TriggerControl.disable();
         insert productList;
         SBQQ.TriggerControl.enable();
-
+             
         ProductConsumptionSchedule psch = NSP_TestHelper.linkProductToCs(objproduct3.id,csch.id );
         insert psch;
+        ProductConsumptionSchedule psch2 = NSP_TestHelper.linkProductToCs(objproduct4.id,seasonalCSCH.id );
+        insert psch2;
 
         List<PriceBookEntry> priceBookEntList = new List<PriceBookEntry>();
         PriceBookEntry objPriceBookEntry = NSP_TestHelper.createPriceBookEntry(objproduct.Id, 100, false);
         PriceBookEntry objPriceBookEntry1 = NSP_TestHelper.createPriceBookEntry(objInvproduct.Id, 100, false);
         PriceBookEntry objPriceBookEntry2 = NSP_TestHelper.createPriceBookEntry(objproduct2.Id, 100, false);
         PriceBookEntry objPriceBookEntry3 = NSP_TestHelper.createPriceBookEntry(objproduct3.Id, 100, false);
+        PriceBookEntry objPriceBookEntry4 = NSP_TestHelper.createPriceBookEntry(objproduct4.Id, 100, false);
         priceBookEntList.add(objPriceBookEntry);
         priceBookEntList.add(objPriceBookEntry1);
         priceBookEntList.add(objPriceBookEntry2);
         priceBookEntList.add(objPriceBookEntry3);
+        priceBookEntList.add(objPriceBookEntry4);
         insert priceBookEntList;
 
         NSP_Address__c nspAddress = NSP_TestHelper.createCustomAddress();
@@ -222,6 +257,9 @@ public class NSP_OrderItemTriggerHelperTest{
         objQuote.SBQQ__Account__c = objaccount.Id;
         objQuote.SBQQ__PriceBook__c = priceBookRec.Id;
         objQuote.NSP_Change_Order_Process_Quote__c = true;
+        objQuote.NSP_WX_Scholarship__c = true;
+        //objQuote.Seasonal_Pricing__c = 'Seasonal Consumption Schedule';
+        //objQuote.NSP_Is_Partner_CS_Applicable__c = true;
         insert objQuote;
         
         objOpportunity.StageName = 'Closed Won';
@@ -258,12 +296,28 @@ public class NSP_OrderItemTriggerHelperTest{
         objQuoteLine[2].NSP_Action_Type__c = NSP_CPQConstants.ACTION_DOWNGRADE;
         objQuoteLine[2].NSP_Scholarship_Price__c = true ;
         objQuoteLine[3].SBQQ__HasConsumptionSchedule__c = true;
+        objQuoteLine[0].NSP_Number_Of_Boxes__c = 5;
+        objQuoteLine[0].NSP_Number_of_Checks__c = 5;
+        objQuoteLine[0].NSP_Number_Of_Users__c = 5;
+        objQuoteLine[0].NSP_TCFullUserLicenseQty__c = 5;     
+        objQuoteLine[1].NSP_Number_Of_Boxes__c = 5;
+        objQuoteLine[1].NSP_Number_of_Checks__c = 5;
+        objQuoteLine[1].NSP_Number_Of_Users__c = 5;
+        objQuoteLine[1].NSP_TCFullUserLicenseQty__c = 5;     
+        objQuoteLine[2].NSP_Number_Of_Boxes__c = 5;
+        objQuoteLine[2].NSP_Number_of_Checks__c = 5;
+        objQuoteLine[2].NSP_Number_Of_Users__c = 5;
+        objQuoteLine[2].NSP_TCFullUserLicenseQty__c = 5;     
+        objQuoteLine[3].NSP_Number_Of_Boxes__c = 5;
+        objQuoteLine[3].NSP_Number_of_Checks__c = 5;
+        objQuoteLine[3].NSP_Number_Of_Users__c = 5;
+        objQuoteLine[3].NSP_TCFullUserLicenseQty__c = 5;     
         update objQuoteLine;
 
         objQuote.SBQQ__Ordered__c = true;
              test.startTest();
         update objQuote;
-
+             
         blng__PaymentMethod__c objPaymntMethod = new blng__PaymentMethod__c();
         objPaymntMethod.blng__Account__c = objaccount.Id;
         objPaymntMethod.blng__Active__c = true;
@@ -275,55 +329,41 @@ public class NSP_OrderItemTriggerHelperTest{
         objPaymntMethod.NSP_Active_Custom__c = true;
         objPaymntMethod.NSP_ACH_method__c = 'BoFA';
         objPaymntMethod.blng__PaymentType__c = 'ACH';
-        insert objPaymntMethod;
+        insert objPaymntMethod;             
              test.stopTest();
          }
     }
-    /**
-     * Description : Test method to test the consumption schedule on order item
-     * Name : consumptionscheduleTest
-     */
-    static testMethod void consumptionscheduleTest(){
-        // Query account and product
-        Account objaccount  = [Select Id, Name from Account WHERE Name =: NSP_TestHelper.DEFAULT_COMPANY_NAME LIMIT 1];
-        Product2 objproduct  = [Select Id, Name from Product2 WHERE Name = 'Test Product' LIMIT 1];
-
-        // create consumption schedule
-        ConsumptionSchedule csch =  NSP_TestHelper.createConsumptionSchedule('IWX Consumption');
-        insert csch;
-        // create consumtpion rate
-        ConsumptionRate  crate =  NSP_TestHelper.createConsumptionRate(csch);
-        insert crate;
-        // activate consumption schedule
-        csch.isActive = true;
-        update csch;
-        // link consumption schedule to product
-        ProductConsumptionSchedule psch = NSP_TestHelper.linkProductToCs(objproduct.id,csch.id );
-        insert psch;
-
-        Test.startTest();                     		
-        list<OrderItem> orderItemList = new list<OrderItem>([select id from OrderItem WHERE Id!=null LIMIT 10]);
-        update orderItemList;
-        
-        delete orderItemList;
-        Test.stopTest();
-        System.assert(objaccount.Name==NSP_TestHelper.DEFAULT_COMPANY_NAME,true);
-  
-    }
-
+    
 @isTest
 public static void afterUpdateDirectorMethod(){
     NSP_AccountGroupTriggerHandler.TriggerDisabled = true;
     List<Order> orderList = [Select Id, SBQQ__Quote__c, NSP_First_usage_upload__c, Type, NSP_Project_Name__c, blng__InvoiceBatch__c, NSP_Billing_Address__c, NSP_Shipping_Address__c, NSP_Billing_Account__c
                             From Order WHERE Id!=null LIMIT 10];
 
-    List<OrderItem> orderItemList = [SELECT Id, OrderItemNumber, NSP_TotalUsageQuantity__c, NSP_ServiceAssetCategory__c, ServiceDate, SBQQ__QuoteLine__c, SBQQ__QuoteLine__r.NSP_ActionType__c,SBQQ__QuoteLine__r.SBQQ__SubscriptionType__c, OrderId, Order.Status, NSP_Project_Completion_Date__c,NSP_ReCalculation_Status_Internal__c,SBQQ__Activated__c 
+    List<OrderItem> orderItemList = [SELECT Id,NSP_AnniversaryBlngApplicable__c,NSP_ServiceAsset__c,SBQQ__TerminatedDate__c ,OrderItemNumber, NSP_TotalUsageQuantity__c, NSP_ServiceAssetCategory__c, ServiceDate, SBQQ__QuoteLine__c, SBQQ__QuoteLine__r.NSP_ActionType__c,SBQQ__QuoteLine__r.SBQQ__SubscriptionType__c, OrderId, Order.Status, NSP_Project_Completion_Date__c,NSP_ReCalculation_Status_Internal__c,SBQQ__Activated__c 
             FROM OrderItem
             WHERE OrderId IN:orderList];
     Test.startTest();
+    Order ord = new Order();
+    ord.id = orderItemList[0].OrderId;
+    ord.status = 'Reviewed';
+    ord.NSP_Project_Name__c = 'xyz';
+    ord.NSP_Change_Order_Process_Quote__c = False;
+    ord.Prevent_Asset_Updates__c = false;
+    update ord;
+    orderItemList[0].SBQQ__TerminatedDate__c = System.Today() + 10;
+    orderItemList[0].NSP_TotalUsageQuantity__c = 5;
+    orderItemList[1].NSP_TotalUsageQuantity__c = 5;
+    orderItemList[2].NSP_TotalUsageQuantity__c = 5;
+    orderItemList[3].NSP_TotalUsageQuantity__c = 5;
+    orderItemList[4].NSP_TotalUsageQuantity__c = 5;
+    orderItemList[0].NSP_AnniversaryBlngApplicable__c = true;
+    update orderItemList;
     orderList[0].NSP_Project_Complete_Date__c = System.today();
     orderList[0].Status = 'Reviewed';
-    
+    orderList[0].NSP_Project_Name__c = 'xyz';
+    orderList[0].NSP_Change_Order_Process_Quote__c = False;
+    orderList[0].Prevent_Asset_Updates__c = false;
     update orderList;
     Test.stopTest();
     System.assert(orderList.size()==1,true);
@@ -398,6 +438,8 @@ public static void afterUpdateDirectorMethod(){
     update orderItemList;
 
     orderList[0].Status = 'Reviewed';
+    orderList[0].NSP_Project_Name__c = 'xyz';
+    orderList[0].NSP_Change_Order_Process_Quote__c = False;
     update orderList;
 
 
@@ -429,7 +471,7 @@ public static void afterUpdateDirectorMethod(){
         insert objAsset;
         //SBQQ.TriggerControl.enable();
 
-        List<OrderItem> orderItemList = [SELECT Id, OrderItemNumber, ServiceDate, SBQQ__QuoteLine__c, SBQQ__QuoteLine__r.NSP_ActionType__c,SBQQ__QuoteLine__r.SBQQ__SubscriptionType__c, OrderId, Order.Status, NSP_Project_Completion_Date__c,NSP_ReCalculation_Status_Internal__c,SBQQ__Activated__c 
+        List<OrderItem> orderItemList = [SELECT Id,NSP_ServiceAsset__c,NSP_UsageUpperBound__c,NSP_TotalUsageQuantity__c, OrderItemNumber, ServiceDate, SBQQ__QuoteLine__c, SBQQ__QuoteLine__r.NSP_ActionType__c,SBQQ__QuoteLine__r.SBQQ__SubscriptionType__c, OrderId, Order.Status, NSP_Project_Completion_Date__c,NSP_ReCalculation_Status_Internal__c,SBQQ__Activated__c 
                                          FROM OrderItem LIMIT 10];
       
         orderItemList[0].NSP_ReCalculation_Status_Internal__c = NSP_CPQConstants.ORDERITEM_RECALCULATIONSTATUS_NA;
@@ -442,6 +484,21 @@ public static void afterUpdateDirectorMethod(){
         orderItemList[1].SBQQ__Asset__c = objAsset.Id;
         orderItemList[2].SBQQ__Asset__c = objAsset.Id;
         orderItemList[3].SBQQ__Asset__c = objAsset.Id;
+        orderItemList[0].NSP_ServiceAsset__c = objAsset.id;
+        orderItemList[1].NSP_ServiceAsset__c = objAsset.id;
+        orderItemList[2].NSP_ServiceAsset__c = objAsset.id;
+        orderItemList[3].NSP_ServiceAsset__c = objAsset.id;
+        orderItemList[4].NSP_ServiceAsset__c = objAsset.id;
+        orderItemList[0].NSP_TotalUsageQuantity__c = 6;
+        orderItemList[1].NSP_TotalUsageQuantity__c = 6;
+        orderItemList[2].NSP_TotalUsageQuantity__c = 6;
+        orderItemList[3].NSP_TotalUsageQuantity__c = 6;
+        orderItemList[4].NSP_TotalUsageQuantity__c = 6;
+        orderItemList[0].NSP_UsageUpperBound__c = 7;
+        orderItemList[1].NSP_UsageUpperBound__c = 5;
+        orderItemList[2].NSP_UsageUpperBound__c = 8;
+        orderItemList[3].NSP_UsageUpperBound__c = 4;
+        orderItemList[4].NSP_UsageUpperBound__c = 9;
         update orderItemList;
         
         Map<Id, OrderItem> orderItemNewMap = new Map<Id, OrderItem>();

@@ -76,7 +76,7 @@ public class NSP_RetEducationRecSyncBatchTest {
             //Then
             System.assertEquals(subPlan.Id, retEdRecList[0].NSP_Subplan__c,'Synced with Asset');
         } catch(Exception ex){
-            NSP_CustomException.LogException(ex);
+            System.debug( ' ~ ex=' + ex );
         }
     }
     

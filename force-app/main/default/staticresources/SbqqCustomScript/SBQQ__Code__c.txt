@@ -173,11 +173,16 @@ export function isFieldVisibleForObject(fieldName, line, conn, objectName)
 export function onBeforeCalculate(quote, lines, conn) 
 { 
     debugger;
+    populateGetSeasonalPriceTable(quote,lines);
     copyQuantityOnClonedlines(quote, lines);
     processQuotelines(quote, lines);
     //checkSerialIdValidationFlag(quote, lines);
     calculateEarlyTerminationFee(quote, lines)
     checkBookedSetup(quote, lines);
+    let Seasonal = checkSeasonalQuote(quote);
+    if(Seasonal === true){
+        ProcessSeasonalRates(quote,lines);
+    }
     return Promise.resolve();
 }
 
@@ -208,9 +213,13 @@ export function onAfterPriceRules(quoteModel, quoteLineModels) {
     processOnDemandTierPrices(quoteModel,quoteLineModels);
     calculateWXSetupFee(quoteModel, quoteLineModels);
     let isPartnerCS = quoteModel.record["NSP_Is_Partner_CS_Applicable__c"]; console.log('partner cs : '+isPartnerCS);
+    let isSeasonal = checkSeasonalQuote(quoteModel);
 	debugger;
-    if(!isPartnerCS){
+    if(!isPartnerCS && isSeasonal === false){
         processConsumptionSchedule(quoteModel, quoteLineModels);
+    }
+    if(isSeasonal === true){
+        processSeasonalDiscount(quoteModel,quoteLineModels);
     }
     return Promise.resolve();
 }
@@ -1190,6 +1199,260 @@ export function copyConfigAttributesToQuote(quote, lines) {
 
 });
 }
+/*
+Seasonal Pricing Implementation
+method - populateGetSeasonalPriceTable
+used to populate the field
+Get_Seasonal_Price_Table__c on quote lines
+US - 299910,294434
+*/
+export function populateGetSeasonalPriceTable(quote,lines){
+
+    let seasonalQuote = quote.record.Seasonal_Pricing__c;
+    let seasonalEnabled = quote.record.Seasonal_Pricing_Enabled__c;
+
+    lines.forEach(function(line){
+        let hasSeasonalPriceTable = line.record.Has_Seasonal_Price_Table__c;
+        if(hasSeasonalPriceTable && seasonalEnabled){
+            line.record.Get_Seasonal_Price_Table__c = seasonalQuote;
+        }else{
+            line.record.Get_Seasonal_Price_Table__c = "Not Applicable";
+        }
+    });
+}
+/*
+Seasonal Pricing Implementation
+method - checkSeasonalQuote
+used to check if the quote is seasonal
+US - 299910,294434
+*/
+export function checkSeasonalQuote(quote){
+    let seasonalQuote = quote.record.Seasonal_Pricing__c;
+    let seasonalEnabled = quote.record.Seasonal_Pricing_Enabled__c;
+    if(seasonalEnabled === true
+         && seasonalQuote !== "Not Applicable"
+        ){
+        return true;
+    }else{
+        return false;
+    }
+}
+/*
+Seasonal Pricing Implementation
+Method - processSeasonalDiscount
+called via onAfterPriceRules
+US - 299910,294434
+*/
+export function processSeasonalDiscount(quote,lines){
+    let seasonalQuote = quote.record.Seasonal_Pricing__c;
+
+    //get the discount type(percent deducted as %, Dollar deducted directly)
+    lines.forEach(function(line){
+        let percentDiscount = line.record.SBQQ__Discount__c;
+        let amountDiscount = line.record.SBQQ__AdditionalDiscountAmount__c;
+        let lineDiscount = 0;
+        let discountType = "";
+        if(percentDiscount === null || percentDiscount === ""){
+            if(amountDiscount === null || amountDiscount === ""){
+                lineDiscount = 0;
+                discountType = "no discount";
+            }else{
+                lineDiscount = amountDiscount;
+                discountType = "amount";
+            }
+        }else{
+            lineDiscount = percentDiscount;
+            discountType = "percent";
+        }
+
+        if(line.consumptionSchedules){
+            line.consumptionSchedules.forEach(function(cs){
+                /*add condition on cs for checking seasonal*/
+                let isSeasonal = cs.get("Name");
+                if(isSeasonal === seasonalQuote){
+                    const rates = cs.getRates();
+                    processSeasonalDiscountHelper(rates
+                        , discountType
+                        , lineDiscount
+                        , isSeasonal
+                        , seasonalQuote
+                    );
+                }
+            });
+        }
+    });
+}
+/*
+Seasonal Pricing Implementation
+Method - processSeasonalDiscountHelper
+called via processSeasonalDiscount
+US - 299910,294434
+*/
+export function processSeasonalDiscountHelper(
+    rates
+    , discountType
+    , lineDiscount
+    , isSeasonal
+    , seasonalQuote
+){
+    rates.forEach(function(csRate){
+        let originalPrice = csRate.get("SBQQ__OriginalPrice__c");
+        let currentPrice =  csRate.get("SBQQ__Price__c");
+        //newSetPrice is used for calculation purpose to be populated below
+        let newSetPrice = 0;
+        //Description stores the non discounted rolled up price
+        let descriptionField = csRate.get("SBQQ__Description__c");
+        let splitArray = descriptionField.split("_");
+        if(splitArray.length > 1){
+            //use the non discounted rolled up price of the rate
+            newSetPrice = splitArray[1];
+        }else{
+            //SBQQ__Price__c is already the non discounted rolled up price
+            newSetPrice = currentPrice;
+        }
+        if(newSetPrice!==currentPrice){
+            csRate.set("SBQQ__Price__c", newSetPrice);
+            currentPrice = newSetPrice;
+        }
+        if(isSeasonal === seasonalQuote){
+            let newPriceAmt = 0;
+            let newPricePer = 0;
+            switch (discountType){
+                case "no discount":
+                    break;
+                case "amount":
+                    newPriceAmt = currentPrice - lineDiscount;
+                    csRate.set("SBQQ__Price__c", newPriceAmt);
+                    newPriceAmt = 0;
+                    originalPrice = 0;
+                    break;
+                case "percent":
+                    newPricePer = currentPrice * ((100-lineDiscount)/100);
+                    csRate.set("SBQQ__Price__c", newPricePer);
+                    newPricePer = 0;
+                    originalPrice = 0;
+                    break;
+            }
+        }else{
+            if(originalPrice !== currentPrice){
+                csRate.set("SBQQ__Price__c", originalPrice);
+            }
+        }
+    });
+}
+/*
+Seasonal Pricing Implementation
+Method - arraysAreEqual
+called via ProcessSeasonalRates
+US - 299910,294434
+*/
+export function arraysAreEqual(arr1, arr2){
+    let i = 0;
+    if(arr1.length !== arr2.length){
+        return false;
+    }else{
+        arr1.forEach((value,index) => {
+            if (value !== arr2[index]){
+                return false;
+            }
+        });
+        return true;
+    }
+}
+/*
+Seasonal Pricing Implementation
+Method - ProcessSeasonalRates
+called via onBeforeCalculate
+US - 299910,294434
+*/
+export function ProcessSeasonalRates(quote,lines){
+    let seasonalQuote = quote.record.Seasonal_Pricing__c;
+
+    if(quote.record.SBQQ__LineItemCount__c>0){
+        //Map to store Bundle parent id as key-
+        //-and Seasonal products in bundle as array
+        let seasonalMap = new Map();
+        //iterate through all lines to gather product codes
+        lines.forEach(function(line){
+            let productCode = line.record.SBQQ__ProductCode__c;
+            let SeasonalApplicable = line.record.Seasonal_Pricing__c;
+            let requiredby = line.record.SBQQ__RequiredBy__c;
+            if((SeasonalApplicable !== "")
+                 && (SeasonalApplicable !== "Not Applicable")
+                 && (requiredby !== "")
+                 && (requiredby !== null) 
+                ){
+                if(seasonalMap.has(requiredby)){
+                    seasonalMap.get(requiredby).push(productCode);
+                }else{
+                    seasonalMap.set(requiredby,[productCode]);
+                }
+            }
+        });
+        //now we have all the product codes on which seasonal is applicable
+        lines.forEach(function(line){
+            let lineKey = line.record.Id;
+            if(line.consumptionSchedules){
+                line.consumptionSchedules.forEach(function(cs){
+                    let isSeasonal = cs.get("Name");
+                    if(isSeasonal === seasonalQuote){
+                        const rates = cs.getRates();
+                        rates.forEach(function(csRate){
+                            ProcessSeasonalRatesHelper(csRate
+                                , seasonalMap
+                                , lineKey
+                            );
+                        });
+                    }
+                });
+            }
+        });
+    }
+}
+/*
+Seasonal Pricing Implementation
+Method - ProcessSeasonalRatesHelper
+called via ProcessSeasonalRates
+US - 299910,294434
+*/
+export function ProcessSeasonalRatesHelper(csRate
+    , seasonalMap
+    , lineKey
+){
+    let currentPrice = csRate.get("SBQQ__Price__c");
+    let originalPrice = csRate.get("SBQQ__OriginalPrice__c");
+    let descriptionArray = [];
+    let newSetPrice = currentPrice;
+
+    if(originalPrice !== currentPrice){
+        csRate.set("SBQQ__Price__c", originalPrice);
+    }
+    let newPrice = originalPrice;
+    let descriptionField = csRate.get("SBQQ__Description__c");
+    let splitArray = descriptionField.split("_");
+    if(splitArray.length > 1){
+        descriptionArray = splitArray[0];
+        newSetPrice = splitArray[1];
+    }
+    else{
+        descriptionArray = descriptionField;
+    }
+    if(descriptionArray){
+        const productPrices = JSON.parse(descriptionArray);
+        const productEnteriesObject = Object.entries(productPrices);
+        productEnteriesObject.forEach(function([key, value]){
+            if(seasonalMap.has(lineKey)){
+                let productCodeListFromMap = seasonalMap.get(lineKey);
+                if(productCodeListFromMap.includes(key)){
+                    newPrice += value;
+                }
+            }
+        });
+        csRate.set("SBQQ__Price__c", newPrice);
+        let newDescription = descriptionArray + "_" + newPrice;
+        csRate.set("SBQQ__Description__c", newDescription);
+    }
+}
 
 export function processConsumptionSchedule(quote, lines)
 {
@@ -1254,6 +1517,10 @@ export function processConsumptionSchedule(quote, lines)
                 const rates = cs.getRates();
                 let ratecount = rates.length;
                 let matchingattribute = cs.get('SBQQ__MatchingAttribute__c');
+                let Name = cs.get("Name");
+                if(String(Name).substring(0,8) === "Seasonal"){
+                    return;
+                }
                 if(!matchingattribute || !matchingattribute.toLowerCase().includes('partner')){
 
                     rates.forEach(function(csrate,index){

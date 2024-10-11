@@ -238,6 +238,39 @@ public static NSP_Employee_Split__c createOpportunityCredit(
         return quote;
     }
 
+        /***********************************************************************************************
+    * MethodName: createCPQQuotelinesSeperateProject
+    * Description : Creating QuoteLine record for CPQ
+    * Params: SBQQ__Quote__c quoteRec,List<Product2> productList,List<PricebookEntry> priceBook,Boolean insertRecord
+    * ********************************************************************************************/
+    public static List<SBQQ__Quoteline__c> createCPQQuotelinesSeperateProject(
+        SBQQ__Quote__c quoteRec,
+        List<Product2> productList,
+        List<PricebookEntry> priceBook,
+        Boolean insertRecord
+    ) {
+        List<SBQQ__Quoteline__c> quotelineList = new List<SBQQ__Quoteline__c>();
+        for (integer count = 0; count < productList.size(); count++) {
+            //Quote Line
+            SBQQ__QuoteLine__c quoteLine = new SBQQ__QuoteLine__c();
+            quoteLine.SBQQ__Quote__c = quoteRec.Id;
+            quoteLine.SBQQ__Product__c = productList[count].Id;
+            quoteLine.SBQQ__Quantity__c = 1;
+            quoteLine.SBQQ__Number__c = 1;
+            quoteLine.Separate_Project__c = true;
+            quoteLine.SBQQ__DefaultSubscriptionTerm__c = 12;
+            quoteLine.SBQQ__PricebookEntryId__c = priceBook[count].Id;
+            quoteLine.SBQQ__NetPrice__c = 10;
+            quoteLine.SBQQ__Quantity__c = 1;
+            quotelineList.add(quoteline);
+        }
+        if (insertRecord) {
+            insert quotelineList;
+        }
+
+        return quotelineList;
+    }
+
     /***********************************************************************************************
     * MethodName: createCPQQuotelines
     * Description : Creating QuoteLine record for CPQ
@@ -505,6 +538,19 @@ public static NSP_Employee_Split__c createOpportunityCredit(
         objproduct.SBQQ__ChargeType__c = 'Recurring';
         objproduct.SBQQ__BillingType__c = 'Arrears';
         objproduct.SBQQ__BillingFrequency__c = freq;
+        objproduct.NSP_IsScholarshipPrice_Applicable__c ='YES';
+        objproduct.blng__BillingRule__c=bRule.Id;
+        objproduct.blng__RevenueRecognitionRule__c=rRule.Id;
+        objproduct.blng__TaxRule__c=tRule.Id;
+        insert objproduct;
+        return objproduct;
+    }
+    public static Product2 createSeparateBillingProduct(String prodName,blng__RevenueRecognitionRule__c rRule,blng__TaxRule__c tRule,blng__BillingRule__c bRule,String freq){
+        Product2 objproduct = NSP_TestHelper.createProduct(prodName,false);
+        objproduct.SBQQ__ChargeType__c = 'Recurring';
+        objproduct.SBQQ__BillingType__c = 'Arrears';
+        objproduct.SBQQ__BillingFrequency__c = freq;
+        objproduct.Separate_Project__c = true;
         objproduct.NSP_IsScholarshipPrice_Applicable__c ='YES';
         objproduct.blng__BillingRule__c=bRule.Id;
         objproduct.blng__RevenueRecognitionRule__c=rRule.Id;

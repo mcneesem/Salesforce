@@ -526,8 +526,9 @@ export default class Nsp_accrualProfileRecordForm extends NavigationMixin(
 
   showSubClientSearchResults = debounce((searchTerm) => {
     const { selectedSubClientIds } = this;
+    const escapedSearchTerm = searchTerm.replace(/'/g, "\\'");
     const searchConfig = JSON.stringify({
-      searchTerm,
+      searchTerm: escapedSearchTerm,
       preSelectedRecs: JSON.stringify(selectedSubClientIds),
       objectApiName: 'NSP_Sub_Client__c',
       searchCategory: 'Name',
@@ -597,8 +598,9 @@ export default class Nsp_accrualProfileRecordForm extends NavigationMixin(
 
   showAccountSearchResults = debounce((searchTerm) => {
     const { selectedAccountIds } = this;
+    const escapedSearchTerm = searchTerm.replace(/'/g, "\\'");
     const searchConfig = JSON.stringify({
-      searchTerm,
+      searchTerm: escapedSearchTerm,
       preSelectedRecs: JSON.stringify(selectedAccountIds),
       objectApiName: 'Account',
       searchCategory: 'Name',

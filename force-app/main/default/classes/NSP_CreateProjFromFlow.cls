@@ -4,7 +4,7 @@
 * Constructor : Public 
 * Description: Create project based on the order project name
 * Purpose: Updates Order Items with NSP_Project__c
-*			Updates Order with NSP_Project__c
+* Updates Order with NSP_Project__c
 */
 public class NSP_CreateProjFromFlow {
     // test w/ NSP_CreateProjFromFlowTest, NSP_AssetServiceTriggerHelperTest (96%)
@@ -58,7 +58,7 @@ public class NSP_CreateProjFromFlow {
                     
                 }
                 else {
-                    List<OrderItem> orderItems = [SELECT Id, OrderId,Order.NSP_Project_Name__c FROM OrderItem WHERE OrderId IN :orderIdSet];
+                    List<OrderItem> orderItems = [SELECT Id, OrderId,Order.NSP_Project_Name__c FROM OrderItem WHERE OrderId IN :orderIdSet and Separate_Project__c = false];
                     pse__Proj__c projectName = [SELECT Id FROM pse__Proj__c WHERE Id =: orderObj.NSP_Project__c LIMIT 1];
                     for(OrderItem oi : orderItems){
                         oi.NSP_Project__c = projectName.Id;
@@ -68,7 +68,7 @@ public class NSP_CreateProjFromFlow {
             }
         }
         if(projectResponseMap.size() > 0){
-            List<OrderItem> orderItems = [SELECT Id, OrderId,Order.NSP_Project_Name__c,Order.Name FROM OrderItem WHERE OrderId IN :orderIdSet];
+            List<OrderItem> orderItems = [SELECT Id, OrderId,Order.NSP_Project_Name__c,Order.Name FROM OrderItem WHERE OrderId IN :orderIdSet and Separate_Project__c = false];
             List<Order> ordList = [SELECT Id,NSP_Project_Name__c,NSP_ProjectOwner__c,Name FROM Order WHERE Id IN :orderIdSet];
             Map<Id,OrderItem> orderItemCheckMap = new Map<Id,OrderItem>( oiUpdateList );
             if ( ( oiUpdateList != null ) && !oiUpdateList.isEmpty() ) {

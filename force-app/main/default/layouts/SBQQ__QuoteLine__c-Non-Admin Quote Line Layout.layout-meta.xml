@@ -156,6 +156,10 @@
                 <behavior>Readonly</behavior>
                 <field>NSP_Net_Total__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Seasonal_Pricing__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

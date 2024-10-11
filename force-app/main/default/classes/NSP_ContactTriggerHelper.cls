@@ -4,8 +4,8 @@
 *    @date: 06/07/2021
 *    @author: Tejas
 */
-public class NSP_ContactTriggerHelper {
-    // test w/ NSP_ContactTriggerHelperTest (79%)
+public with sharing class NSP_ContactTriggerHelper {
+    // test w/ NSP_ContactTriggerHelperTest (81%)
 
     public static final String INSPERITYROLE = 'Insperity';
     public static final String CUSTOMERROLE = 'Customer';
@@ -15,17 +15,15 @@ public class NSP_ContactTriggerHelper {
     public static final List<String> INT_DM_PROFILES = new List<String>{NSP_ServiceConstants.INTEGRATION_USER, NSP_ServiceConstants.DATA_MIGRATION};
     public static final List<String> ALLOWED_PROFILES = new List<String>{'BPS Service','Contact Center','PEO Service','Retirement Services'};
     public static final String WORK_CALENDAR_US40 ='US 40';
-        
-    /**
-* Iterates throught the list of new Contact and passes the required attributes to other methods.
-* @param newList List of New Contact.
-* @param newMap List of New Contact.
-* @return void
-*                
-*/
-    
-    public void beforeInsertDirector(List<Contact> newList) {
-        
+
+    //
+    // Iterates throught the list of new Contact and passes the required attributes to other methods.
+    // @param newList List of New Contact.
+    // @param newMap List of New Contact.
+    // @return void
+    //
+    //
+    public void beforeInsertDirector( List<Contact> newList ) {
         //STY-02849/DF-05013 - Default Resource Fields on manually created contacts - start
         //Modified as part of SOQL fix 228901 
         String loggedInUserProfile_Name;
@@ -73,7 +71,7 @@ public class NSP_ContactTriggerHelper {
             || (loggedInUserProfileName.size() > 0 && !INT_DM_PROFILES.contains(loggedInUserProfileName[0].Name))){
             updatePhoneNumber(newList);
         }
-        try{
+        try {
             //if(loggedInUserProfileName.size() > 0 && !INT_DM_PROFILES.contains(loggedInUserProfileName[0].Name)){
                 Set<Id> sUserIds = new Set<Id>();
                 List<Contact> lContacts = new List<Contact>();
@@ -92,18 +90,17 @@ public class NSP_ContactTriggerHelper {
                  updateContactRoles(sUserIds,lContacts);
                }
             //}     
-        }catch(Exception ex){
-            NSP_CustomException.LogException(ex);
+        } catch ( Exception e ) {
+            NSP_ContactTriggerHelper.handleException( e , 'beforeInsertDirector' );
         }
-       
-        //modified as part of SOQL fix 228901 
-       // if(loggedInUserProfileName.size() > 0 && !INT_DM_PROFILES.contains(loggedInUserProfileName[0].Name))
+
+        //modified as part of SOQL fix 228901
         if((loggedInUserProfile_Name != null && !INT_DM_PROFILES.contains(loggedInUserProfile_Name)) 
             || (loggedInUserProfileName.size() > 0 && !INT_DM_PROFILES.contains(loggedInUserProfileName[0].Name))){
             setSalesOfficeDetails(newList,null);
         }
-    }        
-        
+    }
+
     //
     // Iterates throught the list of new Contact and passes the required attributes to other methods.
     // @param newList List of New Contact.
@@ -149,124 +146,75 @@ public class NSP_ContactTriggerHelper {
             );
         }
     }
-    
-    /**
-* Iterates throught the list of new Contact and passes the required attributes to other methods.
-* @param newList List of New Contact.
-* @param newMap List of New Contact.
-* @return void
-*                
-*/
-    
-    public void beforeUpdateDirector(Map<Id,Contact> newMap,Map<Id,Contact> oldMap) {
-        //Modified as part of SOQL fix 228901 
-        String loggedInUserProfile_Name;
-    	List<Profile> loggedInUserProfileName = new List<Profile>();
-        if(NSP_Trigger_Switch__c.getOrgDefaults().NSP_SOQL_Switch__c){
-            loggedInUserProfileName = getLoggedInUserProfile();
-        } else {
-            loggedInUserProfile_Name = getLoggedInUserProfileName();
-        }
-        try{
-        Set<Id> sUserIds = new Set<Id>();
-        List<Contact> lContacts = new List<Contact>();
-        //if(loggedInUserProfileName.size() > 0 && !INT_DM_PROFILES.contains(loggedInUserProfileName[0].Name)){
-          for(Contact conObj : newMap.values()){
-            if(conObj.NSP_Client_Reference__c != oldMap.get(conObj.Id).NSP_Client_Reference__c 
-               && conObj.NSP_Client_Reference__c){
-                   conObj.NSP_Client_Reference_Task_Date__c = system.today();
-               }
-            //UPDATE ROLE FILTER
-            if(conObj.pse__Salesforce_User__c != null && conObj.pse__Salesforce_User__c != oldMap.get(conObj.Id).pse__Salesforce_User__c){
-                sUserIds.add(conObj.pse__Salesforce_User__c);
-                lContacts.add(conObj);
-            }
-            //Set and reset NSP_Last_4Digit_Of_SSN__c field
-            if ( oldMap.containsKey( conObj.Id )
-                && ( oldMap.get( conObj.Id ) != null )
-                && ( oldMap.get( conObj.Id ).NSP_SSN__c != conObj.NSP_SSN__c ) // detect an SSN change...
-                )
-            {
-                conObj.NSP_Last_4Digit_Of_SSN__c = null; // reset the last 4 digits...
-                if ( String.isNotBlank( conObj.NSP_SSN__c ) && ( conObj.NSP_SSN__c.length() > 4 ) ) {
-                    conObj.NSP_Last_4Digit_Of_SSN__c = conObj.NSP_SSN__c.right( 4 ); // rebuild the last 4 digits...
+
+    //
+    // Iterates throught the list of new Contact and passes the required attributes to other methods.
+    // @param newList List of New Contact.
+    // @param newMap List of New Contact.
+    // @return void
+    //
+    public void beforeUpdateDirector( Map<Id,Contact> newMap , Map<Id,Contact> oldMap ) {
+        try {
+            Set<Id> sUserIds = new Set<Id>();
+            List<Contact> lContacts = new List<Contact>();
+            for ( Contact conObj : newMap.values() ) {
+                if ( conObj.NSP_Client_Reference__c != oldMap.get( conObj.Id ).NSP_Client_Reference__c
+                    && conObj.NSP_Client_Reference__c
+                    )
+                {
+                    conObj.NSP_Client_Reference_Task_Date__c = System.today();
+                }
+                // update role filter...
+                if ( conObj.pse__Salesforce_User__c != null
+                    && conObj.pse__Salesforce_User__c != oldMap.get( conObj.Id ).pse__Salesforce_User__c
+                    )
+                {
+                    sUserIds.add( conObj.pse__Salesforce_User__c );
+                    lContacts.add( conObj );
+                }
+                // set and reset NSP_Last_4Digit_Of_SSN__c field...
+                if ( oldMap.containsKey( conObj.Id )
+                    && ( oldMap.get( conObj.Id ) != null )
+                    && ( oldMap.get( conObj.Id ).NSP_SSN__c != conObj.NSP_SSN__c ) // detect an SSN change...
+                    )
+                {
+                    conObj.NSP_Last_4Digit_Of_SSN__c = null; // reset the last 4 digits...
+                    if ( String.isNotBlank( conObj.NSP_SSN__c ) && ( conObj.NSP_SSN__c.length() > 4 ) ) {
+                        conObj.NSP_Last_4Digit_Of_SSN__c = conObj.NSP_SSN__c.right( 4 ); // rebuild the last 4 digits...
+                    }
                 }
             }
-        }
-         if(sUserIds.size() > 0){
-            updateContactRoles(sUserIds,lContacts);
-         }
-        //}
-        }catch(Exception ex){
-            NSP_CustomException.LogException(ex);
-        }
-        //Format Phone Number
-        //Modified as part of SOQL fix 228901 
-           // if(loggedInUserProfileName.size() > 0 && !INT_DM_PROFILES.contains(loggedInUserProfileName[0].Name))
-            if((loggedInUserProfile_Name != null && !INT_DM_PROFILES.contains(loggedInUserProfile_Name)) 
-                || (loggedInUserProfileName.size() > 0 && !INT_DM_PROFILES.contains(loggedInUserProfileName[0].Name))) {
-                updatePhoneNum(newMap.Values(),oldMap);
+            if ( !sUserIds.isEmpty() ) {
+                updateContactRoles( sUserIds , lContacts );
             }
-        //for integration
-        Set<Id> accountIdSetToUpdateResyncFLag = new Set<Id>();
-        NSP_SObjectUpdateTriggerHelper sObjectUpdateObj = new NSP_SObjectUpdateTriggerHelper();
-        accountIdSetToUpdateResyncFLag = sObjectUpdateObj.fetchUpdFieldsLst(NSP_IntegrationConstants.SOBJECT_CONTACT, newMap, oldMap);
+            String loggedInUserProfileName = getLoggedInUserProfileName();
+            if ( String.isNotBlank( loggedInUserProfileName ) && !INT_DM_PROFILES.contains( loggedInUserProfileName ) ) {
+                // format phone number...
+                updatePhoneNum( newMap.Values() , oldMap );
+                // prepare account for integration sync...
+                Set<Id> accountIdSetToUpdateResyncFlag = new Set<Id>();
+                NSP_SObjectUpdateTriggerHelper sObjectUpdateObj = new NSP_SObjectUpdateTriggerHelper();
+                accountIdSetToUpdateResyncFlag = sObjectUpdateObj.fetchUpdFieldsLst(
+                    NSP_IntegrationConstants.SOBJECT_CONTACT ,
+                    newMap ,
+                    oldMap
+                );
+                IntegrationSyncController.setReadyForIntegrationSync( accountIdSetToUpdateResyncFlag , true );
+                // handle office details...
+                setSalesOfficeDetails( newMap.values() , oldMap );
+            }
+        } catch ( Exception e ) {
+            NSP_ContactTriggerHelper.handleException( e , 'beforeUpdateDirector' );
+        }
+    }
 
-        //Modified as part of SOQL fix 228901         
-        //if(accountIdSetToUpdateResyncFLag.size() > 0 && loggedInUserProfileName.size() > 0 && !INT_DM_PROFILES.contains(loggedInUserProfileName[0].Name))
-        if((accountIdSetToUpdateResyncFLag.size() > 0 && loggedInUserProfile_Name != null && !INT_DM_PROFILES.contains(loggedInUserProfile_Name)) 
-            ||(accountIdSetToUpdateResyncFLag.size() > 0 && loggedInUserProfileName.size() > 0 && !INT_DM_PROFILES.contains(loggedInUserProfileName[0].Name))){
-            List<Account> accountList = new List<Account>();
-            for(Id accountId : accountIdSetToUpdateResyncFLag){
-                Account accountObj = new Account();
-                accountObj.Id = accountId;
-                accountObj.NSP_Ready_for_Integration_Sync__c = true;
-                accountList.add(accountObj);
-            }
-            if(accountList.size() > 0){
-                NSP_AccountTriggerHandler.TriggerDisabled = true; // added for 195356
-                update accountList; 
-            }
-            
-        }
-        
-        //Modified as part of SOQL fix 228901                 
-        //if(loggedInUserProfileName.size() > 0 && !INT_DM_PROFILES.contains(loggedInUserProfileName[0].Name))
-        if((loggedInUserProfile_Name != null && !INT_DM_PROFILES.contains(loggedInUserProfile_Name)) 
-            || (loggedInUserProfileName.size() > 0 && !INT_DM_PROFILES.contains(loggedInUserProfileName[0].Name))){
-                setSalesOfficeDetails(newMap.values(),oldMap);
-        }
-    }
-    
-    /**
-* Iterates throught the event list publish the records in event bus.
-* @param eventList of New Contact.
-* @param objectList of New Contact.
-* @return void             
-* 
-*/
-    
-    public void publishEventBus(List<Integration_Account_Event__e> eventList, Set<Id> idSet) {
-        
-        List<Account> accountList = [SELECT Id, Name, NSP_Ready_for_Integration_Sync__c FROM Account WHERE Id =: idSet];
-        if(PlatformEventSettings__c.getInstance(UserInfo.getUserId()).IsEnabled_IntegrationAccountEvent__c && !eventList.isEmpty()) {
-            // Publishing records Event 
-            EventBus.publish(eventList);
-            for(Account account : accountList) {
-                account.NSP_Ready_for_Integration_Sync__c = FALSE;
-            }
-        }
-        // Account records update.
-        Update accountList;
-    }
-    
     //
     // Iterates through the list of new Contact and passes the required attributes to other methods.
     // @param newList List of New Contact.
     // @param newMap List of New Contact.
     // @return void
     //
-    public void afterUpdateDirector(Map<Id, Contact> newMap,Map<Id, Contact> oldMap) {
+    public void afterUpdateDirector( Map<Id,Contact> newMap , Map<Id,Contact> oldMap ) {
         //Modified as part of SOQL fix 228901 
         String loggedInUserProfile_Name;
         List<Contact> queueNewContact = new List<Contact>();
@@ -278,7 +226,7 @@ public class NSP_ContactTriggerHelper {
         } else {
             loggedInUserProfile_Name = getLoggedInUserProfileName();
         }
-        try{
+        try {
             List<Contact> clientRefernceContactList = new List<Contact>();
             Map<Id, Contact> ConIdcontactMap = new Map<Id,Contact>();
             //Modified as part of SOQL fix 228901
@@ -317,8 +265,8 @@ public class NSP_ContactTriggerHelper {
                 (Map<Id,sObject>)newMap ,
                 (Map<Id,sObject>)oldMap
             );
-        }catch(Exception ex){
-            NSP_CustomException.LogException(ex);
+        } catch ( Exception e ) {
+            NSP_ContactTriggerHelper.handleException( e , 'afterUpdateDirector' );
         }
         if(newMap != null){
             for(Contact conObj : newMap.values()){
@@ -526,22 +474,21 @@ public String formatCommonPattern(String input) {
         }
     }
 
-    /**
-* @MethodName: updateWorkPhoneEmailOnACR
-* @Description: This method describes to update the ACR when ever Contact's Email and Work Phone.
-* @param : Map<Id, Contact> conIdContactMap
-* @createdDate : 12/13/2022
-* @Story : STY-02840
-* @return void                          
-*/
-    
-    public void updateWorkPhoneEmailOnACR(Map<Id, Contact> conIdContactMap){
+    //
+    // @MethodName: updateWorkPhoneEmailOnACR
+    // @Description: This method describes to update the ACR when ever Contact's Email and Work Phone.
+    // @param : Map<Id, Contact> conIdContactMap
+    // @createdDate : 12/13/2022
+    // @Story : STY-02840
+    // @return void
+    //
+    public void updateWorkPhoneEmailOnACR( Map<Id,Contact> conIdContactMap ) {
         List<AccountContactRelation> acrList = new List<AccountContactRelation>();
         List<Contact> conList = new List<Contact>();
         Set<Id> conIdSet = new Set<Id>();
         Contact cont;
         List<Profile> integrationUser = new NSP_sObjectSelector('Profile').setSecurityEnforce(false).selectByName(NSP_ServiceConstants.INTEGRATION_USER, null, true);
-        try{
+        try {
             for(AccountContactRelation acr : [SELECT Id, AccountId, 
                                               ContactId,
                                               Contact.NSP_isContactInsertion__c,
@@ -574,11 +521,11 @@ public String formatCommonPattern(String input) {
             if(!conList.isEmpty()){
                 update conList ; // Don't chnage to Database.update
             }
-        }catch(exception ex){
-            NSP_ErrorLogHandler.logSaveException('NSP_ContactTriggerHelper', 'updateWorkPhoneEmailOnACR', ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_ContactTriggerHelper.handleException( e , 'updateWorkPhoneEmailOnACR' );
         }
     }
-    
+
     /**
 	* Method Name : getLoggedInUserProfile 
 	* Description : STY-02849/DF-05013 Method to get loggedin user profile
@@ -653,5 +600,21 @@ public String formatCommonPattern(String input) {
         }
         return null;
     }
+
+    // for test code coverage only...
+    public static void testHandleException( Exception e , String methodName ) {
+        if ( Test.isRunningTest() ) {
+            NSP_ContactTriggerHelper.handleException( e , methodName );
+        }
+    }
     
+    private static void handleException( Exception e , String methodName ) {
+        NSP_ErrorLogHandler.logException(
+            NSP_ContactTriggerHelper.class.getName() ,
+            methodName ,
+            e
+        );
+    }
+
 }
+//

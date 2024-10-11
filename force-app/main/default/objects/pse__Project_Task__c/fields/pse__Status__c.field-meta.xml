@@ -6,6 +6,7 @@
     <externalId>false</externalId>
     <label>Status</label>
     <required>false</required>
+    <trackFeedHistory>true</trackFeedHistory>
     <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
@@ -23,14 +24,19 @@
                 <label>In Progress</label>
             </value>
             <value>
+                <fullName>Complete</fullName>
+                <default>false</default>
+                <label>Complete</label>
+            </value>
+            <value>
+                <fullName>Canceled</fullName>
+                <default>false</default>
+                <label>Canceled</label>
+            </value>
+            <value>
                 <fullName>On Hold</fullName>
                 <default>false</default>
                 <label>On Hold</label>
-            </value>
-            <value>
-                <fullName>Scheduled</fullName>
-                <default>false</default>
-                <label>Scheduled</label>
             </value>
             <value>
                 <fullName>Unscheduled</fullName>
@@ -38,19 +44,14 @@
                 <label>Unscheduled</label>
             </value>
             <value>
-                <fullName>Complete</fullName>
+                <fullName>Scheduled</fullName>
                 <default>false</default>
-                <label>Complete</label>
+                <label>Scheduled</label>
             </value>
             <value>
                 <fullName>Dispatched</fullName>
                 <default>false</default>
                 <label>Dispatched</label>
-            </value>
-            <value>
-                <fullName>Canceled</fullName>
-                <default>false</default>
-                <label>Canceled</label>
             </value>
             <value>
                 <fullName>Closed - Moved</fullName>

@@ -5,7 +5,7 @@
         <name>Add_varOppoRecord_to_Collection</name>
         <label>Add varOppoRecord to Collection</label>
         <locationX>138</locationX>
-        <locationY>815</locationY>
+        <locationY>755</locationY>
         <assignmentItems>
             <assignToReference>varOppoRecordCollection</assignToReference>
             <operator>Add</operator>
@@ -21,7 +21,7 @@
         <name>Assign_current_Oppo_to_varOppoRecord</name>
         <label>Assign current Oppo to varOppoRecord</label>
         <locationX>138</locationX>
-        <locationY>695</locationY>
+        <locationY>647</locationY>
         <assignmentItems>
             <assignToReference>varOppoRecord.Id</assignToReference>
             <operator>Assign</operator>
@@ -51,7 +51,7 @@
         <name>Related_Opportunities_Found</name>
         <label>Related Opportunities Found</label>
         <locationX>314</locationX>
-        <locationY>455</locationY>
+        <locationY>431</locationY>
         <defaultConnectorLabel>No Related Opportunities Found</defaultConnectorLabel>
         <rules>
             <name>Yes_Related_Opportunities_Found</name>
@@ -77,7 +77,7 @@
         <name>Loop_Through_Related_Opportunities</name>
         <label>Loop Through Related Opportunities</label>
         <locationX>50</locationX>
-        <locationY>575</locationY>
+        <locationY>539</locationY>
         <collectionReference>Get_Related_Opportunities</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -107,10 +107,11 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <recordLookups>
+        <description>Prevent DmlExceptions.  Closed Won Opportunities can not be modified.</description>
         <name>Get_Related_Opportunities</name>
         <label>Get Related Opportunities</label>
         <locationX>314</locationX>
-        <locationY>335</locationY>
+        <locationY>323</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Related_Opportunities_Found</targetReference>
@@ -126,6 +127,13 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </filters>
+        <filters>
+            <field>StageName</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>Closed Won</stringValue>
+            </value>
+        </filters>
         <getFirstRecordOnly>false</getFirstRecordOnly>
         <object>Opportunity</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -134,7 +142,7 @@
         <name>Update_Related_Opportunities</name>
         <label>Update Related Opportunities</label>
         <locationX>50</locationX>
-        <locationY>1031</locationY>
+        <locationY>947</locationY>
         <faultConnector>
             <isGoTo>true</isGoTo>
             <targetReference>Fault_Handler_Subflow</targetReference>
@@ -157,7 +165,7 @@
         <name>Fault_Handler_Subflow</name>
         <label>Fault Handler Subflow</label>
         <locationX>842</locationX>
-        <locationY>455</locationY>
+        <locationY>431</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultMessage</name>

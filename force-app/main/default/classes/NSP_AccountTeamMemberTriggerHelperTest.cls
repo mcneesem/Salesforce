@@ -41,10 +41,7 @@
         List<User> integrationUsers = [
             SELECT Id
             FROM User
-            WHERE (
-                ( Profile.Name = 'Integration User' )
-                AND ( IsActive = True )
-            )
+            WHERE ( Username LIKE 'insperity.integration@insperity.com%' )
             ORDER BY CreatedDate ASC
             LIMIT 1
         ];

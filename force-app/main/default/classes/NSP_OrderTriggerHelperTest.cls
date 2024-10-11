@@ -623,7 +623,6 @@ public class NSP_OrderTriggerHelperTest{
 
         orderList[0].NSP_Project__c = null;
         orderList[0].NSP_First_usage_upload__c = true;
-        orderList[0].Status = NSP_CPQConstants.ORDER_REVIEWED;
         orderList[0].Type = NSP_CPQConstants.ORDER_TYPE_AMENDMENT;
         orderList[0].NSP_Back_Out__c = true;
         NSP_OrderTriggerHelper.changeTaxRulesForWOOrders(new set<Id>{ [SELECT Id

@@ -5,7 +5,7 @@
         <name>Re_Open_Current_Case</name>
         <label>Re-Open Current Case</label>
         <locationX>182</locationX>
-        <locationY>1730</locationY>
+        <locationY>2120</locationY>
         <assignmentItems>
             <assignToReference>currentCase.Status</assignToReference>
             <operator>Assign</operator>
@@ -27,8 +27,8 @@
     <assignments>
         <name>Re_Open_Related_Case</name>
         <label>Re-Open Related Case</label>
-        <locationX>182</locationX>
-        <locationY>1214</locationY>
+        <locationX>336</locationX>
+        <locationY>1322</locationY>
         <assignmentItems>
             <assignToReference>relatedCase.Status</assignToReference>
             <operator>Assign</operator>
@@ -51,7 +51,7 @@
         <name>Set_Current_Case_First_Call_Resolution</name>
         <label>Set Current Case First Call Resolution</label>
         <locationX>314</locationX>
-        <locationY>1922</locationY>
+        <locationY>2312</locationY>
         <assignmentItems>
             <assignToReference>currentCase.First_Call_Resolution__c</assignToReference>
             <operator>Assign</operator>
@@ -67,7 +67,7 @@
         <name>Set_Fault_Element_Close_Re_Opened_Cases</name>
         <label>Set Fault Element: Close_Re_Opened_Cases</label>
         <locationX>314</locationX>
-        <locationY>2354</locationY>
+        <locationY>2744</locationY>
         <assignmentItems>
             <assignToReference>faultElement</assignToReference>
             <operator>Assign</operator>
@@ -83,7 +83,7 @@
     <assignments>
         <name>Set_Fault_Element_Get_Related_Cases</name>
         <label>Set Fault Element: Get_Related_Cases</label>
-        <locationX>2954</locationX>
+        <locationX>2888</locationX>
         <locationY>350</locationY>
         <assignmentItems>
             <assignToReference>faultElement</assignToReference>
@@ -99,7 +99,7 @@
     <assignments>
         <name>Set_Fault_Element_Select_Current_Case</name>
         <label>Set Fault Element: Select_Current_Case</label>
-        <locationX>2426</locationX>
+        <locationX>2360</locationX>
         <locationY>674</locationY>
         <assignmentItems>
             <assignToReference>faultElement</assignToReference>
@@ -116,7 +116,7 @@
     <assignments>
         <name>Set_Fault_Element_Select_Related_Case</name>
         <label>Set Fault Element: Select_Related_Case</label>
-        <locationX>1634</locationX>
+        <locationX>1568</locationX>
         <locationY>998</locationY>
         <assignmentItems>
             <assignToReference>faultElement</assignToReference>
@@ -133,8 +133,8 @@
     <assignments>
         <name>Set_Fault_Element_Update_Current_Case_First_Call_Resolution_c</name>
         <label>Set Fault Element: Update_Current_Case_First_Call_Resolution_c</label>
-        <locationX>842</locationX>
-        <locationY>2138</locationY>
+        <locationX>1040</locationX>
+        <locationY>2528</locationY>
         <assignmentItems>
             <assignToReference>faultElement</assignToReference>
             <operator>Assign</operator>
@@ -150,8 +150,8 @@
     <assignments>
         <name>Set_Fault_Element_Update_Related_Case</name>
         <label>Set Fault Element: Update_Related_Case</label>
-        <locationX>1106</locationX>
-        <locationY>1622</locationY>
+        <locationX>776</locationX>
+        <locationY>1730</locationY>
         <assignmentItems>
             <assignToReference>faultElement</assignToReference>
             <operator>Assign</operator>
@@ -167,8 +167,8 @@
     <assignments>
         <name>Set_Related_Case_First_Call_Resolution</name>
         <label>Set Related Case First Call Resolution</label>
-        <locationX>314</locationX>
-        <locationY>1406</locationY>
+        <locationX>468</locationX>
+        <locationY>1514</locationY>
         <assignmentItems>
             <assignToReference>relatedCase.First_Call_Resolution__c</assignToReference>
             <operator>Assign</operator>
@@ -190,7 +190,7 @@
     <decisions>
         <name>Check_Current_Case</name>
         <label>Check Current Case</label>
-        <locationX>1766</locationX>
+        <locationX>1708</locationX>
         <locationY>674</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -214,7 +214,7 @@
         <name>Check_Current_Case_Status</name>
         <label>Check Current Case Status</label>
         <locationX>314</locationX>
-        <locationY>1622</locationY>
+        <locationY>2012</locationY>
         <defaultConnector>
             <targetReference>Set_Current_Case_First_Call_Resolution</targetReference>
         </defaultConnector>
@@ -238,7 +238,7 @@
     <decisions>
         <name>Check_Inputs</name>
         <label>Check Inputs</label>
-        <locationX>2723</locationX>
+        <locationX>2659</locationX>
         <locationY>134</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -289,7 +289,7 @@
         <name>Check_Re_Opened_Case_Ids</name>
         <label>Check  Re-Opened Case Ids</label>
         <locationX>314</locationX>
-        <locationY>2138</locationY>
+        <locationY>2528</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Has_Re_Opened_Case_Ids</name>
@@ -317,7 +317,7 @@
     <decisions>
         <name>Check_Related_Case</name>
         <label>Check Related Case</label>
-        <locationX>842</locationX>
+        <locationX>809</locationX>
         <locationY>998</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -331,7 +331,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Check_Related_Case_Status</targetReference>
+                <targetReference>Check_Related_Validation_Rules</targetReference>
             </connector>
             <label>Found Related Case</label>
         </rules>
@@ -339,7 +339,7 @@
     <decisions>
         <name>Check_Related_Case_Selection</name>
         <label>Check Related Case Selection</label>
-        <locationX>1370</locationX>
+        <locationX>1320</locationX>
         <locationY>782</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -382,8 +382,8 @@
     <decisions>
         <name>Check_Related_Case_Status</name>
         <label>Check Related Case Status</label>
-        <locationX>314</locationX>
-        <locationY>1106</locationY>
+        <locationX>468</locationX>
+        <locationY>1214</locationY>
         <defaultConnector>
             <targetReference>Set_Related_Case_First_Call_Resolution</targetReference>
         </defaultConnector>
@@ -407,7 +407,7 @@
     <decisions>
         <name>Check_Related_Cases</name>
         <label>Check Related Cases</label>
-        <locationX>2228</locationX>
+        <locationX>2166</locationX>
         <locationY>350</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -431,6 +431,46 @@
                 <targetReference>Related_Cases_Screen</targetReference>
             </connector>
             <label>Found Related Cases</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Prevent DmlExceptions.  Cases created from Email-to-Case require a Category and Subcategory.</description>
+        <name>Check_Related_Validation_Rules</name>
+        <label>Check Related Validation Rules</label>
+        <locationX>314</locationX>
+        <locationY>1106</locationY>
+        <defaultConnector>
+            <targetReference>Check_Related_Case_Status</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Rule_Error_Condition</name>
+            <conditionLogic>( 1 AND ( 2 OR 3 ) )</conditionLogic>
+            <conditions>
+                <leftValueReference>relatedCase.NSP_Case_Created_From_Email_To_Case__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>relatedCase.NSP_Category__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>relatedCase.NSP_SubCategory__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Check_Current_Case_Status</targetReference>
+            </connector>
+            <label>Rule Error Condition</label>
         </rules>
     </decisions>
     <environments>Default</environments>
@@ -463,7 +503,7 @@
     <recordLookups>
         <name>Select_Current_Case</name>
         <label>Select Current Case</label>
-        <locationX>1766</locationX>
+        <locationX>1708</locationX>
         <locationY>566</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -490,7 +530,7 @@
     <recordLookups>
         <name>Select_Related_Case</name>
         <label>Select Related Case</label>
-        <locationX>842</locationX>
+        <locationX>809</locationX>
         <locationY>890</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -517,7 +557,7 @@
     <recordLookups>
         <name>Select_Related_Cases</name>
         <label>Select Related Cases</label>
-        <locationX>2228</locationX>
+        <locationX>2166</locationX>
         <locationY>242</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -556,7 +596,7 @@
         <name>Close_Re_Opened_Cases</name>
         <label>Close Re-Opened Cases</label>
         <locationX>50</locationX>
-        <locationY>2246</locationY>
+        <locationY>2636</locationY>
         <faultConnector>
             <targetReference>Set_Fault_Element_Close_Re_Opened_Cases</targetReference>
         </faultConnector>
@@ -580,7 +620,7 @@
         <name>Update_Current_Case_First_Call_Resolution_c</name>
         <label>Update Current Case (First_Call_Resolution__c)</label>
         <locationX>314</locationX>
-        <locationY>2030</locationY>
+        <locationY>2420</locationY>
         <connector>
             <targetReference>Check_Re_Opened_Case_Ids</targetReference>
         </connector>
@@ -592,8 +632,8 @@
     <recordUpdates>
         <name>Update_Related_Case</name>
         <label>Update Related Case</label>
-        <locationX>314</locationX>
-        <locationY>1514</locationY>
+        <locationX>468</locationX>
+        <locationY>1622</locationY>
         <connector>
             <targetReference>Check_Current_Case_Status</targetReference>
         </connector>
@@ -606,7 +646,7 @@
     <screens>
         <name>Fault_Screen</name>
         <label>Fault Screen</label>
-        <locationX>2954</locationX>
+        <locationX>2888</locationX>
         <locationY>566</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -622,7 +662,7 @@
     <screens>
         <name>Related_Cases_Screen</name>
         <label>Related Cases Screen</label>
-        <locationX>1766</locationX>
+        <locationX>1708</locationX>
         <locationY>458</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -687,7 +727,7 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>2597</locationX>
+        <locationX>2533</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Check_Inputs</targetReference>
@@ -697,7 +737,7 @@
     <subflows>
         <name>Fault_Handler</name>
         <label>Fault Handler</label>
-        <locationX>2954</locationX>
+        <locationX>2888</locationX>
         <locationY>458</locationY>
         <connector>
             <targetReference>Fault_Screen</targetReference>

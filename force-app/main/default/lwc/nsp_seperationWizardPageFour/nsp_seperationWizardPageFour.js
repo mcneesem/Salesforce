@@ -111,8 +111,7 @@ checkBoxField = ["NSP_COBRA__c","NSP_Bonus__c","Is_Notary_Required__c",
 "Is_Rehire_Clause_Required__c","NSP_Commissions__c",
 "Is_Notary_Required__c","NSP_OutplacementServices__c",
 "NSP_SignatureBlockforClientRequired__c","NSP_VerificationOfEmploymentHotline__c",
-"NSP_DontContestUnemployment__c","NSP_ReferenceTospecificClientDocument__c","NSP_TransitionOfDuties__c",
-"NSP_MutualConfidentiality__c","NSP_Equipment__c","NSP_Installments_Check__c"];
+"NSP_DontContestUnemployment__c","NSP_ReferenceTospecificClientDocument__c","NSP_TransitionOfDuties__c","NSP_Equipment__c","NSP_Installments_Check__c"];
 
 
 recordTypeId = '012000000000000AAA';
@@ -130,7 +129,7 @@ isclicked;
 currentPageFields=['Is_Rehire_Clause_Required__c','Is_Notary_Required__c','NSP_Installments_Check__c','NSP_NumberOfpayments__c',
 'NSP_Bonus__c','NSP_BonusSelectOne__c','NSP_EnterBonusAmmount__c','NSP_COBRA__c','NSP_COBRASelectOne__c','NSP_COBRA_Amount__c','COBRA_Amount_Type__c','NSP_NumberOfMonthsCOBRA__c','Num_Of_Weeks_Count__c','Through_Date__c','NSP_Commissions__c',
 'NSP_CommissionsSelectOne__c','NSP_CommissionAmount__c','NSP_Equipment__c','NSP_EquipmentSelection__c','NSP_ManufacturerNameandModel__c','NS_FairMarketValue__c',
-'NSP_MutualConfidentiality__c','NSP_OutplacementServices__c','NSP_OutplacementServicesValue__c',
+'NSP_OutplacementServices__c','NSP_OutplacementServicesValue__c',
 'NSP_NumberOfMonthsOfOutplacement_Service__c','NSP_AmountOfReimbursement__c','NSP_ExpirationDate__c','NSP_SignatureBlockforClientRequired__c','NSP_NameOnSignature__c','NSP_SignatureTitle__c',
 'NSP_VerificationOfEmploymentHotline__c','NSP_DontContestUnemployment__c','NSP_ReferenceTospecificClientDocument__c','NSP_TransitionOfDuties__c','NSP_TransitionDate__c'];
 fieldValue =  { currentTarget : { name :'', value :''} };
@@ -641,14 +640,6 @@ handleOnload(event){
              }
              if( this.fieldsData.NSP_Attached_Approval_Email__c && this.fieldsData.NSP_Attached_Approval_Email__c.value != null){
                 this.NSP_Attached_Approval_Email__c = this.fieldsData.NSP_Attached_Approval_Email__c.value;
-                if( this.template.querySelector('div.NSP_Attached_Approval_Email__c')!= null){
-                    if( this.NSP_Attached_Approval_Email__c == "No" ){
-                        this.template.querySelector('div.NSP_Attached_Approval_Email__c').style.display='';
-                    }else{
-                        this.template.querySelector('div.NSP_Attached_Approval_Email__c').style.display='none';
-                    }
-                }
-
              }
 
 
@@ -801,10 +792,6 @@ handleSubmit(event){
     if(this.filesize < 1 && this.prepareDocTerminationValue !=null && this.prepareDocTerminationValue == 'Yes'){
         event.preventDefault(); // it will prevent the submit
     }
-    if(this.NSP_Attached_Approval_Email__c == 'No' || this.filesize < 1 && this.NSP_Attached_Approval_Email__c == 'Yes' ){
-        this.template.querySelector('div.NSP_Attached_Approval_Email__c').style.display='block';
-        event.preventDefault();
-    }
     if(this.NSP_HaveYouattachedPreparedAgreement__c == 'No' || this.filesize < 1 && this.NSP_HaveYouattachedPreparedAgreement__c == 'Yes' ){
         this.template.querySelector('div.NSP_HaveYouattachedPreparedAgreement__c').style.display='block';
         event.preventDefault();
@@ -910,14 +897,7 @@ handlePrev(event){
      }
 
      if( event.currentTarget.name == "AnyAttachedApprovalEmail" && event.currentTarget.value != null ){
-        this.NSP_Attached_Approval_Email__c = event.currentTarget.value;  
-        if( this.template.querySelector('div.NSP_Attached_Approval_Email__c')!= null){
-            if( this.NSP_Attached_Approval_Email__c == "No" ){
-                this.template.querySelector('div.NSP_Attached_Approval_Email__c').style.display='';
-            }else{
-                this.template.querySelector('div.NSP_Attached_Approval_Email__c').style.display='none';
-            }
-        }  
+        this.NSP_Attached_Approval_Email__c = event.currentTarget.value;   
      }
      if( event.currentTarget.name == "HaveYouattachedPreparedAgreement" && event.currentTarget.value != null ){
         this.NSP_HaveYouattachedPreparedAgreement__c = event.currentTarget.value;  
@@ -971,10 +951,6 @@ handlePrev(event){
         if((this.prepareDocTerminationValue == null || this.prepareDocTerminationValue != 'Yes' || this.filesize > 0) && this.template.querySelector("div.AttachmentVerify")!= null ){
             this.template.querySelector("div.AttachmentVerify").style.display ='none';
         }
-        if(this.NSP_Attached_Approval_Email__c == 'Yes' &&  this.filesize > 0 && this.template.querySelector('div.NSP_Attached_Approval_Email__c')!=null){
-            this.template.querySelector('div.NSP_Attached_Approval_Email__c').style.display='none';
-        }
-
         if(this.NSP_HaveYouattachedPreparedAgreement__c == 'Yes' &&  this.filesize > 0 && this.template.querySelector('div.NSP_HaveYouattachedPreparedAgreement__c')!=null){
         this.template.querySelector('div.NSP_HaveYouattachedPreparedAgreement__c').style.display='none';
         }

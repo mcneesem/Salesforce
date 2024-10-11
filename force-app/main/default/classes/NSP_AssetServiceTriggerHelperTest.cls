@@ -642,7 +642,7 @@ public class NSP_AssetServiceTriggerHelperTest {
             System.assertEquals(assetRecord2.NSP_First_Pay_Date__c,accountRec.NSP_Product_First_Pay_Date__c,'Accounts Product First Pay Date updated with Earliest pay date on rel asset');
 
         } catch(Exception ex){
-            NSP_CustomException.LogException(ex);
+            System.debug( ' ~ ex=' + ex );
         }
     }
 
@@ -684,7 +684,7 @@ public class NSP_AssetServiceTriggerHelperTest {
             System.assertNotEquals(assetRecord1.NSP_First_Pay_Date__c,accountRec.NSP_Product_First_Pay_Date__c,'Accounts Product First Pay Date updated with Earliest pay date on rel asset');
 
         } catch(Exception ex){
-            NSP_CustomException.LogException(ex);
+            System.debug( ' ~ ex=' + ex );
         }
     }
     

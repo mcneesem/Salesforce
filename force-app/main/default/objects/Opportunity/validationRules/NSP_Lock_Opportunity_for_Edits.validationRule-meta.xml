@@ -4,10 +4,16 @@
     <active>true</active>
     <description>Opportunity is Locked for edits once the Opportunity is closed won.</description>
     <errorConditionFormula>AND(
-  NOT(
-    AND(
-      $Permission.Edit_Closed_Won_Create_Box_Folder ,
-      ISCHANGED( Create_Box_com_Folder_s__c )
+NOT(
+    OR(
+      AND(
+        $Permission.Edit_Closed_Won_Create_Box_Folder ,
+        ISCHANGED( Create_Box_com_Folder_s__c )
+      ),
+      AND(
+        $Permission.Edit_Opportunity_Max_Orientation_Date ,
+        ISCHANGED( Max_Orientation_Date__c )
+      )
     )
   ) ,
   NOT( $Setup.NSP_Trigger_Switch__c.OpportunityTrigger__c ) ,

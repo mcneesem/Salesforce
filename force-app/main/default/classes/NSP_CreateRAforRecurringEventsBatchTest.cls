@@ -56,7 +56,7 @@ public class NSP_CreateRAforRecurringEventsBatchTest {
             ResourceAbsence RARec = Database.query(query);
             system.assertNotEquals(RARec , NULL);
         } catch(Exception ex){
-            NSP_CustomException.LogException(ex);
+            System.debug( ' ~ ex=' + ex );
         }
     }
 

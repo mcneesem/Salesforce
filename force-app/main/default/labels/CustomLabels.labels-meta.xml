@@ -867,8 +867,8 @@
         <categories>nsp_benefitsIp</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>Are there any Employer contributions to EEs HSA</shortDescription>
-        <value>Are there any employer contributions to EEs HSA?</value>
+        <shortDescription>Are there any employer contributions to EEs Insperity HSA?</shortDescription>
+        <value>Are there any employer contributions to EEs Insperity HSA?</value>
     </labels>
     <labels>
         <fullName>NSP_Are_there_any_other_EE_orientation_need</fullName>
@@ -2263,7 +2263,7 @@
         <categories>nsp_benefitsIp</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>Did the schedule B change at SKO</shortDescription>
+        <shortDescription>Did the schedule B change at CTM</shortDescription>
         <value>Did the Schedule B change at the Client Transition Meeting?</value>
     </labels>
     <labels>
@@ -3094,14 +3094,14 @@ Meeting - Project Related - Fiduciary,Mutual Fund Corrections - Pricing, Manual 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>GA Report Check List</shortDescription>
-        <value>GA Report Check List : https://nexus.insperity.com/groups/38660/posts/3259654-general-accounts-report-checklist</value>
+        <value>GA Report Check List : https://nexus.insperity.com/groups/38660/posts/3349488-general-account-checklists</value>
     </labels>
     <labels>
         <fullName>NSP_GL_ReportCheckList</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>GL Report Check List</shortDescription>
-        <value>GL Report Check List : https://nexus.insperity.com/groups/38660/posts/3259656-general-ledger-report-checklist</value>
+        <value>GL Report Check List : https://nexus.insperity.com/groups/38660/posts/3349487-general-ledger-report-development-spreadsheet</value>
     </labels>
     <labels>
         <fullName>NSP_General</fullName>
@@ -5386,8 +5386,8 @@ Meeting - Project Related - Fiduciary,Mutual Fund Corrections - Pricing, Manual 
         <fullName>NSP_Spl_Payroll_Needs</fullName>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>Any special payroll needs</shortDescription>
-        <value>Does the client have any special payroll needs (i.e. job costing, IRR, departments)?</value>
+        <shortDescription>Any custom reporting needs</shortDescription>
+        <value> Does the client have any custom reporting needs (i.e. job costing, IRR, departments)?</value>
     </labels>
     <labels>
         <fullName>NSP_Standard_Worked_Hours</fullName>
@@ -5798,8 +5798,8 @@ Climate Plus: https://nexus.insperity.com/groups/38605/posts/3272612-climate-plu
         <categories>nsp_generalIp</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>Will BPA attending SKO</shortDescription>
-        <value>Will the BPA(s) be attending the SKO?</value>
+        <shortDescription>Will BPA attending CTM</shortDescription>
+        <value>Will the BPA(s) be attending the CTM?</value>
     </labels>
     <labels>
         <fullName>NSP_Will_Client_be_maintaining_client_sponspored_plan</fullName>
@@ -6413,6 +6413,13 @@ Climate Plus: https://nexus.insperity.com/groups/38605/posts/3272612-climate-plu
         <protected>false</protected>
         <shortDescription>Sales Roles</shortDescription>
         <value>Regional Manager,Regional Administrator,District Manager,District Administrator,Business Performance Advisor,Business Performance Consultant</value>
+    </labels>
+    <labels>
+        <fullName>Seasonal_Pricing_Error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>To force recalculation before submit for approval</shortDescription>
+        <value>Please check the &quot;Ready for Approval&quot; flag before submitting Seasonal Pricing Quotes for approvals.</value>
     </labels>
     <labels>
         <fullName>Segment_Days</fullName>

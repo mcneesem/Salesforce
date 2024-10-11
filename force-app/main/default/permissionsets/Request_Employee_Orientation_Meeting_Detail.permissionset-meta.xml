@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Request_Employee_Orientation_Meeting_Detail</name>
+    </customPermissions>
+    <description>9/26/2024 - Revised Permission Set Created for Onboarding Meeting Request functionality . Access to new set of flows which creates OMD Records.</description>
+    <flowAccesses>
+        <enabled>true</enabled>
+        <flow>Create_OMD_for_Additional_Employee_Orientation_Meeting</flow>
+    </flowAccesses>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Request Employee Orientation Meeting Detail</label>
+</PermissionSet>

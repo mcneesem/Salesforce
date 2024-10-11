@@ -87,7 +87,7 @@ public with sharing class NSP_AccrualProfileController {
 
     @testvisible
     private static List<NSP_Accrual_Profile__c> getAccrualPlans(List<String> subClientIds){
-        List<String> status = new List<String>{ 'Active','Inactive' };
+        List<String> status = new List<String>{ 'Active','Inactive','AP Approved' };
         return [
             SELECT Id, NSP_Accrual_Profile_Plan_Name__c 
                     FROM NSP_Accrual_Profile__c 

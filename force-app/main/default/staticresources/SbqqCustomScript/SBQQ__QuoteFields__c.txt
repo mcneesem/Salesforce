@@ -29,3 +29,6 @@ NSP_Docupay_Upfront_fee__c
 NSP_WX_WA_Enrollment_Fee__c
 NSP_Has_LD_Product__c
 NSP_Is_Partner_CS_Applicable__c
+Seasonal_Pricing__c
+SBQQ__LineItemCount__c
+Seasonal_Pricing_Enabled__c

@@ -687,12 +687,11 @@ public class NSP_AccountTriggerHelperTest {
         //  Reset all the run counts otherwise the method 'beforeUpdate' won't be triggered
         NSP_AccountTriggerHandler.resetAllHasRun();
         update acct1;
-                
+        Test.stopTest();
+
         Account acct2 = [SELECT id,OwnerId, NSP_Sales_Office__c FROM Account WHERE Id =: acct.Id LIMIT 1];
         Opportunity opp2 = [SELECT id, NSP_Sales_Office__c FROM Opportunity WHERE Id =: opp.Id LIMIT 1];
 
-        Test.stopTest();
-        
         //  The Opportuniry Sales Office should be the same as the Account SO
         System.assertEquals(acct2.NSP_Sales_Office__c,  opp2.NSP_Sales_Office__c);
    }

@@ -136,6 +136,10 @@
             <outputField>NSP_Other_Current_Provider__c</outputField>
         </mappingFields>
         <mappingFields>
+            <inputField>NSP_Reason_looking_to_switch__c</inputField>
+            <outputField>NSP_Reason_looking_to_switch__c</outputField>
+        </mappingFields>
+        <mappingFields>
             <inputField>NSP_Partner__c</inputField>
             <outputField>NSP_Partner__c</outputField>
         </mappingFields>
@@ -146,10 +150,6 @@
         <mappingFields>
             <inputField>NSP_Previous_Company__c</inputField>
             <outputField>NSP_Previous_Company__c</outputField>
-        </mappingFields>
-        <mappingFields>
-            <inputField>NSP_Reason_looking_to_switch__c</inputField>
-            <outputField>NSP_Reason_looking_to_switch__c</outputField>
         </mappingFields>
         <mappingFields>
             <inputField>NSP_Sales_Office__c</inputField>
@@ -220,6 +220,10 @@
             <outputField>NSP_Other_Current_Provider__c</outputField>
         </mappingFields>
         <mappingFields>
+            <inputField>DOZISF__ZoomInfo_First_Updated__c</inputField>
+            <outputField>DOZISF__ZoomInfo_First_Updated__c</outputField>
+        </mappingFields>
+        <mappingFields>
             <inputField>NSP_Persona__c</inputField>
             <outputField>NSP_Buying_Role__c</outputField>
         </mappingFields>
@@ -240,10 +244,6 @@
             <outputField>DOZISF__ZoomInfo_Enrich_Status__c</outputField>
         </mappingFields>
         <mappingFields>
-            <inputField>DOZISF__ZoomInfo_First_Updated__c</inputField>
-            <outputField>DOZISF__ZoomInfo_First_Updated__c</outputField>
-        </mappingFields>
-        <mappingFields>
             <inputField>DOZISF__ZoomInfo_Last_Updated__c</inputField>
             <outputField>DOZISF__ZoomInfo_Last_Updated__c</outputField>
         </mappingFields>
@@ -256,6 +256,14 @@
     <objectMapping>
         <inputObject>Lead</inputObject>
         <mappingFields>
+            <inputField>GCLID__c</inputField>
+            <outputField>GCLID__c</outputField>
+        </mappingFields>
+        <mappingFields>
+            <inputField>NSP_LoyaltyProgram__c</inputField>
+            <outputField>NSP_LoyaltyProgram__c</outputField>
+        </mappingFields>
+        <mappingFields>
             <inputField>NSP_Current_Provider__c</inputField>
             <outputField>NSP_Current_Provider__c</outputField>
         </mappingFields>
@@ -266,10 +274,6 @@
         <mappingFields>
             <inputField>NSP_Is_Lead__c</inputField>
             <outputField>NSP_Is_Originated_From_Lead_Conversion__c</outputField>
-        </mappingFields>
-        <mappingFields>
-            <inputField>NSP_LoyaltyProgram__c</inputField>
-            <outputField>NSP_LoyaltyProgram__c</outputField>
         </mappingFields>
         <mappingFields>
             <inputField>NSP_MedicalRenewal__c</inputField>

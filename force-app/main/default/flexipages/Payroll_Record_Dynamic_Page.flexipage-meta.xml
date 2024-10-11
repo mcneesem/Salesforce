@@ -810,6 +810,16 @@
                 <identifier>RecordNSP_Approvers_cField1</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Payroll_Reviewers__c</fieldItem>
+                <identifier>RecordPayroll_Reviewers_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-f1489dde-f834-4c67-82e3-d616d06d13ee</name>
         <type>Facet</type>
     </flexiPageRegions>

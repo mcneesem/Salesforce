@@ -173,6 +173,9 @@ private class QuoteExtControllerTests {
 * Purpose: This method will get validate approval record for new Quote
 ***********************************************************************************************/
     static testMethod void validateApprovalNewQuoteTest(){
+        Seasonal_Pricing_Setting__c seasonalSetting = new Seasonal_Pricing_Setting__c();
+        seasonalSetting.Enabled__c = true;
+        insert seasonalSetting;
         //Create Account
         Account objAccount = NSP_TestHelper.createAccount(true);
         Account woAccount = NSP_TestHelper.createAccount(false);
@@ -229,6 +232,7 @@ private class QuoteExtControllerTests {
         	 obj1quote.NSP_ProjRec_Start_Date__c = system.today() -1;
         	 obj1quote.NSP_ProjRec_End_Date__c = system.today() -1;
         	 obj1quote.NSP_Target_Date__c = system.today() -1;
+             obj1quote.Seasonal_Pricing__c = 'Seasonal Consumption Schedule';
              insert obj1quote;
             //Create Quote Line
              SBQQ__QuoteLine__c parentqli =  new SBQQ__QuoteLine__c(SBQQ__Product__c = testProduct.id,SBQQ__Quote__c = obj1quote.id);

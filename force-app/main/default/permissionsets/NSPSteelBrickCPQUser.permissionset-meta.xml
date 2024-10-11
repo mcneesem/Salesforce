@@ -2549,6 +2549,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_Pricing_Table__c.Seasonal_Pricing__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Support_Entitlement__c.NSP_Account_Id__c</field>
         <readable>true</readable>
@@ -2770,6 +2775,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Order.Separate_Project__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>OrderItem.Separate_Project__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Order.SBQQ__TaxAmount__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -2984,8 +2999,28 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>OrderItem.Seasonal_Pricing__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>OrderItem.Separate_Project__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Product2.Description</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Product2.Has_Seasonal_Price_Table__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Product2.Has_Seasonal_Pricing__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -3506,6 +3541,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Product2.SBQQ__UpgradeTarget__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Product2.Separate_Project__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -5579,6 +5619,16 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>SBQQ__QuoteLineConsumptionRate__c.Quantity_Range__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__QuoteLineConsumptionRate__c.Quote__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>SBQQ__QuoteLineConsumptionSchedule__c.SBQQ__ConsumptionSchedule__c</field>
         <readable>true</readable>
@@ -5726,6 +5776,16 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>SBQQ__QuoteLine__c.Amendment_Quantity__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__QuoteLine__c.Get_Seasonal_Price_Table__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__QuoteLine__c.Has_Seasonal_Price_Table__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -6679,6 +6739,16 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__QuoteLine__c.Separate_Project__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SBQQ__QuoteLine__c.Seasonal_Pricing__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>SBQQ__QuoteLine__c.Timestar_Hardware_Net_Total__c</field>
         <readable>true</readable>
@@ -7128,6 +7198,11 @@
         <field>SBQQ__Quote__c.Has_Retirement_Integration_Product__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SBQQ__Quote__c.Has_Separate_Project_QuoteLines__c</field>
+        <readable>true</readable>
+    </fieldPermissions>    
     <fieldPermissions>
         <editable>true</editable>
         <field>SBQQ__Quote__c.NSP_Budgetary_Quote__c</field>
@@ -7606,6 +7681,16 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>SBQQ__Quote__c.Ready_for_Approval__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+        <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__Quote__c.Seasonal_Pricing__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SBQQ__Quote__c.Seasonal_Pricing_Enabled__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

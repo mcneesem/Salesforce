@@ -373,7 +373,6 @@ public class NSP_OrderTriggerHelper {
         Set<Id> projCompletedIdSet = new Set<Id>();
         Set<Id> accountIdSet = new Set<Id>();
         Order orderObj = new Order();  
-        List<Order> orderListToUpdate = new List<Order>();
         List<OrderItem> orderItemListToUpdate = new List<OrderItem>();
         List<OrderItem> milestoneOpList = new List<OrderItem>();
         Set<Id> billToContactIds = new Set<Id>();
@@ -401,12 +400,6 @@ public class NSP_OrderTriggerHelper {
                     if(oldOrder.NSP_Project_Go_Live_Date__c != null && oldOrder.NSP_Project_Go_Live_Approved__c == true){
                         projectLiveBeforeReviewIds.add(newOrder.Id);
                     }
-                }
-                //Checks if Project is null when the Order is reviewed and activates the order is Project is blank
-                if(oldOrder.Status == NSP_CPQConstants.ORDER_DRAFT && newOrder.Status == NSP_CPQConstants.ORDER_REVIEWED && ((newOrder.NSP_Project__c == null && newOrder.NSP_Project_Name__c == null) || newOrder.NSP_Change_Order_Process_Quote__c == TRUE)){
-                    orderObj.Id = newOrder.Id;
-                    orderObj.Status = NSP_CPQConstants.ORDER_ACTIVATED;
-                    orderListToUpdate.add(orderObj);
                 }
                 //When the Invoice Ready is checked on Project, Project Go Live checkbox will be set to true on Order and activates all the order products where Order Activation trigger is Project Go Live
                 if(oldOrder.NSP_Project_Go_Live_Approved__c == false && newOrder.NSP_Project_Go_Live_Date__c != null && newOrder.NSP_Project_Go_Live_Approved__c == true && newOrder.Status != NSP_CPQConstants.ORDER_DRAFT) {
@@ -526,17 +519,6 @@ public class NSP_OrderTriggerHelper {
             if(projGoLiveIdSet != null && projGoLiveIdSet.size() > 0){
                 updateSubStartDate(projGoLiveIdSet);
             }
-            try {
-                if(orderListToUpdate.size()>0) {
-                    database.update(orderListToUpdate);
-                }
-            } catch ( Exception e ) {
-                NSP_ErrorLogHandler.logException(
-                    NSP_OrderTriggerHelper.class.getName() ,
-                    'createInvoice outer' ,
-                    e
-                );
-            }
         }
     }
 
@@ -552,7 +534,7 @@ public class NSP_OrderTriggerHelper {
         
         Map<Id,OrderItem> ordProdMap = new Map<Id,OrderItem> ();
         if(orderListNew!= null && orderListNew.size() > 0){
-            List <OrderItem> orderProductObj=[SELECT Id,Product2.ProductCode,NSP_Priority_New_Sales__c,NSP_Project_Name_New_Sales__c,OrderId  from OrderItem WHERE OrderId IN :orderListNew AND NSP_Priority_New_Sales__c!=null order by NSP_Priority_New_Sales__c ASC]; 
+            List <OrderItem> orderProductObj=[SELECT Id,Product2.ProductCode,NSP_Priority_New_Sales__c,NSP_Project_Name_New_Sales__c,OrderId  from OrderItem WHERE OrderId IN :orderListNew AND NSP_Priority_New_Sales__c!=null and Separate_Project__c = false order by NSP_Priority_New_Sales__c ASC ]; 
             for( OrderItem orderLine : orderProductObj){
                 if(!ordProdMap.containskey(orderLine.OrderId)){
                     ordProdMap.put(orderLine.OrderId,orderLine);
@@ -581,10 +563,10 @@ public class NSP_OrderTriggerHelper {
         
         if(orderListAmend!= null && orderListAmend.size() > 0){
             
-            List <OrderItem> orderProductObj=[SELECT Id,Product2.ProductCode,NSP_Priority_Amendment__c,NSP_Project_Name_Amendment__c,OrderId,NSP_QL_ActionType__c,NSP_Transaction_for_Project__c,NSP_ApplicableProductAmendNew__c,NSP_ApplicableProduct_AmendDowngrade__c,NSP_ApplicableProduct_AmendUpsell__c,SBQQ__RequiredBy__c,SBQQ__RequiredBy__r.Product2.ProductCode  from OrderItem WHERE OrderId IN :orderListAmend AND NSP_Priority_Amendment__c!=null order by NSP_Priority_Amendment__c ASC]; 
+            List <OrderItem> orderProductObj=[SELECT Id,Product2.ProductCode,NSP_Priority_Amendment__c,NSP_Project_Name_Amendment__c,OrderId,NSP_QL_ActionType__c,NSP_Transaction_for_Project__c,NSP_ApplicableProductAmendNew__c,NSP_ApplicableProduct_AmendDowngrade__c,NSP_ApplicableProduct_AmendUpsell__c,SBQQ__RequiredBy__c,SBQQ__RequiredBy__r.Product2.ProductCode  from OrderItem WHERE OrderId IN :orderListAmend AND NSP_Priority_Amendment__c!=null and Separate_Project__c = false order by NSP_Priority_Amendment__c ASC]; 
             
             for( OrderItem orderLine : orderProductObj){
-                if(orderLine.NSP_QL_ActionType__c != null) {
+                if(String.isNotBlank( orderLine.NSP_QL_ActionType__c )) {
                     action = orderLine.NSP_QL_ActionType__c.replace('Amend/','');
                     if(action == NSP_CPQConstants.ACTION_NEW && orderLine.NSP_ApplicableProductAmendNew__c != null){
                         if(orderLine.NSP_ApplicableProductAmendNew__c.replace(';',' ').contains(orderLine.SBQQ__RequiredBy__r.Product2.ProductCode)){
@@ -593,25 +575,25 @@ public class NSP_OrderTriggerHelper {
                             } 
                         } 
                     }
-                    else if(action == NSP_CPQConstants.ACTION_DOWNGRADE && orderLine.NSP_ApplicableProduct_AmendDowngrade__c != null){
+                    else if(action == NSP_CPQConstants.ACTION_DOWNGRADE && String.isNotBlank( orderLine.NSP_ApplicableProduct_AmendDowngrade__c )){
                         if(orderLine.NSP_ApplicableProduct_AmendDowngrade__c.replace(';',' ').contains(orderLine.SBQQ__RequiredBy__r.Product2.ProductCode)){
                             if(!ordProdMap.containskey(orderLine.OrderId)){
                                 ordProdMap.put(orderLine.OrderId,orderLine);
                             }
                         } 
                     }
-                    else if(action == NSP_CPQConstants.ACTION_UPSELL && orderLine.NSP_ApplicableProduct_AmendUpsell__c != null){
+                    else if(action == NSP_CPQConstants.ACTION_UPSELL && String.isNotBlank( orderLine.NSP_ApplicableProduct_AmendUpsell__c )){
                         if(orderLine.NSP_ApplicableProduct_AmendUpsell__c.replace(';',' ').contains(orderLine.SBQQ__RequiredBy__r.Product2.ProductCode)){
                             if(!ordProdMap.containskey(orderLine.OrderId)){
                                 ordProdMap.put(orderLine.OrderId,orderLine);
                             }
                         } 
                     }
-                    else if(orderLine.NSP_ApplicableProduct_AmendUpsell__c == null && orderLine.NSP_ApplicableProduct_AmendDowngrade__c == null && orderLine.NSP_ApplicableProductAmendNew__c == null) {
-                        if(orderLine.NSP_Transaction_for_Project__c != null){
+                    else if(String.isBlank( orderLine.NSP_ApplicableProduct_AmendUpsell__c )  && String.isBlank( orderLine.NSP_ApplicableProduct_AmendDowngrade__c ) && String.isBlank( orderLine.NSP_ApplicableProductAmendNew__c )) {
+                        if(String.isNotBlank( orderLine.NSP_Transaction_for_Project__c )){
                             transactionType = orderLine.NSP_Transaction_for_Project__c.replace(';',' ');
                         }
-                        if(orderLine.NSP_QL_ActionType__c != null) {
+                        if(String.isNotBlank( orderLine.NSP_QL_ActionType__c )) {
                             action = orderLine.NSP_QL_ActionType__c.replace('Amend/','');
                             if(transactionType!=null && transactionType.contains(action)){
                                 if(!ordProdMap.containskey(orderLine.OrderId)){
@@ -647,7 +629,7 @@ public static void setProjNameSupplement(Set < ID > orderListSuppl,List < Order 
         List <OrderItem> orderProductObj=[SELECT Id,Product2.ProductCode,NSP_Priority_Amendment__c,NSP_Project_Name_Amendment__c,
                                           OrderId,NSP_QL_ActionType__c,NSP_Transaction_for_Project__c,NSP_ApplicableProductAmendNew__c,
                                           NSP_ApplicableProduct_AmendDowngrade__c,NSP_ApplicableProduct_AmendUpsell__c,SBQQ__RequiredBy__c,
-                                          SBQQ__RequiredBy__r.Product2.ProductCode,SBQQ__QuoteLine__r.NSP_ActionType__c FROM OrderItem WHERE OrderId IN :orderListSuppl AND NSP_Priority_Amendment__c!=null ORDER BY NSP_Priority_Amendment__c ASC];
+                                          SBQQ__RequiredBy__r.Product2.ProductCode,SBQQ__QuoteLine__r.NSP_ActionType__c FROM OrderItem WHERE OrderId IN :orderListSuppl AND NSP_Priority_Amendment__c!=null and  Separate_Project__c = false  ORDER BY NSP_Priority_Amendment__c ASC];
         
         for( OrderItem orderLine : orderProductObj){
             if(orderLine.SBQQ__QuoteLine__r.NSP_ActionType__c != null) {
@@ -697,7 +679,6 @@ public static void setProjNameSupplement(Set < ID > orderListSuppl,List < Order 
             }
             else if(oi.Order.Type == NSP_CPQConstants.QUOTE_TYPE_AMENDMENT &&  oi.Order.NSP_Transaction_Type__c != NSP_CPQConstants.QUOTE_TYPE_TERMINATION && oi.SBQQ__SubscriptionType__c == NSP_CPQConstants.SUBS_EVERGREEN && oi.NSP_OrderProductStartDate__c == '1st of the month')
             {
-                    oi.ServiceDate = System.today().toStartOfMonth();
                     oi.SBQQ__Status__c = NSP_CPQConstants.ORDER_ACTIVATED;
                     orderItemToUpdate.add(oi);
             }
@@ -1363,6 +1344,5 @@ public static void createAndStampSalesTaxContact(Set<Id> accountIdSet, List<Orde
             );
         }
     }
-
 }
 //

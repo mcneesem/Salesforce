@@ -285,6 +285,36 @@
                 </visibilityRule>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Slots_Consumed__c</fieldItem>
+                <identifier>RecordSlots_Consumed__cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Slots_Remaining__c</fieldItem>
+                <identifier>RecordSlots_Remaining__cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Total_Slots_Offered__c</fieldItem>
+                <identifier>RecordSlots_Requested__cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-11b82e39-30bb-4b53-a703-cc4ce4c91b73</name>
         <type>Facet</type>
     </flexiPageRegions>

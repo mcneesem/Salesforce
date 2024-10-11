@@ -139,18 +139,35 @@ public with sharing class NSP_AssetTriggerHelper {
                     accountList.add(eachAsset.AccountId);
                 }
             }
-            List <Asset> assetList = new List<Asset>();
-            assetList = [
-                SELECT ID, recordtypeId, recordtype.name, AccountId, Status
+            List<String> excludeStatusValues = new List<String>();
+            List<String> excluderecordTypeWithStatusValues = new List<String>();
+            List<String> excluderecordTypeValues = new List<String>();
+            AssetTriggerSettings__c settings = AssetTriggerSettings__c.getInstance( UserInfo.getUserId() );
+            if ( settings != null ) {
+                if ( String.isNotBlank( settings.Exclude_Status__c ) ) {
+                    excludeStatusValues = settings.Exclude_Status__c.split( '\\R' );
+                }
+                if ( String.isNotBlank( settings.Exclude_Record_Types_WRT_Status__c ) ) {
+                    excluderecordTypeWithStatusValues = settings.Exclude_Record_Types_WRT_Status__c.split( '\\R' );
+                }
+                if ( String.isNotBlank( settings.Exclude_Record_Types__c ) ) {
+                    excluderecordTypeValues = settings.Exclude_Record_Types__c.split( '\\R' );
+                }
+            }
+            List <Asset> assetList = [
+                SELECT Id , RecordTypeId , RecordType.Name , AccountId , Status
                 FROM Asset
                 WHERE (
-                    AccountId IN :accountList 
-                    AND RecordTypeId != :WOAssetRecordTypeId
-                    AND RecordTypeId != :CPQAssetRecordTypeId
-                    AND Status != :TERMINATED
-                    AND Status != :BACKOUT
-                    AND Status != :RETURNED
-                    AND Status != :INACTIVE
+                    ( AccountId IN :accountList )
+                    AND (
+                        NOT (
+                            (
+                                ( RecordType.Name = :excluderecordTypeWithStatusValues )
+                                AND ( Status = :excludeStatusValues )
+                            )
+                            OR ( RecordType.Name = :excluderecordTypeValues )
+                        )
+                    )
                 )
             ];
             for (Asset eachAsset : assetList) {

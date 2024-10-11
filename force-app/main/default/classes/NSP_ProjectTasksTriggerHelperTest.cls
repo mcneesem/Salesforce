@@ -17,6 +17,18 @@ public class NSP_ProjectTasksTriggerHelperTest {
         settings.IsEnabledCreatePtaIfOwnerChanged__c = true;
         upsert settings;
 
+        // Custtom settings related to Asset
+        AssetTriggerSettings__c assetSettings =  AssetTriggerSettings__c.getOrgDefaults();
+        assetSettings.Exclude_Record_Types__c  = ('WOCPQ'+'\n'+
+                                                  'AssetHardware'+'\n'+
+                                                  'Asset');
+        assetSettings.Exclude_Status__c = ('Backout'+'\n'+
+                                           'Terminated'+'\n'+
+                                           'Returned'+'\n'+
+                                           'Inactive');
+        assetSettings.Exclude_Record_Types_WRT_Status__c = 'Certify';
+        upsert assetSettings;
+        
         List<Account> accList = new List<Account>();
         Account oAccount = (Account)NSP_TestExtendedDataFactory.createSObject(new Account(), 'NSP_TestDataFactory.AccountDefaults', false);
         oAccount.NSP_AIMS_Client__c = '8900';
@@ -262,8 +274,8 @@ public class NSP_ProjectTasksTriggerHelperTest {
         optionalProjTask.pse__Project__c = peoTermProject.Id;
         optionalProjTask.pse__Status__c = NSP_ServiceConstants.PROJECTSTATUSNOTSTARTED;
         nProjectTaskList.add(optionalProjTask);
-        
-        insert nProjectTaskList;
+   
+            insert nProjectTaskList;
         
         WorkOrder relWo = new WorkOrder();
         relWo.Status = 'Unscheduled';

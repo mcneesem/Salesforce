@@ -230,10 +230,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>iSolved - Other</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>ISolved HCM Implementation</fullName>
             <default>false</default>
         </values>
@@ -367,6 +363,10 @@
         </values>
         <values>
             <fullName>XML Utility Rework</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>iSolved - Other</fullName>
             <default>false</default>
         </values>
         <values>
@@ -967,6 +967,17 @@
         </values>
         <values>
             <fullName>TimeStar Accrual Status  %28list field%29</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Support_Team__c</picklist>
+        <values>
+            <fullName>Cost</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Traditional</fullName>
             <default>false</default>
         </values>
     </picklistValues>
