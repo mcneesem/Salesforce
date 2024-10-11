@@ -11,11 +11,12 @@ public without sharing class NSP_AccountTeamTriggerTest {
     private static final string projectTaskTemplate = 'PEO Termination';
     private static final string status = 'Draft';
     private static final string EMP_PER_ID = 'EMP 1234';
+
     /**
-* Does test data setup
-* @param N/A. 
-* @return void                          
-*/
+    * Does test data setup
+    * @param N/A. 
+    * @return void                          
+    */
     @testSetup
     static void testData() {
         User userObj = NSP_TestHelper.createUser(false);
@@ -60,9 +61,9 @@ public without sharing class NSP_AccountTeamTriggerTest {
         oProjectTask1.pse__Milestone__c = milestone.id;
         oProjectTask1.NSP_Template_Generated__c = true;
         oProjectTask1.RecordTypeId = PEOProjectTaskRecordTypeId;
-		projectTasks.add(oProjectTask1);
+        projectTasks.add(oProjectTask1);
 
-		pse__Project_Task__c oProjectTask = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c(), 'NSP_TestDataFactory.ProjectTaskDefaults', false);
+        pse__Project_Task__c oProjectTask = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c(), 'NSP_TestDataFactory.ProjectTaskDefaults', false);
         oProjectTask.pse__Project__c = oProject.Id;
         oProjectTask.Name = projectTaskName;
         oProjectTask.Template_Name__c = projectTaskTemplate;
@@ -93,10 +94,10 @@ public without sharing class NSP_AccountTeamTriggerTest {
     }
 
     /**
-* Checks the update insert logic of the trigger
-* @param N/A. 
-* @return void                          
-*/    
+    * Checks the update insert logic of the trigger
+    * @param N/A. 
+    * @return void                          
+    */    
     @isTest
     public static void testInsert(){
         Account accountObj = [SELECT Id,Name from Account WHERE Name !=null limit 1];
@@ -116,10 +117,10 @@ public without sharing class NSP_AccountTeamTriggerTest {
     }
     
     /**
-* Checks the update update logic of the trigger
-* @param N/A. 
-* @return void                          
-*/     
+    * Checks the update update logic of the trigger
+    * @param N/A. 
+    * @return void                          
+    */     
     @isTest
     public static void testUpdate(){
         test.startTest();
@@ -166,11 +167,11 @@ public without sharing class NSP_AccountTeamTriggerTest {
         system.assertNotEquals(pt.NSP_Client_Liaison_Email__c, userInfo.getUserEmail());
         test.stopTest();
     } 
-     /**
-* @Description: This test method test the method in AccountTeamTriggerHelper
-* @Created date: 13/10/2022. 
-* @return void             
-*     */
+    /**
+    * @Description: This test method test the method in AccountTeamTriggerHelper
+    * @Created date: 13/10/2022. 
+    * @return void             
+    */
     @isTest
     public static void updateAccountTeamNameToAssetNameTest(){
         
@@ -405,7 +406,7 @@ public without sharing class NSP_AccountTeamTriggerTest {
         
         NSP_Account_Team__c accountTeam = [SELECT Id,NSP_Role__c,NSP_User__c from NSP_Account_Team__c 
                                            WHERE NSP_Account__c =: accountObj.Id Limit 1];
-         test.stopTest();
+        test.stopTest();
         system.assertEquals(userObj.Id, accountTeam.NSP_User__c);  
     }
     
@@ -459,7 +460,7 @@ public without sharing class NSP_AccountTeamTriggerTest {
         accTeam7.NSP_User__c = userObj.Id;
         accTeam7.NSP_Account__c = accountObj.Id;
         accTeam7.NSP_Role__c = NSP_ServiceConstants.BUS_TEAM_HRSP_CL;
-		accTeams.add(accTeam7);
+        accTeams.add(accTeam7);
         
         insert accTeams;
         pse__Project_Task__c oProjectTask1 = [SELECT Id FROM pse__Project_Task__c WHERE pse__Status__c = 'Not Started'];
@@ -470,7 +471,7 @@ public without sharing class NSP_AccountTeamTriggerTest {
             NSP_Status__c = status,  
             NSP_Project_Task__c = oProjectTask1.Id 
         );  
-       NSP_Termination_Form__c termForm2 = new NSP_Termination_Form__c(  
+        NSP_Termination_Form__c termForm2 = new NSP_Termination_Form__c(  
             NSP_Account__c = accountObj.Id,  
             NSP_Payroll_Specialist__c = UserInfo.getUserId(),  
             NSP_Status__c = status,  
