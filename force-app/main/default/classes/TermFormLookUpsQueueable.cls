@@ -39,7 +39,7 @@ public class TermFormLookUpsQueueable implements Queueable {
             }  
         }  
   
-        if (terminationForms != null && !terminationForms.isEmpty()) {  
+        if (terminationForms != null && !terminationForms.isEmpty() && this.newRolesMap != null) {  
             // Iterate through Account key  
             for (NSP_Termination_Form__c mapTermForm : terminationForms) {  
                 if (oldRolesMap.containsKey(NSP_ServiceConstants.PAYROLL_SUPERVISOR) && this.newRolesMap.containsKey(NSP_ServiceConstants.PAYROLL_SUPERVISOR) && mapTermForm.NSP_Supervisor__c != null) {  
