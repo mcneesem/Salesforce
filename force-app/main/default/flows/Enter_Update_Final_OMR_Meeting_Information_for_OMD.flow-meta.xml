@@ -90,6 +90,10 @@
                 <stringValue>Get_OMD_Record</stringValue>
             </value>
         </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
     </assignments>
     <assignments>
         <name>Set_Fault_Element_Get_Triggering_Task_Record</name>
@@ -109,35 +113,35 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Set_Fault_Element_Update_OMD_Record</name>
-        <label>Set Fault Element : Update OMD Record</label>
-        <locationX>660</locationX>
-        <locationY>1190</locationY>
-        <assignmentItems>
-            <assignToReference>FaultElement</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Update OMD Record</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Fault_Handler_Subflow</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Set_Fault_Element_Update_Task</name>
-        <label>Set Fault Element : Update Task</label>
+        <name>Set_Fault_Element_Update_Final_OMR_info_to_Task_Record</name>
+        <label>Set Fault Element : Update_Final_OMR_info_to_Task_Record</label>
         <locationX>1188</locationX>
         <locationY>566</locationY>
         <assignmentItems>
             <assignToReference>FaultElement</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Update Task</stringValue>
+                <stringValue>Update_Final_OMR_info_to_Task_Record</stringValue>
             </value>
         </assignmentItems>
         <connector>
             <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Update_OMD_Record</name>
+        <label>Set Fault Element : Update_OMD_Record</label>
+        <locationX>660</locationX>
+        <locationY>1190</locationY>
+        <assignmentItems>
+            <assignToReference>FaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Update_OMD_Record</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
             <targetReference>Fault_Handler_Subflow</targetReference>
         </connector>
     </assignments>
@@ -432,7 +436,7 @@
             <targetReference>Assign_Final_OMR_info_to_OMD_Record</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Set_Fault_Element_Update_Task</targetReference>
+            <targetReference>Set_Fault_Element_Update_Final_OMR_info_to_Task_Record</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>

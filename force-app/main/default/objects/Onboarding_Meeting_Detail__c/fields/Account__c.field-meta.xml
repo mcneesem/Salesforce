@@ -8,7 +8,7 @@
     <relationshipLabel>Onboarding Meeting Details</relationshipLabel>
     <relationshipName>Onboarding_Meeting_Details</relationshipName>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Lookup</type>
 </CustomField>
