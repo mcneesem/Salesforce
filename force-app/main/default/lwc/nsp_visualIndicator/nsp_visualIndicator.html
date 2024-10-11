@@ -85,6 +85,14 @@
                     <div class="slds-align_absolute-center"><img src={nationalAccount} height="100%"></div>
                 </div>
                 </template>
+
+                <template if:true={showEmailToCase}>
+                    <div class="slds-col slds-size_1-of-3">
+                    <div class="slds-text-title slds-align_absolute-center">Email-To-Case</div>
+                    <div class="slds-align_absolute-center"><img src={emailToCase} height="100%"></div>
+                </div>
+                </template>
+                
                 <template if:true={showPendingTermination}>
                     <div class="slds-col slds-size_1-of-3">
                     <div class="slds-text-title slds-align_absolute-center">Pending Termination</div>

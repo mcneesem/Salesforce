@@ -1,7 +1,8 @@
-import { api, track, LightningElement } from 'lwc';
+import { api, track, LightningElement, wire } from 'lwc';
 import nsp_ReportingResource from '@salesforce/resourceUrl/NSP_ReportingResource';
 import gethisAccount from '@salesforce/apex/NSP_VisualIndicatorHelper.gethisAccount';
 import getAccountId from '@salesforce/apex/NSP_VisualIndicatorHelper.getAccountId';
+import isCaseFromEmail from '@salesforce/apex/NSP_VisualIndicatorHelper.isCaseFromEmail';
 
 
 export default class vi2 extends LightningElement {
@@ -27,6 +28,7 @@ export default class vi2 extends LightningElement {
     @track showClientAndInsperity = false;
     @track showPendingTermination = false;
     @track vocSurveyIndicator = false;
+    @track showEmailToCase = false;
     
     contract_exempt = nsp_ReportingResource + '/nsp_ReportingResource/images/contract_exempt.png';
     somewhat_fav = nsp_ReportingResource + '/nsp_ReportingResource/images/somewhat_fav.jfif';
@@ -40,6 +42,16 @@ export default class vi2 extends LightningElement {
     voc6mo = nsp_ReportingResource + '/nsp_ReportingResource/images/voc6mo.png';
     wf_sync = nsp_ReportingResource + '/nsp_ReportingResource/images/wf_sync.png';
     crwc = nsp_ReportingResource + '/nsp_ReportingResource/images/crwc.png';
+    emailToCase = nsp_ReportingResource + '/nsp_ReportingResource/images/emailToCase.png';
+
+    @wire(isCaseFromEmail, { caseId: '$recordId' })
+    wiredResult({ error, data }) {
+        if (data !== undefined) {
+            this.showEmailToCase = data;
+        } else if (error) {
+            console.log('@@error: '+error);
+        }
+    }
 
     connectedCallback(){
         this.callGetAccountId();

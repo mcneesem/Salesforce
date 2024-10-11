@@ -154,6 +154,38 @@ public without sharing class NSP_VisualIndicatorHelper {
         }
         return accountId;
     }
+
+    /**
+* returns the caseRecordIdConfirmed(to confirm the recordId is a case and is created from Email-to-case) for the object that component is placed 
+* @param caseId related to object Id.    
+* @return Boolean             
+*                
+*/
+    @AuraEnabled(cacheable=true)
+    public static Boolean isCaseFromEmail(String caseId) {
+        Boolean emailToCaseConfirmed = false;
+        
+        // Check if the recordId starts with '500' to confirm it as a Case record
+        if (!caseId.startsWith('500')) {
+            return false; // Not a Case record
+        }
+
+        // Query for EmailMessage records related to the Case
+        List<EmailMessage> emailMessages = [
+            SELECT Id
+            FROM EmailMessage
+            WHERE ParentId = :caseId AND Incoming = TRUE
+            LIMIT 1
+        ];
+
+        // Return true if there are any incoming email messages related to the case
+        if(!emailMessages.isEmpty()){
+            emailToCaseConfirmed = true;
+        }
+        
+        return emailToCaseConfirmed;
+    }
+
     /**
 * returns the account details wrapper for 
 * @param    
