@@ -316,7 +316,7 @@ NSP_WX_WA_Benefits_Specialist__c, and NSP_Retirement_Service_Plan_Name__c field 
             if(!accountIdSet.isEmpty() && newRolesMap != null && oldMap != null) {
                 if ( Limits.getQueueableJobs() < Limits.getLimitQueueableJobs() ) {
                     System.enqueueJob(
-                        new QueueableTermFormLookUps(
+                        new TermFormLookUpsQueueable(
                             accountIdSet ,
                             newRolesMap ,
                             oldMap.values()
