@@ -25,13 +25,13 @@ public class TermFormLookUpsQueueable implements Queueable {
         List<NSP_Termination_Form__c> updateTermForm = new List<NSP_Termination_Form__c>();  
         List<NSP_Termination_Form__c> terminationForms = [SELECT Id, NSP_Account__c, NSP_Payroll_Specialist__c, NSP_Insperity_Blended_Role__c, NSP_Supervisor__c, NSP_Client_Liaison__c, NSP_Manager_HR_Services__c, NSP_Account_Executive__c, NSP_Credit_Specialist__c, NSP_Sales_Representative__c  
                                                           FROM NSP_Termination_Form__c    
-                                                          WHERE NSP_Account__c IN: accountId  
+                                                          WHERE NSP_Account__c IN: this.accountId  
                                                           AND NSP_Status__c !=: NSP_ServiceConstants.TERM_SUPERVISOR_APPROVED  
                                                           AND NSP_Project_Task__c NOT IN (SELECT Id FROM pse__Project_Task__c WHERE pse__Status__c =: NSP_ServiceConstants.TASKCOMPLETE)];  
   
         // Get previous Role values  
-        if (oldMap != null) {  
-            for (NSP_Account_Team__c oldAccTeam : oldMap) {  
+        if (this.oldMap != null) {  
+            for (NSP_Account_Team__c oldAccTeam : this.oldMap) {  
                 if (!oldRolesMap.containsKey(oldAccTeam.NSP_Role__c)) {  
                     oldRolesMap.put(oldAccTeam.NSP_Role__c, new List<Id>());  
                 }  
@@ -42,39 +42,39 @@ public class TermFormLookUpsQueueable implements Queueable {
         if (terminationForms != null && !terminationForms.isEmpty()) {  
             // Iterate through Account key  
             for (NSP_Termination_Form__c mapTermForm : terminationForms) {  
-                if (oldRolesMap.containsKey(NSP_ServiceConstants.PAYROLL_SUPERVISOR) && newRolesMap.containsKey(NSP_ServiceConstants.PAYROLL_SUPERVISOR) && mapTermForm.NSP_Supervisor__c != null) {  
+                if (oldRolesMap.containsKey(NSP_ServiceConstants.PAYROLL_SUPERVISOR) && this.newRolesMap.containsKey(NSP_ServiceConstants.PAYROLL_SUPERVISOR) && mapTermForm.NSP_Supervisor__c != null) {  
                     if (oldRolesMap.get(NSP_ServiceConstants.PAYROLL_SUPERVISOR).contains(mapTermForm.NSP_Supervisor__c)) {  
-                        mapTermForm.NSP_Supervisor__c = newRolesMap.get(NSP_ServiceConstants.PAYROLL_SUPERVISOR);  
+                        mapTermForm.NSP_Supervisor__c = this.newRolesMap.get(NSP_ServiceConstants.PAYROLL_SUPERVISOR);  
                     }  
                 }  
-                if (oldRolesMap.containsKey(NSP_ServiceConstants.PAYROLL_SPECIALIST) && newRolesMap.containsKey(NSP_ServiceConstants.PAYROLL_SPECIALIST) && mapTermForm.NSP_Payroll_Specialist__c != null) {  
+                if (oldRolesMap.containsKey(NSP_ServiceConstants.PAYROLL_SPECIALIST) && this.newRolesMap.containsKey(NSP_ServiceConstants.PAYROLL_SPECIALIST) && mapTermForm.NSP_Payroll_Specialist__c != null) {  
                     if (oldRolesMap.get(NSP_ServiceConstants.PAYROLL_SPECIALIST).contains(mapTermForm.NSP_Payroll_Specialist__c)) {  
-                        mapTermForm.NSP_Payroll_Specialist__c = newRolesMap.get(NSP_ServiceConstants.PAYROLL_SPECIALIST);  
+                        mapTermForm.NSP_Payroll_Specialist__c = this.newRolesMap.get(NSP_ServiceConstants.PAYROLL_SPECIALIST);  
                     }  
                 }  
-                if (oldRolesMap.containsKey(NSP_ServiceConstants.BUSINESS_PERFORMANCE_ADVISOR) && newRolesMap.containsKey(NSP_ServiceConstants.BUSINESS_PERFORMANCE_ADVISOR) && mapTermForm.NSP_Sales_Representative__c != null) {  
+                if (oldRolesMap.containsKey(NSP_ServiceConstants.BUSINESS_PERFORMANCE_ADVISOR) && this.newRolesMap.containsKey(NSP_ServiceConstants.BUSINESS_PERFORMANCE_ADVISOR) && mapTermForm.NSP_Sales_Representative__c != null) {  
                     if (oldRolesMap.get(NSP_ServiceConstants.BUSINESS_PERFORMANCE_ADVISOR).contains(mapTermForm.NSP_Sales_Representative__c)) {  
-                        mapTermForm.NSP_Sales_Representative__c = newRolesMap.get(NSP_ServiceConstants.BUSINESS_PERFORMANCE_ADVISOR);  
+                        mapTermForm.NSP_Sales_Representative__c = this.newRolesMap.get(NSP_ServiceConstants.BUSINESS_PERFORMANCE_ADVISOR);  
                     }  
                 }  
-                if (oldRolesMap.containsKey(NSP_ServiceConstants.CLIENT_LIAISION) && newRolesMap.containsKey(NSP_ServiceConstants.CLIENT_LIAISION) && mapTermForm.NSP_Client_Liaison__c != null) {  
+                if (oldRolesMap.containsKey(NSP_ServiceConstants.CLIENT_LIAISION) && this.newRolesMap.containsKey(NSP_ServiceConstants.CLIENT_LIAISION) && mapTermForm.NSP_Client_Liaison__c != null) {  
                     if (oldRolesMap.get(NSP_ServiceConstants.CLIENT_LIAISION).contains(mapTermForm.NSP_Client_Liaison__c)) {  
-                        mapTermForm.NSP_Client_Liaison__c = newRolesMap.get(NSP_ServiceConstants.CLIENT_LIAISION);  
+                        mapTermForm.NSP_Client_Liaison__c = this.newRolesMap.get(NSP_ServiceConstants.CLIENT_LIAISION);  
                     }  
                 }  
-                if (oldRolesMap.containsKey(NSP_ServiceConstants.MID_MARKET_ACC_EX) && newRolesMap.containsKey(NSP_ServiceConstants.MID_MARKET_ACC_EX) && mapTermForm.NSP_Account_Executive__c != null) {  
+                if (oldRolesMap.containsKey(NSP_ServiceConstants.MID_MARKET_ACC_EX) && this.newRolesMap.containsKey(NSP_ServiceConstants.MID_MARKET_ACC_EX) && mapTermForm.NSP_Account_Executive__c != null) {  
                     if (oldRolesMap.get(NSP_ServiceConstants.MID_MARKET_ACC_EX).contains(mapTermForm.NSP_Account_Executive__c)) {  
-                        mapTermForm.NSP_Account_Executive__c = newRolesMap.get(NSP_ServiceConstants.MID_MARKET_ACC_EX);  
+                        mapTermForm.NSP_Account_Executive__c = this.newRolesMap.get(NSP_ServiceConstants.MID_MARKET_ACC_EX);  
                     }  
                 }  
-                if (oldRolesMap.containsKey(NSP_ServiceConstants.MANAGER_HRSERVICES) && newRolesMap.containsKey(NSP_ServiceConstants.MANAGER_HRSERVICES) && mapTermForm.NSP_Manager_HR_Services__c != null) {  
+                if (oldRolesMap.containsKey(NSP_ServiceConstants.MANAGER_HRSERVICES) && this.newRolesMap.containsKey(NSP_ServiceConstants.MANAGER_HRSERVICES) && mapTermForm.NSP_Manager_HR_Services__c != null) {  
                     if (oldRolesMap.get(NSP_ServiceConstants.MANAGER_HRSERVICES).contains(mapTermForm.NSP_Manager_HR_Services__c)) {  
-                        mapTermForm.NSP_Manager_HR_Services__c = newRolesMap.get(NSP_ServiceConstants.MANAGER_HRSERVICES);  
+                        mapTermForm.NSP_Manager_HR_Services__c = this.newRolesMap.get(NSP_ServiceConstants.MANAGER_HRSERVICES);  
                     }  
                 }  
-                if (oldRolesMap.containsKey(NSP_ServiceConstants.BUS_TEAM_HRSP_CL) && newRolesMap.containsKey(NSP_ServiceConstants.BUS_TEAM_HRSP_CL) && mapTermForm.NSP_Insperity_Blended_Role__c != null) {  
+                if (oldRolesMap.containsKey(NSP_ServiceConstants.BUS_TEAM_HRSP_CL) && this.newRolesMap.containsKey(NSP_ServiceConstants.BUS_TEAM_HRSP_CL) && mapTermForm.NSP_Insperity_Blended_Role__c != null) {  
                     if (oldRolesMap.get(NSP_ServiceConstants.BUS_TEAM_HRSP_CL).contains(mapTermForm.NSP_Insperity_Blended_Role__c)) {  
-                        mapTermForm.NSP_Insperity_Blended_Role__c = newRolesMap.get(NSP_ServiceConstants.BUS_TEAM_HRSP_CL);  
+                        mapTermForm.NSP_Insperity_Blended_Role__c = this.newRolesMap.get(NSP_ServiceConstants.BUS_TEAM_HRSP_CL);  
                     }  
                 }  
                 updateTermForm.add(mapTermForm);  
