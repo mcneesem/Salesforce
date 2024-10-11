@@ -282,47 +282,59 @@ NSP_WX_WA_Benefits_Specialist__c, and NSP_Retirement_Service_Plan_Name__c field 
             }
         }
     }
-    
-    /**
-* Iterates throught the list of new NSP_Account_Team__c and passes the required attributes to other methods.
-* @param newMap Map of NSP_Account_Team__c.
-* @param oldMap Map of NSP_Account_Team__c.
-* @return void
-*                
-*/
-    
-    public void afterUpdateDirector(Map<Id, NSP_Account_Team__c> newMap,Map<Id, NSP_Account_Team__c> oldMap) {
+
+    //
+    // Iterates throught the list of new NSP_Account_Team__c and passes the required attributes to other methods.
+    // @param newMap Map of NSP_Account_Team__c.
+    // @param oldMap Map of NSP_Account_Team__c.
+    // @return void
+    //
+    public void afterUpdateDirector( Map<Id,NSP_Account_Team__c> newMap , Map<Id,NSP_Account_Team__c> oldMap ) {
         try{
             Set<Id> accountIdSet = new Set<Id>();
             Map<String,Id> newRolesMap = new Map<String,Id>();
             Map<Id,NSP_Account_Team__c> mapAccountIdtoAccountTeam = new Map<Id,NSP_Account_Team__c>();
-            
-            /*STY-03187 : Checking if NSP_Role__c field in AccountTeam object is WX/WA Benefits Specialist or WA/WX Payroll Specialist or
-401k Plan Consultant then mapping AccountId and accountTeamObject */
-            for(NSP_Account_Team__c accTeamMemberObj : newMap.values()) {
-                accountIdSet.add(accTeamMemberObj.NSP_Account__c);
-                if(String.isNotBlank( accTeamMemberObj.NSP_Role__c )){
-                    newRolesMap.put(accTeamMemberObj.NSP_Role__c, accTeamMemberObj.NSP_User__c);
-                }
-                if(String.isNotBlank(accTeamMemberObj.NSP_Role__c) && 
-                   (accTeamMemberObj.NSP_Role__c != oldMap.get(accTeamMemberObj.Id).NSP_Role__c || 
-                    accTeamMemberObj.NSP_User__c != oldMap.get(accTeamMemberObj.Id).NSP_User__c) &&
-                   (accTeamMemberObj.NSP_Role__c == NSP_ServiceConstants.WXWA_BENEFITS ||
-                    accTeamMemberObj.NSP_Role__c == NSP_ServiceConstants.WXWA_PAYROLL ||
-                    accTeamMemberObj.NSP_Role__c == NSP_ServiceConstants.PLAN_CONSULTANT)){
-                        mapAccountIdtoAccountTeam.put(accTeamMemberObj.NSP_Account__c, accTeamMemberObj);
-                    }
-            }
-            if(!accountIdSet.isEmpty() && newRolesMap != null && oldMap != null) {
-                if ( Limits.getQueueableJobs() < Limits.getLimitQueueableJobs() ) {
-                    System.enqueueJob(
-                        new TermFormLookUpsQueueable(
-                            accountIdSet ,
-                            newRolesMap ,
-                            oldMap.values()
-                        )
+            // STY-03187 : Checking if NSP_Role__c field in AccountTeam object is WX/WA Benefits Specialist
+            // or WA/WX Payroll Specialist or 401k Plan Consultant then mapping AccountId and accountTeamObject
+            for ( NSP_Account_Team__c accTeamMemberObj : newMap.values() ) {
+                accountIdSet.add( accTeamMemberObj.NSP_Account__c );
+                if ( String.isNotBlank( accTeamMemberObj.NSP_Role__c ) ) {
+                    newRolesMap.put(
+                        accTeamMemberObj.NSP_Role__c ,
+                        accTeamMemberObj.NSP_User__c
                     );
                 }
+                if ( String.isNotBlank( accTeamMemberObj.NSP_Role__c ) ) {
+                    if ( ( accTeamMemberObj.NSP_Role__c != oldMap.get(accTeamMemberObj.Id).NSP_Role__c )
+                        || ( accTeamMemberObj.NSP_User__c != oldMap.get(accTeamMemberObj.Id).NSP_User__c )
+                        )
+                    {
+                        if ( ( accTeamMemberObj.NSP_Role__c == NSP_ServiceConstants.WXWA_BENEFITS )
+                            || ( accTeamMemberObj.NSP_Role__c == NSP_ServiceConstants.WXWA_PAYROLL )
+                            || ( accTeamMemberObj.NSP_Role__c == NSP_ServiceConstants.PLAN_CONSULTANT )
+                            )
+                        {
+                            mapAccountIdtoAccountTeam.put(
+                                accTeamMemberObj.NSP_Account__c ,
+                                accTeamMemberObj
+                            );
+                        }
+                    }
+                }
+            }
+            if ( !accountIdSet.isEmpty()
+                && ( newRolesMap != null )
+                && ( oldMap != null )
+                && ( Limits.getQueueableJobs() < Limits.getLimitQueueableJobs() )
+                )
+            {
+                System.enqueueJob(
+                    new TermFormLookUpsQueueable(
+                        accountIdSet ,
+                        newRolesMap ,
+                        oldMap.values()
+                    )
+                );
             }
             Set<Id> accountIdSetToUpdateResyncFlag = new Set<Id>();
             NSP_SObjectUpdateTriggerHelper sObjectUpdateObj = new NSP_SObjectUpdateTriggerHelper();
@@ -336,8 +348,8 @@ NSP_WX_WA_Benefits_Specialist__c, and NSP_Retirement_Service_Plan_Name__c field 
             IntegrationSyncController.setReadyForIntegrationSync( accountIdSetToUpdateResyncFlag );
 
             //Checking if map of accountId and Account Team is greater than zero or not
-            if(mapAccountIdtoAccountTeam.size()>0 && !mapAccountIdtoAccountTeam.isEmpty()){
-                updateAccountTeamNameToAssetName(mapAccountIdtoAccountTeam);
+            if ( !mapAccountIdtoAccountTeam.isEmpty() ) {
+                updateAccountTeamNameToAssetName( mapAccountIdtoAccountTeam );
             }
         } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
