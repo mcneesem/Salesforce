@@ -1,16 +1,16 @@
 /* 
-*    ClassName:QueueableTermFormLookUps
+*    ClassName:TermFormLookUpsQueueable
 *    @description: Represents the Termination Form and Account Team trigger Roles/Users
 *    @date: 10/11/2024
 *    @author: Roberto Rivero
 */
-public class QueueableTermFormLookUps implements Queueable {  
+public class TermFormLookUpsQueueable implements Queueable {  
     // test w/ NSP_AccountTeamTriggerTest (90%)
     private Set<Id> accountId;  
     private Map<String, Id> newRolesMap;  
     private List<NSP_Account_Team__c> oldMap;  
   
-    public QueueableTermFormLookUps(Set<Id> accountId, Map<String, Id> newRolesMap, List<NSP_Account_Team__c> oldMap) {
+    public TermFormLookUpsQueueable(Set<Id> accountId, Map<String, Id> newRolesMap, List<NSP_Account_Team__c> oldMap) {
         this.accountId = accountId;  
         this.newRolesMap = newRolesMap;  
         this.oldMap = oldMap;  
@@ -86,7 +86,7 @@ public class QueueableTermFormLookUps implements Queueable {
             } catch (Exception e) {  
                 NSP_ErrorLogHandler.logException(  
                     NSP_AccountTeamTriggerHelper.class.getName(),  
-                    'updateUserLookups',  
+                    'execute',  
                     e  
                 );  
             }  
