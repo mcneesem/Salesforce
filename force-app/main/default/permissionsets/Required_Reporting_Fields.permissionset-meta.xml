@@ -248,6 +248,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Lead.NSP_Eloqua_Comments__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Lead.NSP_ICP_Percent__c</field>
         <readable>true</readable>
     </fieldPermissions>
