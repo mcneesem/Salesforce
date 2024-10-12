@@ -47,6 +47,11 @@
                 <label>Ameriprise</label>
             </value>
             <value>
+                <fullName>Armstrong Transport Group, LLC</fullName>
+                <default>false</default>
+                <label>Armstrong Transport Group, LLC</label>
+            </value>
+            <value>
                 <fullName>AtWork Group LLC</fullName>
                 <default>false</default>
                 <label>AtWork Group LLC</label>
@@ -117,11 +122,6 @@
                 <label>North American Trailer Dealer Association (NATDA)</label>
             </value>
             <value>
-                <fullName>PREVEER (UFG franchise)</fullName>
-                <default>false</default>
-                <label>PREVEER (UFG franchise)</label>
-            </value>
-            <value>
                 <fullName>Quantum Assurance</fullName>
                 <default>false</default>
                 <label>Quantum Assurance</label>
@@ -147,6 +147,11 @@
                 <label>The Union for Reform Judaism</label>
             </value>
             <value>
+                <fullName>The Union for Reform Judiasm (Conservative Judiasm)</fullName>
+                <default>false</default>
+                <label>The Union for Reform Judiasm (Conservative Judiasm)</label>
+            </value>
+            <value>
                 <fullName>The Veterinary Cooperative</fullName>
                 <default>false</default>
                 <label>The Veterinary Cooperative</label>
@@ -155,21 +160,6 @@
                 <fullName>Trane U.S. Inc.</fullName>
                 <default>false</default>
                 <label>Trane U.S. Inc.</label>
-            </value>
-            <value>
-                <fullName>United Franchise Group (UFG)</fullName>
-                <default>false</default>
-                <label>United Franchise Group (UFG)</label>
-            </value>
-            <value>
-                <fullName>VentureX Locations (UFG franchise)</fullName>
-                <default>false</default>
-                <label>VentureX Locations (UFG franchise)</label>
-            </value>
-            <value>
-                <fullName>Venture X Members (tenants)</fullName>
-                <default>false</default>
-                <label>Venture X Members (tenants)</label>
             </value>
             <value>
                 <fullName>Veterinary Study Group</fullName>
@@ -213,6 +203,12 @@
                 <label>Other</label>
             </value>
             <value>
+                <fullName>PREVEER (UFG franchise)</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>PREVEER (UFG franchise)</label>
+            </value>
+            <value>
                 <fullName>Raymond James Advisor</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
@@ -223,6 +219,24 @@
                 <default>false</default>
                 <isActive>false</isActive>
                 <label>United Franchise Group</label>
+            </value>
+            <value>
+                <fullName>United Franchise Group (UFG)</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>United Franchise Group (UFG)</label>
+            </value>
+            <value>
+                <fullName>Venture X Members (tenants)</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Venture X Members (tenants)</label>
+            </value>
+            <value>
+                <fullName>VentureX Locations (UFG franchise)</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>VentureX Locations (UFG franchise)</label>
             </value>
             <value>
                 <fullName>Worldcom PR</fullName>
