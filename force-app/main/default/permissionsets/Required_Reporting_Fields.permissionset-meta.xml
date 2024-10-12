@@ -488,6 +488,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Opportunity.Current_Bid_Expiration_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Opportunity.Discovery_Call_Completed_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
