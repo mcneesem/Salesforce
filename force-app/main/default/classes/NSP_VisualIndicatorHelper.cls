@@ -1,22 +1,14 @@
-/*
-* @Description:      This class is created to apply logic to display visual indicators on Account, Service Exceptions 
-				      and Asset objects for Reporting
-* @CreatedDate:      1/31/2023
-* @LastModifiedDate: 3/24/2023 Updated for Change Request DF-03195: Gourav Das (PwC)
-* @Story:            STY-00909
-* */  
 public without sharing class NSP_VisualIndicatorHelper {
-    
-    /**
-* returns the account details for 
-* @param accId Id related to account.    
-* @return void             
-*                
-*/     
+
+    //
+    // returns the account details for
+    // @param accId Id related to account.
+    // @return void
+    //
     @AuraEnabled(cacheable=true)
     public static List<VisualIndicatorWrapper> gethisAccount(String accId) {
         try{
-            List<NSP_Service_Exception__c> expList = new List<NSP_Service_Exception__c>();	
+            List<NSP_Service_Exception__c> expList = new List<NSP_Service_Exception__c>();
             List<Asset> assetList = new List<Asset>();
             List<NSP_Survey__c> surveyList = new List<NSP_Survey__c>();
             List<VisualIndicatorWrapper> accWrapperList = new List<VisualIndicatorWrapper>();
@@ -132,12 +124,12 @@ public without sharing class NSP_VisualIndicatorHelper {
             throw NSP_Utilities.getAuraException(excep);
         }
     }
-    /**
-* returns the account Id for the object that component is placed on(Case,Asset,Account) 
-* @param accId Id related to object Id.    
-* @return String             
-*                
-*/
+
+    //
+    // returns the account Id for the object that component is placed on(Case,Asset,Account)
+    // @param accId Id related to object Id.
+    // @return String
+    //
     @AuraEnabled(cacheable=true)
     public static String getAccountId(String accId) {
         Id objectId = accId;
@@ -155,43 +147,40 @@ public without sharing class NSP_VisualIndicatorHelper {
         return accountId;
     }
 
-    /**
-* returns the caseRecordIdConfirmed(to confirm the recordId is a case and is created from Email-to-case) for the object that component is placed 
-* @param caseId related to object Id.    
-* @return Boolean             
-*                
-*/
+    //
+    // returns the caseRecordIdConfirmed(to confirm the recordId is a case and is created from Email-to-case) for the object that component is placed
+    // @param caseId related to object Id.
+    // @return Boolean
+    //
     @AuraEnabled(cacheable=true)
     public static Boolean isCaseFromEmail(String caseId) {
         Boolean emailToCaseConfirmed = false;
-        
-        // Check if the recordId starts with '500' to confirm it as a Case record
-        if (!caseId.startsWith('500')) {
-            return false; // Not a Case record
+        // Check if the caseId is a Case record Id
+        if ( String.isNotBlank( caseId )
+            && ( caseId InstanceOf Id )
+            && Id.valueOf( caseId ).getSObjectType() == Case.getSObjectType()
+            )
+        {
+            // Query for EmailMessage records related to the Case
+            List<EmailMessage> emailMessages = [
+                SELECT Id
+                FROM EmailMessage
+                WHERE ParentId = :caseId AND Incoming = TRUE
+                LIMIT 1
+            ];
+            // Return true if there are any incoming email messages related to the case
+            if(!emailMessages.isEmpty()){
+                emailToCaseConfirmed = true;
+            }
         }
-
-        // Query for EmailMessage records related to the Case
-        List<EmailMessage> emailMessages = [
-            SELECT Id
-            FROM EmailMessage
-            WHERE ParentId = :caseId AND Incoming = TRUE
-            LIMIT 1
-        ];
-
-        // Return true if there are any incoming email messages related to the case
-        if(!emailMessages.isEmpty()){
-            emailToCaseConfirmed = true;
-        }
-        
         return emailToCaseConfirmed;
     }
 
-    /**
-* returns the account details wrapper for 
-* @param    
-* @return void             
-*                
-*/     
+    //
+    // returns the account details wrapper for 
+    // @param
+    // @return void
+    //
     public class VisualIndicatorWrapper{
         @AuraEnabled
         public Account accRecord {get;set;}
@@ -202,14 +191,16 @@ public without sharing class NSP_VisualIndicatorHelper {
         @AuraEnabled
         public Boolean assetNationalAccount {get;set;}
         @AuraEnabled
-        public Boolean workSyncClientTrue {get;set;}  
+        public Boolean workSyncClientTrue {get;set;}
         @AuraEnabled
-        public Boolean client100True {get;set;} 
+        public Boolean client100True {get;set;}
         @AuraEnabled
-        public Boolean clientAndInsperity {get;set;}  
+        public Boolean clientAndInsperity {get;set;}
         @AuraEnabled
         public Boolean pendingTermination {get;set;}
         @AuraEnabled
-        public Boolean vocSurveyIndicator {get;set;}          
-    }    
+        public Boolean vocSurveyIndicator {get;set;}
+    }
+
 }
+//
