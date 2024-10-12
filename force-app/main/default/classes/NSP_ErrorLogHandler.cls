@@ -1,5 +1,6 @@
 public with sharing class NSP_ErrorLogHandler {
     // test w/ NSP_ErrorLogHandlerTest (91%)
+
     private static final String NO_ERRORS_FOUND = 'No errors found.';
 
     //
