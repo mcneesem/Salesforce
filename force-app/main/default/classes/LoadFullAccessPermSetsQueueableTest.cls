@@ -53,4 +53,11 @@ public class LoadFullAccessPermSetsQueueableTest {
         List<FieldPermissions> fp = [SELECT Id, ParentId FROM FieldPermissions WHERE ParentId IN :psMap.keySet() ];
         System.assertNotEquals(null, fp);
     }
+
+    @isTest private static void testLoadFullAccessPermSetsQueueableLogging() {
+        Test.startTest();
+        LoadFullAccessPermSetsQueueable.createErrorLogFuture( null , null , null );
+        Test.stopTest();
+    }
+
 }

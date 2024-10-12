@@ -90,5 +90,17 @@ private class NSP_ErrorLogHandlerTest {
         Test.stopTest();
     }
 
+    @isTest private static void testLogInfo() {
+        Test.startTest();
+        NSP_ErrorLogHandler.logInfo( null , null , null );
+        Test.stopTest();
+    }
+
+    @isTest private static void testLogInfoFiner() {
+        Test.startTest();
+        NSP_ErrorLogHandler.logInfo( null , null , null , null );
+        Test.stopTest();
+    }
+
 }
 //
