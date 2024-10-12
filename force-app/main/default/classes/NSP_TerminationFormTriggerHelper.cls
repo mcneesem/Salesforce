@@ -2,7 +2,7 @@
 * Represents the termination form trigger helper which handles all the logic.
 */
 public class NSP_TerminationFormTriggerHelper {
-    // test w/ NSP_TerminationFormTriggerHelperTest (86%)
+    // test w/ NSP_TerminationFormTriggerHelperTest (85%)
     
     private static final string SUPERVISOR_DENIED = 'PR Supervisor Denied';
     private static final string TERM_TEAM_DENIED = 'Term Team Denied';
@@ -356,8 +356,7 @@ public class NSP_TerminationFormTriggerHelper {
         }
     }
 
-    public void afterUpdateTerminationForm(List<NSP_Termination_Form__c> terminationFormList, map<Id, NSP_Termination_Form__c> oldMap){
-        set<Id> setOfProjectTaskId = new set<Id>();
+    public void afterUpdateTerminationForm( List<NSP_Termination_Form__c> terminationFormList , Map<Id,NSP_Termination_Form__c> oldMap ) {
         Map<Id,Set<Id>> mTFToUsers = new Map<Id,Set<Id>>();
         Map<Id,Set<Id>> mTFSharingToDelete = new Map<Id,Set<Id>>();
         List<NSP_Termination_Form__c> queueNewTerm = new List<NSP_Termination_Form__c>();
@@ -377,12 +376,15 @@ public class NSP_TerminationFormTriggerHelper {
             'NSP_Termination_Form__c' ,
             'NSP_Client_Reinstatement'
         );
-        
-        for(NSP_Termination_Form__c terminationForm : terminationFormList){
-            if(terminationForm.NSP_Project_Task__c != null 
-                && terminationForm.NSP_Status__c == NSP_ServiceConstants.TERMINATION_FORM_PR_APPROVED_STATUS 
-                && terminationForm.NSP_Status__c != oldMap.get(terminationForm.id).NSP_Status__c){
-                setOfProjectTaskId.add(terminationForm.NSP_Project_Task__c);
+
+        Set<Id> setOfProjectTaskId = new Set<Id>();
+        for ( NSP_Termination_Form__c terminationForm : terminationFormList ) {
+            if ( terminationForm.NSP_Project_Task__c != null
+                && terminationForm.NSP_Status__c == NSP_ServiceConstants.TERMINATION_FORM_PR_APPROVED_STATUS
+                && terminationForm.NSP_Status__c != oldMap.get( terminationForm.Id ).NSP_Status__c
+                )
+            {
+                setOfProjectTaskId.add( terminationForm.NSP_Project_Task__c );
             }
 
             //RECORD SHARING LOGIC
@@ -466,8 +468,8 @@ public class NSP_TerminationFormTriggerHelper {
             shareTerminationFormsWithUsers(mTFToUsers,'Edit');
         }
 
-        if(!setOfProjectTaskId.isEmpty()){
-            updateProjectTaskStatus(setOfProjectTaskId);
+        if ( !setOfProjectTaskId.isEmpty() ) {
+            NSP_TerminationFormTriggerHelper.updateProjectTaskStatus( setOfProjectTaskId );
         }
         
         if(terminationFormBellNotificationSet.size() > 0){
@@ -477,7 +479,7 @@ public class NSP_TerminationFormTriggerHelper {
             sendEmailNotificationToSupervisor(termFormSet);
         }
     }
-    
+
     /**
     * Method to Send Bell Notifications when termination form is rejected/approved
     */
@@ -589,16 +591,37 @@ public class NSP_TerminationFormTriggerHelper {
         }
     }
 
-    public static void updateProjectTaskStatus(set<Id> setOfProjectTaskId){
-        list<pse__Project_Task__c> listOfProjectTask = new list<pse__Project_Task__c> ();
-
-        for(pse__Project_Task__c projectTask : [SELECT pse__Project__c FROM pse__Project_Task__c WHERE ID IN : setOfProjectTaskId]){
-            projectTask.pse__Status__c = NSP_ServiceConstants.TASKCOMPLETE;
-            listOfProjectTask.add(projectTask);
-        }
-
-        if(!listOfProjectTask.isEmpty()){
-            update listOfProjectTask;
+    private static void updateProjectTaskStatus( Set<Id> setOfProjectTaskId ) {
+        try {
+            List<pse__Project_Task__c> listOfProjectTask = new List<pse__Project_Task__c>();
+            for ( pse__Project_Task__c projectTask : [
+                        SELECT pse__Project__c
+                        FROM pse__Project_Task__c
+                        WHERE ( Id IN :setOfProjectTaskId )
+                    ]
+                )
+            {
+                listOfProjectTask.add(
+                    new pse__Project_Task__c(
+                        Id=projectTask.Id ,
+                        pse__Status__c=NSP_ServiceConstants.TASKCOMPLETE
+                    )
+                );
+            }
+            if ( !listOfProjectTask.isEmpty() ) {
+                List<Database.SaveResult> results = Database.update( listOfProjectTask , false ); // throws DmlException ~ FIELD_CUSTOM_VALIDATION_EXCEPTION, Please approve all Termination Forms before marking this Project Task as complete
+                NSP_ErrorLogHandler.logResults(
+                    NSP_TerminationFormTriggerHelper.class.getName() ,
+                    'updateProjectTaskStatus:update' ,
+                    results
+                );
+            }
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_TerminationFormTriggerHelper.class.getName() ,
+                'updateProjectTaskStatus' ,
+                e
+            );
         }
     }
 
@@ -740,41 +763,67 @@ public class NSP_TerminationFormTriggerHelper {
         if(mapOfProject.keySet().size()>0){
             update mapOfProject.values();
         }
-     }
-   
-    
-/* Iterates throught the list of new NSP_Termination_Form__c and passes the required attributes to other methods.
-* @param newList, oldMap List of NSP_Termination_Form__c.  
-* @return void   
-* description: logic to update account on NSP_Termination_Form__c
-* Date :7/13/2023
-*/
-    public void updateAccountOnTerm(List<NSP_Termination_Form__c> newList,Map<Id, NSP_Termination_Form__c> oldMap){
-        List <NSP_Termination_Form__c> termListLookup = new List<NSP_Termination_Form__c> ();
-        map<id,id> accountIdMap = new map<id,id>();
-        map<id,id> termAccountIdMap = new map<id,id>();
-        for(NSP_Termination_Form__c newTerm : newList){
-            NSP_Termination_Form__c oldTerm = oldMap != null ? oldMap.get(newTerm.Id):null;
-            if((newTerm.NSP_Project_Task__c != null && Trigger.isInsert) || (newTerm.NSP_Project_Task__c != oldTerm.NSP_Project_Task__c && newTerm.NSP_Project_Task__c != null)  ){
-                termAccountIdMap.put(newTerm.Id,newTerm.NSP_Project_Task__c );
-            }
-        }
-        if(termAccountIdMap.Size() > 0) {
-           
-            for(pse__Project_Task__c eachProjectTasklist : [SELECT Id, NSP_Account_Id__c FROM pse__Project_Task__c 
-                                                            WHERE NSP_Account_Id__c != null AND ID IN :termAccountIdMap.values()]) {
-                accountIdMap.put(eachProjectTasklist.Id,eachProjectTasklist.NSP_Account_Id__c);
-                                                              
-            }
+    }
 
-        } 
-        for(NSP_Termination_Form__c newTerm : newList){
-            if(termAccountIdMap.keyset().contains(newTerm.id)){
-                newTerm.NSP_Account__c = accountIdMap.get(termAccountIdMap.get(newTerm.id));
+    //
+    // Iterates throught the list of new NSP_Termination_Form__c and passes the required attributes to other methods.
+    // @param newList, oldMap List of NSP_Termination_Form__c.
+    // @return void
+    // description: logic to update account on NSP_Termination_Form__c
+    // Date :7/13/2023
+    //
+    public void updateAccountOnTerm( List<NSP_Termination_Form__c> newList , Map<Id,NSP_Termination_Form__c> oldMap ) {
+        try {
+            Map<Id,Id> termAccountIdMap = new Map<Id,Id>();
+            for ( NSP_Termination_Form__c newTerm : newList ) {
+                if ( newTerm.NSP_Project_Task__c != null ) {
+                    NSP_Termination_Form__c oldTerm = null;
+                    if ( ( oldMap != null ) && oldMap.containsKey( newTerm.Id ) ) {
+                        oldTerm = oldMap.get( newTerm.Id );
+                    }
+                    if ( ( oldTerm == null ) || ( newTerm.NSP_Project_Task__c != oldTerm.NSP_Project_Task__c ) ) {
+                        termAccountIdMap.put(
+                            newTerm.Id ,
+                            newTerm.NSP_Project_Task__c
+                        );
+                    }
+                }
             }
+            Map<Id,Id> accountIdMap = new Map<Id,Id>();
+            if ( !termAccountIdMap.isEmpty() ) {
+                for ( pse__Project_Task__c eachProjectTasklist : [
+                            SELECT Id , NSP_Account_Id__c
+                            FROM pse__Project_Task__c
+                            WHERE (
+                                NSP_Account_Id__c != null
+                                AND Id IN :termAccountIdMap.values()
+                            )
+                        ]
+                    )
+                {
+                    accountIdMap.put(
+                        eachProjectTasklist.Id ,
+                        eachProjectTasklist.NSP_Account_Id__c
+                    );
+                }
+            }
+            for ( NSP_Termination_Form__c newTerm : newList ) {
+                if ( termAccountIdMap.containsKey( newTerm.Id ) ) {
+                    Id mappedId = termAccountIdMap.get( newTerm.Id );
+                    if ( accountIdMap.containsKey( mappedId ) ) {
+                        newTerm.NSP_Account__c = accountIdMap.get( mappedId );
+                    }
+                }
+            }
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_TerminationFormTriggerHelper.class.getName() ,
+                'updateAccountOnTerm' ,
+                e
+            );
         }
     }
-    
+
     /**
     * Populates email and phone from client Owner lookup when user selects client owner
     * @param setOfClientOwnerId set of Client Owner(Contact) Ids
