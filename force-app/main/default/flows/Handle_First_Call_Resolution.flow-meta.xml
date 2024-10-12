@@ -532,7 +532,7 @@
         <label>Select Related Case</label>
         <locationX>809</locationX>
         <locationY>890</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_Related_Case</targetReference>
         </connector>
@@ -553,6 +553,9 @@
         <queriedFields>Status</queriedFields>
         <queriedFields>First_Call_Resolution__c</queriedFields>
         <queriedFields>ParentId</queriedFields>
+        <queriedFields>NSP_Case_Created_From_Email_To_Case__c</queriedFields>
+        <queriedFields>NSP_Category__c</queriedFields>
+        <queriedFields>NSP_SubCategory__c</queriedFields>
     </recordLookups>
     <recordLookups>
         <name>Select_Related_Cases</name>
