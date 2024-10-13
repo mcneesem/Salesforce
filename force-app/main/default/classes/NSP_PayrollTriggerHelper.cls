@@ -2,7 +2,7 @@
 * Represents the Payroll trigger helper which handles all the logic.
 */
 public class NSP_PayrollTriggerHelper {
-    // test w/ NSP_PayrollTriggerHelperTest (85%)
+    // test w/ NSP_PayrollTriggerHelperTest (83%)
 
     public static list<NSP_Payroll_Data_Sheet_Event__e> payrollDataSheetEventListToBeInserted = new list <NSP_Payroll_Data_Sheet_Event__e>();
     public Static final Id WOASSETRECTYPEID = Schema.SObjectType.Asset.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.WO_ASSET_RECORDTYPE).getRecordTypeId();
@@ -46,6 +46,7 @@ public class NSP_PayrollTriggerHelper {
                 )
             {
                 contactidsSet.add(payrolls.NSP_On_site_Supervisor__c);
+                payrolls.On_Site_View_Payroll_Paperwork__c = false;
             }
             if((newPayrollMap == null && payrolls.NSP_Primary_Payroll_Contact__c != null) ||
                 (oldPayrollMap != null  && newPayrollMap != null &&
@@ -54,6 +55,7 @@ public class NSP_PayrollTriggerHelper {
                 )
             {
                 contactidsSet.add(payrolls.NSP_Primary_Payroll_Contact__c);
+                payrolls.Primary_View_Payroll_Paperwork__c = false;
             }
             if((newPayrollMap == null && payrolls.NSP_HR_Contact__c != null) ||
                 (oldPayrollMap != null  && newPayrollMap != null &&
@@ -62,6 +64,7 @@ public class NSP_PayrollTriggerHelper {
                 )
             {
                 contactidsSet.add(payrolls.NSP_HR_Contact__c);
+                payrolls.View_Payroll_Paperwork__c = false;
             }
             if((newPayrollMap == null && payrolls.NSP_Back_Up_Payroll_Contact__c != null) ||
                 (oldPayrollMap != null  && newPayrollMap != null &&
@@ -70,6 +73,7 @@ public class NSP_PayrollTriggerHelper {
                 )
             {
                 contactidsSet.add(payrolls.NSP_Back_Up_Payroll_Contact__c);
+                payrolls.Back_Up_View_Payroll_Paperwork__c = false;
             }
             if (!isPayrollSpecialist && payrolls.Account__c !=null){
                 isPayrollSpecialist=true;
