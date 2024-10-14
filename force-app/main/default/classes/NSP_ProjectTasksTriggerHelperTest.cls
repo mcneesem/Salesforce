@@ -15,6 +15,8 @@ public class NSP_ProjectTasksTriggerHelperTest {
         ProjectTaskTriggerSettings__c settings = ProjectTaskTriggerSettings__c.getOrgDefaults();
         settings.IsEnabled__c = true;
         settings.IsEnabledCreatePtaIfOwnerChanged__c = true;
+        settings.CancellationProjects1__c = 'Attach Written Termination Email or Letter Upon Receipt,Conduct Call with Client (collaborate with Payroll Specialist),Completion of Termination Analysis,Email client Outlook Template providing Termination Steps/Timeline';
+        Settings.CancellationProjects2__c = 'Email client Outlook Template on Insperity Relationship Touch Base';
         upsert settings;
 
         // Custtom settings related to Asset
