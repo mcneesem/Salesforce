@@ -42,7 +42,7 @@ global class NSP_SubPlanChangeHistoryBatch implements Database.Batchable<sObject
         Map<Id, NSP_Sub_Plan_Change_History__c> subPlanHistBySubPlan = new map<Id,NSP_Sub_Plan_Change_History__c>(); 
         
         Boolean isEnabledRetFields = false;
-        Sub_Plan_Change_History_Batch_Setting__c settings = Sub_Plan_Change_History_Batch_Setting__c.getInstance( UserInfo.getUserId() );
+        SubPlanChangeHistoryBatchSettings__c settings = SubPlanChangeHistoryBatchSettings__c.getInstance( UserInfo.getUserId() );
         if ( settings != null ) {
             isEnabledRetFields = settings.IsEnabledRetFields__c;
         }
