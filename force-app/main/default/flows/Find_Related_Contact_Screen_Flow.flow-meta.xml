@@ -127,6 +127,13 @@
                 <elementReference>Get_Voice_Call.ContactId__c</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>currentCase.AccountId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Voice_Call.ContactId__r.AccountId</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Update_Current_Case_ContactId</targetReference>
         </connector>
