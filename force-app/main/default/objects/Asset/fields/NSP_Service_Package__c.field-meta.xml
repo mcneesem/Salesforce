@@ -41,6 +41,21 @@
                 <default>false</default>
                 <label>WS - Asset Plus Prop</label>
             </value>
+            <value>
+                <fullName>WO - WD Bundle Plus</fullName>
+                <default>false</default>
+                <label>WO - WD Bundle Plus</label>
+            </value>
+            <value>
+                <fullName>WS - WD Bundle Plus</fullName>
+                <default>false</default>
+                <label>WS - WD Bundle Plus</label>
+            </value>
+            <value>
+                <fullName>WO - WD Full Bundle</fullName>
+                <default>false</default>
+                <label>WO - WD Full Bundle</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
