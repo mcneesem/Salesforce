@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
     <customSettingsType>Hierarchy</customSettingsType>
-    <description>It is to activate or de-activate the new logic for batch class</description>
     <enableFeeds>false</enableFeeds>
     <label>Sub Plan Change History Batch Setting</label>
     <visibility>Public</visibility>
