@@ -246,6 +246,6 @@ IF(
             <type>FieldUpdate</type>
         </action>
     </recallActions>
-    <recordEditability>AdminOnly</recordEditability>
+    <recordEditability>AdminOrCurrentApprover</recordEditability>
     <showApprovalHistory>false</showApprovalHistory>
 </ApprovalProcess>
