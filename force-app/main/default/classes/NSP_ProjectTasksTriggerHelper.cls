@@ -6,6 +6,15 @@ public class NSP_ProjectTasksTriggerHelper {
     private static final String COBRA_GUIDELINES_MM = 'NSP_COBRAGuidelines';
     private static final String COBRA_TEAM_MM = 'NSP_COBRATeam';
     private static final String COBRA_PACKETS_MM = 'NSP_COBRAPackets';
+    private static final Id WOAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId('Asset',NSP_ServiceConstants.WO_ASSET_RECORDTYPE);
+    private static final Id CPQAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId('Asset','NSP_CPQ_Asset');
+	private static final Id projectTaskPEORecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'pse__Project_Task__c' , 'PEO_Project_Task' );
+    private static final string BACKOUT = 'Backout';
+    private static final string TERMINATED = 'Terminated';
+    private static final string RETURNED = 'Returned';
+    private static final string INACTIVE = 'Inactive';
+    private static final string SUBMIT_TERMINATION_CHECKLIST = 'Submit Termination Checklist';
+    private static final string LEVIESTASK = 'Employee Levies Provided';
     private static final Id wOAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Asset' , 'WO' );
     private static final Id projectTaskPEORecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'pse__Project_Task__c' , 'PEO_Project_Task' );
     private static final String BACKOUT = 'Backout';
@@ -27,6 +36,16 @@ public class NSP_ProjectTasksTriggerHelper {
         Map<Id, pse__Proj__c> parentProjectMap  = new  Map<Id, pse__Proj__c>();
         Map<Id, Id> mapOfparentTaskIdAndMilestoneId = new Map<Id, Id>();
         Set<Id> setOfParentProjectTask = new Set<Id>();
+        List<String> projectForCancallation = new List<String>();
+		ProjectTaskTriggerSettings__c settings = ProjectTaskTriggerSettings__c.getInstance( UserInfo.getUserId() );
+        if( settings != null ){
+            if ( String.isNotBlank( settings.CancellationProjects1__c )) {
+                projectForCancallation = settings.CancellationProjects1__c.split( ',' );
+                if(String.isNotBlank( settings.CancellationProjects2__c )){
+                    projectForCancallation.addAll(settings.CancellationProjects2__c.split( ',' ));
+                }
+            }
+        }
         List<String> projectForCancallation = new List<String>();
         ProjectTaskTriggerSettings__c settings = ProjectTaskTriggerSettings__c.getInstance( UserInfo.getUserId() );
         if( settings != null ){
@@ -68,6 +87,14 @@ public class NSP_ProjectTasksTriggerHelper {
                 projectTask.pse__Actual_Start_Date_Time__c = Datetime.now();
                 projectTask.pse__Started__c = true;
             }
+            if ( ( projectTask.RecordTypeId == projectTaskPEORecordTypeId )
+                && ( projectForCancallation != null )
+                && !projectForCancallation.isEmpty()
+                && String.isNotBlank( projectTask.Name )
+                && ( projectForCancallation.contains( projectTask.Name ) )
+                && CustomPermissionController.checkUserPermission( 'Finance_Service_User' , UserInfo.getUserId() )
+               )
+            {
             if ( ( projectTask.RecordTypeId == NSP_ProjectTasksTriggerHelper.projectTaskPEORecordTypeId )
                 && ( projectForCancallation != null )
                 && !projectForCancallation.isEmpty()
