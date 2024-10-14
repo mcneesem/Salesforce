@@ -211,6 +211,31 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Check_if_incomplete_forms_are_there</name>
+        <label>Check if incomplete forms are there</label>
+        <locationX>2940</locationX>
+        <locationY>242</locationY>
+        <defaultConnector>
+            <targetReference>Get_Recordtype</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Not_approved_form_are_there</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Existing_Term_form</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Error_screen</targetReference>
+            </connector>
+            <label>Not approved form are there</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Check_Project_Task</name>
         <label>Check Project Task</label>
         <locationX>1964</locationX>
@@ -866,6 +891,38 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
+        <name>Get_Existing_Term_form</name>
+        <label>Get Existing Term form</label>
+        <locationX>2940</locationX>
+        <locationY>134</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_if_incomplete_forms_are_there</targetReference>
+        </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_subflow</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>NSP_Status__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>Term Team Approved</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>NSP_Project_Task__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>NSP_Termination_Form__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>Get_Record_type</name>
         <label>Get Record type</label>
         <locationX>3999</locationX>
@@ -1006,6 +1063,22 @@
             <fieldType>RadioButtons</fieldType>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Error_screen</name>
+        <label>Error screen</label>
+        <locationX>50</locationX>
+        <locationY>350</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>Already_non_approved_form</name>
+            <fieldText>&lt;p&gt;There is currently a termination form that is in the approval process. Please complete the approval before starting a new form&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
@@ -1249,7 +1322,7 @@
         <locationX>5242</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Get_Recordtype</targetReference>
+            <targetReference>Get_Existing_Term_form</targetReference>
         </connector>
     </start>
     <status>Draft</status>
@@ -1272,6 +1345,11 @@
             </value>
         </inputAssignments>
     </subflows>
+    <textTemplates>
+        <name>Approvalprocessinprogress</name>
+        <isViewedAsPlainText>false</isViewedAsPlainText>
+        <text>&lt;p&gt;There is currently a termination form that is in the approval process. Please complete the approval before starting a new form.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</text>
+    </textTemplates>
     <variables>
         <name>recordId</name>
         <dataType>SObject</dataType>
