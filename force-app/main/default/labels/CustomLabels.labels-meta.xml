@@ -129,6 +129,13 @@
         <value>Client Integra Responses (smartsheet.com).</value>
     </labels>
     <labels>
+        <fullName>Client_is_currently_making_employer_contributions</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Client is currently making employer contributions</shortDescription>
+        <value>Client is currently making employer contributions?</value>
+    </labels>
+    <labels>
         <fullName>Close_Lost_Role_in_Opportunity_Team</fullName>
         <categories>Closed Lost. Roles Eligible</categories>
         <language>en_US</language>
