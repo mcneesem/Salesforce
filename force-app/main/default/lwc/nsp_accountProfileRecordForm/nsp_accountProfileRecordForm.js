@@ -23,9 +23,16 @@ export default class Nsp_accountProfileRecordForm extends LightningElement {
   getInfo(value) {
     this.recordWithAllFields=value;
     if(this.recordWithAllFields.data){
-      this.allFieldsValue = createMapWithValueProperty(this.recordWithAllFields.data);
+      this.allFieldsValue = JSON.parse(JSON.stringify(createMapWithValueProperty(this.recordWithAllFields.data)));
       getAccountProfileRelatedInfo({ accId: this.recordId })
         .then((relatedInfo) => {
+          Object.keys(relatedInfo).forEach((fieldName) => {
+            if(fieldName in this.allFieldsValue){
+              if(relatedInfo[fieldName].value !== undefined && this.allFieldsValue[fieldName].value !== undefined && relatedInfo[fieldName].value !== this.allFieldsValue[fieldName].value){
+                this.allFieldsValue[fieldName].value = relatedInfo[fieldName].value;
+              }
+            }
+          })
           getRecentlyUpdatedFields({ accId: this.recordId })
             .then((updatedInfo) => {
               this.createFieldConfig(relatedInfo, updatedInfo);
