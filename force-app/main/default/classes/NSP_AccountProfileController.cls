@@ -137,7 +137,7 @@ public with sharing class NSP_AccountProfileController {
         //Make the fields read only if the AIMS status is other than 'Terminated'
         if(assetObj.NSP_Account_Status__c != 'Terminated'){
             //Show Union employee field as checkbox on UI
-            Map<String, String> unionEmpValueMap = getLabelValueMapByField('NSP_Union_Employees__c', assetObj.NSP_Union_Employees__c);
+            Map<String, String> unionEmpValueMap = getLabelValueMap('Union Employees- If so, percentage of workforce?', assetObj.NSP_Union_Employees__c);
             unionEmpValueMap.put(TYPE, CHECKBOX);
             String valueChekbox = assetObj.NSP_Union_Employees__c ? TRUE_VALUE : FALSE_VALUE;
             unionEmpValueMap.put(IS_CHECKED,valueChekbox);
