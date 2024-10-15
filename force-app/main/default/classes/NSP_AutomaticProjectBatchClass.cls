@@ -27,7 +27,8 @@ public class NSP_AutomaticProjectBatchClass implements Database.Batchable<sObjec
             accountIdList = getFilteredAccountsFromProjects(assetAccIdSet);
         }
         String query = new NSP_QueryBuilder(NSP_ServiceConstants.ACCOUNT_OBJECT, accountFields)
-            					.addFilter('Id', accountIdList, NSP_QueryBuilder.Operator.INCLUDES).build();
+            .addFilter('Id', accountIdList, NSP_QueryBuilder.Operator.INCLUDES)
+            .build();
         return Database.getQueryLocator(query);
     }
 
