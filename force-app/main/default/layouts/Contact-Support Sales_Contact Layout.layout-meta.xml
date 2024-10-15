@@ -51,6 +51,10 @@
                 <behavior>Readonly</behavior>
                 <field>NSP_Running_SubRegion__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Workday_Employee_ID__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

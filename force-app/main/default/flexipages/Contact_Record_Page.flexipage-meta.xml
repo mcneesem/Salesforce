@@ -11,6 +11,12 @@
                 <identifier>RecordNameField</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldItem>Record.Workday_Employee_ID__c</fieldItem>
+                <identifier>RecordWorkday_Employee_ID__cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-411ea267-a88c-4092-9a2f-4c66c27c58b8</name>
         <type>Facet</type>
     </flexiPageRegions>
