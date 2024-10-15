@@ -1069,24 +1069,55 @@ public with sharing class NSP_ProjectTriggerHelper {
         }
     }
 
-    /***********************************************************************************************
-    * MethodName: updateProjectName
-    * Description : This Method will update the project name for FSO and MM Projects    
-    * Params:       List< pse__Proj__c> projectList ,  Map<Id,pse__Proj__c> oldProjectMap
-    * Author :      Nischay Jindal
-    * ********************************************************************************************/   
-    public  void updateProjectName(Map<Id,pse__Proj__c> newProjectMap , Map<Id,pse__Proj__c> oldProjectMap , 
-                                            Set <Id> projectSetId , Id peoProjectRecordTypeId){
-        try{  
-        Map<Id,pse__Proj__c> projectAccountMap= new Map<Id,pse__Proj__c>([Select Id ,pse__Account__c, pse__Account__r.Name FROM pse__Proj__c WHERE Id IN:projectSetId]);
-            for(pse__Proj__c project:newProjectMap.values()){
-                if(project.pse__Account__c!=null && project.pse__Account__c== projectAccountMap.get(project.Id).pse__Account__c && !project.Name.contains(projectAccountMap.get(project.Id).pse__Account__r.Name)
-                    &&  project.pse__Project_Type__c == NSP_ServiceConstants.ImplementationProjectType
-                    && !project.pse__Is_Template__c && project.recordTypeId == peoProjectRecordTypeId && 
-                    (project.TemplateName__c == label.Middle_Market_Implementation_Project ||
-                    project.TemplateName__c == label.FSOImplementationProject) ){
-                        project.Name = projectNameAsPerNamingConvention(project.TemplateName__c,project.pse__Start_Date__c, projectAccountMap.get(project.pse__Account__c).Name);
+    //
+    // MethodName: updateProjectName
+    // Description: This Method will update the project name for FSO and MM Projects
+    // Params: List< pse__Proj__c> projectList ,  Map<Id,pse__Proj__c> oldProjectMap
+    // Author: Nischay Jindal
+    //
+    public void updateProjectName(
+        Map<Id,pse__Proj__c> newProjectMap ,
+        Map<Id,pse__Proj__c> oldProjectMap ,
+        Set <Id> projectSetId ,
+        Id peoProjectRecordTypeId
+        )
+    {
+        try {
+            Map<Id,pse__Proj__c> projectAccountMap= new Map<Id,pse__Proj__c>(
+                [
+                    SELECT Id , pse__Account__c , pse__Account__r.Name
+                    FROM pse__Proj__c
+                    WHERE ( Id IN :projectSetId )
+                ]
+            );
+            for ( pse__Proj__c project : newProjectMap.values() ) {
+                if ( ( project.pse__Account__c != null )
+                    && projectAccountMap.containsKey( project.Id )
+                    && ( projectAccountMap.get( project.Id ) != null )
+                    && ( project.pse__Account__c == projectAccountMap.get( project.Id ).pse__Account__c )
+                    && ( projectAccountMap.get( project.Id ).pse__Account__r != null )
+                    && !project.Name.contains( projectAccountMap.get( project.Id ).pse__Account__r.Name )
+                    && ( project.pse__Project_Type__c == NSP_ServiceConstants.ImplementationProjectType )
+                    && !project.pse__Is_Template__c
+                    && ( project.recordTypeId == NSP_ProjectTriggerHelper.peoProjectRecordTypeId )
+                    )
+                {
+                    if ( ( project.TemplateName__c == label.Middle_Market_Implementation_Project )
+                        || ( project.TemplateName__c == label.FSOImplementationProject )
+                        )
+                    {
+                        if ( projectAccountMap.containsKey( project.pse__Account__c )
+                            && ( projectAccountMap.get( project.pse__Account__c ) != null )
+                            )
+                        {
+                            project.Name = projectNameAsPerNamingConvention(
+                                project.TemplateName__c ,
+                                project.pse__Start_Date__c ,
+                                projectAccountMap.get( project.pse__Account__c ).Name
+                            );
+                        }
                     }
+                }
             }
         } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
