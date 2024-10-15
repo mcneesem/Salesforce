@@ -2,7 +2,7 @@
 * Represents the Opportunity trigger helper created By Service which handles all the logic.
 */
 public class NSP_OpportunityTriggerServiceHelper {
-    // test w/ NSP_OpportunityTriggerServiceHelperTest, NSP_AutomaticProjectBatchTest (91%)
+    // test w/ NSP_OpportunityTriggerServiceHelperTest, NSP_AutomaticProjectBatchTest (85%)
 
     /*****************************************************************
     * Creating Constructor to call FF API's
