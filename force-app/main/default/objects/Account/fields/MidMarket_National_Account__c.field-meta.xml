@@ -83,6 +83,11 @@
                 <label>Financial Services Institute (FSI)</label>
             </value>
             <value>
+                <fullName>First Tee Foundation</fullName>
+                <default>false</default>
+                <label>First Tee Foundation</label>
+            </value>
+            <value>
                 <fullName>Five Iron Golf Franchising</fullName>
                 <default>false</default>
                 <label>Five Iron Golf Franchising</label>
@@ -113,6 +118,11 @@
                 <label>Independent Tire Dealers</label>
             </value>
             <value>
+                <fullName>LG Electronics</fullName>
+                <default>false</default>
+                <label>LG Electronics</label>
+            </value>
+            <value>
                 <fullName>MDVIP</fullName>
                 <default>false</default>
                 <label>MDVIP</label>
@@ -136,6 +146,11 @@
                 <fullName>South Carolina Research Authority</fullName>
                 <default>false</default>
                 <label>South Carolina Research Authority</label>
+            </value>
+            <value>
+                <fullName>Store Local Corporation</fullName>
+                <default>false</default>
+                <label>Store Local Corporation</label>
             </value>
             <value>
                 <fullName>TechStars</fullName>

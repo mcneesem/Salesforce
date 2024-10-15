@@ -870,6 +870,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>First Tee Foundation</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Five Iron Golf Franchising</fullName>
             <default>false</default>
         </values>
@@ -891,6 +895,10 @@
         </values>
         <values>
             <fullName>Independent Tire Dealers</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>LG Electronics</fullName>
             <default>false</default>
         </values>
         <values>
@@ -927,6 +935,10 @@
         </values>
         <values>
             <fullName>South Carolina Research Authority</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Store Local Corporation</fullName>
             <default>false</default>
         </values>
         <values>
