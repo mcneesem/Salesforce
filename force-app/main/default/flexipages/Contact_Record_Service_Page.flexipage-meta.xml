@@ -1407,6 +1407,16 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.Workday_Employee_ID__c</fieldItem>
+                <identifier>RecordWorkday_Employee_ID_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Contact_Pin__c</fieldItem>
                 <identifier>RecordNSP_Contact_Pin_cField</identifier>
                 <visibilityRule>

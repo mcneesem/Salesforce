@@ -11,6 +11,12 @@
                 <identifier>RecordNameField</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldItem>Record.Workday_Employee_ID__c</fieldItem>
+                <identifier>RecordWorkday_Employee_ID__cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-411ea267-a88c-4092-9a2f-4c66c27c58b8</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -2696,28 +2702,6 @@
                 </componentInstanceProperties>
                 <componentName>force:relatedListContainer</componentName>
                 <identifier>force_relatedListContainer</identifier>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>fields</name>
-                    <value>NSP_Field_Name__c,NSP_Modified_Date__c,NSP_Old_Value__c,NSP_New_Value__c,NSP_Modified_By__r.Name</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>relatedFieldApiName</name>
-                    <value>NSP_Sobject_Record_Id__c</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>sobjectApiName</name>
-                    <value>NSP_SObjects_History_Tracking__b</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>sortedBy</name>
-                    <value>NSP_Modified_Date__c</value>
-                </componentInstanceProperties>
-                <componentName>NSP_SingleRelatedList</componentName>
-                <identifier>NSP_SingleRelatedList</identifier>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
