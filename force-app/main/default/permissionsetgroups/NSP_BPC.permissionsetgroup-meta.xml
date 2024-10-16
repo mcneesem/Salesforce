@@ -12,7 +12,6 @@
     <permissionSets>Contact_View_All</permissionSets>
     <permissionSets>List_View_Enhanced_Access</permissionSets>
     <permissionSets>Mid_Market</permissionSets>
-    <permissionSets>Multi_Factor_Authentication_for_User_Interface_Logins</permissionSets>
     <permissionSets>NSP_Billing_View_All</permissionSets>
     <permissionSets>NSP_Finance_Service_Objects_Permission</permissionSets>
     <permissionSets>NSP_Main_Service_Contacts</permissionSets>

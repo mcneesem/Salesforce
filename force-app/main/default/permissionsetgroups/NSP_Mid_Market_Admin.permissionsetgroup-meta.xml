@@ -19,7 +19,6 @@
     <permissionSets>MidMarket_Fields_Read_Access</permissionSets>
     <permissionSets>MidMarket_National_Account_edit_permissions</permissionSets>
     <permissionSets>Mid_Market</permissionSets>
-    <permissionSets>Multi_Factor_Authentication_for_User_Interface_Logins</permissionSets>
     <permissionSets>NSP_Asset_Pending_Comment_Access</permissionSets>
     <permissionSets>NSP_Billing_View_All</permissionSets>
     <permissionSets>NSP_CRMA_Limited_and_Collections</permissionSets>
@@ -40,6 +39,5 @@
     <permissionSets>force__NextBestActionRecUnlimitedPSL</permissionSets>
     <permissionSets>force__PipelineInspectionIncluded</permissionSets>
     <permissionSets>force__SalesCloudEinsteinIncluded</permissionSets>
-    <permissionSets>force__VoiceOutbound</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>
