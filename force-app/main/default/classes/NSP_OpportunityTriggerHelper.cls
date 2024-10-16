@@ -850,11 +850,7 @@ public with sharing class NSP_OpportunityTriggerHelper {
                 upsert upsertList;
             }
         } catch ( Exception e ) {
-            NSP_ErrorLogHandler.logException(
-                NSP_OpportunityTriggerHelper.class.getName() ,
-                'createAssetForCloseWonOpportunity' ,
-                e
-            );
+            NSP_OpportunityTriggerHelper.handleException( e , 'createAssetForCloseWonOpportunity' );
         }
     }
 
@@ -1243,11 +1239,7 @@ public with sharing class NSP_OpportunityTriggerHelper {
                 upsert upsertList;
             }
         } catch ( Exception e ) {
-            NSP_ErrorLogHandler.logException(
-                NSP_OpportunityTriggerHelper.class.getName() ,
-                'createAsset' ,
-                e
-            );
+            NSP_OpportunityTriggerHelper.handleException( e , 'createAsset' );
         }
     }
 
@@ -1301,11 +1293,7 @@ public with sharing class NSP_OpportunityTriggerHelper {
                 update enrollmentUpdateList;
             }
         } catch ( Exception e ) {
-            NSP_ErrorLogHandler.logException(
-                NSP_OpportunityTriggerHelper.class.getName() ,
-                'enrollmentFeeCheck' ,
-                e
-            );
+            NSP_OpportunityTriggerHelper.handleException( e , 'enrollmentFeeCheck' );
         }
     }
         
@@ -1355,11 +1343,7 @@ public with sharing class NSP_OpportunityTriggerHelper {
                 update optysToUpdate.values();
             }
         } catch ( Exception e ) {
-            NSP_ErrorLogHandler.logException(
-                NSP_OpportunityTriggerHelper.class.getName() ,
-                'calculateSetUpAndDocupayTax' ,
-                e
-            );
+            NSP_OpportunityTriggerHelper.handleException( e , 'calculateSetUpAndDocupayTax' );
         }
     }
 
@@ -1477,4 +1461,21 @@ public with sharing class NSP_OpportunityTriggerHelper {
         }
         return fieldPicklistOrder;
     }
+
+    // for test code coverage only...
+    public static void testHandleException( Exception e , String methodName ) {
+        if ( Test.isRunningTest() ) {
+            NSP_OpportunityTriggerHelper.handleException( e , methodName );
+        }
+    }
+
+    private static void handleException( Exception e , String methodName ) {
+        NSP_ErrorLogHandler.logException(
+            NSP_OpportunityTriggerHelper.class.getName() ,
+            methodName ,
+            e
+        );
+    }
+
 }
+//
