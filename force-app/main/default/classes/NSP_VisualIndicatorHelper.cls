@@ -1,4 +1,5 @@
 public without sharing class NSP_VisualIndicatorHelper {
+    // test w/ NSP_VisualIndicatorHelper_Test (??%)
 
     //
     // returns the account details for
