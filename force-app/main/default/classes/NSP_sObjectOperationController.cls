@@ -1,32 +1,31 @@
-/*
-    Apex class Name      :  NSP_sObjectOperationController
-    Version              :  1.0
-    Created Date         :  15 Jan, 2023
-    Story                :  STY-03359
-    Description          :  Generic class to handle search operations on sObjects.
-    Created By           :  Nishkarsh Manav
-
-*/
+//
+// Apex class Name: NSP_sObjectOperationController
+// Version: 1.0
+// Created Date: 15 Jan, 2023
+// Story: STY-03359
+// Description: Generic class to handle search operations on sObjects.
+// Created By: Nishkarsh Manav
+//
 public with sharing class NSP_sObjectOperationController {
+    // test w/ NSP_sObjectOperationControllerTest (90%)
+
     private static final String DEFAULT_ICON = 'standard:account';
 
-    /**
-     * It provides search results on the basis of given search configuration.
-     * @param - {String} - searchConfig
-     * Possible parameters of search configuration object are
-     * searchCategory - Field name that will be used in filtering records
-     * searchTerm - Search Term (Contains operator will be used)
-     * objectApiName - sObject name of the records
-     * resultSize - count of records that should be returned
-     * additionalInfoField - Additional field whose value needs to be displayed in lookup option
-     * preSelectedRecs - Ids of the record which need to be excluded from search results
-     * 
-     */
+    //
+    // It provides search results on the basis of given search configuration.
+    // @param - {String} - searchConfig
+    // Possible parameters of search configuration object are
+    // searchCategory - Field name that will be used in filtering records
+    // searchTerm - Search Term (Contains operator will be used)
+    // objectApiName - sObject name of the records
+    // resultSize - count of records that should be returned
+    // additionalInfoField - Additional field whose value needs to be displayed in lookup option
+    // preSelectedRecs - Ids of the record which need to be excluded from search results
+    //
     @AuraEnabled(cacheable=true)
     public static List<NSP_LookupOption> searchRecordsByFilters(String searchConfig){
         try {
             Map<String, Object> searchConfigMap = getSearchConfigMap(searchConfig);
-
             //String searchCategory = (String) searchConfigMap.get('searchCategory');
             String searchTerm = (String) searchConfigMap.get('searchTerm');
             String objectApiName = (String) searchConfigMap.get('objectApiName');
@@ -35,40 +34,76 @@ public with sharing class NSP_sObjectOperationController {
             List<String> preSelectedRecs = (List<String>) JSON.deserialize(searchConfigMap.get('preSelectedRecs').toString(), List<String>.class);
             List<String> fieldsToFetch = new List<String>{ 'Name' };
             List<String> additionalFields = String.isNotBlank(additionalInfoField) ? additionalInfoField.split(',') : new List<String>();
-
             if(!additionalFields.isEmpty()){
                 fieldsToFetch.addAll(additionalFields);
             }
-
-            NSP_sObjectSelector selector = new NSP_sObjectSelector(objectApiName, fieldsToFetch).addLimit(resultSize);
-            List<SObject> filteredRecords = selector.selectByName(searchTerm, preSelectedRecs);
-
+            List<SObject> filteredRecords = selectByNameAndAimsNumber(searchTerm, objectApiName, preSelectedRecs);
             return getLookupOptions(filteredRecords, 'Name', additionalFields);
         } catch (Exception excep) {
             throw NSP_Utilities.getAuraException(excep);
         }
     }
 
-    /**
-     * This method insert, update & delete the given records.
-     * @param - recordsToUpsertMap - Map of object name (key) & records (value) that need to be inserted or updated
-     * @param - recordsToDeleteMap - Map of object name (key) & records (value) that need to be deleted
-     * 
-     */
+    public static List<SObject> selectByNameAndAimsNumber(String name, String objectApiName, List<Id> recordsToExclude){
+        String key = null;
+        if ( String.isNotBlank( name ) ) {
+            key = '%' + String.escapeSingleQuotes( name ) + '%';
+        }
+        List<SObject> results = new List<SObject>();
+        if ( String.isNotBlank( key )
+            && String.isNotBlank( objectApiName )
+            && ( recordsToExclude != null )
+            )
+        {
+            if ( objectApiName == 'Account' ) {
+                results = [
+                    SELECT Name , NSP_AIMS_Client__c
+                    FROM Account
+                    WHERE (
+                        ( Id NOT IN :recordsToExclude )
+                        AND (
+                            ( Name LIKE :key )
+                            OR ( NSP_AIMS_Client__c LIKE :key )
+                        )
+                    )
+                    WITH SECURITY_ENFORCED
+                    LIMIT 10
+                ];
+            } else if ( objectApiName == 'NSP_Sub_Client__c' ) {
+                results = [
+                    SELECT Name , NSP_Sub_Client__c , NSP_Account__c , NSP_Account__r.Name , NSP_Client__c
+                    FROM NSP_Sub_Client__c 
+                    WHERE (
+                        ( Id NOT IN :recordsToExclude )
+                        AND (
+                            ( Name LIKE :key )
+                            OR ( NSP_Sub_Client__c LIKE :key )
+                        )
+                    )
+                    WITH SECURITY_ENFORCED
+                    LIMIT 10
+                ];
+            }
+        }
+        return results;
+    }
+
+    //
+    // This method insert, update & delete the given records.
+    // @param - recordsToUpsertMap - Map of object name (key) & records (value) that need to be inserted or updated
+    // @param - recordsToDeleteMap - Map of object name (key) & records (value) that need to be deleted
+    //
     @AuraEnabled
     public static void upsertAndDeleteRecords(Map<String, List<String>> recordsToUpsertMap, Map<String, List<String>> recordsToDeleteMap){
         try {
             if(!recordsToUpsertMap.isEmpty()){
                 List<SObject> recordsToUpsert = getSobjectRecords(recordsToUpsertMap);
-
                 if(!recordsToUpsert.isEmpty()){
                     upsert recordsToUpsert;
                 }
             }
-
             if(!recordsToDeleteMap.isEmpty()){
                 List<SObject> recordsToDelete = getSobjectRecords(recordsToDeleteMap);
-
                 if(!recordsToDelete.isEmpty()){
                     delete recordsToDelete;
                 }
@@ -80,11 +115,9 @@ public with sharing class NSP_sObjectOperationController {
 
     private static List<SObject> getSobjectRecords(Map<String, List<String>> recordsMap){
         List<SObject> recordsList = new List<SObject>();
-
         for (String objectApiName : recordsMap.keySet()) {
             recordsList.addAll(getSobjectRecords(recordsMap.get(objectApiName), objectApiName));
         }
-
         return recordsList;
     }
 
@@ -94,7 +127,6 @@ public with sharing class NSP_sObjectOperationController {
             SObject sObj = (SObject) JSON.deserialize(rec, Type.forName(sObjectName));
             sObjects.add(sObj);
         }
-
         return sObjects;
     }
 
@@ -122,10 +154,10 @@ public with sharing class NSP_sObjectOperationController {
                 }
                 info = JSON.serialize(additionalFieldValues);
             }
-
             lookupOptions.add(new NSP_LookupOption(optionLabel, rec.Id, info, DEFAULT_ICON, false));
         }
-
         return lookupOptions;
     }
+
 }
+//
