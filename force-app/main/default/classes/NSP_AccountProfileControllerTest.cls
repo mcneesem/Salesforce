@@ -1,16 +1,13 @@
-/**
-Apex Class Name      :  NSP_AccountProfileControllerTest
-Version              :  1.0
-Author               :  Shreemanth
-Created Date         :  10/27/2022
-Function             :  This class is used as a test class of NSP_AccountProfileController
-Story                :  
-*/
+//
+// Apex Class Name      :  NSP_AccountProfileControllerTest
+// Version              :  1.0
+// Author               :  Shreemanth
+// Created Date         :  10/27/2022
+// Function             :  This class is used as a test class of NSP_AccountProfileController
+//
+@isTest private class NSP_AccountProfileControllerTest {
 
-@isTest
-private class NSP_AccountProfileControllerTest {
-    @testSetup
-    static void setAllData(){
+    @testSetup private static void setAllData(){
         Id woAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId('Asset', NSP_ServiceConstants.WO_ASSET_RECORDTYPE);
         Id retAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId('Asset', NSP_ServiceConstants.RET_CHOICE_ASSET_RECORDTYPE);
         Id retClientSubPlanId = NSP_GenericRecordType.getRecordTypeId('NSP_Client_Sub_Plan_History__c', 'Choice');
@@ -93,7 +90,7 @@ private class NSP_AccountProfileControllerTest {
         eligibility.NSP_Plan_Subplan_Relationship__c = planSubPlan.Id;
         eligibility.NSP_Asset__c = retassetObj.Id;
         insert eligibility;
-		
+
         //Create an Asset RET Education Association Record
         AssetRETEducationAssociation__c retEduAssociation = (AssetRETEducationAssociation__c)NSP_TestExtendedDataFactory.createSObject(new AssetRETEducationAssociation__c(),'NSP_TestDataFactory.AssetRETEducationAssociationDefaults',false);
         retEduAssociation.NSP_Education_Client__c = retassetObj.Id;
@@ -109,44 +106,39 @@ private class NSP_AccountProfileControllerTest {
         accTeam.NSP_User__c = UserInfo.getUserId();
         insert accTeam;
     }
- /**
-    * Method to test - NSP_AccountProfileController.getAccountProfileRelatedInfo
-    */
 
-    @isTest
-    static void getAccountProfileRelatedInfoReturnsFieldValues(){
+    // Method to test - NSP_AccountProfileController.getAccountProfileRelatedInfo
+    @isTest private static void getAccountProfileRelatedInfoReturnsFieldValues(){
         //GIVEN
         Account acc = [SELECT Id, Name FROM Account WHERE Name = 'Test Account' LIMIT 1];
         try {
-             //WHEN
-             Test.startTest();
-             Map<String, Map<String, String>> relatedInfo = NSP_AccountProfileController.getAccountProfileRelatedInfo(acc.Id);
-			Test.stopTest();
-             //THEN
-             System.assertEquals(false, relatedInfo.isEmpty());
+            //WHEN
+            Test.startTest();
+            Map<String, Map<String, String>> relatedInfo = NSP_AccountProfileController.getAccountProfileRelatedInfo(acc.Id);
+            Test.stopTest();
+            //THEN
+            System.assertEquals(false, relatedInfo.isEmpty());
         } catch(AuraHandledException ex){
             System.assert(false, 'Should not throw error.');
         }
     }
 
-    @isTest
-    static void getAccountProfileRelatedInfoWhenAccountIdIsNull(){
+    @isTest private static void getAccountProfileRelatedInfoWhenAccountIdIsNull(){
         System.assertEquals(0, NSP_AccountProfileController.getAccountProfileRelatedInfo(null).size(), 'Should Return null');
     }
 
-    @isTest
-    static void getAccountProfileRelatedInforeturnsCorrectAssetDetails(){
+    @isTest private static void getAccountProfileRelatedInforeturnsCorrectAssetDetails(){
         // GIVEN
         Test.startTest();
         Account acc = [SELECT Id, Name FROM Account WHERE Name= 'Test Account' LIMIT 1];
-       	List<String> assetFields = new List<String>{ 
+        List<String> assetFields = new List<String>{ 
             'Id', 'NSP_Account_Status__c','NSP_AIMS_First_Pay_Date__c',
             'Status'
         };
 
         String query = new NSP_QueryBuilder('Asset', assetFields)
-                .addFilter('RecordType.DeveloperName', NSP_ServiceConstants.WO_ASSET_RECORDTYPE)
-                .addFilter('AccountId', acc.Id).addLimit(1).build();
+            .addFilter('RecordType.DeveloperName', NSP_ServiceConstants.WO_ASSET_RECORDTYPE)
+            .addFilter('AccountId', acc.Id).addLimit(1).build();
 
         List<Asset> assets = (List<Asset>) Database.query(query);
         assets[0].NSP_AIMS_First_Pay_Date__c = System.today();
@@ -163,34 +155,32 @@ private class NSP_AccountProfileControllerTest {
         Test.stopTest();
     }
 
-    @isTest
-    static void getAccountProfileRelatedInforeturnsCorrectAccountDetails(){
+    @isTest private static void getAccountProfileRelatedInforeturnsCorrectAccountDetails(){
         // GIVEN
         Account acc = [SELECT Id, Name FROM Account WHERE Name = 'Test Account' LIMIT 1];
 
         // WHEN
         Test.startTest();
         Map<String, Map<String, String>> relatedInfo = NSP_AccountProfileController.getAccountProfileRelatedInfo(acc.Id);
-		Test.stopTest();
+        Test.stopTest();
         // THEN
         System.assertEquals('abc.com', getValue('Website', relatedInfo));
         System.assertEquals('xyz', getValue('TickerSymbol', relatedInfo));
         System.assertEquals('2018', getValue('NSP_Year_Established__c', relatedInfo));
     }
 
-    @isTest
-    static void getAccountProfileRelatedInforeturnsCorrectSubClientDetails(){
+    @isTest private static void getAccountProfileRelatedInforeturnsCorrectSubClientDetails(){
         // GIVEN
        Test.startTest();
         Account acc = [SELECT Id, Name FROM Account WHERE Name= 'Test Account' LIMIT 1];
-       	List<String> assetFields = new List<String>{ 
+        List<String> assetFields = new List<String>{ 
             'Id', 'NSP_Account_Status__c','NSP_AIMS_First_Pay_Date__c',
             'Status'
         };
 
         String query = new NSP_QueryBuilder('Asset', assetFields)
-                .addFilter('RecordType.DeveloperName', NSP_ServiceConstants.WO_ASSET_RECORDTYPE)
-                .addFilter('AccountId', acc.Id).addLimit(1).build();
+            .addFilter('RecordType.DeveloperName', NSP_ServiceConstants.WO_ASSET_RECORDTYPE)
+            .addFilter('AccountId', acc.Id).addLimit(1).build();
 
         List<Asset> assets = (List<Asset>) Database.query(query);
         assets[0].NSP_AIMS_First_Pay_Date__c = System.today();
@@ -205,72 +195,81 @@ private class NSP_AccountProfileControllerTest {
         Test.stopTest();
     }
 
-    @isTest
-    static void getAccountProfileRelatedInforeturnsSaaSActivityField(){
+    @isTest private static void getAccountProfileRelatedInforeturnsSaaSActivityField(){
         // GIVEN
         Account acc = [SELECT Id, Name FROM Account WHERE Name = 'Test Account' LIMIT 1];
 
         // WHEN
         Test.startTest();
         Map<String, Map<String, String>> relatedInfo = NSP_AccountProfileController.getAccountProfileRelatedInfo(acc.Id);
-		Test.stopTest();
+        Test.stopTest();
         // THEN
         System.assertEquals('12', getValue('NSP_How_many_emplys_enrolled_in_401k__c', relatedInfo));
     }
 
-    @isTest 
-    static void getAccountProfileRelatedInforeturnsRetEdu(){
+    @isTest private static void getAccountProfileRelatedInforeturnsRetEdu(){
         // GIVEN
         Account acc = [SELECT Id, Name FROM Account WHERE Name = 'Test Account' LIMIT 1];
 
         // WHEN
         Test.startTest();
         Map<String, Map<String, String>> relatedInfo = NSP_AccountProfileController.getAccountProfileRelatedInfo(acc.Id);
-		Test.stopTest();
+        Test.stopTest();
         // THEN
         System.assertNotEquals(null, getValue('NSP_last_employee_401k_education_webinar__c', relatedInfo));
     }
 
-    @isTest 
-    static void getAccountProfileRelatedInforeturnsEligibility(){
+    @isTest private static void getAccountProfileRelatedInforeturnsEligibility(){
         // GIVEN
         Account acc = [SELECT Id, Name FROM Account WHERE Name = 'Test Account' LIMIT 1];
 
         // WHEN
         Test.startTest();
         Map<String, Map<String, String>> relatedInfo = NSP_AccountProfileController.getAccountProfileRelatedInfo(acc.Id);
-		Test.stopTest();
+        Test.stopTest();
         // THEN
         System.assertNotEquals(null, getValue('NSP_401K_ORK_wait_period__c', relatedInfo));
     }
 
-    @isTest
-    static void getAccountProfileRelatedInforeturnsAccTeam(){
+    @isTest private static void getAccountProfileRelatedInforeturnsAccTeam(){
         // GIVEN
         Account acc = [SELECT Id, Name FROM Account WHERE Name = 'Test Account' LIMIT 1];
 
         // WHEN
         Test.startTest();
         Map<String, Map<String, String>> relatedInfo = NSP_AccountProfileController.getAccountProfileRelatedInfo(acc.Id);
-		Test.stopTest();
+        Test.stopTest();
         // THEN
         System.assertNotEquals(null, getValue('NSP_Assigned_RS_Specialist__c', relatedInfo));
     }
-
-    @isTest
-    static void getRecentlyUpdatedFieldswhenNoFieldValueChangedreturnsEmptyList(){
+    
+    @isTest private static void getAccountAllFields(){
         // GIVEN
         Account acc = [SELECT Id, Name FROM Account WHERE Name = 'Test Account' LIMIT 1];
 
         // WHEN
         Test.startTest();
-        List<String> recentlyUpdatedFields = NSP_AccountProfileController.getRecentlyUpdatedFields(acc.Id);
+        SObject allFields = NSP_AccountProfileController.getRecordWithAllFields(acc.Id);
         Test.stopTest();
         // THEN
-        System.assertEquals(new List<String>(), recentlyUpdatedFields, 'Field Name list should be empty when no field value is changed.');
+        System.assertNotEquals(null, allFields);
     }
 
-    static String getValue(String fieldName, Map<String, Map<String, String>> relatedInfo){
+    @isTest private static void getRecentlyUpdatedFieldswhenNoFieldValueChangedreturnsEmptyList(){
+        // GIVEN
+        Account acc = [SELECT Id, Name FROM Account WHERE Name = 'Test Account' LIMIT 1];
+
+        // WHEN
+        Test.startTest();
+        Map<String,String> recentlyUpdatedFields = NSP_AccountProfileController.getRecentlyUpdatedFields(acc.Id);
+        Test.stopTest();
+        // THEN
+        System.assertEquals(new Map<String,String>(), recentlyUpdatedFields, 'Field Name Map should be empty when no field value is changed.');
+    }
+
+    private static String getValue(String fieldName, Map<String, Map<String, String>> relatedInfo){
         return relatedInfo.get(fieldName)?.get('value');
     }
+
 }
+//
