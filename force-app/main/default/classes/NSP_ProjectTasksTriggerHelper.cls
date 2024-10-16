@@ -1349,9 +1349,25 @@ public class NSP_ProjectTasksTriggerHelper {
         Id XMLAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId('Asset',NSP_ServiceConstants.XML_ASSET);
         Id IntegraAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId('Asset',NSP_ServiceConstants.INTEGRA_ASSET);
         try {
+            Map<Id,NSP_Termination_Form__c> projectTaskTermFormMap = new Map<Id,NSP_Termination_Form__c>();
             Map<Id,Id> projectMap = new Map<Id,Id>();
             Map<Id,pse__Project_Task__c> projectTaskMap = new Map<Id,pse__Project_Task__c>();
             if (!mapOfProjectTaskAndProject.isEmpty()) {
+                for ( NSP_Termination_Form__c termForm : [
+                            SELECT Id , NSP_Project_Task__c , CreatedDate , NSP_Last_Date_Wages_Paid_Through__c
+                            FROM NSP_Termination_Form__c
+                            WHERE ( NSP_Project_Task__c IN :mapOfProjectTaskAndProject.keySet() )
+                            ORDER BY CreatedDate DESC
+                        ]
+                    )
+                {
+                    if ( String.isNotBlank( termForm.NSP_Project_Task__c )
+                        && !projectTaskTermFormMap.containsKey( termForm.NSP_Project_Task__c )
+                        )
+                    {
+                        projectTaskTermFormMap.put( termForm.NSP_Project_Task__c , termForm );
+                    }
+                }
                 for ( pse__Project_Task__c projectTask : [
                             SELECT
                                 Id , Name , pse__Project__r.pse__Account__r.Name ,
@@ -1433,7 +1449,8 @@ public class NSP_ProjectTasksTriggerHelper {
                             projectTaskMap.get(pTask.Id).pse__Project__r.pse__Account__c,
                             projectTaskMap.get(pTask.Id).pse__Project__r.pse__Account__r.NSP_AIMS_Client__c,
                             listOfToAddresses,
-                            activeAssetList.get(pTask.NSP_AccountId__c)
+                            activeAssetList.get(pTask.NSP_AccountId__c),
+                            projectTaskTermFormMap.get(pTask.Id)
                         );
                         if (optionalTask != null) {
                             optionalTask.pse__Status__c = NSP_ServiceConstants.PROJECTSTATUSCOMPLETED;
@@ -1466,16 +1483,29 @@ public class NSP_ProjectTasksTriggerHelper {
             );
         }
     }
+
     //Letter Received email.
-    private void assetListEmail( String accountName , Id accountId , String accountAIMS , List<String> listOfToAddresses , List<Asset> assetList ) {
+    private void assetListEmail(
+        String accountName ,
+        Id accountId ,
+        String accountAIMS ,
+        List<String> listOfToAddresses ,
+        List<Asset> assetList ,
+        NSP_Termination_Form__c termForm
+        )
+    {
         String subjectString = null;
         String mailBody = null;
         String accName = accountName+' | '+accountAIMS;
         String customUrl = URL.getOrgDomainURL().toExternalForm()+ '/'+accountId;
         subjectString = 'WO Client ' + accName + ' has been approved for termination';
         mailBody = 'WO Client ' +'<a href="' +customUrl+'">'+ accName +'</a>';
-        mailBody += ' has been approved for termination.'+'<br/><br/>';
-        mailBody += 'Please review the following Assets to determine next steps for termination.'+'<br/><br/>';
+        String termFormDetails = '';
+        if ( ( termForm != null ) && ( termForm.NSP_Last_Date_Wages_Paid_Through__c != null ) ){
+            termFormDetails = ' on '+ termForm.NSP_Last_Date_Wages_Paid_Through__c.format();
+        }
+        mailBody += ' has been approved for termination' + termFormDetails + '.' + '<br/><br/>';
+        mailBody += 'Please review the following Assets to determine next steps for termination.' + '<br/><br/>';
         if ( ( assetList != null ) && !assetList.isEmpty() ) {
             for (Asset asset : assetList){
                 String assetUrl = URL.getOrgDomainURL().toExternalForm()+ '/'+asset.Id;
