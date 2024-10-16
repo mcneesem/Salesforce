@@ -100,6 +100,20 @@
             }
     }
 
+    // Validate Case is from email to case
+    @isTest private static void testIsCaseFromEmailWithoutEmailMessage() {
+        // Query a Case record without any EmailMessage
+        Case caseRec = [SELECT ID FROM CASE LIMIT 1];
+
+        // Test the method with a Case recordId that has no EmailMessage
+        Test.startTest();
+        Boolean result = NSP_VisualIndicatorHelper.isCaseFromEmail(caseRec.Id);
+        Test.stopTest();
+
+        // Assert the result is false
+        Assert.areEqual(false, result);
+    }
+
     // Validating the Service Exceptions Logic
     @isTest private static void Test_ServiceExceptions_For_Account() {
         Account newAccount = [SELECT ID FROM Account LIMIT 1];
