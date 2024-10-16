@@ -1501,7 +1501,7 @@ public class NSP_ProjectTasksTriggerHelper {
         subjectString = 'WO Client ' + accName + ' has been approved for termination';
         mailBody = 'WO Client ' +'<a href="' +customUrl+'">'+ accName +'</a>';
         String termFormDetails = '';
-        if ( ( termForm != null ) && String.isNotBlank( termForm.NSP_Last_Date_Wages_Paid_Through__c ) ){
+        if ( ( termForm != null ) && ( termForm.NSP_Last_Date_Wages_Paid_Through__c != null ) ){
             termFormDetails = ' on '+ termForm.NSP_Last_Date_Wages_Paid_Through__c.format();
         }
         mailBody += ' has been approved for termination' + termFormDetails + '.' + '<br/><br/>';
