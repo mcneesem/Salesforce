@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Update_Final_OMR_Meeting_Info</name>
+    </customPermissions>
+    <description>Access to Task Action - Update Final OMR Meeting Info</description>
+    <flowAccesses>
+        <enabled>true</enabled>
+        <flow>Enter_Update_Final_OMR_Meeting_Information_for_OMD</flow>
+    </flowAccesses>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Update Final OMR Meeting Info</label>
+</PermissionSet>
