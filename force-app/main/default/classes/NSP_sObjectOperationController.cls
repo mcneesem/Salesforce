@@ -26,7 +26,6 @@ public with sharing class NSP_sObjectOperationController {
     public static List<NSP_LookupOption> searchRecordsByFilters(String searchConfig){
         try {
             Map<String, Object> searchConfigMap = getSearchConfigMap(searchConfig);
-
             //String searchCategory = (String) searchConfigMap.get('searchCategory');
             String searchTerm = (String) searchConfigMap.get('searchTerm');
             String objectApiName = (String) searchConfigMap.get('objectApiName');
@@ -35,7 +34,6 @@ public with sharing class NSP_sObjectOperationController {
             List<String> preSelectedRecs = (List<String>) JSON.deserialize(searchConfigMap.get('preSelectedRecs').toString(), List<String>.class);
             List<String> fieldsToFetch = new List<String>{ 'Name' };
             List<String> additionalFields = String.isNotBlank(additionalInfoField) ? additionalInfoField.split(',') : new List<String>();
-
             if(!additionalFields.isEmpty()){
                 fieldsToFetch.addAll(additionalFields);
             }
@@ -100,15 +98,12 @@ public with sharing class NSP_sObjectOperationController {
         try {
             if(!recordsToUpsertMap.isEmpty()){
                 List<SObject> recordsToUpsert = getSobjectRecords(recordsToUpsertMap);
-
                 if(!recordsToUpsert.isEmpty()){
                     upsert recordsToUpsert;
                 }
             }
-
             if(!recordsToDeleteMap.isEmpty()){
                 List<SObject> recordsToDelete = getSobjectRecords(recordsToDeleteMap);
-
                 if(!recordsToDelete.isEmpty()){
                     delete recordsToDelete;
                 }
@@ -120,11 +115,9 @@ public with sharing class NSP_sObjectOperationController {
 
     private static List<SObject> getSobjectRecords(Map<String, List<String>> recordsMap){
         List<SObject> recordsList = new List<SObject>();
-
         for (String objectApiName : recordsMap.keySet()) {
             recordsList.addAll(getSobjectRecords(recordsMap.get(objectApiName), objectApiName));
         }
-
         return recordsList;
     }
 
@@ -134,7 +127,6 @@ public with sharing class NSP_sObjectOperationController {
             SObject sObj = (SObject) JSON.deserialize(rec, Type.forName(sObjectName));
             sObjects.add(sObj);
         }
-
         return sObjects;
     }
 
@@ -162,10 +154,10 @@ public with sharing class NSP_sObjectOperationController {
                 }
                 info = JSON.serialize(additionalFieldValues);
             }
-
             lookupOptions.add(new NSP_LookupOption(optionLabel, rec.Id, info, DEFAULT_ICON, false));
         }
-
         return lookupOptions;
     }
+
 }
+//
