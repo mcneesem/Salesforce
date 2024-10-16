@@ -29,6 +29,7 @@ public class NSP_SubPlanChangeHistoryBatchTest {
         NSP_Plan_SubPlan__c subPlan = (NSP_Plan_SubPlan__c)NSP_TestExtendedDataFactory.createSObject(new NSP_Plan_SubPlan__c(), 'NSP_TestDataFactory.SubPlanDefaults', false);
         subPlan.NSP_Parent_Plan_ID__c = plan.Id;
         subPlan.RecordTypeId = WOSubPlanRT;
+        subPlan.NSP_Status__c = 'Frozen';
         insert subPlan ;
         
         //Insert new Sub Plan Change History with WO Record Type
@@ -36,6 +37,17 @@ public class NSP_SubPlanChangeHistoryBatchTest {
         subPlanHist.NSP_Plan_ID__c = plan.Id;
         subPlanHist.NSP_Plan_Subplan_Relationship__c = subPlan.Id;
         subPlanHist.RecordTypeId = WOSubPlanHisRT;
+        subPlanHist.Auto_Enroll_Effective_Date__c = Date.today() - 5;
+        subPlanHist.Auto_Escalate__c = 1.1;
+        subPlanHist.Escalation_Max__c = 2.0;
+        subPlanHist.Is_QACA__c = true;
+        subPlanHist.Is_Mandatory__c = true;
+        subPlanHist.Allows_LT_Employer_Contributions__c= true;
+        subPlanHist.LTPT_Effective_Date__c = Date.today() - 4;
+        subPlanHist.LTPT_Term_Date__c = Date.today() - 3;
+        subPlanHist.Exemption_Type__c = 'Less than 11 EE\'s';
+        subPlanHist.Exemption_Date__c = Date.Today() + 5;
+        subPlanHist.NSP_Status__c = 'Active';
         insert subPlanHist ;
         
     } 
