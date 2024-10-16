@@ -15,6 +15,10 @@ public class NSP_SubPlanChangeHistoryBatchTest {
     @testSetup
     public static void createTestData (){
 
+        SubPlanChangeHistoryBatchSettings__c settings = SubPlanChangeHistoryBatchSettings__c.getOrgDefaults();
+        settings.IsEnabledRetFields__c = true;
+        upsert settings;
+
         //Get Record Types Id for WO
         Id WOPlanRT = Schema.SObjectType.NSP_Plan__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.WO_RT_NAME).getRecordTypeId();
         Id WOSubPlanRT = Schema.SObjectType.NSP_Plan_SubPlan__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.WO_RT_NAME).getRecordTypeId();
