@@ -194,12 +194,6 @@ private class NSP_PayrollTriggerHelperTest {
         //GIVEN
         Contact contact = [SELECT Id,LastName FROM Contact WHERE LastName = 'Test con' LIMIT 1];
         NSP_Payroll__c pds = [SELECT Id, NSP_Primary_Payroll_Contact__c,NSP_Back_Up_Payroll_Contact__c,NSP_HR_Contact__c,NSP_On_site_Supervisor__c, Primary_View_Payroll_Paperwork__c,Back_Up_View_Payroll_Paperwork__c,On_Site_View_Payroll_Paperwork__c,View_Payroll_Paperwork__c FROM NSP_Payroll__c WHERE Id != null LIMIT 1];
-        //WHEN
-        pds.NSP_Primary_Payroll_Contact__c = null;
-        pds.NSP_Back_Up_Payroll_Contact__c = null;
-        pds.NSP_HR_Contact__c = null;
-        pds.NSP_On_site_Supervisor__c = null;
-        update pds;
         
         pds.NSP_Primary_Payroll_Contact__c = contact.Id;
         pds.NSP_Back_Up_Payroll_Contact__c = contact.Id;
