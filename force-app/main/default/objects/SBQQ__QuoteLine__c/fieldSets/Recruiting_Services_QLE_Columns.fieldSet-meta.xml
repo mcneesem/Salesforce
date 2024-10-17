@@ -33,6 +33,21 @@
         <isRequired>false</isRequired>
     </displayedFields>
     <displayedFields>
+        <field>Annual_Base_Salary__c</field>
+        <isFieldManaged>false</isFieldManaged>
+        <isRequired>false</isRequired>
+    </displayedFields>
+    <displayedFields>
+        <field>Salary_Bracket_Percentage__c</field>
+        <isFieldManaged>false</isFieldManaged>
+        <isRequired>false</isRequired>
+    </displayedFields>
+    <displayedFields>
+        <field>Upfront_Fee_Payment_Percentage__c</field>
+        <isFieldManaged>false</isFieldManaged>
+        <isRequired>false</isRequired>
+    </displayedFields>
+    <displayedFields>
         <field>SBQQ__NetPrice__c</field>
         <isFieldManaged>false</isFieldManaged>
         <isRequired>false</isRequired>
