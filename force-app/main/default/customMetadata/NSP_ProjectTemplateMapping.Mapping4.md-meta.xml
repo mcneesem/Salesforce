@@ -8,10 +8,10 @@
     </values>
     <values>
         <field>Template_ID__c</field>
-        <value xsi:type="xsd:string">a2o4x0000012QdVAAU</value>
+        <value xsi:type="xsd:string">a2o4x00000151xMAAQ</value>
     </values>
     <values>
         <field>Template_Name__c</field>
-        <value xsi:type="xsd:string">Climate Survey</value>
+        <value xsi:type="xsd:string">TES Climate Survey</value>
     </values>
 </CustomMetadata>
