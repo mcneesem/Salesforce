@@ -8,7 +8,7 @@
   IF(
     AND(
       ISPICKVAL( SBQQ__Quote__r.SBQQ__Type__c , &quot;Amendment&quot; ) ,
-    I  SPICKVAL( SBQQ__PricingMethod__c , &quot;Block&quot; )
+      ISPICKVAL( SBQQ__PricingMethod__c , &quot;Block&quot; )
     ) ,
     SBQQ__NetPrice__c ,
     IF(
