@@ -2,19 +2,18 @@ public class NSP_ProjectTasksTriggerHelper {
     // test w/ NSP_ProjectTasksTriggerHelperTest, NSP_Implprofile_ServiceHelperUpdate_Test (81%)
 
     private static final String HUNDRED_PERCENT =  '100%';
-    private static final string SYS_ADMIN = 'System Administrator';
     private static final String COBRA_MM ='NSP_COBRA';
     private static final String COBRA_GUIDELINES_MM = 'NSP_COBRAGuidelines';
     private static final String COBRA_TEAM_MM = 'NSP_COBRATeam';
     private static final String COBRA_PACKETS_MM = 'NSP_COBRAPackets';
-    private static final Id WOAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId('Asset',NSP_ServiceConstants.WO_ASSET_RECORDTYPE);
-    private static final Id CPQAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId('Asset','NSP_CPQ_Asset');
-    private static final string BACKOUT = 'Backout';
-    private static final string TERMINATED = 'Terminated';
-    private static final string RETURNED = 'Returned';
-    private static final string INACTIVE = 'Inactive';
-    private static final string SUBMIT_TERMINATION_CHECKLIST = 'Submit Termination Checklist';
-    private static final string LEVIESTASK = 'Employee Levies Provided';
+    private static final Id wOAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Asset' , 'WO' );
+    private static final Id projectTaskPEORecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'pse__Project_Task__c' , 'PEO_Project_Task' );
+    private static final String BACKOUT = 'Backout';
+    private static final String TERMINATED = 'Terminated';
+    private static final String RETURNED = 'Returned';
+    private static final String INACTIVE = 'Inactive';
+    private static final String SUBMIT_TERMINATION_CHECKLIST = 'Submit Termination Checklist';
+    private static final String LEVIESTASK = 'Employee Levies Provided';
 
     /**
     * Iterates throught the list of new pse__Project_Task__c and passes the required attributes to other methods.
@@ -28,7 +27,16 @@ public class NSP_ProjectTasksTriggerHelper {
         Map<Id, pse__Proj__c> parentProjectMap  = new  Map<Id, pse__Proj__c>();
         Map<Id, Id> mapOfparentTaskIdAndMilestoneId = new Map<Id, Id>();
         Set<Id> setOfParentProjectTask = new Set<Id>();
-        
+        List<String> projectForCancallation = new List<String>();
+        ProjectTaskTriggerSettings__c settings = ProjectTaskTriggerSettings__c.getInstance( UserInfo.getUserId() );
+        if( settings != null ){
+            if ( String.isNotBlank( settings.CancellationProjects1__c ) ) {
+                projectForCancallation = settings.CancellationProjects1__c.split( ',' );
+                if ( String.isNotBlank( settings.CancellationProjects2__c ) ) {
+                    projectForCancallation.addAll( settings.CancellationProjects2__c.split( ',' ) );
+                }
+            }
+        }
         for(pse__Project_Task__c projectTask : projectTaskList){
             if(projectTask.pse__Parent_Task__c != null){
                 setOfParentProjectTask.add(projectTask.pse__Parent_Task__c);
@@ -60,8 +68,17 @@ public class NSP_ProjectTasksTriggerHelper {
                 projectTask.pse__Actual_Start_Date_Time__c = Datetime.now();
                 projectTask.pse__Started__c = true;
             }
-        }    
-
+            if ( ( projectTask.RecordTypeId == NSP_ProjectTasksTriggerHelper.projectTaskPEORecordTypeId )
+                && ( projectForCancallation != null )
+                && !projectForCancallation.isEmpty()
+                && String.isNotBlank( projectTask.Name )
+                && ( projectForCancallation.contains( projectTask.Name ) )
+                && CustomPermissionController.checkUserPermission( 'Finance_Service_User' , UserInfo.getUserId() )
+               )
+            {
+                projectTask.pse__Status__c = 'Canceled';
+            }
+        }
         if(!setOfParentProjectTask.isEmpty()){
             for(pse__Project_Task__c parentTask : [SELECT pse__Milestone__c FROM pse__Project_Task__c WHERE ID IN : setOfParentProjectTask]){
                 mapOfparentTaskIdAndMilestoneId.put(parentTask.id, parentTask.pse__Milestone__c);
@@ -367,7 +384,6 @@ public class NSP_ProjectTasksTriggerHelper {
     * Params: List<pse__Project_Task__c> cobraProjectTaskList
     * ********************************************************************************************/
     public void createCobraSubTasks(List<pse__Project_Task__c> cobraProjectTaskList){
-        Id projectTaskPEORecordTypeId = Schema.SObjectType.pse__Project_Task__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.PROJECT_TASK_PEO_RECORDTYPE).getRecordTypeId();
         NSP_ProjectTask_Automation__mdt pta =  NSP_ProjectTask_Automation__mdt.getInstance(COBRA_MM);
         NSP_ProjectTask_Automation__mdt pta1 =  NSP_ProjectTask_Automation__mdt.getInstance(COBRA_GUIDELINES_MM);
         NSP_ProjectTask_Automation__mdt pta2 =  NSP_ProjectTask_Automation__mdt.getInstance(COBRA_TEAM_MM);
@@ -420,9 +436,8 @@ public class NSP_ProjectTasksTriggerHelper {
     * Params: pse__Project_Task__c parentProjectTask
     * ********************************************************************************************/
     private pse__Project_Task__c createProjectTaskfromParent(pse__Project_Task__c parentProjectTask){
-        Id projectTaskPEORecordTypeId = Schema.SObjectType.pse__Project_Task__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.PROJECT_TASK_PEO_RECORDTYPE).getRecordTypeId();
         pse__Project_Task__c eachProjectTask = new pse__Project_Task__c();
-        eachProjectTask.RecordTypeId=projectTaskPEORecordTypeId;
+        eachProjectTask.RecordTypeId = NSP_ProjectTasksTriggerHelper.projectTaskPEORecordTypeId;
         eachProjectTask.NSP_Category__c= parentProjectTask.NSP_Category__c;
         eachProjectTask.NSP_Visible_to_Client__c = TRUE;
         eachProjectTask.pse__Status__c = NSP_ServiceConstants.PROJECT_TASK_NOT_STARTED;
@@ -594,7 +609,7 @@ public class NSP_ProjectTasksTriggerHelper {
                             SELECT Id , AccountId , NSP_Reason_for_Term__c , NSP_Anticipated_Date_Of_Termination__c 
                             FROM Asset 
                             WHERE (
-                                RecordTypeId = :NSP_ProjectTasksTriggerHelper.WOAssetRecordTypeId
+                                RecordTypeId = :NSP_ProjectTasksTriggerHelper.wOAssetRecordTypeId
                                 AND Status = 'Active'
                                 AND AccountId IN :listOfAccountId
                             )
