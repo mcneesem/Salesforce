@@ -343,9 +343,9 @@
     <textTemplates>
         <name>EmailBody</name>
         <isViewedAsPlainText>true</isViewedAsPlainText>
-        <text>Thank you for submitting your hardship request. Your hardship request will be reviewed within 7-10 business days. If the request is in good order, you will receive your funds within 7-10 business days after review. &lt;br/&gt;  
- &lt;br/&gt;
-Sincerely &lt;br/&gt;
+        <text>Thank you for submitting your hardship request. Your hardship request will be reviewed within 7-10 business days. If the request is in good order, you will receive your funds within 7-10 business days after review.&lt;br/&gt;
+&lt;br/&gt;
+Sincerely&lt;br/&gt;
 Insperity 401k Operations Team</text>
     </textTemplates>
     <textTemplates>
