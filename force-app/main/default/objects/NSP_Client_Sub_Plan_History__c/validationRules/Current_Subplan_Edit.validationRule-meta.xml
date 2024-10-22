@@ -3,8 +3,8 @@
     <fullName>Current_Subplan_Edit</fullName>
     <active>true</active>
     <errorConditionFormula>AND(
-ISCHANGED( NSP_Current_Subplan__c ) ,
-NOT( $Permission.Bypass_Validation_Rules_RET_Client_Sub_Plan_History )
+  ISCHANGED( NSP_Current_Subplan__c ) ,
+  NOT( $Permission.Bypass_Validation_Rules_RET_Client_Sub_Plan_History )
 )</errorConditionFormula>
     <errorDisplayField>NSP_Current_Subplan__c</errorDisplayField>
     <errorMessage>You do not have permission to edit this field.</errorMessage>
