@@ -49,8 +49,8 @@
                 <field>NSP_Client_Sub_Account_Numbers__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>NSP_Approver__c</field>
+                <behavior>Readonly</behavior>
+                <field>NSP_Approver_Formula__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
