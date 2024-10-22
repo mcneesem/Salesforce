@@ -206,7 +206,7 @@ public with sharing class NSP_EmailMessageTriggerHelper {
                                         currentCase.Status = REOPENED;
                                         currentCase.NSP_Case_Sub_Status__c = UNASSIGNED;
                                         currentCase.OwnerId = NSP_EmailMessageTriggerHelper.CONTACTCENTER_QUEUEID;
-                                        currentCase.NSP_Response_After_Close__c = false;
+                                        currentCase.NSP_Response_After_Close__c = true;
                                         casesToUpdate.add( currentCase );
                                     } else {
                                         caseToEmailMessageMap.put( currentCase , eMessage );
@@ -259,8 +259,13 @@ public with sharing class NSP_EmailMessageTriggerHelper {
             && !ContactCenterEmailAddresses.isEmpty()
             )
         {
+            // Convert ContactCenterEmailAddresses to lowercase for case-agnostic comparison  
+            List<String> lowerCaseContactCenterEmails = new List<String>();  
+            for (String email : ContactCenterEmailAddresses) {  
+                lowerCaseContactCenterEmails.add(email.toLowerCase());  
+            } 
             for ( String str : ToAddress ) {
-                if ( ContactCenterEmailAddresses.contains( str ) ) {
+                if ( lowerCaseContactCenterEmails.contains( str.toLowerCase() ) ) {
                     count++;
                 }
             }
