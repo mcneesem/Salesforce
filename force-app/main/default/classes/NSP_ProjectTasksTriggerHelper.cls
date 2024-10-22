@@ -277,6 +277,7 @@ public class NSP_ProjectTasksTriggerHelper {
                                     eachProjecttask.pse__Hierarchy_Depth__c = 1;
                                     eachProjecttask.pse__Milestone__c = parentTask.pse__Milestone__c;
                                     eachProjecttask.pse__Order__c =parentTask.pse__Order__c;
+                                    eachProjecttask.Task_Order__c =parentTask.Task_Order__c;
                                     newProjectTasks.add(eachProjecttask);
                                 }
                             }
@@ -397,6 +398,7 @@ public class NSP_ProjectTasksTriggerHelper {
                 eachProjecttask.Name=pta1.NSP_Task_Name__c;
                 eachProjecttask.pse__Hierarchy_Depth__c =1;
                 eachProjecttask.pse__Order__c=137;
+                eachProjecttask.Task_Order__c=137;
                 //
                 cobraChildProjectTaskList.add(eachProjecttask);
                 pse__Project_Task__c eachProjecttask1 = createProjectTaskfromParent(pt);
@@ -404,6 +406,7 @@ public class NSP_ProjectTasksTriggerHelper {
                 eachProjecttask1.Name=pta2.NSP_Task_Name__c;
                 eachProjecttask1.pse__Hierarchy_Depth__c =2;
                 eachProjecttask1.pse__Order__c=138;
+                eachProjecttask1.Task_Order__c=138;
                 cobraChildProjectTaskList.add(eachProjecttask1);
                 //
                 pse__Project_Task__c eachProjecttask2 = createProjectTaskfromParent(pt);
@@ -411,6 +414,7 @@ public class NSP_ProjectTasksTriggerHelper {
                 eachProjecttask2.Name=pta3.NSP_Task_Name__c;
                 eachProjecttask2.pse__Hierarchy_Depth__c =3;
                 eachProjecttask2.pse__Order__c=139;
+                eachProjecttask2.Task_Order__c=139;
                 cobraChildProjectTaskList.add(eachProjecttask2);
             }
         }
@@ -2494,14 +2498,14 @@ public class NSP_ProjectTasksTriggerHelper {
         Map<Id, Map<String, String>> mapOfProjAndResourceEmail = new Map<Id, Map<String, String>>();
         
         try{
-            for(pse__Project_Task__c projTask: [SELECT Id, Name, pse__Order__c, pse__Status__c, pse__Project__r.TemplateName__c, Responsible_Party__c 
+            for(pse__Project_Task__c projTask: [SELECT Id, Name, pse__Order__c, Task_Order__c, pse__Status__c, pse__Project__r.TemplateName__c, Responsible_Party__c 
                                                 FROM pse__Project_Task__c WHERE Id IN: projectTaskIdSet AND pse__Project__r.TemplateName__c IN :retTemplateNames]){
                 
                                                                 mapOfProjAndProjTask.put(projTask.pse__Project__c, projTask);
                     
             }
             
-            List<String> projTaskFields = new List<String>{'Id', 'Name', 'pse__Project__c', 'pse__Order__c', 'Responsible_Party__c'};
+            List<String> projTaskFields = new List<String>{'Id', 'Name', 'pse__Project__c', 'pse__Order__c','Task_Order__c', 'Responsible_Party__c'};
                 
                 //Get a list of all the project task associated with the parent project
             String query = new NSP_QueryBuilder('pse__Project_Task__c', projTaskFields)
@@ -2521,6 +2525,7 @@ public class NSP_ProjectTasksTriggerHelper {
             if(!listOfAllPrjTaskForAProject.isEmpty() && !mapOfProjAndResourceEmail.isEmpty()){        
                 for(pse__Project_Task__c projTask : listOfAllPrjTaskForAProject){
                     if(projTask.pse__Order__c == mapOfProjAndProjTask.get(projTask.pse__Project__c).pse__Order__c+1 &&
+                        projTask.Task_Order__c == mapOfProjAndProjTask.get(projTask.pse__Project__c).Task_Order__c+1 &&
                         projTask.Responsible_Party__c != mapOfProjAndProjTask.get(projTask.pse__Project__c).Responsible_Party__c &&
                         mapOfProjAndResourceEmail.containsKey(projTask.pse__Project__c) && 
                         mapOfProjAndResourceEmail.get(projTask.pse__Project__c).containsKey(projTask.Responsible_Party__c)){
