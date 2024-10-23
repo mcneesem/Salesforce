@@ -1,36 +1,28 @@
-/**
-* Represents test class for Asset Trigger helper 
-* Represents test class for Asset Trigger Handler
-* Created by : Hemali Patel
-* Created Date : 9/7/2021
-*
-*/
 @isTest(SeeAllData=false)
-public class NSP_AssetTriggerHelperTest {
+private class NSP_AssetTriggerHelperTest {
     private static final Id integraRecordTypeId = Schema.SObjectType.Asset.getRecordTypeInfosByName().get(NSP_ServiceConstants.INTEGRA_ASSET).getRecordTypeId();
 	private static final Id woRecordTypeId = Schema.SObjectType.Asset.getRecordTypeInfosByName().get(NSP_ServiceConstants.WO_ASSET_RECORDTYPE).getRecordTypeId();
     private static final Id retRecordTypeId = Schema.SObjectType.Asset.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.RET_WO_ASSET_RECORDTYPE).getRecordTypeId();
-    /**
-* Does test data setup
-* Purpose : prepare test data for Test class
-* @param N/A. 
-* @return void                          
-*/
-    
-    @testSetup
-    static void testData() {
-        // Custtom settings related to Asset
-        AssetTriggerSettings__c assetSettings =  AssetTriggerSettings__c.getOrgDefaults();
-        assetSettings.Exclude_Record_Types__c  = ('WOCPQ'+'\n'+
-                                                  'AssetHardware'+'\n'+
-                                                  'Asset');
-        assetSettings.Exclude_Status__c = ('Backout'+'\n'+
-                                           'Terminated'+'\n'+
-                                           'Returned'+'\n'+
-                                           'Inactive');
-        assetSettings.Exclude_Record_Types_WRT_Status__c = 'Certify';
-        upsert assetSettings;
-        
+
+    @testSetup private static void testData() {
+        // Custom Settings related to Asset Trigger...
+        String newline = '\n';
+        AssetTriggerSettings__c settings =  AssetTriggerSettings__c.getOrgDefaults();
+        settings.Exclude_Record_Types__c  = (
+            'WOCPQ' + newline
+            + 'AssetHardware' + newline
+            + 'Asset'
+        );
+        settings.Exclude_Status__c = (
+            'Backout' + newline
+            + 'Terminated' + newline
+            + 'Returned' + newline
+            + 'Inactive'
+        );
+        settings.Exclude_Record_Types_WRT_Status__c = 'Certify';
+        settings.IsEnabledRecordTypeDefault__c = true;
+        upsert settings;
+
         Profile profile = [SELECT Id FROM Profile WHERE Name =: NSP_ServiceConstants.PEOSERVICE];
         List<Account> accList = new List<Account>();
         //Account creation
