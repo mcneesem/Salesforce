@@ -5,7 +5,7 @@ public with sharing class NSP_EmailMessageTriggerHelper {
     // test w/ NSP_EmailMessageTriggerHelperTest (87%)
 
     public static boolean isFirst = false;
-    public static List<String> ContactCenterEmailAddresses = System.Label.NSP_Contact_Center_Email_Addresses.split(',');
+    private static List<String> ContactCenterEmailAddresses = System.Label.NSP_Contact_Center_Email_Addresses.toLowerCase().split( ',' );
     public static final String QUEUE = 'Queue';
     public static final String CONTACTCENTER = 'NSP_ContactCenter';
     private static final Id CONTACTCENTER_QUEUEID = '00G4x000001fXVREA2';
@@ -190,12 +190,12 @@ public with sharing class NSP_EmailMessageTriggerHelper {
                                     toAddressList = eMessage.ToAddress.split( ';' );
                                 }
                                 
-                                if (!isContactCenterCase( NSP_EmailMessageTriggerHelper.ContactCenterEmailAddresses , toAddressList )) {
+                                if (!isContactCenterCase( toAddressList )) {
                                     currentCase.NSP_Response_After_Close__c = true;
                                     casesToUpdate.add( currentCase );
                                 }
                                 else if ( ( currentCase.Status == CLOSED ) 
-                                         && isContactCenterCase( NSP_EmailMessageTriggerHelper.ContactCenterEmailAddresses , toAddressList )
+                                         && isContactCenterCase( toAddressList )
                                         )
                                 {
                                     Integer businessDaysBetween = getNoOfBusinessDaysBetweenDates(
@@ -251,21 +251,16 @@ public with sharing class NSP_EmailMessageTriggerHelper {
     // Story         : STY-04647
     // Params        : List<String> ContactCenterEmailAddresses , List<String> ToAddress
     // ********************************************************************************************
-    private static Boolean isContactCenterCase( List<String> ContactCenterEmailAddresses , List<String> ToAddress ) {
+    private static Boolean isContactCenterCase( List<String> ToAddress ) {
         Integer count = 0;
         if ( ( ToAddress != null )
             && !ToAddress.isEmpty()
-            && ( ContactCenterEmailAddresses != null )
-            && !ContactCenterEmailAddresses.isEmpty()
+            && ( NSP_EmailMessageTriggerHelper.ContactCenterEmailAddresses != null )
+            && !NSP_EmailMessageTriggerHelper.ContactCenterEmailAddresses.isEmpty()
             )
         {
-            // Convert ContactCenterEmailAddresses to lowercase for case-agnostic comparison  
-            List<String> lowerCaseContactCenterEmails = new List<String>();  
-            for (String email : ContactCenterEmailAddresses) {  
-                lowerCaseContactCenterEmails.add(email.toLowerCase());  
-            } 
             for ( String str : ToAddress ) {
-                if ( lowerCaseContactCenterEmails.contains( str.toLowerCase() ) ) {
+                if ( NSP_EmailMessageTriggerHelper.ContactCenterEmailAddresses.contains( str.toLowerCase() ) ) {
                     count++;
                 }
             }
