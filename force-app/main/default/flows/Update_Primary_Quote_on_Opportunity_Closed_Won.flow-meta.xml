@@ -6,7 +6,7 @@
         <name>ByPass_Flag</name>
         <label>ByPass_Flag</label>
         <locationX>182</locationX>
-        <locationY>335</locationY>
+        <locationY>323</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Run</name>
@@ -69,48 +69,12 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <recordCreates>
-        <description>Records event id in log</description>
-        <name>Create_Log</name>
-        <label>Create Log</label>
-        <locationX>50</locationX>
-        <locationY>575</locationY>
-        <inputAssignments>
-            <field>NSP_Class__c</field>
-            <value>
-                <elementReference>$Flow.InterviewGuid</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>NSP_Description__c</field>
-            <value>
-                <elementReference>EventId</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>NSP_Method__c</field>
-            <value>
-                <elementReference>$Flow.CurrentStage</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>NSP_Record_Id__c</field>
-            <value>
-                <elementReference>$Record.Id</elementReference>
-            </value>
-        </inputAssignments>
-        <object>NSP_Error_Log__c</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordCreates>
-    <recordCreates>
         <description>creates event to publish create order event</description>
         <name>Publish_Create_Order_Event</name>
         <label>Publish Create Order Event</label>
         <locationX>50</locationX>
-        <locationY>455</locationY>
+        <locationY>431</locationY>
         <assignRecordIdToReference>EventId</assignRecordIdToReference>
-        <connector>
-            <targetReference>Create_Log</targetReference>
-        </connector>
         <inputAssignments>
             <field>NSP_Action__c</field>
             <value>
@@ -157,7 +121,7 @@
         <recordTriggerType>Update</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <variables>
         <name>ByPass</name>
         <dataType>Boolean</dataType>
