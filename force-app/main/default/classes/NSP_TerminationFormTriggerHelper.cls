@@ -308,16 +308,31 @@ public class NSP_TerminationFormTriggerHelper {
         }
     }
 
-    public void shareTerminationFormsWithUsers(Map<Id,Set<Id>> mRecordToUsers, String accessLevel){
-        List<NSP_Termination_Form__Share> lTerminationFormShares = new List<NSP_Termination_Form__Share>();
-        for(Id iTForm: mRecordToUsers.keySet()){
-            for(Id iUser : mRecordToUsers.get(iTForm)){
-                lTerminationFormShares.add(new NSP_Termination_Form__Share(ParentId = iTForm,UserOrGroupId = iUser,AccessLevel = accessLevel));
+    public void shareTerminationFormsWithUsers(Map<Id, Set<Id>> mRecordToUsers, String accessLevel) {  
+        List<NSP_Termination_Form__Share> lTerminationFormShares = new List<NSP_Termination_Form__Share>();  
+        
+        try {  
+            if (mRecordToUsers != null) {
+                for (Id iTForm: mRecordToUsers.keySet()) {  
+                    Set<Id> userSet = mRecordToUsers.get(iTForm);
+                    
+                    if (userSet != null) {  
+                        for (Id iUser: userSet) {  
+                            lTerminationFormShares.add(new NSP_Termination_Form__Share(ParentId = iTForm, UserOrGroupId = iUser, AccessLevel = accessLevel));
+                        }
+                    }
+                }
             }
-        }
-        if(lTerminationFormShares.size() > 0){
-            insert lTerminationFormShares;
-        }
+            if (!lTerminationFormShares.isEmpty()) {
+                insert lTerminationFormShares;  
+            }  
+        } catch (Exception e) {
+            NSP_ErrorLogHandler.logException(  
+                NSP_TerminationFormTriggerHelper.class.getName(),  
+                'shareTerminationFormsWithUsers',  
+                e  
+            );  
+        }  
     }
     
     public void beforeTerminationFormUpdate( Map<Id,NSP_Termination_Form__c> newMap , Map<Id,NSP_Termination_Form__c> oldMap ) {
