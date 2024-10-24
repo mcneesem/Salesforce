@@ -144,7 +144,18 @@ global class NSP_SubPlanChangeHistoryBatch implements Database.Batchable<sObject
     * Params:       Database.SchedulableContext bc
     * ********************************************************************************************/ 
     global Void execute( SchedulableContext sc ) {
-        Database.executeBatch( new NSP_SubPlanChangeHistoryBatch() , 200 );
+        Boolean isEnabledRetFields = false;
+        SubPlanChangeHistoryBatchSettings__c settings = SubPlanChangeHistoryBatchSettings__c.getInstance( UserInfo.getUserId() );
+        if ( settings != null ) {
+            isEnabledRetFields = settings.IsEnabledRetFields__c;
+        }
+        if(isEnabledRetFields)
+        {
+            Database.executeBatch( new SubPlanChangeHistoryBatch() , 200 );
+        }
+        else
+        {
+            Database.executeBatch( new NSP_SubPlanChangeHistoryBatch() , 200 );
+        }
     }
-
 }

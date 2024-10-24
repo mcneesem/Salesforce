@@ -15,25 +15,36 @@ global class SubPlanChangeHistoryBatch implements Database.Batchable<sObject> , 
 	* ********************************************************************************************/ 
     global Database.QueryLocator start(Database.BatchableContext bc) 
     {
-        return Database.getQueryLocator([SELECT Id , NSP_Auto_Deferral__c,NSP_Status__c, NSP_Plan_Effective_Date__c, 
-                                         NSP_Original_PE_Date__c, NSP_Plan_Type__c, Auto_Enroll_Effective_Date__c, 
-                                         Auto_Escalate__c, Escallation_Max__c, Is_QACA__c,Is_Mandatory__c, 
-                                         Allows_LT_Employer_Contributions__c, LTPT_Effective_Date__c, LTPT_Term_Date__c, 
-                                         Exemption_Type__c, Exemption_Date__c, 
-                                         ( 
-                                             SELECT Id, NSP_Auto_Deferral__c, NSP_Status__c, NSP_Plan_Effective_Date__c, 
-                                             NSP_Plan_Subplan_Relationship__c, NSP_Plan_Type__c, Auto_Enroll_Effective_Date__c, 
-                                             Auto_Escalate__c, Escalation_Max__c, Is_QACA__c, Is_Mandatory__c, 
-                                             Allows_LT_Employer_Contributions__c, LTPT_Effective_Date__c, 
-                                             LTPT_Term_Date__c, Exemption_Type__c, Exemption_Date__c 
-                                             FROM 
-                                             Sub_Plan_Change_Historys__r 
-                                             WHERE 
-                                             NSP_Plan_Effective_Date__c <= TODAY 
-                                             ORDER BY CreatedDate DESC 
-                                             LIMIT 1
-                                         ) 
-                                         FROM NSP_Plan_SubPlan__c]); 
+        return Database.getQueryLocator(
+            [
+                SELECT
+                Id , NSP_Auto_Deferral__c , NSP_Status__c , NSP_Plan_Effective_Date__c ,
+                NSP_Original_PE_Date__c , NSP_Plan_Type__c , Auto_Enroll_Effective_Date__c ,
+                Auto_Escalate__c , Escallation_Max__c , Is_QACA__c , Is_Mandatory__c ,
+                Allows_LT_Employer_Contributions__c , LTPT_Effective_Date__c , LTPT_Term_Date__c ,
+                Exemption_Type__c , Exemption_Date__c ,
+                (
+                    SELECT
+                    Id , NSP_Auto_Deferral__c , NSP_Status__c , NSP_Plan_Effective_Date__c ,
+                    NSP_Plan_Subplan_Relationship__c , NSP_Plan_Type__c , Auto_Enroll_Effective_Date__c ,
+                    Auto_Escalate__c , Escalation_Max__c , Is_QACA__c , Is_Mandatory__c ,
+                    Allows_LT_Employer_Contributions__c , LTPT_Effective_Date__c ,
+                    LTPT_Term_Date__c , Exemption_Type__c , Exemption_Date__c
+                    FROM Sub_Plan_Change_Historys__r
+                    WHERE ( NSP_Plan_Effective_Date__c <= TODAY )
+                    ORDER BY CreatedDate DESC
+                    LIMIT 1
+                )
+                FROM NSP_Plan_SubPlan__c
+                WHERE (
+                    Id IN (
+                        SELECT NSP_Plan_Subplan_Relationship__c
+                        FROM NSP_Sub_Plan_Change_History__c
+                        WHERE ( NSP_Plan_Effective_Date__c <= TODAY )
+                    )
+                )
+            ]
+        ); 
     }
     
     /***********************************************************************************************
