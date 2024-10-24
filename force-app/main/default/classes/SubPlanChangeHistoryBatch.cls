@@ -5,6 +5,7 @@
 * Azure Story 			: ADO-314621
 * Last Modified Date 	: 
 * Last Modified By: 
+* Test Coverage         : 91%
 */
 global class SubPlanChangeHistoryBatch implements Database.Batchable<sObject> , Schedulable
 {
@@ -29,7 +30,7 @@ global class SubPlanChangeHistoryBatch implements Database.Batchable<sObject> , 
                                              Sub_Plan_Change_Historys__r 
                                              WHERE 
                                              NSP_Plan_Effective_Date__c <= TODAY 
-                                             ORDER BY LastModifiedDate DESC 
+                                             ORDER BY CreatedDate DESC 
                                              LIMIT 1
                                          ) 
                                          FROM NSP_Plan_SubPlan__c]); 
