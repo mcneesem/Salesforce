@@ -1,7 +1,7 @@
 @isTest
 public class SubPlanChangeHistoryBatchTest {
     
-    @testSetup static void prepareTestData (){
+    @testSetup static void Prepare_Test_Data (){
         
         //Get Record Types Id for WO
         Id WOPlanRT = Schema.SObjectType.NSP_Plan__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.WO_RT_NAME).getRecordTypeId();
@@ -55,11 +55,31 @@ public class SubPlanChangeHistoryBatchTest {
         Database.executeBatch(new SubPlanChangeHistoryBatch(), 200);
     }
     
-    // Testing the Schedule
-    @isTest static void Test_Schedule_Batch()
-    {
-        SubPlanChangeHistoryBatch sphb 	= new SubPlanChangeHistoryBatch();
-        string chronExp 				= '0 0 23 * * ?';
-        system.schedule('Test Sub Plan Change History Batch', chronExp, sphb);
+    // Testing the schedule
+    @isTest static void Test_ScheduleBatch(){ 
+        // Insert custom setting
+        SubPlanChangeHistoryBatchSettings__c testSetting = new SubPlanChangeHistoryBatchSettings__c();
+        testSetting.IsEnabled__c = true;
+        insert testSetting;
+        
+        NSP_SubPlanChangeHistoryBatch subPlanChangeHistoryBatch = new NSP_SubPlanChangeHistoryBatch();
+        String chroneExp = '0 0 23 * * ?';
+        system.schedule('Test NSP_SubPlanChangeHistoryBatch', chroneExp, subPlanChangeHistoryBatch);
+    } 
+    
+    // Testing the schedule
+    @isTest static void Test_NSP_SubPlanChangeHistoryBatch(){ 
+        NSP_SubPlanChangeHistoryBatch subPlanChangeHistoryBatch = new NSP_SubPlanChangeHistoryBatch();
+        String chroneExp = '0 0 23 * * ?';
+        system.schedule('Test NSP_SubPlanChangeHistoryBatch', chroneExp, subPlanChangeHistoryBatch);
+    }
+    
+    // Testing the NSP_SubPlanChangeHistoryBatch
+    @isTest static void Test_NSP_SubPlanChangeHistoryBatch_Execution(){ 
+        // Insert custom setting
+        SubPlanChangeHistoryBatchSettings__c testSetting = new SubPlanChangeHistoryBatchSettings__c();
+        testSetting.IsEnabledRetFields__c = true;
+        insert testSetting;
+        Database.executeBatch(new NSP_SubPlanChangeHistoryBatch(), 200);
     }
 }

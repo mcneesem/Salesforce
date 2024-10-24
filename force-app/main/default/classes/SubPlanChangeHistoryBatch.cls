@@ -5,11 +5,11 @@
 * Azure Story 			: ADO-314621
 * Last Modified Date 	: 
 * Last Modified By: 
-* Test Coverage         : 91%
+* Test Coverage         : 98%
 */
-global class SubPlanChangeHistoryBatch implements Database.Batchable<sObject> , Schedulable
+global class SubPlanChangeHistoryBatch implements Database.Batchable<sObject>
 {
-    // test w/ SubPlanChangeHistoryBatchTest (91%)
+    // test w/ SubPlanChangeHistoryBatchTest (98%)
     /***********************************************************************************************
 	* MethodName: start
 	* Params	: Database.BatchableContext bc
@@ -95,15 +95,6 @@ global class SubPlanChangeHistoryBatch implements Database.Batchable<sObject> , 
 	* Params:       Database.BatchableContext bc
 	* ********************************************************************************************/ 
     global Void finish(Database.BatchableContext bc) {
-    }
-    
-    /***********************************************************************************************
-	* MethodName: execute
-	* Description : To Schedule SubPlanChangeHistoryBatch Class
-	* Params:       Database.SchedulableContext bc
-	* ********************************************************************************************/ 
-    global Void execute(System.SchedulableContext Sc) {
-        Database.executeBatch(new SubPlanChangeHistoryBatch(), 200);
     }
     
    /***********************************************************************************************

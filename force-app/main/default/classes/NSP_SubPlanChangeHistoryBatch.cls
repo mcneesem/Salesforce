@@ -5,7 +5,7 @@
 * Name : NSP_SubPlanChangeHistoryBatch
 */
 global class NSP_SubPlanChangeHistoryBatch implements Database.Batchable<sObject> , Schedulable {
-    // test w/ NSP_SubPlanChangeHistoryBatchTest (??%)
+    // test w/ SubPlanChangeHistoryBatchTest (98%)
 
     /***********************************************************************************************
     * MethodName: start
