@@ -9,6 +9,7 @@
 */
 global class SubPlanChangeHistoryBatch implements Database.Batchable<sObject> , Schedulable
 {
+    // test w/ SubPlanChangeHistoryBatchTest (91%)
     /***********************************************************************************************
 	* MethodName: start
 	* Params	: Database.BatchableContext bc
