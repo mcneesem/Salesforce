@@ -25,6 +25,10 @@ public without sharing class NSP_AccountTeamTriggerTest {
         userObj.NSP_Service_Region__c = 'MMSO - Houston';
         insert userObj;
         
+        AccountTeamTriggerSettings__c setting = new AccountTeamTriggerSettings__c();
+        setting.IsEnabledTermFormLookUps__c = true;
+        insert setting;
+        
         NSP_TestHelper.createAccount(true);
         String PEOProjectTaskRecordTypeId = Schema.SObjectType.pse__Project_Task__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.PROJECT_TASK_PEO_RECORDTYPE).getRecordTypeId();
         Id peoProjectRecordTypeId = SObjectType.pse__Proj__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.PEOProject).getRecordTypeId();
