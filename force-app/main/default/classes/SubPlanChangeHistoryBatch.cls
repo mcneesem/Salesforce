@@ -61,20 +61,16 @@ global class SubPlanChangeHistoryBatch implements Database.Batchable<sObject> , 
         {
             for(NSP_Plan_SubPlan__c subPlanChange : subPlanChangeList)
             { 
-                NSP_Sub_Plan_Change_History__c subPlanChangeHistory =  null;
-                
-                if(subPlanChange.Sub_Plan_Change_Historys__r?.size() > 0)
+                if ( ( subPlanChange.Sub_Plan_Change_Historys__r != null )
+                    && !subPlanChange.Sub_Plan_Change_Historys__r.isEmpty()
+                   )
                 {
-                    subPlanChangeHistory = subPlanChange.Sub_Plan_Change_Historys__r;
-                }
-                
-                if(subPlanChangeHistory <> null)
-                {
-                    NSP_Plan_SubPlan__c modifiedSubPlan = setSubPlanFields(subPlanChange, subPlanChangeHistory); // line to modify
-                    
-                    if(modifiedSubPlan <> null)
-                    {
-                        planSubPlanToBeUpdatedMap.put(modifiedSubPlan.Id, modifiedSubPlan); 
+                    NSP_Plan_SubPlan__c modifiedSubPlan = setSubPlanFields(
+                        subPlanChange ,
+                        subPlanChange.Sub_Plan_Change_Historys__r
+                    );
+                    if ( modifiedSubPlan != null ) {
+                        planSubPlanToBeUpdatedMap.put( modifiedSubPlan.Id , modifiedSubPlan );
                     }
                 }
             }
