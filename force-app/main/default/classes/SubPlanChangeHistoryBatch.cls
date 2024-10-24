@@ -81,26 +81,13 @@ global class SubPlanChangeHistoryBatch implements Database.Batchable<sObject> , 
             
             if(planSubPlanToBeUpdatedMap?.size() > 0) 
             {
-                // DML to update Sub Plan
-                Database.SaveResult[] srList = Database.update(planSubPlanToBeUpdatedMap.values(), false);
-                
-                // Iterate through each returned result
-                for (Database.SaveResult sr : srList)
-                {
-                    if (!sr.isSuccess()) 
-                    {
-                        // Operation failed, so get all errors                
-                        for(Database.Error err : sr.getErrors()) 
-                        {
-                            
-                            NSP_ErrorLogHandler.logSaveException(
-                                'NSP_SubPlanChangeHistoryTriggerHelper', 
-                                'planSubPlanToBeUpdated', 
-                                err.getMessage()
-                            );
-                        }
-                    }
-                }
+                // DML to update the modified records
+                Database.SaveResult[] results = Database.update( planSubPlanToBeUpdatedMap.values() , false );
+                NSP_ErrorLogHandler.logResults(
+                    SubPlanChangeHistoryBatch.class.getName() ,
+                    'execute' ,
+                    results
+                );
             }
         }
     }   
