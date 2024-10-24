@@ -147,7 +147,7 @@ global class NSP_SubPlanChangeHistoryBatch implements Database.Batchable<sObject
         Boolean isEnabledRetFields = false;
         SubPlanChangeHistoryBatchSettings__c settings = SubPlanChangeHistoryBatchSettings__c.getInstance( UserInfo.getUserId() );
         if ( settings != null ) {
-            isEnabledRetFields = settings.IsEnabledRetFields__c;
+            isEnabledRetFields = settings.IsEnabled__c;
         }
         if(isEnabledRetFields)
         {
