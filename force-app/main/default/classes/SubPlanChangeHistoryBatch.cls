@@ -224,11 +224,11 @@ global class SubPlanChangeHistoryBatch implements Database.Batchable<sObject> , 
             isModified = true;
         }
         
-        if(isModified)
+        if(!isModified)
         {
-            return planSubPlan;
+            planSubPlan = null;
         }
         
-        return null;
+        return planSubPlan;
     }
 }
