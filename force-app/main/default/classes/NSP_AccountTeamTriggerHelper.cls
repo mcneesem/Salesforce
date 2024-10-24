@@ -326,6 +326,7 @@ NSP_WX_WA_Benefits_Specialist__c, and NSP_Retirement_Service_Plan_Name__c field 
                 && ( newRolesMap != null )
                 && ( oldMap != null )
                 && ( Limits.getQueueableJobs() < Limits.getLimitQueueableJobs() )
+                && AccountTeamTriggerSettings__c.getInstance( UserInfo.getUserId() ).IsEnabledTermFormLookUps__c
                 )
             {
                 System.enqueueJob(
