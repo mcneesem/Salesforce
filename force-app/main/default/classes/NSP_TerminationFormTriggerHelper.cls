@@ -324,7 +324,12 @@ public class NSP_TerminationFormTriggerHelper {
                 }
             }
             if (!lTerminationFormShares.isEmpty()) {
-                insert lTerminationFormShares;  
+                List<Database.SaveResult> results = Database.insert( lTerminationFormShares , false );
+                NSP_ErrorLogHandler.logResults(
+                    NSP_TerminationFormTriggerHelper.class.getName() ,
+                    'shareTerminationFormsWithUsers:insert' ,
+                    results
+                ); 
             }  
         } catch (Exception e) {
             NSP_ErrorLogHandler.logException(  
