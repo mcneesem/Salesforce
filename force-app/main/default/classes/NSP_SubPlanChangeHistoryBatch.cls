@@ -149,13 +149,11 @@ global class NSP_SubPlanChangeHistoryBatch implements Database.Batchable<sObject
         if ( settings != null ) {
             isEnabledBatch = settings.IsEnabled__c;
         }
-        if(isEnabledBatch)
-        {
+        if ( isEnabledBatch ) {
             Database.executeBatch( new SubPlanChangeHistoryBatch() , 200 );
-        }
-        else
-        {
+        } else {
             Database.executeBatch( new NSP_SubPlanChangeHistoryBatch() , 200 );
         }
     }
+
 }
