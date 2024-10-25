@@ -16,6 +16,11 @@
     NOT(
       (ISPICKVAL( NSP_Role__c , &quot;WA/WX Payroll Specialist&quot;)) ||
       (ISPICKVAL( NSP_Role__c , &quot;WX/WA Benefits Specialist&quot;)) ||
+      (ISPICKVAL(NSP_Role__c , &apos;WX/WA Manager&apos;)) ||
+      (ISPICKVAL(NSP_Role__c , &apos;WX/WA Supervisor&apos;)) ||
+      (ISPICKVAL(NSP_Role__c , &apos;WX/WA Customer Success Specialist&apos;)) ||
+      (ISPICKVAL(NSP_Role__c , &apos;WX Time Specialist&apos;)) ||
+      (ISPICKVAL(NSP_Role__c , &apos;WX Business Team&apos;)) ||
       (ISPICKVAL( NSP_Role__c , &apos;Customer Success Specialist&apos;)) ||
       (ISPICKVAL( NSP_Role__c , &apos;ITA Analyst&apos;)) ||
       (ISPICKVAL( NSP_Role__c , &apos;Manager, ITA&apos;)) ||
@@ -26,6 +31,11 @@
     NOT(
       (ISPICKVAL(PRIORVALUE(NSP_Role__c),&apos;WA/WX Payroll Specialist&apos;)) ||
       (ISPICKVAL(PRIORVALUE(NSP_Role__c),&apos;WX/WA Benefits Specialist&apos;)) ||
+      (ISPICKVAL(PRIORVALUE(NSP_Role__c),&apos;WX/WA Manager&apos;)) ||
+      (ISPICKVAL(PRIORVALUE(NSP_Role__c),&apos;WX/WA Supervisor&apos;)) ||
+      (ISPICKVAL(PRIORVALUE(NSP_Role__c),&apos;WX/WA Customer Success Specialist&apos;)) ||
+      (ISPICKVAL(PRIORVALUE(NSP_Role__c),&apos;WX Time Specialist&apos;)) ||
+      (ISPICKVAL(PRIORVALUE(NSP_Role__c),&apos;WX Business Team&apos;) ||
       (ISPICKVAL(PRIORVALUE(NSP_Role__c),&apos;Customer Success Specialist&apos;)) ||
       (ISPICKVAL(PRIORVALUE(NSP_Role__c),&apos;ITA Analyst&apos;)) ||
       (ISPICKVAL(PRIORVALUE(NSP_Role__c),&apos;Manager, ITA&apos;)) ||
@@ -34,7 +44,8 @@
       (ISPICKVAL(PRIORVALUE(NSP_Role__c),&apos;401k Plan Consultant&apos;))
     )
   )
+)
 )</errorConditionFormula>
     <errorDisplayField>NSP_Role__c</errorDisplayField>
-    <errorMessage>Service User can only select WX/WA Benefits Specialist, WA/WX Payroll Specialist, Customer Success Specialist, 401k Plan Consultant Roles</errorMessage>
+    <errorMessage>Service User can only select WX/WA Benefits Specialist, WA/WX Payroll Specialist, WX/WA Manager, WX/WA Supervisor, WX/WA Customer Success Specialist, WX Time Specialist, WX Business Team, Customer Success Specialist, 401k Plan Consultant Roles</errorMessage>
 </ValidationRule>

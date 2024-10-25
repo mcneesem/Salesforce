@@ -11,6 +11,12 @@
                 <identifier>RecordNameField</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldItem>Record.Workday_Employee_ID__c</fieldItem>
+                <identifier>RecordWorkday_Employee_ID__cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-411ea267-a88c-4092-9a2f-4c66c27c58b8</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -2698,28 +2704,6 @@
                 <identifier>force_relatedListContainer</identifier>
             </componentInstance>
         </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>fields</name>
-                    <value>NSP_Field_Name__c,NSP_Modified_Date__c,NSP_Old_Value__c,NSP_New_Value__c,NSP_Modified_By__r.Name</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>relatedFieldApiName</name>
-                    <value>NSP_Sobject_Record_Id__c</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>sobjectApiName</name>
-                    <value>NSP_SObjects_History_Tracking__b</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>sortedBy</name>
-                    <value>NSP_Modified_Date__c</value>
-                </componentInstanceProperties>
-                <componentName>NSP_SingleRelatedList</componentName>
-                <identifier>NSP_SingleRelatedList</identifier>
-            </componentInstance>
-        </itemInstances>
         <mode>Replace</mode>
         <name>relatedTabContent</name>
         <type>Facet</type>
@@ -2787,6 +2771,23 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
+                    <name>height</name>
+                    <value>400px</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>tabName</name>
+                </componentInstanceProperties>
+                <componentName>highspot:HighspotContent</componentName>
+                <identifier>highspot_HighspotContent</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-1fe61350-3058-4fec-a944-b9a71dcf8c33</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
                     <name>active</name>
                     <value>true</value>
                 </componentInstanceProperties>
@@ -2846,6 +2847,20 @@
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
                 <identifier>customTab2</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-1fe61350-3058-4fec-a944-b9a71dcf8c33</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>Highspot</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tab</componentName>
+                <identifier>flexipage_tab2</identifier>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>

@@ -103,7 +103,7 @@
         </quickActionListItems>
         <quickActionListItems>
             <quickActionName>FeedItem.QuestionPost</quickActionName>
-        </quickActionListItems> 
+        </quickActionListItems>
     </quickActionList>
     <relatedLists>
         <fields>Note__c</fields>

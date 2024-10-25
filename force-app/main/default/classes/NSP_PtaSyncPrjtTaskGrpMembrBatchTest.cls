@@ -101,7 +101,7 @@ public class NSP_PtaSyncPrjtTaskGrpMembrBatchTest {
                                                         WHERE  pse__Project_Task__c =: projectTaskRec.Id LIMIT 1];
             System.assertNotEquals(contactRec.Id,newPta.pse__Resource__c,'Pta Not Created with contact');
         } catch(Exception ex){
-            NSP_CustomException.LogException(ex);
+            System.debug( ' ~ ex=' + ex );
         }
     }
     

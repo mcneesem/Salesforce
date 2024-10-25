@@ -211,6 +211,10 @@
                 <behavior>Readonly</behavior>
                 <field>SBQQ__ProratedListPrice__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Seasonal_Pricing__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -228,6 +232,14 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>NSP_Secondary_ListPrice__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Talent_Connect_Net_Total__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Talent_Connect_Net_Total_For_Template__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -1412,6 +1424,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>NSP_WX_Setup_Fee_Contribution__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Separate_Project__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>

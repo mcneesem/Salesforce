@@ -67,7 +67,7 @@ public class NSP_AccountTerminationBatch_Test {
 
             system.assertEquals('Terminated' , asst.Status);
         } catch(Exception ex){
-            NSP_CustomException.LogException(ex);
+            System.debug( ' ~ ex=' + ex );
         }
     }
  

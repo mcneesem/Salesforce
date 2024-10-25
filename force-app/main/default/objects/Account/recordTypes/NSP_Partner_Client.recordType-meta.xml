@@ -84,6 +84,25 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Clint_prof_sec_and_extrnl_HRTechgy__c</picklist>
+        <values>
+            <fullName>ATS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Accounting Software</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>LMS HRIS etc%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Track API%27s</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>DOZISF__ZoomInfo_Enrich_Status__c</picklist>
         <values>
             <fullName>Enriched</fullName>
@@ -244,6 +263,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Armstrong Transport Group%2C LLC</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>AtWork Group LLC</fullName>
             <default>false</default>
         </values>
@@ -265,6 +288,10 @@
         </values>
         <values>
             <fullName>Financial Services Institute %28FSI%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>First Tee Foundation</fullName>
             <default>false</default>
         </values>
         <values>
@@ -292,6 +319,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>LG Electronics</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>MDVIP</fullName>
             <default>false</default>
         </values>
@@ -305,10 +336,6 @@
         </values>
         <values>
             <fullName>North American Trailer Dealer Association %28NATDA%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>PREVEER %28UFG franchise%29</fullName>
             <default>false</default>
         </values>
         <values>
@@ -332,6 +359,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Store Local Corporation</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>TechStars</fullName>
             <default>false</default>
         </values>
@@ -340,23 +371,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>The Union for Reform Judiasm %28Conservative Judiasm%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>The Veterinary Cooperative</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Trane U%2ES%2E Inc%2E</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>United Franchise Group %28UFG%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Venture X Members %28tenants%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>VentureX Locations %28UFG franchise%29</fullName>
             <default>false</default>
         </values>
         <values>
@@ -5639,6 +5662,10 @@
         </values>
         <values>
             <fullName>Acrisure%2C LLC dba Presidio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Acrisure%2C Martin Insurance</fullName>
             <default>false</default>
         </values>
         <values>

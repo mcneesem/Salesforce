@@ -2,6 +2,7 @@
 Date : 02/11/2021 */
 
 public with sharing class NSP_CreateProjectUsingKey {
+    // test w/ NSP_CreateProjectUsingKeyTest (93%)
 
     /*This method will accept key and look for Template Id in Custom Metadata: Template_Key_and_Id_Mapping__mdt.
     * It will also delete Budgets, considered as part of STY-00954
@@ -16,7 +17,9 @@ public with sharing class NSP_CreateProjectUsingKey {
         new pse.CreateProjectFromTemplateService.CreateProjectFromTemplateRequest(keyWithTemplateId[0].Template_ID__c, projectStartdate);
         //Set new project name to specified name
         projRequest.ProjectName = keyWithTemplateId[0].Template_Name__c;
-
+        projRequest.Mappers = new List<pse.SObjectCloneMapper>{
+            NSP_CreateProjFromFlow.getDefaultMappers()
+        };
         //Call the service and create project
         List<pse.CreateProjectFromTemplateService.CreateProjectResponse> projResponse =
         pse.CreateProjectFromTemplateService.createProjectsFromTemplates( 
@@ -43,7 +46,10 @@ public with sharing class NSP_CreateProjectUsingKey {
                         new pse.CreateProjectFromTemplateService.CreateProjectFromTemplateRequest(templateProjectId, startDateForProject);
         //assigning the values
         projRequest.ProjectName = projectName;
-		projRequest.IsActive = true;
+        projRequest.IsActive = true;
+        projRequest.Mappers = new List<pse.SObjectCloneMapper>{
+            NSP_CreateProjFromFlow.getDefaultMappers()
+        };
         return projRequest;
     }
     

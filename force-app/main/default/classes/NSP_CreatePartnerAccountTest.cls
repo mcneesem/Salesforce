@@ -53,7 +53,7 @@ public class NSP_CreatePartnerAccountTest {
         NSP_CreatePartnerAccount.createAccount(null,cnt.id);
         NSP_CreatePartnerAccount.getPiklistValues(null,null);
         }catch(Exception ex){
-            NSP_CustomException.LogException(ex);
+            System.debug( ' ~ ex=' + ex );
         }
         NSP_CreatePartnerAccount.returnAllPickListValues();
         Test.stopTest();

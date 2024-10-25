@@ -2,7 +2,7 @@
 * Represents the Opportunity trigger helper created By Service which handles all the logic.
 */
 public class NSP_OpportunityTriggerServiceHelper {
-    // test w/ NSP_OpportunityTriggerServiceHelperTest, NSP_AutomaticProjectBatchTest (91%)
+    // test w/ NSP_OpportunityTriggerServiceHelperTest, NSP_AutomaticProjectBatchTest (85%)
 
     /*****************************************************************
     * Creating Constructor to call FF API's
@@ -175,30 +175,40 @@ public class NSP_OpportunityTriggerServiceHelper {
         }
         
     }
-   
-    /**
-* Create Project And Delete Budget
-* @param lProjRequests Response received from FinancialForce APIs).    
-* @return void             
-*                
-*/
-    
-    public Set<Id> createProjectAndDeleteBudget(List<pse.CreateProjectFromTemplateService.CreateProjectFromTemplateAndAccountRequest> lProjRequests){
-       
-      
-        //Call the service and create project      
-        List<pse.CreateProjectFromTemplateService.CreateProjectResponse> projResponse = this.implInstance.createProjectFromTemplate(new List<pse.CreateProjectFromTemplateService.CreateProjectFromTemplateAndAccountRequest>{lProjRequests[0]});
-        Set<Id> newProjectId = this.implInstance.getProjectIdSet(projResponse);
-        
-        // Deleting all Budgets Created with Projects
-        if(!newProjectId.isEmpty()){
-            List<pse__Budget__c> lBudgets = [SELECT id FROM pse__Budget__c WHERE pse__Project__c in : newProjectId];
-            delete lBudgets;
+
+    //
+    // Create Project And Delete Budget
+    // @param lProjRequests Response received from FinancialForce APIs).
+    // @return void
+    //
+    public Set<Id> createProjectAndDeleteBudget( List<pse.CreateProjectFromTemplateService.CreateProjectFromTemplateAndAccountRequest> lProjRequests ) {
+        Set<Id> newProjectId = new Set<Id>();
+        if ( ( lProjRequests != null ) && !lProjRequests.isEmpty() ) {
+            //Add incoming mappers plus Region field
+            if(lProjRequests[0].Mappers != null) {
+                lProjRequests[0].Mappers.addAll(new List<pse.SObjectCloneMapper>{
+                    NSP_CreateProjFromFlow.getDefaultMappers()
+                });
+            }
+            else {
+                lProjRequests[0].Mappers = new List<pse.SObjectCloneMapper> { NSP_CreateProjFromFlow.getDefaultMappers()};
+            }
+            //Call the service and create project      
+            List<pse.CreateProjectFromTemplateService.CreateProjectResponse> projResponse = this.implInstance.createProjectFromTemplate(new List<pse.CreateProjectFromTemplateService.CreateProjectFromTemplateAndAccountRequest>{lProjRequests[0]});
+            newProjectId = this.implInstance.getProjectIdSet(projResponse);
+            // Deleting all Budgets Created with Projects
+            if ( !newProjectId.isEmpty() ) {
+                List<pse__Budget__c> lBudgets = [
+                    SELECT Id
+                    FROM pse__Budget__c
+                    WHERE pse__Project__c IN :newProjectId
+                ];
+                delete lBudgets;
+            }
         }
-        
         return newProjectId;
     }
-    
+
     /***********************************************************************************************
 * MethodName: updateImplementationProfile
 * Description : This Method will update Opportunity related account ProjectId on the Implementation Profile for the Closed Opportunities 

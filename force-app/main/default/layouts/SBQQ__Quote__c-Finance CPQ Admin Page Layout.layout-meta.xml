@@ -105,6 +105,10 @@
                 <behavior>Edit</behavior>
                 <field>NSP_ProjectOwner__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Talent_Connect_Total_Monthly_Fee__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

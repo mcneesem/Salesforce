@@ -96,4 +96,14 @@
         <protected>false</protected>
         <reevaluateOnChange>false</reevaluateOnChange>
     </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_status_to_Draft</fullName>
+        <field>NSP_Status__c</field>
+        <literalValue>Draft</literalValue>
+        <name>Update status to Draft</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
 </Workflow>

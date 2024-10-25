@@ -8,11 +8,12 @@ public with sharing class NSP_ProjectTriggerHelper {
     public final String PROJECTTASKSTATUSCANCELLED = 'Canceled';
     public final String PROJECTSERVICEPLAN3 = 'Service_Plan_Level_3';
     public final String PROJECTSERVICEPLAN4 = 'Service_Plan_Level_4';
-    public Static final Id PEOPROJECTTECORDTYPEID = SObjectType.pse__Proj__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.PEOProject).getRecordTypeId();
+    public Static final Id PEOPROJECTTECORDTYPEID = NSP_GenericRecordType.getRecordTypeId( 'pse__Proj__c' , 'PEO_Project' );
+    public Static final Id TESBPSPROJECTTECORDTYPEID = NSP_GenericRecordType.getRecordTypeId( 'pse__Proj__c' , 'TES_BPS' );
     public Static final List<String> PROJECTTASKNAMES = label.NSP_Project_Task_Names.split(',');
     public Static final String NEWPROJECTNAME = 'Post Implementation Payroll Follow Up';
     public Static final String NEWPROJECTTYPE = 'Implementation';
-    public static final Id WORECORDTYPEID = Schema.SObjectType.Asset.getRecordTypeInfosByName().get('WO').getRecordTypeId();
+    public Static final Id WORECORDTYPEID = NSP_GenericRecordType.getRecordTypeId( 'Asset' , 'WO' );
     public static final Id PEOBILLRECTYPEID = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.PROJECT, NSP_ServiceConstants.PEO_BILL_RECORDTYPE);
     public static final Id casePEORecordTypeId = NSP_GenericRecordType.getRecordTypeId('Case', NSP_ServiceConstants.PEO);
     private static final Id itaCqaRecordTypeId = NSP_GenericRecordType.getRecordTypeId('Case', NSP_ServiceConstants.NSP_ITA_CQA);
@@ -57,6 +58,11 @@ public with sharing class NSP_ProjectTriggerHelper {
             if(project.recordTypeId == PEOPROJECTTECORDTYPEID && project.TemplateName__c == NSP_ServiceConstants.WO_WX_TEMPLATE){
                 project.pse__Start_Date__c = System.today();
                 project.pse__End_Date__c = System.today().addDays(30);
+            }
+
+            if(project.recordTypeId == TESBPSPROJECTTECORDTYPEID && project.TemplateName__c == NSP_ServiceConstants.ITA_IMPLEMENTATION){
+                project.pse__Start_Date__c = System.today();
+                project.pse__End_Date__c = system.today().addmonths(12);
             }
         
         	updatePrjNameList.add(project);           
@@ -211,31 +217,27 @@ public with sharing class NSP_ProjectTriggerHelper {
         }
     }
 
-
-    /**
-    * Iterates throught the list of new leads and passes the required attributes to other methods.
-    * @param projectNewList List of New project. 
-    * @param projectOldMap Map of Old project.   
-    * @return void             
-    *                
-    */
-    public void afterInsertMethod(List<pse__Proj__c> projectNewList, Map<Id, pse__Proj__c> projectOldMap){
-        Map<Id, pse__Proj__c> projectNewMap = new Map<Id, pse__Proj__c>();       
-        for(pse__Proj__c proj : projectNewList){
-            projectNewMap.put(proj.Id, proj);           
+    //
+    // Iterates throught the list of new leads and passes the required attributes to other methods.
+    // @param projectNewList List of New project.
+    // @param projectOldMap Map of Old project.
+    // @return void
+    //
+    public void afterInsertMethod( List<pse__Proj__c> projectNewList , Map<Id,pse__Proj__c> projectOldMap ) {
+        Map<Id,pse__Proj__c> projectNewMap = new Map<Id,pse__Proj__c>();       
+        for ( pse__Proj__c proj : projectNewList ) {
+            projectNewMap.put( proj.Id , proj );
         }
-        //Method to assign assignments to project and its related project task and milestone on change of Project co-ordinator and Implementor.
-        onChangeOfProjectImplementorCoordinator(projectNewMap, projectOldMap);                
+        this.onChangeOfProjectImplementorCoordinator( projectNewMap , projectOldMap );
     }
 
-    /**
-    * Iterates throught the list of new leads and passes the required attributes to other methods.
-    * @param projectNewMap Map of New project. 
-    * @param projectOldMap Map of Old project.   
-    * @return void             
-    *                
-    */
-    public void afterUpdateDirector(Map<Id, pse__Proj__c> projectNewMap,Map<Id, pse__Proj__c> projectOldMap){        
+    //
+    // Iterates throught the list of new leads and passes the required attributes to other methods.
+    // @param projectNewMap Map of New project.
+    // @param projectOldMap Map of Old project.
+    // @return void
+    //
+    public void afterUpdateDirector( Map<Id, pse__Proj__c> projectNewMap , Map<Id, pse__Proj__c> projectOldMap ) {
         Set<Id> cancelledProjectIdSet = new Set<Id>();
         Set<Id> setOfProjectId = new Set<Id>();
         Set<Id> completedPrjctIdSet = new Set<Id>();
@@ -277,9 +279,7 @@ public with sharing class NSP_ProjectTriggerHelper {
                 && projectOldMap.get(projectId).pse__Project_Status__c != projectNewMap.get(projectId).pse__Project_Status__c){   
                     cancelledProjectIdSet.add(projectId);
                 }
-            //Method to assign assignments to project and its related project task and milestone on change of Project co-ordinator and Implementor.
-            onChangeOfProjectImplementorCoordinator(projectNewMap,projectOldMap);
-            
+            this.onChangeOfProjectImplementorCoordinator( projectNewMap , projectOldMap );
             if(projectNewMap.get(projectId).pse__Is_Template__c && projectNewMap.get(projectId).TemplateName__c != projectOldMap.get(projectId).TemplateName__c){
                 setOfProjectId.add(projectId);
             }
@@ -375,7 +375,7 @@ public with sharing class NSP_ProjectTriggerHelper {
              NSP_ProjectRecordSharing.shareRelatedProjectTasks(mapOfProjects.keySet());
              NSP_ProjectRecordSharing.shareRelatedMilestones(mapOfProjects.keySet());
         }
-    }   
+    }
 
     /***********************************************************************************************
     * MethodName: updateProjectNameonBeforeInsert 
@@ -521,14 +521,14 @@ public with sharing class NSP_ProjectTriggerHelper {
             update childRecordList;
         }
     }
-    /**
-    * Method to assign assignments to project and its related project task and milestone on change of Project co-ordinator and Implementor.
-    * @param projectNewMap Map of New project. 
-    * @param projectOldMap Map of Old project.   
-    * @return void             
-    *                
-    */
-    public void onChangeOfProjectImplementorCoordinator(Map<Id, pse__Proj__c> projectNewMap,Map<Id, pse__Proj__c> projectOldMap){        
+
+    //
+    // Method to assign assignments to project and its related project task and milestone on change of Project co-ordinator and Implementor.
+    // @param projectNewMap Map of New project.
+    // @param projectOldMap Map of Old project.
+    // @return void
+    //
+    private void onChangeOfProjectImplementorCoordinator( Map<Id,pse__Proj__c> projectNewMap , Map<Id,pse__Proj__c> projectOldMap ) {
         Map<Id, Id> userWithContactMap = new Map<Id, Id>();
         Map<Id, pse__Proj__c> changedProjectMap = new Map<Id, pse__Proj__c>();
         Set<Id> projectUsersSet = new Set<Id>();       
@@ -556,66 +556,125 @@ public with sharing class NSP_ProjectTriggerHelper {
             }
         }
         //List is empty or not
-        if(!changedProjectMap.isEmpty() && !userWithContactMap.isEmpty()){
-            linkProjectImplementerToChildrecords(changedProjectMap, userWithContactMap, projectNewMap);
+        if ( !changedProjectMap.isEmpty() && !userWithContactMap.isEmpty() ) {
+            this.linkProjectImplementerToChildrecords(
+                changedProjectMap ,
+                userWithContactMap ,
+                projectNewMap
+            );
         }
     }
 
-    /**
-    * call the method to Update the child records to link project Implementer.
-    * @param Map<Id, pse__Proj__c> changedProjectMap, Map<Id, Id> userWithContactMap, Map<Id, pse__Proj__c> projectNewMap
-    * @return void             
-    */  
-    public void linkProjectImplementerToChildrecords(Map<Id, pse__Proj__c> changedProjectMap, Map<Id, Id> userWithContactMap, Map<Id, pse__Proj__c> projectNewMap){
-        if(!changedProjectMap.isEmpty()){
-            createSchedule(changedProjectMap, userWithContactMap, projectNewMap);
+    //
+    // call the method to Update the child records to link project Implementer.
+    // @param Map<Id, pse__Proj__c> changedProjectMap, Map<Id, Id> userWithContactMap, Map<Id, pse__Proj__c> projectNewMap
+    // @return void
+    //
+    private void linkProjectImplementerToChildrecords(
+        Map<Id,pse__Proj__c> changedProjectMap ,
+        Map<Id,Id> userWithContactMap ,
+        Map<Id,pse__Proj__c> projectNewMap
+        )
+    {
+        if ( ( changedProjectMap != null ) && !changedProjectMap.isEmpty() ) {
+            this.createSchedule(
+                changedProjectMap ,
+                userWithContactMap ,
+                projectNewMap
+            );
         }
-    }    
-    /**
-    * method to create schedule for the assignments.
-    * @param Map<Id, pse__Proj__c> changedProjectMap, Map<Id, Id> userWithContactMap, Map<Id, pse__Proj__c> projectNewMap  
-    * @return void             
-    */
-    public void createSchedule(Map<Id, pse__Proj__c> changedProjectMap, Map<Id, Id> userWithContactMap, Map<Id, pse__Proj__c> projectNewMap){
-        Map<Id, pse__Schedule__c> projectWithScheduleMap = new Map<Id, pse__Schedule__c>();
-        for(pse__Proj__c project : projectNewMap.values()){ 
-            pse__Schedule__c sch = new pse__Schedule__c();
-            sch.pse__Start_Date__c = project.pse__Start_Date__c;
-            sch.pse__End_Date__c = project.pse__End_Date__c;
-            projectWithScheduleMap.put(project.Id, sch);
-        }
-        if(!projectWithScheduleMap.isEmpty()){
-            insert projectWithScheduleMap.values();
-        }
-        createAssignments(changedProjectMap, userWithContactMap, projectWithScheduleMap);
-    }    
-    /**
-    * method to create assignments for project coordinator and implementor.
-    * @param Map<Id, pse__Proj__c> changedProjectMap, Map<Id, Id> userWithContactMap, Map<Id, pse__Schedule__c> projectWithScheduleMap  
-    * @return void             
-    */
-    public void createAssignments(Map<Id, pse__Proj__c> changedProjectMap, Map<Id, Id> userWithContactMap, Map<Id, pse__Schedule__c> projectWithScheduleMap){
-        List<pse__Assignment__c> relatedAssignmentList = new List<pse__Assignment__c>();       
-        for(Id projectId : changedProjectMap.keyset()){
-            if(userWithContactMap.get(changedProjectMap.get(projectId).Project_Coordinator__c) !=
-                userWithContactMap.get(changedProjectMap.get(projectId).Project_Implementer__c)){
-                    if(userWithContactMap.get(changedProjectMap.get(projectId).Project_Implementer__c) != null){
-                        relatedAssignmentList.addAll(linkAssignmentToResource(projectId, userWithContactMap.get(changedProjectMap.get(projectId).Project_Implementer__c), projectWithScheduleMap.get(projectId).Id));
-                    }
-                    if(userWithContactMap.get(changedProjectMap.get(projectId).Project_Coordinator__c) != null){
-                        relatedAssignmentList.addAll(linkAssignmentToResource(projectId, userWithContactMap.get(changedProjectMap.get(projectId).Project_Coordinator__c), projectWithScheduleMap.get(projectId).Id));
-                    }
-            }else if(userWithContactMap.get(changedProjectMap.get(projectId).Project_Coordinator__c) ==
-                userWithContactMap.get(changedProjectMap.get(projectId).Project_Implementer__c)){
-                relatedAssignmentList.addAll(linkAssignmentToResource(projectId, userWithContactMap.get(changedProjectMap.get(projectId).Project_Implementer__c), projectWithScheduleMap.get(projectId).Id));
-            }
-        }   
-        // Adding Test.isRunningTest to bypass in test class as we need staffing permission for the assignment's resource and the assignment's
-        if(relatedAssignmentList.size() > 0 && !Test.isRunningTest()){
-            insert relatedAssignmentList;
-        }
-        linkAssignmentToProjectTask('pse__Project_Task__c',NSP_ServiceConstants.PSE_PROJECT, relatedAssignmentList, changedProjectMap);
     }
+
+    //
+    // method to create schedule for the assignments.
+    // @param Map<Id, pse__Proj__c> changedProjectMap, Map<Id, Id> userWithContactMap, Map<Id, pse__Proj__c> projectNewMap
+    // @return void
+    //
+    private void createSchedule(
+        Map<Id,pse__Proj__c> changedProjectMap ,
+        Map<Id,Id> userWithContactMap ,
+        Map<Id,pse__Proj__c> projectNewMap
+        )
+    {
+        try {
+            Map<Id,pse__Schedule__c> projectWithScheduleMap = new Map<Id,pse__Schedule__c>();
+            if ( ( projectNewMap != null ) && !projectNewMap.isEmpty() ) {
+                for ( pse__Proj__c project : projectNewMap.values() ) {
+                    if ( ( project.Id != null )
+                        && ( project.pse__Start_Date__c != null )
+                        && ( project.pse__End_Date__c != null )
+                        )
+                    {
+                        pse__Schedule__c sch = new pse__Schedule__c();
+                        sch.pse__Start_Date__c = project.pse__Start_Date__c;
+                        sch.pse__End_Date__c = project.pse__End_Date__c;
+                        projectWithScheduleMap.put( project.Id , sch );
+                    }
+                }
+                if ( !projectWithScheduleMap.isEmpty() ) {
+                    insert projectWithScheduleMap.values();
+                }
+            }
+            this.createAssignments(
+                changedProjectMap ,
+                userWithContactMap ,
+                projectWithScheduleMap
+            );
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_ProjectTriggerHelper.class.getName() ,
+                'createSchedule' ,
+                e
+            );
+        }
+    }
+
+    //
+    // method to create assignments for project coordinator and implementor.
+    // @param Map<Id, pse__Proj__c> changedProjectMap, Map<Id, Id> userWithContactMap, Map<Id, pse__Schedule__c> projectWithScheduleMap
+    // @return void
+    //
+    private void createAssignments(
+        Map<Id,pse__Proj__c> changedProjectMap ,
+        Map<Id,Id> userWithContactMap ,
+        Map<Id,pse__Schedule__c> projectWithScheduleMap
+        )
+    {
+        try {
+            List<pse__Assignment__c> relatedAssignmentList = new List<pse__Assignment__c>();       
+            for(Id projectId : changedProjectMap.keyset()){
+                if(userWithContactMap.get(changedProjectMap.get(projectId).Project_Coordinator__c) !=
+                    userWithContactMap.get(changedProjectMap.get(projectId).Project_Implementer__c)){
+                        if(userWithContactMap.get(changedProjectMap.get(projectId).Project_Implementer__c) != null){
+                            relatedAssignmentList.addAll(linkAssignmentToResource(projectId, userWithContactMap.get(changedProjectMap.get(projectId).Project_Implementer__c), projectWithScheduleMap.get(projectId).Id));
+                        }
+                        if(userWithContactMap.get(changedProjectMap.get(projectId).Project_Coordinator__c) != null){
+                            relatedAssignmentList.addAll(linkAssignmentToResource(projectId, userWithContactMap.get(changedProjectMap.get(projectId).Project_Coordinator__c), projectWithScheduleMap.get(projectId).Id));
+                        }
+                }else if(userWithContactMap.get(changedProjectMap.get(projectId).Project_Coordinator__c) ==
+                    userWithContactMap.get(changedProjectMap.get(projectId).Project_Implementer__c)){
+                    relatedAssignmentList.addAll(linkAssignmentToResource(projectId, userWithContactMap.get(changedProjectMap.get(projectId).Project_Implementer__c), projectWithScheduleMap.get(projectId).Id));
+                }
+            }   
+            // Adding Test.isRunningTest to bypass in test class as we need staffing permission for the assignment's resource and the assignment's
+            if ( !relatedAssignmentList.isEmpty() && !Test.isRunningTest() ) {
+                insert relatedAssignmentList; // throws DmlException ~ FIELD_CUSTOM_VALIDATION_EXCEPTION, You are not allowed to create the assignment *** You must be granted the Staffing permission for the assignment's resource and the assignment's project.
+            }
+            this.linkAssignmentToProjectTask(
+                'pse__Project_Task__c' ,
+                'pse__Project__c' ,
+                relatedAssignmentList ,
+                changedProjectMap
+            );
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_ProjectTriggerHelper.class.getName() ,
+                'createAssignments' ,
+                e
+            );
+        }
+    }
+
     /**
     * method to link assignement with resource.
     * @param Id resourceId, Map<Id, pse__Schedule__c> projectWithScheduleMap  
@@ -631,37 +690,55 @@ public with sharing class NSP_ProjectTriggerHelper {
             relatedAssignmentList.add(relatedAssignment);
         return relatedAssignmentList;
     }
-    /**
-    * method to link project task with new assignemnts .
-    * @param String objectName, String relationField, List<pse__Assignment__c> relatedAssignmentList, Map<Id, pse__Proj__c> changedProjectMap  
-    * @return void             
-    */
-    public void linkAssignmentToProjectTask(String objectName, String relationField, List<pse__Assignment__c> relatedAssignmentList, Map<Id, pse__Proj__c> changedProjectMap){
-        SET<ID> projectKeys = changedProjectMap.keyset();
-        Map<Id,pse__Assignment__c> resourceWithAssignment = new Map<Id, pse__Assignment__c>(); 
-        List<sObject> childRecordList = Database.query('SELECT Id, pse__Project__c FROM '+ String.escapeSingleQuotes(objectName) +' WHERE '+ String.escapeSingleQuotes(relationField) +' IN: projectKeys AND pse__Project__r.RecordTypeId !='+ '\''+bpsProjectRecordTypeId+'\'');
-        List<pse__Project_Task_Assignment__c> PTAList = new List<pse__Project_Task_Assignment__c>();
-        for(pse__Assignment__c assignment : relatedAssignmentList){
-            resourceWithAssignment.put(assignment.pse__Resource__c, assignment);
-        }
-        if(!childRecordList.isEmpty()){
-            for(sObject childRecordObj : childRecordList){
-                if(objectName == 'pse__Project_Task__c'){
-                    for(pse__Assignment__c assignment : resourceWithAssignment.values()){
-                        pse__Project_Task_Assignment__c PTA = new pse__Project_Task_Assignment__c();
-                        PTA.pse__Project_Task__c = childRecordObj.Id;
-                        PTA.pse__Assignment__c = assignment.Id;
-                        PTA.pse__Resource__c = assignment.pse__Resource__c;
-                        PTA.pse__Resource_Role__c = 'Executive';
-                        PTAList.add(PTA);
-                    } 
+
+    //
+    // method to link project task with new assignemnts.
+    // @param String objectName, String relationField, List<pse__Assignment__c> relatedAssignmentList, Map<Id, pse__Proj__c> changedProjectMap
+    // @return void
+    //
+    private void linkAssignmentToProjectTask(
+        String objectName ,
+        String relationField ,
+        List<pse__Assignment__c> relatedAssignmentList ,
+        Map<Id,pse__Proj__c> changedProjectMap
+        )
+    {
+        try {
+            Set<Id> projectKeys = changedProjectMap.keyset();
+            Map<Id,pse__Assignment__c> resourceWithAssignment = new Map<Id,pse__Assignment__c>(); 
+            List<sObject> childRecordList = Database.query(
+                'SELECT Id, pse__Project__c'
+                +' FROM '+ String.escapeSingleQuotes(objectName)
+                +' WHERE '+ String.escapeSingleQuotes(relationField) +' IN: projectKeys'
+                +' AND pse__Project__r.RecordTypeId !='+ '\''+bpsProjectRecordTypeId+'\''
+            );
+            List<pse__Project_Task_Assignment__c> PTAList = new List<pse__Project_Task_Assignment__c>();
+            for(pse__Assignment__c assignment : relatedAssignmentList){
+                resourceWithAssignment.put(assignment.pse__Resource__c, assignment);
+            }
+            if(!childRecordList.isEmpty()){
+                for(sObject childRecordObj : childRecordList){
+                    if(objectName == 'pse__Project_Task__c'){
+                        for(pse__Assignment__c assignment : resourceWithAssignment.values()){
+                            pse__Project_Task_Assignment__c PTA = new pse__Project_Task_Assignment__c();
+                            PTA.pse__Project_Task__c = childRecordObj.Id;
+                            PTA.pse__Assignment__c = assignment.Id;
+                            PTA.pse__Resource__c = assignment.pse__Resource__c;
+                            PTA.pse__Resource_Role__c = 'Executive';
+                            PTAList.add(PTA);
+                        } 
+                    }
                 }
             }
+            insert PTAList;
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_ProjectTriggerHelper.class.getName() ,
+                'linkAssignmentToProjectTask' ,
+                e
+            );
         }
-        insert PTAList;
     }
-    
-
 
     /* Description : Below method will run after Project is inserted.
                         Use the below method i.e. afterProjectInsertion to implement
@@ -992,24 +1069,55 @@ public with sharing class NSP_ProjectTriggerHelper {
         }
     }
 
-    /***********************************************************************************************
-    * MethodName: updateProjectName
-    * Description : This Method will update the project name for FSO and MM Projects    
-    * Params:       List< pse__Proj__c> projectList ,  Map<Id,pse__Proj__c> oldProjectMap
-    * Author :      Nischay Jindal
-    * ********************************************************************************************/   
-    public  void updateProjectName(Map<Id,pse__Proj__c> newProjectMap , Map<Id,pse__Proj__c> oldProjectMap , 
-                                            Set <Id> projectSetId , Id peoProjectRecordTypeId){
-        try{  
-        Map<Id,pse__Proj__c> projectAccountMap= new Map<Id,pse__Proj__c>([Select Id ,pse__Account__c, pse__Account__r.Name FROM pse__Proj__c WHERE Id IN:projectSetId]);
-            for(pse__Proj__c project:newProjectMap.values()){
-                if(project.pse__Account__c!=null && project.pse__Account__c== projectAccountMap.get(project.Id).pse__Account__c && !project.Name.contains(projectAccountMap.get(project.Id).pse__Account__r.Name)
-                    &&  project.pse__Project_Type__c == NSP_ServiceConstants.ImplementationProjectType
-                    && !project.pse__Is_Template__c && project.recordTypeId == peoProjectRecordTypeId && 
-                    (project.TemplateName__c == label.Middle_Market_Implementation_Project ||
-                    project.TemplateName__c == label.FSOImplementationProject) ){
-                        project.Name = projectNameAsPerNamingConvention(project.TemplateName__c,project.pse__Start_Date__c, projectAccountMap.get(project.pse__Account__c).Name);
+    //
+    // MethodName: updateProjectName
+    // Description: This Method will update the project name for FSO and MM Projects
+    // Params: List< pse__Proj__c> projectList ,  Map<Id,pse__Proj__c> oldProjectMap
+    // Author: Nischay Jindal
+    //
+    public void updateProjectName(
+        Map<Id,pse__Proj__c> newProjectMap ,
+        Map<Id,pse__Proj__c> oldProjectMap ,
+        Set <Id> projectSetId ,
+        Id peoProjectRecordTypeId
+        )
+    {
+        try {
+            Map<Id,pse__Proj__c> projectAccountMap= new Map<Id,pse__Proj__c>(
+                [
+                    SELECT Id , pse__Account__c , pse__Account__r.Name
+                    FROM pse__Proj__c
+                    WHERE ( Id IN :projectSetId )
+                ]
+            );
+            for ( pse__Proj__c project : newProjectMap.values() ) {
+                if ( ( project.pse__Account__c != null )
+                    && projectAccountMap.containsKey( project.Id )
+                    && ( projectAccountMap.get( project.Id ) != null )
+                    && ( project.pse__Account__c == projectAccountMap.get( project.Id ).pse__Account__c )
+                    && ( projectAccountMap.get( project.Id ).pse__Account__r != null )
+                    && !project.Name.contains( projectAccountMap.get( project.Id ).pse__Account__r.Name )
+                    && ( project.pse__Project_Type__c == NSP_ServiceConstants.ImplementationProjectType )
+                    && !project.pse__Is_Template__c
+                    && ( project.recordTypeId == NSP_ProjectTriggerHelper.peoProjectRecordTypeId )
+                    )
+                {
+                    if ( ( project.TemplateName__c == label.Middle_Market_Implementation_Project )
+                        || ( project.TemplateName__c == label.FSOImplementationProject )
+                        )
+                    {
+                        if ( projectAccountMap.containsKey( project.pse__Account__c )
+                            && ( projectAccountMap.get( project.pse__Account__c ) != null )
+                            )
+                        {
+                            project.Name = projectNameAsPerNamingConvention(
+                                project.TemplateName__c ,
+                                project.pse__Start_Date__c ,
+                                projectAccountMap.get( project.pse__Account__c ).Name
+                            );
+                        }
                     }
+                }
             }
         } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
@@ -1488,6 +1596,9 @@ public with sharing class NSP_ProjectTriggerHelper {
         new pse.CreateProjectFromTemplateService.CreateProjectFromTemplateRequest(keyWithTemplateId.Template_ID__c, projectStartdate);
         //Set new project name to specified name
         projRequest.ProjectName = keyWithTemplateId.Template_Name__c;
+        projRequest.Mappers = new List<pse.SObjectCloneMapper>{
+            NSP_CreateProjFromFlow.getDefaultMappers()
+        };
         //Call the service and create project
         List<pse.CreateProjectFromTemplateService.CreateProjectResponse> projResponse =
         pse.CreateProjectFromTemplateService.createProjectsFromTemplates( 
@@ -1505,6 +1616,9 @@ public with sharing class NSP_ProjectTriggerHelper {
         pse.CreateProjectFromTemplateService.CreateProjectFromTemplateAndAccountRequest projRequest = new pse.CreateProjectFromTemplateService.CreateProjectFromTemplateAndAccountRequest(oaccount.Id, oprojectTemplate.Id , System.Today());
         //assigning the values
         projRequest.ProjectName = oprojectTemplate.Template_Name__c;
+        projRequest.Mappers = new List<pse.SObjectCloneMapper>{
+            NSP_CreateProjFromFlow.getDefaultMappers()
+        };
         projRequest.IsActive = true;
         projRequest.ProjectOwnerId = oaccountTeam.NSP_User__c;
         return projRequest;
@@ -1562,7 +1676,7 @@ public with sharing class NSP_ProjectTriggerHelper {
         if ( String.isNotBlank( prjName ) && String.isNotBlank( accountName ) ) {
             prjName = prjName + ' - '+ accountName;
         }
-        if ( prjName.length() > 80 ) {
+        if ( prjName.length() > 73 ) {
             prjName = prjName.substring( 0 , 73 );
         }
         return prjName;

@@ -39,9 +39,14 @@
         <name>Christmas</name>
     </holidays>
     <holidays>
-        <activityDate>2024-12-25</activityDate>
-        <isRecurring>false</isRecurring>
-        <name>Christmas</name>
+        <businessHours>Contact Center</businessHours>
+        <description>Recurring every year on December 25th.</description>
+        <isRecurring>true</isRecurring>
+        <name>Christmas Day</name>
+        <recurrenceDayOfMonth>25</recurrenceDayOfMonth>
+        <recurrenceMonthOfYear>December</recurrenceMonthOfYear>
+        <recurrenceStartDate>2024-12-25</recurrenceStartDate>
+        <recurrenceType>RecursYearly</recurrenceType>
     </holidays>
     <holidays>
         <activityDate>2023-04-07</activityDate>
@@ -55,10 +60,26 @@
         <name>Good Friday</name>
     </holidays>
     <holidays>
+        <activityDate>2025-04-18</activityDate>
+        <businessHours>Contact Center</businessHours>
+        <isRecurring>false</isRecurring>
+        <name>Good Friday 2025</name>
+    </holidays>
+    <holidays>
         <activityDate>2023-07-04</activityDate>
         <businessHours>Default</businessHours>
         <isRecurring>false</isRecurring>
         <name>Independence Day</name>
+    </holidays>
+    <holidays>
+        <businessHours>Contact Center</businessHours>
+        <description>Recurring every year on July 4th.</description>
+        <isRecurring>true</isRecurring>
+        <name>Independence Day</name>
+        <recurrenceDayOfMonth>4</recurrenceDayOfMonth>
+        <recurrenceMonthOfYear>July</recurrenceMonthOfYear>
+        <recurrenceStartDate>2024-07-04</recurrenceStartDate>
+        <recurrenceType>RecursYearly</recurrenceType>
     </holidays>
     <holidays>
         <activityDate>2024-07-04</activityDate>
@@ -70,6 +91,17 @@
         <businessHours>Default</businessHours>
         <isRecurring>false</isRecurring>
         <name>Labor Day</name>
+    </holidays>
+    <holidays>
+        <businessHours>Contact Center</businessHours>
+        <description>Recurring every year on the first Monday of September.</description>
+        <isRecurring>true</isRecurring>
+        <name>Labor Day</name>
+        <recurrenceDayOfWeek>Monday</recurrenceDayOfWeek>
+        <recurrenceInstance>First</recurrenceInstance>
+        <recurrenceMonthOfYear>September</recurrenceMonthOfYear>
+        <recurrenceStartDate>2024-09-02</recurrenceStartDate>
+        <recurrenceType>RecursYearlyNth</recurrenceType>
     </holidays>
     <holidays>
         <activityDate>2024-09-02</activityDate>
@@ -88,15 +120,47 @@
         <name>Martin Luther King Day</name>
     </holidays>
     <holidays>
+        <businessHours>Contact Center</businessHours>
+        <description>Recurring every year on the third Monday of January.</description>
+        <isRecurring>true</isRecurring>
+        <name>Martin Luther King Jr. Day</name>
+        <recurrenceDayOfWeek>Monday</recurrenceDayOfWeek>
+        <recurrenceInstance>Third</recurrenceInstance>
+        <recurrenceMonthOfYear>January</recurrenceMonthOfYear>
+        <recurrenceStartDate>2024-01-15</recurrenceStartDate>
+        <recurrenceType>RecursYearlyNth</recurrenceType>
+    </holidays>
+    <holidays>
         <activityDate>2023-05-29</activityDate>
         <businessHours>Default</businessHours>
         <isRecurring>false</isRecurring>
         <name>Memorial Day</name>
     </holidays>
     <holidays>
+        <businessHours>Contact Center</businessHours>
+        <description>Recurring every year on the last Monday of May.</description>
+        <isRecurring>true</isRecurring>
+        <name>Memorial Day</name>
+        <recurrenceDayOfWeek>Monday</recurrenceDayOfWeek>
+        <recurrenceInstance>Last</recurrenceInstance>
+        <recurrenceMonthOfYear>May</recurrenceMonthOfYear>
+        <recurrenceStartDate>2024-05-27</recurrenceStartDate>
+        <recurrenceType>RecursYearlyNth</recurrenceType>
+    </holidays>
+    <holidays>
         <activityDate>2024-05-27</activityDate>
         <isRecurring>false</isRecurring>
         <name>Memorial Day</name>
+    </holidays>
+    <holidays>
+        <businessHours>Contact Center</businessHours>
+        <description>Recurring every year on January 1st.</description>
+        <isRecurring>true</isRecurring>
+        <name>New Year&apos;s Day</name>
+        <recurrenceDayOfMonth>1</recurrenceDayOfMonth>
+        <recurrenceMonthOfYear>January</recurrenceMonthOfYear>
+        <recurrenceStartDate>2024-01-01</recurrenceStartDate>
+        <recurrenceType>RecursYearly</recurrenceType>
     </holidays>
     <holidays>
         <activityDate>2023-01-02</activityDate>
@@ -111,9 +175,26 @@
         <name>New Year&apos;s Day 2024</name>
     </holidays>
     <holidays>
-        <activityDate>2025-01-01</activityDate>
-        <isRecurring>false</isRecurring>
-        <name>New Year&apos;s Day 2025</name>
+        <businessHours>Contact Center</businessHours>
+        <description>Recurring every year on the fourth Thursday of November.</description>
+        <isRecurring>true</isRecurring>
+        <name>Thanksgiving Day</name>
+        <recurrenceDayOfWeek>Thursday</recurrenceDayOfWeek>
+        <recurrenceInstance>Fourth</recurrenceInstance>
+        <recurrenceMonthOfYear>November</recurrenceMonthOfYear>
+        <recurrenceStartDate>2024-11-28</recurrenceStartDate>
+        <recurrenceType>RecursYearlyNth</recurrenceType>
+    </holidays>
+    <holidays>
+        <businessHours>Contact Center</businessHours>
+        <description>Recurring every year on the fourth Friday of November.</description>
+        <isRecurring>true</isRecurring>
+        <name>Thanksgiving Day After</name>
+        <recurrenceDayOfWeek>Friday</recurrenceDayOfWeek>
+        <recurrenceInstance>Fourth</recurrenceInstance>
+        <recurrenceMonthOfYear>November</recurrenceMonthOfYear>
+        <recurrenceStartDate>2025-11-28</recurrenceStartDate>
+        <recurrenceType>RecursYearlyNth</recurrenceType>
     </holidays>
     <holidays>
         <activityDate>2023-11-24</activityDate>
@@ -122,18 +203,8 @@
         <name>Thanksgiving Friday</name>
     </holidays>
     <holidays>
-        <activityDate>2024-11-29</activityDate>
-        <isRecurring>false</isRecurring>
-        <name>Thanksgiving Friday</name>
-    </holidays>
-    <holidays>
         <activityDate>2023-11-23</activityDate>
         <businessHours>Default</businessHours>
-        <isRecurring>false</isRecurring>
-        <name>Thanksgiving Thursday</name>
-    </holidays>
-    <holidays>
-        <activityDate>2024-11-28</activityDate>
         <isRecurring>false</isRecurring>
         <name>Thanksgiving Thursday</name>
     </holidays>

@@ -48,6 +48,11 @@
                 <label>Ameriprise</label>
             </value>
             <value>
+                <fullName>Armstrong Transport Group, LLC</fullName>
+                <default>false</default>
+                <label>Armstrong Transport Group, LLC</label>
+            </value>
+            <value>
                 <fullName>AtWork Group LLC</fullName>
                 <default>false</default>
                 <label>AtWork Group LLC</label>
@@ -76,6 +81,11 @@
                 <fullName>Financial Services Institute (FSI)</fullName>
                 <default>false</default>
                 <label>Financial Services Institute (FSI)</label>
+            </value>
+            <value>
+                <fullName>First Tee Foundation</fullName>
+                <default>false</default>
+                <label>First Tee Foundation</label>
             </value>
             <value>
                 <fullName>Five Iron Golf Franchising</fullName>
@@ -108,6 +118,11 @@
                 <label>Independent Tire Dealers</label>
             </value>
             <value>
+                <fullName>LG Electronics</fullName>
+                <default>false</default>
+                <label>LG Electronics</label>
+            </value>
+            <value>
                 <fullName>MDVIP</fullName>
                 <default>false</default>
                 <label>MDVIP</label>
@@ -116,11 +131,6 @@
                 <fullName>North American Trailer Dealer Association (NATDA)</fullName>
                 <default>false</default>
                 <label>North American Trailer Dealer Association (NATDA)</label>
-            </value>
-            <value>
-                <fullName>PREVEER (UFG franchise)</fullName>
-                <default>false</default>
-                <label>PREVEER (UFG franchise)</label>
             </value>
             <value>
                 <fullName>Quantum Assurance</fullName>
@@ -138,6 +148,11 @@
                 <label>South Carolina Research Authority</label>
             </value>
             <value>
+                <fullName>Store Local Corporation</fullName>
+                <default>false</default>
+                <label>Store Local Corporation</label>
+            </value>
+            <value>
                 <fullName>TechStars</fullName>
                 <default>false</default>
                 <label>TechStars</label>
@@ -146,6 +161,11 @@
                 <fullName>The Union for Reform Judaism</fullName>
                 <default>false</default>
                 <label>The Union for Reform Judaism</label>
+            </value>
+            <value>
+                <fullName>The Union for Reform Judiasm (Conservative Judiasm)</fullName>
+                <default>false</default>
+                <label>The Union for Reform Judiasm (Conservative Judiasm)</label>
             </value>
             <value>
                 <fullName>The Veterinary Cooperative</fullName>
@@ -158,21 +178,6 @@
                 <label>Trane U.S. Inc.</label>
             </value>
             <value>
-                <fullName>United Franchise Group (UFG)</fullName>
-                <default>false</default>
-                <label>United Franchise Group (UFG)</label>
-            </value>
-            <value>
-                <fullName>VentureX Locations (UFG franchise)</fullName>
-                <default>false</default>
-                <label>VentureX Locations (UFG franchise)</label>
-            </value>
-            <value>
-                <fullName>Venture X Members (tenants)</fullName>
-                <default>false</default>
-                <label>Venture X Members (tenants)</label>
-            </value>
-            <value>
                 <fullName>Veterinary Study Group</fullName>
                 <default>false</default>
                 <label>Veterinary Study Group</label>
@@ -182,6 +187,30 @@
                 <default>false</default>
                 <isActive>false</isActive>
                 <label>Girl Scouts of America</label>
+            </value>
+            <value>
+                <fullName>PREVEER (UFG franchise)</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>PREVEER (UFG franchise)</label>
+            </value>
+            <value>
+                <fullName>United Franchise Group (UFG)</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>United Franchise Group (UFG)</label>
+            </value>
+            <value>
+                <fullName>Venture X Members (tenants)</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Venture X Members (tenants)</label>
+            </value>
+            <value>
+                <fullName>VentureX Locations (UFG franchise)</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>VentureX Locations (UFG franchise)</label>
             </value>
             <value>
                 <fullName>Worldcom PR</fullName>

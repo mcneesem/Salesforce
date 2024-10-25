@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Slots_Consumed__c</fullName>
+    <externalId>false</externalId>
+    <label>Slots Consumed</label>
+    <summaryFilterItems>
+        <field>Onboarding_Meeting_Detail__c.Status__c</field>
+        <operation>notEqual</operation>
+        <value>Cancelled</value>
+    </summaryFilterItems>
+    <summaryForeignKey>Onboarding_Meeting_Detail__c.Onboarding_Meeting_Request__c</summaryForeignKey>
+    <summaryOperation>count</summaryOperation>
+    <trackTrending>false</trackTrending>
+    <type>Summary</type>
+</CustomField>

@@ -126,6 +126,14 @@
                 <behavior>Edit</behavior>
                 <field>NSP_ProductBundle__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Has_Seasonal_Pricing__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Has_Seasonal_Price_Table__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -776,6 +784,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>SBQQ__UpgradeRatio__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Separate_Project__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>

@@ -18,14 +18,20 @@
                 <label>401k</label>
             </value>
             <value>
-                <fullName>401b</fullName>
-                <default>false</default>
-                <label>401b</label>
-            </value>
-            <value>
                 <fullName>IRA</fullName>
                 <default>false</default>
                 <label>IRA</label>
+            </value>
+            <value>
+                <fullName>403b</fullName>
+                <default>false</default>
+                <label>403b</label>
+            </value>
+            <value>
+                <fullName>401b</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>401b</label>
             </value>
         </valueSetDefinition>
     </valueSet>

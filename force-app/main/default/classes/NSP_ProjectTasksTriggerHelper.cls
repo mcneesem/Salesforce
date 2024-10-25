@@ -1,19 +1,19 @@
 public class NSP_ProjectTasksTriggerHelper {
-    // test w/ NSP_ProjectTasksTriggerHelperTest (80%)
+    // test w/ NSP_ProjectTasksTriggerHelperTest, NSP_Implprofile_ServiceHelperUpdate_Test (81%)
 
     private static final String HUNDRED_PERCENT =  '100%';
-    private static final string SYS_ADMIN = 'System Administrator';
-    private static final String COBRA_MM='NSP_COBRA';
-    private static final String COBRA_GUIDELINES_MM= 'NSP_COBRAGuidelines';
-    private static final String COBRA_TEAM_MM= 'NSP_COBRATeam';
-    private static final String COBRA_PACKETS_MM= 'NSP_COBRAPackets';
-    private static final Id WOAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId('Asset',NSP_ServiceConstants.WO_ASSET_RECORDTYPE);
-    private static final Id CPQAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId('Asset','NSP_CPQ_Asset');
-    private static final string BACKOUT= 'Backout';
-    private static final string TERMINATED= 'Terminated';
-    private static final string RETURNED= 'Returned';
-    private static final string INACTIVE= 'Inactive';
-    private static final string SUBMIT_TERMINATION_CHECKLIST = 'Submit Termination Checklist';
+    private static final String COBRA_MM ='NSP_COBRA';
+    private static final String COBRA_GUIDELINES_MM = 'NSP_COBRAGuidelines';
+    private static final String COBRA_TEAM_MM = 'NSP_COBRATeam';
+    private static final String COBRA_PACKETS_MM = 'NSP_COBRAPackets';
+    private static final Id wOAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Asset' , 'WO' );
+    private static final Id projectTaskPEORecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'pse__Project_Task__c' , 'PEO_Project_Task' );
+    private static final String BACKOUT = 'Backout';
+    private static final String TERMINATED = 'Terminated';
+    private static final String RETURNED = 'Returned';
+    private static final String INACTIVE = 'Inactive';
+    private static final String SUBMIT_TERMINATION_CHECKLIST = 'Submit Termination Checklist';
+    private static final String LEVIESTASK = 'Employee Levies Provided';
 
     /**
     * Iterates throught the list of new pse__Project_Task__c and passes the required attributes to other methods.
@@ -27,7 +27,16 @@ public class NSP_ProjectTasksTriggerHelper {
         Map<Id, pse__Proj__c> parentProjectMap  = new  Map<Id, pse__Proj__c>();
         Map<Id, Id> mapOfparentTaskIdAndMilestoneId = new Map<Id, Id>();
         Set<Id> setOfParentProjectTask = new Set<Id>();
-        
+        List<String> projectForCancallation = new List<String>();
+        ProjectTaskTriggerSettings__c settings = ProjectTaskTriggerSettings__c.getInstance( UserInfo.getUserId() );
+        if( settings != null ){
+            if ( String.isNotBlank( settings.CancellationProjects1__c ) ) {
+                projectForCancallation = settings.CancellationProjects1__c.split( ',' );
+                if ( String.isNotBlank( settings.CancellationProjects2__c ) ) {
+                    projectForCancallation.addAll( settings.CancellationProjects2__c.split( ',' ) );
+                }
+            }
+        }
         for(pse__Project_Task__c projectTask : projectTaskList){
             if(projectTask.pse__Parent_Task__c != null){
                 setOfParentProjectTask.add(projectTask.pse__Parent_Task__c);
@@ -59,8 +68,17 @@ public class NSP_ProjectTasksTriggerHelper {
                 projectTask.pse__Actual_Start_Date_Time__c = Datetime.now();
                 projectTask.pse__Started__c = true;
             }
-        }    
-
+            if ( ( projectTask.RecordTypeId == NSP_ProjectTasksTriggerHelper.projectTaskPEORecordTypeId )
+                && ( projectForCancallation != null )
+                && !projectForCancallation.isEmpty()
+                && String.isNotBlank( projectTask.Name )
+                && ( projectForCancallation.contains( projectTask.Name ) )
+                && CustomPermissionController.checkUserPermission( 'Finance_Service_User' , UserInfo.getUserId() )
+               )
+            {
+                projectTask.pse__Status__c = 'Canceled';
+            }
+        }
         if(!setOfParentProjectTask.isEmpty()){
             for(pse__Project_Task__c parentTask : [SELECT pse__Milestone__c FROM pse__Project_Task__c WHERE ID IN : setOfParentProjectTask]){
                 mapOfparentTaskIdAndMilestoneId.put(parentTask.id, parentTask.pse__Milestone__c);
@@ -100,6 +118,8 @@ public class NSP_ProjectTasksTriggerHelper {
         NSP_ProjectTask_Automation__mdt pta =  NSP_ProjectTask_Automation__mdt.getInstance(COBRA_MM);
         List<ID> accountIdList = new List<ID>(); 
         List<string> peoTerminationTaskList = System.Label.PEO_Termination_Tasks.split(';');
+        List<pse__Project_Task__c> garnishments = new List<pse__Project_Task__c>();
+        List<pse__Project_Task__c> levies = new List<pse__Project_Task__c>();
         String TERMINATIONANALYSIS = null;
         if ( peoTerminationTaskList != null
             && !peoTerminationTaskList.isEmpty()
@@ -113,6 +133,12 @@ public class NSP_ProjectTasksTriggerHelper {
                 //Checking for COBRA Parent Task
                 if(pTask.Name==pta.NSP_Task_Name__c){
                     cobraProjectTaskList.add(pTask);
+                }
+                if(pTask.Name == NSP_ServiceConstants.GARNISHMENT){
+                    garnishments.add(pTask);
+                }
+                if(pTask.Name == LEVIESTASK){  
+                    levies.add(pTask);
                 }
                 //Checking for Project Task Account
                 if ( pTask.NSP_Account_Id__c != null
@@ -129,8 +155,147 @@ public class NSP_ProjectTasksTriggerHelper {
         if (accountIdList.size() > 0){
             updateDocusignAsset(accountIdList);
         }
+        if (garnishments.size() > 0){
+            createSubtask(garnishments, NSP_ServiceConstants.GARNISHMENT);
+        }
+        if (levies.size() > 0){
+            createSubtask(levies, LEVIESTASK);
+        }
     }
-        
+    
+     /***********************************************************************************************
+    * MethodName:  createSubtask
+    * Description : Create sub tasks for garnishments and levies
+    * Params: List<pse__Project_Task__c> projectTasks, String taskType
+    * ********************************************************************************************/
+    private void createSubtask(List<pse__Project_Task__c> projectTasks, String taskType){
+        try {
+            List<pse__Project_Task__c> newProjectTasks = new List<pse__Project_Task__c>();
+            Map<Id, pse__Project_Task__c> ipToParentTaskMap = new Map<Id, pse__Project_Task__c>();
+            Map<Id, Map<String, String>> taskEmployeedata = new Map<Id, Map<String, String>>();
+            Map<String, String> documentMap = new Map<String, String>();
+            Map<Id, pse__Project_Task__c> idProjecttask = new Map<Id, pse__Project_Task__c>();
+            Map<Id, Implementation_Profile__c> implMap = new Map<Id, Implementation_Profile__c>();
+
+            for (pse__Project_Task__c task : projectTasks) {
+                if (task.Implementation_Profile__c != null) {
+                    ipToParentTaskMap.put(task.Implementation_Profile__c, task);
+                }
+                if (task.id != null) {
+                    idProjecttask.put(task.id, task);
+                }
+            }
+
+            if(ipToParentTaskMap.keyset().size() > 0){
+                List<Implementation_Profile__c> employeeDataList = [
+                    SELECT
+                        Id , Account__r.Name , NSP_Project_Manager__r.pse__Salesforce_User__c ,
+                        Account__r.Id , NSP_Documents_garnishments__c , Document_Levies__c
+                    FROM Implementation_Profile__c
+                    WHERE Id IN :ipToParentTaskMap.keyset()
+                ];
+                if(employeeDataList.size() > 0){
+                    for(Implementation_Profile__c impl:employeeDataList){
+                        if(impl != null){
+                            implMap.put(impl.id,impl);
+                            List<String> documentList = new List<String>();
+                            if(taskType == NSP_ServiceConstants.GARNISHMENT){
+                                documentList = impl.NSP_Documents_garnishments__c.split(',');
+                            } else if(taskType == LEVIESTASK){
+                                documentList = impl.Document_Levies__c.split(',');
+                            }
+
+                            if(!documentList.isEmpty()){
+                                for (String documents : documentList) {
+                                    if(String.isNotBlank(documents)){
+                                        List<String> documentSplit = documents.split('~');
+                                        if (documentSplit.size() == 2) {
+                                            String documentKey = documentSplit[0].trim();
+                                            String documentValue = documentSplit[1].trim();
+                                            documentMap.put(documentKey, documentValue);
+                                        }
+                                    }
+                                }
+                            }
+
+                            if ( ipToParentTaskMap.containsKey(impl.id)
+                                && ipToParentTaskMap.get(impl.id) != null
+                                && ipToParentTaskMap.get(impl.id).id != null
+                                )
+                            {
+                                Id parentId = ipToParentTaskMap.get(impl.id).id;
+                                if (taskEmployeedata.containsKey(parentId)) {
+                                    Map<String, String> existingMap = taskEmployeedata.get(parentId);
+                                    existingMap.putAll(documentMap);
+                                } else {
+                                    taskEmployeedata.put(parentId, documentMap);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            if(taskEmployeedata.keyset().size() > 0){
+                for(ID projTask : taskEmployeedata.keyset()){
+                    for(String employee : taskEmployeedata.get(projTask).keyset()){
+                        if(String.isNotBlank(employee)
+                            && taskEmployeedata.containsKey(projTask)
+                            && taskEmployeedata.get(projTask).containsKey(employee)
+                            && taskEmployeedata.get(projTask).get(employee) == NSP_ServiceConstants.NOTCOLLECTED
+                            )
+                        {
+                            if(idProjecttask.containsKey(projTask)){
+                                pse__Project_Task__c parentTask = idProjecttask.get(projTask);
+                                if ( parentTask != null
+                                    && parentTask.Implementation_Profile__c != null
+                                    && implMap.containsKey(parentTask.Implementation_Profile__c)
+                                    )
+                                {
+                                    pse__Project_Task__c eachProjecttask = new pse__Project_Task__c();
+                                    Implementation_Profile__c eachImplProfile = implMap.get(parentTask.Implementation_Profile__c);
+                                    if(eachImplProfile != null){
+                                        if ( eachImplProfile.NSP_Project_Manager__c != null
+                                            && eachImplProfile.NSP_Project_Manager__r.pse__Salesforce_User__c != null
+                                            )
+                                        {
+                                            eachProjecttask.OwnerId = eachImplProfile.NSP_Project_Manager__r.pse__Salesforce_User__c;
+                                        }
+                                        if(eachImplProfile.Account__c != null && eachImplProfile.Account__r.Name != null){
+                                            eachProjecttask.NSP_Implementation_Profile_Account__c = eachImplProfile.Account__r.Name;
+                                        }
+                                        if(eachImplProfile.Account__c != null){
+                                            eachProjecttask.NSP_Implementation_Account_Id__c = eachImplProfile.Account__c;
+                                        }
+                                    }
+                                    eachProjecttask.NSP_Category__c = parentTask.NSP_Category__c;
+                                    eachProjecttask.NSP_Sub_Category__c = parentTask.NSP_Sub_Category__c;
+                                    eachProjecttask.pse__Start_Date_Time__c = parentTask.pse__Start_Date_Time__c;
+                                    eachProjecttask.pse__End_Date_Time__c = parentTask.pse__End_Date_Time__c;
+                                    eachProjecttask.Name = employee + (taskType == NSP_ServiceConstants.GARNISHMENT ? NSP_ServiceConstants.GARNISHDOC : NSP_ServiceConstants.LEVYDOC);
+                                    eachProjecttask.pse__Parent_Task__c = parentTask.Id;
+                                    eachProjecttask.pse__Hierarchy_Depth__c = 1;
+                                    eachProjecttask.pse__Milestone__c = parentTask.pse__Milestone__c;
+                                    eachProjecttask.pse__Order__c =parentTask.pse__Order__c;
+                                    newProjectTasks.add(eachProjecttask);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            if (newProjectTasks.size() > 0){
+                insert newProjectTasks;
+            }
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_ProjectTasksTriggerHelper.class.getName() ,
+                'createsubtask' ,
+                e
+            );
+        }
+    }
+
     /**
     * @MethodName: updateDocusignAsset
     * @Description: Populate related Active asset for docusign use
@@ -138,26 +303,40 @@ public class NSP_ProjectTasksTriggerHelper {
     * @return void                          
     */    
     public static void updateDocusignAsset(List<ID> accountList) {
-        Map<Id, Set<String>> accountToAssetRecordtypeMap = new Map<Id, Set<String>>();
-        Map<Id, RecordTypeInfo> recTypeMap = Asset.sObjectType.getDescribe().getRecordTypeInfosById();
-        List<Asset> assetList = new List<Asset>();
-        List<Account> acctList = new List<Account>();
-        List<String> ActiveAssetList = new List<String>();
-        
+        List<String> excludeStatusValues = new List<String>();
+        List<String> excluderecordTypeWithStatusValues = new List<String>();
+        List<String> excluderecordTypeValues = new List<String>();
+        AssetTriggerSettings__c settings = AssetTriggerSettings__c.getInstance( UserInfo.getUserId() );
+        if ( settings != null ) {
+            if ( String.isNotBlank( settings.Exclude_Status__c ) ) {
+                excludeStatusValues = settings.Exclude_Status__c.split( '\\R' );
+            }
+            if ( String.isNotBlank( settings.Exclude_Record_Types_WRT_Status__c ) ) {
+                excluderecordTypeWithStatusValues = settings.Exclude_Record_Types_WRT_Status__c.split( '\\R' );
+            }
+            if ( String.isNotBlank( settings.Exclude_Record_Types__c ) ) {
+                excluderecordTypeValues = settings.Exclude_Record_Types__c.split( '\\R' );
+            }
+        }
         try {
-            assetList = [
+            List<Asset> assetList = [
                 SELECT Id , RecordTypeId , RecordType.Name , AccountId , Status
                 FROM Asset
                 WHERE (
-                    AccountId IN:accountList
-                    AND RecordTypeId != :NSP_ProjectTasksTriggerHelper.WOAssetRecordTypeId
-                    AND RecordTypeId != :CPQAssetRecordTypeId
-                    AND Status != :TERMINATED
-                    AND Status != :BACKOUT
-                    AND Status != :RETURNED
-                    AND Status != :INACTIVE
+                    ( AccountId IN :accountList )
+                    AND (
+                        NOT (
+                            (
+                                ( RecordType.Name = :excluderecordTypeWithStatusValues )
+                                AND ( Status = :excludeStatusValues )
+                            )
+                            OR ( RecordType.Name = :excluderecordTypeValues )
+                        )
+                    )
                 )
             ];
+            Map<Id,Set<String>> accountToAssetRecordtypeMap = new Map<Id,Set<String>>();
+            Map<Id,RecordTypeInfo> recTypeMap = Asset.sObjectType.getDescribe().getRecordTypeInfosById();
             for (Asset eachAsset : assetList) {
                 if (eachAsset.AccountId != null) { 
                     if (!accountToAssetRecordtypeMap.containsKey(eachAsset.AccountId)) {
@@ -171,7 +350,8 @@ public class NSP_ProjectTasksTriggerHelper {
                     accountToAssetRecordtypeMap.get(eachAsset.AccountId).addAll(recordTypeName.split(','));
                 }
             }
-            
+            List<Account> acctList = new List<Account>();
+            List<String> activeAssetList = new List<String>();
             for (Account eachAccount : [SELECT Id, Docusign_Assets__c FROM Account WHERE ID IN :accountList]) {
                 //Clearing old value for Docusign_Assets__c
                 eachAccount.Docusign_Assets__c = Null;
@@ -179,10 +359,10 @@ public class NSP_ProjectTasksTriggerHelper {
                     //Adding value into Set for deduplication
                     Set<String> existingassetsrecordtype = accountToAssetRecordtypeMap.get(eachAccount.Id);
                     //Adding value from set to List
-                    ActiveAssetList.addAll(existingassetsrecordtype);
+                    activeAssetList.addAll(existingassetsrecordtype);
                     //Updating the Docusign_Assets__c
-                    if (ActiveAssetList.size() > 0){
-                        eachAccount.Docusign_Assets__c = String.join(ActiveAssetList, ', ');
+                    if (activeAssetList.size() > 0){
+                        eachAccount.Docusign_Assets__c = String.join(activeAssetList, ', ');
                     }
                 }
                 acctList.add(eachAccount);
@@ -204,7 +384,6 @@ public class NSP_ProjectTasksTriggerHelper {
     * Params: List<pse__Project_Task__c> cobraProjectTaskList
     * ********************************************************************************************/
     public void createCobraSubTasks(List<pse__Project_Task__c> cobraProjectTaskList){
-        Id projectTaskPEORecordTypeId = Schema.SObjectType.pse__Project_Task__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.PROJECT_TASK_PEO_RECORDTYPE).getRecordTypeId();
         NSP_ProjectTask_Automation__mdt pta =  NSP_ProjectTask_Automation__mdt.getInstance(COBRA_MM);
         NSP_ProjectTask_Automation__mdt pta1 =  NSP_ProjectTask_Automation__mdt.getInstance(COBRA_GUIDELINES_MM);
         NSP_ProjectTask_Automation__mdt pta2 =  NSP_ProjectTask_Automation__mdt.getInstance(COBRA_TEAM_MM);
@@ -257,9 +436,8 @@ public class NSP_ProjectTasksTriggerHelper {
     * Params: pse__Project_Task__c parentProjectTask
     * ********************************************************************************************/
     private pse__Project_Task__c createProjectTaskfromParent(pse__Project_Task__c parentProjectTask){
-        Id projectTaskPEORecordTypeId = Schema.SObjectType.pse__Project_Task__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.PROJECT_TASK_PEO_RECORDTYPE).getRecordTypeId();
         pse__Project_Task__c eachProjectTask = new pse__Project_Task__c();
-        eachProjectTask.RecordTypeId=projectTaskPEORecordTypeId;
+        eachProjectTask.RecordTypeId = NSP_ProjectTasksTriggerHelper.projectTaskPEORecordTypeId;
         eachProjectTask.NSP_Category__c= parentProjectTask.NSP_Category__c;
         eachProjectTask.NSP_Visible_to_Client__c = TRUE;
         eachProjectTask.pse__Status__c = NSP_ServiceConstants.PROJECT_TASK_NOT_STARTED;
@@ -431,7 +609,7 @@ public class NSP_ProjectTasksTriggerHelper {
                             SELECT Id , AccountId , NSP_Reason_for_Term__c , NSP_Anticipated_Date_Of_Termination__c 
                             FROM Asset 
                             WHERE (
-                                RecordTypeId = :NSP_ProjectTasksTriggerHelper.WOAssetRecordTypeId
+                                RecordTypeId = :NSP_ProjectTasksTriggerHelper.wOAssetRecordTypeId
                                 AND Status = 'Active'
                                 AND AccountId IN :listOfAccountId
                             )
@@ -1150,7 +1328,7 @@ public class NSP_ProjectTasksTriggerHelper {
         if(!projectTaskIdSet.isEmpty()){
             NSP_ProjectTaskTriggerEmailNotification.emailNotifyforFEIN(projectTaskIdSet,mapofProjecttasks);
         }
-        if (accountIdList.size() > 0){
+        if (ProjectTaskTriggerSettings__c.getInstance(UserInfo.getUserId()).IsUpdateDocusignAsset__c && accountIdList.size() > 0){
             updateDocusignAsset(accountIdList);
         }
         if(!fundingprojectTaskIdSet.isEmpty()){
@@ -1186,9 +1364,25 @@ public class NSP_ProjectTasksTriggerHelper {
         Id XMLAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId('Asset',NSP_ServiceConstants.XML_ASSET);
         Id IntegraAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId('Asset',NSP_ServiceConstants.INTEGRA_ASSET);
         try {
+            Map<Id,NSP_Termination_Form__c> projectTaskTermFormMap = new Map<Id,NSP_Termination_Form__c>();
             Map<Id,Id> projectMap = new Map<Id,Id>();
             Map<Id,pse__Project_Task__c> projectTaskMap = new Map<Id,pse__Project_Task__c>();
             if (!mapOfProjectTaskAndProject.isEmpty()) {
+                for ( NSP_Termination_Form__c termForm : [
+                            SELECT Id , NSP_Project_Task__c , CreatedDate , NSP_Last_Date_Wages_Paid_Through__c
+                            FROM NSP_Termination_Form__c
+                            WHERE ( NSP_Project_Task__c IN :mapOfProjectTaskAndProject.keySet() )
+                            ORDER BY CreatedDate DESC
+                        ]
+                    )
+                {
+                    if ( String.isNotBlank( termForm.NSP_Project_Task__c )
+                        && !projectTaskTermFormMap.containsKey( termForm.NSP_Project_Task__c )
+                        )
+                    {
+                        projectTaskTermFormMap.put( termForm.NSP_Project_Task__c , termForm );
+                    }
+                }
                 for ( pse__Project_Task__c projectTask : [
                             SELECT
                                 Id , Name , pse__Project__r.pse__Account__r.Name ,
@@ -1270,7 +1464,8 @@ public class NSP_ProjectTasksTriggerHelper {
                             projectTaskMap.get(pTask.Id).pse__Project__r.pse__Account__c,
                             projectTaskMap.get(pTask.Id).pse__Project__r.pse__Account__r.NSP_AIMS_Client__c,
                             listOfToAddresses,
-                            activeAssetList.get(pTask.NSP_AccountId__c)
+                            activeAssetList.get(pTask.NSP_AccountId__c),
+                            projectTaskTermFormMap.get(pTask.Id)
                         );
                         if (optionalTask != null) {
                             optionalTask.pse__Status__c = NSP_ServiceConstants.PROJECTSTATUSCOMPLETED;
@@ -1303,16 +1498,29 @@ public class NSP_ProjectTasksTriggerHelper {
             );
         }
     }
+
     //Letter Received email.
-    private void assetListEmail( String accountName , Id accountId , String accountAIMS , List<String> listOfToAddresses , List<Asset> assetList ) {
+    private void assetListEmail(
+        String accountName ,
+        Id accountId ,
+        String accountAIMS ,
+        List<String> listOfToAddresses ,
+        List<Asset> assetList ,
+        NSP_Termination_Form__c termForm
+        )
+    {
         String subjectString = null;
         String mailBody = null;
         String accName = accountName+' | '+accountAIMS;
         String customUrl = URL.getOrgDomainURL().toExternalForm()+ '/'+accountId;
         subjectString = 'WO Client ' + accName + ' has been approved for termination';
         mailBody = 'WO Client ' +'<a href="' +customUrl+'">'+ accName +'</a>';
-        mailBody += ' has been approved for termination.'+'<br/><br/>';
-        mailBody += 'Please review the following Assets to determine next steps for termination.'+'<br/><br/>';
+        String termFormDetails = '';
+        if ( ( termForm != null ) && ( termForm.NSP_Last_Date_Wages_Paid_Through__c != null ) ){
+            termFormDetails = ' on '+ termForm.NSP_Last_Date_Wages_Paid_Through__c.format();
+        }
+        mailBody += ' has been approved for termination' + termFormDetails + '.' + '<br/><br/>';
+        mailBody += 'Please review the following Assets to determine next steps for termination.' + '<br/><br/>';
         if ( ( assetList != null ) && !assetList.isEmpty() ) {
             for (Asset asset : assetList){
                 String assetUrl = URL.getOrgDomainURL().toExternalForm()+ '/'+asset.Id;

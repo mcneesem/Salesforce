@@ -3,6 +3,7 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { CloseActionScreenEvent } from 'lightning/actions';
 import { CurrentPageReference, NavigationMixin } from 'lightning/navigation';
 import hasPermission from '@salesforce/customPermission/NSP_DisplayTypeScreenOnCase';
+import hasSubCompPerm from '@salesforce/customPermission/Enable_Case_Creation_Sub_Components';
 import getCategoryList from '@salesforce/apex/NSP_CustomCaseCreationPageController.getCategoryList';
 import getAllCategoryList from '@salesforce/apex/NSP_CustomCaseCreationPageController.getAllCategoryList';
 import getFieldSetFieldsBySobject from '@salesforce/apex/NSP_Utilities.getAllFieldSetFieldsBySObjectName';
@@ -34,6 +35,8 @@ import PARENTCASE_ACCOUNTID from '@salesforce/schema/Case.AccountId';
 import PROJECT from '@salesforce/schema/Case.Project__c';
 import CATEGORY from '@salesforce/schema/Case.NSP_Category__c';
 import SUB_CATEGORY from '@salesforce/schema/Case.NSP_SubCategory__c';
+import DETAIL from '@salesforce/schema/Case.NSP_Detail__c';
+import VERSION from '@salesforce/schema/Case.NSP_Version__c';
 import getCaseSettingFlag from '@salesforce/apex/NSP_CustomCaseCreationPageController.getCaseSettingFlag';
 
 import { IsConsoleNavigation, getFocusedTabInfo, closeTab } from 'lightning/platformWorkspaceApi';
@@ -46,6 +49,9 @@ const ACCOUNTFIELDS = [
 export default class Nsp_CustomCaseCreationPage extends NavigationMixin(LightningElement) {
     get isCustomPermissionEnabled() {
         return hasPermission;
+    }
+    get isSubCompPermissionEnabled() {
+        return hasSubCompPerm;
     }
 
     label = {
@@ -469,7 +475,7 @@ export default class Nsp_CustomCaseCreationPage extends NavigationMixin(Lightnin
     }
 
     // Added as part of DF-03856 to populate the account Id, if the child case is created from the parent Case
-    @wire(getRecord , { recordId : '$caseParentId', fields: [PARENTCASE_ACCOUNTID, PROJECT, CATEGORY, SUB_CATEGORY] })
+    @wire(getRecord , { recordId : '$caseParentId', fields: [PARENTCASE_ACCOUNTID, PROJECT, CATEGORY, SUB_CATEGORY, DETAIL, VERSION] })
     getParentCaseFields(value){
         const { error, data} = value;
         if(data){
@@ -477,10 +483,22 @@ export default class Nsp_CustomCaseCreationPage extends NavigationMixin(Lightnin
             this.projectId = data.fields.Project__c.value;
             this.selectedCategory = data.fields.NSP_Category__c.value;
             this.selectedSubCategory = data.fields.NSP_SubCategory__c.value;
+            this.selectedDetail = data.fields.NSP_Detail__c.value;
+            this.selectedVersion = data.fields.NSP_Version__c.value;
             let accountLookupEle = this.template.querySelector('c-nsp_case-custom-look-up[data-id="accountLookup"]');
             if(accountLookupEle){
                 accountLookupEle.getDefaultRecord(this.accountID, 'Account', '');
-            }             
+            }
+            this.handleSubCategoryFiltered();
+            const localKey = this.selectedCategory + '-' + this.selectedSubCategory;
+            if(this.selectedDetail!==undefined && this.selectedDetail!==null){
+                this.showDetail = true;
+                this.detailOptions = this.createOptions(this.categoryWrapper.mCatSubToDetails[localKey]);
+            }
+            if(this.selectedVersion!==undefined && this.selectedVersion!==null){
+                this.showVersion = true;
+                this.versionOptions = this.createOptions(this.categoryWrapper.mCatSubDetailToVersions[localKey + '-' + this.selectedDetail]);
+            }
         }else if(error){
             this.data = null;
             this.error = error;
@@ -803,6 +821,14 @@ export default class Nsp_CustomCaseCreationPage extends NavigationMixin(Lightnin
         //Added By Sruthi - start
         this.recordId = event.detail.id;
         this.isMultipleContactsSelected = this.isMultipleContacts;
+        if ( this.isSubCompPermissionEnabled ) {
+            if ( ( this.filesUploaded == undefined ) || ( this.filesUploaded == null ) || ( this.filesUploaded == '' ) ) {
+                const fileComponent = this.template.querySelector('c-case-file-upload');
+                if(fileComponent!==undefined && fileComponent!==null){
+                    this.filesUploaded = fileComponent.filesUploaded;
+                }
+            }
+        }
         saveFiles({filesToInsert: this.filesUploaded, recordId: this.recordId});
         if(this.noteButtonClicked){
            this.handleNotesInsertion(this.recordId);
@@ -905,14 +931,21 @@ export default class Nsp_CustomCaseCreationPage extends NavigationMixin(Lightnin
     handleCancelNotes(){
         this.noteButtonClicked = false;
     }
-    handleNotesInsertion(createdCaseId){
-        const notesFields = this.template.querySelectorAll("lightning-input-field");
-        notesFields.forEach(field => {
-            if (field.fieldName === 'Case__c') {
-                field.value = createdCaseId;
+    handleNotesInsertion( createdCaseId ) {
+        if ( this.isSubCompPermissionEnabled ) {
+            const notesComp = this.template.querySelector( "c-case-notes" );
+            if ( ( notesComp !== undefined ) && ( notesComp !== null ) ) {
+                notesComp.submit( createdCaseId );
             }
-        });
-        this.template.querySelector('[data-id = "note-record-form"]').submit();
+        } else {
+            const notesFields = this.template.querySelectorAll( "lightning-input-field" );
+            notesFields.forEach( field => {
+                if ( field.fieldName === 'Case__c' ) {
+                    field.value = createdCaseId;
+                }
+            });
+            this.template.querySelector( '[data-id = "note-record-form"]' ).submit();
+        }
     }
     handleCancel(event) {
         this.resetFormAction(event);
@@ -947,6 +980,9 @@ export default class Nsp_CustomCaseCreationPage extends NavigationMixin(Lightnin
     }
 
     handleButtonClick() {
+        if ( this.isSubCompPermissionEnabled ) {
+            this.getCatSubCatValues();
+        }
         let errorFields = '';
         this.showError = false;
         this.errorMessageToDisplay = '';
@@ -998,6 +1034,14 @@ export default class Nsp_CustomCaseCreationPage extends NavigationMixin(Lightnin
             errorFields += "Case Owner,"
         }
         this.getAllInputFields = event.detail.fields;
+        if(this.isSubCompPermissionEnabled){
+            this.getCatSubCatValues();        
+            this.getAllInputFields.NSP_Category__c = this.selectedCategory; 
+            this.getAllInputFields.NSP_SubCategory__c = this.selectedSubCategory; 
+            this.getAllInputFields.NSP_Detail__c = this.selectedDetail; 
+            this.getAllInputFields.NSP_Version__c = this.selectedVersion;
+        }
+        
         const inputFields = this.template.querySelectorAll('lightning-input-field');
         if(errorFields == '' && inputFields){
             if(this.getDisplayConfidentialCheckBox === true){
@@ -1081,15 +1125,16 @@ export default class Nsp_CustomCaseCreationPage extends NavigationMixin(Lightnin
                 field.reset();
             });
         }
-
-        const comboBoxFields = this.template.querySelectorAll(
-            'lightning-combobox'
-        );
-
-        if (comboBoxFields) {
-            comboBoxFields.forEach(field => {
-                field.value = "";
-            });
+        if ( this.isSubCompPermissionEnabled ) {
+            const catSubCatComponent = this.template.querySelector('c-nsp_cat-subcat-detail');
+            if(catSubCatComponent){
+                const comboBoxFields = catSubCatComponent.getAllComboboxes();
+                if (comboBoxFields) {
+                    comboBoxFields.forEach(field => {
+                        field.value = "";
+                    });
+                }
+            }
         }
     }
 
@@ -1442,4 +1487,17 @@ export default class Nsp_CustomCaseCreationPage extends NavigationMixin(Lightnin
     render(){
         return ((this.selectedRecordTypeName === 'BPS') ? bpsTemplate : (this.selectedRecordTypeName === 'RET Time Tracking') ? retTemplate : defaultTemplate);
     } 
+
+    getCatSubCatValues() {
+        if ( this.isSubCompPermissionEnabled ) {
+            const childComponent = this.template.querySelector( 'c-case-cat-subcat-detail' );
+            if(childComponent!==undefined && childComponent!==null){
+                this.selectedCategory = childComponent.selectedCategory; 
+                this.selectedSubCategory = childComponent.selectedSubCategory;
+                this.selectedDetail = childComponent.selectedDetail;
+                this.selectedVersion = childComponent.selectedVersion;
+            }
+        }
+    }
+
 }

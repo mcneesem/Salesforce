@@ -390,6 +390,16 @@
                 </visibilityRule>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Workday_Employee_ID__c</fieldItem>
+                <identifier>RecordWorkday_Employee_ID__cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-dbb7baf2-6dc6-4d1f-a595-c5091112fe0d</name>
         <type>Facet</type>
     </flexiPageRegions>

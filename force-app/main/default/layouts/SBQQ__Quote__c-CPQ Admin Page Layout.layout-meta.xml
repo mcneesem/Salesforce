@@ -54,6 +54,10 @@
                 <field>NSP_WX_Scholarship__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Seasonal_Pricing__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Required</behavior>
                 <field>NSP_Pricing_Model__c</field>
             </layoutItems>

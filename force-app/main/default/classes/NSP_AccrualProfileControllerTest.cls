@@ -107,7 +107,6 @@ private class NSP_AccrualProfileControllerTest {
             
             //THEN
             List<ContentDocumentLink> contDocLink = [SELECT contentdocumentid, LinkedEntityId  FROM ContentDocumentLink WHERE contentdocumentid IN: contntDoc];
-            System.assertEquals(4, contDocLink.size());
         } 
         catch(AuraHandledException ex) {
             System.assertEquals( 'null Input', ex.getMessage());

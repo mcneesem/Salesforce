@@ -15,8 +15,22 @@ public class NSP_ProjectTasksTriggerHelperTest {
         ProjectTaskTriggerSettings__c settings = ProjectTaskTriggerSettings__c.getOrgDefaults();
         settings.IsEnabled__c = true;
         settings.IsEnabledCreatePtaIfOwnerChanged__c = true;
+        settings.CancellationProjects1__c = 'Attach Written Termination Email or Letter Upon Receipt,Conduct Call with Client (collaborate with Payroll Specialist),Completion of Termination Analysis,Email client Outlook Template providing Termination Steps/Timeline';
+        Settings.CancellationProjects2__c = 'Email client Outlook Template on Insperity Relationship Touch Base';
         upsert settings;
 
+        // Custtom settings related to Asset
+        AssetTriggerSettings__c assetSettings =  AssetTriggerSettings__c.getOrgDefaults();
+        assetSettings.Exclude_Record_Types__c  = ('WOCPQ'+'\n'+
+                                                  'AssetHardware'+'\n'+
+                                                  'Asset');
+        assetSettings.Exclude_Status__c = ('Backout'+'\n'+
+                                           'Terminated'+'\n'+
+                                           'Returned'+'\n'+
+                                           'Inactive');
+        assetSettings.Exclude_Record_Types_WRT_Status__c = 'Certify';
+        upsert assetSettings;
+        
         List<Account> accList = new List<Account>();
         Account oAccount = (Account)NSP_TestExtendedDataFactory.createSObject(new Account(), 'NSP_TestDataFactory.AccountDefaults', false);
         oAccount.NSP_AIMS_Client__c = '8900';
@@ -262,8 +276,8 @@ public class NSP_ProjectTasksTriggerHelperTest {
         optionalProjTask.pse__Project__c = peoTermProject.Id;
         optionalProjTask.pse__Status__c = NSP_ServiceConstants.PROJECTSTATUSNOTSTARTED;
         nProjectTaskList.add(optionalProjTask);
-        
-        insert nProjectTaskList;
+   
+            insert nProjectTaskList;
         
         WorkOrder relWo = new WorkOrder();
         relWo.Status = 'Unscheduled';

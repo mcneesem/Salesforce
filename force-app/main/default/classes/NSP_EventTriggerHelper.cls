@@ -5,52 +5,45 @@ public class NSP_EventTriggerHelper {
     // test w/ NSP_EventTriggerHelperTest (88%)
     
     public static String DISCOVERY_CALL = 'Discovery Call';
+    public static String WO_PROPOSAL = 'WO Proposal';
     private static final String EMPTY_STRING = '';
     private static final String WORD_SEPARATOR =  ' : ';
-    /* Iterates throught the list of new Event and passes the required attributes to other methods.
-    * @param newList List of New Event.  
-    * @return void             
-    *                
-    */
-        public void beforeInsertDirector(List<Event> newList){  
-            List<Event> eventList = new List<Event>();
-            for(Event evt : newList){
-                evt.NSP_Last_Assigned_Owner__c = evt.OwnerId; // Added as part of STY-01774
-                //Added as part of STY-03437
-                if(evt.WhatId != null || evt.WhoId != null){
-                    eventList.add(evt);
-                }
-            }     
-            updateEventSales(newList,null);
-            if(!eventList.isEmpty()){
-                populateWhatAndWhoNamesEvent(eventList);//Update of NSP_What_Name__c and NSP_Who_Name__c before Insert
-            }
-    }
-     
-        /**
-    * Iterates throught the map of new Event and passes the required attributes to other methods.
-    * @param newList List of New Event.  
-    * @param eventNewMap Map of Event id and Event records.
-    * @return void             
-    *                
-    */
-        
-        public void afterInsertDirector(List<Event> newList, Map<Id, Event> eventNewMap){ 
+    private static Boolean Is_Enabled_WO_WS_Stage_Entry = OpportunityStageSettings__c.getInstance(UserInfo.getUserId()).Is_Enabled_WO_WS_Stage_Entry__c;
 
-            updateOpportunitiesWithDiscoverCalls(newList);
-            updateActivityDate(newList,null);  
+    // Iterates throught the list of new Event and passes the required attributes to other methods.
+    // @param newList List of New Event.  
+    // @return void
+    public void beforeInsertDirector(List<Event> newList) {
+        List<Event> eventList = new List<Event>();
+        for(Event evt : newList){
+            evt.NSP_Last_Assigned_Owner__c = evt.OwnerId; // Added as part of STY-01774
+            //Added as part of STY-03437
+            if(evt.WhatId != null || evt.WhoId != null){
+                eventList.add(evt);
+            }
         }
-        
-        /**
-    * Iterates throught the Event map and identifies the records that needs to worked based on various criterias.
-    * @param eventNewMap Map of New Event. 
-    * @param eventOldMap Map of Old Event. 
-    * @return void             
-    *                
-    */
-        
-        public void beforeUpdateDirector(Map<Id, Event> eventNewMap, Map<Id, Event> eventOldMap){
-            updateEventSales(eventNewMap.values(),eventOldMap);
+        updateEventSales(newList,null);
+        if(!eventList.isEmpty()){
+            populateWhatAndWhoNamesEvent(eventList);//Update of NSP_What_Name__c and NSP_Who_Name__c before Insert
+        }
+    }
+
+    // Iterates throught the map of new Event and passes the required attributes to other methods.
+    // @param newList List of New Event.  
+    // @param eventNewMap Map of Event id and Event records.
+    // @return void
+    public void afterInsertDirector(List<Event> newList, Map<Id,Event> eventNewMap) {
+        updateOpportunitiesWithDiscoverCalls(newList);
+        updateActivityDate(newList,null);
+        checkOpportunityStageCriteria(newList);
+    }
+
+    // Iterates throught the Event map and identifies the records that needs to worked based on various criterias.
+    // @param eventNewMap Map of New Event. 
+    // @param eventOldMap Map of Old Event. 
+    // @return void
+    public void beforeUpdateDirector(Map<Id,Event> eventNewMap, Map<Id,Event> eventOldMap) {
+        updateEventSales(eventNewMap.values(),eventOldMap);
         //Added as part of STY-03437
         List<Event> eligibleEvents = new List<Event>();
         for(Event newEventRecord : eventNewMap.values()) {
@@ -61,22 +54,20 @@ public class NSP_EventTriggerHelper {
         }
         if(!eligibleEvents.isEmpty()) {
             populateWhatAndWhoNamesEvent(eligibleEvents);//Update of NSP_What_Name__c and NSP_Who_Name__c before Update
-        } 
-        }    
+        }
+    }
 
-    //
     // Iterates throught the list of new Events and passes the required attributes to other methods.
     // @param eventNewMap Map of New Event.
     // @param eventOldMap Map of Old Event.
     // @return void
-    //
     public void afterUpdateDirector( Map<Id,Event> eventNewMap , Map<Id,Event> eventOldMap ) {
         Map<Id,Event> rescheduledEventsMap = new Map<Id,Event>();
         Set<String> subjectSet = new Set<String>();  
         Id eventRecordType = Schema.SObjectType.Event.getRecordTypeInfosByDeveloperName().get('Core_Sales_Event_RT')?.getRecordTypeId();
         if(eventNewMap != null){
             for (Event newEventRecord : eventNewMap.Values()){
-                if( ( eventOldMap != null ) && eventOldMap.containsKey( newEventRecord.Id ) ){
+                if ( ( eventOldMap != null ) && eventOldMap.containsKey( newEventRecord.Id ) ) {
                     Event oldEventRecord = eventOldMap.get(newEventRecord.Id);
                     if (newEventRecord.RecordTypeId == eventRecordType
                         && newEventRecord.WhatId != null && newEventRecord.FSL__Event_Type__c == 'Resource Absence'
@@ -107,6 +98,7 @@ public class NSP_EventTriggerHelper {
         }
         updateOpportunitiesWithDiscoverCalls(eventNewMap.values());
         updateActivityDate(eventNewMap.values(),eventOldMap);
+        checkOpportunityStageCriteria(eventNewMap.values());
     }
 
     //
@@ -141,8 +133,12 @@ public class NSP_EventTriggerHelper {
             if (resourceAbsenceToUpdateList.size() > 0){
                 Update resourceAbsenceToUpdateList;
             }
-        }catch(Exception ex){
-            NSP_ErrorLogHandler.logSaveException('NSP_EventTriggerHelper', 'updateResourceAbsenceDate', ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_EventTriggerHelper.class.getName() ,
+                'updateResourceAbsenceDate' ,
+                e
+            );
         }
     }
 
@@ -173,8 +169,12 @@ public class NSP_EventTriggerHelper {
             if (attendeesEventMap != null && attendeesEventMap.size() > 0) {
                 deleteResourceAbsence(attendeesEventMap);
             }
-        } catch (Exception ex) {
-            NSP_ErrorLogHandler.logSaveException('NSP_EventTriggerHelper', 'beforeDeleteDirector', ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_EventTriggerHelper.class.getName() ,
+                'beforeDeleteDirector' ,
+                e
+            );
         }
     }
 
@@ -242,8 +242,12 @@ public class NSP_EventTriggerHelper {
             if (eventOldMap != null && eventOldMap.size() > 0){
                 deleteResourceAbsence(eventOldMap);
             }
-        }catch(Exception ex){
-            NSP_ErrorLogHandler.logSaveException('NSP_EventTriggerHelper', 'afterDeleteDirector', ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_EventTriggerHelper.class.getName() ,
+                'afterDeleteDirector' ,
+                e
+            );
         }
     }
 
@@ -261,28 +265,33 @@ public class NSP_EventTriggerHelper {
             if (resourceAbsenceList.size() > 0){
                 Delete resourceAbsenceList;
             }
-        }catch(Exception ex){
-            NSP_ErrorLogHandler.logSaveException('NSP_EventTriggerHelper', 'deleteResourceAbsence', ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_EventTriggerHelper.class.getName() ,
+                'deleteResourceAbsence' ,
+                e
+            );
         }
     }
 
-    public void updateOpportunitiesWithDiscoverCalls(List<Event> newList) {
-
+    private void updateOpportunitiesWithDiscoverCalls(List<Event> newList) {
         Set<ID> updateOpportunityIDList = new Set<ID>();
         List<Opportunity> updateOpportunityList = new List<Opportunity>();
         try{
-            String opportunity_prefix = Schema.SObjectType.Opportunity.getKeyPrefix();
-
             for(Event event : newList){
                 if(event != NULL && event.WhatId != NULL && event.NSP_Event_Subtype__c != NULL){
                     if(event.NSP_Event_Subtype__c.equalsIgnoreCase(DISCOVERY_CALL) && 
-                       ((String)event.WhatId).startsWith(opportunity_prefix)){
+                       event.WhatId.getSObjectType() == Opportunity.getSObjectType()) {
                         updateOpportunityIDList.add(event.WhatId);
-                    }           
-                }  
+                    }
+                }
             }
-            List<Opportunity> listOpportunity = [SELECT ID, NSP_Ready_for_Integration_Sync__c FROM Opportunity 
-                                                 WHERE ID IN: updateOpportunityIDList]; //Capitalized WHERE Condition as part of code fix
+            List<Opportunity> listOpportunity = [
+                SELECT Id , NSP_Ready_for_Integration_Sync__c
+                FROM Opportunity 
+                WHERE ( Id IN :updateOpportunityIDList )
+            ];
+
             for(Opportunity oppty : listOpportunity){
                 Opportunity opp = new Opportunity();
                 opp.Id = oppty.Id;
@@ -292,71 +301,93 @@ public class NSP_EventTriggerHelper {
             if(!updateOpportunityList.isEmpty()){
                 Database.update(updateOpportunityList);
             }
-        }catch(Exception ex){
-            NSP_ErrorLogHandler.logSaveException('NSP_EventTriggerHelper', 'updateOpportunitiesWithDiscoverCalls', ex.getMessage());
-        }  
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_EventTriggerHelper.class.getName() ,
+                'updateOpportunitiesWithDiscoverCalls' ,
+                e
+            );
+        }
     }
-  /**
-* Method Name : updateActivityDate 
-* Description : Method to update last activity date on all related leads with same DUNS.
-* Date : 31/03/2021
-* @param newList List of New Event. 
-* @param eventOldMap Map of Old Event.   
-* @return void  
-*/
-        public void updateActivityDate(List<Event> newList,Map<Id,Event> eventOldMap){
-            Set < Id > leadIdSet = new Set < Id > ();
-            List < Lead > leadResult = new List<Lead> ();
-            List < Lead > leadWithDuns = new List<Lead> ();
-            Map < String, Date > lastActivityDateMap = new Map < String, Date > ();
-            List < Lead > leadToUpdate = new List<Lead> ();
+
+    public void checkOpportunityStageCriteria(List<Event> newList) {
+        List<Id> updateOpportunityIds = new List<Id>();
+        if ( NSP_EventTriggerHelper.Is_Enabled_WO_WS_Stage_Entry ) {
             for(Event event : newList){
-                Event oldEvent = eventOldMap != null ? eventOldMap.get(event.Id):null;
-                if((Trigger.isInsert || event.StartDateTime != oldEvent.StartDateTime) && event.StartDateTime != null && event.WhoId!= null){
-                leadIdSet.add(event.WhoId);
-            }
-            }
-            if(!leadIdSet.isEmpty()){
-                leadResult = [SELECT Id, Salutation, FirstName, MiddleName, LastName, NSP_Parent_Lead__c, DNB_Connect_DUNS_Number__c,LastActivityDate FROM Lead WHERE Id IN: leadIdSet];
-                if(!leadResult.isEmpty()) {
-                    for(Lead leadObj :leadResult){
-                        if(leadObj.LastActivityDate != null && leadObj.DNB_Connect_DUNS_Number__c !=null) {
-                            lastActivityDateMap.put(leadObj.DNB_Connect_DUNS_Number__c,leadObj.LastActivityDate);
-                        }
-                    }
-                    if(!lastActivityDateMap.isEmpty()) {
-                        leadWithDuns = [SELECT Id, Salutation, FirstName, NSP_Last_Activity__c, LastName, NSP_Parent_Lead__c, DNB_Connect_DUNS_Number__c,LastActivityDate FROM Lead WHERE DNB_Connect_DUNS_Number__c IN: lastActivityDateMap.keySet()];
-                        Lead lastActive = [SELECT LastActivityDate FROM Lead WHERE DNB_Connect_DUNS_Number__c IN: lastActivityDateMap.keySet() AND LastActivityDate != null ORDER BY LastActivityDate DESC LIMIT 1];
-                        if(!leadWithDuns.isEmpty()){
-                            for(Lead leadObject : leadWithDuns){
-                                 leadObject.NSP_Last_Activity__c = lastActive.LastActivityDate;
-                                 leadToUpdate.add(leadObject);
-                               }
-                        }
+                if(event != NULL && event.WhatId != NULL && event.NSP_Event_Subtype__c != NULL){
+                    if ( ( event.WhatId.getSObjectType() == Opportunity.getSObjectType() )
+                        && (
+                            event.NSP_Event_Subtype__c.equalsIgnoreCase(DISCOVERY_CALL)
+                            || event.NSP_Event_Subtype__c.equalsIgnoreCase(WO_PROPOSAL)
+                            )
+                        )
+                    {
+                        updateOpportunityIds.add(event.WhatId);
                     }
                 }
             }
-            try{
-                if(!leadToUpdate.isEmpty()){
-                    update leadToUpdate;
+            AutomateOpportunityStage.automateOpportunityStageAsync(updateOpportunityIds);
+        }
+    }
+
+    // Method Name : updateActivityDate
+    // Description : Method to update last activity date on all related leads with same DUNS.
+    // Date : 31/03/2021
+    // @param newList List of New Event.
+    // @param eventOldMap Map of Old Event.
+    // @return void
+    public void updateActivityDate(List<Event> newList,Map<Id,Event> eventOldMap){
+        Set < Id > leadIdSet = new Set < Id > ();
+        List < Lead > leadResult = new List<Lead> ();
+        List < Lead > leadWithDuns = new List<Lead> ();
+        Map < String, Date > lastActivityDateMap = new Map < String, Date > ();
+        List < Lead > leadToUpdate = new List<Lead> ();
+        for(Event event : newList){
+            Event oldEvent = eventOldMap != null ? eventOldMap.get(event.Id):null;
+            if((Trigger.isInsert || event.StartDateTime != oldEvent.StartDateTime) && event.StartDateTime != null && event.WhoId!= null){
+            leadIdSet.add(event.WhoId);
+        }
+        }
+        if(!leadIdSet.isEmpty()){
+            leadResult = [SELECT Id, Salutation, FirstName, MiddleName, LastName, NSP_Parent_Lead__c, DNB_Connect_DUNS_Number__c,LastActivityDate FROM Lead WHERE Id IN: leadIdSet];
+            if(!leadResult.isEmpty()) {
+                for(Lead leadObj :leadResult){
+                    if(leadObj.LastActivityDate != null && leadObj.DNB_Connect_DUNS_Number__c !=null) {
+                        lastActivityDateMap.put(leadObj.DNB_Connect_DUNS_Number__c,leadObj.LastActivityDate);
+                    }
                 }
-            }
-            catch(Exception ex){
-                NSP_ErrorLogHandler.logSaveException('NSP_EventTriggerHelper', 'updateActivityDate', ex.getMessage());
+                if(!lastActivityDateMap.isEmpty()) {
+                    leadWithDuns = [SELECT Id, Salutation, FirstName, NSP_Last_Activity__c, LastName, NSP_Parent_Lead__c, DNB_Connect_DUNS_Number__c,LastActivityDate FROM Lead WHERE DNB_Connect_DUNS_Number__c IN: lastActivityDateMap.keySet()];
+                    Lead lastActive = [SELECT LastActivityDate FROM Lead WHERE DNB_Connect_DUNS_Number__c IN: lastActivityDateMap.keySet() AND LastActivityDate != null ORDER BY LastActivityDate DESC LIMIT 1];
+                    if(!leadWithDuns.isEmpty()){
+                        for(Lead leadObject : leadWithDuns){
+                            leadObject.NSP_Last_Activity__c = lastActive.LastActivityDate;
+                            leadToUpdate.add(leadObject);
+                        }
+                    }
+                }
             }
         }
-    
-/**
-* Method Name : updateEventSales 
-* Description : Method to update sales region, sales devison and sales office.
-* Date : 08/12/2022
-* @param newList List of New Event. 
-* @param OldEventMap Map of Old Event.   
-* @return void  
-*/
+        try{
+            if(!leadToUpdate.isEmpty()){
+                update leadToUpdate;
+            }
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_EventTriggerHelper.class.getName() ,
+                'updateActivityDate' ,
+                e
+            );
+        }
+    }
 
+    // Method Name : updateEventSales
+    // Description : Method to update sales region, sales devison and sales office.
+    // Date : 08/12/2022
+    // @param newList List of New Event.
+    // @param OldEventMap Map of Old Event.
+    // @return void
     public void updateEventSales(List<Event> newList,Map<Id,Event> OldEventMap){
-    
     set<Id> ownerIdSet = new set<Id>();
     for(Event newEvent : newList){
         Event oldEvent = OldEventMap != null ? OldEventMap.get(newEvent.Id):null;
@@ -365,7 +396,7 @@ public class NSP_EventTriggerHelper {
             ownerIdSet.add(newEvent.ownerId);    
         }
     }
-    
+
     if(ownerIdSet.Size() > 0){
         Map<Id,User> userIdMap = new Map<Id,User>([SELECT Id,NSP_SalesDivision__c,NSP_Sales_Office__c,NSP_SalesRegion__c from user WHERE Id In :ownerIdSet AND NSP_Sales_Office__c != null ]);
         
@@ -381,14 +412,12 @@ public class NSP_EventTriggerHelper {
         }    
     }
   }  
-     
-    /**
-* Method Name : populateWhatAndWhoNamesEvent 
-* Description : Method to update NSP_What_Name__c and/or NSP_Who_Name__c on Event Object
-* Date : 25/05/2023
-* @param newEventList List of new Events 
-* @return void  
-*/
+
+    // Method Name : populateWhatAndWhoNamesEvent
+    // Description : Method to update NSP_What_Name__c and/or NSP_Who_Name__c on Event Object
+    // Date : 25/05/2023
+    // @param newEventList List of new Events
+    // @return void
     private void populateWhatAndWhoNamesEvent(List<Event> newEventList) {
         List<String> fieldApiNamesList = new List<String>{ 'WhatId', 'WhoId' };
             Map<String, Set<String>> targetRecordIdsByObjectApiNameMap = new Map<String, Set<String>>();
@@ -430,7 +459,7 @@ public class NSP_EventTriggerHelper {
             eventToBeUpdateRecord.NSP_Who_Name__c  = String.isNotBlank(eventToBeUpdateRecord.WhoId) ? targetRelatedObjectsMap.get(eventToBeUpdateRecord.WhoId) : EMPTY_STRING;
         }
     }
-    
+
     private Map<Id, String> getRelatedRecordDetails(String objectName, String fieldName, Set<String> recordIds, String objectLabel) {
         Map<Id, String> relatedRecordDetailsMap = new Map<Id, String>();
         List<String> fieldList = new List<String>{fieldName};
@@ -440,5 +469,5 @@ public class NSP_EventTriggerHelper {
         }
         return relatedRecordDetailsMap;
     }
-    
-    }
+
+}

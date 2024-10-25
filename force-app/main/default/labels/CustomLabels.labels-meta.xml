@@ -8,6 +8,34 @@
         <value>NSP_Asset_Product,Time_Attendance,Applicant_Tracking,Employment_Screening,Learning_Development,Organizational_Planning,Performance_Management,Integra,Certify,Insurance_Service,Recruiting_Services,XML,RET_WO</value>
     </labels>
     <labels>
+        <fullName>AddContact_Discovery</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AddContact_Discovery</shortDescription>
+        <value>Please add at least one Contact to the Opportunity to move to Discovery stage</value>
+    </labels>
+    <labels>
+        <fullName>AddDiscoveryCalls_DataColl</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AddDiscoveryCalls_DataColl</shortDescription>
+        <value>Please add Discovery Calls before moving to Data Collection stage</value>
+    </labels>
+    <labels>
+        <fullName>AddDiscoveryCalls_Discovery</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AddDiscoveryCalls_Discovery</shortDescription>
+        <value>Please add Discovery Calls before moving to Discovery stage</value>
+    </labels>
+    <labels>
+        <fullName>AddWOProposal_Proposal</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AddWOProposal_Proposal</shortDescription>
+        <value>Please add WO Proposal event before moving to Proposal stage</value>
+    </labels>
+    <labels>
         <fullName>Any_users_who_cannot_see_salary</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -45,6 +73,41 @@
         <value>-8;-14</value>
     </labels>
     <labels>
+        <fullName>BidApproved_Proposal</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>BidApproved_Proposal</shortDescription>
+        <value>Please ensure Bid is Approved to move to Proposal stage</value>
+    </labels>
+    <labels>
+        <fullName>BidLocked_Analysis</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>BidLocked_Analysis</shortDescription>
+        <value>Please ensure Bid is Locked before moving to Analysis stage</value>
+    </labels>
+    <labels>
+        <fullName>Bid_Generated_in_AIMS</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Bid Generated in AIMS</shortDescription>
+        <value>Bid Generated in AIMS</value>
+    </labels>
+    <labels>
+        <fullName>Bid_Sent_to_Pricing_and_Review</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Bid Sent to Pricing and Review</shortDescription>
+        <value>Bid Sent to Pricing and Review</value>
+    </labels>
+    <labels>
+        <fullName>Business_Profile_Started</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Business Profile Started</shortDescription>
+        <value>Business Profile Started</value>
+    </labels>
+    <labels>
         <fullName>CANNOT_DELETE_ACCOUNT</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -64,6 +127,13 @@
         <protected>false</protected>
         <shortDescription>Client Integra Responses smartsheet</shortDescription>
         <value>Client Integra Responses (smartsheet.com).</value>
+    </labels>
+    <labels>
+        <fullName>Client_is_currently_making_employer_contributions</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Client is currently making employer contributions</shortDescription>
+        <value>Client is currently making employer contributions?</value>
     </labels>
     <labels>
         <fullName>Close_Lost_Role_in_Opportunity_Team</fullName>
@@ -241,11 +311,25 @@
         <value>There is already an existing Project Task Assignment marked as Primary. Please change Resource Type on Primary PTA first.</value>
     </labels>
     <labels>
+        <fullName>EvalTaskPrefix_Analysis</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>EvalTaskPrefix_Analysis</shortDescription>
+        <value>Please complete the following Tasks to move to Analysis stage:</value>
+    </labels>
+    <labels>
         <fullName>ExistingPDSMessage</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ExistingPDSMessage</shortDescription>
         <value>There is already an existing Payroll Datasheet record for this Sub Client.</value>
+    </labels>
+    <labels>
+        <fullName>FSOImplementationProject</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>FSOImplementationProject</shortDescription>
+        <value>FSO - Implementation</value>
     </labels>
     <labels>
         <fullName>Field_Marketing_Team_DeveloperName</fullName>
@@ -255,11 +339,11 @@
         <value>Field_Marketing_Team</value>
     </labels>
     <labels>
-        <fullName>FSOImplementationProject</fullName>
+        <fullName>ForecastStatus_ClosedWon</fullName>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>FSOImplementationProject</shortDescription>
-        <value>FSO - Implementation</value>
+        <shortDescription>ForecastStatus_ClosedWon</shortDescription>
+        <value>Please ensure Forecast Status is Pending or Sold/Booked to move to Closed/Won stage</value>
     </labels>
     <labels>
         <fullName>HCM_Case_Email_Send_To_Address</fullName>
@@ -592,7 +676,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AddPrimaryProduct</shortDescription>
-        <value>Please Select Primary Product before changing stage to Analysis</value>
+        <value>Please Select Primary Product before moving to next stage</value>
     </labels>
     <labels>
         <fullName>NSP_AddPrimaryQuote</fullName>
@@ -790,8 +874,8 @@
         <categories>nsp_benefitsIp</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>Are there any Employer contributions to EEs HSA</shortDescription>
-        <value>Are there any employer contributions to EEs HSA?</value>
+        <shortDescription>Are there any employer contributions to EEs Insperity HSA?</shortDescription>
+        <value>Are there any employer contributions to EEs Insperity HSA?</value>
     </labels>
     <labels>
         <fullName>NSP_Are_there_any_other_EE_orientation_need</fullName>
@@ -2186,7 +2270,7 @@
         <categories>nsp_benefitsIp</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>Did the schedule B change at SKO</shortDescription>
+        <shortDescription>Did the schedule B change at CTM</shortDescription>
         <value>Did the Schedule B change at the Client Transition Meeting?</value>
     </labels>
     <labels>
@@ -3017,14 +3101,14 @@ Meeting - Project Related - Fiduciary,Mutual Fund Corrections - Pricing, Manual 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>GA Report Check List</shortDescription>
-        <value>GA Report Check List : https://nexus.insperity.com/groups/38660/posts/3259654-general-accounts-report-checklist</value>
+        <value>GA Report Check List : https://nexus.insperity.com/groups/38660/posts/3349488-general-account-checklists</value>
     </labels>
     <labels>
         <fullName>NSP_GL_ReportCheckList</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>GL Report Check List</shortDescription>
-        <value>GL Report Check List : https://nexus.insperity.com/groups/38660/posts/3259656-general-ledger-report-checklist</value>
+        <value>GL Report Check List : https://nexus.insperity.com/groups/38660/posts/3349487-general-ledger-report-development-spreadsheet</value>
     </labels>
     <labels>
         <fullName>NSP_General</fullName>
@@ -5309,8 +5393,8 @@ Meeting - Project Related - Fiduciary,Mutual Fund Corrections - Pricing, Manual 
         <fullName>NSP_Spl_Payroll_Needs</fullName>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>Any special payroll needs</shortDescription>
-        <value>Does the client have any special payroll needs (i.e. job costing, IRR, departments)?</value>
+        <shortDescription>Any custom reporting needs</shortDescription>
+        <value> Does the client have any custom reporting needs (i.e. job costing, IRR, departments)?</value>
     </labels>
     <labels>
         <fullName>NSP_Standard_Worked_Hours</fullName>
@@ -5721,8 +5805,8 @@ Climate Plus: https://nexus.insperity.com/groups/38605/posts/3272612-climate-plu
         <categories>nsp_generalIp</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>Will BPA attending SKO</shortDescription>
-        <value>Will the BPA(s) be attending the SKO?</value>
+        <shortDescription>Will BPA attending CTM</shortDescription>
+        <value>Will the BPA(s) be attending the CTM?</value>
     </labels>
     <labels>
         <fullName>NSP_Will_Client_be_maintaining_client_sponspored_plan</fullName>
@@ -6086,6 +6170,13 @@ Climate Plus: https://nexus.insperity.com/groups/38605/posts/3272612-climate-plu
         <value>An Open Nurture/Regen Task already exists on the Opportunity.</value>
     </labels>
     <labels>
+        <fullName>Opportunity_Backward_Stage</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Opportunity_Backward_Stage</shortDescription>
+        <value>You do not have sufficient privileges to move Stage backward</value>
+    </labels>
+    <labels>
         <fullName>Opportunity_Product_Update_Error_Message</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -6317,11 +6408,25 @@ Climate Plus: https://nexus.insperity.com/groups/38605/posts/3272612-climate-plu
         <value>https://www.sfdcstuff.com/search/label/Lightning</value>
     </labels>
     <labels>
+        <fullName>STPCompleted_ClosedWon</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>STPCompleted_ClosedWon</shortDescription>
+        <value>Please ensure Sold to Paid Checklist is completed to move to Closed/Won stage</value>
+    </labels>
+	<labels>
         <fullName>Sales_Roles</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Sales Roles</shortDescription>
         <value>Regional Manager,Regional Administrator,District Manager,District Administrator,Business Performance Advisor,Business Performance Consultant</value>
+    </labels>
+    <labels>
+        <fullName>Seasonal_Pricing_Error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>To force recalculation before submit for approval</shortDescription>
+        <value>Please check the &quot;Ready for Approval&quot; flag before submitting Seasonal Pricing Quotes for approvals.</value>
     </labels>
     <labels>
         <fullName>Segment_Days</fullName>

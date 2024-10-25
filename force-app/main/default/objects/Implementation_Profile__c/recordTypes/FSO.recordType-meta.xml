@@ -2163,10 +2163,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Premier Time Sheet</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Web Payroll</fullName>
             <default>false</default>
         </values>
@@ -5366,10 +5362,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Premier Time Sheet</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Web Payroll</fullName>
             <default>false</default>
         </values>
@@ -5803,6 +5795,17 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Work_performed_the_same_as_the_rest_year__c</picklist>
+        <values>
+            <fullName>Different</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Same</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Work_week__c</picklist>
         <values>
             <fullName>Friday - Thursday</fullName>
@@ -5949,17 +5952,6 @@
         </values>
         <values>
             <fullName>Yes</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>Work_performed_the_same_as_the_rest_year__c</picklist>
-        <values>
-            <fullName>Different</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Same</fullName>
             <default>false</default>
         </values>
     </picklistValues>

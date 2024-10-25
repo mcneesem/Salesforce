@@ -29,7 +29,7 @@ public class NSP_AccountTriggerHelperTest {
     @testSetup
     static void testData() {
 
-          UserRole BPArole = [SELECT Id FROM UserRole WHERE Name='Business Performance Advisor'];
+          UserRole BPArole = [SELECT Id FROM UserRole WHERE Name='Business Performance Advisor'];  
         UserRole CPMrole = [SELECT Id FROM UserRole WHERE Name='Channel Program Manager'];
          UserRole LArole = [SELECT Id FROM UserRole WHERE Name='Loyalty Advisor'];
          Profile profileobj = [SELECT Id FROM Profile WHERE Name='System Administrator'];
@@ -658,5 +658,41 @@ public class NSP_AccountTriggerHelperTest {
         Test.stopTest();
     }
 
+    
+    @isTest private static void testOpportunitySalesOfficeUpdate() {
+
+        Test.startTest();
+
+        List<User> users = [SELECT Id, NSP_Sales_Office__c,UserRole.Name FROM User WHERE 
+                            (UserRole.Name = 'Sales Support Specialist' OR UserRole.Name = 'Business Performance Advisor') 
+                            AND NSP_Sales_Office__c != null AND IsActive = true LIMIT 2];
+
+        Account acct = new Account();
+        acct.name = 'Test Office';
+        acct.OwnerId = users[0].Id;
+        insert acct;
+
+        Opportunity opp = new Opportunity();
+        opp.name = 'Opportunity 1';
+        opp.AccountId = acct.Id;
+        opp.stagename = NSP_SalesConstants.DISCOVERY_STAGE;
+        opp.CloseDate = date.today();        
+        opp.NSP_PrimaryProduct__c = 'WO';
+        opp.OwnerId = users[0].Id;
+        insert opp;
+        
+        //  Change account owner
+        Account acct1 = [SELECT id, OwnerId FROM Account WHERE Id =: acct.Id LIMIT 1];
+        acct1.OwnerId = users[1].Id;
+        //  Reset all the run counts otherwise the method 'beforeUpdate' won't be triggered
+        NSP_AccountTriggerHandler.resetAllHasRun();
+        update acct1;
+        Test.stopTest();
+
+        Account acct2 = [SELECT id,OwnerId, NSP_Sales_Office__c FROM Account WHERE Id =: acct.Id LIMIT 1];
+        Opportunity opp2 = [SELECT id, NSP_Sales_Office__c FROM Opportunity WHERE Id =: opp.Id LIMIT 1];
+
+        //  The Opportuniry Sales Office should be the same as the Account SO
+        System.assertEquals(acct2.NSP_Sales_Office__c,  opp2.NSP_Sales_Office__c);
+   }
 }
-//

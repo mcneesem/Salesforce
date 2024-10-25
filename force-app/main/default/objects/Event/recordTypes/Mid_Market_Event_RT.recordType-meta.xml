@@ -685,7 +685,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>WA Proposal</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>WO Proposal</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WS Proposal</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WX Proposal</fullName>
             <default>false</default>
         </values>
     </picklistValues>

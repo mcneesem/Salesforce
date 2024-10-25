@@ -1,5 +1,5 @@
 public with sharing class NSP_AccountTeamTriggerHelper {
-    // test w/ NSP_AccountTeamTriggerTest (81%)
+    // test w/ NSP_AccountTeamTriggerTest (82%)
 
     /**
 * Iterates throught the list of new NSP_Account_Team__c and passes the required attributes to other methods.
@@ -93,11 +93,13 @@ public with sharing class NSP_AccountTeamTriggerHelper {
     
     public void afterInsertDirector(List<NSP_Account_Team__c> newList, Map<Id, NSP_Account_Team__c> newMap) {
         try{
-            List<Account> accountList = new List<Account>();
             List<AccountTeamMember> accountTeamMemberList = new List<AccountTeamMember>();
             Map<Id,NSP_Account_Team__c> mapAccountIdtoAccountTeam = new Map<Id,NSP_Account_Team__c>();
             
-            for(NSP_Account_Team__c accTeamMemberObj : newList) {
+            Set<Id> accountIdSet = new Set<Id>();
+            for ( NSP_Account_Team__c accTeamMemberObj : newList ) {
+                // prepare to sync Account...
+                accountIdSet.add( accTeamMemberObj.NSP_Account__c );
                 //insert AccountTeamMeber
                 AccountTeamMember accountTeamMemberObj = new AccountTeamMember();
                 accountTeamMemberObj.AccountId = accTeamMemberObj.NSP_Account__c;
@@ -105,15 +107,8 @@ public with sharing class NSP_AccountTeamTriggerHelper {
                 accountTeamMemberObj.TeamMemberRole = NSP_IntegrationConstants.TEAMMEMBERROLE;
                 accountTeamMemberObj.UserId = accTeamMemberObj.NSP_User__c;
                 accountTeamMemberList.add(accountTeamMemberObj);
-                
-                //update Account
-                Account accountObj = new Account();
-                accountObj.Id = accTeamMemberObj.NSP_Account__c;
-                accountObj.NSP_Ready_for_Integration_Sync__c = true;
-                accountList.add(accountObj);
-                
-                /*STY-03187: Checking if NSP_Role__c field in AccountTeam object is WX/WA Benefits Specialist or WA/WX Payroll Specialist or
-401k Plan Consultant then mapping AccountId and accountTeamObject */
+                // STY-03187: Checking if NSP_Role__c field in AccountTeam object is WX/WA Benefits Specialist
+                // or WA/WX Payroll Specialist or 401k Plan Consultant then mapping AccountId and accountTeamObject
                 if(String.isNotBlank(accTeamMemberObj.NSP_Role__c) && 
                    (accTeamMemberObj.NSP_Role__c == NSP_ServiceConstants.WXWA_BENEFITS || 
                     accTeamMemberObj.NSP_Role__c == NSP_ServiceConstants.WXWA_PAYROLL ||
@@ -126,9 +121,8 @@ public with sharing class NSP_AccountTeamTriggerHelper {
                 insert accountTeamMemberList;
             }
             
-            if(accountList.size() > 0){
-                update accountList;                    
-            }
+            // ready to sync Accounts...
+            IntegrationSyncController.setReadyForIntegrationSync( accountIdSet );
             
             //Checking if map of accountId and Account Team is greater than zero or not
             if(mapAccountIdtoAccountTeam.size()>0 && !mapAccountIdtoAccountTeam.isEmpty()){
@@ -299,9 +293,6 @@ NSP_WX_WA_Benefits_Specialist__c, and NSP_Retirement_Service_Plan_Name__c field 
     
     public void afterUpdateDirector(Map<Id, NSP_Account_Team__c> newMap,Map<Id, NSP_Account_Team__c> oldMap) {
         try{
-            Set<Id> accountIdSetToUpdateResyncFLag = new Set<Id>();
-            NSP_SObjectUpdateTriggerHelper sObjectUpdateObj = new NSP_SObjectUpdateTriggerHelper();
-            accountIdSetToUpdateResyncFLag.addAll(sObjectUpdateObj.fetchUpdFieldsLst(NSP_IntegrationConstants.SOBJECT_ACCOUNTTEAM, newMap, oldMap));
             Map<Id,NSP_Account_Team__c> mapAccountIdtoAccountTeam = new Map<Id,NSP_Account_Team__c>();
             
             /*STY-03187 : Checking if NSP_Role__c field in AccountTeam object is WX/WA Benefits Specialist or WA/WX Payroll Specialist or
@@ -317,19 +308,18 @@ NSP_WX_WA_Benefits_Specialist__c, and NSP_Retirement_Service_Plan_Name__c field 
                         mapAccountIdtoAccountTeam.put(accTeamMemberObj.NSP_Account__c, accTeamMemberObj);
                     }
             }
-            
-            if(accountIdSetToUpdateResyncFLag.size() > 0){
-                List<Account> updateAccountList = new List<Account>();
-                for(Id accountId : accountIdSetToUpdateResyncFLag){
-                    Account accountObj = new Account(); 
-                    accountObj.NSP_Ready_for_Integration_Sync__c = true;
-                    accountObj.Id = accountId; 
-                    updateAccountList.add(accountObj);
-                }
-                if(updateAccountList.size() > 0){
-                    update updateAccountList;                    
-                }
-            }
+
+            Set<Id> accountIdSetToUpdateResyncFlag = new Set<Id>();
+            NSP_SObjectUpdateTriggerHelper sObjectUpdateObj = new NSP_SObjectUpdateTriggerHelper();
+            accountIdSetToUpdateResyncFlag.addAll(
+                sObjectUpdateObj.fetchUpdFieldsLst(
+                    NSP_IntegrationConstants.SOBJECT_ACCOUNTTEAM ,
+                    newMap ,
+                    oldMap
+                )
+            );
+            IntegrationSyncController.setReadyForIntegrationSync( accountIdSetToUpdateResyncFlag );
+
             //Checking if map of accountId and Account Team is greater than zero or not
             if(mapAccountIdtoAccountTeam.size()>0 && !mapAccountIdtoAccountTeam.isEmpty()){
                 updateAccountTeamNameToAssetName(mapAccountIdtoAccountTeam);
@@ -623,5 +613,66 @@ NSP_WX_WA_Benefits_Specialist__c, and NSP_Retirement_Service_Plan_Name__c field 
         }
     }
 
+    //
+    // @MethodName: updatePayrollDataSheetRecords
+    // @Description: This method is used to update Payroll_Specialist__c field on Payroll Data sheet records
+    // @param : List<NSP_Account_Team__c> newAccountTeamList, Map<Id,NSP_Account_Team__c> newMap, Map<Id,NSP_Account_Team__c> oldMap
+    // @createdDate : 09/05/2024
+    // @User story : 304232
+    // @return void
+    //
+    public static void updatePayrollDataSheetRecords( List<NSP_Account_Team__c> newAccountTeamList , Map<Id,NSP_Account_Team__c> oldMap ) {
+        Set<Id> accountIds = new Set<Id>();
+        List<NSP_Payroll__c> lstOfPayrolls = new List<NSP_Payroll__c>();
+        if ( ( newAccountTeamList != null ) && !newAccountTeamList.isEmpty() ) {
+            // Loop through each accountteam member in the new list  
+            for ( NSP_Account_Team__c accountTeam : newAccountTeamList ) {
+                if ( accountTeam.NSP_Account__c != null ) {
+                    NSP_Account_Team__c oldAccountTeam = null;
+                    if ( ( oldMap != null ) && oldMap.containsKey(accountTeam.Id) ) {
+                        oldAccountTeam = oldMap.get( accountTeam.Id );
+                    }
+                    if ( ( accountTeam.NSP_Role__c == NSP_ServiceConstants.PayrollSpecialist )
+                        || ( ( oldAccountTeam != null )
+                            && ( ( oldAccountTeam.NSP_Role__c != accountTeam.NSP_Role__c )
+                                || ( oldAccountTeam.NSP_Account__c != accountTeam.NSP_Account__c )
+                                )
+                            )
+                        )
+                    {
+                        accountIds.add( accountTeam.NSP_Account__c );
+                    }
+                }
+            }
+        }
+        if ( accountIds != null && !accountIds.isEmpty() ) {
+            // Query the PDS records for the identified account IDs
+            for ( NSP_Payroll__c pdsRecord : [
+                        SELECT
+                            Id , Name , NSP_Sub_Client_Name__c , Account__c , NSP_on_Site_Supervisor__c ,
+                            NSP_Primary_Payroll_Contact__c , NSP_HR_Contact__c , NSP_Back_Up_Payroll_Contact__c ,
+                            Back_Up_View_Payroll_Paperwork__c , Primary_View_Payroll_Paperwork__c ,
+                            View_Payroll_Paperwork__c , On_Site_View_Payroll_Paperwork__c
+                        FROM NSP_Payroll__c
+                        WHERE ( Account__c IN :accountIds )
+                    ]
+                )
+            {
+                if ( pdsRecord.Account__c != null ) { 
+                    lstOfPayrolls.add( pdsRecord );
+                }
+            }
+            if ( !lstOfPayrolls.isEmpty() ) {
+                // Call the helper method to update fields after insert/update
+                NSP_PayrollTriggerHelper payrollTriggerHelper = new NSP_PayrollTriggerHelper();
+                payrollTriggerHelper.fieldUpdatesAfterInsertUpdate(
+                    lstOfPayrolls ,
+                    null ,
+                    null ,
+                    false
+                );
+            }
+        }
+    }
 }
 //

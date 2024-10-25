@@ -95,7 +95,7 @@ public class NSP_AmendmentChecklistTriggerHelperTest {
             //Then
             System.assertEquals(null, amendmentChecklistRec.NSP_Subplan_Number__c,'Amendment Checklist Rec Subplan Number got updated ');
         }catch(Exception ex){
-            NSP_CustomException.LogException(ex);
+            System.debug( ' ~ ex=' + ex );
         }    
     }
 
@@ -149,7 +149,7 @@ public class NSP_AmendmentChecklistTriggerHelperTest {
             //Then
             System.assertEquals(null, amendmentChecklistRec.NSP_Subplan_Number__c,'Amendment Checklist Rec Subplan Number got removed ');
         }catch(Exception ex){
-            NSP_CustomException.LogException(ex);
+            System.debug( ' ~ ex=' + ex );
         }     
     }
 }

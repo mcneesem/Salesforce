@@ -1,26 +1,24 @@
 {
   "attributes" : {
     "type" : "SBQQ__CustomScript__c",
-    "url" : "/services/data/v61.0/sobjects/SBQQ__CustomScript__c/a65O3000000HM2dIAG"
+    "url" : "/services/data/v62.0/sobjects/SBQQ__CustomScript__c/a6504000000TzykAAC"
   },
-  "Id" : "a65O3000000HM2dIAG",
-  "OwnerId" : "0054x0000093OjeAAE",
+  "Id" : "a6504000000TzykAAC",
+  "OwnerId" : "0054x0000092xAOAAY",
   "IsDeleted" : false,
-  "Name" : "QCP_Script_VXX36",
+  "Name" : "QCP_Script_VXX37",
   "CurrencyIsoCode" : "USD",
-  "CreatedDate" : "2024-08-12T00:28:08.000+0000",
-  "CreatedById" : "0054x0000093OjeAAE",
-  "LastModifiedDate" : "2024-08-12T00:28:08.000+0000",
-  "LastModifiedById" : "0054x0000093OjeAAE",
-  "SystemModstamp" : "2024-08-12T00:28:08.000+0000",
-  "LastViewedDate" : "2024-08-28T18:16:57.000+0000",
-  "LastReferencedDate" : "2024-08-28T18:16:57.000+0000",
+  "CreatedDate" : "2024-08-21T07:54:54.000+0000",
+  "CreatedById" : "0054x0000092xAOAAY",
+  "LastModifiedDate" : "2024-09-14T09:18:24.000+0000",
+  "LastModifiedById" : "0054x0000092xAOAAY",
+  "SystemModstamp" : "2024-09-14T09:18:24.000+0000",
+  "LastViewedDate" : "2024-09-23T17:45:53.000+0000",
+  "LastReferencedDate" : "2024-09-23T17:45:53.000+0000",
   "SBQQ__Code__c" : "...",
   "SBQQ__ConsumptionRateFields__c" : "...",
   "SBQQ__ConsumptionScheduleFields__c" : "...",
   "SBQQ__QuoteFields__c" : "...",
   "SBQQ__QuoteLineFields__c" : "...",
-  "SBQQ__TranspiledCode__c" : "...",
-  "NSP_External_Id__c" : "a654x000000pBYfAAM",
-  "GearsetExternalId__c" : "2AAMIG2000000g756a"
-}}
+  "SBQQ__TranspiledCode__c" : "..."
+}

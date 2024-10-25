@@ -1,7 +1,3 @@
-/**
-* Represents the case trigger helper which handles all the logic.
-*
-*/
 public class NSP_CaseTriggerHelper {
     // test w/ NSP_CaseTriggerHelperTest (78%)
 
@@ -1241,7 +1237,10 @@ createdDate : 6/13/2023
                 }
             }
         } catch ( Exception e ) {
-            NSP_CustomException.logException( e );
+            NSP_CaseTriggerHelper.handleException(
+                e ,
+                'updateContactSupportRole'
+            );
         }
     }
 
@@ -1870,239 +1869,246 @@ Story:        STY-01785
         }
     }
 
-    public void createCaseHistory(Map<Id, Case> oldMap, Map<Id, Case> newMap) {
-        if(oldMap.isEmpty()) {
-            List<NSP_Case_History__c> newCaseHistoryToBeCreatedList = new List<NSP_Case_History__c>();
-            Set<Id> caseIdsSet = new Set<Id>();
-            for(Id caseId : newMap.keySet()) {
-                caseIdsSet.add(caseId);
-            }
-            Map<Id,Case> caseMap ;
-            if(caseIdsSet.size()>0){
-                caseMap = new Map<ID, Case>([SELECT Id, TYPEOF Owner WHEN User Then nsp_service_region__c,name,Manager.Name,Title WHEN Group THEN Name, DeveloperName END  FROM Case WHERE Id IN :caseIdsSet ]);    
-            }
-            for(Case newCase : newMap.values()) {
-                NSP_Case_History__c caseHistory = new NSP_Case_History__c();
-                caseHistory.NSP_Case__c = newCase.Id;
-                Case caseRec = caseMap!= null && caseMap.get(newCase.Id) != null ? caseMap.get(newCase.Id) : null;
-                String name;
-                String queueName;
-                if(String.valueOf(newCase.OwnerId).startsWith(STARTSWITHGROUP)){
-                    Group grp = caseRec.Owner;
-                    name = grp.Name;
-                    queueName = grp.DeveloperName;
-                    if(queueName == NSP_ReportingConstants.Time_H_W_B_P_C_Queue){
-                        caseHistory.Time_H_W_B_P_C_Queue__c=0;
-                    }
-                    else if(queueName == NSP_ReportingConstants.Time_H_W_Communications_Queue){
-                        caseHistory.Time_H_W_Communications_Queue_Spent__c=0;
-                    }
-                    else if(queueName == NSP_ReportingConstants.Time_Health_Welfare_Products_Queue){
-                        caseHistory.Time_Health_Welfare_Products_Queue__c=0;
-                    }
-                    else{
-                        caseHistory.NSP_Time_in_Queue__c = 0;
-                    }
-                }else{
-                    User userRec = caseRec.Owner;
-                    name = userRec.name;
-                    caseHistory.NSP_Case_Current_Owners_Manager_Text__c = userRec.Manager != null && userRec.Manager.Name != null? userRec.Manager.name:'';
-                    caseHistory.NSP_Case_Current_Service_Region_Text__c = userRec.nsp_service_region__c != null ? userRec.nsp_service_region__c :'';
-                    caseHistory.NSP_Case_Current_Job_Title__c = userRec.Title != null ? userRec.Title :'';
-                }
-                caseHistory.NSP_Case_Current_Owner_Text__c = name;
-                caseHistory.NSP_Case_Previous_Owner_Text__c = name;
-                //caseHistory.NSP_Case_Current_Owner_Text__c = newCase.Status;
-                caseHistory.NSP_Case_Current_status__c = newCase.Status;
-                caseHistory.NSP_Case_Previous_Status__c = newCase.Status;
-                caseHistory.NSP_Case_Age__c = 0;
-                caseHistory.NSP_Time_Individual_Spent__c = 0;
-                caseHistory.NSP_Status_Duration__c = 0;
-                caseHistory.NSP_Start_Date__c=newCase.createdDate;
-                caseHistory.NSP_1st_Queue2User_Evaluated__c = false;
-                caseHistory.NSP_Case_Current_Detail__c = newCase.NSP_Detail__c;
-                caseHistory.NSP_Case_Current_Category__c = newCase.NSP_Category__c;
-                caseHistory.NSP_Case_Current_Sub_Category__c = newCase.NSP_SubCategory__c;
-            newCaseHistoryToBeCreatedList.add(caseHistory);
-        }
-        insert newCaseHistoryToBeCreatedList;
-    } else {
-        Set<Id> caseIds = new Set<Id>();
-        for(Case newCaseRecord : newMap.values()) {
-            if(newCaseRecord.OwnerId != oldMap.get(newCaseRecord.Id).OwnerId || newCaseRecord.Status != oldMap.get(newCaseRecord.Id).Status) {
-                caseIds.add(newCaseRecord.Id);
-            }
-        }
-        if(!caseIds.isEmpty()) {
-            BusinessHours defaultBusinessHours = [SELECT ID FROM BusinessHours WHERE IsDefault=true];
-                List<Case> newCaseList = [SELECT Id, OwnerId, CreatedDate, Status, LastModifiedDate, NSP_Detail__c,NSP_Category__c,NSP_SubCategory__c,
-                                          NSP_JobTitle__c, TYPEOF Owner WHEN User Then nsp_service_region__c,name,
-                                         Manager.Name,Title WHEN Group THEN Name,DeveloperName END,                                         
-                                        (SELECT Id, NSP_Case__c, CreatedDate,NSP_Case_Current_Owner_Text__c,
-                                         NSP_Case_Previous_Owner_Text__c, NSP_Case_Current_Owner__c,
-                                          NSP_Case_Current_status__c, 
-                                         NSP_Time_Individual_Spent__c,NSP_Time_in_Queue__c,Time_H_W_B_P_C_Queue__c,
-                                          Time_H_W_Communications_Queue_Spent__c,
-                                          Time_Health_Welfare_Products_Queue__c, 
-                                          NSP_Status_Duration__c, 
-                                          NSP_Case_Previous_Owner__c, NSP_Case_Previous_Status__c,
-                                          NSP_Case_Current_Owners_Manager_Text__c,NSP_Case_Current_Service_Region_Text__c,NSP_Case_Current_Job_Title__c,
-                                          NSP_Case_Current_Sub_Category__c,NSP_1st_Queue2User_Evaluated__c,NSP_Case_1st_assigned_from_Queue_to_User__c FROM Case_Histories__r Order By CreatedDate Desc limit 1) 
-                                          FROM Case WHERE Id IN :caseIds ];
+    public void createCaseHistory( Map<Id,Case> oldMap , Map<Id,Case> newMap ) {
+        try {
+            if(oldMap.isEmpty()) {
                 List<NSP_Case_History__c> newCaseHistoryToBeCreatedList = new List<NSP_Case_History__c>();
-                Datetime currentDateTime = Datetime.now();
-                NSP_Case_History__c historyRecord;
-                Decimal timeToAdd;
-                Boolean isQueue=false, isUser=false, isStatus=false;
-                for(Case newCaseRecord : newCaseList) {
-                    Case oldCaseRecord = oldMap.get(newCaseRecord.Id);
-                    if(!newCaseRecord.Case_Histories__r.isEmpty()) {
-                        historyRecord = newCaseRecord.Case_Histories__r[0];
-                        NSP_Case_History__c newCaseHistory = historyRecord.clone(false, false, false, false);
-                        newCaseHistory.NSP_Case_Current_Detail__c = newCaseRecord.NSP_Detail__c;
-                        newCaseHistory.NSP_Case_Current_Category__c = newCaseRecord.NSP_Category__c;
-                        newCaseHistory.NSP_Case_Current_Sub_Category__c = newCaseRecord.NSP_SubCategory__c;
-                        newCaseHistory.NSP_Start_Date__c = currentDateTime;
-                        //Calculate time from case created till last modified.
-                        newCaseHistory.NSP_Case_Age__c = calculateTimeDifference(defaultBusinessHours.Id, newCaseRecord.CreatedDate, newCaseRecord.LastModifiedDate);
-                        timeToAdd = calculateTimeDifference(defaultBusinessHours.Id, historyRecord.CreatedDate, newCaseRecord.LastModifiedDate);
-                        String newOwner;
-                        if(newCaseRecord.OwnerId != oldCaseRecord.OwnerId && String.valueOf(newCaseRecord.OwnerId).startsWith(STARTSWITHGROUP)){
-                            Group grp = newCaseRecord.owner;
-                            newOwner = grp.Name;
-                            newCaseHistory.NSP_Case_Current_Owners_Manager_Text__c ='';
-                            newCaseHistory.NSP_Case_Current_Service_Region_Text__c = null;
-                            newCaseHistory.NSP_Case_Current_Job_Title__c = '';
-                        } else if(newCaseRecord.OwnerId != oldCaseRecord.OwnerId && String.valueOf(newCaseRecord.OwnerId).startsWith(STARTSWITHUSER)){
-                            User newUser = newCaseRecord.owner;
-                            newOwner = newUser.Name;
-                            newCaseHistory.NSP_Case_Current_Service_Region_Text__c = newUser.nsp_service_region__c;
-                            newCaseHistory.NSP_Case_Current_Owners_Manager_Text__c = newUser.Manager != null && newUser.Manager.Name != null? newUser.Manager.name:'';
-                            newCaseHistory.NSP_Case_Current_Job_Title__c = newUser.Title != null ? newUser.Title:'';
-                        }
-                        if(newCaseRecord.OwnerId != oldCaseRecord.OwnerId && String.valueOf(oldCaseRecord.OwnerId).startsWith(STARTSWITHGROUP)) {
-                            if(String.valueOf(newCaseRecord.OwnerId).startsWith(STARTSWITHGROUP)){
-                            String grpOwner;
-                            Group grp = newCaseRecord.owner;
-                            grpOwner = grp.DeveloperName;
-                            if(grpOwner == NSP_ReportingConstants.Time_H_W_B_P_C_Queue){
-                        		newCaseHistory.Time_H_W_B_P_C_Queue__c=0;
-                            }
-                            else if(grpOwner == NSP_ReportingConstants.Time_H_W_Communications_Queue){
-                        		newCaseHistory.Time_H_W_Communications_Queue_Spent__c=0;
-                            }
-                            else if(grpOwner == NSP_ReportingConstants.Time_Health_Welfare_Products_Queue){
-                        		newCaseHistory.Time_Health_Welfare_Products_Queue__c=0;
-                            }
-                            else{
-                            newCaseHistory.NSP_Time_in_Queue__c = 0;
-                            }
-                            }
-                            newCaseHistory.NSP_Time_Individual_Spent__c = 0;
-                            newCaseHistory.NSP_Case_Previous_Owner_Text__c = newCaseHistory.NSP_Case_Current_Owner_Text__c;
-                            newCaseHistory.NSP_Case_Current_Owner_Text__c = newOwner;  
-                            isQueue = true;
-                            if(!newCaseHistory.NSP_1st_Queue2User_Evaluated__c && String.valueOf(newCaseRecord.OwnerId).startsWith(STARTSWITHUSER)){
-                                newCaseHistory.NSP_1st_Queue2User_Evaluated__c = true;
-                                newCaseHistory.NSP_Case_1st_assigned_from_Queue_to_User__c = currentDateTime;
-                            }
-                        } else if(newCaseRecord.OwnerId != oldCaseRecord.OwnerId) {
-                            if(String.valueOf(newCaseRecord.OwnerId).startsWith('00G')){
-                                String grpOwner;
-                            	Group grp = newCaseRecord.owner;
-                            	grpOwner = grp.DeveloperName;
-                            	if(grpOwner == NSP_ReportingConstants.Time_H_W_B_P_C_Queue){
-                        			newCaseHistory.Time_H_W_B_P_C_Queue__c=0;
-                            	}
-                            	else if(grpOwner == NSP_ReportingConstants.Time_H_W_Communications_Queue){
-                        			newCaseHistory.Time_H_W_Communications_Queue_Spent__c=0;
-                            	}
-                            	else if(grpOwner == NSP_ReportingConstants.Time_Health_Welfare_Products_Queue){
-                        			newCaseHistory.Time_Health_Welfare_Products_Queue__c=0;
-                            	}
-                            	else{
-                        			newCaseHistory.NSP_Time_in_Queue__c = 0;
-                            	}
-                            }
-                            newCaseHistory.NSP_Time_Individual_Spent__c = 0;
-                            newCaseHistory.NSP_Case_Previous_Owner_Text__c = newCaseHistory.NSP_Case_Current_Owner_Text__c;
-                            newCaseHistory.NSP_Case_Current_Owner_Text__c = newOwner;
-                            isUser = true;
-                        }
-                        if(newCaseRecord.OwnerId == oldCaseRecord.OwnerId && String.valueOf(oldCaseRecord.OwnerId).startsWith(STARTSWITHGROUP)) {
-                            String grpOwner;
-                            Group grp = newCaseRecord.owner;
-                            grpOwner = grp.DeveloperName;
-                            if(grpOwner == NSP_ReportingConstants.Time_H_W_B_P_C_Queue){
-                        		newCaseHistory.Time_H_W_B_P_C_Queue__c +=  timeToAdd;
-                            }
-                            else if(grpOwner == NSP_ReportingConstants.Time_H_W_Communications_Queue){
-                        		newCaseHistory.Time_H_W_Communications_Queue_Spent__c +=  timeToAdd;
-                            }
-                            else if(grpOwner == NSP_ReportingConstants.Time_Health_Welfare_Products_Queue){
-                        		newCaseHistory.Time_Health_Welfare_Products_Queue__c +=  timeToAdd;
-                            }
-                            else{
-                        		newCaseHistory.NSP_Time_in_Queue__c  +=  timeToAdd;
-                            }                           
-                        } else if(newCaseRecord.OwnerId == oldCaseRecord.OwnerId) {
-                            newCaseHistory.NSP_Time_Individual_Spent__c +=  timeToAdd;
-                        }
-                        if(newCaseRecord.Status != oldCaseRecord.Status) {
-                            newCaseHistory.NSP_Status_Duration__c = 0;
-                            newCaseHistory.NSP_Case_Previous_Status__c = oldCaseRecord.Status;
-                            newCaseHistory.NSP_Case_Current_status__c = newCaseRecord.Status;
-                            isStatus = true;
-                        } 
-                        if(newCaseRecord.Status == oldCaseRecord.Status) {
-                            
-                            newCaseHistory.NSP_Status_Duration__c += timeToAdd;
-                        }
-                        newCaseHistoryToBeCreatedList.add(newCaseHistory);
-                    }
+                Set<Id> caseIdsSet = new Set<Id>();
+                for(Id caseId : newMap.keySet()) {
+                    caseIdsSet.add(caseId);
                 }
-                if(historyRecord != null){
-                    historyRecord.NSP_End_Date__c = currentDateTime;
-                    if(isStatus){
-                        historyRecord.NSP_Status_Duration__c += timeToAdd;
+                Map<Id,Case> caseMap ;
+                if(caseIdsSet.size()>0){
+                    caseMap = new Map<ID, Case>([SELECT Id, TYPEOF Owner WHEN User Then nsp_service_region__c,name,Manager.Name,Title WHEN Group THEN Name, DeveloperName END  FROM Case WHERE Id IN :caseIdsSet ]);    
+                }
+                for(Case newCase : newMap.values()) {
+                    NSP_Case_History__c caseHistory = new NSP_Case_History__c();
+                    caseHistory.NSP_Case__c = newCase.Id;
+                    String ownerName = null;
+                    Case caseRec = null;
+                    if ( ( caseMap != null )
+                        && caseMap.containsKey( newCase.Id )
+                        && ( caseMap.get( newCase.Id ) != null )
+                        )
+                    {
+                        caseRec = caseMap.get(newCase.Id);
                     }
-                    if ( isQueue ) {
-                        List<String> grpFields = new List<String>{'Id', 'Name', 'DeveloperName'};
-                        String grpQuery = new NSP_QueryBuilder( 'Group' , grpFields )
-                            .addFilter( 'Name' , historyRecord.NSP_Case_Current_Owner_Text__c )
-                            .build()
-                            ;
-                        List<Group> queueList = null;
-                        try {
-                            queueList = Database.query( grpQuery ); // throws...  System.QueryException: mismatched character '' expecting '''
-                        } catch ( Exception e ) {
-                            NSP_CaseTriggerHelper.handleException(
-                                e ,
-                                'createCaseHistory'
-                            );
-                        }
-                        if ( ( queueList != null ) && !queueList.isEmpty() ) {
-                            String grpOwner = queueList[0].DeveloperName;
-                            if ( grpOwner == NSP_ReportingConstants.Time_H_W_B_P_C_Queue ) {
-                                historyRecord.Time_H_W_B_P_C_Queue__c += timeToAdd;
-                            } else if ( grpOwner == NSP_ReportingConstants.Time_H_W_Communications_Queue ) {
-                                historyRecord.Time_H_W_Communications_Queue_Spent__c += timeToAdd;
-                            } else if ( grpOwner == NSP_ReportingConstants.Time_Health_Welfare_Products_Queue ) {
-                                historyRecord.Time_Health_Welfare_Products_Queue__c += timeToAdd;
+                    if ( caseRec != null ) {
+                        if ( newCase.OwnerId.getSObjectType() == Group.getSObjectType() ) {
+                            Group grp = caseRec.Owner;
+                            ownerName = grp.Name;
+                            String queueName = grp.DeveloperName;
+                            if ( queueName == NSP_ReportingConstants.Time_H_W_B_P_C_Queue ) {
+                                caseHistory.Time_H_W_B_P_C_Queue__c = 0;
+                            } else if ( queueName == NSP_ReportingConstants.Time_H_W_Communications_Queue ) {
+                                caseHistory.Time_H_W_Communications_Queue_Spent__c = 0;
+                            } else if ( queueName == NSP_ReportingConstants.Time_Health_Welfare_Products_Queue ) {
+                                caseHistory.Time_Health_Welfare_Products_Queue__c = 0;
                             } else {
-                                historyRecord.NSP_Time_in_Queue__c  += timeToAdd;
+                                caseHistory.NSP_Time_in_Queue__c = 0;
                             }
+                        } else {
+                            User userRec = caseRec.Owner;
+                            ownerName = userRec.name;
+                            caseHistory.NSP_Case_Current_Owners_Manager_Text__c = userRec.Manager != null && userRec.Manager.Name != null? userRec.Manager.name:'';
+                            caseHistory.NSP_Case_Current_Service_Region_Text__c = userRec.nsp_service_region__c != null ? userRec.nsp_service_region__c :'';
+                            caseHistory.NSP_Case_Current_Job_Title__c = userRec.Title != null ? userRec.Title :'';
                         }
                     }
-                    if ( isUser ) {
-                        historyRecord.NSP_Time_Individual_Spent__c += timeToAdd;
-                    }
-                    newCaseHistoryToBeCreatedList.add( historyRecord );
+                    caseHistory.NSP_Case_Current_Owner_Text__c = ownerName;
+                    caseHistory.NSP_Case_Previous_Owner_Text__c = ownerName;
+                    //caseHistory.NSP_Case_Current_Owner_Text__c = newCase.Status;
+                    caseHistory.NSP_Case_Current_status__c = newCase.Status;
+                    caseHistory.NSP_Case_Previous_Status__c = newCase.Status;
+                    caseHistory.NSP_Case_Age__c = 0;
+                    caseHistory.NSP_Time_Individual_Spent__c = 0;
+                    caseHistory.NSP_Status_Duration__c = 0;
+                    caseHistory.NSP_Start_Date__c=newCase.createdDate;
+                    caseHistory.NSP_1st_Queue2User_Evaluated__c = false;
+                    caseHistory.NSP_Case_Current_Detail__c = newCase.NSP_Detail__c;
+                    caseHistory.NSP_Case_Current_Category__c = newCase.NSP_Category__c;
+                    caseHistory.NSP_Case_Current_Sub_Category__c = newCase.NSP_SubCategory__c;
+                    newCaseHistoryToBeCreatedList.add(caseHistory);
                 }
-                if ( !newCaseHistoryToBeCreatedList.isEmpty() ) {
-                    upsert newCaseHistoryToBeCreatedList; // try catch capture error logs
+                insert newCaseHistoryToBeCreatedList;
+            } else {
+                Set<Id> caseIds = new Set<Id>();
+                for(Case newCaseRecord : newMap.values()) {
+                    if(newCaseRecord.OwnerId != oldMap.get(newCaseRecord.Id).OwnerId || newCaseRecord.Status != oldMap.get(newCaseRecord.Id).Status) {
+                        caseIds.add(newCaseRecord.Id);
+                    }
+                }
+                if(!caseIds.isEmpty()) {
+                    BusinessHours defaultBusinessHours = [SELECT ID FROM BusinessHours WHERE IsDefault=true];
+                    List<Case> newCaseList = [
+                        SELECT
+                        Id, OwnerId, CreatedDate, Status, LastModifiedDate, NSP_Detail__c,NSP_Category__c,NSP_SubCategory__c,
+                        NSP_JobTitle__c, TYPEOF Owner WHEN User Then nsp_service_region__c,name,
+                        Manager.Name,Title WHEN Group THEN Name,DeveloperName END,
+                        (SELECT Id, NSP_Case__c, CreatedDate,NSP_Case_Current_Owner_Text__c,
+                        NSP_Case_Previous_Owner_Text__c, NSP_Case_Current_Owner__c,
+                        NSP_Case_Current_status__c, 
+                        NSP_Time_Individual_Spent__c,NSP_Time_in_Queue__c,Time_H_W_B_P_C_Queue__c,
+                        Time_H_W_Communications_Queue_Spent__c,
+                        Time_Health_Welfare_Products_Queue__c, 
+                        NSP_Status_Duration__c, 
+                        NSP_Case_Previous_Owner__c, NSP_Case_Previous_Status__c,
+                        NSP_Case_Current_Owners_Manager_Text__c,NSP_Case_Current_Service_Region_Text__c,NSP_Case_Current_Job_Title__c,
+                        NSP_Case_Current_Sub_Category__c,NSP_1st_Queue2User_Evaluated__c,NSP_Case_1st_assigned_from_Queue_to_User__c FROM Case_Histories__r Order By CreatedDate Desc limit 1) 
+                        FROM Case
+                        WHERE ( Id IN :caseIds )
+                    ];
+                    List<NSP_Case_History__c> newCaseHistoryToBeCreatedList = new List<NSP_Case_History__c>();
+                    Datetime currentDateTime = Datetime.now();
+                    NSP_Case_History__c historyRecord;
+                    Decimal timeToAdd;
+                    Boolean isQueue=false, isUser=false, isStatus=false;
+                    for(Case newCaseRecord : newCaseList) {
+                        Case oldCaseRecord = oldMap.get(newCaseRecord.Id);
+                        if(!newCaseRecord.Case_Histories__r.isEmpty()) {
+                            historyRecord = newCaseRecord.Case_Histories__r[0];
+                            NSP_Case_History__c newCaseHistory = historyRecord.clone(false, false, false, false);
+                            newCaseHistory.NSP_Case_Current_Detail__c = newCaseRecord.NSP_Detail__c;
+                            newCaseHistory.NSP_Case_Current_Category__c = newCaseRecord.NSP_Category__c;
+                            newCaseHistory.NSP_Case_Current_Sub_Category__c = newCaseRecord.NSP_SubCategory__c;
+                            newCaseHistory.NSP_Start_Date__c = currentDateTime;
+                            //Calculate time from case created till last modified.
+                            newCaseHistory.NSP_Case_Age__c = calculateTimeDifference(defaultBusinessHours.Id, newCaseRecord.CreatedDate, newCaseRecord.LastModifiedDate);
+                            timeToAdd = calculateTimeDifference(defaultBusinessHours.Id, historyRecord.CreatedDate, newCaseRecord.LastModifiedDate);
+                            String newOwner;
+                            if(newCaseRecord.OwnerId != oldCaseRecord.OwnerId && String.valueOf(newCaseRecord.OwnerId).startsWith(STARTSWITHGROUP)){
+                                Group grp = newCaseRecord.owner;
+                                newOwner = grp.Name;
+                                newCaseHistory.NSP_Case_Current_Owners_Manager_Text__c ='';
+                                newCaseHistory.NSP_Case_Current_Service_Region_Text__c = null;
+                                newCaseHistory.NSP_Case_Current_Job_Title__c = '';
+                            } else if(newCaseRecord.OwnerId != oldCaseRecord.OwnerId && String.valueOf(newCaseRecord.OwnerId).startsWith(STARTSWITHUSER)){
+                                User newUser = newCaseRecord.owner;
+                                newOwner = newUser.Name;
+                                newCaseHistory.NSP_Case_Current_Service_Region_Text__c = newUser.nsp_service_region__c;
+                                newCaseHistory.NSP_Case_Current_Owners_Manager_Text__c = newUser.Manager != null && newUser.Manager.Name != null? newUser.Manager.name:'';
+                                newCaseHistory.NSP_Case_Current_Job_Title__c = newUser.Title != null ? newUser.Title:'';
+                            }
+                            if(newCaseRecord.OwnerId != oldCaseRecord.OwnerId && String.valueOf(oldCaseRecord.OwnerId).startsWith(STARTSWITHGROUP)) {
+                                if(String.valueOf(newCaseRecord.OwnerId).startsWith(STARTSWITHGROUP)){
+                                String grpOwner;
+                                Group grp = newCaseRecord.owner;
+                                grpOwner = grp.DeveloperName;
+                                if(grpOwner == NSP_ReportingConstants.Time_H_W_B_P_C_Queue){
+                                    newCaseHistory.Time_H_W_B_P_C_Queue__c=0;
+                                } else if(grpOwner == NSP_ReportingConstants.Time_H_W_Communications_Queue){
+                                    newCaseHistory.Time_H_W_Communications_Queue_Spent__c=0;
+                                } else if(grpOwner == NSP_ReportingConstants.Time_Health_Welfare_Products_Queue){
+                                    newCaseHistory.Time_Health_Welfare_Products_Queue__c=0;
+                                } else{
+                                    newCaseHistory.NSP_Time_in_Queue__c = 0;
+                                }
+                                }
+                                newCaseHistory.NSP_Time_Individual_Spent__c = 0;
+                                newCaseHistory.NSP_Case_Previous_Owner_Text__c = newCaseHistory.NSP_Case_Current_Owner_Text__c;
+                                newCaseHistory.NSP_Case_Current_Owner_Text__c = newOwner;  
+                                isQueue = true;
+                                if(!newCaseHistory.NSP_1st_Queue2User_Evaluated__c && String.valueOf(newCaseRecord.OwnerId).startsWith(STARTSWITHUSER)){
+                                    newCaseHistory.NSP_1st_Queue2User_Evaluated__c = true;
+                                    newCaseHistory.NSP_Case_1st_assigned_from_Queue_to_User__c = currentDateTime;
+                                }
+                            } else if(newCaseRecord.OwnerId != oldCaseRecord.OwnerId) {
+                                if(String.valueOf(newCaseRecord.OwnerId).startsWith('00G')){
+                                    String grpOwner;
+                                    Group grp = newCaseRecord.owner;
+                                    grpOwner = grp.DeveloperName;
+                                    if(grpOwner == NSP_ReportingConstants.Time_H_W_B_P_C_Queue){
+                                        newCaseHistory.Time_H_W_B_P_C_Queue__c=0;
+                                    } else if(grpOwner == NSP_ReportingConstants.Time_H_W_Communications_Queue){
+                                        newCaseHistory.Time_H_W_Communications_Queue_Spent__c=0;
+                                    } else if(grpOwner == NSP_ReportingConstants.Time_Health_Welfare_Products_Queue){
+                                        newCaseHistory.Time_Health_Welfare_Products_Queue__c=0;
+                                    } else{
+                                        newCaseHistory.NSP_Time_in_Queue__c = 0;
+                                    }
+                                }
+                                newCaseHistory.NSP_Time_Individual_Spent__c = 0;
+                                newCaseHistory.NSP_Case_Previous_Owner_Text__c = newCaseHistory.NSP_Case_Current_Owner_Text__c;
+                                newCaseHistory.NSP_Case_Current_Owner_Text__c = newOwner;
+                                isUser = true;
+                            }
+                            if(newCaseRecord.OwnerId == oldCaseRecord.OwnerId && String.valueOf(oldCaseRecord.OwnerId).startsWith(STARTSWITHGROUP)) {
+                                String grpOwner;
+                                Group grp = newCaseRecord.owner;
+                                grpOwner = grp.DeveloperName;
+                                if(grpOwner == NSP_ReportingConstants.Time_H_W_B_P_C_Queue){
+                                    newCaseHistory.Time_H_W_B_P_C_Queue__c +=  timeToAdd;
+                                } else if(grpOwner == NSP_ReportingConstants.Time_H_W_Communications_Queue){
+                                    newCaseHistory.Time_H_W_Communications_Queue_Spent__c +=  timeToAdd;
+                                } else if(grpOwner == NSP_ReportingConstants.Time_Health_Welfare_Products_Queue){
+                                    newCaseHistory.Time_Health_Welfare_Products_Queue__c +=  timeToAdd;
+                                } else{
+                                    newCaseHistory.NSP_Time_in_Queue__c  +=  timeToAdd; // throws System.NullPointerException: Attempt to de-reference a null object
+                                }
+                            } else if(newCaseRecord.OwnerId == oldCaseRecord.OwnerId) {
+                                newCaseHistory.NSP_Time_Individual_Spent__c +=  timeToAdd;
+                            }
+                            if(newCaseRecord.Status != oldCaseRecord.Status) {
+                                newCaseHistory.NSP_Status_Duration__c = 0;
+                                newCaseHistory.NSP_Case_Previous_Status__c = oldCaseRecord.Status;
+                                newCaseHistory.NSP_Case_Current_status__c = newCaseRecord.Status;
+                                isStatus = true;
+                            } 
+                            if(newCaseRecord.Status == oldCaseRecord.Status) {
+                                
+                                newCaseHistory.NSP_Status_Duration__c += timeToAdd;
+                            }
+                            newCaseHistoryToBeCreatedList.add(newCaseHistory);
+                        }
+                    }
+                    if(historyRecord != null){
+                        historyRecord.NSP_End_Date__c = currentDateTime;
+                        if(isStatus){
+                            historyRecord.NSP_Status_Duration__c += timeToAdd;
+                        }
+                        if ( isQueue ) {
+                            List<String> grpFields = new List<String>{'Id', 'Name', 'DeveloperName'};
+                            String grpQuery = new NSP_QueryBuilder( 'Group' , grpFields )
+                                .addFilter( 'Name' , historyRecord.NSP_Case_Current_Owner_Text__c )
+                                .build()
+                                ;
+                            List<Group> queueList = null;
+                            try {
+                                queueList = Database.query( grpQuery ); // throws...  System.QueryException: mismatched character '' expecting '''
+                            } catch ( Exception e ) {
+                                NSP_CaseTriggerHelper.handleException(
+                                    e ,
+                                    'createCaseHistory'
+                                );
+                            }
+                            if ( ( queueList != null ) && !queueList.isEmpty() ) {
+                                String grpOwner = queueList[0].DeveloperName;
+                                if ( grpOwner == NSP_ReportingConstants.Time_H_W_B_P_C_Queue ) {
+                                    historyRecord.Time_H_W_B_P_C_Queue__c += timeToAdd;
+                                } else if ( grpOwner == NSP_ReportingConstants.Time_H_W_Communications_Queue ) {
+                                    historyRecord.Time_H_W_Communications_Queue_Spent__c += timeToAdd;
+                                } else if ( grpOwner == NSP_ReportingConstants.Time_Health_Welfare_Products_Queue ) {
+                                    historyRecord.Time_Health_Welfare_Products_Queue__c += timeToAdd;
+                                } else {
+                                    historyRecord.NSP_Time_in_Queue__c  += timeToAdd;
+                                }
+                            }
+                        }
+                        if ( isUser ) {
+                            historyRecord.NSP_Time_Individual_Spent__c += timeToAdd;
+                        }
+                        newCaseHistoryToBeCreatedList.add( historyRecord );
+                    }
+                    if ( !newCaseHistoryToBeCreatedList.isEmpty() ) {
+                        upsert newCaseHistoryToBeCreatedList; // try catch capture error logs
+                    }
                 }
             }
+        } catch ( Exception e ) {
+            NSP_CaseTriggerHelper.handleException(
+                e ,
+                'createCaseHistory'
+            );
         }
     }
 
@@ -2141,12 +2147,12 @@ Params:       String businessHoursId, DateTime startDate, DateTime endDate
         return salesOfficePicklistValues;
     }
     
-    /**********************************************************************************************
-MethodName  : UpdateServiceRequestChannel 
-Description : This method will update servicereuest channel field on contact if the case is niceCX case and origin is Phone
-Params		 : CaseList
-Created by : Harsha Khiroya
-********************************************************************************************/
+    //
+    // MethodName  : UpdateServiceRequestChannel 
+    // Description : This method will update servicereuest channel field on contact if the case is niceCX case and origin is Phone
+    // Params : CaseList
+    //Created by : Harsha Khiroya
+    //
     private static void UpdateServiceRequestChannel( Set<Id> caseIdset){
         
         List<Contact> caseContactList = new List<Contact>();

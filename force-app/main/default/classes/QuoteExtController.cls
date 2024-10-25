@@ -54,6 +54,7 @@ public with sharing class QuoteExtController {
     public Boolean isSerialIdsBlank{get;set;}
     public Boolean isETSerialIdsNotMatched{get;set;}
     public Boolean isTerminationDateBlank{get;set;}
+    public Boolean isSeasonalCalculationPending{get;set;}
 
     static final String REQ_DATE_ERR_MESSAGE=System.Label.NSP_RequestFirstCheckDate;
     static final String DESC_SERVICES_ERR_MESSAGE=System.Label.NSP_Description_Of_Service;
@@ -86,6 +87,7 @@ public with sharing class QuoteExtController {
     static final String SERIAL_IDS_ERR=System.Label.NSP_SerialId_Validation;
     static final String ET_SERIAL_IDS_ERR=System.Label.NSP_ET_Serial_Id_Validation;
     public static final String TERMINATION_DATE_ERROR = System.Label.NSP_Termination_Date_Error;
+    public static final String SEASONAL_ERR = System.Label.Seasonal_Pricing_Error;
 
     public QuoteExtController( ApexPages.StandardController stdController ) {
         objQuote = (SBQQ__Quote__c )stdController.getRecord();
@@ -138,6 +140,7 @@ public with sharing class QuoteExtController {
                 isSerialIdsBlank=false;
                 isETSerialIdsNotMatched=false;
                 isTerminationDateBlank = false;
+                isSeasonalCalculationPending = false;
             }
             //This logic scans the quote fields to check if the fields are holding the right values or not.
             if(!quoteFieldMessage.isEmpty()) {
@@ -260,6 +263,10 @@ public with sharing class QuoteExtController {
                     }
                     if(errorMessage.contains(TERMINATION_DATE_ERROR)){
                         isTerminationDateBlank = true;
+                        showQuoteError = true;
+                    }
+                    if(errorMessage.contains(SEASONAL_ERR)){
+                        isSeasonalCalculationPending = true;
                         showQuoteError = true;
                     }
                 }

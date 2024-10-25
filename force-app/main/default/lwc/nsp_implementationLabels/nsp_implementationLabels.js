@@ -453,6 +453,7 @@ import Describeworkdifferentthannormallyperformed from '@salesforce/label/c.Desc
 import IstheEmployeeanIntern from '@salesforce/label/c.Is_the_Employee_an_Intern';
 import WhatmonthsistheInternworking from '@salesforce/label/c.What_months_is_the_Intern_working';
 import WhatmonthsistheInterninschool from '@salesforce/label/c.What_months_is_the_Intern_in_school';
+import Clientiscurrentlymakingemployercontributions from '@salesforce/label/c.Client_is_currently_making_employer_contributions';
 
 // HARD CODED VALUES
 const precentageComplete = '99% Complete';
@@ -1027,5 +1028,6 @@ export {
     Describeworkdifferentthannormallyperformed,
     IstheEmployeeanIntern,
     WhatmonthsistheInternworking,
-    WhatmonthsistheInterninschool
+    WhatmonthsistheInterninschool,
+    Clientiscurrentlymakingemployercontributions
 };

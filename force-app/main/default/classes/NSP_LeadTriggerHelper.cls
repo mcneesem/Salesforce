@@ -14,8 +14,8 @@ Modification Log     :
 ***************************************************************************************************/
 
 
-public class NSP_LeadTriggerHelper {
-    // test w/ NSP_LeadTriggerHelperTest (81%)
+public with sharing class NSP_LeadTriggerHelper {
+    // test w/ NSP_LeadTriggerHelperTest (83%)
     
     public static final List < String > reasonNurturingReasonsList = System.label.NSP_Lead_at_Nurturing_or_Unqualified.split(';');
     private static final string NEW_LEAD_RT = 'NSP_New_Lead_Record_Type';
@@ -906,57 +906,63 @@ if ((leadNewMap.get(leadId).NSP_Lead_Routing__c == true &&
             update opportunityList;
         }
     }
-    
-    /*
-* Method accepts all Leads that are in nurturing or Unqualified state and 
-* creates a task assined to Lead owner
-* @param List<Lead> newLeadList
-* @return void
-*/
-    public static void createTasks(List < Lead > newLeadList, Map < Id, Lead > leadOldMap) {
-        List < Task > tasksList = new List < Task > ();
-        List < Lead > regenValueUpdateList = new List < Lead > ();
-        //map to store Lead Id and Call back task
-        Map < Id, Task > leadIdTaskMap = new Map < Id, Task > ();
-        for (Lead leadRecord: newLeadList) {
-            if (!reasonNurturingReasonsList.contains(leadOldMap.get(leadRecord.Id).NSP_Reason__c)) {
-                
-                Task taskRecord = new Task();
-                if(leadRecord.NSP_Reason__c != null){
-                    String addMonthsValue = leadRecord.NSP_Reason__c.replaceAll('[^0-9]', '');
+
+    //
+    // Method accepts all Leads that are in nurturing or Unqualified state and creates a task assined to Lead owner
+    // @param List<Lead> newLeadList
+    // @return void
+    //
+    public static void createTasks( List<Lead> newLeadList , Map<Id,Lead> leadOldMap ) {
+        List<Task> tasksList = new List<Task>();
+        List<Lead> regenValueUpdateList = new List<Lead>();
+        for ( Lead leadRecord : newLeadList ) {
+            if ( !reasonNurturingReasonsList.contains( leadOldMap.get( leadRecord.Id ).NSP_Reason__c ) ) {
+                if ( String.isNotBlank( leadRecord.NSP_Reason__c ) ) {
+                    Task taskRecord = new Task();
                     taskRecord.Subject = leadRecord.NSP_Reason__c;
                     taskRecord.OwnerId = leadRecord.OwnerId;
                     taskRecord.WhoId = leadRecord.Id;
                     taskRecord.Type = NSP_SalesConstants.CALL_BACK_TASK;
-                    taskRecord.ActivityDate = System.today().addMonths(Integer.valueOf(addMonthsValue));
-                    tasksList.add(taskRecord);
+                    String addMonthsValue = leadRecord.NSP_Reason__c.replaceAll( '[^0-9]' , '' );
+                    taskRecord.ActivityDate = System.today().addMonths( Integer.valueOf( addMonthsValue ) );
+                    tasksList.add( taskRecord );
                 }
             } else {
-                regenValueUpdateList.add(leadRecord);
+                regenValueUpdateList.add( leadRecord );
             }
         }
-        
-        /*if(tasksList.size() > 0) {
-insert tasksList;
-}*/
-        
+
         //code to handle if the regen value is changed in Reason field eg
         //value changed from too early, 18 months to too early, 12 months
-        if (regenValueUpdateList.size() > 0) {
-            
-            List < Task > tasksToUpdate = [SELECT Id, WhoId, ActivityDate, Type, CreatedDate, Subject FROM Task WHERE WhoId IN: regenValueUpdateList AND Subject IN: reasonNurturingReasonsList];
-            
-            for (Task taskRecord: tasksToUpdate) {
-                leadIdTaskMap.put(taskRecord.WhoId, taskRecord);
+        Map<Id,Task> leadIdTaskMap = new Map<Id,Task>();
+        if ( !regenValueUpdateList.isEmpty() ) {
+            List<Task> tasksToUpdate = [
+                SELECT Id , WhoId , ActivityDate , Type , CreatedDate , Subject
+                FROM Task
+                WHERE (
+                    WhoId IN :regenValueUpdateList
+                    AND Subject IN: reasonNurturingReasonsList
+                )
+            ];
+            for ( Task taskRecord : tasksToUpdate ) {
+                leadIdTaskMap.put( taskRecord.WhoId , taskRecord );
             }
-            
-            for (Lead leadRecord: regenValueUpdateList) {
-                if(leadRecord.NSP_Reason__c != null) {
-                    String addMonthsValue = leadRecord.NSP_Reason__c.replaceAll('[^0-9]', '');
-                    DateTime dt = leadIdTaskMap.get(leadRecord.Id).CreatedDate.addMonths(Integer.valueOf(addMonthsValue));
-                    leadIdTaskMap.get(leadRecord.Id).Subject = leadRecord.NSP_Reason__c;
-                    leadIdTaskMap.get(leadRecord.Id).ActivityDate = Date.newInstance(dt.year(), dt.month(), dt.day());
-                    tasksList.add(leadIdTaskMap.get(leadRecord.Id));
+            for ( Lead leadRecord: regenValueUpdateList ) {
+                if ( String.isNotBlank( leadRecord.NSP_Reason__c ) ) {
+                    if ( leadIdTaskMap.containsKey( leadRecord.Id ) ) {
+                        Task taskToUpdate = leadIdTaskMap.get( leadRecord.Id );
+                        if ( ( taskToUpdate != null ) && ( taskToUpdate.CreatedDate != null ) ) {
+                            String addMonthsValue = leadRecord.NSP_Reason__c.replaceAll( '[^0-9]' , '' );
+                            DateTime newActivityDateTime = taskToUpdate.CreatedDate.addMonths( Integer.valueOf( addMonthsValue ) );
+                            taskToUpdate.ActivityDate = Date.newInstance(
+                                newActivityDateTime.year() ,
+                                newActivityDateTime.month() ,
+                                newActivityDateTime.day()
+                            );
+                            taskToUpdate.Subject = leadRecord.NSP_Reason__c;
+                            tasksList.add( taskToUpdate );
+                        }
+                    }
                 }
             }
         }

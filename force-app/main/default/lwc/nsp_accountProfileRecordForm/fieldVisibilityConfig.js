@@ -7,13 +7,9 @@ const FIELD_VISIBILITY_CONFIG = {
         'NSP_Which_vendor_used__c',
         'NSP_What_countries__c',
         'NSP_Number_of_WSEE_s_in_each_country__c',
+        'Is_client_HQ_located_internationallly__c',
+        'Does_the_client_have_KDM_internationally__c'
       ],
-    },
-  ],
-  NSP_Company_Recognition_and_Rewards__c: [
-    {
-      expValue: ['Yes'],
-      dependentFields: ['NSP_PD_Company_Recognition_Rewards__c'],
     },
   ],
   NSP_Do_they_have_SEOs__c: [
@@ -35,12 +31,6 @@ const FIELD_VISIBILITY_CONFIG = {
     {
       expValue: ['Yes'],
       dependentFields: ['NSP_What_are_they__c', 'NSP_Exceptions__c'],
-    },
-  ],
-  NSP_usng_third_pary_timekeeping_system__c: [
-    {
-      expValue: ['Yes'],
-      dependentFields: ['NSP_Which_software_are_they_using__c'],
     },
   ],
   NSP_Do_they_have_a_GL_interface__c: [
@@ -110,6 +100,42 @@ const FIELD_VISIBILITY_CONFIG = {
       dependentFields: ['NSP_Select_View__c'],
     },
   ],
+
+  NSP_Union_Employees__c: [
+    {
+      expValue: [true],
+      dependentFields: ['Percentage_of_Union_Employees_workforce__c'],
+    },
+  ],
+  Is_client_HQ_located_internationallly__c: [
+    {
+      expValue: ['Yes'],
+      dependentFields: ['Country_HQ_is_located_one_location_only__c'],
+    },
+  ],
+  Does_the_client_have_KDM_internationally__c: [
+    {
+      expValue: ['Yes'],
+      dependentFields: ['Which_countries_KDM_International__c'],
+    },
+  ],
+  NSP_High_Profile_or_Notable_Client__c: [
+    {
+      expValue: [true],
+      dependentFields: ['Why_high_profile_or_notable_client__c'],
+    },
+  ],
+  VOC_Results__c: [
+    {
+      expValue: [true],
+      dependentFields: [
+        'VOC_Date__c',
+        'Pos_Neg__c',
+        'Action_Plan__c',
+      ],
+    },
+  ],
+
 };
 
 export { FIELD_VISIBILITY_CONFIG };

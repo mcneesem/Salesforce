@@ -3,12 +3,6 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <name>WX/WA HR Services</name>
     <queueSobject>
-        <sobjectType>Case</sobjectType>
-    </queueSobject>
-    <queueSobject>
         <sobjectType>pse__Proj__c</sobjectType>
-    </queueSobject>
-    <queueSobject>
-        <sobjectType>Task</sobjectType>
     </queueSobject>
 </Queue>

@@ -193,6 +193,209 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>NSP_BPS_Project_Template__c</picklist>
+        <values>
+            <fullName>Abra - HR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Abra - Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Abra - Payroll</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Carrier Connection</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Compensation - Market Competitive Analysis</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Core HR Health Assessment</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HR Process Mapping</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HR Resource Center</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Handbook</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ISolved HCM Implementation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ITA-Implementation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ITA-Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Integra - Implementation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Integra - Rework</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Interview Guides</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Leave Admin</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Manager Liability Training</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>New Tax IMPL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OPRT Implementation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OPRT Trainings</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PS Trainings</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PerformSmart Implementation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Premier Employee Directory %E2%80%93 Implementation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Premier Employee Directory %E2%80%93 Rework</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>QA - OPD</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>QA - OPRT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>QA - PerformSmart</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RS TalentConnect Implementation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sage Support</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Salary Survey</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Service Hours - OPRT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Service Hours - PS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Standard Climate Survey</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Strategic HR Health Assessment</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>TES HR Compliance Review</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>TES Termination</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Total Compensation Statement</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Training %26 Development</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WX Benefits Renewal Project</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WX to WO Transition</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WX%2FWA Data Migration</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>XML Utility Implementation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>XML Utility Rework</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>iSolved - Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>iSolved ACA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>iSolved Benefits</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>iSolved Flexible Benefits</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>iSolved Performance Management</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>iSolved Reporting</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>iSolved Time</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>NSP_Cancelled_Reason__c</picklist>
         <values>
             <fullName>Client Terminated</fullName>
@@ -200,6 +403,130 @@
         </values>
         <values>
             <fullName>Created in Error</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Change_Order_Classification__c</picklist>
+        <values>
+            <fullName>Audit</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CAM Changes</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Config - Accruals</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Config - Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Config - Pay Group</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Data Import</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hardware</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ITA Termination</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Special Projects</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>System Optimization %26 Review</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>TED</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Training</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Client_Size__c</picklist>
+        <values>
+            <fullName>Business Team %281-30 EE%27s%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Core %2831-49 EE%27s%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Emerging Growth %28100%2B EE%27s%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Emerging Growth %2850-99 EE%27s%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MidMarket %28150 - 749 EE%27s%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Middle Market Enterprise %28750 %2B EEs%29</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_HRQST_Review_Status__c</picklist>
+        <values>
+            <fullName>Approved</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Assigned</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Open</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Waiting on Client</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_On_Hold_Reason__c</picklist>
+        <values>
+            <fullName>Client Determined %E2%80%93 Capacity</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Client Determined %E2%80%93 Readiness</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Client Determined %E2%80%93 Sequencing</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Insperity Determined %E2%80%93 Capacity</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Insperity Determined %E2%80%93 Readiness</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Insperity Determined %E2%80%93 Sequencing</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -223,6 +550,21 @@
         </values>
         <values>
             <fullName>Unfavorable</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_TimeStar_Accrual_Status__c</picklist>
+        <values>
+            <fullName>Implemented after Go Live</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Implemented at Go Live</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not Required</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -558,6 +900,17 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Support_Team__c</picklist>
+        <values>
+            <fullName>Cost</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Traditional</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>TES_HCM_Implementation_Support_Tasks__c</picklist>
         <values>
             <fullName>Bank Audit Task</fullName>
@@ -602,6 +955,25 @@
         </values>
         <values>
             <fullName>Time and Materials</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>pse__Estimate_Approval_Status__c</picklist>
+        <values>
+            <fullName>Approved</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Draft</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rejected</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Submitted</fullName>
             <default>false</default>
         </values>
     </picklistValues>

@@ -5148,7 +5148,7 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Lead.NSP_Regen_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>

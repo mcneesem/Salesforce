@@ -44,7 +44,7 @@
             system.assertEquals(0, Limits.getEmailInvocations());
             Test.stopTest();
         }catch(Exception ex){
-            NSP_CustomException.LogException(ex);
+            System.debug( ' ~ ex=' + ex );
         }
     }
 
@@ -54,7 +54,7 @@
             NSP_TerminationForm_Batch.schedule();
             test.stopTest();
         } catch(Exception ex){
-            NSP_CustomException.LogException(ex);
+            System.debug( ' ~ ex=' + ex );
         }
     }
 

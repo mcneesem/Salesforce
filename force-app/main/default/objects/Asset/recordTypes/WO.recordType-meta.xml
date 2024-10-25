@@ -893,6 +893,14 @@
             <fullName>68</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>70</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>71</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>NSP_ORK_Plan_Vendor__c</picklist>
@@ -2180,6 +2188,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>WO - WD Bundle Plus</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WO - WD Full Bundle</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>WS - Asset Plus Corp</fullName>
             <default>false</default>
         </values>
@@ -2189,6 +2205,10 @@
         </values>
         <values>
             <fullName>WS - Bundle Plus</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WS - WD Bundle Plus</fullName>
             <default>false</default>
         </values>
     </picklistValues>

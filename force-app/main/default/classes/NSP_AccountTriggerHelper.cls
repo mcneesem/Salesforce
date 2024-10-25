@@ -11,7 +11,7 @@
 public class NSP_AccountTriggerHelper {
     // test w/ NSP_AccountTriggerHelperTest, NSP_AccountContactRelationHelperTest, NSP_AccountContactServiceHelperTest (77%)
     // test w/ NSP_AccountTriggerHelperTest, NSP_LeadTriggerHelperTest (77%)
-    // test w/ NSP_AccountTriggerHelperTest (77%)
+    // test w/ NSP_AccountTriggerHelperTest (78%)
     // test w/ NSP_AccountContactRelationHelperTest (34%)
     // test w/ NSP_AccountContactServiceHelperTest (38%)
 
@@ -74,10 +74,10 @@ if(accountObj.RecordTypeId==PARTNER_RECORDTYPE_ID
             if (acctListToStampDocusignTemplateId.size() > 0) {
                 setDummyUsers(acctListToStampDocusignTemplateId);
             }
+            setSalesOfficeDetails(newList, null);
         } catch ( Exception e ) {
             NSP_AccountTriggerHelper.handleException( e , 'beforeInsertDirector' );
         }
-        setSalesOfficeDetails(newList, null);
     }
 
     /**
@@ -124,6 +124,7 @@ if(accountObj.RecordTypeId==PARTNER_RECORDTYPE_ID
      *
      */
     public void beforeUpdateDirector( Map<Id,Account> accountNewMap , Map<Id,Account> accountOldMap ) {
+
         try {
             List < Account > accountList = new List < Account > ();
             List < Account > accountownerChangedList = new List < Account > ();
@@ -182,10 +183,10 @@ if(accountObj.RecordTypeId==PARTNER_RECORDTYPE_ID
             if (acctListToStampDocusignTemplateId.size() > 0) {
                 setDummyUsers(acctListToStampDocusignTemplateId);
             }
+            setSalesOfficeDetails(accountNewMap.values(), accountOldMap);
         } catch ( Exception e ) {
             NSP_AccountTriggerHelper.handleException( e , 'beforeUpdateDirector' );
         }
-        setSalesOfficeDetails(accountNewMap.values(), accountOldMap);
     }
 
     /**
@@ -615,6 +616,9 @@ WHERE (userRole.Name = 'Loyalty Advisor' OR userRole.Name = 'Channel Program Man
         set < Id > ownerIdSet = new set < Id > ();
         set < Id > accountIdSet = new set < Id > ();
         set < String > salesOfficeSet = new set < String > ();
+        Map<Id,String> newSalesOffice = new Map<Id,String>();
+        Map<Id,Id> oldAccountUserId = new Map<Id,Id>();
+
         for(Account newAccount: newList){
             Account oldAccount = accountOldMap != null ? accountOldMap.get(newAccount.Id) : null;
             if((Trigger.isInsert || newAccount.OwnerId != oldAccount.OwnerId) && newAccount.OwnerId != null){
@@ -622,7 +626,6 @@ WHERE (userRole.Name = 'Loyalty Advisor' OR userRole.Name = 'Channel Program Man
                 if(newAccount.Id  != null){
                     accountIdSet.add(newAccount.Id);
                 }
-
             }
             else if(Trigger.isUpdate && string.isNotBlank(newAccount.NSP_Sales_Office__c) && !system.isQueueable() &&
                 (newAccount.NSP_Sales_Office__c != oldAccount.NSP_Sales_Office__c ||
@@ -630,7 +633,6 @@ WHERE (userRole.Name = 'Loyalty Advisor' OR userRole.Name = 'Channel Program Man
                      newAccount.NSP_SalesRegion__c != oldAccount.NSP_SalesRegion__c )){
                 salesOfficeSet.add(newAccount.NSP_Sales_Office__c);
             }
-
         }
 
         if(ownerIdSet.Size() > 0){
@@ -647,6 +649,11 @@ WHERE (userRole.Name = 'Loyalty Advisor' OR userRole.Name = 'Channel Program Man
                     newAccount.NSP_SalesRegion__c = eachUser.NSP_SalesRegion__c;  // sales region
                     newAccount.NSP_Sales_Division__c = eachUser.NSP_SalesDivision__c; // sales division
                     newAccount.NSP_Sales_Office__c = eachUser.NSP_Sales_Office__c; // sales office
+                    //  301313 - Opportunity Sales Office not Update on Reassign Account
+                    if(Trigger.isUpdate){
+                        newSalesOffice.put(newAccount.Id, newAccount.NSP_Sales_Office__c);
+                        oldAccountUserId.put(newAccount.Id, oldAccount.OwnerId);
+                    }
                 }
             }
         }
@@ -673,8 +680,84 @@ WHERE (userRole.Name = 'Loyalty Advisor' OR userRole.Name = 'Channel Program Man
                 }            
             }
         }
+
+        if(newSalesOffice.size() > 0){
+            updateRelatedOpportunity(newSalesOffice, oldAccountUserId);
+        }
     }
     
+     /* Description: This method updates the Opportunity Sales Office when
+     *  Account is reassigned
+     * 
+     * @param: accountSalesOffice
+     * @return: void
+     * Modification History:
+     * -------------------------------------------------------------------------------------
+     *  Date              | Description
+     * -------------------------------------------------------------------------------------
+     *  09/10/2024          ADO-301313 - Opportunity Sales Office not Update on Reassign Account
+     */
+    private static void updateRelatedOpportunity( Map<Id,String> newSalesOffice , Map<Id,Id> oldAccountUserId ) {
+        try {
+            Map<Id, String> oppsChangeOffice = new Map<Id, String>(); 
+            List<Opportunity> opps = [
+                SELECT Id , OwnerId , AccountId , NSP_Sales_Office__c
+                FROM Opportunity
+                WHERE (
+                    StageName != 'Closed Lost'
+                    AND  StageName != 'Closed Won'
+                    AND StageName != 'Closing'
+                    AND AccountId IN :newSalesOffice.keySet()
+                )
+            ];
+    
+            for(Opportunity opp : opps){
+                //  If Opportunity owner is the same as Account owner then update the Sales Office
+                if(opp.OwnerId == oldAccountUserId.get(opp.AccountId)){
+                    oppsChangeOffice.put(opp.Id, newSalesOffice.get(opp.AccountId));
+                }
+            }
+    
+            //  Update Sales Office, adding extra condition checking the limits
+            if ( !oppsChangeOffice.isEmpty()
+                && Limits.getFutureCalls() < Limits.getLimitFutureCalls()
+                )
+            {
+                updateRelatedOpportunityAsync(JSON.serialize(oppsChangeOffice));
+            }
+        } catch ( Exception e ) {
+            NSP_AccountTriggerHelper.handleException( e , 'updateRelatedOpportunity' );
+        }
+    }
+
+    @future
+    private static void updateRelatedOpportunityAsync(String soppsChangeOffice){
+        try {
+            List<Opportunity> oppsToUpdate = new List<Opportunity>();
+            Map<Id,String> oppsChangeOffice = (Map<Id,String>)JSON.deserialize(
+                soppsChangeOffice ,
+                Map<Id,String>.class
+            );
+
+            List<Opportunity> opps = [
+                SELECT Id , NSP_Sales_Office__c
+                FROM Opportunity
+                WHERE Id IN :oppsChangeOffice.keySet()
+            ];
+
+            for(Opportunity opp : opps){
+                opp.NSP_Sales_Office__c = oppsChangeOffice.get(opp.Id);
+                oppsToUpdate.add(opp);
+            }
+
+            if ( !oppsToUpdate.isEmpty() ) {
+                update oppsToUpdate;
+            }
+        } catch ( Exception e ) {
+            NSP_AccountTriggerHelper.handleException( e , 'updateRelatedOpportunityAsync' );
+        }
+    }
+
         /*** Publishes events for Accounts deleted by merge.
     * @param oldList List of Account.
     * @param oldMap List of Account.

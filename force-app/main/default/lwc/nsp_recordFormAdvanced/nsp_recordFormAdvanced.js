@@ -1,7 +1,8 @@
-import { LightningElement, api, track } from 'lwc';
+import { LightningElement, api, track, wire } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { isObject } from './utils';
 import { getUpdatedFieldVisibility } from 'c/nsp_utils';
+import { getObjectInfo } from 'lightning/uiObjectInfoApi';
 
 // IMPORT HTML TEMPLATES
 import recordFormSimple from './nsp_recordFormSimple.html';
@@ -45,7 +46,9 @@ export default class Nsp_recordFormAdvanced extends LightningElement {
   @track fieldVisibilityConfig = {};
   @track fields = {};
   @track sections = null;
-
+  @track accountFieldInfo = {};
+  @track updatedFormValues = {};
+  @track error = null;
   @track state = {
     isLoading: true,
     isFirstTimeLoad: true,
@@ -56,6 +59,16 @@ export default class Nsp_recordFormAdvanced extends LightningElement {
   render() {
     return isObject(this.fields) ? recordFormWithSections : recordFormSimple;
   }
+
+  @wire(getObjectInfo, { objectApiName: '$objectName' })
+    accountObjectInfo({ data, error }) {
+        if (data){
+          this.accountFieldInfo = data.fields;
+        }
+        else if(error){
+          this.error = error;
+        }
+    }
 
   handleError(error) {
     this.showToast({
@@ -78,20 +91,27 @@ export default class Nsp_recordFormAdvanced extends LightningElement {
 
   handleValueChange({ detail, target }) {
     const fieldName = target.dataset.name;
-    const { value } = detail;
-
-    this.updateDependentFieldVisibility(fieldName, value);
+    const { value , checked } = detail;
+    let fieldValue = value || checked;
+    if(fieldValue === undefined){
+      fieldValue = null;
+    }
+    this.updatedFormValues[fieldName] = fieldValue;
+    this.updateDependentFieldVisibility(fieldName, fieldValue);
   }
 
   handleSubmit(event) {
     event.preventDefault(); // stop the form from submitting
 
     this.state.isLoading = true;
-    this.recordForm.submit(this.formValues);
+    this.recordForm.submit(this.updatedFormValues);
   }
 
   handleSuccess({ detail }) {
     this.recordId = detail.id;
+    this.dispatchEvent(
+      new CustomEvent('recordsaved')
+    );
     this.showSuccessToast('Data saved successfully.');
     this.state.isLoading = false;
   }
@@ -105,6 +125,7 @@ export default class Nsp_recordFormAdvanced extends LightningElement {
     this.columns =
       Number.parseInt(columns) !== NaN ? Number.parseInt(columns) : 1;
     this.fields = fields;
+    this.updatedFormValues = JSON.parse(JSON.stringify(this.formValues));
   }
 
   updateDependentFieldVisibility(fieldName, value) {
@@ -123,7 +144,16 @@ export default class Nsp_recordFormAdvanced extends LightningElement {
         elmClassList.add(classToAdd);
         elmClassList.remove(classToRemove);
         if(!visibility){
-          this.updateDependentFieldVisibility(fieldName, null);}
+          if(Object.keys(this.accountFieldInfo).includes(fieldName) &&
+           Object.keys(this.updatedFormValues).includes(fieldName)){
+            if(this.accountFieldInfo[fieldName].datatype === 'Boolean'){
+              this.updatedFormValues[fieldName]=false;
+            }else{
+              this.updatedFormValues[fieldName]=null;
+            }
+          }
+          this.updateDependentFieldVisibility(fieldName, null);
+        } 
       });
     }
   }
