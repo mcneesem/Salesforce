@@ -173,6 +173,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Case.First_Call_Resolution__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Case.National_Account_Group__c</field>
         <readable>true</readable>
     </fieldPermissions>
