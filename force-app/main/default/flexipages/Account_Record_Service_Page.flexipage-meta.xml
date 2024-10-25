@@ -158,6 +158,16 @@
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
+                        <valueListItems>
+                            <value>Account.Update_Onboarding_Meetings</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!$Permission.CustomPermission.Update_Onboarding_Meetings}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>true</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
@@ -376,6 +386,10 @@
                 <componentInstanceProperties>
                     <name>showHeader</name>
                     <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>showPostToSlack</name>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>showSharing</name>
@@ -734,6 +748,10 @@
                 <componentInstanceProperties>
                     <name>showHeader</name>
                     <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>showPostToSlack</name>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>showSharing</name>

@@ -4,7 +4,7 @@
     <assignments>
         <name>Assign_Task_Fields</name>
         <label>Assign Task Fields</label>
-        <locationX>440</locationX>
+        <locationX>517</locationX>
         <locationY>1206</locationY>
         <assignmentItems>
             <assignToReference>r_TaskRecord.Description</assignToReference>
@@ -77,7 +77,7 @@
         <description>Assign Task ID to identify the Task Record and update</description>
         <name>Assign_Task_Id</name>
         <label>Assign Task Id</label>
-        <locationX>176</locationX>
+        <locationX>231</locationX>
         <locationY>1422</locationY>
         <assignmentItems>
             <assignToReference>r_TaskRecord.Id</assignToReference>
@@ -87,13 +87,13 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Update_Task_Record</targetReference>
+            <targetReference>Task_Status_Completed</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Set_Fault_Element_Create_Task_Record</name>
         <label>Set Fault Element : Create_Task_Record</label>
-        <locationX>968</locationX>
+        <locationX>1067</locationX>
         <locationY>1530</locationY>
         <assignmentItems>
             <assignToReference>faultElement</assignToReference>
@@ -109,7 +109,7 @@
     <assignments>
         <name>Set_Fault_Element_Get_entity_definition_of_account</name>
         <label>Set Fault Element : Get_entity_definition_of_account</label>
-        <locationX>2288</locationX>
+        <locationX>2387</locationX>
         <locationY>384</locationY>
         <assignmentItems>
             <assignToReference>faultElement</assignToReference>
@@ -126,7 +126,7 @@
     <assignments>
         <name>Set_Fault_Element_Get_field_definition_of_sales_office_on_ac</name>
         <label>Set Fault Element : Get_field_definition_of_sales_office_on_account</label>
-        <locationX>2024</locationX>
+        <locationX>2123</locationX>
         <locationY>492</locationY>
         <assignmentItems>
             <assignToReference>faultElement</assignToReference>
@@ -143,7 +143,7 @@
     <assignments>
         <name>Set_Fault_Element_Get_OMR_Queue</name>
         <label>Set Fault Element : Get_OMR_Queue</label>
-        <locationX>1496</locationX>
+        <locationX>1595</locationX>
         <locationY>708</locationY>
         <assignmentItems>
             <assignToReference>faultElement</assignToReference>
@@ -160,7 +160,7 @@
     <assignments>
         <name>Set_Fault_Element_Get_picklistvalueinfo_of_sales_office_on_account</name>
         <label>Set Fault Element : Get_picklistvalueinfo_of_sales_office_on_account</label>
-        <locationX>1760</locationX>
+        <locationX>1859</locationX>
         <locationY>600</locationY>
         <assignmentItems>
             <assignToReference>faultElement</assignToReference>
@@ -177,7 +177,7 @@
     <assignments>
         <name>Set_Fault_Element_Get_Task_Record</name>
         <label>Set Fault Element : Get_Task_Record</label>
-        <locationX>792</locationX>
+        <locationX>869</locationX>
         <locationY>924</locationY>
         <assignmentItems>
             <assignToReference>faultElement</assignToReference>
@@ -194,8 +194,8 @@
     <assignments>
         <name>Set_Fault_Element_Update_OMD_Record</name>
         <label>Set Fault Element : Update_OMD_Record</label>
-        <locationX>1232</locationX>
-        <locationY>2070</locationY>
+        <locationX>1331</locationX>
+        <locationY>2328</locationY>
         <assignmentItems>
             <assignToReference>faultElement</assignToReference>
             <operator>Assign</operator>
@@ -211,8 +211,8 @@
     <assignments>
         <name>Set_Fault_Element_Update_Task_Record</name>
         <label>Set Fault Element : Update_Task_Record</label>
-        <locationX>440</locationX>
-        <locationY>1638</locationY>
+        <locationX>539</locationX>
+        <locationY>1938</locationY>
         <assignmentItems>
             <assignToReference>faultElement</assignToReference>
             <operator>Assign</operator>
@@ -223,6 +223,23 @@
         <connector>
             <isGoTo>true</isGoTo>
             <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Set Task Status to Open when Updating Completed Task</description>
+        <name>Set_Task_Status_Open</name>
+        <label>Set Task Status : Open</label>
+        <locationX>99</locationX>
+        <locationY>1638</locationY>
+        <assignmentItems>
+            <assignToReference>r_TaskRecord.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Open</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Task_Record</targetReference>
         </connector>
     </assignments>
     <constants>
@@ -236,7 +253,7 @@
         <description>Verify Task is Already exists , if Task Exists Update the Task else create new Task for OMD Record</description>
         <name>Is_Task_Record_Exists</name>
         <label>Is Task Record Exists?</label>
-        <locationX>440</locationX>
+        <locationX>517</locationX>
         <locationY>1314</locationY>
         <defaultConnector>
             <targetReference>Create_Task_Record</targetReference>
@@ -269,7 +286,7 @@
         <description>Verify if Task is created for OMD Record : If No -&gt; then Create Task , if Yes-&gt; then Update Task</description>
         <name>Task_Created_For_OMD</name>
         <label>Task Created For OMD</label>
-        <locationX>440</locationX>
+        <locationX>517</locationX>
         <locationY>708</locationY>
         <defaultConnector>
             <targetReference>Get_Task_Record</targetReference>
@@ -296,6 +313,31 @@
                 <targetReference>Assign_Task_Fields</targetReference>
             </connector>
             <label>No - Task not created</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Task_Status_Completed</name>
+        <label>Task Status : Completed?</label>
+        <locationX>231</locationX>
+        <locationY>1530</locationY>
+        <defaultConnector>
+            <targetReference>Update_Task_Record</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Task_is_Completed</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Task_Record.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Completed</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Task_Status_Open</targetReference>
+            </connector>
+            <label>Yes : Task is Completed</label>
         </rules>
     </decisions>
     <description>Create/Update Task Record for CTM and Employee/Additional OT Meeting Requests</description>
@@ -354,7 +396,7 @@
     <recordCreates>
         <name>Create_Task_Record</name>
         <label>Create Task Record</label>
-        <locationX>704</locationX>
+        <locationX>803</locationX>
         <locationY>1422</locationY>
         <connector>
             <targetReference>Update_OMD_Record_Create_Task</targetReference>
@@ -367,7 +409,7 @@
     <recordLookups>
         <name>Get_entity_definition_of_account</name>
         <label>Get entity definition of account</label>
-        <locationX>440</locationX>
+        <locationX>517</locationX>
         <locationY>276</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -391,7 +433,7 @@
     <recordLookups>
         <name>Get_field_definition_of_sales_office_on_account</name>
         <label>Get field definition of sales office on account</label>
-        <locationX>440</locationX>
+        <locationX>517</locationX>
         <locationY>384</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -422,7 +464,7 @@
     <recordLookups>
         <name>Get_OMR_Queue</name>
         <label>Get OMR Queue</label>
-        <locationX>440</locationX>
+        <locationX>517</locationX>
         <locationY>600</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -453,7 +495,7 @@
     <recordLookups>
         <name>Get_picklistvalueinfo_of_sales_office_on_account</name>
         <label>Get picklistvalueinfo of sales office on account</label>
-        <locationX>440</locationX>
+        <locationX>517</locationX>
         <locationY>492</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -485,7 +527,7 @@
         <description>Verify  Task Record exist in database</description>
         <name>Get_Task_Record</name>
         <label>Get Task Record</label>
-        <locationX>528</locationX>
+        <locationX>605</locationX>
         <locationY>816</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -510,8 +552,8 @@
         <description>Update TaskId and Status</description>
         <name>Update_OMD_Record_Create_Task</name>
         <label>Update OMD Record</label>
-        <locationX>440</locationX>
-        <locationY>1962</locationY>
+        <locationX>517</locationX>
+        <locationY>2220</locationY>
         <faultConnector>
             <targetReference>Set_Fault_Element_Update_OMD_Record</targetReference>
         </faultConnector>
@@ -532,8 +574,8 @@
     <recordUpdates>
         <name>Update_Task_Record</name>
         <label>Update Task Record</label>
-        <locationX>176</locationX>
-        <locationY>1530</locationY>
+        <locationX>231</locationX>
+        <locationY>1830</locationY>
         <connector>
             <targetReference>Update_OMD_Record_Create_Task</targetReference>
         </connector>
@@ -568,7 +610,7 @@
     <subflows>
         <name>Fault_Handler_Subflow</name>
         <label>Fault_Handler_Subflow</label>
-        <locationX>968</locationX>
+        <locationX>1067</locationX>
         <locationY>1638</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>

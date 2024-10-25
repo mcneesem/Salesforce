@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Allow_Update_Task_Status_Update_OMD__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Allow Flow to update the OMD Status when Task Status is updated for CTM and Employee Orientation Meeting</description>
+    <externalId>false</externalId>
+    <label>Allow Update Task Status Update OMD</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>
