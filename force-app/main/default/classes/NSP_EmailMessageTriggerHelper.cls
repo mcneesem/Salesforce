@@ -13,8 +13,6 @@ public with sharing class NSP_EmailMessageTriggerHelper {
     private static final Id PEO_RECORDTYPEID = NSP_GenericRecordType.getRecordTypeId( 'Case' , 'PEO' );
     private static final Id BPS_RECORDTYPEID = NSP_GenericRecordType.getRecordTypeId( 'Case' , 'BPS' );
 
-    // Description: This method will be called after insert of EmailMessage
-    // Date       : 17/11/2021
     public void afterInsertionEmailMessage( List<EmailMessage> newList , Map<Id,EmailMessage> newMap ) {
         Boolean switchEnabled = EmailMessageTriggerSettings__c.getInstance( UserInfo.getUserId() ).IsHealthAndWelfareEmailMessageEnabled__c;
         Set<Id> parentIds = new Set<Id>();
@@ -36,10 +34,11 @@ public with sharing class NSP_EmailMessageTriggerHelper {
                 healthWelfareInternalExternalCaseIdFromAddMap.put( eMessage.ParentId , eMessage );
             }
         }
+        Set<Id> validatedParents = new Set<Id>();
         if ( !parentIds.isEmpty() ) {
             // prevent Validation Rule DmlExceptions by excluding 'Closed' Cases from the list of Cases modified by this logic...
             List<Case> validatedParents = [
-                SELECT Id , NSP_Case_Created_From_Email_To_Case__c
+                SELECT Id
                 FROM Case
                 WHERE (
                     ( Id IN :parentIds )
@@ -50,17 +49,19 @@ public with sharing class NSP_EmailMessageTriggerHelper {
             if ( ( validatedParents != null ) && !validatedParents.isEmpty() ) {
                 validatedParentsMap = new Map<Id,Case>( validatedParents );
             }
-            parentIds = validatedParentsMap.keySet();
+            validatedParents = validatedParentsMap.keySet();
         }
         List<Case> caseToUpdate = new List<Case>();
-        if ( !parentIds.isEmpty() ) {
+        if ( !validatedParents.isEmpty() ) {
             //Added as a part of STY-04132 
-            for ( Id caseId : parentIds ) {
+            for ( Id caseId : validatedParents ) {
                 Case caseRecord = new Case();
                 caseRecord.Id = caseId;
                 caseRecord.NSP_Case_Created_From_Email_To_Case__c = true;
                 caseToUpdate.add( caseRecord );
             }
+        }
+        if ( !parentIds.isEmpty() ) {
             NSP_WebCaseAssignment.webCaseAssign( parentIds , newList );
             reOpenOrMarkResponseAfterCloseTrue( parentIds , newList );
         }
