@@ -2,19 +2,18 @@ public class NSP_ProjectTasksTriggerHelper {
     // test w/ NSP_ProjectTasksTriggerHelperTest, NSP_Implprofile_ServiceHelperUpdate_Test (81%)
 
     private static final String HUNDRED_PERCENT =  '100%';
-    private static final string SYS_ADMIN = 'System Administrator';
     private static final String COBRA_MM ='NSP_COBRA';
     private static final String COBRA_GUIDELINES_MM = 'NSP_COBRAGuidelines';
     private static final String COBRA_TEAM_MM = 'NSP_COBRATeam';
     private static final String COBRA_PACKETS_MM = 'NSP_COBRAPackets';
-    private static final Id WOAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId('Asset',NSP_ServiceConstants.WO_ASSET_RECORDTYPE);
-    private static final Id CPQAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId('Asset','NSP_CPQ_Asset');
-    private static final string BACKOUT = 'Backout';
-    private static final string TERMINATED = 'Terminated';
-    private static final string RETURNED = 'Returned';
-    private static final string INACTIVE = 'Inactive';
-    private static final string SUBMIT_TERMINATION_CHECKLIST = 'Submit Termination Checklist';
-    private static final string LEVIESTASK = 'Employee Levies Provided';
+    private static final Id wOAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Asset' , 'WO' );
+    private static final Id projectTaskPEORecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'pse__Project_Task__c' , 'PEO_Project_Task' );
+    private static final String BACKOUT = 'Backout';
+    private static final String TERMINATED = 'Terminated';
+    private static final String RETURNED = 'Returned';
+    private static final String INACTIVE = 'Inactive';
+    private static final String SUBMIT_TERMINATION_CHECKLIST = 'Submit Termination Checklist';
+    private static final String LEVIESTASK = 'Employee Levies Provided';
 
     /**
     * Iterates throught the list of new pse__Project_Task__c and passes the required attributes to other methods.
@@ -28,7 +27,16 @@ public class NSP_ProjectTasksTriggerHelper {
         Map<Id, pse__Proj__c> parentProjectMap  = new  Map<Id, pse__Proj__c>();
         Map<Id, Id> mapOfparentTaskIdAndMilestoneId = new Map<Id, Id>();
         Set<Id> setOfParentProjectTask = new Set<Id>();
-        
+        List<String> projectForCancallation = new List<String>();
+        ProjectTaskTriggerSettings__c settings = ProjectTaskTriggerSettings__c.getInstance( UserInfo.getUserId() );
+        if( settings != null ){
+            if ( String.isNotBlank( settings.CancellationProjects1__c ) ) {
+                projectForCancallation = settings.CancellationProjects1__c.split( ',' );
+                if ( String.isNotBlank( settings.CancellationProjects2__c ) ) {
+                    projectForCancallation.addAll( settings.CancellationProjects2__c.split( ',' ) );
+                }
+            }
+        }
         for(pse__Project_Task__c projectTask : projectTaskList){
             if(projectTask.pse__Parent_Task__c != null){
                 setOfParentProjectTask.add(projectTask.pse__Parent_Task__c);
@@ -60,8 +68,17 @@ public class NSP_ProjectTasksTriggerHelper {
                 projectTask.pse__Actual_Start_Date_Time__c = Datetime.now();
                 projectTask.pse__Started__c = true;
             }
-        }    
-
+            if ( ( projectTask.RecordTypeId == NSP_ProjectTasksTriggerHelper.projectTaskPEORecordTypeId )
+                && ( projectForCancallation != null )
+                && !projectForCancallation.isEmpty()
+                && String.isNotBlank( projectTask.Name )
+                && ( projectForCancallation.contains( projectTask.Name ) )
+                && CustomPermissionController.checkUserPermission( 'Finance_Service_User' , UserInfo.getUserId() )
+               )
+            {
+                projectTask.pse__Status__c = 'Canceled';
+            }
+        }
         if(!setOfParentProjectTask.isEmpty()){
             for(pse__Project_Task__c parentTask : [SELECT pse__Milestone__c FROM pse__Project_Task__c WHERE ID IN : setOfParentProjectTask]){
                 mapOfparentTaskIdAndMilestoneId.put(parentTask.id, parentTask.pse__Milestone__c);
@@ -367,7 +384,6 @@ public class NSP_ProjectTasksTriggerHelper {
     * Params: List<pse__Project_Task__c> cobraProjectTaskList
     * ********************************************************************************************/
     public void createCobraSubTasks(List<pse__Project_Task__c> cobraProjectTaskList){
-        Id projectTaskPEORecordTypeId = Schema.SObjectType.pse__Project_Task__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.PROJECT_TASK_PEO_RECORDTYPE).getRecordTypeId();
         NSP_ProjectTask_Automation__mdt pta =  NSP_ProjectTask_Automation__mdt.getInstance(COBRA_MM);
         NSP_ProjectTask_Automation__mdt pta1 =  NSP_ProjectTask_Automation__mdt.getInstance(COBRA_GUIDELINES_MM);
         NSP_ProjectTask_Automation__mdt pta2 =  NSP_ProjectTask_Automation__mdt.getInstance(COBRA_TEAM_MM);
@@ -420,9 +436,8 @@ public class NSP_ProjectTasksTriggerHelper {
     * Params: pse__Project_Task__c parentProjectTask
     * ********************************************************************************************/
     private pse__Project_Task__c createProjectTaskfromParent(pse__Project_Task__c parentProjectTask){
-        Id projectTaskPEORecordTypeId = Schema.SObjectType.pse__Project_Task__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.PROJECT_TASK_PEO_RECORDTYPE).getRecordTypeId();
         pse__Project_Task__c eachProjectTask = new pse__Project_Task__c();
-        eachProjectTask.RecordTypeId=projectTaskPEORecordTypeId;
+        eachProjectTask.RecordTypeId = NSP_ProjectTasksTriggerHelper.projectTaskPEORecordTypeId;
         eachProjectTask.NSP_Category__c= parentProjectTask.NSP_Category__c;
         eachProjectTask.NSP_Visible_to_Client__c = TRUE;
         eachProjectTask.pse__Status__c = NSP_ServiceConstants.PROJECT_TASK_NOT_STARTED;
@@ -594,7 +609,7 @@ public class NSP_ProjectTasksTriggerHelper {
                             SELECT Id , AccountId , NSP_Reason_for_Term__c , NSP_Anticipated_Date_Of_Termination__c 
                             FROM Asset 
                             WHERE (
-                                RecordTypeId = :NSP_ProjectTasksTriggerHelper.WOAssetRecordTypeId
+                                RecordTypeId = :NSP_ProjectTasksTriggerHelper.wOAssetRecordTypeId
                                 AND Status = 'Active'
                                 AND AccountId IN :listOfAccountId
                             )
@@ -1349,9 +1364,25 @@ public class NSP_ProjectTasksTriggerHelper {
         Id XMLAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId('Asset',NSP_ServiceConstants.XML_ASSET);
         Id IntegraAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId('Asset',NSP_ServiceConstants.INTEGRA_ASSET);
         try {
+            Map<Id,NSP_Termination_Form__c> projectTaskTermFormMap = new Map<Id,NSP_Termination_Form__c>();
             Map<Id,Id> projectMap = new Map<Id,Id>();
             Map<Id,pse__Project_Task__c> projectTaskMap = new Map<Id,pse__Project_Task__c>();
             if (!mapOfProjectTaskAndProject.isEmpty()) {
+                for ( NSP_Termination_Form__c termForm : [
+                            SELECT Id , NSP_Project_Task__c , CreatedDate , NSP_Last_Date_Wages_Paid_Through__c
+                            FROM NSP_Termination_Form__c
+                            WHERE ( NSP_Project_Task__c IN :mapOfProjectTaskAndProject.keySet() )
+                            ORDER BY CreatedDate DESC
+                        ]
+                    )
+                {
+                    if ( String.isNotBlank( termForm.NSP_Project_Task__c )
+                        && !projectTaskTermFormMap.containsKey( termForm.NSP_Project_Task__c )
+                        )
+                    {
+                        projectTaskTermFormMap.put( termForm.NSP_Project_Task__c , termForm );
+                    }
+                }
                 for ( pse__Project_Task__c projectTask : [
                             SELECT
                                 Id , Name , pse__Project__r.pse__Account__r.Name ,
@@ -1433,7 +1464,8 @@ public class NSP_ProjectTasksTriggerHelper {
                             projectTaskMap.get(pTask.Id).pse__Project__r.pse__Account__c,
                             projectTaskMap.get(pTask.Id).pse__Project__r.pse__Account__r.NSP_AIMS_Client__c,
                             listOfToAddresses,
-                            activeAssetList.get(pTask.NSP_AccountId__c)
+                            activeAssetList.get(pTask.NSP_AccountId__c),
+                            projectTaskTermFormMap.get(pTask.Id)
                         );
                         if (optionalTask != null) {
                             optionalTask.pse__Status__c = NSP_ServiceConstants.PROJECTSTATUSCOMPLETED;
@@ -1466,16 +1498,29 @@ public class NSP_ProjectTasksTriggerHelper {
             );
         }
     }
+
     //Letter Received email.
-    private void assetListEmail( String accountName , Id accountId , String accountAIMS , List<String> listOfToAddresses , List<Asset> assetList ) {
+    private void assetListEmail(
+        String accountName ,
+        Id accountId ,
+        String accountAIMS ,
+        List<String> listOfToAddresses ,
+        List<Asset> assetList ,
+        NSP_Termination_Form__c termForm
+        )
+    {
         String subjectString = null;
         String mailBody = null;
         String accName = accountName+' | '+accountAIMS;
         String customUrl = URL.getOrgDomainURL().toExternalForm()+ '/'+accountId;
         subjectString = 'WO Client ' + accName + ' has been approved for termination';
         mailBody = 'WO Client ' +'<a href="' +customUrl+'">'+ accName +'</a>';
-        mailBody += ' has been approved for termination.'+'<br/><br/>';
-        mailBody += 'Please review the following Assets to determine next steps for termination.'+'<br/><br/>';
+        String termFormDetails = '';
+        if ( ( termForm != null ) && ( termForm.NSP_Last_Date_Wages_Paid_Through__c != null ) ){
+            termFormDetails = ' on '+ termForm.NSP_Last_Date_Wages_Paid_Through__c.format();
+        }
+        mailBody += ' has been approved for termination' + termFormDetails + '.' + '<br/><br/>';
+        mailBody += 'Please review the following Assets to determine next steps for termination.' + '<br/><br/>';
         if ( ( assetList != null ) && !assetList.isEmpty() ) {
             for (Asset asset : assetList){
                 String assetUrl = URL.getOrgDomainURL().toExternalForm()+ '/'+asset.Id;

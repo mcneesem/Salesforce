@@ -1558,6 +1558,17 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Does_this_client_have_an_AWW__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Duration__c</picklist>
         <values>
             <fullName>120</fullName>
@@ -2176,10 +2187,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Premier Time Sheet</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Web Payroll</fullName>
             <default>false</default>
         </values>
@@ -2344,6 +2351,21 @@
     </picklistValues>
     <picklistValues>
         <picklist>Is_Insperity_s_group_health_plan_replaci__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Is_client_CA_docs_submitted_for_approval__c</picklist>
+        <values>
+            <fullName>N%2FA</fullName>
+            <default>false</default>
+        </values>
         <values>
             <fullName>No</fullName>
             <default>false</default>
@@ -5412,10 +5434,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Premier Time Sheet</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Web Payroll</fullName>
             <default>false</default>
         </values>
@@ -5849,6 +5867,17 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Work_performed_the_same_as_the_rest_year__c</picklist>
+        <values>
+            <fullName>Different</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Same</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Work_week__c</picklist>
         <values>
             <fullName>Friday - Thursday</fullName>
@@ -6003,17 +6032,6 @@
         </values>
         <values>
             <fullName>Yes</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>Work_performed_the_same_as_the_rest_year__c</picklist>
-        <values>
-            <fullName>Different</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Same</fullName>
             <default>false</default>
         </values>
     </picklistValues>

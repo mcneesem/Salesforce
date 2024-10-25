@@ -1,7 +1,6 @@
-@isTest
-private class NSP_sObjectOperationControllerTest {
-    @TestSetup
-    static void setupData(){
+@isTest private class NSP_sObjectOperationControllerTest {
+
+    @TestSetup private static void setupData(){
         List<Account> accounts = new List<Account>();
         for (Integer intgr = 0; intgr < 5; intgr++) {
             Account acc = (Account) NSP_TestDataFactory.createSObject(new Account());
@@ -12,24 +11,22 @@ private class NSP_sObjectOperationControllerTest {
         insert accounts;
     }
 
-    /**
-     * This method validates the search results returned by searchRecordsByFilters method.
-     */
-    @isTest
-    static void searchRecordsByFiltersReturnsOnlyValidResults() {
+    //This method validates the search results returned by searchRecordsByFilters method.
+    @isTest private static void searchRecordsByFiltersReturnsOnlyValidResults() {
         // GIVEN
-        String searchConfig = '{"searchTerm": "Test 1","preSelectedRecs": "[]" , "objectApiName": "Account", "searchCategory": "Name", "resultSize":10 , "additionalInfoField":"BillingAddress,CurrencyIsoCode"}';
-
+        String searchConfig = '{"searchTerm": "Test 1","preSelectedRecs": "[]" , "objectApiName": "Account", "searchCategory": "Name", "resultSize":10 , "additionalInfoField":"NSP_AIMS_Client__c"}';
+        String searchConfigSubClient = '{"searchTerm": "Test 1","preSelectedRecs": "[]" , "objectApiName": "NSP_Sub_Client__c", "searchCategory": "Name", "resultSize":10 , "additionalInfoField":"NSP_Sub_Client__c"}';
+        test.startTest();
         // WHEN
         List<NSP_LookupOption> results = NSP_sObjectOperationController.searchRecordsByFilters(searchConfig);
-
+        List<NSP_LookupOption> results2 = NSP_sObjectOperationController.searchRecordsByFilters(searchConfigSubClient);
+        test.stopTest();
         // THEN
         System.assertEquals(1, results.size());
         System.assertEquals('Test 1', results[0].label);
     }
 
-    @isTest
-    static void searchRecordsByFiltersReturnsEmptyArrayWhenNoResultAvailable() {
+    @isTest private static void searchRecordsByFiltersReturnsEmptyArrayWhenNoResultAvailable() {
         // GIVEN
         String searchConfig = '{"searchTerm": "Test 12","preSelectedRecs": "[]" , "objectApiName": "Account", "searchCategory": "Name", "resultSize":10 }';
 
@@ -40,8 +37,7 @@ private class NSP_sObjectOperationControllerTest {
         System.assertEquals(0, results.size(), 'Result should be empty when record not available with the given search term.');
     }
 
-    @isTest
-    static void upsertAndDeleteRecordsCreateNewRecords(){
+    @isTest private static void upsertAndDeleteRecordsCreateNewRecords(){
         // GIVEN
         List<String> recordsToInsert = new List<String>{ '{ "LastName": "Test 1" }' , '{ "LastName": "Test 2" }' };
         Map<String, List<String>> recordsToUpsertMap = new Map<String, List<String>>{ 'Contact' => recordsToInsert };
@@ -55,8 +51,7 @@ private class NSP_sObjectOperationControllerTest {
         System.assertEquals(2, Database.query(contactSelectionQuery).size(), '2 Contact records should exist.');
     }
 
-    @isTest
-    static void upsertAndDeleteRecordsDeleteRecords(){
+    @isTest private static void upsertAndDeleteRecordsDeleteRecords(){
         // GIVEN
         String accountSelectionQuery = new NSP_QueryBuilder('Account').build();
         List<Account> accounts = (List<Account>) Database.query(accountSelectionQuery);
@@ -74,8 +69,7 @@ private class NSP_sObjectOperationControllerTest {
         System.assertEquals(3, Database.query(accountSelectionQuery).size(), '3 Account records should exist.');
     }
 
-    @isTest
-    static void upsertAndDeleteRecordsInsertAndDeleteRecords(){
+    @isTest private static void upsertAndDeleteRecordsInsertAndDeleteRecords(){
         // GIVEN
         String accountSelectionQuery = new NSP_QueryBuilder('Account').build();
         String contactSelectionQuery = new NSP_QueryBuilder('Contact').build();
@@ -99,8 +93,7 @@ private class NSP_sObjectOperationControllerTest {
         System.assertEquals(2, Database.query(contactSelectionQuery).size(), '2 Contact records should exist.');
     }
 
-    @isTest
-    static void upsertAndDeleteRecordsNoRecordInsertedOrDeletedWhenBothMapsAreEmpty(){
+    @isTest private static void upsertAndDeleteRecordsNoRecordInsertedOrDeletedWhenBothMapsAreEmpty(){
         // GIVEN, 
         String accountSelectionQuery = new NSP_QueryBuilder('Account').build();
         String contactSelectionQuery = new NSP_QueryBuilder('Contact').build();
@@ -111,5 +104,19 @@ private class NSP_sObjectOperationControllerTest {
         // THEN
         System.assertEquals(5, Database.query(accountSelectionQuery).size(), '5 Account records should exist.');
         System.assertEquals(0, Database.query(contactSelectionQuery).size(), '0 Contact records should exist.');
+    }
+    
+    @isTest private static void selectByNameAndAimsNumberTest(){
+        Account acc2 = [SELECT Id FROM Account WHERE Name = 'Test 0' LIMIT 1];
+        
+        NSP_Sub_Client__c subClient = (NSP_Sub_Client__c)NSP_TestExtendedDataFactory.createSObject(new NSP_Sub_Client__c(), 'NSP_TestDataFactory.SubClientDefaults', false);
+        subClient.Name = 'Test 2';
+        subClient.NSP_Client__c = '1253';
+        insert subClient;
+        List<Id> recordsToExclude = new List<Id>{acc2.Id};
+        Test.startTest();
+        List<SObject> result1 = NSP_sObjectOperationController.selectByNameAndAimsNumber('Test 1', 'Account', recordsToExclude);
+        Test.stopTest();
+        System.assertEquals(1, result1.size());
     }
 }

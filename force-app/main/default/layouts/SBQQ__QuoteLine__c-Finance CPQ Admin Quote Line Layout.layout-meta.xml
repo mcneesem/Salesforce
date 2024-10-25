@@ -233,6 +233,14 @@
                 <behavior>Edit</behavior>
                 <field>NSP_Secondary_ListPrice__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Talent_Connect_Net_Total__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Talent_Connect_Net_Total_For_Template__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>

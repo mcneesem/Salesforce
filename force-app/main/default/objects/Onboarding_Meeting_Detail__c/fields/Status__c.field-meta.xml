@@ -4,7 +4,7 @@
     <externalId>false</externalId>
     <label>Status</label>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
@@ -13,12 +13,12 @@
             <sorted>false</sorted>
             <value>
                 <fullName>Draft</fullName>
-                <default>false</default>
+                <default>true</default>
                 <label>Draft</label>
             </value>
             <value>
                 <fullName>Active</fullName>
-                <default>true</default>
+                <default>false</default>
                 <label>Active</label>
             </value>
             <value>

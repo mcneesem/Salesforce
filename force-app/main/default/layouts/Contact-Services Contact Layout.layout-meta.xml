@@ -60,6 +60,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Workday_Employee_ID__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>NSP_Contact_Pin__c</field>
             </layoutItems>
         </layoutColumns>

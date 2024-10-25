@@ -207,6 +207,16 @@
                 <default>false</default>
                 <label>BIP Aligned Equity Holdings</label>
             </value>
+            <value>
+                <fullName>70</fullName>
+                <default>false</default>
+                <label>MYRX Inc.</label>
+            </value>
+            <value>
+                <fullName>71</fullName>
+                <default>false</default>
+                <label>Undisclosed</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

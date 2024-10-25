@@ -30,6 +30,7 @@
             <value>
                 <fullName>Premier Time Sheet</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>Premier Time Sheet</label>
             </value>
         </valueSetDefinition>

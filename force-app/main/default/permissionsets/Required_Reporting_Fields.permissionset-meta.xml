@@ -218,6 +218,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Contact.Workday_Employee_ID__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Event.NSP_Activity_ID_18__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -248,6 +253,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Lead.Most_Recent_Campaign__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Lead.NSP_Eloqua_Comments__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Lead.NSP_ICP_Percent__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -264,6 +279,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>MessagingSession.Agent_Chat_Duration_Time__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>MessagingSession.InteractionGuid__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -479,6 +499,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Opportunity.Checklist_User_Check_Formula__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Opportunity.Current_Bid_Expiration_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

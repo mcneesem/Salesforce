@@ -61,6 +61,10 @@
                 <behavior>Edit</behavior>
                 <field>NSP_W9__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Workday_Employee_ID__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
