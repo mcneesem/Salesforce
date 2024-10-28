@@ -4,7 +4,7 @@
     <assignments>
         <name>Add_OMD_Records_Individual_OT_Meeting_Info</name>
         <label>Add OMD Records (Individual OT Meeting Info)</label>
-        <locationX>578</locationX>
+        <locationX>50</locationX>
         <locationY>2030</locationY>
         <assignmentItems>
             <assignToReference>rc_OMD</assignToReference>
@@ -21,7 +21,7 @@
     <assignments>
         <name>Assign_Active_OMD</name>
         <label>Assign Active OMD</label>
-        <locationX>1188</locationX>
+        <locationX>1084</locationX>
         <locationY>350</locationY>
         <assignmentItems>
             <assignToReference>rc_OMD_all_active_meetings</assignToReference>
@@ -38,7 +38,7 @@
         <description>Client Transition Meeting Record</description>
         <name>Assign_CTM_Meetings</name>
         <label>Assign : CTM Meetings</label>
-        <locationX>1276</locationX>
+        <locationX>1172</locationX>
         <locationY>674</locationY>
         <assignmentItems>
             <assignToReference>r_OMD_Original_CTM_Meeting</assignToReference>
@@ -55,8 +55,8 @@
         <description>Pass this collection to Combo Meeting Updates</description>
         <name>Assign_New_Client_Orientation_Meetings</name>
         <label>Assign : New Client Orientation Meetings</label>
-        <locationX>710</locationX>
-        <locationY>1706</locationY>
+        <locationX>226</locationX>
+        <locationY>1598</locationY>
         <assignmentItems>
             <assignToReference>rc_OMD_Original_OT_Meetings</assignToReference>
             <operator>Assign</operator>
@@ -65,14 +65,14 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Update_Employee_Orientation_Meeting</targetReference>
+            <targetReference>SPOT</targetReference>
         </connector>
     </assignments>
     <assignments>
         <description>Assign Updated CTM Info to Collection for Update and Updated CTM Record to Pass as Input to OT Meeting</description>
         <name>Assign_OMD_Record_CTM_Info</name>
         <label>Assign : OMD Record (CTM Info)</label>
-        <locationX>380</locationX>
+        <locationX>226</locationX>
         <locationY>1382</locationY>
         <assignmentItems>
             <assignToReference>rc_OMD</assignToReference>
@@ -89,13 +89,13 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>SPOT</targetReference>
+            <targetReference>Filter_New_Client_Orientation_Meetings</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Assign_OT_Meeting_Selected_Record</name>
         <label>Assign : OT Meeting Selected Record</label>
-        <locationX>1370</locationX>
+        <locationX>1282</locationX>
         <locationY>1274</locationY>
         <assignmentItems>
             <assignToReference>rc_OMD_Original_OT_Meetings</assignToReference>
@@ -113,7 +113,7 @@
         <description>Employee Orientation Meetings collection</description>
         <name>Assign_OT_Meetings</name>
         <label>Assign : OT Meetings</label>
-        <locationX>1540</locationX>
+        <locationX>1436</locationX>
         <locationY>674</locationY>
         <assignmentItems>
             <assignToReference>rc_OMD_Original_OT_Meetings</assignToReference>
@@ -129,7 +129,7 @@
     <assignments>
         <name>Reset_OT_Meeting_Collection</name>
         <label>Reset : OT Meeting Collection</label>
-        <locationX>1370</locationX>
+        <locationX>1282</locationX>
         <locationY>1166</locationY>
         <assignmentItems>
             <assignToReference>rc_OMD_Original_OT_Meetings</assignToReference>
@@ -142,7 +142,7 @@
     <assignments>
         <name>Set_Element_Get_OMD_Records</name>
         <label>Set Element : Get_OMD_Records</label>
-        <locationX>2162</locationX>
+        <locationX>2074</locationX>
         <locationY>242</locationY>
         <assignmentItems>
             <assignToReference>FaultElement</assignToReference>
@@ -159,7 +159,7 @@
     <assignments>
         <name>Set_Element_Update_Client_Transition_Meeting_Subflow</name>
         <label>Set Element : Update_Client_Transition_Meeting_Subflow</label>
-        <locationX>1106</locationX>
+        <locationX>1018</locationX>
         <locationY>1382</locationY>
         <assignmentItems>
             <assignToReference>FaultElement</assignToReference>
@@ -176,7 +176,7 @@
     <assignments>
         <name>Set_Element_Update_OMD_OT_Individual_OT_Meeting_Subflow</name>
         <label>Set Element : Update_OMD_OT_Individual_OT_Meeting_Subflow</label>
-        <locationX>842</locationX>
+        <locationX>314</locationX>
         <locationY>2030</locationY>
         <assignmentItems>
             <assignToReference>FaultElement</assignToReference>
@@ -193,8 +193,8 @@
     <assignments>
         <name>Set_Fault_Element_Update_OMD_Records</name>
         <label>Set Fault Element : Update_OMD_Records</label>
-        <locationX>314</locationX>
-        <locationY>1706</locationY>
+        <locationX>754</locationX>
+        <locationY>2480</locationY>
         <assignmentItems>
             <assignToReference>FaultElement</assignToReference>
             <operator>Assign</operator>
@@ -211,8 +211,8 @@
         <name>Filter_New_Client_Orientation_Meetings</name>
         <elementSubtype>FilterCollectionProcessor</elementSubtype>
         <label>Filter : New Client Orientation Meetings</label>
-        <locationX>710</locationX>
-        <locationY>1598</locationY>
+        <locationX>226</locationX>
+        <locationY>1490</locationY>
         <assignNextValueToReference>currentItem_Filter_New_Client_Orientation_Meetings</assignNextValueToReference>
         <collectionProcessorType>FilterCollectionProcessor</collectionProcessorType>
         <collectionReference>rc_OMD_all_active_meetings</collectionReference>
@@ -232,7 +232,7 @@
         <description>If no active meetings to update end the flow</description>
         <name>Check_For_Active_Meetings</name>
         <label>Check For Active Meetings</label>
-        <locationX>1543</locationX>
+        <locationX>1447</locationX>
         <locationY>242</locationY>
         <defaultConnector>
             <targetReference>No_Active_Meetings</targetReference>
@@ -257,7 +257,7 @@
     <decisions>
         <name>CTM_Flow_Success</name>
         <label>CTM Flow Success</label>
-        <locationX>743</locationX>
+        <locationX>622</locationX>
         <locationY>1274</locationY>
         <defaultConnector>
             <targetReference>Set_Element_Update_Client_Transition_Meeting_Subflow</targetReference>
@@ -282,7 +282,7 @@
     <decisions>
         <name>Employee_OT_Meeting_Update_Success</name>
         <label>Employee OT Meeting Update Success</label>
-        <locationX>710</locationX>
+        <locationX>182</locationX>
         <locationY>1922</locationY>
         <defaultConnector>
             <targetReference>Set_Element_Update_OMD_OT_Individual_OT_Meeting_Subflow</targetReference>
@@ -307,7 +307,7 @@
     <decisions>
         <name>Split_Meeting_Request_Types</name>
         <label>Split Meeting Request Types</label>
-        <locationX>1540</locationX>
+        <locationX>1436</locationX>
         <locationY>566</locationY>
         <defaultConnectorLabel>Defualt Outcome</defaultConnectorLabel>
         <rules>
@@ -365,12 +365,12 @@
     <decisions>
         <name>SPOT</name>
         <label>SPOT</label>
-        <locationX>380</locationX>
-        <locationY>1490</locationY>
+        <locationX>226</locationX>
+        <locationY>1706</locationY>
         <defaultConnector>
-            <targetReference>Filter_New_Client_Orientation_Meetings</targetReference>
+            <targetReference>Update_OMD_Records</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>Default Outcome - No SPOT</defaultConnectorLabel>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>SPOT_Meeting_Yes</name>
             <conditionLogic>and</conditionLogic>
@@ -386,11 +386,40 @@
             </connector>
             <label>SPOT Meeting : Yes</label>
         </rules>
+        <rules>
+            <name>SPOT_Meeting_No</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>r_OMD_Original_CTM_Meeting.Self_Paced_Orientation_SPOT__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>No</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>rc_OMD_Original_OT_Meetings</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>rc_OMD_Original_OT_Meetings</leftValueReference>
+                <operator>IsEmpty</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Employee_Orientation_Meeting</targetReference>
+            </connector>
+            <label>SPOT Meeting : No</label>
+        </rules>
     </decisions>
     <decisions>
         <name>Which_Meeting_To_Update</name>
         <label>Which Meeting To Update</label>
-        <locationX>1188</locationX>
+        <locationX>1084</locationX>
         <locationY>1058</locationY>
         <defaultConnectorLabel>Default Outcome - OT Meetings</defaultConnectorLabel>
         <rules>
@@ -451,7 +480,7 @@
     <loops>
         <name>OMD_Loop</name>
         <label>OMD Loop</label>
-        <locationX>1188</locationX>
+        <locationX>1084</locationX>
         <locationY>458</locationY>
         <collectionReference>Get_OMD_Records</collectionReference>
         <iterationOrder>Asc</iterationOrder>
@@ -485,7 +514,7 @@
         <description>All Active OMD Records associated to an account</description>
         <name>Get_OMD_Records</name>
         <label>Get OMD Records</label>
-        <locationX>1543</locationX>
+        <locationX>1447</locationX>
         <locationY>134</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -532,8 +561,8 @@
     <recordUpdates>
         <name>Update_OMD_Records</name>
         <label>Update OMD Records</label>
-        <locationX>50</locationX>
-        <locationY>1598</locationY>
+        <locationX>226</locationX>
+        <locationY>2372</locationY>
         <connector>
             <targetReference>Update_Request_Confirmation_Screen</targetReference>
         </connector>
@@ -545,7 +574,7 @@
     <screens>
         <name>Active_OMD_Meetings</name>
         <label>Active OMD Meetings</label>
-        <locationX>1188</locationX>
+        <locationX>1084</locationX>
         <locationY>950</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -615,8 +644,8 @@
     <screens>
         <name>Error_Processing_Request</name>
         <label>Error Processing Request</label>
-        <locationX>314</locationX>
-        <locationY>1922</locationY>
+        <locationX>754</locationX>
+        <locationY>2696</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -631,7 +660,7 @@
     <screens>
         <name>No_Active_Meetings</name>
         <label>No Active Meetings</label>
-        <locationX>1898</locationX>
+        <locationX>1810</locationX>
         <locationY>350</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -647,8 +676,8 @@
     <screens>
         <name>Update_Request_Confirmation_Screen</name>
         <label>Update Request Confirmation Screen</label>
-        <locationX>50</locationX>
-        <locationY>1706</locationY>
+        <locationX>226</locationX>
+        <locationY>2480</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -661,7 +690,7 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>1417</locationX>
+        <locationX>1321</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_OMD_Records</targetReference>
@@ -671,8 +700,8 @@
     <subflows>
         <name>Insperity_Fault_Handler_Subflow</name>
         <label>Insperity Fault Handler Subflow</label>
-        <locationX>314</locationX>
-        <locationY>1814</locationY>
+        <locationX>754</locationX>
+        <locationY>2588</locationY>
         <connector>
             <targetReference>Error_Processing_Request</targetReference>
         </connector>
@@ -699,7 +728,7 @@
     <subflows>
         <name>Update_Client_Transition_Meeting</name>
         <label>Update Client Transition Meeting</label>
-        <locationX>743</locationX>
+        <locationX>622</locationX>
         <locationY>1166</locationY>
         <connector>
             <targetReference>CTM_Flow_Success</targetReference>
@@ -716,7 +745,7 @@
     <subflows>
         <name>Update_Employee_Orientation_Meeting</name>
         <label>Update Employee Orientation Meeting</label>
-        <locationX>710</locationX>
+        <locationX>182</locationX>
         <locationY>1814</locationY>
         <connector>
             <targetReference>Employee_OT_Meeting_Update_Success</targetReference>
