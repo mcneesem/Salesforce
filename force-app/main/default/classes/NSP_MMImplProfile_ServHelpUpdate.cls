@@ -705,6 +705,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                                         }
                                                         eachProjecttask.pse__Milestone__c=milestoneId;
                                                         eachProjecttask.pse__Order__c=9;
+                                                        eachProjecttask.Task_Order__c=9;
                                                         eachProjectTask.NSP_Visible_to_Client__c=FALSE;
                                                         projectTaskList.add(eachProjecttask);               
                                             
@@ -750,6 +751,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                                             eachProjecttask.OwnerId=ipwithValue.NSP_Project_Manager__r.pse__Salesforce_User__c;
                                                         }
                                                         eachProjecttask.pse__Order__c=11;
+                                                        eachProjecttask.Task_Order__c=11;
                                                         eachProjectTask.NSP_Visible_to_Client__c=FALSE;
                                                         eachProjecttask.pse__Milestone__c=milestoneId;
     
@@ -797,6 +799,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                                             eachProjecttask.OwnerId=ipwithValue.NSP_Project_Manager__r.pse__Salesforce_User__c;
                                                         }
                                                         eachProjecttask.pse__Order__c=28;
+                                                        eachProjecttask.Task_Order__c=28;
                                                         eachProjecttask.pse__Milestone__c=milestoneId;
     
                                                         projectTaskList.add(eachProjecttask);               
@@ -842,6 +845,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                                             eachProjecttask.OwnerId=ipwithValue.NSP_Project_Manager__r.pse__Salesforce_User__c;
                                                         }
                                                         eachProjecttask.pse__Order__c=31;
+                                                        eachProjecttask.Task_Order__c=31;
                                                         eachProjectTask.NSP_Visible_to_Client__c=FALSE;
                                                         eachProjecttask.pse__Milestone__c=milestoneId;
     
@@ -888,6 +892,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                                             eachProjecttask.OwnerId=ipwithValue.NSP_Project_Manager__r.pse__Salesforce_User__c;
                                                         }
                                                         eachProjecttask.pse__Order__c=36;
+                                                        eachProjecttask.Task_Order__c=36;
                                                         eachProjectTask.NSP_Visible_to_Client__c=FALSE;
                                                         eachProjecttask.pse__Milestone__c=milestoneId;
     
@@ -933,6 +938,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                                             eachProjecttask.OwnerId=ipwithValue.NSP_HR_Specialist__r.pse__Salesforce_User__c;
                                                         }
                                                         eachProjecttask.pse__Order__c=37;
+                                                        eachProjecttask.Task_Order__c=37;
                                                         eachProjectTask.NSP_Visible_to_Client__c=FALSE;
                                                         eachProjecttask.pse__Milestone__c=milestoneId;
     
@@ -979,6 +985,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                                             eachProjecttask.OwnerId=ipwithValue.NSP_Project_Manager__r.pse__Salesforce_User__c;
                                                         }
                                                         eachProjecttask.pse__Order__c=38;
+                                                        eachProjecttask.Task_Order__c=38;
                                                         eachProjectTask.NSP_Visible_to_Client__c=FALSE;
                                                         eachProjecttask.pse__Milestone__c=milestoneId;
     
@@ -1023,6 +1030,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                                             eachProjecttask.OwnerId=ipwithValue.NSP_Project_Manager__r.pse__Salesforce_User__c;
                                                         }
                                                         eachProjecttask.pse__Order__c=55;
+                                                        eachProjecttask.Task_Order__c=55;
                                                         eachProjecttask.pse__Milestone__c=milestoneId;
     
                                                         projectTaskList.add(eachProjecttask);               
@@ -1096,6 +1104,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                                         eachProjecttask.pse__Milestone__c=milestoneId;
                                                         eachProjecttask.pse__Parent_Task__c=pt.Id;
                                                         eachProjecttask.pse__Order__c=56;
+                                                        eachProjecttask.Task_Order__c=56;
                                                         eachProjectTask.NSP_Visible_to_Client__c=FALSE;
                                                         projectTaskList.add(eachProjecttask); 
                     ipAutomationRecords.add(createIPAutomation(ipRec, ipa.NSP_Automation_Name__c, ipa.NSP_Method_Name__c,ipa.NSP_Section__c));              
@@ -1146,6 +1155,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                                         eachProjecttask.pse__Parent_Task__c=pt.Id;
                                                         eachProjecttask.pse__Hierarchy_Depth__c=2;
                                                         eachProjecttask.pse__Order__c = 57;
+                                                        eachProjecttask.Task_Order__c = 57;
                                                         eachProjecttask.NSP_Visible_to_Client__c = FALSE;
                                                         projectTaskList.add(eachProjecttask);  
                     ipAutomationRecords.add(createIPAutomation(ipRec, ipa.NSP_Automation_Name__c, ipa.NSP_Method_Name__c,ipa.NSP_Section__c));             
@@ -1195,6 +1205,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                                         eachProjecttask.pse__Milestone__c=milestoneId;
                                                         eachProjecttask.pse__Parent_Task__c=pt.Id;
                                                         eachProjecttask.pse__Order__c = 58;
+                                                        eachProjecttask.Task_Order__c = 58;
                                                         eachProjecttask.NSP_Visible_to_Client__c = FALSE;
                                                         projectTaskList.add(eachProjecttask);  
                         ipAutomationRecords.add(createIPAutomation(ipRec, ipa.NSP_Automation_Name__c, ipa.NSP_Method_Name__c,ipa.NSP_Section__c));             
@@ -1235,6 +1246,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                                         eachProjecttask.NSP_Sub_Category__c=pta.NSP_Sub_Category__c;
                                                         eachProjecttask.Name=pta.NSP_Task_Name__c;
                                                         eachProjecttask.pse__Order__c=59;
+                                                        eachProjecttask.Task_Order__c=59;
                                                         eachProjectTask.NSP_Visible_to_Client__c=FALSE;
                                                         Implementation_Profile__c ipwithValue=(Implementation_Profile__c) data.get(IMPL_PROFILE_IDENTIFIER).get(ipRecId);
                                                         if(ipwithValue.NSP_Project_Manager__c!=null && ipwithValue.NSP_Project_Manager__r.pse__Salesforce_User__c!=null){
@@ -1281,6 +1293,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                 pse__Project_Task__c eachProjecttask = createProjectTaskfromIP(proj, pta.NSP_Category__c,ipRecId,milestoneKey);
                                                         eachProjecttask.NSP_Sub_Category__c=pta.NSP_Sub_Category__c;
                                                         eachProjecttask.Name=pta.NSP_Task_Name__c;
+                                                        eachProjecttask.Task_Order__c=60;
                                                         eachProjecttask.pse__Order__c=60;
                                                         eachProjectTask.NSP_Visible_to_Client__c=FALSE;
                                                         Implementation_Profile__c ipwithValue=(Implementation_Profile__c) data.get(IMPL_PROFILE_IDENTIFIER).get(ipRecId);
@@ -1341,6 +1354,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                                             eachProjecttask.OwnerId=ipwithValue.NSP_Project_Manager__r.pse__Salesforce_User__c;
                                                         }
                                                         eachProjecttask.pse__Order__c=70;
+                                                        eachProjecttask.Task_Order__c=70;
                                                         eachProjectTask.NSP_Visible_to_Client__c=FALSE;
                                                         eachProjecttask.pse__Milestone__c=milestoneId;
     
@@ -1354,6 +1368,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                                             eachProjecttask1.OwnerId=ipwithValue.NSP_Payroll_Project_Manager__r.pse__Salesforce_User__c;
                                                         }
                                                         eachProjecttask1.pse__Order__c=71;
+                                                        eachProjecttask1.Task_Order__c=71;
                                                         eachProjecttask1.pse__Milestone__c=milestoneId;
     
                                                         projectTaskList.add(eachProjecttask1);               
@@ -1365,6 +1380,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                                             eachProjecttask2.OwnerId=ipwithValue.NSP_Project_Manager__r.pse__Salesforce_User__c;
                                                         }
                                                         eachProjecttask2.pse__Order__c=72;
+                                                        eachProjecttask2.Task_Order__c=72;
                                                         eachProjecttask2.pse__Milestone__c=milestoneId;
     
                                                         projectTaskList.add(eachProjecttask2);               
@@ -1377,6 +1393,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                                             eachProjecttask3.OwnerId=ipwithValue.NSP_Project_Manager__r.pse__Salesforce_User__c;
                                                         }
                                                         eachProjecttask3.pse__Order__c=73;
+                                                        eachProjecttask3.Task_Order__c=73;
                                                         eachProjecttask3.pse__Milestone__c=milestoneId;
                                                         eachProjectTask.NSP_Visible_to_Client__c=FALSE;
     
@@ -1389,6 +1406,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                                             eachProjecttask4.OwnerId=ipwithValue.NSP_Project_Manager__r.pse__Salesforce_User__c;
                                                         }
                                                         eachProjecttask4.pse__Order__c=74;
+                                                        eachProjecttask4.Task_Order__c=74;
                                                         eachProjecttask4.pse__Milestone__c=milestoneId;
     
                                                         projectTaskList.add(eachProjecttask4);               
@@ -1400,6 +1418,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                                             eachProjecttask5.OwnerId=ipwithValue.NSP_Project_Manager__r.pse__Salesforce_User__c;
                                                         }
                                                         eachProjecttask5.pse__Order__c=75;
+                                                        eachProjecttask5.Task_Order__c=75;
                                                         eachProjecttask5.pse__Milestone__c=milestoneId;
     
                                                         projectTaskList.add(eachProjecttask5);               
@@ -1411,6 +1430,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                                             eachProjecttask6.OwnerId=ipwithValue.NSP_Payroll_Project_Manager__r.pse__Salesforce_User__c;
                                                         }
                                                         eachProjecttask6.pse__Order__c=80;
+                                                        eachProjecttask6.Task_Order__c=80;
                                                         eachProjecttask6.pse__Milestone__c=milestoneId;
     
                                                         projectTaskList.add(eachProjecttask6);               
@@ -1422,6 +1442,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                                             eachProjecttask7.OwnerId=ipwithValue.NSP_Project_Manager__r.pse__Salesforce_User__c;
                                                         }
                                                         eachProjecttask7.pse__Order__c=81;
+                                                        eachProjecttask7.Task_Order__c=81;
                                                         eachProjecttask7.pse__Milestone__c=milestoneId;
     
                                                         projectTaskList.add(eachProjecttask7);               
@@ -1434,6 +1455,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                                             eachProjecttask8.OwnerId=ipwithValue.NSP_Payroll_Project_Manager__r.pse__Salesforce_User__c;
                                                         }
                                                         eachProjecttask8.pse__Order__c=82;
+                                                        eachProjecttask8.Task_Order__c=82;
                                                         eachProjecttask8.pse__Milestone__c=milestoneId;
     
                                                         projectTaskList.add(eachProjecttask8);   
@@ -1442,6 +1464,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                                         eachProjecttask9.NSP_Sub_Category__c=pta9.NSP_Sub_Category__c;
                                                         eachProjecttask9.Name=pta9.NSP_Task_Name__c;
                                                         eachProjecttask9.pse__Order__c=83;
+                                                        eachProjecttask9.Task_Order__c=83;
                                                         if(ipwithValue.NSP_Project_Manager__c!=null && ipwithValue.NSP_Project_Manager__r.pse__Salesforce_User__c!=null){
                                                         eachProjecttask9.OwnerId=ipwithValue.NSP_Project_Manager__r.pse__Salesforce_User__c;
                                                         }
@@ -1488,6 +1511,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                                         eachProjecttask.pse__Parent_Task__c=pt.Id;
                                                         eachProjecttask.pse__Milestone__c=pt.pse__Milestone__c;
                                                         eachProjecttask.pse__Order__c = 76;
+                                                        eachProjecttask.Task_Order__c = 76;
                                                         eachProjectTask.NSP_Visible_to_Client__c=FALSE;
                                                         projectTaskList.add(eachProjecttask);
                                 
@@ -1501,6 +1525,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                                         eachProjecttask1.pse__Parent_Task__c=pt.Id;
                                                         eachProjecttask1.pse__Milestone__c=pt.pse__Milestone__c;
                                                         eachProjecttask1.pse__Order__c = 77;
+                                                        eachProjecttask1.Task_Order__c = 77;
                                                         eachProjectTask1.NSP_Visible_to_Client__c=FALSE;
                                                         projectTaskList.add(eachProjecttask1); 
     
@@ -1514,6 +1539,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                                         eachProjecttask2.pse__Parent_Task__c=pt.Id;
                                                         eachProjecttask2.pse__Milestone__c=pt.pse__Milestone__c;
                                                         eachProjecttask2.pse__Order__c = 78;
+                                                        eachProjecttask2.Task_Order__c = 78;
                                                         eachProjectTask2.NSP_Visible_to_Client__c=FALSE;
                                                         projectTaskList.add(eachProjecttask2); 
     
@@ -1528,6 +1554,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                                         eachProjecttask3.pse__Parent_Task__c=pt.Id;
                                                         eachProjecttask3.pse__Milestone__c=pt.pse__Milestone__c;
                                                         eachProjecttask3.pse__Order__c = 79;
+                                                        eachProjecttask3.Task_Order__c = 79;
                                                         projectTaskList.add(eachProjecttask3);  
                             }
                         }
@@ -1566,6 +1593,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                                         eachProjecttask.NSP_Sub_Category__c=pta.NSP_Sub_Category__c;
                                                         eachProjecttask.Name=pta.NSP_Task_Name__c;
                                                         eachProjecttask.pse__Order__c=84;
+                                                        eachProjecttask.Task_Order__c=84;
                                                         Implementation_Profile__c ipwithValue=(Implementation_Profile__c) data.get(IMPL_PROFILE_IDENTIFIER).get(ipRecId);
                                                         if(ipwithValue.NSP_Payroll_Project_Manager__c!=null && ipwithValue.NSP_Payroll_Project_Manager__r.pse__Salesforce_User__c!=null){
                                                             eachProjecttask.OwnerId=ipwithValue.NSP_Payroll_Project_Manager__r.pse__Salesforce_User__c;
@@ -1610,6 +1638,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                                         eachProjecttask.NSP_Sub_Category__c=pta.NSP_Sub_Category__c;
                                                         eachProjecttask.Name=pta.NSP_Task_Name__c;
                                                         eachProjecttask.pse__Order__c=85;
+                                                        eachProjecttask.Task_Order__c=85;
                                                         Implementation_Profile__c ipwithValue=(Implementation_Profile__c) data.get(IMPL_PROFILE_IDENTIFIER).get(ipRecId);
                                                         if(ipwithValue.NSP_Payroll_Project_Manager__c!=null && ipwithValue.NSP_Payroll_Project_Manager__r.pse__Salesforce_User__c!=null){
                                                             eachProjecttask.OwnerId=ipwithValue.NSP_Payroll_Project_Manager__r.pse__Salesforce_User__c;
@@ -1654,6 +1683,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                                         eachProjecttask.NSP_Sub_Category__c=pta.NSP_Sub_Category__c;
                                                         eachProjecttask.Name=pta.NSP_Task_Name__c;
                                                         eachProjecttask.pse__Order__c=86;
+                                                        eachProjecttask.Task_Order__c=86;
                                                         eachProjectTask.NSP_Visible_to_Client__c=FALSE;
                                                         Implementation_Profile__c ipwithValue=(Implementation_Profile__c) data.get(IMPL_PROFILE_IDENTIFIER).get(ipRecId);
                                                         if(ipwithValue.NSP_Payroll_Project_Manager__c!=null && ipwithValue.NSP_Payroll_Project_Manager__r.pse__Salesforce_User__c!=null){
@@ -1699,6 +1729,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                                         eachProjecttask.NSP_Sub_Category__c=pta.NSP_Sub_Category__c;
                                                         eachProjecttask.Name=pta.NSP_Task_Name__c;
                                                         eachProjecttask.pse__Order__c=87;
+                                                        eachProjecttask.Task_Order__c=87;
                                                         eachProjectTask.NSP_Visible_to_Client__c=FALSE;
                                                         Implementation_Profile__c ipwithValue=(Implementation_Profile__c) data.get(IMPL_PROFILE_IDENTIFIER).get(ipRecId);
                                                         if(ipwithValue.NSP_Payroll_Specialist__c!=null && ipwithValue.NSP_Payroll_Specialist__r.pse__Salesforce_User__c!=null){
@@ -1744,6 +1775,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                                         eachProjecttask.NSP_Sub_Category__c=pta.NSP_Sub_Category__c;
                                                         eachProjecttask.Name=pta.NSP_Task_Name__c;
                                                         eachProjecttask.pse__Order__c=88;
+                                                        eachProjecttask.Task_Order__c=88;
                                                         eachProjectTask.NSP_Visible_to_Client__c=FALSE;
                                                         Implementation_Profile__c ipwithValue=(Implementation_Profile__c) data.get(IMPL_PROFILE_IDENTIFIER).get(ipRecId);
                                                         if(ipwithValue.NSP_Payroll_Project_Manager__c!=null && ipwithValue.NSP_Payroll_Project_Manager__r.pse__Salesforce_User__c!=null){
@@ -1789,6 +1821,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                                         eachProjecttask.NSP_Sub_Category__c=pta.NSP_Sub_Category__c;
                                                         eachProjecttask.Name=pta.NSP_Task_Name__c;
                                                         eachProjecttask.pse__Order__c=89;
+                                                        eachProjecttask.Task_Order__c=89;
                                                         eachProjectTask.NSP_Visible_to_Client__c=FALSE;
                                                         Implementation_Profile__c ipwithValue=(Implementation_Profile__c) data.get(IMPL_PROFILE_IDENTIFIER).get(ipRecId);
                                                         if(ipwithValue.NSP_Payroll_Specialist__c!=null && ipwithValue.NSP_Payroll_Specialist__r.pse__Salesforce_User__c!=null){
@@ -1834,6 +1867,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                                         eachProjecttask.NSP_Sub_Category__c=pta.NSP_Sub_Category__c;
                                                         eachProjecttask.Name=NSP_ServiceConstants.SETUP+ipRec.Allowances__c+ ' '+ pta.NSP_Task_Name__c;
                                                         eachProjecttask.pse__Order__c=90;
+                                                        eachProjecttask.Task_Order__c=90;
                                                         eachProjectTask.NSP_Visible_to_Client__c=FALSE;
                                                         Implementation_Profile__c ipwithValue=(Implementation_Profile__c) data.get(IMPL_PROFILE_IDENTIFIER).get(ipRecId);
                                                         if(ipwithValue.NSP_Payroll_Project_Manager__c!=null && ipwithValue.NSP_Payroll_Project_Manager__r.pse__Salesforce_User__c!=null){
@@ -1880,6 +1914,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                                         eachProjecttask.NSP_Sub_Category__c=pta.NSP_Sub_Category__c;
                                                         eachProjecttask.Name=pta.NSP_Task_Name__c;
                                                         eachProjecttask.pse__Order__c=91;
+                                                        eachProjecttask.Task_Order__c=91;
                                                         eachProjectTask.NSP_Visible_to_Client__c=FALSE;
                                                         Implementation_Profile__c ipwithValue=(Implementation_Profile__c) data.get(IMPL_PROFILE_IDENTIFIER).get(ipRecId);
                                                         if(ipwithValue.NSP_Payroll_Specialist__c!=null && ipwithValue.NSP_Payroll_Specialist__r.pse__Salesforce_User__c!=null){
@@ -1927,6 +1962,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                                         eachProjecttask.NSP_Sub_Category__c=pta.NSP_Sub_Category__c;
                                                         eachProjecttask.Name=pta.NSP_Task_Name__c;
                                                         eachProjecttask.pse__Order__c=133;
+                                                        eachProjecttask.Task_Order__c=133;
                                                         eachProjectTask.NSP_Visible_to_Client__c=FALSE;
                                                         Implementation_Profile__c ipwithValue=(Implementation_Profile__c) data.get(IMPL_PROFILE_IDENTIFIER).get(ipRecId);
                                                         if(ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__c!=null && ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__r.pse__Salesforce_User__c!=null){
@@ -1983,6 +2019,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                                                             eachProjecttask.pse__Milestone__c=milestoneId;
                                                                             eachProjecttask.pse__Parent_Task__c=pt.Id;
                                                                             eachProjecttask.pse__Order__c = 134;
+                                                                            eachProjecttask.Task_Order__c = 134;
                                                                             eachProjecttask.NSP_Visible_to_Client__c = FALSE;
                                                                             projectTaskList.add(eachProjecttask); 
                             }
@@ -2033,6 +2070,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                                         eachProjecttask.pse__Milestone__c=milestoneId;
                                                         eachProjecttask.pse__Parent_Task__c=pt.Id;
                                                         eachProjecttask.pse__Order__c = 135;
+                                                        eachProjecttask.Task_Order__c = 135;
                                                         eachProjecttask.NSP_Visible_to_Client__c = FALSE;
     
                                                         projectTaskList.add(eachProjecttask);  
@@ -2075,6 +2113,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                                         eachProjecttask.NSP_Sub_Category__c=pta.NSP_Sub_Category__c;
                                                         eachProjecttask.Name=pta.NSP_Task_Name__c;
                                                         eachProjecttask.pse__Order__c=136;
+                                                        eachProjecttask.Task_Order__c=136;
                                                         Implementation_Profile__c ipwithValue=(Implementation_Profile__c) data.get(IMPL_PROFILE_IDENTIFIER).get(ipRecId);
                                                         if(ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__c!=null && ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__r.pse__Salesforce_User__c!=null){
                                                             eachProjecttask.OwnerId=ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__r.pse__Salesforce_User__c;
@@ -2119,6 +2158,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                                         eachProjecttask.NSP_Sub_Category__c=pta.NSP_Sub_Category__c;
                                                         eachProjecttask.Name=pta.NSP_Task_Name__c;
                                                         eachProjecttask.pse__Order__c=140;
+                                                        eachProjecttask.Task_Order__c=140;
                                                         Implementation_Profile__c ipwithValue=(Implementation_Profile__c) data.get(IMPL_PROFILE_IDENTIFIER).get(ipRecId);
                                                         if(ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__c!=null && ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__r.pse__Salesforce_User__c!=null){
                                                             eachProjecttask.OwnerId=ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__r.pse__Salesforce_User__c;
@@ -2164,6 +2204,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                                         eachProjecttask.NSP_Sub_Category__c=pta.NSP_Sub_Category__c;
                                                         eachProjecttask.Name=pta.NSP_Task_Name__c;
                                                         eachProjecttask.pse__Order__c=141;
+                                                        eachProjecttask.Task_Order__c=141;
 
                                                         Implementation_Profile__c ipwithValue=(Implementation_Profile__c) data.get(IMPL_PROFILE_IDENTIFIER).get(ipRecId);
                                                         if(ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__c!=null && ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__r.pse__Salesforce_User__c!=null){
@@ -2212,6 +2253,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                                         eachProjecttask.NSP_Sub_Category__c=pta.NSP_Sub_Category__c;
                                                         eachProjecttask.Name=pta.NSP_Task_Name__c;
                                                         eachProjecttask.pse__Order__c=142;
+                                                        eachProjecttask.Task_Order__c=142;
                                                         eachProjectTask.NSP_Visible_to_Client__c=False;
                                                         Implementation_Profile__c ipwithValue=(Implementation_Profile__c) data.get(IMPL_PROFILE_IDENTIFIER).get(ipRecId);
                                                         if(ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__c!=null && ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__r.pse__Salesforce_User__c!=null){
@@ -2259,6 +2301,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                                     eachProjecttask.NSP_Sub_Category__c=pta.NSP_Sub_Category__c;
                                                     eachProjecttask.Name=pta.NSP_Task_Name__c;
                                                     eachProjecttask.pse__Order__c=146;
+                                                    eachProjecttask.Task_Order__c=146;
                                                     Implementation_Profile__c ipwithValue=(Implementation_Profile__c) data.get(IMPL_PROFILE_IDENTIFIER).get(ipRecId);
                                                     if(ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__c!=null && ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__r.pse__Salesforce_User__c!=null){
                                                         eachProjecttask.OwnerId=ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__r.pse__Salesforce_User__c;
@@ -2306,6 +2349,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                                         eachProjecttask.NSP_Sub_Category__c=pta.NSP_Sub_Category__c;
                                                         eachProjecttask.Name=pta.NSP_Task_Name__c;
                                                         eachProjecttask.pse__Order__c=147;
+                                                        eachProjecttask.Task_Order__c=147;
                                                         Implementation_Profile__c ipwithValue=(Implementation_Profile__c) data.get(IMPL_PROFILE_IDENTIFIER).get(ipRecId);
                                                         if(ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__c!=null && ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__r.pse__Salesforce_User__c!=null){
                                                             eachProjecttask.OwnerId=ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__r.pse__Salesforce_User__c;
@@ -2352,6 +2396,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                                         eachProjecttask.NSP_Sub_Category__c=pta.NSP_Sub_Category__c;
                                                         eachProjecttask.Name=pta.NSP_Task_Name__c;
                                                         eachProjecttask.pse__Order__c=148;
+                                                        eachProjecttask.Task_Order__c=148;
                                                         Implementation_Profile__c ipwithValue=(Implementation_Profile__c) data.get(IMPL_PROFILE_IDENTIFIER).get(ipRecId);
                                                         if(ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__c!=null && ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__r.pse__Salesforce_User__c!=null){
                                                             eachProjecttask.OwnerId=ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__r.pse__Salesforce_User__c;
@@ -2397,6 +2442,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                                         eachProjecttask.NSP_Sub_Category__c=pta.NSP_Sub_Category__c;
                                                         eachProjecttask.Name=pta.NSP_Task_Name__c;
                                                         eachProjecttask.pse__Order__c=149;
+                                                        eachProjecttask.Task_Order__c=149;
                                                         Implementation_Profile__c ipwithValue=(Implementation_Profile__c) data.get(IMPL_PROFILE_IDENTIFIER).get(ipRecId);
                                                         if(ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__c!=null && ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__r.pse__Salesforce_User__c!=null){
                                                             eachProjecttask.OwnerId=ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__r.pse__Salesforce_User__c;
@@ -2441,6 +2487,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                                     eachProjecttask.NSP_Sub_Category__c=pta.NSP_Sub_Category__c;
                                                     eachProjecttask.Name=pta.NSP_Task_Name__c;
                										eachProjecttask.pse__Order__c=166;
+                                                    eachProjecttask.Task_Order__c=166;
                                                     Implementation_Profile__c ipwithValue=(Implementation_Profile__c) data.get(IMPL_PROFILE_IDENTIFIER).get(ipRecId);
                                                     if(ipwithValue.NSP_HR_Specialist__c!=null && ipwithValue.NSP_HR_Specialist__r.pse__Salesforce_User__c!=null){
                                                         eachProjecttask.OwnerId=ipwithValue.NSP_HR_Specialist__r.pse__Salesforce_User__c;
@@ -2486,6 +2533,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                                         eachProjecttask.NSP_Sub_Category__c=pta.NSP_Sub_Category__c;
                                                         eachProjecttask.Name=pta.NSP_Task_Name__c;
                											eachProjecttask.pse__Order__c=167;
+                                                        eachProjecttask.Task_Order__c=167;
                                                         Implementation_Profile__c ipwithValue=(Implementation_Profile__c) data.get(IMPL_PROFILE_IDENTIFIER).get(ipRecId);
                                                         if(ipwithValue.NSP_HR_Specialist__c!=null && ipwithValue.NSP_HR_Specialist__r.pse__Salesforce_User__c!=null){
                                                             eachProjecttask.OwnerId=ipwithValue.NSP_HR_Specialist__r.pse__Salesforce_User__c;
@@ -2531,6 +2579,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                                     eachProjecttask.NSP_Sub_Category__c=pta.NSP_Sub_Category__c;
                                                     eachProjecttask.Name=pta.NSP_Task_Name__c;
                                                     eachProjecttask.pse__Order__c=168;
+                                                    eachProjecttask.Task_Order__c=168;
                                                     Implementation_Profile__c ipwithValue=(Implementation_Profile__c) data.get(IMPL_PROFILE_IDENTIFIER).get(ipRecId);
                                                     if(ipwithValue.NSP_HR_Specialist__c!=null && ipwithValue.NSP_HR_Specialist__r.pse__Salesforce_User__c!=null){
                                                         eachProjecttask.OwnerId=ipwithValue.NSP_HR_Specialist__r.pse__Salesforce_User__c;
@@ -2587,6 +2636,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                                         eachProjecttask.NSP_Sub_Category__c=pta.NSP_Sub_Category__c;
                                                         eachProjecttask.Name=pta.NSP_Task_Name__c;
                                                         eachProjecttask.pse__Order__c=150;
+                                                        eachProjecttask.Task_Order__c=150;
                                                         eachProjectTask.NSP_Visible_to_Client__c=FALSE;
                                                         if(ipwithValue.NSP_Project_Manager__c!=null && ipwithValue.NSP_Project_Manager__r.pse__Salesforce_User__c!=null){
                                                             eachProjectTask.OwnerId=ipwithValue.NSP_Project_Manager__r.pse__Salesforce_User__c;
@@ -2600,6 +2650,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                                         eachProjecttask1.NSP_Sub_Category__c=pta1.NSP_Sub_Category__c;
                                                         eachProjecttask1.Name=pta1.NSP_Task_Name__c;
                                                         eachProjecttask1.pse__Order__c=151;
+                                                        eachProjecttask1.Task_Order__c=151;
                                                         if(ipwithValue.NSP_Project_Manager__c!=null && ipwithValue.NSP_Project_Manager__r.pse__Salesforce_User__c!=null){
                                                             eachProjecttask1.OwnerId=ipwithValue.NSP_Project_Manager__r.pse__Salesforce_User__c;
                                                         }
@@ -2612,6 +2663,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                                         eachProjecttask2.NSP_Sub_Category__c=pta2.NSP_Sub_Category__c;
                                                         eachProjecttask2.Name=pta2.NSP_Task_Name__c;
                                                         eachProjecttask2.pse__Order__c=152;
+                                                        eachProjecttask2.Task_Order__c=152;
                                                         if(ipwithValue.NSP_Project_Manager__c!=null && ipwithValue.NSP_Project_Manager__r.pse__Salesforce_User__c!=null){
                                                             eachProjecttask2.OwnerId=ipwithValue.NSP_Project_Manager__r.pse__Salesforce_User__c;
                                                         }
@@ -2623,6 +2675,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                                         eachProjecttask3.NSP_Sub_Category__c=pta3.NSP_Sub_Category__c;
                                                         eachProjecttask3.Name=pta3.NSP_Task_Name__c;
                                                         eachProjecttask3.pse__Order__c=153;
+                                                        eachProjecttask3.Task_Order__c=153;
                                                         if(ipwithValue.NSP_Project_Manager__c!=null && ipwithValue.NSP_Project_Manager__r.pse__Salesforce_User__c!=null){
                                                             eachProjecttask3.OwnerId=ipwithValue.NSP_Project_Manager__r.pse__Salesforce_User__c;
                                                         }
@@ -2634,6 +2687,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                                         eachProjecttask4.NSP_Sub_Category__c=pta4.NSP_Sub_Category__c;
                                                         eachProjecttask4.Name=pta4.NSP_Task_Name__c;
                 										eachProjecttask4.pse__Order__c=154;
+                                                        eachProjecttask4.Task_Order__c=154;
                                                         if(ipwithValue.NSP_Project_Manager__c!=null && ipwithValue.NSP_Project_Manager__r.pse__Salesforce_User__c!=null){
                                                             eachProjecttask4.OwnerId=ipwithValue.NSP_Project_Manager__r.pse__Salesforce_User__c;
                                                         }
@@ -2645,6 +2699,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                                         eachProjecttask5.NSP_Sub_Category__c=pta5.NSP_Sub_Category__c;
                                                         eachProjecttask5.Name=pta5.NSP_Task_Name__c;
                                                         eachProjecttask5.pse__Order__c=155;
+                                                        eachProjecttask5.Task_Order__c=155;
                                                         eachProjectTask5.NSP_Visible_to_Client__c=FALSE;
                                                         if(ipwithValue.NSP_Project_Manager__c!=null && ipwithValue.NSP_Project_Manager__r.pse__Salesforce_User__c!=null){
                                                             eachProjecttask5.OwnerId=ipwithValue.NSP_Project_Manager__r.pse__Salesforce_User__c;
@@ -2657,6 +2712,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                                         eachProjecttask6.NSP_Sub_Category__c=pta6.NSP_Sub_Category__c;
                                                         eachProjecttask6.Name=pta6.NSP_Task_Name__c;
                                                         eachProjecttask6.pse__Order__c=156;
+                                                        eachProjecttask6.Task_Order__c=156;
                                                         eachProjectTask6.NSP_Visible_to_Client__c=FALSE;
                                                         if(ipwithValue.NSP_Project_Manager__c!=null && ipwithValue.NSP_Project_Manager__r.pse__Salesforce_User__c!=null){
                                                             eachProjecttask6.OwnerId=ipwithValue.NSP_Project_Manager__r.pse__Salesforce_User__c;
@@ -2669,6 +2725,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                                         eachProjecttask7.NSP_Sub_Category__c=pta7.NSP_Sub_Category__c;
                                                         eachProjecttask7.Name=pta7.NSP_Task_Name__c;
                                                         eachProjecttask7.pse__Order__c=157;
+                                                        eachProjecttask7.Task_Order__c=157;
                                                         if(ipwithValue.NSP_Project_Manager__c!=null && ipwithValue.NSP_Project_Manager__r.pse__Salesforce_User__c!=null){
                                                             eachProjecttask7.OwnerId=ipwithValue.NSP_Project_Manager__r.pse__Salesforce_User__c;
                                                         }
@@ -2680,6 +2737,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                                         eachProjecttask8.NSP_Sub_Category__c=pta8.NSP_Sub_Category__c;
                                                         eachProjecttask8.Name=pta8.NSP_Task_Name__c;
                                                         eachProjecttask8.pse__Order__c=158;
+                                                        eachProjecttask8.Task_Order__c=158;
                                                         eachProjectTask8.NSP_Visible_to_Client__c=FALSE;
                                                         if(ipwithValue.NSP_Project_Manager__c!=null && ipwithValue.NSP_Project_Manager__r.pse__Salesforce_User__c!=null){
                                                             eachProjecttask8.OwnerId=ipwithValue.NSP_Project_Manager__r.pse__Salesforce_User__c;
@@ -2732,6 +2790,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                 eachProjecttask.NSP_Sub_Category__c=pta.NSP_Sub_Category__c;
                                                         eachProjecttask.Name=pta.NSP_Task_Name__c;
                                                         eachProjecttask.pse__Order__c=159;
+                                                        eachProjecttask.Task_Order__c=159;
                                                         if(ipwithValue.NSP_Project_Manager__c!=null && ipwithValue.NSP_Project_Manager__r.pse__Salesforce_User__c!=null){
                                                             eachProjecttask.OwnerId=ipwithValue.NSP_Project_Manager__r.pse__Salesforce_User__c;
                                                         }
@@ -2743,6 +2802,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                                         eachProjecttask1.NSP_Sub_Category__c=pta1.NSP_Sub_Category__c;
                                                         eachProjecttask1.Name=pta1.NSP_Task_Name__c;
                                                         eachProjecttask1.pse__Order__c=160;
+                                                        eachProjecttask1.Task_Order__c=160;
                                                         if(ipwithValue.NSP_Project_Manager__c!=null && ipwithValue.NSP_Project_Manager__r.pse__Salesforce_User__c!=null){
                                                             eachProjecttask1.OwnerId=ipwithValue.NSP_Project_Manager__r.pse__Salesforce_User__c;
                                                         }
@@ -2755,6 +2815,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                                         eachProjecttask2.NSP_Sub_Category__c=pta2.NSP_Sub_Category__c;
                                                         eachProjecttask2.Name=pta2.NSP_Task_Name__c;
                                                         eachProjecttask2.pse__Order__c=161;
+                                                        eachProjecttask2.Task_Order__c=161;
                                                         if(ipwithValue.NSP_Project_Manager__c!=null && ipwithValue.NSP_Project_Manager__r.pse__Salesforce_User__c!=null){
                                                             eachProjecttask2.OwnerId=ipwithValue.NSP_Project_Manager__r.pse__Salesforce_User__c;
                                                         }
@@ -2766,6 +2827,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                                         eachProjecttask3.NSP_Sub_Category__c=pta3.NSP_Sub_Category__c;
                                                         eachProjecttask3.Name=pta3.NSP_Task_Name__c;
                                                         eachProjecttask3.pse__Order__c=162;
+                                                        eachProjecttask3.Task_Order__c=162;
                                                         if(ipwithValue.NSP_Project_Manager__c!=null && ipwithValue.NSP_Project_Manager__r.pse__Salesforce_User__c!=null){
                                                             eachProjecttask3.OwnerId=ipwithValue.NSP_Project_Manager__r.pse__Salesforce_User__c;
                                                         }
@@ -2777,6 +2839,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                                         eachProjecttask4.NSP_Sub_Category__c=pta4.NSP_Sub_Category__c;
                                                         eachProjecttask4.Name=pta4.NSP_Task_Name__c;
                 										eachProjecttask4.pse__Order__c=163;
+                                                        eachProjecttask4.Task_Order__c=163;
                                                         if(ipwithValue.NSP_Project_Manager__c!=null && ipwithValue.NSP_Project_Manager__r.pse__Salesforce_User__c!=null){
                                                             eachProjecttask4.OwnerId=ipwithValue.NSP_Project_Manager__r.pse__Salesforce_User__c;
                                                         }
@@ -2788,6 +2851,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                                         eachProjecttask5.NSP_Sub_Category__c=pta5.NSP_Sub_Category__c;
                                                         eachProjecttask5.Name=pta5.NSP_Task_Name__c;
                 										eachProjecttask5.pse__Order__c=164;
+                                                        eachProjecttask5.Task_Order__c=164;
                                                         if(ipwithValue.NSP_Project_Manager__c!=null && ipwithValue.NSP_Project_Manager__r.pse__Salesforce_User__c!=null){
                                                             eachProjecttask5.OwnerId=ipwithValue.NSP_Project_Manager__r.pse__Salesforce_User__c;
                                                         }
@@ -2799,6 +2863,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                                         eachProjecttask6.NSP_Sub_Category__c=pta6.NSP_Sub_Category__c;
                                                         eachProjecttask6.Name=pta6.NSP_Task_Name__c;
                                                         eachProjecttask6.pse__Order__c=165;
+                                                        eachProjecttask6.Task_Order__c=165;
                                                         if(ipwithValue.NSP_Project_Manager__c!=null && ipwithValue.NSP_Project_Manager__r.pse__Salesforce_User__c!=null){
                                                             eachProjecttask6.OwnerId=ipwithValue.NSP_Project_Manager__r.pse__Salesforce_User__c;
                                                         }
@@ -2843,6 +2908,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                                         eachProjecttask.NSP_Sub_Category__c=pta.NSP_Sub_Category__c;
                                                         eachProjecttask.Name=pta.NSP_Task_Name__c;
                 										eachProjecttask.pse__Order__c=169;
+                                                        eachProjecttask.Task_Order__c=169;
                                                         Implementation_Profile__c ipwithValue=(Implementation_Profile__c) data.get(IMPL_PROFILE_IDENTIFIER).get(ipRecId);
                                                         if(ipwithValue.NSP_HR_Specialist__c!=null && ipwithValue.NSP_HR_Specialist__r.pse__Salesforce_User__c!=null){
                                                             eachProjecttask.OwnerId=ipwithValue.NSP_HR_Specialist__r.pse__Salesforce_User__c;
@@ -2888,6 +2954,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                                         eachProjecttask.NSP_Sub_Category__c=pta.NSP_Sub_Category__c;
                                                         eachProjecttask.Name=pta.NSP_Task_Name__c;
                 										eachProjecttask.pse__Order__c=170;
+                                                        eachProjecttask.Task_Order__c=170;
                                                         Implementation_Profile__c ipwithValue=(Implementation_Profile__c) data.get(IMPL_PROFILE_IDENTIFIER).get(ipRecId);
                                                         if(ipwithValue.NSP_HR_Specialist__c!=null && ipwithValue.NSP_HR_Specialist__r.pse__Salesforce_User__c!=null){
                                                             eachProjecttask.OwnerId=ipwithValue.NSP_HR_Specialist__r.pse__Salesforce_User__c;
@@ -2932,6 +2999,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                                         eachProjecttask.NSP_Sub_Category__c=pta.NSP_Sub_Category__c;
                                                         eachProjecttask.Name=pta.NSP_Task_Name__c;
                 										eachProjecttask.pse__Order__c=171;
+                                                        eachProjecttask.Task_Order__c=171;
                                                         Implementation_Profile__c ipwithValue=(Implementation_Profile__c) data.get(IMPL_PROFILE_IDENTIFIER).get(ipRecId);
                                                         if(ipwithValue.NSP_HR_Specialist__c!=null && ipwithValue.NSP_HR_Specialist__r.pse__Salesforce_User__c!=null){
                                                             eachProjecttask.OwnerId=ipwithValue.NSP_HR_Specialist__r.pse__Salesforce_User__c;
@@ -2974,6 +3042,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                                         eachProjecttask.NSP_Sub_Category__c=pta.NSP_Sub_Category__c;
                                                         eachProjecttask.Name=pta.NSP_Task_Name__c;
                 										eachProjecttask.pse__Order__c=172;
+                                                        eachProjecttask.Task_Order__c=172;
                                                         Implementation_Profile__c ipwithValue=(Implementation_Profile__c) data.get(IMPL_PROFILE_IDENTIFIER).get(ipRecId);
                                                         if(ipwithValue.NSP_HR_Specialist__c!=null && ipwithValue.NSP_HR_Specialist__r.pse__Salesforce_User__c!=null){
                                                             eachProjecttask.OwnerId=ipwithValue.NSP_HR_Specialist__r.pse__Salesforce_User__c;
@@ -3017,6 +3086,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                                         eachProjecttask.NSP_Sub_Category__c=pta.NSP_Sub_Category__c;
                                                         eachProjecttask.Name=pta.NSP_Task_Name__c;
                 										eachProjecttask.pse__Order__c=184;
+                                                        eachProjecttask.Task_Order__c=184;
                                                         eachProjectTask.NSP_Visible_to_Client__c=FALSE;
                                                         Implementation_Profile__c ipwithValue=(Implementation_Profile__c) data.get(IMPL_PROFILE_IDENTIFIER).get(ipRecId);
                                                         if(ipwithValue.NSP_Project_Manager__c!=null && ipwithValue.NSP_Project_Manager__r.pse__Salesforce_User__c!=null){
@@ -3058,6 +3128,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                                     eachProjecttask.NSP_Sub_Category__c=pta.NSP_Sub_Category__c;
                                                     eachProjecttask.Name=pta.NSP_Task_Name__c;
                										eachProjecttask.pse__Order__c=185;
+                                                    eachProjecttask.Task_Order__c=185;
                                                     eachProjectTask.NSP_Visible_to_Client__c=FALSE;
                                                     Implementation_Profile__c ipwithValue=(Implementation_Profile__c) data.get(IMPL_PROFILE_IDENTIFIER).get(ipRecId);
                                                     if(ipwithValue.NSP_Project_Manager__c!=null && ipwithValue.NSP_Project_Manager__r.pse__Salesforce_User__c!=null){
@@ -3104,6 +3175,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                                         eachProjecttask.NSP_Sub_Category__c=pta.NSP_Sub_Category__c;
                                                         eachProjecttask.Name=pta.NSP_Task_Name__c;
                 										eachProjecttask.pse__Order__c=186;
+                                                        eachProjecttask.Task_Order__c=186;
                                                         eachProjectTask.NSP_Visible_to_Client__c=FALSE;
                                                         Implementation_Profile__c ipwithValue=(Implementation_Profile__c) data.get(IMPL_PROFILE_IDENTIFIER).get(ipRecId);
                                                         if(ipwithValue.NSP_Project_Manager__c!=null && ipwithValue.NSP_Project_Manager__r.pse__Salesforce_User__c!=null){
@@ -3148,6 +3220,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                                         eachProjecttask.NSP_Sub_Category__c=pta.NSP_Sub_Category__c;
                                                         eachProjecttask.Name=pta.NSP_Task_Name__c;
                 										eachProjecttask.pse__Order__c=187;
+                                                        eachProjecttask.Task_Order__c=187;
                                                         eachProjectTask.NSP_Visible_to_Client__c=FALSE;
                                                         Implementation_Profile__c ipwithValue=(Implementation_Profile__c) data.get(IMPL_PROFILE_IDENTIFIER).get(ipRecId);
                                                         if(ipwithValue.NSP_Project_Manager__c!=null && ipwithValue.NSP_Project_Manager__r.pse__Salesforce_User__c!=null){
@@ -3191,6 +3264,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                                         eachProjecttask.NSP_Sub_Category__c=pta.NSP_Sub_Category__c;
                                                         eachProjecttask.Name=pta.NSP_Task_Name__c;
                 										eachProjecttask.pse__Order__c=188;
+                                                        eachProjecttask.Task_Order__c=188;
                                                         eachProjectTask.NSP_Visible_to_Client__c=FALSE;
                                                         Implementation_Profile__c ipwithValue=(Implementation_Profile__c) data.get(IMPL_PROFILE_IDENTIFIER).get(ipRecId);
                                                         if(ipwithValue.NSP_Project_Manager__c!=null && ipwithValue.NSP_Project_Manager__r.pse__Salesforce_User__c!=null){
@@ -3234,6 +3308,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                                         eachProjecttask.NSP_Sub_Category__c=pta.NSP_Sub_Category__c;
                                                         eachProjecttask.Name=pta.NSP_Task_Name__c;
                 										eachProjecttask.pse__Order__c = 189;
+                                                        eachProjecttask.Task_Order__c = 189;
                                                         eachProjectTask.NSP_Visible_to_Client__c=FALSE;
                                                         Implementation_Profile__c ipwithValue=(Implementation_Profile__c) data.get(IMPL_PROFILE_IDENTIFIER).get(ipRecId);
                                                         if(ipwithValue.NSP_Project_Manager__c!=null && ipwithValue.NSP_Project_Manager__r.pse__Salesforce_User__c!=null){
