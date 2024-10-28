@@ -308,38 +308,44 @@ public class NSP_TerminationFormTriggerHelper {
         }
     }
 
-    public void shareTerminationFormsWithUsers(Map<Id, Set<Id>> mRecordToUsers, String accessLevel) {  
-        List<NSP_Termination_Form__Share> lTerminationFormShares = new List<NSP_Termination_Form__Share>();  
-        
-        try {  
-            if (mRecordToUsers != null) {
-                for (Id iTForm: mRecordToUsers.keySet()) {  
-                    Set<Id> userSet = mRecordToUsers.get(iTForm);
-                    
-                    if (userSet != null) {  
-                        for (Id iUser: userSet) {  
-                            lTerminationFormShares.add(new NSP_Termination_Form__Share(ParentId = iTForm, UserOrGroupId = iUser, AccessLevel = accessLevel));
+    private void shareTerminationFormsWithUsers( Map<Id,Set<Id>> mRecordToUsers , String accessLevel ) {
+        try {
+            List<NSP_Termination_Form__Share> lTerminationFormShares = new List<NSP_Termination_Form__Share>();
+            if ( mRecordToUsers != null ) {
+                for ( Id iTForm : mRecordToUsers.keySet() ) {
+                    if ( mRecordToUsers.containsKey( iTForm ) ) {
+                        Set<Id> userSet = mRecordToUsers.get( iTForm );
+                        if ( userSet != null ) {
+                            for ( Id iUser : userSet ) {
+                                lTerminationFormShares.add(
+                                    new NSP_Termination_Form__Share(
+                                        ParentId=iTForm ,
+                                        UserOrGroupId=iUser ,
+                                        AccessLevel = accessLevel
+                                    )
+                                );
+                            }
                         }
                     }
                 }
             }
-            if (!lTerminationFormShares.isEmpty()) {
+            if ( !lTerminationFormShares.isEmpty() ) {
                 List<Database.SaveResult> results = Database.insert( lTerminationFormShares , false );
                 NSP_ErrorLogHandler.logResults(
                     NSP_TerminationFormTriggerHelper.class.getName() ,
                     'shareTerminationFormsWithUsers:insert' ,
                     results
-                ); 
-            }  
-        } catch (Exception e) {
-            NSP_ErrorLogHandler.logException(  
-                NSP_TerminationFormTriggerHelper.class.getName(),  
-                'shareTerminationFormsWithUsers',  
-                e  
-            );  
-        }  
+                );
+            }
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_TerminationFormTriggerHelper.class.getName() ,
+                'shareTerminationFormsWithUsers' ,
+                e
+            );
+        }
     }
-    
+
     public void beforeTerminationFormUpdate( Map<Id,NSP_Termination_Form__c> newMap , Map<Id,NSP_Termination_Form__c> oldMap ) {
         set<Id> setOfClientOwnerId = new set<Id>();
         set<Id> setOfCreditSpecialistId = new set<Id>();
