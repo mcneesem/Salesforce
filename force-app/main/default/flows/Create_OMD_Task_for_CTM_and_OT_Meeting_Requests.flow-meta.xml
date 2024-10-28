@@ -653,7 +653,7 @@ Client Contact Name: {!$Record.Client_Contact_Name__c}
 -
 Client Contact Phone: {!$Record.Client_Contact_Phone__c}
 -
-Client Contact Email: {!$Record.Client_Contact_Phone__c}
+Client Contact Email: {!$Record.Client_Contact_Email__c}
 -
 NSP Effective Date: {!$Record.Effective_Date__c}
 -
