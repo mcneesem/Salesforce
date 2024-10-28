@@ -39,6 +39,11 @@
         <field>NSP_Sub_Client__c.ABCP_Period__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>User.Workday_Employee_ID__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Edit Integrated Fields</label>
 </PermissionSet>

@@ -61,6 +61,10 @@
                 <field>NSP_Employee_Per_ID__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Workday_Employee_ID__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>NSP_Running_Sales_Region__c</field>
             </layoutItems>
