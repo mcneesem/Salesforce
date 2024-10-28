@@ -4347,6 +4347,16 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.Range_of_Estimated_Number_of_Employees__c</fieldItem>
+                <identifier>RecordRange_of_Estimated_Number_of_Employees_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Eloqua_Comments__c</fieldItem>
                 <identifier>RecordNSP_Eloqua_Comments_cField2</identifier>
             </fieldInstance>
