@@ -5,7 +5,7 @@
 * Name : NSP_SubPlanChangeHistoryBatch
 */
 global class NSP_SubPlanChangeHistoryBatch implements Database.Batchable<sObject> , Schedulable {
-    // test w/ NSP_SubPlanChangeHistoryBatchTest (??%)
+    // test w/ SubPlanChangeHistoryBatchTest (98%)
 
     /***********************************************************************************************
     * MethodName: start
@@ -144,7 +144,16 @@ global class NSP_SubPlanChangeHistoryBatch implements Database.Batchable<sObject
     * Params:       Database.SchedulableContext bc
     * ********************************************************************************************/ 
     global Void execute( SchedulableContext sc ) {
-        Database.executeBatch( new NSP_SubPlanChangeHistoryBatch() , 200 );
+        Boolean isEnabledBatch = false;
+        SubPlanChangeHistoryBatchSettings__c settings = SubPlanChangeHistoryBatchSettings__c.getInstance( UserInfo.getUserId() );
+        if ( settings != null ) {
+            isEnabledBatch = settings.IsEnabled__c;
+        }
+        if ( isEnabledBatch ) {
+            Database.executeBatch( new SubPlanChangeHistoryBatch() , 200 );
+        } else {
+            Database.executeBatch( new NSP_SubPlanChangeHistoryBatch() , 200 );
+        }
     }
 
 }
