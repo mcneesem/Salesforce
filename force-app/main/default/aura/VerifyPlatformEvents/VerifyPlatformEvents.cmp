@@ -1,0 +1,68 @@
+<aura:component implements="flexipage:availableForAllPageTypes" access="global" >
+    <!-- VerifyPlatformEvents -->
+    <!-- allows user to subscribe to event channels, receive event payloads, and monitor via browser console log... -->
+    <!--
+    // basic flow debugging...
+    Flow: Publish One Time Sync Event (API: Publish_One_Time_Sync_Event)
+    -->
+    <!--
+    // basic apex debugging...
+    List<One_Time_Sync_Event__e> syncs = new List<One_Time_Sync_Event__e>();
+    syncs.add( new One_Time_Sync_Event__e() );
+    System.debug( ' ~ syncs=' + syncs );
+    List<Database.SaveResult> results = EventBus.publish( syncs );
+    for ( Database.SaveResult result : results ) {
+        System.debug( ' ~ result=' + result );
+    }
+    -->
+
+    <!-- EMP API component -->
+    <lightning:empApi aura:id="empApi"/>
+
+    <!-- Calls the onInit controller function on component initalization -->
+    <aura:handler name="init" value="{!this}" action="{!c.onInit}"/>
+
+    <!-- Holds the streaming event subscription -->
+    <aura:attribute name="subscription" type="Map"/>
+
+    <!-- Form for subscribing/unsubscribing to/from events -->
+    <aura:attribute name="channel" type="String" default="/event/One_Time_Sync_Event__e"/>
+    <aura:attribute name="replayId" type="Integer" default="-1"/>
+    <lightning:card title="Verify Platform Events">
+        <p class="slds-p-horizontal_small">
+            <lightning:input aura:id="channel"
+                             label="Channel"
+                             name="Channel"
+                             type="text"
+                             value="{!v.channel}"
+                             fieldLevelHelp="Open browser console log to see component output."
+                             disabled="{!not(empty(v.subscription))}"
+                             />
+            <lightning:input aura:id="replayId"
+                             label="Replay Id"
+                             name="Replay Id"
+                             type="number"
+                             value="{!v.replayId}"
+                             fieldLevelHelp="Use -1 for new events.  Use -2 for new and past events."
+                             disabled="{!not(empty(v.subscription))}"
+                             />
+            <br/>
+            <lightning:button label="Subscribe"
+                              onclick="{!c.subscribe}"
+                              disabled="{!not(empty(v.subscription))}"
+                              />
+            <lightning:button label="Unsubscribe"
+                              onclick="{!c.unsubscribe}"
+                              disabled="{!empty(v.subscription)}"
+                              />
+            <lightning:button label="Reset"
+                              onclick="{!c.reset}"
+                              />
+        </p>
+    </lightning:card>
+    <!--
+    subscription: {!v.subscription}<br/>
+    channel: {!v.channel}<br/>
+    replayId: {!v.replayId}<br/>
+	-->
+</aura:component>
