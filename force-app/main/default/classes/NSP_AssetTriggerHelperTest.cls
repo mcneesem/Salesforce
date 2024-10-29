@@ -1,7 +1,7 @@
 @isTest(SeeAllData=false)
 private class NSP_AssetTriggerHelperTest {
     private static final Id integraRecordTypeId = Schema.SObjectType.Asset.getRecordTypeInfosByName().get(NSP_ServiceConstants.INTEGRA_ASSET).getRecordTypeId();
-	private static final Id woRecordTypeId = Schema.SObjectType.Asset.getRecordTypeInfosByName().get(NSP_ServiceConstants.WO_ASSET_RECORDTYPE).getRecordTypeId();
+    private static final Id woRecordTypeId = Schema.SObjectType.Asset.getRecordTypeInfosByName().get(NSP_ServiceConstants.WO_ASSET_RECORDTYPE).getRecordTypeId();
     private static final Id retRecordTypeId = Schema.SObjectType.Asset.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.RET_WO_ASSET_RECORDTYPE).getRecordTypeId();
 
     @testSetup private static void testData() {
@@ -66,7 +66,7 @@ private class NSP_AssetTriggerHelperTest {
         Insert users;
         
         Test.startTest();
-        NSP_Account_Team__c	accountteam = new NSP_Account_Team__c();
+        NSP_Account_Team__c accountteam = new NSP_Account_Team__c();
         accountteam.NSP_Account__c = accoutObject3.Id;
         accountteam.NSP_User__c = users.Id;
         accountteam.NSP_Role__c = 'Manager, HR Services';
@@ -99,8 +99,8 @@ private class NSP_AssetTriggerHelperTest {
         assetObj1.NSP_Need_Rollup_Recalculation__c = true;
         assetObj1.recordTypeId = woRecordTypeId;
         assetList.add(assetObj1);
-		 
-		//Create Asset
+
+        //Create Asset
         Asset assetObj2 = new Asset();
         assetObj2.accountId = accoutObject3.Id;
         assetObj2.NSP_Client__c = 'asset3';
@@ -182,27 +182,25 @@ private class NSP_AssetTriggerHelperTest {
 * @param N/A. 
 * @return void                          
 */
-    @isTest
-    static void beforeUpdateDirectorTest() {
+    @isTest private static void beforeUpdateDirectorTest() {
         List<Asset> assetList = [SELECT ID,Name,NSP_Need_Rollup_Recalculation__c FROM Asset WHERE Name !=null LIMIT 1];
         Test.startTest();
             Asset assetObj = new Asset();
             assetObj.Id = assetList[0].ID;
             assetObj.NSP_Need_Rollup_Recalculation__c = true;
             assetObj.NSP_Client_Segment_type__c ='Core';
-        	assetObj.NSP_Client_SegmentDate__c = system.Today().addDays(10);
+            assetObj.NSP_Client_SegmentDate__c = system.Today().addDays(10);
             assetObj.NSP_Government_Contractor__c = true;
             assetObj.NSP_IES_e_Verify_Client__c = true;
             update assetObj;
         Test.stopTest();
         List<Asset> assetList1 = [SELECT ID,NSP_Need_Rollup_Recalculation__c,NSP_Actual_Part_Time_EE_Count__c FROM 
                                   Asset WHERE NSP_Need_Rollup_Recalculation__c = true]; 
-    	System.assertEquals(true, assetList1[0].NSP_Need_Rollup_Recalculation__c);
+        System.assertEquals(true, assetList1[0].NSP_Need_Rollup_Recalculation__c);
     
     }
     
-    @isTest
-    static void assetTest() {
+    @isTest private static void assetTest() {
           Test.startTest();
         Account accountObject = [SELECT id FROM account WHERE Name = 'Test Account' limit 1];
         Asset assetObjWO = new Asset();
@@ -232,8 +230,7 @@ private class NSP_AssetTriggerHelperTest {
 * @param N/A. 
 * @return void                          
 */    
-     @isTest
-    static void afterUpdateWXTest() {
+    @isTest private static void afterUpdateWXTest() {
         
         Id new_Asset_RT_ID = Schema.SObjectType.Asset.RecordTypeInfosByName.get('WX_WA').getRecordTypeId();
         List<Asset> assetList = [SELECT ID,Name FROM Asset WHERE NSP_Client__c = 'asset3' LIMIT 1];
@@ -245,7 +242,7 @@ private class NSP_AssetTriggerHelperTest {
         update assetObj;
         Test.stopTest();
         List<Asset> assetList1 = [SELECT ID,Name, NSP_First_Pay_Date__c FROM Asset WHERE NSP_Client__c = 'asset3' LIMIT 1];
-		System.assertEquals(date.today(), assetList1[0].NSP_First_Pay_Date__c);
+        System.assertEquals(date.today(), assetList1[0].NSP_First_Pay_Date__c);
         
     }
 
@@ -256,8 +253,7 @@ private class NSP_AssetTriggerHelperTest {
 * @param N/A. 
 * @return void                          
 */    
-     @isTest
-    static void afterUpdateWOTest() {
+    @isTest private static void afterUpdateWOTest() {
         
         Id new_Asset_RT_ID = Schema.SObjectType.Asset.RecordTypeInfosByName.get('WO').getRecordTypeId();
         List<Asset> assetList = [SELECT ID,Name FROM Asset WHERE NSP_Client__c = 'asset3' LIMIT 1];
@@ -269,7 +265,7 @@ private class NSP_AssetTriggerHelperTest {
         update assetObj;
         Test.stopTest();
         List<Asset> assetList1 = [SELECT ID,Name,NSP_AIMS_First_Pay_Date__c FROM Asset WHERE NSP_Client__c = 'asset3' LIMIT 1];
-		System.assertEquals(date.today(), assetList1[0].NSP_AIMS_First_Pay_Date__c);
+        System.assertEquals(date.today(), assetList1[0].NSP_AIMS_First_Pay_Date__c);
         
     }
 
@@ -280,8 +276,7 @@ private class NSP_AssetTriggerHelperTest {
 * @param N/A. 
 * @return void                          
 */    
-     @isTest
-    static void peoTESClientStatusTest() {
+    @isTest private static void peoTESClientStatusTest() {
         
         List<Asset> assetList = [SELECT ID,Name,Status,NSP_Termination_Date__c FROM Asset WHERE NSP_Client__c = 'asset5' LIMIT 1];
         Test.startTest();
@@ -292,7 +287,7 @@ private class NSP_AssetTriggerHelperTest {
         update assetObj;
         Test.stopTest();
         List<Asset> assetList1 = [SELECT ID,Name,NSP_Termination_Date__c FROM Asset WHERE NSP_Client__c = 'asset5' LIMIT 1];
-		System.assertEquals(date.today(), assetList1[0].NSP_Termination_Date__c);
+        System.assertEquals(date.today(), assetList1[0].NSP_Termination_Date__c);
         
     }
     
@@ -304,8 +299,7 @@ private class NSP_AssetTriggerHelperTest {
 * @param N/A. 
 * @return void                          
 */    
-     @isTest
-    static void peoTESClientStatusWxTest() {
+    @isTest private static void peoTESClientStatusWxTest() {
         
         List<Account> accList = [SELECT ID,Name FROM Account WHERE Name = 'Test Account5' LIMIT 1];
         Id wX_WARecordTypeId = Schema.SObjectType.Asset.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.WX_WA).getRecordTypeId();
@@ -330,8 +324,7 @@ private class NSP_AssetTriggerHelperTest {
 * @param N/A. 
 * @return void                          
 */    
-     @isTest
-    static void updateRETAsset() {
+    @isTest private static void updateRETAsset() {
         
         List<Asset> assetList = [SELECT ID,Name,Status,NSP_Termination_Date__c FROM Asset WHERE NSP_Client__c = 'asset6' LIMIT 1];
         Test.startTest();
@@ -342,7 +335,7 @@ private class NSP_AssetTriggerHelperTest {
         update assetObj;
         Test.stopTest();
         List<Asset> assetList1 = [SELECT ID,Name,NSP_Termination_Date__c FROM Asset WHERE NSP_Client__c = 'asset6' LIMIT 1];
-		System.assertEquals(date.today(), assetList1[0].NSP_Termination_Date__c);
+        System.assertEquals(date.today(), assetList1[0].NSP_Termination_Date__c);
         
     }
     
@@ -353,8 +346,7 @@ private class NSP_AssetTriggerHelperTest {
     * @return void                          
     */
     
-    @isTest
-    static void createPlatformEventForAsset() {
+    @isTest private static void createPlatformEventForAsset() {
         Test.startTest();
         Account accountObject = [SELECT Id from Account WHERE Name = 'Test Account' limit 1];
         Asset assetObjWO = new Asset();
@@ -376,8 +368,7 @@ private class NSP_AssetTriggerHelperTest {
     }
     
     
-    @isTest
-    static void updateActiveAsset() {
+    @isTest private static void updateActiveAsset() {
         Test.startTest();
         Account accountObject = [SELECT Id from Account WHERE Name = 'Test Account' limit 1];
         Asset assetObjWO = new Asset();
@@ -390,8 +381,7 @@ private class NSP_AssetTriggerHelperTest {
         system.assertEquals(assetObjWO.accountId, accountObject.Id);
     }
     
-        @isTest
-    static void afterPayDateWOTest() {
+    @isTest private static void afterPayDateWOTest() {
         
         Id new_Asset_RT_ID = Schema.SObjectType.Asset.RecordTypeInfosByName.get('WX_WA').getRecordTypeId();
         Id  soldToCheckListRecordTypeId = Schema.SObjectType.NSP_Checklist__c.getRecordTypeInfosByDeveloperName().get('NSP_Sold_to_Paid_Checklist').getRecordTypeId();
@@ -429,12 +419,11 @@ private class NSP_AssetTriggerHelperTest {
         update assetObj;
         Test.stopTest();
         List<Asset> assetList1 = [SELECT ID,Name,NSP_AIMS_First_Pay_Date__c FROM Asset WHERE NSP_Client__c = 'asset4' LIMIT 1];
-		System.assertEquals(date.today(), assetList1[0].NSP_AIMS_First_Pay_Date__c);
+        System.assertEquals(date.today(), assetList1[0].NSP_AIMS_First_Pay_Date__c);
         
     }
     
-    @isTest
-    static void updateActiveAssetWithName() {
+    @isTest private static void updateActiveAssetWithName() {
         Test.startTest();
         Account accountObject = [SELECT Id from Account WHERE Name = 'Test Account' limit 1];
         Asset assetObjWO = new Asset();
