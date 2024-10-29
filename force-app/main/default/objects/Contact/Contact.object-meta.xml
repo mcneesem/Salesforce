@@ -374,6 +374,17 @@
         <fields>CORE.USERS.ALIAS</fields>
         <profileName>Contact Center</profileName>
     </profileSearchLayouts>
+    <profileSearchLayouts>
+        <fields>FULL_NAME</fields>
+        <fields>NSP_Contact_Info__c</fields>
+        <fields>NSP_Job_Title__c</fields>
+        <fields>ACCOUNT.NAME</fields>
+        <fields>CONTACT.PHONE1</fields>
+        <fields>NSP_Preferred_First_Name__c</fields>
+        <fields>NSP_Personal_Email__c</fields>
+        <fields>CORE.USERS.ALIAS</fields>
+        <profileName>Finance Service</profileName>
+    </profileSearchLayouts>
     <recordTypeTrackFeedHistory>false</recordTypeTrackFeedHistory>
     <recordTypeTrackHistory>true</recordTypeTrackHistory>
     <searchLayouts>
