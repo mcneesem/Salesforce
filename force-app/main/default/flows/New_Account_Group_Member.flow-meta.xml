@@ -3,13 +3,12 @@
     <actionCalls>
         <name>Navigate_ToRecord</name>
         <label>Navigate To Record</label>
-        <locationX>1458</locationX>
-        <locationY>2090</locationY>
+        <locationX>1062</locationX>
+        <locationY>2138</locationY>
         <actionName>c:NSP_NavigateToRecord</actionName>
         <actionType>component</actionType>
         <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Error_Screen</targetReference>
+            <targetReference>Set_Fault_Element_Navigate_ToRecord</targetReference>
         </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
@@ -18,15 +17,18 @@
                 <elementReference>varAccountGroupMember.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>c:NSP_NavigateToRecord</nameSegment>
+        <offset>0</offset>
         <storeOutputAutomatically>true</storeOutputAutomatically>
+        <versionSegment>1</versionSegment>
     </actionCalls>
     <apiVersion>55.0</apiVersion>
     <assignments>
         <description>Assign Values to the Account Group member Variable</description>
         <name>Assign_Account_Group_Member_Account</name>
         <label>Assign Account Group Member Account</label>
-        <locationX>490</locationX>
-        <locationY>398</locationY>
+        <locationX>424</locationX>
+        <locationY>350</locationY>
         <assignmentItems>
             <assignToReference>varAccountGroupMember.NSP_Member_Account__c</assignToReference>
             <operator>Assign</operator>
@@ -49,8 +51,8 @@
         <description>Assign Values to the Account Group member Variable</description>
         <name>Assign_Account_Group_Member_Group</name>
         <label>Assign Account Group Member Group</label>
-        <locationX>754</locationX>
-        <locationY>398</locationY>
+        <locationX>688</locationX>
+        <locationY>350</locationY>
         <assignmentItems>
             <assignToReference>varAccountGroupMember.NSP_Member_Account__c</assignToReference>
             <operator>Assign</operator>
@@ -73,7 +75,7 @@
         <name>Duplicate_Entry_Text</name>
         <label>Duplicate Entry Text</label>
         <locationX>314</locationX>
-        <locationY>974</locationY>
+        <locationY>866</locationY>
         <assignmentItems>
             <assignToReference>DuplicateEntryMessage</assignToReference>
             <operator>Assign</operator>
@@ -90,7 +92,7 @@
         <name>No_access_to_create_Account_Group_Memeber</name>
         <label>No access to create Account Group Memeber</label>
         <locationX>50</locationX>
-        <locationY>974</locationY>
+        <locationY>866</locationY>
         <assignmentItems>
             <assignToReference>DuplicateEntryMessage</assignToReference>
             <operator>Assign</operator>
@@ -107,8 +109,8 @@
         <description>removes the validation once the screen is revisited.</description>
         <name>Remove_Validation_Message</name>
         <label>Remove Validation Message</label>
-        <locationX>754</locationX>
-        <locationY>614</locationY>
+        <locationX>688</locationX>
+        <locationY>542</locationY>
         <assignmentItems>
             <assignToReference>DuplicateEntryMessage</assignToReference>
             <operator>Assign</operator>
@@ -117,13 +119,131 @@
             <targetReference>Check_for_Duplicate_Group_Member</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Check_for_Duplicate_Group_Member</name>
+        <label>Set Fault Element: Check_for_Duplicate_Group_Member</label>
+        <locationX>2866</locationX>
+        <locationY>758</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Check_for_Duplicate_Group_Member</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler_Subflow_Flow_1</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Create_Account_Group_Member</name>
+        <label>Set Fault Element: Create_Account_Group_Member</label>
+        <locationX>842</locationX>
+        <locationY>1406</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Create_Account_Group_Member</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Insperity_Fault_Handler_Subflow_Flow_1</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Delete_Account_Group</name>
+        <label>Set Fault Element: Delete_Account_Group</label>
+        <locationX>1106</locationX>
+        <locationY>1298</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Delete_Account_Group</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler_Subflow_Flow_1</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Delete_Account_Group_Member</name>
+        <label>Set Fault Element: Delete_Account_Group_Member</label>
+        <locationX>1634</locationX>
+        <locationY>1622</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Delete_Account_Group_Member</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler_Subflow_Flow_1</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_getAccountGroup</name>
+        <label>Set Fault Element: getAccountGroup</label>
+        <locationX>2602</locationX>
+        <locationY>974</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>getAccountGroup</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler_Subflow_Flow_1</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_getAccountGroupMembers</name>
+        <label>Set Fault Element: getAccountGroupMembers</label>
+        <locationX>2338</locationX>
+        <locationY>1082</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>getAccountGroupMembers</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler_Subflow_Flow_1</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Navigate_ToRecord</name>
+        <label>Set Fault Element: Navigate_ToRecord</label>
+        <locationX>1326</locationX>
+        <locationY>2246</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Navigate_ToRecord</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler_Subflow_Flow_1</targetReference>
+        </connector>
+    </assignments>
     <decisions>
         <name>Check_for_Alert_Condition</name>
         <label>Check for Alert Condition</label>
-        <locationX>1766</locationX>
-        <locationY>1454</locationY>
+        <locationX>1634</locationX>
+        <locationY>1298</locationY>
         <defaultConnector>
-            <targetReference>Navigate_ToRecord</targetReference>
+            <targetReference>Check_Record</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -146,8 +266,8 @@
         <description>Same flow has been used for Account Group RelatedList New Group Member and Account Relatedlist New Group Member Button</description>
         <name>Check_for_RecordId</name>
         <label>Check for RecordId</label>
-        <locationX>754</locationX>
-        <locationY>158</locationY>
+        <locationX>688</locationX>
+        <locationY>134</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>From_Account</name>
@@ -197,8 +317,8 @@
     <decisions>
         <name>Check_if_group_has_only_one_group_memeber</name>
         <label>Check if group has only one group memeber</label>
-        <locationX>1458</locationX>
-        <locationY>1214</locationY>
+        <locationX>1326</locationX>
+        <locationY>1082</locationY>
         <defaultConnector>
             <isGoTo>true</isGoTo>
             <targetReference>Create_Account_Group_Member</targetReference>
@@ -236,10 +356,53 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Check_Record</name>
+        <label>Check Record</label>
+        <locationX>1326</locationX>
+        <locationY>2030</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Validated_Record</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>varAccountGroupMember</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>varAccountGroupMember</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>varAccountGroupMember.Id</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>varAccountGroupMember.Id</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Navigate_ToRecord</targetReference>
+            </connector>
+            <label>Validated Record</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Contains_Duplicate_Entry</name>
         <label>Contains Duplicate Entry?</label>
-        <locationX>754</locationX>
-        <locationY>854</locationY>
+        <locationX>688</locationX>
+        <locationY>758</locationY>
         <defaultConnector>
             <targetReference>getAccountGroup</targetReference>
         </defaultConnector>
@@ -343,12 +506,12 @@
         <name>Create_Account_Group_Member</name>
         <label>Create Account Group Member</label>
         <locationX>578</locationX>
-        <locationY>1454</locationY>
+        <locationY>1298</locationY>
         <connector>
-            <targetReference>Navigate_ToRecord</targetReference>
+            <targetReference>Check_Record</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Error_Screen</targetReference>
+            <targetReference>Set_Fault_Element_Create_Account_Group_Member</targetReference>
         </faultConnector>
         <inputReference>varAccountGroupMember</inputReference>
     </recordCreates>
@@ -356,13 +519,12 @@
         <name>Delete_Account_Group</name>
         <label>Delete Account Group</label>
         <locationX>578</locationX>
-        <locationY>1334</locationY>
+        <locationY>1190</locationY>
         <connector>
             <targetReference>Create_Account_Group_Member</targetReference>
         </connector>
         <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Error_Screen</targetReference>
+            <targetReference>Set_Fault_Element_Delete_Account_Group</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -378,14 +540,13 @@
         <name>Delete_Account_Group_Member</name>
         <label>Delete Account Group Member</label>
         <locationX>1370</locationX>
-        <locationY>1694</locationY>
+        <locationY>1514</locationY>
         <connector>
             <isGoTo>true</isGoTo>
             <targetReference>Create_Account_Group_Member</targetReference>
         </connector>
         <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Error_Screen</targetReference>
+            <targetReference>Set_Fault_Element_Delete_Account_Group_Member</targetReference>
         </faultConnector>
         <inputReference>getAccountGroupMembers</inputReference>
     </recordDeletes>
@@ -393,15 +554,14 @@
         <description>Check for Account Group Member records if already exists.</description>
         <name>Check_for_Duplicate_Group_Member</name>
         <label>Check for Duplicate Group Member</label>
-        <locationX>754</locationX>
-        <locationY>734</locationY>
+        <locationX>688</locationX>
+        <locationY>650</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Contains_Duplicate_Entry</targetReference>
         </connector>
         <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Error_Screen</targetReference>
+            <targetReference>Set_Fault_Element_Check_for_Duplicate_Group_Member</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -425,15 +585,14 @@
     <recordLookups>
         <name>getAccountGroup</name>
         <label>getAccountGroup</label>
-        <locationX>1458</locationX>
-        <locationY>974</locationY>
+        <locationX>1326</locationX>
+        <locationY>866</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>getAccountGroupMembers</targetReference>
         </connector>
         <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Error_Screen</targetReference>
+            <targetReference>Set_Fault_Element_getAccountGroup</targetReference>
         </faultConnector>
         <filterLogic>1 AND (2 OR 3 OR 4 OR 5 OR 6 OR 7)</filterLogic>
         <filters>
@@ -494,15 +653,14 @@
     <recordLookups>
         <name>getAccountGroupMembers</name>
         <label>getAccountGroupMembers</label>
-        <locationX>1458</locationX>
-        <locationY>1094</locationY>
+        <locationX>1326</locationX>
+        <locationY>974</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_if_group_has_only_one_group_memeber</targetReference>
         </connector>
         <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Error_Screen</targetReference>
+            <targetReference>Set_Fault_Element_getAccountGroupMembers</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -527,7 +685,7 @@
         <name>ByPassValidation</name>
         <label>ByPassValidation</label>
         <locationX>1370</locationX>
-        <locationY>1574</locationY>
+        <locationY>1406</locationY>
         <connector>
             <targetReference>Delete_Account_Group_Member</targetReference>
         </connector>
@@ -551,8 +709,8 @@
     <screens>
         <name>Alert</name>
         <label>Alert</label>
-        <locationX>1766</locationX>
-        <locationY>1334</locationY>
+        <locationX>1634</locationX>
+        <locationY>1190</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -596,7 +754,7 @@
         <name>Error_Screen</name>
         <label>Error Screen</label>
         <locationX>842</locationX>
-        <locationY>1574</locationY>
+        <locationY>1622</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -611,8 +769,8 @@
     <screens>
         <name>New_Account_Group_Members_Account</name>
         <label>New Account Group Members Account</label>
-        <locationX>490</locationX>
-        <locationY>278</locationY>
+        <locationX>424</locationX>
+        <locationY>242</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -712,6 +870,7 @@
                 </fields>
                 <fields>
                     <fieldType>ObjectProvided</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <objectFieldReference>varAccountGroupMember.NSP_Primary__c</objectFieldReference>
                 </fields>
@@ -744,8 +903,8 @@
     <screens>
         <name>New_Account_Group_Members_Group</name>
         <label>New Account Group Members Group</label>
-        <locationX>754</locationX>
-        <locationY>278</locationY>
+        <locationX>688</locationX>
+        <locationY>242</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -885,6 +1044,7 @@
         </fields>
         <fields>
             <fieldType>ObjectProvided</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>false</isRequired>
             <objectFieldReference>varAccountGroupMember.NSP_Primary__c</objectFieldReference>
         </fields>
@@ -907,19 +1067,57 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>628</locationX>
+        <locationX>562</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Check_for_RecordId</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
+    <subflows>
+        <name>Insperity_Fault_Handler_Subflow_Flow_1</name>
+        <label>Insperity Fault Handler Subflow Flow 1</label>
+        <locationX>842</locationX>
+        <locationY>1514</locationY>
+        <connector>
+            <targetReference>Error_Screen</targetReference>
+        </connector>
+        <flowName>Insperity_Fault_Handler_Subflow</flowName>
+        <inputAssignments>
+            <name>faultElement</name>
+            <value>
+                <elementReference>faultElement</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultFlow</name>
+            <value>
+                <stringValue>New_Account_Group_Member</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultMessage</name>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
     <variables>
         <name>DuplicateEntryMessage</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>faultElement</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue></stringValue>
+        </value>
     </variables>
     <variables>
         <name>proceed</name>

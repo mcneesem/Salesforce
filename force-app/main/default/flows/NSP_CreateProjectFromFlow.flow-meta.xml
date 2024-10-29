@@ -3,13 +3,16 @@
     <actionCalls>
         <name>Override_Rev_Rec_Rules</name>
         <label>Override Rev Rec Rules</label>
-        <locationX>1040</locationX>
+        <locationX>1414</locationX>
         <locationY>384</locationY>
         <actionName>NSP_ReviewRevRecRules</actionName>
         <actionType>apex</actionType>
         <connector>
             <targetReference>Check_Order_Type</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_Override_Rev_Rec_Rules</targetReference>
+        </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>records</name>
@@ -18,15 +21,19 @@
             </value>
         </inputParameters>
         <nameSegment>NSP_ReviewRevRecRules</nameSegment>
+        <offset>0</offset>
         <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <name>Set_Order_Id</name>
         <label>Set Order Id</label>
-        <locationX>116</locationX>
+        <locationX>50</locationX>
         <locationY>492</locationY>
         <actionName>NSP_CreateProjFromFlow</actionName>
         <actionType>apex</actionType>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_Set_Order_Id</targetReference>
+        </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>records</name>
@@ -35,9 +42,93 @@
             </value>
         </inputParameters>
         <nameSegment>NSP_CreateProjFromFlow</nameSegment>
+        <offset>0</offset>
         <versionSegment>1</versionSegment>
     </actionCalls>
     <apiVersion>55.0</apiVersion>
+    <assignments>
+        <name>Set_Fault_Element_Override_Rev_Rec_Rules</name>
+        <label>Set Fault Element: Override_Rev_Rec_Rules</label>
+        <locationX>2338</locationX>
+        <locationY>492</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Override_Rev_Rec_Rules</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Set_Order_Id</name>
+        <label>Set Fault Element: Set_Order_Id</label>
+        <locationX>314</locationX>
+        <locationY>600</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Set_Order_Id</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Insperity_Fault_Handler</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Update_Order_with_Review_Rec_Rec_Flag_Set</name>
+        <label>Set Fault Element: Update_Order_with_Review_Rec_Rec_Flag_Set</label>
+        <locationX>2074</locationX>
+        <locationY>1008</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Update_Order_with_Review_Rec_Rec_Flag_Set</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Update_Termination_Or_Renewal_Order</name>
+        <label>Set Fault Update_Termination_Or_Renewal_Order</label>
+        <locationX>1370</locationX>
+        <locationY>708</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Update_Termination_Or_Renewal_Order</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_New_Effective_Date</name>
+        <label>Set New Effective Date</label>
+        <locationX>1810</locationX>
+        <locationY>708</locationY>
+        <assignmentItems>
+            <assignToReference>newEffectiveDate</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>FirstDayofMonth</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Order_with_Review_Rec_Rec_Flag_Set</targetReference>
+        </connector>
+    </assignments>
     <decisions>
         <name>Check_For_Data_Migration_User_Records</name>
         <label>Check For Data Migration User/Records</label>
@@ -70,7 +161,7 @@
     <decisions>
         <name>Check_For_Data_Migration_User_Records1</name>
         <label>Check For Data Migration User/Records1</label>
-        <locationX>842</locationX>
+        <locationX>1128</locationX>
         <locationY>276</locationY>
         <defaultConnector>
             <targetReference>Override_Rev_Rec_Rules</targetReference>
@@ -99,7 +190,7 @@
     <decisions>
         <name>Check_If_Project_Is_Not_Null</name>
         <label>Check If Project Is Not Null</label>
-        <locationX>248</locationX>
+        <locationX>314</locationX>
         <locationY>384</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -133,12 +224,38 @@
         </rules>
     </decisions>
     <decisions>
+        <description>Prevent DmlExceptions: FIELD_INTEGRITY_EXCEPTION: You can&apos;t edit Order Start Date on activated orders.</description>
+        <name>Check_Order_Status</name>
+        <label>Check Order Status</label>
+        <locationX>1722</locationX>
+        <locationY>600</locationY>
+        <defaultConnector>
+            <targetReference>Set_New_Effective_Date</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Order_Is_Activated</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Activated</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Order_with_Review_Rec_Rec_Flag_Set</targetReference>
+            </connector>
+            <label>Order Is Activated</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Check_Order_Type</name>
         <label>Check Order Type</label>
-        <locationX>1040</locationX>
+        <locationX>1414</locationX>
         <locationY>492</locationY>
         <defaultConnector>
-            <targetReference>Update_Order_with_Review_Rec_Rec_Flag_Set</targetReference>
+            <targetReference>Check_Order_Status</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -199,12 +316,15 @@
     <recordUpdates>
         <name>Update_Order_with_Review_Rec_Rec_Flag_Set</name>
         <label>Update Order with Review Rec Rec Flag Set</label>
-        <locationX>1172</locationX>
-        <locationY>600</locationY>
+        <locationX>1722</locationX>
+        <locationY>900</locationY>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_Update_Order_with_Review_Rec_Rec_Flag_Set</targetReference>
+        </faultConnector>
         <inputAssignments>
             <field>EffectiveDate</field>
             <value>
-                <elementReference>FirstDayofMonth</elementReference>
+                <elementReference>newEffectiveDate</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -218,8 +338,11 @@
     <recordUpdates>
         <name>Update_Termination_Or_Renewal_Order</name>
         <label>Update Termination Or Renewal Order</label>
-        <locationX>908</locationX>
+        <locationX>1106</locationX>
         <locationY>600</locationY>
+        <faultConnector>
+            <targetReference>Set_Fault_Update_Termination_Or_Renewal_Order</targetReference>
+        </faultConnector>
         <inputAssignments>
             <field>NSP_Rev_Rec_Rules_Reviewed__c</field>
             <value>
@@ -229,7 +352,7 @@
         <inputReference>$Record</inputReference>
     </recordUpdates>
     <start>
-        <locationX>89</locationX>
+        <locationX>199</locationX>
         <locationY>0</locationY>
         <object>Order</object>
         <recordTriggerType>Create</recordTriggerType>
@@ -257,4 +380,49 @@
         <triggerType>RecordAfterSave</triggerType>
     </start>
     <status>Draft</status>
+    <subflows>
+        <name>Insperity_Fault_Handler</name>
+        <label>Insperity Fault Handler</label>
+        <locationX>314</locationX>
+        <locationY>708</locationY>
+        <flowName>Insperity_Fault_Handler_Subflow</flowName>
+        <inputAssignments>
+            <name>faultElement</name>
+            <value>
+                <elementReference>faultElement</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultFlow</name>
+            <value>
+                <stringValue>NSP_CreateProjectFromFlow</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultMessage</name>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <variables>
+        <name>faultElement</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue></stringValue>
+        </value>
+    </variables>
+    <variables>
+        <name>newEffectiveDate</name>
+        <dataType>Date</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <elementReference>$Record.EffectiveDate</elementReference>
+        </value>
+    </variables>
 </Flow>
