@@ -2,16 +2,15 @@ public class NSP_AccountGroupTriggerHelper {
     // test w/ NSP_AccountGroupMemberController_Test (92%)
     // test w/ NSP_AccountGroupTriggerHelper (77%)
 
-    /**
-    * Iterates throught the list of NSP_Account_Groups and Updates the group Name based on Criteria.
-    * @param newList List of New NSP_Account_Group__c.  OldMap of NSP_Account_Group__c
-    * @return void      
-    *                
-    */
-    public void beforeUpdateGroupName(List<NSP_Account_Group__c> newList, Map<Id, NSP_Account_Group__c> oldMap){
-        
+    //
+    // Iterates throught the list of NSP_Account_Groups and Updates the group Name based on Criteria.
+    // @param newList List of New NSP_Account_Group__c.  OldMap of NSP_Account_Group__c
+    // @return void
+    //
+    public void beforeUpdateGroupName( List<NSP_Account_Group__c> newList , Map<Id,NSP_Account_Group__c> oldMap ) {
         for(NSP_Account_Group__c accGroup : newList){
             NSP_Account_Group__c oldAccountGroup = oldMap != null ? oldMap?.get(accGroup.Id) : null;
+            String newName = accGroup.Name;
             List<String> accGroupName = new List<String>();
             //When a Account Group tag/Account is changed, we concat the Group Type & Primary Account & tag  
             if(isFieldUpdatedForGroupName(accGroup, oldAccountGroup)){
@@ -26,7 +25,7 @@ public class NSP_AccountGroupTriggerHelper {
                 }
 
                 if(!accGroupName.isEmpty()){
-                    accGroup.Name = String.join(accGroupName, ' - ') ;
+                    newName = String.join(accGroupName, ' - ') ;
                 }
             } else if(accGroup.NSP_Type__c == NSP_ServiceConstants.TYPECONTROLLEDGROUP){ 
                 if(String.isNotBlank(accGroup.NSP_Type__c)){
@@ -37,9 +36,14 @@ public class NSP_AccountGroupTriggerHelper {
                 }
 
                 if(!accGroupName.isEmpty()){
-                    accGroup.Name = String.join(accGroupName, ' ') ;
+                    newName = String.join(accGroupName, ' ') ;
                 }
             }
+            // prevents ~ AccountGroupTrigger: data changed by trigger for field Account Group Name: data value too large: (value has been hidden)
+            accGroup.Name = SchemaController.safeText(
+                newName ,
+                sObjectType.NSP_Account_Group__c.Fields.Name
+            );
         }
     }
 
