@@ -47,17 +47,17 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Onboarding_Meeting_Detail__c.Final_OMR_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Onboarding_Meeting_Detail__c.Final_OMR_End_Time__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Onboarding_Meeting_Detail__c.Final_OMR_Start_Time__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -113,6 +113,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Onboarding_Meeting_Detail__c.Onboarding_Meeting_Request_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Onboarding_Meeting_Detail__c.Pay_Frequency__c</field>
         <readable>true</readable>
     </fieldPermissions>
