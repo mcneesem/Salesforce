@@ -2920,6 +2920,12 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
+                <componentName>lightningInbox:sendLaterListContainer</componentName>
+                <identifier>lightningInbox_sendLaterListContainer</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
                 <componentInstanceProperties>
                     <name>showLegacyActivityComposer</name>
                     <value>false</value>
