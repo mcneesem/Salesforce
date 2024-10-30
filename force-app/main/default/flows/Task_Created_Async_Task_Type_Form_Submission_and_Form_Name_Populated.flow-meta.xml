@@ -3,7 +3,7 @@
     <actionCalls>
         <name>Notify_Lead_Owner_for_Lead_from_Website</name>
         <label>Notify_Lead_Owner_for_Lead_from_Website</label>
-        <locationX>264</locationX>
+        <locationX>176</locationX>
         <locationY>708</locationY>
         <actionName>Task.Notify_Lead_Owner_for_Lead_from_Website</actionName>
         <actionType>emailAlert</actionType>
@@ -24,7 +24,7 @@
         <name>NSP_Notify_Account_Owner_for_Contact_from_Website</name>
         <label>NSP_Notify_Account_Owner_for_Contact_from_Website</label>
         <locationX>1232</locationX>
-        <locationY>600</locationY>
+        <locationY>816</locationY>
         <actionName>Task.NSP_Notify_Account_Owner_for_Contact_from_Website</actionName>
         <actionType>emailAlert</actionType>
         <faultConnector>
@@ -61,7 +61,7 @@
         <name>Assign_varFaultElement_Notify_Account_Owner_for_Contact_from_Website_email_alert</name>
         <label>Assign varFaultElement - Notify Account Owner for Contact from Website email alert</label>
         <locationX>1496</locationX>
-        <locationY>708</locationY>
+        <locationY>924</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -77,7 +77,7 @@
     <assignments>
         <name>Assign_varFaultElement_Notify_Lead_Owner_for_Lead_from_Website_email_alert</name>
         <label>Assign varFaultElement - Notify Lead Owner for Lead from Website email alert</label>
-        <locationX>528</locationX>
+        <locationX>440</locationX>
         <locationY>816</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
@@ -91,10 +91,27 @@
             <targetReference>Fault_Handler_Subflow</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Update_Task_s_Account_Owner_Email_field</name>
+        <label>Assign varFaultElement - Update Task&apos;s Account Owner Email field</label>
+        <locationX>2024</locationX>
+        <locationY>708</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Update_Tasks_Account_Owner_Email_field</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
     <decisions>
         <name>Bypass_Task_Email_Alerts</name>
         <label>Bypass Task Email Alerts?</label>
-        <locationX>616</locationX>
+        <locationX>704</locationX>
         <locationY>276</locationY>
         <defaultConnector>
             <targetReference>Related_to_Lead_or_Contact</targetReference>
@@ -114,10 +131,46 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Is_Account_Owner_active_with_Email</name>
+        <label>Is Account Owner active with Email</label>
+        <locationX>1892</locationX>
+        <locationY>492</locationY>
+        <defaultConnectorLabel>Owner not active or missing email</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Account_Owner_is_active_with_email</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.AccountId</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Account.Owner.IsActive</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Account.Owner.Email</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Tasks_Account_Owner_Email_field</targetReference>
+            </connector>
+            <label>Yes - Account Owner is active with email</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Is_Account_Owner_Email_field_populated</name>
         <label>Is Account Owner Email field populated?</label>
         <locationX>1496</locationX>
-        <locationY>492</locationY>
+        <locationY>708</locationY>
         <defaultConnectorLabel>Field not populated</defaultConnectorLabel>
         <rules>
             <name>Yes_Account_Owner_Email_populated</name>
@@ -138,7 +191,7 @@
     <decisions>
         <name>Is_Lead_Owner_Active_with_Email</name>
         <label>Is Lead Owner Active with Email?</label>
-        <locationX>528</locationX>
+        <locationX>440</locationX>
         <locationY>600</locationY>
         <defaultConnectorLabel>Owner inactive or missing email</defaultConnectorLabel>
         <rules>
@@ -160,7 +213,7 @@
     <decisions>
         <name>Related_to_Lead_or_Contact</name>
         <label>Related to Lead or Contact?</label>
-        <locationX>1232</locationX>
+        <locationX>1496</locationX>
         <locationY>384</locationY>
         <defaultConnectorLabel>N/A</defaultConnectorLabel>
         <rules>
@@ -189,12 +242,12 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Is_Account_Owner_Email_field_populated</targetReference>
+                <targetReference>Is_Account_Owner_active_with_Email</targetReference>
             </connector>
             <label>Contact</label>
         </rules>
     </decisions>
-    <description>If Task related to Lead or Contact, and Task Type = &quot;Form Submission&quot; and Form Name = 1 of 6 specific forms, send email alert</description>
+    <description>Updates Tasks Account Owner Email Field. If Task related to Lead or Contact, and Task Type = &quot;Form Submission&quot; and Form Name = 1 of 6 specific forms, send email alert</description>
     <environments>Default</environments>
     <interviewLabel>Task - Created - Async - Task Type Form Submission and Form Name Populated {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Task - Created - Async - Task Type Form Submission and Form Name Populated</label>
@@ -220,7 +273,7 @@
     <recordLookups>
         <name>Get_Lead_Owner_Info</name>
         <label>Get Lead Owner Info</label>
-        <locationX>528</locationX>
+        <locationX>440</locationX>
         <locationY>492</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -262,10 +315,29 @@
         <object>User</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordUpdates>
+        <name>Update_Tasks_Account_Owner_Email_field</name>
+        <label>Update Task&apos;s Account Owner Email field</label>
+        <locationX>1496</locationX>
+        <locationY>600</locationY>
+        <connector>
+            <targetReference>Is_Account_Owner_Email_field_populated</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Update_Task_s_Account_Owner_Email_field</targetReference>
+        </faultConnector>
+        <inputAssignments>
+            <field>NSP_Account_Owner_Email__c</field>
+            <value>
+                <elementReference>$Record.Account.Owner.Email</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
     <start>
         <locationX>50</locationX>
         <locationY>0</locationY>
-        <filterLogic>1 AND (2 OR (3 AND 10 AND 11)) AND (4 OR 5 OR 6 OR 7 OR 8 OR 9)</filterLogic>
+        <filterLogic>1 AND (2 OR 3) AND (4 OR 5 OR 6 OR 7 OR 8 OR 9)</filterLogic>
         <filters>
             <field>NSP_Task_type__c</field>
             <operator>EqualTo</operator>
@@ -327,20 +399,6 @@
             <operator>EqualTo</operator>
             <value>
                 <stringValue>InsperityBPSForm</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>NSP_Account_Owner_Email__c</field>
-            <operator>IsNull</operator>
-            <value>
-                <booleanValue>false</booleanValue>
-            </value>
-        </filters>
-        <filters>
-            <field>NSP_Account_Owner_Email__c</field>
-            <operator>NotEqualTo</operator>
-            <value>
-                <stringValue></stringValue>
             </value>
         </filters>
         <object>Task</object>
