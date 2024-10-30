@@ -1,11 +1,8 @@
-/**
-* Represents the EmailMessage trigger helper which handles all the logic.
-*/
 public with sharing class NSP_EmailMessageTriggerHelper {
     // test w/ NSP_EmailMessageTriggerHelperTest (87%)
 
     public static boolean isFirst = false;
-    public static List<String> ContactCenterEmailAddresses = System.Label.NSP_Contact_Center_Email_Addresses.split(',');
+    private static List<String> ContactCenterEmailAddresses = System.Label.NSP_Contact_Center_Email_Addresses.toLowerCase().split( ',' );
     public static final String QUEUE = 'Queue';
     public static final String CONTACTCENTER = 'NSP_ContactCenter';
     private static final Id CONTACTCENTER_QUEUEID = '00G4x000001fXVREA2';
@@ -15,27 +12,15 @@ public with sharing class NSP_EmailMessageTriggerHelper {
     public static final String OPEN = 'Open';
     private static final Id PEO_RECORDTYPEID = NSP_GenericRecordType.getRecordTypeId( 'Case' , 'PEO' );
     private static final Id BPS_RECORDTYPEID = NSP_GenericRecordType.getRecordTypeId( 'Case' , 'BPS' );
-        
-    // Description: This method will be called after insert of EmailMessage
-    // Date       : 17/11/2021
-    public void afterInsertionEmailMessage(List<EmailMessage> newList, Map<Id, EmailMessage> newMap){
+
+    public void afterInsertionEmailMessage( List<EmailMessage> newList , Map<Id,EmailMessage> newMap ) {
         Boolean switchEnabled = EmailMessageTriggerSettings__c.getInstance( UserInfo.getUserId() ).IsHealthAndWelfareEmailMessageEnabled__c;
-        Set<Id> setOfCaseId = new Set<Id> ();
+        Set<Id> parentIds = new Set<Id>();
         Set<Id> employmentScreeningcaseIdSet = new Set<Id>();
-        List<Case> caseToUpdate = new List<Case>();
         Map<Id,EmailMessage> healthWelfareInternalExternalCaseIdFromAddMap = new Map<Id,EmailMessage>();
         for ( EmailMessage eMessage : newList ) {
             if ( ( eMessage.ParentId != null ) && incomingEmailCheck( eMessage ) ) {
-                setOfCaseId.add( eMessage.ParentId );
-            }
-            //Added as a part of STY-04132 
-            if ( !setOfCaseId.isEmpty() ) {
-                for ( Id caseID : setOfCaseId ) {
-                    Case caseRecord = new Case();
-                    caseRecord.ID = caseID;
-                    caseRecord.NSP_Case_Created_From_Email_To_Case__c = true;
-                    caseToUpdate.add(caseRecord);
-                }
+                parentIds.add( eMessage.ParentId );
             }
             //As a part of STY-03671
             if ( eMessage.ToAddress == System.Label.NSP_Customer_Service_Email
@@ -49,26 +34,52 @@ public with sharing class NSP_EmailMessageTriggerHelper {
                 healthWelfareInternalExternalCaseIdFromAddMap.put( eMessage.ParentId , eMessage );
             }
         }
-        if(!setOfCaseId.isEmpty()){
-            NSP_WebCaseAssignment.webCaseAssign(setOfCaseId, newList);
-            reOpenOrMarkResponseAfterCloseTrue(setOfCaseId, newList);
+        Set<Id> validatedParents = new Set<Id>();
+        if ( !parentIds.isEmpty() ) {
+            // prevent Validation Rule DmlExceptions by excluding 'Closed' Cases from the list of Cases modified by this logic...
+            List<Case> validatedParents = [
+                SELECT Id
+                FROM Case
+                WHERE (
+                    ( Id IN :parentIds )
+                    AND ( Status != 'Closed' )
+                )
+            ];
+            Map<Id,Case> validatedParentsMap = new Map<Id,Case>();
+            if ( ( validatedParents != null ) && !validatedParents.isEmpty() ) {
+                validatedParentsMap = new Map<Id,Case>( validatedParents );
+            }
+            validatedParents = validatedParentsMap.keySet();
+        }
+        List<Case> caseToUpdate = new List<Case>();
+        if ( !validatedParents.isEmpty() ) {
+            //Added as a part of STY-04132 
+            for ( Id caseId : validatedParents ) {
+                Case caseRecord = new Case();
+                caseRecord.Id = caseId;
+                caseRecord.NSP_Case_Created_From_Email_To_Case__c = true;
+                caseToUpdate.add( caseRecord );
+            }
+        }
+        if ( !parentIds.isEmpty() ) {
+            NSP_WebCaseAssignment.webCaseAssign( parentIds , newList );
+            reOpenOrMarkResponseAfterCloseTrue( parentIds , newList );
         }
         //As a part of STY-03671
-        if(!employmentScreeningcaseIdSet.isEmpty()){
-            updateConfidentialCheckBoxForEmpScreening(employmentScreeningcaseIdSet);
+        if ( !employmentScreeningcaseIdSet.isEmpty() ) {
+            updateConfidentialCheckBoxForEmpScreening( employmentScreeningcaseIdSet );
         }
         //As a part of STY-03531
         if ( !switchEnabled && !healthWelfareInternalExternalCaseIdFromAddMap.isEmpty() ) {
             sendEmailToHealthWelfareInternalExternal( healthWelfareInternalExternalCaseIdFromAddMap );
         }
-        
         // Added as a part of STY-04132 
         if ( !caseToUpdate.isEmpty() ) {
-            List<Database.SaveResult> results1 =  Database.update( caseToUpdate , false );
+            List<Database.SaveResult> results = Database.update( caseToUpdate , false );
             NSP_ErrorLogHandler.logResults(
                 NSP_EmailMessageTriggerHelper.class.getName() ,
                 'afterInsertionEmailMessage' ,
-                results1
+                results
             );
         }
     }
@@ -190,12 +201,12 @@ public with sharing class NSP_EmailMessageTriggerHelper {
                                     toAddressList = eMessage.ToAddress.split( ';' );
                                 }
                                 
-                                if (!isContactCenterCase( NSP_EmailMessageTriggerHelper.ContactCenterEmailAddresses , toAddressList )) {
+                                if (!isContactCenterCase( toAddressList )) {
                                     currentCase.NSP_Response_After_Close__c = true;
                                     casesToUpdate.add( currentCase );
                                 }
                                 else if ( ( currentCase.Status == CLOSED ) 
-                                         && isContactCenterCase( NSP_EmailMessageTriggerHelper.ContactCenterEmailAddresses , toAddressList )
+                                         && isContactCenterCase( toAddressList )
                                         )
                                 {
                                     Integer businessDaysBetween = getNoOfBusinessDaysBetweenDates(
@@ -206,7 +217,7 @@ public with sharing class NSP_EmailMessageTriggerHelper {
                                         currentCase.Status = REOPENED;
                                         currentCase.NSP_Case_Sub_Status__c = UNASSIGNED;
                                         currentCase.OwnerId = NSP_EmailMessageTriggerHelper.CONTACTCENTER_QUEUEID;
-                                        currentCase.NSP_Response_After_Close__c = false;
+                                        currentCase.NSP_Response_After_Close__c = true;
                                         casesToUpdate.add( currentCase );
                                     } else {
                                         caseToEmailMessageMap.put( currentCase , eMessage );
@@ -251,16 +262,16 @@ public with sharing class NSP_EmailMessageTriggerHelper {
     // Story         : STY-04647
     // Params        : List<String> ContactCenterEmailAddresses , List<String> ToAddress
     // ********************************************************************************************
-    private static Boolean isContactCenterCase( List<String> ContactCenterEmailAddresses , List<String> ToAddress ) {
+    private static Boolean isContactCenterCase( List<String> ToAddress ) {
         Integer count = 0;
         if ( ( ToAddress != null )
             && !ToAddress.isEmpty()
-            && ( ContactCenterEmailAddresses != null )
-            && !ContactCenterEmailAddresses.isEmpty()
+            && ( NSP_EmailMessageTriggerHelper.ContactCenterEmailAddresses != null )
+            && !NSP_EmailMessageTriggerHelper.ContactCenterEmailAddresses.isEmpty()
             )
         {
             for ( String str : ToAddress ) {
-                if ( ContactCenterEmailAddresses.contains( str ) ) {
+                if ( NSP_EmailMessageTriggerHelper.ContactCenterEmailAddresses.contains( str.toLowerCase() ) ) {
                     count++;
                 }
             }
