@@ -6,6 +6,7 @@
     <permissionSets>Account_Profile_Access</permissionSets>
     <permissionSets>Bypass_Lead_Email_Alerts</permissionSets>
     <permissionSets>Bypass_Opportunity_Email_Alerts</permissionSets>
+    <permissionSets>Bypass_Task_Email_Alerts</permissionSets>
     <permissionSets>Data_Migration_Permission_Set</permissionSets>
     <permissionSets>Edit_Integrated_Fields</permissionSets>
     <permissionSets>Legacy_Data_Migration_Object_Permissions</permissionSets>
