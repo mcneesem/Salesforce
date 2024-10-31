@@ -34,7 +34,7 @@ public with sharing class NSP_EmailMessageTriggerHelper {
                 healthWelfareInternalExternalCaseIdFromAddMap.put( eMessage.ParentId , eMessage );
             }
         }
-        Set<Id> validatedParents = new Set<Id>();
+        Set<Id> validatedParentIds = new Set<Id>();
         if ( !parentIds.isEmpty() ) {
             // prevent Validation Rule DmlExceptions by excluding 'Closed' Cases from the list of Cases modified by this logic...
             List<Case> validatedParents = [
@@ -49,12 +49,12 @@ public with sharing class NSP_EmailMessageTriggerHelper {
             if ( ( validatedParents != null ) && !validatedParents.isEmpty() ) {
                 validatedParentsMap = new Map<Id,Case>( validatedParents );
             }
-            validatedParents = validatedParentsMap.keySet();
+            validatedParentIds = validatedParentsMap.keySet();
         }
         List<Case> caseToUpdate = new List<Case>();
-        if ( !validatedParents.isEmpty() ) {
+        if ( !validatedParentIds.isEmpty() ) {
             //Added as a part of STY-04132 
-            for ( Id caseId : validatedParents ) {
+            for ( Id caseId : validatedParentIds ) {
                 Case caseRecord = new Case();
                 caseRecord.Id = caseId;
                 caseRecord.NSP_Case_Created_From_Email_To_Case__c = true;
