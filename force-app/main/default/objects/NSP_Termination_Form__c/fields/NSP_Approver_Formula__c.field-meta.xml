@@ -3,14 +3,7 @@
     <fullName>NSP_Approver_Formula__c</fullName>
     <description>created as part of DF_03863</description>
     <externalId>false</externalId>
-    <formula>IF(
-  OR(
-    ( RecordType.DeveloperName = &apos;NSP_Credit_Specialist_Form&apos; ) ,
-    ( RecordType.DeveloperName = &apos;NSP_Client_Reinstatement&apos; )
-  ) ,
-  &apos;Termination Team&apos; ,
-  NSP_Approver__r.FirstName &amp; &apos; &apos; &amp; NSP_Approver__r.MiddleName &amp; &apos; &apos; &amp; NSP_Approver__r.LastName
-)</formula>
+    <formula>IF(   RecordType.DeveloperName = &apos;NSP_Credit_Specialist_Form&apos;, &apos;Termination Team&apos; ,   NSP_Approver__r.FirstName &amp; &apos; &apos;&amp; NSP_Approver__r.MiddleName &amp;  &apos; &apos;&amp;NSP_Approver__r.LastName  )</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Approver</label>
     <required>false</required>
