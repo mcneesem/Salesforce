@@ -2384,7 +2384,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
     }
     
     public void createProjectTaskForMedical() {
-        // If Reporting: Select all that apply
+        
         List<pse__Project_Task__c> projectTaskList = new List<pse__Project_Task__c>();
         List<NSP_Implementation_Profile_Automation__c> ipAutomationRecords = new List<NSP_Implementation_Profile_Automation__c>();
         
