@@ -21,6 +21,7 @@
             </value>
         </inputParameters>
         <nameSegment>addScreenPop</nameSegment>
+        <offset>0</offset>
         <storeOutputAutomatically>true</storeOutputAutomatically>
         <versionSegment>1</versionSegment>
     </actionCalls>
@@ -118,6 +119,7 @@
             </value>
         </inputParameters>
         <nameSegment>routeWork</nameSegment>
+        <offset>0</offset>
         <versionSegment>1</versionSegment>
     </actionCalls>
     <apiVersion>60.0</apiVersion>
@@ -455,12 +457,6 @@ Routes each call to the default queue (Basic Queue) and, if the agent accepts, s
                 <stringValue>Subject</stringValue>
             </value>
         </inputAssignments>
-        <inputAssignments>
-            <field>Transfer_Queue__c</field>
-            <value>
-                <elementReference>input_record.Transfer_Queue__c</elementReference>
-            </value>
-        </inputAssignments>
         <object>Case</object>
     </recordCreates>
     <recordLookups>
@@ -490,7 +486,6 @@ Routes each call to the default queue (Basic Queue) and, if the agent accepts, s
         <queriedFields>RecordTypeId</queriedFields>
         <queriedFields>Status</queriedFields>
         <queriedFields>Subject</queriedFields>
-        <queriedFields>Transfer_Queue__c</queriedFields>
     </recordLookups>
     <recordUpdates>
         <name>Update_Voice_Call</name>
