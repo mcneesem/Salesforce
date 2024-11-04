@@ -6,7 +6,6 @@ public class NSP_CaseTriggerHelper {
     public static string CATEGORY_VALUE   = 'CSS';
     public static string CSS_ROLE         = 'Customer Success Specialist';
     public static string RET_NSPHardship_QUEUE = 'RET - NSPHardship';
-    public static string Payroll_COE_QUEUE = 'Payroll COE';
     public final String BPSRECORDTYPE = 'BPS';
     public final String TASKPRIORITY = 'Medium';
     public final String TASKSTATUS = 'Completed';
@@ -26,7 +25,7 @@ public class NSP_CaseTriggerHelper {
     public static List<String> orgPlusSupportRoles = System.Label.NSP_OrgPlus_Support_Roles.split(',');
     public static List<String> performSmartSupportRoles = System.Label.NSP_PerformSmart_Support_Roles.split(',');
     public static List<String> tesSupportRoles = System.Label.NSP_TES_Support_Role.split(',');
-    public static final Id PEO_RECORDTYPEID = SObjectType.Case.getRecordTypeInfosByDeveloperName().get('PEO').getRecordTypeId();
+    private static final Id peoRecordTypeId = NSP_GenericRecordType.getRecordTypeId('Case', 'PEO');
     private static final Id itaCqaRecordTypeId = NSP_GenericRecordType.getRecordTypeId('Case', NSP_ServiceConstants.NSP_ITA_CQA);
     private static final Id dolAuditsRecordTypeId = NSP_GenericRecordType.getRecordTypeId('Case', NSP_ServiceConstants.DO_AUDITS_RECORDTYPE);
     private static final Id wageClaimsRecordTypeId = NSP_GenericRecordType.getRecordTypeId('Case', NSP_ServiceConstants.WAGE_CLAIMS_RECORDTYPE);
@@ -83,7 +82,7 @@ public class NSP_CaseTriggerHelper {
             eachCase.NSP_SubCategory__c ==  NSP_ServiceConstants.CASE_SUB_CATEGORY_DOL_AUDITS ? dolAuditsRecordTypeId : eachCase.recordTypeId;
             eachCase.NSP_Opened_Date__c = system.today(); //DF-02760
             
-            eachCase.NSP_Case_Sub_Status__c = (eachcase.recordTypeId == PEO_RECORDTYPEID && eachCase.Status == NSP_ServiceConstants.CLOSED_STATUS) ? NSP_ServiceConstants.RESOLVED : eachCase.NSP_Case_Sub_Status__c;
+            eachCase.NSP_Case_Sub_Status__c = (eachcase.recordTypeId == NSP_CaseTriggerHelper.peoRecordTypeId && eachCase.Status == NSP_ServiceConstants.CLOSED_STATUS) ? NSP_ServiceConstants.RESOLVED : eachCase.NSP_Case_Sub_Status__c;
             
             if(isCorpEE(eachCase, null)){
                 acrAccIdSet.add(eachCase.accountId);
@@ -107,19 +106,24 @@ public class NSP_CaseTriggerHelper {
             }
 
             // Added as part of usrsty-247918
-            if(eachcase.RecordTypeId == PEO_RECORDTYPEID && eachcase.NSP_Assigned_Queue__c == RET_NSPHardship_QUEUE){
+            if ( eachcase.RecordTypeId == NSP_CaseTriggerHelper.peoRecordTypeId
+                && eachcase.NSP_Assigned_Queue__c == RET_NSPHardship_QUEUE
+                )
+            {
                 if(String.isBlank(eachcase.NSP_Category__c) && String.isBlank(eachcase.NSP_SubCategory__c)){
                     eachcase.NSp_Category__c = 'Retirement Svc-Processing';
                     eachcase.NSP_SubCategory__c = 'Hardship';
                 }
             }
-            if(eachcase.RecordTypeId == PEO_RECORDTYPEID && eachcase.NSP_Assigned_Queue__c == Payroll_COE_QUEUE){
+            if ( eachcase.RecordTypeId == NSP_CaseTriggerHelper.peoRecordTypeId
+                && eachcase.NSP_Assigned_Queue__c == 'Payroll COE'
+                )
+            {
                 if(String.isBlank(eachcase.NSP_Category__c) && String.isBlank(eachcase.NSP_SubCategory__c)){
                     eachcase.NSp_Category__c = 'PR COE Escalation';
                     eachcase.NSP_SubCategory__c = 'Nexus';
                 }
             }
-            
             if(String.isNotBlank(eachcase.NSP_Category__c) && String.isNotBlank(eachcase.NSP_SubCategory__c)){
                 categorySet.add(eachCase.NSP_Category__c);
                 subCategorySet.add(eachCase.NSP_SubCategory__c);
@@ -541,8 +545,11 @@ Date        : 30/09/2021
 * @Story : Bug 237020
 * @return Boolean                         
 */ 
-    private Boolean isCorpEE(Case eachCase, Case oldCase){
-        return String.isNotBlank(eachCase.contactId) && eachCase.recordTypeId == PEO_RECORDTYPEID;            
+    private Boolean isCorpEE( Case eachCase , Case oldCase ) {
+        return (
+            String.isNotBlank( eachCase.contactId )
+            && ( eachCase.recordTypeId == NSP_CaseTriggerHelper.peoRecordTypeId )
+        );
     }
 
     /**
@@ -698,14 +705,17 @@ Date        : 30/09/2021
                 
                 /* Added as part of STY-03293. If confidential Checkbox is true and Category/Sub Categpry is not blank share the records based on public group*/
                 /* As part of STY-04427 opening up sharing access for BPS record type */
-                if(oCase.NSP_Confidential__c == true && String.isNotBlank(oCase.NSP_Category__c) &&
-                   oCase.NSP_Private__c == false &&
-                   String.isNotBlank(oCase.NSP_SubCategory__c) &&
-                   (oCase.recordTypeId == PEO_RECORDTYPEID || oCase.recordTypeId == bpsRecordTypeId)){                   
-                       casesToShare.add(oCase);
-                       categorySet.add(oCase.NSP_Category__c);
-                       subCategorySet.add(oCase.NSP_SubCategory__c);
-                   }
+                if ( oCase.NSP_Confidential__c == true
+                    && String.isNotBlank(oCase.NSP_Category__c)
+                    && oCase.NSP_Private__c == false
+                    && String.isNotBlank(oCase.NSP_SubCategory__c)
+                    && ( oCase.recordTypeId == NSP_CaseTriggerHelper.peoRecordTypeId || oCase.recordTypeId == bpsRecordTypeId )
+                    )
+                {
+                    casesToShare.add(oCase);
+                    categorySet.add(oCase.NSP_Category__c);
+                    subCategorySet.add(oCase.NSP_SubCategory__c);
+                }
                 /* Added as part of STY-03293 */      
                 
                 /*STY-02804 If private check box is checked then the case will be shared with Private Section 125 Visibility public group */
@@ -717,7 +727,7 @@ Date        : 30/09/2021
                 /*STY-02804  ends*/
                 
                 // Added as part of STY-03256
-                if ( ( oCase.recordTypeId == PEO_RECORDTYPEID )
+                if ( ( oCase.recordTypeId == NSP_CaseTriggerHelper.peoRecordTypeId )
                     && ( oCase.OwnerId == healthAndProductsGrpId )
                     && String.isNotBlank( oCase.Subject )
                     && oCase.Subject.startsWith( NSP_ServiceConstants.SUBJECT7 )
@@ -928,7 +938,10 @@ Date        : 30/09/2021
 * when ever owner is changing, recalculating the sharing rules as part of DF-03733
 * As part of STY-04427 opening up sharing access for BPS record type 
 * */
-            if((eachCase.recordTypeId == PEO_RECORDTYPEID || eachCase.recordTypeId == bpsRecordTypeId) && eachcase.NSP_Private__c == false){
+            if ( ( eachCase.recordTypeId == NSP_CaseTriggerHelper.peoRecordTypeId || eachCase.recordTypeId == bpsRecordTypeId )
+                && eachcase.NSP_Private__c == false
+                )
+            {
                 
                 if((caseOldMap.get(eachCase.Id).NSP_Confidential__c != eachCase.NSP_Confidential__c && 
                     eachCase.NSP_Confidential__c == true && 
