@@ -6,6 +6,7 @@ public class NSP_CaseTriggerHelper {
     public static string CATEGORY_VALUE   = 'CSS';
     public static string CSS_ROLE         = 'Customer Success Specialist';
     public static string RET_NSPHardship_QUEUE = 'RET - NSPHardship';
+    public static string Payroll_COE_QUEUE = 'Payroll COE';
     public final String BPSRECORDTYPE = 'BPS';
     public final String TASKPRIORITY = 'Medium';
     public final String TASKSTATUS = 'Completed';
@@ -110,6 +111,12 @@ public class NSP_CaseTriggerHelper {
                 if(String.isBlank(eachcase.NSP_Category__c) && String.isBlank(eachcase.NSP_SubCategory__c)){
                     eachcase.NSp_Category__c = 'Retirement Svc-Processing';
                     eachcase.NSP_SubCategory__c = 'Hardship';
+                }
+            }
+            if(eachcase.RecordTypeId == PEO_RECORDTYPEID && eachcase.NSP_Assigned_Queue__c == Payroll_COE_QUEUE){
+                if(String.isBlank(eachcase.NSP_Category__c) && String.isBlank(eachcase.NSP_SubCategory__c)){
+                    eachcase.NSp_Category__c = 'PR COE Escalation';
+                    eachcase.NSP_SubCategory__c = 'Nexus';
                 }
             }
             
