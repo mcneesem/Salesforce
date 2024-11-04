@@ -98,13 +98,15 @@ public class NSP_MMImplProfile_ServHelpUpdate {
      private static final String ALLOWNCE_EXPENSE_MM= 'NSP_Allowance_Expenses';
      private static final String DEPENDENT_CARE_MM= 'NSP_Dependent_Care';
      private static final String HEALTH_CARE_MM= 'NSP_Health_Care';
-     private static final String OTHER_PRETAX_TYPE_MM= 'NSP_Other_Pretax';
      private static final String SEVERANCEAGREEMENT_MM= 'NSP_SeverenceAgreement';
      private static final String JOBDESCRIPTION_MM= 'NSP_JobDescriptiom';
      private static final String HANDBOOK_DEVELOPMENT_MM= 'NSP_HandbookDevelopment';
      private static final String COBRA_GUIDELINES_MM= 'NSP_COBRAGuidelines';
      private static final String COBRA_TEAM_MM= 'NSP_COBRATeam';
      private static final String COBRA_PACKETS_MM= 'NSP_COBRAPackets';
+     private static final String CSP_MEDICAL_MM ='CSP_Medical';
+     private static final String CSP_DENTAL_MM ='CSP_Dental';
+     private static final String CSP_VISION_MM ='CSP_Vision';
      
  
      private static Id ipFSORecordTypeId = SObjectType.Implementation_Profile__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.FSOProfile).getRecordTypeId();
@@ -118,9 +120,9 @@ public class NSP_MMImplProfile_ServHelpUpdate {
          this.automationsToExecute.addAll(new List<String>{PAYROLL_REGISTER_MM,SECTION_QUESTIONNAIRE_MM,FEIN_DOCUMENT_COLLECTED_MM,GENERAL_LIABILITY_MM,
              PTO_MM,EEO_FILING_MM,SEASONAL_EE_MM,EEO_ON_LEAVE_MM,LOA_TYPES_MM,LOA_GREATER_THAN_MM,SALARY_CONT_MM,SPECIFIC_LEAVE_MM,POST_TAX_MM,TIMESTAR_MM,TIMESTAR_TA_EMP_MM,
              GARNISHMENT_MM,TAX_LEVIES_MM,PRE_TAX_MM,PRE_TAX_DEDUCT_MM,POST_TAX_SPONSPOREDPLAN_MM,POST_TAX_EMPSETUP_MM,ALLOWNCE_EXPENSE_MM,RETIRE_PLAN_MM,HSA_MM,HSA_OPTUM_MM,
-             HSA_OPTUM_NO_MM,COBRA_MM,DEDUCIBLE_CARRYOVER_MM,EE_MEDICAL_MM,WAITING_MM,DEPENDENT_CARE_MM,HEALTH_CARE_MM,OTHER_PRETAX_TYPE_MM,POST_DEDUCTION_MM,RETIRE_PLANORK_MM,
+             HSA_OPTUM_NO_MM,COBRA_MM,DEDUCIBLE_CARRYOVER_MM,EE_MEDICAL_MM,WAITING_MM,DEPENDENT_CARE_MM,HEALTH_CARE_MM,POST_DEDUCTION_MM,RETIRE_PLANORK_MM,
              NSP401K_MM,HANDBOOK_DEVELOPMENT_MM,JOBDESCRIPTION_MM,SEVERANCEAGREEMENT_MM,SUBSTANCE_ABUSE_MM,STANDARD_MM,BACKGROUND_MM,DRUG_SCREENING_MM,
-             SCREENING_BPS_MM,PERFORMANCE_BPS_MM,ORGANIZATIONAL_BPS_MM,INSURANCE_BPS_MM,RECRUITING_BPS_MM,CERTIFY_BPS_MM});
+             SCREENING_BPS_MM,PERFORMANCE_BPS_MM,ORGANIZATIONAL_BPS_MM,INSURANCE_BPS_MM,RECRUITING_BPS_MM,CERTIFY_BPS_MM,CSP_MEDICAL_MM,CSP_DENTAL_MM,CSP_VISION_MM});
      }
   
      public NSP_MMImplProfile_ServHelpUpdate(Id ipRecord, String automationName){
@@ -268,8 +270,14 @@ public class NSP_MMImplProfile_ServHelpUpdate {
             if(automationsToExecute.contains(HEALTH_CARE_MM)){
                 checkForHealthCare(ipRec, existingRec);
             }
-            if(automationsToExecute.contains(OTHER_PRETAX_TYPE_MM)){
-                checkForOtherPreTaxType(ipRec, existingRec);
+            if(automationsToExecute.contains(CSP_MEDICAL_MM)){
+                checkForMedical(ipRec, existingRec);
+            }
+            if(automationsToExecute.contains(CSP_DENTAL_MM)){
+                checkForDental(ipRec, existingRec);
+            }
+            if(automationsToExecute.contains(CSP_VISION_MM)){
+                checkForVision(ipRec, existingRec);
             }
             if(automationsToExecute.contains(POST_DEDUCTION_MM)){
                 checkforPostTaxDeductions(ipRec, existingRec);
@@ -404,8 +412,14 @@ public class NSP_MMImplProfile_ServHelpUpdate {
          if(ipRecordsByAutomation.containsKey(HEALTH_CARE_MM)){
             createProjectTaskForHealthCare();
          }
-         if(ipRecordsByAutomation.containsKey(OTHER_PRETAX_TYPE_MM)){
-            createProjectTaskForOtherPretax();
+         if(ipRecordsByAutomation.containsKey(CSP_MEDICAL_MM)){
+            createProjectTaskForMedical();
+         }
+         if(ipRecordsByAutomation.containsKey(CSP_DENTAL_MM)){
+            createProjectTaskForDental();
+         }
+         if(ipRecordsByAutomation.containsKey(CSP_VISION_MM)){
+            createProjectTaskForVision();
          }
          if(ipRecordsByAutomation.containsKey(RETIRE_PLANORK_MM)){
             createProjectTaskForRetirementPlans();
@@ -2368,51 +2382,179 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                //check for existing Automation record and store the new Automation records
                recToInsert.addAll(getnewAutomationListtoInsert(ipAutomationRecords));
     }
-
-    public void createProjectTaskForOtherPretax(){
-        //and Health Care Flexible Spend Account is checked 
+    
+    public void createProjectTaskForMedical() {
+        // If Reporting: Select all that apply
         List<pse__Project_Task__c> projectTaskList = new List<pse__Project_Task__c>();
         List<NSP_Implementation_Profile_Automation__c> ipAutomationRecords = new List<NSP_Implementation_Profile_Automation__c>();
-       
-        NSP_ProjectTask_Automation__mdt pta =  NSP_ProjectTask_Automation__mdt.getInstance(OTHER_PRETAX_TYPE_MM);
-        NSP_Implementation_Automations__mdt ipa = NSP_Implementation_Automations__mdt.getInstance(OTHER_PRETAX_TYPE_MM);
-
         
-        for(Id ipRecId : ipRecordsByAutomation.get(OTHER_PRETAX_TYPE_MM)){
-           Implementation_Profile__c ipRec = newIPs.get(ipRecId);
-           if(isRerun || ipRec.NSP_Form_Completed__c){
-                pse__Proj__c proj = (pse__Proj__c) data.get(PROJECT_IDENTIFIER).get(ipRec.NSP_Project__c);
-                Id milestoneId;
-                                                
-                milestoneId=getMilestoneId(proj.pse__Milestones__r,pta.NSP_Milestone__c, proj);
-                String milestoneKey = proj.Id + '~' + pta.NSP_Milestone__c;
-
-                if(milestoneId == null && !mileStonesToInsert.containsKey(milestoneKey)){
-                    pse__Milestone__c eachMilestone = new pse__Milestone__c(Name=pta.NSP_Milestone__c, RecordTypeId=milestonePEORecordtypeId, pse__Project__c=proj.Id, pse__Target_Date__c=proj.pse__End_Date__c);
-                    mileStonesToInsert.put(milestoneKey, eachMilestone);
+        NSP_ProjectTask_Automation__mdt pta =  NSP_ProjectTask_Automation__mdt.getInstance(CSP_MEDICAL_MM);
+        NSP_Implementation_Automations__mdt ipa = NSP_Implementation_Automations__mdt.getInstance(CSP_MEDICAL_MM);
+        
+        if(ipRecordsByAutomation != null){
+            for(Id ipRecId : ipRecordsByAutomation.get(CSP_MEDICAL_MM)){
+                if(newIPs != null) {
+                    Implementation_Profile__c ipRec = newIPs.get(ipRecId);
+                    if(ipRec != null) {
+                        if((isRerun || ipRec.NSP_Form_Completed__c)){
+                            pse__Proj__c proj = (pse__Proj__c) data.get(PROJECT_IDENTIFIER).get(ipRec.NSP_Project__c);
+                            if(proj != null){
+                                Id milestoneId;
+                                milestoneId=getMilestoneId(proj.pse__Milestones__r,pta.NSP_Milestone__c, proj);
+                                String milestoneKey = proj.Id + '~' + pta.NSP_Milestone__c;
+                                if(milestoneId == null && !mileStonesToInsert.containsKey(milestoneKey)){
+                                    pse__Milestone__c eachMilestone = new pse__Milestone__c(
+                                        Name=pta.NSP_Milestone__c, 
+                                        RecordTypeId=milestonePEORecordtypeId, 
+                                        pse__Project__c=proj.Id, 
+                                        pse__Target_Date__c=proj.pse__End_Date__c);
+                                    mileStonesToInsert.put(milestoneKey, eachMilestone);
+                                }
+                                pse__Project_Task__c eachProjecttask = createProjectTaskfromIP(proj,  pta.NSP_Category__c, ipRecId,milestoneKey);
+                                eachProjecttask.NSP_Sub_Category__c=pta.NSP_Sub_Category__c;
+                                eachProjecttask.Name=pta.NSP_Task_Name__c;
+                                eachProjecttask.pse__Order__c=147;
+                                eachProjectTask.NSP_Visible_to_Client__c=FALSE;
+                                Implementation_Profile__c ipwithValue=(Implementation_Profile__c) data.get(IMPL_PROFILE_IDENTIFIER).get(ipRecId);
+                                if(ipwithValue != null){
+                                    if(ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__r!=null && ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__r.pse__Salesforce_User__c!=null){
+                                        eachProjecttask.OwnerId=ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__r.pse__Salesforce_User__c;
+                                    }
+                                    eachProjecttask.pse__Long_Description__c = System.label.CSP_Medical;
+                                    eachProjecttask.pse__Milestone__c=milestoneId;
+                                    projectTaskList.add(eachProjecttask);
+                                    ipAutomationRecords.add(
+                                        createIPAutomation(
+                                            ipRec, 
+                                            ipa.NSP_Automation_Name__c, 
+                                            ipa.NSP_Method_Name__c,ipa.NSP_Section__c)); 
+                                }
+                            }
+                        }
+                    }
                 }
-                                                
-                    pse__Project_Task__c eachProjecttask = createProjectTaskfromIP(proj, pta.NSP_Category__c, ipRecId,milestoneKey);
-                                                        eachProjecttask.NSP_Sub_Category__c=pta.NSP_Sub_Category__c;
-                                                        eachProjecttask.Name=pta.NSP_Task_Name__c;
-                                                        eachProjecttask.pse__Order__c=148;
-                                                        eachProjecttask.Task_Order__c=148;
-                                                        Implementation_Profile__c ipwithValue=(Implementation_Profile__c) data.get(IMPL_PROFILE_IDENTIFIER).get(ipRecId);
-                                                        if(ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__c!=null && ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__r.pse__Salesforce_User__c!=null){
-                                                            eachProjecttask.OwnerId=ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__r.pse__Salesforce_User__c;
-                                                        }
-                                                        
-                                                        eachProjecttask.pse__Milestone__c=milestoneId;
+            }
+        }
+        //check for existing project task and store the new tasks
+        recToInsert.addAll(getnewTaskstoInsert(projectTaskList));
+        //check for existing Automation record and store the new Automation records
+        recToInsert.addAll(getnewAutomationListtoInsert(ipAutomationRecords)); 
+    }
+    
+    public void createProjectTaskForDental() {
+        // If Reporting: Select all that apply
+        List<pse__Project_Task__c> projectTaskList = new List<pse__Project_Task__c>();
+        List<NSP_Implementation_Profile_Automation__c> ipAutomationRecords = new List<NSP_Implementation_Profile_Automation__c>();
         
-                                                        projectTaskList.add(eachProjecttask); 
-                    ipAutomationRecords.add(createIPAutomation(ipRec, ipa.NSP_Automation_Name__c, ipa.NSP_Method_Name__c,ipa.NSP_Section__c));
-           }  
-                                         
-         }
-               //check for existing project task and store the new tasks
-               recToInsert.addAll(getnewTaskstoInsert(projectTaskList));
-               //check for existing Automation record and store the new Automation records
-               recToInsert.addAll(getnewAutomationListtoInsert(ipAutomationRecords));
+        NSP_ProjectTask_Automation__mdt pta =  NSP_ProjectTask_Automation__mdt.getInstance(CSP_DENTAL_MM);
+        NSP_Implementation_Automations__mdt ipa = NSP_Implementation_Automations__mdt.getInstance(CSP_DENTAL_MM);
+        
+        if(ipRecordsByAutomation != null){
+            for(Id ipRecId : ipRecordsByAutomation.get(CSP_DENTAL_MM)){
+                if(newIPs != null) {
+                    Implementation_Profile__c ipRec = newIPs.get(ipRecId);
+                    if(ipRec != null) {
+                        if((isRerun || ipRec.NSP_Form_Completed__c)){
+                            pse__Proj__c proj = (pse__Proj__c) data.get(PROJECT_IDENTIFIER).get(ipRec.NSP_Project__c);
+                            if(proj != null){
+                                Id milestoneId;
+                                milestoneId=getMilestoneId(proj.pse__Milestones__r,pta.NSP_Milestone__c, proj);
+                                String milestoneKey = proj.Id + '~' + pta.NSP_Milestone__c;
+                                if(milestoneId == null && !mileStonesToInsert.containsKey(milestoneKey)){
+                                    pse__Milestone__c eachMilestone = new pse__Milestone__c(
+                                        Name=pta.NSP_Milestone__c, 
+                                        RecordTypeId=milestonePEORecordtypeId, 
+                                        pse__Project__c=proj.Id, 
+                                        pse__Target_Date__c=proj.pse__End_Date__c);
+                                    mileStonesToInsert.put(milestoneKey, eachMilestone);
+                                }
+                                pse__Project_Task__c eachProjecttask = createProjectTaskfromIP(proj,  pta.NSP_Category__c, ipRecId,milestoneKey);
+                                eachProjecttask.NSP_Sub_Category__c=pta.NSP_Sub_Category__c;
+                                eachProjecttask.Name=pta.NSP_Task_Name__c;
+                                eachProjecttask.pse__Order__c=148;
+                                eachProjectTask.NSP_Visible_to_Client__c=FALSE;
+                                Implementation_Profile__c ipwithValue=(Implementation_Profile__c) data.get(IMPL_PROFILE_IDENTIFIER).get(ipRecId);
+                                if(ipwithValue != null){
+                                    if(ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__r!=null && ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__r.pse__Salesforce_User__c!=null){
+                                        eachProjecttask.OwnerId=ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__r.pse__Salesforce_User__c;
+                                    }
+                                    eachProjecttask.pse__Long_Description__c = System.label.CSP_Dental;
+                                    eachProjecttask.pse__Milestone__c=milestoneId;
+                                    projectTaskList.add(eachProjecttask);
+                                    ipAutomationRecords.add(
+                                        createIPAutomation(
+                                            ipRec, 
+                                            ipa.NSP_Automation_Name__c, 
+                                            ipa.NSP_Method_Name__c,ipa.NSP_Section__c)); 
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        //check for existing project task and store the new tasks
+        recToInsert.addAll(getnewTaskstoInsert(projectTaskList));
+        //check for existing Automation record and store the new Automation records
+        recToInsert.addAll(getnewAutomationListtoInsert(ipAutomationRecords)); 
+    }
+    
+    public void createProjectTaskForVision() {
+        // If Reporting: Select all that apply
+        List<pse__Project_Task__c> projectTaskList = new List<pse__Project_Task__c>();
+        List<NSP_Implementation_Profile_Automation__c> ipAutomationRecords = new List<NSP_Implementation_Profile_Automation__c>();
+        
+        NSP_ProjectTask_Automation__mdt pta =  NSP_ProjectTask_Automation__mdt.getInstance(CSP_VISION_MM);
+        NSP_Implementation_Automations__mdt ipa = NSP_Implementation_Automations__mdt.getInstance(CSP_VISION_MM);
+        
+        if(ipRecordsByAutomation != null){
+            for(Id ipRecId : ipRecordsByAutomation.get(CSP_VISION_MM)){
+                if(newIPs != null) {
+                    Implementation_Profile__c ipRec = newIPs.get(ipRecId);
+                    if(ipRec != null) {
+                        if((isRerun || ipRec.NSP_Form_Completed__c)){
+                            pse__Proj__c proj = (pse__Proj__c) data.get(PROJECT_IDENTIFIER).get(ipRec.NSP_Project__c);
+                            if(proj != null){
+                                Id milestoneId;
+                                milestoneId=getMilestoneId(proj.pse__Milestones__r,pta.NSP_Milestone__c, proj);
+                                String milestoneKey = proj.Id + '~' + pta.NSP_Milestone__c;
+                                if(milestoneId == null && !mileStonesToInsert.containsKey(milestoneKey)){
+                                    pse__Milestone__c eachMilestone = new pse__Milestone__c(
+                                        Name=pta.NSP_Milestone__c, 
+                                        RecordTypeId=milestonePEORecordtypeId, 
+                                        pse__Project__c=proj.Id, 
+                                        pse__Target_Date__c=proj.pse__End_Date__c);
+                                    mileStonesToInsert.put(milestoneKey, eachMilestone);
+                                }
+                                pse__Project_Task__c eachProjecttask = createProjectTaskfromIP(proj,  pta.NSP_Category__c, ipRecId,milestoneKey);
+                                eachProjecttask.NSP_Sub_Category__c=pta.NSP_Sub_Category__c;
+                                eachProjecttask.Name=pta.NSP_Task_Name__c;
+                                eachProjecttask.pse__Order__c=148;
+                                eachProjectTask.NSP_Visible_to_Client__c=FALSE;
+                                Implementation_Profile__c ipwithValue=(Implementation_Profile__c) data.get(IMPL_PROFILE_IDENTIFIER).get(ipRecId);
+                                if(ipwithValue != null){
+                                    if(ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__r!=null && ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__r.pse__Salesforce_User__c!=null){
+                                        eachProjecttask.OwnerId=ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__r.pse__Salesforce_User__c;
+                                    }
+                                    eachProjecttask.pse__Long_Description__c = System.label.CSP_Vision;
+                                    eachProjecttask.pse__Milestone__c=milestoneId;
+                                    projectTaskList.add(eachProjecttask);
+                                    ipAutomationRecords.add(
+                                        createIPAutomation(
+                                            ipRec, 
+                                            ipa.NSP_Automation_Name__c, 
+                                            ipa.NSP_Method_Name__c,ipa.NSP_Section__c)); 
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        //check for existing project task and store the new tasks
+        recToInsert.addAll(getnewTaskstoInsert(projectTaskList));
+        //check for existing Automation record and store the new Automation records
+        recToInsert.addAll(getnewAutomationListtoInsert(ipAutomationRecords)); 
     }
      
     public void createProjectTaskForPostDeductions(){
@@ -3919,22 +4061,69 @@ public class NSP_MMImplProfile_ServHelpUpdate {
              }
          }   
      }
- 
-     private void checkForOtherPreTaxType(Implementation_Profile__c newRec, Implementation_Profile__c existingRec){
-         
-         if( newRec.RecordTypeId == ipMMRecordTypeId &&
-            newRec.NSP_Client_Sponsored_Plan__c == NSP_ServiceConstants.YES && newRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c!=null && 
-            ((newRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c.contains(NSP_ServiceConstants.MEDICAL) && newRec.NSP_Medical_Ongoing_CSP_cafeteria_Doc__c == NSP_ServiceConstants.REQUESTED)
-            ||(newRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c.contains(NSP_ServiceConstants.DENTAL) && newRec.NSP_Dental_Ongoing_CSP_cafeteria_Doc__c == NSP_ServiceConstants.REQUESTED)
-            ||(newRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c.contains(NSP_ServiceConstants.VISION) && newRec.NSP_Vision_Ongoing_CSP_cafeteria_Doc__c == NSP_ServiceConstants.REQUESTED))){
-      
- 
-             if(existingRec == null || newRec.NSP_Form_Completed__c  ||
-                newRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c != existingRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c){
-                  updateEligibleRecordsMap(ipRecordsByAutomation, newRec.Id, OTHER_PRETAX_TYPE_MM);
-             }
-         }   
-     }
+    
+    private void checkForMedical(Implementation_Profile__c newRec, Implementation_Profile__c existingRec){
+        if ( newRec != null ) {
+            if( newRec.RecordTypeId == ipMMRecordTypeId 
+               && newRec.NSP_Client_Sponsored_Plan__c == NSP_ServiceConstants.YES 
+               && newRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c!=null 
+               && newRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c.contains(NSP_ServiceConstants.MEDICAL) 
+               && newRec.NSP_Medical_Ongoing_CSP_cafeteria_Doc__c == NSP_ServiceConstants.REQUESTED 
+              )
+              
+            {
+                if ( existingRec == null
+                    || newRec.NSP_Form_Completed__c
+                    || newRec.NSP_Medical_Ongoing_CSP_cafeteria_Doc__c != existingRec.NSP_Medical_Ongoing_CSP_cafeteria_Doc__c
+                   )
+                {
+                    updateEligibleRecordsMap(ipRecordsByAutomation, newRec.Id, CSP_MEDICAL_MM);
+                }
+            }
+        }
+    }
+    
+    private void checkForDental(Implementation_Profile__c newRec, Implementation_Profile__c existingRec){
+        if ( newRec != null ) {
+            if( newRec.RecordTypeId == ipMMRecordTypeId 
+               && newRec.NSP_Client_Sponsored_Plan__c == NSP_ServiceConstants.YES 
+               && newRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c!=null 
+               && newRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c.contains(NSP_ServiceConstants.DENTAL) 
+               && newRec.NSP_Dental_Ongoing_CSP_cafeteria_Doc__c == NSP_ServiceConstants.REQUESTED 
+              )
+              
+            {
+                if ( existingRec == null
+                    || newRec.NSP_Form_Completed__c
+                    || newRec.NSP_Dental_Ongoing_CSP_cafeteria_Doc__c != existingRec.NSP_Dental_Ongoing_CSP_cafeteria_Doc__c
+                   )
+                {
+                    updateEligibleRecordsMap(ipRecordsByAutomation, newRec.Id, CSP_DENTAL_MM);
+                }
+            }
+        }
+    }
+    
+    private void checkForVision(Implementation_Profile__c newRec, Implementation_Profile__c existingRec){
+        if ( newRec != null ) {
+            if( newRec.RecordTypeId == ipMMRecordTypeId 
+               && newRec.NSP_Client_Sponsored_Plan__c == NSP_ServiceConstants.YES 
+               && newRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c!=null 
+               && newRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c.contains(NSP_ServiceConstants.VISION) 
+               && newRec.NSP_Vision_Ongoing_CSP_cafeteria_Doc__c == NSP_ServiceConstants.REQUESTED 
+              )
+              
+            {
+                if ( existingRec == null
+                    || newRec.NSP_Form_Completed__c
+                    || newRec.NSP_Vision_Ongoing_CSP_cafeteria_Doc__c != existingRec.NSP_Vision_Ongoing_CSP_cafeteria_Doc__c
+                   )
+                {
+                    updateEligibleRecordsMap(ipRecordsByAutomation, newRec.Id, CSP_VISION_MM);
+                }
+            }
+        }
+    }
  
      private void checkForHandbookDevelopment(Implementation_Profile__c newRec, Implementation_Profile__c existingRec){
          

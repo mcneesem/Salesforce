@@ -55,7 +55,11 @@ public class NSP_MMImplProfile_UpdateTest {
        oProject1.RecordTypeId = projectPEORecordTypeId;
        projList.add(oProject1);
        database.insert(projList);
-        
+       
+        /*pse__Milestone__c milestone = (pse__Milestone__c)NSP_TestExtendedDataFactory.createSObject(new pse__Milestone__c(), 'NSP_TestDataFactory.MileStoneDefaults', false);
+        milestone.pse__Project__c = oProject1.id;
+        milestone.Name = 'Test';
+        insert milestone;*/
        /* pse__Proj__c oProject2 = (pse__Proj__c)NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c(), 'NSP_TestDataFactory.ProjectDefaults', false);
        oProject2.Name='test project';
        oProject2.pse__Start_Date__c = Date.Today();
@@ -129,7 +133,7 @@ public class NSP_MMImplProfile_UpdateTest {
          ip.NSP_Dental_Ongoing_CSP_cafeteria_Doc__c= NSP_ServiceConstants.REQUESTED;
          ip.NSP_Vision_Ongoing_CSP_cafeteria_Doc__c= NSP_ServiceConstants.REQUESTED;
          ip.NSP_Form_Completed__c=true;
-        
+         ip.NSP_HSA_Ongoing_CSP_cafeteria_document__c = NSP_ServiceConstants.REQUESTED;
         Test.startTest();
         //update ip record for the above fields
         update  ip;
@@ -160,6 +164,7 @@ public class NSP_MMImplProfile_UpdateTest {
         ip.NSP_Payroll_Project_Manager__c=cont.id;
         ip.NSP_Payroll_Specialist__c=cont.id;
         ip.NSP_Form_Completed__c=true;
+        ip.NSP_Sr_Onboarding_Benefit_Rep__c = cont.id;
         Test.startTest();
         //update ip record for the above fields
         update  ip;
@@ -194,6 +199,7 @@ public class NSP_MMImplProfile_UpdateTest {
         ip.NSP_Payroll_Project_Manager__c=cont.id;
         ip.NSP_Payroll_Specialist__c=cont.id;
         ip.NSP_Form_Completed__c = true;
+        ip.NSP_Sr_Onboarding_Benefit_Rep__c = cont.id;
         Test.startTest();
         //update ip record for the above fields
         update  ip;
