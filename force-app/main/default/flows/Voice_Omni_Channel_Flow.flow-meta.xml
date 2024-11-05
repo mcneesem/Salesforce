@@ -21,7 +21,6 @@
             </value>
         </inputParameters>
         <nameSegment>addScreenPop</nameSegment>
-        <offset>0</offset>
         <storeOutputAutomatically>true</storeOutputAutomatically>
         <versionSegment>1</versionSegment>
     </actionCalls>
@@ -119,7 +118,6 @@
             </value>
         </inputParameters>
         <nameSegment>routeWork</nameSegment>
-        <offset>0</offset>
         <versionSegment>1</versionSegment>
     </actionCalls>
     <apiVersion>60.0</apiVersion>
