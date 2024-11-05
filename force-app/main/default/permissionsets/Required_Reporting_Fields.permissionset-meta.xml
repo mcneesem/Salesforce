@@ -278,6 +278,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Lead.Range_of_Estimated_Number_of_Employees__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Lead.accountBuyingStage6sense__c</field>
         <readable>true</readable>
     </fieldPermissions>
