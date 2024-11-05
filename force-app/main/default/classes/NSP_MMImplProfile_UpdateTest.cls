@@ -56,10 +56,6 @@ public class NSP_MMImplProfile_UpdateTest {
        projList.add(oProject1);
        database.insert(projList);
        
-        /*pse__Milestone__c milestone = (pse__Milestone__c)NSP_TestExtendedDataFactory.createSObject(new pse__Milestone__c(), 'NSP_TestDataFactory.MileStoneDefaults', false);
-        milestone.pse__Project__c = oProject1.id;
-        milestone.Name = 'Test';
-        insert milestone;*/
        /* pse__Proj__c oProject2 = (pse__Proj__c)NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c(), 'NSP_TestDataFactory.ProjectDefaults', false);
        oProject2.Name='test project';
        oProject2.pse__Start_Date__c = Date.Today();
