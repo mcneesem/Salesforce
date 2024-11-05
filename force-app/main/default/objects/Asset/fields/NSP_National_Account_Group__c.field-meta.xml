@@ -237,6 +237,21 @@
                 <default>false</default>
                 <label>LG</label>
             </value>
+            <value>
+                <fullName>76</fullName>
+                <default>false</default>
+                <label>Quest Family Office</label>
+            </value>
+            <value>
+                <fullName>77</fullName>
+                <default>false</default>
+                <label>Aliavia Ventures</label>
+            </value>
+            <value>
+                <fullName>78</fullName>
+                <default>false</default>
+                <label>Osuna Partners</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
