@@ -63,13 +63,15 @@ export default class Nsp_accountProfileRecordForm extends LightningElement {
       const disabled = isDisable == 'FALSE' ? false: true;
 
       if(Object.keys(FIELD_VISIBILITY_CONFIG).includes(fieldName)){
-
-        if(FIELD_VISIBILITY_CONFIG[fieldName]
-            && FIELD_VISIBILITY_CONFIG[fieldName][0]
-            && FIELD_VISIBILITY_CONFIG[fieldName][0].expValue
-            && FIELD_VISIBILITY_CONFIG[fieldName][0].expValue[0]
-            && relatedFieldValueMap[fieldName].value
-        ){
+        if ( FIELD_VISIBILITY_CONFIG[fieldName]
+          && FIELD_VISIBILITY_CONFIG[fieldName][0]
+          && FIELD_VISIBILITY_CONFIG[fieldName][0].expValue
+          && FIELD_VISIBILITY_CONFIG[fieldName][0].expValue[0] !== null
+          && FIELD_VISIBILITY_CONFIG[fieldName][0].expValue[0] !== undefined
+          && relatedFieldValueMap[fieldName].value !== null
+          && relatedFieldValueMap[fieldName].value !== undefined
+          )
+        {
           if( FIELD_VISIBILITY_CONFIG[fieldName][0].expValue[0].toString() !== relatedFieldValueMap[fieldName].value.toString()){
             //Adding dependent fields to configDependentFields to allow visibility.
             FIELD_VISIBILITY_CONFIG[fieldName].forEach(({ dependentFields }) => {
@@ -183,8 +185,10 @@ export default class Nsp_accountProfileRecordForm extends LightningElement {
       if(!(parentField in this.allFieldsValue)){
         addChilds=true;
       }else if(parentField in this.allFieldsValue){
-        if ( expValue[0]
-          && this.allFieldsValue[parentField].value
+        if ( expValue[0] !== null
+          && expValue[0] !== undefined
+          && this.allFieldsValue[parentField].value !== null
+          && this.allFieldsValue[parentField].value !== undefined
           && ( expValue[0].toString() !== this.allFieldsValue[parentField].value.toString() )
           )
         {
