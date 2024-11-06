@@ -2,10 +2,36 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>56.0</apiVersion>
     <assignments>
+        <name>Assign_Seasonal_From_Master_Contract</name>
+        <label>Assign Seasonal From Master Contract</label>
+        <locationX>50</locationX>
+        <locationY>803</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Seasonal_Pricing__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.SBQQ__MasterContract__r.SBQQ__Order__r.SBQQ__Quote__r.Seasonal_Pricing__c</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Assign_Seasonal_From_Master_Evergreen_Contract</name>
+        <label>Assign Seasonal From Master Evergreen Contract</label>
+        <locationX>314</locationX>
+        <locationY>803</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Seasonal_Pricing__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.SBQQ__MasterEvergreenContract__r.SBQQ__Order__r.SBQQ__Quote__r.Seasonal_Pricing__c</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
         <name>SetQuote_Type_as_Supplemental</name>
         <label>SetQuote Type as Supplemental</label>
-        <locationX>50</locationX>
-        <locationY>431</locationY>
+        <locationX>402</locationX>
+        <locationY>395</locationY>
         <assignmentItems>
             <assignToReference>$Record.SBQQ__Type__c</assignToReference>
             <operator>Assign</operator>
@@ -13,12 +39,79 @@
                 <stringValue>Supplemental</stringValue>
             </value>
         </assignmentItems>
+        <connector>
+            <targetReference>Check_Amendment_Quote</targetReference>
+        </connector>
     </assignments>
+    <decisions>
+        <description>Populate Seasonal Pricing field for Amendment quotes</description>
+        <name>Check_Amendment_Quote</name>
+        <label>Check Amendment Quote</label>
+        <locationX>534</locationX>
+        <locationY>587</locationY>
+        <defaultConnectorLabel>New Quote</defaultConnectorLabel>
+        <rules>
+            <name>Amendment_Scenario</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__Type__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>New Product</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Check_Master</targetReference>
+            </connector>
+            <label>Amendment Scenario</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Check if Contract exists on the quote</description>
+        <name>Check_Master</name>
+        <label>Check Contract</label>
+        <locationX>314</locationX>
+        <locationY>695</locationY>
+        <defaultConnectorLabel>Skip</defaultConnectorLabel>
+        <rules>
+            <name>Master_Contract</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Master_Contract</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_Seasonal_From_Master_Contract</targetReference>
+            </connector>
+            <label>Master Contract</label>
+        </rules>
+        <rules>
+            <name>Master_Evergreen_Contract</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__MasterEvergreenContract__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_Seasonal_From_Master_Evergreen_Contract</targetReference>
+            </connector>
+            <label>Master Evergreen Contract</label>
+        </rules>
+    </decisions>
     <decisions>
         <name>Check_Supplemental_Quote</name>
         <label>Check Supplemental Quote</label>
-        <locationX>182</locationX>
-        <locationY>311</locationY>
+        <locationX>534</locationX>
+        <locationY>287</locationY>
+        <defaultConnector>
+            <targetReference>Check_Amendment_Quote</targetReference>
+        </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>isSupplemental</name>
@@ -78,7 +171,7 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <start>
-        <locationX>56</locationX>
+        <locationX>408</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Check_Supplemental_Quote</targetReference>
@@ -87,5 +180,5 @@
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
         <triggerType>RecordBeforeSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
 </Flow>
