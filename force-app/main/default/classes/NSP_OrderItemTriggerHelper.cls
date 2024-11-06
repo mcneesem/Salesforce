@@ -73,7 +73,10 @@ public class NSP_OrderItemTriggerHelper {
         List<String> orderItemPartnerAccounts = new List<String>();
         for ( OrderItem eachItem : newMap.values() ) {
             Boolean seasonalApplied = True;
-            if(eachItem.Seasonal_Pricing__c == 'Not Applicable' || eachItem.Seasonal_Pricing__c == ''){
+            if ( ( eachItem.Seasonal_Pricing__c == 'Not Applicable' )
+                || String.isBlank( eachItem.Seasonal_Pricing__c )
+                )
+            {
                 seasonalApplied = False;
             }
             if ( eachItem.NSP_IsScholarshipFee_Applicable__c
