@@ -413,13 +413,13 @@ public class NSP_MMImplProfile_ServHelpUpdate {
             createProjectTaskForHealthCare();
          }
          if(ipRecordsByAutomation.containsKey(CSP_MEDICAL_MM)){
-            createProjectTaskForMedical();
+            createProjectTaskForPreTaxHealth(148, CSP_MEDICAL_MM);
          }
          if(ipRecordsByAutomation.containsKey(CSP_DENTAL_MM)){
-            createProjectTaskForDental();
+            createProjectTaskForPreTaxHealth(148, CSP_DENTAL_MM);
          }
          if(ipRecordsByAutomation.containsKey(CSP_VISION_MM)){
-            createProjectTaskForVision();
+            createProjectTaskForPreTaxHealth(148, CSP_VISION_MM);
          }
          if(ipRecordsByAutomation.containsKey(RETIRE_PLANORK_MM)){
             createProjectTaskForRetirementPlans();
@@ -2383,132 +2383,26 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                recToInsert.addAll(getnewAutomationListtoInsert(ipAutomationRecords));
     }
     
-    public void createProjectTaskForMedical() {
-        
-        List<pse__Project_Task__c> projectTaskList = new List<pse__Project_Task__c>();
-        List<NSP_Implementation_Profile_Automation__c> ipAutomationRecords = new List<NSP_Implementation_Profile_Automation__c>();
-        
-        NSP_ProjectTask_Automation__mdt pta =  NSP_ProjectTask_Automation__mdt.getInstance(CSP_MEDICAL_MM);
-        NSP_Implementation_Automations__mdt ipa = NSP_Implementation_Automations__mdt.getInstance(CSP_MEDICAL_MM);
-        
-        if(ipRecordsByAutomation != null){
-            for(Id ipRecId : ipRecordsByAutomation.get(CSP_MEDICAL_MM)){
-                if(newIPs != null) {
-                    Implementation_Profile__c ipRec = newIPs.get(ipRecId);
-                    if(ipRec != null) {
-                        if((isRerun || ipRec.NSP_Form_Completed__c)){
-                            pse__Proj__c proj = (pse__Proj__c) data.get(PROJECT_IDENTIFIER).get(ipRec.NSP_Project__c);
-                            if(proj != null){
-                                Id milestoneId;
-                                milestoneId=getMilestoneId(proj.pse__Milestones__r,pta.NSP_Milestone__c, proj);
-                                String milestoneKey = proj.Id + '~' + pta.NSP_Milestone__c;
-                                if(milestoneId == null && !mileStonesToInsert.containsKey(milestoneKey)){
-                                    pse__Milestone__c eachMilestone = new pse__Milestone__c(
-                                        Name=pta.NSP_Milestone__c, 
-                                        RecordTypeId=milestonePEORecordtypeId, 
-                                        pse__Project__c=proj.Id, 
-                                        pse__Target_Date__c=proj.pse__End_Date__c);
-                                    mileStonesToInsert.put(milestoneKey, eachMilestone);
-                                }
-                                pse__Project_Task__c eachProjecttask = createProjectTaskfromIP(proj,  pta.NSP_Category__c, ipRecId,milestoneKey);
-                                eachProjecttask.NSP_Sub_Category__c=pta.NSP_Sub_Category__c;
-                                eachProjecttask.Name=pta.NSP_Task_Name__c;
-                                eachProjecttask.pse__Order__c=147;
-                                eachProjectTask.NSP_Visible_to_Client__c=FALSE;
-                                Implementation_Profile__c ipwithValue=(Implementation_Profile__c) data.get(IMPL_PROFILE_IDENTIFIER).get(ipRecId);
-                                if(ipwithValue != null){
-                                    if(ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__r!=null && ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__r.pse__Salesforce_User__c!=null){
-                                        eachProjecttask.OwnerId=ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__r.pse__Salesforce_User__c;
-                                    }
-                                    eachProjecttask.pse__Long_Description__c = System.label.CSP_Medical;
-                                    eachProjecttask.pse__Milestone__c=milestoneId;
-                                    projectTaskList.add(eachProjecttask);
-                                    ipAutomationRecords.add(
-                                        createIPAutomation(
-                                            ipRec, 
-                                            ipa.NSP_Automation_Name__c, 
-                                            ipa.NSP_Method_Name__c,ipa.NSP_Section__c)); 
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        //check for existing project task and store the new tasks
-        recToInsert.addAll(getnewTaskstoInsert(projectTaskList));
-        //check for existing Automation record and store the new Automation records
-        recToInsert.addAll(getnewAutomationListtoInsert(ipAutomationRecords)); 
-    }
-    
-    public void createProjectTaskForDental() {
+    public void createProjectTaskForPreTaxHealth(Integer order, String automation) {
         // If Reporting: Select all that apply
         List<pse__Project_Task__c> projectTaskList = new List<pse__Project_Task__c>();
         List<NSP_Implementation_Profile_Automation__c> ipAutomationRecords = new List<NSP_Implementation_Profile_Automation__c>();
+        String longDescription = ''; 
         
-        NSP_ProjectTask_Automation__mdt pta =  NSP_ProjectTask_Automation__mdt.getInstance(CSP_DENTAL_MM);
-        NSP_Implementation_Automations__mdt ipa = NSP_Implementation_Automations__mdt.getInstance(CSP_DENTAL_MM);
-        
-        if(ipRecordsByAutomation != null){
-            for(Id ipRecId : ipRecordsByAutomation.get(CSP_DENTAL_MM)){
-                if(newIPs != null) {
-                    Implementation_Profile__c ipRec = newIPs.get(ipRecId);
-                    if(ipRec != null) {
-                        if((isRerun || ipRec.NSP_Form_Completed__c)){
-                            pse__Proj__c proj = (pse__Proj__c) data.get(PROJECT_IDENTIFIER).get(ipRec.NSP_Project__c);
-                            if(proj != null){
-                                Id milestoneId;
-                                milestoneId=getMilestoneId(proj.pse__Milestones__r,pta.NSP_Milestone__c, proj);
-                                String milestoneKey = proj.Id + '~' + pta.NSP_Milestone__c;
-                                if(milestoneId == null && !mileStonesToInsert.containsKey(milestoneKey)){
-                                    pse__Milestone__c eachMilestone = new pse__Milestone__c(
-                                        Name=pta.NSP_Milestone__c, 
-                                        RecordTypeId=milestonePEORecordtypeId, 
-                                        pse__Project__c=proj.Id, 
-                                        pse__Target_Date__c=proj.pse__End_Date__c);
-                                    mileStonesToInsert.put(milestoneKey, eachMilestone);
-                                }
-                                pse__Project_Task__c eachProjecttask = createProjectTaskfromIP(proj,  pta.NSP_Category__c, ipRecId,milestoneKey);
-                                eachProjecttask.NSP_Sub_Category__c=pta.NSP_Sub_Category__c;
-                                eachProjecttask.Name=pta.NSP_Task_Name__c;
-                                eachProjecttask.pse__Order__c=148;
-                                eachProjectTask.NSP_Visible_to_Client__c=FALSE;
-                                Implementation_Profile__c ipwithValue=(Implementation_Profile__c) data.get(IMPL_PROFILE_IDENTIFIER).get(ipRecId);
-                                if(ipwithValue != null){
-                                    if(ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__r!=null && ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__r.pse__Salesforce_User__c!=null){
-                                        eachProjecttask.OwnerId=ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__r.pse__Salesforce_User__c;
-                                    }
-                                    eachProjecttask.pse__Long_Description__c = System.label.CSP_Dental;
-                                    eachProjecttask.pse__Milestone__c=milestoneId;
-                                    projectTaskList.add(eachProjecttask);
-                                    ipAutomationRecords.add(
-                                        createIPAutomation(
-                                            ipRec, 
-                                            ipa.NSP_Automation_Name__c, 
-                                            ipa.NSP_Method_Name__c,ipa.NSP_Section__c)); 
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+        if(automation == CSP_MEDICAL_MM) {
+            longDescription = System.label.CSP_Medical;
         }
-        //check for existing project task and store the new tasks
-        recToInsert.addAll(getnewTaskstoInsert(projectTaskList));
-        //check for existing Automation record and store the new Automation records
-        recToInsert.addAll(getnewAutomationListtoInsert(ipAutomationRecords)); 
-    }
-    
-    public void createProjectTaskForVision() {
-        // If Reporting: Select all that apply
-        List<pse__Project_Task__c> projectTaskList = new List<pse__Project_Task__c>();
-        List<NSP_Implementation_Profile_Automation__c> ipAutomationRecords = new List<NSP_Implementation_Profile_Automation__c>();
-        
-        NSP_ProjectTask_Automation__mdt pta =  NSP_ProjectTask_Automation__mdt.getInstance(CSP_VISION_MM);
-        NSP_Implementation_Automations__mdt ipa = NSP_Implementation_Automations__mdt.getInstance(CSP_VISION_MM);
+        else if(automation == CSP_DENTAL_MM) {
+            longDescription = System.label.CSP_Dental;
+        }
+        else if(automation == CSP_VISION_MM) {
+            longDescription = System.label.CSP_Vision;
+        }
+        NSP_ProjectTask_Automation__mdt pta =  NSP_ProjectTask_Automation__mdt.getInstance(automation);
+        NSP_Implementation_Automations__mdt ipa = NSP_Implementation_Automations__mdt.getInstance(automation);
         
         if(ipRecordsByAutomation != null){
-            for(Id ipRecId : ipRecordsByAutomation.get(CSP_VISION_MM)){
+            for(Id ipRecId : ipRecordsByAutomation.get(automation)){
                 if(newIPs != null) {
                     Implementation_Profile__c ipRec = newIPs.get(ipRecId);
                     if(ipRec != null) {
@@ -2529,14 +2423,16 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                 pse__Project_Task__c eachProjecttask = createProjectTaskfromIP(proj,  pta.NSP_Category__c, ipRecId,milestoneKey);
                                 eachProjecttask.NSP_Sub_Category__c=pta.NSP_Sub_Category__c;
                                 eachProjecttask.Name=pta.NSP_Task_Name__c;
-                                eachProjecttask.pse__Order__c=148;
+                                eachProjecttask.pse__Order__c=order;
                                 eachProjectTask.NSP_Visible_to_Client__c=FALSE;
                                 Implementation_Profile__c ipwithValue=(Implementation_Profile__c) data.get(IMPL_PROFILE_IDENTIFIER).get(ipRecId);
                                 if(ipwithValue != null){
-                                    if(ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__r!=null && ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__r.pse__Salesforce_User__c!=null){
+                                    if(ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__c!=null && ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__r.pse__Salesforce_User__c!=null){
                                         eachProjecttask.OwnerId=ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__r.pse__Salesforce_User__c;
                                     }
-                                    eachProjecttask.pse__Long_Description__c = System.label.CSP_Vision;
+                                    if(String.isNotBlank(longDescription)){
+                                    	eachProjecttask.pse__Long_Description__c = longDescription;    
+                                    }
                                     eachProjecttask.pse__Milestone__c=milestoneId;
                                     projectTaskList.add(eachProjecttask);
                                     ipAutomationRecords.add(
