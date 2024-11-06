@@ -90,6 +90,10 @@
                 <behavior>Edit</behavior>
                 <field>NSP_21_yrs_3_mon__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>LTPT__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
