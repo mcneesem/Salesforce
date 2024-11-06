@@ -104,6 +104,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
      private static final String COBRA_GUIDELINES_MM= 'NSP_COBRAGuidelines';
      private static final String COBRA_TEAM_MM= 'NSP_COBRATeam';
      private static final String COBRA_PACKETS_MM= 'NSP_COBRAPackets';
+     private static final String CSP_HSA_MM ='CSP_HSA';
      private static final String CSP_MEDICAL_MM ='CSP_Medical';
      private static final String CSP_DENTAL_MM ='CSP_Dental';
      private static final String CSP_VISION_MM ='CSP_Vision';
@@ -122,7 +123,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
              GARNISHMENT_MM,TAX_LEVIES_MM,PRE_TAX_MM,PRE_TAX_DEDUCT_MM,POST_TAX_SPONSPOREDPLAN_MM,POST_TAX_EMPSETUP_MM,ALLOWNCE_EXPENSE_MM,RETIRE_PLAN_MM,HSA_MM,HSA_OPTUM_MM,
              HSA_OPTUM_NO_MM,COBRA_MM,DEDUCIBLE_CARRYOVER_MM,EE_MEDICAL_MM,WAITING_MM,DEPENDENT_CARE_MM,HEALTH_CARE_MM,POST_DEDUCTION_MM,RETIRE_PLANORK_MM,
              NSP401K_MM,HANDBOOK_DEVELOPMENT_MM,JOBDESCRIPTION_MM,SEVERANCEAGREEMENT_MM,SUBSTANCE_ABUSE_MM,STANDARD_MM,BACKGROUND_MM,DRUG_SCREENING_MM,
-             SCREENING_BPS_MM,PERFORMANCE_BPS_MM,ORGANIZATIONAL_BPS_MM,INSURANCE_BPS_MM,RECRUITING_BPS_MM,CERTIFY_BPS_MM,CSP_MEDICAL_MM,CSP_DENTAL_MM,CSP_VISION_MM});
+             SCREENING_BPS_MM,PERFORMANCE_BPS_MM,ORGANIZATIONAL_BPS_MM,INSURANCE_BPS_MM,RECRUITING_BPS_MM,CERTIFY_BPS_MM,CSP_HSA_MM,CSP_MEDICAL_MM,CSP_DENTAL_MM,CSP_VISION_MM});
      }
   
      public NSP_MMImplProfile_ServHelpUpdate(Id ipRecord, String automationName){
@@ -230,6 +231,9 @@ public class NSP_MMImplProfile_ServHelpUpdate {
             }
             if(automationsToExecute.contains(PRE_TAX_DEDUCT_MM)){
                 checkForPreTax(ipRec, existingRec);
+            }
+             if(automationsToExecute.contains(CSP_HSA_MM)){
+                checkForCspHsa(ipRec, existingRec);
             }
             if(automationsToExecute.contains(POST_TAX_SPONSPOREDPLAN_MM)){
                 checkForPostTax(ipRec, existingRec);
@@ -377,6 +381,9 @@ public class NSP_MMImplProfile_ServHelpUpdate {
          }
          if(ipRecordsByAutomation.containsKey(PRE_TAX_MM)){
             createProjectTaskForPreTax();
+         }
+         if(ipRecordsByAutomation.containsKey(CSP_HSA_MM)){
+            createProjectTaskForPreTaxHealth(93,CSP_HSA_MM);
          }
          if(ipRecordsByAutomation.containsKey(PRE_TAX_DEDUCT_MM)){
             createProjectTaskForPreTaxDeduct();
@@ -3899,7 +3906,29 @@ public class NSP_MMImplProfile_ServHelpUpdate {
              }
          }   
      }
- 
+
+    private void checkForCspHsa(Implementation_Profile__c newRec, Implementation_Profile__c existingRec){
+        if ( newRec != null ) {
+            if( newRec.RecordTypeId == ipMMRecordTypeId
+               && newRec.NSP_Client_Sponsored_Plan__c == NSP_ServiceConstants.YES
+               && newRec.Sponsored_plan_contribution_type__c != null
+               && newRec.Sponsored_plan_contribution_type__c.contains(NSP_ServiceConstants.PRETAX)
+               && newRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c != null
+               && newRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c.contains(NSP_ServiceConstants.HSA)
+               && newRec.NSP_HSA_Ongoing_CSP_cafeteria_document__c == NSP_ServiceConstants.REQUESTED
+              )
+            {
+                if ( existingRec == null
+                    || newRec.NSP_Form_Completed__c
+                    || newRec.NSP_HSA_Ongoing_CSP_cafeteria_document__c != existingRec.NSP_HSA_Ongoing_CSP_cafeteria_document__c
+                   )
+                {
+                    updateEligibleRecordsMap(ipRecordsByAutomation, newRec.Id, CSP_HSA_MM);
+                }
+            }
+        }
+    }
+    
          private void checkForPostTax(Implementation_Profile__c newRec, Implementation_Profile__c existingRec){
          
          if( newRec.RecordTypeId == ipMMRecordTypeId &&
