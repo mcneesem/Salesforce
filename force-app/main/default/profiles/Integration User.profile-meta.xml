@@ -32213,7 +32213,7 @@
         <recordType>NSP_Participation_SaaS_Activity__c.ITA_Activity</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
-	<recordTypeVisibilities>
+    <recordTypeVisibilities>
         <default>true</default>
         <recordType>NSP_Contribution__c.WO</recordType>
         <visible>true</visible>
@@ -32228,16 +32228,16 @@
         <recordType>NSP_Client_Sub_Plan_History__c.Choice</recordType>
         <visible>false</visible>
     </recordTypeVisibilities>
-	<recordTypeVisibilities>
+    <recordTypeVisibilities>
         <default>true</default>
         <recordType>NSP_Eligibility__c.WO</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
-	<recordTypeVisibilities>
+    <recordTypeVisibilities>
         <default>true</default>
         <recordType>NSP_Sub_Plan_Change_History__c.WO</recordType>
         <visible>true</visible>
-    </recordTypeVisibilities>	
+    </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
         <recordType>NSP_Plan__c.WO</recordType>
@@ -32264,12 +32264,12 @@
         <visible>false</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
-        <default>false</default>
+        <default>true</default>
         <recordType>Asset.NSP_CPQ_Asset</recordType>
         <visible>false</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
-        <default>true</default>
+        <default>false</default>
         <recordType>Asset.WO</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
