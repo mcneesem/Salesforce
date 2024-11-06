@@ -86,6 +86,13 @@
                 <elementReference>Get_Task_Record.Id</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>r_TaskRecord.Subject</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>update_omr_task_subject</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Task_Status_Completed</targetReference>
         </connector>
@@ -371,6 +378,12 @@
         <name>omr_task_subject</name>
         <dataType>String</dataType>
         <expression>TEXT({!$Record.Meeting_Request_Type__c})+&quot; | &quot; + {!Get_picklistvalueinfo_of_sales_office_on_account.Label}</expression>
+    </formulas>
+    <formulas>
+        <description>used for update orientation meeting</description>
+        <name>update_omr_task_subject</name>
+        <dataType>String</dataType>
+        <expression>&quot;Updated: &quot;+{!omr_task_subject}</expression>
     </formulas>
     <interviewLabel>Create OMD Task for for CTM and OT Meeting Requests {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Create OMD Task for CTM and OT Meeting Requests</label>
