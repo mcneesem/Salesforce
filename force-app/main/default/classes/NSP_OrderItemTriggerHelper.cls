@@ -579,12 +579,14 @@ public class NSP_OrderItemTriggerHelper {
         OrderItem ordObj = new OrderItem();
         String type = null;
         Set<Id> recordTypeSet = new Set<Id>();
+        Set<Id> RETrecordTypeSet = new Set<id>();
+        List<String> retirementRecordTypeName = new List<String>{'RET Choice','RET WO'};
         Set<Id> accountIdSet = new Set<Id>();
         Map<Id,Decimal> quantityMap = new Map<Id,Decimal>();
         List<OrderItem> ordItemList = new List<OrderItem>();
         for ( OrderItem op : [
                     SELECT
-                        Id , OrderItemNumber , NSP_QL_ActionType__c , SBQQ__QuoteLine__r.NSP_Quoted_Quantity__c , OrderId ,
+                        Id , NSP_Action_Type__c,OrderItemNumber , NSP_QL_ActionType__c , SBQQ__QuoteLine__r.NSP_Quoted_Quantity__c , OrderId ,
                         order.NSP_Transaction_Type__c , Order.Status , SBQQ__QuoteLine__r.NSP_Number_of_Checks__c ,
                         SBQQ__QuoteLine__r.NSP_TCFullUserLicenseQty__c , Order.OpportunityId , NSP_ServiceAssetCategory__c ,
                         SBQQ__QuotedQuantity__c , Order.Type , Order.AccountId , SBQQ__QuoteLine__r.NSP_Number_Of_Boxes__c ,
@@ -599,7 +601,12 @@ public class NSP_OrderItemTriggerHelper {
             } 
             if(op.NSP_ServiceAssetCategory__c != null){
                 String recType = Schema.SObjectType.ASSET.getRecordTypeInfosByName().get(op.NSP_ServiceAssetCategory__c).getRecordTypeId();
-                recordTypeId.add(recType);
+                if(!retirementRecordTypeName.contains(op.NSP_ServiceAssetCategory__c)){
+                    recordTypeId.add(recType);
+                }else{
+                    RETrecordTypeSet.add(recType);
+                    accountIdSet.add(op.Order.AccountId);
+                }
                 ordProdMap.put(recType,op);
                 type = op.Order.Type;
                 if ( op.SBQQ__QuoteLine__r.NSP_Number_of_Checks__c != null
@@ -640,18 +647,30 @@ public class NSP_OrderItemTriggerHelper {
             }
         }
         if ( optyId != null && optyId.size() > 0 ) {
-            List<Asset> assetList = [
-                SELECT Id , Status , NSP_Termination_Date__c , RecordTypeId , Opportunity__c , NSP_OrderProduct__c , AccountId
-                FROM Asset
-                WHERE (
-                    Opportunity__c IN :optyId
-                    AND RecordTypeId IN :recordTypeId
-                    AND Status != 'Active'
-                )
-            ];
+            List<Asset> assetList = new List<Asset>();
+            if(!RETrecordTypeSet.isEmpty()){
+                assetList = [
+                    SELECT Id , Status , NSP_Termination_Date__c , RecordTypeId , Opportunity__c , NSP_OrderProduct__c , AccountId
+                    FROM Asset
+                    WHERE (
+                        AccountId IN :accountIdSet
+                        AND RecordTypeId IN :RETrecordTypeSet
+                    )
+                ];
+            }else{
+                assetList = [
+                    SELECT Id , Status , NSP_Termination_Date__c , RecordTypeId , Opportunity__c , NSP_OrderProduct__c , AccountId 
+                    FROM Asset 
+                    WHERE (
+                        Opportunity__c IN :optyId
+                        AND RecordTypeId IN :recordTypeId
+                        AND Status != 'Active'
+                    )
+                ];
+            }
             for(Asset assetObj: assetList){
                 ordObj = new OrderItem();
-                if(assetObj.NSP_OrderProduct__c == NULL && assetList.size() > 0){
+                if ( ( ( assetObj.NSP_OrderProduct__c == null ) || !RETrecordTypeSet.isEmpty() ) && !assetList.isEmpty() ) {
                     assetObj.NSP_OrderProduct__c = ordProdMap.get(assetObj.RecordTypeId).Id;
                     assetObj.NSP_Current_SaaS_Seats__c = String.valueOf(quantityMap.get(assetObj.RecordTypeId));
                     ordObj.Id = ordProdMap.get(assetObj.RecordTypeId).Id;
@@ -669,39 +688,44 @@ public class NSP_OrderItemTriggerHelper {
                 List<Asset> assetAmendList = [
                     SELECT
                         Id , Status , NSP_Termination_Date__c , RecordTypeId ,
-                        Opportunity__c , NSP_OrderProduct__c , AccountId
+                        RecordType.Name , Opportunity__c , NSP_OrderProduct__c , AccountId
                     FROM Asset
                     WHERE (
                         AccountId IN :accountIdSet
                         AND RecordTypeId IN :recordTypeSet
-                        AND Status != 'Terminated'
-                        AND Status != 'Backout'
                     )
                 ];
-                for(Asset assetObj:assetAmendList){
-                    assetObj.NSP_OrderProduct__c = ordProdMap.get(assetObj.RecordTypeId).Id;
-                    assetObj.NSP_Current_SaaS_Seats__c = String.valueOf(quantityMap.get(assetObj.RecordTypeId));
-                    ordObj.Id = ordProdMap.get(assetObj.RecordTypeId).Id;
-                    ordObj.NSP_ServiceAsset__c = assetObj.Id;
-                    ordItemList.add(ordObj);
-                    updateAssetList.add(assetObj); 
+                for ( Asset assetObj : assetAmendList ) {
+                    if ( retirementRecordTypeName.contains(assetObj.RecordType.Name)
+                        || ( !retirementRecordTypeName.contains(assetObj.RecordType.Name)
+                            && assetObj.Status != 'Terminated'
+                            && assetObj.Status != 'Backout'
+                            )
+                        )
+                    {
+                        assetObj.NSP_OrderProduct__c = ordProdMap.get(assetObj.RecordTypeId).Id;
+                        assetObj.NSP_Current_SaaS_Seats__c = String.valueOf(quantityMap.get(assetObj.RecordTypeId));
+                        ordObj.Id = ordProdMap.get(assetObj.RecordTypeId).Id;
+                        ordObj.NSP_ServiceAsset__c = assetObj.Id;
+                        ordItemList.add(ordObj);
+                        updateAssetList.add(assetObj);
+                    }
                 }
             }
-        }
-        
-        try{
-            if ( ( ordItemList != null ) && ( ordItemList.size() > 0 ) ) {
-                database.update( ordItemList );
+            try {
+                if ( ( ordItemList != null ) && ( ordItemList.size() > 0 ) ) {
+                    database.update( ordItemList );
+                }
+                if ( ( updateAssetList != null ) && ( updateAssetList.size() > 0 ) ) {
+                    database.update( updateAssetList );
+                }
+            } catch ( Exception e ) {
+                NSP_ErrorLogHandler.logException(
+                    NSP_OrderItemTriggerHelper.class.getName() ,
+                    'updateAsset' ,
+                    e
+                );
             }
-            if ( ( updateAssetList != null ) && ( updateAssetList.size() > 0 ) ) {
-                database.update( updateAssetList );
-            }
-        } catch ( Exception e ) {
-            NSP_ErrorLogHandler.logException(
-                NSP_OrderItemTriggerHelper.class.getName() ,
-                'updateAsset' ,
-                e
-            );
         }
     }
 
