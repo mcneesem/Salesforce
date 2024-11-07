@@ -6,13 +6,17 @@
 */
 @isTest(SeeAllData=false)
 public without sharing class NSP_AccountTeamTriggerTest {
-    
+    private static final string accountName = 'Testing Account';
+    private static final string projectTaskName = 'Submit Termination Checklist';
+    private static final string projectTaskTemplate = 'PEO Termination';
+    private static final string status = 'Draft';
     private static final string EMP_PER_ID = 'EMP 1234';
+
     /**
-* Does test data setup
-* @param N/A. 
-* @return void                          
-*/
+    * Does test data setup
+    * @param N/A. 
+    * @return void                          
+    */
     @testSetup
     static void testData() {
         User userObj = NSP_TestHelper.createUser(false);
@@ -21,11 +25,16 @@ public without sharing class NSP_AccountTeamTriggerTest {
         userObj.NSP_Service_Region__c = 'MMSO - Houston';
         insert userObj;
         
+        AccountTeamTriggerSettings__c setting = new AccountTeamTriggerSettings__c();
+        setting.IsEnabledTermFormLookUps__c = true;
+        insert setting;
+        
         NSP_TestHelper.createAccount(true);
         String PEOProjectTaskRecordTypeId = Schema.SObjectType.pse__Project_Task__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.PROJECT_TASK_PEO_RECORDTYPE).getRecordTypeId();
         Id peoProjectRecordTypeId = SObjectType.pse__Proj__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.PEOProject).getRecordTypeId();
          
         Account acc = (Account)NSP_TestExtendedDataFactory.createSObject(new Account(), 'NSP_TestDataFactory.AccountDefaults', false);
+        acc.Name = accountName;
         insert acc;
         
         List<pse__Proj__c> lstProject = new List<pse__Proj__c>();
@@ -49,28 +58,50 @@ public without sharing class NSP_AccountTeamTriggerTest {
         milestone.pse__Project__c = oProject.id;
         insert milestone;
         
+        List<pse__Project_Task__c> projectTasks = new List<pse__Project_Task__c>();
         pse__Project_Task__c oProjectTask1 = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c(), 'NSP_TestDataFactory.ProjectTaskDefaults', false);
         oProjectTask1.pse__Project__c = oProject.Id;
         oProjectTask1.pse__Status__c = NSP_ServiceConstants.PROJECT_TASK_CANCELLED;
         oProjectTask1.pse__Milestone__c = milestone.id;
         oProjectTask1.NSP_Template_Generated__c = true;
         oProjectTask1.RecordTypeId = PEOProjectTaskRecordTypeId;
-        insert oProjectTask1;
+        projectTasks.add(oProjectTask1);
 
+        pse__Project_Task__c oProjectTask = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c(), 'NSP_TestDataFactory.ProjectTaskDefaults', false);
+        oProjectTask.pse__Project__c = oProject.Id;
+        oProjectTask.Name = projectTaskName;
+        oProjectTask.Template_Name__c = projectTaskTemplate;
+        oProjectTask.NSP_Account_Id__c = acc.Id;
+        oProjectTask.pse__Status__c = NSP_ServiceConstants.PROJECT_TASK_NOT_STARTED;
+        projectTasks.add(oProjectTask);
+        
+        pse__Project_Task__c oProjectTask2 = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c(), 'NSP_TestDataFactory.ProjectTaskDefaults', false);
+        oProjectTask2.pse__Project__c = oProject.Id;
+        oProjectTask2.Name = projectTaskName;
+        oProjectTask2.Template_Name__c = projectTaskTemplate;
+        oProjectTask2.NSP_Account_Id__c = acc.Id;
+        oProjectTask2.pse__Status__c = NSP_ServiceConstants.PROJECT_TASK_IN_PROGRESS;
+        projectTasks.add(oProjectTask2);
+        insert projectTasks; 
+        
+        
+        
+        
         //Added as part of STY-03667
         //Account team insertion
         NSP_Account_Team__c accTeam = (NSP_Account_Team__c)NSP_TestExtendedDataFactory.createSObject(new NSP_Account_Team__c(), 'NSP_TestDataFactory.AccountTeamMemberDefaults', true);
         accTeam.NSP_Primary__c=true;
         accTeam.NSP_User__c=userObj.Id;
+        accTeam.NSP_Role__c = 'Client Liaison';
         update accTeam;
         
     }
-    
+
     /**
-* Checks the update insert logic of the trigger
-* @param N/A. 
-* @return void                          
-*/    
+    * Checks the update insert logic of the trigger
+    * @param N/A. 
+    * @return void                          
+    */    
     @isTest
     public static void testInsert(){
         Account accountObj = [SELECT Id,Name from Account WHERE Name !=null limit 1];
@@ -90,12 +121,13 @@ public without sharing class NSP_AccountTeamTriggerTest {
     }
     
     /**
-* Checks the update update logic of the trigger
-* @param N/A. 
-* @return void                          
-*/     
+    * Checks the update update logic of the trigger
+    * @param N/A. 
+    * @return void                          
+    */     
     @isTest
     public static void testUpdate(){
+        test.startTest();
         Account accountObj = [SELECT Id,Name from Account WHERE Name !=null limit 1];
         
         NSP_Account_Team__c accTeam = new NSP_Account_Team__c();
@@ -108,7 +140,7 @@ public without sharing class NSP_AccountTeamTriggerTest {
                                               NSP_Account__c =: accountObj.Id Limit 1];
         
         accountTeamObj.NSP_Role__c = 'HR Specialist';
-        test.startTest();
+        
         update accountTeamObj;
         test.stopTest();  
         
@@ -139,11 +171,11 @@ public without sharing class NSP_AccountTeamTriggerTest {
         system.assertNotEquals(pt.NSP_Client_Liaison_Email__c, userInfo.getUserEmail());
         test.stopTest();
     } 
-     /**
-* @Description: This test method test the method in AccountTeamTriggerHelper
-* @Created date: 13/10/2022. 
-* @return void             
-*     */
+    /**
+    * @Description: This test method test the method in AccountTeamTriggerHelper
+    * @Created date: 13/10/2022. 
+    * @return void             
+    */
     @isTest
     public static void updateAccountTeamNameToAssetNameTest(){
         
@@ -374,11 +406,133 @@ public without sharing class NSP_AccountTeamTriggerTest {
         update accountTeamObjList;
         accTeam1.NSP_PER_ID__c = '765488';
         update accTeam1;
-        test.stopTest();  
+         
         
         NSP_Account_Team__c accountTeam = [SELECT Id,NSP_Role__c,NSP_User__c from NSP_Account_Team__c 
                                            WHERE NSP_Account__c =: accountObj.Id Limit 1];
-        
+        test.stopTest();
         system.assertEquals(userObj.Id, accountTeam.NSP_User__c);  
+    }
+    
+    @isTest
+    public static void updateUserLookupsTest(){
+        test.startTest();
+        Account accountObj = [SELECT Id,Name from Account WHERE Name =:accountName limit 1];
+        User userObj = [SELECT Id from User WHERE NSP_Employee_Per_ID__c =: EMP_PER_ID];
+        List<NSP_Account_Team__c> accTeams = new List<NSP_Account_Team__c>();
+        List<NSP_Account_Team__c> accTeamsUpdate = new List<NSP_Account_Team__c>();
+        List<NSP_Termination_Form__c> termForms = new List<NSP_Termination_Form__c>();
+        
+        NSP_Account_Team__c accTeam1 = new NSP_Account_Team__c();
+        accTeam1.NSP_User__c = userObj.Id;
+        accTeam1.NSP_Account__c = accountObj.Id;
+        accTeam1.NSP_Role__c = NSP_ServiceConstants.PAYROLL_SUPERVISOR;
+        accTeams.add(accTeam1);
+        
+        NSP_Account_Team__c accTeam2 = new NSP_Account_Team__c();
+        accTeam2.NSP_User__c = userObj.Id;
+        accTeam2.NSP_Account__c = accountObj.Id;
+        accTeam2.NSP_Role__c = NSP_ServiceConstants.PAYROLL_SPECIALIST;
+        accTeams.add(accTeam2);
+            
+        NSP_Account_Team__c accTeam3 = new NSP_Account_Team__c();
+        accTeam3.NSP_User__c = userObj.Id;
+        accTeam3.NSP_Account__c = accountObj.Id;
+        accTeam3.NSP_Role__c = NSP_ServiceConstants.BUSINESS_PERFORMANCE_ADVISOR;
+        accTeams.add(accTeam3);
+        
+        NSP_Account_Team__c accTeam4 = new NSP_Account_Team__c();
+        accTeam4.NSP_User__c = userObj.Id;
+        accTeam4.NSP_Account__c = accountObj.Id;
+        accTeam4.NSP_Primary__c=true;
+        accTeam4.NSP_Role__c = NSP_ServiceConstants.CLIENT_LIAISION;
+        accTeams.add(accTeam4);
+        
+        NSP_Account_Team__c accTeam5 = new NSP_Account_Team__c();
+        accTeam5.NSP_User__c = userObj.Id;
+        accTeam5.NSP_Account__c = accountObj.Id;
+        accTeam5.NSP_Role__c = NSP_ServiceConstants.MID_MARKET_ACC_EX;
+        accTeams.add(accTeam5);
+        
+        NSP_Account_Team__c accTeam6 = new NSP_Account_Team__c();
+        accTeam6.NSP_User__c = userObj.Id;
+        accTeam6.NSP_Account__c = accountObj.Id;
+        accTeam6.NSP_Role__c = NSP_ServiceConstants.MANAGER_HRSERVICES;
+        accTeams.add(accTeam6);
+        
+        NSP_Account_Team__c accTeam7 = new NSP_Account_Team__c();
+        accTeam7.NSP_User__c = userObj.Id;
+        accTeam7.NSP_Account__c = accountObj.Id;
+        accTeam7.NSP_Role__c = NSP_ServiceConstants.BUS_TEAM_HRSP_CL;
+        accTeams.add(accTeam7);
+        
+        insert accTeams;
+        pse__Project_Task__c oProjectTask1 = [SELECT Id FROM pse__Project_Task__c WHERE pse__Status__c = 'Not Started'];
+        pse__Project_Task__c oProjectTask2= [SELECT Id FROM pse__Project_Task__c WHERE pse__Status__c = 'In Progress'];
+        NSP_Termination_Form__c termForm1 = new NSP_Termination_Form__c(  
+            NSP_Account__c = accountObj.Id,  
+            NSP_Supervisor__c = UserInfo.getUserId(),  
+            NSP_Status__c = status,  
+            NSP_Project_Task__c = oProjectTask1.Id 
+        );  
+        NSP_Termination_Form__c termForm2 = new NSP_Termination_Form__c(  
+            NSP_Account__c = accountObj.Id,  
+            NSP_Payroll_Specialist__c = UserInfo.getUserId(),  
+            NSP_Status__c = status,  
+            NSP_Project_Task__c = oProjectTask1.Id 
+        );
+        termForms.add(termForm2);
+        NSP_Termination_Form__c termForm3 = new NSP_Termination_Form__c(  
+            NSP_Account__c = accountObj.Id,  
+            NSP_Insperity_Blended_Role__c = UserInfo.getUserId(),  
+            NSP_Status__c = status,  
+            NSP_Project_Task__c = oProjectTask2.Id 
+        );  
+        termForms.add(termForm3);
+        NSP_Termination_Form__c termForm4 = new NSP_Termination_Form__c(  
+            NSP_Account__c = accountObj.Id,  
+            NSP_Client_Liaison__c = UserInfo.getUserId(),  
+            NSP_Status__c = status,  
+            NSP_Project_Task__c = oProjectTask1.Id 
+        );
+        termForms.add(termForm4);
+        NSP_Termination_Form__c termForm5 = new NSP_Termination_Form__c(  
+            NSP_Account__c = accountObj.Id,  
+            NSP_Manager_HR_Services__c = UserInfo.getUserId(),  
+            NSP_Status__c = status,  
+            NSP_Project_Task__c = oProjectTask1.Id 
+        ); 
+        termForms.add(termForm5);
+        NSP_Termination_Form__c termForm6 = new NSP_Termination_Form__c(  
+            NSP_Account__c = accountObj.Id,  
+            NSP_Account_Executive__c = UserInfo.getUserId(),  
+            NSP_Status__c = status,  
+            NSP_Project_Task__c = oProjectTask1.Id 
+        );
+        termForms.add(termForm6);
+        NSP_Termination_Form__c termForm7 = new NSP_Termination_Form__c(  
+            NSP_Account__c = accountObj.Id,  
+            NSP_Credit_Specialist__c = UserInfo.getUserId(),  
+            NSP_Status__c = status,  
+            NSP_Project_Task__c = oProjectTask1.Id 
+        );
+        termForms.add(termForm7);
+        insert termForms;
+        accTeam1.NSP_User__c = UserInfo.getUserId();
+        accTeamsUpdate.add(accTeam1);
+        accTeam2.NSP_User__c = UserInfo.getUserId();
+        accTeamsUpdate.add(accTeam2);
+        accTeam3.NSP_User__c = UserInfo.getUserId();
+        accTeamsUpdate.add(accTeam3);
+        accTeam4.NSP_User__c = UserInfo.getUserId();
+        accTeamsUpdate.add(accTeam4);
+        accTeam5.NSP_User__c = UserInfo.getUserId();
+        accTeamsUpdate.add(accTeam5);
+        accTeam6.NSP_User__c = UserInfo.getUserId();
+        accTeamsUpdate.add(accTeam6);
+        accTeam7.NSP_User__c = UserInfo.getUserId();
+        accTeamsUpdate.add(accTeam7);
+        
+        update accTeamsUpdate;
     }
 }

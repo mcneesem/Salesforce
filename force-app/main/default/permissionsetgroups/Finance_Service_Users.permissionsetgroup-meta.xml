@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Group of Permission Sets to be granted to Finance Service Users.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Finance Service Users</label>
+    <permissionSets>Finance_Service_Field_Access</permissionSets>
+    <permissionSets>Finance_Service_User</permissionSets>
+    <status>Updated</status>
+</PermissionSetGroup>

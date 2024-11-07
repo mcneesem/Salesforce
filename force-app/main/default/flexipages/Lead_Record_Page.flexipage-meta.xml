@@ -4270,6 +4270,12 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
+                <componentName>lightningInbox:sendLaterListContainer</componentName>
+                <identifier>lightningInbox_sendLaterListContainer</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
                 <componentInstanceProperties>
                     <name>showLegacyActivityComposer</name>
                     <value>false</value>
@@ -4341,6 +4347,16 @@
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Range_of_Estimated_Number_of_Employees__c</fieldItem>
+                <identifier>RecordRange_of_Estimated_Number_of_Employees_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <itemInstances>
             <fieldInstance>
                 <fieldInstanceProperties>

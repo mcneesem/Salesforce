@@ -901,6 +901,22 @@
             <fullName>71</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>72</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>73</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>74</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>75</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>NSP_ORK_Plan_Vendor__c</picklist>

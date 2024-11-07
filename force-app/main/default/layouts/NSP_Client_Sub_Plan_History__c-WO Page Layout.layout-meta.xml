@@ -48,7 +48,7 @@
                 <field>NSP_Plan_ID_Form__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>NSP_Current_Subplan__c</field>
             </layoutItems>
         </layoutColumns>

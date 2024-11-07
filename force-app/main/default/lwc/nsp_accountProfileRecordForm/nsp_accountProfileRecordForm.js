@@ -18,6 +18,7 @@ export default class Nsp_accountProfileRecordForm extends LightningElement {
   @track allFieldsValue = {};
   @track recordWithAllFields = {};
   @track fieldsConfig = {};
+  @track relatedDependentFields=[];
 
   @wire(getRecordWithAllFields, { recordId: '$recordId' })
   getInfo(value) {
@@ -61,6 +62,25 @@ export default class Nsp_accountProfileRecordForm extends LightningElement {
       const isHidden = childFields.includes(fieldName);
       const disabled = isDisable == 'FALSE' ? false: true;
 
+      if(Object.keys(FIELD_VISIBILITY_CONFIG).includes(fieldName)){
+
+        if(FIELD_VISIBILITY_CONFIG[fieldName]
+            && FIELD_VISIBILITY_CONFIG[fieldName][0]
+            && FIELD_VISIBILITY_CONFIG[fieldName][0].expValue
+            && FIELD_VISIBILITY_CONFIG[fieldName][0].expValue[0]
+            && relatedFieldValueMap[fieldName].value
+        ){
+          if( FIELD_VISIBILITY_CONFIG[fieldName][0].expValue[0].toString() !== relatedFieldValueMap[fieldName].value.toString()){
+            //Adding dependent fields to configDependentFields to allow visibility.
+            FIELD_VISIBILITY_CONFIG[fieldName].forEach(({ dependentFields }) => {
+              if (! this.relatedDependentFields.includes(dependentFields)) {
+                this.relatedDependentFields = [...this.relatedDependentFields, ...dependentFields];
+              }
+            });
+          }
+        }
+      }
+      
       if (isHidden) {
         childFields = childFields.filter((f) => f !== fieldName);
       }
@@ -163,7 +183,11 @@ export default class Nsp_accountProfileRecordForm extends LightningElement {
       if(!(parentField in this.allFieldsValue)){
         addChilds=true;
       }else if(parentField in this.allFieldsValue){
-        if(expValue[0] !== this.allFieldsValue[parentField].value){
+        if ( expValue[0]
+          && this.allFieldsValue[parentField].value
+          && ( expValue[0].toString() !== this.allFieldsValue[parentField].value.toString() )
+          )
+        {
           addChilds=true;
         }
       }
@@ -182,9 +206,9 @@ export default class Nsp_accountProfileRecordForm extends LightningElement {
   }
 
   get config() {
-    const { fieldsConfig, fieldVisibilityConfig } = this;
+    const { fieldsConfig, fieldVisibilityConfig, relatedDependentFields} = this;
 
-    return { fieldsConfig, fieldVisibilityConfig, columns: 2, fields: FIELDS };
+    return { fieldsConfig, fieldVisibilityConfig, relatedDependentFields, columns: 2, fields: FIELDS,  };
   }
 
   refreshData() {

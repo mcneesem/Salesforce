@@ -367,11 +367,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>NSP_Termination_Form__c.NSP_Status__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>NSP_Termination_Form__c.NSP_SubTerm_reason__c</field>
         <readable>true</readable>
     </fieldPermissions>

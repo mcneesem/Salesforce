@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Verify_Platform_Events</name>
+    </customPermissions>
+    <description>Grants the Custom Permission to view the &quot;Verify Platform Event&quot; Aura Component.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Verify Platform Events</label>
+</PermissionSet>

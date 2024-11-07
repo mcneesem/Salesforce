@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IsEnabledTermFormLookUps__c</fullName>
+    <defaultValue>true</defaultValue>
+    <description>Controls usage of the NSP_AccountTeamTriggerHelper.afterUpdateDirector() to fire QueueableTermFormLookUps Apex Class/Member</description>
+    <externalId>false</externalId>
+    <label>IsEnabledTermFormLookUps</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

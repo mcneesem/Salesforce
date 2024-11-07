@@ -4532,6 +4532,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>2024 Fall Campaign Kicker</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>2024 Fall Credit Promotion</fullName>
             <default>false</default>
         </values>
@@ -4541,10 +4545,6 @@
         </values>
         <values>
             <fullName>2024 Recruiting Promotion</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>2024 September Credit Promotion</fullName>
             <default>false</default>
         </values>
         <values>

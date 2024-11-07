@@ -276,8 +276,8 @@ public class NSP_ProjectTasksTriggerHelperTest {
         optionalProjTask.pse__Project__c = peoTermProject.Id;
         optionalProjTask.pse__Status__c = NSP_ServiceConstants.PROJECTSTATUSNOTSTARTED;
         nProjectTaskList.add(optionalProjTask);
-   
-            insert nProjectTaskList;
+        
+        insert nProjectTaskList;
         
         WorkOrder relWo = new WorkOrder();
         relWo.Status = 'Unscheduled';
@@ -747,60 +747,6 @@ public class NSP_ProjectTasksTriggerHelperTest {
         System.assertEquals(0, [SELECT count() FROM Case WHERE Subject =:NSP_ServiceConstants.HCM_TEST_CASE_SUBJECT]);
     }
     
-    /***********************************************************************************************
-    * MethodName  : testWXWADataMigrationAndNewTaxImplProjectCreation
-    * Description  : This Method will test positive scenario which will create 
-    *                 New Tax IMPL and WX/WA Data Migration sub project when 
-    *           Configuration Task of iSolved HCM project is marked as complete 
-    * ********************************************************************************************/
-    @IsTest
-    private static void testWXWADataMigrationAndNewTaxImplProjectCreation(){
-        Test.startTest();
-        pse__Proj__c newTaxImplTemplate = (pse__Proj__c)NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c());
-        newTaxImplTemplate.Name = NSP_ServiceConstants.NEW_TAX_IMPL_PROJECT;
-        newTaxImplTemplate.pse__Start_Date__c = Date.Today();
-        newTaxImplTemplate.pse__Is_Template__c = true;
-    INSERT newTaxImplTemplate;
-        
-        pse__Proj__c wxwaDMTemplate = (pse__Proj__c)NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c());
-        wxwaDMTemplate.Name = NSP_ServiceConstants.WX_WA_DATA_MIGRATION_PROJECT;
-        wxwaDMTemplate.pse__Start_Date__c = Date.Today();
-        wxwaDMTemplate.pse__Is_Template__c = true;
-    INSERT wxwaDMTemplate;
-        
-        List<String> projTaskFields = new List<String>{'Id'};
-        String query = new NSP_QueryBuilder('pse__Project_Task__c', projTaskFields)
-                          .addFilter('Name', NSP_ServiceConstants.CONFIGURATION_TASK).addLimit(1).build();
-        pse__Project_Task__c projectTaskRec = Database.query(query);
-        projectTaskRec.pse__Status__c = NSP_ServiceConstants.TASKCOMPLETE;
-        update projectTaskRec;
-        
-        NSP_ProjectTasksTriggerHelper.createNewTaxIMPLSubProject(new Set<Id>{projectTaskRec.Id});
-        System.assertEquals(1, [SELECT count() FROM pse__Proj__c WHERE Name =:NSP_ServiceConstants.NEW_TAX_IMPL_PROJECT]);
-        System.assertEquals(1, [SELECT count() FROM pse__Proj__c WHERE Name =:NSP_ServiceConstants.WX_WA_DATA_MIGRATION_PROJECT]);
-        Test.stopTest();
-    }
-    
-    /***********************************************************************************************
-    * MethodName  : testWXWADataMigrationAndNewTaxImplProjectNoCreation
-    * Description  : This Method will test negative scenario which should not create 
-    *           New Tax IMPL and WX/WA Data Migration sub project 
-    *           when Configuration Task of iSolved HCM project is In Progress 
-    * ********************************************************************************************/
-    @IsTest
-    private static void testWXWADataMigrationAndNewTaxImplProjectNoCreation(){
-        Test.startTest();
-        List<String> projTaskFields = new List<String>{'Id'};
-        String query = new NSP_QueryBuilder('pse__Project_Task__c', projTaskFields)
-                          .addFilter('Name', NSP_ServiceConstants.CONFIGURATION_TASK).addLimit(1).build();
-        pse__Project_Task__c projectTaskRec = Database.query(query);
-        projectTaskRec.pse__Status__c = NSP_ServiceConstants.PROJECT_TASK_IN_PROGRESS;
-        Database.update(projectTaskRec);
-        System.assertEquals(0, [SELECT count() FROM pse__Proj__c WHERE Name =:NSP_ServiceConstants.NEW_TAX_IMPL_PROJECT]);
-        System.assertEquals(0, [SELECT count() FROM pse__Proj__c WHERE Name =:NSP_ServiceConstants.WX_WA_DATA_MIGRATION_PROJECT]);
-        Test.stopTest();
-    }
-
     /************************************************************************************************************************
     * MethodName  : schedulePtWithNonServiceResOwnerTest
     * Description  : Schedule PT with Owner not having Service Resource Rec

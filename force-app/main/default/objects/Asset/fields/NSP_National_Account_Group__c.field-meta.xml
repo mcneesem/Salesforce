@@ -217,6 +217,26 @@
                 <default>false</default>
                 <label>Undisclosed</label>
             </value>
+            <value>
+                <fullName>72</fullName>
+                <default>false</default>
+                <label>Oak Tree Fund 9</label>
+            </value>
+            <value>
+                <fullName>73</fullName>
+                <default>false</default>
+                <label>Girl Scouts</label>
+            </value>
+            <value>
+                <fullName>74</fullName>
+                <default>false</default>
+                <label>Armstrong Trucking</label>
+            </value>
+            <value>
+                <fullName>75</fullName>
+                <default>false</default>
+                <label>LG</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
