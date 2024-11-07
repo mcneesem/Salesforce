@@ -401,6 +401,7 @@ public void updateActivitySales(List<Task> newList,Map<Id,Task> OldTaskMap){
         get {
             return new Map<String,String>{
                 NSP_ServiceConstants.INTEGRA => NSP_ServiceConstants.INTEGRA,
+                NSP_ServiceConstants.INSPERITY_INTEGRA => NSP_ServiceConstants.INTEGRA_QUEUE,
                 NSP_ServiceConstants.EXPENSE_MANAGEMENT => NSP_ServiceConstants.CERTIFY_QUEUE,
                 NSP_ServiceConstants.HR_CONSULTING_SERVICES => NSP_ServiceConstants.HR_CONSULTING,
                 NSP_ServiceConstants.PI_INSURANCE_SERVICES => NSP_ServiceConstants.INSURANCE_SERVICES,
