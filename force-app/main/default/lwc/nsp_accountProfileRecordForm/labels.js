@@ -115,7 +115,7 @@ const LABEL = {
   Country_HQ_is_located_one_location_only__c:"Country HQ is located (one location only)",
   Does_the_client_have_KDM_internationally__c:"Does the client have a KDM or KDMs located internationally?",
   Which_countries_KDM_International__c:"Which country(ies) located?",
-  Percentage_of_Union_Employees_workforce__c:"If have Union Employees, what percentage of workforce?",
+  Percentage_of_Union_Employees_workforce__c:"What percentage of the workforce is Union?",
   Name_of_PE_firm_or_Investment_Entity__c:"Name of PE firm or Investment Entity (if applicable)",
   NSP_Board_of_Directors__c:"Board of Directors? (no. of members, level of influence, etc.)",
   NSP_Special_client_accessibility_needs__c:"Special client accessibility needs (Global or unpaid user access? Language?)",

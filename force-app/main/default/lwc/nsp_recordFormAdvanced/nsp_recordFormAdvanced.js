@@ -53,6 +53,7 @@ export default class Nsp_recordFormAdvanced extends LightningElement {
     isLoading: true,
     isFirstTimeLoad: true,
   };
+  @track relatedDependentFields = [];
 
   columns = 1;
 
@@ -102,7 +103,7 @@ export default class Nsp_recordFormAdvanced extends LightningElement {
 
   handleSubmit(event) {
     event.preventDefault(); // stop the form from submitting
-
+    this.updateBlankInDependentFields();
     this.state.isLoading = true;
     this.recordForm.submit(this.updatedFormValues);
   }
@@ -117,15 +118,35 @@ export default class Nsp_recordFormAdvanced extends LightningElement {
   }
 
   populateValuesInClassVariables(value) {
-    const { fieldsConfig, fieldVisibilityConfig, columns, fields } = value;
+    const { fieldsConfig, fieldVisibilityConfig, relatedDependentFields, columns, fields } = value;
 
     // Update values in instance variables
     this.fieldsConfig = fieldsConfig;
     this.fieldVisibilityConfig = fieldVisibilityConfig;
+    this.relatedDependentFields = relatedDependentFields;
+
     this.columns =
       Number.parseInt(columns) !== NaN ? Number.parseInt(columns) : 1;
     this.fields = fields;
     this.updatedFormValues = JSON.parse(JSON.stringify(this.formValues));
+  }
+  updateBlankInDependentFields() {
+    if ( this.relatedDependentFields
+      && Array.isArray( this.relatedDependentFields )
+      && ( this.relatedDependentFields.length > 0 )
+      )
+    {
+      this.relatedDependentFields.forEach((fieldName) => {
+        if(Object.keys(this.accountFieldInfo).includes(fieldName) &&
+              Object.keys(this.updatedFormValues).includes(fieldName)){
+                if(this.accountFieldInfo[fieldName].datatype === 'Boolean'){
+                  this.updatedFormValues[fieldName]=false;
+                }else{
+                  this.updatedFormValues[fieldName]=null;
+                }
+          }
+      });
+    }
   }
 
   updateDependentFieldVisibility(fieldName, value) {

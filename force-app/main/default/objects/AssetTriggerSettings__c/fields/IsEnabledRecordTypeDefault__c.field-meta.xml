@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IsEnabledRecordTypeDefault__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Used to control the default Asset Record Type used by the &quot;Insperity Integration&quot; User during Asset inserts.
+See Apex Class: NSP_AssetTriggerHelper</description>
+    <label>IsEnabledRecordTypeDefault</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

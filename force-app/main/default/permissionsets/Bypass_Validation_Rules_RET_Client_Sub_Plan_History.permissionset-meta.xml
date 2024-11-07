@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Bypass_Validation_Rules_RET_Client_Sub_Plan_History</name>
+    </customPermissions>
+    <description>Grants the Custom Permission to Bypass Validation Rules RET-Client Sub Plan History</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Bypass Validation Rules RET-Client Sub Plan History</label>
+</PermissionSet>

@@ -1,18 +1,9 @@
 public with sharing class NSP_AssetTriggerHelper {
-    // test w/ NSP_AssetTriggerHelperTest (84%)
+    // test w/ NSP_AssetTriggerHelperTest (83%)
 
-    private static final string assetWoType = 'WO';
-    private static final string assetwxType = 'WX_WA';
-    private static final string activeStatus = 'Active';
-    private static final string onboardingStatus = 'Onboarding';    
-    private static final Id new_Asset_RT_ID = Schema.SObjectType.Asset.RecordTypeInfosByName.get(assetWoType).getRecordTypeId();
-    private static final Id asset_RT_ID = Schema.SObjectType.Asset.RecordTypeInfosByName.get(assetwxType).getRecordTypeId();
-    Static final Id WOAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId('Asset',NSP_ServiceConstants.WO_ASSET_RECORDTYPE);
-    Static final Id CPQAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId('Asset','NSP_CPQ_Asset');
-    private static final string BACKOUT= 'Backout';
-    private static final string TERMINATED= 'Terminated';
-    private static final string RETURNED= 'Returned';
-    private static final string INACTIVE= 'Inactive';
+    private static final Id woAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Asset' , 'WO' );
+    private static final Id wxAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Asset' , ' WX_WA' );
+    private static final Id cpqAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Asset' , 'NSP_CPQ_Asset' );
 
     //
     // Iterates throught the list of new Account and passes the required attributes to other methods.
@@ -21,6 +12,22 @@ public with sharing class NSP_AssetTriggerHelper {
     //
     public void beforeInsertDirector( List<Asset> newList ) { 
         try {
+            if ( AssetTriggerSettings__c.getInstance( UserInfo.getUserId() ).IsEnabledRecordTypeDefault__c ) {
+                // ADO-314743
+                // ~ handle Default Asset Record Type change for "Integration User" Profile
+                // ~ Salesforce Automation (Id=0054x0000057XwoAAE) depends on "CPQ Asset" default...
+                // ~ Insperity Integration (AIMS) (Id=0054x0000057MPSAA2) previously depended on "WO" default...
+                if ( ( newList != null ) && !newList.isEmpty() ) {
+                    for ( Asset record : newList ) {
+                        if ( String.isBlank( record.RecordTypeId ) // null/blank/undefined Asset Record Type
+                            || ( record.RecordTypeId == NSP_AssetTriggerHelper.cpqAssetRecordTypeId ) // Asset Record Type: CPQ Asset (Id=0124x000000yRuyAAE)
+                            )
+                        {
+                            record.RecordTypeId = NSP_AssetTriggerHelper.woAssetRecordTypeId; // Asset Record Type: WO (Id=0124x000000yRuzAAE)
+                        }
+                    }
+                }
+            }
             updatePayDateonAsset( newList , null ); // added for STY-03387
         } catch ( Exception e ) {
             NSP_AssetTriggerHelper.handleException( e , 'beforeInsertDirector' );
@@ -41,10 +48,17 @@ public with sharing class NSP_AssetTriggerHelper {
         List<Asset> docusignAsset = new List<Asset>();
         try {
             for(Asset assetObj: newList){              
-                if(assetObj.Status != null && (assetObj.Status == activeStatus || assetObj.Status == onboardingStatus)){
+                if ( ( assetObj.Status != null )
+                    && ( ( assetObj.Status == 'Active' ) || ( assetObj.Status == 'Onboarding' ) )
+                    )
+                {
                     ast.add(assetObj);
                 }
-                if(assetObj.Status != null && assetObj.RecordTypeId != WOAssetRecordTypeId && assetObj.RecordTypeId != CPQAssetRecordTypeId){
+                if ( ( assetObj.Status != null )
+                    && ( assetObj.RecordTypeId != NSP_AssetTriggerHelper.woAssetRecordTypeId )
+                    && ( assetObj.RecordTypeId != NSP_AssetTriggerHelper.cpqAssetRecordTypeId )
+                    )
+                {
                     docusignAsset.add(assetObj); 
                 }
             }
@@ -95,7 +109,7 @@ public with sharing class NSP_AssetTriggerHelper {
             Asset oldRecord = oldMap.get( asst.Id );
             if ( oldRecord != null ) {
                 if ( ( asst.NSP_Government_Contractor__c != oldRecord.NSP_Government_Contractor__c )
-                    && ( asst.recordTypeId == WOAssetRecordTypeId )
+                    && ( asst.recordTypeId == NSP_AssetTriggerHelper.woAssetRecordTypeId )
                     )
                 {
                     asstIdSet.add( asst.Id );
@@ -104,8 +118,8 @@ public with sharing class NSP_AssetTriggerHelper {
                     ast.add( asst );
                 }
                 if ( ( asst.Status != oldRecord.Status )
-                    && ( asst.RecordTypeId != WOAssetRecordTypeId )
-                    && ( asst.RecordTypeId != CPQAssetRecordTypeId )
+                    && ( asst.RecordTypeId != NSP_AssetTriggerHelper.woAssetRecordTypeId )
+                    && ( asst.RecordTypeId != NSP_AssetTriggerHelper.cpqAssetRecordTypeId )
                     )
                 {
                     docusignAsset.add( asst );
@@ -239,8 +253,8 @@ public with sharing class NSP_AssetTriggerHelper {
             WHERE (
                 AccountId IN :accountList
                 AND (
-                    Status = :activeStatus
-                    OR Status = :onboardingStatus
+                    Status = 'Active'
+                    OR Status = 'Onboarding'
                 )
             )
         ];
@@ -376,15 +390,15 @@ public with sharing class NSP_AssetTriggerHelper {
             for(Asset newAsset :newList){
                 if(newAsset.opportunity__c!=null){
                     Asset oldAsset = oldMap != null ? oldMap.get(newAsset.Id):null;
-                    if ( ( Trigger.isInsert && newAsset.RecordTypeId == new_Asset_RT_ID && newAsset.NSP_AIMS_First_Pay_Date__c != NULL )
-                        || ( newAsset.NSP_AIMS_First_Pay_Date__c != oldAsset.NSP_AIMS_First_Pay_Date__c && newAsset.RecordTypeId == new_Asset_RT_ID && newAsset.NSP_AIMS_First_Pay_Date__c != NULL )
-                        || ( newAsset.opportunity__c != oldAsset.opportunity__c && newAsset.RecordTypeId == new_Asset_RT_ID && newAsset.NSP_AIMS_First_Pay_Date__c != NULL )
+                    if ( ( Trigger.isInsert && newAsset.RecordTypeId == NSP_AssetTriggerHelper.woAssetRecordTypeId && newAsset.NSP_AIMS_First_Pay_Date__c != NULL )
+                        || ( newAsset.NSP_AIMS_First_Pay_Date__c != oldAsset.NSP_AIMS_First_Pay_Date__c && newAsset.RecordTypeId == NSP_AssetTriggerHelper.woAssetRecordTypeId && newAsset.NSP_AIMS_First_Pay_Date__c != NULL )
+                        || ( newAsset.opportunity__c != oldAsset.opportunity__c && newAsset.RecordTypeId == NSP_AssetTriggerHelper.woAssetRecordTypeId && newAsset.NSP_AIMS_First_Pay_Date__c != NULL )
                         )
                     {
                         idSet.add(newAsset.opportunity__c);
-                    } else if ( ( Trigger.isInsert && newAsset.RecordTypeId == asset_RT_ID && newAsset.NSP_First_Pay_Date__c != NULL )
-                        || ( newAsset.NSP_First_Pay_Date__c != oldAsset.NSP_First_Pay_Date__c  && newAsset.RecordTypeId == asset_RT_ID && newAsset.NSP_First_Pay_Date__c != NULL )
-                        || ( newAsset.opportunity__c != oldAsset.opportunity__c  && newAsset.RecordTypeId == asset_RT_ID && newAsset.NSP_First_Pay_Date__c != NULL )
+                    } else if ( ( Trigger.isInsert && newAsset.RecordTypeId == NSP_AssetTriggerHelper.wxAssetRecordTypeId && newAsset.NSP_First_Pay_Date__c != NULL )
+                        || ( newAsset.NSP_First_Pay_Date__c != oldAsset.NSP_First_Pay_Date__c  && newAsset.RecordTypeId == NSP_AssetTriggerHelper.wxAssetRecordTypeId && newAsset.NSP_First_Pay_Date__c != NULL )
+                        || ( newAsset.opportunity__c != oldAsset.opportunity__c  && newAsset.RecordTypeId == NSP_AssetTriggerHelper.wxAssetRecordTypeId && newAsset.NSP_First_Pay_Date__c != NULL )
                         )
                     {
                         idwxset.add(newAsset.opportunity__c);
@@ -425,7 +439,11 @@ public with sharing class NSP_AssetTriggerHelper {
 		for(Asset newAsset : newList){
 			Asset oldAsset = oldMap != null ? oldMap.get(newAsset.Id):null;
 			
-			if(newAsset.Opportunity__c != null && newAsset.RecordTypeId == new_Asset_RT_ID && (Trigger.isInsert || newAsset.Opportunity__c != oldAsset.Opportunity__c) ){
+            if ( ( newAsset.Opportunity__c != null )
+                && ( newAsset.RecordTypeId == NSP_AssetTriggerHelper.woAssetRecordTypeId )
+                && ( Trigger.isInsert || ( newAsset.Opportunity__c != oldAsset.Opportunity__c ) )
+                )
+            {
 				opportunityIdSet.add(newAsset.Opportunity__c); // get opportunity id
 			}
 		}
@@ -444,8 +462,12 @@ public with sharing class NSP_AssetTriggerHelper {
 			for(Asset newAsset : newList){
 				Asset oldAsset = oldMap != null ? oldMap.get(newAsset.Id):null;
 				
-				if(newAsset.Opportunity__c != null && newAsset.RecordTypeId == new_Asset_RT_ID && (Trigger.isInsert || newAsset.Opportunity__c != oldAsset.Opportunity__c) 
-					&& opportunityIdToChecklistMap.containsKey(newAsset.Opportunity__c)){
+                if ( ( newAsset.Opportunity__c != null )
+                    && ( newAsset.RecordTypeId == NSP_AssetTriggerHelper.woAssetRecordTypeId )
+                    && ( Trigger.isInsert || ( newAsset.Opportunity__c != oldAsset.Opportunity__c ) )
+					&& opportunityIdToChecklistMap.containsKey( newAsset.Opportunity__c )
+                    )
+                {
 					NSP_Checklist__c objChecklist = opportunityIdToChecklistMap.get(newAsset.Opportunity__c);
 					newAsset.NSP_Projected_First_Pay_Date__c = objChecklist.NSP_Requested_First_Pay_Date__c; // assign value
 				}

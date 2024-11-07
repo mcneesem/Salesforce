@@ -186,6 +186,19 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
+                <componentName>VerifyPlatformEvents</componentName>
+                <identifier>c_VerifyPlatformEvents</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!$Permission.CustomPermission.Verify_Platform_Events}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
                 <componentInstanceProperties>
                     <name>tabs</name>
                     <value>sidebartabs</value>

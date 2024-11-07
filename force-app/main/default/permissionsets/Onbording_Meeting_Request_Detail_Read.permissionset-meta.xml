@@ -113,6 +113,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Onboarding_Meeting_Detail__c.Onboarding_Meeting_Request_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Onboarding_Meeting_Detail__c.Pay_Frequency__c</field>
         <readable>true</readable>
     </fieldPermissions>

@@ -263,7 +263,6 @@ export default class Nsp_accrualProfileRecordForm extends NavigationMixin(
   handleSubClientSelection({ detail }) {
     const selectedOption = { ...this.subClientMap[detail] };
 
-    selectedOption.label = this.appendInfoInOptionLabel(selectedOption);
     this.selectedSubClients = [...this.selectedSubClients, selectedOption];
     this.addParentAccount(selectedOption);
 
@@ -287,7 +286,6 @@ export default class Nsp_accrualProfileRecordForm extends NavigationMixin(
   handleAccountSelection({ detail }) {
     const selectedOption = this.accountMap[detail];
 
-    selectedOption.label = this.appendInfoInOptionLabel(selectedOption);
     this.selectedAccounts = [...this.selectedAccounts, selectedOption];
     this.accountSearchResults = this.accountSearchResults.filter(
       (option) => option.value !== detail
@@ -458,10 +456,6 @@ export default class Nsp_accrualProfileRecordForm extends NavigationMixin(
     if (!this.selectedAccountIds.includes(accId)) {
       this.selectedAccounts.push(this.getOption(accName, accId));
     }
-  }
-
-  appendInfoInOptionLabel({ label, info }) {
-    return info ? label + SEPARATOR + info : label;
   }
 
   updateApgRows(records) {

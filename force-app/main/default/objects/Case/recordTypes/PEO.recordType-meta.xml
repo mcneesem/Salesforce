@@ -3982,7 +3982,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Changed to Non-Exempt</fullName>
+            <fullName>Changed to Hourly Non-Exempt</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Changed to Salary Non-Exempt</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3991,6 +3995,10 @@
         </values>
         <values>
             <fullName>Client Confirmed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Client Unresponsive</fullName>
             <default>false</default>
         </values>
         <values>

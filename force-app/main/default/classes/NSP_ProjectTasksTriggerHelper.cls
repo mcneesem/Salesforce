@@ -1,5 +1,5 @@
 public class NSP_ProjectTasksTriggerHelper {
-    // test w/ NSP_ProjectTasksTriggerHelperTest, NSP_Implprofile_ServiceHelperUpdate_Test (81%)
+    // test w/ NSP_ProjectTasksTriggerHelperTest, NSP_Implprofile_ServiceHelperUpdate_Test (79%)
 
     private static final String HUNDRED_PERCENT =  '100%';
     private static final String COBRA_MM ='NSP_COBRA';
@@ -277,6 +277,7 @@ public class NSP_ProjectTasksTriggerHelper {
                                     eachProjecttask.pse__Hierarchy_Depth__c = 1;
                                     eachProjecttask.pse__Milestone__c = parentTask.pse__Milestone__c;
                                     eachProjecttask.pse__Order__c =parentTask.pse__Order__c;
+                                    eachProjecttask.Task_Order__c =parentTask.Task_Order__c;
                                     newProjectTasks.add(eachProjecttask);
                                 }
                             }
@@ -397,6 +398,7 @@ public class NSP_ProjectTasksTriggerHelper {
                 eachProjecttask.Name=pta1.NSP_Task_Name__c;
                 eachProjecttask.pse__Hierarchy_Depth__c =1;
                 eachProjecttask.pse__Order__c=137;
+                eachProjecttask.Task_Order__c=137;
                 //
                 cobraChildProjectTaskList.add(eachProjecttask);
                 pse__Project_Task__c eachProjecttask1 = createProjectTaskfromParent(pt);
@@ -404,6 +406,7 @@ public class NSP_ProjectTasksTriggerHelper {
                 eachProjecttask1.Name=pta2.NSP_Task_Name__c;
                 eachProjecttask1.pse__Hierarchy_Depth__c =2;
                 eachProjecttask1.pse__Order__c=138;
+                eachProjecttask1.Task_Order__c=138;
                 cobraChildProjectTaskList.add(eachProjecttask1);
                 //
                 pse__Project_Task__c eachProjecttask2 = createProjectTaskfromParent(pt);
@@ -411,6 +414,7 @@ public class NSP_ProjectTasksTriggerHelper {
                 eachProjecttask2.Name=pta3.NSP_Task_Name__c;
                 eachProjecttask2.pse__Hierarchy_Depth__c =3;
                 eachProjecttask2.pse__Order__c=139;
+                eachProjecttask2.Task_Order__c=139;
                 cobraChildProjectTaskList.add(eachProjecttask2);
             }
         }
@@ -1164,8 +1168,6 @@ public class NSP_ProjectTasksTriggerHelper {
         Map<Id, Id> mapofDiscoveryProjectTask = new Map<Id,Id>();
         Map<Id, Id> mapOfDiscoveryProjectTaskOwner = new Map<Id, Id>();
         Set<Id>hcmProjectSet = new Set<Id>();
-        Set<Id>newTaxIMPLSubProjectSet =new Set<Id>();
-        Set<Id>wXWADataMigrationSubProject =new Set<Id>();
         Set<Id> goLiveProjectTaskIds = new Set<Id>();
         List<Id> accountIdList = new List<Id>();
         List<string> peoTerminationTaskList = System.Label.PEO_Termination_Tasks.split(';');
@@ -1264,10 +1266,6 @@ public class NSP_ProjectTasksTriggerHelper {
                     if(oProjectTask.Name == NSP_ServiceConstants.PROJECT_TASK_DISCOVERY){
                         hcmProjectSet.add(oProjectTask.Id);
                     }
-                    if(oProjectTask.Name == NSP_ServiceConstants.CONFIGURATION_TASK){
-                        newTaxIMPLSubProjectSet.add(oProjectTask.Id);
-                        wXWADataMigrationSubProject.add(oProjectTask.Id);
-                    }
                 }
                 if ( oldMapProjecttasks.get(oProjectTask.Id).OwnerId != oProjectTask.OwnerId
                     && oProjectTask.OwnerId.getsobjecttype() == User.sobjecttype
@@ -1310,14 +1308,6 @@ public class NSP_ProjectTasksTriggerHelper {
             List<NSP_ProjectTaskQueueEvent__e> lstTaskQueueEvent = new List<NSP_ProjectTaskQueueEvent__e>();
             lstTaskQueueEvent.add(new NSP_ProjectTaskQueueEvent__e(NSP_Input_Parameters__c = JSON.serialize(mapInputParams), NSP_MethodName__c = 'createPTAIfOwnerIsChanged', NSP_UserId__c = UserInfo.getUserId()));
             List<Database.SaveResult> saveResults = EventBus.publish(lstTaskQueueEvent);
-        }
-        // Added as part of STY-02157
-        if(!newTaxIMPLSubProjectSet.isEmpty() && !System.isFuture() && !System.isBatch()){
-            createNewTaxIMPLSubProject(newTaxIMPLSubProjectSet);
-        }
-        // Added as part of STY-02158
-        if(!wXWADataMigrationSubProject.isEmpty() && !System.isFuture() && !System.isBatch()){
-            createWXWADataMigrationSubProject(wXWADataMigrationSubProject);
         }
         if(sProjectTasksIds.size() > 0){
             sendNotificationToDependentResource(sProjectTasksIds);
@@ -2211,275 +2201,6 @@ public class NSP_ProjectTasksTriggerHelper {
     }
 
     /***********************************************************************************************
-    * MethodName: createNewTaxIMPLSubProject
-    * Description : Create New Tax IMPL sub project
-    * Story : STY-02157
-    * Params: List<pse__Project_Task__c> projectTaskList
-    * Params: Map<Id,pse__Project_Task__c> oldProjectTaskMap
-    * ********************************************************************************************/
-    @future
-    public static void createNewTaxIMPLSubProject(Set<Id> projectTaskIdSet){
-        try{
-            Id templateProjectId;
-            Date startDateForProject;
-            String projectName;
-            List<pse__Proj__c> childProjectList = new List<pse__Proj__c>();
-            List<pse__Proj__c> projListToUpdate = new List<pse__Proj__c>();
-            List<pse__Project_Task__c> projectTaskList = new List<pse__Project_Task__c>();
-            Set<Id> parentProjectIdSet = new Set<Id>();
-            Set<Id> newProjectIdSet = new Set<Id>();
-            Map<Id, Id> projectIdWithAccountIdMap = new Map<Id, Id>();
-                        List<pse.CreateProjectFromTemplateService.CreateProjectFromTemplateRequest> projRequestList = new List<pse.CreateProjectFromTemplateService.CreateProjectFromTemplateRequest>();
-            pse.CreateProjectFromTemplateService.CreateProjectFromTemplateRequest projRequest;
-            
-            //Querying Project Template            
-            List<String> projectFields = new List<String>{'Id','Name','Project_Coordinator__c','Project_Implementer__c'};
-            String query = new NSP_QueryBuilder('pse__Proj__c', projectFields)
-                            .addFilter('Name', NSP_ServiceConstants.NEW_TAX_IMPL_PROJECT)
-                            .addFilter('pse__Is_Template__c', true).addLimit(1).build();
-            pse__Proj__c projectTemplate = Database.query(query);
-            
-            //To get Project Tasks
-            for(pse__Project_Task__c projectTask : [SELECT Id, Name, pse__Status__c, pse__Project__c, pse__Project__r.Name,
-                                                    pse__Project__r.TemplateName__c,
-                                                    pse__Project__r.pse__Account__c
-                                                    FROM pse__Project_Task__c
-                                                    WHERE Id IN: projectTaskIdSet
-                                                    AND pse__Project__c != null
-                                                    AND pse__Project__r.TemplateName__c =:NSP_ServiceConstants.HCM_PROJECT_NAME 
-                                                    AND Name =: NSP_ServiceConstants.CONFIGURATION_TASK
-                                                    AND pse__Status__c =: NSP_ServiceConstants.TASKCOMPLETE
-                                                    ]){
-                if(projectTask.pse__Status__c == NSP_ServiceConstants.TASKCOMPLETE){
-                    projectTaskList.add(projectTask);
-
-                    if(projectTemplate != null){
-                        templateProjectId = Id.valueOf(projectTemplate.Id);//Template project Id used to clone the new project.
-                        startDateForProject = Date.Today();// Provide a project start date.
-                        projectName = projectTemplate.Name;
-                    }
-                    
-                    if(templateProjectId != null){
-                        projRequest = NSP_CreateProjectUsingKey.createProjectFromTemplate(templateProjectId, startDateForProject, projectName);
-                        projRequestList.add(projRequest);
-                        parentProjectIdSet.add(projectTask.pse__Project__c);
-                        projectIdWithAccountIdMap.put(projectTask.pse__Project__c, projectTask.pse__Project__r.pse__Account__c);
-                                                                                    }
-                }
-                
-            }
-
-            //Getting list of child project 
-            if(!parentProjectIdSet.isEmpty()){            
-                List<String> projFields = new List<String>{'Id','Name'};
-                String queryProject = new NSP_QueryBuilder('pse__Proj__c', projFields)
-                    .addFilter('pse__Parent_Project__c', new List<Id>(parentProjectIdSet), NSP_QueryBuilder.Operator.INCLUDES)
-                    .addContainsFilter('Name', NSP_ServiceConstants.NEW_TAX_IMPL_PROJECT).build();
-                childProjectList = (List<pse__Proj__c>)Database.query(queryProject);
-            }
-            
-            //send email alert when confiuration task status is complete
-            if(!projectTaskList.isEmpty() && childProjectList.size() == 0){
-                configurationTaskCompletionEmail(projectTaskList);
-            }
-            
-            // Creating Project and Deleting Budget
-            if(!projRequestList.isEmpty() && childProjectList.size() == 0){
-                newProjectIdSet = NSP_CreateProjectUsingKey.createProjectAndDeleteBudget(projRequestList);
-            }
-
-            //Linking newly created project with parent project
-            if(!newProjectIdSet.isEmpty() && !parentProjectIdSet.isEmpty() && projectTemplate != null && childProjectList.size() == 0){
-                for(Id newProjectId : newProjectIdSet){
-                    projListToUpdate = linkProjectWithParentProject(newProjectId, parentProjectIdSet, projectIdWithAccountIdMap, projectTemplate);
-                }
-            }
-            if ( !projListToUpdate.isEmpty() && ( childProjectList.size() == 0 ) ) {
-                Database.SaveResult[] projectUpdateList = Database.update( projListToUpdate , false );
-                NSP_ErrorLogHandler.logResults(
-                    NSP_ProjectTasksTriggerHelper.class.getName() ,
-                    'createNewTaxIMPLSubProject' ,
-                    projectUpdateList
-                );
-            }
-        } catch (Exception e ) {
-            NSP_ProjectTasksTriggerHelper.handleException(
-                e ,
-                'createNewTaxIMPLSubProject'
-            );
-        }
-    }
-
-        /***********************************************************************************************
-    * MethodName: createWXWADataMigrationSubProject
-    * Description : Create New Tax IMPL sub project
-    * Story : STY-02158
-    * Params: List<pse__Project_Task__c> projectTaskList
-    * Params: Map<Id,pse__Project_Task__c> oldProjectTaskMap
-    * ********************************************************************************************/
-    @future
-    public static void createWXWADataMigrationSubProject(Set<Id> projectTaskIdSet){
-        try{
-            Id templateProjectId;
-            Date startDateForProject;
-            String projectName;
-            List<pse__Proj__c> childProjectList = new List<pse__Proj__c>();
-            Set<Id> newProjectIdSet = new Set<Id>();
-            List<pse__Proj__c> projListToUpdate = new List<pse__Proj__c>();
-            Set<Id> parentProjectIdSet = new Set<Id>();
-            Map<Id, Id> projectIdWithAccountIdMap = new Map<Id, Id>();
-                        List<pse.CreateProjectFromTemplateService.CreateProjectFromTemplateRequest> projRequestList = new List<pse.CreateProjectFromTemplateService.CreateProjectFromTemplateRequest>();
-            pse.CreateProjectFromTemplateService.CreateProjectFromTemplateRequest projRequest;
-            
-            //Querying Project Template            
-            List<String> projectFields = new List<String>{'Id','Name','Project_Coordinator__c','Project_Implementer__c'};
-            String query = new NSP_QueryBuilder('pse__Proj__c', projectFields)
-                            .addFilter('Name', NSP_ServiceConstants.WX_WA_DATA_MIGRATION_PROJECT)
-                            .addFilter('pse__Is_Template__c', true).addLimit(1).build();
-            pse__Proj__c projectTemplate = Database.query(query);
-            
-            //To get Project Tasks
-            for(pse__Project_Task__c projectTask : [SELECT Id, Name, pse__Status__c, pse__Project__c, pse__Project__r.Name,
-                                                    pse__Project__r.TemplateName__c,
-                                                    pse__Project__r.pse__Account__c
-                                                    FROM pse__Project_Task__c
-                                                    WHERE Id IN: projectTaskIdSet
-                                                    AND pse__Project__c != null
-                                                    AND pse__Project__r.TemplateName__c =:NSP_ServiceConstants.HCM_PROJECT_NAME 
-                                                    AND Name =: NSP_ServiceConstants.CONFIGURATION_TASK
-                                                    AND pse__Status__c =: NSP_ServiceConstants.TASKCOMPLETE
-                                                    ]){
-                if(projectTask.pse__Status__c == NSP_ServiceConstants.TASKCOMPLETE){
-
-                    if(projectTemplate != null){
-                        templateProjectId = Id.valueOf(projectTemplate.Id);//Template project Id used to clone the new project.
-                        startDateForProject = Date.Today();// Provide a project start date.
-                        projectName = projectTemplate.Name;
-                    }
-                    
-                    if(templateProjectId != null){
-                        projRequest = NSP_CreateProjectUsingKey.createProjectFromTemplate(templateProjectId, startDateForProject, projectName);
-                        projRequestList.add(projRequest);
-                        parentProjectIdSet.add(projectTask.pse__Project__c);
-                        projectIdWithAccountIdMap.put(projectTask.pse__Project__c, projectTask.pse__Project__r.pse__Account__c);
-                                                                                    }
-                }
-                
-            }
-
-            //Getting list of child project
-            if(!parentProjectIdSet.isEmpty()){            
-                List<String> projFields = new List<String>{'Id','Name'};
-                String queryProject = new NSP_QueryBuilder('pse__Proj__c', projFields)
-                    .addFilter('pse__Parent_Project__c', new List<Id>(parentProjectIdSet), NSP_QueryBuilder.Operator.INCLUDES)
-                    .addContainsFilter('Name', NSP_ServiceConstants.WX_WA_DATA_MIGRATION_PROJECT).build();
-                childProjectList = (List<pse__Proj__c>)Database.query(queryProject);
-            }
-
-            // Creating Project and Deleting Budget
-            if(!projRequestList.isEmpty() && childProjectList.size() == 0){
-                newProjectIdSet = NSP_CreateProjectUsingKey.createProjectAndDeleteBudget(projRequestList);
-            }
-
-            //Linking newly created project with parent project
-            if(!newProjectIdSet.isEmpty() && !parentProjectIdSet.isEmpty() && projectTemplate != null && childProjectList.size() == 0){
-                for(Id newProjectId : newProjectIdSet){
-                    projListToUpdate = linkProjectWithParentProject(newProjectId, parentProjectIdSet, projectIdWithAccountIdMap, projectTemplate);
-                }
-            }
-            if ( !projListToUpdate.isEmpty() && !newProjectIdSet.isEmpty() && ( childProjectList.size() == 0 ) ) {
-                Database.SaveResult[] projectUpdateList = Database.update( projListToUpdate , false );
-                wxwaDataMigrationProjectCreationEmail( newProjectIdSet );
-                NSP_ErrorLogHandler.logResults(
-                    NSP_ProjectTasksTriggerHelper.class.getName() ,
-                    'createWXWADataMigrationSubProject' ,
-                    projectUpdateList
-                );
-            }
-        } catch ( Exception e ) {
-            NSP_ProjectTasksTriggerHelper.handleException(
-                e ,
-                'createWXWADataMigrationSubProject'
-            );
-        }
-    }
-
-    /***********************************************************************************************
-    * MethodName: linkProjectWithParentProject
-    * Description : Link New Tax IMPL project with Parent Project
-    * Story : STY-02157
-    * Params: Id projectId, Id parentId
-    * ********************************************************************************************/
-    public static List<pse__Proj__c> linkProjectWithParentProject(Id projectId, Set<Id> parentProjectIdSet, Map<Id, Id> projectIdWithAccountIdMap, pse__Proj__c projTemplate){
-        List<pse__Proj__c> projectList = new List<pse__Proj__c>();
-        for(Id parentProjectId : parentProjectIdSet){
-            pse__Proj__c newProject = new pse__Proj__c();
-            newProject.Id = projectId;
-            newProject.pse__Parent_Project__c = parentProjectId;
-                        newProject.pse__Account__c = projectIdWithAccountIdMap.get(parentProjectId);
-                            newProject.pse__End_Date__c = Date.Today().addDays(90);
-            if(projTemplate.Project_Implementer__c != null){
-                newProject.Project_Implementer__c = projTemplate.Project_Implementer__c;
-            }
-            if(projTemplate.Project_Coordinator__c != null){
-                newProject.Project_Coordinator__c = projTemplate.Project_Coordinator__c;
-            }
-            projectList.add(newProject);  
-        }
-        return projectList;
-    }
-
-    /***********************************************************************************************
-    * MethodName: configurationTaskCompletionEmail
-    * Description : Send Email when iSolved HCM Project Configuration Task is complete 
-    * Story : STY-02157
-    * Params: List<pse__Project_Task__c> ProjectTaskList
-    * ********************************************************************************************/
-    public static void configurationTaskCompletionEmail(List<pse__Project_Task__c> ProjectTaskList){
-        List<Messaging.SingleEmailMessage> lstEmailMessages = new List<Messaging.SingleEmailMessage>();
-        List<String> emailTempFields = new List<String>{'Id'};      
-        EmailTemplate emailTemplate = NSP_sObjectSelector.selectByDeveloperName(emailTempFields, 'NSP_Isolved_HCM_Configuration_Task_Completion_Email');
-        List<String> sendToList = new List<String>{System.Label.HCM_Case_Email_Send_To_Address,System.Label.NSP_Tes_Tax_Email_Address};
-            for(pse__Project_Task__c projectTaskRec: [SELECT Id FROM pse__Project_Task__c WHERE Id IN: ProjectTaskList]){
-                Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
-                email= Messaging.renderStoredEmailTemplate(emailTemplate.Id, UserInfo.getUserId() , projectTaskRec.Id);
-                email.setTemplateId(emailTemplate.Id); 
-                email.setToAddresses(sendToList);
-                email.setWhatId(projectTaskRec.Id);  
-                email.setSaveAsActivity(false);
-                lstEmailMessages.add(email);
-            }
-        if ( !lstEmailMessages.isEmpty() && !Test.isRunningTest() ) {
-            NSP_ProjectTasksTriggerHelper.sendSingleEmailMessages( lstEmailMessages );
-        }
-    }
-
-    /***********************************************************************************************
-    * MethodName: wxwaDataMigrationProjectCreationEmail
-    * Description : Send Email when WX/WA Data Migration Project is created 
-    * Story : STY-02158
-    * Params: Set<Id> projectIdSet
-    * ********************************************************************************************/
-    public static void wxwaDataMigrationProjectCreationEmail(Set<Id> projectIdSet){
-        List<Messaging.SingleEmailMessage> lstEmailMessages = new List<Messaging.SingleEmailMessage>();
-        List<String> emailTempFields = new List<String>{'Id'};      
-        EmailTemplate emailTemplate = NSP_sObjectSelector.selectByDeveloperName(emailTempFields, 'NSP_WXWA_Data_Migration_Project_Creation_Email');
-        List<String> sendToList = new List<String>{System.Label.NSP_TES_Data_Team_Email_Address};
-            for(pse__Proj__c projectRec: [SELECT Id FROM pse__Proj__c WHERE Id IN: projectIdSet]){
-                Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
-                email= Messaging.renderStoredEmailTemplate(emailTemplate.Id, UserInfo.getUserId() , projectRec.Id);
-                email.setTemplateId(emailTemplate.Id); 
-                email.setToAddresses(sendToList);
-                email.setWhatId(projectRec.Id);  
-                email.setSaveAsActivity(false);
-                lstEmailMessages.add(email);
-            }
-        if ( !lstEmailMessages.isEmpty() && !Test.isRunningTest() ) {
-            NSP_ProjectTasksTriggerHelper.sendSingleEmailMessages( lstEmailMessages );
-        }
-    }
-
-    /***********************************************************************************************
     * MethodName: sendEmailToProjectResource
     * Description : Method to send an email to proj resource when higher peer order proj task is completed.
     * Params: List<pse__Project_Task__c> newProjectTaskList, Map<Id, pse__Project_Task__c> projectTaskOldMap
@@ -2494,14 +2215,14 @@ public class NSP_ProjectTasksTriggerHelper {
         Map<Id, Map<String, String>> mapOfProjAndResourceEmail = new Map<Id, Map<String, String>>();
         
         try{
-            for(pse__Project_Task__c projTask: [SELECT Id, Name, pse__Order__c, pse__Status__c, pse__Project__r.TemplateName__c, Responsible_Party__c 
+            for(pse__Project_Task__c projTask: [SELECT Id, Name, pse__Order__c, Task_Order__c, pse__Status__c, pse__Project__r.TemplateName__c, Responsible_Party__c 
                                                 FROM pse__Project_Task__c WHERE Id IN: projectTaskIdSet AND pse__Project__r.TemplateName__c IN :retTemplateNames]){
                 
                                                                 mapOfProjAndProjTask.put(projTask.pse__Project__c, projTask);
                     
             }
             
-            List<String> projTaskFields = new List<String>{'Id', 'Name', 'pse__Project__c', 'pse__Order__c', 'Responsible_Party__c'};
+            List<String> projTaskFields = new List<String>{'Id', 'Name', 'pse__Project__c', 'pse__Order__c','Task_Order__c', 'Responsible_Party__c'};
                 
                 //Get a list of all the project task associated with the parent project
             String query = new NSP_QueryBuilder('pse__Project_Task__c', projTaskFields)
@@ -2521,6 +2242,7 @@ public class NSP_ProjectTasksTriggerHelper {
             if(!listOfAllPrjTaskForAProject.isEmpty() && !mapOfProjAndResourceEmail.isEmpty()){        
                 for(pse__Project_Task__c projTask : listOfAllPrjTaskForAProject){
                     if(projTask.pse__Order__c == mapOfProjAndProjTask.get(projTask.pse__Project__c).pse__Order__c+1 &&
+                        projTask.Task_Order__c == mapOfProjAndProjTask.get(projTask.pse__Project__c).Task_Order__c+1 &&
                         projTask.Responsible_Party__c != mapOfProjAndProjTask.get(projTask.pse__Project__c).Responsible_Party__c &&
                         mapOfProjAndResourceEmail.containsKey(projTask.pse__Project__c) && 
                         mapOfProjAndResourceEmail.get(projTask.pse__Project__c).containsKey(projTask.Responsible_Party__c)){
