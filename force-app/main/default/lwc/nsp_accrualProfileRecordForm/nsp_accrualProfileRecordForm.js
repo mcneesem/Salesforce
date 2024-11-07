@@ -187,8 +187,8 @@ export default class Nsp_accrualProfileRecordForm extends NavigationMixin(
   })
   getAttachedFileNames({ data, error }) {
     if(data){
-      data.forEach((fileName)=>{
-        this.uploadedAttachments.push(fileName);
+      data.forEach((attachedFile)=>{
+        this.uploadedAttachments.push(attachedFile);
       })
     }
     if(error){
@@ -403,7 +403,11 @@ export default class Nsp_accrualProfileRecordForm extends NavigationMixin(
     // Get the list of uploaded files
     const uploadedFiles = detail.files;
     uploadedFiles.forEach((uploadedFile) => {
-      this.uploadedAttachments.push(uploadedFile.name);
+      let attachedFile={
+        fileId : uploadedFile.documentId,
+        fileName : uploadedFile.name
+      };
+      this.uploadedAttachments.push(attachedFile);
       if (!this.recordId) {
         this.unlinkedFiles.push(uploadedFile.documentId);
       }
@@ -411,6 +415,11 @@ export default class Nsp_accrualProfileRecordForm extends NavigationMixin(
 
     this.showSuccessToast('No. of files uploaded : ' + uploadedFiles.length);
     this.filesUploadedCount = uploadedFiles.length;
+  }
+
+  navigateToFile(event) {
+    let fileId = event.target.dataset.value;
+    this.navigateToNewTab(fileId);
   }
 
   populateObjectInfoData(data) {
@@ -779,7 +788,7 @@ export default class Nsp_accrualProfileRecordForm extends NavigationMixin(
     this.navigate(this.recordId);
   }
 
-  navigate(recordId) {
+  getNavigateConfig(recordId){
     const config = {
       type: 'standard__recordPage',
       attributes: {
@@ -787,11 +796,27 @@ export default class Nsp_accrualProfileRecordForm extends NavigationMixin(
         actionName: 'view',
       },
     };
+    return config;
+  }
 
-    this[NavigationMixin.GenerateUrl](config)
-    .then((url) => {
-      window.location.replace(url);
-    });
+  navigate(recordId) {
+    const config = this.getNavigateConfig(recordId);
+    if( config !== undefined && config !== null ){
+      this[NavigationMixin.GenerateUrl](config)
+      .then((url) => {
+        window.location.replace(url);
+      });
+    }
+  }
+
+  navigateToNewTab(recordId) {
+    const config = this.getNavigateConfig(recordId);
+    if( config !== undefined && config !== null ){
+      this[NavigationMixin.GenerateUrl](config)
+      .then((url) => {
+        window.open(url);
+      });
+    }
   }
 
   showSuccessToast(message) {
