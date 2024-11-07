@@ -1,11 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>61.0</apiVersion>
+    <assignments>
+        <name>Set_Element_Create_Child_OMR_Records_from_1st_Child</name>
+        <label>Set Element : Create_Child_OMR_Records_from_1st_Child</label>
+        <locationX>770</locationX>
+        <locationY>492</locationY>
+        <assignmentItems>
+            <assignToReference>FaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Create_Child_OMR_Records_from_1st_Child</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
     <decisions>
         <name>Child_Is_the_Next_Matching_Date_Before_Entered_End_Date</name>
         <label>Child Is the Next Matching Date Before Entered End Date?</label>
-        <locationX>176</locationX>
-        <locationY>323</locationY>
+        <locationX>374</locationX>
+        <locationY>276</locationY>
         <defaultConnector>
             <targetReference>Create_Child_OMR_Records_from_1st_Child</targetReference>
         </defaultConnector>
@@ -31,12 +47,6 @@
         <expression>IF((
 {!$Record.Date_Valid__c} + ({!$Record.Day_of_Week_Number__c} - MOD({!$Record.Date_Valid__c} - DATE( 1900, 1, 7 ), 7 ) ) + IF( MOD({!$Record.Date_Valid__c} - DATE( 1900, 1, 7 ), 7 ) &gt;= {!$Record.Day_of_Week_Number__c}, 7, 0)) &lt;= {!$Record.End__c}, {!$Record.Date_Valid__c} + ({!$Record.Day_of_Week_Number__c} - MOD({!$Record.Date_Valid__c} - DATE( 1900, 1, 7 ), 7 ) ) + IF( MOD({!$Record.Date_Valid__c} - DATE( 1900, 1, 7 ), 7 ) &gt;= {!$Record.Day_of_Week_Number__c}, 7, 0), null)</expression>
     </formulas>
-    <formulas>
-        <name>ChildNextDateThatMatchesSelectedDayOfWeek</name>
-        <dataType>Date</dataType>
-        <expression>IF((
-{!$Record.Date_Valid__c} + ({!$Record.Selected_Day_of_Week_Number__c} - MOD({!$Record.Date_Valid__c} - DATE( 1900, 1, 7 ), 7 ) ) + IF( MOD({!$Record.Date_Valid__c} - DATE( 1900, 1, 7 ), 7 ) &gt;= {!$Record.Selected_Day_of_Week_Number__c}, 7, 0)) &lt;= {!$Record.Parent_OMR__r.End__c}, {!$Record.Date_Valid__c} + ({!$Record.Selected_Day_of_Week_Number__c} - MOD({!$Record.Date_Valid__c} - DATE( 1900, 1, 7 ), 7 ) ) + IF( MOD({!$Record.Date_Valid__c} - DATE( 1900, 1, 7 ), 7 ) &gt;= {!$Record.Selected_Day_of_Week_Number__c}, 7, 0), null)</expression>
-    </formulas>
     <interviewLabel>Create OMR Blocks Child OMRs from 1st Child {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Create OMR Blocks Child OMRs from 1st Child</label>
     <processMetadataValues>
@@ -61,8 +71,11 @@
     <recordCreates>
         <name>Create_Child_OMR_Records_from_1st_Child</name>
         <label>Create Child OMR Records from 1st Child</label>
-        <locationX>308</locationX>
-        <locationY>431</locationY>
+        <locationX>506</locationX>
+        <locationY>384</locationY>
+        <faultConnector>
+            <targetReference>Set_Element_Create_Child_OMR_Records_from_1st_Child</targetReference>
+        </faultConnector>
         <inputAssignments>
             <field>Date_Valid__c</field>
             <value>
@@ -129,9 +142,6 @@
     <start>
         <locationX>50</locationX>
         <locationY>0</locationY>
-        <connector>
-            <targetReference>Child_Is_the_Next_Matching_Date_Before_Entered_End_Date</targetReference>
-        </connector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Parent__c</field>
@@ -142,7 +152,45 @@
         </filters>
         <object>Onboarding_Meeting_Request__c</object>
         <recordTriggerType>Create</recordTriggerType>
+        <scheduledPaths>
+            <connector>
+                <targetReference>Child_Is_the_Next_Matching_Date_Before_Entered_End_Date</targetReference>
+            </connector>
+            <pathType>AsyncAfterCommit</pathType>
+        </scheduledPaths>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
+    <subflows>
+        <name>Insperity_Fault_Handler_Subflow</name>
+        <label>Insperity Fault Handler Subflow</label>
+        <locationX>770</locationX>
+        <locationY>600</locationY>
+        <flowName>Insperity_Fault_Handler_Subflow</flowName>
+        <inputAssignments>
+            <name>faultElement</name>
+            <value>
+                <elementReference>FaultElement</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultFlow</name>
+            <value>
+                <stringValue>Create_OMR_Blocks_Child_OMRs_from_1st_Child</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultMessage</name>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <variables>
+        <name>FaultElement</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
 </Flow>

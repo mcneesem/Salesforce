@@ -10,9 +10,8 @@
     <permissionSets>Implementation_Profile_Read_Only</permissionSets>
     <permissionSets>NSP_Payroll_Data_Sheet_Read_Only</permissionSets>
     <permissionSets>Named_Account_Group_Edit_Access</permissionSets>
-    <permissionSets>Request_CTM_and_Employee_Orientation_Meeting_Detail</permissionSets>
-    <permissionSets>Request_Employee_Orientation_Meeting_Detail</permissionSets>
-    <permissionSets>Update_Final_OMR_Meeting_Info</permissionSets>
+    <permissionSets>Request_CTM_and_Employee_Orientation_Meeting</permissionSets>
+    <permissionSets>Request_Employee_Orientation_Meeting_Revised</permissionSets>
     <permissionSets>Required_Reporting_Fields</permissionSets>
     <permissionSets>Traction_Complete_Fields_Edit_Access</permissionSets>
     <status>Updated</status>
