@@ -301,8 +301,8 @@ export default class WizardSurveyPageFilters extends LightningElement {
                     this.template.querySelector('div.NSP_ServiceLengthSelection__c').style.display = 'none';
                     this.template.querySelector('lightning-input-field.NSP_ServiceLengthSelection__c').value != null ? this.template.querySelector('lightning-input-field.NSP_ServiceLengthSelection__c').value = '' : '';
                 }
-                if (this.template.querySelector('lightning-checkbox-group.' + fieldName) != null) {
-                    this.template.querySelector('lightning-checkbox-group.' + fieldName).value = null;
+                if (this.template.querySelector('lightning-checkbox-group[name="NSP_ServiceLengthSelection__c"]') != null) {
+                    this.template.querySelector('lightning-checkbox-group[name="NSP_ServiceLengthSelection__c"]').value = null;
                 }
 
                 if (!this.isOnloaded && this.enableFilter && this.template.querySelector('lightning-input-field.NSP_ServiceLengthSelection__c') != null) {
