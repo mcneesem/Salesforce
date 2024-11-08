@@ -3,15 +3,15 @@
     <actionCalls>
         <name>Merge_Project_Apex_Action</name>
         <label>Merge Project Apex Action</label>
-        <locationX>474</locationX>
-        <locationY>2378</locationY>
+        <locationX>974</locationX>
+        <locationY>2420</locationY>
         <actionName>NSP_MergeProjectController</actionName>
         <actionType>apex</actionType>
         <connector>
             <targetReference>NavigateToSurvivor</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>CreateLog</targetReference>
+            <targetReference>Set_Fault_Element_Merge_Project_Apex_Action</targetReference>
         </faultConnector>
         <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
@@ -20,12 +20,14 @@
                 <elementReference>varProjectIds</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>NSP_MergeProjectController</nameSegment>
+        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <name>NavigateToSurvivor</name>
         <label>NavigateToSurvivor</label>
-        <locationX>474</locationX>
-        <locationY>2498</locationY>
+        <locationX>974</locationX>
+        <locationY>2528</locationY>
         <actionName>c:NSP_FlowNavigatetoRecord</actionName>
         <actionType>component</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -35,14 +37,16 @@
                 <elementReference>varSurvivorRecordId</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>c:NSP_FlowNavigatetoRecord</nameSegment>
         <storeOutputAutomatically>true</storeOutputAutomatically>
+        <versionSegment>1</versionSegment>
     </actionCalls>
     <apiVersion>55.0</apiVersion>
     <assignments>
         <name>ChildProjectAbstractAssign</name>
         <label>ChildProjectAbstractAssign</label>
-        <locationX>1810</locationX>
-        <locationY>463</locationY>
+        <locationX>1708</locationX>
+        <locationY>458</locationY>
         <assignmentItems>
             <assignToReference>varChildProject</assignToReference>
             <operator>Assign</operator>
@@ -57,8 +61,8 @@
     <assignments>
         <name>ChildProjectAbstractAssign_0</name>
         <label>ChildProjectAbstractAssign</label>
-        <locationX>606</locationX>
-        <locationY>1406</locationY>
+        <locationX>1106</locationX>
+        <locationY>1538</locationY>
         <assignmentItems>
             <assignToReference>varChildProject</assignToReference>
             <operator>Assign</operator>
@@ -73,8 +77,8 @@
     <assignments>
         <name>childProjectDefaultSelectedProject</name>
         <label>childProjectDefaultSelectedProject</label>
-        <locationX>1109</locationX>
-        <locationY>541</locationY>
+        <locationX>1166</locationX>
+        <locationY>782</locationY>
         <assignmentItems>
             <assignToReference>varChildProject</assignToReference>
             <operator>Assign</operator>
@@ -89,8 +93,8 @@
     <assignments>
         <name>ConfirmationStage</name>
         <label>ConfirmationStage</label>
-        <locationX>474</locationX>
-        <locationY>2018</locationY>
+        <locationX>974</locationX>
+        <locationY>2096</locationY>
         <assignmentItems>
             <assignToReference>$Flow.CurrentStage</assignToReference>
             <operator>Assign</operator>
@@ -105,8 +109,8 @@
     <assignments>
         <name>IntialStage</name>
         <label>IntialStage</label>
-        <locationX>1797</locationX>
-        <locationY>206</locationY>
+        <locationX>2243</locationX>
+        <locationY>134</locationY>
         <assignmentItems>
             <assignToReference>$Flow.CurrentStage</assignToReference>
             <operator>Assign</operator>
@@ -121,8 +125,8 @@
     <assignments>
         <name>Invoice_Ready</name>
         <label>Invoice Ready</label>
-        <locationX>1750</locationX>
-        <locationY>806</locationY>
+        <locationX>2250</locationX>
+        <locationY>674</locationY>
         <assignmentItems>
             <assignToReference>varGenericError</assignToReference>
             <operator>Assign</operator>
@@ -131,14 +135,15 @@
             </value>
         </assignmentItems>
         <connector>
+            <isGoTo>true</isGoTo>
             <targetReference>Error_generic</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Invoice_Ready_0</name>
         <label>Invoice Ready</label>
-        <locationX>694</locationX>
-        <locationY>1646</locationY>
+        <locationX>1194</locationX>
+        <locationY>1754</locationY>
         <assignmentItems>
             <assignToReference>varGenericError</assignToReference>
             <operator>Assign</operator>
@@ -147,14 +152,15 @@
             </value>
         </assignmentItems>
         <connector>
+            <isGoTo>true</isGoTo>
             <targetReference>Error_generic</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Is_Different_Record_Type</name>
         <label>Is Different Record Type</label>
-        <locationX>313</locationX>
-        <locationY>1198</locationY>
+        <locationX>314</locationX>
+        <locationY>1322</locationY>
         <assignmentItems>
             <assignToReference>varGenericError</assignToReference>
             <operator>Assign</operator>
@@ -163,14 +169,15 @@
             </value>
         </assignmentItems>
         <connector>
+            <isGoTo>true</isGoTo>
             <targetReference>Error_generic</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>NSP_Add_projectIds_to_list</name>
         <label>Add projectIds to list</label>
-        <locationX>474</locationX>
-        <locationY>2258</locationY>
+        <locationX>974</locationX>
+        <locationY>2312</locationY>
         <assignmentItems>
             <assignToReference>varProjectIds</assignToReference>
             <operator>Add</operator>
@@ -192,8 +199,8 @@
     <assignments>
         <name>NSP_Assign_error_message_Project_record_not_populated</name>
         <label>Assign error message - Project record not populated</label>
-        <locationX>1526</locationX>
-        <locationY>718</locationY>
+        <locationX>1986</locationX>
+        <locationY>998</locationY>
         <assignmentItems>
             <assignToReference>varGenericError</assignToReference>
             <operator>Assign</operator>
@@ -202,14 +209,15 @@
             </value>
         </assignmentItems>
         <connector>
+            <isGoTo>true</isGoTo>
             <targetReference>Error_generic</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Project_Not_be_Template</name>
         <label>Project Not be Template</label>
-        <locationX>305</locationX>
-        <locationY>1331</locationY>
+        <locationX>578</locationX>
+        <locationY>1322</locationY>
         <assignmentItems>
             <assignToReference>varGenericError</assignToReference>
             <operator>Assign</operator>
@@ -218,14 +226,15 @@
             </value>
         </assignmentItems>
         <connector>
+            <isGoTo>true</isGoTo>
             <targetReference>Error_generic</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Same_Project</name>
         <label>Same Project</label>
-        <locationX>78</locationX>
-        <locationY>1166</locationY>
+        <locationX>50</locationX>
+        <locationY>1106</locationY>
         <assignmentItems>
             <assignToReference>varGenericError</assignToReference>
             <operator>Assign</operator>
@@ -235,6 +244,56 @@
         </assignmentItems>
         <connector>
             <targetReference>Error_generic</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_getProjectId</name>
+        <label>Set Fault Element: getProjectId</label>
+        <locationX>2514</locationX>
+        <locationY>458</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>getProjectId</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler_Subflow_Flow_1</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_getProjectId_0</name>
+        <label>Set Fault Element: getProjectId_0</label>
+        <locationX>1458</locationX>
+        <locationY>1538</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>getProjectId_0</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler_Subflow_Flow_1</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Merge_Project_Apex_Action</name>
+        <label>Set Fault Element: Merge_Project_Apex_Action</label>
+        <locationX>1722</locationX>
+        <locationY>2528</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Merge_Project_Apex_Action</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Insperity_Fault_Handler_Subflow_Flow_1</targetReference>
         </connector>
     </assignments>
     <choices>
@@ -305,8 +364,8 @@
     <decisions>
         <name>ChildAlreadyQueried</name>
         <label>ChildAlreadyQueried</label>
-        <locationX>745</locationX>
-        <locationY>1141</locationY>
+        <locationX>974</locationX>
+        <locationY>1322</locationY>
         <defaultConnector>
             <targetReference>getProjectId_0</targetReference>
         </defaultConnector>
@@ -330,9 +389,10 @@
     <decisions>
         <name>HasRecordIId</name>
         <label>HasRecordIId</label>
-        <locationX>1797</locationX>
-        <locationY>326</locationY>
+        <locationX>2243</locationX>
+        <locationY>242</locationY>
         <defaultConnector>
+            <isGoTo>true</isGoTo>
             <targetReference>ProjectSelectionScreen</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Null</defaultConnectorLabel>
@@ -355,8 +415,8 @@
     <decisions>
         <name>NSP_Check_Project_is_same</name>
         <label>Check Project is same</label>
-        <locationX>276</locationX>
-        <locationY>1046</locationY>
+        <locationX>347</locationX>
+        <locationY>998</locationY>
         <defaultConnector>
             <targetReference>Parent_Details</targetReference>
         </defaultConnector>
@@ -380,8 +440,8 @@
     <decisions>
         <name>Parent_Child_Verification</name>
         <label>Parent Child Verification</label>
-        <locationX>561</locationX>
-        <locationY>1139</locationY>
+        <locationX>644</locationX>
+        <locationY>1214</locationY>
         <defaultConnector>
             <targetReference>ChildAlreadyQueried</targetReference>
         </defaultConnector>
@@ -427,8 +487,8 @@
     <decisions>
         <name>PostSelectionCheck</name>
         <label>PostSelectionCheck</label>
-        <locationX>1064</locationX>
-        <locationY>718</locationY>
+        <locationX>1166</locationX>
+        <locationY>890</locationY>
         <defaultConnector>
             <targetReference>NSP_Assign_error_message_Project_record_not_populated</targetReference>
         </defaultConnector>
@@ -459,8 +519,8 @@
     <decisions>
         <name>PreCheck</name>
         <label>PreCheck</label>
-        <locationX>1612</locationX>
-        <locationY>462</locationY>
+        <locationX>1708</locationX>
+        <locationY>566</locationY>
         <defaultConnector>
             <targetReference>Invoice_Ready</targetReference>
         </defaultConnector>
@@ -484,8 +544,8 @@
     <decisions>
         <name>PreCheck_0</name>
         <label>PreCheck</label>
-        <locationX>606</locationX>
-        <locationY>1526</locationY>
+        <locationX>1106</locationX>
+        <locationY>1646</locationY>
         <defaultConnector>
             <targetReference>Invoice_Ready_0</targetReference>
         </defaultConnector>
@@ -518,7 +578,7 @@
     <processMetadataValues>
         <name>CanvasMode</name>
         <value>
-            <stringValue>FREE_FORM_CANVAS</stringValue>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
         </value>
     </processMetadataValues>
     <processMetadataValues>
@@ -528,46 +588,17 @@
         </value>
     </processMetadataValues>
     <processType>Flow</processType>
-    <recordCreates>
-        <name>CreateLog</name>
-        <label>CreateLog</label>
-        <locationX>1222</locationX>
-        <locationY>2498</locationY>
-        <connector>
-            <targetReference>FAULT</targetReference>
-        </connector>
-        <inputAssignments>
-            <field>NSP_Class__c</field>
-            <value>
-                <elementReference>$Flow.InterviewGuid</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>NSP_Description__c</field>
-            <value>
-                <elementReference>$Flow.FaultMessage</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>NSP_Record_Id__c</field>
-            <value>
-                <elementReference>recordId</elementReference>
-            </value>
-        </inputAssignments>
-        <object>NSP_Error_Log__c</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordCreates>
     <recordLookups>
         <name>getProjectId</name>
         <label>getProjectId</label>
-        <locationX>2212</locationX>
-        <locationY>455</locationY>
+        <locationX>1708</locationX>
+        <locationY>350</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>ChildProjectAbstractAssign</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>CreateLog</targetReference>
+            <targetReference>Set_Fault_Element_getProjectId</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -584,14 +615,14 @@
     <recordLookups>
         <name>getProjectId_0</name>
         <label>getProjectId</label>
-        <locationX>723</locationX>
-        <locationY>1322</locationY>
+        <locationX>1106</locationX>
+        <locationY>1430</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>ChildProjectAbstractAssign_0</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>CreateLog</targetReference>
+            <targetReference>Set_Fault_Element_getProjectId_0</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -608,8 +639,8 @@
     <recordLookups>
         <name>Parent_Details</name>
         <label>Parent Details</label>
-        <locationX>385</locationX>
-        <locationY>1127</locationY>
+        <locationX>644</locationX>
+        <locationY>1106</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Parent_Child_Verification</targetReference>
@@ -629,8 +660,8 @@
     <screens>
         <name>ChecksComplete</name>
         <label>ChecksComplete</label>
-        <locationX>474</locationX>
-        <locationY>2138</locationY>
+        <locationX>974</locationX>
+        <locationY>2204</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -670,7 +701,7 @@
         <name>Error_generic</name>
         <label>Error</label>
         <locationX>50</locationX>
-        <locationY>1443</locationY>
+        <locationY>1214</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -685,8 +716,8 @@
     <screens>
         <name>FAULT</name>
         <label>FAULT</label>
-        <locationX>1222</locationX>
-        <locationY>2618</locationY>
+        <locationX>1722</locationX>
+        <locationY>2744</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -701,8 +732,8 @@
     <screens>
         <name>ProjectSelectionScreen</name>
         <label>ProjectSelectionScreen</label>
-        <locationX>1070</locationX>
-        <locationY>452</locationY>
+        <locationX>1166</locationX>
+        <locationY>674</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -920,13 +951,51 @@
         <stageOrder>10</stageOrder>
     </stages>
     <start>
-        <locationX>1671</locationX>
-        <locationY>48</locationY>
+        <locationX>2117</locationX>
+        <locationY>0</locationY>
         <connector>
             <targetReference>IntialStage</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
+    <subflows>
+        <name>Insperity_Fault_Handler_Subflow_Flow_1</name>
+        <label>Insperity Fault Handler Subflow Flow 1</label>
+        <locationX>1722</locationX>
+        <locationY>2636</locationY>
+        <connector>
+            <targetReference>FAULT</targetReference>
+        </connector>
+        <flowName>Insperity_Fault_Handler_Subflow</flowName>
+        <inputAssignments>
+            <name>faultElement</name>
+            <value>
+                <elementReference>faultElement</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultFlow</name>
+            <value>
+                <stringValue>NSP_Project_Merge</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultMessage</name>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <variables>
+        <name>faultElement</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue></stringValue>
+        </value>
+    </variables>
     <variables>
         <name>recordId</name>
         <dataType>String</dataType>
