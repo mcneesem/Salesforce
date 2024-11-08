@@ -1410,19 +1410,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Cancelled</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Close%2FLost</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Complete</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Inactive</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1438,15 +1430,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Pending Approval</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Quality Review</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Special Extension</fullName>
+            <fullName>Transition in Progress</fullName>
             <default>false</default>
         </values>
     </picklistValues>
