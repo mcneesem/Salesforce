@@ -497,10 +497,10 @@ public class NSP_Implementationprofile_ServiceHelper {
                 checkforClientAWWNo(ipRec, existingRec);
             }
             if (automationsToExecute.contains(LICENSED_CONTRACTOR_YES_FSO)) {  
-                checkForLicensedContractor(ipRec, existingRec, LICENSED_CONTRACTOR_YES_FSO);  
+                checkForLicensedContractor(ipRec, LICENSED_CONTRACTOR_YES_FSO);  
             }  
             if (automationsToExecute.contains(LICENSED_CONTRACTOR_YES_MM)) {  
-                checkForLicensedContractor(ipRec, existingRec, LICENSED_CONTRACTOR_YES_MM);  
+                checkForLicensedContractor(ipRec, LICENSED_CONTRACTOR_YES_MM);  
             }
             
         }
@@ -1440,7 +1440,7 @@ public class NSP_Implementationprofile_ServiceHelper {
      Automation Name: LicensedContractorYes
      Automation icon: envelope
     */
-    private void checkForLicensedContractor(Implementation_Profile__c newIp, Implementation_Profile__c existingRec, String contractorType) {  
+    private void checkForLicensedContractor(Implementation_Profile__c newIp, String contractorType) {  
     Id recordTypeId = (contractorType == LICENSED_CONTRACTOR_YES_FSO) ? ipFSORecordTypeId : ipMMRecordTypeId;  
       
     if (newIp != null &&   
