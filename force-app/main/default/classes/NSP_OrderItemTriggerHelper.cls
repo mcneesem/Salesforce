@@ -579,7 +579,7 @@ public class NSP_OrderItemTriggerHelper {
         OrderItem ordObj = new OrderItem();
         String type = null;
         Set<Id> recordTypeSet = new Set<Id>();
-        Set<Id> RETrecordTypeSet = new Set<id>();
+        Set<Id> retRecordTypeSet = new Set<Id>();
         List<String> retirementRecordTypeName = new List<String>{'RET Choice','RET WO'};
         Set<Id> accountIdSet = new Set<Id>();
         Map<Id,Decimal> quantityMap = new Map<Id,Decimal>();
@@ -604,7 +604,7 @@ public class NSP_OrderItemTriggerHelper {
                 if(!retirementRecordTypeName.contains(op.NSP_ServiceAssetCategory__c)){
                     recordTypeId.add(recType);
                 }else{
-                    RETrecordTypeSet.add(recType);
+                    retRecordTypeSet.add(recType);
                     accountIdSet.add(op.Order.AccountId);
                 }
                 ordProdMap.put(recType,op);
@@ -648,13 +648,13 @@ public class NSP_OrderItemTriggerHelper {
         }
         if ( optyId != null && optyId.size() > 0 ) {
             List<Asset> assetList = new List<Asset>();
-            if(!RETrecordTypeSet.isEmpty()){
+            if ( !retRecordTypeSet.isEmpty() ) {
                 assetList = [
                     SELECT Id , Status , NSP_Termination_Date__c , RecordTypeId , Opportunity__c , NSP_OrderProduct__c , AccountId
                     FROM Asset
                     WHERE (
                         AccountId IN :accountIdSet
-                        AND RecordTypeId IN :RETrecordTypeSet
+                        AND RecordTypeId IN :retRecordTypeSet
                     )
                 ];
             }else{
@@ -670,7 +670,10 @@ public class NSP_OrderItemTriggerHelper {
             }
             for(Asset assetObj: assetList){
                 ordObj = new OrderItem();
-                if ( ( ( assetObj.NSP_OrderProduct__c == null ) || !RETrecordTypeSet.isEmpty() ) && !assetList.isEmpty() ) {
+                if ( !assetList.isEmpty()
+                    && ( ( assetObj.NSP_OrderProduct__c == null ) || !retRecordTypeSet.isEmpty() )
+                    )
+                {
                     assetObj.NSP_OrderProduct__c = ordProdMap.get(assetObj.RecordTypeId).Id;
                     assetObj.NSP_Current_SaaS_Seats__c = String.valueOf(quantityMap.get(assetObj.RecordTypeId));
                     ordObj.Id = ordProdMap.get(assetObj.RecordTypeId).Id;
