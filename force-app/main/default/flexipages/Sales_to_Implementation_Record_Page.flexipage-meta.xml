@@ -254,6 +254,16 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.StageName__c</fieldItem>
+                <identifier>RecordStageName_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.AIMS_Client__c</fieldItem>
                 <identifier>RecordAIMS_Client_cField</identifier>
             </fieldInstance>
