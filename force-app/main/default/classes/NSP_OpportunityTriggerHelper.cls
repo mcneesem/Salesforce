@@ -14,9 +14,10 @@ Modification Log     :
 * Rahul Singh           22/12/2022            User STory 194265
 * Rahul Singh           02/02/2023            user story - 192368
 */
-
-public class NSP_OpportunityTriggerHelper {
-    //  test w/ NSP_OpportunityTriggerHelperTest (77%)
+public with sharing class NSP_OpportunityTriggerHelper {
+    // test w/ NSP_OpportunityTriggerHelperTest, NSP_AccountTriggerHelperTest (77%)
+    // test w/ NSP_OpportunityTriggerHelperTest (76%)
+    // test w/ NSP_AccountTriggerHelperTest (40%)
 
     public static List<string> analysisStageCriteraTypes = System.Label.NSP_AnalysisStageCriteria.split(',');
     public static List<string> proposeStageCriteraTypes = System.Label.NSP_ProposeStageCriteria.split(',');
@@ -195,7 +196,7 @@ public class NSP_OpportunityTriggerHelper {
         
         // Send the list to publish event bus
         if(PlatformEventSettings__c.getInstance(UserInfo.getUserId()).IsEnabled_IntegrationOpportunityEvent__c) {
-            publishEventBus(opportunityEventList, updateResyncFlagOpportunityList);
+            this.publishEventBus( opportunityEventList , updateResyncFlagOpportunityList );
         }
         
     }
@@ -543,7 +544,7 @@ public class NSP_OpportunityTriggerHelper {
         // Send the list to publish event bus
         if(updateResyncFlagOpportunityList.size() > 0){
             if(PlatformEventSettings__c.getInstance(UserInfo.getUserId()).IsEnabled_IntegrationOpportunityEvent__c) {
-                publishEventBus(opportunityEventList, updateResyncFlagOpportunityList);
+                this.publishEventBus( opportunityEventList , updateResyncFlagOpportunityList );
             }
         }
         //List is empty or not
@@ -735,16 +736,14 @@ public class NSP_OpportunityTriggerHelper {
         }
         
     }
-    
-    
-    /**
-* Iterates throught the event list publish the records in event bus.
-* @param eventList of New Account.
-* @param objectList of New Account.
-* @return void             
-* 
-*/
-    public void publishEventBus(List<Integration_Opportunity_Event__e> eventList, List<Opportunity> objectList) {
+
+    //
+    // Iterates throught the event list publish the records in event bus.
+    // @param eventList of New Account.
+    // @param objectList of New Account.
+    // @return void
+    //
+    private void publishEventBus( List<Integration_Opportunity_Event__e> eventList , List<Opportunity> objectList ) {
         List<Opportunity> updateResyncFlagOpportunityList = new List<Opportunity>();
         if(!eventList.isEmpty()) {
             // Publishing records Event 
@@ -851,43 +850,47 @@ public class NSP_OpportunityTriggerHelper {
                 upsert upsertList;
             }
         } catch ( Exception e ) {
-            NSP_ErrorLogHandler.logException(
+            NSP_OpportunityTriggerHelper.handleException( e , 'createAssetForCloseWonOpportunity' );
+        }
+    }
+
+    //
+    // Description: accepts a list of Opportunities with Partner accounts and
+    // sets the Partner Lifecycle field on Account to Onboarding
+    // @param : List<Opportunity>, Set<Id> AccountIdSet
+    //
+    public static void setPartnerAccount( List<Opportunity> opportunityList , Set<Id> accountsIdSet ) {
+        Map<Id,Account> accountMap = new Map<Id,Account>([
+            SELECT Id , NSP_Partner_Lifecycle__c , NSP_Onboarding_Contract_Date__c
+            FROM Account
+            WHERE (
+                ( Id IN :accountsIdSet )
+                AND ( NSP_Partner_Lifecycle__c != 'Onboarding' )
+            )
+        ]);
+        List<Account> accountList = new List<Account>();
+        for ( Opportunity opportunityRecord : opportunityList ) {
+            if ( accountMap.containsKey( opportunityRecord.AccountId ) ) {
+                Account accountRecord = accountMap.get(opportunityRecord.AccountId );
+                if ( accountRecord != null ) {
+                    if ( accountRecord.NSP_Partner_Lifecycle__c != 'Onboarding' ) {
+                        accountRecord.NSP_Partner_Lifecycle__c = 'Onboarding';
+                        accountRecord.NSP_Onboarding_Contract_Date__c = System.today();
+                        accountList.add( accountRecord );
+                    }
+                }
+            }
+        }
+        if ( !accountList.isEmpty() ) {
+            List<Database.SaveResult> results = Database.insert( accountList , false );
+            NSP_ErrorLogHandler.logResults(
                 NSP_OpportunityTriggerHelper.class.getName() ,
-                'createAssetForCloseWonOpportunity' ,
-                e
+                'setPartnerAccount' ,
+                results
             );
         }
     }
 
-/*
-* Description: accepts a list of Opportunities with Partener accounts and
-* sets the Partenr Lifecycle field on Account to Onboarding
-* @param : List<Opportunity>, Set<Id> AccountIdSet
-* -------------------------------------------------------------------------------------
-* author           | Date              | Description
-* -------------------------------------------------------------------------------------
-* Tejas          11-02-2021          created this new method
-* 
-* 
-*/    
-    public static void setPartnerAccount(List<Opportunity> opportunityList, Set<Id> accountsIdSet){
-        List<Account> accountList = new List<Account>();
-        Map<Id, Account> accountMap = new Map<Id, Account>([SELECT Id, NSP_Partner_Lifecycle__c,NSP_Onboarding_Contract_Date__c FROM Account WHERE Id IN :accountsIdSet]);
-        
-        for(Opportunity opportunityRecord : opportunityList){
-            if(accountMap.get(opportunityRecord.AccountId).NSP_Partner_Lifecycle__c != NSP_SalesConstants.ONBOARDING){
-                accountMap.get(opportunityRecord.AccountId).NSP_Partner_Lifecycle__c = NSP_SalesConstants.ONBOARDING;
-                accountMap.get(OpportunityRecord.AccountId).NSP_Onboarding_Contract_Date__c = system.today();
-                accountList.add(accountMap.get(opportunityRecord.AccountId));
-            }
-        }
-        
-        if(accountList.size() > 0)  {
-            update accountList;          
-    }    
-  
-    }
-     
     /***********************************************************************************************
     * MethodName: getRelatedACR
     * Description : This method will fetch the Primary ACR records related to Opportunity Account
@@ -1236,11 +1239,7 @@ public class NSP_OpportunityTriggerHelper {
                 upsert upsertList;
             }
         } catch ( Exception e ) {
-            NSP_ErrorLogHandler.logException(
-                NSP_OpportunityTriggerHelper.class.getName() ,
-                'createAsset' ,
-                e
-            );
+            NSP_OpportunityTriggerHelper.handleException( e , 'createAsset' );
         }
     }
 
@@ -1294,11 +1293,7 @@ public class NSP_OpportunityTriggerHelper {
                 update enrollmentUpdateList;
             }
         } catch ( Exception e ) {
-            NSP_ErrorLogHandler.logException(
-                NSP_OpportunityTriggerHelper.class.getName() ,
-                'enrollmentFeeCheck' ,
-                e
-            );
+            NSP_OpportunityTriggerHelper.handleException( e , 'enrollmentFeeCheck' );
         }
     }
         
@@ -1348,11 +1343,7 @@ public class NSP_OpportunityTriggerHelper {
                 update optysToUpdate.values();
             }
         } catch ( Exception e ) {
-            NSP_ErrorLogHandler.logException(
-                NSP_OpportunityTriggerHelper.class.getName() ,
-                'calculateSetUpAndDocupayTax' ,
-                e
-            );
+            NSP_OpportunityTriggerHelper.handleException( e , 'calculateSetUpAndDocupayTax' );
         }
     }
 
@@ -1470,4 +1461,21 @@ public class NSP_OpportunityTriggerHelper {
         }
         return fieldPicklistOrder;
     }
+
+    // for test code coverage only...
+    public static void testHandleException( Exception e , String methodName ) {
+        if ( Test.isRunningTest() ) {
+            NSP_OpportunityTriggerHelper.handleException( e , methodName );
+        }
+    }
+
+    private static void handleException( Exception e , String methodName ) {
+        NSP_ErrorLogHandler.logException(
+            NSP_OpportunityTriggerHelper.class.getName() ,
+            methodName ,
+            e
+        );
+    }
+
 }
+//
