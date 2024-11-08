@@ -106,23 +106,23 @@ public class NSP_CaseTriggerHelper {
             }
 
             // Added as part of usrsty-247918
-            if ( eachcase.RecordTypeId == NSP_CaseTriggerHelper.peoRecordTypeId
-                && eachcase.NSP_Assigned_Queue__c == RET_NSPHardship_QUEUE
+            if ( ( eachcase.RecordTypeId == NSP_CaseTriggerHelper.peoRecordTypeId )
+                && ( eachcase.NSP_Assigned_Queue__c == RET_NSPHardship_QUEUE )
+                && String.isBlank( eachcase.NSP_Category__c)
+                && String.isBlank( eachcase.NSP_SubCategory__c )
                 )
             {
-                if(String.isBlank(eachcase.NSP_Category__c) && String.isBlank(eachcase.NSP_SubCategory__c)){
-                    eachcase.NSp_Category__c = 'Retirement Svc-Processing';
-                    eachcase.NSP_SubCategory__c = 'Hardship';
-                }
+                eachcase.NSp_Category__c = 'Retirement Svc-Processing';
+                eachcase.NSP_SubCategory__c = 'Hardship';
             }
-            if ( eachcase.RecordTypeId == NSP_CaseTriggerHelper.peoRecordTypeId
-                && eachcase.NSP_Assigned_Queue__c == 'Payroll COE'
+            if ( ( eachcase.RecordTypeId == NSP_CaseTriggerHelper.peoRecordTypeId )
+                && ( eachcase.NSP_Assigned_Queue__c == 'Payroll COE' )
+                && String.isBlank( eachcase.NSP_Category__c )
+                && String.isBlank( eachcase.NSP_SubCategory__c )
                 )
             {
-                if(String.isBlank(eachcase.NSP_Category__c) && String.isBlank(eachcase.NSP_SubCategory__c)){
-                    eachcase.NSp_Category__c = 'PR COE Escalation';
-                    eachcase.NSP_SubCategory__c = 'Nexus';
-                }
+                eachcase.NSp_Category__c = 'PR COE Escalation';
+                eachcase.NSP_SubCategory__c = 'Nexus';
             }
             if(String.isNotBlank(eachcase.NSP_Category__c) && String.isNotBlank(eachcase.NSP_SubCategory__c)){
                 categorySet.add(eachCase.NSP_Category__c);
