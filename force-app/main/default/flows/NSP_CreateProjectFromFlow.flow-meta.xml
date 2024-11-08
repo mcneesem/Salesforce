@@ -21,7 +21,6 @@
             </value>
         </inputParameters>
         <nameSegment>NSP_ReviewRevRecRules</nameSegment>
-        <offset>0</offset>
         <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
@@ -42,7 +41,6 @@
             </value>
         </inputParameters>
         <nameSegment>NSP_CreateProjFromFlow</nameSegment>
-        <offset>0</offset>
         <versionSegment>1</versionSegment>
     </actionCalls>
     <apiVersion>55.0</apiVersion>

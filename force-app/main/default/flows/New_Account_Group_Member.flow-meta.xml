@@ -18,7 +18,6 @@
             </value>
         </inputParameters>
         <nameSegment>c:NSP_NavigateToRecord</nameSegment>
-        <offset>0</offset>
         <storeOutputAutomatically>true</storeOutputAutomatically>
         <versionSegment>1</versionSegment>
     </actionCalls>
