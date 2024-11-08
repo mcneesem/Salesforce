@@ -21,6 +21,13 @@ const DYNAMIC_FIELDS = {
       dependentFields: ['Check_all_changes_that_apply__c', 'Provide_organization_change_details__c'],
     },
   ],
+  Are_you_a_licensed_Contractor__c: [
+    {
+      expValue: ['Yes'],
+      dependentFields: ['Are_you_registered_with_the_CSLB__c', 'Contractor_s_License__c'],
+    },
+  ],
+  
 };
 
 export { DYNAMIC_FIELDS };

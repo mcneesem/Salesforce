@@ -80,7 +80,10 @@ public class NSP_Implementationprofile_ServiceHelper {
     private static final String IP_IDENTIFIER = 'Implementation_Profile__c';
     private static final String IP_AUTOMATION_IDENTIFIER = 'NSP_Implementation_Profile_Automation__c';
     private static final String USER_IDENTIFIER = 'User';
-    
+    private static final String Licensed_Contractor_Yes_FSO = 'licensedContractorYesFSO';
+    private static final String Licensed_Contractor_Yes_MM = 'licensedContractorYesMM';
+    private static final String Licensed_Automation_Name_FSO = 'Licensed_Contractor_FSO';
+    private static final String Licensed_Automation_Name_MM = 'Licensed_Contractor_MM';
     private static final List<String> EMAIL_TEMPLATES = new List<String>{
         NSP_ServiceConstants.EEO_INFORMATION,
             NSP_ServiceConstants.EPLI_NOTIFICATION,
@@ -121,7 +124,7 @@ public class NSP_Implementationprofile_ServiceHelper {
             REMOVE_EMPLOYEE_DIR_FN, STOCK_PURCHASE_PLAN_FN, EPLI_NOTIFY_FN, EXISTING_RET_PLAN_KEEP_FN,
             EXISTING_RET_PLAN_MOVE_FN, EEO_INFO_FN, NEW_401_FN, SRP_NOTIFY_FN,PRIOR_WAGES_FN,
             EE_COMMISSION_FN,CAFETERIAL_PLAN_FN,TECH_PACKET_FN,AdditionalBPSes_FSO,
-            CLIENT_AWW_YES, CLIENT_AWW_NO
+            CLIENT_AWW_YES, CLIENT_AWW_NO,Licensed_Contractor_Yes_FSO,Licensed_Contractor_Yes_MM
         });
     }
     
@@ -317,6 +320,12 @@ public class NSP_Implementationprofile_ServiceHelper {
         if(ipRecordsByAutomation.containsKey(CLIENT_AWW_NO)){
             emailNotifyforclientAWWNo();
         }
+        if (ipRecordsByAutomation.containsKey(LICENSED_CONTRACTOR_YES_FSO)) {  
+            emailNotifyForLicensedContractor(LICENSED_CONTRACTOR_YES_FSO, Licensed_Automation_Name_FSO);  
+        }  
+        if (ipRecordsByAutomation.containsKey(LICENSED_CONTRACTOR_YES_MM)) {  
+            emailNotifyForLicensedContractor(LICENSED_CONTRACTOR_YES_MM, Licensed_Automation_Name_MM);  
+        } 
     }
     
     private void finish(){
@@ -486,6 +495,12 @@ public class NSP_Implementationprofile_ServiceHelper {
             }
             if(automationsToExecute.contains(CLIENT_AWW_NO)){
                 checkforClientAWWNo(ipRec, existingRec);
+            }
+            if (automationsToExecute.contains(LICENSED_CONTRACTOR_YES_FSO)) {  
+                checkForLicensedContractor(ipRec, existingRec, LICENSED_CONTRACTOR_YES_FSO);  
+            }  
+            if (automationsToExecute.contains(LICENSED_CONTRACTOR_YES_MM)) {  
+                checkForLicensedContractor(ipRec, existingRec, LICENSED_CONTRACTOR_YES_MM);  
             }
             
         }
@@ -1419,6 +1434,78 @@ public class NSP_Implementationprofile_ServiceHelper {
             NSP_Implprofile_ServiceHelperUpdate.automationRecordUpdate(impRecordId,impAutomationName,impMethodName,impAutomationRecordType,impAutomationSection );
         }
     }
+    
+    /**
+     Automathion Section: Service Team
+     Automation Name: LicensedContractorYes
+     Automation icon: envelope
+    */
+    private void checkForLicensedContractor(Implementation_Profile__c newIp, Implementation_Profile__c existingRec, String contractorType) {  
+    Id recordTypeId = (contractorType == LICENSED_CONTRACTOR_YES_FSO) ? ipFSORecordTypeId : ipMMRecordTypeId;  
+      
+    if (newIp != null &&   
+        newIp.RecordTypeId == recordTypeId 
+        && newIp.Are_you_registered_with_the_CSLB__c == NSP_ServiceConstants.YES 
+        && String.isNotBlank(newIp.Contractor_s_License__c)
+        && String.isNotBlank(newIp.NSP_Legal_Name__c)) {  
+        updateEligibleRecordsMap(ipRecordsByAutomation, newIp.Id, contractorType);  
+    }  
+}  
+  
+private void emailNotifyForLicensedContractor(String contractorType, String mdtName) {  
+    if (ipRecordsByAutomation != null) {  
+        for (Id ipRecId : ipRecordsByAutomation.get(contractorType)) {  
+            Implementation_Profile__c ipWithValue = (Implementation_Profile__c) data.get(IP_IDENTIFIER).get(ipRecId);  
+            if (ipWithValue != null) {  
+                String subject = ipWithValue.Account__r.Name + ' is a Licensed Contractor in California';  
+                String body = 'Lockton Affinity,<br><br>' +  
+                    ipWithValue.Account__r.Name + ' is a Licensed Contract in California. Please update the CSLB website with the client\'s new Workers’ Comp coverage through Insperity.<br><br>' +  
+                    'LEGAL NAME: ' + ipWithValue.NSP_Legal_Name__c + '\n' +  
+                    'CONTRACTORS CSLB#: ' + ipWithValue.Contractor_s_License__c + '\n' +  
+                    'EFFECTIVE DATE: ' + ipWithValue.Effective_Date_Payroll_Worker_comp_EPLI__c + '<br><br>' +  
+                    'Regards' + ',\n' +   
+                    ipWithValue.NSP_Project_Manager__r.Name + '\n' +  
+                    ipWithValue.NSP_Project_Manager__r.Title + '\n' +  
+                    ipWithValue.NSP_Project_Manager__r.NSP_Work_email__c + '\n';  
+                emailNotify(ipWithValue, contractorType, subject, body, mdtName);  
+            }  
+        }  
+    }  
+      
+    if (impRecordId != null && impAutomationName != null) {  
+        NSP_Implprofile_ServiceHelperUpdate.automationRecordUpdate(impRecordId, impAutomationName, impMethodName, impAutomationRecordType, impAutomationSection);  
+    }  
+}  
+  
+private void emailNotify(Implementation_Profile__c ipWithValue, String contractorType, String subject, String body, String mdtName) {  
+    if (ipWithValue != null && String.isNotBlank(contractorType) && String.isNotBlank(subject) && String.isNotBlank(body) && String.isNotBlank(mdtName)) {  
+        List<NSP_Implementation_Profile_Automation__c> ipAutomationRecords = new List<NSP_Implementation_Profile_Automation__c>();  
+        List<String> emailAddress = new List<String>();  
+        emailAddress.add(label.Licensed_Contractor_Email);  
+        if (ipWithValue.NSP_Project_Manager__r != null && ipWithValue.NSP_Project_Manager__r.NSP_Work_email__c != null) {  
+            emailAddress.add(ipWithValue.NSP_Project_Manager__r.NSP_Work_email__c);     
+        }  
+          
+        NSP_Implementation_Automations__mdt ipa = NSP_Implementation_Automations__mdt.getInstance(mdtName);  
+          
+        if ((isRerun || ipWithValue.NSP_Form_Completed__c) && !isSaveForm && ipa != null) {  
+            String automationIdentifier = ipWithValue.Id + '_' + contractorType + '_' +   
+                (contractorType == LICENSED_CONTRACTOR_YES_FSO ? NSP_ServiceConstants.FSOProfile : NSP_ServiceConstants.MIDDLEMARKET);  
+            if (!isRerun && !ipAutomationdata?.get(IP_AUTOMATION_IDENTIFIER).contains(automationIdentifier)) {  
+                sendMailUsingFlowAction(emailAddress, subject, body);  
+                ipAutomationRecords.add(ipAutomationHelper.createIPAutomation(ipWithValue, ipa.NSP_Automation_Name__c, ipa.NSP_Method_Name__c, ipa.NSP_Section__c));  
+            } else if (isRerun) {  
+                sendMailUsingFlowAction(emailAddress, subject, body);  
+                impRecordId = ipWithValue.Id;  
+                impAutomationName = ipa.NSP_Automation_Name__c;  
+                impMethodName = ipa.NSP_Method_Name__c;  
+                impAutomationSection = ipa.NSP_Section__c;  
+                impAutomationRecordType = (contractorType == LICENSED_CONTRACTOR_YES_FSO ? NSP_ServiceConstants.FSOProfile : NSP_ServiceConstants.MIDDLEMARKET);  
+            }  
+        }  
+        recToInsert.addAll(ipAutomationRecords);  
+    }  
+}
 
     /**
      Automathion Section: Orientation
@@ -2523,11 +2610,11 @@ public class NSP_Implementationprofile_ServiceHelper {
             NSP_Orientation_Rep__c, NSP_Orientation_Rep__r.NSP_Work_Email__c,
             NSP_Onboarding_Specialist_Coordinator__r.NSP_Work_email__c,NSP_HR_Specialist__c,
             NSP_HR_Specialist__r.pse__Salesforce_User__c,NSP_Payroll_Specialist__r.NSP_Work_email__c,
-            NSP_Project_Manager__c,NSP_Project_Manager__r.NSP_Work_email__c,
+            NSP_Project_Manager__c,NSP_Project_Manager__r.NSP_Work_email__c,NSP_Project_Manager__r.Name,NSP_Project_Manager__r.Title,
             NSP_Project_Manager__r.pse__Salesforce_User__c, RecordTypeId,
             NSP_Project_Manager__r.pse__Salesforce_User__r.Email,NSP_OT_Representative__c,
             NSP_OT_Representative__r.NSP_Work_email__c, Does_this_client_have_an_AWW__c,
-            Is_client_CA_docs_submitted_for_approval__c
+            Is_client_CA_docs_submitted_for_approval__c,Are_you_registered_with_the_CSLB__c,NSP_Legal_Name__c,Contractor_s_License__c,Effective_Date_Payroll_Worker_comp_EPLI__c
             FROM Implementation_Profile__c
             WHERE Id in:ipIds
         ]);

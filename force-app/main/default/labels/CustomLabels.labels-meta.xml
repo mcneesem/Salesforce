@@ -50,6 +50,20 @@
         <value>Are there any non-paid users?</value>
     </labels>
     <labels>
+        <fullName>Are_you_a_licensed_Contractor</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Are you a licensed Contractor</shortDescription>
+        <value>Are you a licensed Contractor in the state of California (ex: HVAC, Plumbing, Electrical)?</value>
+    </labels>
+    <labels>
+        <fullName>Are_you_registered_with_the_CSLB</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Are you registered with the CSLB</shortDescription>
+        <value>Are you registered with the CSLB (California Contractors State License Board)?</value>
+    </labels>
+    <labels>
         <fullName>BPS_Integra_Asset_Feilds</fullName>
         <categories>Stores all the fields which BPS users can edit on Integra Asset if Create Asset Perm Set is not assigned.</categories>
         <language>en_US</language>
@@ -463,6 +477,13 @@
         <protected>false</protected>
         <shortDescription>Is there a need for Integra</shortDescription>
         <value>Is there a need for Integra?</value>
+    </labels>
+    <labels>
+        <fullName>Licensed_Contractor_Email</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Licensed Contractor Email</shortDescription>
+        <value>InsperityCerts@locktonaffinity.com.invalid</value>
     </labels>
     <labels>
         <fullName>MM_AND_BPC_USERROLE</fullName>

@@ -10,6 +10,9 @@ const SECTION_FIELDS = [
   'Check_all_changes_that_apply__c',
   'Provide_organization_change_details__c',
   'NSP_Service_team_notes__c',
+  'Are_you_registered_with_the_CSLB__c',
+  'Are_you_a_licensed_Contractor__c',
+  'Contractor_s_License__c'
 ];
 
 const RL_FIELDS = [

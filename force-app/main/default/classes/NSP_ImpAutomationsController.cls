@@ -162,7 +162,7 @@ public class NSP_ImpAutomationsController {
                     NSP_Asset__r.AccountId, NSP_Payroll_Specialist__r.pse__Salesforce_User__c,  NSP_Project_Manager__r.pse__Salesforce_User__c,
                     NSP_Project_Manager__r.pse__Salesforce_User__r.Email,NSP_Urgent_Medical_Needs_Emp_Details__c, NSP_Employees_on_LOA__c,
                     NSP_Employee_Details_On_LOA__c ,NSP_Old_Benefits_Package__c ,NSP_Old_Effective_Date_EPLI__c,NSP_Old_Insperity_Ben_effective_date__c,
-                    NSP_OT_Representative__r.NSP_Work_email__c
+                    NSP_OT_Representative__r.NSP_Work_email__c,Are_you_registered_with_the_CSLB__c,Contractor_s_License__c,NSP_Legal_Name__c
                 FROM Implementation_Profile__c
                 WHERE ( Id = :ipRecordId )
             ]

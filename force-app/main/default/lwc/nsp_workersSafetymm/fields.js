@@ -16,6 +16,9 @@ const SECTION_FIELDS = [
   'NSP_Immediateworkerscomporsafety_concern__c',
   'When_are_certificates_needed__c',
   'Workers_Comp_Safety_Notes__c',
+  'Are_you_registered_with_the_CSLB__c',
+  'Are_you_a_licensed_Contractor__c',
+  'Contractor_s_License__c'
 ];
 
 const SYNC_FIELDS = {
