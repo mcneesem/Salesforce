@@ -778,6 +778,9 @@ public with sharing class NSP_OpportunityTriggerHelper {
         Set<Id> accountIds = new Set<Id>();
         Map<Id,String> recordTypeMap = new Map<Id,String>(); 
         Set<String> recordIdSet = new Set<String>();
+        //store all ret record id in diff set
+        List<String> retProducts = new List<String>{'RET WO', 'RET Choice'};
+        Set<String> retRecordIdSet = new Set<String>();
         String optyType = null;
         List<OpportunityLineItem> opptyLineItemList = [SELECT Name,Opportunity.accountId,NSP_Product_Name__c,NSP_AccountId__c,
                                                        Product2Id,Quantity,UnitPrice,NSP_Opportunity_Booked_Date__c,NSP_Signed_Delivery_Order_Date__c,
@@ -792,7 +795,11 @@ public with sharing class NSP_OpportunityTriggerHelper {
             if(oppItem.Product2.NSP_ServiceAssetCategory__c != null){
                 String rectype = Schema.SObjectType.ASSET.getRecordTypeInfosByName().get(oppItem.Product2.NSP_ServiceAssetCategory__c).getRecordTypeId();
                 recordTypeMap.put(oppItem.Product2Id,rectype); 
-                recordIdSet.add(rectype);     
+                if( !retProducts.contains(oppItem.Product2.NSP_ServiceAssetCategory__c)){
+                    recordIdSet.add(rectype); 
+                }else{
+                    retRecordIdSet.add(rectype);
+                }
                 optyType = oppItem.Opportunity.Type;
             }
         }
@@ -803,14 +810,43 @@ public with sharing class NSP_OpportunityTriggerHelper {
         for(Asset assetItem: assetfromCopier){
             assetMap.put(assetItem.Product2Id,assetItem);
         }
-        List<Asset> existingAssets = [SELECT Id,Name,AccountId,Product2Id,NSP_ProductBundle__c FROM Asset WHERE  AccountId IN :accountIds AND RecordTypeId IN :recordIdSet AND  Status != :NSP_SalesConstants.TERMINATED_STATUS AND Status != :NSP_SalesConstants.BACKOUT_STATUS];
+        List<Asset> existingAssets = [
+            SELECT
+                Id , Name , AccountId , Product2Id ,
+                NSP_ProductBundle__c , Product2.NSP_ServiceAssetCategory__c
+            FROM Asset
+            WHERE (
+                ( AccountId IN :accountIds )
+                AND (
+                    (
+                        ( RecordTypeId IN :recordIdSet )
+                        AND ( Status != :NSP_SalesConstants.TERMINATED_STATUS )
+                        AND ( Status != :NSP_SalesConstants.BACKOUT_STATUS )
+                    )
+                    OR ( RecordTypeId IN :retRecordIdSet )
+                )
+            )
+        ];
         Boolean isAssetFound=FALSE;
         for(Id draftAsset:assetMap.keySet()){
             for(Asset existingAsset: existingAssets ){  
                 if(assetMap.get(draftAsset).AccountId == existingAsset.AccountId){
-                    if(existingAsset.NSP_ProductBundle__c == NSP_SalesConstants.WOSS && (assetMap.get(draftAsset).NSP_ProductBundle__c == NSP_SalesConstants.WX || assetMap.get(draftAsset).NSP_ProductBundle__c == NSP_SalesConstants.WA) && optyType == NSP_SalesConstants.NEW_BUSINESS_OPPORTUNITY){
+                    if(retProducts.contains(existingAsset.Product2.NSP_ServiceAssetCategory__c)){
+                        //RET assit exists
+                        isAssetFound = TRUE;
+                        Break;
+                    }
+                    if ( existingAsset.NSP_ProductBundle__c == NSP_SalesConstants.WOSS
+                        && ( assetMap.get(draftAsset).NSP_ProductBundle__c == NSP_SalesConstants.WX || assetMap.get(draftAsset).NSP_ProductBundle__c == NSP_SalesConstants.WA )
+                        && optyType == NSP_SalesConstants.NEW_BUSINESS_OPPORTUNITY
+                        )
+                    {
                         isAssetFound=FALSE;
-                    } else if(existingAsset.NSP_ProductBundle__c != NSP_SalesConstants.WOSS && assetMap.get(draftAsset).NSP_ProductBundle__c == NSP_SalesConstants.WO_WS && optyType == NSP_SalesConstants.NEW_BUSINESS_OPPORTUNITY){
+                    } else if ( existingAsset.NSP_ProductBundle__c != NSP_SalesConstants.WOSS
+                        && assetMap.get(draftAsset).NSP_ProductBundle__c == NSP_SalesConstants.WO_WS
+                        && optyType == NSP_SalesConstants.NEW_BUSINESS_OPPORTUNITY
+                        )
+                    {
                         isAssetFound=FALSE;
                     } 
                     else{
