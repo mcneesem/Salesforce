@@ -275,6 +275,14 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>NSP_Consultant__c</fields>
+        <fields>NSP_Effective_Date_Consultant__c</fields>
+        <fields>NSP_DocuSign_Executed_Date__c</fields>
+        <fields>Plan_Subplan_Relationship_Form__c</fields>
+        <relatedList>NSP_Amendment_Checklist__c.Plan_Subplan_Relationship__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
         <fields>NSP_Subplan_Plan_Detail_Record_Form__c</fields>
         <fields>NSP_Asset__c</fields>
         <fields>CREATED_DATE</fields>
