@@ -48,11 +48,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>pse__Proj__c.Sprint_Week__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>pse__Proj__c.Support_Team__c</field>
         <readable>true</readable>
     </fieldPermissions>
