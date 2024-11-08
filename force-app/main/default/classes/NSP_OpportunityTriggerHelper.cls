@@ -780,7 +780,7 @@ public with sharing class NSP_OpportunityTriggerHelper {
         Set<String> recordIdSet = new Set<String>();
         //store all ret record id in diff set
         List<String> RETProducts = new List<String>{'RET WO', 'RET Choice'};
-        Set<String> RETrecordIdSet = new Set<String>();
+        Set<String> retRecordIdSet = new Set<String>();
         String optyType = null;
         List<OpportunityLineItem> opptyLineItemList = [SELECT Name,Opportunity.accountId,NSP_Product_Name__c,NSP_AccountId__c,
                                                        Product2Id,Quantity,UnitPrice,NSP_Opportunity_Booked_Date__c,NSP_Signed_Delivery_Order_Date__c,
@@ -798,7 +798,7 @@ public with sharing class NSP_OpportunityTriggerHelper {
                 if( !RETProducts.contains(oppItem.Product2.NSP_ServiceAssetCategory__c)){
                     recordIdSet.add(rectype); 
                 }else{
-                    RETrecordIdSet.add(rectype);
+                    retRecordIdSet.add(rectype);
                 }
                 optyType = oppItem.Opportunity.Type;
             }
@@ -823,7 +823,7 @@ public with sharing class NSP_OpportunityTriggerHelper {
                         AND ( Status != :NSP_SalesConstants.TERMINATED_STATUS )
                         AND ( Status != :NSP_SalesConstants.BACKOUT_STATUS )
                     )
-                    OR ( RecordTypeId IN :RETrecordIdSet )
+                    OR ( RecordTypeId IN :retRecordIdSet )
                 )
             )
         ];
