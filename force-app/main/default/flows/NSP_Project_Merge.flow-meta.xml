@@ -21,7 +21,6 @@
             </value>
         </inputParameters>
         <nameSegment>NSP_MergeProjectController</nameSegment>
-        <offset>0</offset>
         <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
@@ -39,7 +38,6 @@
             </value>
         </inputParameters>
         <nameSegment>c:NSP_FlowNavigatetoRecord</nameSegment>
-        <offset>0</offset>
         <storeOutputAutomatically>true</storeOutputAutomatically>
         <versionSegment>1</versionSegment>
     </actionCalls>

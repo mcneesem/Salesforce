@@ -19,7 +19,6 @@
             </value>
         </inputParameters>
         <nameSegment>NSP_InvoiceEmailMessageService</nameSegment>
-        <offset>0</offset>
         <versionSegment>1</versionSegment>
     </actionCalls>
     <apiVersion>55.0</apiVersion>

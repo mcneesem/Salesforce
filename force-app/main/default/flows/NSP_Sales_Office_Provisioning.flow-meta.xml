@@ -22,7 +22,6 @@
             </value>
         </inputParameters>
         <nameSegment>NSP_FlowMultiSelectParse</nameSegment>
-        <offset>0</offset>
         <outputParameters>
             <assignToReference>SelectedOfficesText</assignToReference>
             <name>output</name>
@@ -51,7 +50,6 @@
             </value>
         </inputParameters>
         <nameSegment>NSP_FlowMultiSelectParse</nameSegment>
-        <offset>0</offset>
         <outputParameters>
             <assignToReference>SelectedOfficesText</assignToReference>
             <name>output</name>
@@ -80,7 +78,6 @@
             </value>
         </inputParameters>
         <nameSegment>NSP_FlowMultiSelectParse</nameSegment>
-        <offset>0</offset>
         <outputParameters>
             <assignToReference>SelectedOfficesText</assignToReference>
             <name>output</name>
@@ -109,7 +106,6 @@
             </value>
         </inputParameters>
         <nameSegment>NSP_FlowMultiSelectParse</nameSegment>
-        <offset>0</offset>
         <outputParameters>
             <assignToReference>MultiParseOutput</assignToReference>
             <name>output</name>
