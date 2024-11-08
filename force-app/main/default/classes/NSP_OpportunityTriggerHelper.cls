@@ -779,7 +779,7 @@ public with sharing class NSP_OpportunityTriggerHelper {
         Map<Id,String> recordTypeMap = new Map<Id,String>(); 
         Set<String> recordIdSet = new Set<String>();
         //store all ret record id in diff set
-        List<String> RETProducts = new List<String>{'RET WO', 'RET Choice'};
+        List<String> retProducts = new List<String>{'RET WO', 'RET Choice'};
         Set<String> retRecordIdSet = new Set<String>();
         String optyType = null;
         List<OpportunityLineItem> opptyLineItemList = [SELECT Name,Opportunity.accountId,NSP_Product_Name__c,NSP_AccountId__c,
@@ -795,7 +795,7 @@ public with sharing class NSP_OpportunityTriggerHelper {
             if(oppItem.Product2.NSP_ServiceAssetCategory__c != null){
                 String rectype = Schema.SObjectType.ASSET.getRecordTypeInfosByName().get(oppItem.Product2.NSP_ServiceAssetCategory__c).getRecordTypeId();
                 recordTypeMap.put(oppItem.Product2Id,rectype); 
-                if( !RETProducts.contains(oppItem.Product2.NSP_ServiceAssetCategory__c)){
+                if( !retProducts.contains(oppItem.Product2.NSP_ServiceAssetCategory__c)){
                     recordIdSet.add(rectype); 
                 }else{
                     retRecordIdSet.add(rectype);
@@ -831,7 +831,7 @@ public with sharing class NSP_OpportunityTriggerHelper {
         for(Id draftAsset:assetMap.keySet()){
             for(Asset existingAsset: existingAssets ){  
                 if(assetMap.get(draftAsset).AccountId == existingAsset.AccountId){
-                    if(RETProducts.contains(existingAsset.Product2.NSP_ServiceAssetCategory__c)){
+                    if(retProducts.contains(existingAsset.Product2.NSP_ServiceAssetCategory__c)){
                         //RET assit exists
                         isAssetFound = TRUE;
                         Break;
