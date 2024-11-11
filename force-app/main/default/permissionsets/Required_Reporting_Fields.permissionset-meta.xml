@@ -448,7 +448,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>NSP_Sales_to_Implementation__c.StageName__c</field>
+        <field>NSP_Sales_to_Implementation__c.Opportunity_Stage_Name__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

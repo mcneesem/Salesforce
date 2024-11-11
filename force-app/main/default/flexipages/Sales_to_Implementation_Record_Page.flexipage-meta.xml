@@ -254,7 +254,7 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.StageName__c</fieldItem>
+                <fieldItem>Record.Opportunity_Stage_Name__c</fieldItem>
                 <identifier>RecordStageName_cField</identifier>
             </fieldInstance>
         </itemInstances>
