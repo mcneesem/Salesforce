@@ -238,6 +238,10 @@
             <fullName>Termination</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>WX_WA CAM</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>NSP_BackOutReason__c</picklist>
@@ -340,6 +344,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Existing Employees</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FEIN Change</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Fein</fullName>
             <default>false</default>
         </values>
@@ -349,6 +361,10 @@
         </values>
         <values>
             <fullName>New Acct N</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>New Employees</fullName>
             <default>false</default>
         </values>
         <values>

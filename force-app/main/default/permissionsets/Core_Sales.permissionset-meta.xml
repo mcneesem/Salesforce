@@ -56,6 +56,11 @@
         <field>AccountContactRelation.NSP_Work_Phone__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Opportunity.CAM_New_EEs_Added__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Core Sales</label>
     <recordTypeVisibilities>

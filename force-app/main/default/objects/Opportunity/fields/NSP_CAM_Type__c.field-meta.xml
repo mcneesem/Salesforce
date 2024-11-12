@@ -71,6 +71,21 @@
                 <default>false</default>
                 <label>Shared N</label>
             </value>
+            <value>
+                <fullName>Existing Employees</fullName>
+                <default>false</default>
+                <label>Existing Employees</label>
+            </value>
+            <value>
+                <fullName>New Employees</fullName>
+                <default>false</default>
+                <label>New Employees</label>
+            </value>
+            <value>
+                <fullName>FEIN Change</fullName>
+                <default>false</default>
+                <label>FEIN Change</label>
+            </value>
         </valueSetDefinition>
         <valueSettings>
             <controllingFieldValue>CAM</controllingFieldValue>
@@ -119,6 +134,18 @@
         <valueSettings>
             <controllingFieldValue>CAM</controllingFieldValue>
             <valueName>Shared N</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>WX_WA CAM</controllingFieldValue>
+            <valueName>Existing Employees</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>WX_WA CAM</controllingFieldValue>
+            <valueName>New Employees</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>WX_WA CAM</controllingFieldValue>
+            <valueName>FEIN Change</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>

@@ -59,6 +59,11 @@
                 <label>Renewal</label>
             </value>
             <value>
+                <fullName>WX_WA CAM</fullName>
+                <default>false</default>
+                <label>WX_WA CAM</label>
+            </value>
+            <value>
                 <fullName>Exception Add</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
@@ -110,6 +115,10 @@
         <valueSettings>
             <controllingFieldValue>New Product</controllingFieldValue>
             <valueName>Cross-sell</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>New Product</controllingFieldValue>
+            <valueName>WX_WA CAM</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Existing Product</controllingFieldValue>
