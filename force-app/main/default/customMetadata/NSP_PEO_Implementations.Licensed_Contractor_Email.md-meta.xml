@@ -7,11 +7,11 @@
         <value xsi:type="xsd:string">Automation Section: Service Team And Workers Safety
             Automation Name: CA Licensed Contractor And CA Licensed Contractor (MM Client)
             Automation Icon: envelope
-            Email: 	insperitycerts@locktonaffinity.com.</value>
+            Email: insperitycerts@locktonaffinity.com.</value>
     </values>
     <values>
         <field>NSP_Email_Address__c</field>
-        <value xsi:type="xsd:string">	insperitycerts@locktonaffinity.com.invalid</value>
+        <value xsi:type="xsd:string">insperitycerts@locktonaffinity.com.invalid</value>
     </values>
     <values>
         <field>NSP_Name__c</field>
