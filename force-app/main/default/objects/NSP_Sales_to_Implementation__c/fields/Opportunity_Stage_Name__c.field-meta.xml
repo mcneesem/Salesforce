@@ -4,12 +4,12 @@
     <description>Display the opportunity Stage name when the opportunity is Closed Won or Closed Lost</description>
     <externalId>false</externalId>
     <formula>IF(
-	OR(
-		TEXT( NSP_Opportunity__r.StageName ) = &apos;Closed Lost&apos;, 
-		TEXT( NSP_Opportunity__r.StageName ) = &apos;Closed Won&apos;
-	), 
-	TEXT( NSP_Opportunity__r.StageName ), 
-	NULL
+  OR(
+    ( TEXT( NSP_Opportunity__r.StageName ) = &apos;Closed Lost&apos; ) ,
+    ( TEXT( NSP_Opportunity__r.StageName ) = &apos;Closed Won&apos; )
+  ) ,
+  TEXT( NSP_Opportunity__r.StageName ) ,
+  NULL
 )</formula>
     <label>Opportunity Stage</label>
     <required>false</required>
