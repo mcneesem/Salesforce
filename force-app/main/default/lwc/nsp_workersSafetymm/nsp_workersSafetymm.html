@@ -96,7 +96,7 @@
 
       <c-nsp_selection-box
         disabled={disabledFields.Are_you_a_licensed_Contractor__c}
-        class={styles.Are_you_a_licensed_Contractor__c}
+        lwc:if={visibility.Are_you_a_licensed_Contractor__c}
         label={label.AreyoualicensedContractor}
         field-api-name="Implementation_Profile__c.Are_you_a_licensed_Contractor__c"
         record-type-id={recordTypeId}
