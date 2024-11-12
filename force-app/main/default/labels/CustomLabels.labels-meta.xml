@@ -479,13 +479,6 @@
         <value>Is there a need for Integra?</value>
     </labels>
     <labels>
-        <fullName>Licensed_Contractor_Email</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Licensed Contractor Email</shortDescription>
-        <value>InsperityCerts@locktonaffinity.com.invalid</value>
-    </labels>
-    <labels>
         <fullName>MM_AND_BPC_USERROLE</fullName>
         <categories>Used In Lead Trigger</categories>
         <language>en_US</language>
