@@ -171,6 +171,16 @@
                 <default>false</default>
                 <label>ITA Analyst</label>
             </value>
+            <value>
+                <fullName>TES Integration Specialist</fullName>
+                <default>false</default>
+                <label>TES Integration Specialist</label>
+            </value>
+            <value>
+                <fullName>Payroll Implementer</fullName>
+                <default>false</default>
+                <label>Payroll Implementer</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
