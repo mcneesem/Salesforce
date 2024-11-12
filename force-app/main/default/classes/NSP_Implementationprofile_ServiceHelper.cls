@@ -84,6 +84,7 @@ public class NSP_Implementationprofile_ServiceHelper {
     private static final String Licensed_Contractor_Yes_MM = 'licensedContractorYesMM';
     private static final String Licensed_Automation_Name_FSO = 'Licensed_Contractor_FSO';
     private static final String Licensed_Automation_Name_MM = 'Licensed_Contractor_MM';
+    private static final String LicensedContractorEmail = 'Licensed_Contractor_Email';
     private static final List<String> EMAIL_TEMPLATES = new List<String>{
         NSP_ServiceConstants.EEO_INFORMATION,
             NSP_ServiceConstants.EPLI_NOTIFICATION,
@@ -1530,7 +1531,10 @@ public class NSP_Implementationprofile_ServiceHelper {
         {
             List<NSP_Implementation_Profile_Automation__c> ipAutomationRecords = new List<NSP_Implementation_Profile_Automation__c>();
             List<String> emailAddress = new List<String>();
-            emailAddress.add(label.Licensed_Contractor_Email);
+            NSP_PEO_Implementations__mdt pf = NSP_PEO_Implementations__mdt.getInstance(LicensedContractorEmail);
+            if ( String.isNotBlank( pf.NSP_Email_Address__c ) ) {
+                emailAddress.add(pf.NSP_Email_Address__c);
+            }  
             if ( ipWithValue.NSP_Project_Manager__r != null
                 && ipWithValue.NSP_Project_Manager__r.NSP_Work_email__c != null
                 )
