@@ -17,6 +17,12 @@ const DYNAMIC_FIELDS = {
           dependentFields: ['When_are_certificates_needed__c'],
         },
       ],
+      Employees_work_in_the_following_states__c: [
+        {
+          expValue: ['CA'],
+          dependentFields: ['Are_you_a_licensed_Contractor__c'],
+        },
+      ],
       Are_you_a_licensed_Contractor__c: [
         {
           expValue: ['Yes'],
