@@ -1534,7 +1534,7 @@ public class NSP_Implementationprofile_ServiceHelper {
             NSP_PEO_Implementations__mdt pf = NSP_PEO_Implementations__mdt.getInstance(LicensedContractorEmail);
             if ( String.isNotBlank( pf.NSP_Email_Address__c ) ) {
                 emailAddress.add(pf.NSP_Email_Address__c);
-            }  
+            }
             if ( ipWithValue.NSP_Project_Manager__r != null
                 && ipWithValue.NSP_Project_Manager__r.NSP_Work_email__c != null
                 )
