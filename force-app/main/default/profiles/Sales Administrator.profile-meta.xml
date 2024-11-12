@@ -1050,6 +1050,10 @@
         <enabled>false</enabled>
         <name>Allow_Delete_Leads</name>
     </customPermissions>
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Financial_Analysis_Tool_Access</name>
+    </customPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>User.NSP_Running_Sales_Division__c</field>

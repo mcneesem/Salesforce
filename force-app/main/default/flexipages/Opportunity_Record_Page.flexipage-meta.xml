@@ -163,29 +163,8 @@
                         <valueListItems>
                             <value>Opportunity.Financial_Analysis_Tool</value>
                             <visibilityRule>
-                                <booleanFilter>1 OR 2 OR 3 OR 4 OR 5</booleanFilter>
                                 <criteria>
-                                    <leftValue>{!$User.Profile.Name}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>Sales Manager</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!$User.Profile.Name}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>Sales Member</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!$User.Profile.Name}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>Sales Administrator</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!$User.Profile.Name}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>Sales Operations</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!$Permission.CustomPermission.Admin_Layout_Access}</leftValue>
+                                    <leftValue>{!$Permission.CustomPermission.Financial_Analysis_Tool_Access}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>true</rightValue>
                                 </criteria>

@@ -1046,6 +1046,10 @@
         <enabled>true</enabled>
         <name>NSP_SObject_Field_History__mdt</name>
     </customMetadataTypeAccesses>
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Financial_Analysis_Tool_Access</name>
+    </customPermissions>
     <description>Renamed to Sales Member form Traditional Sales</description>
     <fieldPermissions>
         <editable>false</editable>
