@@ -57,6 +57,16 @@
                 <default>false</default>
                 <label>High Complexity</label>
             </value>
+            <value>
+                <fullName>Flex</fullName>
+                <default>false</default>
+                <label>Flex</label>
+            </value>
+            <value>
+                <fullName>Add On</fullName>
+                <default>false</default>
+                <label>Add On</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
