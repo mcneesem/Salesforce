@@ -646,9 +646,9 @@
         </lightning-file-upload>
         <lightning-card variant="Narrow" title="Attachments" icon-name="standard:file" class="slds-p-bottom_large">
           <template for:each={uploadedAttachments} for:item="attachment">
-            <div class="slds-p-left_medium slds-p-bottom_x-small" key={attachment.name}>
+            <div class="slds-p-left_medium slds-p-bottom_x-small" key={attachment.fileId}>
               <lightning-icon icon-name="doctype:unknown" size="small"></lightning-icon>
-              {attachment}
+              <a href="#" data-value={attachment.fileId} onclick={navigateToFile}>{attachment.fileName}</a>
             </div>
           </template>
         </lightning-card>

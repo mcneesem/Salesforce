@@ -154,9 +154,8 @@ private class NSP_AccrualProfileControllerTest {
         Test.startTest();
         //GIVEN
         List<NSP_Accrual_Profile__c> lstAccProfile = [SELECT Id,Name FROM NSP_Accrual_Profile__c LIMIT 2];
-        NSP_AccrualProfileController.getAttachedFiles(lstAccProfile[0].Id);
-        List<String> lstAttachmentName = NSP_AccrualProfileController.getAttachedFiles(lstAccProfile[1].Id);
-        System.assertEquals(lstAttachmentName[0],'Header_Picture1.jpg');
+        List<NSP_AccrualProfileController.FileWrapper> lstOfAttachments = NSP_AccrualProfileController.getAttachedFiles(lstAccProfile[1].Id);
+        System.assertEquals(lstOfAttachments[0].fileName,'Header_Picture1.jpg');
         Test.stopTest();
     }
 }
