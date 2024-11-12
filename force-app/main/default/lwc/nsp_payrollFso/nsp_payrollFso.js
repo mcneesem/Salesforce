@@ -156,9 +156,15 @@ export default class Nsp_payrollFso extends LightningElement {
         let valueArray = value.split(';');
         value = this.removeItemsFromArray(valueArray, itemsTobeRemoved).join(';');
       }
-      this.dispatchEvent(
-        new CustomEvent(SYNC_FIELD_EVENT_NAME, { detail: { fieldName, value } })
-      );
+      if (fieldName === 'Employees_work_in_the_following_states__c' && value.split(';').includes('CA')) {  
+        this.dispatchEvent(  
+            new CustomEvent(SYNC_FIELD_EVENT_NAME, { detail: { fieldName, value: 'CA' } })  
+        );   
+     }else {  
+        this.dispatchEvent(
+          new CustomEvent(SYNC_FIELD_EVENT_NAME, { detail: { fieldName, value } })
+        );
+      }
     }
   }
 
