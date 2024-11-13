@@ -683,8 +683,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>blng__TaxIntegration__c.
-    NSP_External_Id__c</field>
+        <field>blng__TaxIntegration__c.NSP_External_Id__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
