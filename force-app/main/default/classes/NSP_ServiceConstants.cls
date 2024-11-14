@@ -580,6 +580,7 @@ public class NSP_ServiceConstants {
     public final static String RELABELING= 'Special Pay Codes/Relabeling';
     public final static String JOBCOST='Job Costing';
     public final static String INTEGRA='Integra';
+    public final static String INSPERITY_INTEGRA='Quickbooks Integration(Insperity Integra)';
     public final static String INTEGRARESPONSE='Integra Responses SmartSheet';
     public final static String CUSTOMREPORT='Custom Report';
     public final static String CUSTOM401K='Custom 401(k)';
@@ -810,7 +811,7 @@ public class NSP_ServiceConstants {
 
 
     //Queue DeveloperNames
-    public static final String INTEGRA_QUEUE = 'NSP_Integra';
+    public static final String INTEGRA_QUEUE = 'Integra';
     public static final String CERTIFY_QUEUE ='NSP_Certify';
     public static final String SERVICE_REFERRAL =  'Service_Referrals';
     public static final String RECRUITING_SERVICES ='NSP_Recruiting_Services';
