@@ -16,10 +16,11 @@
     <permissionSets>DNB_Connect_Fields_Edit_Access</permissionSets>
     <permissionSets>Edit_Integrated_Fields</permissionSets>
     <permissionSets>Field_Access_to_System_Admin_Lite</permissionSets>
+    <permissionSets>Financial_Analysis_Tool_Access</permissionSets>
     <permissionSets>NSP_Payroll_Data_Sheet</permissionSets>
     <permissionSets>NSP_Termination_Form_Access</permissionSets>
-    <permissionSets>Project_Task_Access</permissionSets>
     <permissionSets>Onbording_Meeting_Request_Detail_Edit</permissionSets>
+    <permissionSets>Project_Task_Access</permissionSets>
     <permissionSets>Project_Template_Data_Load</permissionSets>
     <permissionSets>Resource_Absence_record_type_access</permissionSets>
     <permissionSets>Sales_Enablement</permissionSets>
