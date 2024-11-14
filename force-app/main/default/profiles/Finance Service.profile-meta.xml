@@ -15366,7 +15366,7 @@
         <layout>NSP_Client_Sub_Plan_History__c-Choice Page Layout</layout>
         <recordType>NSP_Client_Sub_Plan_History__c.Choice</recordType>
     </layoutAssignments>
-	<layoutAssignments>
+    <layoutAssignments>
         <layout>NSP_Client_Sub_Plan_History__c-WO Page Layout</layout>
         <recordType>NSP_Client_Sub_Plan_History__c.WO</recordType>
     </layoutAssignments>
@@ -15374,7 +15374,7 @@
         <layout>NSP_Plan_SubPlan__c-Choice Page Layout</layout>
         <recordType>NSP_Plan_SubPlan__c.Choice</recordType>
     </layoutAssignments>
-	<layoutAssignments>
+    <layoutAssignments>
         <layout>NSP_Plan_SubPlan__c-WO Page Layout</layout>
         <recordType>NSP_Plan_SubPlan__c.WO</recordType>
     </layoutAssignments>
@@ -15382,7 +15382,7 @@
         <layout>NSP_Contribution__c-Choice Page Layout</layout>
         <recordType>NSP_Contribution__c.Choice</recordType>
     </layoutAssignments>
-	<layoutAssignments>
+    <layoutAssignments>
         <layout>NSP_Contribution__c-WO Page Layout</layout>
         <recordType>NSP_Contribution__c.WO</recordType>
     </layoutAssignments>
@@ -15390,7 +15390,7 @@
         <layout>NSP_Eligibility__c-Choice Page Layout</layout>
         <recordType>NSP_Eligibility__c.Choice</recordType>
     </layoutAssignments>
-	<layoutAssignments>
+    <layoutAssignments>
         <layout>NSP_Eligibility__c-WO Page Layout</layout>
         <recordType>NSP_Eligibility__c.WO</recordType>
     </layoutAssignments>
@@ -15398,7 +15398,7 @@
         <layout>NSP_Plan__c-Choice Page Layout</layout>
         <recordType>NSP_Plan__c.Choice</recordType>
     </layoutAssignments>
-	<layoutAssignments>
+    <layoutAssignments>
         <layout>NSP_Plan__c-WO Page Layout</layout>
         <recordType>NSP_Plan__c.WO</recordType>
     </layoutAssignments>
@@ -15406,7 +15406,7 @@
         <layout>NSP_Sub_Plan_Change_History__c-Choice Page Layout</layout>
         <recordType>NSP_Sub_Plan_Change_History__c.Choice</recordType>
     </layoutAssignments>
-	<layoutAssignments>
+    <layoutAssignments>
         <layout>NSP_Sub_Plan_Change_History__c-WO Page Layout</layout>
         <recordType>NSP_Sub_Plan_Change_History__c.WO</recordType>
     </layoutAssignments>
@@ -16091,7 +16091,7 @@
         <layout>pse__Project_Task__c-PEO Project Task</layout>
         <recordType>pse__Project_Task__c.PEO_Project_Task</recordType>
     </layoutAssignments>
-	<layoutAssignments>
+    <layoutAssignments>
         <layout>pse__Project_Task__c-RET Project Task</layout>
         <recordType>pse__Project_Task__c.RET_Project_Task</recordType>
     </layoutAssignments>
@@ -16107,9 +16107,24 @@
         <layout>pse__Proj__c-TES%2BBPS</layout>
         <recordType>pse__Proj__c.TES_BPS</recordType>
     </layoutAssignments>
-	<layoutAssignments>
+    <layoutAssignments>
         <layout>pse__Proj__c-PEO Project Billable</layout>
         <recordType>pse__Proj__c.PEO_Project_Billable</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>NSP_Termination_Form__c-Finance Service Reinstatement Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>NSP_Termination_Form__c-Finance Service Reinstatement Layout</layout>
+        <recordType>NSP_Termination_Form__c.NSP_Client_Reinstatement</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>NSP_Termination_Form__c-Finance Service Reinstatement Layout</layout>
+        <recordType>NSP_Termination_Form__c.NSP_Credit_Specialist_Form</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>NSP_Termination_Form__c-Finance Service Reinstatement Layout</layout>
+        <recordType>NSP_Termination_Form__c.NSP_Payroll_Specialist_Form</recordType>
     </layoutAssignments>
     <objectPermissions>
         <allowCreate>false</allowCreate>
@@ -16383,7 +16398,7 @@
         <recordType>NSP_Client_Sub_Plan_History__c.WO</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
-	<recordTypeVisibilities>
+    <recordTypeVisibilities>
         <default>false</default>
         <recordType>NSP_Client_Sub_Plan_History__c.Choice</recordType>
         <visible>true</visible>
@@ -16393,7 +16408,7 @@
         <recordType>NSP_Plan_SubPlan__c.WO</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
-	<recordTypeVisibilities>
+    <recordTypeVisibilities>
         <default>false</default>
         <recordType>NSP_Plan_SubPlan__c.Choice</recordType>
         <visible>true</visible>
@@ -16403,7 +16418,7 @@
         <recordType>NSP_Contribution__c.WO</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
-	<recordTypeVisibilities>
+    <recordTypeVisibilities>
         <default>false</default>
         <recordType>NSP_Contribution__c.Choice</recordType>
         <visible>true</visible>
@@ -16413,7 +16428,7 @@
         <recordType>NSP_Eligibility__c.Choice</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
-	<recordTypeVisibilities>
+    <recordTypeVisibilities>
         <default>true</default>
         <recordType>NSP_Eligibility__c.WO</recordType>
         <visible>true</visible>
@@ -16423,7 +16438,7 @@
         <recordType>NSP_Plan__c.WO</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
-	<recordTypeVisibilities>
+    <recordTypeVisibilities>
         <default>false</default>
         <recordType>NSP_Plan__c.Choice</recordType>
         <visible>true</visible>
@@ -16433,7 +16448,7 @@
         <recordType>NSP_Sub_Plan_Change_History__c.Choice</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
-	<recordTypeVisibilities>
+    <recordTypeVisibilities>
         <default>true</default>
         <recordType>NSP_Sub_Plan_Change_History__c.WO</recordType>
         <visible>true</visible>
