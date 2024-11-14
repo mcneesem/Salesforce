@@ -3,7 +3,6 @@ public class NSP_ContentVersionHandler implements NSP_ITriggerHandler {
 
     // Use this variable to disable this trigger from transaction
     public static Boolean TriggerDisabled = false;
-    public static Boolean runOnce = true;
 
     //
     // Represents whether the trigger is disabled or not
