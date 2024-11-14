@@ -110,6 +110,7 @@
     </approvalStep>
     <enableMobileDeviceAccess>false</enableMobileDeviceAccess>
     <entryCriteria>
+        <booleanFilter>1 AND 2 AND 3</booleanFilter>
         <criteriaItems>
             <field>NSP_Accrual_Profile__c.Is_Client_MM_or_MM_Enterprise__c</field>
             <operation>equals</operation>
@@ -119,6 +120,11 @@
             <field>NSP_Accrual_Profile__c.RecordType</field>
             <operation>equals</operation>
             <value>ITA</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>NSP_Accrual_Profile__c.NSP_Status__c</field>
+            <operation>notEqual</operation>
+            <value>Recalled</value>
         </criteriaItems>
     </entryCriteria>
     <finalApprovalActions>
@@ -154,10 +160,10 @@
         </action>
     </initialSubmissionActions>
     <label>ITA Non MM Client Approval</label>
-    <processOrder>1</processOrder>
+    <processOrder>2</processOrder>
     <recallActions>
         <action>
-            <name>Change_Status_to_Draft</name>
+            <name>Change_Status_to_Recalled</name>
             <type>FieldUpdate</type>
         </action>
     </recallActions>
