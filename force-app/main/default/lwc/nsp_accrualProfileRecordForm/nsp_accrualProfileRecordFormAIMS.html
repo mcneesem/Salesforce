@@ -18,7 +18,8 @@
         density="comfy">        
         <lightning-spinner
           if:true={state.isLoading}
-          alternative-text="Loading"></lightning-spinner>
+          alternative-text="Loading">
+        </lightning-spinner>
 
         <div class="slds-align_absolute-center">
           <lightning-radio-group name="radioGroup"
@@ -52,7 +53,8 @@
                   class="slds-show slds-m-horizontal_xx-small"
                   onsearchtermchange={handleAccountSearchTermChange}
                   onlookupselect={handleAccountSelection}
-                  onlookupdeselect={handleAccountDeselection}>
+                  onlookupdeselect={handleAccountDeselection}
+                  data-name="Account">
                 </c-nsp_multi-select-lookup>
 
                 <c-nsp_multi-select-lookup
@@ -63,7 +65,8 @@
                   class="slds-show slds-m-horizontal_xx-small"
                   onsearchtermchange={handleSubClientSearchTermChange}
                   onlookupselect={handleSubClientSelection}
-                  onlookupdeselect={handleSubClientDeselection}>
+                  onlookupdeselect={handleSubClientDeselection}
+                  data-name="SubClient">
                 </c-nsp_multi-select-lookup>
 
                 <lightning-input-field
@@ -100,7 +103,8 @@
                   field-name="NSP_Contact_email__c"
                   data-name="NSP_Contact_email__c"
                   value={fieldValue.NSP_Contact_email__c}
-                  onchange={handleValueChange}>
+                  onchange={handleValueChange}
+                  data-field="NSP_Contact_email__c">
                 </lightning-input-field>
 
                 <lightning-input-field
@@ -156,9 +160,13 @@
                   class="slds-var-m-horizontal_x-small"
                   onchange={handleValueChange}>
                 </lightning-combobox>
-  
+
+                <lightning-formatted-text
+                  value="New/Revised"
+                  class="slds-show slds-var-m-around_xx-small slds-text-body_small"
+                  data-field="NSP_New_Revised__c">
+                </lightning-formatted-text>
                 <c-nsp_selection-box
-                  label="New/Revised"
                   field-api-name="NSP_Accrual_Profile__c.NSP_New_Revised__c"
                   record-type-id={fieldValue.recordTypeId}
                   value={fieldValue.NSP_New_Revised__c}
@@ -176,7 +184,8 @@
   
                 <lightning-formatted-text
                   value="Does this plan replace another (or other) plans?"
-                  class="slds-show slds-var-m-around_xx-small slds-text-body_small">
+                  class="slds-show slds-var-m-around_xx-small slds-text-body_small"
+                  data-field="NSP_Does_this_plan_replace_other_plans__c">
                 </lightning-formatted-text>
   
                 <lightning-input-field
@@ -205,9 +214,13 @@
                   class="slds-show slds-var-p-horizontal_xx-small"
                   onchange={handleValueChange}>
                 </lightning-input-field>
-  
+                
+                <lightning-formatted-text
+                  value="Employee Status (check all that apply)"
+                  class="slds-show slds-var-m-around_xx-small slds-text-body_small"
+                  data-field="NSP_Employee_Status_check_all_that_apply__c">
+                </lightning-formatted-text>
                 <c-nsp_selection-box
-                  label="Employee Status (check all that apply)"
                   field-api-name="NSP_Accrual_Profile__c.NSP_Employee_Status_check_all_that_apply__c"
                   record-type-id={fieldValue.recordTypeId}
                   value={fieldValue.NSP_Employee_Status_check_all_that_apply__c}
@@ -219,7 +232,8 @@
 
                 <lightning-formatted-text
                   value="What additional information describes this group of employees? "
-                  class="slds-show slds-var-m-around_xx-small slds-text-body_small">
+                  class="slds-show slds-var-m-around_xx-small slds-text-body_small"
+                  data-field="NSP_Add_info_describles_group_of_emp__c">
                 </lightning-formatted-text>
 
                 <lightning-input-field
@@ -244,7 +258,8 @@
   
                 <lightning-formatted-text
                   value="What is the plan year or 12-month period in which time is earned?"
-                  class="slds-show slds-var-m-around_xx-small slds-text-body_small">
+                  class="slds-show slds-var-m-around_xx-small slds-text-body_small"
+                  data-field="NSP_What_is_the_plan_year__c">
                 </lightning-formatted-text>
 
                 <lightning-input-field
@@ -278,7 +293,8 @@
                   <lightning-formatted-text
                     if:true={visibility.NSP_If_hired_midway_through_pay_period__c_AIMS_CALENDAR}
                     value="If hired midway through the year, is a prorated accrual earned?"
-                    class="slds-show slds-var-m-around_xx-small slds-text-body_small">
+                    class="slds-show slds-var-m-around_xx-small slds-text-body_small"
+                    data-field="NSP_If_hired_midway_through_pay_period__c">
                   </lightning-formatted-text>
 
                   <lightning-input-field
@@ -424,7 +440,8 @@
                   <lightning-formatted-text
                     if:true={visibility.NSP_If_hired_midway_through_pay_period__c_AIMS_FISCALYEAR}
                     value="If hired midway through the year, is a prorated accrual earned?"
-                    class="slds-show slds-var-m-around_xx-small slds-text-body_small">
+                    class="slds-show slds-var-m-around_xx-small slds-text-body_small"
+                    data-field="NSP_If_hired_midway_through_pay_period__c">
                   </lightning-formatted-text>
 
                   <lightning-input-field
@@ -477,7 +494,9 @@
                   </template>
                 </div>
               
-                <lightning-formatted-text value="In what unit of time are accruals tracked?">
+                <lightning-formatted-text 
+                value="In what unit of time are accruals tracked?"
+                data-field="NSP_What_unitoftime_are_accruals_tracked__c">
                 </lightning-formatted-text>
 
                 <lightning-input-field
@@ -520,7 +539,8 @@
 
                 <lightning-formatted-text
                     value={doBalancesCarryOverLabel}
-                    class="slds-show slds-var-m-around_xx-small slds-text-body_small">
+                    class="slds-show slds-var-m-around_xx-small slds-text-body_small"
+                    data-field="NSP_Do_balances_carry_over_into_next_yer__c">
                 </lightning-formatted-text>
 
                 <lightning-input-field
@@ -572,7 +592,8 @@
 
                 <lightning-formatted-text
                   value={infoMessage.NSP_Add_info_not_already_listed_on_form_info_msg}
-                  class="slds-show slds-var-m-around_medium">
+                  class="slds-show slds-var-m-around_medium"
+                  data-field="NSP_Add_info_not_already_listed_on_form__c">
                 </lightning-formatted-text>
 
                 <lightning-input-field
@@ -586,7 +607,8 @@
 
                 <lightning-formatted-text
                   value="Policy/Accrual supporting documentation attached"
-                  class="slds-show slds-var-m-around_medium">
+                  class="slds-show slds-var-m-around_medium"
+                  data-field="NSP_Policy_Accrual_supporting_doc__c">
                 </lightning-formatted-text>
                 <lightning-input-field
                   field-name="NSP_Policy_Accrual_supporting_doc__c"
