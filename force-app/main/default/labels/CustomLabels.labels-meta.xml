@@ -129,6 +129,13 @@
         <value>Client maintaining their own dental coverage.  CSP Set Up Required to take pre-tax deductions.  Receive and submit necessary documents to H&amp;W.</value>
     </labels>
     <labels>
+        <fullName>CSP_HSA</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP - HSA</shortDescription>
+        <value>Client maintaining their own HSA.  CSP Set Up Required to take pre-tax deductions.  Receive and submit necessary documents to H&amp;W.</value>
+    </labels>
+    <labels>
         <fullName>CSP_Medical</fullName>
         <language>en_US</language>
         <protected>false</protected>
