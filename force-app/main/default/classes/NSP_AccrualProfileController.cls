@@ -6,7 +6,7 @@ Modification Log     :
 **/
 
 public with sharing class NSP_AccrualProfileController {
-    // test w/ NSP_AccrualProfileControllerTest (90%)
+    // test w/ NSP_AccrualProfileControllerTest (92%)
 
     public static String recId;
     public static void setrecId (String recordId) {
@@ -142,5 +142,44 @@ public with sharing class NSP_AccrualProfileController {
             return String.join(lstAccountNames, ', ');
         } set;
         
+    }
+
+    @AuraEnabled(cacheable=true)  
+    public static SObject getRecordWithAllFields(Id recordId) {  
+        SObject result = null;  
+        
+        if (recordId != null) {  
+            Schema.DescribeSObjectResult accrualDescribe = getAccrualDescribe();  
+            if (accrualDescribe != null) {  
+                Map<String, Schema.SObjectField> accrualFieldMap = getAccrualFieldMap(accrualDescribe);  
+                if (accrualFieldMap != null && !accrualFieldMap.isEmpty()) {  
+                    List<String> allFields = getAllFields(accrualFieldMap);  
+                    if (allFields != null && !allFields.isEmpty()) {  
+                        NSP_sObjectSelector selector = getSelector(allFields);  
+                        if (selector != null) {  
+                            result = selector.selectById(recordId);  
+                        }  
+                    }  
+                }  
+            }  
+        }  
+        
+        return result;  
+    }  
+    
+    private static Schema.DescribeSObjectResult getAccrualDescribe() {  
+        return NSP_Accrual_Profile__c.sObjectType.getDescribe();  
+    }  
+    
+    private static Map<String, Schema.SObjectField> getAccrualFieldMap(Schema.DescribeSObjectResult accrualDescribe) {  
+        return accrualDescribe.fields.getMap();  
+    }  
+    
+    private static List<String> getAllFields(Map<String, Schema.SObjectField> accrualFieldMap) {  
+        return new List<String>(accrualFieldMap.keySet());  
+    }  
+    
+    private static NSP_sObjectSelector getSelector(List<String> allFields) {  
+        return new NSP_sObjectSelector('NSP_Accrual_Profile__c', allFields).setSecurityEnforce(false);  
     }
 }
