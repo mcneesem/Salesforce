@@ -2,7 +2,7 @@ public class NSP_ContentVersionTriggerHelper {
     // test w/ CLMDocumentTransferTest (100%)
 
     //
-    // Iterates throught the ContentVersion lies and identifies the records that needs to worked based on various criterias.
+    // Iterates throught the ContentVersion list and identifies the records that needs to worked based on various criterias.
     // @param newList of new ContentVersions.
     // @return void
     //
