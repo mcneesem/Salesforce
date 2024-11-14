@@ -397,7 +397,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
             createProjectTaskForPreTax();
          }
          if(ipRecordsByAutomation.containsKey(CSP_HSA_MM)){
-            createProjectTaskForPreTaxHealth(93,CSP_HSA_MM);
+            createProjectTaskForPreTaxHealth(147,CSP_HSA_MM);
          }
          if(ipRecordsByAutomation.containsKey(PRE_TAX_DEDUCT_MM)){
             createProjectTaskForPreTaxDeduct();
@@ -2415,9 +2415,12 @@ public class NSP_MMImplProfile_ServHelpUpdate {
             longDescription = System.label.CSP_Dental;
         } else if(automation == CSP_VISION_MM) {
             longDescription = System.label.CSP_Vision;
+        } else if(automation == CSP_HSA_MM) {
+            longDescription = System.label.CSP_HSA;
         }
         NSP_ProjectTask_Automation__mdt pta = NSP_ProjectTask_Automation__mdt.getInstance(automation);
         NSP_Implementation_Automations__mdt ipa = NSP_Implementation_Automations__mdt.getInstance(automation);
+        pse__Work_Calendar__c workCalendarRecord = [SELECT Id FROM pse__Work_Calendar__c LIMIT 1]; 
         if(ipRecordsByAutomation != null){
             for(Id ipRecId : ipRecordsByAutomation.get(automation)){
                 if(newIPs != null) {
@@ -2441,7 +2444,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                 eachProjecttask.NSP_Sub_Category__c=pta.NSP_Sub_Category__c;
                                 eachProjecttask.Name=pta.NSP_Task_Name__c;
                                 eachProjecttask.pse__Order__c=order;
-                                eachProjectTask.NSP_Visible_to_Client__c=FALSE;
+                                eachProjectTask.NSP_Visible_to_Client__c=TRUE;
                                 Implementation_Profile__c ipwithValue=(Implementation_Profile__c) data.get(IMPL_PROFILE_IDENTIFIER).get(ipRecId);
                                 if(ipwithValue != null){
                                     if(ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__c!=null && ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__r.pse__Salesforce_User__c!=null){
@@ -2449,6 +2452,9 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                     }
                                     if(String.isNotBlank(longDescription)){
                                         eachProjecttask.pse__Long_Description__c = longDescription;
+                                    }
+                                    if (workCalendarRecord != null) {  
+                                        eachProjecttask.pse__Work_Calendar__c = workCalendarRecord.Id;  
                                     }
                                     eachProjecttask.pse__Milestone__c=milestoneId;
                                     projectTaskList.add(eachProjecttask);
