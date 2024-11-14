@@ -4,9 +4,9 @@
     <active>true</active>
     <description>Account Segment field to be locked if set to MidMarket, unless the user can update the MidMarket National Account field</description>
     <errorConditionFormula>AND(
-  ISCHANGED(NSP_Account_Segment__c), 
-  ISPICKVAL(PRIORVALUE( NSP_Account_Segment__c ) , &apos;MidMarket&apos; ), 
-  NOT( $Permission.MidMarket_National_Account_edit_permissions ) 
+  NOT( $Permission.MidMarket_National_Account_edit_permissions ) ,
+  ISCHANGED( NSP_Account_Segment__c ) ,
+  ISPICKVAL( PRIORVALUE( NSP_Account_Segment__c ) , &apos;MidMarket&apos; )
 )</errorConditionFormula>
     <errorDisplayField>NSP_Account_Segment__c</errorDisplayField>
     <errorMessage>You do not have permission to take that action on this record.</errorMessage>
