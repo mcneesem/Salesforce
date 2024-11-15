@@ -6,11 +6,9 @@ Created Date         :  March 20 2023
 Function             :  This class is used as a test class of NSP_AccrualProfileController
 Story                :  
 */
-@isTest
-private class NSP_AccrualProfileControllerTest {
-    //test setUp method
-    @testSetup 
-    static void setUpAllData(){
+@isTest private class NSP_AccrualProfileControllerTest {
+
+    @testSetup private static void setUpAllData(){
         
         Account accoutObject = (Account)NSP_TestExtendedDataFactory.createSObject(new Account(), 'NSP_TestDataFactory.AccountDefaults', false);
         accoutObject.Name = 'Test Account';
@@ -66,8 +64,7 @@ private class NSP_AccrualProfileControllerTest {
     }
     
     // description : This test method is used to cover NSP_AccrualProfileController.getPlanOptions() method
-    @isTest
-    static void getPlanOptionsTest (){
+    @isTest private static void getPlanOptionsTest (){
         Test.startTest();
         //GIVEN
         Account acc = [SELECT Id,Name FROM Account 
@@ -87,8 +84,7 @@ private class NSP_AccrualProfileControllerTest {
     }
     
     // description : This test method is used to cover NSP_AccrualProfileController.linkFilesToRecord() method
-    @isTest
-    static void linkFilesToRecordTest (){
+    @isTest private static void linkFilesToRecordTest (){
         Test.startTest();
         //GIVEN
         Account acc = [SELECT Id,Name FROM Account WHERE Name != null LIMIT 1];
@@ -115,8 +111,7 @@ private class NSP_AccrualProfileControllerTest {
     }
     
     // description : This test method is used to cover NSP_AccrualProfileController.linkFilesToRecord(accId, null) method
-    @isTest
-    static void negativeTestLinkFilesToRecord (){
+    @isTest private static void negativeTestLinkFilesToRecord (){
         
         //GIVEN
         Account acc = [SELECT Id,Name FROM Account WHERE Name != null LIMIT 1];
@@ -133,8 +128,7 @@ private class NSP_AccrualProfileControllerTest {
     }
     
     // description : This test method is used to cover NSP_AccrualProfileController.setrecId,NSP_AccrualProfileController.setrecId,NSP_AccrualProfileController.accrualProfilePlanName and NSP_AccrualProfileController.accrualProfileAccountNames 
-    @isTest
-    static void accrualProfilePlanName (){ 
+    @isTest private static void accrualProfilePlanName (){ 
         
         //GIVEN
         NSP_Accrual_Profile__c accProfile = [SELECT Id,Name FROM NSP_Accrual_Profile__c WHERE Id != null LIMIT 1];
@@ -149,13 +143,21 @@ private class NSP_AccrualProfileControllerTest {
     }
     
     // description : This test method is used to cover NSP_AccrualProfileController.getAttachedFiles method.
-    @isTest
-    static void getAttachedFilesNameTest (){ 
+    @isTest private static void getAttachedFilesNameTest (){ 
         Test.startTest();
         //GIVEN
         List<NSP_Accrual_Profile__c> lstAccProfile = [SELECT Id,Name FROM NSP_Accrual_Profile__c LIMIT 2];
         List<NSP_AccrualProfileController.FileWrapper> lstOfAttachments = NSP_AccrualProfileController.getAttachedFiles(lstAccProfile[1].Id);
         System.assertEquals(lstOfAttachments[0].fileName,'Header_Picture1.jpg');
         Test.stopTest();
+    }
+    // description : This test method is used to cover NSP_AccrualProfileController.getRecordWithAllFields method.
+    @isTest private static void getRecordWithAllFieldsTest() {  
+        Id accrual = [SELECT Id FROM NSP_Accrual_Profile__c WHERE NSP_Accrual_Profile_Plan_Name__c = 'Test Accrual Profile Attachment'].Id;   
+        Test.startTest();
+        SObject result = NSP_AccrualProfileController.getRecordWithAllFields(accrual);  
+        Test.stopTest();
+        System.assertNotEquals(result, null);  
+        System.assertEquals(result.getSObjectType(), NSP_Accrual_Profile__c.SObjectType);  
     }
 }

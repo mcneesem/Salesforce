@@ -1,14 +1,28 @@
 c-nsp_implementation-profile lightning-input-field .slds-form-element__label{
-	font-weight: 500;
-	color: #0000FF;
+    font-weight: 500;
+    color: #0000FF;
+}
+c-nsp_accrual-profile-record-form lightning-input-field .slds-form-element__label{
+    font-weight: 500;
+    color: #0000FF;
 }
 
 c-nsp_implementation-profile lightning-input .slds-form-element__label{
-	font-weight: 500;
-	color: #0000FF;
+    font-weight: 500;
+    color: #0000FF;
+}
+
+c-nsp_accrual-profile-record-form lightning-input .slds-form-element__label{
+    font-weight: 500;
+    color: #0000FF;
 }
 
 c-nsp_implementation-profile .answered lightning-formatted-text{
+    color: #000000;
+    font-weight: 500;
+}
+
+c-nsp_accrual-profile-record-form .answered lightning-formatted-text{
     color: #000000;
     font-weight: 500;
 }
@@ -18,16 +32,43 @@ c-nsp_implementation-profile lightning-formatted-text.answered{
     font-weight: 500;
 }
 
+c-nsp_accrual-profile-record-form lightning-formatted-text.answered{
+    color: #000000;
+    font-weight: 500;
+}
+
+c-nsp_accrual-profile-record-form lightning-combobox .slds-form-element__label{
+    font-weight: 500;
+    color: #0000FF;
+}
+
+c-nsp_accrual-profile-record-form  lightning-combobox.answered{
+    color: #000000;
+    font-weight: 500;
+}
+
 c-nsp_implementation-profile lightning-formatted-text:not(.slds-page-header__title):not(.slds-text-heading_small):not(.answered):not(.redAnswered){
     color: #0000FF;
     font-weight: 500;
 }
+c-nsp_accrual-profile-record-form lightning-formatted-text:not(.slds-page-header__title):not(.slds-text-heading_small):not(.answered):not(.redAnswered){
+    color: #0000FF;
+    font-weight: 500;
+} 
 c-nsp_implementation-profile .question{
+    color: #0000FF;
+    font-weight: 500;
+}
+c-nsp_accrual-profile-record-form .question{
     color: #0000FF;
     font-weight: 500;
 }
 
 c-nsp_implementation-profile .question .slds-form-element__label{
+    color: #0000FF;
+    font-weight: 500;
+}
+c-nsp_accrual-profile-record-form .question .slds-form-element__label{
     color: #0000FF;
     font-weight: 500;
 }
@@ -37,8 +78,13 @@ c-nsp_implementation-profile .answered .slds-form-element__label{
     font-weight: 500;
 }
 
+c-nsp_accrual-profile-record-form .answered .slds-form-element__label{
+    color: #000000;
+    font-weight: 500;
+}
+
 c-nsp_implementation-profile .slds-checkbox .slds-checkbox__label .slds-form-element__label{
-	font-size: 12px;
+    font-size: 12px;
 }
 
 c-nsp_mid-market-form-ip lightning-formatted-text + lightning-input-field{
@@ -47,7 +93,6 @@ c-nsp_mid-market-form-ip lightning-formatted-text + lightning-input-field{
     margin-bottom: 4px;
 }
 
-/* added as part of STY-03065 */
 c-nsp_implementation-profile lightning-formatted-text.redAnswered{
     color: red;
     font-weight: 500;
