@@ -168,17 +168,6 @@ export default class Nsp_serviceTeamFso extends LightningElement {
     return LABELS;
   }
 
-  @api
-  get syncFieldValues() {
-    return null;
-  }
-  set syncFieldValues(values) {
-    if (values) {
-      const { fieldName, value } = values;
-      this.updateDependentFieldVisibility(fieldName, value);
-    }
-  }
-
   handleDoubleClick({ detail, target }){
     this.isDoubleClick = true;
     this.handleValueChange({ detail: detail, target: target });
