@@ -21,108 +21,125 @@ public class NSP_MMImplProfile_ServHelpUpdate {
     private List<String> existingIpAutomations=new List<String>();
     private List<String> listRegulatedStates = new List<String>();
     private Map<String, pse__Milestone__c> mileStonesToInsert = new Map<String, pse__Milestone__c>();
-     
-     private static final String PROJECT_IDENTIFIER = 'pse__Proj__c';
-     private static final String PROJECT_TASK_IDENTIFIER = 'pse__Project_Task__c';
-     private static final String IMPL_PROFILE_IDENTIFIER = 'Implementation_Profile__c';
-     private static final String IP_AUTOMATION_IDENTIFIER = 'NSP_Implementation_Profile_Automation__c';
- 
-     private static final String PAYROLL_REGISTER_MM='NSP_Payroll_Register';
-     private static final String SECTION_QUESTIONNAIRE_MM = 'NSP_Section_125_Questionaire';
-     private static final String FEIN_DOCUMENT_COLLECTED_MM = 'NSP_FEIN_documentation';
-     private static final String GENERAL_LIABILITY_MM = 'NSP_Received_Certificate';
-     private static final String PTO_MM='NSP_Tracking_PTO';
-     private static final String EEO_FILING_MM = 'NSP_Union_EEs';
-     private static final String SEASONAL_EE_MM = 'NSP_Seasonal_EEs';
-     private static final String EEO_ON_LEAVE_MM = 'NSP_Leave_of_Absence';
-     private static final String LOA_TYPES_MM = 'NSP_LOA_Types';
-     private static final String LOA_GREATER_THAN_MM = 'NSP_LOA_Type_Greater';
-     private static final String SALARY_CONT_MM = 'NSP_LOA_Salary_Continuation';
-     private static final String POST_TAX_MM = 'NSP_Post_tax_deductions';
-     private static final String TIMESTAR_MM = 'NSP_TimeStar';
-     private static final String TIMESTAR_TA_MM = 'NSP_TimeStar_T_A';
-     private static final String TIMESTAR_TA_SYS_MM = 'NSP_TimeStar_T_A_System';
-     private static final String TIMESTAR_TA_ADMIN_MM = 'NSP_TimeStar_T_A_Administrator';
-     private static final String TIMESTAR_TA_SUP_MM = 'NSP_TimeStar_T_A_Supervisor';
-     private static final String TIMESTAR_TA_EMP_MM = 'NSP_TimeStar_Employee_Plan';
-     private static final String TIMESTAR_TA_CONFIG_MM = 'NSP_Timestar_T_A_Configuration';
-     private static final String TIMESTAR_TA_EMP_SUB1_MM  = 'NSP_Timestar_Emp_Plan_Sub1';
-     private static final String TIMESTAR_TA_EMP_SUB2_MM  = 'NSP_Timestar_Emp_Plan_Sub2';
-     private static final String TIMESTAR_TA_EMP_SUB3_MM  = 'NSP_Timestar_Emp_Plan_Sub3';
-     private static final String TIMESTAR_TA_EMP_SUB4_MM  = 'NSP_Timestar_Emp_Plan_Sub4';
-     private static final String TIMESTAR_TA_PARALLEL = 'NSP_TimeStar_TA_Parallel';
-     private static final String TIMESTAR_TA_SYSTEM_MM = 'NSP_TimeStar_TA_System_Live';
-     private static final String TIMESTAR_TA_PAYROLL_EXPERT_MM = 'NSP_TimeStar_TA_Payroll_Expert';
-     private static final String GARNISHMENT_MM = 'NSP_EE_garnishments';
-     private static final String TAX_LEVIES_MM = 'NSP_Tax_levies';
-     private static final String RETIRE_PLAN_MM='NSP_Retirement_Plan';
-     private static final String HSA_MM='NSP_HSA';
-     private static final String HSA_OPTUM_MM='HSA_Optum';
-     private static final String HSA_OPTUM_NO_MM='NSP_HSA_No_Optum';
-     private static final String COBRA_MM='NSP_COBRA';
-     private static final String DEDUCIBLE_CARRYOVER_MM = 'NSP_Deductible_Carryover';
-     private static final String EE_MEDICAL_MM = 'NSP_EE_Medical';
-     private static final String WAITING_MM = 'NSP_EE_Waiting';
-     private static final String POST_DEDUCTION_MM='NSP_Post_tax';
-     private static final String RETIRE_PLANORK_MM='NSP_Retirement_Plan_ORK_401K';
-     private static final String RETIRE_PLAN_ORK_CLIENT_MM='NSP_Retirement_Plan_ORK_Client';
-     private static final String RETIRE_PLAN_ORK_401K_MM='NSP_Retirement_Plan_ORK_Payroll';
-     private static final String RETIRE_PLAN_401K_DEF_MM='NSP_Retirement_Plan_401k_Deferrals';
-     private static final String RETIRE_PLAN_401K_EMP_MM='NSP_Retirement_Plan_401k_Employee';
-     private static final String RETIRE_PLAN_401K_DEF_UP_MM='NSP_Retirement_Plan_401k_uploaded';
-     private static final String RETIRE_PLAN_401K_LOAN_MM='NSP_Retirement_Plan_401k_Emp_Upload';
-     private static final String RETIRE_PLAN_401K_YTD_MM='NSP_Retirement_Plan_401k_YTD';
-     private static final String RETIRE_PLAN_401K_YTD_UP_MM='NSP_Retirement_Plan_401k_YTD_uploaded';
-     private static final String NSP401K_MM = 'NSP_X401k_Meeting';
-     private static final String NSP401K_CLIENT_MM = 'NSP_X401k_Client_Plan';
-     private static final String NSP401K_ELECTION_MM = 'NSP_X401k_Election_Agreement';
-     private static final String NSP401K_CLIENT_MATCH_MM = 'NSP_X401k_Client_Match';
-     private static final String NSP401K_PLAN_MM = 'NSP_X401k_Plan_Setup';
-     private static final String NSP401K_COLLECT_MM = 'NSP_X401k_Collect_YTD';
-     private static final String NSP401K_EMP_TRAIN_MM = 'NSP_X401K_Employee_training';
-     private static final String SUBSTANCE_ABUSE_MM = 'NSP_Substance_Abuse';
-     private static final String STANDARD_MM = 'NSP_Standard_Offer_Letter';
-     private static final String BACKGROUND_MM = 'NSP_Background_Check';
-     private static final String DRUG_SCREENING_MM = 'NSP_Drug_Screening';
-     private static final String SCREENING_BPS_MM = 'NSP_Select_BPSes_Employment';
-     private static final String PERFORMANCE_BPS_MM = 'NSP_Select_BPSes_Performance';
-     private static final String ORGANIZATIONAL_BPS_MM = 'NSP_Select_BPSes_Organizational';
-     private static final String INSURANCE_BPS_MM = 'NSP_Select_BPSes_Insurance';
-     private static final String RECRUITING_BPS_MM = 'NSP_Select_BPSes_Recruiting';
-     private static final String CERTIFY_BPS_MM= 'NSP_Select_BPSes_Certify';
-     private static final String SPECIFIC_LEAVE_MM= 'NSP_Specific_Leave';
-     private static final String PRE_TAX_MM= 'NSP_Pre_Tax';
-     private static final String PRE_TAX_DEDUCT_MM= 'NSP_Pre_Tax_Deduction';
-     private static final String POST_TAX_SPONSPOREDPLAN_MM= 'NSP_Post_Tax_SponsporedPlan';
-     private static final String POST_TAX_EMPSETUP_MM= 'NSP_Post_Tax_EmpSetup';
-     private static final String ALLOWNCE_EXPENSE_MM= 'NSP_Allowance_Expenses';
-     private static final String DEPENDENT_CARE_MM= 'NSP_Dependent_Care';
-     private static final String HEALTH_CARE_MM= 'NSP_Health_Care';
-     private static final String OTHER_PRETAX_TYPE_MM= 'NSP_Other_Pretax';
-     private static final String SEVERANCEAGREEMENT_MM= 'NSP_SeverenceAgreement';
-     private static final String JOBDESCRIPTION_MM= 'NSP_JobDescriptiom';
-     private static final String HANDBOOK_DEVELOPMENT_MM= 'NSP_HandbookDevelopment';
-     private static final String COBRA_GUIDELINES_MM= 'NSP_COBRAGuidelines';
-     private static final String COBRA_TEAM_MM= 'NSP_COBRATeam';
-     private static final String COBRA_PACKETS_MM= 'NSP_COBRAPackets';
-     
- 
-     private static Id ipFSORecordTypeId = SObjectType.Implementation_Profile__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.FSOProfile).getRecordTypeId();
-     private static Id ipMMRecordTypeId = SObjectType.Implementation_Profile__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.MMProfile).getRecordTypeId();
-     private static Id milestonePEORecordtypeId = SObjectType.pse__Milestone__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.PEOMILSTONE).getRecordTypeId();
-     private static Id projectTaskPEORecordTypeId = Schema.SObjectType.pse__Project_Task__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.PROJECT_TASK_PEO_RECORDTYPE).getRecordTypeId();
-     
-     public NSP_MMImplProfile_ServHelpUpdate(Map<Id, Implementation_Profile__c> newIPs, Map<Id, Implementation_Profile__c> oldIPs){
-         this.newIPs = newIPs;
-         this.oldIPs = oldIPs;
-         this.automationsToExecute.addAll(new List<String>{PAYROLL_REGISTER_MM,SECTION_QUESTIONNAIRE_MM,FEIN_DOCUMENT_COLLECTED_MM,GENERAL_LIABILITY_MM,
-             PTO_MM,EEO_FILING_MM,SEASONAL_EE_MM,EEO_ON_LEAVE_MM,LOA_TYPES_MM,LOA_GREATER_THAN_MM,SALARY_CONT_MM,SPECIFIC_LEAVE_MM,POST_TAX_MM,TIMESTAR_MM,TIMESTAR_TA_EMP_MM,
-             GARNISHMENT_MM,TAX_LEVIES_MM,PRE_TAX_MM,PRE_TAX_DEDUCT_MM,POST_TAX_SPONSPOREDPLAN_MM,POST_TAX_EMPSETUP_MM,ALLOWNCE_EXPENSE_MM,RETIRE_PLAN_MM,HSA_MM,HSA_OPTUM_MM,
-             HSA_OPTUM_NO_MM,COBRA_MM,DEDUCIBLE_CARRYOVER_MM,EE_MEDICAL_MM,WAITING_MM,DEPENDENT_CARE_MM,HEALTH_CARE_MM,OTHER_PRETAX_TYPE_MM,POST_DEDUCTION_MM,RETIRE_PLANORK_MM,
-             NSP401K_MM,HANDBOOK_DEVELOPMENT_MM,JOBDESCRIPTION_MM,SEVERANCEAGREEMENT_MM,SUBSTANCE_ABUSE_MM,STANDARD_MM,BACKGROUND_MM,DRUG_SCREENING_MM,
-             SCREENING_BPS_MM,PERFORMANCE_BPS_MM,ORGANIZATIONAL_BPS_MM,INSURANCE_BPS_MM,RECRUITING_BPS_MM,CERTIFY_BPS_MM});
-     }
-  
+
+    private static final String PROJECT_IDENTIFIER = 'pse__Proj__c';
+    private static final String PROJECT_TASK_IDENTIFIER = 'pse__Project_Task__c';
+    private static final String IMPL_PROFILE_IDENTIFIER = 'Implementation_Profile__c';
+    private static final String IP_AUTOMATION_IDENTIFIER = 'NSP_Implementation_Profile_Automation__c';
+
+    private static final String PAYROLL_REGISTER_MM='NSP_Payroll_Register';
+    private static final String SECTION_QUESTIONNAIRE_MM = 'NSP_Section_125_Questionaire';
+    private static final String FEIN_DOCUMENT_COLLECTED_MM = 'NSP_FEIN_documentation';
+    private static final String GENERAL_LIABILITY_MM = 'NSP_Received_Certificate';
+    private static final String PTO_MM='NSP_Tracking_PTO';
+    private static final String EEO_FILING_MM = 'NSP_Union_EEs';
+    private static final String SEASONAL_EE_MM = 'NSP_Seasonal_EEs';
+    private static final String EEO_ON_LEAVE_MM = 'NSP_Leave_of_Absence';
+    private static final String LOA_TYPES_MM = 'NSP_LOA_Types';
+    private static final String LOA_GREATER_THAN_MM = 'NSP_LOA_Type_Greater';
+    private static final String SALARY_CONT_MM = 'NSP_LOA_Salary_Continuation';
+    private static final String POST_TAX_MM = 'NSP_Post_tax_deductions';
+    private static final String TIMESTAR_MM = 'NSP_TimeStar';
+    private static final String TIMESTAR_TA_MM = 'NSP_TimeStar_T_A';
+    private static final String TIMESTAR_TA_SYS_MM = 'NSP_TimeStar_T_A_System';
+    private static final String TIMESTAR_TA_ADMIN_MM = 'NSP_TimeStar_T_A_Administrator';
+    private static final String TIMESTAR_TA_SUP_MM = 'NSP_TimeStar_T_A_Supervisor';
+    private static final String TIMESTAR_TA_EMP_MM = 'NSP_TimeStar_Employee_Plan';
+    private static final String TIMESTAR_TA_CONFIG_MM = 'NSP_Timestar_T_A_Configuration';
+    private static final String TIMESTAR_TA_EMP_SUB1_MM  = 'NSP_Timestar_Emp_Plan_Sub1';
+    private static final String TIMESTAR_TA_EMP_SUB2_MM  = 'NSP_Timestar_Emp_Plan_Sub2';
+    private static final String TIMESTAR_TA_EMP_SUB3_MM  = 'NSP_Timestar_Emp_Plan_Sub3';
+    private static final String TIMESTAR_TA_EMP_SUB4_MM  = 'NSP_Timestar_Emp_Plan_Sub4';
+    private static final String TIMESTAR_TA_PARALLEL = 'NSP_TimeStar_TA_Parallel';
+    private static final String TIMESTAR_TA_SYSTEM_MM = 'NSP_TimeStar_TA_System_Live';
+    private static final String TIMESTAR_TA_PAYROLL_EXPERT_MM = 'NSP_TimeStar_TA_Payroll_Expert';
+    private static final String GARNISHMENT_MM = 'NSP_EE_garnishments';
+    private static final String TAX_LEVIES_MM = 'NSP_Tax_levies';
+    private static final String RETIRE_PLAN_MM='NSP_Retirement_Plan';
+    private static final String HSA_MM='NSP_HSA';
+    private static final String HSA_OPTUM_MM='HSA_Optum';
+    private static final String HSA_OPTUM_NO_MM='NSP_HSA_No_Optum';
+    private static final String COBRA_MM='NSP_COBRA';
+    private static final String DEDUCIBLE_CARRYOVER_MM = 'NSP_Deductible_Carryover';
+    private static final String EE_MEDICAL_MM = 'NSP_EE_Medical';
+    private static final String WAITING_MM = 'NSP_EE_Waiting';
+    private static final String POST_DEDUCTION_MM='NSP_Post_tax';
+    private static final String RETIRE_PLANORK_MM='NSP_Retirement_Plan_ORK_401K';
+    private static final String RETIRE_PLAN_ORK_CLIENT_MM='NSP_Retirement_Plan_ORK_Client';
+    private static final String RETIRE_PLAN_ORK_401K_MM='NSP_Retirement_Plan_ORK_Payroll';
+    private static final String RETIRE_PLAN_401K_DEF_MM='NSP_Retirement_Plan_401k_Deferrals';
+    private static final String RETIRE_PLAN_401K_EMP_MM='NSP_Retirement_Plan_401k_Employee';
+    private static final String RETIRE_PLAN_401K_DEF_UP_MM='NSP_Retirement_Plan_401k_uploaded';
+    private static final String RETIRE_PLAN_401K_LOAN_MM='NSP_Retirement_Plan_401k_Emp_Upload';
+    private static final String RETIRE_PLAN_401K_YTD_MM='NSP_Retirement_Plan_401k_YTD';
+    private static final String RETIRE_PLAN_401K_YTD_UP_MM='NSP_Retirement_Plan_401k_YTD_uploaded';
+    private static final String NSP401K_MM = 'NSP_X401k_Meeting';
+    private static final String NSP401K_CLIENT_MM = 'NSP_X401k_Client_Plan';
+    private static final String NSP401K_ELECTION_MM = 'NSP_X401k_Election_Agreement';
+    private static final String NSP401K_CLIENT_MATCH_MM = 'NSP_X401k_Client_Match';
+    private static final String NSP401K_PLAN_MM = 'NSP_X401k_Plan_Setup';
+    private static final String NSP401K_COLLECT_MM = 'NSP_X401k_Collect_YTD';
+    private static final String NSP401K_EMP_TRAIN_MM = 'NSP_X401K_Employee_training';
+    private static final String SUBSTANCE_ABUSE_MM = 'NSP_Substance_Abuse';
+    private static final String STANDARD_MM = 'NSP_Standard_Offer_Letter';
+    private static final String BACKGROUND_MM = 'NSP_Background_Check';
+    private static final String DRUG_SCREENING_MM = 'NSP_Drug_Screening';
+    private static final String SCREENING_BPS_MM = 'NSP_Select_BPSes_Employment';
+    private static final String PERFORMANCE_BPS_MM = 'NSP_Select_BPSes_Performance';
+    private static final String ORGANIZATIONAL_BPS_MM = 'NSP_Select_BPSes_Organizational';
+    private static final String INSURANCE_BPS_MM = 'NSP_Select_BPSes_Insurance';
+    private static final String RECRUITING_BPS_MM = 'NSP_Select_BPSes_Recruiting';
+    private static final String CERTIFY_BPS_MM= 'NSP_Select_BPSes_Certify';
+    private static final String SPECIFIC_LEAVE_MM= 'NSP_Specific_Leave';
+    private static final String PRE_TAX_MM= 'NSP_Pre_Tax';
+    private static final String PRE_TAX_DEDUCT_MM= 'NSP_Pre_Tax_Deduction';
+    private static final String POST_TAX_SPONSPOREDPLAN_MM= 'NSP_Post_Tax_SponsporedPlan';
+    private static final String POST_TAX_EMPSETUP_MM= 'NSP_Post_Tax_EmpSetup';
+    private static final String ALLOWNCE_EXPENSE_MM= 'NSP_Allowance_Expenses';
+    private static final String DEPENDENT_CARE_MM= 'NSP_Dependent_Care';
+    private static final String HEALTH_CARE_MM= 'NSP_Health_Care';
+    private static final String SEVERANCEAGREEMENT_MM= 'NSP_SeverenceAgreement';
+    private static final String JOBDESCRIPTION_MM= 'NSP_JobDescriptiom';
+    private static final String HANDBOOK_DEVELOPMENT_MM= 'NSP_HandbookDevelopment';
+    private static final String COBRA_GUIDELINES_MM= 'NSP_COBRAGuidelines';
+    private static final String COBRA_TEAM_MM= 'NSP_COBRATeam';
+    private static final String COBRA_PACKETS_MM= 'NSP_COBRAPackets';
+    private static final String CSP_HSA_MM ='CSP_HSA';
+    private static final String CSP_MEDICAL_MM ='CSP_Medical';
+    private static final String CSP_DENTAL_MM ='CSP_Dental';
+    private static final String CSP_VISION_MM ='CSP_Vision';
+
+    private static Id ipFSORecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Implementation_Profile__c' , NSP_ServiceConstants.FSOProfile );
+    private static Id ipMMRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Implementation_Profile__c' , NSP_ServiceConstants.MMProfile );
+    private static Id milestonePEORecordtypeId = NSP_GenericRecordType.getRecordTypeId( 'pse__Milestone__c' , NSP_ServiceConstants.PEOMILSTONE );
+    private static Id projectTaskPEORecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'pse__Project_Task__c' , NSP_ServiceConstants.PROJECT_TASK_PEO_RECORDTYPE );
+
+    public NSP_MMImplProfile_ServHelpUpdate( Map<Id,Implementation_Profile__c> newIPs , Map<Id,Implementation_Profile__c> oldIPs ) {
+        this.newIPs = newIPs;
+        this.oldIPs = oldIPs;
+        this.automationsToExecute.addAll(
+            new List<String>{
+                PAYROLL_REGISTER_MM,SECTION_QUESTIONNAIRE_MM,
+                FEIN_DOCUMENT_COLLECTED_MM,GENERAL_LIABILITY_MM,
+                PTO_MM,EEO_FILING_MM,SEASONAL_EE_MM,EEO_ON_LEAVE_MM,
+                LOA_TYPES_MM,LOA_GREATER_THAN_MM,SALARY_CONT_MM,
+                SPECIFIC_LEAVE_MM,POST_TAX_MM,TIMESTAR_MM,TIMESTAR_TA_EMP_MM,
+                GARNISHMENT_MM,TAX_LEVIES_MM,PRE_TAX_MM,PRE_TAX_DEDUCT_MM,
+                POST_TAX_SPONSPOREDPLAN_MM,POST_TAX_EMPSETUP_MM,
+                ALLOWNCE_EXPENSE_MM,RETIRE_PLAN_MM,HSA_MM,HSA_OPTUM_MM,
+                HSA_OPTUM_NO_MM,COBRA_MM,DEDUCIBLE_CARRYOVER_MM,
+                EE_MEDICAL_MM,WAITING_MM,DEPENDENT_CARE_MM,
+                HEALTH_CARE_MM,POST_DEDUCTION_MM,RETIRE_PLANORK_MM,
+                NSP401K_MM,HANDBOOK_DEVELOPMENT_MM,JOBDESCRIPTION_MM,
+                SEVERANCEAGREEMENT_MM,SUBSTANCE_ABUSE_MM,STANDARD_MM,
+                BACKGROUND_MM,DRUG_SCREENING_MM,SCREENING_BPS_MM,
+                PERFORMANCE_BPS_MM,ORGANIZATIONAL_BPS_MM,INSURANCE_BPS_MM,
+                RECRUITING_BPS_MM,CERTIFY_BPS_MM,CSP_HSA_MM,CSP_MEDICAL_MM,
+                CSP_DENTAL_MM,CSP_VISION_MM
+            }
+        );
+    }
+
      public NSP_MMImplProfile_ServHelpUpdate(Id ipRecord, String automationName){
         this.newIPs =  NSP_ImpAutomationsController.getIpRecord(ipRecord);
         this.isRerun=true;
@@ -229,6 +246,9 @@ public class NSP_MMImplProfile_ServHelpUpdate {
             if(automationsToExecute.contains(PRE_TAX_DEDUCT_MM)){
                 checkForPreTax(ipRec, existingRec);
             }
+            if(automationsToExecute.contains(CSP_HSA_MM)){
+                checkForCspHsa(ipRec, existingRec);
+            }
             if(automationsToExecute.contains(POST_TAX_SPONSPOREDPLAN_MM)){
                 checkForPostTax(ipRec, existingRec);
             }
@@ -268,8 +288,14 @@ public class NSP_MMImplProfile_ServHelpUpdate {
             if(automationsToExecute.contains(HEALTH_CARE_MM)){
                 checkForHealthCare(ipRec, existingRec);
             }
-            if(automationsToExecute.contains(OTHER_PRETAX_TYPE_MM)){
-                checkForOtherPreTaxType(ipRec, existingRec);
+            if(automationsToExecute.contains(CSP_MEDICAL_MM)){
+                checkForMedical(ipRec, existingRec);
+            }
+            if(automationsToExecute.contains(CSP_DENTAL_MM)){
+                checkForDental(ipRec, existingRec);
+            }
+            if(automationsToExecute.contains(CSP_VISION_MM)){
+                checkForVision(ipRec, existingRec);
             }
             if(automationsToExecute.contains(POST_DEDUCTION_MM)){
                 checkforPostTaxDeductions(ipRec, existingRec);
@@ -370,6 +396,9 @@ public class NSP_MMImplProfile_ServHelpUpdate {
          if(ipRecordsByAutomation.containsKey(PRE_TAX_MM)){
             createProjectTaskForPreTax();
          }
+         if(ipRecordsByAutomation.containsKey(CSP_HSA_MM)){
+            createProjectTaskForPreTaxHealth(147,CSP_HSA_MM);
+         }
          if(ipRecordsByAutomation.containsKey(PRE_TAX_DEDUCT_MM)){
             createProjectTaskForPreTaxDeduct();
          }
@@ -404,8 +433,14 @@ public class NSP_MMImplProfile_ServHelpUpdate {
          if(ipRecordsByAutomation.containsKey(HEALTH_CARE_MM)){
             createProjectTaskForHealthCare();
          }
-         if(ipRecordsByAutomation.containsKey(OTHER_PRETAX_TYPE_MM)){
-            createProjectTaskForOtherPretax();
+         if(ipRecordsByAutomation.containsKey(CSP_MEDICAL_MM)){
+            createProjectTaskForPreTaxHealth(148, CSP_MEDICAL_MM);
+         }
+         if(ipRecordsByAutomation.containsKey(CSP_DENTAL_MM)){
+            createProjectTaskForPreTaxHealth(148, CSP_DENTAL_MM);
+         }
+         if(ipRecordsByAutomation.containsKey(CSP_VISION_MM)){
+            createProjectTaskForPreTaxHealth(148, CSP_VISION_MM);
          }
          if(ipRecordsByAutomation.containsKey(RETIRE_PLANORK_MM)){
             createProjectTaskForRetirementPlans();
@@ -2369,52 +2404,80 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                recToInsert.addAll(getnewAutomationListtoInsert(ipAutomationRecords));
     }
 
-    public void createProjectTaskForOtherPretax(){
-        //and Health Care Flexible Spend Account is checked 
+    public void createProjectTaskForPreTaxHealth(Integer order, String automation) {
+        // If Reporting: Select all that apply
         List<pse__Project_Task__c> projectTaskList = new List<pse__Project_Task__c>();
         List<NSP_Implementation_Profile_Automation__c> ipAutomationRecords = new List<NSP_Implementation_Profile_Automation__c>();
-       
-        NSP_ProjectTask_Automation__mdt pta =  NSP_ProjectTask_Automation__mdt.getInstance(OTHER_PRETAX_TYPE_MM);
-        NSP_Implementation_Automations__mdt ipa = NSP_Implementation_Automations__mdt.getInstance(OTHER_PRETAX_TYPE_MM);
-
-        
-        for(Id ipRecId : ipRecordsByAutomation.get(OTHER_PRETAX_TYPE_MM)){
-           Implementation_Profile__c ipRec = newIPs.get(ipRecId);
-           if(isRerun || ipRec.NSP_Form_Completed__c){
-                pse__Proj__c proj = (pse__Proj__c) data.get(PROJECT_IDENTIFIER).get(ipRec.NSP_Project__c);
-                Id milestoneId;
-                                                
-                milestoneId=getMilestoneId(proj.pse__Milestones__r,pta.NSP_Milestone__c, proj);
-                String milestoneKey = proj.Id + '~' + pta.NSP_Milestone__c;
-
-                if(milestoneId == null && !mileStonesToInsert.containsKey(milestoneKey)){
-                    pse__Milestone__c eachMilestone = new pse__Milestone__c(Name=pta.NSP_Milestone__c, RecordTypeId=milestonePEORecordtypeId, pse__Project__c=proj.Id, pse__Target_Date__c=proj.pse__End_Date__c);
-                    mileStonesToInsert.put(milestoneKey, eachMilestone);
+        String longDescription = '';
+        if(automation == CSP_MEDICAL_MM) {
+            longDescription = System.label.CSP_Medical;
+        } else if(automation == CSP_DENTAL_MM) {
+            longDescription = System.label.CSP_Dental;
+        } else if(automation == CSP_VISION_MM) {
+            longDescription = System.label.CSP_Vision;
+        } else if(automation == CSP_HSA_MM) {
+            longDescription = System.label.CSP_HSA;
+        }
+        NSP_ProjectTask_Automation__mdt pta = NSP_ProjectTask_Automation__mdt.getInstance(automation);
+        NSP_Implementation_Automations__mdt ipa = NSP_Implementation_Automations__mdt.getInstance(automation);
+        pse__Work_Calendar__c workCalendarRecord = [SELECT Id FROM pse__Work_Calendar__c LIMIT 1]; 
+        if(ipRecordsByAutomation != null){
+            for(Id ipRecId : ipRecordsByAutomation.get(automation)){
+                if(newIPs != null) {
+                    Implementation_Profile__c ipRec = newIPs.get(ipRecId);
+                    if(ipRec != null) {
+                        if((isRerun || ipRec.NSP_Form_Completed__c)){
+                            pse__Proj__c proj = (pse__Proj__c) data.get(PROJECT_IDENTIFIER).get(ipRec.NSP_Project__c);
+                            if(proj != null){
+                                Id milestoneId;
+                                milestoneId=getMilestoneId(proj.pse__Milestones__r,pta.NSP_Milestone__c, proj);
+                                String milestoneKey = proj.Id + '~' + pta.NSP_Milestone__c;
+                                if(milestoneId == null && !mileStonesToInsert.containsKey(milestoneKey)){
+                                    pse__Milestone__c eachMilestone = new pse__Milestone__c(
+                                        Name=pta.NSP_Milestone__c,
+                                        RecordTypeId=milestonePEORecordtypeId,
+                                        pse__Project__c=proj.Id,
+                                        pse__Target_Date__c=proj.pse__End_Date__c);
+                                    mileStonesToInsert.put(milestoneKey, eachMilestone);
+                                }
+                                pse__Project_Task__c eachProjecttask = createProjectTaskfromIP(proj,  pta.NSP_Category__c, ipRecId,milestoneKey);
+                                eachProjecttask.NSP_Sub_Category__c=pta.NSP_Sub_Category__c;
+                                eachProjecttask.Name=pta.NSP_Task_Name__c;
+                                eachProjecttask.pse__Order__c=order;
+                                eachProjectTask.NSP_Visible_to_Client__c=TRUE;
+                                Implementation_Profile__c ipwithValue=(Implementation_Profile__c) data.get(IMPL_PROFILE_IDENTIFIER).get(ipRecId);
+                                if(ipwithValue != null){
+                                    if(ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__c!=null && ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__r.pse__Salesforce_User__c!=null){
+                                        eachProjecttask.OwnerId=ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__r.pse__Salesforce_User__c;
+                                    }
+                                    if(String.isNotBlank(longDescription)){
+                                        eachProjecttask.pse__Long_Description__c = longDescription;
+                                    }
+                                    if (workCalendarRecord != null) {  
+                                        eachProjecttask.pse__Work_Calendar__c = workCalendarRecord.Id;  
+                                    }
+                                    eachProjecttask.pse__Milestone__c=milestoneId;
+                                    projectTaskList.add(eachProjecttask);
+                                    ipAutomationRecords.add(
+                                        createIPAutomation(
+                                            ipRec, 
+                                            ipa.NSP_Automation_Name__c,
+                                            ipa.NSP_Method_Name__c,ipa.NSP_Section__c
+                                        )
+                                    );
+                                }
+                            }
+                        }
+                    }
                 }
-                                                
-                    pse__Project_Task__c eachProjecttask = createProjectTaskfromIP(proj, pta.NSP_Category__c, ipRecId,milestoneKey);
-                                                        eachProjecttask.NSP_Sub_Category__c=pta.NSP_Sub_Category__c;
-                                                        eachProjecttask.Name=pta.NSP_Task_Name__c;
-                                                        eachProjecttask.pse__Order__c=148;
-                                                        eachProjecttask.Task_Order__c=148;
-                                                        Implementation_Profile__c ipwithValue=(Implementation_Profile__c) data.get(IMPL_PROFILE_IDENTIFIER).get(ipRecId);
-                                                        if(ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__c!=null && ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__r.pse__Salesforce_User__c!=null){
-                                                            eachProjecttask.OwnerId=ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__r.pse__Salesforce_User__c;
-                                                        }
-                                                        
-                                                        eachProjecttask.pse__Milestone__c=milestoneId;
-        
-                                                        projectTaskList.add(eachProjecttask); 
-                    ipAutomationRecords.add(createIPAutomation(ipRec, ipa.NSP_Automation_Name__c, ipa.NSP_Method_Name__c,ipa.NSP_Section__c));
-           }  
-                                         
-         }
-               //check for existing project task and store the new tasks
-               recToInsert.addAll(getnewTaskstoInsert(projectTaskList));
-               //check for existing Automation record and store the new Automation records
-               recToInsert.addAll(getnewAutomationListtoInsert(ipAutomationRecords));
+            }
+        }
+        //check for existing project task and store the new tasks
+        recToInsert.addAll(getnewTaskstoInsert(projectTaskList));
+        //check for existing Automation record and store the new Automation records
+        recToInsert.addAll(getnewAutomationListtoInsert(ipAutomationRecords));
     }
-     
+
     public void createProjectTaskForPostDeductions(){
          //Does the client have any post-tax deductions 
          List<pse__Project_Task__c> projectTaskList = new List<pse__Project_Task__c>();
@@ -3861,8 +3924,30 @@ public class NSP_MMImplProfile_ServHelpUpdate {
              }
          }   
      }
- 
-         private void checkForPostTax(Implementation_Profile__c newRec, Implementation_Profile__c existingRec){
+
+    private void checkForCspHsa( Implementation_Profile__c newRec , Implementation_Profile__c existingRec ) {
+        if ( newRec != null ) {
+            if ( newRec.RecordTypeId == ipMMRecordTypeId
+                && newRec.NSP_Client_Sponsored_Plan__c == NSP_ServiceConstants.YES
+                && newRec.Sponsored_plan_contribution_type__c != null
+                && newRec.Sponsored_plan_contribution_type__c.contains(NSP_ServiceConstants.PRETAX)
+                && newRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c != null
+                && newRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c.contains(NSP_ServiceConstants.HSA)
+                && newRec.NSP_HSA_Ongoing_CSP_cafeteria_document__c == NSP_ServiceConstants.REQUESTED
+                )
+            {
+                if ( existingRec == null
+                    || newRec.NSP_Form_Completed__c
+                    || newRec.NSP_HSA_Ongoing_CSP_cafeteria_document__c != existingRec.NSP_HSA_Ongoing_CSP_cafeteria_document__c
+                    )
+                {
+                    updateEligibleRecordsMap(ipRecordsByAutomation, newRec.Id, CSP_HSA_MM);
+                }
+            }
+        }
+    }
+
+        private void checkForPostTax(Implementation_Profile__c newRec, Implementation_Profile__c existingRec){
          
          if( newRec.RecordTypeId == ipMMRecordTypeId &&
             (newRec.Client_has_any_post_tax_deductions__c==NSP_ServiceConstants.YES ||
@@ -3919,23 +4004,67 @@ public class NSP_MMImplProfile_ServHelpUpdate {
              }
          }   
      }
- 
-     private void checkForOtherPreTaxType(Implementation_Profile__c newRec, Implementation_Profile__c existingRec){
-         
-         if( newRec.RecordTypeId == ipMMRecordTypeId &&
-            newRec.NSP_Client_Sponsored_Plan__c == NSP_ServiceConstants.YES && newRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c!=null && 
-            ((newRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c.contains(NSP_ServiceConstants.MEDICAL) && newRec.NSP_Medical_Ongoing_CSP_cafeteria_Doc__c == NSP_ServiceConstants.REQUESTED)
-            ||(newRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c.contains(NSP_ServiceConstants.DENTAL) && newRec.NSP_Dental_Ongoing_CSP_cafeteria_Doc__c == NSP_ServiceConstants.REQUESTED)
-            ||(newRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c.contains(NSP_ServiceConstants.VISION) && newRec.NSP_Vision_Ongoing_CSP_cafeteria_Doc__c == NSP_ServiceConstants.REQUESTED))){
-      
- 
-             if(existingRec == null || newRec.NSP_Form_Completed__c  ||
-                newRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c != existingRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c){
-                  updateEligibleRecordsMap(ipRecordsByAutomation, newRec.Id, OTHER_PRETAX_TYPE_MM);
-             }
-         }   
-     }
- 
+
+    private void checkForMedical( Implementation_Profile__c newRec , Implementation_Profile__c existingRec ) {
+        if ( newRec != null ) {
+            if ( newRec.RecordTypeId == ipMMRecordTypeId 
+                && newRec.NSP_Client_Sponsored_Plan__c == NSP_ServiceConstants.YES 
+                && newRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c!=null 
+                && newRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c.contains(NSP_ServiceConstants.MEDICAL) 
+                && newRec.NSP_Medical_Ongoing_CSP_cafeteria_Doc__c == NSP_ServiceConstants.REQUESTED 
+                )
+            {
+                if ( existingRec == null
+                    || newRec.NSP_Form_Completed__c
+                    || newRec.NSP_Medical_Ongoing_CSP_cafeteria_Doc__c != existingRec.NSP_Medical_Ongoing_CSP_cafeteria_Doc__c
+                    )
+                {
+                    updateEligibleRecordsMap(ipRecordsByAutomation, newRec.Id, CSP_MEDICAL_MM);
+                }
+            }
+        }
+    }
+
+    private void checkForDental( Implementation_Profile__c newRec , Implementation_Profile__c existingRec ) {
+        if ( newRec != null ) {
+            if ( newRec.RecordTypeId == ipMMRecordTypeId 
+                && newRec.NSP_Client_Sponsored_Plan__c == NSP_ServiceConstants.YES 
+                && newRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c!=null 
+                && newRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c.contains(NSP_ServiceConstants.DENTAL) 
+                && newRec.NSP_Dental_Ongoing_CSP_cafeteria_Doc__c == NSP_ServiceConstants.REQUESTED 
+                )
+            {
+                if ( existingRec == null
+                    || newRec.NSP_Form_Completed__c
+                    || newRec.NSP_Dental_Ongoing_CSP_cafeteria_Doc__c != existingRec.NSP_Dental_Ongoing_CSP_cafeteria_Doc__c
+                    )
+                {
+                    updateEligibleRecordsMap(ipRecordsByAutomation, newRec.Id, CSP_DENTAL_MM);
+                }
+            }
+        }
+    }
+
+    private void checkForVision( Implementation_Profile__c newRec , Implementation_Profile__c existingRec ) {
+        if ( newRec != null ) {
+            if ( newRec.RecordTypeId == ipMMRecordTypeId 
+                && newRec.NSP_Client_Sponsored_Plan__c == NSP_ServiceConstants.YES 
+                && newRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c!=null 
+                && newRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c.contains(NSP_ServiceConstants.VISION) 
+                && newRec.NSP_Vision_Ongoing_CSP_cafeteria_Doc__c == NSP_ServiceConstants.REQUESTED 
+                )
+            {
+                if ( existingRec == null
+                    || newRec.NSP_Form_Completed__c
+                    || newRec.NSP_Vision_Ongoing_CSP_cafeteria_Doc__c != existingRec.NSP_Vision_Ongoing_CSP_cafeteria_Doc__c
+                    )
+                {
+                    updateEligibleRecordsMap(ipRecordsByAutomation, newRec.Id, CSP_VISION_MM);
+                }
+            }
+        }
+    }
+
      private void checkForHandbookDevelopment(Implementation_Profile__c newRec, Implementation_Profile__c existingRec){
          
          if( newRec.RecordTypeId == ipMMRecordTypeId &&
