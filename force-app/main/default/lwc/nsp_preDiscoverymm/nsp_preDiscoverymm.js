@@ -124,15 +124,9 @@ export default class Nsp_preDiscoverymm extends LightningElement {
   publishSyncEvent(fieldName) {
     if (Object.values(SYNC_FIELDS).includes(fieldName)) {
       const value = this.field[fieldName];
-      if (fieldName === 'Employees_work_in_the_following_states__c' && value.split(';').includes('CA')) {  
-        this.dispatchEvent(  
-            new CustomEvent(SYNC_FIELD_EVENT_NAME, { detail: { fieldName, value: 'CA' } })  
-        );   
-      }else {  
-        this.dispatchEvent(
-          new CustomEvent(SYNC_FIELD_EVENT_NAME, { detail: { fieldName, value } })
-        );
-      }
+      this.dispatchEvent(
+        new CustomEvent(SYNC_FIELD_EVENT_NAME, { detail: { fieldName, value } })
+      );
     }
   }
 
