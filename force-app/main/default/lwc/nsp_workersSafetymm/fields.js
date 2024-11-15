@@ -3,7 +3,9 @@ const RL_FIELDS = [
   'NSP_Immediateworkerscomporsafety_concern__c',
   'Regulatory_accreditation_inspections__c',
   'Interested_in_on_site_safety_inspections__c',
-  'NSP_Immediate_need_for_Workers_Comp_Cert__c'
+  'NSP_Immediate_need_for_Workers_Comp_Cert__c',
+  'Are_you_registered_with_the_CSLB__c',
+  'Are_you_a_licensed_Contractor__c'
   ];
 
 const SECTION_FIELDS = [
