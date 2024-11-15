@@ -18,7 +18,9 @@ const SECTION_FIELDS = [
 const RL_FIELDS = [
 'NSP_Immediate_need_for_Workers_Comp_Cert__c',
 'Client_have_any_urgent_HR_needs__c',
-'Client_expect_chnges_in_the_organization__c'
+'Client_expect_chnges_in_the_organization__c',
+'Are_you_registered_with_the_CSLB__c',
+'Are_you_a_licensed_Contractor__c'
 ];
 
 export { SECTION_FIELDS,RL_FIELDS };
