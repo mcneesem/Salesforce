@@ -82,7 +82,6 @@ export default class Nsp_workersSafetymm extends LightningElement {
       if (Object.keys(SYNC_FIELDS).includes(fieldName)) {
         this.field[SYNC_FIELDS[fieldName]] = value;
       }
-      this.updateDependentFieldVisibility(fieldName, value);
       this.postSyncOperations(fieldName, value);
       this.addStyleToPrePopulatedQuestions(fieldName, value);
     }
