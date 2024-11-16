@@ -3,6 +3,11 @@
     <description>Enables Field Permissions on Project Task</description>
     <fieldPermissions>
         <editable>true</editable>
+        <field>pse__Project_Task__c.Client_Comments__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>pse__Project_Task__c.Task_Order__c</field>
         <readable>true</readable>
     </fieldPermissions>
