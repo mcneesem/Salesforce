@@ -41,6 +41,14 @@
                 <behavior>Edit</behavior>
                 <field>blng__Notes__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>GL_Transactions_Count__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>GL_Transactions_Created__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -328,6 +336,10 @@
         <fields>blng__Type__c</fields>
         <fields>blng__InvoiceLine__c</fields>
         <relatedList>blng__PaymentAllocationDebitNoteLine__c.blng__DebitNoteLine__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>GL_Transaction__c.Debit_Note_Line__c</relatedList>
     </relatedLists>
     <relatedLists>
         <relatedList>RelatedContentNoteList</relatedList>

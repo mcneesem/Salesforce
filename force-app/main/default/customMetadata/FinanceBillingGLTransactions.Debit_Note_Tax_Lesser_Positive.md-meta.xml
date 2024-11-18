@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Debit Note Tax Lesser Positive</label>
+    <protected>false</protected>
+    <values>
+        <field>Amount_Field__c</field>
+        <value xsi:type="xsd:string">TaxAmount</value>
+    </values>
+    <values>
+        <field>Entry_Type__c</field>
+        <value xsi:type="xsd:string">Negative</value>
+    </values>
+    <values>
+        <field>GL_Treatment_Source__c</field>
+        <value xsi:type="xsd:string">NSP_Tax_Credit_GL_Account_Number__c</value>
+    </values>
+    <values>
+        <field>IsActive__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>Type__c</field>
+        <value xsi:type="xsd:string">Debit_Note</value>
+    </values>
+    <values>
+        <field>Value__c</field>
+        <value xsi:type="xsd:string">Lesser</value>
+    </values>
+</CustomMetadata>
