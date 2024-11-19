@@ -1504,7 +1504,7 @@ public class NSP_Implementationprofile_ServiceHelper {
                         + 'EFFECTIVE DATE: ' + ipWithValue.Effective_Date_Payroll_Worker_comp_EPLI__c + '<br><br>'
                         + 'Regards' + ',\n'
                         + ipWithValue.NSP_Project_Manager__r.Name + '\n'
-                        + ipWithValue.NSP_Project_Manager__r.Title + '\n'
+                        + ipWithValue.NSP_Project_Manager__r.NSP_Job_Title__c + '\n'
                         + ipWithValue.NSP_Project_Manager__r.NSP_Work_email__c + '\n';
                     emailNotify(ipWithValue, contractorType, subject, body, mdtName);
                 }
@@ -2693,6 +2693,7 @@ public class NSP_Implementationprofile_ServiceHelper {
                 NSP_Project_Manager__r.Name ,
                 NSP_Project_Manager__r.Title ,
                 NSP_Project_Manager__r.pse__Salesforce_User__c ,
+            	NSP_Project_Manager__r.NSP_Job_Title__c,
                 RecordTypeId ,
                 NSP_Project_Manager__r.pse__Salesforce_User__r.Email ,
                 NSP_OT_Representative__c ,
