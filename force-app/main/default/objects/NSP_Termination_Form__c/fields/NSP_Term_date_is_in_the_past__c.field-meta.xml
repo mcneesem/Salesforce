@@ -6,6 +6,7 @@
     <formula>IF( NSP_Client_Term_Date__c  &lt;  TODAY() , IMAGE(&quot;/img/samples/color_red.gif&quot;, &quot;red&quot;, 30, 30), IMAGE(&quot;/img/samples/color_green.gif&quot;, &quot;green&quot;, 30, 30))</formula>
     <label>Term date is in the past?</label>
     <required>false</required>
+    <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Text</type>
     <unique>false</unique>
