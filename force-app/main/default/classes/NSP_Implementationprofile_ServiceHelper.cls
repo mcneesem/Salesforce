@@ -2691,7 +2691,6 @@ public class NSP_Implementationprofile_ServiceHelper {
                 NSP_Project_Manager__c ,
                 NSP_Project_Manager__r.NSP_Work_email__c ,
                 NSP_Project_Manager__r.Name ,
-                NSP_Project_Manager__r.Title ,
                 NSP_Project_Manager__r.pse__Salesforce_User__c ,
             	NSP_Project_Manager__r.NSP_Job_Title__c,
                 RecordTypeId ,
