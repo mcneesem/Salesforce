@@ -1,5 +1,5 @@
 public class NSP_ProjectTasksTriggerHelper {
-    // test w/ NSP_ProjectTasksTriggerHelperTest, NSP_Implprofile_ServiceHelperUpdate_Test (79%)
+    // test w/ NSP_ProjectTasksTriggerHelperTest, NSP_Implprofile_ServiceHelperUpdate_Test (81%)
 
     private static final String HUNDRED_PERCENT =  '100%';
     private static final String COBRA_MM ='NSP_COBRA';
@@ -1165,10 +1165,6 @@ public class NSP_ProjectTasksTriggerHelper {
         List<pse__Project_Task__c> projectTaskList = new List<pse__Project_Task__c>();
         Map<Id, Id> mapOfProjectTaskOwner = new Map<Id,Id>();
         Map<Id, Id> mapofClientProjectTask = new Map<Id, Id>();
-        Map<Id, Id> mapofDiscoveryProjectTask = new Map<Id,Id>();
-        Map<Id, Id> mapOfDiscoveryProjectTaskOwner = new Map<Id, Id>();
-        Set<Id>hcmProjectSet = new Set<Id>();
-        Set<Id> goLiveProjectTaskIds = new Set<Id>();
         List<Id> accountIdList = new List<Id>();
         List<string> peoTerminationTaskList = System.Label.PEO_Termination_Tasks.split(';');
         String TERMINATIONANALYSIS = null;
@@ -1202,15 +1198,6 @@ public class NSP_ProjectTasksTriggerHelper {
                     )
                 {
                     sProjectTasksIds.add(oProjectTask.Id);
-                }
-                if ( oProjectTask.Name ==NSP_ServiceConstants.GO_LIVE
-                    && oProjectTask.pse__Project__c != NULL
-                    && oProjectTask.pse__Status__c == NSP_ServiceConstants.PROJECTSTATUSCOMPLETED
-                    && oProjectTask.NSP_Is_Status_Completed__c
-                    && !oldMapProjecttasks.get(oProjectTask.Id).NSP_Is_Status_Completed__c
-                    )
-                {
-                    goLiveProjectTaskIds.add(oProjectTask.Id);
                 }
                 if ( ( oldMapProjecttasks.get( oProjectTask.Id ).pse__Status__c != NSP_ServiceConstants.TASKCOMPLETE )
                     && ( oProjectTask.pse__Status__c == NSP_ServiceConstants.TASKCOMPLETE )
@@ -1252,20 +1239,12 @@ public class NSP_ProjectTasksTriggerHelper {
                         mapOfProjectTaskOwner.put(oProjectTask.pse__Project__c, oProjectTask.OwnerId);
                         mapofClientProjectTask.put(oProjectTask.pse__Project__c,oProjectTask.id);
                     }
-                    //Check if onsite discovery task is completed
-                    if(oProjectTask.Name==NSP_ServiceConstants.ONSITEDISCOVERY){
-                        mapOfDiscoveryProjectTaskOwner.put(oProjectTask.pse__Project__c, oProjectTask.OwnerId);
-                        mapofDiscoveryProjectTask.put(oProjectTask.pse__Project__c,oProjectTask.id);
-                    }
                 }
 
                 if ( oldMapProjecttasks.get(oProjectTask.Id).pse__Status__c != oProjectTask.pse__Status__c
                     && oProjectTask.pse__Status__c == NSP_ServiceConstants.TASKCOMPLETE
                     )
                 {
-                    if(oProjectTask.Name == NSP_ServiceConstants.PROJECT_TASK_DISCOVERY){
-                        hcmProjectSet.add(oProjectTask.Id);
-                    }
                 }
                 if ( oldMapProjecttasks.get(oProjectTask.Id).OwnerId != oProjectTask.OwnerId
                     && oProjectTask.OwnerId.getsobjecttype() == User.sobjecttype
@@ -1297,9 +1276,6 @@ public class NSP_ProjectTasksTriggerHelper {
         }
         if ( !mapOfProjectTaskAndProject.isEmpty() && !listOfAccountId.isEmpty() ) {
             onSubmitTaskCompletion( mapOfProjectTaskAndProject , listOfAccountId );
-        }
-        if(!hcmProjectSet.isEmpty() && !System.isFuture() && !System.isBatch()){
-            createHCMCaseOnProjectTaskUpdate(hcmProjectSet);
         }
         if(!projectTaskidsChangedOwner.isEmpty() && !System.isFuture() && !System.isBatch()){
             Map<String, Object> mapInputParams = new Map<String, Object>{
@@ -1338,12 +1314,6 @@ public class NSP_ProjectTasksTriggerHelper {
         }
         if(mapofClientProjectTask.size()>0){
             NSP_ProjectTaskTriggerEmailNotification.emailNotifyClientTransition(mapofClientProjectTask, mapOfProjectTaskOwner);
-        }
-        if(mapofDiscoveryProjectTask.size()>0){
-            NSP_ProjectTaskTriggerEmailNotification.emailNotifyOnsiteDiscovery(mapofDiscoveryProjectTask, mapOfDiscoveryProjectTaskOwner);
-        }
-        if(!goLiveProjectTaskIds.isEmpty()){
-            createCasesOnProjectTasksUpdate(goLiveProjectTaskIds);
         }
     }
 
@@ -1941,99 +1911,6 @@ public class NSP_ProjectTasksTriggerHelper {
         }
     }
 
-    /***********************************************************************************************
-    * MethodName: createHCMCaseOnProjectTaskUpdate
-    * Description : Create HCM Case when Discovery Project Task status is Complete on 
-    *               iSolved HCM Implementation project
-    * Story : STY-02181
-    * Params: List<pse__Project_Task__c> newProjectTaskList
-    * Params: Map<Id,pse__Project_Task__c> oldProjectTaskMap
-    * ********************************************************************************************/ 
-    @future
-    public static void createHCMCaseOnProjectTaskUpdate(Set<Id> projectTaskIdSet){
-        try{
-            List<Case> createCaseList = new List<Case>();
-
-            List<pse__Project_Task__c> projectTaskList = new List<pse__Project_Task__c>();
-            //To get Project Tasks
-            if(!projectTaskIdSet.isEmpty()){
-            for(pse__Project_Task__c projectTask : [SELECT Id, Name, pse__Status__c, pse__Project__c, pse__Project__r.Name,
-                                                    pse__Project__r.Project_Implementer__c, pse__Project__r.TemplateName__c
-                                                    FROM pse__Project_Task__c
-                                                        WHERE Id IN: projectTaskIdSet
-                                                    AND pse__Project__c != null
-                                                    AND pse__Project__r.Project_Implementer__c != null
-                                                    AND pse__Project__r.TemplateName__c =:NSP_ServiceConstants.HCM_PROJECT_NAME 
-                                                    AND Name =: NSP_ServiceConstants.PROJECT_TASK_DISCOVERY 
-                                                    AND pse__Status__c =: NSP_ServiceConstants.TASKCOMPLETE
-                                                    ]){
-                    if(projectTask.pse__Status__c ==NSP_ServiceConstants.TASKCOMPLETE){
-                    projectTaskList.add(projectTask);
-                    }
-                
-                }
-            }
-            //Checking projectTaskList List not empty
-            if(!projectTaskList.isEmpty()){
-                createCaseList = createHCMCase(projectTaskList);
-            }
-            //Checking createCaseList Task List not empty
-            if(!createCaseList.isEmpty()){
-                //Inserting HCM Case 
-                database.insert(createCaseList, false);
-            }
-        } catch ( Exception e ) {
-            NSP_ProjectTasksTriggerHelper.handleException(
-                e ,
-                'createHCMCaseOnProjectTaskUpdate'
-            );
-        }
-    }
-
-    /***********************************************************************************************
-    * MethodName: createHCMCase
-    * Description : Create HCM Case 
-    * Story : STY-02181
-    * Params: List<pse__Project_Task__c> projectTaskList
-    * Params: Map<Id,pse__Project_Task__c> oldProjectTaskMap
-    * ********************************************************************************************/
-    private static List<Case> createHCMCase(List<pse__Project_Task__c> projectTaskList){
-
-        //Variable declaration
-        List<Case> createCaseList = new List<Case>();
-        String dataTemplateContent;
-        
-        //Reading static resource 
-        StaticResource srObject = [SELECT Id, Name, Body FROM StaticResource WHERE Name =:NSP_ServiceConstants.HCM_CASE_DATA_TEMPLATE LIMIT 1];
-        
-        if (srObject != null) {
-            dataTemplateContent = srObject.body.toString();
-        }
-
-        //To get case recordtypeId
-        Id recordTypeIdWxImpl = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.CASE_OBJECT_NAME,NSP_ServiceConstants.WX_IMPL);
-
-        for(pse__Project_Task__c projTask : projectTaskList){
-
-            Case hcmCase = new Case();
-            hcmCase.RecordTypeId = recordTypeIdWxImpl;
-            hcmCase.Subject = NSP_ServiceConstants.HCM_CASE_SUBJECT+projTask.pse__Project__r.Name;
-            hcmCase.OwnerId = projTask.pse__Project__r.Project_Implementer__c;    
-            hcmCase.Status = NSP_ServiceConstants.OPEN;
-            hcmCase.NSP_Case_Sub_Status__c = NSP_ServiceConstants.CASE_SUB_STATUS_NOT_STARTED;
-            hcmCase.NSP_Opened_Date__c = Date.Today();
-            hcmCase.Priority = NSP_ServiceConstants.MEDIUM;
-            hcmCase.NSP_Category__c = NSP_ServiceConstants.CASE_CATEGORY_WX_WA;
-            hcmCase.NSP_SubCategory__c = NSP_ServiceConstants.CASE_SUB_CATEGORY_PROJECTS;
-            hcmCase.NSP_Detail__c = NSP_ServiceConstants.CASE_DETAIL_HCM_AUDIT;
-            hcmCase.NSP_Assigned_Queue__c = NSP_ServiceConstants.CASE_ASIGNED_QUEUE_WX_IMPL_SUPPORT;
-            hcmCase.Project__c = projTask.pse__Project__c;
-            hcmCase.NSP_Data_Template__c = dataTemplateContent;
-            createCaseList.add(hcmCase);
-        }
-        return createCaseList;
-    }
-
     private static Map<String,set<String>> getCCAccountTeams(List<NSP_Account_Team__c> accTeamRecords){
         Map<String,set<String>> mapAccTeamEmails = new Map<String,set<String>>();
         for(NSP_Account_Team__c accTeam: accTeamRecords){
@@ -2093,110 +1970,6 @@ public class NSP_ProjectTasksTriggerHelper {
                 e ,
                 'beforeUpdate'
             );
-        }
-    }
-
-    /***********************************************************************************************
-    * MethodName: createCasesOnProjectTasksUpdate
-    * Description : Create First Live Payroll Case when Go Live Project Task status is Complete on 
-    *               iSolved HCM Implementation project
-    * Story : STY-02182
-    * Params: List<pse__Project_Task__c> newProjectTaskList
-    * Params: Map<Id,pse__Project_Task__c> oldProjectTaskMap
-    * ********************************************************************************************/ 
-
-    public static void createCasesOnProjectTasksUpdate(Set<Id> newProjectTaskIds ){
-        List<pse__Project_Task__c> projTasksList = new List<pse__Project_Task__c>();
-        try{
-            for(pse__Project_Task__c projTaskRec: [SELECT Id, Name, pse__Status__c, NSP_Is_Status_Completed__c,
-                                                    pse__Project__c, pse__Project__r.Name,
-                                                    pse__Project__r.TemplateName__c, pse__Project__r.Project_Implementer__c
-                                                    FROM pse__Project_Task__c
-                                                    WHERE Id IN: newProjectTaskIds
-                                                    
-                                                    AND pse__Project__r.Project_Implementer__c != NULL
-                                                    AND pse__Project__r.TemplateName__c =: NSP_ServiceConstants.HCM_PROJECT_NAME
-                                                    
-                                                    ]){
-                                                        //if the project task status is set to 'Complete' for the first time
-                                                        
-                                                                projTasksList.add(projTaskRec);
-                                                            
-                                                    }
-            if(!projTasksList.isEmpty()){
-                createCaseForISolvedHCMProj(projTasksList);
-            }
-        } catch ( Exception e ) {
-            NSP_ProjectTasksTriggerHelper.handleException(
-                e ,
-                'createCasesOnProjectTasksUpdate'
-            );
-        }
-    }
-
-    /***********************************************************************************************
-    * MethodName: createCaseForISolvedHCMProj
-    * Description : Helper mehtod for createCasesOnProjectTasksUpdate which will create a case 
-    * and send an email to project implementer
-    * Story : STY-02182
-    * Params: List<pse__Project_Task__c> projTaskList
-    * ********************************************************************************************/ 
-
-    private static void createCaseForISolvedHCMProj(List<pse__Project_Task__c> projTaskList){
-        List<Case> createCaseList = new List<Case>();
-        List<String> emailTempFields = new List<String>{'ID'};
-        List<Messaging.SingleEmailMessage> lstEmailMessages = new List<Messaging.SingleEmailMessage>();
-        List<String> sendToList = new List<String>();
-        //Get WX IMPL Case RecordType
-        Id recordTypeIdWxImpl = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.CASE_OBJECT_NAME,NSP_ServiceConstants.WX_IMPL);
-        //Get email template
-        EmailTemplate emailTemplate = NSP_sObjectSelector.selectByDeveloperName(emailTempFields, 'NSP_First_Live_Payroll_Case_Creation_Email');
-    OrgWideEmailAddress orgWideAddress;
-        if(Label.NSP_Report_Dev_OrgWideEmail != null && !Test.isRunningTest()){
-            List<String> orgWideEmailFields = new List<String>{'Id'};
-                String query = new NSP_QueryBuilder(NSP_ServiceConstants.ORG_WIDE_EMAIL_SOBJECT_TYPE, orgWideEmailFields)
-                .addFilter('Address', Label.NSP_Report_Dev_OrgWideEmail).setSecurityEnforce(false).build();
-            orgWideAddress = Database.query(query);
-        }
-        //for each project task create a case
-        for(pse__Project_Task__c projTaskRec: projTaskList){
-            Case newCase = new Case();
-            newCase.RecordTypeId = recordTypeIdWxImpl;
-            newCase.Subject = NSP_ServiceConstants.FIRST_LIVE_PAYROLL_CASE_SUB + projTaskRec.pse__Project__r.Name;
-            newCase.OwnerId = projTaskRec.pse__Project__r.Project_Implementer__c;
-            newCase.Status = NSP_ServiceConstants.OPEN;
-            newCase.NSP_Case_Sub_Status__c = NSP_ServiceConstants.CASE_SUB_STATUS_NOT_STARTED;
-            newCase.NSP_Opened_Date__c = System.Today();
-            newCase.Priority = NSP_ServiceConstants.MEDIUM;
-            newCase.NSP_Category__c = NSP_ServiceConstants.CASE_CATEGORY_WX_WA;
-            newCase.NSP_SubCategory__c = NSP_ServiceConstants.CASE_SUB_CATEGORY_PROJECTS;
-            newCase.NSP_Detail__c = NSP_ServiceConstants.FIRST_LIVE_PAYROLL_DETAIL;
-            newCase.NSP_Data_Template__c = NSP_ServiceConstants.FIRST_LIVE_PAYROLL_DATA_TEMPLATE;
-            newCase.NSP_Assigned_Queue__c = NSP_ServiceConstants.CASE_ASIGNED_QUEUE_WX_IMPL_SUPPORT;
-            newCase.Project__c = projTaskRec.pse__Project__c;
-            createCaseList.add(newCase);
-        }
-        if(!createCaseList.isEmpty()){
-            Database.insert(createCaseList, false);
-        }
-        //for each case record created send an email
-        for(Case eachCase: [SELECT Id, Project__c, Project__r.Project_Implementer__c
-                            FROM Case 
-                            WHERE Id IN: createCaseList]){
-            sendToList.add(eachCase.Project__r.Project_Implementer__c);                 
-            Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
-            email= Messaging.renderStoredEmailTemplate(emailTemplate.Id, null , eachCase.Id);
-            email.setTemplateId(emailTemplate.Id); 
-            email.setToAddresses(sendToList);
-            email.setWhatId(eachCase.Id);
-            email.setSaveAsActivity(false);
-            if(orgWideAddress != null && orgWideAddress.Id != null && !Test.isRunningTest()){
-                email.setOrgWideEmailAddressId(orgWideAddress.Id);
-            }
-            lstEmailMessages.add(email);
-        }
-        if ( !lstEmailMessages.isEmpty() ) {
-            NSP_ProjectTasksTriggerHelper.sendSingleEmailMessages( lstEmailMessages );
         }
     }
 
