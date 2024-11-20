@@ -1875,9 +1875,7 @@ public class NSP_ProjectTasksTriggerHelper {
                     if( prjTask.Name==NSP_ServiceConstants.PayCodeClientTask
                         || prjTask.Name==NSP_ServiceConstants.ClientPackingTask || prjTask.Name==NSP_ServiceConstants.EnrollmentTask){
                             prjTask.OwnerId=IPICQueueId;
-                        } else if(prjTask.Name==NSP_ServiceConstants.ClientOptumTask){
-                            prjTask.OwnerId=HWQueueId;
-                        }else if(prjTask.Name==NSP_ServiceConstants.CONFIGURATION){
+                        } else if(prjTask.Name==NSP_ServiceConstants.CONFIGURATION){
                         prjTask.OwnerId=projectMap.get(prjTask.pse__Project__c).OwnerId;
                         
                                     
