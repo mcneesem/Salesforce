@@ -16,6 +16,6 @@
     </values>
     <values>
         <field>NSP_Task_Name__c</field>
-        <value xsi:type="xsd:string">State/Location Specific Sick Policies</value>
+        <value xsi:type="xsd:string">Collect Client Handbook/Time-off Policies</value>
     </values>
 </CustomMetadata>
