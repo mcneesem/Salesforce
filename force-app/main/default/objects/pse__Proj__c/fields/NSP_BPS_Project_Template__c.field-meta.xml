@@ -12,14 +12,44 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>WX Benefits Renewal Project</fullName>
+                <fullName>Abra - HR</fullName>
                 <default>false</default>
-                <label>WX Benefits Renewal Project</label>
+                <label>Abra - HR</label>
             </value>
             <value>
-                <fullName>Training &amp; Development</fullName>
+                <fullName>Abra - Other</fullName>
                 <default>false</default>
-                <label>Training &amp; Development</label>
+                <label>Abra - Other</label>
+            </value>
+            <value>
+                <fullName>Abra - Payroll</fullName>
+                <default>false</default>
+                <label>Abra - Payroll</label>
+            </value>
+            <value>
+                <fullName>Carrier Connection</fullName>
+                <default>false</default>
+                <label>Carrier Connection</label>
+            </value>
+            <value>
+                <fullName>Compensation - Market Competitive Analysis</fullName>
+                <default>false</default>
+                <label>Compensation - Market Competitive Analysis</label>
+            </value>
+            <value>
+                <fullName>Core HR Health Assessment</fullName>
+                <default>false</default>
+                <label>Core HR Health Assessment</label>
+            </value>
+            <value>
+                <fullName>Handbook</fullName>
+                <default>false</default>
+                <label>Handbook</label>
+            </value>
+            <value>
+                <fullName>HR Process Mapping</fullName>
+                <default>false</default>
+                <label>HR Process Mapping</label>
             </value>
             <value>
                 <fullName>HR Resource Center</fullName>
@@ -27,9 +57,14 @@
                 <label>HR Resource Center</label>
             </value>
             <value>
-                <fullName>HR Process Mapping</fullName>
+                <fullName>Integra - Implementation</fullName>
                 <default>false</default>
-                <label>HR Process Mapping</label>
+                <label>Integra - Implementation</label>
+            </value>
+            <value>
+                <fullName>Integra - Rework</fullName>
+                <default>false</default>
+                <label>Integra - Rework</label>
             </value>
             <value>
                 <fullName>Interview Guides</fullName>
@@ -57,6 +92,11 @@
                 <label>ISolved HCM Implementation</label>
             </value>
             <value>
+                <fullName>iSolved - Other</fullName>
+                <default>false</default>
+                <label>iSolved - Other</label>
+            </value>
+            <value>
                 <fullName>iSolved Performance Management</fullName>
                 <default>false</default>
                 <label>iSolved Performance Management</label>
@@ -72,39 +112,24 @@
                 <label>iSolved Time</label>
             </value>
             <value>
+                <fullName>iSolve – Hardware</fullName>
+                <default>false</default>
+                <label>iSolve – Hardware</label>
+            </value>
+            <value>
+                <fullName>ITA-Implementation</fullName>
+                <default>false</default>
+                <label>ITA-Implementation</label>
+            </value>
+            <value>
+                <fullName>ITA-Other</fullName>
+                <default>false</default>
+                <label>ITA-Other</label>
+            </value>
+            <value>
                 <fullName>Leave Admin</fullName>
                 <default>false</default>
                 <label>Leave Admin</label>
-            </value>
-            <value>
-                <fullName>New Tax IMPL</fullName>
-                <default>false</default>
-                <label>New Tax IMPL</label>
-            </value>
-            <value>
-                <fullName>WX to WO Transition</fullName>
-                <default>false</default>
-                <label>WX to WO Transition</label>
-            </value>
-            <value>
-                <fullName>Carrier Connection</fullName>
-                <default>false</default>
-                <label>Carrier Connection</label>
-            </value>
-            <value>
-                <fullName>WX/WA Data Migration</fullName>
-                <default>false</default>
-                <label>WX/WA Data Migration</label>
-            </value>
-            <value>
-                <fullName>Compensation - Market Competitive Analysis</fullName>
-                <default>false</default>
-                <label>Compensation - Market Competitive Analysis</label>
-            </value>
-            <value>
-                <fullName>Handbook</fullName>
-                <default>false</default>
-                <label>Handbook</label>
             </value>
             <value>
                 <fullName>Manager Liability Training</fullName>
@@ -112,49 +137,39 @@
                 <label>Manager Liability Training</label>
             </value>
             <value>
-                <fullName>Salary Survey</fullName>
+                <fullName>New Tax IMPL</fullName>
                 <default>false</default>
-                <label>Salary Survey</label>
+                <label>New Tax IMPL</label>
             </value>
             <value>
-                <fullName>Standard Climate Survey</fullName>
+                <fullName>OPRT Implementation</fullName>
                 <default>false</default>
-                <label>Standard Climate Survey</label>
+                <label>OPRT Implementation</label>
             </value>
             <value>
-                <fullName>Total Compensation Statement</fullName>
+                <fullName>OPRT Trainings</fullName>
                 <default>false</default>
-                <label>Total Compensation Statement</label>
+                <label>OPRT Trainings</label>
             </value>
             <value>
-                <fullName>Core HR Health Assessment</fullName>
+                <fullName>PerformSmart Implementation</fullName>
                 <default>false</default>
-                <label>Core HR Health Assessment</label>
+                <label>PerformSmart Implementation</label>
             </value>
             <value>
-                <fullName>Strategic HR Health Assessment</fullName>
+                <fullName>Premier Employee Directory – Implementation</fullName>
                 <default>false</default>
-                <label>Strategic HR Health Assessment</label>
+                <label>Premier Employee Directory – Implementation</label>
             </value>
             <value>
-                <fullName>Integra - Implementation</fullName>
+                <fullName>Premier Employee Directory – Rework</fullName>
                 <default>false</default>
-                <label>Integra - Implementation</label>
+                <label>Premier Employee Directory – Rework</label>
             </value>
             <value>
-                <fullName>Integra - Rework</fullName>
+                <fullName>PS Trainings</fullName>
                 <default>false</default>
-                <label>Integra - Rework</label>
-            </value>
-            <value>
-                <fullName>XML Utility Implementation</fullName>
-                <default>false</default>
-                <label>XML Utility Implementation</label>
-            </value>
-            <value>
-                <fullName>XML Utility Rework</fullName>
-                <default>false</default>
-                <label>XML Utility Rework</label>
+                <label>PS Trainings</label>
             </value>
             <value>
                 <fullName>QA - OPD</fullName>
@@ -172,34 +187,19 @@
                 <label>QA - PerformSmart</label>
             </value>
             <value>
-                <fullName>Premier Employee Directory – Implementation</fullName>
+                <fullName>RS TalentConnect Implementation</fullName>
                 <default>false</default>
-                <label>Premier Employee Directory – Implementation</label>
+                <label>RS TalentConnect Implementation</label>
             </value>
             <value>
-                <fullName>Premier Employee Directory – Rework</fullName>
+                <fullName>Sage Support</fullName>
                 <default>false</default>
-                <label>Premier Employee Directory – Rework</label>
+                <label>Sage Support</label>
             </value>
             <value>
-                <fullName>OPRT Trainings</fullName>
+                <fullName>Salary Survey</fullName>
                 <default>false</default>
-                <label>OPRT Trainings</label>
-            </value>
-            <value>
-                <fullName>OPRT Implementation</fullName>
-                <default>false</default>
-                <label>OPRT Implementation</label>
-            </value>
-            <value>
-                <fullName>PerformSmart Implementation</fullName>
-                <default>false</default>
-                <label>PerformSmart Implementation</label>
-            </value>
-            <value>
-                <fullName>PS Trainings</fullName>
-                <default>false</default>
-                <label>PS Trainings</label>
+                <label>Salary Survey</label>
             </value>
             <value>
                 <fullName>Service Hours - OPRT</fullName>
@@ -212,44 +212,34 @@
                 <label>Service Hours - PS</label>
             </value>
             <value>
-                <fullName>RS TalentConnect Implementation</fullName>
+                <fullName>Standard Climate Survey</fullName>
                 <default>false</default>
-                <label>RS TalentConnect Implementation</label>
+                <label>Standard Climate Survey</label>
             </value>
             <value>
-                <fullName>ITA-Implementation</fullName>
+                <fullName>Strategic HR Health Assessment</fullName>
                 <default>false</default>
-                <label>ITA-Implementation</label>
+                <label>Strategic HR Health Assessment</label>
             </value>
             <value>
-                <fullName>ITA-Other</fullName>
+                <fullName>TES 360 Performance Management</fullName>
                 <default>false</default>
-                <label>ITA-Other</label>
+                <label>TES 360 Performance Management</label>
             </value>
             <value>
-                <fullName>Abra - HR</fullName>
+                <fullName>TES Climate Survey</fullName>
                 <default>false</default>
-                <label>Abra - HR</label>
+                <label>TES Climate Survey</label>
             </value>
             <value>
-                <fullName>Abra - Other</fullName>
+                <fullName>TES HR Compliance</fullName>
                 <default>false</default>
-                <label>Abra - Other</label>
+                <label>TES HR Compliance</label>
             </value>
             <value>
-                <fullName>Abra - Payroll</fullName>
+                <fullName>TES HR Compliance Review</fullName>
                 <default>false</default>
-                <label>Abra - Payroll</label>
-            </value>
-            <value>
-                <fullName>Sage Support</fullName>
-                <default>false</default>
-                <label>Sage Support</label>
-            </value>
-            <value>
-                <fullName>iSolved - Other</fullName>
-                <default>false</default>
-                <label>iSolved - Other</label>
+                <label>TES HR Compliance Review</label>
             </value>
             <value>
                 <fullName>TES Termination</fullName>
@@ -257,9 +247,44 @@
                 <label>TES Termination</label>
             </value>
             <value>
-                <fullName>TES HR Compliance Review</fullName>
+                <fullName>Total Compensation Statement</fullName>
                 <default>false</default>
-                <label>TES HR Compliance Review</label>
+                <label>Total Compensation Statement</label>
+            </value>
+            <value>
+                <fullName>Training &amp; Development</fullName>
+                <default>false</default>
+                <label>Training &amp; Development</label>
+            </value>
+            <value>
+                <fullName>WX/WA Data Migration</fullName>
+                <default>false</default>
+                <label>WX/WA Data Migration</label>
+            </value>
+            <value>
+                <fullName>WX/WA Tax Correction</fullName>
+                <default>false</default>
+                <label>WX/WA Tax Correction</label>
+            </value>
+            <value>
+                <fullName>WX Benefits Renewal Project</fullName>
+                <default>false</default>
+                <label>WX Benefits Renewal Project</label>
+            </value>
+            <value>
+                <fullName>WX to WO Transition</fullName>
+                <default>false</default>
+                <label>WX to WO Transition</label>
+            </value>
+            <value>
+                <fullName>XML Utility Implementation</fullName>
+                <default>false</default>
+                <label>XML Utility Implementation</label>
+            </value>
+            <value>
+                <fullName>XML Utility Rework</fullName>
+                <default>false</default>
+                <label>XML Utility Rework</label>
             </value>
         </valueSetDefinition>
     </valueSet>
