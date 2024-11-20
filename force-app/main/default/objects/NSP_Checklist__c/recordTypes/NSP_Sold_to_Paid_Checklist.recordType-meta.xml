@@ -26,6 +26,35 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Checklist_Type__c</picklist>
+        <values>
+            <fullName>Sold To Paid</fullName>
+            <default>true</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Has_the_FEIN_run_payroll_before__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Hush_Protocol__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>NSP_Addendums_required_before_OT__c</picklist>
         <values>
             <fullName>No</fullName>
@@ -671,6 +700,17 @@
         <values>
             <fullName>Yes</fullName>
             <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Status__c</picklist>
+        <values>
+            <fullName>Completed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In Progress</fullName>
+            <default>true</default>
         </values>
     </picklistValues>
     <picklistValues>
