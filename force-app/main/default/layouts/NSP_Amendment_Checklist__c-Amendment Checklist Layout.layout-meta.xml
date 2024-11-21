@@ -20,8 +20,8 @@
                 <field>NSP_Client_Company_Name__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>NSP_Subplan_Number__c</field>
+                <behavior>Readonly</behavior>
+                <field>Plan_Subplan_Relationship_Form__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -89,6 +89,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>NSP_21_yrs_3_mon__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>LTPT__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>

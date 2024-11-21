@@ -63,10 +63,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>NSP_Product_Risk_Level__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>NSP_Product_Term_Reason__c</field>
             </layoutItems>
             <layoutItems>

@@ -4,5 +4,6 @@
     <fields>Name</fields>
     <fields>NSP_Asset__c</fields>
     <fields>NSP_Consultant__c</fields>
+    <fields>Plan_Subplan_Relationship_Form__c</fields>
     <label>Amendment Compact Layout</label>
 </CompactLayout>

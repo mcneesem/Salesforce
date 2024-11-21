@@ -173,11 +173,11 @@
         <apexClass>NSP_SubPlanChangeHistoryBatch</apexClass>
         <enabled>true</enabled>
     </classAccesses>
-	<classAccesses>
+    <classAccesses>
         <apexClass>NSP_SubPlanChangeHistoryTriggerHandler</apexClass>
         <enabled>true</enabled>
     </classAccesses>
-	<classAccesses>
+    <classAccesses>
         <apexClass>NSP_SubPlanChangeHistoryTriggerHelper</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -541,11 +541,11 @@
         <apexClass>NSP_DocusignStatusHelper</apexClass>
         <enabled>true</enabled>
     </classAccesses>
-	 <classAccesses>
+    <classAccesses>
         <apexClass>NSP_SubClientContactTriggerHelper</apexClass>
         <enabled>true</enabled>
     </classAccesses>
-	<classAccesses>
+    <classAccesses>
         <apexClass>NSP_SubClientContactTriggerHelperTest</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -609,7 +609,7 @@
         <apexClass>NSP_ClientGoalTriggerHelper_Test</apexClass>
         <enabled>false</enabled>
     </classAccesses>
-  	<classAccesses>
+    <classAccesses>
         <apexClass>NSP_ClientGoalsController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -31392,15 +31392,15 @@
         <layout>NSP_Participation_SaaS_Activity__c-ITA Activity Layout</layout>
         <recordType>NSP_Participation_SaaS_Activity__c.ITA_Activity</recordType>
     </layoutAssignments>
-	<layoutAssignments>
+    <layoutAssignments>
         <layout>NSP_Participation_SaaS_Activity__c-L%26D Activity Layout</layout>
         <recordType>NSP_Participation_SaaS_Activity__c.L_D_Activity</recordType>
     </layoutAssignments>
-	<layoutAssignments>
+    <layoutAssignments>
         <layout>NSP_Participation_SaaS_Activity__c-RET Participation Layout</layout>
         <recordType>NSP_Participation_SaaS_Activity__c.RET_Participation</recordType>
     </layoutAssignments>
-	<layoutAssignments>
+    <layoutAssignments>
         <layout>NSP_Participation_SaaS_Activity__c-WX Activity Layout</layout>
         <recordType>NSP_Participation_SaaS_Activity__c.WX_Activity</recordType>
     </layoutAssignments>
@@ -31441,7 +31441,7 @@
         <layout>NSP_Sub_Plan_Change_History__c-Choice Page Layout</layout>
         <recordType>NSP_Sub_Plan_Change_History__c.Choice</recordType>
     </layoutAssignments>
-	<layoutAssignments>
+    <layoutAssignments>
         <layout>NSP_Sub_Plan_Change_History__c-WO Page Layout</layout>
         <recordType>NSP_Sub_Plan_Change_History__c.WO</recordType>
     </layoutAssignments>
@@ -31456,7 +31456,7 @@
         <layout>NSP_Plan_SubPlan__c-WO Page Layout</layout>
         <recordType>NSP_Plan_SubPlan__c.WO</recordType>
     </layoutAssignments>
-	<layoutAssignments>
+    <layoutAssignments>
         <layout>NSP_Plan__c-WO Page Layout</layout>
         <recordType>NSP_Plan__c.WO</recordType>
     </layoutAssignments>
@@ -31767,9 +31767,9 @@
     <layoutAssignments>
         <layout>NSP_Error_Log__c-Error Log Layout</layout>
     </layoutAssignments>
-	<layoutAssignments>
+    <layoutAssignments>
         <layout>NSP_Eligibility__c-WO Page Layout</layout>
-		<recordType>NSP_Eligibility__c.WO</recordType>
+        <recordType>NSP_Eligibility__c.WO</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>NSP_Exception_Log__c-Exception Log Layout</layout>
@@ -32213,7 +32213,7 @@
         <recordType>NSP_Participation_SaaS_Activity__c.ITA_Activity</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
-	<recordTypeVisibilities>
+    <recordTypeVisibilities>
         <default>true</default>
         <recordType>NSP_Contribution__c.WO</recordType>
         <visible>true</visible>
@@ -32228,16 +32228,16 @@
         <recordType>NSP_Client_Sub_Plan_History__c.Choice</recordType>
         <visible>false</visible>
     </recordTypeVisibilities>
-	<recordTypeVisibilities>
+    <recordTypeVisibilities>
         <default>true</default>
         <recordType>NSP_Eligibility__c.WO</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
-	<recordTypeVisibilities>
+    <recordTypeVisibilities>
         <default>true</default>
         <recordType>NSP_Sub_Plan_Change_History__c.WO</recordType>
         <visible>true</visible>
-    </recordTypeVisibilities>	
+    </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
         <recordType>NSP_Plan__c.WO</recordType>
@@ -32264,12 +32264,12 @@
         <visible>false</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
-        <default>false</default>
+        <default>true</default>
         <recordType>Asset.NSP_CPQ_Asset</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
-        <default>true</default>
+        <default>false</default>
         <recordType>Asset.WO</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>

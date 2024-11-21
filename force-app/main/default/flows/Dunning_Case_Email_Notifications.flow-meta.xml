@@ -31,7 +31,7 @@
         <locationX>176</locationX>
         <locationY>323</locationY>
         <faultConnector>
-            <targetReference>create_error_log</targetReference>
+            <targetReference>Insperity_Fault_Handler_Subflow_Flow_1</targetReference>
         </faultConnector>
         <inputAssignments>
             <field>ContentDocumentId</field>
@@ -60,45 +60,6 @@
         <object>ContentDocumentLink</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
-    <recordCreates>
-        <description>create error log for flow</description>
-        <name>create_error_log</name>
-        <label>create error log</label>
-        <locationX>440</locationX>
-        <locationY>431</locationY>
-        <inputAssignments>
-            <field>NSP_Class__c</field>
-            <value>
-                <elementReference>$Flow.CurrentStage</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>NSP_Description__c</field>
-            <value>
-                <elementReference>$Flow.FaultMessage</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>NSP_Method__c</field>
-            <value>
-                <elementReference>$Flow.InterviewGuid</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>NSP_Object__c</field>
-            <value>
-                <stringValue>Case</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>NSP_Record_Id__c</field>
-            <value>
-                <elementReference>$Record.Id</elementReference>
-            </value>
-        </inputAssignments>
-        <object>NSP_Error_Log__c</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordCreates>
     <start>
         <locationX>50</locationX>
         <locationY>0</locationY>
@@ -117,7 +78,32 @@
         <recordTriggerType>Create</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
+    <subflows>
+        <name>Insperity_Fault_Handler_Subflow_Flow_1</name>
+        <label>Insperity Fault Handler Subflow Flow 1</label>
+        <locationX>440</locationX>
+        <locationY>431</locationY>
+        <flowName>Insperity_Fault_Handler_Subflow</flowName>
+        <inputAssignments>
+            <name>faultElement</name>
+            <value>
+                <stringValue>Create_CD_Link</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultFlow</name>
+            <value>
+                <stringValue>Dunning_Case_Email_Notifications</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultMessage</name>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
     <variables>
         <description>Stores CSS Email Id / Group Email</description>
         <name>CSSEmailValue</name>

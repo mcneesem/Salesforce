@@ -1274,6 +1274,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Payroll Implementer</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Project Coordinator</fullName>
             <default>false</default>
         </values>
@@ -1355,6 +1359,10 @@
         </values>
         <values>
             <fullName>RET Sec 125</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>TES Integration Specialist</fullName>
             <default>false</default>
         </values>
         <values>

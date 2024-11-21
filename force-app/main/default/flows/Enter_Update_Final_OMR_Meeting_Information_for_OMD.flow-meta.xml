@@ -4,7 +4,7 @@
     <assignments>
         <name>Assign_Final_OMR_info_to_OMD_Record</name>
         <label>Assign Final OMR info to OMD Record</label>
-        <locationX>176</locationX>
+        <locationX>314</locationX>
         <locationY>566</locationY>
         <assignmentItems>
             <assignToReference>r_OMD.Id</assignToReference>
@@ -34,13 +34,6 @@
                 <elementReference>final_End_Time</elementReference>
             </value>
         </assignmentItems>
-        <assignmentItems>
-            <assignToReference>r_OMD.Status__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Draft</stringValue>
-            </value>
-        </assignmentItems>
         <connector>
             <targetReference>Get_Final_Meeting_Date_Time_OMR_Record</targetReference>
         </connector>
@@ -48,7 +41,7 @@
     <assignments>
         <name>Reparent_OMD_Record</name>
         <label>Reparent OMD Record</label>
-        <locationX>132</locationX>
+        <locationX>270</locationX>
         <locationY>890</locationY>
         <assignmentItems>
             <assignToReference>r_OMD.Onboarding_Meeting_Request__c</assignToReference>
@@ -58,13 +51,13 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Update_OMD_Record</targetReference>
+            <targetReference>OMD_Record_Exist</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Set_Fault_Element_Get_Final_Meeting_Date_Time_OMR_Record</name>
         <label>Set Fault Element : Get_Final_Meeting_Date_Time_OMR_Record</label>
-        <locationX>924</locationX>
+        <locationX>842</locationX>
         <locationY>782</locationY>
         <assignmentItems>
             <assignToReference>FaultElement</assignToReference>
@@ -81,7 +74,7 @@
     <assignments>
         <name>Set_Fault_Element_Get_OMD_Record</name>
         <label>Set Fault Element : Get_OMD_Record</label>
-        <locationX>1452</locationX>
+        <locationX>1370</locationX>
         <locationY>350</locationY>
         <assignmentItems>
             <assignToReference>FaultElement</assignToReference>
@@ -98,7 +91,7 @@
     <assignments>
         <name>Set_Fault_Element_Get_Triggering_Task_Record</name>
         <label>Set Fault Element : Get_Triggering_Task_Record</label>
-        <locationX>1716</locationX>
+        <locationX>1634</locationX>
         <locationY>242</locationY>
         <assignmentItems>
             <assignToReference>FaultElement</assignToReference>
@@ -115,7 +108,7 @@
     <assignments>
         <name>Set_Fault_Element_Update_Final_OMR_info_to_Task_Record</name>
         <label>Set Fault Element : Update_Final_OMR_info_to_Task_Record</label>
-        <locationX>1188</locationX>
+        <locationX>1106</locationX>
         <locationY>566</locationY>
         <assignmentItems>
             <assignToReference>FaultElement</assignToReference>
@@ -132,8 +125,8 @@
     <assignments>
         <name>Set_Fault_Element_Update_OMD_Record</name>
         <label>Set Fault Element : Update_OMD_Record</label>
-        <locationX>660</locationX>
-        <locationY>1190</locationY>
+        <locationX>314</locationX>
+        <locationY>1298</locationY>
         <assignmentItems>
             <assignToReference>FaultElement</assignToReference>
             <operator>Assign</operator>
@@ -146,9 +139,32 @@
         </connector>
     </assignments>
     <decisions>
+        <description>Check if OMD Record exists -&gt; Avoid error for Old Meeting Records</description>
+        <name>OMD_Record_Exist</name>
+        <label>OMD Record : Exist?</label>
+        <locationX>314</locationX>
+        <locationY>1082</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Exist</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_OMD_Record</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_OMD_Record</targetReference>
+            </connector>
+            <label>Yes  : Exist</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Selected_OMR_vs_Final_OMR</name>
         <label>Selected OMR vs. Final OMR</label>
-        <locationX>176</locationX>
+        <locationX>314</locationX>
         <locationY>782</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -162,7 +178,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Update_OMD_Record</targetReference>
+                <targetReference>OMD_Record_Exist</targetReference>
             </connector>
             <label>Selected OMR Matches Final OMR</label>
         </rules>
@@ -182,6 +198,7 @@
             <label>Selected OMR Does Not Match Final OMR</label>
         </rules>
     </decisions>
+    <description>Added check for OMD Record, Stop regenerating the Task for Final OMR</description>
     <dynamicChoiceSets>
         <name>End_Time</name>
         <dataType>Picklist</dataType>
@@ -326,7 +343,7 @@
     <recordLookups>
         <name>Get_Final_Meeting_Date_Time_OMR_Record</name>
         <label>Get Final Meeting Date/Time OMR Record</label>
-        <locationX>176</locationX>
+        <locationX>314</locationX>
         <locationY>674</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -379,7 +396,7 @@
         <description>Get the OMD Record associated to Task and Originally Selected Time Block</description>
         <name>Get_OMD_Record</name>
         <label>Get OMD Record</label>
-        <locationX>176</locationX>
+        <locationX>314</locationX>
         <locationY>242</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -403,7 +420,7 @@
     <recordLookups>
         <name>Get_Triggering_Task_Record</name>
         <label>Get Triggering Task Record</label>
-        <locationX>176</locationX>
+        <locationX>314</locationX>
         <locationY>134</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -430,7 +447,7 @@
     <recordUpdates>
         <name>Update_Final_OMR_info_to_Task_Record</name>
         <label>Update Final OMR info to Task Record</label>
-        <locationX>176</locationX>
+        <locationX>314</locationX>
         <locationY>458</locationY>
         <connector>
             <targetReference>Assign_Final_OMR_info_to_OMD_Record</targetReference>
@@ -458,8 +475,8 @@
         <description>Update OMD Record with Final OMR Meeting info</description>
         <name>Update_OMD_Record</name>
         <label>Update OMD Record</label>
-        <locationX>176</locationX>
-        <locationY>1082</locationY>
+        <locationX>50</locationX>
+        <locationY>1190</locationY>
         <faultConnector>
             <targetReference>Set_Fault_Element_Update_OMD_Record</targetReference>
         </faultConnector>
@@ -468,8 +485,8 @@
     <screens>
         <name>Error_Processing_Request</name>
         <label>Error Processing Request</label>
-        <locationX>660</locationX>
-        <locationY>1406</locationY>
+        <locationX>314</locationX>
+        <locationY>1514</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -484,7 +501,7 @@
     <screens>
         <name>Finalized_Meeting_Information</name>
         <label>Finalized Meeting Information</label>
-        <locationX>176</locationX>
+        <locationX>314</locationX>
         <locationY>350</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -613,7 +630,7 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>50</locationX>
+        <locationX>188</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Triggering_Task_Record</targetReference>
@@ -623,8 +640,8 @@
     <subflows>
         <name>Fault_Handler_Subflow</name>
         <label>Fault Handler Subflow</label>
-        <locationX>660</locationX>
-        <locationY>1298</locationY>
+        <locationX>314</locationX>
+        <locationY>1406</locationY>
         <connector>
             <targetReference>Error_Processing_Request</targetReference>
         </connector>

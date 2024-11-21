@@ -10,8 +10,10 @@ Modification Log     :
 * -------------------------------------------------------------------------------------------------  
 * Rakesh                 	07/02/2021            First Iteration
 */
-public class NSP_OpportunityTriggerHelperFunctions {
-    // test w/ NSP_OpportunityTriggerHelperTest,NSP_AccountTriggerHelperTest (88%)
+public with sharing class NSP_OpportunityTriggerHelperFunctions {
+    // test w/ NSP_OpportunityTriggerHelperTest, NSP_AccountTriggerHelperTest (91%)
+    // test w/ NSP_OpportunityTriggerHelperTest (74%)
+    // test w/ NSP_AccountTriggerHelperTest (65%)
 
     public NSP_OpportunityTriggerHelperFunctions() {
 
@@ -253,29 +255,23 @@ public static void getAccountOwnerEmail(Set<Id> accountId) {
                 opportunityEventList.add(New Integration_Opportunity_Event__e(Id__c = opportunityObject.Id));
             }
 
-            if (PlatformEventSettings__c.getInstance(UserInfo.getUserId()).IsEnabled_IntegrationOpportunityEvent__c) {
-                publishEventBus(opportunityEventList, opportunityList);
+            if ( PlatformEventSettings__c.getInstance( UserInfo.getUserId() ).IsEnabled_IntegrationOpportunityEvent__c ) {
+                NSP_OpportunityTriggerHelperFunctions.publishEventBus( opportunityEventList , opportunityList );
             }
         }
     }
-    public static void publishEventBus(List<Integration_Opportunity_Event__e> eventList, List<Opportunity> objectList) {
-        if(!eventList.isEmpty()) {
+
+    private static void publishEventBus( List<Integration_Opportunity_Event__e> eventList , List<Opportunity> objectList ) {
+        if ( ( eventList != null ) && !eventList.isEmpty() ) {
             // Publishing records Event 
-            List<Database.SaveResult> results = EventBus.publish(eventList);
-            // Inspect publishing result for each event
-            List<NSP_Error_Log__c> logList = new List<NSP_Error_Log__c>();
-            for (Database.SaveResult sr : results) {
-                NSP_Error_Log__c log = new NSP_Error_Log__c();
-                log.NSP_Class__c = 'NSP_OpportunityTriggerHelperFunction';
-                log.NSP_Method__c = 'publishEventBus';                
-                log.NSP_Description__c = String.valueOf(sr.getErrors()[0].getMessage()) + '  '+String.valueOf(sr.getErrors()[0].getStatusCode());
-                log.NSP_Record_Id__c = sr.getId();
-                logList.add(log);  
-            }
-            
-            if(logList.size() > 0){
-                insert logList;
-            }
+            List<Database.SaveResult> results = EventBus.publish( eventList );
+            NSP_ErrorLogHandler.logResults(
+                NSP_OpportunityTriggerHelperFunctions.class.getName() ,
+                'publishEventBus' ,
+                results
+            );
         }
     }
+
 }
+//

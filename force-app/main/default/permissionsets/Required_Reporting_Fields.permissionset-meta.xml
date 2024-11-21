@@ -368,6 +368,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>NSP_Amendment_Checklist__c.Plan_Subplan_Relationship_Form__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>NSP_Checklist__c.RecordTypeName__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -433,6 +438,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>NSP_Revenue_Distribution_Scenario__c.NSP_External_Id__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>NSP_Reward__c.NSP_Reward_ID_18__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -444,6 +454,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Sales_to_Implementation__c.Booked_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NSP_Sales_to_Implementation__c.Opportunity_Stage_Name__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -504,6 +519,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Sub_Plan_Change_History__c.LTPT_Term_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Opportunity.CAM_New_EEs_Added__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -628,6 +648,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>ProductConsumptionSchedule.NSP_External_Id__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SBQQ__BlockPrice__c.NSP_External_Id__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Task.NSP_Activity_ID_18__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -658,6 +688,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>blng__FinancePeriod__c.NSP_External_Id__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>blng__TaxIntegration__c.NSP_External_Id__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>pse__Assignment__c.Assignment_Id_18__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -679,6 +719,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>pse__Proj__c.FEIN__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>pse__Proj__c.Implementation_Team__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

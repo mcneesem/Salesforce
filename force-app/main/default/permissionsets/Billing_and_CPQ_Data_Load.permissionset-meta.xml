@@ -158,6 +158,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>NSP_Revenue_Distribution_Scenario__c.NSP_External_Id__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>NSP_Revenue_Distribution_Scenario__c.NSP_Immediate_Rule_Cred__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -274,6 +279,16 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Product2.Family</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Product2.Has_Seasonal_Price_Table__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Product2.Has_Seasonal_Pricing__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -993,12 +1008,27 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Product2.Salary_Bracket_Percentage__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Product2.Separate_Project__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Product2.StockKeepingUnit</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Product2.TransferRecordMode</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Product2.Upfront_Fee_Payment_Percentage__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1038,7 +1068,17 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>ProductConsumptionSchedule.NSP_External_Id__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>SBQQ__BlockPrice__c.NSP_Block_Price_External_Id__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SBQQ__BlockPrice__c.NSP_External_Id__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -2463,6 +2503,56 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>blng__FinancePeriod__c.NSP_External_Id__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>blng__FinancePeriod__c.NSP_Finance_Period_External_Id__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>blng__FinancePeriod__c.blng__Family__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>blng__FinancePeriod__c.blng__FinancePeriodFamily__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>blng__FinancePeriod__c.blng__LegalEntity__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>blng__FinancePeriod__c.blng__NextOpenPeriod__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>blng__FinancePeriod__c.blng__Notes__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>blng__FinancePeriod__c.blng__PeriodType__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>blng__FinancePeriod__c.blng__ReferenceId__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>blng__FinancePeriod__c.blng__UniqueId__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>blng__GLAccount__c.NSP_Account__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -2804,6 +2894,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>blng__TaxIntegration__c.AVA_BLNG__Validate_Address__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>blng__TaxIntegration__c.NSP_External_Id__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

@@ -4,8 +4,8 @@
     <assignments>
         <name>Add_to_SORec</name>
         <label>Add_to_SORec</label>
-        <locationX>1103</locationX>
-        <locationY>589</locationY>
+        <locationX>182</locationX>
+        <locationY>1058</locationY>
         <assignmentItems>
             <assignToReference>VarAccountTeammember.NSP_User__c</assignToReference>
             <operator>Assign</operator>
@@ -48,8 +48,8 @@
     <assignments>
         <name>AssigntoSo</name>
         <label>AssigntoSo</label>
-        <locationX>1297</locationX>
-        <locationY>625</locationY>
+        <locationX>182</locationX>
+        <locationY>1166</locationY>
         <assignmentItems>
             <assignToReference>varAccountMemberSO</assignToReference>
             <operator>Add</operator>
@@ -64,21 +64,22 @@
     <assignments>
         <name>NullLooper</name>
         <label>NullLooper</label>
-        <locationX>1151</locationX>
-        <locationY>839</locationY>
+        <locationX>50</locationX>
+        <locationY>1382</locationY>
         <assignmentItems>
             <assignToReference>VarAccountTeammember</assignToReference>
             <operator>Assign</operator>
         </assignmentItems>
         <connector>
+            <isGoTo>true</isGoTo>
             <targetReference>Account_Team_Addition</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>RecordIdAssignment</name>
         <label>RecordIdAssignment</label>
-        <locationX>778</locationX>
-        <locationY>213</locationY>
+        <locationX>182</locationX>
+        <locationY>134</locationY>
         <assignmentItems>
             <assignToReference>varAccountId</assignToReference>
             <operator>Assign</operator>
@@ -109,8 +110,8 @@
     <decisions>
         <name>Add_Another</name>
         <label>Add Another</label>
-        <locationX>1439</locationX>
-        <locationY>758</locationY>
+        <locationX>182</locationX>
+        <locationY>1274</locationY>
         <defaultConnector>
             <targetReference>Create_AccMember</targetReference>
         </defaultConnector>
@@ -134,8 +135,8 @@
     <decisions>
         <name>UserID_to_Team_Compare</name>
         <label>UserID to Team Compare</label>
-        <locationX>1204</locationX>
-        <locationY>204</locationY>
+        <locationX>402</locationX>
+        <locationY>566</locationY>
         <defaultConnector>
             <targetReference>LoopExistingMembers</targetReference>
         </defaultConnector>
@@ -181,13 +182,14 @@
         <picklistField>NSP_Role__c</picklistField>
         <picklistObject>NSP_Account_Team__c</picklistObject>
     </dynamicChoiceSets>
+    <environments>Default</environments>
     <interviewLabel>Account Team Member Creation {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Account Team Member Creation</label>
     <loops>
         <name>LoopExistingMembers</name>
         <label>LoopExistingMembers</label>
-        <locationX>945</locationX>
-        <locationY>502</locationY>
+        <locationX>182</locationX>
+        <locationY>458</locationY>
         <collectionReference>GetAccountTeam</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -206,7 +208,7 @@
     <processMetadataValues>
         <name>CanvasMode</name>
         <value>
-            <stringValue>FREE_FORM_CANVAS</stringValue>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
         </value>
     </processMetadataValues>
     <processMetadataValues>
@@ -219,41 +221,18 @@
     <recordCreates>
         <name>Create_AccMember</name>
         <label>Create AccMember</label>
-        <locationX>1728</locationX>
-        <locationY>820</locationY>
+        <locationX>314</locationX>
+        <locationY>1382</locationY>
         <faultConnector>
-            <targetReference>FaultLog</targetReference>
+            <targetReference>Insperity_Fault_Handler_Subflow_Flow_1</targetReference>
         </faultConnector>
         <inputReference>varAccountMemberSO</inputReference>
-    </recordCreates>
-    <recordCreates>
-        <name>FaultLog</name>
-        <label>FaultLog</label>
-        <locationX>1541</locationX>
-        <locationY>997</locationY>
-        <connector>
-            <targetReference>ErrorFault</targetReference>
-        </connector>
-        <inputAssignments>
-            <field>NSP_ErrorSource__c</field>
-            <value>
-                <elementReference>$Flow.InterviewGuid</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>NSP_StackTrace__c</field>
-            <value>
-                <elementReference>$Flow.FaultMessage</elementReference>
-            </value>
-        </inputAssignments>
-        <object>NSP_Exception_Log__c</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
     <recordLookups>
         <name>GetAccountTeam</name>
         <label>GetAccountTeam</label>
-        <locationX>770</locationX>
-        <locationY>331</locationY>
+        <locationX>182</locationX>
+        <locationY>242</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Account_Team_Addition</targetReference>
@@ -274,8 +253,8 @@
     <screens>
         <name>Account_Team_Addition</name>
         <label>Account Team Addition</label>
-        <locationX>430</locationX>
-        <locationY>551</locationY>
+        <locationX>182</locationX>
+        <locationY>350</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -337,6 +316,7 @@
                     <dataType>String</dataType>
                     <fieldText>Role_Id</fieldText>
                     <fieldType>DropdownBox</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <inputParameters>
@@ -356,6 +336,7 @@
                     <dataType>String</dataType>
                     <fieldText>Product_Type</fieldText>
                     <fieldType>DropdownBox</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <inputParameters>
@@ -367,6 +348,7 @@
                 <isRequired>false</isRequired>
             </fields>
             <isRequired>false</isRequired>
+            <regionContainerType>SectionWithoutHeader</regionContainerType>
         </fields>
         <fields>
             <name>Account_Team_Addition_Section2</name>
@@ -380,6 +362,7 @@
                     <dataType>String</dataType>
                     <fieldText>Sales Office</fieldText>
                     <fieldType>DropdownBox</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <inputParameters>
@@ -398,6 +381,7 @@
                     <dataType>String</dataType>
                     <fieldText>PER ID</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <inputParameters>
@@ -419,6 +403,7 @@
                     <defaultSelectedChoiceReference>NoChoice</defaultSelectedChoiceReference>
                     <fieldText>Add Additional User?</fieldText>
                     <fieldType>DropdownBox</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <inputParameters>
@@ -430,6 +415,7 @@
                 <isRequired>false</isRequired>
             </fields>
             <isRequired>false</isRequired>
+            <regionContainerType>SectionWithoutHeader</regionContainerType>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
@@ -437,14 +423,14 @@
     <screens>
         <name>ErrorFault</name>
         <label>ErrorFault</label>
-        <locationX>1714</locationX>
-        <locationY>1045</locationY>
+        <locationX>578</locationX>
+        <locationY>1598</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <fields>
             <name>ErrorDisplay</name>
-            <fieldText>&lt;p&gt;An Error has occurred, please provide your System Administrator the below information&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;Exception ID: &lt;/b&gt;{!FaultLog}&lt;/p&gt;&lt;p&gt;&lt;b&gt;Error Message: &lt;/b&gt;{!$Flow.FaultMessage}&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;An Error has occurred, please provide your System Administrator the below information&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Error Message: &lt;/strong&gt;{!$Flow.FaultMessage}&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -453,8 +439,8 @@
     <screens>
         <name>UserExistsDisplay</name>
         <label>UserExistsDisplay</label>
-        <locationX>1483</locationX>
-        <locationY>276</locationY>
+        <locationX>270</locationX>
+        <locationY>674</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -467,13 +453,41 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>650</locationX>
-        <locationY>48</locationY>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
         <connector>
             <targetReference>RecordIdAssignment</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
+    <subflows>
+        <name>Insperity_Fault_Handler_Subflow_Flow_1</name>
+        <label>Insperity Fault Handler Subflow Flow 1</label>
+        <locationX>578</locationX>
+        <locationY>1490</locationY>
+        <connector>
+            <targetReference>ErrorFault</targetReference>
+        </connector>
+        <flowName>Insperity_Fault_Handler_Subflow</flowName>
+        <inputAssignments>
+            <name>faultElement</name>
+            <value>
+                <stringValue>Create_AccMember</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultFlow</name>
+            <value>
+                <stringValue>Account_Team_Member_Creation</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultMessage</name>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
     <variables>
         <name>accountteamvar</name>
         <dataType>SObject</dataType>

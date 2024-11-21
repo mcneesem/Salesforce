@@ -5,7 +5,7 @@
         <name>Add_Loop_Item_to_Collection</name>
         <label>Add Loop Item to Collection</label>
         <locationX>138</locationX>
-        <locationY>1055</locationY>
+        <locationY>971</locationY>
         <assignmentItems>
             <assignToReference>OrderProductsToUpdate</assignToReference>
             <operator>Add</operator>
@@ -21,7 +21,7 @@
         <name>Assign_Payment_Method_to_Order_Item</name>
         <label>Assign Payment Method to Order Item</label>
         <locationX>138</locationX>
-        <locationY>935</locationY>
+        <locationY>863</locationY>
         <assignmentItems>
             <assignToReference>AssignPaymentMethodtoOP.Id</assignToReference>
             <operator>Assign</operator>
@@ -41,10 +41,43 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Set_Fault_Element_Update_Payment_Method_on_Order_Items</name>
+        <label>Set Fault Element: Update_Payment_Method_on_Order_Items</label>
+        <locationX>314</locationX>
+        <locationY>1271</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Update_Payment_Method_on_Order_Items</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Insperity_Fault_Handler_Subflow_Flow_1</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Update_Payment_Method_to_Blank</name>
+        <label>Set Fault Element: Update_Payment_Method_to_Blank</label>
+        <locationX>930</locationX>
+        <locationY>1163</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Update_Payment_Method_to_Blank</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler_Subflow_Flow_1</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Set_Payment_Method_to_Blank</name>
         <label>Set Payment Method to Blank</label>
         <locationX>754</locationX>
-        <locationY>935</locationY>
+        <locationY>863</locationY>
         <assignmentItems>
             <assignToReference>Loop_Over_Order_Products.NSP_Payment_Method__c</assignToReference>
             <operator>Assign</operator>
@@ -64,7 +97,7 @@
         <name>Check_ACH_Active_Payment_Method_Exist</name>
         <label>Check ACH Active Payment Method Exist</label>
         <locationX>358</locationX>
-        <locationY>695</locationY>
+        <locationY>647</locationY>
         <defaultConnector>
             <targetReference>Loop_Over_Order_Products</targetReference>
         </defaultConnector>
@@ -89,7 +122,7 @@
         <name>Check_OP_records</name>
         <label>Check OP records</label>
         <locationX>776</locationX>
-        <locationY>455</locationY>
+        <locationY>431</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>If_OP_not_null</name>
@@ -114,7 +147,7 @@
         <name>Loop_Over_Order_Products</name>
         <label>Loop Over Order Products</label>
         <locationX>666</locationX>
-        <locationY>815</locationY>
+        <locationY>755</locationY>
         <collectionReference>Get_Order_Products</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -128,7 +161,7 @@
         <name>loop_over_Orderitems</name>
         <label>loop over Orderitems</label>
         <locationX>50</locationX>
-        <locationY>815</locationY>
+        <locationY>755</locationY>
         <collectionReference>Get_Order_Products</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -157,31 +190,11 @@
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
-    <recordCreates>
-        <name>Create_Error_Log</name>
-        <label>Create Error Log</label>
-        <locationX>314</locationX>
-        <locationY>1391</locationY>
-        <inputAssignments>
-            <field>NSP_Class__c</field>
-            <value>
-                <stringValue>[FLow] Update Payment Method on Order Product</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>NSP_Description__c</field>
-            <value>
-                <elementReference>$Flow.FaultMessage</elementReference>
-            </value>
-        </inputAssignments>
-        <object>NSP_Error_Log__c</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordCreates>
     <recordLookups>
         <name>Get_ACH_Active_Payment_Method_for_Account</name>
         <label>Get ACH Active Payment Method for Account</label>
         <locationX>358</locationX>
-        <locationY>575</locationY>
+        <locationY>539</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_ACH_Active_Payment_Method_Exist</targetReference>
@@ -209,7 +222,7 @@
         <name>Get_Order_Products</name>
         <label>Get Order Products</label>
         <locationX>776</locationX>
-        <locationY>335</locationY>
+        <locationY>323</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_OP_records</targetReference>
@@ -244,9 +257,9 @@
         <name>Update_Payment_Method_on_Order_Items</name>
         <label>Update Payment Method on Order Items</label>
         <locationX>50</locationX>
-        <locationY>1271</locationY>
+        <locationY>1163</locationY>
         <faultConnector>
-            <targetReference>Create_Error_Log</targetReference>
+            <targetReference>Set_Fault_Element_Update_Payment_Method_on_Order_Items</targetReference>
         </faultConnector>
         <inputReference>OrderProductsToUpdate</inputReference>
     </recordUpdates>
@@ -254,10 +267,9 @@
         <name>Update_Payment_Method_to_Blank</name>
         <label>Update Payment Method to Blank</label>
         <locationX>666</locationX>
-        <locationY>1151</locationY>
+        <locationY>1055</locationY>
         <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Create_Error_Log</targetReference>
+            <targetReference>Set_Fault_Element_Update_Payment_Method_to_Blank</targetReference>
         </faultConnector>
         <inputReference>UpdateOrderItems</inputReference>
     </recordUpdates>
@@ -271,7 +283,32 @@
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
+    <subflows>
+        <name>Insperity_Fault_Handler_Subflow_Flow_1</name>
+        <label>Insperity Fault Handler Subflow Flow 1</label>
+        <locationX>314</locationX>
+        <locationY>1379</locationY>
+        <flowName>Insperity_Fault_Handler_Subflow</flowName>
+        <inputAssignments>
+            <name>faultElement</name>
+            <value>
+                <elementReference>faultElement</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultFlow</name>
+            <value>
+                <stringValue>Update_Payment_method_on_order_item</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultMessage</name>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
     <variables>
         <name>AssignPaymentMethodtoOP</name>
         <dataType>SObject</dataType>
@@ -279,6 +316,16 @@
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <objectType>OrderItem</objectType>
+    </variables>
+    <variables>
+        <name>faultElement</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue></stringValue>
+        </value>
     </variables>
     <variables>
         <name>OrderProductsToUpdate</name>
