@@ -23,6 +23,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>pse__Proj__c.Implementation_Team__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>pse__Proj__c.Next_Open_Enrollment__c</field>
         <readable>true</readable>
     </fieldPermissions>

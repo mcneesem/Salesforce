@@ -3,15 +3,16 @@
     <actionCalls>
         <name>ParseMulti</name>
         <label>ParseMulti</label>
-        <locationX>417</locationX>
-        <locationY>706</locationY>
+        <locationX>4362</locationX>
+        <locationY>2090</locationY>
         <actionName>NSP_FlowMultiSelectParse</actionName>
         <actionType>apex</actionType>
         <connector>
             <targetReference>LoopDA</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>EXCEPTION</targetReference>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler_Subflow_Flow_1</targetReference>
         </faultConnector>
         <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
@@ -20,23 +21,26 @@
                 <elementReference>Sales_Offices_Where_DA</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>NSP_FlowMultiSelectParse</nameSegment>
         <outputParameters>
             <assignToReference>SelectedOfficesText</assignToReference>
             <name>output</name>
         </outputParameters>
+        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <name>ParseMulti_0</name>
         <label>ParseMulti</label>
-        <locationX>562</locationX>
-        <locationY>1196</locationY>
+        <locationX>4362</locationX>
+        <locationY>3014</locationY>
         <actionName>NSP_FlowMultiSelectParse</actionName>
         <actionType>apex</actionType>
         <connector>
             <targetReference>LoopLA</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>EXCEPTION</targetReference>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler_Subflow_Flow_1</targetReference>
         </faultConnector>
         <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
@@ -45,23 +49,26 @@
                 <elementReference>Sales_Offices_Where_Loyalty_Advisor_LA</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>NSP_FlowMultiSelectParse</nameSegment>
         <outputParameters>
             <assignToReference>SelectedOfficesText</assignToReference>
             <name>output</name>
         </outputParameters>
+        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <name>ParseMulti_0_0</name>
         <label>ParseMulti</label>
-        <locationX>586</locationX>
-        <locationY>1451</locationY>
+        <locationX>4362</locationX>
+        <locationY>3938</locationY>
         <actionName>NSP_FlowMultiSelectParse</actionName>
         <actionType>apex</actionType>
         <connector>
             <targetReference>LoopCPM</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>EXCEPTION</targetReference>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler_Subflow_Flow_1</targetReference>
         </faultConnector>
         <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
@@ -70,23 +77,26 @@
                 <elementReference>Sales_Offices_Where_CPM</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>NSP_FlowMultiSelectParse</nameSegment>
         <outputParameters>
             <assignToReference>SelectedOfficesText</assignToReference>
             <name>output</name>
         </outputParameters>
+        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <name>ParseMultiSelect</name>
         <label>ParseMultiSelect</label>
-        <locationX>3280</locationX>
-        <locationY>1266</locationY>
+        <locationX>1370</locationX>
+        <locationY>1646</locationY>
         <actionName>NSP_FlowMultiSelectParse</actionName>
         <actionType>apex</actionType>
         <connector>
             <targetReference>DeleteLooper</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>EXCEPTION</targetReference>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler_Subflow_Flow_1</targetReference>
         </faultConnector>
         <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
@@ -95,17 +105,19 @@
                 <elementReference>Select_Which_Users_to_Remove</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>NSP_FlowMultiSelectParse</nameSegment>
         <outputParameters>
             <assignToReference>MultiParseOutput</assignToReference>
             <name>output</name>
         </outputParameters>
+        <versionSegment>1</versionSegment>
     </actionCalls>
     <apiVersion>54.0</apiVersion>
     <assignments>
         <name>AddFilteredtoSO_0</name>
         <label>AddFilteredtoSO</label>
-        <locationX>214</locationX>
-        <locationY>1864</locationY>
+        <locationX>4450</locationX>
+        <locationY>4370</locationY>
         <assignmentItems>
             <assignToReference>varSelectedOffices</assignToReference>
             <operator>Add</operator>
@@ -127,8 +139,8 @@
     <assignments>
         <name>AddFilteredtoSO_0_0</name>
         <label>AddFilteredtoSO</label>
-        <locationX>338</locationX>
-        <locationY>1450</locationY>
+        <locationX>4450</locationX>
+        <locationY>3446</locationY>
         <assignmentItems>
             <assignToReference>varSelectedOffices</assignToReference>
             <operator>Add</operator>
@@ -150,8 +162,8 @@
     <assignments>
         <name>AddFilteredtoSO_0_0_0</name>
         <label>AddFilteredtoSO</label>
-        <locationX>417</locationX>
-        <locationY>1035</locationY>
+        <locationX>4450</locationX>
+        <locationY>2522</locationY>
         <assignmentItems>
             <assignToReference>varSelectedOffices</assignToReference>
             <operator>Add</operator>
@@ -173,8 +185,8 @@
     <assignments>
         <name>AddStage</name>
         <label>AddStage</label>
-        <locationX>1674</locationX>
-        <locationY>1095</locationY>
+        <locationX>2690</locationX>
+        <locationY>566</locationY>
         <assignmentItems>
             <assignToReference>$Flow.ActiveStages</assignToReference>
             <operator>Add</operator>
@@ -196,8 +208,8 @@
     <assignments>
         <name>AddStage_0</name>
         <label>AddStage</label>
-        <locationX>2255</locationX>
-        <locationY>2494</locationY>
+        <locationX>3218</locationX>
+        <locationY>6098</locationY>
         <assignmentItems>
             <assignToReference>$Flow.CurrentStage</assignToReference>
             <operator>Assign</operator>
@@ -212,8 +224,8 @@
     <assignments>
         <name>AddStage_0_0</name>
         <label>AddStage</label>
-        <locationX>2372</locationX>
-        <locationY>335</locationY>
+        <locationX>3218</locationX>
+        <locationY>134</locationY>
         <assignmentItems>
             <assignToReference>$Flow.CurrentStage</assignToReference>
             <operator>Assign</operator>
@@ -228,8 +240,8 @@
     <assignments>
         <name>AddStage_0_0_0</name>
         <label>AddStage</label>
-        <locationX>2563</locationX>
-        <locationY>814</locationY>
+        <locationX>1106</locationX>
+        <locationY>458</locationY>
         <assignmentItems>
             <assignToReference>$Flow.ActiveStages</assignToReference>
             <operator>Add</operator>
@@ -258,8 +270,8 @@
     <assignments>
         <name>AddStage_0_0_0_0</name>
         <label>AddStage</label>
-        <locationX>1921</locationX>
-        <locationY>1167</locationY>
+        <locationX>3482</locationX>
+        <locationY>566</locationY>
         <assignmentItems>
             <assignToReference>$Flow.ActiveStages</assignToReference>
             <operator>Add</operator>
@@ -281,8 +293,8 @@
     <assignments>
         <name>AddStage_0_0_0_0_0</name>
         <label>AddStage</label>
-        <locationX>1911</locationX>
-        <locationY>1324</locationY>
+        <locationX>3482</locationX>
+        <locationY>674</locationY>
         <assignmentItems>
             <assignToReference>$Flow.CurrentStage</assignToReference>
             <operator>Assign</operator>
@@ -297,8 +309,8 @@
     <assignments>
         <name>AddStage_0_0_0_0_0_0</name>
         <label>AddStage</label>
-        <locationX>1676</locationX>
-        <locationY>1216</locationY>
+        <locationX>2690</locationX>
+        <locationY>674</locationY>
         <assignmentItems>
             <assignToReference>$Flow.CurrentStage</assignToReference>
             <operator>Assign</operator>
@@ -313,8 +325,8 @@
     <assignments>
         <name>AssignClearLoop</name>
         <label>AssignClearLoop</label>
-        <locationX>2513</locationX>
-        <locationY>1213</locationY>
+        <locationX>1194</locationX>
+        <locationY>998</locationY>
         <assignmentItems>
             <assignToReference>GetUser</assignToReference>
             <operator>Assign</operator>
@@ -326,8 +338,8 @@
     <assignments>
         <name>AssignItemToText</name>
         <label>AssignItemToText</label>
-        <locationX>124</locationX>
-        <locationY>879</locationY>
+        <locationX>4450</locationX>
+        <locationY>2306</locationY>
         <assignmentItems>
             <assignToReference>varLooperID</assignToReference>
             <operator>Assign</operator>
@@ -342,8 +354,8 @@
     <assignments>
         <name>AssignItemToText_0</name>
         <label>AssignItemToText</label>
-        <locationX>142</locationX>
-        <locationY>1323</locationY>
+        <locationX>4450</locationX>
+        <locationY>3230</locationY>
         <assignmentItems>
             <assignToReference>varLooperID</assignToReference>
             <operator>Assign</operator>
@@ -358,8 +370,8 @@
     <assignments>
         <name>AssignItemToText_0_0</name>
         <label>AssignItemToText</label>
-        <locationX>50</locationX>
-        <locationY>1732</locationY>
+        <locationX>4450</locationX>
+        <locationY>4154</locationY>
         <assignmentItems>
             <assignToReference>varLooperID</assignToReference>
             <operator>Assign</operator>
@@ -374,8 +386,8 @@
     <assignments>
         <name>AssignSelectedUserToDelete</name>
         <label>AssignSelectedUserToDelete</label>
-        <locationX>3134</locationX>
-        <locationY>1259</locationY>
+        <locationX>1370</locationX>
+        <locationY>1538</locationY>
         <assignmentItems>
             <assignToReference>GroupMemberTextCollect</assignToReference>
             <operator>Add</operator>
@@ -390,8 +402,8 @@
     <assignments>
         <name>AssignStage</name>
         <label>AssignStage</label>
-        <locationX>1532</locationX>
-        <locationY>733</locationY>
+        <locationX>4626</locationX>
+        <locationY>1658</locationY>
         <assignmentItems>
             <assignToReference>$Flow.ActiveStages</assignToReference>
             <operator>Add</operator>
@@ -427,8 +439,8 @@
     <assignments>
         <name>AssignToCPMCollect</name>
         <label>AssignToCPMCollect</label>
-        <locationX>820</locationX>
-        <locationY>253</locationY>
+        <locationX>4714</locationX>
+        <locationY>1082</locationY>
         <assignmentItems>
             <assignToReference>varSalesOfficeCPMCollect</assignToReference>
             <operator>Add</operator>
@@ -450,8 +462,8 @@
     <assignments>
         <name>AssignToDACollect</name>
         <label>AssignToDACollect</label>
-        <locationX>1026</locationX>
-        <locationY>295</locationY>
+        <locationX>4714</locationX>
+        <locationY>782</locationY>
         <assignmentItems>
             <assignToReference>varSalesOfficeDACollect</assignToReference>
             <operator>Add</operator>
@@ -473,8 +485,8 @@
     <assignments>
         <name>AssignToLACollect</name>
         <label>AssignToLACollect</label>
-        <locationX>581</locationX>
-        <locationY>245</locationY>
+        <locationX>4714</locationX>
+        <locationY>1382</locationY>
         <assignmentItems>
             <assignToReference>varSalesOfficeLACollect</assignToReference>
             <operator>Add</operator>
@@ -496,8 +508,8 @@
     <assignments>
         <name>AssignToSO</name>
         <label>AssignToSO</label>
-        <locationX>123</locationX>
-        <locationY>1021</locationY>
+        <locationX>4450</locationX>
+        <locationY>2414</locationY>
         <assignmentItems>
             <assignToReference>varOfficeSo.Id</assignToReference>
             <operator>Assign</operator>
@@ -526,8 +538,8 @@
     <assignments>
         <name>AssignToSO_0</name>
         <label>AssignToSO</label>
-        <locationX>146</locationX>
-        <locationY>1483</locationY>
+        <locationX>4450</locationX>
+        <locationY>3338</locationY>
         <assignmentItems>
             <assignToReference>varOfficeSo.Id</assignToReference>
             <operator>Assign</operator>
@@ -556,8 +568,8 @@
     <assignments>
         <name>AssignToSO_0_0</name>
         <label>AssignToSO</label>
-        <locationX>58</locationX>
-        <locationY>1887</locationY>
+        <locationX>4450</locationX>
+        <locationY>4262</locationY>
         <assignmentItems>
             <assignToReference>varOfficeSo.Id</assignToReference>
             <operator>Assign</operator>
@@ -586,8 +598,8 @@
     <assignments>
         <name>AssignUserCollect</name>
         <label>AssignUserCollect</label>
-        <locationX>2514</locationX>
-        <locationY>1377</locationY>
+        <locationX>1194</locationX>
+        <locationY>890</locationY>
         <assignmentItems>
             <assignToReference>varUserCollect</assignToReference>
             <operator>Add</operator>
@@ -609,8 +621,8 @@
     <assignments>
         <name>ClearCountersForReloop</name>
         <label>ClearCountersForReloop</label>
-        <locationX>1129</locationX>
-        <locationY>808</locationY>
+        <locationX>4626</locationX>
+        <locationY>1874</locationY>
         <assignmentItems>
             <assignToReference>varLACounter</assignToReference>
             <operator>Assign</operator>
@@ -639,8 +651,8 @@
     <assignments>
         <name>GroupGroupMemberAssign</name>
         <label>GroupGroupMemberAssign</label>
-        <locationX>3866</locationX>
-        <locationY>1738</locationY>
+        <locationX>1898</locationX>
+        <locationY>2078</locationY>
         <assignmentItems>
             <assignToReference>GroupMemberSO.GroupId</assignToReference>
             <operator>Assign</operator>
@@ -669,8 +681,8 @@
     <assignments>
         <name>SelectedOfficesClear</name>
         <label>SelectedOfficesClear</label>
-        <locationX>752</locationX>
-        <locationY>1221</locationY>
+        <locationX>4362</locationX>
+        <locationY>2906</locationY>
         <assignmentItems>
             <assignToReference>SelectedOfficesText</assignToReference>
             <operator>Assign</operator>
@@ -685,8 +697,8 @@
     <assignments>
         <name>SelectedOfficesClear_0</name>
         <label>SelectedOfficesClear</label>
-        <locationX>763</locationX>
-        <locationY>1452</locationY>
+        <locationX>4362</locationX>
+        <locationY>3830</locationY>
         <assignmentItems>
             <assignToReference>SelectedOfficesText</assignToReference>
             <operator>Assign</operator>
@@ -701,8 +713,8 @@
     <assignments>
         <name>SelectedOfficesClear_0_0</name>
         <label>SelectedOfficesClear</label>
-        <locationX>445</locationX>
-        <locationY>2234</locationY>
+        <locationX>4362</locationX>
+        <locationY>4562</locationY>
         <assignmentItems>
             <assignToReference>SelectedOfficesText</assignToReference>
             <operator>Assign</operator>
@@ -714,8 +726,8 @@
     <assignments>
         <name>SOtoCollectAssign</name>
         <label>SOtoCollectAssign</label>
-        <locationX>3696</locationX>
-        <locationY>1743</locationY>
+        <locationX>1898</locationX>
+        <locationY>2186</locationY>
         <assignmentItems>
             <assignToReference>GroupMemberCollect</assignToReference>
             <operator>Add</operator>
@@ -724,14 +736,15 @@
             </value>
         </assignmentItems>
         <connector>
+            <isGoTo>true</isGoTo>
             <targetReference>DeleteLooper</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>StageAssign</name>
         <label>StageAssign</label>
-        <locationX>673</locationX>
-        <locationY>2234</locationY>
+        <locationX>4626</locationX>
+        <locationY>4754</locationY>
         <assignmentItems>
             <assignToReference>$Flow.CurrentStage</assignToReference>
             <operator>Assign</operator>
@@ -830,8 +843,8 @@
     <decisions>
         <name>Add_Or_Remove</name>
         <label>Add Or Remove</label>
-        <locationX>2897</locationX>
-        <locationY>941</locationY>
+        <locationX>1106</locationX>
+        <locationY>1322</locationY>
         <defaultConnectorLabel>Error</defaultConnectorLabel>
         <rules>
             <name>Modification_Add</name>
@@ -867,8 +880,8 @@
     <decisions>
         <name>Choice_Routing</name>
         <label>Choice Routing</label>
-        <locationX>2312</locationX>
-        <locationY>966</locationY>
+        <locationX>3218</locationX>
+        <locationY>350</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Sales_Office_Non_BPA</name>
@@ -934,8 +947,8 @@
     <decisions>
         <name>CPMChangeRoutiinig</name>
         <label>CPMChangeRoutiinig</label>
-        <locationX>972</locationX>
-        <locationY>1401</locationY>
+        <locationX>4626</locationX>
+        <locationY>3722</locationY>
         <defaultConnector>
             <targetReference>StageAssign</targetReference>
         </defaultConnector>
@@ -966,8 +979,8 @@
     <decisions>
         <name>CPMRoute</name>
         <label>CPMRoute</label>
-        <locationX>823</locationX>
-        <locationY>543</locationY>
+        <locationX>4846</locationX>
+        <locationY>974</locationY>
         <defaultConnector>
             <targetReference>LA_Route</targetReference>
         </defaultConnector>
@@ -991,8 +1004,8 @@
     <decisions>
         <name>DAChangeRoutiinig</name>
         <label>DAChangeRoutiinig</label>
-        <locationX>922</locationX>
-        <locationY>811</locationY>
+        <locationX>4626</locationX>
+        <locationY>1982</locationY>
         <defaultConnector>
             <targetReference>LAChangeRoutiinig</targetReference>
         </defaultConnector>
@@ -1023,8 +1036,8 @@
     <decisions>
         <name>DARoute</name>
         <label>DARoute</label>
-        <locationX>1017</locationX>
-        <locationY>554</locationY>
+        <locationX>4846</locationX>
+        <locationY>674</locationY>
         <defaultConnector>
             <targetReference>CPMRoute</targetReference>
         </defaultConnector>
@@ -1048,8 +1061,8 @@
     <decisions>
         <name>ID_Compare</name>
         <label>ID Compare</label>
-        <locationX>3852</locationX>
-        <locationY>1583</locationY>
+        <locationX>2030</locationX>
+        <locationY>1970</locationY>
         <defaultConnector>
             <targetReference>LoopGetMemberId</targetReference>
         </defaultConnector>
@@ -1073,8 +1086,8 @@
     <decisions>
         <name>LA_Route</name>
         <label>LA Route</label>
-        <locationX>621</locationX>
-        <locationY>579</locationY>
+        <locationX>4846</locationX>
+        <locationY>1274</locationY>
         <defaultConnector>
             <targetReference>SalesOfficePersonWrapper</targetReference>
         </defaultConnector>
@@ -1098,8 +1111,8 @@
     <decisions>
         <name>LAChangeRoutiinig</name>
         <label>LAChangeRoutiinig</label>
-        <locationX>933</locationX>
-        <locationY>1191</locationY>
+        <locationX>4626</locationX>
+        <locationY>2798</locationY>
         <defaultConnector>
             <targetReference>CPMChangeRoutiinig</targetReference>
         </defaultConnector>
@@ -1130,8 +1143,8 @@
     <decisions>
         <name>Update_CPMs</name>
         <label>Update CPMs?</label>
-        <locationX>1104</locationX>
-        <locationY>2752</locationY>
+        <locationX>4626</locationX>
+        <locationY>5666</locationY>
         <defaultConnector>
             <targetReference>AddStage_0</targetReference>
         </defaultConnector>
@@ -1155,8 +1168,8 @@
     <decisions>
         <name>Update_DAs</name>
         <label>Update DAs?</label>
-        <locationX>826</locationX>
-        <locationY>2746</locationY>
+        <locationX>4626</locationX>
+        <locationY>4970</locationY>
         <defaultConnector>
             <targetReference>Update_LAs</targetReference>
         </defaultConnector>
@@ -1180,8 +1193,8 @@
     <decisions>
         <name>Update_LAs</name>
         <label>Update LAs?</label>
-        <locationX>974</locationX>
-        <locationY>2755</locationY>
+        <locationX>4626</locationX>
+        <locationY>5318</locationY>
         <defaultConnector>
             <targetReference>Update_CPMs</targetReference>
         </defaultConnector>
@@ -1275,6 +1288,7 @@
         <object>NSP_Office_Assignment__c</object>
         <valueField>Id</valueField>
     </dynamicChoiceSets>
+    <environments>Default</environments>
     <formulas>
         <name>formImage</name>
         <dataType>String</dataType>
@@ -1300,8 +1314,8 @@
     <loops>
         <name>DeleteLooper</name>
         <label>DeleteLooper</label>
-        <locationX>3614</locationX>
-        <locationY>1228</locationY>
+        <locationX>1370</locationX>
+        <locationY>1754</locationY>
         <collectionReference>MultiParseOutput</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -1314,8 +1328,8 @@
     <loops>
         <name>LoopCPM</name>
         <label>LoopCPM</label>
-        <locationX>455</locationX>
-        <locationY>1756</locationY>
+        <locationX>4362</locationX>
+        <locationY>4046</locationY>
         <collectionReference>SelectedOfficesText</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -1328,8 +1342,8 @@
     <loops>
         <name>LoopDA</name>
         <label>LoopDA</label>
-        <locationX>417</locationX>
-        <locationY>883</locationY>
+        <locationX>4362</locationX>
+        <locationY>2198</locationY>
         <collectionReference>SelectedOfficesText</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -1342,8 +1356,8 @@
     <loops>
         <name>LoopGetMemberId</name>
         <label>LoopGetMemberId</label>
-        <locationX>3860</locationX>
-        <locationY>1244</locationY>
+        <locationX>1810</locationX>
+        <locationY>1862</locationY>
         <collectionReference>GetPublicGroupMembers</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -1356,8 +1370,8 @@
     <loops>
         <name>LoopLA</name>
         <label>LoopLA</label>
-        <locationX>340</locationX>
-        <locationY>1322</locationY>
+        <locationX>4362</locationX>
+        <locationY>3122</locationY>
         <collectionReference>SelectedOfficesText</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -1370,8 +1384,8 @@
     <loops>
         <name>LoopMembers</name>
         <label>LoopMembers</label>
-        <locationX>2755</locationX>
-        <locationY>1020</locationY>
+        <locationX>1106</locationX>
+        <locationY>674</locationY>
         <collectionReference>GetPublicGroupMembers</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -1384,8 +1398,8 @@
     <loops>
         <name>SalesOfficePersonWrapper</name>
         <label>SalesOfficePersonWrapper</label>
-        <locationX>1789</locationX>
-        <locationY>343</locationY>
+        <locationX>4626</locationX>
+        <locationY>566</locationY>
         <collectionReference>GetSalesOfficesByUser</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -1404,7 +1418,7 @@
     <processMetadataValues>
         <name>CanvasMode</name>
         <value>
-            <stringValue>FREE_FORM_CANVAS</stringValue>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
         </value>
     </processMetadataValues>
     <processMetadataValues>
@@ -1417,13 +1431,14 @@
     <recordCreates>
         <name>CreateMember</name>
         <label>CreateMember</label>
-        <locationX>3466</locationX>
-        <locationY>943</locationY>
+        <locationX>50</locationX>
+        <locationY>1538</locationY>
         <connector>
             <targetReference>AddStage_0</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>EXCEPTION</targetReference>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler_Subflow_Flow_1</targetReference>
         </faultConnector>
         <inputAssignments>
             <field>GroupId</field>
@@ -1440,56 +1455,32 @@
         <object>GroupMember</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
-    <recordCreates>
-        <name>ExceptionCreate</name>
-        <label>ExceptionCreate</label>
-        <locationX>1446</locationX>
-        <locationY>2529</locationY>
-        <inputAssignments>
-            <field>NSP_ErrorSource__c</field>
-            <value>
-                <elementReference>$Flow.InterviewGuid</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>NSP_Error_Message__c</field>
-            <value>
-                <elementReference>$Flow.CurrentRecord</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>NSP_StackTrace__c</field>
-            <value>
-                <elementReference>$Flow.FaultMessage</elementReference>
-            </value>
-        </inputAssignments>
-        <object>NSP_Exception_Log__c</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordCreates>
     <recordDeletes>
         <name>DeleteGroupMembers</name>
         <label>DeleteGroupMembers</label>
-        <locationX>3544</locationX>
-        <locationY>1825</locationY>
+        <locationX>1370</locationX>
+        <locationY>2612</locationY>
         <connector>
             <targetReference>AddStage_0</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>EXCEPTION</targetReference>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler_Subflow_Flow_1</targetReference>
         </faultConnector>
         <inputReference>GroupMemberCollect</inputReference>
     </recordDeletes>
     <recordLookups>
         <name>GetBPA</name>
         <label>GetBPA</label>
-        <locationX>1658</locationX>
-        <locationY>951</locationY>
+        <locationX>2690</locationX>
+        <locationY>458</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>AddStage</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>EXCEPTION</targetReference>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler_Subflow_Flow_1</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -1506,14 +1497,15 @@
     <recordLookups>
         <name>GetOfficeAssignment</name>
         <label>GetOfficeAssignment</label>
-        <locationX>1917</locationX>
-        <locationY>1035</locationY>
+        <locationX>3482</locationX>
+        <locationY>458</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>AddStage_0_0_0_0</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>EXCEPTION</targetReference>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler_Subflow_Flow_1</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -1530,14 +1522,15 @@
     <recordLookups>
         <name>GetPublicGroupMembers</name>
         <label>GetPublicGroupMembers</label>
-        <locationX>2745</locationX>
-        <locationY>814</locationY>
+        <locationX>1106</locationX>
+        <locationY>566</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>LoopMembers</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>EXCEPTION</targetReference>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler_Subflow_Flow_1</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -1556,14 +1549,15 @@
     <recordLookups>
         <name>GetSalesOfficesByUser</name>
         <label>GetSalesOfficesByUser</label>
-        <locationX>2060</locationX>
-        <locationY>547</locationY>
+        <locationX>4626</locationX>
+        <locationY>458</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>SalesOfficePersonWrapper</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>EXCEPTION</targetReference>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler_Subflow_Flow_1</targetReference>
         </faultConnector>
         <filterLogic>or</filterLogic>
         <filters>
@@ -1596,14 +1590,14 @@
     <recordLookups>
         <name>GetUser</name>
         <label>GetUser</label>
-        <locationX>2763</locationX>
-        <locationY>1383</locationY>
+        <locationX>1194</locationX>
+        <locationY>782</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>AssignUserCollect</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>EXCEPTION</targetReference>
+            <targetReference>Insperity_Fault_Handler_Subflow_Flow_1</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -1624,52 +1618,56 @@
     <recordUpdates>
         <name>Update_CPM_Office_Assignment</name>
         <label>Update CPM Office Assignment</label>
-        <locationX>1144</locationX>
-        <locationY>2908</locationY>
+        <locationX>4362</locationX>
+        <locationY>5774</locationY>
         <connector>
             <targetReference>AddStage_0</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>EXCEPTION</targetReference>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler_Subflow_Flow_1</targetReference>
         </faultConnector>
         <inputReference>varSelectedOfficesCPM</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>Update_DA_Office_Assignment</name>
         <label>Update DA Office Assignment</label>
-        <locationX>812</locationX>
-        <locationY>2914</locationY>
+        <locationX>4362</locationX>
+        <locationY>5078</locationY>
         <connector>
             <targetReference>Update_LAs</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>EXCEPTION</targetReference>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler_Subflow_Flow_1</targetReference>
         </faultConnector>
         <inputReference>varSelectedOfficesDA</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>Update_LA_Office_Assignment</name>
         <label>Update LA Office Assignment</label>
-        <locationX>986</locationX>
-        <locationY>2912</locationY>
+        <locationX>4362</locationX>
+        <locationY>5426</locationY>
         <connector>
             <targetReference>Update_CPMs</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>EXCEPTION</targetReference>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler_Subflow_Flow_1</targetReference>
         </faultConnector>
         <inputReference>varSelectedOfficesLA</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>Update_Office_Assignment</name>
         <label>Update Office Assignment</label>
-        <locationX>1902</locationX>
-        <locationY>1607</locationY>
+        <locationX>3482</locationX>
+        <locationY>890</locationY>
         <connector>
             <targetReference>AddStage_0</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>EXCEPTION</targetReference>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler_Subflow_Flow_1</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -1702,13 +1700,14 @@
     <recordUpdates>
         <name>Update_User</name>
         <label>Update User</label>
-        <locationX>1667</locationX>
-        <locationY>1605</locationY>
+        <locationX>2690</locationX>
+        <locationY>890</locationY>
         <connector>
             <targetReference>AddStage_0</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>EXCEPTION</targetReference>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler_Subflow_Flow_1</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -1730,14 +1729,11 @@
     <screens>
         <name>EXCEPTION</name>
         <label>EXCEPTION</label>
-        <locationX>1353</locationX>
-        <locationY>2375</locationY>
+        <locationX>1458</locationX>
+        <locationY>998</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
-        <connector>
-            <targetReference>ExceptionCreate</targetReference>
-        </connector>
         <fields>
             <name>ExceptionDisplay</name>
             <fieldText>&lt;p&gt;&lt;b&gt;An Exception Has Occurred, click next to create an exception log:&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;Fault Message: &lt;/b&gt;{!$Flow.FaultMessage}&lt;/p&gt;</fieldText>
@@ -1749,8 +1745,8 @@
     <screens>
         <name>ModifyBPA</name>
         <label>ModifyBPA</label>
-        <locationX>1677</locationX>
-        <locationY>1386</locationY>
+        <locationX>2690</locationX>
+        <locationY>782</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -1829,6 +1825,7 @@
             <fieldText>Sales Office Assignment</fieldText>
             <fieldType>MultiSelectCheckboxes</fieldType>
             <helpText>&lt;p&gt;Contains existing office assignments and allows for keeping, adding, &amp;amp; removing office assignments&lt;/p&gt;</helpText>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>false</isRequired>
         </fields>
         <showFooter>true</showFooter>
@@ -1837,8 +1834,8 @@
     <screens>
         <name>OfficeAssignment</name>
         <label>OfficeAssignment</label>
-        <locationX>1907</locationX>
-        <locationY>1469</locationY>
+        <locationX>3482</locationX>
+        <locationY>782</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -1976,8 +1973,8 @@
     <screens>
         <name>Offices</name>
         <label>Offices</label>
-        <locationX>680</locationX>
-        <locationY>2743</locationY>
+        <locationX>4626</locationX>
+        <locationY>4862</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -2019,8 +2016,8 @@
     <screens>
         <name>OffiiceByPerson</name>
         <label>OffiiceByPerson</label>
-        <locationX>1531</locationX>
-        <locationY>897</locationY>
+        <locationX>4626</locationX>
+        <locationY>1766</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -2099,6 +2096,7 @@
             </defaultValue>
             <fieldText>Sales Offices where District Admin (DA)</fieldText>
             <fieldType>MultiSelectCheckboxes</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -2121,6 +2119,7 @@
             </defaultValue>
             <fieldText>Sales Offices where Channel Program Manager (CPM)</fieldText>
             <fieldType>MultiSelectCheckboxes</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -2143,6 +2142,7 @@
             </defaultValue>
             <fieldText>Sales Offices where Loyalty Advisor (LA)</fieldText>
             <fieldType>MultiSelectCheckboxes</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -2161,8 +2161,8 @@
     <screens>
         <name>Sales_Office_Pub_Group_Screen_Addition</name>
         <label>Sales Office Pub Group Screen - Addition</label>
-        <locationX>3122</locationX>
-        <locationY>936</locationY>
+        <locationX>50</locationX>
+        <locationY>1430</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -2275,8 +2275,8 @@
     <screens>
         <name>Sales_Office_Pub_Group_Screen_Removal</name>
         <label>Sales Office Pub Group Screen - Removal</label>
-        <locationX>3124</locationX>
-        <locationY>1104</locationY>
+        <locationX>1370</locationX>
+        <locationY>1430</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -2318,6 +2318,7 @@
             <dataType>String</dataType>
             <fieldText>Select Which Users to Remove</fieldText>
             <fieldType>MultiSelectCheckboxes</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
         </fields>
         <showFooter>true</showFooter>
@@ -2326,8 +2327,8 @@
     <screens>
         <name>SuccessDisplay</name>
         <label>SuccessDisplay</label>
-        <locationX>2245</locationX>
-        <locationY>2670</locationY>
+        <locationX>3218</locationX>
+        <locationY>6206</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -2367,8 +2368,8 @@
     <screens>
         <name>Welcome</name>
         <label>Welcome</label>
-        <locationX>2376</locationX>
-        <locationY>553</locationY>
+        <locationX>3218</locationX>
+        <locationY>242</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2414,6 +2415,7 @@
                     <dataType>String</dataType>
                     <fieldText>What would you like to modify?</fieldText>
                     <fieldType>RadioButtons</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <inputParameters>
@@ -2504,6 +2506,7 @@
             <dataType>String</dataType>
             <fieldText>Which Sales Office Public Group would you like to modify</fieldText>
             <fieldType>DropdownBox</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -2523,6 +2526,7 @@
             <dataType>String</dataType>
             <fieldText>Modification type</fieldText>
             <fieldType>DropdownBox</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -2725,13 +2729,35 @@
         <stageOrder>22</stageOrder>
     </stages>
     <start>
-        <locationX>2246</locationX>
-        <locationY>142</locationY>
+        <locationX>3092</locationX>
+        <locationY>0</locationY>
         <connector>
             <targetReference>AddStage_0_0</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
+    <subflows>
+        <name>Insperity_Fault_Handler_Subflow_Flow_1</name>
+        <label>Insperity Fault Handler Subflow Flow 1</label>
+        <locationX>1458</locationX>
+        <locationY>890</locationY>
+        <connector>
+            <targetReference>EXCEPTION</targetReference>
+        </connector>
+        <flowName>Insperity_Fault_Handler_Subflow</flowName>
+        <inputAssignments>
+            <name>faultFlow</name>
+            <value>
+                <stringValue>NSP_Sales_Office_Provisioning</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultMessage</name>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
     <variables>
         <name>GroupMemberCollect</name>
         <dataType>SObject</dataType>

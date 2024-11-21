@@ -242,6 +242,16 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.Implementation_Team__c</fieldItem>
+                <identifier>RecordImplementation_Team_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.Support_Team__c</fieldItem>
                 <identifier>RecordSupport_Team_cField2</identifier>
             </fieldInstance>

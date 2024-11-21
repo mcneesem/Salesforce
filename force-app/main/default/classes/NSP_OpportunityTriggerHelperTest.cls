@@ -994,6 +994,7 @@ static void createAssetTest3(){
         //Inserting Opportunity Object
         update opportuniytObject;
         Test.stopTest();
+        NSP_OpportunityTriggerHelper.testHandleException( null , null );
     }
     
     @isTest

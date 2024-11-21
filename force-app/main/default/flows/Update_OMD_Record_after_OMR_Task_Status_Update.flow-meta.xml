@@ -4,8 +4,8 @@
     <assignments>
         <name>Set_Fault_Element_Get_OMD_Record</name>
         <label>Set Fault Element :  Get_OMD_Record</label>
-        <locationX>842</locationX>
-        <locationY>492</locationY>
+        <locationX>968</locationX>
+        <locationY>384</locationY>
         <assignmentItems>
             <assignToReference>faultElement</assignToReference>
             <operator>Assign</operator>
@@ -21,8 +21,8 @@
     <assignments>
         <name>Set_Fault_Element_Update_OMD_Record</name>
         <label>Set Fault Element :  Update_OMD_Record</label>
-        <locationX>314</locationX>
-        <locationY>708</locationY>
+        <locationX>440</locationX>
+        <locationY>600</locationY>
         <assignmentItems>
             <assignToReference>faultElement</assignToReference>
             <operator>Assign</operator>
@@ -35,33 +35,10 @@
         </connector>
     </assignments>
     <decisions>
-        <description>If CS : Allow Update Task Status Update OMD is Checked then Update the OMD Status</description>
-        <name>Custom_Setting_OMD_Update_Allowed</name>
-        <label>Custom Setting : OMD Update Allowed?</label>
-        <locationX>710</locationX>
-        <locationY>276</locationY>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Allow_Update_Task_Status_Update_OMD</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>$Setup.Onboarding_Meeting_Detail_Settings__c.Allow_Update_Task_Status_Update_OMD__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Get_OMD_Record</targetReference>
-            </connector>
-            <label>Allow Update Task Status Update OMD</label>
-        </rules>
-    </decisions>
-    <decisions>
         <name>Verify_if_OMD_Record_Exists</name>
         <label>Verify if OMD Record Exists</label>
-        <locationX>314</locationX>
-        <locationY>492</locationY>
+        <locationX>440</locationX>
+        <locationY>384</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Yes_OMD_Record_Exist</name>
@@ -86,7 +63,8 @@
             <label>Yes</label>
         </rules>
     </decisions>
-    <description>Updated the Entry Condition</description>
+    <description>Updated the Entry Condition 
+11/5 - Removed the Custom Setting Logic</description>
     <environments>Default</environments>
     <interviewLabel>Update OMD Record after OMR Task Status Update {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Update OMD Record after OMR Task Status Update</label>
@@ -112,8 +90,8 @@
     <recordLookups>
         <name>Get_OMD_Record</name>
         <label>Get OMD Record</label>
-        <locationX>314</locationX>
-        <locationY>384</locationY>
+        <locationX>440</locationX>
+        <locationY>276</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Verify_if_OMD_Record_Exists</targetReference>
@@ -139,8 +117,8 @@
         <description>Update OMD Status to Cancelled</description>
         <name>Update_OMD_Record</name>
         <label>Update OMD Record</label>
-        <locationX>50</locationX>
-        <locationY>600</locationY>
+        <locationX>176</locationX>
+        <locationY>492</locationY>
         <faultConnector>
             <targetReference>Set_Fault_Element_Update_OMD_Record</targetReference>
         </faultConnector>
@@ -161,7 +139,7 @@
         <object>Onboarding_Meeting_Detail__c</object>
     </recordUpdates>
     <start>
-        <locationX>122</locationX>
+        <locationX>50</locationX>
         <locationY>0</locationY>
         <filterLogic>1 AND ( 2 OR 3 ) AND ( 4 OR 5)</filterLogic>
         <filters>
@@ -203,7 +181,7 @@
         <recordTriggerType>Update</recordTriggerType>
         <scheduledPaths>
             <connector>
-                <targetReference>Custom_Setting_OMD_Update_Allowed</targetReference>
+                <targetReference>Get_OMD_Record</targetReference>
             </connector>
             <pathType>AsyncAfterCommit</pathType>
         </scheduledPaths>
@@ -213,8 +191,8 @@
     <subflows>
         <name>Fault_Handler_Subflow</name>
         <label>Fault Handler Subflow</label>
-        <locationX>314</locationX>
-        <locationY>816</locationY>
+        <locationX>440</locationX>
+        <locationY>708</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultElement</name>

@@ -122,6 +122,34 @@
         <value>Missing Custom Permission: Allow Delete Leads</value>
     </labels>
     <labels>
+        <fullName>CSP_Dental</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP - Dental</shortDescription>
+        <value>Client maintaining their own dental coverage.  CSP Set Up Required to take pre-tax deductions.  Receive and submit necessary documents to H&amp;W.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_HSA</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP - HSA</shortDescription>
+        <value>Client maintaining their own HSA.  CSP Set Up Required to take pre-tax deductions.  Receive and submit necessary documents to H&amp;W.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Medical</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP - Medical</shortDescription>
+        <value>Client maintaining their own medical coverage.  CSP Set Up Required to take pre-tax deductions.  Receive and submit necessary documents to H&amp;W.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Vision</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP - Vision</shortDescription>
+        <value>Client maintaining their own vision coverage.  CSP Set Up Required to take pre-tax deductions.  Receive and submit necessary documents to H&amp;W.</value>
+    </labels>
+    <labels>
         <fullName>Client_Integra_Responses_smartsheet</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -220,13 +248,6 @@
         <value>Do the employee’s work more than 6 months in a calendar year?</value>
     </labels>
     <labels>
-        <fullName>DoesTheClientOfferStockPurchasePlan</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Does_the_client_offer_a_Stock_Purchase__c</shortDescription>
-        <value>Does the client offer a Stock Purchase Plan?</value>
-    </labels>
-    <labels>
         <fullName>Do_you_have_a_recent_journal</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -274,6 +295,13 @@
         <protected>false</protected>
         <shortDescription>Do you require more than 3 job hyperlink</shortDescription>
         <value>https://app.smartsheet.com/b/form/a018de2c40de4cc8aea5f4b064ec35e2</value>
+    </labels>
+    <labels>
+        <fullName>DoesTheClientOfferStockPurchasePlan</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Does_the_client_offer_a_Stock_Purchase__c</shortDescription>
+        <value>Does the client offer a Stock Purchase Plan?</value>
     </labels>
     <labels>
         <fullName>Does_this_client_have_an_AWW</fullName>
@@ -607,7 +635,6 @@
     </labels>
     <labels>
         <fullName>NSP_Account_Team_TES_Tax</fullName>
-        <categories>Automation Email</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Sales Notifcation WO to WX Account Team Email</shortDescription>
@@ -615,7 +642,6 @@
     </labels>
     <labels>
         <fullName>NSP_Account_Team_WA_Support</fullName>
-        <categories>Automation email</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Sales - Notification - WO to WX and WX to WO Account Team Email</shortDescription>
@@ -2112,7 +2138,6 @@
     </labels>
     <labels>
         <fullName>NSP_Customer_Service_Email</fullName>
-        <categories>Used to store customer service email to case address.</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Customer_Service_Email</shortDescription>
@@ -3296,7 +3321,6 @@ Meeting - Project Related - Fiduciary,Mutual Fund Corrections - Pricing, Manual 
     </labels>
     <labels>
         <fullName>NSP_Health_Welfare_Client_Sponsored_Plans</fullName>
-        <categories>Used to store Health &amp; Welfare Client Sponsored Plans email to case address. Created as a part of STY-04453 and used in NSP_EmailMessageTriggerHelper class.</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Health &amp; Welfare Client Sponsored Plans</shortDescription>
@@ -3304,7 +3328,6 @@ Meeting - Project Related - Fiduciary,Mutual Fund Corrections - Pricing, Manual 
     </labels>
     <labels>
         <fullName>NSP_Health_Welfare_Ed_Assist</fullName>
-        <categories>Used to store Health &amp; Welfare Ed Assist email to case address. Created as a part of STY-04453 and used in NSP_EmailMessageTriggerHelper class.</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Health &amp; Welfare Ed Assist</shortDescription>
@@ -3312,7 +3335,6 @@ Meeting - Project Related - Fiduciary,Mutual Fund Corrections - Pricing, Manual 
     </labels>
     <labels>
         <fullName>NSP_Health_Welfare_Section_125</fullName>
-        <categories>Used to store Health &amp; Welfare Section 125 email to case address. Created as a part of STY-03531 and used in NSP_EmailMessageTriggerHelper class.</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Health &amp; Welfare Section 125</shortDescription>
@@ -3694,7 +3716,6 @@ Meeting - Project Related - Fiduciary,Mutual Fund Corrections - Pricing, Manual 
     </labels>
     <labels>
         <fullName>NSP_Les_Drug_Screening_Email</fullName>
-        <categories>Used to store les drug screening  email to case address.</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Les Drug Screening Email</shortDescription>
@@ -3942,7 +3963,6 @@ Meeting - Project Related - Fiduciary,Mutual Fund Corrections - Pricing, Manual 
     </labels>
     <labels>
         <fullName>NSP_NiceCX_Flow_Error_Receipent</fullName>
-        <categories>Nice, Service, CTI</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>NiceCX Flow Error Receipent</shortDescription>
@@ -5073,7 +5093,6 @@ Meeting - Project Related - Fiduciary,Mutual Fund Corrections - Pricing, Manual 
     </labels>
     <labels>
         <fullName>NSP_Restricted_Email_Addresses</fullName>
-        <categories>Used to store all the email addresses for which email to case will not be created. As a part of STY-03531 and STY-03643.</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Restricted Email Addresses</shortDescription>
@@ -5394,7 +5413,7 @@ Meeting - Project Related - Fiduciary,Mutual Fund Corrections - Pricing, Manual 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Any custom reporting needs</shortDescription>
-        <value> Does the client have any custom reporting needs (i.e. job costing, IRR, departments)?</value>
+        <value>Does the client have any custom reporting needs (i.e. job costing, IRR, departments)?</value>
     </labels>
     <labels>
         <fullName>NSP_Standard_Worked_Hours</fullName>
@@ -5496,7 +5515,6 @@ Climate Plus: https://nexus.insperity.com/groups/38605/posts/3272612-climate-plu
     </labels>
     <labels>
         <fullName>NSP_TES_Banking</fullName>
-        <categories>Used to store TES Banking email address. Created as a part of STY-02182</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>TES Banking</shortDescription>
@@ -6233,6 +6251,20 @@ Climate Plus: https://nexus.insperity.com/groups/38605/posts/3272612-climate-plu
         <value>Will payroll be submitted from multiple contacts?</value>
     </labels>
     <labels>
+        <fullName>Post_Refresh_Email_Labels</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Post_Refresh_Email_Labels</shortDescription>
+        <value>HCM_Case_Email_Send_To_Address,NSP_Account_Team_TES_Tax,NSP_Account_Team_WA_Support,NSP_Channel_Prgram_Email,NSP_Client_Offer_Stock_Options_Email,NSP_Contact_Center_Email_Addresses,NSP_CSS_Group_Email,NSP_Customer_Service_Email,NSP_Health_Welfare_Client_Sponsored_Plans,NSP_Health_Welfare_Ed_Assist,NSP_Health_Welfare_Section_125,NSP_IES_NotificationAlertEmail,NSP_IRR_Checked_Email,NSP_iSolved_HCM_Case_Completion_Email,NSP_ITA_CQA_Team_Shared_box,NSP_ITA_Email_Address,NSP_Les_Drug_Screening_Email,NSP_Mid_Market_Sales_Email,NSP_New_Client_Sales_Email,NSP_NiceCX_Flow_Error_Receipent,NSP_Opportunity_Closed_Won_AlertAdditionalEmails,NSP_Report_Dev_OrgWideEmail,NSP_Report_Dev_Team_CC_Address,NSP_Restricted_Email_Addresses,NSP_RET_401k_queue_Email_Address,NSP_Salepprwk_Email,NSP_TerminationFormBatchGenericToAddress,NSP_Termination_Team,NSP_TES_Banking,NSP_TES_Data_Team_Email_Address,NSP_Tes_Tax_Email_Address,NSP_WO_Email_DL,NSP_WXCarrierEmail,NSP_WX_Email_DL</value>
+    </labels>
+    <labels>
+        <fullName>Post_Refresh_Email_Labels_2</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Post_Refresh_Email_Labels_2</shortDescription>
+        <value>RecepientIdStateretProgram,RecepientToClientSale,RecepientToCOBRA,RecepientToCOEPayroll,RecepientToCusrelCEO,RecepientToEPLI,RecepientToFinanceService,RecepientToForm8973,RecepientToGabrieul,RecepientToId401ORK,RecepientToId401Sales,RecepientToIdEEOTeam,RecepientToIdPriorWages,RecepientToOC,RecepientToOrientReq,RecepientToSBEA,RecepientToWCNotification,Recipient_email_Ids</value>
+    </labels>
+    <labels>
         <fullName>Premier_Performance_Implementation_Timeline</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -6414,7 +6446,7 @@ Climate Plus: https://nexus.insperity.com/groups/38605/posts/3272612-climate-plu
         <shortDescription>STPCompleted_ClosedWon</shortDescription>
         <value>Please ensure Sold to Paid Checklist is completed to move to Closed/Won stage</value>
     </labels>
-	<labels>
+    <labels>
         <fullName>Sales_Roles</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -6509,11 +6541,25 @@ Climate Plus: https://nexus.insperity.com/groups/38605/posts/3272612-climate-plu
         <value>0050R000008jCfUQAU</value>
     </labels>
     <labels>
+        <fullName>What_QuickBooks_version_do_you_use</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>What QuickBooks version do you use</shortDescription>
+        <value>What QuickBooks version do you use?</value>
+    </labels>
+    <labels>
         <fullName>What_accounting_software_do_you_use</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>What_accounting_software_do_you_use</shortDescription>
         <value>What accounting software do you use?</value>
+    </labels>
+    <labels>
+        <fullName>What_is_client_s_Active_Benefits_Continuation_Period_ABCP</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>What is client&apos;s Active Benefits Continuation Period (ABCP)?</shortDescription>
+        <value>What is client&apos;s Active Benefits Continuation Period (ABCP)?</value>
     </labels>
     <labels>
         <fullName>What_months_does_the_client_increase_their_staff</fullName>
@@ -6535,20 +6581,6 @@ Climate Plus: https://nexus.insperity.com/groups/38605/posts/3272612-climate-plu
         <protected>false</protected>
         <shortDescription>What months is the Intern working?</shortDescription>
         <value>What months is the Intern working?</value>
-    </labels>
-    <labels>
-        <fullName>What_is_client_s_Active_Benefits_Continuation_Period_ABCP</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>What is client&apos;s Active Benefits Continuation Period (ABCP)?</shortDescription>
-        <value>What is client&apos;s Active Benefits Continuation Period (ABCP)?</value>
-    </labels>
-    <labels>
-        <fullName>What_QuickBooks_version_do_you_use</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>What QuickBooks version do you use</shortDescription>
-        <value>What QuickBooks version do you use?</value>
     </labels>
     <labels>
         <fullName>Would_you_like_automation_for_your_general_ledger</fullName>

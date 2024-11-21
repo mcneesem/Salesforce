@@ -110,7 +110,7 @@ const LABEL = {
   VOC_Results__c:"VOC Results (date of VOC, pos/neg), mitigating actions",
 
   NSP_How_does_client_generate_revenue__c:"Business Description (Brief history, ownership, revenue drivers etc.)",
-  NSP_Union_Employees__c:"Union Employees- If so, percentage of workforce?",
+  NSP_Union_Employees__c:"Union Employees",
   Is_client_HQ_located_internationallly__c:"Is the client's headquarters located internationally?",
   Country_HQ_is_located_one_location_only__c:"Country HQ is located (one location only)",
   Does_the_client_have_KDM_internationally__c:"Does the client have a KDM or KDMs located internationally?",

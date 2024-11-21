@@ -45,6 +45,21 @@ NSP_Plan_SubPlan</description>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>NSP_Amendment_Checklist__c.Plan_Subplan_Relationship_Form__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_Amendment_Checklist__c.Plan_Subplan_Relationship__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_Amendment_Checklist__c.LTPT__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>NSP_Plan_SubPlan__c.Allows_LT_Employer_Contributions__c</field>
         <readable>true</readable>

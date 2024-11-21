@@ -54,6 +54,11 @@
                 <label>Intake</label>
             </value>
             <value>
+                <fullName>Transition in Progress</fullName>
+                <default>false</default>
+                <label>Transition in Progress</label>
+            </value>
+            <value>
                 <fullName>Quality Review</fullName>
                 <default>false</default>
                 <label>Quality Review</label>

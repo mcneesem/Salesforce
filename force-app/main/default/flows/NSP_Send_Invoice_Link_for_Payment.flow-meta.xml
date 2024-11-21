@@ -9,7 +9,7 @@
         <actionName>NSP_InvoiceEmailMessageService</actionName>
         <actionType>apex</actionType>
         <faultConnector>
-            <targetReference>Create_Error_Log</targetReference>
+            <targetReference>Insperity_Fault_Handler_Subflow_Flow_1</targetReference>
         </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
@@ -18,6 +18,8 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>NSP_InvoiceEmailMessageService</nameSegment>
+        <versionSegment>1</versionSegment>
     </actionCalls>
     <apiVersion>55.0</apiVersion>
     <description>Flow to send invoice emails</description>
@@ -43,44 +45,6 @@
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
-    <recordCreates>
-        <name>Create_Error_Log</name>
-        <label>Create Error Log</label>
-        <locationX>440</locationX>
-        <locationY>431</locationY>
-        <inputAssignments>
-            <field>NSP_Class__c</field>
-            <value>
-                <elementReference>$Flow.InterviewGuid</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>NSP_Description__c</field>
-            <value>
-                <elementReference>$Flow.FaultMessage</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>NSP_Method__c</field>
-            <value>
-                <elementReference>$Flow.CurrentRecord</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>NSP_Object__c</field>
-            <value>
-                <stringValue>Invoice</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>NSP_Record_Id__c</field>
-            <value>
-                <elementReference>$Record.Id</elementReference>
-            </value>
-        </inputAssignments>
-        <object>NSP_Error_Log__c</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordCreates>
     <start>
         <locationX>50</locationX>
         <locationY>0</locationY>
@@ -106,5 +70,30 @@
         <recordTriggerType>Update</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
+    <subflows>
+        <name>Insperity_Fault_Handler_Subflow_Flow_1</name>
+        <label>Insperity Fault Handler Subflow Flow 1</label>
+        <locationX>440</locationX>
+        <locationY>431</locationY>
+        <flowName>Insperity_Fault_Handler_Subflow</flowName>
+        <inputAssignments>
+            <name>faultElement</name>
+            <value>
+                <stringValue>Send_Invoice_Email_Action</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultFlow</name>
+            <value>
+                <stringValue>NSP_Send_Invoice_Link_for_Payment</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultMessage</name>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
 </Flow>

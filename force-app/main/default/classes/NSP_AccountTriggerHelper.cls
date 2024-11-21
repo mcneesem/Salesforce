@@ -1,17 +1,16 @@
-/**
- * Represents the Account trigger helper which handles all the logic.
- * -------------------------------------------------------------------------------------------------
- * Modification History
- *  ManiTeja           March 28 2022        As part of DF-01476, removed setChannelPartnerAndLoyaltyAdvisor reference to populate Loyalty Advisor and CPM based on state.
-*  Rahul Singh        Sept  29 2022        Added as part of 569324 charwell request.
-*  Ruchi              Oct   21 2022        Added as part of 128176.
-*  Rahul Singh        Nov   29 2022        Modified as part of user story 191911
-
-***************************************************************************************************/
+//
+// Represents the Account trigger helper which handles all the logic.
+// -------------------------------------------------------------------------------------------------
+// Modification History
+//  ManiTeja           March 28 2022        As part of DF-01476, removed setChannelPartnerAndLoyaltyAdvisor reference to populate Loyalty Advisor and CPM based on state.
+//  Rahul Singh        Sept  29 2022        Added as part of 569324 charwell request.
+//  Ruchi              Oct   21 2022        Added as part of 128176.
+//  Rahul Singh        Nov   29 2022        Modified as part of user story 191911
+//
 public class NSP_AccountTriggerHelper {
     // test w/ NSP_AccountTriggerHelperTest, NSP_AccountContactRelationHelperTest, NSP_AccountContactServiceHelperTest (77%)
     // test w/ NSP_AccountTriggerHelperTest, NSP_LeadTriggerHelperTest (77%)
-    // test w/ NSP_AccountTriggerHelperTest (78%)
+    // test w/ NSP_AccountTriggerHelperTest (79%)
     // test w/ NSP_AccountContactRelationHelperTest (34%)
     // test w/ NSP_AccountContactServiceHelperTest (38%)
 
@@ -46,14 +45,19 @@ public class NSP_AccountTriggerHelper {
                 if (accountObj.RecordTypeId == PARTNER_RECORDTYPE_ID) {
                     accountObj.NSP_Partner_Lifecycle__c = NSP_SalesConstants.EVALUATION;
                 }
-if(accountObj.RecordTypeId==PARTNER_RECORDTYPE_ID
-&& userDetails.UserRole.Name == NSP_SalesConstants.BPA_User && String.isNotBlank(userDetails.NSP_Sales_Office__c)){
+                if ( accountObj.RecordTypeId==PARTNER_RECORDTYPE_ID
+                    && userDetails.UserRole.Name == NSP_SalesConstants.BPA_User
+                    && String.isNotBlank(userDetails.NSP_Sales_Office__c)
+                    )
+                {
                     // Added as part of DF-01154
                     bpaAccountList.add(accountObj);
                     salesOfficeSet.add(userDetails.NSP_Sales_Office__c);
                 }
-if(accountObj.RecordTypeId==PARTNER_RECORDTYPE_ID
-&& userDetails.UserRole.Name == NSP_SalesConstants.BPC_USER){
+                if ( accountObj.RecordTypeId==PARTNER_RECORDTYPE_ID
+                    && userDetails.UserRole.Name == NSP_SalesConstants.BPC_USER
+                    )
+                {
                     accountObj.NSP_Channel_Program_Manager__c = system.label.NSP_CPM_USER;
                 }
                 //create list to populate docusign template id for merge on demand templates
@@ -144,7 +148,10 @@ if(accountObj.RecordTypeId==PARTNER_RECORDTYPE_ID
                 if (accountNewMap.get(accountId).Ownerid != accountOldMap.get(accountId).Ownerid) {
                     accountownerChangedList.add(accountNewMap.get(accountId));
                 }
-                if (accountNewMap.get(accountId).NumberOfEmployees != accountOldMap.get(accountId).NumberOfEmployees) {
+                if ( ( accountNewMap.get(accountId).NumberOfEmployees != accountOldMap.get(accountId).NumberOfEmployees )
+                    && ( accountOldMap.get(accountId).NSP_Account_Segment__c != NSP_SalesConstants.MIDMARKET_SALES )
+                    )
+                {
                     updateAccountSegment(accountNewMap.get(accountId));
                 }
                 //create list to populate docusign template id for merge on demand templates
@@ -485,8 +492,11 @@ WHERE (userRole.Name = 'Loyalty Advisor' OR userRole.Name = 'Channel Program Man
     public static void updateAccountSegment(Account accountObject) {
         if (accountObject.NumberOfEmployees > Integer.valueOf(System.Label.NSP_MidMarket_Threshold)) {
             accountObject.NSP_Account_Segment__c = System.Label.NSP_Account_Segment_MidMarket;
-} else if(accountObject.NumberOfEmployees > Integer.valueOf(System.Label.NSP_Emerging_Growth_Threshold_Employees)
-&& accountObject.NumberOfEmployees <= Integer.valueOf(System.Label.NSP_MidMarket_Threshold)){
+        } else if (
+            ( accountObject.NumberOfEmployees > Integer.valueOf( System.Label.NSP_Emerging_Growth_Threshold_Employees ) )
+            && ( accountObject.NumberOfEmployees <= Integer.valueOf( System.Label.NSP_MidMarket_Threshold ) )
+            )
+        {
             accountObject.NSP_Account_Segment__c = System.Label.NSP_Account_Segment_Emerging_Growth;
         } else if (accountObject.NumberOfEmployees != null) {
             accountObject.NSP_Account_Segment__c = System.Label.NSP_Account_Segment_Core_Sales;

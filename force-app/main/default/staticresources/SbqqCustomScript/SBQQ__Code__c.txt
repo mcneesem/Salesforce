@@ -1305,7 +1305,7 @@ export function processSeasonalDiscountHelper(
         let splitArray = descriptionField.split("_");
         if(splitArray.length > 1){
             //use the non discounted rolled up price of the rate
-            newSetPrice = splitArray[1];
+            newSetPrice = parseFloat(splitArray[1]);
         }else{
             //SBQQ__Price__c is already the non discounted rolled up price
             newSetPrice = currentPrice;
@@ -1419,6 +1419,7 @@ export function ProcessSeasonalRatesHelper(csRate
     , seasonalMap
     , lineKey
 ){
+    resetSeasonalRate(csRate);
     let currentPrice = csRate.get("SBQQ__Price__c");
     let originalPrice = csRate.get("SBQQ__OriginalPrice__c");
     let descriptionArray = [];
@@ -1432,7 +1433,7 @@ export function ProcessSeasonalRatesHelper(csRate
     let splitArray = descriptionField.split("_");
     if(splitArray.length > 1){
         descriptionArray = splitArray[0];
-        newSetPrice = splitArray[1];
+        newSetPrice = parseFloat(splitArray[1]);
     }
     else{
         descriptionArray = descriptionField;
@@ -1449,8 +1450,33 @@ export function ProcessSeasonalRatesHelper(csRate
             }
         });
         csRate.set("SBQQ__Price__c", newPrice);
-        let newDescription = descriptionArray + "_" + newPrice;
+        let newDescription = descriptionArray + "_" + newPrice + "_" + originalPrice;
         csRate.set("SBQQ__Description__c", newDescription);
+    }
+}
+/*
+Seasonal Pricing Implementation
+Method - resetSeasonalRate
+called via ProcessSeasonalRatesHelper
+US - 299910,294434
+*/
+export function resetSeasonalRate(csRate){
+    //method used to reset the original price
+    //to prevent CPQ from overiding the OG price
+    if(csRate){
+        let descriptionField = csRate.get("SBQQ__Description__c");
+        let splitArray = descriptionField.split("_");
+        if(splitArray.length > 1){
+            let priceField = csRate.get("SBQQ__Price__c");
+            let originalPriceField = csRate.get("SBQQ__OriginalPrice__c");
+            if(priceField !== parseFloat(splitArray[1])){
+                priceField = parseFloat(splitArray[1]);
+                csRate.set("SBQQ__Price__c", priceField);
+            }if(originalPriceField !== parseFloat(splitArray[2])){
+                originalPriceField = parseFloat(splitArray[2]);
+                csRate.set("SBQQ__OriginalPrice__c", originalPriceField);
+            }   
+        }
     }
 }
 

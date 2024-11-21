@@ -3,8 +3,8 @@
     <actionCalls>
         <name>Navigate_to_credit_termination_form</name>
         <label>Navigate to credit termination form</label>
-        <locationX>4186</locationX>
-        <locationY>1706</locationY>
+        <locationX>4450</locationX>
+        <locationY>1922</locationY>
         <actionName>c:NSP_NavigateToRecord</actionName>
         <actionType>component</actionType>
         <faultConnector>
@@ -25,8 +25,8 @@
     <actionCalls>
         <name>Navigate_to_Payroll_form</name>
         <label>Navigate to Payroll form</label>
-        <locationX>1634</locationX>
-        <locationY>1706</locationY>
+        <locationX>1898</locationX>
+        <locationY>1922</locationY>
         <actionName>c:NSP_NavigateToRecord</actionName>
         <actionType>component</actionType>
         <faultConnector>
@@ -47,8 +47,8 @@
     <actionCalls>
         <name>Navigate_to_reinstatement_form</name>
         <label>Navigate to reinstatement form</label>
-        <locationX>50</locationX>
-        <locationY>1706</locationY>
+        <locationX>314</locationX>
+        <locationY>1922</locationY>
         <actionName>c:NSP_NavigateToRecord</actionName>
         <actionType>component</actionType>
         <faultConnector>
@@ -69,8 +69,8 @@
     <actionCalls>
         <name>Navigate_to_Termination_Form_record</name>
         <label>Navigate to Termination form record</label>
-        <locationX>3339</locationX>
-        <locationY>2798</locationY>
+        <locationX>3735</locationX>
+        <locationY>3014</locationY>
         <actionName>c:NSP_FlowNavigatetoRecord</actionName>
         <actionType>component</actionType>
         <faultConnector>
@@ -138,8 +138,8 @@
     <decisions>
         <name>Check_asset_record</name>
         <label>Check asset record</label>
-        <locationX>3999</locationX>
-        <locationY>458</locationY>
+        <locationX>4395</locationX>
+        <locationY>674</locationY>
         <defaultConnector>
             <targetReference>Check_User_Role_Profile</targetReference>
         </defaultConnector>
@@ -184,8 +184,8 @@
     <decisions>
         <name>Check_credit_specialist_recordtype</name>
         <label>Check credit specialist recordtype</label>
-        <locationX>4846</locationX>
-        <locationY>1382</locationY>
+        <locationX>5110</locationX>
+        <locationY>1598</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Credit_Specialist_form1</name>
@@ -238,8 +238,8 @@
     <decisions>
         <name>Check_Project_Task</name>
         <label>Check Project Task</label>
-        <locationX>1964</locationX>
-        <locationY>1166</locationY>
+        <locationX>2228</locationX>
+        <locationY>1382</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Reinstatement_Requested</name>
@@ -275,8 +275,8 @@
     <decisions>
         <name>Check_Project_Task_name</name>
         <label>Check Project Task name</label>
-        <locationX>3702</locationX>
-        <locationY>1166</locationY>
+        <locationX>3966</locationX>
+        <locationY>1382</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Reinstatement_Requested_Project_Task</name>
@@ -313,8 +313,8 @@
     <decisions>
         <name>Check_Project_Task_name_1</name>
         <label>Check Project Task name</label>
-        <locationX>5308</locationX>
-        <locationY>1166</locationY>
+        <locationX>5704</locationX>
+        <locationY>1382</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Submit_Termination_Checklist_ProjectTask</name>
@@ -351,8 +351,8 @@
     <decisions>
         <name>Check_Recordtype</name>
         <label>Check Recordtype</label>
-        <locationX>5368</locationX>
-        <locationY>242</locationY>
+        <locationX>5830</locationX>
+        <locationY>458</locationY>
         <defaultConnectorLabel>Recordtype is null</defaultConnectorLabel>
         <rules>
             <name>Recordtype_not_null</name>
@@ -380,8 +380,8 @@
     <decisions>
         <name>Check_Recordtype_1</name>
         <label>Check Recordtype</label>
-        <locationX>2294</locationX>
-        <locationY>1382</locationY>
+        <locationX>2558</locationX>
+        <locationY>1598</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Payroll_Specialist_record_type</name>
@@ -409,8 +409,8 @@
     <decisions>
         <name>Check_User_Role_Profile</name>
         <label>Check User Role/Profile</label>
-        <locationX>3999</locationX>
-        <locationY>1058</locationY>
+        <locationX>4395</locationX>
+        <locationY>1274</locationY>
         <defaultConnector>
             <targetReference>Select_Record_Type</targetReference>
         </defaultConnector>
@@ -478,8 +478,8 @@
     <decisions>
         <name>Client_is_Terminated</name>
         <label>Client is Terminated</label>
-        <locationX>3823</locationX>
-        <locationY>674</locationY>
+        <locationX>4219</locationX>
+        <locationY>890</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Yes_and_continue</name>
@@ -500,8 +500,8 @@
     <decisions>
         <name>Credit_Form_null_check</name>
         <label>Credit Form null check</label>
-        <locationX>4450</locationX>
-        <locationY>1598</locationY>
+        <locationX>4714</locationX>
+        <locationY>1814</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Credit_form_not_null</name>
@@ -522,8 +522,8 @@
     <decisions>
         <name>Form_Id_null_check</name>
         <label>Form Id null check</label>
-        <locationX>314</locationX>
-        <locationY>1598</locationY>
+        <locationX>578</locationX>
+        <locationY>1814</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Form_Id_not_null</name>
@@ -544,8 +544,8 @@
     <decisions>
         <name>Form_not_null</name>
         <label>Form not null</label>
-        <locationX>1898</locationX>
-        <locationY>1598</locationY>
+        <locationX>2162</locationX>
+        <locationY>1814</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>FormID_not_null</name>
@@ -566,8 +566,8 @@
     <decisions>
         <name>Formid_null_check</name>
         <label>Formid null check</label>
-        <locationX>3603</locationX>
-        <locationY>2690</locationY>
+        <locationX>3999</locationX>
+        <locationY>2906</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Not_null_check</name>
@@ -588,8 +588,8 @@
     <decisions>
         <name>Getrecordtype_null_check</name>
         <label>Getrecordtype null check</label>
-        <locationX>3999</locationX>
-        <locationY>2474</locationY>
+        <locationX>4395</locationX>
+        <locationY>2690</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Not_Null</name>
@@ -617,8 +617,8 @@
     <decisions>
         <name>Recordtype_null_check</name>
         <label>Recordtype null check</label>
-        <locationX>710</locationX>
-        <locationY>1382</locationY>
+        <locationX>974</locationX>
+        <locationY>1598</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Record_Type_Not_null</name>
@@ -644,6 +644,19 @@
         </rules>
     </decisions>
     <environments>Default</environments>
+    <formulas>
+        <name>safeTerminationFormName</name>
+        <dataType>String</dataType>
+        <expression>IF(
+  NOT( ISBLANK( {!Termination_Form_Name} ) ) ,
+  IF(
+    ( LEN( {!Termination_Form_Name} ) &gt; 80 ) ,
+    LEFT( {!Termination_Form_Name} , 80 ) ,
+    {!Termination_Form_Name}
+  ) ,
+  &apos;&apos;
+)</expression>
+    </formulas>
     <formulas>
         <name>Termination_Form_Name</name>
         <dataType>String</dataType>
@@ -683,8 +696,8 @@
     <recordCreates>
         <name>Create_Payroll_specialist_form</name>
         <label>Create Payroll specialist form</label>
-        <locationX>1898</locationX>
-        <locationY>1490</locationY>
+        <locationX>2162</locationX>
+        <locationY>1706</locationY>
         <connector>
             <targetReference>Form_not_null</targetReference>
         </connector>
@@ -701,7 +714,7 @@
         <inputAssignments>
             <field>Name</field>
             <value>
-                <elementReference>Termination_Form_Name</elementReference>
+                <elementReference>safeTerminationFormName</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -716,8 +729,8 @@
     <recordCreates>
         <name>Create_Reinstatement_form</name>
         <label>Create Reinstatement form</label>
-        <locationX>314</locationX>
-        <locationY>1490</locationY>
+        <locationX>578</locationX>
+        <locationY>1706</locationY>
         <connector>
             <targetReference>Form_Id_null_check</targetReference>
         </connector>
@@ -734,7 +747,7 @@
         <inputAssignments>
             <field>Name</field>
             <value>
-                <elementReference>Termination_Form_Name</elementReference>
+                <elementReference>safeTerminationFormName</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -749,8 +762,8 @@
     <recordCreates>
         <name>Create_Termination_Form</name>
         <label>Create Termination Form</label>
-        <locationX>3603</locationX>
-        <locationY>2582</locationY>
+        <locationX>3999</locationX>
+        <locationY>2798</locationY>
         <connector>
             <targetReference>Formid_null_check</targetReference>
         </connector>
@@ -767,7 +780,7 @@
         <inputAssignments>
             <field>Name</field>
             <value>
-                <elementReference>Termination_Form_Name</elementReference>
+                <elementReference>safeTerminationFormName</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -782,8 +795,8 @@
     <recordCreates>
         <name>Credit_Specialist_termination_form</name>
         <label>Credit Specialist termination form</label>
-        <locationX>4450</locationX>
-        <locationY>1490</locationY>
+        <locationX>4714</locationX>
+        <locationY>1706</locationY>
         <connector>
             <targetReference>Credit_Form_null_check</targetReference>
         </connector>
@@ -800,7 +813,7 @@
         <inputAssignments>
             <field>Name</field>
             <value>
-                <elementReference>Termination_Form_Name</elementReference>
+                <elementReference>safeTerminationFormName</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -815,8 +828,8 @@
     <recordLookups>
         <name>Credit_Specialist_Record_Type</name>
         <label>Credit Specialist Record Type</label>
-        <locationX>4846</locationX>
-        <locationY>1274</locationY>
+        <locationX>5110</locationX>
+        <locationY>1490</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_credit_specialist_recordtype</targetReference>
@@ -840,8 +853,8 @@
     <recordLookups>
         <name>Get_Asset_record</name>
         <label>Get Asset record</label>
-        <locationX>3999</locationX>
-        <locationY>350</locationY>
+        <locationX>4395</locationX>
+        <locationY>566</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_asset_record</targetReference>
@@ -925,8 +938,8 @@
     <recordLookups>
         <name>Get_Record_type</name>
         <label>Get Record type</label>
-        <locationX>3999</locationX>
-        <locationY>2366</locationY>
+        <locationX>4395</locationX>
+        <locationY>2582</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Getrecordtype_null_check</targetReference>
@@ -964,8 +977,8 @@
     <recordLookups>
         <name>Get_Recordtype</name>
         <label>Get Recordtype</label>
-        <locationX>5368</locationX>
-        <locationY>134</locationY>
+        <locationX>5830</locationX>
+        <locationY>350</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_Recordtype</targetReference>
@@ -996,8 +1009,8 @@
     <recordLookups>
         <name>Payroll_Specialist_Recordtype</name>
         <label>Payroll Specialist Recordtype</label>
-        <locationX>2294</locationX>
-        <locationY>1274</locationY>
+        <locationX>2558</locationX>
+        <locationY>1490</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_Recordtype_1</targetReference>
@@ -1021,8 +1034,8 @@
     <recordLookups>
         <name>Record_type</name>
         <label>Record type</label>
-        <locationX>710</locationX>
-        <locationY>1274</locationY>
+        <locationX>974</locationX>
+        <locationY>1490</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Recordtype_null_check</targetReference>
@@ -1046,8 +1059,8 @@
     <screens>
         <name>Check_Client_is_Terminated</name>
         <label>Check Client is Terminated</label>
-        <locationX>3823</locationX>
-        <locationY>566</locationY>
+        <locationX>4219</locationX>
+        <locationY>782</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -1086,8 +1099,8 @@
     <screens>
         <name>Select_Record_Type</name>
         <label>Select Record Type</label>
-        <locationX>3999</locationX>
-        <locationY>2258</locationY>
+        <locationX>4395</locationX>
+        <locationY>2474</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -1319,7 +1332,7 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>5242</locationX>
+        <locationX>2814</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Existing_Term_form</targetReference>
@@ -1329,8 +1342,8 @@
     <subflows>
         <name>Fault_Handler_subflow</name>
         <label>Fault Handler subflow</label>
-        <locationX>3603</locationX>
-        <locationY>2906</locationY>
+        <locationX>3999</locationX>
+        <locationY>3122</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultMessage</name>

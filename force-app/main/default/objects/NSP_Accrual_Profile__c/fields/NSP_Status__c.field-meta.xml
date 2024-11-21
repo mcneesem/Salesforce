@@ -56,6 +56,11 @@
                 <default>false</default>
                 <label>AP Approved</label>
             </value>
+            <value>
+                <fullName>Recalled</fullName>
+                <default>false</default>
+                <label>Recalled</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

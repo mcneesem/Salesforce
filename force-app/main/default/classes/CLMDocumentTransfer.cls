@@ -1,16 +1,9 @@
-/**
- * @description       : 
- * @author            : ChangeMeIn@UserSettingsUnder.SFDoc
- * @group             : 
- * @last modified on  : 05-04-2022
- * @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
-**/
 //
 // This code is provided as an example only, no warranty is expressed or implied. If you choose to use 
 // any or all of this sample code, you agree to assume all risk and liability associated with that use.
 //
 public with sharing class CLMDocumentTransfer {
-    // test w/ CLMDocumentTransferTest (89%)
+    // test w/ CLMDocumentTransferTest (85%)
 
     String dsAccountId;
     String iss;
@@ -114,8 +107,12 @@ public with sharing class CLMDocumentTransfer {
                 invToUpdate.NSP_CLM_Document_Received__c = true;
                 NSP_InvoiceTriggerHandler.TriggerDisabled = true;
                 update invToUpdate;
-            } catch (Exception ex) {
-                NSP_CustomException.LogException(ex);
+            } catch ( Exception e ) {
+                NSP_ErrorLogHandler.logException(
+                    CLMDocumentTransfer.class.getName() ,
+                    'downloadDocument' ,
+                    e
+                );
             }
             NSP_AutomationSetting__mdt invoiceEmailsEnabled = NSP_AutomationSetting__mdt.getInstance('NSP_Invoice_Email_Service');
             if (!invoiceEmailsEnabled.NSP_Disable__c) {

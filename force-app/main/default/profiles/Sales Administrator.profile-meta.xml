@@ -1050,6 +1050,10 @@
         <enabled>false</enabled>
         <name>Allow_Delete_Leads</name>
     </customPermissions>
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Financial_Analysis_Tool_Access</name>
+    </customPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>User.NSP_Running_Sales_Division__c</field>
@@ -1060,7 +1064,7 @@
         <field>User.NSP_Running_Sales_Office__c</field>
         <readable>true</readable>
     </fieldPermissions>
-	<fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>User.NSP_Running_Sales_Region__c</field>
         <readable>true</readable>
@@ -1074,12 +1078,12 @@
         <editable>false</editable>
         <field>Lead.account6Sense_Account_6QA_Age__c</field>
         <readable>true</readable>
-    </fieldPermissions>    
-	<fieldPermissions>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Lead.Do_Not_Contact__c</field>
         <readable>true</readable>
-    </fieldPermissions>    
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Contact.Due_to_OneTrust_Opt_Out_on_File__c</field>
@@ -1099,7 +1103,7 @@
         <editable>false</editable>
         <field>Opportunity.MidMarket_National_Account__c</field>
         <readable>true</readable>
-    </fieldPermissions>   
+    </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>Contact.DoNotCall</field>
@@ -1139,7 +1143,7 @@
         <editable>true</editable>
         <field>Contact.NSP_Do_Not_Postal_Mail__c</field>
         <readable>true</readable>
-    </fieldPermissions>    
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Contact.NSP_Job_Title__c</field>
@@ -9097,7 +9101,7 @@
         <field>NSP_Checklist__c.NSP_Requested_1st_Pay_Period_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
-	<fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Checklist__c.NSP_Requested_First_Pay_Date__c</field>
         <readable>true</readable>
@@ -13643,40 +13647,40 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-		<editable>false</editable>
-		<field>blng__Invoice__c.Invoice_ID_18__c</field>
-		<readable>true</readable>
-	</fieldPermissions>
-	<fieldPermissions>
-		<editable>false</editable>
-		<field>blng__InvoiceLine__c.Invoice_Line_ID_18__c</field>
-		<readable>true</readable>
-	</fieldPermissions>
-	<fieldPermissions>
-		<editable>false</editable>
-		<field>blng__CreditNote__c.Credit_Note_ID_18__c</field>
-		<readable>true</readable>
-	</fieldPermissions>
-	<fieldPermissions>
-		<editable>false</editable>
-		<field>blng__CreditNoteLine__c.Credit_Note_Line_ID_18__c</field>
-		<readable>true</readable>
-	</fieldPermissions>
-	<fieldPermissions>
-		<editable>false</editable>
-		<field>blng__DebitNote__c.Debit_Note_ID_18__c</field>
-		<readable>true</readable>
-	</fieldPermissions>
-	<fieldPermissions>
-		<editable>false</editable>
-		<field>blng__DebitNoteLine__c.Debit_Note_Line_ID_18__c</field>
-		<readable>true</readable>
-	</fieldPermissions>
-	<fieldPermissions>
-		<editable>false</editable>
-		<field>blng__Payment__c.Payment_ID_18__c</field>
-		<readable>true</readable>
-	</fieldPermissions>
+        <editable>false</editable>
+        <field>blng__Invoice__c.Invoice_ID_18__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>blng__InvoiceLine__c.Invoice_Line_ID_18__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>blng__CreditNote__c.Credit_Note_ID_18__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>blng__CreditNoteLine__c.Credit_Note_Line_ID_18__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>blng__DebitNote__c.Debit_Note_ID_18__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>blng__DebitNoteLine__c.Debit_Note_Line_ID_18__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>blng__Payment__c.Payment_ID_18__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>Onboarding_Meeting_Request__c.NSP_Date_Valid_Formula__c</field>
@@ -13786,23 +13790,23 @@
         <enabled>true</enabled>
         <flow>Enter_Final_Employee_Orientation_Meeting_Information</flow>
     </flowAccesses>
-	<flowAccesses>
+    <flowAccesses>
         <enabled>true</enabled>
         <flow>Request_Discover_SKO_Meeting</flow>
     </flowAccesses>
-	<flowAccesses>
+    <flowAccesses>
         <enabled>true</enabled>
         <flow>Request_Employee_Orientation_Meeting</flow>
     </flowAccesses>
-	<flowAccesses>
+    <flowAccesses>
         <enabled>true</enabled>
         <flow>Take_Final_OMR_Meeting_Information</flow>
     </flowAccesses>
-	<flowAccesses>
+    <flowAccesses>
         <enabled>true</enabled>
         <flow>Update_Final_Employee_Orientation_Meeting_Information</flow>
     </flowAccesses>
-	<flowAccesses>
+    <flowAccesses>
         <enabled>true</enabled>
         <flow>Update_Final_OMR_Meeting_Information</flow>
     </flowAccesses>

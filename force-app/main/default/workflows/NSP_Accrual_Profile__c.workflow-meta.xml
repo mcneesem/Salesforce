@@ -111,6 +111,16 @@
         <template>Services_Emails/NSP_Accrual_Profile_Rejection</template>
     </alerts>
     <fieldUpdates>
+        <fullName>Change_Status_ReSubmitted</fullName>
+        <field>NSP_Status__c</field>
+        <literalValue>Resubmitted for Approval</literalValue>
+        <name>Change Status ReSubmitted for Approval</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>Change_Status_to_APApproved</fullName>
         <field>NSP_Status__c</field>
         <literalValue>AP Approved</literalValue>
@@ -185,6 +195,16 @@
         <field>NSP_Status__c</field>
         <literalValue>Resubmitted for Approval</literalValue>
         <name>Change Status to ReSubmitted AIMS</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Change_Status_to_Recalled</fullName>
+        <field>NSP_Status__c</field>
+        <literalValue>Recalled</literalValue>
+        <name>Change Status to Recalled</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Literal</operation>
         <protected>false</protected>

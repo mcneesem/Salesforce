@@ -58,10 +58,16 @@
     </approvalStep>
     <enableMobileDeviceAccess>false</enableMobileDeviceAccess>
     <entryCriteria>
+        <booleanFilter>1 AND 2</booleanFilter>
         <criteriaItems>
             <field>NSP_Accrual_Profile__c.RecordType</field>
             <operation>equals</operation>
             <value>AIMS</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>NSP_Accrual_Profile__c.NSP_Status__c</field>
+            <operation>notEqual</operation>
+            <value>Recalled</value>
         </criteriaItems>
     </entryCriteria>
     <finalApprovalActions>
@@ -97,10 +103,10 @@
         </action>
     </initialSubmissionActions>
     <label>AIMS Accrual Approval Process</label>
-    <processOrder>2</processOrder>
+    <processOrder>1</processOrder>
     <recallActions>
         <action>
-            <name>Change_Status_to_Draft</name>
+            <name>Change_Status_to_Recalled</name>
             <type>FieldUpdate</type>
         </action>
     </recallActions>

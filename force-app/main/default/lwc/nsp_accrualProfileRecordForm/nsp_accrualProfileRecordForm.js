@@ -7,7 +7,9 @@ import ACCRUAL_PROFILE_OBJECT from '@salesforce/schema/NSP_Accrual_Profile__c';
 import NAME_FIELD from '@salesforce/schema/NSP_Accrual_Profile__c.Name';
 import itaForm from './nsp_accrualProfileRecordForm.html';
 import aimsForm from './nsp_accrualProfileRecordFormAIMS.html';
-
+import getRecordWithAllFields from '@salesforce/apex/NSP_AccrualProfileController.getRecordWithAllFields';
+import cssResource from '@salesforce/resourceUrl/StandardFieldStyles';
+import { loadStyle } from 'lightning/platformResourceLoader';
 import {
   ACCRUAL_LEVEL_CHANGES_FIELD_MAPPING_CALENDAR_YEAR,
   ACCRUAL_LEVEL_CHANGES_FIELD_MAPPING_ANNIVERSARY_YEAR,
@@ -32,7 +34,8 @@ import {
   SEPARATOR,
   ACTIVE_SECTIONS,
   EXISTING_FIELD_API_VALUE,
-  SPECIAL_FIELDS
+  SPECIAL_FIELDS,
+  RL_FIELDS,
 } from './constants';
 
 import {
@@ -41,7 +44,10 @@ import {
   getUpdatedFieldVisibility,
   isNonEmptyArray,
   isMultiSelectCheckbox,
-  getMultiDependentFieldVisibility
+  getMultiDependentFieldVisibility,
+  createMapWithValueProperty,
+  RL_CLASS_NAME,
+  ANSWERED_CLASS_NAME,
 } from 'c/nsp_utils';
 import { DYNAMIC_FIELDS, MULTIPLE_DEPENDENT_FIELDS } from './dynamicFieldsConfig';
 import { getRelatedListRecords } from 'lightning/uiRelatedListApi';
@@ -60,10 +66,13 @@ export default class Nsp_accrualProfileRecordForm extends NavigationMixin(
   @api objectApiName;
   @api isClone = false;
   @api error;
+  fieldValues = {};  
   @track state = {
     isLoading: true,
+    isLoaded: false,
     errorMessage: null,
     recordTypeOptions: [],
+    isLoadingFirstTime: true,
   };
 
   @track selectedSubClients = [];
@@ -164,6 +173,7 @@ export default class Nsp_accrualProfileRecordForm extends NavigationMixin(
       }
 
       this.doOneTimeActions(this.fieldValue);
+      this.addStyleOnLoad();
     }
     if (error) {
       this.showErrorToast(error.body.message);
@@ -187,8 +197,8 @@ export default class Nsp_accrualProfileRecordForm extends NavigationMixin(
   })
   getAttachedFileNames({ data, error }) {
     if(data){
-      data.forEach((fileName)=>{
-        this.uploadedAttachments.push(fileName);
+      data.forEach((attachedFile)=>{
+        this.uploadedAttachments.push(attachedFile);
       })
     }
     if(error){
@@ -208,6 +218,11 @@ export default class Nsp_accrualProfileRecordForm extends NavigationMixin(
           WORK_EMAIL_FIELD
         );
       }
+      const target = this.template.querySelector('[data-field="NSP_Contact_email__c"]'); 
+      const value = this.fieldValue.NSP_Contact_email__c; 
+      if(target){
+        this.addStyleToAnsweredQuestion(target, value); 
+      }
     }
     if (error) {
       this.showErrorToast(error.body.message);
@@ -226,6 +241,28 @@ export default class Nsp_accrualProfileRecordForm extends NavigationMixin(
     } else if (error) {
       this.showErrorToast(error.body.message);
     }
+  }
+
+  connectedCallback() {
+    const { objectApiName, recordId } = this;
+
+    loadStyle(this, cssResource);
+    if (recordId) {
+      getRecordWithAllFields({ objectApiName, recordId })
+      .then(data => {
+        this.setIPFieldValues(data);
+        this.addStyleOnLoad();
+      })
+      .catch(error => {
+        this.error = error
+        this.hideLoadingSpinner(); 
+      });
+    } else {  
+      this.hideLoadingSpinner();  
+  } 
+  }
+  setIPFieldValues(data) {
+    this.fieldValues = createMapWithValueProperty(data);
   }
 
   @wire(getRelatedListRecords, {
@@ -269,6 +306,7 @@ export default class Nsp_accrualProfileRecordForm extends NavigationMixin(
     this.subClientSearchResults = this.subClientSearchResults.filter(
       (option) => option.value !== detail
     );
+    this.applyStyleToElement('SubClient', this.selectedSubClients); 
   }
 
   handleSubClientDeselection({ detail }) {
@@ -277,8 +315,15 @@ export default class Nsp_accrualProfileRecordForm extends NavigationMixin(
     );
     this.deletedSubClients = this.getListOfRecordsWithAllFields(this._apscrRecords)
     .filter(record => !this.selectedSubClientIds.includes(record.NSP_Sub_Client__c))
+    this.applyStyleToElement('SubClient', this.selectedSubClients); 
   }
 
+  applyStyleToElement(dataName, value) {  
+    const target = this.template.querySelector(`[data-name="${dataName}"]`);  
+    if (target) {  
+        this.addStyleToAnsweredQuestion(target, value);  
+    }  
+  } 
   handleAccountSearchTermChange({ detail }) {
     this.showAccountSearchResults(detail);
   }
@@ -290,6 +335,7 @@ export default class Nsp_accrualProfileRecordForm extends NavigationMixin(
     this.accountSearchResults = this.accountSearchResults.filter(
       (option) => option.value !== detail
     );
+    this.applyStyleToElement('Account', this.selectedAccounts);  
   }
 
   handleAccountDeselection({ detail }) {
@@ -298,6 +344,7 @@ export default class Nsp_accrualProfileRecordForm extends NavigationMixin(
     );
     this.deletedAccounts = this.getListOfRecordsWithAllFields(this._aparRecords)
     .filter(record => !this.selectedAccountIds.includes(record.NSP_Account__c))
+    this.applyStyleToElement('Account', this.selectedAccounts);  
   }
 
   handleError(event) {
@@ -307,7 +354,20 @@ export default class Nsp_accrualProfileRecordForm extends NavigationMixin(
   }
 
   handleLoad() {
-    this.hideLoadingSpinner();
+    const { state } = this;  
+    if (state.isLoadingFirstTime) {
+      state.isLoadingFirstTime = false;
+      this.hideLoadingSpinner();
+      this.addStyleOnLoad();
+    }
+    this.addStyleToPrePopulatedQuestions('NSP_Status__c','Draft');
+    if(this.selectedAccounts) {
+      this.addStyleToPrePopulatedQuestions('Account',this.selectedAccounts);
+    }
+    if(this.selectedSubClients) {
+      this.addStyleToPrePopulatedQuestions('SubClient',this.selectedSubClients);
+    }
+      
   }
 
   handleSuccess({ detail }) {
@@ -345,6 +405,7 @@ export default class Nsp_accrualProfileRecordForm extends NavigationMixin(
       : value;
     this.updateDependentFieldVisibility(visibilityName || name, value);
     this.doFieldSpecificAction(name, value);
+    this.addStyleToAnsweredQuestion(target, value);
   }
 
   handleChange(event) {
@@ -361,6 +422,7 @@ export default class Nsp_accrualProfileRecordForm extends NavigationMixin(
     const value = detail.checked;
 
     this.fieldValue[name] = value;
+    this.addStyleToAnsweredQuestion(target, value);
   }
 
   handleLookUpChange({ detail, target }) {
@@ -370,6 +432,7 @@ export default class Nsp_accrualProfileRecordForm extends NavigationMixin(
     if(fieldName=='CustomOwnerId__c'){
       this.fieldValue['OwnerId'] = value;
     }
+    this.addStyleToAnsweredQuestion(target, value);
   }
 
   handleApgRowAction({ detail }) {
@@ -403,7 +466,11 @@ export default class Nsp_accrualProfileRecordForm extends NavigationMixin(
     // Get the list of uploaded files
     const uploadedFiles = detail.files;
     uploadedFiles.forEach((uploadedFile) => {
-      this.uploadedAttachments.push(uploadedFile.name);
+      let attachedFile={
+        fileId : uploadedFile.documentId,
+        fileName : uploadedFile.name
+      };
+      this.uploadedAttachments.push(attachedFile);
       if (!this.recordId) {
         this.unlinkedFiles.push(uploadedFile.documentId);
       }
@@ -411,6 +478,11 @@ export default class Nsp_accrualProfileRecordForm extends NavigationMixin(
 
     this.showSuccessToast('No. of files uploaded : ' + uploadedFiles.length);
     this.filesUploadedCount = uploadedFiles.length;
+  }
+
+  navigateToFile(event) {
+    let fileId = event.target.dataset.value;
+    this.navigateToNewTab(fileId);
   }
 
   populateObjectInfoData(data) {
@@ -456,6 +528,7 @@ export default class Nsp_accrualProfileRecordForm extends NavigationMixin(
     if (!this.selectedAccountIds.includes(accId)) {
       this.selectedAccounts.push(this.getOption(accName, accId));
     }
+    this.applyStyleToElement('Account', this.selectedAccounts);  
   }
 
   updateApgRows(records) {
@@ -668,54 +741,70 @@ export default class Nsp_accrualProfileRecordForm extends NavigationMixin(
     return ret;
   }
 
-  doFieldSpecificAction(fieldName, value) {
-    if (fieldName === 'NSP_Accrual_Levels__c') {
-      this.updateAccrualProfileGrid(value);
+  
+  doFieldSpecificAction(fieldName, value) {  
+    const YES = 'Yes';  
+    const accrualLevelField = "NSP_When_do_accrual_level_changes_happen__c";  
+    const accrualUpdateValue = 'Beginning of the Pay Period that contains the Anniversary Date';  
+    const lastOfPayPeriodValue = 'Last of Pay Period: Accrual is added on the last day of each pay period';  
+    const hoursWorkedValue = 'Hours Worked: Accrual is added based on actual hours worked';  
+  
+    switch (fieldName) {  
+        case 'NSP_Accrual_Levels__c':  
+            this.updateAccrualProfileGrid(value);  
+            break;  
+        case 'NSP_Delay_in_the_Accrual_start_time__c':  
+            if (value === YES) {  
+                this.prependZeroValueRowInApg();  
+            }  
+            break;  
+        case 'NSP_time_accrue_under_plan_fiscal_year__c':  
+        case 'NSP_time_accrue_under_plan_anniv_year__c':  
+        case 'NSP_Accrue_under_plan_cal_year__c':  
+            if (value === lastOfPayPeriodValue || value === hoursWorkedValue) {  
+                this.fieldValue.NSP_When_do_accrual_level_changes_happen__c = accrualUpdateValue;  
+            }  
+            break;  
+        case 'NSP_Accrual_Profile__c':  
+            if (value === 'other') {  
+                this.fieldValue.NSP_Accrual_Profile__c = null;  
+            }  
+            break;  
+        case 'NSP_Does_this_plan_replace_other_plans__c':  
+            if (value === YES || value === 'No') {  
+                this.nameOfThePlanBeingReplaced = '';  
+            }  
+            break;  
+        default:  
+            break;  
+    }  
+  
+    this.addStyleToPrePopulatedQuestions(accrualLevelField, this.fieldValue[accrualLevelField]);  
+}  
+
+
+    addStyleToAnsweredQuestion(target, value) {
+    const fieldName = target.dataset.name;
+    const elm = this.getCustomLabelElm(fieldName) || target;
+    const isValuePresent = Array.isArray(value) ? !!value.length : !!value;
+    if (elm) {
+      const className = ANSWERED_CLASS_NAME;
+      elm.classList.remove(ANSWERED_CLASS_NAME);
+      elm.classList.remove(RL_CLASS_NAME);
+      if (isValuePresent) {
+          elm.classList.add(className);
+      }
     }
-    if (
-      fieldName === 'NSP_Delay_in_the_Accrual_start_time__c' &&
-      value === YES
-    ) {
-      this.prependZeroValueRowInApg();
-    }
-    if (
-      (fieldName === 'NSP_time_accrue_under_plan_fiscal_year__c' ||
-        fieldName === 'NSP_time_accrue_under_plan_anniv_year__c' ||
-        fieldName === 'NSP_Accrue_under_plan_cal_year__c') &&
-      value ===
-        'Last of Pay Period: Accrual is added on the last day of each pay period'
-    ) {
-      this.fieldValue.NSP_When_do_accrual_level_changes_happen__c =
-        'Beginning of the Pay Period that contains the Anniversary Date';
-    }
-    if (
-      (fieldName === 'NSP_time_accrue_under_plan_anniv_year__c' ||
-        fieldName === 'NSP_Accrue_under_plan_cal_year__c') &&
-      value === 'Hours Worked: Accrual is added based on actual hours worked'
-    ) {
-      this.fieldValue.NSP_When_do_accrual_level_changes_happen__c =
-        'Beginning of the Pay Period that contains the Anniversary Date';
-    }
-    if (
-      fieldName === 'NSP_time_accrue_under_plan_fiscal_year__c' &&
-      value === 'Hours Worked: Accrual is added based on actual hours worked'
-    ) {
-      this.fieldValue.NSP_When_do_accrual_level_changes_happen__c =
-        'Beginning of the Pay Period that contains the Anniversary Date';
-    }
-    if (fieldName === 'NSP_Accrual_Profile__c' && value === 'other') {
-      this.fieldValue.NSP_Accrual_Profile__c = null;
-    }
-    if (
-      fieldName === 'NSP_Does_this_plan_replace_other_plans__c' &&
-      (value === 'Yes' || value === 'No')
-    ) {
-      this.nameOfThePlanBeingReplaced = '';
-    }
-    if (
-      fieldName === 'NSP_Does_this_plan_replace_other_plans__c' && (value === 'Yes'|| value === 'No')
-    ) {
-      this.nameOfThePlanBeingReplaced = '';
+  }
+  getCustomLabelElm(fieldName) {
+    return this.template.querySelector(
+      `lightning-formatted-text[data-field=${fieldName}]`
+    );
+  }
+  addStyleToPrePopulatedQuestions(name, value) {
+    const elm = this.template.querySelector(`[data-name=${name}]`);
+    if (elm) {
+      this.addStyleToAnsweredQuestion(elm, value);
     }
   }
 
@@ -779,7 +868,7 @@ export default class Nsp_accrualProfileRecordForm extends NavigationMixin(
     this.navigate(this.recordId);
   }
 
-  navigate(recordId) {
+  getNavigateConfig(recordId){
     const config = {
       type: 'standard__recordPage',
       attributes: {
@@ -787,11 +876,27 @@ export default class Nsp_accrualProfileRecordForm extends NavigationMixin(
         actionName: 'view',
       },
     };
+    return config;
+  }
 
-    this[NavigationMixin.GenerateUrl](config)
-    .then((url) => {
-      window.location.replace(url);
-    });
+  navigate(recordId) {
+    const config = this.getNavigateConfig(recordId);
+    if( config !== undefined && config !== null ){
+      this[NavigationMixin.GenerateUrl](config)
+      .then((url) => {
+        window.location.replace(url);
+      });
+    }
+  }
+
+  navigateToNewTab(recordId) {
+    const config = this.getNavigateConfig(recordId);
+    if( config !== undefined && config !== null ){
+      this[NavigationMixin.GenerateUrl](config)
+      .then((url) => {
+        window.open(url);
+      });
+    }
   }
 
   showSuccessToast(message) {
@@ -869,6 +974,24 @@ export default class Nsp_accrualProfileRecordForm extends NavigationMixin(
       } else {
         this.nameOfThePlanBeingReplaced = NSP_Accrual_Profile__c;
       }
+    }
+  }
+
+  addStyleOnLoad() {
+    if (this.fieldValues) {
+
+      Object.keys(this.fieldValues).forEach((fieldName) => {
+        const { value } = this.fieldValues[fieldName];
+
+        if (RL_FIELDS.includes(fieldName) && value) {
+          this.fieldValue[fieldName] = value;
+          this.addStyleToPrePopulatedQuestions(fieldName, value);
+        }
+        this.addStyleToPrePopulatedQuestions('NSP_Accrual_Profile__c', value);
+      });
+      if (this.fieldValue.CustomOwnerId__c) {  
+        this.addStyleToPrePopulatedQuestions('CustomOwnerId__c', this.fieldValue.CustomOwnerId__c);  
+      } 
     }
   }
 
