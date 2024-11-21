@@ -2125,28 +2125,28 @@ createdDate : 6/12/2023
         Map<string, Boolean> catSubCatDefaultConfidentialEligibleMap = new Map<string, Boolean>();
         Map<string, Boolean> catSubCatConfidentialEligibleMap = new Map<string, Boolean>();
         Map<string, Boolean> catSubCatDetailConfidentialEligibleMap = new Map<string, Boolean>();
-        try{           
-            for(NSP_Category_Sub_Category_Mapping__c catSubCatMapping : [SELECT Id, NSP_Category__c, NSP_Subcategory__c, 
-                                                                         NSP_Public_Groups_To_Share__c,
-                                                                         NSP_Detail__c,
-                                                                         NSP_Display_confidential_popup__c,
-                                                                         Default_case_as_confidential__c
-                                                                         FROM NSP_Category_Sub_Category_Mapping__c 
-                                                                         WHERE NSP_Category__c IN: categorySet 
-                                                                         AND NSP_Subcategory__c IN: subCategorySet]){
-                                                                             catSubCatDetailConfidentialEligibleMap.put(
-                                                                                 catSubCatMapping.NSP_Category__c+';'+catSubCatMapping.NSP_Subcategory__c+';'+catSubCatMapping.NSP_Detail__c, 
-                                                                                 catSubCatMapping.NSP_Display_confidential_popup__c
-                                                                             );
-                                                                             catSubCatConfidentialEligibleMap.put(
-                                                                                 catSubCatMapping.NSP_Category__c+';'+catSubCatMapping.NSP_Subcategory__c,
-                                                                                 catSubCatMapping.NSP_Display_confidential_popup__c
-                                                                             );
-                                                                             catSubCatDefaultConfidentialEligibleMap.put(
-                                                                                 catSubCatMapping.NSP_Category__c+';'+catSubCatMapping.NSP_Subcategory__c,
-                                                                                 catSubCatMapping.Default_case_as_confidential__c
-                                                                             );
-                                                                         }
+        Map<string, Boolean> catSubCatDetailDefaultConfidentialEligibleMap = new Map<string, Boolean>();
+        try{
+            List<NSP_Category_Sub_Category_Mapping__c> mappings = [
+                SELECT Id, NSP_Category__c, NSP_Subcategory__c, NSP_Public_Groups_To_Share__c,
+                    NSP_Detail__c, NSP_Display_confidential_popup__c, Default_case_as_confidential__c
+                FROM NSP_Category_Sub_Category_Mapping__c 
+                WHERE NSP_Category__c IN :categorySet 
+                AND NSP_Subcategory__c IN :subCategorySet
+            ];           
+            for(NSP_Category_Sub_Category_Mapping__c catSubCatMapping : mappings){
+                String keyWithDetail = catSubCatMapping.NSP_Category__c + ';' + catSubCatMapping.NSP_Subcategory__c + ';' + catSubCatMapping.NSP_Detail__c;
+                String keyWithoutDetail = catSubCatMapping.NSP_Category__c + ';' + catSubCatMapping.NSP_Subcategory__c;
+
+                //For Display Confidentaial popup
+                catSubCatConfidentialEligibleMap.put(keyWithoutDetail, catSubCatMapping.NSP_Display_confidential_popup__c);
+                catSubCatDetailConfidentialEligibleMap.put(keyWithDetail, catSubCatMapping.NSP_Display_confidential_popup__c);
+
+                //For Default Confidentaial Checkbox
+                catSubCatDetailDefaultConfidentialEligibleMap.put(keyWithDetail, catSubCatMapping.Default_case_as_confidential__c);
+                catSubCatDefaultConfidentialEligibleMap.put(keyWithoutDetail, catSubCatMapping.Default_case_as_confidential__c);
+                                                                          
+            }
     
             for(Case cse : caseList){
                 String detailKey = cse.NSP_Category__c + ';' + cse.NSP_Subcategory__c + ';' + cse.NSP_Detail__c;
@@ -2157,6 +2157,12 @@ createdDate : 6/12/2023
                 }else{
                     if(String.isNotBlank(cse.NSP_Detail__c)){
                         cse.NSP_Show_Confidential_Checkbox__c = catSubCatDetailConfidentialEligibleMap.containsKey(detailKey) ? catSubCatDetailConfidentialEligibleMap.get(detailKey) : false;
+                        if(!cse.NSP_Show_Confidential_Checkbox__c){
+                            cse.NSP_Show_Confidential_Checkbox__c = catSubCatDetailDefaultConfidentialEligibleMap.containsKey(detailKey) ? catSubCatDetailDefaultConfidentialEligibleMap.get(detailKey) : false;
+                            if(cse.NSP_Show_Confidential_Checkbox__c){
+                                cse.NSP_Confidential__c = true;
+                            }
+                        }
                     }else if(catSubCatConfidentialEligibleMap.containsKey(catSubCatKey)){ 
                         cse.NSP_Show_Confidential_Checkbox__c = false;
                         if(catSubCatConfidentialEligibleMap.get(catSubCatKey) || catSubCatDefaultConfidentialEligibleMap.get(catSubCatKey)){
