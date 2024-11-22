@@ -823,11 +823,13 @@ public class NSP_Implementationprofile_ServiceHelper {
     
     private void checkForMMOptum(Implementation_Profile__c newRec, Implementation_Profile__c existingRec) {
 
-        if(newRec != null && newRec.NSP_Asset__c !=null &&
-           newRec.RecordTypeId == ipMMRecordTypeId && 
-           newRec.Is_client_s_current_HSA_with_Optum_Bank__c == NSP_ServiceConstants.Yes){
-             if(existingRec == null || newRec.NSP_Form_Completed__c  ||
-                newRec.Is_client_s_current_HSA_with_Optum_Bank__c != existingRec.Is_client_s_current_HSA_with_Optum_Bank__c){
+        if (newRec != null &&   
+            newRec.NSP_Asset__c != null &&   
+            newRec.RecordTypeId == ipMMRecordTypeId &&   
+            newRec.Is_client_s_current_HSA_with_Optum_Bank__c == NSP_ServiceConstants.Yes &&  
+            (existingRec == null ||   
+            newRec.NSP_Form_Completed__c ||   
+            newRec.Is_client_s_current_HSA_with_Optum_Bank__c != existingRec.Is_client_s_current_HSA_with_Optum_Bank__c)){
                updateEligibleRecordsMap(ipRecordsByAutomation, newRec.Id, MM_OPTUM_CASE);
            }
     }
