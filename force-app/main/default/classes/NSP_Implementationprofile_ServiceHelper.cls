@@ -38,6 +38,7 @@ public class NSP_Implementationprofile_ServiceHelper {
     private static final String RRP_CASE_FN = 'RRPCase';
     private static final String OFFER_HSA_FN = 'clientOfferHSA';
     private static final String OFFER_OPTUM_FN = 'clientOfferOPTUM';
+    private static final String MM_OPTUM_CASE = 'OptumBankcase';
     private static final String LEAVE_ABSENCEFSO_FN = 'leaveAbsenceFSO';
     private static final String REMOVE_EMPLOYEE_DIR_FN = 'NSP_Remove_Employee_Directory';
     private static final String STOCK_PURCHASE_PLAN_FN = 'NSP_Stock_Purchase_Plan';
@@ -85,6 +86,7 @@ public class NSP_Implementationprofile_ServiceHelper {
     private static final String Licensed_Automation_Name_FSO = 'Licensed_Contractor_FSO';
     private static final String Licensed_Automation_Name_MM = 'Licensed_Contractor_MM';
     private static final String LicensedContractorEmail = 'Licensed_Contractor_Email';
+    private static final String MMOPTUM='Optum Bank case';
     private static final List<String> EMAIL_TEMPLATES = new List<String>{
         NSP_ServiceConstants.EEO_INFORMATION,
             NSP_ServiceConstants.EPLI_NOTIFICATION,
@@ -123,6 +125,7 @@ public class NSP_Implementationprofile_ServiceHelper {
             RRP_CASE_FN ,
             OFFER_HSA_FN ,
             OFFER_OPTUM_FN ,
+            MM_OPTUM_CASE ,
             LEAVE_ABSENCEFSO_FN ,
             EMP_HOURS_FN ,
             SEASONAL_EE_FN ,
@@ -236,6 +239,9 @@ public class NSP_Implementationprofile_ServiceHelper {
         }
         if(ipRecordsByAutomation.containsKey(OFFER_OPTUM_FN)){
             createCaseOPTUM();
+        }
+        if(ipRecordsByAutomation.containsKey(MM_OPTUM_CASE)){
+            createMMCaseOPTUM();
         }
         if(ipRecordsByAutomation.containsKey(LEAVE_ABSENCEFSO_FN)){
             createCaseLeaveAbsenceFSO();
@@ -417,6 +423,9 @@ public class NSP_Implementationprofile_ServiceHelper {
             
             if(automationsToExecute.contains(OFFER_OPTUM_FN)){
                 checkForOptum(ipRec, existingRec);
+            }
+            if(automationsToExecute.contains(MM_OPTUM_CASE)){
+                checkForMMOptum(ipRec, existingRec);
             }
             if(automationsToExecute.contains(LEAVE_ABSENCEFSO_FN)){
                 checkForLeaveAbsenceFSO(ipRec, existingRec);
@@ -810,6 +819,18 @@ public class NSP_Implementationprofile_ServiceHelper {
                       updateEligibleRecordsMap(ipRecordsByAutomation, newRec.Id, LEAVE_ABSENCE_FN);
                   }
            }
+    }
+    
+    private void checkForMMOptum(Implementation_Profile__c newRec, Implementation_Profile__c existingRec) {
+
+        if(newRec != null && newRec.NSP_Asset__c !=null &&
+           newRec.RecordTypeId == ipMMRecordTypeId && 
+           newRec.Is_client_s_current_HSA_with_Optum_Bank__c == NSP_ServiceConstants.Yes){
+             if(existingRec == null || newRec.NSP_Form_Completed__c  ||
+                newRec.Is_client_s_current_HSA_with_Optum_Bank__c != existingRec.Is_client_s_current_HSA_with_Optum_Bank__c){
+               updateEligibleRecordsMap(ipRecordsByAutomation, newRec.Id, MM_OPTUM_CASE);
+           }
+    }
     }
     
     public void createCaseClientProfileInfo(){
@@ -1225,6 +1246,46 @@ public class NSP_Implementationprofile_ServiceHelper {
         }
         
         return eachCase;
+        
+    }
+    
+    public void createMMCaseOPTUM(){
+        //create case for HSA with optum bank 
+        List<NSP_Implementation_Profile_Automation__c> ipAutomationRecords = new List<NSP_Implementation_Profile_Automation__c>();
+        List<Case> caseList = new List<Case>();
+        String subject = 'Prior HSA with Optum Bank ';
+        String instruction = 'Confirm current HSA platform and HSA transfer process for employees.SBOS: Once Employer Code/Group # or participant data provided in the Notes, reassign to H&W Products Queue.';
+        for(Id ipRecId : ipRecordsByAutomation.get(MM_OPTUM_CASE)){
+            if(ipRecId != null){
+                Implementation_Profile__c ipRec = newIPs.get(ipRecId);
+                if (ipRec != null ){
+                    if(((isRerun || ipRec.NSP_Form_Completed__c) && !isSaveForm )  ){
+                        Implementation_Profile__c ipwithValue=(Implementation_Profile__c) data.get(IP_IDENTIFIER).get(ipRecId);
+                        Case eachCase = createCase(ipRec);
+                        if(ipWithValue != null && ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__r!=null && ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__r.pse__Salesforce_User__c!=null){
+                            eachCase.OwnerId=ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__r.pse__Salesforce_User__c;
+                            eachCase.NSP_Category__c = NSP_ServiceConstants.CATEGORY7;
+                            eachCase.NSP_SubCategory__c = NSP_ServiceConstants.SUBCATEGORY1;
+                            eachCase.Subject =subject+ipWithValue.Account__r.Name;
+                            eachCase.NSP_Instructions__c = instruction;
+                            eachCase.Status = NSP_ServiceConstants.CASE_OPEN_STATUS;
+                            eachCase.NSP_Case_Sub_Status__c = NSP_ServiceConstants.UNASSIGNED;
+                            eachCase.Priority = NSP_ServiceConstants.MEDIUM;
+                            eachCase.Origin = NSP_ServiceConstants.CANCELLED_REASON;
+                            eachCase.AssetId = ipwithValue.NSP_Asset__c;
+                            eachCase.NSP_Segment__c = ipWithValue.Account__r.NSP_Service_Segment__c;
+                        }
+                        
+                        caseList.add(eachCase); 
+                        ipAutomationRecords.add(ipAutomationHelper.createIPAutomation(ipRec, MMOPTUM,MM_OPTUM_CASE,NSP_ServiceConstants.BENEFITS));
+                    }
+                }
+            }
+        }
+        //check for existing Case and store the new cases
+        recToInsert.addAll(ipAutomationHelper.getnewCasestoInsert(caseList));
+        //check for existing Automation record and store the new Automation records
+        recToInsert.addAll(getnewAutomationListtoInsert(ipAutomationRecords));
         
     }
     
@@ -2694,6 +2755,9 @@ public class NSP_Implementationprofile_ServiceHelper {
                 NSP_Project_Manager__r.pse__Salesforce_User__c ,
             	NSP_Project_Manager__r.NSP_Job_Title__c,
                 RecordTypeId ,
+                Account__r.NSP_Service_Segment__c,
+                NSP_Sr_Onboarding_Benefit_Rep__c,
+            	NSP_Sr_Onboarding_Benefit_Rep__r.pse__Salesforce_User__c,
                 NSP_Project_Manager__r.pse__Salesforce_User__r.Email ,
                 NSP_OT_Representative__c ,
                 NSP_OT_Representative__r.NSP_Work_email__c ,
