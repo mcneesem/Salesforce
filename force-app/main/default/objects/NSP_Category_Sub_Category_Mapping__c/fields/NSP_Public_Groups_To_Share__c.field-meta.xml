@@ -87,6 +87,11 @@
                 <default>false</default>
                 <label>Payroll COE Data Visibility</label>
             </value>
+            <value>
+                <fullName>Background Check Data Visibility</fullName>
+                <default>false</default>
+                <label>Background Check Data Visibility</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
     <visibleLines>4</visibleLines>
