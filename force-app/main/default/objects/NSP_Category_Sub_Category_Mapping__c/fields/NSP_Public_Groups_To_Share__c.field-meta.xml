@@ -92,6 +92,11 @@
                 <default>false</default>
                 <label>Background Check Data Visibility</label>
             </value>
+            <value>
+                <fullName>Drug Testing Data Visibility</fullName>
+                <default>false</default>
+                <label>Drug Testing Data Visibility</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
     <visibleLines>4</visibleLines>
