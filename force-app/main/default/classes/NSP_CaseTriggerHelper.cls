@@ -2124,14 +2124,7 @@ createdDate : 6/12/2023
     private static void checkTheEligibiltyOfConfidentiality(Set<String> categorySet, Set<String> subCategorySet, List<case> caseList){
         Map<string, NSP_Category_Sub_Category_Mapping__c> catSubCatConfidentialEligibleMap = new Map<string, NSP_Category_Sub_Category_Mapping__c>();
         
-        try{
-            List<NSP_Category_Sub_Category_Mapping__c> mappings = [
-                SELECT Id, NSP_Category__c, NSP_Subcategory__c, NSP_Public_Groups_To_Share__c,
-                    NSP_Detail__c, NSP_Display_confidential_popup__c, Default_case_as_confidential__c
-                FROM NSP_Category_Sub_Category_Mapping__c 
-                WHERE NSP_Category__c IN :categorySet 
-                AND NSP_Subcategory__c IN :subCategorySet
-            ];           
+        try{          
             for(NSP_Category_Sub_Category_Mapping__c catSubCatMapping : [SELECT Id, NSP_Category__c, NSP_Subcategory__c, 
                                                                          NSP_Public_Groups_To_Share__c,
                                                                          NSP_Detail__c,
