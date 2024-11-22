@@ -474,6 +474,86 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
+        <content>Client_Goals_record_page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>NSP_ClientGoal__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>BPS Service</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Client_Goals_record_page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>NSP_ClientGoal__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>System Admin Lite</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Client_Goals_record_page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>NSP_ClientGoal__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Client_Goals_record_page</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>NSP_ClientGoal__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Retirement Services</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Client_Goals_record_page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>NSP_ClientGoal__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Retirement Services</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Client_Goals_record_page</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>NSP_ClientGoal__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>PEO Service</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Client_Goals_record_page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>NSP_ClientGoal__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>PEO Service</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Client_Goals_record_page</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>NSP_ClientGoal__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Data Migration</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Client_Goals_record_page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>NSP_ClientGoal__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Data Migration</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Client_Goals_record_page</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>NSP_ClientGoal__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
         <content>WO_RT_Plan_Record_Page</content>
         <formFactor>Small</formFactor>
         <pageOrSobjectType>NSP_Plan__c</pageOrSobjectType>

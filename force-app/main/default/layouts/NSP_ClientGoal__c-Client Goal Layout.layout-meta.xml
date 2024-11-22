@@ -76,6 +76,14 @@
     <relatedLists>
         <relatedList>RelatedEntityHistoryList</relatedList>
     </relatedLists>
+    <relatedLists>
+        <fields>pse__Project_Task__c.NAME</fields>
+        <fields>pse__Project_Task__c.pse__Project__c</fields>
+        <fields>pse__Project_Task__c.NSP_Owner__c</fields>
+        <fields>pse__Project_Task__c.pse__End_Date__c</fields>
+        <fields>pse__Project_Task__c.Past_Due__c</fields>
+        <relatedList>Client_Goals_Project_task_junction__c.Client_Goal__c</relatedList>
+    </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
     <showInteractionLogPanel>false</showInteractionLogPanel>
