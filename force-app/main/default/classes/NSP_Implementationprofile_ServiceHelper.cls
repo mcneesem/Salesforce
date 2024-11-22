@@ -1498,7 +1498,7 @@ public class NSP_Implementationprofile_ServiceHelper {
                     String subject = ipWithValue.Account__r.Name + ' is a Licensed Contractor in California';
                     String body = 'Lockton Affinity,<br><br>'
                         + ipWithValue.Account__r.Name
-                        + ' is a Licensed Contract in California. Please update the CSLB website with the client\'s new Workers\' Comp coverage through Insperity.<br><br>'
+                        + ' is a Licensed Contractor in California. Please update the CSLB website with the client\'s new Workers\' Comp coverage through Insperity.<br><br>'
                         + 'LEGAL NAME: ' + ipWithValue.NSP_Legal_Name__c + '\n'
                         + 'CONTRACTORS CSLB#: ' + ipWithValue.Contractor_s_License__c + '\n'
                         + 'EFFECTIVE DATE: ' + ipWithValue.Effective_Date_Payroll_Worker_comp_EPLI__c + '<br><br>'
