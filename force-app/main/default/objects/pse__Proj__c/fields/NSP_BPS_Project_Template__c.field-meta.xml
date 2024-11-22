@@ -117,6 +117,11 @@
                 <label>iSolve – Hardware</label>
             </value>
             <value>
+                <fullName>ITA - Hardware</fullName>
+                <default>false</default>
+                <label>ITA - Hardware</label>
+            </value>
+            <value>
                 <fullName>ITA-Implementation</fullName>
                 <default>false</default>
                 <label>ITA-Implementation</label>
