@@ -156,6 +156,11 @@
                 <default>false</default>
                 <label>Payroll Implementer</label>
             </value>
+            <value>                                
+                <fullName>Software Analyst</fullName>
+                <default>false</default>
+                <label>Software Analyst</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
