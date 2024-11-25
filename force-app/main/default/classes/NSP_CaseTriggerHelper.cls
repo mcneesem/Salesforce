@@ -1,5 +1,5 @@
 public class NSP_CaseTriggerHelper {
-    // test w/ NSP_CaseTriggerHelperTest (78%)
+    // test w/ NSP_CaseTriggerHelperTest (77%)
 
     public static string ESCALATION_QUEUE = 'NSP_Escalations';
     public static string QUEUE_TYPE       = 'Queue';
@@ -112,9 +112,9 @@ public class NSP_CaseTriggerHelper {
                 && String.isBlank( eachcase.NSP_SubCategory__c )
                 )
             {
-                eachcase.NSp_Category__c = 'Retirement Svc-Processing';
-                eachcase.NSP_SubCategory__c = 'Hardship';
-            }
+                    eachcase.NSp_Category__c = 'Retirement Svc-Processing';
+                    eachcase.NSP_SubCategory__c = 'Hardship';
+                }
             if ( ( eachcase.RecordTypeId == NSP_CaseTriggerHelper.peoRecordTypeId )
                 && ( eachcase.NSP_Assigned_Queue__c == 'Payroll COE' )
                 && String.isBlank( eachcase.NSP_Category__c )
@@ -712,10 +712,10 @@ Date        : 30/09/2021
                     && ( oCase.recordTypeId == NSP_CaseTriggerHelper.peoRecordTypeId || oCase.recordTypeId == bpsRecordTypeId )
                     )
                 {
-                    casesToShare.add(oCase);
-                    categorySet.add(oCase.NSP_Category__c);
-                    subCategorySet.add(oCase.NSP_SubCategory__c);
-                }
+                       casesToShare.add(oCase);
+                       categorySet.add(oCase.NSP_Category__c);
+                       subCategorySet.add(oCase.NSP_SubCategory__c);
+                   }
                 /* Added as part of STY-03293 */      
                 
                 /*STY-02804 If private check box is checked then the case will be shared with Private Section 125 Visibility public group */
@@ -888,9 +888,7 @@ Date        : 30/09/2021
         Set<String> subCategorySet = new Set<String>();
         Set < Id > ownerChnagedCases = new Set<Id>();
         Set<Id> reassignrecTypeIds = getReassignRecordTypeIds();
-        List<Case> hcmCaseList = new List<Case>();
         List<Case> bankAuditCaseList = new List<Case>();
-        List<Case> firstPayrollCaseList = new List<Case>();
         List<Case> nonInsperityEmplCaseList = new List<Case>();
         //Report Dev Cases Lists
         List<Case> reqNotCompleteCaseList = new List<Case>();
@@ -981,16 +979,6 @@ Date        : 30/09/2021
                    ownerChnagedCases.add(eachCase.Id);
                }
 
-            /*Added as part of STY-02181*/
-            if ( ( caseOldMap.get( eachCase.Id ).Status != eachCase.Status )
-                && ( eachCase.Status == NSP_ServiceConstants.CASE_CLOSED_STATUS )
-                && String.isNotBlank( eachCase.Subject )
-                && eachCase.Subject.contains( NSP_ServiceConstants.HCM_CASE_SUBJECT )
-                )
-            {
-                hcmCaseList.add( eachCase );
-            }
-
             /*Added as part of STY-00762*/
             if(caseOldMap.get(eachCase.Id).NSP_Detail__c != eachCase.NSP_Detail__c
                && eachCase.NSP_Category__c == NSP_ServiceConstants.CASE_CATEGORY_SERVICE_OPERATIONS
@@ -1026,16 +1014,6 @@ Date        : 30/09/2021
                 )
             {
                 bankAuditCaseList.add( eachCase );
-            }
-
-            //As a part of STY-02182
-            if ( ( eachCase.Status == NSP_ServiceConstants.CASE_CLOSED_STATUS )
-                && ( eachCase.Status != caseOldMap.get( eachCase.Id ).Status )
-                && String.isNotBlank( eachCase.Subject )
-                && eachCase.Subject.contains( NSP_ServiceConstants.FIRST_LIVE_PAYROLL_CASE_SUB )
-                )
-            {
-                firstPayrollCaseList.add( eachCase );
             }
 
             //Added as part of STY-03638
@@ -1116,18 +1094,9 @@ Date        : 30/09/2021
             NSP_CaseRecordSharing.sharePrivateCases(privateCaseList);
         }              
         
-        /*Added as part of STY-02181*/
-        if(!hcmCaseList.isEmpty()){
-            sendHCMCaseCompletionMail(hcmCaseList);
-        }
         //As a part of STY-02183
         if(!bankAuditCaseList.isEmpty()){
             bankAuditCaseCompletionEmail(bankAuditCaseList);
-        }
-        
-        //As a part of STY-02182
-        if(!firstPayrollCaseList.isEmpty()){
-            sendFirstPayrollCompletionEmail(firstPayrollCaseList);
         }
         
         /*Added as part of STY-00762*/
@@ -1452,46 +1421,6 @@ created case will be updated to cancelled.
         return reassignRecTypeIds;
     }
 
-    /**
-* @MethodName: sendHCMCaseCompletionMail
-* @Description: This method will send email when iSolved HCM Case status is complete
-* @param : List<Case> caseList
-* @createdDate : 28/11/2022
-* @Story : STY-02181
-* @return void                          
-*/
-    public void sendHCMCaseCompletionMail(List<Case> caseList){
-        List<Messaging.SingleEmailMessage> emailList = new List<Messaging.SingleEmailMessage>();
-        Id emailTemplateId = [SELECT Id FROM EmailTemplate WHERE DeveloperName =:NSP_ServiceConstants.HCM_CASE_COMPLETION_EMAIL_TEMPLATE_NAME]?.Id;
-        List<String> sendTo = new List<String>{System.Label.HCM_Case_Email_Send_To_Address};
-            String subject;
-        if(emailTemplateId != null){
-            for(Case caseRecord : [ SELECT Id, Project__c,  Project__r.pse__Project_ID__c, Project__r.pse__Account__c,
-                                   Project__r.pse__Account__r.Name 
-                                   FROM Case WHERE Id IN: caseList]){
-                                       Messaging.SingleEmailMessage email = Messaging.renderStoredEmailTemplate(emailTemplateId, UserInfo.getUserId(), caseRecord.Id);
-                                       subject = email.getSubject()+
-                                           NSP_ServiceConstants.BLANK_SPACE+
-                                           NSP_ServiceConstants.OPEN_BRACE+
-                                           caseRecord.Project__r.pse__Account__r.Name+
-                                           NSP_ServiceConstants.CLOSE_BRACE+
-                                           NSP_ServiceConstants.BLANK_SPACE+
-                                           NSP_ServiceConstants.OPEN_BRACE+
-                                           caseRecord.Project__r.pse__Project_ID__c+
-                                           NSP_ServiceConstants.CLOSE_BRACE;
-                                       email.setSubject(subject);
-                                       email.setToAddresses(sendTo);
-                                       email.setSubject(subject);
-                                       email.setTemplateId(emailTemplateId);
-                                       email.setSaveAsActivity(false);
-                                       emailList.add(email);
-                                   }
-            if ( emailList.size() > 0 ) {
-                NSP_CaseTriggerHelper.sendSingleEmailMessages( emailList );
-            }
-        }
-    }
-
     private static void sendSingleEmailMessages( List<Messaging.SingleEmailMessage> messages ) {
         if ( ( messages != null ) && !messages.isEmpty() ) {
             try {
@@ -1568,37 +1497,7 @@ created case will be updated to cancelled.
             NSP_CaseTriggerHelper.sendSingleEmailMessages( lstEmailMessages );
         }
     }
-    
-    /***********************************************************************************************
-* MethodName  : sendFirstPayrollCompletionEmail
-* Description : This Method sends an email when the first live payroll processed case is closed for the first time
-* Params      : List<Case> caseList
-* Story       : STY-02182
-* ********************************************************************************************/
-    public void sendFirstPayrollCompletionEmail(List<Case> caseList){
-        List<Messaging.SingleEmailMessage> lstEmailMessages = new List<Messaging.SingleEmailMessage>(); 
-        List<String> emailTempFields = new List<String>{'ID'};
-            List<String> sendToList = new List<String>{System.Label.NSP_TES_Banking};
-                //get Email Template
-                EmailTemplate emailTemplate = NSP_sObjectSelector.selectByDeveloperName(emailTempFields, 'NSP_First_Live_Payroll_Case_Completion_Email');   
-        //if the case status is set to 'Closed' fire an email
-        for(Case eachCase: [SELECT Id, Project__c, Project__r.name, Project__r.Project_Implementer__c FROM Case WHERE Id IN: caseList]){
-            sendToList.add(eachCase.Project__r.Project_Implementer__c);
-            Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
-            email= Messaging.renderStoredEmailTemplate(emailTemplate.Id, null , eachCase.Id);
-            String subject = email.getSubject() + ' ' + eachCase.Project__r.name;
-            email.setSubject(subject);
-            email.setTemplateId(emailTemplate.Id); 
-            email.setToAddresses(sendToList);
-            email.setWhatId(eachCase.Id);  
-            email.setSaveAsActivity(false);
-            lstEmailMessages.add(email);
-        }
-        if ( !lstEmailMessages.isEmpty() && !Test.isRunningTest() ) {
-            NSP_CaseTriggerHelper.sendSingleEmailMessages( lstEmailMessages );
-        }     
-    }
-    
+
     /***********************************************************************
 * @MethodName: bpsCaseUpdateForNonInsperityEmployeeType
 * @Description: This method will update the BPS type case
