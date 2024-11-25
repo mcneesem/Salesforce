@@ -2047,15 +2047,19 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                     pse__Project_Task__c eachProjecttask = createProjectTaskfromIP(proj, pta.NSP_Category__c, ipRecId,milestoneKey);
                                                                             eachProjecttask.NSP_Sub_Category__c=pta.NSP_Sub_Category__c;
                                                                             eachProjecttask.Name=pta.NSP_Task_Name__c;
-                                                                            if(mapofGroupIds.containsKey(NSP_ServiceConstants.HEALTH_WELFARE_PRODUCT)!=null){
-                                                                                eachProjecttask.OwnerId=mapofGroupIds.get(NSP_ServiceConstants.HEALTH_WELFARE_PRODUCT);
-                                                                            }
+                                											Implementation_Profile__c ipwithValue=(Implementation_Profile__c) data.get(IMPL_PROFILE_IDENTIFIER).get(ipRecId);
+                                											if(ipWithValue != null && ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__r!=null && ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__r.pse__Salesforce_User__c!=null){
+                                                            					eachProjecttask.OwnerId=ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__r.pse__Salesforce_User__c;
+                                                        					}
                                                                             eachProjecttask.pse__Hierarchy_Depth__c=1;
                                                                             eachProjecttask.pse__Milestone__c=milestoneId;
                                                                             eachProjecttask.pse__Parent_Task__c=pt.Id;
                                                                             eachProjecttask.pse__Order__c = 134;
                                                                             eachProjecttask.Task_Order__c = 134;
                                                                             eachProjecttask.NSP_Visible_to_Client__c = FALSE;
+                                											if(String.isNotBlank(System.label.HSA_With_Optum_Bank)){
+                                												eachProjecttask.pse__Long_Description__c = System.label.HSA_With_Optum_Bank;	
+                                											}
                                                                             projectTaskList.add(eachProjecttask); 
                             }
                         }  
@@ -2107,7 +2111,9 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                                         eachProjecttask.pse__Order__c = 135;
                                                         eachProjecttask.Task_Order__c = 135;
                                                         eachProjecttask.NSP_Visible_to_Client__c = FALSE;
-    
+                        								if(String.isNotBlank(System.label.HSA_With_No_Optum_Bank)){
+                                							eachProjecttask.pse__Long_Description__c = System.label.HSA_With_No_Optum_Bank;	
+                                						}    
                                                         projectTaskList.add(eachProjecttask);  
                     ipAutomationRecords.add(createIPAutomation(ipRec, ipa.NSP_Automation_Name__c, ipa.NSP_Method_Name__c,ipa.NSP_Section__c));
                     }

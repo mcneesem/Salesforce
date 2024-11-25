@@ -136,6 +136,26 @@ public class NSP_MMImplProfile_UpdateTest {
         System.assertEquals(NSP_ServiceConstants.CSP401K,ip.Type_of_retirement_plan_client_has_today__c);
         Test.stopTest();
     }
+
+    //test method handleOptumProjectTask
+    @isTest
+    public static void handleOptumTask(){
+        pse__Proj__c project = [SELECT Id,Name FROM pse__Proj__c WHERE  TemplateName__c=:label.Middle_Market_Implementation_Project LIMIT 1];
+        Implementation_Profile__c ip = [SELECT Id, NSP_Project__c FROM Implementation_Profile__c WHERE NSP_Project__c= :project.Id LIMIT 1];
+        Contact cont = [SELECT Id,pse__Salesforce_User__c FROM Contact WHERE LastName='ResourceLN' ];
+        ip.Does_the_client_offer_a_HSA__c =NSP_ServiceConstants.Yes;
+        ip.Is_client_s_current_HSA_with_Optum_Bank__c =NSP_ServiceConstants.Yes;
+        ip.Select_BPSes__c = NSP_ServiceConstants.INSURANCE;
+        ip.NSP_Project_Manager__c  = cont.id;
+        ip.NSP_Sr_Onboarding_Benefit_Rep__c=cont.id;
+        ip.NSP_Form_Completed__c=true;
+        Test.startTest();
+        //update ip record for the above fields
+        update  ip;
+        System.assertEquals(NSP_ServiceConstants.YES,ip.Is_client_s_current_HSA_with_Optum_Bank__c);
+		Test.stopTest();
+    }
+
     //test method handleTaskCreation
     @isTest
     public static void handleTaskCreation(){
