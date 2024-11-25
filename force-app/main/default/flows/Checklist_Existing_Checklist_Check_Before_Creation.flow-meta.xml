@@ -13,6 +13,13 @@
                 <stringValue>Booking</stringValue>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>recordChecklist.RecordTypeId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Setup.ChecklistSettings__c.ChecklistRecordTypeId__c</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Get_Opty_Owner_Info</targetReference>
         </connector>
@@ -97,6 +104,13 @@
             </value>
         </assignmentItems>
         <assignmentItems>
+            <assignToReference>recordChecklist.RecordTypeId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Setup.ChecklistSettings__c.ChecklistRecordTypeId__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
             <assignToReference>recordOpportunity.Number_of_MMC_Checklists__c</assignToReference>
             <operator>Assign</operator>
             <value>
@@ -133,13 +147,6 @@
                 <elementReference>recordOpportunity.NSP_PrimaryProduct__c</elementReference>
             </value>
         </assignmentItems>
-        <assignmentItems>
-            <assignToReference>recordChecklist.RecordTypeId</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>$Setup.ChecklistSettings__c.ChecklistRecordTypeId__c</elementReference>
-            </value>
-        </assignmentItems>
         <connector>
             <targetReference>Create_Checklist_Subflow</targetReference>
         </connector>
@@ -156,6 +163,13 @@
                 <stringValue>Sales Engineer Questionnaire</stringValue>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>recordChecklist.RecordTypeId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Setup.ChecklistSettings__c.ChecklistRecordTypeId__c</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Get_Opty_Owner_Info</targetReference>
         </connector>
@@ -170,6 +184,13 @@
             <operator>Assign</operator>
             <value>
                 <stringValue>Sold To Paid</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>recordChecklist.RecordTypeId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>0124x000000yRvBAAU</stringValue>
             </value>
         </assignmentItems>
         <connector>

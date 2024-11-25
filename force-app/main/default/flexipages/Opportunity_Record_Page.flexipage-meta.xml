@@ -7604,7 +7604,7 @@
                             <value>NAME</value>
                         </valueListItems>
                         <valueListItems>
-                            <value>RECORDTYPE</value>
+                            <value>Checklist_Type__c</value>
                         </valueListItems>
                         <valueListItems>
                             <value>CREATEDBY_USER</value>
