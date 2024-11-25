@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomPermission xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Used to provide user access to the custom button for GL Period. This let&apos;s the permitted user in creating the GL transaction records.</description>
+    <isLicensed>false</isLicensed>
+    <label>Finance Logger</label>
+</CustomPermission>

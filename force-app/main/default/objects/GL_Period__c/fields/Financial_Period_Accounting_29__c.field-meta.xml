@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Financial_Period_Accounting_29__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <externalId>false</externalId>
+    <label>Financial Period Accounting 29</label>
+    <lookupFilter>
+        <active>true</active>
+        <filterItems>
+            <field>blng__FinancePeriod__c.blng__PeriodType__c</field>
+            <operation>equals</operation>
+            <value>Accounting</value>
+        </filterItems>
+        <filterItems>
+            <field>blng__FinancePeriod__c.blng__LegalEntity__r.Name</field>
+            <operation>equals</operation>
+            <value>29</value>
+        </filterItems>
+        <isOptional>false</isOptional>
+    </lookupFilter>
+    <referenceTo>blng__FinancePeriod__c</referenceTo>
+    <relationshipLabel>GL_Periods (Financial Period Accounting 29)</relationshipLabel>
+    <relationshipName>GL_Periods1</relationshipName>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

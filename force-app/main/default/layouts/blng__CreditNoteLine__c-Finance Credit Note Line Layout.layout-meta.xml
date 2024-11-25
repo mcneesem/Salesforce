@@ -22,6 +22,10 @@
                 <behavior>Edit</behavior>
                 <field>blng__TotalAmount__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>GL_Transactions_Count__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -43,6 +47,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>blng__Notes__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>GL_Transactions_Created__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -515,6 +523,13 @@
         <fields>blng__Type__c</fields>
         <fields>blng__Unallocated__c</fields>
         <relatedList>blng__RefundLineCreditNoteLine__c.blng__CreditNoteLine__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>GL_Transaction__c.Credit_Note_Line__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <relatedList>RelatedEntityHistoryList</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
