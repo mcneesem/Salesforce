@@ -2005,7 +2005,9 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                                         }
                                                     
                                                         eachProjecttask.pse__Milestone__c=milestoneId;
-    
+    													if(String.isNotBlank(System.label.HSA)){
+															eachProjecttask.pse__Long_Description__c = System.label.HSA;
+														}
                                                         projectTaskList.add(eachProjecttask); 
                     ipAutomationRecords.add(createIPAutomation(ipRec, ipa.NSP_Automation_Name__c, ipa.NSP_Method_Name__c,ipa.NSP_Section__c));              
                                           
@@ -2161,7 +2163,9 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                                         }
                                                         
                                                         eachProjecttask.pse__Milestone__c=milestoneId;
-    
+    													if(String.isNotBlank(System.label.COBRA_Parent)){
+															eachProjecttask.pse__Long_Description__c = System.label.COBRA_Parent;
+														}
                                                         projectTaskList.add(eachProjecttask);
                     ipAutomationRecords.add(createIPAutomation(ipRec, ipa.NSP_Automation_Name__c, ipa.NSP_Method_Name__c,ipa.NSP_Section__c));
                 
@@ -2206,7 +2210,9 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                                         }
                                                         
                                                         eachProjecttask.pse__Milestone__c=milestoneId;
-    
+    													if(String.isNotBlank(System.label.Deductible_Carryover)){
+															eachProjecttask.pse__Long_Description__c = System.label.Deductible_Carryover;
+														}
                                                         projectTaskList.add(eachProjecttask);  
                     ipAutomationRecords.add(createIPAutomation(ipRec, ipa.NSP_Automation_Name__c, ipa.NSP_Method_Name__c,ipa.NSP_Section__c));
             }  
@@ -2253,7 +2259,9 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                                         }
                                                         
                                                         eachProjecttask.pse__Milestone__c=milestoneId;
-    
+    													if(String.isNotBlank(System.label.Care_Transition)){
+															eachProjecttask.pse__Long_Description__c = System.label.Care_Transition;
+														}
                                                         projectTaskList.add(eachProjecttask);               
                                             
                     ipAutomationRecords.add(createIPAutomation(ipRec, ipa.NSP_Automation_Name__c, ipa.NSP_Method_Name__c,ipa.NSP_Section__c));
@@ -2349,7 +2357,9 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                                     }
                                                     
                                                     eachProjecttask.pse__Milestone__c=milestoneId;
-    
+               										if(String.isNotBlank(System.label.Dependent_Care_FSA)){
+														eachProjecttask.pse__Long_Description__c = System.label.Dependent_Care_FSA;
+													}
                                                     projectTaskList.add(eachProjecttask); 
                 ipAutomationRecords.add(createIPAutomation(ipRec, ipa.NSP_Automation_Name__c, ipa.NSP_Method_Name__c,ipa.NSP_Section__c));
               
@@ -2397,7 +2407,9 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                                         }
                                                         
                                                         eachProjecttask.pse__Milestone__c=milestoneId;
-        
+                                               			if(String.isNotBlank(System.label.Health_Care_FSA)){
+															eachProjecttask.pse__Long_Description__c = System.label.Health_Care_FSA;
+														}
                                                         projectTaskList.add(eachProjecttask); 
                     ipAutomationRecords.add(createIPAutomation(ipRec, ipa.NSP_Automation_Name__c, ipa.NSP_Method_Name__c,ipa.NSP_Section__c));
              }
@@ -2517,7 +2529,9 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                                             eachProjecttask.OwnerId=ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__r.pse__Salesforce_User__c;
                                                         }
                                                         eachProjecttask.pse__Milestone__c=milestoneId;
-    
+    													if(String.isNotBlank(System.label.Post_Tax_IIS)){
+															eachProjecttask.pse__Long_Description__c = System.label.Post_Tax_IIS;
+														}
                                                         projectTaskList.add(eachProjecttask);               
                                             
                 ipAutomationRecords.add(createIPAutomation(ipRec, ipa.NSP_Automation_Name__c, ipa.NSP_Method_Name__c,ipa.NSP_Section__c));
