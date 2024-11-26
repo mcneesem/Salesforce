@@ -7,7 +7,7 @@
     <inlineHelpText>Field populates when Client Owner is chosen &amp; form saved, or manually enter to override</inlineHelpText>
     <label>Client Owner Email</label>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Email</type>
     <unique>false</unique>
