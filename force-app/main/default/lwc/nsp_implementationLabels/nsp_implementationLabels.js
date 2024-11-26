@@ -454,6 +454,8 @@ import IstheEmployeeanIntern from '@salesforce/label/c.Is_the_Employee_an_Intern
 import WhatmonthsistheInternworking from '@salesforce/label/c.What_months_is_the_Intern_working';
 import WhatmonthsistheInterninschool from '@salesforce/label/c.What_months_is_the_Intern_in_school';
 import Clientiscurrentlymakingemployercontributions from '@salesforce/label/c.Client_is_currently_making_employer_contributions';
+import AreyoualicensedContractor from '@salesforce/label/c.Are_you_a_licensed_Contractor';
+import AreyouregisteredwiththeCSLB from '@salesforce/label/c.Are_you_registered_with_the_CSLB';
 
 // HARD CODED VALUES
 const precentageComplete = '99% Complete';
@@ -1029,5 +1031,7 @@ export {
     IstheEmployeeanIntern,
     WhatmonthsistheInternworking,
     WhatmonthsistheInterninschool,
-    Clientiscurrentlymakingemployercontributions
+    Clientiscurrentlymakingemployercontributions,
+    AreyoualicensedContractor,
+    AreyouregisteredwiththeCSLB
 };
