@@ -1485,6 +1485,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Closed Prior to CQA</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Complete</fullName>
             <default>false</default>
         </values>
