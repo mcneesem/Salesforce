@@ -26,6 +26,28 @@
     </decisions>
     <description>This flow is used for updating values in Account when a field is changed in Sub Client.</description>
     <environments>Default</environments>
+    <formulas>
+        <description>Formats the Margin currency value into String so we don´t lose the 2 decimals.</description>
+        <name>formattedMarginCurrency</name>
+        <dataType>String</dataType>
+        <expression>IF( MOD(ROUND({!$Record.NSP_Margin__c}, 2), 1) == 0,
+TEXT(ROUND({!$Record.NSP_Margin__c}, 2)) &amp; &quot;.00&quot;,
+IF( MOD(ROUND({!$Record.NSP_Margin__c},2) *10, 1) == 0,
+TEXT(ROUND({!$Record.NSP_Margin__c},2)) &amp; &quot;0&quot;,
+TEXT(ROUND({!$Record.NSP_Margin__c},2))
+))</expression>
+    </formulas>
+    <formulas>
+        <description>Formats the Reserve currency value into String so we don´t lose the 2 decimals.</description>
+        <name>formattedReserveCurrency</name>
+        <dataType>String</dataType>
+        <expression>IF( MOD(ROUND({!$Record.NSP_Reserve__c}, 2), 1) == 0, 
+TEXT(ROUND({!$Record.NSP_Reserve__c}, 2)) &amp; &quot;.00&quot;,
+IF( MOD(ROUND({!$Record.NSP_Reserve__c},2) *10, 1) == 0,
+TEXT(ROUND({!$Record.NSP_Reserve__c},2)) &amp; &quot;0&quot;,
+TEXT(ROUND({!$Record.NSP_Reserve__c},2))
+))</expression>
+    </formulas>
     <interviewLabel>Sub Client Update Account fields {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Sub Client Update Account fields</label>
     <processMetadataValues>
@@ -66,13 +88,13 @@
         <inputAssignments>
             <field>NSP_Margin__c</field>
             <value>
-                <elementReference>$Record.NSP_Margin__c</elementReference>
+                <elementReference>formattedMarginCurrency</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <field>NSP_Reserve__c</field>
             <value>
-                <elementReference>$Record.NSP_Reserve__c</elementReference>
+                <elementReference>formattedReserveCurrency</elementReference>
             </value>
         </inputAssignments>
         <object>Account</object>
