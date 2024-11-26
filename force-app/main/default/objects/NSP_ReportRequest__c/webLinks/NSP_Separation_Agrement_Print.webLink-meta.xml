@@ -16,5 +16,5 @@
     <protected>false</protected>
     <showsLocation>false</showsLocation>
     <showsStatus>false</showsStatus>
-    <url>https://uatna11.springcm.com/atlas/doclauncher/eos/Separation Agreement Config?aid=50202&amp;eos[0].Id={!NSP_ReportRequest__c.Id}&amp;eos[0].System=Salesforce&amp;eos[0].Type=NSP_ReportRequest__c&amp;eos[0].Name={!NSP_ReportRequest__c.Id}&amp;eos[0].ScmPath=/Salesforce/Wizard Output/</url>
+    <url>https://{!$Setup.NSP_Docusign_Account_Details__c.CLM_Base_URL__c}/atlas/doclauncher/eos/Separation Agreement Config?aid={!$Setup.NSP_Docusign_Account_Details__c.Docusign_Account_Id__c}&amp;eos[0].Id={!NSP_ReportRequest__c.Id}&amp;eos[0].System=Salesforce&amp;eos[0].Type=NSP_ReportRequest__c&amp;eos[0].Name={!NSP_ReportRequest__c.Id}&amp;eos[0].ScmPath=/Salesforce/Wizard Output/</url>
 </WebLink>
