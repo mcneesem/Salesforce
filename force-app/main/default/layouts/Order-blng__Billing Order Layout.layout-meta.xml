@@ -164,6 +164,10 @@
                 <behavior>Edit</behavior>
                 <field>NSP_ProjectOwner__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Project_Status__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
