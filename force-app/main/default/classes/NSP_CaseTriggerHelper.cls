@@ -2122,10 +2122,9 @@ Story:        STY-4166
 createdDate : 6/12/2023
 ********************************************************************************************/
     private static void checkTheEligibiltyOfConfidentiality(Set<String> categorySet, Set<String> subCategorySet, List<case> caseList){
-        Map<string, Boolean> catSubCatDefaultConfidentialEligibleMap = new Map<string, Boolean>();
-        Map<string, Boolean> catSubCatConfidentialEligibleMap = new Map<string, Boolean>();
-        Map<string, Boolean> catSubCatDetailConfidentialEligibleMap = new Map<string, Boolean>();
-        try{           
+        Map<string, NSP_Category_Sub_Category_Mapping__c> catSubCatConfidentialEligibleMap = new Map<string, NSP_Category_Sub_Category_Mapping__c>();
+        
+        try{          
             for(NSP_Category_Sub_Category_Mapping__c catSubCatMapping : [SELECT Id, NSP_Category__c, NSP_Subcategory__c, 
                                                                          NSP_Public_Groups_To_Share__c,
                                                                          NSP_Detail__c,
@@ -2134,41 +2133,33 @@ createdDate : 6/12/2023
                                                                          FROM NSP_Category_Sub_Category_Mapping__c 
                                                                          WHERE NSP_Category__c IN: categorySet 
                                                                          AND NSP_Subcategory__c IN: subCategorySet]){
-                                                                             catSubCatDetailConfidentialEligibleMap.put(
-                                                                                 catSubCatMapping.NSP_Category__c+';'+catSubCatMapping.NSP_Subcategory__c+';'+catSubCatMapping.NSP_Detail__c, 
-                                                                                 catSubCatMapping.NSP_Display_confidential_popup__c
-                                                                             );
-                                                                             catSubCatConfidentialEligibleMap.put(
-                                                                                 catSubCatMapping.NSP_Category__c+';'+catSubCatMapping.NSP_Subcategory__c,
-                                                                                 catSubCatMapping.NSP_Display_confidential_popup__c
-                                                                             );
-                                                                             catSubCatDefaultConfidentialEligibleMap.put(
-                                                                                 catSubCatMapping.NSP_Category__c+';'+catSubCatMapping.NSP_Subcategory__c,
-                                                                                 catSubCatMapping.Default_case_as_confidential__c
-                                                                             );
-                                                                         }
+                String keyCatSubCat = catSubCatMapping.NSP_Category__c + ';' + catSubCatMapping.NSP_Subcategory__c;
+                if(String.isNotBlank(catSubCatMapping.NSP_Detail__c)){
+                   keyCatSubCat +=  ';' + catSubCatMapping.NSP_Detail__c;
+                   catSubCatConfidentialEligibleMap.put(keyCatSubCat, catSubCatMapping); 
+                }else{
+                   catSubCatConfidentialEligibleMap.put(keyCatSubCat, catSubCatMapping);
+                }                                                                     
+            }
     
             for(Case cse : caseList){
-                String detailKey = cse.NSP_Category__c + ';' + cse.NSP_Subcategory__c + ';' + cse.NSP_Detail__c;
                 String catSubCatKey = cse.NSP_Category__c + ';' + cse.NSP_Subcategory__c;
-    
+                if(String.isNotBlank(cse.NSP_Detail__c)){
+                    catSubCatKey += ';' + cse.NSP_Detail__c;
+                }
+                
                 if(Test.isRunningTest()){
                     cse.NSP_Show_Confidential_Checkbox__c = false;
                 }else{
-                    if(String.isNotBlank(cse.NSP_Detail__c)){
-                        cse.NSP_Show_Confidential_Checkbox__c = catSubCatDetailConfidentialEligibleMap.containsKey(detailKey) ? catSubCatDetailConfidentialEligibleMap.get(detailKey) : false;
-                    }else if(catSubCatConfidentialEligibleMap.containsKey(catSubCatKey)){ 
-                        cse.NSP_Show_Confidential_Checkbox__c = false;
-                        if(catSubCatConfidentialEligibleMap.get(catSubCatKey) || catSubCatDefaultConfidentialEligibleMap.get(catSubCatKey)){
+                    
+                    if(catSubCatConfidentialEligibleMap != NULL && catSubCatConfidentialEligibleMap.containsKey(catSubCatKey)){
+                        if(catSubCatConfidentialEligibleMap.get(catSubCatKey).Default_case_as_confidential__c){
+                            cse.NSP_Confidential__c = true;
+                            cse.NSP_Show_Confidential_Checkbox__c = true;
+                        }else if(catSubCatConfidentialEligibleMap.get(catSubCatKey).NSP_Display_confidential_popup__c){
                             cse.NSP_Show_Confidential_Checkbox__c = true;
                         }
-                        if(catSubCatDefaultConfidentialEligibleMap.get(catSubCatKey) && !catSubCatConfidentialEligibleMap.get(catSubCatKey)){
-                            cse.NSP_Confidential__c = true;
-                        }
-                    }else{
-                        cse.NSP_Show_Confidential_Checkbox__c = false;
-                    }
-    
+                    }  
                     if (!cse.NSP_Show_Confidential_Checkbox__c && cse.NSP_Confidential__c) {
                         cse.NSP_Confidential__c = cse.NSP_Show_Confidential_Checkbox__c;
                     }
