@@ -257,6 +257,26 @@
                 <default>false</default>
                 <label>Wave Rock Holdings</label>
             </value>
+            <value>
+                <fullName>80</fullName>
+                <default>false</default>
+                <label>Yellow Point Equity Partners</label>
+            </value>
+            <value>
+                <fullName>81</fullName>
+                <default>false</default>
+                <label>University Lab Partners</label>
+            </value>
+            <value>
+                <fullName>82</fullName>
+                <default>false</default>
+                <label>CH3 Capital LLC</label>
+            </value>
+            <value>
+                <fullName>83</fullName>
+                <default>false</default>
+                <label>Lysios Capital Inc</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
