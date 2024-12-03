@@ -2066,6 +2066,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>CO Support</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Configuration Adjustment</fullName>
             <default>false</default>
         </values>

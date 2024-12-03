@@ -22,6 +22,11 @@
                 <label>Administrative Relief</label>
             </value>
             <value>
+                <fullName>CO Support</fullName>
+                <default>false</default>
+                <label>CO Support</label>
+            </value>
+            <value>
                 <fullName>Configuration Adjustment</fullName>
                 <default>false</default>
                 <label>Configuration Adjustment</label>
