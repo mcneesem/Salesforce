@@ -320,7 +320,8 @@ public class NSP_OrderTriggerHelper {
                 blngTypeIdSet.add(newOrder.Id);
             }
             //STY-03797 Start - This code is used to collect Account Ids of reviewed Orders
-            if(oldOrder.Status == NSP_CPQConstants.ORDER_DRAFT && newOrder.Status == NSP_CPQConstants.ORDER_REVIEWED) {
+            if((oldOrder.Status == NSP_CPQConstants.ORDER_DRAFT && newOrder.Status == NSP_CPQConstants.ORDER_REVIEWED) || 
+              (oldOrder.Status == NSP_CPQConstants.ORDER_DRAFT && newOrder.Status == NSP_CPQConstants.ORDER_ACTIVATED)) {
                 String accIdstr;
                 if(newOrder.blng__BillingAccount__c != null) {
                 reviewedOrdersAccountSet.add(newOrder.blng__BillingAccount__c);
