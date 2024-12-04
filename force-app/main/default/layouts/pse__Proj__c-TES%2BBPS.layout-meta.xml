@@ -103,6 +103,10 @@
                 <behavior>Readonly</behavior>
                 <field>I_am_Project_Coordinator__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Roles_To_Cancel_Project_Tasks__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

@@ -925,6 +925,21 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Roles_To_Cancel_Project_Tasks__c</picklist>
+        <values>
+            <fullName>Benefit Analyst</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Time Analyst</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Time Analyst %2B Benefit Analyst</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Service_Level__c</picklist>
         <values>
             <fullName>Client Size %28list field%29</fullName>

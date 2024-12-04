@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Roles_To_Cancel_Project_Tasks__c</fullName>
+    <label>Roles To Cancel Project Tasks</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Time Analyst</fullName>
+                <default>false</default>
+                <label>Time Analyst</label>
+            </value>
+            <value>
+                <fullName>Benefit Analyst</fullName>
+                <default>false</default>
+                <label>Benefit Analyst</label>
+            </value>
+            <value>
+                <fullName>Time Analyst + Benefit Analyst</fullName>
+                <default>false</default>
+                <label>Time Analyst + Benefit Analyst</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>
