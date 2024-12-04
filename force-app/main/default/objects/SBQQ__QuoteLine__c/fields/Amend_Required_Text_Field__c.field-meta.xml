@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Amend_Required_Text_Field__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF(
+ AND(
+  ISPICKVAL(SBQQ__Quote__r.SBQQ__Type__c, &apos;Amendment&apos;)
+  , SBQQ__PriorQuantity__c &gt; 0
+ )
+ ,IF(
+   OR(
+    ISPICKVAL(NSP_Product_Type__c , &apos;iSolved Hardware&apos;)
+    ,ISPICKVAL(NSP_Product_Type__c, &apos;Time &amp; Attendance Hardware&apos;)
+    ,ISPICKVAL(NSP_Product_Type__c, &apos;Learning Direct&apos;)
+    ,ISPICKVAL(NSP_Product_Type__c, &apos;Learning Select&apos;)
+    ,ISPICKVAL(NSP_Product_Type__c, &apos;Learning Hosting&apos;)
+   )
+   ,&apos;Green&apos; 
+   ,IF(
+     NSP_Lock_On_QLI__c
+     ,IF(
+       OR(
+        SBQQ__Quote__r.NSP_Has_Renewable_Products__c &gt; 0
+        ,SBQQ__Quote__r.NSP_ListPriceProductCount__c &gt; 0
+       )
+       ,&apos;Green&apos;
+       ,&apos;Red&apos;
+      )
+     ,&apos;&apos;
+    )
+  )
+ , &apos;&apos;
+)</formula>
+    <label>Amend Required Text Field</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

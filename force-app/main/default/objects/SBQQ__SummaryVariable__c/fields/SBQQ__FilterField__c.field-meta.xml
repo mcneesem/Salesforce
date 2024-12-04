@@ -62,6 +62,11 @@
                 <default>false</default>
                 <label>NSP_Support_ProductCode__c</label>
             </value>
+            <value>
+                <fullName>Parent_Amend_Required_is_Red__c</fullName>
+                <default>false</default>
+                <label>Parent_Amend_Required_is_Red__c</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
