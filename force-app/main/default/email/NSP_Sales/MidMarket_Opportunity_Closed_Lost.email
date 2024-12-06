@@ -1,0 +1,2 @@
+{!User.Name} updated a MidMarket opportunity to Closed-Lost . Please take the next action as necessary.
+<a href="{!Opportunity.Link}">{!Opportunity.Name}</a>
