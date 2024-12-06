@@ -63,8 +63,8 @@
             </value>
         </filters>
         <filters>
-            <field>Name</field>
-            <operator>Contains</operator>
+            <field>TemplateName__c</field>
+            <operator>EqualTo</operator>
             <value>
                 <stringValue>ITA-Implementation</stringValue>
             </value>
