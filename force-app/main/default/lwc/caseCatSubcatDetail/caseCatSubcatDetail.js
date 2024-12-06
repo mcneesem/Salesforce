@@ -6,6 +6,8 @@ import getRelatedSubCategory from '@salesforce/apex/NSP_CustomCaseCreationPageCo
 import getCategoryList from '@salesforce/apex/NSP_CustomCaseCreationPageController.getCategoryList';
 import getAllCategoryList from '@salesforce/apex/NSP_CustomCaseCreationPageController.getAllCategoryList';
 import getCategoryDependenciesMap from '@salesforce/apex/NSP_CustomCaseCreationPageController.getCategoryDependenciesMap';
+import isUserInQueue from '@salesforce/apex/NSP_CustomCaseCreationPageController.isUserInQueue';
+import getProfileName from '@salesforce/apex/NSP_CustomCaseCreationPageController.getProfileName';
 
 export default class CaseCatSubcatDetail extends LightningElement {
     @api oCase = {};
@@ -44,10 +46,21 @@ export default class CaseCatSubcatDetail extends LightningElement {
     categoryDetailMap = new Map();
     categorySubCategoryConfidentialMap = new Map();
     categorySubCategoryDetailMap = new Map();
-    categorySubCategoryDetailConfidentialMap = new Map();
+    @api categorySubCategoryDetailConfidentialMap = new Map();
     selectedAllRecordTypeMap = new Map();
     recordTypeMap = new Map();
     renderCallOnce = false;
+    userPartOfQueue = false;
+
+    verifyCompensationQueue(){
+        isUserInQueue()
+        .then(result => {
+			this.userPartOfQueue = result;
+		})
+		.catch(error => {
+            this.userPartOfQueue = false;
+		})
+    }
 
     @wire(getAllCategoryList, {recordTypeId: '$recTypeId'})
     wiredgetAllCategoryList(result){
@@ -63,6 +76,7 @@ export default class CaseCatSubcatDetail extends LightningElement {
                 }else{
                     this.isBPSUser = false;
                 }
+                this.verifyCompensationQueue();
                 this.getCatDependenciesMap();
             });
         }
@@ -120,6 +134,29 @@ export default class CaseCatSubcatDetail extends LightningElement {
             this.error = result.error;
         }
     }
+    connectedCallback() {
+        this.handleProfileName();
+    }
+    handleProfileName(){
+        getProfileName().
+        then((result) => {
+            if (result) {
+                this.profileName = result;
+            }
+            this.error = undefined;
+        })
+        .catch((error) => {
+            this.error = error;
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Error!!',
+                    message: error.message,
+                    variant: 'error',
+                }),
+            );
+        });
+    
+    }
 
     handleChange(event) {
         if (event.currentTarget.name == 'Category') {
@@ -134,9 +171,14 @@ export default class CaseCatSubcatDetail extends LightningElement {
             if(this.isBPSUser == false && this.subCategoryOptions.length > 0){
                 this.showAllSubCategoryButton = true;
             }
+            const selectEvent = new CustomEvent('catsubcatselect',{detail: {type:'Category',value:this.selectedCategory}});
+            this.dispatchEvent(selectEvent);
         }
         if (event.currentTarget.name == 'Sub Category') {
             this.selectedSubCategory = event.target.value;
+            const selectEvent = new CustomEvent('catsubcatselect',{detail: {type:'SubCategory',value:this.selectedSubCategory}});
+            this.dispatchEvent(selectEvent);
+            
             this.detailOptions = this.createOptions(this.categoryWrapper.mCatSubToDetails[this.selectedCategory + '-' + event.target.value]);
             if(this.detailOptions.length > 0){
                 this.showDetail = true;
@@ -157,6 +199,8 @@ export default class CaseCatSubcatDetail extends LightningElement {
             if(this.selectedCategory.length>0 && this.selectedSubCategory.length>0 && this.accountID.length>0){
                 this.handlePopulateAsset(event);
             }
+             
+            
         }
         if (event.currentTarget.name == 'Detail') {
             this.selectedDetail = event.target.value;
@@ -177,6 +221,7 @@ export default class CaseCatSubcatDetail extends LightningElement {
         if (this.disableButton) {
             this.disableButton = false;
         }
+        this.handleDisplayConfidentialCheckBox();
     }
 
     createOptions(lValues){
@@ -224,7 +269,6 @@ export default class CaseCatSubcatDetail extends LightningElement {
         getRelatedCategory({selectedRole: role,recordTypeId: this.recTypeId }).then((response) => {
             this.categoryOptions = this.createOptions(response);
         }).catch((error) => {
-            console.log('getRelatedCategory error: '+error);
         })
     }
 
@@ -234,6 +278,9 @@ export default class CaseCatSubcatDetail extends LightningElement {
             let isSystemAdmin = ( this.profileName && this.profileName.startsWith( 'System Admin' ) );
             if ( !isSystemAdmin ) {
                 response = response.filter(value => value !== "Separation Agreement Request");
+            }
+            if(this.selectedCategory==='Compensation Services' && !isSystemAdmin && !this.userPartOfQueue){
+                response = response.filter(value => (value === "Client Consultation" || value == "Salary Survey"));
             }
             this.subCategoryOptions = this.createOptions(response);
         }).catch((error) => {
@@ -254,6 +301,8 @@ export default class CaseCatSubcatDetail extends LightningElement {
             this.showAllSubCategoryButton = false;
             this.showFilterSubCategoryButton = false;
             this.getFiteredSubCatValues();
+            const selectEvent = new CustomEvent('catsubcatselect',{detail: {type:'Category',value:this.selectedCategory}});
+            this.dispatchEvent(selectEvent);
         }
         if (event.currentTarget.name == 'Sub Category') {
             this.selectedSubCategory = event.target.value;
@@ -271,6 +320,9 @@ export default class CaseCatSubcatDetail extends LightningElement {
             if(this.selectedCategory.length>0 && this.selectedSubCategory.length>0 && this.accountID.length>0){
                 this.handlePopulateAsset(event);
             }
+            
+            const selectEvent = new CustomEvent('catsubcatselect',{detail: {type:'SubCategory',value:this.selectedSubCategory}});
+            this.dispatchEvent(selectEvent);
         }
         if (event.currentTarget.name == 'Detail') {
             this.selectedDetail = event.target.value;
@@ -279,6 +331,7 @@ export default class CaseCatSubcatDetail extends LightningElement {
         if (event.currentTarget.name == 'Version') {
             this.selectedVersion = event.detail.value;
         }
+        this.handleDisplayConfidentialCheckBox();
     }
 
     handleCategoryFilteredView(event){
@@ -309,18 +362,36 @@ export default class CaseCatSubcatDetail extends LightningElement {
             if ( !isSystemAdmin && ( result.mCatToSubCatogories["HR Employee Relations"] != null ) ) {
                 result.mCatToSubCatogories["HR Employee Relations"] = result.mCatToSubCatogories["HR Employee Relations"].filter(value => value !== "Separation Agreement Request");
             }
+            if(!isSystemAdmin && !this.userPartOfQueue && result.mCatToSubCatogories["Compensation Services"]!==null && result.mCatToSubCatogories["Compensation Services"]!==undefined){
+                result.mCatToSubCatogories["Compensation Services"] = result.mCatToSubCatogories["Compensation Services"].filter(value => (value == "Client Consultation" || value == "Salary Survey"));
+            }
             this.subCategoryOptions = this.createOptions(result.mCatToSubCatogories[this.oCase.NSP_Category__c]);
             this.detailOptions = this.createOptions(result.mCatSubToDetails[this.oCase.NSP_Category__c + '-' + this.oCase.NSP_SubCategory__c]);
             this.versionOptions = this.createOptions(result.mCatSubDetailToVersions[this.oCase.NSP_Category__c + '-' + this.oCase.NSP_SubCategory__c + '-' + this.oCase.NSP_Detail__c]);
             this.categoryWrapper = result;
         }).catch((error) => {
-            console.log('getCategoryDependenciesMap error '+error);
         })
     }
 
     @api
     getAllComboboxes() {
         return this.template.querySelectorAll('lightning-combobox');
+    }
+    handleDisplayConfidentialCheckBox(){
+        let showConfidentialField = false; 
+        if(this.selectedSubCategory != null && this.selectedCategory != null && this.selectedDetail != null){
+                let catSubCatDetail = this.selectedCategory + '-' + this.selectedSubCategory + '-' + this.selectedDetail;
+                showConfidentialField = this.categorySubCategoryDetailConfidentialMap.get(catSubCatDetail) != null ? this.categorySubCategoryDetailConfidentialMap.get(catSubCatDetail)[0] : false;
+        }else if(this.selectedSubCategory != null && this.selectedCategory != null && !this.showDetail){
+            let catSubCategory = this.selectedCategory + '-' + this.selectedSubCategory;
+            showConfidentialField = this.categorySubCategoryConfidentialMap.get(catSubCategory) != null ? this.categorySubCategoryConfidentialMap.get(catSubCategory)[0] : false;
+        }
+        if(showConfidentialField===true){
+        const confidentailevent = new CustomEvent('confidentailevent', {
+            detail: showConfidentialField
+        });
+        this.dispatchEvent(confidentailevent);
+        }
     }
     
     renderedCallback(){
