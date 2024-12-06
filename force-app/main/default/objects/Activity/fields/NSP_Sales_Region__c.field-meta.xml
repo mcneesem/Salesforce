@@ -79,6 +79,10 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>MidMarket</controllingFieldValue>
+            <valueName>HCM Sales 2</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>MidMarket</controllingFieldValue>
             <valueName>MM Sales</valueName>
         </valueSettings>
         <valueSettings>
