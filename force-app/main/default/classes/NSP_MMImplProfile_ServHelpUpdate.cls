@@ -1332,8 +1332,8 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                                         eachProjecttask.pse__Order__c=60;
                                                         eachProjectTask.NSP_Visible_to_Client__c=FALSE;
                                                         Implementation_Profile__c ipwithValue=(Implementation_Profile__c) data.get(IMPL_PROFILE_IDENTIFIER).get(ipRecId);
-                                                        if(ipwithValue.NSP_Project_Manager__c!=null && ipwithValue.NSP_Project_Manager__r.pse__Salesforce_User__c!=null){
-                                                            eachProjecttask.OwnerId=ipwithValue.NSP_Project_Manager__r.pse__Salesforce_User__c;
+                                                        if(ipwithValue.NSP_Payroll_Project_Manager__r!=null && ipwithValue.NSP_Payroll_Project_Manager__r.pse__Salesforce_User__c!=null){
+                                                            eachProjecttask.OwnerId=ipwithValue.NSP_Payroll_Project_Manager__r.pse__Salesforce_User__c;
                                                         }
                                                         
                                                         eachProjecttask.pse__Milestone__c=milestoneId;
@@ -2005,7 +2005,9 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                                         }
                                                     
                                                         eachProjecttask.pse__Milestone__c=milestoneId;
-    
+    													if(String.isNotBlank(System.label.HSA)){
+															eachProjecttask.pse__Long_Description__c = System.label.HSA;
+														}
                                                         projectTaskList.add(eachProjecttask); 
                     ipAutomationRecords.add(createIPAutomation(ipRec, ipa.NSP_Automation_Name__c, ipa.NSP_Method_Name__c,ipa.NSP_Section__c));              
                                           
@@ -2047,15 +2049,19 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                     pse__Project_Task__c eachProjecttask = createProjectTaskfromIP(proj, pta.NSP_Category__c, ipRecId,milestoneKey);
                                                                             eachProjecttask.NSP_Sub_Category__c=pta.NSP_Sub_Category__c;
                                                                             eachProjecttask.Name=pta.NSP_Task_Name__c;
-                                                                            if(mapofGroupIds.containsKey(NSP_ServiceConstants.HEALTH_WELFARE_PRODUCT)!=null){
-                                                                                eachProjecttask.OwnerId=mapofGroupIds.get(NSP_ServiceConstants.HEALTH_WELFARE_PRODUCT);
-                                                                            }
+                                											Implementation_Profile__c ipwithValue=(Implementation_Profile__c) data.get(IMPL_PROFILE_IDENTIFIER).get(ipRecId);
+                                											if(ipWithValue != null && ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__r!=null && ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__r.pse__Salesforce_User__c!=null){
+                                                            					eachProjecttask.OwnerId=ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__r.pse__Salesforce_User__c;
+                                                        					}
                                                                             eachProjecttask.pse__Hierarchy_Depth__c=1;
                                                                             eachProjecttask.pse__Milestone__c=milestoneId;
                                                                             eachProjecttask.pse__Parent_Task__c=pt.Id;
                                                                             eachProjecttask.pse__Order__c = 134;
                                                                             eachProjecttask.Task_Order__c = 134;
                                                                             eachProjecttask.NSP_Visible_to_Client__c = FALSE;
+                                											if(String.isNotBlank(System.label.HSA_With_Optum_Bank)){
+                                												eachProjecttask.pse__Long_Description__c = System.label.HSA_With_Optum_Bank;	
+                                											}
                                                                             projectTaskList.add(eachProjecttask); 
                             }
                         }  
@@ -2107,7 +2113,9 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                                         eachProjecttask.pse__Order__c = 135;
                                                         eachProjecttask.Task_Order__c = 135;
                                                         eachProjecttask.NSP_Visible_to_Client__c = FALSE;
-    
+                        								if(String.isNotBlank(System.label.HSA_With_No_Optum_Bank)){
+                                							eachProjecttask.pse__Long_Description__c = System.label.HSA_With_No_Optum_Bank;	
+                                						}    
                                                         projectTaskList.add(eachProjecttask);  
                     ipAutomationRecords.add(createIPAutomation(ipRec, ipa.NSP_Automation_Name__c, ipa.NSP_Method_Name__c,ipa.NSP_Section__c));
                     }
@@ -2155,7 +2163,9 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                                         }
                                                         
                                                         eachProjecttask.pse__Milestone__c=milestoneId;
-    
+    													if(String.isNotBlank(System.label.COBRA_Parent)){
+															eachProjecttask.pse__Long_Description__c = System.label.COBRA_Parent;
+														}
                                                         projectTaskList.add(eachProjecttask);
                     ipAutomationRecords.add(createIPAutomation(ipRec, ipa.NSP_Automation_Name__c, ipa.NSP_Method_Name__c,ipa.NSP_Section__c));
                 
@@ -2200,7 +2210,9 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                                         }
                                                         
                                                         eachProjecttask.pse__Milestone__c=milestoneId;
-    
+    													if(String.isNotBlank(System.label.Deductible_Carryover)){
+															eachProjecttask.pse__Long_Description__c = System.label.Deductible_Carryover;
+														}
                                                         projectTaskList.add(eachProjecttask);  
                     ipAutomationRecords.add(createIPAutomation(ipRec, ipa.NSP_Automation_Name__c, ipa.NSP_Method_Name__c,ipa.NSP_Section__c));
             }  
@@ -2247,7 +2259,9 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                                         }
                                                         
                                                         eachProjecttask.pse__Milestone__c=milestoneId;
-    
+    													if(String.isNotBlank(System.label.Care_Transition)){
+															eachProjecttask.pse__Long_Description__c = System.label.Care_Transition;
+														}
                                                         projectTaskList.add(eachProjecttask);               
                                             
                     ipAutomationRecords.add(createIPAutomation(ipRec, ipa.NSP_Automation_Name__c, ipa.NSP_Method_Name__c,ipa.NSP_Section__c));
@@ -2343,7 +2357,9 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                                     }
                                                     
                                                     eachProjecttask.pse__Milestone__c=milestoneId;
-    
+               										if(String.isNotBlank(System.label.Dependent_Care_FSA)){
+														eachProjecttask.pse__Long_Description__c = System.label.Dependent_Care_FSA;
+													}
                                                     projectTaskList.add(eachProjecttask); 
                 ipAutomationRecords.add(createIPAutomation(ipRec, ipa.NSP_Automation_Name__c, ipa.NSP_Method_Name__c,ipa.NSP_Section__c));
               
@@ -2391,7 +2407,9 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                                         }
                                                         
                                                         eachProjecttask.pse__Milestone__c=milestoneId;
-        
+                                               			if(String.isNotBlank(System.label.Health_Care_FSA)){
+															eachProjecttask.pse__Long_Description__c = System.label.Health_Care_FSA;
+														}
                                                         projectTaskList.add(eachProjecttask); 
                     ipAutomationRecords.add(createIPAutomation(ipRec, ipa.NSP_Automation_Name__c, ipa.NSP_Method_Name__c,ipa.NSP_Section__c));
              }
@@ -2511,7 +2529,9 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                                             eachProjecttask.OwnerId=ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__r.pse__Salesforce_User__c;
                                                         }
                                                         eachProjecttask.pse__Milestone__c=milestoneId;
-    
+    													if(String.isNotBlank(System.label.Post_Tax_IIS)){
+															eachProjecttask.pse__Long_Description__c = System.label.Post_Tax_IIS;
+														}
                                                         projectTaskList.add(eachProjecttask);               
                                             
                 ipAutomationRecords.add(createIPAutomation(ipRec, ipa.NSP_Automation_Name__c, ipa.NSP_Method_Name__c,ipa.NSP_Section__c));
@@ -2739,8 +2759,8 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                                         eachProjecttask3.Name=pta3.NSP_Task_Name__c;
                                                         eachProjecttask3.pse__Order__c=153;
                                                         eachProjecttask3.Task_Order__c=153;
-                                                        if(ipwithValue.NSP_Project_Manager__c!=null && ipwithValue.NSP_Project_Manager__r.pse__Salesforce_User__c!=null){
-                                                            eachProjecttask3.OwnerId=ipwithValue.NSP_Project_Manager__r.pse__Salesforce_User__c;
+                                                        if(ipwithValue.NSP_Payroll_Project_Manager__r!=null && ipwithValue.NSP_Payroll_Project_Manager__r.pse__Salesforce_User__c!=null){
+                                                            eachProjecttask3.OwnerId=ipwithValue.NSP_Payroll_Project_Manager__r.pse__Salesforce_User__c;
                                                         }
                                                         eachProjecttask3.pse__Milestone__c=milestoneId;
     
@@ -2751,8 +2771,8 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                                         eachProjecttask4.Name=pta4.NSP_Task_Name__c;
                 										eachProjecttask4.pse__Order__c=154;
                                                         eachProjecttask4.Task_Order__c=154;
-                                                        if(ipwithValue.NSP_Project_Manager__c!=null && ipwithValue.NSP_Project_Manager__r.pse__Salesforce_User__c!=null){
-                                                            eachProjecttask4.OwnerId=ipwithValue.NSP_Project_Manager__r.pse__Salesforce_User__c;
+                                                        if(ipwithValue.NSP_Payroll_Project_Manager__r!=null && ipwithValue.NSP_Payroll_Project_Manager__r.pse__Salesforce_User__c!=null){
+                                                            eachProjecttask4.OwnerId=ipwithValue.NSP_Payroll_Project_Manager__r.pse__Salesforce_User__c;
                                                         }
                                                         eachProjecttask4.pse__Milestone__c=milestoneId;
     
@@ -2764,8 +2784,8 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                                         eachProjecttask5.pse__Order__c=155;
                                                         eachProjecttask5.Task_Order__c=155;
                                                         eachProjectTask5.NSP_Visible_to_Client__c=FALSE;
-                                                        if(ipwithValue.NSP_Project_Manager__c!=null && ipwithValue.NSP_Project_Manager__r.pse__Salesforce_User__c!=null){
-                                                            eachProjecttask5.OwnerId=ipwithValue.NSP_Project_Manager__r.pse__Salesforce_User__c;
+                                                        if(ipwithValue.NSP_Payroll_Project_Manager__r!=null && ipwithValue.NSP_Payroll_Project_Manager__r.pse__Salesforce_User__c!=null){
+                                                            eachProjecttask5.OwnerId=ipwithValue.NSP_Payroll_Project_Manager__r.pse__Salesforce_User__c;
                                                         }
                                                         eachProjecttask5.pse__Milestone__c=milestoneId;
     
@@ -2777,8 +2797,8 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                                         eachProjecttask6.pse__Order__c=156;
                                                         eachProjecttask6.Task_Order__c=156;
                                                         eachProjectTask6.NSP_Visible_to_Client__c=FALSE;
-                                                        if(ipwithValue.NSP_Project_Manager__c!=null && ipwithValue.NSP_Project_Manager__r.pse__Salesforce_User__c!=null){
-                                                            eachProjecttask6.OwnerId=ipwithValue.NSP_Project_Manager__r.pse__Salesforce_User__c;
+                                                        if(ipwithValue.NSP_Payroll_Project_Manager__r!=null && ipwithValue.NSP_Payroll_Project_Manager__r.pse__Salesforce_User__c!=null){
+                                                            eachProjecttask6.OwnerId=ipwithValue.NSP_Payroll_Project_Manager__r.pse__Salesforce_User__c;
                                                         }
                                                         eachProjecttask6.pse__Milestone__c=milestoneId;
     

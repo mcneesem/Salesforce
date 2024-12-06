@@ -7,6 +7,10 @@
         <value xsi:type="xsd:string">Need WC Certs</value>
     </values>
     <values>
+        <field>NSP_Automation_Order__c</field>
+        <value xsi:type="xsd:double">1.0</value>
+    </values>
+    <values>
         <field>NSP_Class_Name__c</field>
         <value xsi:type="xsd:string">NSP_Implementationprofile_ServiceHelper</value>
     </values>

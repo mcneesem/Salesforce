@@ -5,6 +5,7 @@
     <externalId>false</externalId>
     <inlineHelpText>Please attach: Client Document Requesting Reinstatement</inlineHelpText>
     <label>Client Document Requesting Reinstatement</label>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

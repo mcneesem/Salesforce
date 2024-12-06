@@ -27,16 +27,6 @@
                 <default>false</default>
                 <label>Less than 11 Employees</label>
             </value>
-            <value>
-                <fullName>Less than 3 yrs</fullName>
-                <default>false</default>
-                <label>Less than 3 yrs</label>
-            </value>
-            <value>
-                <fullName>Less than 11 EE&apos;s</fullName>
-                <default>false</default>
-                <label>Less than 11 EE&apos;s</label>
-            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

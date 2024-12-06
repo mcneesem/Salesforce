@@ -24,11 +24,16 @@
             <assignToReference>$Record.Name</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>{!$Record.Account__r.Name} - Onboarding Profile</stringValue>
+                <elementReference>Onboarding_Profile_Name</elementReference>
             </value>
         </assignmentItems>
     </assignments>
     <environments>Default</environments>
+    <formulas>
+        <name>Onboarding_Profile_Name</name>
+        <dataType>String</dataType>
+        <expression>LEFT({!$Record.Account__r.Name}, 59) &amp; &apos; - Onboarding Profile&apos;</expression>
+    </formulas>
     <formulas>
         <name>X1stPayrollProcessingDatePlusFour</name>
         <dataType>Date</dataType>
@@ -80,5 +85,5 @@
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
         <triggerType>RecordBeforeSave</triggerType>
     </start>
-    <status>Obsolete</status>
+    <status>Draft</status>
 </Flow>

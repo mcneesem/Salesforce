@@ -9,14 +9,15 @@
     <permissionSets>Admin_Layout_Access</permissionSets>
     <permissionSets>Allow_Delete_Accounts</permissionSets>
     <permissionSets>Allow_Delete_Leads</permissionSets>
+    <permissionSets>Client_goal_project_task_junction_access</permissionSets>
     <permissionSets>Edit_Integrated_Fields</permissionSets>
     <permissionSets>Field_Access_to_System_Admin_Lite</permissionSets>
+    <permissionSets>Finance_Logger</permissionSets>
     <permissionSets>Financial_Analysis_Tool_Access</permissionSets>
     <permissionSets>Manage_Custom_Report_Types</permissionSets>
     <permissionSets>NSP_Payroll_Data_Sheet</permissionSets>
     <permissionSets>NSP_Termination_Form_Access</permissionSets>
     <permissionSets>NVMStatsSF__View_NVM_Stats</permissionSets>
-    <permissionSets>Onbording_Meeting_Request_Detail_Edit</permissionSets>
     <permissionSets>Project_Task_Access</permissionSets>
     <permissionSets>Resource_Absence_record_type_access</permissionSets>
     <permissionSets>Sales_Enablement</permissionSets>

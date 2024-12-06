@@ -1365,6 +1365,10 @@
             <fullName>TES Integration Specialist</fullName>
             <default>false</default>
         </values>
+        <values>            
+            <fullName>Software Analyst</fullName>
+            <default>false</default>
+        </values>
         <values>
             <fullName>Time Analyst</fullName>
             <default>false</default>

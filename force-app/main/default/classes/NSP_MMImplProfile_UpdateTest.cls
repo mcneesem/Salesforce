@@ -18,7 +18,7 @@ public class NSP_MMImplProfile_UpdateTest {
     
      public static Id ipMMRecordTypeId = SObjectType.Implementation_Profile__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.MMProfile).getRecordTypeId();
      public static Id projectPEORecordTypeId = SObjectType.pse__Proj__c.getRecordTypeInfosByDeveloperName().get('PEO_Project').getRecordTypeId();
-
+	 private static final Id woRecordTypeId = Schema.SObjectType.Asset.getRecordTypeInfosByName().get(NSP_ServiceConstants.WO_ASSET_RECORDTYPE).getRecordTypeId();
     /**
     * Does test data setup 
     * @return void                          
@@ -34,6 +34,15 @@ public class NSP_MMImplProfile_UpdateTest {
         oContact.pse__Salesforce_User__c=createUser.Id;
         //inserting contact
         insert oContact;
+        //Inserting Account
+        Account accoutObject = new Account();
+        accoutObject.Name = 'Test Account';
+        insert accoutObject;
+        //Inserting Asset
+        Asset woAsset = (Asset) NSP_TestExtendedDataFactory.createSObject(new Asset(), 'NSP_TestDataFactory.AssetDefaults', false);
+        woAsset.AccountId = accoutObject.Id;
+        woAsset.recordTypeId = woRecordTypeId;
+        insert woAsset;
         //Project creation
         List<pse__Proj__c> projList = new List<pse__Proj__c>();
         
@@ -136,6 +145,28 @@ public class NSP_MMImplProfile_UpdateTest {
         System.assertEquals(NSP_ServiceConstants.CSP401K,ip.Type_of_retirement_plan_client_has_today__c);
         Test.stopTest();
     }
+
+    //test method handleOptumProjectTask
+    @isTest
+    public static void handleOptumTask(){
+        Test.startTest();
+        Asset asset =[SELECT Id FROM Asset WHERE recordTypeId=:woRecordTypeId LIMIT 1];
+        pse__Proj__c project = [SELECT Id,Name FROM pse__Proj__c WHERE  TemplateName__c=:label.Middle_Market_Implementation_Project LIMIT 1];
+        Implementation_Profile__c ip = [SELECT Id, NSP_Project__c FROM Implementation_Profile__c WHERE NSP_Project__c= :project.Id LIMIT 1];
+        Contact cont = [SELECT Id,pse__Salesforce_User__c FROM Contact WHERE LastName='ResourceLN' ];
+        ip.Does_the_client_offer_a_HSA__c =NSP_ServiceConstants.Yes;
+        ip.Is_client_s_current_HSA_with_Optum_Bank__c =NSP_ServiceConstants.Yes;
+        ip.Select_BPSes__c = NSP_ServiceConstants.INSURANCE;
+        ip.NSP_Project_Manager__c  = cont.id;
+        ip.NSP_Sr_Onboarding_Benefit_Rep__c=cont.id;
+        ip.NSP_Form_Completed__c=true;
+        ip.NSP_Asset__c = asset.id;
+        //update ip record for the above fields
+        update  ip;
+        System.assertEquals(NSP_ServiceConstants.YES,ip.Is_client_s_current_HSA_with_Optum_Bank__c);
+		Test.stopTest();
+    }
+
     //test method handleTaskCreation
     @isTest
     public static void handleTaskCreation(){

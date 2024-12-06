@@ -56,6 +56,7 @@
     &apos;76&apos; , &apos;Quest Family Office&apos; ,
     &apos;77&apos; , &apos;Aliavia Ventures&apos; ,
     &apos;78&apos; , &apos;Osuna Partners&apos; ,
+    &apos;79&apos; , &apos;Wave Rock Holdings&apos; ,
     TEXT( Account.WO_Asset__r.NSP_National_Account_Group__c )
   )
 )</formula>

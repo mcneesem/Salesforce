@@ -261,7 +261,7 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>flowArguments</name>
-                    <value>[{&quot;label&quot;:&quot;recordId&quot;,&quot;dataType&quot;:&quot;String&quot;,&quot;supportsRecordId&quot;:true,&quot;value&quot;:&quot;{!Record.Id}&quot;}]</value>
+                    <value>[{&quot;label&quot;:&quot;recordId&quot;,&quot;dataType&quot;:&quot;String&quot;,&quot;supportsRecordId&quot;:true,&quot;value&quot;:&quot;{!Record.Id}&quot;},{&quot;label&quot;:&quot;recordOpportunity&quot;,&quot;dataType&quot;:&quot;SObject&quot;,&quot;supportsRecordId&quot;:true,&quot;value&quot;:&quot;&quot;}]</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>flowLayout</name>
@@ -274,7 +274,7 @@
                 <componentName>flowruntime:interview</componentName>
                 <identifier>flowruntime_interview</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 OR 2 OR 3</booleanFilter>
+                    <booleanFilter>1 OR 2 OR 3 OR 4</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.Checklist_User_Check_Formula__c}</leftValue>
                         <operator>EQUAL</operator>
@@ -289,6 +289,11 @@
                         <leftValue>{!Record.Checklist_User_Check_Formula__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Booking</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Checklist_User_Check_Formula__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>MMC</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
@@ -5648,6 +5653,16 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.Number_of_MMC_Checklists__c</fieldItem>
+                <identifier>RecordNumber_of_MMC_Checklists_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.Number_of_SEQ_Checklists__c</fieldItem>
                 <identifier>RecordNumber_of_SEQ_Checklists_cField</identifier>
             </fieldInstance>
@@ -7589,7 +7604,7 @@
                             <value>NAME</value>
                         </valueListItems>
                         <valueListItems>
-                            <value>RECORDTYPE</value>
+                            <value>Checklist_Type__c</value>
                         </valueListItems>
                         <valueListItems>
                             <value>CREATEDBY_USER</value>

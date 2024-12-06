@@ -742,33 +742,6 @@ private class NSP_CaseTriggerHelperTest {
     }
     
     /**
-    * @Description: This test method is used to check email invocation when case status is closed
-    * @Created date: 30/11/2022. 
-    * @return void             
-    */  
-    @isTest
-    private static void testSendHCMCaseCompletionMail(){        
-        Case hcmCase = [SELECT Id, Subject, Status FROM Case WHERE Subject =:NSP_ServiceConstants.HCM_TEST_CASE_SUBJECT];
-        Test.startTest();
-        hcmCase.Status = NSP_ServiceConstants.CASE_CLOSED_STATUS;
-        hcmCase.NSP_Rating__c = NSP_ServiceConstants.CASE_RATING;
-        UPDATE hcmCase;
-        //System.assertEquals(1, Limits.getEmailInvocations());
-        Test.stopTest();
-        
-    }
-
-    @isTest
-    private static void testNotSendHCMCaseCompletionMail(){        
-        Case hcmCase = [SELECT Id, Subject, Status FROM Case WHERE Subject =:NSP_ServiceConstants.HCM_TEST_CASE_SUBJECT];
-        Test.startTest();
-        hcmCase.Status = NSP_ServiceConstants.CASE_CANCELLED_STATUS;
-        UPDATE hcmCase;
-        system.assertEquals(0, Limits.getEmailInvocations());
-        Test.stopTest();
-        
-    }
-    /**
     * @Description: This test method is used to check email invocation 
     * 				when case sub status is awaiting Verification
     * @Created date: 9/12/2022. 

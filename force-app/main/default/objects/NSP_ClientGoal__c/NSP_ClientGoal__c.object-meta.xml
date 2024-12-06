@@ -149,7 +149,7 @@
     <enableHistory>true</enableHistory>
     <enableLicensing>false</enableLicensing>
     <enableReports>false</enableReports>
-    <enableSearch>false</enableSearch>
+    <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>Read</externalSharingModel>
@@ -160,7 +160,11 @@
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Client Goals</pluralLabel>
-    <searchLayouts></searchLayouts>
+    <searchLayouts>
+        <searchResultsAdditionalFields>NSP_Goal_Type__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>NSP_Goal_Details__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>NSP_Goal_Date__c</searchResultsAdditionalFields>
+    </searchLayouts>
     <sharingModel>Read</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Licensed Contractor Email</label>
+    <protected>false</protected>
+    <values>
+        <field>Description__c</field>
+        <value xsi:type="xsd:string">Automation Section: Service Team And Workers Safety
+            Automation Name: CA Licensed Contractor And CA Licensed Contractor (MM Client)
+            Automation Icon: envelope
+            Email: insperitycerts@locktonaffinity.com.</value>
+    </values>
+    <values>
+        <field>NSP_Email_Address__c</field>
+        <value xsi:type="xsd:string">insperitycerts@locktonaffinity.com.invalid</value>
+    </values>
+    <values>
+        <field>NSP_Name__c</field>
+        <value xsi:type="xsd:string">Licensed Contractor Email</value>
+    </values>
+</CustomMetadata>

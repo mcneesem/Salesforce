@@ -252,6 +252,11 @@
                 <default>false</default>
                 <label>Osuna Partners</label>
             </value>
+            <value>
+                <fullName>79</fullName>
+                <default>false</default>
+                <label>Wave Rock Holdings</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

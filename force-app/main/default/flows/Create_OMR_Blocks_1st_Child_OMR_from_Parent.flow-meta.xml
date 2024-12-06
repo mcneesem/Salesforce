@@ -4,8 +4,8 @@
     <assignments>
         <name>Set_Element_Friday_Create_1st_Child_OMR</name>
         <label>Set Element : Friday_Create_1st_Child_OMR</label>
-        <locationX>1479</locationX>
-        <locationY>4236</locationY>
+        <locationX>1199</locationX>
+        <locationY>4283</locationY>
         <assignmentItems>
             <assignToReference>FaultElement</assignToReference>
             <operator>Assign</operator>
@@ -20,8 +20,8 @@
     <assignments>
         <name>Set_Element_Friday_Create_1st_Child_OMR_with_Parent_Start</name>
         <label>Set Element : Friday_Create_1st_Child_OMR_with_Parent_Start</label>
-        <locationX>687</locationX>
-        <locationY>4128</locationY>
+        <locationX>407</locationX>
+        <locationY>4175</locationY>
         <assignmentItems>
             <assignToReference>FaultElement</assignToReference>
             <operator>Assign</operator>
@@ -37,8 +37,8 @@
     <assignments>
         <name>Set_Element_Monday_Create_1st_Child_OMR</name>
         <label>Set Element : Monday_Create_1st_Child_OMR</label>
-        <locationX>1358</locationX>
-        <locationY>708</locationY>
+        <locationX>1078</locationX>
+        <locationY>755</locationY>
         <assignmentItems>
             <assignToReference>FaultElement</assignToReference>
             <operator>Assign</operator>
@@ -54,8 +54,8 @@
     <assignments>
         <name>Set_Element_Monday_Create_1st_Child_OMR_with_Parent_Start</name>
         <label>Set Element : Monday_Create_1st_Child_OMR_with_Parent_Start</label>
-        <locationX>654</locationX>
-        <locationY>600</locationY>
+        <locationX>374</locationX>
+        <locationY>647</locationY>
         <assignmentItems>
             <assignToReference>FaultElement</assignToReference>
             <operator>Assign</operator>
@@ -71,8 +71,8 @@
     <assignments>
         <name>Set_Element_Thursday_Create_1st_Child_OMR</name>
         <label>Set Element : Thursday_Create_1st_Child_OMR</label>
-        <locationX>1358</locationX>
-        <locationY>3354</locationY>
+        <locationX>1078</locationX>
+        <locationY>3401</locationY>
         <assignmentItems>
             <assignToReference>FaultElement</assignToReference>
             <operator>Assign</operator>
@@ -88,8 +88,8 @@
     <assignments>
         <name>Set_Element_Thursday_Create_1st_Child_OMR_with_Parent_Start</name>
         <label>Set Element : Thursday_Create_1st_Child_OMR_with_Parent_Start</label>
-        <locationX>654</locationX>
-        <locationY>3246</locationY>
+        <locationX>374</locationX>
+        <locationY>3293</locationY>
         <assignmentItems>
             <assignToReference>FaultElement</assignToReference>
             <operator>Assign</operator>
@@ -105,8 +105,8 @@
     <assignments>
         <name>Set_Element_Tuesday_Create_1st_Child_OMR</name>
         <label>Set Element : Tuesday_Create_1st_Child_OMR</label>
-        <locationX>1358</locationX>
-        <locationY>1590</locationY>
+        <locationX>1078</locationX>
+        <locationY>1637</locationY>
         <assignmentItems>
             <assignToReference>FaultElement</assignToReference>
             <operator>Assign</operator>
@@ -122,8 +122,8 @@
     <assignments>
         <name>Set_Element_Tuesday_Create_1st_Child_OMR_with_Parent_Start</name>
         <label>Set Element : Tuesday_Create_1st_Child_OMR_with_Parent_Start</label>
-        <locationX>654</locationX>
-        <locationY>1482</locationY>
+        <locationX>374</locationX>
+        <locationY>1529</locationY>
         <assignmentItems>
             <assignToReference>FaultElement</assignToReference>
             <operator>Assign</operator>
@@ -139,8 +139,8 @@
     <assignments>
         <name>Set_Element_Wednesday_Create_1st_Child_OMR</name>
         <label>Set Element : Wednesday_Create_1st_Child_OMR</label>
-        <locationX>1358</locationX>
-        <locationY>2472</locationY>
+        <locationX>1078</locationX>
+        <locationY>2519</locationY>
         <assignmentItems>
             <assignToReference>FaultElement</assignToReference>
             <operator>Assign</operator>
@@ -156,8 +156,8 @@
     <assignments>
         <name>Set_Element_Wednesday_Create_1st_Child_OMR_with_Parent_Start</name>
         <label>Set Element : Wednesday_Create_1st_Child_OMR_with_Parent_Start</label>
-        <locationX>654</locationX>
-        <locationY>2364</locationY>
+        <locationX>374</locationX>
+        <locationY>2411</locationY>
         <assignmentItems>
             <assignToReference>FaultElement</assignToReference>
             <operator>Assign</operator>
@@ -173,8 +173,8 @@
     <decisions>
         <name>Is_Start_Date_a_Friday</name>
         <label>Is Start Date a Friday?</label>
-        <locationX>753</locationX>
-        <locationY>3912</locationY>
+        <locationX>473</locationX>
+        <locationY>3959</locationY>
         <defaultConnector>
             <targetReference>Next_Friday_Before_Entered_End_Date</targetReference>
         </defaultConnector>
@@ -198,8 +198,8 @@
     <decisions>
         <name>Is_Start_Date_a_Monday</name>
         <label>Is Start Date a Monday?</label>
-        <locationX>698</locationX>
-        <locationY>384</locationY>
+        <locationX>418</locationX>
+        <locationY>431</locationY>
         <defaultConnector>
             <targetReference>Is_the_Next_Monday_Before_Entered_End_Date</targetReference>
         </defaultConnector>
@@ -223,8 +223,8 @@
     <decisions>
         <name>Is_Start_Date_a_Thursday</name>
         <label>Is Start Date a Thursday?</label>
-        <locationX>698</locationX>
-        <locationY>3030</locationY>
+        <locationX>418</locationX>
+        <locationY>3077</locationY>
         <defaultConnector>
             <targetReference>Next_Thursday_Before_Entered_End_Date</targetReference>
         </defaultConnector>
@@ -248,8 +248,8 @@
     <decisions>
         <name>Is_Start_Date_a_Tuesday</name>
         <label>Is Start Date a Tuesday?</label>
-        <locationX>698</locationX>
-        <locationY>1266</locationY>
+        <locationX>418</locationX>
+        <locationY>1313</locationY>
         <defaultConnector>
             <targetReference>Is_the_Next_Tuesday_Before_Entered_End_Date</targetReference>
         </defaultConnector>
@@ -273,8 +273,8 @@
     <decisions>
         <name>Is_Start_Date_a_Wednesday</name>
         <label>Is Start Date a Wednesday?</label>
-        <locationX>698</locationX>
-        <locationY>2148</locationY>
+        <locationX>418</locationX>
+        <locationY>2195</locationY>
         <defaultConnector>
             <targetReference>Is_the_Next_Wednesday_Before_Entered_End_Date</targetReference>
         </defaultConnector>
@@ -298,8 +298,8 @@
     <decisions>
         <name>Is_the_Next_Monday_Before_Entered_End_Date</name>
         <label>Is the Next Monday Before Entered End Date?</label>
-        <locationX>1006</locationX>
-        <locationY>492</locationY>
+        <locationX>726</locationX>
+        <locationY>539</locationY>
         <defaultConnector>
             <targetReference>Monday_Create_1st_Child_OMR</targetReference>
         </defaultConnector>
@@ -323,8 +323,8 @@
     <decisions>
         <name>Is_the_Next_Tuesday_Before_Entered_End_Date</name>
         <label>Is the Next Tuesday Before Entered End Date?</label>
-        <locationX>1006</locationX>
-        <locationY>1374</locationY>
+        <locationX>726</locationX>
+        <locationY>1421</locationY>
         <defaultConnector>
             <targetReference>Tuesday_Create_1st_Child_OMR</targetReference>
         </defaultConnector>
@@ -348,8 +348,8 @@
     <decisions>
         <name>Is_the_Next_Wednesday_Before_Entered_End_Date</name>
         <label>Is the Next Wednesday Before Entered End Date?</label>
-        <locationX>1006</locationX>
-        <locationY>2256</locationY>
+        <locationX>726</locationX>
+        <locationY>2303</locationY>
         <defaultConnector>
             <targetReference>Wednesday_Create_1st_Child_OMR</targetReference>
         </defaultConnector>
@@ -373,8 +373,8 @@
     <decisions>
         <name>Next_Friday_Before_Entered_End_Date</name>
         <label>Next Friday Before Entered End Date?</label>
-        <locationX>1083</locationX>
-        <locationY>4020</locationY>
+        <locationX>803</locationX>
+        <locationY>4067</locationY>
         <defaultConnector>
             <targetReference>Friday_Create_1st_Child_OMR</targetReference>
         </defaultConnector>
@@ -395,8 +395,8 @@
     <decisions>
         <name>Next_Thursday_Before_Entered_End_Date</name>
         <label>Next Thursday Before Entered End Date?</label>
-        <locationX>1006</locationX>
-        <locationY>3138</locationY>
+        <locationX>726</locationX>
+        <locationY>3185</locationY>
         <defaultConnector>
             <targetReference>Thursday_Create_1st_Child_OMR</targetReference>
         </defaultConnector>
@@ -420,8 +420,8 @@
     <decisions>
         <name>Repeat_on_Friday</name>
         <label>Repeat on Friday?</label>
-        <locationX>456</locationX>
-        <locationY>3804</locationY>
+        <locationX>176</locationX>
+        <locationY>3851</locationY>
         <defaultConnector>
             <targetReference>Is_Start_Date_a_Friday</targetReference>
         </defaultConnector>
@@ -442,8 +442,8 @@
     <decisions>
         <name>Repeat_on_Monday</name>
         <label>Repeat on Monday?</label>
-        <locationX>456</locationX>
-        <locationY>276</locationY>
+        <locationX>176</locationX>
+        <locationY>323</locationY>
         <defaultConnector>
             <targetReference>Is_Start_Date_a_Monday</targetReference>
         </defaultConnector>
@@ -467,8 +467,8 @@
     <decisions>
         <name>Repeat_on_Thursday</name>
         <label>Repeat on Thursday?</label>
-        <locationX>456</locationX>
-        <locationY>2922</locationY>
+        <locationX>176</locationX>
+        <locationY>2969</locationY>
         <defaultConnector>
             <targetReference>Is_Start_Date_a_Thursday</targetReference>
         </defaultConnector>
@@ -492,8 +492,8 @@
     <decisions>
         <name>Repeat_on_Tuesday</name>
         <label>Repeat on Tuesday?</label>
-        <locationX>456</locationX>
-        <locationY>1158</locationY>
+        <locationX>176</locationX>
+        <locationY>1205</locationY>
         <defaultConnector>
             <targetReference>Is_Start_Date_a_Tuesday</targetReference>
         </defaultConnector>
@@ -517,8 +517,8 @@
     <decisions>
         <name>Repeat_on_Wednesday</name>
         <label>Repeat on Wednesday?</label>
-        <locationX>456</locationX>
-        <locationY>2040</locationY>
+        <locationX>176</locationX>
+        <locationY>2087</locationY>
         <defaultConnector>
             <targetReference>Is_Start_Date_a_Wednesday</targetReference>
         </defaultConnector>
@@ -600,8 +600,8 @@
     <recordCreates>
         <name>Friday_Create_1st_Child_OMR</name>
         <label>Friday Create 1st Child OMR</label>
-        <locationX>1215</locationX>
-        <locationY>4128</locationY>
+        <locationX>935</locationX>
+        <locationY>4175</locationY>
         <faultConnector>
             <targetReference>Set_Element_Friday_Create_1st_Child_OMR</targetReference>
         </faultConnector>
@@ -671,8 +671,8 @@
     <recordCreates>
         <name>Friday_Create_1st_Child_OMR_with_Parent_Start</name>
         <label>Friday Create 1st Child OMR with Parent Start</label>
-        <locationX>423</locationX>
-        <locationY>4020</locationY>
+        <locationX>143</locationX>
+        <locationY>4067</locationY>
         <faultConnector>
             <targetReference>Set_Element_Friday_Create_1st_Child_OMR_with_Parent_Start</targetReference>
         </faultConnector>
@@ -742,8 +742,8 @@
     <recordCreates>
         <name>Monday_Create_1st_Child_OMR</name>
         <label>Monday Create 1st Child OMR</label>
-        <locationX>1094</locationX>
-        <locationY>600</locationY>
+        <locationX>814</locationX>
+        <locationY>647</locationY>
         <connector>
             <targetReference>Repeat_on_Tuesday</targetReference>
         </connector>
@@ -816,8 +816,8 @@
     <recordCreates>
         <name>Monday_Create_1st_Child_OMR_with_Parent_Start</name>
         <label>Monday Create 1st Child OMR with Parent Start</label>
-        <locationX>390</locationX>
-        <locationY>492</locationY>
+        <locationX>110</locationX>
+        <locationY>539</locationY>
         <connector>
             <targetReference>Repeat_on_Tuesday</targetReference>
         </connector>
@@ -890,8 +890,8 @@
     <recordCreates>
         <name>Thursday_Create_1st_Child_OMR</name>
         <label>Thursday Create 1st Child OMR</label>
-        <locationX>1094</locationX>
-        <locationY>3246</locationY>
+        <locationX>814</locationX>
+        <locationY>3293</locationY>
         <connector>
             <targetReference>Repeat_on_Friday</targetReference>
         </connector>
@@ -964,8 +964,8 @@
     <recordCreates>
         <name>Thursday_Create_1st_Child_OMR_with_Parent_Start</name>
         <label>Thursday Create 1st Child OMR with Parent Start</label>
-        <locationX>390</locationX>
-        <locationY>3138</locationY>
+        <locationX>110</locationX>
+        <locationY>3185</locationY>
         <connector>
             <targetReference>Repeat_on_Friday</targetReference>
         </connector>
@@ -1038,8 +1038,8 @@
     <recordCreates>
         <name>Tuesday_Create_1st_Child_OMR</name>
         <label>Tuesday Create 1st Child OMR</label>
-        <locationX>1094</locationX>
-        <locationY>1482</locationY>
+        <locationX>814</locationX>
+        <locationY>1529</locationY>
         <connector>
             <targetReference>Repeat_on_Wednesday</targetReference>
         </connector>
@@ -1112,8 +1112,8 @@
     <recordCreates>
         <name>Tuesday_Create_1st_Child_OMR_with_Parent_Start</name>
         <label>Tuesday Create 1st Child OMR with Parent Start</label>
-        <locationX>390</locationX>
-        <locationY>1374</locationY>
+        <locationX>110</locationX>
+        <locationY>1421</locationY>
         <connector>
             <targetReference>Repeat_on_Wednesday</targetReference>
         </connector>
@@ -1186,8 +1186,8 @@
     <recordCreates>
         <name>Wednesday_Create_1st_Child_OMR</name>
         <label>Wednesday Create 1st Child OMR</label>
-        <locationX>1094</locationX>
-        <locationY>2364</locationY>
+        <locationX>814</locationX>
+        <locationY>2411</locationY>
         <connector>
             <targetReference>Repeat_on_Thursday</targetReference>
         </connector>
@@ -1260,8 +1260,8 @@
     <recordCreates>
         <name>Wednesday_Create_1st_Child_OMR_with_Parent_Start</name>
         <label>Wednesday Create 1st Child OMR with Parent Start</label>
-        <locationX>390</locationX>
-        <locationY>2256</locationY>
+        <locationX>110</locationX>
+        <locationY>2303</locationY>
         <connector>
             <targetReference>Repeat_on_Thursday</targetReference>
         </connector>
@@ -1334,6 +1334,9 @@
     <start>
         <locationX>50</locationX>
         <locationY>0</locationY>
+        <connector>
+            <targetReference>Repeat_on_Monday</targetReference>
+        </connector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Parent__c</field>
@@ -1344,20 +1347,14 @@
         </filters>
         <object>Onboarding_Meeting_Request__c</object>
         <recordTriggerType>Create</recordTriggerType>
-        <scheduledPaths>
-            <connector>
-                <targetReference>Repeat_on_Monday</targetReference>
-            </connector>
-            <pathType>AsyncAfterCommit</pathType>
-        </scheduledPaths>
         <triggerType>RecordAfterSave</triggerType>
     </start>
     <status>Draft</status>
     <subflows>
         <name>Insperity_Fault_Handler_Subflow</name>
         <label>Insperity Fault Handler Subflow</label>
-        <locationX>1479</locationX>
-        <locationY>4344</locationY>
+        <locationX>1199</locationX>
+        <locationY>4391</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultElement</name>

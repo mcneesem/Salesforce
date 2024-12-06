@@ -415,6 +415,12 @@
         <fields>Status</fields>
         <relatedList>WorkOrder.NSP_Project_Task__c</relatedList>
     </relatedLists>
+    <relatedLists>
+         <fields>NAME</fields>
+         <fields>NSP_ClientGoal__c.NAME</fields>
+         <fields>NSP_ClientGoal__c.NSP_Account__c</fields>
+         <relatedList>Client_Goals_Project_task_junction__c.Project_Task__c</relatedList>
+    </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>true</showHighlightsPanel>
     <showInteractionLogPanel>true</showInteractionLogPanel>
