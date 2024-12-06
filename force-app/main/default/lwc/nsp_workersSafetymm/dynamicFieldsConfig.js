@@ -17,6 +17,12 @@ const DYNAMIC_FIELDS = {
           dependentFields: ['When_are_certificates_needed__c'],
         },
       ],
+      Are_you_a_licensed_Contractor__c: [
+        {
+          expValue: ['Yes'],
+          dependentFields: ['Are_you_registered_with_the_CSLB__c', 'Contractor_s_License__c'],
+        },
+      ],
     
 };
 

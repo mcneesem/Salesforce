@@ -43,6 +43,38 @@
         class={styles.Send_the_certificates_to__c}
         onchange={handleValueChange}></lightning-input-field>
     </div>
+    <c-nsp_selection-box
+        disabled={disabledFields.Are_you_a_licensed_Contractor__c}
+        label={label.AreyoualicensedContractor}
+        field-api-name="Implementation_Profile__c.Are_you_a_licensed_Contractor__c"
+        record-type-id={recordTypeId}
+        data-name="Are_you_a_licensed_Contractor__c"
+        value={field.Are_you_a_licensed_Contractor__c}
+        onchange={handleValueChange}
+        ondblclick={handleDoubleClick}>
+    </c-nsp_selection-box>
+    <c-nsp_selection-box
+        disabled={disabledFields.Are_you_registered_with_the_CSLB__c}
+        lwc:if={visibility.Are_you_registered_with_the_CSLB__c}
+        class={styles.Are_you_registered_with_the_CSLB__c}
+        label={label.AreyouregisteredwiththeCSLB}
+        field-api-name="Implementation_Profile__c.Are_you_registered_with_the_CSLB__c"
+        record-type-id={recordTypeId}
+        data-name="Are_you_registered_with_the_CSLB__c"
+        value={field.Are_you_registered_with_the_CSLB__c}
+        onchange={handleValueChange}
+        ondblclick={handleDoubleClick}>
+    </c-nsp_selection-box>
+
+    <lightning-input-field
+      lwc:if={visibility.Contractor_s_License__c}
+      class={styles.Contractor_s_License__c}
+      value={field.Contractor_s_License__c}
+      disabled={disabledFields.Contractor_s_License__c}
+      data-name="Contractor_s_License__c"
+      field-name="Contractor_s_License__c"
+      onchange={handleValueChange}>
+    </lightning-input-field>
 
     <c-nsp_selection-box
       disabled={disabledFields.Client_have_any_urgent_HR_needs__c}

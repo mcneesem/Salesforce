@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Amount_Field__c</fullName>
+    <description>To set the field for the custom metadata record</description>
+    <externalId>false</externalId>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <inlineHelpText>Choose the field for comparison in this Custom Metadata Record</inlineHelpText>
+    <label>Amount Field</label>
+    <required>true</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Subtotal</fullName>
+                <default>true</default>
+                <label>blng__Subtotal__c</label>
+            </value>
+            <value>
+                <fullName>TaxAmount</fullName>
+                <default>false</default>
+                <label>blng__TaxAmount__c</label>
+            </value>
+            <value>
+                <fullName>Amount</fullName>
+                <default>false</default>
+                <label>blng__Amount__c</label>
+            </value>
+            <value>
+                <fullName>RevenueAmount</fullName>
+                <default>false</default>
+                <label>blng__RevenueAmount__c</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

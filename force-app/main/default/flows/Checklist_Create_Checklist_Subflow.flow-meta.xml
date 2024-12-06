@@ -4,7 +4,7 @@
     <assignments>
         <name>Assign_Booking_WO_values_to_recordChecklist</name>
         <label>Assign Booking WO values to recordChecklist</label>
-        <locationX>1634</locationX>
+        <locationX>1898</locationX>
         <locationY>458</locationY>
         <assignmentItems>
             <assignToReference>recordChecklist.NSP_ALE_switched_to_YES_over_50_ees__c</assignToReference>
@@ -398,7 +398,7 @@
     <assignments>
         <name>Assign_Booking_WX_values_to_recordChecklist</name>
         <label>Assign Booking WX values to recordChecklist</label>
-        <locationX>1370</locationX>
+        <locationX>1634</locationX>
         <locationY>458</locationY>
         <assignmentItems>
             <assignToReference>recordChecklist.NSP_Book_Sale_in_Salesforce__c</assignToReference>
@@ -498,7 +498,7 @@
     <assignments>
         <name>Assign_Fault_Element_CreateChecklist</name>
         <label>Assign Fault Element</label>
-        <locationX>2338</locationX>
+        <locationX>2602</locationX>
         <locationY>866</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
@@ -515,7 +515,7 @@
     <assignments>
         <name>Assign_Fault_Element_Update_Opportunity_Record</name>
         <label>Assign Fault Element</label>
-        <locationX>2074</locationX>
+        <locationX>2338</locationX>
         <locationY>974</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
@@ -526,6 +526,400 @@
         </assignmentItems>
         <connector>
             <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_MMC_values_to_recordChecklist</name>
+        <label>Assign MMC values to recordChecklist</label>
+        <locationX>1370</locationX>
+        <locationY>458</locationY>
+        <assignmentItems>
+            <assignToReference>recordChecklist.NSP_Client_Name__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>recordAccount.Name</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>recordChecklist.NSP_Client_FEIN__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>recordAccount.NSP_FEIN__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>recordChecklist.NSP_Bid_Number__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>recordOpportunity.NSP_BidNumber__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>recordChecklist.NSP_Account_Billing_Country__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>recordAccount.BillingCountry</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>recordChecklist.NSP_Account_Billing_Street__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>recordAccount.BillingStreet</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>recordChecklist.NSP_Account_Billling_City__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>recordAccount.BillingCity</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>recordChecklist.NSP_Account_Billing_State_Code__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>recordAccount.BillingStateCode</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>recordChecklist.NSP_Billing_Postal_Code__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>recordAccount.BillingPostalCode</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>recordChecklist.Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Status_MMC_WoWx</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>recordChecklist.NSP_Requested_Insperity_Effective_Date__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>RequestedNSPEffectiveDate_MMC_WoWx</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>recordChecklist.NSP_Requested_First_Pay_Date__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>RequestedFirstPayDate_MMC_WoWx</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>recordChecklist.NSP_Full_Time_Employees__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>FullTimeEmployees_MMC_WoWx</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>recordChecklist.NSP_Part_Time_Employees__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>PartTimeEmployees_MMC_WoWx</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>recordChecklist.NSP_Pay_Frequency__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Copy_1_of_PayFrequency_STP_WO</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>recordChecklist.NSP_Benefits_Waiting_Period__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>BenefitWaitingPeriod_MMC_WoWx</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>recordChecklist.NSP_Demo_completed__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Demo_Completed_MMC_WoWx</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>recordChecklist.NSP_Demo_Date__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Demo_Completed_Date_MMC_WoWx</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>recordChecklist.NSP_Benefit_Classing__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>BenefitClassing_MMC_WoWx</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>recordChecklist.NSP_X401k__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>X401K_MMC_WoWx</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>recordChecklist.NSP_Communication_Method__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Preferred_Method_MMC_WoWx</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>recordChecklist.NSP_Additional_Notes__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Additional_Notes_MMC_WoWx</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>recordChecklist.NSP_Why_are_they_looking_at_Insperity__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Reason_why_client_bought_MMC_WoWx</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>recordChecklist.NSP_Primary_Contact_Full_Name__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>recordContact.Name</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>recordChecklist.NSP_Client_Contact_Name__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>recordContact.Name</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>recordChecklist.NSP_Contact_Email__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>recordContact.Email</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>recordChecklist.NSP_Phone_Number__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>recordContact.Phone</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>recordChecklist.NSP_Opportunity_Primary_Product__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>recordOpportunity.NSP_PrimaryProduct__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>recordChecklist.NSP_Opportunity__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>recordOpportunity.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>recordChecklist.Urgent__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Urgent_MMC</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>recordChecklist.MMNA_Account_Partner__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>recordOpportunity.MidMarket_National_Account__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>recordChecklist.Tax_Type__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Tax_Type_MMC</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>recordChecklist.Hush_Protocol__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Hush_Protocol_MMC</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>recordChecklist.Has_the_FEIN_run_payroll_before__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Has_the_FEIN_run_payroll_before_MMC</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>recordChecklist.Pricing_includes_co_employment_FT__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Pricing_includes_co_employment_FT_MMC</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>recordChecklist.Pricing_includes_co_employment_PT__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Pricing_includes_co_employment_PT_MMC</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>recordChecklist.Benefits_Start_Date__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Benefits_Start_Date_MMC</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>recordChecklist.Pay_Period__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Pay_Period_MMC</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>recordChecklist.Enrollment_Fee_Amount__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Enrollment_Fee_Amount_MMC</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>recordChecklist.Enrollment_Fee_Payment_Option__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Enrollment_Fee_Payment_Options_MMC</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>recordChecklist.Medical_Employee__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Medical_Employee_MMC</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>recordChecklist.Medical_E_and_Spouse__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Medical_E_and_Spouse_MMC</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>recordChecklist.Medical_E_and_Children__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Medical_E_and_Children_MMC</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>recordChecklist.Medical_E_and_Family__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Medical_E_and_Family_MMC</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>recordChecklist.Dental_Vision_Employee__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Dental_Vision_Employee_MMC</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>recordChecklist.Dental_Vision_E_and_Spouse__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Dental_Vision_E_and_Spouse</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>recordChecklist.Dental_Vision_E_and_Children__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Dental_Vision_E_and_Children_MMC</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>recordChecklist.Dental_Vision_E_and_Family__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Dental_Vision_E_and_Family_MMC</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>recordChecklist.Who_Completed_the_Demo__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>WhoCompletedTheDemo_MMC.recordId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>recordChecklist.Type_of_Classing_Who__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Type_of_Classing_Who_MMC</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>recordChecklist.ITA__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ITA_MMC</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>recordChecklist.GL_Policy__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GL_Policy_MMC</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>recordChecklist.Integra__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Integra_MMC</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>recordChecklist.Performance_Management__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Performance_Management_MMC</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>recordChecklist.Solutions_Specialist__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>recordAccount.OwnerId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>recordChecklist.Docusign_Signer__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>DocusignSigner_MMC.recordId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Increase_MMC_Checklist_Count_on_Opty</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -1892,7 +2286,7 @@
     <assignments>
         <name>Increase_Booking_Checklist_Count_on_Opty_Booking_WO</name>
         <label>Increase Booking Checklist Count on Opty</label>
-        <locationX>1634</locationX>
+        <locationX>1898</locationX>
         <locationY>566</locationY>
         <assignmentItems>
             <assignToReference>recordOpportunity.Number_of_Booking_Checklists__c</assignToReference>
@@ -1908,7 +2302,7 @@
     <assignments>
         <name>Increase_Checklist_Count_on_Opty_Booking_WX</name>
         <label>Increase Booking Checklist Count on Opty</label>
-        <locationX>1370</locationX>
+        <locationX>1634</locationX>
         <locationY>566</locationY>
         <assignmentItems>
             <assignToReference>recordOpportunity.Number_of_Booking_Checklists__c</assignToReference>
@@ -1970,6 +2364,22 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Increase_MMC_Checklist_Count_on_Opty</name>
+        <label>Increase MMC Checklist Count on Opty</label>
+        <locationX>1370</locationX>
+        <locationY>566</locationY>
+        <assignmentItems>
+            <assignToReference>recordOpportunity.Number_of_MMC_Checklists__c</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <numberValue>1.0</numberValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Create_Checklist</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Increase_STP_Checklist_Count_on_Opty_STP_WO</name>
         <label>Increase STP Checklist Count on Opty</label>
         <locationX>1106</locationX>
@@ -2020,7 +2430,7 @@
     <decisions>
         <name>Checklist_Routing</name>
         <label>Checklist Routing</label>
-        <locationX>974</locationX>
+        <locationX>1106</locationX>
         <locationY>242</locationY>
         <defaultConnector>
             <targetReference>Create_Checklist</targetReference>
@@ -2037,10 +2447,10 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>recordChecklist.RecordTypeId</leftValueReference>
+                <leftValueReference>recordChecklist.Checklist_Type__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>0124x000000yRvAAAU</stringValue>
+                    <stringValue>Sales Engineer Questionnaire</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -2059,10 +2469,10 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>recordChecklist.RecordTypeId</leftValueReference>
+                <leftValueReference>recordChecklist.Checklist_Type__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>0124x000000yRvAAAU</stringValue>
+                    <stringValue>Sales Engineer Questionnaire</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -2081,10 +2491,10 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>recordChecklist.RecordTypeId</leftValueReference>
+                <leftValueReference>recordChecklist.Checklist_Type__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>0124x000000yRvAAAU</stringValue>
+                    <stringValue>Sales Engineer Questionnaire</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -2103,10 +2513,10 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>recordChecklist.RecordTypeId</leftValueReference>
+                <leftValueReference>recordChecklist.Checklist_Type__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>0124x000000yRvBAAU</stringValue>
+                    <stringValue>Sold To Paid</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -2132,16 +2542,45 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>recordChecklist.RecordTypeId</leftValueReference>
+                <leftValueReference>recordChecklist.Checklist_Type__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>0124x000000yRvBAAU</stringValue>
+                    <stringValue>Sold To Paid</stringValue>
                 </rightValue>
             </conditions>
             <connector>
                 <targetReference>STP_WO_Screen</targetReference>
             </connector>
             <label>Sold to Paid - WO or WS</label>
+        </rules>
+        <rules>
+            <name>MidMarket_Closing_WO_or_WX</name>
+            <conditionLogic>(1 OR 2) AND 3</conditionLogic>
+            <conditions>
+                <leftValueReference>recordOpportunity.NSP_PrimaryProduct__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>WO</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>recordOpportunity.NSP_PrimaryProduct__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>WX</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>recordChecklist.Checklist_Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>MidMarket Closing</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>MMC_WoWx_Screen</targetReference>
+            </connector>
+            <label>MidMarket Closing - WO or WX</label>
         </rules>
         <rules>
             <name>Booking_WX</name>
@@ -2154,10 +2593,10 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>recordChecklist.RecordTypeId</leftValueReference>
+                <leftValueReference>recordChecklist.Checklist_Type__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>0124x000000yRv9AAE</stringValue>
+                    <stringValue>Booking</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -2176,10 +2615,10 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>recordChecklist.RecordTypeId</leftValueReference>
+                <leftValueReference>recordChecklist.Checklist_Type__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>0124x000000yRv9AAE</stringValue>
+                    <stringValue>Booking</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -2188,7 +2627,7 @@
             <label>Booking - WO</label>
         </rules>
     </decisions>
-    <description>&quot;Additional Notes&quot; long text and &quot;Gov&apos;t Contract Approval Email&quot; added to SEQ - WX</description>
+    <description>MidMarket Closing added. &quot;Additional Notes&quot; long text and &quot;Gov&apos;t Contract Approval Email&quot; added to SEQ - WX</description>
     <dynamicChoiceSets>
         <name>activeBenefitContinuationPeriodPicklist</name>
         <dataType>Picklist</dataType>
@@ -2470,6 +2909,14 @@
         <picklistObject>NSP_Checklist__c</picklistObject>
     </dynamicChoiceSets>
     <dynamicChoiceSets>
+        <name>hasTheFEINRunPayrollBeforePicklist</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>Has_the_FEIN_run_payroll_before__c</picklistField>
+        <picklistObject>NSP_Checklist__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
         <name>howDoYouWantSystemToCalcOTPicklist</name>
         <dataType>Picklist</dataType>
         <displayField xsi:nil="true"/>
@@ -2491,6 +2938,14 @@
         <displayField xsi:nil="true"/>
         <object xsi:nil="true"/>
         <picklistField>NSP_Howoftenperformancereviews_be_done__c</picklistField>
+        <picklistObject>NSP_Checklist__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>hushProtocolPicklist</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>Hush_Protocol__c</picklistField>
         <picklistObject>NSP_Checklist__c</picklistObject>
     </dynamicChoiceSets>
     <dynamicChoiceSets>
@@ -2694,7 +3149,7 @@
     <recordCreates>
         <name>Create_Checklist</name>
         <label>Create Checklist</label>
-        <locationX>974</locationX>
+        <locationX>1106</locationX>
         <locationY>758</locationY>
         <connector>
             <targetReference>Update_Opportunity_Record</targetReference>
@@ -2707,7 +3162,7 @@
     <recordUpdates>
         <name>Update_Opportunity_Record</name>
         <label>Update Opportunity Record</label>
-        <locationX>974</locationX>
+        <locationX>1106</locationX>
         <locationY>866</locationY>
         <faultConnector>
             <targetReference>Assign_Fault_Element_Update_Opportunity_Record</targetReference>
@@ -2718,7 +3173,7 @@
     <screens>
         <name>Booking_WO_Screen</name>
         <label>Booking - WO Screen</label>
-        <locationX>1634</locationX>
+        <locationX>1898</locationX>
         <locationY>350</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -3231,7 +3686,7 @@
     <screens>
         <name>Booking_WX_Screen</name>
         <label>Booking - WX Screen</label>
-        <locationX>1370</locationX>
+        <locationX>1634</locationX>
         <locationY>350</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -3393,6 +3848,669 @@
             </fields>
             <isRequired>false</isRequired>
             <regionContainerType>SectionWithoutHeader</regionContainerType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>MMC_WoWx_Screen</name>
+        <label>MMC - WO WX Screen</label>
+        <locationX>1370</locationX>
+        <locationY>350</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Assign_MMC_values_to_recordChecklist</targetReference>
+        </connector>
+        <fields>
+            <name>MMC_WoWx_Header_DisplayText</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); color: rgb(0, 0, 0); font-size: 16px; font-family: Arial, Helvetica, sans-serif;&quot;&gt;MidMarket Closing Checklist&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>MMC_WoWx_Screen_Section1</name>
+            <fieldType>RegionContainer</fieldType>
+            <fields>
+                <name>MMC_WoWx_Screen_Section1_Column1</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>CompanyName_MMC_WoWx</name>
+                    <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(107, 109, 112);&quot;&gt;Legal Client Company Name&lt;/span&gt;&lt;/p&gt;&lt;p&gt;{!recordAccount.Name}&lt;/p&gt;</fieldText>
+                    <fieldType>DisplayText</fieldType>
+                </fields>
+                <fields>
+                    <name>DBAName_MMC_WoWx</name>
+                    <fieldText>&lt;p&gt;DBA Name&lt;/p&gt;&lt;p&gt;{!recordAccount.NSP_Account_DBA__c}&lt;/p&gt;</fieldText>
+                    <fieldType>DisplayText</fieldType>
+                </fields>
+                <fields>
+                    <name>MMNA_MMC_WoWx</name>
+                    <fieldText>&lt;p&gt;MMNA Account Partner&lt;/p&gt;&lt;p&gt;{!recordOpportunity.MidMarket_National_Account__c}&lt;/p&gt;</fieldText>
+                    <fieldType>DisplayText</fieldType>
+                </fields>
+                <fields>
+                    <name>ClientFEIN_MMC_WoWx</name>
+                    <fieldText>&lt;p&gt;Client FEIN&lt;/p&gt;&lt;p&gt;{!recordAccount.NSP_FEIN__c}&lt;/p&gt;</fieldText>
+                    <fieldType>DisplayText</fieldType>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>6</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <fields>
+                <name>MMC_WoWx_Screen_Section1_Column2</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>MMNA_DisplayText_MMC</name>
+                    <fieldText>&lt;p&gt;MMNA Account Partner&lt;/p&gt;&lt;p&gt;{!recordOpportunity.MidMarket_National_Account__c}&lt;/p&gt;</fieldText>
+                    <fieldType>DisplayText</fieldType>
+                </fields>
+                <fields>
+                    <name>BidNumber_MMC_WoWx</name>
+                    <fieldText>&lt;p&gt;Bid Number&lt;/p&gt;&lt;p&gt;{!recordOpportunity.NSP_BidNumber__c}&lt;/p&gt;</fieldText>
+                    <fieldType>DisplayText</fieldType>
+                </fields>
+                <fields>
+                    <name>Solutions_Specialist_MMC_WoWx</name>
+                    <fieldText>&lt;p&gt;Solutions Specialist&lt;/p&gt;&lt;p&gt;{!recordAccount.Owner.Name}&lt;/p&gt;</fieldText>
+                    <fieldType>DisplayText</fieldType>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>6</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <isRequired>false</isRequired>
+            <regionContainerType>SectionWithoutHeader</regionContainerType>
+        </fields>
+        <fields>
+            <name>MMC_WoWx_Screen_Section2</name>
+            <fieldType>RegionContainer</fieldType>
+            <fields>
+                <name>MMC_WoWx_Screen_Section2_Column1</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>BillingAddress_MMC_WoWx</name>
+                    <extensionName>flowruntime:address</extensionName>
+                    <fieldType>ComponentInstance</fieldType>
+                    <inputParameters>
+                        <name>addressLabel</name>
+                        <value>
+                            <stringValue>Address</stringValue>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>street</name>
+                        <value>
+                            <elementReference>recordAccount.BillingStreet</elementReference>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>city</name>
+                        <value>
+                            <elementReference>recordAccount.BillingCity</elementReference>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>province</name>
+                        <value>
+                            <elementReference>recordAccount.BillingState</elementReference>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>postalCode</name>
+                        <value>
+                            <elementReference>recordAccount.BillingPostalCode</elementReference>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>country</name>
+                        <value>
+                            <elementReference>recordAccount.BillingCountry</elementReference>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>provinceCode</name>
+                        <value>
+                            <elementReference>recordAccount.BillingStateCode</elementReference>
+                        </value>
+                    </inputParameters>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isRequired>true</isRequired>
+                    <storeOutputAutomatically>true</storeOutputAutomatically>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>6</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <fields>
+                <name>MMC_WoWx_Screen_Section2_Column2</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>Status_MMC_WoWx</name>
+                    <choiceReferences>statusPicklist</choiceReferences>
+                    <dataType>String</dataType>
+                    <fieldText>Status</fieldText>
+                    <fieldType>DropdownBox</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isRequired>true</isRequired>
+                </fields>
+                <fields>
+                    <name>Urgent_MMC</name>
+                    <dataType>Boolean</dataType>
+                    <fieldText>Urgent:</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isRequired>true</isRequired>
+                </fields>
+                <fields>
+                    <name>Hush_Protocol_MMC</name>
+                    <choiceReferences>hushProtocolPicklist</choiceReferences>
+                    <dataType>String</dataType>
+                    <fieldText>Hush Protocol:</fieldText>
+                    <fieldType>DropdownBox</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isRequired>false</isRequired>
+                </fields>
+                <fields>
+                    <name>Tax_Type_MMC</name>
+                    <dataType>String</dataType>
+                    <fieldText>Tax Type</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isRequired>false</isRequired>
+                </fields>
+                <fields>
+                    <name>Has_the_FEIN_run_payroll_before_MMC</name>
+                    <choiceReferences>hasTheFEINRunPayrollBeforePicklist</choiceReferences>
+                    <dataType>String</dataType>
+                    <fieldText>Has the FEIN run payroll before?</fieldText>
+                    <fieldType>DropdownBox</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isRequired>false</isRequired>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>6</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <isRequired>false</isRequired>
+            <regionContainerType>SectionWithoutHeader</regionContainerType>
+        </fields>
+        <fields>
+            <name>MMC_WoWx_Screen_Section3</name>
+            <fieldType>RegionContainer</fieldType>
+            <fields>
+                <name>MMC_WoWx_Screen_Section3_Column1</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>RequestedNSPEffectiveDate_MMC_WoWx</name>
+                    <dataType>Date</dataType>
+                    <fieldText>Requested Insperity Effective Date</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isRequired>false</isRequired>
+                </fields>
+                <fields>
+                    <name>RequestedFirstPayDate_MMC_WoWx</name>
+                    <dataType>Date</dataType>
+                    <fieldText>Requested First Pay Date</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isRequired>false</isRequired>
+                </fields>
+                <fields>
+                    <name>BenefitWaitingPeriod_MMC_WoWx</name>
+                    <choiceReferences>benefitsWaitingPeriodPicklist</choiceReferences>
+                    <dataType>String</dataType>
+                    <fieldText>Benefits Waiting Period</fieldText>
+                    <fieldType>DropdownBox</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isRequired>false</isRequired>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>3</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <fields>
+                <name>MMC_WoWx_Screen_Section3_Column2</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>Benefits_Start_Date_MMC</name>
+                    <dataType>Date</dataType>
+                    <fieldText>Benefits Start Date</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isRequired>false</isRequired>
+                </fields>
+                <fields>
+                    <name>Enrollment_Fee_Amount_MMC</name>
+                    <dataType>Currency</dataType>
+                    <fieldText>Enrollment Fee Amount</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isRequired>false</isRequired>
+                    <scale>0</scale>
+                </fields>
+                <fields>
+                    <name>Enrollment_Fee_Payment_Options_MMC</name>
+                    <dataType>String</dataType>
+                    <fieldText>Enrollment Fee Payment Options</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isRequired>false</isRequired>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>3</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <fields>
+                <name>MMC_WoWx_Screen_Section3_Column3</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>FullTimeEmployees_MMC_WoWx</name>
+                    <dataType>Number</dataType>
+                    <fieldText>Full Time Employees</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isRequired>false</isRequired>
+                    <scale>0</scale>
+                </fields>
+                <fields>
+                    <name>PartTimeEmployees_MMC_WoWx</name>
+                    <dataType>Number</dataType>
+                    <fieldText>Part Time Employees</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isRequired>false</isRequired>
+                    <scale>0</scale>
+                </fields>
+                <fields>
+                    <name>Copy_1_of_PayFrequency_STP_WO</name>
+                    <choiceReferences>payFrequencyPicklist</choiceReferences>
+                    <dataType>String</dataType>
+                    <fieldText>Pay Frequency</fieldText>
+                    <fieldType>DropdownBox</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isRequired>false</isRequired>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>3</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <fields>
+                <name>MMC_WoWx_Screen_Section3_Column4</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>Pricing_includes_co_employment_FT_MMC</name>
+                    <dataType>Currency</dataType>
+                    <fieldText>Pricing (includes co-employment) FT</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isRequired>false</isRequired>
+                    <scale>2</scale>
+                </fields>
+                <fields>
+                    <name>Pricing_includes_co_employment_PT_MMC</name>
+                    <dataType>Currency</dataType>
+                    <fieldText>Pricing (includes co-employment) PT</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isRequired>false</isRequired>
+                    <scale>2</scale>
+                </fields>
+                <fields>
+                    <name>Pay_Period_MMC</name>
+                    <dataType>String</dataType>
+                    <fieldText>Pay Period</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isRequired>false</isRequired>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>3</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <isRequired>false</isRequired>
+            <regionContainerType>SectionWithoutHeader</regionContainerType>
+        </fields>
+        <fields>
+            <name>Employer_Contributions_Section_MMC_WoWx</name>
+            <fieldText>Employer Contributions:</fieldText>
+            <fieldType>RegionContainer</fieldType>
+            <fields>
+                <name>Employer_Contributions_Section_MMC_WoWx_Column1</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>Medical_Employee_MMC</name>
+                    <dataType>Currency</dataType>
+                    <fieldText>Medical Employee</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isRequired>false</isRequired>
+                    <scale>2</scale>
+                </fields>
+                <fields>
+                    <name>Medical_E_and_Spouse_MMC</name>
+                    <dataType>Currency</dataType>
+                    <fieldText>Medical E and Spouse</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isRequired>false</isRequired>
+                    <scale>2</scale>
+                </fields>
+                <fields>
+                    <name>Medical_E_and_Children_MMC</name>
+                    <dataType>Currency</dataType>
+                    <fieldText>Medical E and Children</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isRequired>false</isRequired>
+                    <scale>2</scale>
+                </fields>
+                <fields>
+                    <name>Medical_E_and_Family_MMC</name>
+                    <dataType>Currency</dataType>
+                    <fieldText>Medical E and Family</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isRequired>false</isRequired>
+                    <scale>2</scale>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>4</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <fields>
+                <name>Employer_Contributions_Section_MMC_WoWx_Column2</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>Dental_Vision_Employee_MMC</name>
+                    <dataType>Currency</dataType>
+                    <fieldText>Dental/Vision Employee</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isRequired>false</isRequired>
+                    <scale>2</scale>
+                </fields>
+                <fields>
+                    <name>Dental_Vision_E_and_Spouse</name>
+                    <dataType>Currency</dataType>
+                    <fieldText>Dental/Vision E and Spouse</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isRequired>false</isRequired>
+                    <scale>2</scale>
+                </fields>
+                <fields>
+                    <name>Dental_Vision_E_and_Children_MMC</name>
+                    <dataType>Currency</dataType>
+                    <fieldText>Dental/Vision E and Children</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isRequired>false</isRequired>
+                    <scale>2</scale>
+                </fields>
+                <fields>
+                    <name>Dental_Vision_E_and_Family_MMC</name>
+                    <dataType>Currency</dataType>
+                    <fieldText>Dental/Vision E and Family</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isRequired>false</isRequired>
+                    <scale>2</scale>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>4</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <fields>
+                <name>Employer_Contributions_Section_MMC_WoWx_Column3</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>Demo_Completed_MMC_WoWx</name>
+                    <choiceReferences>demoCompletedPicklist</choiceReferences>
+                    <dataType>String</dataType>
+                    <fieldText>Demo Completed?</fieldText>
+                    <fieldType>DropdownBox</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isRequired>false</isRequired>
+                </fields>
+                <fields>
+                    <name>Demo_Completed_Date_MMC_WoWx</name>
+                    <dataType>Date</dataType>
+                    <fieldText>Demo Completed Date</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isRequired>false</isRequired>
+                </fields>
+                <fields>
+                    <name>WhoCompletedTheDemo_MMC</name>
+                    <extensionName>flowruntime:lookup</extensionName>
+                    <fieldType>ComponentInstance</fieldType>
+                    <inputParameters>
+                        <name>fieldApiName</name>
+                        <value>
+                            <stringValue>Who_Completed_the_Demo__c</stringValue>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>label</name>
+                        <value>
+                            <stringValue>Who completed the Demo</stringValue>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>objectApiName</name>
+                        <value>
+                            <stringValue>NSP_Checklist__c</stringValue>
+                        </value>
+                    </inputParameters>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isRequired>true</isRequired>
+                    <storeOutputAutomatically>true</storeOutputAutomatically>
+                </fields>
+                <fields>
+                    <name>BenefitClassing_MMC_WoWx</name>
+                    <choiceReferences>benefitClassingPicklist</choiceReferences>
+                    <dataType>String</dataType>
+                    <fieldText>Benefit Classing?</fieldText>
+                    <fieldType>DropdownBox</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isRequired>false</isRequired>
+                </fields>
+                <fields>
+                    <name>Type_of_Classing_Who_MMC</name>
+                    <dataType>String</dataType>
+                    <fieldText>Type of Classing/Who</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isRequired>false</isRequired>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>4</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <isRequired>false</isRequired>
+            <regionContainerType>SectionWithHeader</regionContainerType>
+        </fields>
+        <fields>
+            <name>Business_Performance_Solutions_Section_MMC_WoWx</name>
+            <fieldText>Business Performance Solutions:</fieldText>
+            <fieldType>RegionContainer</fieldType>
+            <fields>
+                <name>Business_Performance_Solutions_Section_MMC_WoWx_Column1</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>ITA_MMC</name>
+                    <dataType>String</dataType>
+                    <fieldText>ITA</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isRequired>false</isRequired>
+                </fields>
+                <fields>
+                    <name>X401K_MMC_WoWx</name>
+                    <choiceReferences>x401kPicklist</choiceReferences>
+                    <dataType>String</dataType>
+                    <fieldText>401K</fieldText>
+                    <fieldType>DropdownBox</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isRequired>false</isRequired>
+                </fields>
+                <fields>
+                    <name>Integra_MMC</name>
+                    <dataType>String</dataType>
+                    <fieldText>Integra</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isRequired>false</isRequired>
+                </fields>
+                <fields>
+                    <name>Performance_Management_MMC</name>
+                    <dataType>String</dataType>
+                    <fieldText>Performance Management</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isRequired>false</isRequired>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>4</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <fields>
+                <name>Business_Performance_Solutions_Section_MMC_WoWx_Column2</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>GL_Policy_MMC</name>
+                    <dataType>String</dataType>
+                    <fieldText>GL Policy</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isRequired>false</isRequired>
+                </fields>
+                <fields>
+                    <name>MainContact_DisplayText_MMC</name>
+                    <fieldText>&lt;p&gt;Main Contact&lt;/p&gt;&lt;p&gt;{!recordContact.Name}&lt;/p&gt;</fieldText>
+                    <fieldType>DisplayText</fieldType>
+                </fields>
+                <fields>
+                    <name>Preferred_Method_MMC_WoWx</name>
+                    <dataType>String</dataType>
+                    <fieldText>Preferred Method</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isRequired>false</isRequired>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>4</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <fields>
+                <name>Business_Performance_Solutions_Section_MMC_WoWx_Column3</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>Additional_Notes_MMC_WoWx</name>
+                    <fieldText>Additional Notes</fieldText>
+                    <fieldType>LargeTextArea</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isRequired>false</isRequired>
+                </fields>
+                <fields>
+                    <name>Reason_why_client_bought_MMC_WoWx</name>
+                    <dataType>String</dataType>
+                    <fieldText>Reason why client bought</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isRequired>false</isRequired>
+                </fields>
+                <fields>
+                    <name>DocusignSigner_MMC</name>
+                    <extensionName>flowruntime:lookup</extensionName>
+                    <fieldType>ComponentInstance</fieldType>
+                    <inputParameters>
+                        <name>fieldApiName</name>
+                        <value>
+                            <stringValue>Docusign_Signer__c</stringValue>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>label</name>
+                        <value>
+                            <stringValue>Docusign Signer</stringValue>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>objectApiName</name>
+                        <value>
+                            <stringValue>NSP_Checklist__c</stringValue>
+                        </value>
+                    </inputParameters>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isRequired>true</isRequired>
+                    <storeOutputAutomatically>true</storeOutputAutomatically>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>4</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <isRequired>false</isRequired>
+            <regionContainerType>SectionWithHeader</regionContainerType>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
@@ -5226,7 +6344,7 @@
     <screens>
         <name>Welcome_Screen</name>
         <label>Welcome Screen</label>
-        <locationX>974</locationX>
+        <locationX>1106</locationX>
         <locationY>134</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -5244,7 +6362,7 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>848</locationX>
+        <locationX>980</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Welcome_Screen</targetReference>
@@ -5254,7 +6372,7 @@
     <subflows>
         <name>Fault_Handler_Subflow</name>
         <label>Fault Handler Subflow</label>
-        <locationX>2074</locationX>
+        <locationX>2338</locationX>
         <locationY>1082</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
@@ -5266,7 +6384,7 @@
         <inputAssignments>
             <name>faultFlow</name>
             <value>
-                <stringValue>Checklist - Create Checklist Subflow</stringValue>
+                <stringValue>Checklist_Create_Checklist_Subflow</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>

@@ -715,38 +715,6 @@ public class NSP_ProjectTasksTriggerHelperTest {
        
    }
     
-    /***********************************************************************************************
-    * MethodName: testCreateHCMCaseOnProjectTaskUpdate
-    * Description : This Method will test positive scenario which will create HCM Case  
-    * ********************************************************************************************/
-    @IsTest
-    private static void testCreateHCMCaseOnProjectTaskUpdate(){        
-         Test.startTest();
-        StaticResource srObject = [SELECT Id, Name, Body FROM StaticResource WHERE Name =:NSP_ServiceConstants.HCM_CASE_DATA_TEMPLATE LIMIT 1];
-        pse__Proj__c getProject = [SELECT Id, Name,Project_Implementer__c, TemplateName__c FROM pse__Proj__c WHERE TemplateName__c =: NSP_ServiceConstants.HCM_PROJECT_NAME];
-       pse__Project_Task__c discoveryTask = [SELECT Id, Name, pse__Status__c  FROM pse__Project_Task__c WHERE Name =: NSP_ServiceConstants.PROJECT_TASK_DISCOVERY];
-        discoveryTask.pse__Status__c = NSP_ServiceConstants.TASKCOMPLETE;
-         UPDATE discoveryTask;
-       
-        NSP_ProjectTasksTriggerHelper.createHCMCaseOnProjectTaskUpdate(new Set<Id>{discoveryTask.Id});
-        Test.stopTest();
-        System.assertEquals(discoveryTask.pse__Status__c, NSP_ServiceConstants.TASKCOMPLETE);
-    }
-    
-     /***********************************************************************************************
-    * MethodName: testCreateNoHCMCaseOnProjectTaskUpdate
-    * Description : This Method will test negative scenario 
-    * ********************************************************************************************/
-    @IsTest
-    private static void testCreateNoHCMCaseOnProjectTaskUpdate(){
-        Test.startTest();
-        pse__Project_Task__c discoveryTask = [SELECT Id, Name, pse__Status__c  FROM pse__Project_Task__c WHERE Name =:NSP_ServiceConstants.PROJECT_TASK_DISCOVERY];
-        discoveryTask.pse__Status__c = NSP_ServiceConstants.PROJECT_TASK_IN_PROGRESS;
-        UPDATE discoveryTask;
-        Test.stopTest();
-        System.assertEquals(0, [SELECT count() FROM Case WHERE Subject =:NSP_ServiceConstants.HCM_TEST_CASE_SUBJECT]);
-    }
-    
     /************************************************************************************************************************
     * MethodName  : schedulePtWithNonServiceResOwnerTest
     * Description  : Schedule PT with Owner not having Service Resource Rec

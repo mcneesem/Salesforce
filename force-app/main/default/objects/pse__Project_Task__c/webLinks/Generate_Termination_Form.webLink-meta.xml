@@ -16,5 +16,5 @@
     <protected>false</protected>
     <showsLocation>false</showsLocation>
     <showsStatus>false</showsStatus>
-    <url>https://uatna11.springcm.com/atlas/doclauncher/OneClickDocGen?aid=50202&amp;config=Termination Letter From Project Task&amp;eos[0].Id={!pse__Project_Task__c.Id}&amp;eos[0].System=Salesforce&amp;eos[0].Type=pse__Project_Task__c&amp;eos[0].Name={!pse__Project_Task__c.Id}&amp;eos[0].ScmPath=/Salesforce/Project Task/</url>
+    <url>https://{!$Setup.NSP_Docusign_Account_Details__c.CLM_Base_URL__c}/atlas/doclauncher/OneClickDocGen?aid={!$Setup.NSP_Docusign_Account_Details__c.Docusign_Account_Id__c}&amp;config=Termination Letter From Project Task&amp;eos[0].Id={!pse__Project_Task__c.Id}&amp;eos[0].System=Salesforce&amp;eos[0].Type=pse__Project_Task__c&amp;eos[0].Name={!pse__Project_Task__c.Id}&amp;eos[0].ScmPath=/Salesforce/Project Task/</url>
 </WebLink>

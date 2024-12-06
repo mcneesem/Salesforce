@@ -18002,6 +18002,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>blng__FinancePeriod__c.Finance_Period_Identifier__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>blng__FinancePeriod__c.blng__FinancePeriodFamily__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -20213,6 +20218,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>blng__Payment__c.Payment_ID_18__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>blng__Refund__c.Finance_Period__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

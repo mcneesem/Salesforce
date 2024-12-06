@@ -9,6 +9,10 @@
 public class NSP_OrderTriggerHelperTest{
     @testSetup
     static void setupTestData(){
+        Order_Settings__c orderSetting = new Order_Settings__c();
+        orderSetting.EffectiveDateStartOfMonth__c = true;
+        insert orderSetting;
+        
         NSP_OrderItemTriggerHandler.TriggerDisabled = true;
         NSP_QuoteTriggerHandler.TriggerDisabled = true;
         NSP_AccountTriggerHandler.TriggerDisabled = true;
@@ -132,6 +136,7 @@ public class NSP_OrderTriggerHelperTest{
         objInvproduct.SBQQ__BillingType__c = NSP_CPQConstants.BLNGTYPE_ADVANCE;
         objInvproduct.NSP_Priority_Amendment__c = 12.0;
         objInvproduct.NSP_Order_Activation_Trigger__c = NSP_CPQConstants.PROJGOLIVEDATE;
+        objInvproduct.NSP_Order_Activation_Trigger_Amend__c = NSP_CPQConstants.PROJGOLIVEDATE;
         objInvproduct.SBQQ__BillingFrequency__c = NSP_CPQConstants.INVOICE_PLAN;
         objInvproduct.NSP_IsScholarshipPrice_Applicable__c = 'No';
         objInvproduct.blng__BillingRule__c = brObj.Id;
@@ -362,7 +367,16 @@ public class NSP_OrderTriggerHelperTest{
 
         objQuote.SBQQ__Ordered__c = true;
         Update objQuote;
-
+        
+        Asset asset = new Asset();
+        asset.AccountId = objaccount.Id;
+        asset.Name = 'xyz';
+        asset.Product2Id = objproduct8.id;
+        asset.Opportunity__c = objOpportunity.id;
+        asset.RecordTypeId = Schema.SObjectType.Asset.getRecordTypeInfosByDeveloperName().get('Hardware_Asset').getRecordTypeId();
+        asset.Status = 'Purchased';
+        insert asset;
+        
         blng__PaymentMethod__c objPaymntMethod = new blng__PaymentMethod__c();
         objPaymntMethod.blng__Account__c = objaccount.Id;
         objPaymntMethod.blng__Active__c = true;
@@ -416,8 +430,13 @@ public class NSP_OrderTriggerHelperTest{
                                      From NSP_Address__c WHERE Id!=null
                                      Limit 1];
         Id stdPriceBookId = Test.getStandardPricebookId();
-        SBQQ__Quote__c quoteRecord = [Select Id, SBQQ__Account__c, SBQQ__Opportunity2__C
+        SBQQ__Quote__c quoteRecord = [Select Id, SBQQ__Account__c, SBQQ__Opportunity2__C, NSP_Project__c
                                       From SBQQ__Quote__c WHERE Id!=null LIMIT 10];
+        
+        pse__Proj__c proj = [SELECT id FROM pse__Proj__c LIMIT 1];
+        quoteRecord.NSP_Project__c = proj.id;
+        update quoteRecord;
+        
         Test.startTest();
         Order testOrder2 = new Order();
         testOrder2.Pricebook2Id = stdPriceBookId;
@@ -431,6 +450,8 @@ public class NSP_OrderTriggerHelperTest{
         testOrder2.EffectiveDate = Date.Today();
         testOrder2.blng__InvoiceBatch__c = 'Standalone Order';
         testOrder2.NSP_Project_Key__c = 'Test Project Key2';
+        testOrder2.NSP_Project__c = proj.id;
+        
         //testOrder2.NSP_Project_Name__c = 'Test Project Name2';
         SBQQ.TriggerControl.disable();
         insert testOrder2;
@@ -449,20 +470,37 @@ public class NSP_OrderTriggerHelperTest{
         NSP_Address__c nspAddress = [Select Id
                                      From NSP_Address__c WHERE Id!=null
                                      Limit 1];
-        List<Order> orderList = [Select Id, SBQQ__Quote__c, NSP_First_usage_upload__c, Type, NSP_Project_Name__c, blng__InvoiceBatch__c, NSP_Billing_Address__c, NSP_Shipping_Address__c, NSP_Billing_Account__c
+        List<Order> orderList = [Select Id, NSP_Project__c, SBQQ__Quote__c, NSP_First_usage_upload__c, Type, NSP_Project_Name__c, blng__InvoiceBatch__c, NSP_Billing_Address__c, NSP_Shipping_Address__c, NSP_Billing_Account__c
                                  From Order WHERE Id!=null LIMIT 10];
-
+        
+        Id projId = orderList[0].NSP_Project__c;
+        List<pse__Proj__c> project = [SELECT id, pse__Project_Status__c,Invoice_Ready__c, Go_Live_Date__c FROM pse__Proj__c LIMIT 1];
+        orderList[0].NSP_Project__c = project[0].id;
+        
+        
         orderList[0].NSP_Billing_Address__c = nspAddress.Id;
         update orderList;
+        //project not being created
+        project[0].pse__Project_Status__c = 'Close/Lost';
         orderList[0].NSP_Billing_Address__c = null;
         //orderList[0].NSP_Shipping_Address__c = objaccount.Id;
         Test.startTest();
-
+        
+        update project;
         update orderList;
         orderList[0].NSP_Shipping_Address__c = null;
         update orderList;
         orderList[0].NSP_Billing_Account__c = null;
         orderList[0].NSP_Project_Go_Live_Date__c = System.today() + 10;
+        orderList[0].NSP_Project_Go_Live_Approved__c = true;
+        
+        update orderList;
+        
+        /*project[0].Invoice_Ready__c = true;
+project[0].Go_Live_Date__c = System.Today();
+update project;*/
+        
+        orderList[0].Status = 'Reviewed';
         update orderList;
         Test.stopTest();
 
@@ -489,6 +527,7 @@ public class NSP_OrderTriggerHelperTest{
         orderProductList[0].NSP_Priority_New_Sales__c = 10;
         orderProductList[0].blng__TaxRule__c = taxRuleRecord.id;
         orderProductList[1].blng__TaxRule__c = taxRuleRecord.id;
+        orderProductList[0].NSP_Product_Type__c = 'test';
         Update orderProductList;
         orderlist[0].Type = NSP_CPQConstants.ORDER_TYPE_NEW;
         orderList[0].Status = NSP_CPQConstants.ORDER_REVIEWED;
@@ -595,16 +634,26 @@ public class NSP_OrderTriggerHelperTest{
         NSP_OrderItemTriggerHandler.TriggerDisabled = true;
         NSP_QuoteTriggerHandler.TriggerDisabled = true;
         NSP_AccountTriggerHandler.TriggerDisabled = true;
-        List<Order> orderList = [Select Id, Status, SBQQ__Quote__c, NSP_Project_Go_Live_Date__c, NSP_Project_Go_Live_Approved__c, NSP_First_usage_upload__c, Type, NSP_Project_Name__c, blng__InvoiceBatch__c, NSP_Billing_Address__c, NSP_Shipping_Address__c, NSP_Billing_Account__c
+        List<Order> orderList = [Select Id, blng__BillingAccount__c,NSP_Rev_Rec_Rules_Reviewed__c,Status, SBQQ__Quote__c, NSP_Project_Go_Live_Date__c, NSP_Project_Go_Live_Approved__c, NSP_First_usage_upload__c, Type, NSP_Project_Name__c, blng__InvoiceBatch__c, NSP_Billing_Address__c, NSP_Shipping_Address__c, NSP_Billing_Account__c
                                  From Order WHERE Id!=null LIMIT 10];
         List<blng__PaymentMethod__c> objPaymntMethod = [SELECT Id, blng__Account__c
                                                         FROM blng__PaymentMethod__c  WHERE Id!=null LIMIT 10];
-        List<OrderItem> orderItemList = [SELECT Id, SBQQ__Status__c, Order.Type, NSP_Preferred_Payment_Method__c, NSP_Order_Activation_Trigger__c, NSP_Order_Activation_Trigger_Amend__c, Order.AccountId, NSP_Payment_Method__c, ServiceDate, SBQQ__BillingFrequency__c, NSP_AnniversaryBlngApplicable__c, SBQQ__SubscriptionTerm__c
+        List<OrderItem> orderItemList = [SELECT Id, blng__TaxRule__c,SBQQ__Status__c, Order.Type, NSP_Preferred_Payment_Method__c, NSP_Order_Activation_Trigger__c, NSP_Order_Activation_Trigger_Amend__c, Order.AccountId, NSP_Payment_Method__c, ServiceDate, SBQQ__BillingFrequency__c, NSP_AnniversaryBlngApplicable__c, SBQQ__SubscriptionTerm__c
                                          FROM OrderItem  WHERE OrderId IN:orderList LIMIT 10];
-
+        Account acc = [SELECT id FROM Account WHERE NAME = 'Insperity WO Billing Account' LIMIT 1];
+        
+        orderList[0].NSP_Rev_Rec_Rules_Reviewed__c = true;
+        SBQQ.TriggerControl.disable();
+		NSP_OrderTriggerHandler.TriggerDisabled = true;
+        update orderList;
+        SBQQ.TriggerControl.enable();
+        
+        
         Test.startTest();
         orderList[0].Status = 'Reviewed';
         orderList[0].Type = NSP_CPQConstants.QUOTE_TYPE_AMENDMENT;
+        orderList[0].blng__BillingAccount__c = acc.id;
+        
         update orderList;
         Test.stopTest();
 
@@ -625,6 +674,7 @@ public class NSP_OrderTriggerHelperTest{
         orderList[0].NSP_First_usage_upload__c = true;
         orderList[0].Type = NSP_CPQConstants.ORDER_TYPE_AMENDMENT;
         orderList[0].NSP_Back_Out__c = true;
+        orderList[0].NSP_CreateProject__c = true;
         NSP_OrderTriggerHelper.changeTaxRulesForWOOrders(new set<Id>{ [SELECT Id
                                                                        FROM Order  WHERE Id!=null 
                                                                        LIMIT 1]?.Id });
@@ -683,6 +733,7 @@ public class NSP_OrderTriggerHelperTest{
         List<Order> orderList = [SELECT Id, Status, blng__BillingAccount__c, ShippingStateCode, ShippingCountryCode, ShippingStreet, ShippingCity, ShippingState, ShippingCountry, ShippingPostalCode, NSP_Ship_To_Street__c, NSP_Ship_To_City__c, NSP_Ship_To_State__c, NSP_Ship_To_Country__c, NSP_Ship_To_Postal_Code__c, NSP_Invoice_To_Email__c, ShipToContactId, BillToContactId, SBQQ__Quote__c, AccountId, NSP_Project_Go_Live_Date__c, NSP_Project_Go_Live_Approved__c, NSP_First_usage_upload__c, Type, NSP_Project_Name__c, blng__InvoiceBatch__c, NSP_Billing_Address__c, NSP_Shipping_Address__c, NSP_Billing_Account__c
                                  FROM Order WHERE Id!=null  LIMIT 10];
         orderList[0].NSP_Billing_Account__c = accList[0].Id;
+        
         update orderList;
         Map<String, Order> orderAddressKeyToCheck = new Map<String, Order>();
         orderAddressKeyToCheck.put(orderList[0].Id, orderList[0]);
@@ -751,5 +802,63 @@ public class NSP_OrderTriggerHelperTest{
         update orderList[0];
         System.assert(orderList[0].id!=null, true);
         NSP_OrderTriggerHelper.updateOrderStartDate( new Set<Id>{ orderList[0].Id } );
+    }
+    
+    @isTest
+    static void createInvoiceMethod5(){
+        List<Order> orderList = [SELECT id,AccountId,OpportunityId, Type,NSP_Transaction_Type__c, Status, NSP_Back_Out__c, NSP_Project_Go_Live_Date__c, NSP_Project_Go_Live_Approved__c FROM Order WHERE NSP_Back_Out__c = false];
+        List<pse__Proj__c> project = [SELECT id, pse__Project_Status__c,Invoice_Ready__c, Go_Live_Date__c FROM pse__Proj__c LIMIT 1];
+        List<OrderItem> items = [SELECT id, Product2Id,SBQQ__BillingFrequency__c,NSP_Order_Activation_Trigger__c, NSP_Order_Activation_Trigger_Amend__c FROM OrderItem WHERE OrderId =: orderList[0].id];
+		//do for all items
+        for(integer i=0;i<items.size();i++){
+            items[i].SBQQ__BillingFrequency__c = NSP_CPQConstants.BLNGFREQ_MONTHLY;
+        }        
+        
+        system.debug('ITEMS LIST VAIBHAV = '+items);
+        orderList[0].NSP_Project__c = project[0].id;
+        orderList[0].NSP_Project_Go_Live_Date__c = System.today();
+        orderList[0].NSP_Project_Go_Live_Approved__c = true;
+        orderList[0].Status = 'Reviewed';
+        orderList[0].Type = 'New Product';
+        SBQQ.TriggerControl.disable();
+        update orderList;
+        update items;
+        SBQQ.TriggerControl.enable();
+       
+        
+        Test.startTest();
+        project[0].Invoice_Ready__c = true;
+        project[0].Go_Live_Date__c = System.today();
+        update project;
+    
+        Test.stopTest();
+        
+        system.debug('HI ORDER LIST VAIBHAV = ' + orderList);
+        System.assert(orderList.size()>0, 'Order List size is greater than 0');
+    }
+    
+    @isTest
+    static void createContractTest2(){
+        List<Order> orderList = [SELECT id,Type,Status,blng__InvoiceBatch__c, NSP_Order_Product_Type__c fROM Order Where Status != 'Activated'];
+        orderList[0].Status = NSP_CPQConstants.ORDER_REVIEWED;
+        List<OrderItem> itemsList = [SELECT Id, ServiceDate FROM OrderItem WHERE OrderId = :orderList[0].id];
+        itemsList[0].ServiceDate = System.Today();
+        
+        update itemsList;
+        
+        SBQQ.TriggerControl.disable();
+		NSP_OrderTriggerHandler.TriggerDisabled = true;
+        update orderList;
+        SBQQ.TriggerControl.enable();     
+        
+        Test.startTest();
+        NSP_OrderTriggerHelper.setInvoiceBatch(new Set<Id>{ orderList[0].Id }, orderList);
+        NSP_OrderTriggerHelper.updateUsageProd(new Set<Id>{ orderList[0].Id }, orderList);
+        NSP_OrderTriggerHelper.setProjNameSupplement(new Set<Id>{ orderList[0].Id },orderList);
+        Test.stopTest();
+        
+        system.debug('VAIBHAV ORDER LIST = '+ orderList);
+        System.assert(orderList.size()>0, 'Order List size is greater than 0');
+        
     }
 }

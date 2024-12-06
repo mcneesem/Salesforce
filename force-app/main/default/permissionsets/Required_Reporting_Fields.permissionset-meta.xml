@@ -48,6 +48,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Account.NSP_Margin__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.NSP_Reserve__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Account.NSP_SalesRegion__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -618,6 +628,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Opportunity.Number_of_MMC_Checklists__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Opportunity.Number_of_SEQ_Checklists__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -769,6 +784,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>pse__Project_Task__c.NSP_Situation_Termination_Drivers__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>pse__Project_Task__c.WO_Asset__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>

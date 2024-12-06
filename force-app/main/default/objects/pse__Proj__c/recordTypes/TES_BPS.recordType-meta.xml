@@ -282,6 +282,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>ITA - Hardware</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>ITA-Implementation</fullName>
             <default>false</default>
         </values>
@@ -378,6 +382,18 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>TES 360 Performance Management</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>TES Climate Survey</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>TES HR Compliance</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>TES HR Compliance Review</fullName>
             <default>false</default>
         </values>
@@ -406,11 +422,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>WX%2FWA Tax Correction</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>XML Utility Implementation</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>XML Utility Rework</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>iSolve %E2%80%93 Hardware</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1458,6 +1482,10 @@
         </values>
         <values>
             <fullName>Close%2FLost</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Closed Prior to CQA</fullName>
             <default>false</default>
         </values>
         <values>

@@ -175,14 +175,6 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>NSP_NAICS__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>NSP_NaicsDesc__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>Industry</field>
             </layoutItems>
             <layoutItems>
@@ -191,14 +183,6 @@
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Sic</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>SicDesc</field>
-            </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>NSP_Inc_5000__c</field>

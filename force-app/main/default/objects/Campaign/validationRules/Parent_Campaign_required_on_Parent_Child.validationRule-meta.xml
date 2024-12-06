@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Parent_Campaign_required_on_Parent_Child</fullName>
+    <active>true</active>
+    <description>If Campaign is Marketing Campaign RT, and Campaign Level is Parent or Child, then Parent Campaign field must be populated</description>
+    <errorConditionFormula>AND(
+OR(
+ISPICKVAL( Campaign_Level__c, &quot;Child: Delivery Mechanism Type&quot;),
+ISPICKVAL( Campaign_Level__c, &quot;Parent: Program&quot;)
+),
+ISBLANK( ParentId ),
+RecordType.DeveloperName = &apos;Marketing_Record_Type&apos;)</errorConditionFormula>
+    <errorDisplayField>ParentId</errorDisplayField>
+    <errorMessage>Parent Campaign is required when Campaign Level is Parent or Child</errorMessage>
+</ValidationRule>

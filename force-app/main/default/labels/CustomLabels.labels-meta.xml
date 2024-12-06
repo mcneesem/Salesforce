@@ -50,6 +50,20 @@
         <value>Are there any non-paid users?</value>
     </labels>
     <labels>
+        <fullName>Are_you_a_licensed_Contractor</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Are you a licensed Contractor</shortDescription>
+        <value>Are you a licensed Contractor in the state of California (ex: HVAC, Plumbing, Electrical)?</value>
+    </labels>
+    <labels>
+        <fullName>Are_you_registered_with_the_CSLB</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Are you registered with the CSLB</shortDescription>
+        <value>Are you registered with the CSLB (California Contractors State License Board)?</value>
+    </labels>
+    <labels>
         <fullName>BPS_Integra_Asset_Feilds</fullName>
         <categories>Stores all the fields which BPS users can edit on Integra Asset if Create Asset Perm Set is not assigned.</categories>
         <language>en_US</language>
@@ -122,6 +136,34 @@
         <value>Missing Custom Permission: Allow Delete Leads</value>
     </labels>
     <labels>
+        <fullName>COBRA_Guidelines</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>COBRA Guidelines</shortDescription>
+        <value>Send COBRA Takeover Form/Spreadsheet to client along with guidelines on the process.</value>
+    </labels>
+    <labels>
+        <fullName>COBRA_Packet</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>COBRA Packet</shortDescription>
+        <value>Confirm when COBRA Takeover Packets were mailed.</value>
+    </labels>
+    <labels>
+        <fullName>COBRA_Parent</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>COBRA-Parent</shortDescription>
+        <value>Explain COBRA Takeover option to client contacts.  Prepare and provide COBRA Takeover Form/Spreadsheet, if applicable.</value>
+    </labels>
+    <labels>
+        <fullName>COBRA_Team</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>COBRA Team</shortDescription>
+        <value>Review completed COBRA Takeover Forms/Spreadsheet.  Create a Case and send forms/spreadsheet to COBRA Team for processing.</value>
+    </labels>
+    <labels>
         <fullName>CSP_Dental</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -148,6 +190,13 @@
         <protected>false</protected>
         <shortDescription>CSP - Vision</shortDescription>
         <value>Client maintaining their own vision coverage.  CSP Set Up Required to take pre-tax deductions.  Receive and submit necessary documents to H&amp;W.</value>
+    </labels>
+    <labels>
+        <fullName>Care_Transition</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Care Transition</shortDescription>
+        <value>Address/Assist with sensitive employee benefits questions as needed.</value>
     </labels>
     <labels>
         <fullName>Client_Integra_Responses_smartsheet</fullName>
@@ -232,6 +281,20 @@
         <protected>false</protected>
         <shortDescription>DA and DM Userrole</shortDescription>
         <value>District Administrator,District Manager</value>
+    </labels>
+    <labels>
+        <fullName>Deductible_Carryover</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Deductible Carryover</shortDescription>
+        <value>Prepare deductible credit form and provide for distribution to employees.  Load prepared form to Client Account - Files.</value>
+    </labels>
+    <labels>
+        <fullName>Dependent_Care_FSA</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Dependent Care-FSA</shortDescription>
+        <value>Client maintaining their own DCFSA.  CSP Set Up Required to take pre-tax deductions.  Receive and submit necessary documents to H&amp;W</value>
     </labels>
     <labels>
         <fullName>Describe_the_type_of_work_that_is_different_than_work_normally_performed</fullName>
@@ -381,11 +444,39 @@
         <value>TESImplementationSupport@insperity.com</value>
     </labels>
     <labels>
+        <fullName>HSA_With_No_Optum_Bank</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>HSA With No Optum Bank</shortDescription>
+        <value>Discuss HSA rollover/transfer method with client contact.  Discuss rollover/transfer options during Orientations.</value>
+    </labels>
+    <labels>
+        <fullName>HSA_With_Optum_Bank</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>HSA With Optum Bank</shortDescription>
+        <value>A case has been created and assigned to you. Add necessary info to case and reassign to H&amp;W Products Team to confirm if client&apos;s OptumBank HSA is on same platform as Insperity.</value>
+    </labels>
+    <labels>
+        <fullName>HSA</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>HSA</shortDescription>
+        <value>Identify client&apos;s current HSA custodial bank to determine fund transfer method and messaging for Orientation sessions.</value>
+    </labels>
+    <labels>
         <fullName>Have_the_user_roles_been_updated_in_AIMS</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Have_the_user_roles_been_updated_in_AIMS__c</shortDescription>
         <value>Have the user roles been updated in AIMS?</value>
+    </labels>
+    <labels>
+        <fullName>Health_Care_FSA</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Health Care-FSA</shortDescription>
+        <value>Client maintaining their own FSA.  CSP Set Up Required to take pre-tax deductions.  Receive and submit necessary documents to H&amp;W.</value>
     </labels>
     <labels>
         <fullName>If_Itemized_they_must_use_Integra</fullName>
@@ -6241,7 +6332,7 @@ Climate Plus: https://nexus.insperity.com/groups/38605/posts/3272612-climate-plu
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>PEO Termination Team Roles</shortDescription>
-        <value>Business Performance Advisor;Client Liaison;Bus. Team-HRSp/CL;MidMarket Account Exec;Manager, HR Services;Payroll Supervisor;Payroll Specialist;401k Plan Consultant</value>
+        <value>Business Performance Advisor;Client Liaison;Bus. Team-HRSp/CL;MidMarket Account Exec;Manager, HR Services;Payroll Supervisor;Payroll Specialist;401k Plan Consultant;Renewal Coordinator</value>
     </labels>
     <labels>
         <fullName>Payroll_submitted_frm_multiple_contacts</fullName>
@@ -6263,6 +6354,13 @@ Climate Plus: https://nexus.insperity.com/groups/38605/posts/3272612-climate-plu
         <protected>false</protected>
         <shortDescription>Post_Refresh_Email_Labels_2</shortDescription>
         <value>RecepientIdStateretProgram,RecepientToClientSale,RecepientToCOBRA,RecepientToCOEPayroll,RecepientToCusrelCEO,RecepientToEPLI,RecepientToFinanceService,RecepientToForm8973,RecepientToGabrieul,RecepientToId401ORK,RecepientToId401Sales,RecepientToIdEEOTeam,RecepientToIdPriorWages,RecepientToOC,RecepientToOrientReq,RecepientToSBEA,RecepientToWCNotification,Recipient_email_Ids</value>
+    </labels>
+    <labels>
+        <fullName>Post_Tax_IIS</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Post Tax-IIS</shortDescription>
+        <value>Confirm if client will offer additional Life, AD&amp;D, or Disability coverage through Insperity Insurance Services or through another broker.  Confirm coverage details, if applicable</value>
     </labels>
     <labels>
         <fullName>Premier_Performance_Implementation_Timeline</fullName>

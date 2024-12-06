@@ -17,6 +17,6 @@
     <protected>false</protected>
     <showsLocation>false</showsLocation>
     <showsStatus>false</showsStatus>
-    <url>https://uatna11.springcm.com/atlas/doclauncher/OneClickDocGen?aid=50202&amp;config=Service Plan&amp;eos[0].Id={!NSP_Service_Plan__c.Id}&amp;eos[0].System=Salesforce&amp;eos[0].Type=NSP_Service_Plan__c&amp;eos[0].Name={!NSP_Service_Plan__c.Name}&amp;eos[0].ScmPath=/Salesforce/Service Plan/
+    <url>https://{!$Setup.NSP_Docusign_Account_Details__c.CLM_Base_URL__c}/atlas/doclauncher/OneClickDocGen?aid={!$Setup.NSP_Docusign_Account_Details__c.Docusign_Account_Id__c}&amp;config=Service Plan&amp;eos[0].Id={!NSP_Service_Plan__c.Id}&amp;eos[0].System=Salesforce&amp;eos[0].Type=NSP_Service_Plan__c&amp;eos[0].Name={!NSP_Service_Plan__c.Name}&amp;eos[0].ScmPath=/Salesforce/Service Plan/
 </url>
 </WebLink>

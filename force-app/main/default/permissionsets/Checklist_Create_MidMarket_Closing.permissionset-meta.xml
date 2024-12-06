@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Checklist_Create_MidMarket_Closing</name>
+    </customPermissions>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Checklist - Create - MidMarket Closing</label>
+</PermissionSet>

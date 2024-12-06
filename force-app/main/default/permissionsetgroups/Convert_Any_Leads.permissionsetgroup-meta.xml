@@ -9,6 +9,7 @@
     <permissionSets>Bypass_Task_Event_Cancelled_Status</permissionSets>
     <permissionSets>Contact_Modify_All</permissionSets>
     <permissionSets>Convert_Leads</permissionSets>
+    <permissionSets>Lead_Management</permissionSets>
     <permissionSets>Lead_Modify_All</permissionSets>
     <permissionSets>Named_Account_Group_Bypass_Restrictions</permissionSets>
     <permissionSets>Opportunity_Create</permissionSets>

@@ -9404,6 +9404,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Implementation_Profile__c.Are_you_a_licensed_Contractor__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Implementation_Profile__c.Are_you_registered_with_the_CSLB__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Implementation_Profile__c.NSP_BPA_BPC__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -9710,6 +9720,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Implementation_Profile__c.Contact_Information__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Implementation_Profile__c.Contractor_s_License__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
