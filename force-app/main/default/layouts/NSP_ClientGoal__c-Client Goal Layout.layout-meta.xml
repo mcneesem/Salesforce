@@ -31,11 +31,11 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
-                <field>NSP_Contact__c</field>
+                <field>NSP_Account__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
-                <field>NSP_Account__c</field>
+                <field>NSP_Contact__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>

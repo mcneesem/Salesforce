@@ -1660,6 +1660,9 @@
                         <valueListItems>
                             <value>NSP_ClientGoal__c.NSP_Goal_Date__c</value>
                         </valueListItems>
+                        <valueListItems>
+                            <value>NSP_ClientGoal__c.NSP_Contact__c</value>
+                        </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
@@ -1680,6 +1683,13 @@
                 </componentInstanceProperties>
                 <componentName>lst:dynamicRelatedList</componentName>
                 <identifier>lst_dynamicRelatedList2</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.pse__Project__r.pse__Project_Type__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Service Plan</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <itemInstances>
