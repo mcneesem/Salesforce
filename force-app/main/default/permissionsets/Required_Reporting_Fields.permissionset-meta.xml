@@ -336,6 +336,11 @@
         <field>NSP_Account_Team__c.NSP_Logged_in_User_check__c</field>
         <readable>true</readable>
     </fieldPermissions>
+        <fieldPermissions>
+        <editable>false</editable>
+        <field>NSP_Account_Team__c.Users_Sales_Office__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Amendment_Checklist__c.Allows_ER_LTPT__c</field>

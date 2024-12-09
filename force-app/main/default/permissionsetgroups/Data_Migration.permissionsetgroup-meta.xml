@@ -4,6 +4,7 @@
     <hasActivationRequired>false</hasActivationRequired>
     <label>Data Migration</label>
     <permissionSets>Account_Profile_Access</permissionSets>
+    <permissionSets>Account_Team_Management</permissionSets>
     <permissionSets>Bypass_Lead_Email_Alerts</permissionSets>
     <permissionSets>Bypass_Opportunity_Email_Alerts</permissionSets>
     <permissionSets>Bypass_Task_Email_Alerts</permissionSets>

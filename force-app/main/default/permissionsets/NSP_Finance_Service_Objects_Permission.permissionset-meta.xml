@@ -3867,6 +3867,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>NSP_Account_Team__c.Users_Sales_Office__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>NSP_Accrual_Profile_Grid__c.NSP_Accrual_Period_limits_Hours__c</field>
         <readable>true</readable>
     </fieldPermissions>
