@@ -1254,8 +1254,8 @@ public class NSP_Implementationprofile_ServiceHelper {
         //create case for HSA with optum bank 
         List<NSP_Implementation_Profile_Automation__c> ipAutomationRecords = new List<NSP_Implementation_Profile_Automation__c>();
         List<Case> caseList = new List<Case>();
-        String subject = 'Prior HSA with Optum Bank ';
-        String instruction = 'Confirm current HSA platform and HSA transfer process for employees.SBOS: Once Employer Code/Group # or participant data provided in the Notes, reassign to H&W Products Queue.';
+        String subject = 'Prior HSA with Optum Bank - ';
+        String instruction = 'Confirm current HSA platform and HSA transfer process for employees.\nSBOS: Once Employer Code/Group # or participant data provided in the Notes, reassign to H&W Products Queue.';
         for(Id ipRecId : ipRecordsByAutomation.get(MM_OPTUM_CASE)){
             if(ipRecId != null){
                 Implementation_Profile__c ipRec = newIPs.get(ipRecId);
