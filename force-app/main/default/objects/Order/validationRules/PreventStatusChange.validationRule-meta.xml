@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>PreventStatusChange</fullName>
+    <active>true</active>
+    <description>This validation ensures the order is change to Reviewed by Order Management team only after &quot;Rev Rec Rules Reviewed&quot; flag is checked.</description>
+    <errorConditionFormula>AND(
+    ISCHANGED(Status),
+    OR(
+        AND(
+            ISPICKVAL(Status, &apos;Reviewed&apos;),
+            ISPICKVAL(PRIORVALUE(Status), &apos;Draft&apos;)
+        ),
+        AND(
+            ISPICKVAL(Status, &apos;Activated&apos;),
+            ISPICKVAL(PRIORVALUE(Status), &apos;Draft&apos;)
+        )
+    ),
+    NOT(NSP_Rev_Rec_Rules_Reviewed__c)
+)</errorConditionFormula>
+    <errorMessage>The order can only be marked as Reviewed once the Ready for Review flag is checked.</errorMessage>
+</ValidationRule>
