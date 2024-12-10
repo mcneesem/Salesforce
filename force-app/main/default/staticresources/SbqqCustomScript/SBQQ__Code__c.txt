@@ -1852,10 +1852,7 @@ export function amendmentForClonedLineCalculation (quote, lines){
 					line.record["NSP_Delta_Total__c"] = line.record["NSP_Delta_Total__c"] - disc;
                 }
                 if(line.record["SBQQ__BillingFrequency__c"] == 'Annual'){
-                    let netPriceAnnual = discountedValue - productMap.get(line.record["SBQQ__ProductCode__c"])*line.record["SBQQ__ProrateMultiplier__c"];
-                    line.record["SBQQ__NetPrice__c"] =netPriceAnnual;
 					line.record["NSP_Delta_Total__c"] = line.record["NSP_Delta_Total__c"] - disc;
-                    
                 }
             }
 
