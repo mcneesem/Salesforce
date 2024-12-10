@@ -17,5 +17,5 @@
     ),
     NOT(NSP_Rev_Rec_Rules_Reviewed__c)
 )</errorConditionFormula>
-    <errorMessage>The order can only be marked as Reviewed once the Ready for Review flag is checked.</errorMessage>
+    <errorMessage>The order can only be marked as Reviewed once the &quot;Ready for Review&quot; flag is checked.</errorMessage>
 </ValidationRule>
