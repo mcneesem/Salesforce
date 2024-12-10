@@ -14,7 +14,9 @@ public class NSP_Quote_Service {
     public static string getDocuSignUrl(String recordId,String templateId,String name,String accountName,String aid){
     try {
         String queryParam;
-        queryParam = System.Label.NSP_Docusign_Base_URL+'?'+
+        String clm_Base_URL = NSP_Docusign_Account_Details__c.getInstance(UserInfo.getUserId()).CLM_Base_URL__c;
+        aid = aid ?? NSP_Docusign_Account_Details__c.getInstance(UserInfo.getUserId()).Docusign_Account_Id__c;
+        queryParam = 'https://'+clm_Base_URL+'/atlas/doclauncher/OneClickDocGen?'+
         'aid='+aid+'&'+
         'config='+templateId+'&'+
         'eos[0].Id='+recordId+'&'+
