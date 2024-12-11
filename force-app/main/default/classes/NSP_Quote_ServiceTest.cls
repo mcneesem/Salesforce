@@ -39,7 +39,25 @@ public without sharing class NSP_Quote_ServiceTest {
     }
     @isTest
     public static void getDocusignUrlTest(){
-        String DOCUSIGN_AID=System.Label.NSP_Docusign_Account_Id;
+        String dsAccountId,clmBaseUrl;        
+        List<DocuSign_Settings__c> lstDCS = [
+            SELECT
+                Id , IsEnabled__c , AccountId__c , CLMBaseUrl__c
+            FROM DocuSign_Settings__c
+            WHERE ( IsEnabled__c = True )
+            LIMIT 1
+        ];
+        DocuSign_Settings__c dcs = null;
+        if ( ( lstDCS != null ) && ( lstDCS.size() > 0 ) ) {
+            dcs = lstDCS[0];
+        }
+        if ( dcs != null ) {
+            NSP_Docusign_Account_Details__c setting = new NSP_Docusign_Account_Details__c();
+            setting.CLM_Base_URL__c = dcs.CLMBaseUrl__c;
+            setting.Docusign_Account_Id__c = dcs.AccountId__c;
+            insert setting;
+        }
+        String DOCUSIGN_AID=null; //System.Label.NSP_Docusign_Account_Id;
         string sUrl = NSP_Quote_Service.getDocuSignUrl('testRecordId','testTemplateId','testName','testAccountName',DOCUSIGN_AID);
         System.assertEquals(true, sUrl.contains('testAccountName'));
     }
