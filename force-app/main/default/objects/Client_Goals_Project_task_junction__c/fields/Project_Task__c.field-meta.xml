@@ -3,8 +3,17 @@
     <fullName>Project_Task__c</fullName>
     <externalId>false</externalId>
     <label>Project Task</label>
+    <lookupFilter>
+        <active>true</active>
+        <filterItems>
+            <field>$Source.Account__c</field>
+            <operation>equals</operation>
+            <valueField>pse__Project_Task__c.NSP_Account_Id__c</valueField>
+        </filterItems>
+        <isOptional>false</isOptional>
+    </lookupFilter>
     <referenceTo>pse__Project_Task__c</referenceTo>
-    <relationshipLabel>Client Goals Project task junctions</relationshipLabel>
+    <relationshipLabel>Client Goals Project Tasks Relationships</relationshipLabel>
     <relationshipName>Client_Goals_Project_task_junctions</relationshipName>
     <relationshipOrder>0</relationshipOrder>
     <reparentableMasterDetail>false</reparentableMasterDetail>
