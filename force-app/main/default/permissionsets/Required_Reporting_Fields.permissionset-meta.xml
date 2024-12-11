@@ -701,7 +701,7 @@
         <field>User.User_ID_18__c</field>
         <readable>true</readable>
     </fieldPermissions>
-        <fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>VoiceCall.Agent_Call_Duration_Time__c</field>
         <readable>true</readable>
@@ -754,6 +754,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>pse__Proj__c.Implementation_Team__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>pse__Proj__c.Implementer_Status__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

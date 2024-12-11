@@ -992,6 +992,16 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.Implementer_Status__c</fieldItem>
+                <identifier>RecordImplementer_Status_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.pse__Is_Active__c</fieldItem>
                 <identifier>Recordpse__Is_Active__cField</identifier>
                 <visibilityRule>

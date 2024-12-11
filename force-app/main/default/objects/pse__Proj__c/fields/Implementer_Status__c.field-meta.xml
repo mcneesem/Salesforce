@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Implementer_Status__c</fullName>
+    <label>Implementer Status</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Active</fullName>
+                <default>true</default>
+                <label>Active</label>
+            </value>
+            <value>
+                <fullName>Team Lead</fullName>
+                <default>false</default>
+                <label>Team Lead</label>
+            </value>
+            <value>
+                <fullName>New Hire</fullName>
+                <default>false</default>
+                <label>New Hire</label>
+            </value>
+            <value>
+                <fullName>Agile Resource</fullName>
+                <default>false</default>
+                <label>Agile Resource</label>
+            </value>
+            <value>
+                <fullName>On Leave</fullName>
+                <default>false</default>
+                <label>On Leave</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>
