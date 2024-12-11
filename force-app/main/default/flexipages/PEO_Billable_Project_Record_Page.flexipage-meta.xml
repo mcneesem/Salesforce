@@ -220,6 +220,16 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.Level_of_Effort__c</fieldItem>
+                <identifier>RecordLevel_of_Effort__cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Rating__c</fieldItem>
                 <identifier>RecordNSP_Rating_cField</identifier>
             </fieldInstance>
