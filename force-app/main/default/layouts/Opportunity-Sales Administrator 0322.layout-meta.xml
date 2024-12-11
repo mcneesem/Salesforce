@@ -726,13 +726,6 @@
             <sortOrder>24</sortOrder>
         </platformActionListItems>
     </platformActionList>
-    <relatedContent>
-        <relatedContentItems>
-            <layoutItem>
-                <component>wits:newsPanel</component>
-            </layoutItem>
-        </relatedContentItems>
-    </relatedContent>
     <relatedLists>
         <fields>NAME</fields>
         <relatedList>NSP_Sales_to_Implementation__c.NSP_Opportunity__c</relatedList>
@@ -784,13 +777,6 @@
         <fields>NSP_isReferral__c</fields>
         <fields>IsPrimary</fields>
         <relatedList>RelatedContactRoleList</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>CAMPAIGN.NAME</fields>
-        <fields>CONTACT.NAME</fields>
-        <fields>CM.FIRST_ASSOCIATED_DATE</fields>
-        <fields>INFLUENCE</fields>
-        <relatedList>RelatedCampaignInfluence2List</relatedList>
     </relatedLists>
     <relatedLists>
         <relatedList>RelatedFileList</relatedList>
@@ -849,13 +835,6 @@
     </relatedLists>
     <relatedLists>
         <relatedList>RelatedEntityHistoryList</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
-        <fields>NSP_Field_Name__c</fields>
-        <fields>NSP_Old_Value__c</fields>
-        <fields>NSP_New_Value__c</fields>
-        <relatedList>NSP_SObject_History_Tracking__c.NSP_Opportunity__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>ASSET.NAME</fields>
