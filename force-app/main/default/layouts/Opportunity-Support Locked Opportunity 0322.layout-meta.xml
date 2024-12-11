@@ -1029,6 +1029,7 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Checklist_Type__c</fields>
         <fields>RECORDTYPE</fields>
         <fields>CREATEDBY_USER</fields>
         <fields>CREATED_DATE</fields>

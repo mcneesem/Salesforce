@@ -38,6 +38,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Account.NSP_Account_Segment__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Account.NSP_Account_Status__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -383,6 +388,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>NSP_Checklist__c.Checklist_Type__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>NSP_Checklist__c.RecordTypeName__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -686,7 +696,7 @@
         <field>User.User_ID_18__c</field>
         <readable>true</readable>
     </fieldPermissions>
-    <fieldPermissions>
+        <fieldPermissions>
         <editable>false</editable>
         <field>VoiceCall.Agent_Call_Duration_Time__c</field>
         <readable>true</readable>
