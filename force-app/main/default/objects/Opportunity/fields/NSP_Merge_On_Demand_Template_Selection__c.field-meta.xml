@@ -13,9 +13,9 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>NDA</fullName>
+                <fullName>ClientOFEOnlyAddendum</fullName>
                 <default>false</default>
-                <label>NDA</label>
+                <label>Client OFE Only Addendum</label>
             </value>
             <value>
                 <fullName>ClientServiceAgreement</fullName>
@@ -23,14 +23,19 @@
                 <label>ClientServiceAgreement</label>
             </value>
             <value>
-                <fullName>EnrollmentFeeMultiPaymentNonRefundable</fullName>
-                <default>false</default>
-                <label>Enrollment Fee Multi Payment Non Refundable</label>
-            </value>
-            <value>
                 <fullName>EnrollmentFeeCreditCardPayment</fullName>
                 <default>false</default>
                 <label>Docupay</label>
+            </value>
+            <value>
+                <fullName>EnhancedEPLIQuestionnaire</fullName>
+                <default>false</default>
+                <label>Enhanced EPLI Questionnaire</label>
+            </value>
+            <value>
+                <fullName>EnrollmentFeeMultiPaymentNonRefundable</fullName>
+                <default>false</default>
+                <label>Enrollment Fee Multi Payment Non Refundable</label>
             </value>
             <value>
                 <fullName>GLALInsuranceCertificateRequest</fullName>
@@ -38,9 +43,34 @@
                 <label>GLALInsuranceCertificateRequest</label>
             </value>
             <value>
+                <fullName>IRR Addendum</fullName>
+                <default>false</default>
+                <label>IRR Addendum</label>
+            </value>
+            <value>
                 <fullName>Mid-MarketClientServiceAgreement</fullName>
                 <default>false</default>
                 <label>Mid-MarketClientServiceAgreement</label>
+            </value>
+            <value>
+                <fullName>MidMarketCSA</fullName>
+                <default>false</default>
+                <label>MidMarket CSA</label>
+            </value>
+            <value>
+                <fullName>MidMarketCSAAnnualRenewal</fullName>
+                <default>false</default>
+                <label>MidMarket CSA Annual Renewal</label>
+            </value>
+            <value>
+                <fullName>MidMarketEPLIAddendum</fullName>
+                <default>false</default>
+                <label>MidMarket EPLI Addendum</label>
+            </value>
+            <value>
+                <fullName>NDA</fullName>
+                <default>false</default>
+                <label>NDA</label>
             </value>
             <value>
                 <fullName>AnalysisDocumentsOver50ee</fullName>
