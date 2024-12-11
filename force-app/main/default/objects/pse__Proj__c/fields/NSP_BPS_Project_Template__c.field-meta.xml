@@ -87,6 +87,11 @@
                 <label>iSolved Flexible Benefits</label>
             </value>
             <value>
+                <fullName>iSolved – Hardware</fullName>
+                <default>false</default>
+                <label>iSolved – Hardware</label>
+            </value>
+            <value>
                 <fullName>ISolved HCM Implementation</fullName>
                 <default>false</default>
                 <label>ISolved HCM Implementation</label>
@@ -110,11 +115,6 @@
                 <fullName>iSolved Time</fullName>
                 <default>false</default>
                 <label>iSolved Time</label>
-            </value>
-            <value>
-                <fullName>iSolve – Hardware</fullName>
-                <default>false</default>
-                <label>iSolve – Hardware</label>
             </value>
             <value>
                 <fullName>ITA - Hardware</fullName>
