@@ -91,6 +91,11 @@
         <label>HCM Sales</label>
     </customValue>
     <customValue>
+        <fullName>HCM Sales 2</fullName>
+        <default>false</default>
+        <label>HCM Sales 2</label>
+    </customValue>
+    <customValue>
         <fullName>Inside Sales</fullName>
         <default>false</default>
         <label>Inside Sales</label>
