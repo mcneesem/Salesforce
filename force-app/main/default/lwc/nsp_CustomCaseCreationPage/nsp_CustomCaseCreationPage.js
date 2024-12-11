@@ -38,6 +38,7 @@ import SUB_CATEGORY from '@salesforce/schema/Case.NSP_SubCategory__c';
 import DETAIL from '@salesforce/schema/Case.NSP_Detail__c';
 import VERSION from '@salesforce/schema/Case.NSP_Version__c';
 import getCaseSettingFlag from '@salesforce/apex/NSP_CustomCaseCreationPageController.getCaseSettingFlag';
+import isUserInQueue from '@salesforce/apex/NSP_CustomCaseCreationPageController.isUserInQueue';
 
 import { IsConsoleNavigation, getFocusedTabInfo, closeTab } from 'lightning/platformWorkspaceApi';
 
@@ -172,12 +173,25 @@ export default class Nsp_CustomCaseCreationPage extends NavigationMixin(Lightnin
     getAllInputFields = [];
     objectNameKeyPrefixMap = new Map();
     fieldValueMap = {};
+    showRequestedJobs = false;
+    userPartOfQueue = false;
+
+    verifyCompensationQueue(){
+        isUserInQueue()
+        .then(result => { 
+			this.userPartOfQueue = result;
+		})
+		.catch(error => {            
+            this.userPartOfQueue = false;
+		})
+    }
 
     @wire(getObjectInfo, { objectApiName: CASE_OBJ })
     wireObjectInfo(result) {
         if (result.data) {
             if (result.data.recordTypeInfos) {
                 this.selectedRecTypeId = this.pageRef.state.recordTypeId != undefined ? this.pageRef.state.recordTypeId : result.data.defaultRecordTypeId;
+                this.verifyCompensationQueue();
                 this.getCatDependenciesMap();
                 if( this.selectedRecTypeId){
                     const rtis = result.data.recordTypeInfos;
@@ -238,6 +252,7 @@ export default class Nsp_CustomCaseCreationPage extends NavigationMixin(Lightnin
             this.error = error;
         }
     }
+    
     get showTypeField(){
         return (this.showCaseType && this.hasBPSAccess);
     }
@@ -769,9 +784,16 @@ export default class Nsp_CustomCaseCreationPage extends NavigationMixin(Lightnin
             if(this.isBPSUser == false && this.subCategoryOptions.length > 0){
                 this.showAllSubCategoryButton = true;            
             }
+            this.updateDescriptionToRequired();
         }
         if (event.currentTarget.name == 'Sub Category') {
             this.selectedSubCategory = event.target.value;
+            if(this.selectedSubCategory==='Salary Survey'){
+               this.showRequestedJobs = true;
+            }
+            else{
+               this.showRequestedJobs = false;
+            }
             //this.populateSubCategory();
             this.detailOptions = this.createOptions(this.categoryWrapper.mCatSubToDetails[this.selectedCategory + '-' + event.target.value]);
             if(this.detailOptions.length > 0){
@@ -793,6 +815,7 @@ export default class Nsp_CustomCaseCreationPage extends NavigationMixin(Lightnin
             if(this.selectedCategory.length>0 && this.selectedSubCategory.length>0 && this.accountID.length>0){
                 this.handlePopulateAsset(event);
             }
+            
         }
 
         if (event.currentTarget.name == 'Detail') {
@@ -815,6 +838,36 @@ export default class Nsp_CustomCaseCreationPage extends NavigationMixin(Lightnin
         }
         
         if (this.disableButton) this.disableButton = false;
+    }
+    updateDescriptionToRequired(){
+        const inputFields = this.template.querySelectorAll('lightning-input-field');
+        if(inputFields){
+            inputFields.forEach(field => {
+                if(this.selectedCategory==='Compensation Services' && field.fieldName === 'Description'){
+                   field.required = true; 
+                }
+                else{
+                    field.required = false;
+                }
+            });
+        }
+    }
+    handleCatSubcatSelection(event){
+        let type = event.detail.type;
+        let value = event.detail.value;
+        if(type==='SubCategory'){
+            if(value==='Salary Survey'){
+                this.showRequestedJobs = true;
+            }
+            else{
+                this.showRequestedJobs = false;    
+            }
+        }
+        else{
+            this.selectedCategory = value;
+            this.updateDescriptionToRequired();
+        }
+        
     }
 
     handleSuccess(event) {
@@ -1033,6 +1086,7 @@ export default class Nsp_CustomCaseCreationPage extends NavigationMixin(Lightnin
         if(this.selectedOwnerId === ''){
             errorFields += "Case Owner,"
         }
+        
         this.getAllInputFields = event.detail.fields;
         if(this.isSubCompPermissionEnabled){
             this.getCatSubCatValues();        
@@ -1194,11 +1248,19 @@ export default class Nsp_CustomCaseCreationPage extends NavigationMixin(Lightnin
                     this.showAllSubCategoryButton = false; 
                     this.showFilterSubCategoryButton = false; 
                     this.getFiteredSubCatValues();
+
+                this.updateDescriptionToRequired();
         }
         //updated by rahul for bug 210402
         if (event.currentTarget.name == 'Sub Category') {
             this.selectedSubCategory = event.target.value;
-            this.detailOptions = this.createOptions(this.categoryWrapper.mCatSubToDetails[this.selectedCategory + '-' + event.target.value]);
+            if(this.selectedSubCategory==='Salary Survey'){
+                this.showRequestedJobs = true;
+            }
+            else{
+                this.showRequestedJobs = false;
+            }
+            this.detailOptions = this.createOptions(this.categoryWrapper.mCatSubToDetails[this.selectedCategory + '-' + event.target.value]);
             if(this.detailOptions.length > 0){
                 this.showDetail = true;
                 this.showAllDetail = false;
@@ -1213,6 +1275,7 @@ export default class Nsp_CustomCaseCreationPage extends NavigationMixin(Lightnin
             if(this.selectedCategory.length>0 && this.selectedSubCategory.length>0 && this.accountID.length>0){
                 this.handlePopulateAsset(event);
             }
+            
         }
         if (event.currentTarget.name == 'Detail') {
             this.selectedDetail = event.target.value;
@@ -1370,6 +1433,9 @@ export default class Nsp_CustomCaseCreationPage extends NavigationMixin(Lightnin
             if ( !isSystemAdmin && ( result.mCatToSubCatogories["HR Employee Relations"] != null ) ) {
                 result.mCatToSubCatogories["HR Employee Relations"] = result.mCatToSubCatogories["HR Employee Relations"].filter(value => value !== "Separation Agreement Request");
             }
+            if(!isSystemAdmin && !this.userPartOfQueue && result.mCatToSubCatogories["Compensation Services"]!==null && result.mCatToSubCatogories["Compensation Services"]!==undefined){
+                result.mCatToSubCatogories["Compensation Services"] = result.mCatToSubCatogories["Compensation Services"].filter(value => (value == "Client Consultation" || value == "Salary Survey"));
+            }
             this.subCategoryOptions = this.createOptions(result.mCatToSubCatogories[this.oCase.NSP_Category__c]);
             this.detailOptions = this.createOptions(result.mCatSubToDetails[this.oCase.NSP_Category__c + '-' + this.oCase.NSP_SubCategory__c]);
             this.versionOptions = this.createOptions(result.mCatSubDetailToVersions[this.oCase.NSP_Category__c + '-' + this.oCase.NSP_SubCategory__c + '-' + this.oCase.NSP_Detail__c]);
@@ -1391,6 +1457,9 @@ export default class Nsp_CustomCaseCreationPage extends NavigationMixin(Lightnin
             let isSystemAdmin = ( this.profileName && this.profileName.startsWith( 'System Admin' ) );
             if ( !isSystemAdmin ) {
                 response = response.filter(value => value !== "Separation Agreement Request");
+            }
+            if(this.selectedCategory==='Compensation Services' && !isSystemAdmin && !this.userPartOfQueue){
+                response = response.filter(value => (value === "Client Consultation" || value == "Salary Survey"));
             }
             this.subCategoryOptions = this.createOptions(response);
         }).catch((error) => {
