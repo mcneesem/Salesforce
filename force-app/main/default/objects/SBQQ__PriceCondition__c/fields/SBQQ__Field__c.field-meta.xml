@@ -332,6 +332,16 @@
                 <default>false</default>
                 <label>SBQQ__UpgradedSubscription__c</label>
             </value>
+            <value>
+                <fullName>SBQQ__RequiredBy__c</fullName>
+                <default>false</default>
+                <label>SBQQ__RequiredBy__c</label>
+            </value>
+            <value>
+                <fullName>Amend_Required_Text_Field__c</fullName>
+                <default>false</default>
+                <label>Amend_Required_Text_Field__c</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

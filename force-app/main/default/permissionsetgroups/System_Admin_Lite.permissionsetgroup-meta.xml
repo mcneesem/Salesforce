@@ -11,6 +11,7 @@
     <permissionSets>Allow_Delete_Accounts</permissionSets>
     <permissionSets>Allow_Delete_Leads</permissionSets>
     <permissionSets>Client_goal_project_task_junction_access</permissionSets>
+    <permissionSets>Bundle_Template_Flag_fields_Permission</permissionSets>
     <permissionSets>Edit_Integrated_Fields</permissionSets>
     <permissionSets>Field_Access_to_System_Admin_Lite</permissionSets>
     <permissionSets>Finance_Logger</permissionSets>
