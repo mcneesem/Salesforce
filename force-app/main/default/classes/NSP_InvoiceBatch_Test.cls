@@ -9,13 +9,18 @@ public class NSP_InvoiceBatch_Test {
     
 	@TestSetup
     public static void createTestData(){
+        InvoiceBatchSettings__c settings = InvoiceBatchSettings__c.getOrgDefaults();
+        settings.IsEnabled__c = true;
+        settings.BatchSize__c = 25;
+        upsert settings;
+
         NSP_ContactTriggerHandler.TriggerDisabled = true;
         blng__BillingRule__c objBillingRule = NSP_TestHelper.createBillingRule(); 
         blng__RevenueRecognitionRule__c objRevRecRule =  NSP_TestHelper.createRevrecRule('1');
         blng__TaxRule__c objTaxRule = NSP_TestHelper.createRevTaxRule();
         
         Account objaccount = NSP_TestHelper.createAccount(true);
-        Contact objcontact = NSP_TestHelper.createContact(objaccount.id, true);
+        NSP_TestHelper.createContact(objaccount.id, true);
         
         Product2 objproduct = NSP_TestHelper.createProduct('Test Product',false);
         objproduct.blng__BillingRule__c = objBillingRule.Id;
@@ -39,7 +44,7 @@ public class NSP_InvoiceBatch_Test {
         //create quote
         SBQQ__Quote__c objQuote   = NSP_TestHelper.createCPQQuote(objaccount.Id,objOpprtunity.Id,true);
         // create quote lines
-        List<SBQQ__Quoteline__c> qlines = NSP_TestHelper.createCPQQuotelines(objQuote,new List<Product2>{objproduct},new List<PriceBookEntry> {objPbe}, true);
+        NSP_TestHelper.createCPQQuotelines(objQuote,new List<Product2>{objproduct},new List<PriceBookEntry> {objPbe}, true);
         
         
         Test.startTest();
@@ -60,24 +65,8 @@ public class NSP_InvoiceBatch_Test {
         update orderList;
         orderList[0].blng__BillNow__c=true;
         update orderList;
-        
-        /*
-        NSP_OrderTriggerHandler.TriggerDisabled = true;
-        NSP_InvoiceTriggerHandler.TriggerDisabled = true;
-		List<Order> ords =[SELECT Id, OrderNumber, blng__BillingDayOfMonth__c FROM Order WHERE SBQQ__Quote__c=:objQuote.Id ];
-        ords[0].blng__BillingDayOfMonth__c = '1';
-        ords[0].Status = 'Reviewed';
-        update ords;
 
-        ords[0].Status = 'Activated';
-        update ords;
-        ords[0].blng__BillNow__c = TRUE;
-		update ords;
-        */
-        List<blng__Invoice__c> inv =[Select Id,blng__InvoiceStatus__c,blng__Balance__c from blng__Invoice__c WHERE Id!=null];
-        
-        NSP_InvoiceBatch invBatch= new NSP_InvoiceBatch();
-        Database.executeBatch(invBatch,1);
+        Database.executeBatch(new NSP_InvoiceBatch(),1);
         Test.stopTest();
         System.assert(orderList.size()==1,true);
     }  
@@ -94,7 +83,7 @@ public class NSP_InvoiceBatch_Test {
         //create quote
         SBQQ__Quote__c objQuote   = NSP_TestHelper.createCPQQuote(objaccount.Id,objOpprtunity.Id,true);
         // create quote lines
-        List<SBQQ__Quoteline__c> qlines = NSP_TestHelper.createCPQQuotelines(objQuote,new List<Product2>{objproduct},new List<PriceBookEntry> {objPbe}, true);
+        NSP_TestHelper.createCPQQuotelines(objQuote,new List<Product2>{objproduct},new List<PriceBookEntry> {objPbe}, true);
         
         
         Test.startTest();
@@ -119,10 +108,20 @@ public class NSP_InvoiceBatch_Test {
         List<blng__Invoice__c> inv =[Select Id,blng__InvoiceStatus__c,blng__Balance__c from blng__Invoice__c WHERE Id!=null];
         List<Id>invoices = new List<Id>{inv[0].Id};
         
-        NSP_InvoiceBatch invBatch= new NSP_InvoiceBatch(invoices);
-        Database.executeBatch(invBatch,1);
+        Database.executeBatch(new NSP_InvoiceBatch(invoices),1);
         
         Test.stopTest();
         System.assert(orderList.size()==1,true);
     }
+
+    @isTest private static void testSchedulable() {
+        Test.startTest();
+        System.schedule(
+            'NSP_InvoiceBatch ~ everyday at midnight' ,
+            '0 0 0 * * ? *' ,
+            new NSP_InvoiceBatch()
+        );
+        Test.stopTest();
+    }
 }
+//
