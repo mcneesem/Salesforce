@@ -591,6 +591,7 @@
     <relatedLists>
         <excludeButtons>MassChangeOwner</excludeButtons>
         <fields>NAME</fields>
+        <fields>Asset.NAME</fields>
         <fields>Asset.NSP_Status__c</fields>
         <relatedList>Project_Asset__c.Project__c</relatedList>
     </relatedLists>
