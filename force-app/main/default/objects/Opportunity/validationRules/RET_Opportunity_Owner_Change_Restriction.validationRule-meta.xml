@@ -4,11 +4,11 @@
     <active>true</active>
     <description>Retirement Services opportunity Owner can only be updated by Users with RET_Sales_Assignments permission set</description>
     <errorConditionFormula>AND(
-NOT( $Setup.NSP_Trigger_Switch__c.OpportunityValidations__c ),
-NOT(ISNEW()),
-ISCHANGED( OwnerId ),
-ISPICKVAL( NSP_PrimaryProduct__c, &apos;Retirement Services&apos; ),
-NOT( $Permission.RET_Sales_Assignments )
+  NOT( $Setup.NSP_Trigger_Switch__c.OpportunityValidations__c ) ,
+  NOT( $Permission.RET_Sales_Assignments ) ,
+  NOT( ISNEW() ) ,
+  ISCHANGED( OwnerId ) ,
+  ISPICKVAL( NSP_PrimaryProduct__c , &apos;Retirement Services&apos; )
 )</errorConditionFormula>
     <errorMessage>You must be a Retirement Services Sales user to reassign this Opportunity.</errorMessage>
 </ValidationRule>
