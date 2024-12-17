@@ -406,6 +406,7 @@ export default class Nsp_accrualProfileRecordForm extends NavigationMixin(
     this.updateDependentFieldVisibility(visibilityName || name, value);
     this.doFieldSpecificAction(name, value);
     this.addStyleToAnsweredQuestion(target, value);
+    this.addStyleToFiscalYear();
   }
 
   handleChange(event) {
@@ -480,6 +481,22 @@ export default class Nsp_accrualProfileRecordForm extends NavigationMixin(
     this.filesUploadedCount = uploadedFiles.length;
   }
 
+  //ADO: 320801 | Methods created for header (No field) "List start of fiscal year:"
+  addStyleToFiscalYear() { 
+    const targetFiscalYear = this.template.querySelector('[data-name="isClientFiscalYear"]'); 
+    const valueFiscalYear = (this.fieldValue.NSP_Month__c != null && this.fieldValue.NSP_Day__c != null)  
+    ? this.fieldValue.NSP_Month__c
+    : null;
+    if(targetFiscalYear){
+      this.addStyleToAnsweredQuestion(targetFiscalYear, valueFiscalYear); 
+    }
+  }
+  addStyleToPrepopulatedFiscalYear() { 
+    const valueFiscalYear = (this.fieldValue.NSP_Month__c != null && this.fieldValue.NSP_Day__c != null)  
+    ? this.fieldValue.NSP_Month__c
+    : null;
+    this.addStyleToPrePopulatedQuestions('isClientFiscalYear', valueFiscalYear);
+  }
   navigateToFile(event) {
     let fileId = event.target.dataset.value;
     this.navigateToNewTab(fileId);
@@ -988,6 +1005,7 @@ export default class Nsp_accrualProfileRecordForm extends NavigationMixin(
           this.addStyleToPrePopulatedQuestions(fieldName, value);
         }
         this.addStyleToPrePopulatedQuestions('NSP_Accrual_Profile__c', value);
+        this.addStyleToPrepopulatedFiscalYear();
       });
       if (this.fieldValue.CustomOwnerId__c) {  
         this.addStyleToPrePopulatedQuestions('CustomOwnerId__c', this.fieldValue.CustomOwnerId__c);  
