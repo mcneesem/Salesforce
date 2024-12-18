@@ -70,7 +70,7 @@ public class NSP_AssetTriggerHandler implements NSP_ITriggerHandler {
             NSP_AssetServiceHelper oAssetHelper = new NSP_AssetServiceHelper();
             oAssetHelper.createBPSProject((List<Asset>)newList);
         }
-
+        NSP_AssetTriggerHelper.createPlatformEventForAsset( (List<Asset>)newMap.values() , null );
     }
 
     /**
@@ -117,7 +117,7 @@ public class NSP_AssetTriggerHandler implements NSP_ITriggerHandler {
             assetServiceHelper.clearAssetTerminationSection((List<Asset>)newMap.Values(),(Map<Id, Asset>)oldMap);
         }
         //added as part of STY-03624 changes
-        NSP_AssetTriggerHelper.createPlatformEventForAsset((List<Asset>)newMap.Values(),(Map<Id, Asset>)oldMap);   
+        NSP_AssetTriggerHelper.createPlatformEventForAsset( (List<Asset>)newMap.Values() , (Map<Id,Asset>)oldMap );
     }
     
     /**
