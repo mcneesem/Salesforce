@@ -10,7 +10,7 @@ Modification Log     :
 * -------------------------------------------------------------------------------------------------  
 ***************************************************************************************************/
 public with sharing class NSP_CaseRecordSharing {
-    // test w/ NSP_CaseRecordSharingTest (83%)
+    // test w/ NSP_CaseRecordSharingTest (85%)
 
     private static Map<String,Id> grpNameGrpIdMap = new Map<String,Id>();
     private static Map<String,List<String>> catSubCatGroupNamesMap = new Map<String,List<String>>();
@@ -224,13 +224,6 @@ public with sharing class NSP_CaseRecordSharing {
         newCaseShare.caseAccessLevel = NSP_ServiceConstants.editSharingAccess;
         newCaseShare.CaseId = recordId;
         return newCaseShare;
-    }
-
-    // for test code coverage only...
-    public static void testHandleException( Exception e , String methodName ) {
-        if ( Test.isRunningTest() ) {
-            NSP_CaseRecordSharing.handleException( e , methodName );
-        }
     }
 
     private static void handleException( Exception e , String methodName ) {
