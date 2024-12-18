@@ -482,21 +482,23 @@ export default class Nsp_accrualProfileRecordForm extends NavigationMixin(
   }
 
   //ADO: 320801 | Methods created for header (No field) "List start of fiscal year:"
-  addStyleToFiscalYear() { 
-    const targetFiscalYear = this.template.querySelector('[data-name="isClientFiscalYear"]'); 
-    const valueFiscalYear = (this.fieldValue.NSP_Month__c != null && this.fieldValue.NSP_Day__c != null)  
-    ? this.fieldValue.NSP_Month__c
-    : null;
+  addStyleToFiscalYear() {
+    const targetFiscalYear = this.template.querySelector('[data-name="isClientFiscalYear"]');
+    const valueFiscalYear = (this.fieldValue.NSP_Month__c != null && this.fieldValue.NSP_Day__c != null)
+      ? this.fieldValue.NSP_Month__c
+      : null;
     if(targetFiscalYear){
-      this.addStyleToAnsweredQuestion(targetFiscalYear, valueFiscalYear); 
+      this.addStyleToAnsweredQuestion(targetFiscalYear, valueFiscalYear);
     }
   }
-  addStyleToPrepopulatedFiscalYear() { 
-    const valueFiscalYear = (this.fieldValue.NSP_Month__c != null && this.fieldValue.NSP_Day__c != null)  
-    ? this.fieldValue.NSP_Month__c
-    : null;
+
+  addStyleToPrepopulatedFiscalYear() {
+    const valueFiscalYear = (this.fieldValue.NSP_Month__c != null && this.fieldValue.NSP_Day__c != null)
+      ? this.fieldValue.NSP_Month__c
+      : null;
     this.addStyleToPrePopulatedQuestions('isClientFiscalYear', valueFiscalYear);
   }
+
   navigateToFile(event) {
     let fileId = event.target.dataset.value;
     this.navigateToNewTab(fileId);
