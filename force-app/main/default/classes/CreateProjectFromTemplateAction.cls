@@ -1,8 +1,8 @@
 /* Apex class is used to Create Project from Template Using Financial Force API through Flow
 Date : 06/21/2023 */
 
-public class CreateProjectFromTemplateAction {
-    // test w/ CreateProjectFromTemplateActionTest (100%)
+public with sharing class CreateProjectFromTemplateAction {
+    // test w/ CreateProjectFromTemplateActionTest (83%)
 
     @InvocableMethod(label='Create Project from Template Service' 
                      description='Leverage Financial Force Service API to create a Project from a Project Template'
@@ -61,8 +61,7 @@ public class CreateProjectFromTemplateAction {
         
         //Make a fieldMapper for the recordtypeId field on Project.
         pse.SObjectCloneMapper.Field recordtypeMapper = new pse.SObjectCloneMapper.Field(Schema.pse__Proj__c.recordtypeId);
-        Id PEOPROJECTTECORDTYPEID = SObjectType.pse__Proj__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.PEOProject).getRecordTypeId();
-        recordtypeMapper.DefaultValue = PEOPROJECTTECORDTYPEID;
+        recordtypeMapper.DefaultValue = NSP_GenericRecordType.getRecordTypeId( 'pse__Proj__c' , 'PEO_Project' );
         
         pse.SObjectCloneMapper.Field recordtypeMapper1 = new pse.SObjectCloneMapper.Field(Schema.pse__Proj__c.NSP_Exclusively_Assign_Owner__c);
         recordtypeMapper1.DefaultValue = TRUE;
@@ -77,11 +76,62 @@ public class CreateProjectFromTemplateAction {
         pse.SObjectCloneMapper itemCloneMap = new pse.SObjectCloneMapper(pse__Proj__c.SObjectType, setOfFields);
             
         projRequest.Mappers = new List<pse.SObjectCloneMapper> { itemCloneMap };
-        
+
         //Call the service and create project
-        List<pse.CreateProjectFromTemplateService.CreateProjectResponse> projResponse =
-        pse.CreateProjectFromTemplateService.createProjectsFromTemplates( 
-        new List<pse.CreateProjectFromTemplateService.CreateProjectFromTemplateAndAccountRequest>{projRequest});        
-        return projResponse[0].NewProjectId;
+        List<pse.CreateProjectFromTemplateService.CreateProjectResponse> projResponse = pse.CreateProjectFromTemplateService.createProjectsFromTemplates(
+            new List<pse.CreateProjectFromTemplateService.CreateProjectFromTemplateAndAccountRequest>{ projRequest }
+        );
+        return CreateProjectFromTemplateAction.handleCreateProjectResponse(
+            CreateProjectFromTemplateAction.class.getName() ,
+            'createProjectFromAsset' ,
+            projResponse
+        );
     }
+
+    //
+    //
+    //
+
+    public static Set<Id> handleCreateProjectResponses( String className , String methodName , List<pse.CreateProjectFromTemplateService.CreateProjectResponse> responses ) {
+        Set<Id> newProjectIds = new Set<Id>();
+        if ( ( responses != null ) && !responses.isEmpty() ) {
+            for ( pse.CreateProjectFromTemplateService.CreateProjectResponse response : responses ) {
+                Id newProjectId = CreateProjectFromTemplateAction.handleCreateProjectResponse( className , methodName , response );
+                if ( newProjectId != null ) {
+                    newProjectIds.add( newProjectId );
+                }
+            }
+        }
+        return newProjectIds;
+    }
+
+    public static Id handleCreateProjectResponse( String className , String methodName , List<pse.CreateProjectFromTemplateService.CreateProjectResponse> responses ) {
+        Id newProjectId = null;
+        if ( ( responses != null ) && !responses.isEmpty() ) {
+            newProjectId = CreateProjectFromTemplateAction.handleCreateProjectResponse( className , methodName , responses[0] );
+        }
+        return newProjectId;
+    }
+
+    private static Id handleCreateProjectResponse( String className , String methodName , pse.CreateProjectFromTemplateService.CreateProjectResponse response ) {
+        Id newProjectId = null;
+        if ( response != null ) {
+            if ( response.isSuccess() ) {
+                newProjectId = response.NewProjectId;
+            } else {
+                if ( ( response.Errors != null ) && !response.Errors.isEmpty() ) {
+                    for ( pse.CreateProjectFromTemplateService.CreateProjectError error : response.Errors ) {
+                        NSP_ErrorLogHandler.logInfo(
+                            className ,
+                            methodName ,
+                            error.Message
+                        );
+                    }
+                }
+            }
+        }
+        return newProjectId;
+    }
+
 }
+//

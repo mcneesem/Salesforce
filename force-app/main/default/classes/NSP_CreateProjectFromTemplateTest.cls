@@ -2,11 +2,12 @@
 private class NSP_CreateProjectFromTemplateTest {
     private static final String ACCOUNTDEFAULTS = 'NSP_TestDataFactory.AccountDefaults';
     private static final String ASSETDEFAULTS = 'NSP_TestDataFactory.AssetDefaults';
+    private static final String CASESUBJECT = 'Test Case Project';
     
     @isTest static void testButton() {
         Account acc = (Account)NSP_TestExtendedDataFactory.createSObject(new Account(), ACCOUNTDEFAULTS, true);
         Case case1 = new Case();
-        case1.Subject = 'Test Case Project';
+        case1.Subject = CASESUBJECT;
         case1.Status = 'Open';
         case1.Origin = 'Phone';
         case1.AccountId = acc.Id;
@@ -15,6 +16,7 @@ private class NSP_CreateProjectFromTemplateTest {
         proj1.pse__Start_Date__c = Date.Today();
         proj1.Name = 'Test';
         proj1.pse__Is_Template__c = true;
+        proj1.pse__Is_Active__c = true;
         insert proj1;
         case1.Project_Template__c = proj1.Id;
         insert case1;
@@ -33,37 +35,26 @@ private class NSP_CreateProjectFromTemplateTest {
         NSP_CreateProjectFromTemplate scc = new NSP_CreateProjectFromTemplate(sc);
         scc.inputProj = proj1;
         scc.setassetRef(assetObj);
-        PageReference returnPage = scc.createProject();
+        scc.createProject();
         Test.StopTest();
     
         //Check input fields from Visualforce page match
         System.assertEquals(Date.Today(), scc.inputProj.pse__Start_Date__c, 'inputted start date does not match');
         pse__Proj__c proj = [SELECT Id, Name FROM pse__Proj__c WHERE Id != null LIMIT 1];
-        PageReference testPage = new PageReference('/' + proj.Id);
+        new PageReference('/' + proj.Id);
     }
     
-    /* Commented Date : 13/Oct
-    @isTest static void testGetProject(){
-        Case c = new Case();
-        ApexPages.StandardController sc = new ApexPages.StandardController(c);
-        SimpleCPFTController scc = new SimpleCPFTController(sc);
-        Test.StartTest();        
-        pse__Proj__c proj = scc.inputProj;
-        Test.StopTest();
-        
-        System.assertNotEquals(null, proj, 'dummy project should be created by controller');
-    }*/
-
     @isTest static void testNoStartDate(){
 		PageReference returnPage;
         Case case2 = new Case();
-        case2.Subject = 'Test Case Project';
+        case2.Subject = CASESUBJECT;
         case2.Status = 'Open';
         case2.Origin = 'Phone';
 
         pse__Proj__c proj2 = new pse__Proj__c();
         proj2.Name = 'Test';
         proj2.pse__Is_Template__c = true;
+        proj2.pse__Is_Active__c = true;
 		proj2.pse__Start_Date__c = Date.Today();
         insert proj2;
         case2.Project_Template__c = proj2.Id;
@@ -87,7 +78,7 @@ private class NSP_CreateProjectFromTemplateTest {
     
     @isTest static void testButtonFromRelatedList() {
         Case case3 = new Case();
-        case3.Subject = 'Test Case Project';
+        case3.Subject = CASESUBJECT;
         case3.Status = 'Open';
         case3.Origin = 'Phone';
 
@@ -95,6 +86,7 @@ private class NSP_CreateProjectFromTemplateTest {
         proj3.pse__Start_Date__c = Date.Today();
         proj3.Name = 'Test';
         proj3.pse__Is_Template__c = true;
+        proj3.pse__Is_Active__c = true;
         insert proj3;
         case3.Project_Template__c = proj3.Id;
         insert case3;
@@ -106,7 +98,7 @@ private class NSP_CreateProjectFromTemplateTest {
   
         NSP_CreateProjectFromTemplate scc = new NSP_CreateProjectFromTemplate();
         scc.inputProj = proj3;
-        PageReference returnPage = scc.createProject();
+        scc.createProject();
         scc.getcaseRef();
         scc.getassetRef();
         Test.StopTest();
@@ -114,13 +106,13 @@ private class NSP_CreateProjectFromTemplateTest {
         //Check input fields from Visualforce page match
         System.assertEquals(Date.Today(), scc.inputProj.pse__Start_Date__c, 'inputted start date does not match');
         pse__Proj__c proj = [SELECT Id, Name FROM pse__Proj__c WHERE Id != null LIMIT 1];
-        PageReference testPage = new PageReference('/' + proj.Id);
+        new PageReference('/' + proj.Id);
     }
     
     @isTest
     public static void createProject(){
         Case oCase = new Case();
-        oCase.Subject = 'Test Case Project';
+        oCase.Subject = CASESUBJECT;
         oCase.Status = 'Open';
         oCase.Origin = 'Phone';
         oCase.Comments_for_Project__c = 'abc';
@@ -130,6 +122,7 @@ private class NSP_CreateProjectFromTemplateTest {
         oProject.pse__Start_Date__c = Date.Today();
         oProject.Name = 'Test';
         oProject.pse__Is_Template__c = true;
+        oProject.pse__Is_Active__c = true;
         insert oProject;
         oCase.Project_Template__c = oProject.Id;
         insert oCase;
