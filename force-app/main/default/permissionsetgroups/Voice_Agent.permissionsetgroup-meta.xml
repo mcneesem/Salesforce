@@ -6,9 +6,8 @@
     <permissionSets>Address_Book_Visibility</permissionSets>
     <permissionSets>Assign_Connected_App_NewVoiceMedia</permissionSets>
     <permissionSets>Find_Related_Contact_Screen_Flow</permissionSets>
-    <permissionSets>Messaging_User_Edit</permissionSets>
+    <permissionSets>Messaging_User_Read</permissionSets>
     <permissionSets>NVMContactWorld__Agent</permissionSets>
-    <permissionSets>Read_Messaging_User</permissionSets>
     <permissionSets>Service_Presence_Statuses_Base</permissionSets>
     <permissionSets>Service_Presence_Statuses_Voice</permissionSets>
     <permissionSets>Vonage_Call_Recording</permissionSets>
