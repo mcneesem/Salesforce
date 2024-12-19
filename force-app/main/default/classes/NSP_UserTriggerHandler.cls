@@ -2,6 +2,7 @@
 // Represents the User trigger handler.
 //
 public with sharing class NSP_UserTriggerHandler implements NSP_ITriggerHandler{
+    // test w/ NSP_UserTriggerHelper_Test (??%)
     // test w/ UserOnboardingTriggerHelperTest (100%)
 
     // Use this variable to disable this trigger from transaction
