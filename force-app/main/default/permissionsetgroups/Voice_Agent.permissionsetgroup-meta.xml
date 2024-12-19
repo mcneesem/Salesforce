@@ -8,6 +8,7 @@
     <permissionSets>Find_Related_Contact_Screen_Flow</permissionSets>
     <permissionSets>Messaging_User_Edit</permissionSets>
     <permissionSets>NVMContactWorld__Agent</permissionSets>
+    <permissionSets>Read_Messaging_User</permissionSets>
     <permissionSets>Service_Presence_Statuses_Base</permissionSets>
     <permissionSets>Service_Presence_Statuses_Voice</permissionSets>
     <permissionSets>Vonage_Call_Recording</permissionSets>
