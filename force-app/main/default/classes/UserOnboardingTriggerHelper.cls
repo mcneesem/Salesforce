@@ -972,10 +972,10 @@ public with sharing class UserOnboardingTriggerHelper {
                     Marketing_User__c ,
                     Service_Cloud_User__c ,
                     Chat_User__c ,
-                	Permission_Set_Group_Name__c ,
-                	Permission_Set_License__c ,
-                	Permission_Set_Name__c ,
-                	Queue_Name__c
+                    Permission_Set_Group_Name__c ,
+                    Permission_Set_License__c ,
+                    Permission_Set_Name__c ,
+                    Queue_Name__c
                 FROM User_Onboarding_Detail__mdt
                 WHERE ( Title__c IN :titles )
             ];
