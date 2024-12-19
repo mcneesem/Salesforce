@@ -44,7 +44,7 @@
     </values>
     <values>
         <field>Permission_Set_Name__c</field>
-        <value xsi:type="xsd:string">Bloomfire_User,Bloomfire_Custom_User,Cobrowse_io_Agent_Permission_Set_Cloned,Contact_Modify_All,cobrowseio_agent_permission,inContact_Agent_Permission,Legacy_Connected_App_Access,NSP_Billing_View_All,NSP_CRMA_Limited_and_Collections,NSP_Order_ViewAll,NSP_PEO_Home_Page,NSP_PII_Data_Visibility,NSP_RET_Sales_permission_set,PartnerTelephonyCustomPsl,Traction_Complete_User</value>
+        <value xsi:type="xsd:string">Bloomfire_Custom_User,Bloomfire_User,Cobrowse_io_Agent_Permission_Set_Cloned,Contact_Modify_All,cobrowseio_agent_permission,inContact_Agent_Permission,Legacy_Connected_App_Access,NSP_Billing_View_All,NSP_CRMA_Limited_and_Collections,NSP_Order_ViewAll,NSP_PEO_Home_Page,NSP_PII_Data_Visibility,NSP_RET_Sales_permission_set,PartnerTelephonyCustomPsl,Traction_Complete_User</value>
     </values>
     <values>
         <field>Profile__c</field>
