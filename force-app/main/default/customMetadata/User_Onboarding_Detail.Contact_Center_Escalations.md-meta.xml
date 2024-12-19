@@ -52,7 +52,7 @@
     </values>
     <values>
         <field>Queue_Name__c</field>
-        <value xsi:type="xsd:string">Contact_Center_Agents,NSP_401k,NSP_All_Data_Visibility,NSP_Benefits,NSP_Escalations,NSP_Contact_Center_Missing_Queue,NSP_Contact_Center_Outbound,NSP_Contact_Center_Section_125,NSP_Contact_Center_Spanish,NSP_Contact_Center_Verification,NSP_ContactCenter,NSP_Corp_Cases_Visibility,NSP_Service_Profile_Group_Members,RET_NSPHardship,NSP_Web_Support,View_All_Survey_Responses</value>
+        <value xsi:type="xsd:string">Contact_Center_Agents,Messaging_Chat_Fallback,MessagingChatQueue,NSP_401k,NSP_All_Data_Visibility,NSP_Benefits,NSP_Escalations,NSP_Contact_Center_Missing_Queue,NSP_Contact_Center_Outbound,NSP_Contact_Center_Section_125,NSP_Contact_Center_Spanish,NSP_Contact_Center_Verification,NSP_ContactCenter,NSP_Corp_Cases_Visibility,NSP_Service_Profile_Group_Members,RET_NSPHardship,NSP_Web_Support,View_All_Survey_Responses</value>
     </values>
     <values>
         <field>RET_Department_list__c</field>
