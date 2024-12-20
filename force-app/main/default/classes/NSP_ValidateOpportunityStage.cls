@@ -217,10 +217,8 @@ public with sharing class NSP_ValidateOpportunityStage {
                                 } else if(opp.NSP_PrimaryProduct__c == NSP_SalesConstants.HR_CONSULTING_SERVICES && opp.NSP_Client_For_Life__c != NSP_SalesConstants.WO_WS){
                                     opp.addError(System.Label.NSP_Create_Signed_Delivery_Order);
                                 }
-                            } else if ( opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WO || opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WS || opp.NSP_Order_Generated__c ) {
-                                if(!opp.NSP_Closing_Appointment__c){
-                                    opp.addError(System.Label.NSP_WO_Closing_Appointment_or_Docusign);
-                                }
+                            } else if ( ( opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WO || opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WS || opp.NSP_Order_Generated__c ) && !opp.NSP_Closing_Appointment__c ) {
+                                opp.addError(System.Label.NSP_WO_Closing_Appointment_or_Docusign);
                             }
                         }
                         //closed-won criteria CR-031
@@ -329,10 +327,8 @@ public with sharing class NSP_ValidateOpportunityStage {
                         } else if(opp.NSP_PrimaryProduct__c == NSP_SalesConstants.HR_CONSULTING_SERVICES && opp.NSP_Client_For_Life__c != NSP_SalesConstants.WO_WS){
                             opp.addError(System.Label.NSP_Create_Signed_Delivery_Order);
                         }
-                    } else if ( opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WO || opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WS || opp.NSP_Order_Generated__c) {
-                        if(!opp.NSP_Closing_Appointment__c){
-                            opp.addError(System.Label.NSP_WO_Closing_Appointment_or_Docusign);
-                        }
+                    } else if ( ( opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WO || opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WS || opp.NSP_Order_Generated__c ) && !opp.NSP_Closing_Appointment__c ) {
+                        opp.addError(System.Label.NSP_WO_Closing_Appointment_or_Docusign);
                     }
                 }
                 //closed-won criteria CR-031
