@@ -141,7 +141,7 @@ public with sharing class NSP_CustomCaseCreationPageController {
        * @param {list<Object>} filesToInsert - content type you want to attach this file to
        * @return {Id} - returns the created attachment  if the
        *   upload was successful, otherwise returns null
-		*Modified Date : 8/21/2023 */
+        *Modified Date : 8/21/2023 */
        
     @AuraEnabled
     public static void saveFiles(list<Object> filesToInsert, String recordId) {
@@ -680,6 +680,18 @@ public static Boolean isMemberOfPrivateSection125Visibility(){
     @AuraEnabled(cacheable=true)
     public static Boolean getCaseSettingFlag() {
         return CustomCaseCreationSettings__c.getInstance(UserInfo.getProfileId()).IsReloadEnabled__c;
+    }
+    @AuraEnabled(cacheable=true)
+    public static Boolean isUserInQueue() {
+        Boolean userInQueue = false;
+        String queueName = 'Compensation_Services';
+        if(String.isNotBlank(queueName)){
+          List<GroupMember> groupMemberList = [Select Id from GroupMember where UserOrGroupId = :UserInfo.getUserId() AND GroupId IN (SELECT Id FROM Group WHERE Type = 'Queue' AND DeveloperName=:queueName)];  
+            if(!groupMemberList.isEmpty()){
+                userInQueue = true;
+            }
+        }
+        return userInQueue;
     }
 
 }

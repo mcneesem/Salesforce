@@ -37,6 +37,7 @@
             <label>Project is WO</label>
         </rules>
     </decisions>
+    <description>Now accounts for Project Task status changed to &quot;Cancelled&quot;</description>
     <environments>Default</environments>
     <interviewLabel>Project Task - Updated - Async - Max Orientation Date {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Project Task - Updated - Async - Max Orientation Date</label>
@@ -89,7 +90,7 @@
     <start>
         <locationX>50</locationX>
         <locationY>0</locationY>
-        <filterLogic>1 AND 2 AND 3 AND 4 AND 5 AND 6 AND (7 OR 8)</filterLogic>
+        <filterLogic>1 AND 2 AND 3 AND 4 AND 5 AND 6 AND (7 OR 8 or 9)</filterLogic>
         <filters>
             <field>NSP_Category__c</field>
             <operator>EqualTo</operator>
@@ -144,6 +145,13 @@
             <operator>EqualTo</operator>
             <value>
                 <stringValue>Dispatched</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>pse__Status__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Canceled</stringValue>
             </value>
         </filters>
         <object>pse__Project_Task__c</object>

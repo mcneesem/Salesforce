@@ -41,8 +41,48 @@
                 <elementReference>varAccountId</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>VarAccountTeammember.Users_Sales_Office__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Sales_Office</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>AssigntoSo</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Create_AccMember</name>
+        <label>Assign varFaultElement - Create_AccMember</label>
+        <locationX>578</locationX>
+        <locationY>1490</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Create_AccMember</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_GetAccountTeam</name>
+        <label>Assign varFaultElement - GetAccountTeam</label>
+        <locationX>842</locationX>
+        <locationY>350</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>GetAccountTeam</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -157,15 +197,7 @@
             <label>userID Matches member</label>
         </rules>
     </decisions>
-    <dynamicChoiceSets>
-        <description>Sales Office</description>
-        <name>nsp_sales_office</name>
-        <dataType>Picklist</dataType>
-        <displayField xsi:nil="true"/>
-        <object xsi:nil="true"/>
-        <picklistField>NSP_Sales_Office__c</picklistField>
-        <picklistObject>Account</picklistObject>
-    </dynamicChoiceSets>
+    <description>Updated to use new &quot;User&apos;s Sales Office&quot; field</description>
     <dynamicChoiceSets>
         <name>ProductType</name>
         <dataType>Picklist</dataType>
@@ -180,6 +212,14 @@
         <displayField xsi:nil="true"/>
         <object xsi:nil="true"/>
         <picklistField>NSP_Role__c</picklistField>
+        <picklistObject>NSP_Account_Team__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>usersSalesOfficePicklist</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>Users_Sales_Office__c</picklistField>
         <picklistObject>NSP_Account_Team__c</picklistObject>
     </dynamicChoiceSets>
     <environments>Default</environments>
@@ -224,7 +264,7 @@
         <locationX>314</locationX>
         <locationY>1382</locationY>
         <faultConnector>
-            <targetReference>Insperity_Fault_Handler_Subflow_Flow_1</targetReference>
+            <targetReference>Assign_varFaultElement_Create_AccMember</targetReference>
         </faultConnector>
         <inputReference>varAccountMemberSO</inputReference>
     </recordCreates>
@@ -237,6 +277,9 @@
         <connector>
             <targetReference>Account_Team_Addition</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_GetAccountTeam</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>NSP_Account__c</field>
@@ -357,8 +400,8 @@
                 <name>Account_Team_Addition_Section2_Column1</name>
                 <fieldType>Region</fieldType>
                 <fields>
-                    <name>Sales_Office_test</name>
-                    <choiceReferences>nsp_sales_office</choiceReferences>
+                    <name>Sales_Office</name>
+                    <choiceReferences>usersSalesOfficePicklist</choiceReferences>
                     <dataType>String</dataType>
                     <fieldText>Sales Office</fieldText>
                     <fieldType>DropdownBox</fieldType>
@@ -421,22 +464,6 @@
         <showHeader>true</showHeader>
     </screens>
     <screens>
-        <name>ErrorFault</name>
-        <label>ErrorFault</label>
-        <locationX>578</locationX>
-        <locationY>1598</locationY>
-        <allowBack>false</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>false</allowPause>
-        <fields>
-            <name>ErrorDisplay</name>
-            <fieldText>&lt;p&gt;An Error has occurred, please provide your System Administrator the below information&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Error Message: &lt;/strong&gt;{!$Flow.FaultMessage}&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <showFooter>true</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
-    <screens>
         <name>UserExistsDisplay</name>
         <label>UserExistsDisplay</label>
         <locationX>270</locationX>
@@ -445,7 +472,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <fields>
-            <name>UserExistsDisplay1</name>
+            <name>UserExistsDisplayText</name>
             <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 14px; background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;This user is already an account team member, please click previous to modify team addition or finish to exit&lt;/b&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
@@ -461,18 +488,15 @@
     </start>
     <status>Draft</status>
     <subflows>
-        <name>Insperity_Fault_Handler_Subflow_Flow_1</name>
-        <label>Insperity Fault Handler Subflow Flow 1</label>
-        <locationX>578</locationX>
-        <locationY>1490</locationY>
-        <connector>
-            <targetReference>ErrorFault</targetReference>
-        </connector>
+        <name>Insperity_Fault_Handler_Subflow</name>
+        <label>Insperity Fault Handler Subflow</label>
+        <locationX>842</locationX>
+        <locationY>458</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultElement</name>
             <value>
-                <stringValue>Create_AccMember</stringValue>
+                <elementReference>varFaultElement</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -488,14 +512,6 @@
             </value>
         </inputAssignments>
     </subflows>
-    <variables>
-        <name>accountteamvar</name>
-        <dataType>SObject</dataType>
-        <isCollection>true</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>NSP_Account_Team__c</objectType>
-    </variables>
     <variables>
         <name>recordId</name>
         <dataType>String</dataType>
@@ -527,7 +543,7 @@
         <objectType>NSP_Account_Team__c</objectType>
     </variables>
     <variables>
-        <name>varOpptyMemberSO</name>
+        <name>varFaultElement</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>

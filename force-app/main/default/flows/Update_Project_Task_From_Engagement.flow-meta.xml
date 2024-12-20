@@ -206,6 +206,12 @@
             </value>
         </filters>
         <inputAssignments>
+            <field>Associated_RSAP__c</field>
+            <value>
+                <elementReference>Get_RSAP_Record.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>NSP_Efforts_To_Retain__c</field>
             <value>
                 <elementReference>engagementRecord.Action_info__c</elementReference>

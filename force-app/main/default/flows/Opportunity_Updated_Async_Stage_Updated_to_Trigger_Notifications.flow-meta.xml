@@ -92,10 +92,63 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Is_it_a_MidMarket_Opportunity_that_is_Closed_Lost</name>
+        <label>Is it a MidMarket Opportunity that is Closed-Lost?</label>
+        <locationX>1017</locationX>
+        <locationY>492</locationY>
+        <defaultConnector>
+            <targetReference>Is_Parent_Closed_Lost_and_Product_IS_Retirement_Services</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>N/A</defaultConnectorLabel>
+        <rules>
+            <name>Yes_MidMarket_Opty_Closed_Lost</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.NSP_Account_Segment__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>MidMarket</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Owner_isActive__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Owner_Email_Populated__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.StageName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Closed Lost</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.NSP_Mid_Market_Sales_Email__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Opportunity_Subflow_Email_Alerts_MidMarketClosedLost</targetReference>
+            </connector>
+            <label>Yes - MidMarket Opty Closed-Lost</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Is_Parent_Closed_Lost_and_Product_IS_Retirement_Services</name>
         <label>Is Parent Closed Lost and Product IS Retirement Services?</label>
         <locationX>1017</locationX>
-        <locationY>492</locationY>
+        <locationY>792</locationY>
         <defaultConnectorLabel>N/A</defaultConnectorLabel>
         <rules>
             <name>Yes_Parent_is_Closed_Lost_and_Product_IS_Retirement_Services</name>
@@ -173,12 +226,12 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Is_Parent_Closed_Lost_and_Product_IS_Retirement_Services</targetReference>
+                <targetReference>Is_it_a_MidMarket_Opportunity_that_is_Closed_Lost</targetReference>
             </connector>
             <label>Stage = Closed Lost</label>
         </rules>
     </decisions>
-    <description>Removed assignment elements. Evaluates when StageName is changed to &quot;Closed Won&quot; or &quot;Closed Lost&quot;</description>
+    <description>MidMarket Opportunity Closed-Lost. Removed assignment elements. Evaluates when StageName is changed to &quot;Closed Won&quot; or &quot;Closed Lost&quot;</description>
     <environments>Default</environments>
     <interviewLabel>Opportunity - Updated - Async - Stage Updated to Trigger Notifications {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Opportunity - Updated - Async - Stage Updated to Trigger Notifications</label>
@@ -241,7 +294,7 @@
         <name>Opportunity_Subflow_Email_Alerts_ChildOptyClosedLost</name>
         <label>Opportunity - Subflow - Email Alerts</label>
         <locationX>885</locationX>
-        <locationY>600</locationY>
+        <locationY>900</locationY>
         <flowName>Opportunity_Subflow_Email_Alerts</flowName>
         <inputAssignments>
             <name>opportunityId</name>
@@ -256,6 +309,28 @@
             </value>
         </inputAssignments>
         <storeOutputAutomatically>true</storeOutputAutomatically>
+    </subflows>
+    <subflows>
+        <name>Opportunity_Subflow_Email_Alerts_MidMarketClosedLost</name>
+        <label>Opportunity - Subflow - Email Alerts</label>
+        <locationX>885</locationX>
+        <locationY>600</locationY>
+        <connector>
+            <targetReference>Is_Parent_Closed_Lost_and_Product_IS_Retirement_Services</targetReference>
+        </connector>
+        <flowName>Opportunity_Subflow_Email_Alerts</flowName>
+        <inputAssignments>
+            <name>opportunityId</name>
+            <value>
+                <elementReference>$Record.NSP_Opportunity_ID_18__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>varEmailAlert</name>
+            <value>
+                <stringValue>MidMarket_Opportunity_Closed_Lost</stringValue>
+            </value>
+        </inputAssignments>
     </subflows>
     <subflows>
         <name>Opportunity_Subflow_Email_Alerts_NoticeOfTermination</name>

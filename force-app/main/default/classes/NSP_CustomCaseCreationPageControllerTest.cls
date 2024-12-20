@@ -262,5 +262,12 @@ Id  groupId = NSP_sObjectSelector.selectGroupByTypeAndApiName(NSP_ServiceConstan
         Boolean result = NSP_CustomCaseCreationPageController.getCaseSettingFlag();
         Test.stopTest();
     }
+    @isTest
+    private static void testIsUserInQueue(){
+        Test.startTest();
+        Boolean result = NSP_CustomCaseCreationPageController.isUserInQueue();
+        system.assertEquals(false, result);
+        Test.stopTest(); 
+    }
 
 }

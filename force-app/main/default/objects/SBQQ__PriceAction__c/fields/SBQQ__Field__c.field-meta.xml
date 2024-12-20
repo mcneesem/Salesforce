@@ -492,6 +492,11 @@
                 <default>false</default>
                 <label>NSP_Template_AdditionalServiceCount__c</label>
             </value>
+            <value>
+                <fullName>Bundle_Template_Determination_Flag__c</fullName>
+                <default>false</default>
+                <label>Bundle_Template_Determination_Flag__c</label>
+            </value>
         </valueSetDefinition>
         <valueSettings>
             <controllingFieldValue>Quote</controllingFieldValue>
@@ -873,6 +878,10 @@
         <valueSettings>
             <controllingFieldValue>Quote Line</controllingFieldValue>
             <valueName>Amendment_Monthly_Fees__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote Line</controllingFieldValue>
+            <valueName>Bundle_Template_Determination_Flag__c</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Quote Line Pricing Guidance</controllingFieldValue>

@@ -427,8 +427,8 @@ public class NSP_QuoteTriggerHelper {
                     SELECT Id , SBQQ__ProductCode__c , NSP_Lock_On_QLI__c , SBQQ__Quote__c , SBQQ__Quote__r.Has_Retirement_Integration_Product__c
                     FROM SBQQ__QuoteLine__c
                     WHERE (
-                        (
-                            ( NSP_ActionType__c != null )
+                        (	(Bundle_Template_Determination_Flag__c = true)
+                            OR ( NSP_ActionType__c != null )
                             OR ( SBQQ__Quote__r.Has_Retirement_Integration_Product__c = true )
                         )
                         AND (

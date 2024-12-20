@@ -191,11 +191,6 @@
         <label>1104 Atlanta 4</label>
     </customValue>
     <customValue>
-        <fullName>1400</fullName>
-        <default>false</default>
-        <label>1400 Chicago</label>
-    </customValue>
-    <customValue>
         <fullName>1401</fullName>
         <default>false</default>
         <label>1401 Chicago 1</label>
@@ -259,11 +254,6 @@
         <fullName>2101</fullName>
         <default>false</default>
         <label>2101 Maryland 2</label>
-    </customValue>
-    <customValue>
-        <fullName>2110</fullName>
-        <default>false</default>
-        <label>2110 Maryland Blunt</label>
     </customValue>
     <customValue>
         <fullName>2200</fullName>
@@ -541,9 +531,24 @@
         <label>4466 MidMarket Traditional</label>
     </customValue>
     <customValue>
-        <fullName>4477</fullName>
+        <fullName>4467</fullName>
         <default>false</default>
-        <label>4477 WA Sales</label>
+        <label>4467 Core HCM Sales 1</label>
+    </customValue>
+    <customValue>
+        <fullName>4468</fullName>
+        <default>false</default>
+        <label>4468 Core HCM Sales 2</label>
+    </customValue>
+    <customValue>
+        <fullName>4469</fullName>
+        <default>false</default>
+        <label>4469 Core HCM Sales 3</label>
+    </customValue>
+    <customValue>
+        <fullName>4470</fullName>
+        <default>false</default>
+        <label>4470 Core HCM Sales 4</label>
     </customValue>
     <customValue>
         <fullName>4491</fullName>
@@ -594,6 +599,24 @@
         <fullName>5001</fullName>
         <default>false</default>
         <label>5001 Milwaukee 1</label>
+    </customValue>
+    <customValue>
+        <fullName>2110</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>2110 Maryland Blunt</label>
+    </customValue>
+    <customValue>
+        <fullName>4477</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>4477 WA Sales</label>
+    </customValue>
+    <customValue>
+        <fullName>1400</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>1400 Chicago</label>
     </customValue>
     <masterLabel>Sales Offices</masterLabel>
     <sorted>false</sorted>

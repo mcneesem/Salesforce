@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Notify MidMarket Team when MidMarket Opty is marked Closed-Lost</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>MidMarket Opportunity Closed-Lost</name>
+    <style>none</style>
+    <subject>MidMarket Opportunity has been moved to Closed-Lost</subject>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>
