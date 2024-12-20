@@ -5,6 +5,7 @@
 * @strory   STY-00336
 */
 public class NSP_Quote_Service {
+    // test w/ NSP_Quote_ServiceTest (??%)
 
     /**
 * Method for constructing Docusign CLM URL
@@ -15,7 +16,7 @@ public class NSP_Quote_Service {
     try {
         String queryParam;
         String clm_Base_URL = NSP_Docusign_Account_Details__c.getInstance(UserInfo.getUserId()).CLM_Base_URL__c;
-        aid = aid ?? NSP_Docusign_Account_Details__c.getInstance(UserInfo.getUserId()).Docusign_Account_Id__c;
+        aid = ( aid != null ) ? aid : NSP_Docusign_Account_Details__c.getInstance(UserInfo.getUserId()).Docusign_Account_Id__c;
         queryParam = 'https://'+clm_Base_URL+'/atlas/doclauncher/OneClickDocGen?'+
         'aid='+aid+'&'+
         'config='+templateId+'&'+
