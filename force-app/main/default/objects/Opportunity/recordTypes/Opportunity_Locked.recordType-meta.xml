@@ -820,7 +820,15 @@
     <picklistValues>
         <picklist>NSP_Merge_On_Demand_Template_Selection__c</picklist>
         <values>
+            <fullName>ClientOFEOnlyAddendum</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>ClientServiceAgreement</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EnhancedEPLIQuestionnaire</fullName>
             <default>false</default>
         </values>
         <values>
@@ -836,7 +844,23 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>IRR Addendum</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Mid-MarketClientServiceAgreement</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MidMarketCSA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MidMarketCSAAnnualRenewal</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MidMarketEPLIAddendum</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1696,10 +1720,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>1400</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>1401</fullName>
             <default>false</default>
         </values>
@@ -1749,10 +1769,6 @@
         </values>
         <values>
             <fullName>2101</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>2110</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1984,7 +2000,19 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>4477</fullName>
+            <fullName>4467</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4468</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4469</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4470</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2176,6 +2204,10 @@
         </values>
         <values>
             <fullName>HCM Sales</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HCM Sales 2</fullName>
             <default>false</default>
         </values>
         <values>

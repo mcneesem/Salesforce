@@ -181,6 +181,52 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Implementer_Status__c</picklist>
+        <values>
+            <fullName>Active</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Agile Resource</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>New Hire</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>On Leave</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Team Lead</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Level_of_Effort__c</picklist>
+        <values>
+            <fullName>0</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>NSP_Asset_Type__c</picklist>
         <values>
             <fullName>Applicant_Tracking</fullName>
@@ -434,7 +480,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>iSolve %E2%80%93 Hardware</fullName>
+            <fullName>iSolved %E2%80%93 Hardware</fullName>
             <default>false</default>
         </values>
         <values>
@@ -921,6 +967,21 @@
         </values>
         <values>
             <fullName>Standard Plan Type</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Roles_To_Cancel_Project_Tasks__c</picklist>
+        <values>
+            <fullName>Benefit Analyst</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Time Analyst</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Time Analyst %2B Benefit Analyst</fullName>
             <default>false</default>
         </values>
     </picklistValues>

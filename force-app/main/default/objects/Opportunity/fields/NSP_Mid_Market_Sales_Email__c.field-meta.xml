@@ -4,7 +4,7 @@
     <description>Custom field used to store email address of Mid Market sales team. This is automatically populated from trigger</description>
     <encryptionScheme>None</encryptionScheme>
     <externalId>false</externalId>
-    <label>Mid Market Sales Email</label>
+    <label>MidMarket Sales Email</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>true</trackHistory>

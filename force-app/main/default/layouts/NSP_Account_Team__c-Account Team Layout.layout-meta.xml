@@ -47,7 +47,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>NSP_Sales_Office__c</field>
+                <field>Users_Sales_Office__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>

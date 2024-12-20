@@ -16,6 +16,6 @@
     </values>
     <values>
         <field>NSP_Task_Name__c</field>
-        <value xsi:type="xsd:string">Complete the Deductible Carryover form and send to TS</value>
+        <value xsi:type="xsd:string">Provide completed Deductible Credit Courtesy form to Client Contact</value>
     </values>
 </CustomMetadata>

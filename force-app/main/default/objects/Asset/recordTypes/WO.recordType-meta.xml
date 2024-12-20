@@ -933,6 +933,22 @@
             <fullName>79</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>80</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>81</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>82</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>83</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>NSP_ORK_Plan_Vendor__c</picklist>
@@ -1635,10 +1651,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>1400</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>1401</fullName>
             <default>false</default>
         </values>
@@ -1688,10 +1700,6 @@
         </values>
         <values>
             <fullName>2101</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>2110</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1923,7 +1931,19 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>4477</fullName>
+            <fullName>4467</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4468</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4469</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4470</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2115,6 +2135,10 @@
         </values>
         <values>
             <fullName>HCM Sales</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HCM Sales 2</fullName>
             <default>false</default>
         </values>
         <values>

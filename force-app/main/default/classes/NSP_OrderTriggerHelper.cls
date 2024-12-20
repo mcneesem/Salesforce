@@ -311,8 +311,10 @@ public class NSP_OrderTriggerHelper {
                 orderIdSuppl.add(newOrder.Id);
             }
             //This code is used to update Invoice Batch on Order
-            if(oldOrder.Status == NSP_CPQConstants.ORDER_REVIEWED
-               && newOrder.Status == NSP_CPQConstants.ORDER_ACTIVATED) {
+            if((oldOrder.Status == NSP_CPQConstants.ORDER_REVIEWED
+               && newOrder.Status == NSP_CPQConstants.ORDER_ACTIVATED) || 
+               (oldOrder.Status == NSP_CPQConstants.ORDER_DRAFT
+               && newOrder.Status == NSP_CPQConstants.ORDER_ACTIVATED)) {
                 orderIdSet.add(newOrder.Id);
             }
             if(newOrder.NSP_BillingType__c == null
@@ -320,7 +322,8 @@ public class NSP_OrderTriggerHelper {
                 blngTypeIdSet.add(newOrder.Id);
             }
             //STY-03797 Start - This code is used to collect Account Ids of reviewed Orders
-            if(oldOrder.Status == NSP_CPQConstants.ORDER_DRAFT && newOrder.Status == NSP_CPQConstants.ORDER_REVIEWED) {
+            if((oldOrder.Status == NSP_CPQConstants.ORDER_DRAFT && newOrder.Status == NSP_CPQConstants.ORDER_REVIEWED) || 
+              (oldOrder.Status == NSP_CPQConstants.ORDER_DRAFT && newOrder.Status == NSP_CPQConstants.ORDER_ACTIVATED)) {
                 String accIdstr;
                 if(newOrder.blng__BillingAccount__c != null) {
                 reviewedOrdersAccountSet.add(newOrder.blng__BillingAccount__c);

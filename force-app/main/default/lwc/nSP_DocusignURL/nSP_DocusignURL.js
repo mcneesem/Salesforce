@@ -18,7 +18,6 @@ import BUDGETARY_QUOTE from "@salesforce/schema/Opportunity.NSP_Budgetary_Quote_
 import getDocuSignUrl from "@salesforce/apex/NSP_Quote_Service.getDocuSignUrl";
 import validateCustomerSigner from "@salesforce/apex/NSP_Quote_Service.validateCustomerSigner";
 import { CloseActionScreenEvent } from "lightning/actions";
-import docusignAccountId from "@salesforce/label/c.NSP_Docusign_Account_Id";
 import custSignerBill from "@salesforce/label/c.NSP_Customer_Signer_Billing_Account";
 import custSignerAcc from "@salesforce/label/c.NSP_Customer_Signer_Account";
 import ACCOUNT_ID from "@salesforce/schema/Opportunity.AccountId";
@@ -57,7 +56,6 @@ export default class NSP_DocusignURL extends NavigationMixin(LightningElement) {
   isValid;
   contact;
   label = {
-    docusignAccountId,
     custSignerBill,
     custSignerAcc,
     primaryProductErr,
@@ -200,7 +198,7 @@ export default class NSP_DocusignURL extends NavigationMixin(LightningElement) {
       templateId: this.templateId,
       name: this.name,
       accountName: this.accountName,
-      aid: docusignAccountId,
+      aid: null,
     })
       .then((result) => {
         this.genUrl = result;

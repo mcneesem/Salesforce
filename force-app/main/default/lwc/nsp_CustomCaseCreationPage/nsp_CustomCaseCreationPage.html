@@ -37,6 +37,7 @@
                             selected-detail={selectedDetail}
                             selected-version={selectedVersion}
                             o-case={oCase}
+                            oncatsubcatselect = {handleCatSubcatSelection}
                             >
                         </c-case-cat-subcat-detail>
                     </template>
@@ -299,6 +300,9 @@
                               </lightning-layout-item>
                               <lightning-layout-item size="6" class="slds-p-around_small">
                                 <lightning-input-field  title = "Case Origin" field-name='Origin' required> </lightning-input-field>
+                              </lightning-layout-item>
+                              <lightning-layout-item size="6" class="slds-p-around_small" lwc:if={showRequestedJobs}>
+                                <lightning-input-field  title = "Requested Jobs" field-name='Requested_Jobs__c' required> </lightning-input-field>
                               </lightning-layout-item>
                             <template if:true={enableBPSFields}>
                                 <template for:each={bpsFields} for:item="field">

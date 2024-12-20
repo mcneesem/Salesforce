@@ -8,8 +8,8 @@
         <label>Information</label>
         <layoutColumns>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Name</field>
+                <behavior>Edit</behavior>
+                <field>Account__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>

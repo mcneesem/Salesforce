@@ -1254,8 +1254,8 @@ public class NSP_Implementationprofile_ServiceHelper {
         //create case for HSA with optum bank 
         List<NSP_Implementation_Profile_Automation__c> ipAutomationRecords = new List<NSP_Implementation_Profile_Automation__c>();
         List<Case> caseList = new List<Case>();
-        String subject = 'Prior HSA with Optum Bank ';
-        String instruction = 'Confirm current HSA platform and HSA transfer process for employees.SBOS: Once Employer Code/Group # or participant data provided in the Notes, reassign to H&W Products Queue.';
+        String subject = 'Prior HSA with Optum Bank - ';
+        String instruction = 'Confirm current HSA platform and HSA transfer process for employees.\nSBOS: Once Employer Code/Group # or participant data provided in the Notes, reassign to H&W Products Queue.';
         for(Id ipRecId : ipRecordsByAutomation.get(MM_OPTUM_CASE)){
             if(ipRecId != null){
                 Implementation_Profile__c ipRec = newIPs.get(ipRecId);
@@ -1546,6 +1546,7 @@ public class NSP_Implementationprofile_ServiceHelper {
             && newIp.Are_you_registered_with_the_CSLB__c == NSP_ServiceConstants.YES
             && String.isNotBlank(newIp.Contractor_s_License__c)
             && String.isNotBlank(newIp.NSP_Legal_Name__c)
+            && newIp.Effective_Date_Payroll_Worker_comp_EPLI__c != null
             )
         {
             updateEligibleRecordsMap(ipRecordsByAutomation, newIp.Id, contractorType);
@@ -1558,12 +1559,16 @@ public class NSP_Implementationprofile_ServiceHelper {
                 Implementation_Profile__c ipWithValue = (Implementation_Profile__c) data.get(IP_IDENTIFIER).get(ipRecId);
                 if (ipWithValue != null) {
                     String subject = ipWithValue.Account__r.Name + ' is a Licensed Contractor in California';
+                    String effectiveDate = null;
+                    if(ipWithValue.Effective_Date_Payroll_Worker_comp_EPLI__c != null){
+                       effectiveDate = ipWithValue.Effective_Date_Payroll_Worker_comp_EPLI__c.format();
+                    }
                     String body = 'Lockton Affinity,<br><br>'
                         + ipWithValue.Account__r.Name
                         + ' is a Licensed Contractor in California. Please update the CSLB website with the client\'s new Workers\' Comp coverage through Insperity.<br><br>'
                         + 'LEGAL NAME: ' + ipWithValue.NSP_Legal_Name__c + '\n'
                         + 'CONTRACTORS CSLB#: ' + ipWithValue.Contractor_s_License__c + '\n'
-                        + 'EFFECTIVE DATE: ' + ipWithValue.Effective_Date_Payroll_Worker_comp_EPLI__c + '<br><br>'
+                        + 'EFFECTIVE DATE: ' + effectiveDate + '<br><br>'
                         + 'Regards' + ',\n'
                         + ipWithValue.NSP_Project_Manager__r.Name + '\n'
                         + ipWithValue.NSP_Project_Manager__r.NSP_Job_Title__c + '\n'

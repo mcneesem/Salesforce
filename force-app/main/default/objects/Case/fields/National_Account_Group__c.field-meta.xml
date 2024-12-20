@@ -57,6 +57,10 @@
     &apos;77&apos; , &apos;Aliavia Ventures&apos; ,
     &apos;78&apos; , &apos;Osuna Partners&apos; ,
     &apos;79&apos; , &apos;Wave Rock Holdings&apos; ,
+    &apos;80&apos; , &apos;Yellow Point Equity Partners&apos; ,
+    &apos;81&apos; , &apos;University Lab Partners&apos; ,
+    &apos;82&apos; , &apos;CH3 Capital LLC&apos; ,
+    &apos;83&apos; , &apos;Lysios Capital Inc&apos; ,
     TEXT( Account.WO_Asset__r.NSP_National_Account_Group__c )
   )
 )</formula>
