@@ -5,7 +5,7 @@
 * Name : NSP_SalesConstants
 */
 public class NSP_SalesConstants {
-    // test w/NSP_SalesConstantsTest (100%)
+    // test w/ NSP_SalesConstantsTest (100%)
 
     //To set lead stage as sales ready
     public static final String LEAD_STAGE_SRL = 'Sales Ready';
