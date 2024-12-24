@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IsEnabledCampaignCreatedAsyncCreate__c</fullName>
+    <defaultValue>true</defaultValue>
+    <description>See Flow: Campaign_Created_Async_Create_Campaign_Member_Statuses</description>
+    <inlineHelpText>See Flow: Campaign_Created_Async_Create_Campaign_Member_Statuses</inlineHelpText>
+    <label>IsEnabledCampaignCreatedAsyncCreate</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>
