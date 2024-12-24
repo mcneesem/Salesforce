@@ -1453,7 +1453,7 @@
                 <identifier>force_relatedListContainer</identifier>
             </componentInstance>
         </itemInstances>
-        <name>Facet-dd900e89-3a8e-4ab0-bb9c-5d501daf7f88</name>
+        <name>Facet-62d13c70-dcd1-46d3-a6cb-4847ec1559b5</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -1479,7 +1479,7 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>body</name>
-                    <value>Facet-dd900e89-3a8e-4ab0-bb9c-5d501daf7f88</value>
+                    <value>Facet-62d13c70-dcd1-46d3-a6cb-4847ec1559b5</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>title</name>
