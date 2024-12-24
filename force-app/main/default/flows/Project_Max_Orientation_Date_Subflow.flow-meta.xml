@@ -405,11 +405,12 @@
         <queriedFields>Opportunity__c</queriedFields>
     </recordLookups>
     <recordLookups>
+        <description>Prevent DmlExceptions.  Closed Won Opportunities can not be modified due to Opportunity Validation Rules.</description>
         <name>Get_Opportunity_Info</name>
         <label>Get Opportunity Info</label>
         <locationX>314</locationX>
         <locationY>1922</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Does_Max_Orientation_Date_on_Opty_need_to_be_updated</targetReference>
         </connector>
@@ -422,6 +423,13 @@
             <operator>EqualTo</operator>
             <value>
                 <elementReference>varOpportunity.Id</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>StageName</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>Closed Won</stringValue>
             </value>
         </filters>
         <object>Opportunity</object>
