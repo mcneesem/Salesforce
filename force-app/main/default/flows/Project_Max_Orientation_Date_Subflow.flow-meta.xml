@@ -410,7 +410,7 @@
         <label>Get Opportunity Info</label>
         <locationX>314</locationX>
         <locationY>1922</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Does_Max_Orientation_Date_on_Opty_need_to_be_updated</targetReference>
         </connector>
