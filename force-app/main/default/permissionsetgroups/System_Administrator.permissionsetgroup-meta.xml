@@ -12,7 +12,7 @@
     <permissionSets>Allow_Delete_Leads</permissionSets>
     <permissionSets>Asset_Hardware_Edit</permissionSets>
     <permissionSets>Billing_and_CPQ_Data_Load</permissionSets>
-    <permissionSets>Case_Compensation_Fields_Edit</permissionSets>
+    <permissionSets>Case_Compensation_Access</permissionSets>
     <permissionSets>Client_goal_project_task_junction_access</permissionSets>
     <permissionSets>Bundle_Template_Flag_fields_Permission</permissionSets>
     <permissionSets>Config_Admin</permissionSets>
