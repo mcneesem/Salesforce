@@ -723,9 +723,17 @@ public class NSP_TerminationFormTriggerHelper {
             termObj ,
             NSP_Credit_Specialist_Form
         );
+        Id reinstateRecordTypeId = NSP_GenericRecordType.getRecordTypeId(
+            termObj ,
+            NSP_Client_Reinstatement
+        );
         if ( ( terminationFormList != null ) && !terminationFormList.isEmpty() ) {
             for ( NSP_Termination_Form__c termForm : terminationFormList ) {
-                if ( termForm.RecordTypeId == payrollRecordTypeId || termForm.RecordTypeId == creditRecordTypeId) {
+                if ( ( termForm.RecordTypeId == payrollRecordTypeId )
+                    || ( termForm.RecordTypeId == creditRecordTypeId )
+                    || ( termForm.RecordTypeId == reinstateRecordTypeId )
+                    )
+                {
                     //Termination Form Payroll Specialist Record Type
                     mapOfAccountAndAccountTeam = primaryRolesMap;
                 } else {
