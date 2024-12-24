@@ -87,7 +87,7 @@
     </decisions>
     <environments>Default</environments>
     <interviewLabel>Update Case Level 2 Metrics {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>NSP Update Case Level 2 Metrics</label>
+    <label>Update Case Level 2 Metrics</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -125,6 +125,13 @@
             <operator>EqualTo</operator>
             <value>
                 <elementReference>$Record.ParentId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Status</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>Closed</stringValue>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>

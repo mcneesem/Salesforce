@@ -4,7 +4,7 @@
         <name>Route_to_401k_Queue</name>
         <label>Route to 401k Queue</label>
         <locationX>402</locationX>
-        <locationY>2078</locationY>
+        <locationY>2378</locationY>
         <actionName>routeWork</actionName>
         <actionType>routeWork</actionType>
         <faultConnector>
@@ -85,7 +85,7 @@
         <name>Route_to_Benefits_Queue</name>
         <label>Route to Benefits Queue</label>
         <locationX>930</locationX>
-        <locationY>2078</locationY>
+        <locationY>2378</locationY>
         <actionName>routeWork</actionName>
         <actionType>routeWork</actionType>
         <faultConnector>
@@ -166,7 +166,7 @@
         <name>Route_to_Queue</name>
         <label>Route to Queue</label>
         <locationX>666</locationX>
-        <locationY>2546</locationY>
+        <locationY>2846</locationY>
         <actionName>routeWork</actionName>
         <actionType>routeWork</actionType>
         <faultConnector>
@@ -248,7 +248,7 @@
         <name>Populate_Case_On_Messaging_Session_Record</name>
         <label>Populate Case On Messaging Session Record</label>
         <locationX>1282</locationX>
-        <locationY>1190</locationY>
+        <locationY>1490</locationY>
         <assignmentItems>
             <assignToReference>messagingSessionRecord.CaseId</assignToReference>
             <operator>Assign</operator>
@@ -280,7 +280,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Create_Case</targetReference>
+            <targetReference>Check_Topic</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -300,6 +300,22 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>createContact</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Check_Topic</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Translate_Benefits</name>
+        <label>Translate: Benefits</label>
+        <locationX>1150</locationX>
+        <locationY>1190</locationY>
+        <assignmentItems>
+            <assignToReference>input_Topic</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Benefits</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -370,7 +386,7 @@
         <name>Check_Messaging_Session</name>
         <label>Check Messaging Session</label>
         <locationX>1282</locationX>
-        <locationY>1298</locationY>
+        <locationY>1598</locationY>
         <defaultConnector>
             <targetReference>updateMessagingEndUser</targetReference>
         </defaultConnector>
@@ -395,7 +411,7 @@
         <name>Check_Record_Id</name>
         <label>Check Record Id</label>
         <locationX>1282</locationX>
-        <locationY>1862</locationY>
+        <locationY>2162</locationY>
         <defaultConnector>
             <isGoTo>true</isGoTo>
             <targetReference>Missing_Record_Id_Fault_Handler</targetReference>
@@ -460,7 +476,7 @@
         <name>Check_subtopic_for_Case</name>
         <label>Check subtopic for Case</label>
         <locationX>930</locationX>
-        <locationY>1970</locationY>
+        <locationY>2270</locationY>
         <defaultConnector>
             <targetReference>Route_to_Queue</targetReference>
         </defaultConnector>
@@ -679,6 +695,31 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Check_Topic</name>
+        <label>Check Topic</label>
+        <locationX>1282</locationX>
+        <locationY>1082</locationY>
+        <defaultConnector>
+            <targetReference>Create_Case</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Beneficios</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>input_Topic</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Beneficios</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Translate_Benefits</targetReference>
+            </connector>
+            <label>Beneficios</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>isContactAvailable</name>
         <label>isContactAvailable</label>
         <locationX>1282</locationX>
@@ -757,7 +798,7 @@
         <name>Create_Case</name>
         <label>Create Case</label>
         <locationX>1282</locationX>
-        <locationY>1082</locationY>
+        <locationY>1382</locationY>
         <connector>
             <targetReference>Populate_Case_On_Messaging_Session_Record</targetReference>
         </connector>
@@ -965,7 +1006,7 @@
         <name>populateContactOnMessagingSession</name>
         <label>populateContactOnMessagingSession</label>
         <locationX>1018</locationX>
-        <locationY>1406</locationY>
+        <locationY>1706</locationY>
         <connector>
             <targetReference>updateMessagingEndUser</targetReference>
         </connector>
@@ -979,7 +1020,7 @@
         <name>updateMessagingEndUser</name>
         <label>updateMessagingEndUser</label>
         <locationX>1282</locationX>
-        <locationY>1646</locationY>
+        <locationY>1946</locationY>
         <connector>
             <targetReference>UpdateMessagingSessionWithPreChatInfo</targetReference>
         </connector>
@@ -1013,7 +1054,7 @@
         <name>UpdateMessagingSessionWithPreChatInfo</name>
         <label>UpdateMessagingSessionWithPreChatInfo</label>
         <locationX>1282</locationX>
-        <locationY>1754</locationY>
+        <locationY>2054</locationY>
         <connector>
             <targetReference>Check_Record_Id</targetReference>
         </connector>
@@ -1096,7 +1137,7 @@
         <name>Insperity_Fault_Handler_Subflow</name>
         <label>Insperity Fault Handler Subflow</label>
         <locationX>1942</locationX>
-        <locationY>1862</locationY>
+        <locationY>2162</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultMessage</name>
