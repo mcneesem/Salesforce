@@ -743,29 +743,39 @@ public with sharing class NSP_OpportunityTriggerHelper {
     // @param objectList of New Account.
     // @return void
     //
-    private void publishEventBus( List<Integration_Opportunity_Event__e> eventList , List<Opportunity> objectList ) {
-        List<Opportunity> updateResyncFlagOpportunityList = new List<Opportunity>();
-        if(!eventList.isEmpty()) {
-            // Publishing records Event 
-            List<Database.SaveResult> results = EventBus.publish(eventList);
-            NSP_ErrorLogHandler.logResults(
-                NSP_OpportunityTriggerHelper.class.getName() ,
-                'publishEventBus' ,
-                results
-            );
-            for(Opportunity  oppObj : objectList) {
-                Opportunity tempOppObj = new Opportunity();
-                tempOppObj.Id = oppObj.Id;
-                tempOppObj.NSP_Ready_for_Integration_Sync__c = FALSE;
-                updateResyncFlagOpportunityList.add(tempOppObj);
+    private void publishEventBus( List<Integration_Opportunity_Event__e> eventList , List<Opportunity> records ) {
+        try {
+            if ( ( eventList != null ) && !eventList.isEmpty() ) {
+                // Publishing records Event 
+                List<Database.SaveResult> results = EventBus.publish( eventList );
+                NSP_ErrorLogHandler.logResults(
+                    NSP_OpportunityTriggerHelper.class.getName() ,
+                    'publishEventBus:publish' ,
+                    results
+                );
             }
-            
-            if(updateResyncFlagOpportunityList.size() > 0){
-                update updateResyncFlagOpportunityList; 
+            if ( ( records != null ) && !records.isEmpty() ) {
+                List<Opportunity> updateResyncFlagOpportunityList = new List<Opportunity>();
+                for ( Opportunity record : records ) {
+                    Opportunity tempRecord = new Opportunity();
+                    tempRecord.Id = record.Id;
+                    tempRecord.NSP_Ready_for_Integration_Sync__c = false;
+                    updateResyncFlagOpportunityList.add( tempRecord );
+                }
+                if ( !updateResyncFlagOpportunityList.isEmpty() ) {
+                    List<Database.SaveResult> results = Database.update( updateResyncFlagOpportunityList , false );
+                    NSP_ErrorLogHandler.logResults(
+                        NSP_OpportunityTriggerHelper.class.getName() ,
+                        'publishEventBus:update' ,
+                        results
+                    );
+                }
             }
+        } catch ( Exception e ) {
+            NSP_OpportunityTriggerHelper.handleException( e , 'publishEventBus' );
         }
     }
-    
+
     /**
 * Iterates tthrough closed won oportunity and looks for product where asset should be created
 * @param closedWonOpptyList of closed won Opportunity.
@@ -908,17 +918,15 @@ public with sharing class NSP_OpportunityTriggerHelper {
         for ( Opportunity opportunityRecord : opportunityList ) {
             if ( accountMap.containsKey( opportunityRecord.AccountId ) ) {
                 Account accountRecord = accountMap.get(opportunityRecord.AccountId );
-                if ( accountRecord != null ) {
-                    if ( accountRecord.NSP_Partner_Lifecycle__c != 'Onboarding' ) {
-                        accountRecord.NSP_Partner_Lifecycle__c = 'Onboarding';
-                        accountRecord.NSP_Onboarding_Contract_Date__c = System.today();
-                        accountList.add( accountRecord );
-                    }
+                if ( ( accountRecord != null ) && ( accountRecord.NSP_Partner_Lifecycle__c != 'Onboarding' ) ) {
+                    accountRecord.NSP_Partner_Lifecycle__c = 'Onboarding';
+                    accountRecord.NSP_Onboarding_Contract_Date__c = System.today();
+                    accountList.add( accountRecord );
                 }
             }
         }
         if ( !accountList.isEmpty() ) {
-            List<Database.SaveResult> results = Database.insert( accountList , false );
+            List<Database.SaveResult> results = Database.update( accountList , false );
             NSP_ErrorLogHandler.logResults(
                 NSP_OpportunityTriggerHelper.class.getName() ,
                 'setPartnerAccount' ,
