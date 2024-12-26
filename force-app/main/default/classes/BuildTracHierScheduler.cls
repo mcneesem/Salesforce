@@ -12,9 +12,9 @@ public class BuildTracHierScheduler {
     // ********************************************************************************************************
 
     public static String runTracHierScheduler(String cronExpression, String queryClause, List<String> hierIDs) {
-        cronExpression = cronExpression ?? '0 0 9 ? * 6';
-        queryClause = queryClause ?? 'dnb_connect_duns_number__c <> null and dnb_parent_duns__c <> null and dnb_global_ultimate_duns__c <> null and dnb_connect_duns_number__c <> \'000000000\' and dnb_parent_duns__c <> \'000000000\' and dnb_global_ultimate_duns__c <> \'000000000\'';
-        hierIDs = hierIDs ?? new List<String>{'71a7906ee9f8ddea713b'};
+        cronExpression = ( cronExpression != null ) ? cronExpression : '0 0 9 ? * 6';
+        queryClause = ( queryClause != null ) ? queryClause : 'dnb_connect_duns_number__c <> null and dnb_parent_duns__c <> null and dnb_global_ultimate_duns__c <> null and dnb_connect_duns_number__c <> \'000000000\' and dnb_parent_duns__c <> \'000000000\' and dnb_global_ultimate_duns__c <> \'000000000\'';
+        hierIDs = ( hierIDs != null ) ? hierIDs : new List<String>{'71a7906ee9f8ddea713b'};
         String result;
         if (!Test.isRunningTest()) {
             result = TracHier.HierarchyLinkerBatch.scheduleRun(cronExpression, queryClause, hierIDs);
