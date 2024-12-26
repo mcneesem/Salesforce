@@ -237,14 +237,14 @@ public class NSP_OrderItemTriggerHelper {
                     NSP_Project_Completion_Date__c,NSP_ReCalculation_Status_Internal__c, NSP_Payment_Method__c,SBQQ__Activated__c,
                     Product2.NSP_Partial_Period_Free_Treatment__c, Product2.NSP_Legal_Entity__c,NSP_Additional_Product_Description__c,
                     SBQQ__QuoteLine__r.SBQQ__EndDate__c,SBQQ__OrderedQuantity__c,SBQQ__RevisedOrderProduct__c,SBQQ__BillingFrequency__c,
-                    EndDate,Order.Type,Order.NSP_Transaction_Type__c,SBQQ__QuoteLine__r.NSP_MergeProducts__c
+                    EndDate,Order.Type,Order.NSP_Transaction_Type__c,SBQQ__QuoteLine__r.NSP_MergeProducts__c,Prevent_Product_Description_Update__c
                     FROM OrderItem
                     WHERE Id IN:OrderItemNewMap.keyset()
                 ]
             )
         {
             op.NSP_Product_Description__c = op.SBQQ__QuoteLine__r.SBQQ__Description__c;
-            if(OrderItemNewMap.get(op.Id).NSP_Additional_Product_Description__c == null){
+            if(OrderItemNewMap.get(op.Id).NSP_Additional_Product_Description__c == null && !OrderItemNewMap.get(op.Id).Prevent_Product_Description_Update__c){
                 OrderItemNewMap.get(op.Id).NSP_Additional_Product_Description__c = op.SBQQ__QuoteLine__r.SBQQ__Description__c;
             }
             if(op.SBQQ__QuoteLine__r.SBQQ__SubscriptionType__c == RENEWABLE && op.SBQQ__Activated__c == false && op.SBQQ__BillingFrequency__c=='Annual' && op.SBQQ__QuoteLine__r.SBQQ__EndDate__c!=null && op.EndDate!= op.SBQQ__QuoteLine__r.SBQQ__EndDate__c ) {

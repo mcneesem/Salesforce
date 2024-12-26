@@ -140,11 +140,28 @@ public static void updateAddProductDescription(list<blng__InvoiceLine__c> invLin
 * ********************************************************************************************/    
 public static void updateAddProductDescriptionOnOrderItem(list<blng__InvoiceLine__c> invLineNew)  {
     Map<Id,OrderItem>  orderProductUpdateMap = new Map<Id,OrderItem>();
+    Set<Id> orderProductIds = new Set<Id>();
+
     for(blng__InvoiceLine__c newInvoiceLine: invLineNew){
         if(String.isNotBlank(newInvoiceLine.NSP_Additional_Product_Description__c) && newInvoiceLine.blng__OrderProduct__c != null ){
-            OrderItem eachProduct = new OrderItem(Id = newInvoiceLine.blng__OrderProduct__c);
-            eachProduct.NSP_Additional_Product_Description__c = newInvoiceLine.NSP_Additional_Product_Description__c;
-            orderProductUpdateMap.put(eachProduct.id,eachProduct);
+            orderProductIds.add(newInvoiceLine.blng__OrderProduct__c);
+        }
+    }
+    // Query OrderItems
+    Map<Id, OrderItem> orderItemMap = new Map<Id, OrderItem>([
+        SELECT Id, NSP_Additional_Product_Description__c, Prevent_Product_Description_Update__c
+        FROM OrderItem
+        WHERE Id IN :orderProductIds
+    ]);
+      
+    for(blng__InvoiceLine__c newInvoiceLine: invLineNew){
+        if(String.isNotBlank(newInvoiceLine.NSP_Additional_Product_Description__c) && newInvoiceLine.blng__OrderProduct__c != null ){
+            //OrderItem eachProduct = new OrderItem(Id = newInvoiceLine.blng__OrderProduct__c);
+            OrderItem eachProduct = orderItemMap.get(newInvoiceLine.blng__OrderProduct__c);
+            if(!eachProduct.Prevent_Product_Description_Update__c){
+                eachProduct.NSP_Additional_Product_Description__c = newInvoiceLine.NSP_Additional_Product_Description__c;
+                orderProductUpdateMap.put(eachProduct.id,eachProduct);
+            }
         }
     }
     
