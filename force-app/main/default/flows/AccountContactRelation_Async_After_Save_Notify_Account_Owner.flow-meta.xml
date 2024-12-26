@@ -4,7 +4,7 @@
         <name>Send_Email_Notification_to_Account_Owner</name>
         <label>Send Email Notification to Account Owner</label>
         <locationX>176</locationX>
-        <locationY>323</locationY>
+        <locationY>384</locationY>
         <actionName>AccountContactRelation.Email_Alert_to_ACR_Account_Owner</actionName>
         <actionType>emailAlert</actionType>
         <faultConnector>
@@ -22,9 +22,31 @@
         <versionSegment>1</versionSegment>
     </actionCalls>
     <apiVersion>62.0</apiVersion>
+    <decisions>
+        <name>Validate_Account_Owner</name>
+        <label>Validate Account Owner</label>
+        <locationX>440</locationX>
+        <locationY>276</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Active_Account_Owner</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Account.Owner.IsActive</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Send_Email_Notification_to_Account_Owner</targetReference>
+            </connector>
+            <label>Active Account Owner</label>
+        </rules>
+    </decisions>
     <environments>Default</environments>
-    <interviewLabel>Before Save Of Account Contact Relationship Email Notification {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Before Save Of Account Contact Relationship Email Notification</label>
+    <interviewLabel>Account Contact Relation - Async After Save - Notify Account Owner {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Account Contact Relation - Async After Save - Notify Account Owner</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -47,12 +69,43 @@
     <start>
         <locationX>50</locationX>
         <locationY>0</locationY>
-        <connector>
-            <targetReference>Send_Email_Notification_to_Account_Owner</targetReference>
-        </connector>
-        <filterFormula>OR( AND( {!$Record.NSP_Is_Primary__c} = true, {!$Record.Account.Owner.IsActive} = true, NOT( ISNULL( {!$Record.AccountId} ) ), NOT( ISNULL( {!$Record.ContactId} ) ) ), AND( {!$Record.NSP_Is_Primary__c} = true, {!$Record.Account.Owner.IsActive} = true, NOT( ISNULL( {!$Record.AccountId} ) ), NOT( ISNULL( {!$Record.ContactId} ) ), ISCHANGED( {!$Record.ContactId} ) ) )</filterFormula>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>NSP_Is_Primary__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>AccountId</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>ContactId</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>ContactId</field>
+            <operator>IsChanged</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
         <object>AccountContactRelation</object>
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <scheduledPaths>
+            <connector>
+                <targetReference>Validate_Account_Owner</targetReference>
+            </connector>
+            <pathType>AsyncAfterCommit</pathType>
+        </scheduledPaths>
         <triggerType>RecordAfterSave</triggerType>
     </start>
     <status>Draft</status>
@@ -60,12 +113,12 @@
         <name>Failed_to_Send_Email_Notification</name>
         <label>Failed to Send Email Notification</label>
         <locationX>440</locationX>
-        <locationY>431</locationY>
+        <locationY>492</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultElement</name>
             <value>
-                <elementReference>Send_Email_Notification_to_Account_Owner</elementReference>
+                <stringValue>Send_Email_Notification_to_Account_Owner</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
