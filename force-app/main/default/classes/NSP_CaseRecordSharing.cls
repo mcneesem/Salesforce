@@ -9,7 +9,7 @@ Modification Log     :
 * Developer                   Date                   Description                                     
 * -------------------------------------------------------------------------------------------------  
 ***************************************************************************************************/
-public with sharing class NSP_CaseRecordSharing {
+public class NSP_CaseRecordSharing {
     // test w/ NSP_CaseRecordSharingTest (85%)
 
     private static Map<String,Id> grpNameGrpIdMap = new Map<String,Id>();
