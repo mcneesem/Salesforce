@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>62.0</apiVersion>
+    <assignments>
+        <name>Update_Assignment_Resource_Role</name>
+        <label>Update Assignment Resource Role</label>
+        <locationX>176</locationX>
+        <locationY>287</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.pse__Role__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.pse__Resource__r.pse__Resource_Role__c</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
     <environments>Default</environments>
     <interviewLabel>Before Save Of A {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Before Save Of Assignment</label>
@@ -23,24 +36,11 @@
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
-    <recordUpdates>
-        <name>Update_Resource_Role</name>
-        <label>Update Resource Role</label>
-        <locationX>176</locationX>
-        <locationY>287</locationY>
-        <inputAssignments>
-            <field>pse__Role__c</field>
-            <value>
-                <elementReference>$Record.pse__Resource__r.pse__Resource_Role__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputReference>$Record</inputReference>
-    </recordUpdates>
     <start>
         <locationX>50</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Update_Resource_Role</targetReference>
+            <targetReference>Update_Assignment_Resource_Role</targetReference>
         </connector>
         <filterFormula>AND( NOT( ISNULL( {!$Record.pse__Resource__c} ) ), ISCHANGED( {!$Record.pse__Resource__c} ), NOT( ISNULL( TEXT( {!$Record.pse__Resource__r.pse__Resource_Role__c} ) ) ), NOT( ISNULL( TEXT( {!$Record.pse__Role__c} ) ) ) )</filterFormula>
         <object>pse__Assignment__c</object>
