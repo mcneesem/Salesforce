@@ -493,9 +493,17 @@ public class NSP_OrderTriggerHelperTest{
         orderList[0].NSP_Billing_Account__c = null;
         orderList[0].NSP_Project_Go_Live_Date__c = System.today() + 10;
         orderList[0].NSP_Project_Go_Live_Approved__c = true;
-        
+		orderList[0].NSP_Rev_Rec_Rules_Reviewed__c = true;
+
         update orderList;
+
+        blng__TaxRule__c taxRuleRecord = [Select id From blng__TaxRule__c WHERE Id!=null limit 1];
+        List<OrderItem> orderProducts = [SELECT Id, blng__TaxRule__c FROM OrderItem WHERE OrderId = :orderList[0].Id];
         
+        for (OrderItem op : orderProducts) {
+            op.blng__TaxRule__c = taxRuleRecord.Id; // Replace with the appropriate value
+        }
+        update orderProducts;      
         /*project[0].Invoice_Ready__c = true;
 project[0].Go_Live_Date__c = System.Today();
 update project;*/
@@ -563,7 +571,8 @@ update project;*/
         System.assert(orderList.size()>0, 'Order List size is greater than 0');
     }
 
-    @isTest private static void testProcessConsumptionSchedule(){
+    @isTest 
+    private static void testProcessConsumptionSchedule(){
         Test.startTest();
         NSP_OrderItemTriggerHelper.processConsumptionSchedule(
             new List<String>() ,
