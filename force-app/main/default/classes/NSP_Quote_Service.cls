@@ -4,7 +4,7 @@
 * Called from NSP_Docusign js
 * @strory   STY-00336
 */
-public class NSP_Quote_Service {
+public with sharing class NSP_Quote_Service {
     // test w/ NSP_Quote_ServiceTest (??%)
 
     /**
