@@ -1,60 +1,67 @@
-/**
-* Represents the Account Group Member trigger helper which handles all the logic.
-*/
+public with sharing class NSP_AccountGroupMemberTriggerHelper {
+    // test w/ NSP_AccountGroupMemberTriggerHelperTest (87%)
 
-public without sharing class NSP_AccountGroupMemberTriggerHelper {
-
-    /**
-    * @Description  : Iterates throught the list of new Account GroupMembers
-    * @param        : List<NSP_Account_Group_Member__c> newList, Map<Id, NSP_Account_Group_Member__c> newMap 
-    * @return       : void      
-    *                
-    */
-    public static void afterInsertDirector(List<NSP_Account_Group_Member__c> newList, Map<Id, NSP_Account_Group_Member__c> newMap){
-        try{
-            defaultPrimaryFirstAccountGroupMember(newList);
-        } catch(Exception exc){
-            NSP_ErrorLogHandler.logSaveException('NSP_AccountGroupMemberTriggerHelper','afterInsertDirector', exc.getMessage());
+    //
+    // @Description  : Iterates throught the list of new Account GroupMembers
+    // @param        : List<NSP_Account_Group_Member__c> newList, Map<Id, NSP_Account_Group_Member__c> newMap
+    // @return       : void
+    //
+    public static void afterInsertDirector( List<NSP_Account_Group_Member__c> newList , Map<Id,NSP_Account_Group_Member__c> newMap ) {
+        try {
+            defaultPrimaryFirstAccountGroupMember( newList );
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_AccountGroupMemberTriggerHelper.class.getName() ,
+                'afterInsertDirector' ,
+                e
+            );
         }
     }
-    
-    /**
-    * @Description  : Iterates throught the list and map of old Account GroupMembers
-    * @param        : List<sObject> oldList , Map<Id, sObject> oldMap
-    * @return       : void      
-    *                
-    */
-    public static void afterDeleteDirector(List<NSP_Account_Group_Member__c> oldList , Map<Id, NSP_Account_Group_Member__c> oldMap){
-        try{
-            updatePrimaryForLastGroupMember(oldList, oldMap);
-        } catch(Exception exc){
-            NSP_ErrorLogHandler.logSaveException('NSP_AccountGroupMemberTriggerHelper','afterDeleteDirector', exc.getMessage());
+
+    //
+    // @Description  : Iterates throught the list and map of old Account GroupMembers
+    // @param        : List<sObject> oldList , Map<Id, sObject> oldMap
+    // @return       : void
+    //
+    public static void afterDeleteDirector( List<NSP_Account_Group_Member__c> oldList , Map<Id,NSP_Account_Group_Member__c> oldMap ) {
+        try {
+            updatePrimaryForLastGroupMember( oldList , oldMap );
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_AccountGroupMemberTriggerHelper.class.getName() ,
+                'afterDeleteDirector' ,
+                e
+            );
         }
     }
-    
-    /**
-    * Iterates throught the list of new Account GroupMembers and old Account GroupMembers
-    * @param newList List of New Account Group Members.  
-    * @return void      
-    *                
-    */
-    public void afterInsertIsPrimary(List<NSP_Account_Group_Member__c> newList, Map<Id, NSP_Account_Group_Member__c> oldMap) {
-        Map<String,String> mapAccIdGrp = new Map<String,String>();
-        
-        try{ 
+
+    //
+    // Iterates throught the list of new Account GroupMembers and old Account GroupMembers
+    // @param newList List of New Account Group Members.
+    // @return void
+    //
+    public void afterInsertIsPrimary( List<NSP_Account_Group_Member__c> newList , Map<Id,NSP_Account_Group_Member__c> oldMap ) {
+        try {
+            Map<String,String> mapAccIdGrp = new Map<String,String>();
             //check if primary is changed will update the new Primary Account group Member
-            for(NSP_Account_Group_Member__c accGrpM: newList){
-                if((oldMap == null && accGrpM.NSP_Primary__c) || (oldMap!=null && accGrpM.NSP_Primary__c && accGrpM.NSP_Primary__c!=oldMap.get(accGrpM.Id).NSP_Primary__c)){
-                    mapAccIdGrp.put(accGrpM.NSP_Group__c,accGrpM.NSP_Member_Account__c);
+            for ( NSP_Account_Group_Member__c accGrpM : newList ) {
+                if ( ( ( oldMap == null ) && accGrpM.NSP_Primary__c )
+                    || ( ( oldMap != null ) && accGrpM.NSP_Primary__c && ( accGrpM.NSP_Primary__c != oldMap.get( accGrpM.Id ).NSP_Primary__c ) )
+                    )
+                {
+                    mapAccIdGrp.put( accGrpM.NSP_Group__c , accGrpM.NSP_Member_Account__c );
                 }
             }
             //update the Account Group with the Primary Account
-            if(!mapAccIdGrp.isEmpty()){
-                updatePrimaryAccounts(mapAccIdGrp);
+            if ( !mapAccIdGrp.isEmpty() ) {
+                updatePrimaryAccounts( mapAccIdGrp );
             }
-            
-        }catch(Exception ex){
-            NSP_ErrorLogHandler.logSaveException('NSP_AccountGroupMemberTriggerHelper','afterInsertIsPrimary',ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_AccountGroupMemberTriggerHelper.class.getName() ,
+                'afterInsertIsPrimary' ,
+                e
+            );
         }
     }
     
@@ -93,14 +100,14 @@ public without sharing class NSP_AccountGroupMemberTriggerHelper {
             Database.Update(lstOfAccGrpsMembrs,false);
         }
     }
-    
-    /**
-    * List of AccountGroupMember -> Account and Group Relation Duplicate validations 
-    * @param mapAccIdGrp of groupId and Account.  
-    * @return void 
-    */
-    public void validateDuplicapteGroupMembers(List<NSP_Account_Group_Member__c> lstAccGrpMembers){
-        try{ 
+
+    //
+    // List of AccountGroupMember to Account and Group Relation Duplicate validations
+    // @param mapAccIdGrp of groupId and Account.
+    // @return void
+    //
+    public void validateDuplicapteGroupMembers( List<NSP_Account_Group_Member__c> lstAccGrpMembers ) {
+        try {
             Map<String,String> mapAccountIdGroupId = new Map<String,String>();
             for(NSP_Account_Group_Member__c accGrpMem : lstAccGrpMembers){
                 mapAccountIdGroupId.put(accGrpMem.NSP_Member_Account__c,accGrpMem.NSP_Group__c);
@@ -118,11 +125,15 @@ public without sharing class NSP_AccountGroupMemberTriggerHelper {
                     accGrpMem.addError(label.NSP_AccountGroupMemberDuplicateEntryMessage);
                 }
             }
-        }catch(Exception ex){
-            NSP_ErrorLogHandler.logSaveException('NSP_AccountGroupMemberTriggerHelper','validateDuplicapteGroupMembers',ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_AccountGroupMemberTriggerHelper.class.getName() ,
+                'validateDuplicapteGroupMembers' ,
+                e
+            );
         }
     }
-    
+
     /**
     * AccountGroupMember -> validation for WXAccountGroup Members on delete
     * @param  List<NSP_Account_Group_Member__c> lstAccGrpMembers
@@ -196,19 +207,16 @@ public without sharing class NSP_AccountGroupMemberTriggerHelper {
             }            
         }
     }
-    
-    /***********************************************************************
-    * @MethodName : updatePrimaryForLastGroupMember
-    * @Description: This method will update the last member 
-    * 				of Account Group as Primary
-    * @param      : List<NSP_Account_Group_Member__c> oldList, 
-    * 				Map<Id, NSP_Account_Group_Member__c> oldMap
-    * @Story      : STY-03316
-    * @return     : void                          
-    **************************************************************************/
-    public static void updatePrimaryForLastGroupMember(List<NSP_Account_Group_Member__c> oldList, Map<Id, NSP_Account_Group_Member__c> oldMap){
-        
-        try{
+
+    //
+    // @MethodName : updatePrimaryForLastGroupMember
+    // @Description: This method will update the last member of Account Group as Primary
+    // @param      : List<NSP_Account_Group_Member__c> oldList, Map<Id, NSP_Account_Group_Member__c> oldMap
+    // @Story      : STY-03316
+    // @return     : void
+    //
+    public static void updatePrimaryForLastGroupMember( List<NSP_Account_Group_Member__c> oldList , Map<Id,NSP_Account_Group_Member__c> oldMap ) {
+        try {
             Map<String,String> wxGrpIdWithAccountId = new Map<String,String>();
             Map<String,String> mapAccIdGrp = new Map<String,String>();
             List<NSP_Account_Group__c> lstOfAccGrps = new List<NSP_Account_Group__c>();
@@ -248,36 +256,52 @@ public without sharing class NSP_AccountGroupMemberTriggerHelper {
             }
             
             //Update Account Group Name if there is not Primary Group Member in Account Group
-            if(!lstOfAccGrpsToUpdate.isEmpty()){
-                Database.SaveResult[] accGrpUpdateList = Database.update(lstOfAccGrpsToUpdate,false);
-                NSP_ErrorLogHandler.logSaveResultsException('NSP_AccountGroupMemberTriggerHelper', 'defaultPrimaryFirstAccountGroupMember:AccountGroupUpdate', accGrpUpdateList);
+            if ( !lstOfAccGrpsToUpdate.isEmpty() ) {
+                Database.SaveResult[] results = Database.update( lstOfAccGrpsToUpdate , false );
+                NSP_ErrorLogHandler.logResults(
+                    NSP_AccountGroupMemberTriggerHelper.class.getName() ,
+                    'updatePrimaryForLastGroupMember:NSP_Account_Group__c:1' ,
+                    results
+                );
             }
             
             //Update Account Group Name with Primary Group Member Name in it if there is any Primary Group Member in Account Group
-            if(!lstOfAccGrps.isEmpty()){
-                Database.SaveResult[] accGrpUpdateList = Database.update(lstOfAccGrps,false);
-                NSP_ErrorLogHandler.logSaveResultsException('NSP_AccountGroupMemberTriggerHelper', 'defaultPrimaryFirstAccountGroupMember:AccountGroupUpdate', accGrpUpdateList);
+            if ( !lstOfAccGrps.isEmpty() ) {
+                Database.SaveResult[] results = Database.update( lstOfAccGrps , false );
+                NSP_ErrorLogHandler.logResults(
+                    NSP_AccountGroupMemberTriggerHelper.class.getName() ,
+                    'updatePrimaryForLastGroupMember:NSP_Account_Group__c:2' ,
+                    results
+                );
             }
             //Update last Account Group Member to a Primary Group Member in the Account Group
-            if(!lstOfAccGrpsMembrs.isEmpty() && lstOfAccGrpsMembrs.size() == 1){
-                Database.SaveResult[] accGrpMemberUpdateList = Database.update(lstOfAccGrpsMembrs,false);
-                NSP_ErrorLogHandler.logSaveResultsException('NSP_AccountGroupMemberTriggerHelper', 'defaultPrimaryFirstAccountGroupMember:AccountGroupMemberUpdate', accGrpMemberUpdateList);
+            if ( !lstOfAccGrpsMembrs.isEmpty() && ( lstOfAccGrpsMembrs.size() == 1 ) ) {
+                Database.SaveResult[] results = Database.update( lstOfAccGrpsMembrs , false );
+                NSP_ErrorLogHandler.logResults(
+                    NSP_AccountGroupMemberTriggerHelper.class.getName() ,
+                    'updatePrimaryForLastGroupMember:NSP_Account_Group_Member__c' ,
+                    results
+                );
             }
-        }catch(Exception ex){
-            NSP_ErrorLogHandler.logSaveException('NSP_AccountGroupMemberTriggerHelper', 'updatePrimaryForLastGroupMember', ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_AccountGroupMemberTriggerHelper.class.getName() ,
+                'updatePrimaryForLastGroupMember' ,
+                e
+            );
         }
     }
 
-    /***********************************************************************
-    * @MethodName : updatePrimaryAccountForWxAccountGroup
-    * @Description: This method for testing WX Account Group 
-        if primary account is deleted from Account Group Member then Assign the Primary
-        Account i.e from Asset WX child lowest Number as Primary Group Member
-    * @param      : wxGrpIdWithAccountId
-    * @Story      : DF-05135
-    * @return     : void                          
-    **************************************************************************/
-    private static void updatePrimaryAccountForWxAccountGroup(Map<String, String> wxGrpIdWithAccountId){
+    //
+    // @MethodName : updatePrimaryAccountForWxAccountGroup
+    // @Description: This method for testing WX Account Group
+    //    if primary account is deleted from Account Group Member then Assign the Primary
+    //    Account i.e from Asset WX child lowest Number as Primary Group Member
+    // @param      : wxGrpIdWithAccountId
+    // @Story      : DF-05135
+    // @return     : void
+    //
+    private static void updatePrimaryAccountForWxAccountGroup( Map<String,String> wxGrpIdWithAccountId ) {
         Map<String, Id> wxParentIdWithAccountId = new Map<String, Id>();
         List<NSP_Account_Group_Member__c> lstGrpMembers= new List<NSP_Account_Group_Member__c>();
         Map<Id, Set<Id>> grpIdWithAccounts = new Map<Id, Set<Id>>();
@@ -336,9 +360,13 @@ public without sharing class NSP_AccountGroupMemberTriggerHelper {
             }
         }
         
-        if(!lstGrpMembers.isEmpty()) {
-            Database.SaveResult[] accGrpMemberUpdateList = Database.update(lstGrpMembers,false);
-            NSP_ErrorLogHandler.logSaveResultsException('NSP_AccountGroupMemberTriggerHelper', 'updatePrimaryAccountForWxAccountGroup:WXAccountGroupMemberUpdate', accGrpMemberUpdateList);
+        if ( !lstGrpMembers.isEmpty() ) {
+            Database.SaveResult[] results = Database.update( lstGrpMembers , false );
+            NSP_ErrorLogHandler.logResults(
+                NSP_AccountGroupMemberTriggerHelper.class.getName() ,
+                'updatePrimaryAccountForWxAccountGroup' ,
+                results
+            );
         }
     }
 
@@ -389,16 +417,15 @@ public without sharing class NSP_AccountGroupMemberTriggerHelper {
         return lstOfAccGrps;
     }
 
-    /***********************************************************************
-    * @MethodName : defaultPrimaryFirstAccountGroupMember
-    * @Description: This method will update First Account Group Member as primary
-    * @param      : List<NSP_Account_Group_Member__c> accGrpMemList
-    * @Story      : STY-03316
-    * @return     : void                          
-    **************************************************************************/
-    public static void defaultPrimaryFirstAccountGroupMember(List<NSP_Account_Group_Member__c> accGrpMemList){
-
-        try{
+    //
+    // @MethodName : defaultPrimaryFirstAccountGroupMember
+    // @Description: This method will update First Account Group Member as primary
+    // @param      : List<NSP_Account_Group_Member__c> accGrpMemList
+    // @Story      : STY-03316
+    // @return     : void
+    //
+    public static void defaultPrimaryFirstAccountGroupMember( List<NSP_Account_Group_Member__c> accGrpMemList ) {
+        try {
             Map<String,String> mapAccIdGrp = new Map<String,String>();
             List<NSP_Account_Group__c> lstOfAccGrps = new List<NSP_Account_Group__c>();
             List<NSP_Account_Group_Member__c> accGrpMemberList = new List<NSP_Account_Group_Member__c>();
@@ -431,38 +458,60 @@ public without sharing class NSP_AccountGroupMemberTriggerHelper {
             }
                
             //Update Account Group Name with Primary Group Member Name in it if there is any Primary Group Member in Account Group
-            if(!lstOfAccGrps.isEmpty() && accGrpMemberListToUpdate.size() == 1){
-                Database.SaveResult[] accGrpUpdateList = Database.update(lstOfAccGrps,false);
-                NSP_ErrorLogHandler.logSaveResultsException('NSP_AccountGroupMemberTriggerHelper', 'defaultPrimaryFirstAccountGroupMember:AccountGroupUpdate', accGrpUpdateList);
+            if ( !lstOfAccGrps.isEmpty() && ( accGrpMemberListToUpdate.size() == 1 ) ) {
+                Database.SaveResult[] results = Database.update( lstOfAccGrps , false );
+                NSP_ErrorLogHandler.logResults(
+                    NSP_AccountGroupMemberTriggerHelper.class.getName() ,
+                    'defaultPrimaryFirstAccountGroupMember:NSP_Account_Group__c' ,
+                    results
+                );
             }
-            
-             //Update first Account Group Member to a Primary Group Member in the Account Group
-            if(!accGrpMemberListToUpdate.isEmpty() && accGrpMemberListToUpdate.size() == 1){
-                Database.SaveResult[] accGrpMemberUpdateList = Database.update(accGrpMemberListToUpdate,false);
-                NSP_ErrorLogHandler.logSaveResultsException('NSP_AccountGroupMemberTriggerHelper', 'defaultPrimaryFirstAccountGroupMember:AccountGroupMemberUpdate', accGrpMemberUpdateList);
+            //Update first Account Group Member to a Primary Group Member in the Account Group
+            if ( !accGrpMemberListToUpdate.isEmpty() && ( accGrpMemberListToUpdate.size() == 1 ) ) {
+                Database.SaveResult[] results = Database.update( accGrpMemberListToUpdate , false );
+                NSP_ErrorLogHandler.logResults(
+                    NSP_AccountGroupMemberTriggerHelper.class.getName() ,
+                    'defaultPrimaryFirstAccountGroupMember:NSP_Account_Group_Member__c' ,
+                    results
+                );
             }
-        }catch(Exception ex){
-            NSP_ErrorLogHandler.logSaveException('NSP_AccountGroupMemberTriggerHelper', 'defaultPrimaryFirstAccountGroupMember', ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_AccountGroupMemberTriggerHelper.class.getName() ,
+                'defaultPrimaryFirstAccountGroupMember' ,
+                e
+            );
         }
     }
 
-    /***********************************************************************
-    * @MethodName : preventAccountGroupsDeleting
-    * @Description: This method will restrict account Groups that has only one group
-    * @param      : List<NSP_Account_Group_Member__c> accGrpMemList
-    * @Story      : STY-04122
-    * @return     : void                          
-    **************************************************************************/
-    public static void preventAccountGroupsDeleting(List<NSP_Account_Group_Member__c> lstAccGrpMembers){
-        List<String> lstGrpTypes = new List<String>{ NSP_ServiceConstants.ACCOUNT_HEALTH, NSP_ServiceConstants.RENEWAL_PROBABILITY, NSP_ServiceConstants.GROWTH_FORECAST };
-        String userQuery = new NSP_QueryBuilder('User', new List<String>{'Id', 'NSP_Profile_Name__c'})
-                                .addFilter('Id', userinfo.getUserId()).build();
-        User usr  =  (User)Database.query(userQuery);
-
-        for(NSP_Account_Group_Member__c accGroupMembr : lstAccGrpMembers){
-            if(lstGrpTypes.contains(accGroupMembr.NSP_Type__c) && usr.NSP_Profile_Name__c != NSP_ServiceConstants.SYSTEM_ADMINISTRATOR && !accGroupMembr.NSP_ByPassValidation__c){
-                accGroupMembr.addError(label.NSP_AccountCannotRemoveFromSelfGroup); 
+    //
+    // @MethodName : preventAccountGroupsDeleting
+    // @Description: This method will restrict account Groups that has only one group
+    // @param      : List<NSP_Account_Group_Member__c> accGrpMemList
+    // @Story      : STY-04122
+    // @return     : void                          
+    //
+    public static void preventAccountGroupsDeleting( List<NSP_Account_Group_Member__c> lstAccGrpMembers ) {
+        Set<String> adminProfileIds = new Set<String>{
+            '00e4x000001r0zsAAA' , // System Administrator
+            '00e4x000001dm3lAAA' // System Admin Lite
+        };
+        Boolean isAdmin = adminProfileIds.contains( UserInfo.getProfileId() );
+        List<String> lstGrpTypes = new List<String>{
+            NSP_ServiceConstants.ACCOUNT_HEALTH ,
+            NSP_ServiceConstants.RENEWAL_PROBABILITY ,
+            NSP_ServiceConstants.GROWTH_FORECAST
+        };
+        for ( NSP_Account_Group_Member__c accGroupMembr : lstAccGrpMembers ) {
+            if ( lstGrpTypes.contains( accGroupMembr.NSP_Type__c )
+                && !isAdmin
+                && !accGroupMembr.NSP_ByPassValidation__c
+                )
+            {
+                accGroupMembr.addError( label.NSP_AccountCannotRemoveFromSelfGroup ); 
             }
         }
     }
+
 }
+//
