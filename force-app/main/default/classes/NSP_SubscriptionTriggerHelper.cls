@@ -1,6 +1,5 @@
 public class NSP_SubscriptionTriggerHelper {
     // test w/ NSP_SubscriptionTriggerHelperTest (83%)
-    private string NSP_SubscriptionTriggerHelper = 'NSP_SubscriptionTriggerHelper';
 
     //
     // Iterates throught the list of new subscriptions and passes the required attributes to other methods.
@@ -274,11 +273,19 @@ public class NSP_SubscriptionTriggerHelper {
         }
         if(entitlementsToCreate.size()>0){
             List<Database.SaveResult> results = Database.insert(entitlementsToCreate,false);
-            NSP_ErrorLogHandler.logSaveResultsException(NSP_SubscriptionTriggerHelper,'createEntitlements', results); 
+            NSP_ErrorLogHandler.logResults(
+                NSP_SubscriptionTriggerHelper.class.getName() ,
+                'createEntitlements:NSP_Support_Entitlement__c' ,
+                results
+            );
         }
         if(assetsToUpdate.size()>0){
             List<Database.SaveResult> results = Database.update(assetsToUpdate,false);
-            NSP_ErrorLogHandler.logSaveResultsException(NSP_SubscriptionTriggerHelper,'createEntitlements', results); 
+            NSP_ErrorLogHandler.logResults(
+                NSP_SubscriptionTriggerHelper.class.getName() ,
+                'createEntitlements:Asset' ,
+                results
+            );
         }
     }
 
@@ -322,7 +329,11 @@ public class NSP_SubscriptionTriggerHelper {
                 }
             }
             List<Database.SaveResult> results = Database.update(assetsToUpdate,false);
-            NSP_ErrorLogHandler.logSaveResultsException(NSP_SubscriptionTriggerHelper,'terminateSerialIds', results); 
+            NSP_ErrorLogHandler.logResults(
+                NSP_SubscriptionTriggerHelper.class.getName() ,
+                'terminateSerialIds' ,
+                results
+            ); 
         }   
     }
 
@@ -338,19 +349,22 @@ public class NSP_SubscriptionTriggerHelper {
         List<NSP_Support_Entitlement__c> entitlementsToUpdate= new List<NSP_Support_Entitlement__c>();
         Map<Id, Asset> assetsToUpdateMap = new Map<Id, Asset>();
         for(NSP_Support_Entitlement__c entitlement:[SELECT Id,NSP_Supported_Subscription__c,NSP_Covered_Asset__c,NSP_Covered_Asset__r.Status,NSP_Serial_ID__c FROM NSP_Support_Entitlement__c WHERE NSP_Supported_Subscription__c IN:oldToNewSubscrioptionIdMap.KeySet()]){
+            SBQQ__Subscription__c oldSubscription = null;
+            if ( ( oldToNewSubscrioptionIdMap != null )
+                && oldToNewSubscrioptionIdMap.contiansKey( entitlement.NSP_Supported_Subscription__c )){
+                oldSubscription = oldToNewSubscrioptionIdMap.get( entitlement.NSP_Supported_Subscription__c );
+            }
             if(!serialIdsToTerminate.contains(entitlement.NSP_Serial_ID__c)){
                 Asset ast = assetsToUpdateMap.get(entitlement.NSP_Covered_Asset__c);
                 if (ast == null) {
                     ast = new Asset(Id = entitlement.NSP_Covered_Asset__c);
                 }
-                ast.NSP_Support_Expires__c=oldToNewSubscrioptionIdMap.get(entitlement.NSP_Supported_Subscription__c)?.SBQQ__EndDate__c;
-                ast.NSP_Support_Cost__c=oldToNewSubscrioptionIdMap.get(entitlement.NSP_Supported_Subscription__c)?.SBQQ__NetPrice__c;
+                ast.NSP_Support_Expires__c=oldSubscription.SBQQ__EndDate__c;
+                ast.NSP_Support_Cost__c=oldSubscription.SBQQ__NetPrice__c;
                 assetsToUpdateMap.put(ast.Id,ast);
             }
-            if(oldToNewSubscrioptionIdMap.get(entitlement.NSP_Supported_Subscription__c) != null && 
-               oldToNewSubscrioptionIdMap.get(entitlement.NSP_Supported_Subscription__c).NSP_Quote_Type__c == NSP_CPQConstants.QUOTE_TYPE_RENEWAL &&
-               entitlement.NSP_Covered_Asset__c != null &&
-               entitlement.NSP_Covered_Asset__r.Status == NSP_CPQConstants.TERMINATED){
+            if(oldSubscription != null && oldSubscription.NSP_Quote_Type__c == NSP_CPQConstants.QUOTE_TYPE_RENEWAL &&
+               entitlement.NSP_Covered_Asset__c != null && entitlement.NSP_Covered_Asset__r.Status == NSP_CPQConstants.TERMINATED){
                     Asset assetToActivate = assetsToUpdateMap.get(entitlement.NSP_Covered_Asset__c);
                     if (assetToActivate == null) {
                         assetToActivate = new Asset(Id = entitlement.NSP_Covered_Asset__c);
@@ -358,17 +372,25 @@ public class NSP_SubscriptionTriggerHelper {
                     assetToActivate.NSP_ActivationDate__c = Date.today();
                     assetsToUpdateMap.put(assetToActivate.Id, assetToActivate);
             }
-            entitlement.NSP_Supported_Subscription__c=oldToNewSubscrioptionIdMap.get(entitlement.NSP_Supported_Subscription__c).Id;
+            entitlement.NSP_Supported_Subscription__c=oldSubscription.Id;
             entitlementsToUpdate.add(entitlement);
         }
         if(entitlementsToUpdate.size()>0){
             List<Database.SaveResult> results = Database.update(entitlementsToUpdate,false);
-            NSP_ErrorLogHandler.logSaveResultsException(NSP_SubscriptionTriggerHelper,'remapSubscriptionsInEntitlement', results); 
+            NSP_ErrorLogHandler.logResults(
+                NSP_SubscriptionTriggerHelper.class.getName() ,
+                'remapSubscriptionsInEntitlement:NSP_Support_Entitlement__c' ,
+                results
+            ); 
         }
         if(assetsToUpdateMap.size()>0){
             List<Asset> assetsToUpdate = assetsToUpdateMap.values();
             List<Database.SaveResult> results = Database.update(assetsToUpdate,false);
-            NSP_ErrorLogHandler.logSaveResultsException(NSP_SubscriptionTriggerHelper,'remapSubscriptionsInEntitlement', results); 
+            NSP_ErrorLogHandler.logResults(
+                NSP_SubscriptionTriggerHelper.class.getName() ,
+                'remapSubscriptionsInEntitlement:Asset' ,
+                results
+            );
         }
     }
 
@@ -387,7 +409,11 @@ public class NSP_SubscriptionTriggerHelper {
                 eachAsset.NSP_ActivationDate__c=serialIdsDateMap.get(eachAsset.SerialNumber);
             }
             List<Database.SaveResult> results = Database.update(assetsToActivate,false);
-            NSP_ErrorLogHandler.logSaveResultsException(NSP_SubscriptionTriggerHelper,'activateSerialIds', results);   
+            NSP_ErrorLogHandler.logResults(
+                NSP_SubscriptionTriggerHelper.class.getName() ,
+                'activateSerialIds' ,
+                results
+            ); 
         } 
     }
 
@@ -441,7 +467,11 @@ public class NSP_SubscriptionTriggerHelper {
         }
         if(opUpdateList.size() > 0){
             List<Database.SaveResult> results = Database.update(opUpdateList,false);
-            NSP_ErrorLogHandler.logSaveResultsException('NSP_SubscriptionTriggerHelper','updateTermDateonOP', results);
+            NSP_ErrorLogHandler.logResults(
+                NSP_SubscriptionTriggerHelper.class.getName() ,
+                'updateTermDateonOP' ,
+                results
+            );
         }
     }
 
