@@ -14,6 +14,12 @@ public class NSP_InvoiceLineTriggerTest {
     //Set up method to create test data
     @testSetup
     static void setupTestData(){
+        
+        Order_Settings__c orderSetting = Order_Settings__c.getOrgDefaults();
+        orderSetting.EffectiveDateStartOfMonth__c = true;
+        orderSetting.Bypass_Rule_PreventStatusChange__c = true;
+        upsert orderSetting;
+        
         //Disable unnesessary triggers
         NSP_InvoiceTriggerHandler.TriggerDisabled = true;
         NSP_AccountTriggerHandler.TriggerDisabled = true;

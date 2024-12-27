@@ -9,9 +9,10 @@
 public class NSP_OrderTriggerHelperTest{
     @testSetup
     static void setupTestData(){
-        Order_Settings__c orderSetting = new Order_Settings__c();
+        Order_Settings__c orderSetting = Order_Settings__c.getOrgDefaults();
         orderSetting.EffectiveDateStartOfMonth__c = true;
-        insert orderSetting;
+        orderSetting.Bypass_Rule_PreventStatusChange__c = true;
+        upsert orderSetting;
         
         NSP_OrderItemTriggerHandler.TriggerDisabled = true;
         NSP_QuoteTriggerHandler.TriggerDisabled = true;
@@ -497,13 +498,15 @@ public class NSP_OrderTriggerHelperTest{
 
         update orderList;
 
+        
         blng__TaxRule__c taxRuleRecord = [Select id From blng__TaxRule__c WHERE Id!=null limit 1];
         List<OrderItem> orderProducts = [SELECT Id, blng__TaxRule__c FROM OrderItem WHERE OrderId = :orderList[0].Id];
         
         for (OrderItem op : orderProducts) {
             op.blng__TaxRule__c = taxRuleRecord.Id; // Replace with the appropriate value
         }
-        update orderProducts;      
+        update orderProducts;
+        //update orderList;       
         /*project[0].Invoice_Ready__c = true;
 project[0].Go_Live_Date__c = System.Today();
 update project;*/

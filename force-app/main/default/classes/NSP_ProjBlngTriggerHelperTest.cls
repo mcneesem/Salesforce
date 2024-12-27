@@ -3,6 +3,14 @@ public class NSP_ProjBlngTriggerHelperTest {
     public NSP_ProjBlngTriggerHelperTest() {
 
     }
+    
+    @testSetup
+    static void setupTestData(){
+        Order_Settings__c orderSetting = Order_Settings__c.getOrgDefaults();
+        orderSetting.EffectiveDateStartOfMonth__c = true;
+        orderSetting.Bypass_Rule_PreventStatusChange__c = true;
+        upsert orderSetting;
+    }
 
     public static String accountDefaults = 'NSP_TestDataFactory.AccountDefaults';
     public static String accountName = 'Account Test1';
