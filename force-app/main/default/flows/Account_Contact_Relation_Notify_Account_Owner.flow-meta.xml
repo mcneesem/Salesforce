@@ -32,6 +32,27 @@
             <name>Active_Account_Owner</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
+                <leftValueReference>Account_Contact_Relationship_Record</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Account_Contact_Relationship_Record.AccountId</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Account_Contact_Relationship_Record.ContactId</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
                 <leftValueReference>Account_Contact_Relationship_Record.Account.Owner.IsActive</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
@@ -45,8 +66,8 @@
         </rules>
     </decisions>
     <environments>Default</environments>
-    <interviewLabel>Send Email Notification To Account Owner {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Send Email Notification To Account Owner</label>
+    <interviewLabel>Account Contact Relation - Notify Account Owner {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Account Contact Relation - Notify Account Owner</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -83,13 +104,13 @@
         <inputAssignments>
             <name>faultElement</name>
             <value>
-                <stringValue>Send Email Notification To Account Owner</stringValue>
+                <stringValue>Send_Email_Notification</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
             <name>faultFlow</name>
             <value>
-                <stringValue>Send Email Notification</stringValue>
+                <stringValue>Account_Contact_Relation_Notify_Account_Owner</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>

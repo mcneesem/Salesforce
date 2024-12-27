@@ -53,7 +53,7 @@
         <recordTriggerType>Update</recordTriggerType>
         <scheduledPaths>
             <connector>
-                <targetReference>Send_Email_Notification_To_Account_Owner</targetReference>
+                <targetReference>Account_Contact_Relation_Notify_Account_Owner</targetReference>
             </connector>
             <pathType>AsyncAfterCommit</pathType>
         </scheduledPaths>
@@ -61,11 +61,11 @@
     </start>
     <status>Draft</status>
     <subflows>
-        <name>Send_Email_Notification_To_Account_Owner</name>
-        <label>Send Email Notification To Account Owner</label>
+        <name>Account_Contact_Relation_Notify_Account_Owner</name>
+        <label>Account Contact Relation - Notify Account Owner</label>
         <locationX>308</locationX>
         <locationY>276</locationY>
-        <flowName>Send_Email_Notification_To_Account_Owner</flowName>
+        <flowName>Account_Contact_Relation_Notify_Account_Owner</flowName>
         <inputAssignments>
             <name>Account_Contact_Relationship_Record</name>
             <value>
