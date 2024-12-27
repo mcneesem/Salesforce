@@ -2779,7 +2779,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
     * ********************************************************************************************/
     public void emailNotifyInternalDiscovery(){
         for(Id ipRecId : ipRecordsByAutomation.get(INTERNAL_DISCOVERY_FN)){
-            Boolean isSendEmail;
+            Boolean isSendEmail = false;
             Implementation_Profile__c ipRec = newIPs.get(ipRecId);
              Implementation_Profile__c existingRec =  oldIPs.get(ipRec.Id);
             if((isRerun || ipRec.NSP_Form_Completed__c) && !isSaveForm ){ 
@@ -2859,7 +2859,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
                         impProfile.NSP_Old_Insperity_Ben_effective_date__c = ipRec.Insperity_benefits_effective_date__c;
                         impProfile.NSP_Old_Benefits_Package__c = ipRec.Benefits_Package__c;
                         impProfileToUpdate.put(ImpProfKey,impProfile);
-                        if(!listOfTOAddresses.isEmpty() && isSendEmail){
+                        if ( !listOfTOAddresses.isEmpty() && isSendEmail ) {
                        		 NSP_ProjectTaskTriggerEmailNotification.sendMail(subjectString,mailBody,listOfTOAddresses,null,null);
                         }
 
