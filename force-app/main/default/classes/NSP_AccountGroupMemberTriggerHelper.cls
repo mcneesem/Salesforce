@@ -210,10 +210,8 @@ public with sharing class NSP_AccountGroupMemberTriggerHelper {
 
     //
     // @MethodName : updatePrimaryForLastGroupMember
-    // @Description: This method will update the last member
-    // 				of Account Group as Primary
-    // @param      : List<NSP_Account_Group_Member__c> oldList, 
-    // 				Map<Id, NSP_Account_Group_Member__c> oldMap
+    // @Description: This method will update the last member of Account Group as Primary
+    // @param      : List<NSP_Account_Group_Member__c> oldList, Map<Id, NSP_Account_Group_Member__c> oldMap
     // @Story      : STY-03316
     // @return     : void
     //
