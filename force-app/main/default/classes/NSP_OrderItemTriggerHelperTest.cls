@@ -5,12 +5,9 @@
 * @date 09/06/2021
 * Name : NSP_OrderItemTriggerHelperTest
 */
-@isTest
-public class NSP_OrderItemTriggerHelperTest{
-    
-    @testSetup
-    static void setupTestData(){
-        
+@isTest private class NSP_OrderItemTriggerHelperTest{
+
+    @testSetup private static void setupTestData() {
         Order_Settings__c orderSetting = Order_Settings__c.getOrgDefaults();
         orderSetting.EffectiveDateStartOfMonth__c = true;
         orderSetting.Bypass_Rule_PreventStatusChange__c = true;
@@ -339,9 +336,8 @@ public class NSP_OrderItemTriggerHelperTest{
              test.stopTest();
          }
     }
-    
-@isTest
-public static void afterUpdateDirectorMethod(){
+
+    @isTest private static void afterUpdateDirectorMethod() {
     NSP_AccountGroupTriggerHandler.TriggerDisabled = true;
     List<Order> orderList = [Select Id, SBQQ__Quote__c, NSP_First_usage_upload__c, Type, NSP_Project_Name__c, blng__InvoiceBatch__c, NSP_Billing_Address__c, NSP_Shipping_Address__c, NSP_Billing_Account__c
                             From Order WHERE Id!=null LIMIT 10];
@@ -374,10 +370,9 @@ public static void afterUpdateDirectorMethod(){
     Test.stopTest();
     System.assert(orderList.size()==1,true);
     
-}
+    }
 
-    @isTest
-    public static void beforeUpdateDirectorMethod(){
+    @isTest private static void beforeUpdateDirectorMethod() {
     NSP_AccountGroupTriggerHandler.TriggerDisabled = true;
     NSP_ProjectTriggerHandler.TriggerDisabled = true;
     List<Account> objAccount = [SELECT Id,Name FROM Account WHERE Id!=null LIMIT 1];
@@ -459,8 +454,7 @@ public static void afterUpdateDirectorMethod(){
     system.assert(usageSumRecs.size()==1,true);
     }
 
-    @isTest
-    public static void autoActivateOrderLinesMethod(){
+    @isTest private static void autoActivateOrderLinesMethod() {
         NSP_AssetTriggerHandler.TriggerDisabled = true;
         Account objaccount  = [Select Id, Name from Account WHERE Name =: NSP_TestHelper.DEFAULT_COMPANY_NAME LIMIT 1];
         Opportunity objOpp = [SELECT Id,Name FROM Opportunity LIMIT 1];
@@ -519,5 +513,5 @@ public static void afterUpdateDirectorMethod(){
         Test.stopTest();
     }
 
-
 }
+//
