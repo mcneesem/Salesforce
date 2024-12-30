@@ -6,13 +6,11 @@ Story                :
 Modification Log     :                                                                               
 
 ***************************************************************************************************/
-@isTest
-public class NSP_InvoiceTriggerHelperTest
-{
-    public static final String ACCOUNTDEFAULTS = 'NSP_TestDataFactory.AccountDefaults';
-    public static final String CASEDEFAULTS  = 'NSP_TestDataFactory.CaseDefaults';
-    @testSetup
-    static void setupTestData(){
+@isTest private class NSP_InvoiceTriggerHelperTest {
+    private static final String ACCOUNTDEFAULTS = 'NSP_TestDataFactory.AccountDefaults';
+    private static final String CASEDEFAULTS  = 'NSP_TestDataFactory.CaseDefaults';
+
+    @testSetup private static void setupTestData(){
         
         Order_Settings__c orderSetting = Order_Settings__c.getOrgDefaults();
         orderSetting.EffectiveDateStartOfMonth__c = true;
@@ -64,7 +62,7 @@ public class NSP_InvoiceTriggerHelperTest
         obj2product.NSP_IsScholarshipPrice_Applicable__c ='YES';
         obj2product.blng__BillingRule__c=bRule.Id;
         obj2product.blng__RevenueRecognitionRule__c=rRule.Id;
-        obj2product.ProductCode	 = 'IWXSU';
+        obj2product.ProductCode = 'IWXSU';
         obj2product.blng__TaxRule__c=tRule.Id;
         
         insert obj2product;
@@ -77,7 +75,7 @@ public class NSP_InvoiceTriggerHelperTest
         objproduct1.NSP_IsScholarshipPrice_Applicable__c ='YES';
         objproduct1.blng__BillingRule__c=bRule.Id;
         objproduct1.blng__RevenueRecognitionRule__c=rRule1.Id;
-        objproduct1.ProductCode	 = 'IWXSU';
+        objproduct1.ProductCode = 'IWXSU';
         objproduct1.blng__TaxRule__c=tRule.Id;
         
         insert objproduct1;
@@ -125,7 +123,7 @@ public class NSP_InvoiceTriggerHelperTest
         update objQuote;    
         
         list<contact> cntList = [select id from contact limit 2];
-		list<pse__Proj__c> prjList = [select id from pse__Proj__c limit 2];
+        list<pse__Proj__c> prjList = [select id from pse__Proj__c limit 2];
 
         //project creation        
         list<OrderItem> orderItemList = new list<OrderItem>([select id,blng__NextBillingDate__c,blng__InvoiceRunProcessingStatus__c from OrderItem WHERE Order.SBQQ__Quote__c =:objQuote.Id]);
@@ -133,7 +131,7 @@ public class NSP_InvoiceTriggerHelperTest
         orderList[0].NSP_Project_Go_Live_Date__c=system.today();
         orderList[0].Status='Reviewed';
         orderList[0].ShipToContactId = cntList[0].id;
-		orderList[0].NSP_Down_Payment_Required__c = 'yes';
+        orderList[0].NSP_Down_Payment_Required__c = 'yes';
         update orderList;
         orderItemList[0].blng__InvoiceRunProcessingStatus__c='Pending Billing';
         orderItemList[0].NSP_Project__c = prjList[0].id;
@@ -151,15 +149,13 @@ public class NSP_InvoiceTriggerHelperTest
             }           
         }
 
-		inv[0].blng__InvoiceStatus__c='Posted';
+        inv[0].blng__InvoiceStatus__c='Posted';
         inv[0].NSP_CLM_Document_Received__c = false;
         inv[0].NSP_Invoice_External_ID__c = null;
         system.debug(inv);
         system.debug(inv[0].blng__PaymentStatus__c);
-        update inv[0];	
-        
-        
-                
+        update inv[0];
+
         blng__Payment__c currPayment = new blng__Payment__c();
         currPayment.blng__Account__c = objaccount.id; 
         currPayment.blng__Amount__c = inv[0].blng__TotalAmount__c;
@@ -173,7 +169,7 @@ public class NSP_InvoiceTriggerHelperTest
         paymentAlloc.blng__Invoice__c = inv[0].Id;
         paymentAlloc.blng__Type__c = 'Allocation';
         insert paymentAlloc;
-        		
+
         set<id> invoiceIdset = (new map<id,blng__Invoice__c>(inv)).keyset();               
         Set<String> invIdset = (Set<String>)JSON.deserialize(JSON.serialize(invoiceIdset), Set<String>.class);
         
@@ -182,16 +178,15 @@ public class NSP_InvoiceTriggerHelperTest
         
         // NSP_InvoiceTriggerHelper.setInvoiceToEmail(new Set<String>{inv[0].Id}); // correcting compliation errors ~ NSP_InvoiceTriggerHelperTest: line 124, column 34: Method does not exist or incorrect signature: void setInvoiceToEmail(Set<String>) from the type NSP_InvoiceTriggerHelper
         //System.assert(orderList.size()==1,true);
-     }
-     public static testMethod void testDunningCase()
-    {
+    }
+
+    @isTest private static void testDunningCase() {
         Account objaccount  = [Select Id, Name from Account WHERE Name =: NSP_TestHelper.DEFAULT_COMPANY_NAME LIMIT 1];
-		NSP_InvoiceTriggerHelper.checkAndCloseDunningCase(new set<Id>{objaccount.Id});
+        NSP_InvoiceTriggerHelper.checkAndCloseDunningCase(new set<Id>{objaccount.Id});
         System.Assert(objaccount.Id!=null);
     }
     
-    @isTest
-    private static void invoiceLineUnpaidTest(){
+    @isTest private static void invoiceLineUnpaidTest(){
         Account objaccount  = [Select Id, Name from Account WHERE Name =: NSP_TestHelper.DEFAULT_COMPANY_NAME LIMIT 1];
         list<Product2> objproductlist  = [Select Id, Name from Product2 WHERE Name != null];
         List<PriceBookEntry> pblist = new List<PriceBookEntry>();
@@ -225,6 +220,7 @@ public class NSP_InvoiceTriggerHelperTest
         inv[0].blng__InvoiceStatus__c='Posted';
         update inv;
         System.assert(orderList.size()==1,true);
+    }
 
-    }     
 }
+//
