@@ -155,10 +155,11 @@ public static void updateAddProductDescriptionOnOrderItem(list<blng__InvoiceLine
     ]);
       
     for(blng__InvoiceLine__c newInvoiceLine: invLineNew){
-        if(String.isNotBlank(newInvoiceLine.NSP_Additional_Product_Description__c) && newInvoiceLine.blng__OrderProduct__c != null ){
-            //OrderItem eachProduct = new OrderItem(Id = newInvoiceLine.blng__OrderProduct__c);
+        if(String.isNotBlank(newInvoiceLine.NSP_Additional_Product_Description__c) 
+           && newInvoiceLine.blng__OrderProduct__c != null 
+           && orderItemMap.containsKey(newInvoiceLine.blng__OrderProduct__c)){
             OrderItem eachProduct = orderItemMap.get(newInvoiceLine.blng__OrderProduct__c);
-            if(!eachProduct.Prevent_Product_Description_Update__c){
+            if(eachProduct != null && !eachProduct.Prevent_Product_Description_Update__c){
                 eachProduct.NSP_Additional_Product_Description__c = newInvoiceLine.NSP_Additional_Product_Description__c;
                 orderProductUpdateMap.put(eachProduct.id,eachProduct);
             }
