@@ -1,11 +1,6 @@
-@isTest
-public class NSP_ProjBlngTriggerHelperTest {
-    public NSP_ProjBlngTriggerHelperTest() {
+@isTest private class NSP_ProjBlngTriggerHelperTest {
 
-    }
-    
-    @testSetup
-    static void setupTestData(){
+    @testSetup private static void setupTestData(){
         Order_Settings__c orderSetting = Order_Settings__c.getOrgDefaults();
         orderSetting.EffectiveDateStartOfMonth__c = true;
         orderSetting.Bypass_Rule_PreventStatusChange__c = true;
@@ -14,10 +9,8 @@ public class NSP_ProjBlngTriggerHelperTest {
 
     public static String accountDefaults = 'NSP_TestDataFactory.AccountDefaults';
     public static String accountName = 'Account Test1';
-    
-     @isTest
-    public static void testSeperateProject()
-    {
+
+     @isTest private static void testSeperateProject() {
         List<User> deploymentManagers = [
             SELECT Id
             FROM User
@@ -195,12 +188,9 @@ public class NSP_ProjBlngTriggerHelperTest {
             test.stopTest();
             //System.assert(orderList.size()==1,true);           
         }
-        
     }
 
-    @isTest
-    public static void testTriggerHelper(){
-        
+    @isTest private static void testTriggerHelper() {
         List<User> deploymentManagers = [
             SELECT Id
             FROM User
@@ -305,9 +295,7 @@ public class NSP_ProjBlngTriggerHelperTest {
         }
     }
 
-    @isTest
-    public static void testProjectUpdate() {
-        
+    @isTest private static void testProjectUpdate() {
         List<User> deploymentManagers = [
             SELECT Id
             FROM User
@@ -354,13 +342,9 @@ public class NSP_ProjBlngTriggerHelperTest {
             update oProj1;
             //System.assert(oProj1.Invoice_Ready__c == true,true);
         }
-        
-
     }
 
-    @isTest
-    public static void testProjectUpdate2() {
-        
+    @isTest private static void testProjectUpdate2() {
         List<User> deploymentManagers = [
             SELECT Id
             FROM User
@@ -472,13 +456,9 @@ public class NSP_ProjBlngTriggerHelperTest {
             
             //System.assert(orderItemList.size()==1,true);            
         }
-        
-
     }
-    
-    @isTest
-    public static void testTriggerUpdate(){
-        
+
+    @isTest private static void testTriggerUpdate() {
         List<User> deploymentManagers = [
             SELECT Id
             FROM User
@@ -602,6 +582,6 @@ public class NSP_ProjBlngTriggerHelperTest {
             //System.assert(orderList.size()==1,true);           
         }
     }
-        
-    
+
 }
+//
