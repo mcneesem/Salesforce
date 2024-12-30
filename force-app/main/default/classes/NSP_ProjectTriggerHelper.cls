@@ -17,7 +17,7 @@ public with sharing class NSP_ProjectTriggerHelper {
     public static final Id PEOBILLRECTYPEID = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.PROJECT, NSP_ServiceConstants.PEO_BILL_RECORDTYPE);
     public static final Id casePEORecordTypeId = NSP_GenericRecordType.getRecordTypeId('Case', NSP_ServiceConstants.PEO);
     private static final Id itaCqaRecordTypeId = NSP_GenericRecordType.getRecordTypeId('Case', NSP_ServiceConstants.NSP_ITA_CQA);
-	private static final Id peoProjectRecordTypeId = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.PROJECT, NSP_ServiceConstants.PROJECT_PEO_RECORDTYPE);
+    private static final Id peoProjectRecordTypeId = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.PROJECT, NSP_ServiceConstants.PROJECT_PEO_RECORDTYPE);
     private static final Id bpsProjectRecordTypeId = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.PROJECT, NSP_ServiceConstants.PROJECT_BPS_RECORDTYPE);
     private Static final String SERVICEPLANPROJECTTYPE = 'Service Plan';
 
@@ -43,7 +43,7 @@ public with sharing class NSP_ProjectTriggerHelper {
         List<pse__Proj__c> updatePrjNameList = new List<pse__Proj__c>();       
         //getting PEO Billable Project Record Id
         Id billableSerRecordTypeId = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.PROJECT, NSP_ServiceConstants.PEO_BILL_RECORDTYPE);       
- 		List<pse__Proj__c> projectsList = new List<pse__Proj__c>();//<STY-04002> 
+        List<pse__Proj__c> projectsList = new List<pse__Proj__c>();//<STY-04002>
         List<ID> projAccountIDs = new List<ID>(); //<STY-04002> 
         List<pse__Proj__c> projectNameList = new List<pse__Proj__c>();
         List<pse__Proj__c> servicePlanProjectsList = new List<pse__Proj__c>();
@@ -65,7 +65,7 @@ public with sharing class NSP_ProjectTriggerHelper {
                 project.pse__End_Date__c = system.today().addmonths(12);
             }
         
-        	updatePrjNameList.add(project);           
+            updatePrjNameList.add(project);
               //<STY-04002> if loop to check if RT is PEO Project Billable
             if(!project.pse__Is_Template__c && project.recordTypeID == billableSerRecordTypeId){                            
                 if(project.pse__Account__c!= null){
@@ -93,7 +93,7 @@ public with sharing class NSP_ProjectTriggerHelper {
         //Update ProjectName
         if(!newProjectsList.isEmpty()){
             //update Asset Type --DF_04021
-	        updateAssetTypeProject(newProjectsList);
+            updateAssetTypeProject(newProjectsList);
         }
         // Added this condition as part of STY-02092
         if(!projectNameList.isEmpty()){
@@ -188,7 +188,7 @@ public with sharing class NSP_ProjectTriggerHelper {
             List<String> assetFields = new List<String>{'Id','NSP_Client_Segment_type__c'};
             String queryAsset = new NSP_QueryBuilder('Asset', assetFields)
                                 .addFilter('AccountId', new List<Id>(accountIdSet), NSP_QueryBuilder.Operator.INCLUDES)
-                				.addFilter('RecordTypeId', woAssetRecordtypeId)
+                                .addFilter('RecordTypeId', woAssetRecordtypeId)
                                 .addFilter('NSP_Client_Segment_type__c', 'Business Team').build();
             assetList = (List<Asset>)Database.query(queryAsset);
         }
@@ -265,7 +265,7 @@ public with sharing class NSP_ProjectTriggerHelper {
         Set<Id> backoutAssetProjectId = new Set<Id>();
         Map<String,String> mapofRecordTypevsTemplate = new Map<String,String>();
         // Iterate through the Asset Template Mapping to get the Record Type Name Map of Asset
-        for(NSP_Asset_Template_Mapping__mdt metadataObj : [SELECT NSP_Service_Asset_Record_Type__c,NSP_Project_Template__c	FROM NSP_Asset_Template_Mapping__mdt WHERE NSP_Project_Template__c != NULL]){
+        for(NSP_Asset_Template_Mapping__mdt metadataObj : [SELECT NSP_Service_Asset_Record_Type__c,NSP_Project_Template__c FROM NSP_Asset_Template_Mapping__mdt WHERE NSP_Project_Template__c != NULL]){
             mapofRecordTypevsTemplate.put(metadataObj.NSP_Service_Asset_Record_Type__c,metadataObj.NSP_Project_Template__c);
         }
         //Iterating over the project new map
@@ -476,11 +476,11 @@ public with sharing class NSP_ProjectTriggerHelper {
         List<String> projFields = new List<String>{'Id','NSP_Asset_Type__c','TemplateName__c'};
         String query = new NSP_QueryBuilder('pse__Proj__c', projFields)
                               .addFilter('TemplateName__c', templateName)
-			                  .addFilter('pse__Is_Template__c', true)
+                                .addFilter('pse__Is_Template__c', true)
                               .addFilter('pse__Is_Active__c', true).build();
 
         List<pse__Proj__c> projectTemplate = Database.query(query);
-	    return projectTemplate.isEmpty() ? null : projectTemplate[0].NSP_Asset_Type__c;
+        return projectTemplate.isEmpty() ? null : projectTemplate[0].NSP_Asset_Type__c;
     }
     /***********************************************************************************************
     * MethodName: updateAssetTypeProject
@@ -516,7 +516,7 @@ public with sharing class NSP_ProjectTriggerHelper {
                                                        'AND pse__Status__c != '+'\''+ NSP_ServiceConstants.SCHEDULED_STATUS +'\''+')');
         if(!childRecordList.isEmpty()){
             for(sObject childRecordObj : childRecordList){
-            	childRecordObj.put('pse__Status__c',updatedStatusValue); 
+                childRecordObj.put('pse__Status__c',updatedStatusValue);
             }
             update childRecordList;
         }
@@ -759,8 +759,8 @@ public with sharing class NSP_ProjectTriggerHelper {
         Set<Id> wxProjectIdSet = new Set<Id>();
         Map<Id, Id> projectAccountMap = new Map<Id, Id>();
         Id bpsProjectRecordTypeId = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.PROJECT, 'TES_BPS');
-		List<String> templatesUsedToUpdatePeerReview = new List<string>{NSP_ServiceConstants.ITA_IMPLEMENTATION, NSP_ServiceConstants.ITA_OTHER};
-		Set<Id> sentToReviewPrjctIdSet = new Set<Id>();
+        List<String> templatesUsedToUpdatePeerReview = new List<string>{NSP_ServiceConstants.ITA_IMPLEMENTATION, NSP_ServiceConstants.ITA_OTHER};
+        Set<Id> sentToReviewPrjctIdSet = new Set<Id>();
         for(pse__Proj__c project : newProjectList){
             if(project.pse__Account__c != null && (project.RecordTypeId == peoProjectRecordTypeId ||project.RecordTypeId == PEOBILLRECTYPEID)){
                 setOfAccountId.add( project.pse__Account__c );
@@ -835,11 +835,11 @@ public with sharing class NSP_ProjectTriggerHelper {
             createPEOCase(projectAccountMap);
         }
         if(!ipProjectList.isEmpty()){
-	        createProjectTeamRoles(mmProjectIds, fsoProjectIds);            
+            createProjectTeamRoles(mmProjectIds, fsoProjectIds);
         }
         //STY-04100 - To share project records in community
         if(!shareProjAccIdSet.isEmpty() && mapOfProjectToShare != null){
-        	NSP_ProjectRecordSharing.projectRecordSharing(shareProjAccIdSet, mapOfProjectToShare);    
+            NSP_ProjectRecordSharing.projectRecordSharing(shareProjAccIdSet, mapOfProjectToShare);
         }
         
         if(!sentToReviewPrjctIdSet.isEmpty()){
@@ -1003,8 +1003,8 @@ public with sharing class NSP_ProjectTriggerHelper {
     private static void createProjectTeamRoles(Set<Id> mapMMProjectListMMROles, Set<Id> mapFSOProjectListFSOROles){
         List<NSP_Project_Team__c> projectTeamList = new List<NSP_Project_Team__c>();
         try{
-			Set<String> fsoProjectTeamRolesList = new Set<String>{NSP_ServiceConstants.ProjectManager,NSP_ServiceConstants.OrientationRep,NSP_ServiceConstants.OSCoordinator,NSP_ServiceConstants.OTCoordinator,NSP_ServiceConstants.OTPlanner,NSP_ServiceConstants.PayrollSpecialist};
-			Set<String> mmProjectTeamRolesList = new Set<String>{NSP_ServiceConstants.ProjectManager,NSP_ServiceConstants.TransitionSpecialist,NSP_ServiceConstants.SrBenefitRep,NSP_ServiceConstants.PayrollProjectManager,NSP_ServiceConstants.PayrollSpecialist,NSP_ServiceConstants.SrHrSpecialist,NSP_ServiceConstants.AccountExecutive};
+            Set<String> fsoProjectTeamRolesList = new Set<String>{NSP_ServiceConstants.ProjectManager,NSP_ServiceConstants.OrientationRep,NSP_ServiceConstants.OSCoordinator,NSP_ServiceConstants.OTCoordinator,NSP_ServiceConstants.OTPlanner,NSP_ServiceConstants.PayrollSpecialist};
+            Set<String> mmProjectTeamRolesList = new Set<String>{NSP_ServiceConstants.ProjectManager,NSP_ServiceConstants.TransitionSpecialist,NSP_ServiceConstants.SrBenefitRep,NSP_ServiceConstants.PayrollProjectManager,NSP_ServiceConstants.PayrollSpecialist,NSP_ServiceConstants.SrHrSpecialist,NSP_ServiceConstants.AccountExecutive};
 
             Id mmProjectTeamRecordTypeId = SObjectType.NSP_Project_Team__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.MMProjectTeamRecordType).getRecordTypeId();
             Id fsoProjectTeamRecordTypeId = SObjectType.NSP_Project_Team__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.FSOProjectTeamRecordType).getRecordTypeId();
@@ -1437,7 +1437,7 @@ public with sharing class NSP_ProjectTriggerHelper {
     /***********************************************************************************************
     * MethodName  : afterUpdateHCMField
     * Description : This Method creates a case and sends an email when the TES_HCM_Implementation_Support_Tasks__c 
-    * 				field is updated to 'Bank Audit Task' for the first time
+    * field is updated to 'Bank Audit Task' for the first time
     * * Params:     : Set<Id> prjctIdSet
     * Story : STY-02183
     * ********************************************************************************************/
@@ -1720,7 +1720,7 @@ public with sharing class NSP_ProjectTriggerHelper {
                             peoCase.OwnerId = hrSharedQueueId;
                             peoCase.AssetId = woAsset.Id;
                             if(woAsset.AccountId!=null){
-                            	peoCase.AccountId =woAsset.AccountId;
+                                peoCase.AccountId =woAsset.AccountId;
                             }
                             peoCaseList.add(peoCase);
                                 
@@ -1808,8 +1808,8 @@ public with sharing class NSP_ProjectTriggerHelper {
             // get Org Wide address
             List<String> orgWideFields = new List<String>{'Id','Address','DisplayName'};
             String query = new NSP_QueryBuilder('OrgWideEmailAddress', orgWideFields)
-                              .addFilter('DisplayName', System.label.NSP_no_reply).addLimit(1).setSecurityEnforce(false).build();            				
-                              OrgWideEmailAddress orgWidAddress = Database.query(query);
+                .addFilter('DisplayName', System.label.NSP_no_reply).addLimit(1).setSecurityEnforce(false).build();
+            OrgWideEmailAddress orgWidAddress = Database.query(query);
     
             //get Email Template
             List<String> emailTempFields = new List<String>{'ID'};
@@ -1902,8 +1902,8 @@ public with sharing class NSP_ProjectTriggerHelper {
         
         try{
             List<String> userList = new List<String>{'Id','Name','NSP_Service_Stakeholder__c'};
-                String query = new NSP_QueryBuilder('User', userList)
-                                  .addFilter('Id', UserInfo.getUserId()).addLimit(1).setSecurityEnforce(false).build();            				
+            String query = new NSP_QueryBuilder('User', userList)
+                .addFilter('Id', UserInfo.getUserId()).addLimit(1).setSecurityEnforce(false).build();
             User userDetails = Database.query(query);
             
             for (pse__Proj__c project : projects) {
