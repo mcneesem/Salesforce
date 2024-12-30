@@ -6,8 +6,10 @@
 * Purpose: Updates Order Items with NSP_Project__c
 * Updates Order with NSP_Project__c
 */
-public class NSP_CreateProjFromFlow {
-    // test w/ NSP_CreateProjFromFlowTest, NSP_AssetServiceTriggerHelperTest (96%)
+public with sharing class NSP_CreateProjFromFlow {
+    // test w/ NSP_CreateProjFromFlowTest, NSP_AssetServiceTriggerHelperTest (78%)
+    // test w/ NSP_CreateProjFromFlowTest (71%)
+    // test w/ NSP_AssetServiceTriggerHelperTest (18%)
 
     @InvocableMethod(label='Create Project' description='Create Project for Order')
     public static void createProject( List<String> records ) {
@@ -44,20 +46,18 @@ public class NSP_CreateProjFromFlow {
                     projRequest.Mappers = new List<pse.SObjectCloneMapper> { mapp };
 
                     //Call the service and create project
-                    List<pse.CreateProjectFromTemplateService.CreateProjectResponse> projResponse =
-                        pse.CreateProjectFromTemplateService.createProjectsFromTemplates( 
-                            new List<pse.CreateProjectFromTemplateService.CreateProjectFromTemplateAndAccountRequest>{projRequest});
-                    for(pse.CreateProjectFromTemplateService.CreateProjectResponse resp : projResponse){
-                        if(resp.NewProjectId!=null || Test.isRunningTest()){
-                            projectResponseMap.put(resp.Request.ProjectName,resp.NewProjectId);
-                        }
-                        else{
-                            NSP_ErrorLogHandler.logSaveException('NSP_CreateProjectFromFlow', 'createProject',resp.Errors.toString() );
-                        }  
+                    List<pse.CreateProjectFromTemplateService.CreateProjectResponse> projResponse = pse.CreateProjectFromTemplateService.createProjectsFromTemplates(
+                        new List<pse.CreateProjectFromTemplateService.CreateProjectFromTemplateAndAccountRequest>{ projRequest }
+                    );
+                    Id newProjectId = CreateProjectFromTemplateAction.handleCreateProjectResponse(
+                        NSP_CreateProjFromFlow.class.getName() ,
+                        'createProject' ,
+                        projResponse
+                    );
+                    if ( newProjectId != null ) {
+                        projectResponseMap.put( projResponse[0].Request.ProjectName , newProjectId );
                     }
-                    
-                }
-                else {
+                } else {
                     List<OrderItem> orderItems = [SELECT Id, OrderId,Order.NSP_Project_Name__c FROM OrderItem WHERE OrderId IN :orderIdSet and Separate_Project__c = false];
                     pse__Proj__c projectName = [SELECT Id FROM pse__Proj__c WHERE Id =: orderObj.NSP_Project__c LIMIT 1];
                     for(OrderItem oi : orderItems){
