@@ -65,7 +65,7 @@
             list<Product2> productlist = new list<Product2>();
             trProdNames.add('Test Product');
             trProdNames.add('Test Product1');
-            list<Product2> productlst = [Select Id, Name,ProductCode,NSP_Product_Type__c,SBQQ__SubscriptionPricing__c,Separate_Project__c	 from Product2 WHERE Name IN:trProdNames LIMIT 2]; //Added WHERE Condition as part of code fix
+            list<Product2> productlst = [Select Id, Name,ProductCode,NSP_Product_Type__c,SBQQ__SubscriptionPricing__c,Separate_Project__c from Product2 WHERE Name IN:trProdNames LIMIT 2]; //Added WHERE Condition as part of code fix
             productlst[0].ProductCode = 'HCMRETIntegration';
             productlst[0].NSP_Product_Type__c = 'IWX Bundle';
             //product1.SBQQ__SubscriptionType__c = 'Evergreen';
@@ -108,14 +108,14 @@
             set<id> quoteids=  new set<id>();
             set<id> productids=  new set<id>();
 
-			quoteids.add(objQuote1.id);
+            quoteids.add(objQuote1.id);
             quoteids.add(objQuote2.id);
 
             quotelist.add(objQuote1);
             quotelist.add(objQuote2);
             
-            productids.add(productlst[0].id);            
-			            
+            productids.add(productlst[0].id);
+
             Test.startTest();
             update quotelist;
             
