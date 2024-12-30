@@ -45,7 +45,7 @@ private class NSP_CreateProjectFromTemplateTest {
     }
     
     @isTest static void testNoStartDate(){
-		PageReference returnPage;
+        PageReference returnPage;
         Case case2 = new Case();
         case2.Subject = CASESUBJECT;
         case2.Status = 'Open';
@@ -55,7 +55,7 @@ private class NSP_CreateProjectFromTemplateTest {
         proj2.Name = 'Test';
         proj2.pse__Is_Template__c = true;
         proj2.pse__Is_Active__c = true;
-		proj2.pse__Start_Date__c = Date.Today();
+        proj2.pse__Start_Date__c = Date.Today();
         insert proj2;
         case2.Project_Template__c = proj2.Id;
         insert case2;
@@ -160,7 +160,7 @@ private class NSP_CreateProjectFromTemplateTest {
             insert oAccount;
         }
         return oAccount;
-	}
+    }
     
     public static Contact createContact(String firstName,String lastName, Boolean doInsert){
         Contact oContact = new Contact(FirstName = firstName, LastName = lastName);
@@ -168,5 +168,6 @@ private class NSP_CreateProjectFromTemplateTest {
             insert oContact;
         }
         return oContact;
-	}
+    }
+
 }
