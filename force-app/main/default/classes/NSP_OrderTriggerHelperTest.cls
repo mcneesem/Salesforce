@@ -5,10 +5,9 @@
  * @date 11/08/2021
  * Name :  NSP_OrderTriggerHelperTest
  */
-@isTest
-public class NSP_OrderTriggerHelperTest{
-    @testSetup
-    static void setupTestData(){
+@isTest private class NSP_OrderTriggerHelperTest{
+
+    @testSetup private static void setupTestData(){
         Order_Settings__c orderSetting = Order_Settings__c.getOrgDefaults();
         orderSetting.EffectiveDateStartOfMonth__c = true;
         orderSetting.Bypass_Rule_PreventStatusChange__c = true;
@@ -464,8 +463,7 @@ public class NSP_OrderTriggerHelperTest{
         System.Assert(orderList.size()>0, 'Orders are inserted.');
     }
 
-    @isTest
-    public static void beforeUpdateDirectorMethod(){
+    @isTest private static void beforeUpdateDirectorMethod(){
         NSP_AccountTriggerHandler.TriggerDisabled = true;
         Account objaccount = NSP_TestHelper.createAccount(true);
         NSP_Address__c nspAddress = [Select Id
@@ -494,7 +492,7 @@ public class NSP_OrderTriggerHelperTest{
         orderList[0].NSP_Billing_Account__c = null;
         orderList[0].NSP_Project_Go_Live_Date__c = System.today() + 10;
         orderList[0].NSP_Project_Go_Live_Approved__c = true;
-		orderList[0].NSP_Rev_Rec_Rules_Reviewed__c = true;
+        orderList[0].NSP_Rev_Rec_Rules_Reviewed__c = true;
 
         update orderList;
 
@@ -574,8 +572,7 @@ update project;*/
         System.assert(orderList.size()>0, 'Order List size is greater than 0');
     }
 
-    @isTest 
-    private static void testProcessConsumptionSchedule(){
+    @isTest private static void testProcessConsumptionSchedule(){
         Test.startTest();
         NSP_OrderItemTriggerHelper.processConsumptionSchedule(
             new List<String>() ,
@@ -585,8 +582,7 @@ update project;*/
         Test.stopTest();
     }
 
-    @isTest
-    public static void createInvoiceMethod(){
+    @isTest private static void createInvoiceMethod(){
         List<Order> orderList = [Select Id, Status, SBQQ__Quote__c, NSP_Project_Go_Live_Date__c, NSP_Project_Go_Live_Approved__c, NSP_First_usage_upload__c, Type, NSP_Project_Name__c, blng__InvoiceBatch__c, NSP_Billing_Address__c, NSP_Shipping_Address__c, NSP_Billing_Account__c
                                  From Order WHERE Id!=null LIMIT 10];
         List<blng__PaymentMethod__c> objPaymntMethod = [SELECT Id, blng__Account__c FROM blng__PaymentMethod__c WHERE blng__BankAccountName__c = 'saving'];
@@ -619,8 +615,7 @@ update project;*/
         System.assert(orderList.size()>0, 'Order List size is greater than 0');
     }
 
-    @isTest
-    public static void createInvoiceMethod2(){
+    @isTest private static void createInvoiceMethod2(){
         NSP_OrderItemTriggerHandler.TriggerDisabled = true;
         NSP_QuoteTriggerHandler.TriggerDisabled = true;
         NSP_AccountTriggerHandler.TriggerDisabled = true;
@@ -641,8 +636,7 @@ update project;*/
         System.assert(orderList.size()>0, 'Order List size is greater than 0');
     }
 
-    @isTest
-    public static void createInvoiceMethod3(){
+    @isTest private static void createInvoiceMethod3(){
         NSP_OrderItemTriggerHandler.TriggerDisabled = true;
         NSP_QuoteTriggerHandler.TriggerDisabled = true;
         NSP_AccountTriggerHandler.TriggerDisabled = true;
@@ -656,7 +650,7 @@ update project;*/
         
         orderList[0].NSP_Rev_Rec_Rules_Reviewed__c = true;
         SBQQ.TriggerControl.disable();
-		NSP_OrderTriggerHandler.TriggerDisabled = true;
+        NSP_OrderTriggerHandler.TriggerDisabled = true;
         update orderList;
         SBQQ.TriggerControl.enable();
         
@@ -714,8 +708,7 @@ update project;*/
     }
 
 
-    @isTest
-     public static void createInvoiceMethod4(){
+    @isTest private static void createInvoiceMethod4(){
      List<Order> orderList = [Select Id,Status,SBQQ__Quote__c, NSP_Project_Go_Live_Date__c, NSP_Project_Go_Live_Approved__c, NSP_Project_Complete_Date__c,NSP_First_usage_upload__c, Type, NSP_Project_Name__c, blng__InvoiceBatch__c,NSP_Billing_Address__c,NSP_Shipping_Address__c,NSP_Billing_Account__c From Order WHERE Id!=null LIMIT 10]; 
      orderList[0].Type = NSP_CPQConstants.QUOTE_TYPE_NEW;
      orderList[0].NSP_Project_Go_Live_Date__c = System.today()+5;
@@ -733,8 +726,7 @@ update project;*/
 
      }
 
-    @isTest
-    public static void createAndStampSalesTaxContactMethod(){
+    @isTest private static void createAndStampSalesTaxContactMethod(){
         NSP_AccountContactRelationTriggerHandler.TriggerDisabled = true;
         List<Account> accList = [SELECT Id
                                  FROM Account WHERE Id!=null  LIMIT 10];
@@ -754,8 +746,7 @@ update project;*/
         System.assert(orderList.size()>0, 'Order List size is greater than 0');
     }
 
-    @isTest
-    public static void checkDownPaymentDetailsMethod(){
+    @isTest private static void checkDownPaymentDetailsMethod(){
         NSP_OrderItemTriggerHandler.TriggerDisabled = true;
         NSP_QuoteTriggerHandler.TriggerDisabled = true;
         NSP_AccountTriggerHandler.TriggerDisabled = true;
@@ -771,8 +762,7 @@ update project;*/
         System.assert(orderList.size()>0, 'Order List size is greater than 0');
     }
 
-    @IsTest
-    static void testStampDunningEmailonContact(){
+    @IsTest private static void testStampDunningEmailonContact(){
         NSP_AccountContactRelationTriggerHandler.TriggerDisabled = true;
         NSP_ContactTriggerHandler.TriggerDisabled = true;
         NSP_UserTriggerHandler.TriggerDisabled = true;
@@ -821,7 +811,6 @@ update project;*/
         List<Order> orderList = [SELECT id,AccountId,OpportunityId, Type,NSP_Transaction_Type__c, Status, NSP_Back_Out__c, NSP_Project_Go_Live_Date__c, NSP_Project_Go_Live_Approved__c FROM Order WHERE NSP_Back_Out__c = false];
         List<pse__Proj__c> project = [SELECT id, pse__Project_Status__c,Invoice_Ready__c, Go_Live_Date__c FROM pse__Proj__c LIMIT 1];
         List<OrderItem> items = [SELECT id, Product2Id,SBQQ__BillingFrequency__c,NSP_Order_Activation_Trigger__c, NSP_Order_Activation_Trigger_Amend__c FROM OrderItem WHERE OrderId =: orderList[0].id];
-		//do for all items
         for(integer i=0;i<items.size();i++){
             items[i].SBQQ__BillingFrequency__c = NSP_CPQConstants.BLNGFREQ_MONTHLY;
         }        
@@ -859,7 +848,7 @@ update project;*/
         update itemsList;
         
         SBQQ.TriggerControl.disable();
-		NSP_OrderTriggerHandler.TriggerDisabled = true;
+        NSP_OrderTriggerHandler.TriggerDisabled = true;
         update orderList;
         SBQQ.TriggerControl.enable();     
         
@@ -873,4 +862,6 @@ update project;*/
         System.assert(orderList.size()>0, 'Order List size is greater than 0');
         
     }
+
 }
+//
