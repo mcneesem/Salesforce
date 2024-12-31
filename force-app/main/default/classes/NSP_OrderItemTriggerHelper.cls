@@ -198,8 +198,8 @@ public class NSP_OrderItemTriggerHelper {
         Set<String> actionTypeValues = new Set<String>(System.Label.OrderItemRecalcTypes.split(';'));
         Set<Id> statusIdToChange = new Set<Id>();
         Set<Id> paymentMethodChangedLines = new Set<Id>();
-        Set<Id> orderLinesToActivate = new Set<Id> ();  
-        Set<String> orderLinesForUsage = new Set<String> ();
+        Set<Id> orderLinesToActivate = new Set<Id> ();
+        Set<String> orderLinesForUsage = new Set<String>();
         Map<Id,Date> opTerminationMap= new Map<Id,Date>();
         List<SBQQ__QuoteLine__c> quoteLinesToUpdate = new List<SBQQ__QuoteLine__c>();
 
@@ -232,19 +232,27 @@ public class NSP_OrderItemTriggerHelper {
         }
 
         for ( OrderItem op : [
-                    Select Id, OrderItemNumber, ServiceDate, SBQQ__QuoteLine__c, SBQQ__QuoteLine__r.SBQQ__Description__c,
-                    SBQQ__QuoteLine__r.NSP_ActionType__c,SBQQ__QuoteLine__r.SBQQ__SubscriptionType__c, OrderId, Order.Status,
-                    NSP_Project_Completion_Date__c,NSP_ReCalculation_Status_Internal__c, NSP_Payment_Method__c,SBQQ__Activated__c,
-                    Product2.NSP_Partial_Period_Free_Treatment__c, Product2.NSP_Legal_Entity__c,NSP_Additional_Product_Description__c,
-                    SBQQ__QuoteLine__r.SBQQ__EndDate__c,SBQQ__OrderedQuantity__c,SBQQ__RevisedOrderProduct__c,SBQQ__BillingFrequency__c,
-                    EndDate,Order.Type,Order.NSP_Transaction_Type__c,SBQQ__QuoteLine__r.NSP_MergeProducts__c,Prevent_Product_Description_Update__c
+                    SELECT
+                        Id , OrderItemNumber , ServiceDate ,
+                        SBQQ__QuoteLine__c , SBQQ__QuoteLine__r.SBQQ__Description__c ,
+                        SBQQ__QuoteLine__r.NSP_ActionType__c , SBQQ__QuoteLine__r.SBQQ__SubscriptionType__c ,
+                        OrderId , Order.Status , NSP_Project_Completion_Date__c ,
+                        NSP_ReCalculation_Status_Internal__c , NSP_Payment_Method__c , SBQQ__Activated__c ,
+                        Product2.NSP_Partial_Period_Free_Treatment__c , Product2.NSP_Legal_Entity__c ,
+                        NSP_Additional_Product_Description__c , SBQQ__QuoteLine__r.SBQQ__EndDate__c ,
+                        SBQQ__OrderedQuantity__c , SBQQ__RevisedOrderProduct__c , SBQQ__BillingFrequency__c ,
+                        EndDate , Order.Type , Order.NSP_Transaction_Type__c ,
+                        SBQQ__QuoteLine__r.NSP_MergeProducts__c , Prevent_Product_Description_Update__c
                     FROM OrderItem
-                    WHERE Id IN:OrderItemNewMap.keyset()
+                    WHERE ( Id IN :OrderItemNewMap.keyset() )
                 ]
             )
         {
             op.NSP_Product_Description__c = op.SBQQ__QuoteLine__r.SBQQ__Description__c;
-            if(OrderItemNewMap.get(op.Id).NSP_Additional_Product_Description__c == null && !OrderItemNewMap.get(op.Id).Prevent_Product_Description_Update__c){
+            if ( ( OrderItemNewMap.get(op.Id).NSP_Additional_Product_Description__c == null )
+                && !OrderItemNewMap.get(op.Id).Prevent_Product_Description_Update__c
+                )
+            {
                 OrderItemNewMap.get(op.Id).NSP_Additional_Product_Description__c = op.SBQQ__QuoteLine__r.SBQQ__Description__c;
             }
             if(op.SBQQ__QuoteLine__r.SBQQ__SubscriptionType__c == RENEWABLE && op.SBQQ__Activated__c == false && op.SBQQ__BillingFrequency__c=='Annual' && op.SBQQ__QuoteLine__r.SBQQ__EndDate__c!=null && op.EndDate!= op.SBQQ__QuoteLine__r.SBQQ__EndDate__c ) {
