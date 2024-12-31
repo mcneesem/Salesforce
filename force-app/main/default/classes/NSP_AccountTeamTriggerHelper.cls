@@ -1,5 +1,5 @@
 public with sharing class NSP_AccountTeamTriggerHelper {
-    // test w/ NSP_AccountTeamTriggerTest (80%)
+    // test w/ NSP_AccountTeamTriggerTest (79%)
 
     /**
 * Iterates throught the list of new NSP_Account_Team__c and passes the required attributes to other methods.
@@ -95,14 +95,18 @@ public with sharing class NSP_AccountTeamTriggerHelper {
             for ( NSP_Account_Team__c record : newList ) {
                 userIds.add( record.NSP_User__c );
             }
-            Map<Id,User> activeUsers = new Map<Id,User>([
-                SELECT Id
-                FROM User
-                WHERE (
-                    ( Id IN :userIds )
-                    AND ( IsActive = true )
-                )
-            ]);
+            Boolean isEnabledCheckActiveUsers = AccountTeamTriggerSettings__c.getInstance( UserInfo.getUserId() ).IsEnabledCheckActiveUsers__c;
+            Map<Id,User> activeUsers = null;
+            if ( isEnabledCheckActiveUsers ) {
+                activeUsers = new Map<Id,User>([
+                    SELECT Id
+                    FROM User
+                    WHERE (
+                        ( Id IN :userIds )
+                        AND ( IsActive = true )
+                    )
+                ]);
+            }
             // process the new NSP_Account_Team__c records...
             Set<Id> accountIdSet = new Set<Id>();
             List<AccountTeamMember> accountTeamMemberList = new List<AccountTeamMember>();
@@ -111,7 +115,10 @@ public with sharing class NSP_AccountTeamTriggerHelper {
                 // prepare to sync Account...
                 accountIdSet.add( accTeamMemberObj.NSP_Account__c );
                 // prevent DmlException INACTIVE_OWNER_OR_USER by only creating new AccountTeamMember records for active Users...
-                if ( activeUsers.containsKey( accTeamMemberObj.NSP_User__c ) ) {
+                if ( !isEnabledCheckActiveUsers
+                    || ( ( activeUsers != null ) && activeUsers.containsKey( accTeamMemberObj.NSP_User__c ) )
+                    )
+                {
                     AccountTeamMember accountTeamMemberObj = new AccountTeamMember();
                     accountTeamMemberObj.AccountId = accTeamMemberObj.NSP_Account__c;
                     accountTeamMemberObj.AccountAccessLevel = NSP_IntegrationConstants.ACCOUNTACCESSLEVELEDIT;
