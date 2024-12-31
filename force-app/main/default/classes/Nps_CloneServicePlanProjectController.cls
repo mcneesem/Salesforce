@@ -11,7 +11,7 @@ Modification Log     :
 * Jatin                      6/9/2022                First Iteration
 */
 public without sharing class Nps_CloneServicePlanProjectController {
-    // test w/ Nps_CloneServicePlanProjectCtrTest (80%)
+    // test w/ Nps_CloneServicePlanProjectCtrTest (78%)
 
     private static final List<String> PROJECT_TASK_FIELDS = new List<String>{ 
         'Id' , 'pse__Project__c' , 'Name' , 'OwnerId' , 'pse__Status__c' ,
@@ -148,26 +148,20 @@ public without sharing class Nps_CloneServicePlanProjectController {
         }
      }
 
-     /**
-      * This method is used to create/update/delete all the related records of project.
-      * It returns a list of errors which we get during Database operations.
-      */
-     @AuraEnabled
-     public static List<String> createProjectRelatedRecords(String config){
+    //
+    // This method is used to create/update/delete all the related records of project.
+    // It returns a list of errors which we get during Database operations.
+    //
+    @AuraEnabled
+    public static List<String> createProjectRelatedRecords( String config ) {
         try {
-            List<String> projectFields = new List<String>{ 'Id', 'Name', 'pse__Start_Date__c', 'pse__End_Date__c' };
-            List<pse__Project_Task__c> projectTasks = new List<pse__Project_Task__c>();
             Map<String, String> paramsMap = (Map<String, String>) JSON.deserialize(config, Map<String, String>.class);
 
             // Extract all the required data from the parameter map
-            String projectTemplateId = paramsMap.get('projectTemplateId');
             String projId = paramsMap.get('projectId');
             String oldProjectId = paramsMap.get('oldProjectId');
             List<String> prevProjectTaskIds = getListValueByName('prevProjectTaskIds', paramsMap);
             List<String> projAccountIds = getListValueByName('projectAccountIds', paramsMap);
-
-            // Fetch field values of newly created project record from DB
-            pse__Proj__c proj = (pse__Proj__c) new NSP_sObjectSelector('pse__Proj__c', projectFields).selectById(projId);
 
             // Populate list of project tasks that needs to be created
             addPreviousProjectTasks(prevProjectTaskIds, projId,oldProjectId);
@@ -182,7 +176,7 @@ public without sharing class Nps_CloneServicePlanProjectController {
         } catch (Exception excep) {
             throw NSP_Utilities.getAuraException(excep);
         }
-     }
+    }
 
     /*
      This method creates a project from template and populates the incoming field values on the newly created project
@@ -284,15 +278,15 @@ public without sharing class Nps_CloneServicePlanProjectController {
         return projTaskList;
      }
 
-     /**
-      * This method retrieves project tasks by task ids and add it to the given project task list.
-      */
-      @future
-      public static void addPreviousProjectTasks(List<String> prevProjectTaskIds, Id projId, Id oldProjectId){
+    //
+    // This method retrieves project tasks by task ids and add it to the given project task list.
+    //
+    @future
+    public static void addPreviousProjectTasks( List<String> prevProjectTaskIds , Id projId , Id oldProjectId ) {
+        try {
         List<pse__Project_Task__c> prevProjTasks = (List<pse__Project_Task__c>) new NSP_sObjectSelector('pse__Project_Task__c', PROJECT_TASK_FIELDS)
                                                 .selectById(prevProjectTaskIds);
         List<String> newProjectTaskIds = new List<String>();
-        List<pse__Project_Task__c> newProjectTasks = new List<pse__Project_Task__c>();
         List<pse__Project_Task__c> parentProjectTasks = new List<pse__Project_Task__c>();
         List<pse__Project_Task__c> childProjectTasks = new List<pse__Project_Task__c>();
         Map<String,String> parentTaskNameIds = new Map<String,String>(); 
@@ -308,10 +302,14 @@ public without sharing class Nps_CloneServicePlanProjectController {
             }
             
         }
-        if(!parentProjectTasks.isEmpty()){
-            List<Database.SaveResult> results = Database.insert(parentProjectTasks,false);
-            NSP_ErrorLogHandler.logSaveResultsException('NPS_CloneServicePlanProjectController','newProjectTasks', results);
-          }
+            if ( !parentProjectTasks.isEmpty() ) {
+                List<Database.SaveResult> results = Database.insert( parentProjectTasks , false );
+                NSP_ErrorLogHandler.logResults(
+                    Nps_CloneServicePlanProjectController.class.getName() ,
+                    'addPreviousProjectTasks:parent' ,
+                    results
+                );
+            }
           for(pse__Project_Task__c newTask:[SELECT Id,Name FROM pse__Project_Task__c WHERE pse__Project__c=:projId AND NSP_isClonedFromAutomation__c = true]){
               parentTaskNameIds.put(newTask.Name,newTask.Id);
           }
@@ -321,10 +319,14 @@ public without sharing class Nps_CloneServicePlanProjectController {
               childTask.pse__Parent_Task__c = parentTaskNameIds.get(childTask.pse__Parent_Task__r.Name);
           }
         
-          if(!childProjectTasks.isEmpty()){
-            List<Database.SaveResult> results = Database.insert(childProjectTasks,false);
-            NSP_ErrorLogHandler.logSaveResultsException('NPS_CloneServicePlanProjectController','newProjectTasks', results);
-          }
+            if ( !childProjectTasks.isEmpty() ) {
+                List<Database.SaveResult> results = Database.insert( childProjectTasks , false );
+                NSP_ErrorLogHandler.logResults(
+                    Nps_CloneServicePlanProjectController.class.getName() ,
+                    'addPreviousProjectTasks:child' ,
+                    results
+                );
+            }
 
           for(pse__Project_Task__c newTask:[SELECT Id,Name FROM pse__Project_Task__c WHERE pse__Project__c=:projId AND NSP_isClonedFromAutomation__c = true]){
               newProjectTaskIds.add(newTask.Id); 
@@ -340,7 +342,14 @@ public without sharing class Nps_CloneServicePlanProjectController {
 
             // Perform all the DML operations
             performDbOperations(itemsToInsert, itemsToUpdate , new List<SObject>());
-     }
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                Nps_CloneServicePlanProjectController.class.getName() ,
+                'addPreviousProjectTasks' ,
+                e
+            );
+        }
+    }
 
      /**
       * This method creates a list of project accounts by populating project id and account id in it.
