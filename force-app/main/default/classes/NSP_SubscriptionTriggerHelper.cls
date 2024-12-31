@@ -362,7 +362,7 @@ public class NSP_SubscriptionTriggerHelper {
             {
                 SBQQ__Subscription__c oldSubscription = null;
                 if ( ( oldToNewSubscrioptionIdMap != null )
-                    && oldToNewSubscrioptionIdMap.contiansKey( entitlement.NSP_Supported_Subscription__c )
+                    && oldToNewSubscrioptionIdMap.containsKey( entitlement.NSP_Supported_Subscription__c )
                     )
                 {
                     oldSubscription = oldToNewSubscrioptionIdMap.get( entitlement.NSP_Supported_Subscription__c );
