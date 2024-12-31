@@ -1,27 +1,28 @@
-/**
-* @description  :  Helper class for ServiceAppointment trigger.
-* @date 14/11/2022
-* Author : Nischay Jindal
-* Name : NSP_ServiceAppointmentTriggerHelper
-*/
-public class NSP_ServiceAppointmentTriggerHelper {
-    // test w/ NSP_ServiceAppointmentTrigger_Test (??%)
+//
+// @description  :  Helper class for ServiceAppointment trigger.
+// @date 14/11/2022
+// Author : Nischay Jindal
+// Name : NSP_ServiceAppointmentTriggerHelper
+//
+public with sharing class NSP_ServiceAppointmentTriggerHelper {
+    // test w/ NSP_ServiceAppointmentTrigger_Test (84%)
+    // ~ Apex Test Requires: Permission Set: Field Service Admin Permissions
 
-    /***********************************************************************************************
-    * MethodName: beforeUpdateDirector
-    * Description : This Method updated the status checkbox on Service Appointments  
-    * Params:       Map<Id,ServiceAppointment> newMap ,Map<Id,ServiceAppointment> oldMap
-    * Author :      Abhishek Kumar
-    * ********************************************************************************************/
     //map of service resource Id and operating hrs name
-    public static Map<Id, String> mapServResOperHrs = new Map<Id, String>();
+    public static Map<Id,String> mapServResOperHrs = new Map<Id,String>();
     //map of Service Appointment and service resource Ids
-    public static Map<Id, Id> mapSAIdServResId = new Map<Id, Id>();
-    public static void beforeUpdateDirector(Map<Id,ServiceAppointment> newMap ,Map<Id,ServiceAppointment> oldMap ){
+    public static Map<Id,Id> mapSAIdServResId = new Map<Id,Id>();
+
+    //
+    // MethodName : beforeUpdateDirector
+    // Description : This Method updated the status checkbox on Service Appointments
+    // Params : Map<Id,ServiceAppointment> newMap ,Map<Id,ServiceAppointment> oldMap
+    // Author : Abhishek Kumar
+    //
+    public static void beforeUpdateDirector( Map<Id,ServiceAppointment> newMap , Map<Id,ServiceAppointment> oldMap ) {
         List<ServiceAppointment> checkStatusChangeSaList =  new List<ServiceAppointment>();
-        Set<Id> saIdToUpdateEvent = new Set<Id>();
         Set<Id> saIdToDeletEvent = new Set<Id>();
-        try{
+        try {
             for(ServiceAppointment serApp : newMap.values() ){
                 // added as a part of STY-01091
                 // update the flag when the first time status is set to dispatched 
@@ -32,20 +33,15 @@ public class NSP_ServiceAppointmentTriggerHelper {
                        
                     checkStatusChangeSaList.add( serApp );
                 }
-                //added as a part of STY-
-                if( serApp.Status != oldMap.get(serApp.Id).Status){
-                    //check if SA status is updated to Dispatched
-
-                    //check if SA status is updated to Canceled
-                    if( serApp.Status == NSP_ServiceConstants.PROJECT_TASK_CANCELLED ){
-                        serApp.NSP_Old_Date__c = oldMap.get(serApp.Id).SchedStartTime;
-                        serApp.NSP_Old_Scheduled_Time__c = oldMap.get(serApp.Id).NSP_StartEndTime__c;
-                        serApp.NSP_Old_End_Time__c = oldMap.get(serApp.Id).SchedEndTime;
-                        saIdToDeletEvent.add( serApp.Id );
-                        
-                    }
+                if ( ( serApp.Status != oldMap.get( serApp.Id ).Status )
+                    && ( serApp.Status == NSP_ServiceConstants.PROJECT_TASK_CANCELLED )
+                    )
+                {
+                    serApp.NSP_Old_Date__c = oldMap.get( serApp.Id ).SchedStartTime;
+                    serApp.NSP_Old_Scheduled_Time__c = oldMap.get( serApp.Id ).NSP_StartEndTime__c;
+                    serApp.NSP_Old_End_Time__c = oldMap.get( serApp.Id ).SchedEndTime;
+                    saIdToDeletEvent.add( serApp.Id );
                 }
-
                 //added as a part of STY - 04135
 
                 //schedule start is edited AND duration is edited
@@ -71,31 +67,32 @@ public class NSP_ServiceAppointmentTriggerHelper {
             if(!saIdToDeletEvent.isEmpty()){
                 deleteCancelledEvent( saIdToDeletEvent );
             }
-
-        }catch(Exception ex ){
-           NSP_ErrorLogHandler.logSaveException('NSP_ServiceAppointmentTriggerHelper', 'beforeUpdateDirector', ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_ServiceAppointmentTriggerHelper.class.getName() , 
+                'beforeUpdateDirector' ,
+                e
+            );
         }
     }
-    
 
-   /**
-    * Description: Updated to Service Appointment on specific fields will sync back to ProjectTask and WorkOrder
-    * @param newMap of Service Appointment from Trigger
-    * @param oldMap of Service Appointment from Trigger
-    * @return void             
-    */
+    //
+    // Description: Updated to Service Appointment on specific fields will sync back to ProjectTask and WorkOrder
+    // @param newMap of Service Appointment from Trigger
+    // @param oldMap of Service Appointment from Trigger
+    // @return void
+    //
     @future
     public static void syncBackFieldsToProjectTask( Set<Id> serviceAppointmentIds ){
-        Map < Id, ServiceAppointment > workOrderIdServiceAppointment = new Map < Id, ServiceAppointment > ();
+        Map<Id,ServiceAppointment > workOrderIdServiceAppointment = new Map<Id,ServiceAppointment>();
         Set<Id> serviceAppointmentIdSet = new Set<Id>();
-        Map<Id, Id> serviceAppIdAssigResMap = new Map<Id, Id>();
-        Map<Id, Id> assignResIdServiceResMap = new Map<Id, Id>();
-        List < WorkOrder > lstWorKOrderToUpdate = new List < WorkOrder > ();     
-        List < pse__Project_Task__c > lstProjectTaskToUpdate = new List < pse__Project_Task__c > ();
+        Map<Id,Id> serviceAppIdAssigResMap = new Map<Id,Id>();
+        Map<Id,Id> assignResIdServiceResMap = new Map<Id,Id>();
+        List<WorkOrder> lstWorKOrderToUpdate = new List<WorkOrder>();     
+        List<pse__Project_Task__c> lstProjectTaskToUpdate = new List<pse__Project_Task__c>();
         Set<Id> serviceTerritoryId = new Set<Id>();
         Map<Id,String> mapOfServiceTerritoryIdToName = new  Map<Id,String>();
-
-        try{
+        try {
             for( ServiceAppointment eachSa : [ SELECT Id,Status,Description,Subject,NSP_Orientation_Address__c,ServiceTerritoryId,ParentRecordId,EarliestStartTime,OwnerId,Duration,SchedStartTime,SchedEndTime,NSP_Meeting_Type__c 
                                                FROM ServiceAppointment 
                                                WHERE Id IN:  serviceAppointmentIds]){ 
@@ -147,10 +144,13 @@ public class NSP_ServiceAppointmentTriggerHelper {
             if(!lstProjectTaskToUpdate.isEmpty() && Schema.sObjectType.pse__Project_Task__c.isUpdateable() ){
                 Database.update(lstProjectTaskToUpdate,false);
             }
-        }catch(Exception ex){
-            NSP_ErrorLogHandler.logSaveException('NSP_ServiceAppointmentTriggerHelper', 'syncBackFieldsToProjectTask', ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_ServiceAppointmentTriggerHelper.class.getName() , 
+                'syncBackFieldsToProjectTask' ,
+                e
+            );
         }
-        
     }
 
     /***********************************************************************************************
@@ -223,53 +223,58 @@ public class NSP_ServiceAppointmentTriggerHelper {
                 || oServiceApp.SchedEndTime != oldServiceApp.SchedEndTime
             	);
     }
-    
-    /***********************************************************************************************
-    * MethodName: checkStatusChange
-    * Description : This Method updated the status checkbox on Service Appointments  
-    * Params:       List<ServiceAppointment> checkStatusChangeSaList
-    * Author :      Nischay Jindal
-    * ********************************************************************************************/
-    public static void checkStatusChange( List<ServiceAppointment> checkStatusChangeSaList ){
-        try{
-            for(ServiceAppointment serApp : checkStatusChangeSaList ){
-                // update the flag when the first time status is set to dispatched 
-                    serApp.NSP_IsDispatched__c = true;
+
+    //
+    // MethodName : checkStatusChange
+    // Description : This Method updated the status checkbox on Service Appointments
+    // Params : List<ServiceAppointment> checkStatusChangeSaList
+    // Author : Nischay Jindal
+    //
+    public static void checkStatusChange( List<ServiceAppointment> checkStatusChangeSaList ) {
+        try {
+            for (ServiceAppointment serApp : checkStatusChangeSaList ) {
+                // update the flag when the first time status is set to dispatched
+                serApp.NSP_IsDispatched__c = true;
             }
-        }catch(Exception ex ){
-           NSP_ErrorLogHandler.logSaveException('NSP_ServiceAppointmentTriggerHelper', 'beforeUpdate', ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_ServiceAppointmentTriggerHelper.class.getName() , 
+                'checkStatusChange' ,
+                e
+            );
         }
     }
-    
-    /***********************************************************************************************
-    * MethodName: sendEmailNotifications
-    * Description : This Method sends email to users after status Changes
-    * Params:       Map<Id,ServiceAppointment> newMap ,Map<Id,ServiceAppointment> oldMap
-    * Author :      Nischay Jindal
-    * ********************************************************************************************/
-    public static void sendEmailNotifications(Map<Id,ServiceAppointment> newMap ,Map<Id,ServiceAppointment> oldMap ){
+
+    //
+    // MethodName: sendEmailNotifications
+    // Description : This Method sends email to users after status Changes
+    // Params : Map<Id,ServiceAppointment> newMap ,Map<Id,ServiceAppointment> oldMap
+    // Author : Nischay Jindal
+    //
+    public static void sendEmailNotifications( Map<Id,ServiceAppointment> newMap , Map<Id,ServiceAppointment> oldMap ) {
         Set<Id> workOrderIdSet = new Set<Id>();
         Set<Id> serAppIdSet = new Set<Id>();
         Set<Id> taskIdSet = new Set<Id>();
         Map<Id,Id>mapwrkOrderTaskId = new Map<Id,Id>();
         List<String> listOfTOAddresses = new List<String> ();
         Map<Id,List<String>> maptaskIdListEmails = new   Map<Id,List<String>>();
-        Map<Id, List<String>> mapSerIdListResources = new Map<Id, List<String>>();
+        Map<Id,List<String>> mapSerIdListResources = new Map<Id,List<String>>();
         Map<Id,WorkOrder> workOrderMap  = new Map<Id,WorkOrder>();
         Map<String,EmailTemplate> emailTemplateMap = new Map<String,EmailTemplate>();
-        try{
-          for(ServiceAppointment servApp:newMap.values() ){
-            if(isStatusChange(servApp,oldMap) || isRecordChanged(servApp,oldMap.get(ServApp.Id))){
-                if(servApp.ParentRecordId != null){
-                       Id myRecordId = servApp.ParentRecordId;
-                       String sObjName = myRecordId.getSObjectType().getDescribe().getName();
-                       serAppIdSet.add(servApp.Id);
-                       if(sObjName == NSP_ServiceConstants.workOrder){ 
-                           workOrderIdSet.add(servApp.ParentRecordId);
-                       }
-                   }
+        try {
+            for ( ServiceAppointment servApp:newMap.values() ) {
+                if ( ( isStatusChange( servApp , oldMap ) || isRecordChanged( servApp , oldMap.get( ServApp.Id ) ) )
+                    && ( servApp.ParentRecordId != null )
+                    )
+                {
+                    Id myRecordId = servApp.ParentRecordId;
+                    String sObjName = myRecordId.getSObjectType().getDescribe().getName();
+                    serAppIdSet.add( servApp.Id );
+                    if ( sObjName == NSP_ServiceConstants.workOrder ) { 
+                        workOrderIdSet.add( servApp.ParentRecordId );
+                    }
+                }
             }
-          }
           if(!serAppIdSet.isEmpty() && !workOrderIdSet.isEmpty()){
             mapSerIdListResources = getAssignedResources(serAppIdSet);
             workOrderMap = getWorkOrders(workOrderIdSet);
@@ -313,54 +318,85 @@ public class NSP_ServiceAppointmentTriggerHelper {
                     }
                }
             }
-        }   
-       }catch(Exception ex){
-            NSP_ErrorLogHandler.logSaveException('NSP_ServiceAppointmentTriggerHelper', 'sendEmailNotifications', ex.getMessage());
+            }
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_ServiceAppointmentTriggerHelper.class.getName() , 
+                'sendEmailNotifications' ,
+                e
+            );
         }
-        
     }
-    
-    /**********************************************************************************************
-    * Description: this will syn the project task owner, work order owner and service appointment owner with assigned resource userId
-    * @param map of workorder Id and ServiceAppointment Record
-    * @param map of serviceAppointment Id and Assigned Resource Id
-    * @param map of Assigned Resource Id Id and Service Resource Id
-    * @return void
-    *********************************************************************************************/
-    public static void syncProjTaskOwnerSA(Map<Id,ServiceAppointment> workOrderIdServiceAppointment, Map<Id, Id> serviceAppIdAssigResMap, Map<Id, Id> assignResIdServiceResMap){
-        
+
+    //
+    // Description: this will syn the project task owner, work order owner and service appointment owner with assigned resource userId
+    // @param map of workorder Id and ServiceAppointment Record
+    // @param map of serviceAppointment Id and Assigned Resource Id
+    // @param map of Assigned Resource Id Id and Service Resource Id
+    // @return void
+    //
+    public static void syncProjTaskOwnerSA( Map<Id,ServiceAppointment> workOrderIdServiceAppointment , Map<Id,Id> serviceAppIdAssigResMap , Map<Id,Id> assignResIdServiceResMap ) {
         ServiceAppointment serviceApp;
-        List < WorkOrder > lstWorKOrderToUpdate = new List < WorkOrder > ();     
-        List < pse__Project_Task__c > lstProjectTaskToUpdate = new List < pse__Project_Task__c > ();
-        
-        //quering service appointment to update ownerId field with service resource UserId 
-        List<ServiceAppointment> serviceAppList = updateServiceAppointments(serviceAppIdAssigResMap, assignResIdServiceResMap);
+        List<WorkOrder> lstWorKOrderToUpdate = new List<WorkOrder>();
+        List<pse__Project_Task__c> lstProjectTaskToUpdate = new List<pse__Project_Task__c>();
+        //quering service appointment to update ownerId field with service resource UserId
+        List<ServiceAppointment> serviceAppList = updateServiceAppointments( serviceAppIdAssigResMap , assignResIdServiceResMap );
         //quering the workorder to update
-        for (WorkOrder oWorkOrder: [SELECT Id, NSP_Project_Task__c 
-                                    FROM WorkOrder 
-                                    WHERE Id IN: workOrderIdServiceAppointment.keySet()]) {
-            serviceApp = workOrderIdServiceAppointment.get(oWorkOrder.Id);
+        for ( WorkOrder oWorkOrder : [
+                    SELECT Id , NSP_Project_Task__c
+                    FROM WorkOrder
+                    WHERE ( Id IN :workOrderIdServiceAppointment.keySet() )
+                ]
+            )
+        {
+            serviceApp = workOrderIdServiceAppointment.get( oWorkOrder.Id );
             //making the clone of existing workorder Id & project task Id then updating the fields
-            lstWorKOrderToUpdate.add(updateWorkOrder(oWorkOrder, serviceApp, serviceAppIdAssigResMap, assignResIdServiceResMap));
-            lstProjectTaskToUpdate.add(updateProjectTask(oWorkOrder, serviceApp, serviceAppIdAssigResMap, assignResIdServiceResMap));
+            lstWorKOrderToUpdate.add(
+                updateWorkOrder(
+                    oWorkOrder ,
+                    serviceApp ,
+                    serviceAppIdAssigResMap ,
+                    assignResIdServiceResMap
+                )
+            );
+            lstProjectTaskToUpdate.add(
+                updateProjectTask(
+                    oWorkOrder ,
+                    serviceApp ,
+                    serviceAppIdAssigResMap ,
+                    assignResIdServiceResMap
+                )
+            );
         }
          //updating the work order
-        if(!lstWorKOrderToUpdate.isEmpty() && Schema.sObjectType.WorkOrder.isUpdateable()){
-                List<Database.SaveResult> res = Database.update(lstWorKOrderToUpdate,false);
-                NSP_ErrorLogHandler.logSaveResultsException('NSP_ServiceAppointmentTriggerHelper', 'syncProjTaskOwnerSA', res);
+        if ( !lstWorKOrderToUpdate.isEmpty() && Schema.sObjectType.WorkOrder.isUpdateable() ) {
+            List<Database.SaveResult> results = Database.update( lstWorKOrderToUpdate , false );
+            NSP_ErrorLogHandler.logResults(
+                NSP_ServiceAppointmentTriggerHelper.class.getName() , 
+                'syncProjTaskOwnerSA:WorkOrder' ,
+                results
+            );
         }
         //updating the project task
-        if(!lstProjectTaskToUpdate.isEmpty() && Schema.sObjectType.pse__Project_Task__c.isUpdateable() ){
-            List<Database.SaveResult> resproj = Database.update(lstProjectTaskToUpdate,false);
-            NSP_ErrorLogHandler.logSaveResultsException('NSP_ServiceAppointmentTriggerHelper', 'syncProjTaskOwnerSA', resproj);
+        if ( !lstProjectTaskToUpdate.isEmpty() && Schema.sObjectType.pse__Project_Task__c.isUpdateable() ) {
+            List<Database.SaveResult> results = Database.update( lstProjectTaskToUpdate , false );
+            NSP_ErrorLogHandler.logResults(
+                NSP_ServiceAppointmentTriggerHelper.class.getName() , 
+                'syncProjTaskOwnerSA:pse__Project_Task__c' ,
+                results
+            );
         }
         //updating service appointment
-        if(!serviceAppList.isEmpty() && Schema.sObjectType.ServiceAppointment.isUpdateable()){
-            List<Database.SaveResult> resServ = Database.update(serviceAppList,false);
-            NSP_ErrorLogHandler.logSaveResultsException('NSP_ServiceAppointmentTriggerHelper', 'syncProjTaskOwnerSA', resServ);
+        if ( !serviceAppList.isEmpty() && Schema.sObjectType.ServiceAppointment.isUpdateable() ) {
+            List<Database.SaveResult> results = Database.update( serviceAppList , false );
+            NSP_ErrorLogHandler.logResults(
+                NSP_ServiceAppointmentTriggerHelper.class.getName() , 
+                'syncProjTaskOwnerSA:ServiceAppointment' ,
+                results
+            );
         }
     }
-    
+
     /***********************************************************************************************
     * MethodName: sendMail
     * Description : Helper method for email body 
@@ -548,12 +584,12 @@ public class NSP_ServiceAppointmentTriggerHelper {
             pse__Long_Description__c = serviceApp.Description);
     }
 
-    /***********************************************************************************************
-    * MethodName: createOrDeleteFreeEvent
-    * Description : create event rec after scheduling Event 
-    * Params: List<ServiceAppointment> createOrDeletSaList
-    * ********************************************************************************************/  
-    public static void createOrDeleteFreeEvent( List<ServiceAppointment> createOrDeletSaList ){
+    //
+    // MethodName: createOrDeleteFreeEvent
+    // Description : create event rec after scheduling Event
+    // Params: List<ServiceAppointment> createOrDeletSaList
+    //
+    public static void createOrDeleteFreeEvent( List<ServiceAppointment> createOrDeletSaList ) {
         List<Event> eventToInsert = new List<Event>();
         Map<Id,Id> serResToSaIdMap = new Map<Id,Id>();
         Map<Id,Id> saToSerResUserIdMap = new Map<Id,Id>();
@@ -573,55 +609,80 @@ public class NSP_ServiceAppointmentTriggerHelper {
         }
 
         //insert free events 
-        if(!eventToInsert.isEmpty()){
+        if ( !eventToInsert.isEmpty() ) {
             List<Database.SaveResult> results = Database.insert( eventToInsert , false );
-            NSP_ErrorLogHandler.logSaveResultsException('NSP_ServiceAppointmentTriggerHelper', 'createOrDeleteFreeEvent', results );
-        }
-    }
-    /***********************************************************************************************
-    * MethodName: changeFreeEventToBusy
-    * Description : change free event to busy
-    * Params: Set<Id> eventIdDelete
-    * ********************************************************************************************/  
-    public static void changeFreeEventToBusy(Set<Id> eventIdDelete ){
-        
-        List<Event> eventRecListDelete = new List<Event>();
-        //list event update to busy
-        for( Event eachEvent : [SELECT Id,WhatId,ShowAs FROM Event WHERE WhatId IN: eventIdDelete]){
-            eachEvent.ShowAs = 'Busy';
-            eventRecListDelete.add(eachEvent);
-        }
-
-        //update the evnet record 
-        if( !eventRecListDelete.isEmpty()){
-            List<Database.SaveResult> results =  Database.update( eventRecListDelete , false );
-            NSP_ErrorLogHandler.logSaveResultsException('NSP_ServiceAppointmentTriggerHelper', 'changeFreeEventToBusy', results );
+            NSP_ErrorLogHandler.logResults(
+                NSP_ServiceAppointmentTriggerHelper.class.getName() , 
+                'createOrDeleteFreeEvent' ,
+                results
+            );
         }
     }
 
-    /***********************************************************************************************
-    * MethodName: deleteCancelledEvent
-    * Description : delete evevt of cancelled SA
-    * Params: Set<Id> saIdToDeletEvent
-    * ********************************************************************************************/  
-    public static void deleteCancelledEvent(Set<Id> saIdToDeletEvent ){
-        List<Event> eventRecListDelete = new List<Event>();
-        //get the event related to cancelled SA 
-        for( Event eachEvent : [SELECT Id,WhatId FROM Event WHERE WhatId IN: saIdToDeletEvent]){
-            eachEvent.WhatId = null;
-            eventRecListDelete.add(eachEvent);
-        }
-        //delete tha event for cancelled 
-        if( !eventRecListDelete.isEmpty()){
-            List<Database.SaveResult> results =  Database.update( eventRecListDelete , false );
-            NSP_ErrorLogHandler.logSaveResultsException('NSP_ServiceAppointmentTriggerHelper', 'deleteCancelledEvent', results );
-
-            List<Database.DeleteResult> results1 = Database.delete( eventRecListDelete ,false); 
-            NSP_ErrorLogHandler.logDeleteResultsException('NSP_ServiceAppointmentTriggerHelper', 'deleteCancelledEvent', results1 );
-
+    //
+    // MethodName: changeFreeEventToBusy
+    // Description : change free event to busy
+    // Params: Set<Id> eventIdDelete
+    //
+    public static void changeFreeEventToBusy( Set<Id> eventIdDelete ) {
+        if ( ( eventIdDelete != null ) && !eventIdDelete.isEmpty() ) {
+            List<Event> eventRecListDelete = new List<Event>();
+            for( Event eachEvent : [
+                        SELECT Id ,WhatId ,ShowAs
+                        FROM Event
+                        WHERE ( WhatId IN :eventIdDelete )
+                    ]
+                )
+            {
+                eachEvent.ShowAs = 'Busy';
+                eventRecListDelete.add(eachEvent);
+            }
+            if ( !eventRecListDelete.isEmpty() ) {
+                List<Database.SaveResult> results = Database.update( eventRecListDelete , false );
+                NSP_ErrorLogHandler.logResults(
+                    NSP_ServiceAppointmentTriggerHelper.class.getName() , 
+                    'changeFreeEventToBusy' ,
+                    results
+                );
+            }
         }
     }
-    
+
+    //
+    // MethodName: deleteCancelledEvent
+    // Description : delete evevt of cancelled SA
+    // Params: Set<Id> saIdToDeletEvent
+    //
+    public static void deleteCancelledEvent( Set<Id> saIdToDeletEvent ) {
+        if ( ( saIdToDeletEvent != null ) && !saIdToDeletEvent.isEmpty() ) {
+            List<Event> eventRecListDelete = new List<Event>();
+            for ( Event eachEvent : [
+                        SELECT Id , WhatId
+                        FROM Event
+                        WHERE ( WhatId IN :saIdToDeletEvent )
+                    ]
+                )
+            {
+                eachEvent.WhatId = null;
+                eventRecListDelete.add( eachEvent );
+            }
+            if( !eventRecListDelete.isEmpty() ) {
+                List<Database.SaveResult> results =  Database.update( eventRecListDelete , false );
+                NSP_ErrorLogHandler.logResults(
+                    NSP_ServiceAppointmentTriggerHelper.class.getName() , 
+                    'deleteCancelledEvent:update' ,
+                    results
+                );
+                List<Database.DeleteResult> results1 = Database.delete( eventRecListDelete ,false); 
+                NSP_ErrorLogHandler.logResults(
+                    NSP_ServiceAppointmentTriggerHelper.class.getName() , 
+                    'deleteCancelledEvent:delete' ,
+                    results1
+                );
+            }
+        }
+    }
+
     /***********************************************************************************************
     * MethodName: createNewEventRec
     * Description : return new related Event record
@@ -643,20 +704,19 @@ public class NSP_ServiceAppointmentTriggerHelper {
         		return newFreeEvent;
     }
 
-    /***********************************************************************************************
-    * MethodName: afterUpdateDirector
-    * Description : after update Director method
-    * Params:       Map<Id,ServiceAppointment> newMap ,Map<Id,ServiceAppointment> oldMap
-    * Author :      Abhishek Kumar
-    * ********************************************************************************************/
-    public static void afterUpdateDirector(Map<Id,ServiceAppointment> newMap ,Map<Id,ServiceAppointment> oldMap ){
+    //
+    // MethodName : afterUpdateDirector
+    // Description : after update Director method
+    // Params : Map<Id,ServiceAppointment> newMap ,Map<Id,ServiceAppointment> oldMap
+    // Author : Abhishek Kumar
+    //
+    public static void afterUpdateDirector( Map<Id,ServiceAppointment> newMap , Map<Id,ServiceAppointment> oldMap ) {
         Set<Id> serviceAppintmentUpdatedIds = new Set<Id>();
         List<ServiceAppointment> createOrDeletSaList =  new List<ServiceAppointment>();
-        Map< Id, ServiceAppointment> mapOfSaIdToRec = new Map<Id,ServiceAppointment> ();
-        Map< Id, ServiceAppointment> mapOfSaIdToServAppRec = new Map<Id,ServiceAppointment> ();
+        Map<Id,ServiceAppointment> mapOfSaIdToRec = new Map<Id,ServiceAppointment> ();
+        Map<Id,ServiceAppointment> mapOfSaIdToServAppRec = new Map<Id,ServiceAppointment> ();
         Set<Id> saIdToUpdateEvent = new Set<Id>();
-
-        try{
+        try {
             for(ServiceAppointment serApp : newMap.values() ){
                 
                 // added as a part of STY-03891
@@ -675,12 +735,12 @@ public class NSP_ServiceAppointmentTriggerHelper {
                         saIdToUpdateEvent.add( serApp.Id );
                     }
                 }
-                if( isSaUpdatedToUpdateEvent(serApp, oldMap.get(serApp.Id) ) ){
-                    if( mapOfSaIdToRec.get(serApp.Id) == null  ){
-                        mapOfSaIdToRec.put( serApp.Id, serApp );
-                    }
+                if ( isSaUpdatedToUpdateEvent( serApp , oldMap.get( serApp.Id ) )
+                    && ( mapOfSaIdToRec.get( serApp.Id ) == null )
+                    )
+                {
+                    mapOfSaIdToRec.put( serApp.Id , serApp );
                 }
-                
             }
             if(!mapOfSaIdToServAppRec.isEmpty()){
                 updateServiceTerritory(mapOfSaIdToServAppRec);
@@ -698,48 +758,78 @@ public class NSP_ServiceAppointmentTriggerHelper {
                 changeFreeEventToBusy( saIdToUpdateEvent ); 
             }
             
-            //call UpdateSaRelatedEvent
-            if( !mapOfSaIdToRec.isEmpty() ){
-                UpdateSaRelatedEvent (mapOfSaIdToRec);
+            if ( !mapOfSaIdToRec.isEmpty() ) {
+                NSP_ServiceAppointmentTriggerHelper.updateSaRelatedEvent( mapOfSaIdToRec );
             }
-            
-            
-        }catch(Exception ex ){
-           NSP_ErrorLogHandler.logSaveException('NSP_ServiceAppointmentTriggerHelper', 'afterUpdateDirector', ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_ServiceAppointmentTriggerHelper.class.getName() , 
+                'afterUpdateDirector' ,
+                e
+            );
         }
     }
 
-    /***********************************************************************************************
-    * MethodName: updateServiceTerr
-    * Description : Updating the Service Appointment Service Territory field 
-    * Params: (Map< Id, ServiceAppointment> mapOfSaIdToServAppRec
-    * ********************************************************************************************/  
-    private static void updateServiceTerritory(Map< Id, ServiceAppointment> mapOfSaIdToServAppRec){
-        Map<Id, Id> serviceResAssignRes= new Map<Id,Id>();
-        Map<Id, Id> servAppAssignRes= new Map<Id,Id>();
-        Map<Id, Id> servAppUser= new Map<Id,Id>();
-        List<ServiceAppointment> updateServApp =new List<ServiceAppointment>();
-        try{
-            for(AssignedResource assignRes : [SELECT Id, ServiceAppointmentId, ServiceResourceId FROM AssignedResource WHERE ServiceAppointmentId IN: mapOfSaIdToServAppRec.keySet() ]){
-                serviceResAssignRes.put(assignRes.ServiceResourceId,assignRes.Id);
-                servAppAssignRes.put(assignRes.Id,assignRes.ServiceAppointmentId);
+    //
+    // MethodName: updateServiceTerr
+    // Description : Updating the Service Appointment Service Territory field
+    // Params: (Map< Id, ServiceAppointment> mapOfSaIdToServAppRec
+    //
+    private static void updateServiceTerritory( Map<Id,ServiceAppointment> mapOfSaIdToServAppRec ) {
+        Map<Id,Id> serviceResAssignRes = new Map<Id,Id>();
+        Map<Id,Id> servAppAssignRes = new Map<Id,Id>();
+        Map<Id,Id> servAppUser = new Map<Id,Id>();
+        List<ServiceAppointment> updateServApp = new List<ServiceAppointment>();
+        try {
+            for ( AssignedResource assignRes : [
+                        SELECT Id , ServiceAppointmentId , ServiceResourceId
+                        FROM AssignedResource
+                        WHERE ( ServiceAppointmentId IN :mapOfSaIdToServAppRec.keySet() )
+                    ]
+                )
+            {
+                serviceResAssignRes.put( assignRes.ServiceResourceId , assignRes.Id );
+                servAppAssignRes.put( assignRes.Id , assignRes.ServiceAppointmentId );
             }
-            for(ServiceTerritoryMember servTemMem: [SELECT Id, ServiceResourceId, ServiceTerritoryId FROM ServiceTerritoryMember WHERE ServiceResourceId IN: serviceResAssignRes.keySet() ]){
-                servAppUser.put(servAppAssignRes.get(serviceResAssignRes.get(servTemMem.ServiceResourceId)),servTemMem.ServiceTerritoryId);
+            for ( ServiceTerritoryMember servTemMem : [
+                        SELECT Id , ServiceResourceId , ServiceTerritoryId
+                        FROM ServiceTerritoryMember
+                        WHERE ( ServiceResourceId IN :serviceResAssignRes.keySet() )
+                    ]
+                )
+            {
+                servAppUser.put(
+                    servAppAssignRes.get( serviceResAssignRes.get( servTemMem.ServiceResourceId ) ) ,
+                    servTemMem.ServiceTerritoryId
+                );
             }
-            for(ServiceAppointment servApp : [SELECT Id, ServiceTerritoryId FROM ServiceAppointment WHERE Id IN: servAppUser.keySet() ]){
-                servApp.ServiceTerritoryId = servAppUser.get(servApp.Id);
-                updateServApp.add(servApp);
+            for ( ServiceAppointment servApp : [
+                        SELECT Id , ServiceTerritoryId
+                        FROM ServiceAppointment
+                        WHERE ( Id IN :servAppUser.keySet() )
+                    ]
+                )
+            {
+                servApp.ServiceTerritoryId = servAppUser.get( servApp.Id );
+                updateServApp.add( servApp );
             }
-            if(!updateServApp.isEmpty()){
-                List<Database.SaveResult> results =  Database.update(updateServApp, false);
-                NSP_ErrorLogHandler.logSaveResultsException('NSP_ServiceAppointmentTriggerHelper', 'updateServiceTerritory', results );
+            if ( !updateServApp.isEmpty() ) {
+                List<Database.SaveResult> results =  Database.update( updateServApp , false );
+                NSP_ErrorLogHandler.logResults(
+                    NSP_ServiceAppointmentTriggerHelper.class.getName() , 
+                    'updateServiceTerritory:update' ,
+                    results
+                );
             }
-        }catch(Exception ex ){
-           NSP_ErrorLogHandler.logSaveException('NSP_ServiceAppointmentTriggerHelper', 'updateServiceTerritory', ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_ServiceAppointmentTriggerHelper.class.getName() , 
+                'updateServiceTerritory' ,
+                e
+            );
         }
     }
-    
+
     /***********************************************************************************************
             * MethodName: isSaUpdatedToUpdateEvent
             * Description : return true if record or fields changed on SA
@@ -762,30 +852,41 @@ public class NSP_ServiceAppointmentTriggerHelper {
                     )
                 );
             }
-             /***********************************************************************************************
-    * MethodName: UpdateSaRelatedEvent
-    * Description : Update Related Event If SA is updated
-    * Author :      Abhishek Kumar
-    * ********************************************************************************************/ 
-    public static Void UpdateSaRelatedEvent( Map< Id,ServiceAppointment> mapSaIdToRec){
-        List<Event> eventListToUpdate = new List<Event>();
-        for( Event eachEvent : [SELECT Id,Subject,Description,Location,StartDateTime,EndDateTime,OwnerId,WhatId
-                                FROM Event
-                                WHERE WhatId IN: mapSaIdToRec.keySet()] ){                                    
-                                    ServiceAppointment relatedSa = mapSaIdToRec.get(eachEvent.WhatId);
-                                    
-                                    eachEvent.Subject = '[SF] '+relatedSa.Subject;
-                                    eachEvent.Description = relatedSa.Description;
-                                    eachEvent.Location = relatedSa.NSP_Orientation_Address__c;
-                                    eachEvent.StartDateTime = relatedSa.SchedStartTime;
-                                    eachEvent.EndDateTime = relatedSa.SchedEndTime;
-                                    eachEvent.OwnerId =  relatedSa.OwnerId;
-                                    eventListToUpdate.add( eachEvent);
-                                }
 
-        if( !eventListToUpdate.isEmpty()){
-            List<Database.SaveResult> results =  Database.update( eventListToUpdate , false );
-            NSP_ErrorLogHandler.logSaveResultsException('NSP_ServiceAppointmentTriggerHelper', 'UpdateSaRelatedEvent', results );
+    //
+    // MethodName : updateSaRelatedEvent
+    // Description : Update Related Event If SA is updated
+    // Author : Abhishek Kumar
+    //
+    private static void updateSaRelatedEvent( Map<Id,ServiceAppointment> mapSaIdToRec ) {
+        if ( ( mapSaIdToRec != null ) && !mapSaIdToRec.isEmpty() ) {
+            List<Event> eventListToUpdate = new List<Event>();
+            for ( Event eachEvent : [
+                        SELECT Id , Subject , Description , Location , StartDateTime , EndDateTime , OwnerId , WhatId
+                        FROM Event
+                        WHERE ( WhatId IN :mapSaIdToRec.keySet() )
+                    ]
+                )
+            {
+                ServiceAppointment relatedSa = mapSaIdToRec.get( eachEvent.WhatId );
+                eachEvent.Subject = '[SF] '+relatedSa.Subject;
+                eachEvent.Description = relatedSa.Description;
+                eachEvent.Location = relatedSa.NSP_Orientation_Address__c;
+                eachEvent.StartDateTime = relatedSa.SchedStartTime;
+                eachEvent.EndDateTime = relatedSa.SchedEndTime;
+                eachEvent.OwnerId =  relatedSa.OwnerId;
+                eventListToUpdate.add( eachEvent );
+            }
+            if ( !eventListToUpdate.isEmpty() ) {
+                List<Database.SaveResult> results =  Database.update( eventListToUpdate , false );
+                NSP_ErrorLogHandler.logResults(
+                    NSP_ServiceAppointmentTriggerHelper.class.getName() , 
+                    'updateSaRelatedEvent' ,
+                    results
+                );
+            }
         }
     }
+
 }
+//
