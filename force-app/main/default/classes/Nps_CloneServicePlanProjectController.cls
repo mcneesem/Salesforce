@@ -155,7 +155,10 @@ public without sharing class Nps_CloneServicePlanProjectController {
     @AuraEnabled
     public static List<String> createProjectRelatedRecords( String config ) {
         try {
-            Map<String, String> paramsMap = (Map<String, String>) JSON.deserialize(config, Map<String, String>.class);
+            Map<String,String> paramsMap = (Map<String,String>)JSON.deserialize(
+                config ,
+                Map<String,String>.class
+            );
 
             // Extract all the required data from the parameter map
             String projId = paramsMap.get('projectId');
@@ -165,13 +168,13 @@ public without sharing class Nps_CloneServicePlanProjectController {
 
             // Populate list of project tasks that needs to be created
             addPreviousProjectTasks(prevProjectTaskIds, projId,oldProjectId);
-			// Prepare a list of project account records that needs to be created
+            // Prepare a list of project account records that needs to be created
             List<Project_Account__c> projAccounts = getProjectAccounts(projAccountIds, projId);
-			// Prepare a consolidated list of items which needs to be inserted
+            // Prepare a consolidated list of items which needs to be inserted
             List<SObject> itemsToInsert = new List<SObject>();
             List<SObject> itemsToUpdate = new List<SObject>();
             itemsToInsert.addAll(projAccounts);
-			// Perform all the DML operations
+            // Perform all the DML operations
             return performDbOperations(itemsToInsert, itemsToUpdate , new List<SObject>());
         } catch (Exception excep) {
             throw NSP_Utilities.getAuraException(excep);
@@ -328,20 +331,39 @@ public without sharing class Nps_CloneServicePlanProjectController {
                 );
             }
 
-          for(pse__Project_Task__c newTask:[SELECT Id,Name FROM pse__Project_Task__c WHERE pse__Project__c=:projId AND NSP_isClonedFromAutomation__c = true]){
-              newProjectTaskIds.add(newTask.Id); 
-          }
-          insertProjTaskRelatedRecords(prevProjectTaskIds, newProjectTaskIds, projId);
-          List<pse__Project_Task__c> projTaskToCancel = getUnselectedProjectTasksByProjectId(oldProjectId , prevProjectTaskIds);
-			
+            for ( pse__Project_Task__c newTask : [
+                        SELECT Id , Name
+                        FROM pse__Project_Task__c
+                        WHERE (
+                            ( pse__Project__c = :projId )
+                            AND ( NSP_isClonedFromAutomation__c = true )
+                        )
+                    ]
+                )
+            {
+                newProjectTaskIds.add(newTask.Id); 
+            }
+            insertProjTaskRelatedRecords(
+                prevProjectTaskIds ,
+                newProjectTaskIds ,
+                projId
+            );
+            List<pse__Project_Task__c> projTaskToCancel = getUnselectedProjectTasksByProjectId(
+                oldProjectId ,
+                prevProjectTaskIds
+            );
+
             // Prepare a consolidated list of items which needs to be updated
             List<SObject> itemsToUpdate = new List<SObject>();
-          	List<SObject> itemsToInsert = new List<SObject>();
-            itemsToUpdate.addAll(updateStatusInProjectTasks(prevProjectTaskIds));
-            itemsToUpdate.addAll(cancelUnslectedTaskStatus(projTaskToCancel));
+            itemsToUpdate.addAll( updateStatusInProjectTasks( prevProjectTaskIds ) );
+            itemsToUpdate.addAll( cancelUnslectedTaskStatus( projTaskToCancel ) );
 
             // Perform all the DML operations
-            performDbOperations(itemsToInsert, itemsToUpdate , new List<SObject>());
+            performDbOperations(
+                new List<SObject>() ,
+                itemsToUpdate ,
+                new List<SObject>()
+            );
         } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
                 Nps_CloneServicePlanProjectController.class.getName() ,
