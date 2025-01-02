@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Period_End_Date_Must_be_End_Of_any_Month</fullName>
+    <active>true</active>
+    <errorConditionFormula>IF(
+  ( MONTH( Period_End_Date__c ) = 12 ) ,
+  NOT(
+    DAY(
+      DATE(
+        ( YEAR( Period_End_Date__c ) + 1 ) ,
+        1 ,
+        1
+      )
+      - 1
+    )
+    =
+    DAY( Period_End_Date__c )
+  ) ,
+  NOT(
+    DAY(
+      DATE(
+        YEAR( Period_End_Date__c ) ,
+        ( MONTH( Period_End_Date__c ) + 1 ) ,
+        1
+      )
+      - 1
+    )
+    =
+    DAY( Period_End_Date__c )
+  )
+)</errorConditionFormula>
+    <errorDisplayField>Period_End_Date__c</errorDisplayField>
+    <errorMessage>Please enter a valid date which is the last date of the chosen month.</errorMessage>
+</ValidationRule>
