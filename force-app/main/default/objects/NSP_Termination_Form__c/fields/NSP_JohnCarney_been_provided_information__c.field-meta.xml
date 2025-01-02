@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_JohnCarney_been_provided_information__c</fullName>
-    <description>Has John Carney been provided information relative to this termination?</description>
-    <externalId>false</externalId>
-    <inlineHelpText>Has John Carney been provided information relative to this termination?</inlineHelpText>
-    <label>John Carney been provided information?</label>
+    <description>Has Joanne Crossland been provided information relative to this termination?</description>
+    <inlineHelpText>Has Joanne Crossland been provided information relative to this termination?</inlineHelpText>
+    <label>Joanne Crossland provided information?</label>
     <required>false</required>
     <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
