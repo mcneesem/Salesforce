@@ -272,6 +272,16 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.Roles_To_Cancel_Project_Tasks__c</fieldItem>
+                <identifier>RecordRoles_To_Cancel_Project_Tasks__cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.Onboarding_Profile__c</fieldItem>
                 <identifier>RecordOnboarding_Profile_cField</identifier>
             </fieldInstance>
