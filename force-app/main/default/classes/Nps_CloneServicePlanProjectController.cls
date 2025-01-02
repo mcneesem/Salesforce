@@ -10,7 +10,7 @@ Modification Log     :
 * -------------------------------------------------------------------------------------------------
 * Jatin                      6/9/2022                First Iteration
 */
-public without sharing class Nps_CloneServicePlanProjectController {
+public with sharing class Nps_CloneServicePlanProjectController {
     // test w/ Nps_CloneServicePlanProjectCtrTest (78%)
 
     private static final List<String> PROJECT_TASK_FIELDS = new List<String>{ 
