@@ -62,7 +62,7 @@ private class NSP_AssetTriggerHelperTest {
         users.Alias = 'taaron';
         users.LastName ='Test';
         users.Email = 'Test@insperity.com';
-        users.NSP_Service_Region__c = 'MMSO - MidMarket';
+        users.NSP_Service_Region__c = 'MMSO - Central';
         Insert users;
         
         Test.startTest();
