@@ -12,19 +12,21 @@ public with sharing class NSP_AssetTriggerHelper {
     //
     public void beforeInsertDirector( List<Asset> newList ) { 
         try {
-            if ( AssetTriggerSettings__c.getInstance( UserInfo.getUserId() ).IsEnabledRecordTypeDefault__c ) {
-                // ADO-314743
-                // ~ handle Default Asset Record Type change for "Integration User" Profile
-                // ~ Salesforce Automation (Id=0054x0000057XwoAAE) depends on "CPQ Asset" default...
-                // ~ Insperity Integration (AIMS) (Id=0054x0000057MPSAA2) previously depended on "WO" default...
-                if ( ( newList != null ) && !newList.isEmpty() ) {
-                    for ( Asset record : newList ) {
-                        if ( String.isBlank( record.RecordTypeId ) // null/blank/undefined Asset Record Type
-                            || ( record.RecordTypeId == NSP_AssetTriggerHelper.cpqAssetRecordTypeId ) // Asset Record Type: CPQ Asset (Id=0124x000000yRuyAAE)
-                            )
-                        {
-                            record.RecordTypeId = NSP_AssetTriggerHelper.woAssetRecordTypeId; // Asset Record Type: WO (Id=0124x000000yRuzAAE)
-                        }
+            // ADO-314743
+            // ~ handle Default Asset Record Type change for "Integration User" Profile
+            // ~ Salesforce Automation (Id=0054x0000057XwoAAE) depends on "CPQ Asset" default...
+            // ~ Insperity Integration (AIMS) (Id=0054x0000057MPSAA2) previously depended on "WO" default...
+            if ( NSP_AssetTriggerHelper.isEnabledRecordTypeDefault
+                && ( newList != null )
+                && !newList.isEmpty()
+                )
+            {
+                for ( Asset record : newList ) {
+                    if ( String.isBlank( record.RecordTypeId ) // null/blank/undefined Asset Record Type
+                        || ( record.RecordTypeId == NSP_AssetTriggerHelper.cpqAssetRecordTypeId ) // Asset Record Type: CPQ Asset (Id=0124x000000yRuyAAE)
+                        )
+                    {
+                        record.RecordTypeId = NSP_AssetTriggerHelper.woAssetRecordTypeId; // Asset Record Type: WO (Id=0124x000000yRuzAAE)
                     }
                 }
             }
@@ -41,10 +43,14 @@ public with sharing class NSP_AssetTriggerHelper {
     // @return void
     //
     public void afterInsertDirector( List<Asset> newList , Map<Id,Asset> newMap ) {
+        updateInvoiceDate( newList , newMap );
+        if ( NSP_AssetTriggerHelper.isEnabledAccountAssetSummary ) {
+            AccountAssetSummary.accountWOWXFieldUpdate( newList , newMap );
+        } else {
+            peoTESClientStatus( newList , newMap );
+        }
+        updateRETAsset( newList , newMap );
         List<Asset> ast = new List<Asset>();
-        updateInvoiceDate(newList,newMap);
-        peoTESClientStatus(newList,newMap);
-        updateRETAsset(newList,newMap);
         List<Asset> docusignAsset = new List<Asset>();
         try {
             for(Asset assetObj: newList){              
@@ -98,13 +104,17 @@ public with sharing class NSP_AssetTriggerHelper {
                 (Map<Id,sObject>)oldMap
             );
         }
-        Set<Id> asstIdSet = new Set<Id>();        
+        updateInvoiceDate( newMap.values() , oldMap );
+        if ( NSP_AssetTriggerHelper.isEnabledAccountAssetSummary ) {
+            AccountAssetSummary.accountWOWXFieldUpdate( newMap.values() , oldMap );
+        } else {
+            peoTESClientStatus( newMap.values() , oldMap );
+        }
+        updateRETAsset( newMap.values() , oldMap );
+        Set<Id> asstIdSet = new Set<Id>();
         List<Asset> ast = new List<Asset>();
         List<Asset> astremove = new List<Asset>();
         List<Asset> docusignAsset = new List<Asset>();
-        updateInvoiceDate( newMap.values() , oldMap );
-        peoTESClientStatus( newMap.values() , oldMap );
-        updateRETAsset( newMap.values() , oldMap );
         for ( Asset asst : newMap.values() ) {
             Asset oldRecord = oldMap.get( asst.Id );
             if ( oldRecord != null ) {
@@ -156,16 +166,15 @@ public with sharing class NSP_AssetTriggerHelper {
             List<String> excludeStatusValues = new List<String>();
             List<String> excluderecordTypeWithStatusValues = new List<String>();
             List<String> excluderecordTypeValues = new List<String>();
-            AssetTriggerSettings__c settings = AssetTriggerSettings__c.getInstance( UserInfo.getUserId() );
-            if ( settings != null ) {
-                if ( String.isNotBlank( settings.Exclude_Status__c ) ) {
-                    excludeStatusValues = settings.Exclude_Status__c.split( '\\R' );
+            if ( NSP_AssetTriggerHelper.settings != null ) {
+                if ( String.isNotBlank( NSP_AssetTriggerHelper.settings.Exclude_Status__c ) ) {
+                    excludeStatusValues = NSP_AssetTriggerHelper.settings.Exclude_Status__c.split( '\\R' );
                 }
-                if ( String.isNotBlank( settings.Exclude_Record_Types_WRT_Status__c ) ) {
-                    excluderecordTypeWithStatusValues = settings.Exclude_Record_Types_WRT_Status__c.split( '\\R' );
+                if ( String.isNotBlank( NSP_AssetTriggerHelper.settings.Exclude_Record_Types_WRT_Status__c ) ) {
+                    excluderecordTypeWithStatusValues = NSP_AssetTriggerHelper.settings.Exclude_Record_Types_WRT_Status__c.split( '\\R' );
                 }
-                if ( String.isNotBlank( settings.Exclude_Record_Types__c ) ) {
-                    excluderecordTypeValues = settings.Exclude_Record_Types__c.split( '\\R' );
+                if ( String.isNotBlank( NSP_AssetTriggerHelper.settings.Exclude_Record_Types__c ) ) {
+                    excluderecordTypeValues = NSP_AssetTriggerHelper.settings.Exclude_Record_Types__c.split( '\\R' );
                 }
             }
             List <Asset> assetList = [
@@ -814,6 +823,48 @@ public with sharing class NSP_AssetTriggerHelper {
             methodName ,
             e
         );
+    }
+
+    //
+    //
+    //
+
+    private static AssetTriggerSettings__c settings {
+        get {
+            if ( settings == null ) {
+                settings = AssetTriggerSettings__c.getInstance( UserInfo.getUserId() );
+            }
+            return settings;
+        }
+        private set;
+    }
+
+    private static Boolean isEnabledRecordTypeDefault {
+        get {
+            if ( isEnabledRecordTypeDefault == null ) {
+                Boolean local = False;
+                if ( NSP_AssetTriggerHelper.settings != null ) {
+                    local = NSP_AssetTriggerHelper.settings.IsEnabledRecordTypeDefault__c;
+                }
+                isEnabledRecordTypeDefault = local;
+            }
+            return isEnabledRecordTypeDefault;
+        }
+        private set;
+    }
+
+    private static Boolean isEnabledAccountAssetSummary {
+        get {
+            if ( isEnabledAccountAssetSummary == null ) {
+                Boolean local = False;
+                if ( NSP_AssetTriggerHelper.settings != null ) {
+                    local = NSP_AssetTriggerHelper.settings.IsEnabledAccountAssetSummary__c;
+                }
+                isEnabledAccountAssetSummary = local;
+            }
+            return isEnabledAccountAssetSummary;
+        }
+        private set;
     }
 
 }
