@@ -61,6 +61,11 @@
                 <label>Client Liaison</label>
             </value>
             <value>
+                <fullName>Compensation Services</fullName>
+                <default>false</default>
+                <label>Compensation Services</label>
+            </value>
+            <value>
                 <fullName>Contact Center Agent</fullName>
                 <default>false</default>
                 <label>Contact Center Agent</label>
@@ -81,6 +86,11 @@
                 <label>EEO</label>
             </value>
             <value>
+                <fullName>Finance Leader</fullName>
+                <default>false</default>
+                <label>Finance Leader</label>
+            </value>
+            <value>
                 <fullName>Finance Service User</fullName>
                 <default>false</default>
                 <label>Finance Service User</label>
@@ -91,9 +101,9 @@
                 <label>FLSA</label>
             </value>
             <value>
-                <fullName>HR Specialist</fullName>
+                <fullName>Health &amp; Welfare</fullName>
                 <default>false</default>
-                <label>HR Specialist</label>
+                <label>Health &amp; Welfare</label>
             </value>
             <value>
                 <fullName>HR COE</fullName>
@@ -101,9 +111,9 @@
                 <label>HR COE</label>
             </value>
             <value>
-                <fullName>Health &amp; Welfare</fullName>
+                <fullName>HR Specialist</fullName>
                 <default>false</default>
-                <label>Health &amp; Welfare</label>
+                <label>HR Specialist</label>
             </value>
             <value>
                 <fullName>IES Customer Support</fullName>
@@ -206,6 +216,11 @@
                 <label>Safety Consultant</label>
             </value>
             <value>
+                <fullName>Strategic Consulting Services</fullName>
+                <default>false</default>
+                <label>Strategic Consulting Services</label>
+            </value>
+            <value>
                 <fullName>TES Banking &amp; Tax</fullName>
                 <default>false</default>
                 <label>TES Banking &amp; Tax</label>
@@ -234,11 +249,6 @@
                 <fullName>TES Support</fullName>
                 <default>false</default>
                 <label>TES Support</label>
-            </value>
-            <value>
-                <fullName>Finance Leader</fullName>
-                <default>false</default>
-                <label>Finance Leader</label>
             </value>
         </valueSetDefinition>
     </valueSet>
