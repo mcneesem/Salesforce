@@ -61,6 +61,11 @@
                 <label>Safety Meeting</label>
             </value>
             <value>
+                <fullName>Solution Alignment Meeting</fullName>
+                <default>false</default>
+                <label>Solution Alignment Meeting</label>
+            </value>
+            <value>
                 <fullName>WA Proposal</fullName>
                 <default>false</default>
                 <label>WA Proposal</label>
@@ -221,6 +226,11 @@
             <controllingFieldValue>Core Sales</controllingFieldValue>
             <controllingFieldValue>Mid Market</controllingFieldValue>
             <valueName>Networking</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Core Sales</controllingFieldValue>
+            <controllingFieldValue>Mid Market</controllingFieldValue>
+            <valueName>Solution Alignment Meeting</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Core Sales</controllingFieldValue>
