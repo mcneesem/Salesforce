@@ -48,7 +48,6 @@
             </value>
         </inputParameters>
         <nameSegment>emailSimple</nameSegment>
-        <offset>0</offset>
         <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
@@ -72,7 +71,6 @@
             </value>
         </inputParameters>
         <nameSegment>OnboardingMeetingDetailHistory</nameSegment>
-        <offset>0</offset>
         <storeOutputAutomatically>true</storeOutputAutomatically>
         <versionSegment>1</versionSegment>
     </actionCalls>
@@ -345,7 +343,7 @@
             <label>Yes : User Exist</label>
         </rules>
     </decisions>
-    <description>Notify OMD History of what changed  to Queue Members</description>
+    <description>Notify OMD History of what changed to Queue Members</description>
     <environments>Default</environments>
     <formulas>
         <name>f_LastModifiedDateTime</name>
