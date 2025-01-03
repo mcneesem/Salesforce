@@ -2858,7 +2858,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Employes currently enrolled-for FSA</shortDescription>
-        <value>Are there employes currently enrolled?</value>
+        <value>Are there employees currently enrolled?</value>
     </labels>
     <labels>
         <fullName>NSP_EmploywithTempStatus</fullName>
@@ -3437,7 +3437,7 @@ Meeting - Project Related - Fiduciary,Mutual Fund Corrections - Pricing, Manual 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Holidy or Weekend rule</shortDescription>
-        <value>Holidy or Weekend rule</value>
+        <value>Holiday or Weekend rule</value>
     </labels>
     <labels>
         <fullName>NSP_HrContact</fullName>
