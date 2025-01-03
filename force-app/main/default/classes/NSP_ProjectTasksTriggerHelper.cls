@@ -645,8 +645,9 @@ public class NSP_ProjectTasksTriggerHelper {
                                 NSP_User__c
                             FROM NSP_Account_Team__c
                             WHERE (
-                                NSP_Account__c IN :mapOfProjectAndAccount.values()
-                                AND NSP_Role__c IN :peoTerminationTeamRoles
+                                ( NSP_Account__c IN :mapOfProjectAndAccount.values() )
+                                AND ( NSP_Role__c IN :peoTerminationTeamRoles )
+                                AND ( NSP_User__c != null )
                             )
                             ORDER BY NSP_Role__c DESC
                         ]
