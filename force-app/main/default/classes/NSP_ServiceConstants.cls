@@ -567,9 +567,9 @@ public class NSP_ServiceConstants {
     public final static String CLIENTPOLICY = 'Client policies';
     public final static String TIMEENTRYMETHOD = 'XML Upload/Webpayroll';
     public final static String EDC = 'EDC';
-    public final static String PAYROLLLOCATIONS = 'Special Payroll Needs - Locations';
-    public final static String PAYROLLDEPARTMENTS = 'Special Payroll Needs – Departments';
-    public final static String PAYROLLJOBCOSTING = 'Special Payroll Needs – Job Costing';
+    public final static String PAYROLLLOCATIONS = 'Custom Reporting Needs - Locations';
+    public final static String PAYROLLDEPARTMENTS = 'Custom Reporting Needs – Departments';
+    public final static String PAYROLLJOBCOSTING = 'Custom Reporting Needs – Job Costing';
     public final static String ENROLLMENTFEE = 'Enrollment Fee';
     public final static String PAYROLLREGISTER = 'Payroll Register';
     public final static String GARNISHMENTS = 'Garnishments';

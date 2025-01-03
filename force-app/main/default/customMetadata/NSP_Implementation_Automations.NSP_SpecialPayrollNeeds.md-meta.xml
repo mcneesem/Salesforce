@@ -4,7 +4,7 @@
     <protected>false</protected>
     <values>
         <field>NSP_Automation_Name__c</field>
-        <value xsi:type="xsd:string">Special Payroll Needs Notification</value>
+        <value xsi:type="xsd:string">Custom Reporting Needs Notification</value>
     </values>
     <values>
         <field>NSP_Automation_Order__c</field>
