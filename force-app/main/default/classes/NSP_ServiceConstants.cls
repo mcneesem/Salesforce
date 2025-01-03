@@ -11,7 +11,7 @@ public class NSP_ServiceConstants {
     public static final String DATA_MIGRATION ='Data Migration';
     // TERMINATION FORM CONSTANTS
     public static final String PR_SUPERVISOR_APPROVED = 'PR Supervisor Approved';
-    public static final String TERM_SUPERVISOR_APPROVED = 'Term Team Approved';
+    public static final String TERM_SUPERVISOR_APPROVED = NSP_ServiceConstants.TERM_TEAM_APPROVED;
     public final static String terminationFormTaskName = 'Termination request form';
     public static final String NSP_Payroll_Specialist_Form = 'NSP_Payroll_Specialist_Form';
     public static final String NSP_Client_Reinstatement = 'NSP_Client_Reinstatement';
@@ -23,7 +23,8 @@ public class NSP_ServiceConstants {
     public static final String PROJECTSTATUSCLOSED = 'Close/Lost';
     public static final String PROJECTSTATUSCOMPLETED = 'Complete';
     public static final String PROJECTSTATUSCANCELLED = 'Cancelled';
-    public static final String PROJECTSTATUSNOTSTARTED = 'Not Started';
+    private static final String NOT_STARTED = 'Not Started';
+    public static final String PROJECTSTATUSNOTSTARTED = NSP_ServiceConstants.NOT_STARTED;
     public static final String FINISH_To_START         = 'Finish to Start (FS)';
     public static final String CANCELLED_REASON        = 'Other';
     public static final String PROJECT_TYPE_SERVICE    = 'Service Plan';
@@ -61,8 +62,9 @@ public class NSP_ServiceConstants {
     public static final String PROJECT_TASK_RET_RECORDTYPE = 'RET_Project_Task';
     public static final String PROJECTTASKRETCOMPLIANCE = 'RET Compliance';
     public static final String PROJECTTASKRETEXECUTIVE = 'RET Executive & Project';
-    public static final String PROJECT_TASK_IN_PROGRESS = 'In Progress';
-    public static final String PROJECT_TASK_NOT_STARTED = 'Not Started';
+    private static final String IN_PROGRESS = 'In Progress';
+    public static final String PROJECT_TASK_IN_PROGRESS = NSP_ServiceConstants.IN_PROGRESS;
+    public static final String PROJECT_TASK_NOT_STARTED = NSP_ServiceConstants.NOT_STARTED;
     public static final String TASKCOMPLETE = 'Complete';
     public static final String REINSTATEMENT_REQUESTED_TASK = 'Reinstatement Requested';
     public static final String ASSET_OFFSET_DATE = 'Asset Renewal Date';
@@ -96,7 +98,7 @@ public class NSP_ServiceConstants {
 
     // TERMINATION FROM STATUS
     public static final String TERMINATION_FORM_APPROVED_STATUS = 'PR Supervisor Approved';
-    public static final String TERMINATION_FORM_PR_APPROVED_STATUS = 'Term Team Approved';
+    public static final String TERMINATION_FORM_PR_APPROVED_STATUS = NSP_ServiceConstants.TERM_TEAM_APPROVED;
     // PROJECT TASK ASSIGNMENT CONSTANTS
     public static final String PTASSIGNMENTROLE = 'Architect';
     public static final String PRIMARY_RESOURCETYPE = 'Primary';
@@ -126,8 +128,8 @@ public class NSP_ServiceConstants {
     public final static String CASE_CATEGORY_RANDOM = 'ITSWOSU';
     public final static String CASE_CLOSED_STATUS   = 'Closed';
     public static final String HCM_CASE_SUBJECT = 'iSolved HCM Audit Task | ';   
-    public static final String CASE_SUB_STATUS_NOT_STARTED = 'Not Started';
-    public static final String CASE_STATUS_NOT_STARTED = 'Not Started';
+    public static final String CASE_SUB_STATUS_NOT_STARTED = NSP_ServiceConstants.NOT_STARTED;
+    public static final String CASE_STATUS_NOT_STARTED = NSP_ServiceConstants.NOT_STARTED;
     public static final String CASE_CATEGORY_WX_WA = 'WX/WA';
     public static final String CASE_SUB_CATEGORY_PROJECTS = 'Projects';
     public static final String CASE_DETAIL_HCM_AUDIT = 'HCM Audit';
@@ -174,9 +176,9 @@ public class NSP_ServiceConstants {
     public final static String CASE_SUB_STATUS_WAITING_ON_CUSTOMER = 'Waiting on Customer';
     public final static String CASE_PRIORITY_HIGH = 'High';
     public final static String CASE_ORIGIN_EMAIL = 'Email';
-    public final static String CASE_CATEGORY_TIME_AND_ATTENDANCE = 'Time & Attendance';
+    public final static String CASE_CATEGORY_TIME_AND_ATTENDANCE = NSP_ServiceConstants.TIME_AMP_ATTENDANCE;
     public final static String CASE_SUBCATEGORY_TIMESTAR_WO = 'TimeStar WO'; 
-    public final static String CASE_CATEGORY_EMP_SCREENING = 'Employment Screening';
+    public final static String CASE_CATEGORY_EMP_SCREENING = NSP_ServiceConstants.EMPLOYMENT_SCREENING;
     public static final String IMPACT_FOCUS_ITEM_ORIGIN = 'Impact Focus Item';  
     public final static String SEASONAL_EMP_DETAIL = 'Seasonal Employer Requests'; 
     public final static String RESOLVED = 'Resolved';
@@ -236,7 +238,7 @@ public class NSP_ServiceConstants {
     public final static String PEOMILSTONE = 'PEO_Milestone';
     public final static String BPSMILESTONE = 'BPS_Milestone';
     public final static String MILESTONESTATUSCOMPLETE = 'Complete';
-    public final static String MILESTONESTATUSINPROGRESS = 'In Progress';
+    public final static String MILESTONESTATUSINPROGRESS = NSP_ServiceConstants.IN_PROGRESS;
 
     //contact Contains
     public final static String Resource_Role = 'Insperity';
@@ -373,7 +375,7 @@ public class NSP_ServiceConstants {
     public final static String SUBJECT9='Client has Employees on Leave';
     public final static String LOACOMMETNS='Add all LOA Contacts to the case, attach the completed LOA Spreadsheet and all LOA Paperwork and reassign the case to the Health & Welfare Leave Admin queue';
     public final static String FORMERCLIENT ='Former client returning within 12 months';
-    public final static String CASE_TIME_ATTENDENCE = 'Time & Attendance';
+    public final static String CASE_TIME_ATTENDENCE = NSP_ServiceConstants.TIME_AMP_ATTENDANCE;
     public final static String CASE_ORGPLUS_SOFTWARE = 'OrgPlus Software';
     public final static String CASE_PERFORM_SOFTWARE = 'PerformSmart Software';
     public final static String CASE_WX_WA = 'WX/WA';
@@ -468,7 +470,8 @@ public class NSP_ServiceConstants {
     public final static String CLIENTB='403B';
     public final static String NY='NY';
     public final static String PAYSETUP='Payroll - Employee Types of Pay Setup';
-    public final static String COSTING='Job Costing';
+    private final static String JOB_COSTING = 'Job Costing';
+    public final static String COSTING = NSP_ServiceConstants.JOB_COSTING;
     public final static String REPORITNTNEED='Payroll - Client Reporting Needs';
     public final static String REPORT401='Custom 401(k) report';    
     public final static String OTHREPORTS='Other Custom Reports';
@@ -482,7 +485,7 @@ public class NSP_ServiceConstants {
     public final static String GREATER_THAN = 'Greater than 84 days';
     public final static String SUBSTANCE = 'Substance Abuse Policy';
     public final static String STANDARD_LETTER = 'Standard Offer Letter';
-    public final static String SCREENING = 'Employment Screening';
+    public final static String SCREENING = NSP_ServiceConstants.EMPLOYMENT_SCREENING;
     public final static String PERFORMANCE = 'Performance Management';
     public final static String ORGANIZATIONAL = 'Organization Planning';
     public final static String INSURANCE = 'Insurance Services';
@@ -556,7 +559,7 @@ public class NSP_ServiceConstants {
     public final static String PTOTask='PTO Policy Analysis, Development and Tracking for ';
     public final static String LOCATIONS='Locations';
     public final static String DEPARTMENTS='Departments';
-    public final static String JOBCOSTING='Job Costing';
+    public final static String JOBCOSTING = NSP_ServiceConstants.JOB_COSTING;
     public final static String TIMEENTRY = 'Time entry method is ';
     public final static String HRSREVIEW='HRS to review accrual policy(ies) with Client/create any new policies as needed, once compliant, then submit PTO SmartForm with attached policy(ies). Once complete, close this case.';
     public final static String SEASONALCOMMENT='See the Implementation Profile for Seasonal Employee details.';
@@ -578,7 +581,7 @@ public class NSP_ServiceConstants {
     public final static String EMPLOYEEDEDUCT= 'Employee Deductions – non NSP Retirement Plan';
     public final static String NYWSEE= 'Post-tax deductions – NY WSEE';
     public final static String RELABELING= 'Special Pay Codes/Relabeling';
-    public final static String JOBCOST='Job Costing';
+    public final static String JOBCOST = NSP_ServiceConstants.JOB_COSTING;
     public final static String INTEGRA='Integra';
     public final static String INSPERITY_INTEGRA='Quickbooks Integration(Insperity Integra)';
     public final static String INTEGRARESPONSE='Integra Responses SmartSheet';
@@ -732,7 +735,7 @@ public class NSP_ServiceConstants {
       public static final String STATUSCANCELLED = 'Cancelled';
       public static final String SUBJECTRELATEDTOOPTUM = 'Client has a HSA with Optum Bank';
       public static final String MASTER_CQA_TASK = 'Master CQA Case';
-      public static final String CATEGORY_TIME_ATTENDANCE = 'Time & Attendance';
+      public static final String CATEGORY_TIME_ATTENDANCE = NSP_ServiceConstants.TIME_AMP_ATTENDANCE;
       public static final String SUB_CATEGORY_ITA_CQA = 'ITA CQA';
       public static final String NSP_ITA_CQA = 'NSP_ITA_CQA';
       public final static String REOPENED = 'ReOpened';
@@ -830,7 +833,8 @@ public class NSP_ServiceConstants {
     public static final String ORGANIZATIONAL_PLANNING = 'Organizational Planning';
     public static final String PAYROLL_HR_MANAGEMENT_WA = 'Payroll & Human Capital Management(Workforce Acceleration)';
     public static final String PERFORMANCE_MANAGEMENT = 'Performance Management';
-    public static final String TIME_ATTENDANCE = 'Time & Attendance';
+    public static final String TIME_AMP_ATTENDANCE = 'Time & Attendance';
+    public static final String TIME_ATTENDANCE = NSP_ServiceConstants.TIME_AMP_ATTENDANCE;
     public static final String PI_RECRUITING_SERVICES = 'Recruiting Services';
     public static final String PI_RETIREMENT_SERVICES = 'Retirement Services';
     public static final String TIME_AND_ATTENDANCE = 'Time and Attendance';
@@ -860,7 +864,7 @@ public class NSP_ServiceConstants {
     public final static String userAlias   = 'Insp';
     public final static String CUSTOMER_COMMUNITY_PLUS ='Customer Community Plus User';
     public final static String READ_ACCESS   = 'Read';
-    public final static String InProgressStatus   = 'In Progress';
+    public final static String InProgressStatus = NSP_ServiceConstants.IN_PROGRESS;
     public final static String scheduleStatus   = 'Scheduled';
     public final static String dispatchStatus   = 'Dispatched';
     public final static String workOrder   = 'WorkOrder';
