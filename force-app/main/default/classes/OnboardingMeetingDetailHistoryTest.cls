@@ -1,7 +1,7 @@
 @isTest
-public class OnboardingMeetingDetailHistoryTest 
+private class OnboardingMeetingDetailHistoryTest 
 {
-    //=== Preparing the test data
+    //== Preparing the test data
     @testSetup static void setupTestData()
     {
         
@@ -16,8 +16,7 @@ public class OnboardingMeetingDetailHistoryTest
         // Asserts
         Assert.isNotNull(newOMR, 'Onboarding Meeting Reqeust is should not be null');
         Assert.isNotNull(newOMD, 'Onboarding Meeting Detail should not be null');
-        Assert.areEqual(newOMD.Onboarding_Meeting_Request__c, newOMR.Id);
-        
+        Assert.areEqual(newOMD.Onboarding_Meeting_Request__c, newOMR.Id);        
     }
     
     // Test Method to check the History object
@@ -26,6 +25,7 @@ public class OnboardingMeetingDetailHistoryTest
         Onboarding_Meeting_Detail__c meetingRequest 		= [SELECT ID, Onboarding_Meeting_Request__c, EE_Count__c, Effective_Date__c, 
                                                                Special_Instructions__c, Pay_Frequency__c    
                                                                FROM Onboarding_Meeting_Detail__c ORDER BY CreatedDate DESC LIMIT 1];
+
         
         List<Onboarding_Meeting_Detail__History> histories 	= getOnboardingMeetingDetailHistory(meetingRequest.Id);
         // Preparing the Request wrapper to get the response wrapper
@@ -47,7 +47,7 @@ public class OnboardingMeetingDetailHistoryTest
     }
     
     //== Method to set the fields for Onboarding Meeting Request
-    public static Onboarding_Meeting_Request__c createOnboardingMeetingRequest()
+    private static Onboarding_Meeting_Request__c createOnboardingMeetingRequest()
     {
         Onboarding_Meeting_Request__c newOMR 				= new Onboarding_Meeting_Request__c();
         newOMR.Meeting_Type__c 								= 'Discovery/SKO';
@@ -68,7 +68,7 @@ public class OnboardingMeetingDetailHistoryTest
     }
     
     //== Method to set the fields for Onboarding Meeting Detial
-    public static Onboarding_Meeting_Detail__c createOnboardingMeetingDetial(Id newOMR_Id)
+    private static Onboarding_Meeting_Detail__c createOnboardingMeetingDetial(Id newOMR_Id)
     {
         Onboarding_Meeting_Detail__c newOMD 	= new Onboarding_Meeting_Detail__c();
         newOMD.Preferred_Meeting_Time__c 		= '8AM - 9AM';
@@ -83,7 +83,7 @@ public class OnboardingMeetingDetailHistoryTest
     }
     
     //== Get History Records related to Onboarding Meeting Detail
-    public static List<Onboarding_Meeting_Detail__History> getOnboardingMeetingDetailHistory(Id meetingId)
+    private static List<Onboarding_Meeting_Detail__History> getOnboardingMeetingDetailHistory(Id meetingId)
     {
         List<Onboarding_Meeting_Detail__History> histories;
         // If it is test calss then create dummy data
@@ -91,9 +91,10 @@ public class OnboardingMeetingDetailHistoryTest
         {
             histories = new List<Onboarding_Meeting_Detail__History>();
             histories.add(new Onboarding_Meeting_Detail__History(parentId = meetingId, Field='Onboarding_Meeting_Request__c'));
+            histories.add(new Onboarding_Meeting_Detail__History(parentId = meetingId, Field='Special_Instructions__c'));
+            histories.add(new Onboarding_Meeting_Detail__History(parentId = meetingId, Field='First_Pay_Date__c'));
             histories.add(new Onboarding_Meeting_Detail__History(parentId = meetingId, Field='EE_Count__c'));
             histories.add(new Onboarding_Meeting_Detail__History(parentId = meetingId, Field='Effective_Date__c'));
-            histories.add(new Onboarding_Meeting_Detail__History(parentId = meetingId, Field='Special_Instructions__c'));
             histories.add(new Onboarding_Meeting_Detail__History(parentId = meetingId, Field='Pay_Frequency__c'));
         }
         else
@@ -101,6 +102,6 @@ public class OnboardingMeetingDetailHistoryTest
             histories = [SELECT Id, ParentId, Field, OldValue, NewValue, DataType FROM Onboarding_Meeting_Detail__History WHERE ParentId = :meetingId];
         }
         
-        return histories;
+	       return histories;
     }
 }
