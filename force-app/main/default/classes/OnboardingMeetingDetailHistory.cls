@@ -1,5 +1,5 @@
 public with sharing class OnboardingMeetingDetailHistory {
-    // test w/ OnboardingMeetingDetailHistoryTest (84%)
+    // test w/ OnboardingMeetingDetailHistoryTest (96%)
     private static final String OLD_VALUE  = 'Old Value: ';
     private static final String NEW_VALUE  = 'New Value: ';
     private static final String CHANGED_FROM  = ' changed from ';
@@ -15,7 +15,7 @@ public with sharing class OnboardingMeetingDetailHistory {
         try {
             if (requests?.size() > 0) {
                 for (Request req : requests) {
-                    Response res = createResponseFromHistory(req.OMDHistory, mfields);
+                    Response res = createResponseFromHistory(req.omdHistory, mfields);
                     responses.add(res);
                 }
             }
@@ -27,14 +27,14 @@ public with sharing class OnboardingMeetingDetailHistory {
     }
     
     // crreate Response Object based on History Records
-    private static Response createResponseFromHistory(List<Onboarding_Meeting_Detail__History> OMDHistory, Map<String, Schema.SObjectField> mfields) {
+    private static Response createResponseFromHistory(List<Onboarding_Meeting_Detail__History> omdHistory, Map<String, Schema.SObjectField> mfields) {
         Response res = new Response();
         res.meetingRescheduled = false;
         
-        if (OMDHistory?.size() > 0) {
-            for (Onboarding_Meeting_Detail__History history : OMDHistory) {
+        if (omdHistory?.size() > 0) {
+            for (Onboarding_Meeting_Detail__History history : omdHistory) {
                 Schema.DescribeFieldResult fieldResult = mfields.get(history.Field).getDescribe();
-                processHistoryField(history, fieldResult, res);                
+               res = processHistoryField(history, fieldResult, res);                              
             }
         }
         
@@ -42,59 +42,57 @@ public with sharing class OnboardingMeetingDetailHistory {
     }
     
     // process individual history fields    
-    private static void processHistoryField(Onboarding_Meeting_Detail__History history, Schema.DescribeFieldResult fieldResult, Response res) {
+    private static Response processHistoryField(Onboarding_Meeting_Detail__History history, Schema.DescribeFieldResult fieldResult, Response res) {
         if (history.Field == 'Onboarding_Meeting_Request__c') {
             res.meetingRescheduled = true;
         } else {
-            appendResultFromHistory(history, fieldResult, res);
+          appendResultFromHistory(history, fieldResult, res);
         }
+        return res;
     }
     
-    private static void appendResultFromHistory(Onboarding_Meeting_Detail__History history, Schema.DescribeFieldResult fieldResult, Response res) {
+    private static Response appendResultFromHistory(Onboarding_Meeting_Detail__History history, Schema.DescribeFieldResult fieldResult, Response res) {
         String parsedResult = parseStringFromListOfValues(history, fieldResult);
-        res.result = res.result == null ? parsedResult : res.result + parsedResult;
+        res.result = res.result == null ? parsedResult : res.result + parsedResult;        
+        return res;
     }
-    
-    
+ 
+        
    private static string parseStringFromListOfValues(Onboarding_Meeting_Detail__History history, Schema.DescribeFieldResult fieldResult) {
         String returnValue = '';
         String fieldLabel = fieldResult.getLabel();
         String oldValue = String.valueOf(history?.OldValue);
         String newValue = String.valueOf(history?.NewValue);
-        
-        // default message
-        String changeMessage = '<br/>' + fieldLabel + CHANGED_FROM + OLD_VALUE + oldValue + ' to ' + NEW_VALUE + newValue;
-        
-        // format the output based in fieldtype
-        String fieldType = String.valueOf(fieldResult?.getType());
-        if (fieldType == 'DOUBLE') {
-            returnValue = formatDoubleValue(changeMessage, history);
-        } else if (fieldType == 'DATE') {
-            returnValue = formatDateValue(changeMessage, history);
-        } else if (fieldType == 'TEXTAREA') {
-            returnValue = formatTextareaValue(fieldLabel);
-        } else {
-            returnValue = changeMessage;  // Default case for other types
-        }
-        
-        return returnValue;
-    }
-    
+            
+           String fieldType = String.valueOf( fieldResult?.getType() );
+           if ( fieldType == 'DOUBLE' ) {
+               oldValue = formatDoubleValue(Integer.valueOf(history?.OldValue) );
+               newValue = formatDoubleValue(Integer.valueOf(history?.NewValue) );
+               
+           } else if ( fieldType == 'DATE' ) {
+               oldValue = formatDateValue( (Datetime)(history?.OldValue) );
+               newValue = formatDateValue( (Datetime)(history?.NewValue) );
+           }
+           if ( fieldType == 'TEXTAREA' ) {
+               returnValue = formatTextareaValue(fieldLabel);
+           } else {
+               returnValue = '<br/>' + fieldLabel + CHANGED_FROM + OLD_VALUE + oldValue + ' to ' + NEW_VALUE + newValue;
+           }
+           return returnValue;       
+    } 
+
     // format Double
-    private static String formatDoubleValue(String baseMessage, Onboarding_Meeting_Detail__History history) {
-        return baseMessage.replace(String.valueOf(history?.OldValue), String.valueOf(Integer.valueOf(history?.OldValue)))
-            .replace(String.valueOf(history?.NewValue), String.valueOf(Integer.valueOf(history?.NewValue)));
-    }
+      private static String formatDoubleValue(Double value) {         
+        return value != null ? String.valueOf(Integer.valueOf(value)) : String.valueOf(value);
+        
+    } 
+
+   // format Date
+    private static String formatDateValue(Datetime value) {
+        return value != null ? value.format('MM-dd-yyyy'): String.valueOf(value);        
+    } 
     
-    // format Date
-    private static String formatDateValue(String baseMessage, Onboarding_Meeting_Detail__History history) {
-        String oldDate = ((Datetime)(history?.OldValue))?.format('MM-dd-yyyy');
-        String newDate = ((Datetime)(history?.NewValue))?.format('MM-dd-yyyy');
-        return baseMessage.replace(String.valueOf(history?.OldValue), oldDate)
-            .replace(String.valueOf(history?.NewValue), newDate);
-    }
-    
-    // format TEXTAREA
+	// format TEXTAREA
     private static String formatTextareaValue(String fieldLabel) {
         return '<br/>' + fieldLabel + ' updated ';
     }
@@ -103,7 +101,7 @@ public with sharing class OnboardingMeetingDetailHistory {
     public class Request  
     {
         @InvocableVariable
-        public List<Onboarding_Meeting_Detail__History> OMDHistory;
+        public List<Onboarding_Meeting_Detail__History> omdHistory;
     }
     
     //== Response Wrapper

@@ -54,7 +54,6 @@
             </value>
         </inputParameters>
         <nameSegment>emailSimple</nameSegment>
-        <offset>0</offset>
     </actionCalls>
     <actionCalls>
         <name>OnboardingMeetingDetailHistory</name>
@@ -71,13 +70,12 @@
         </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
-            <name>OMDHistory</name>
+            <name>omdHistory</name>
             <value>
                 <elementReference>rc_OMDHistory</elementReference>
             </value>
         </inputParameters>
         <nameSegment>OnboardingMeetingDetailHistory</nameSegment>
-        <offset>0</offset>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <apiVersion>62.0</apiVersion>
@@ -262,7 +260,7 @@
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Yes_Valid_QM</name>
-            <conditionLogic>or</conditionLogic>
+            <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>Get_Queue_Members</leftValueReference>
                 <operator>IsNull</operator>
@@ -335,7 +333,7 @@
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Yes_User_Exist</name>
-            <conditionLogic>or</conditionLogic>
+            <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>Get_Member_Email_Address</leftValueReference>
                 <operator>IsNull</operator>
@@ -613,7 +611,7 @@ TEXT(YEAR({!$Record.Onboarding_Meeting_Request_Date__c}))</expression>
     <textTemplates>
         <name>t_EmailSubject</name>
         <isViewedAsPlainText>true</isViewedAsPlainText>
-        <text>{!$Record.Meeting_Request_Type__c}|{!$Record.Account__r.NSP_AIMS_Client__c}|{!$Record.Account__r.Name}</text>
+        <text>{!$Record.Meeting_Request_Type__c}|{!$Record.Account__r.NSP_AIMS_Client__c}|{!$Record.Account__r.Name} has been Updated</text>
     </textTemplates>
     <variables>
         <name>FaultElement</name>
