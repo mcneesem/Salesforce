@@ -2,7 +2,7 @@
 private class OnboardingMeetingDetailHistoryTest 
 {
     //== Preparing the test data
-    @testSetup static void setupTestData()
+    @testSetup private static void setupTestData()
     {
         
         // Create Onboarding Meeting Request
@@ -20,7 +20,7 @@ private class OnboardingMeetingDetailHistoryTest
     }
     
     // Test Method to check the History object
-    @isTest static void Test_get_OMD_History()
+    @isTest private static void Test_get_OMD_History()
     {
         Onboarding_Meeting_Detail__c meetingRequest 		= [SELECT ID, Onboarding_Meeting_Request__c, EE_Count__c, Effective_Date__c, 
                                                                Special_Instructions__c, Pay_Frequency__c    
