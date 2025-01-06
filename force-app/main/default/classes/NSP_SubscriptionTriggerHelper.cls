@@ -1,5 +1,5 @@
 public class NSP_SubscriptionTriggerHelper {
-    // test w/ NSP_SubscriptionTriggerHelperTest (83%)
+    // test w/ NSP_SubscriptionTriggerHelperTest (75%)
 
     //
     // Iterates throught the list of new subscriptions and passes the required attributes to other methods.
@@ -273,19 +273,11 @@ public class NSP_SubscriptionTriggerHelper {
         }
         if ( !entitlementsToCreate.isEmpty() ) {
             List<Database.SaveResult> results = Database.insert( entitlementsToCreate , false );
-            NSP_ErrorLogHandler.logResults(
-                NSP_SubscriptionTriggerHelper.class.getName() ,
-                'createEntitlements:NSP_Support_Entitlement__c' ,
-                results
-            );
+            NSP_SubscriptionTriggerHelper.handleResults( results , 'createEntitlements:NSP_Support_Entitlement__c' );
         }
         if ( !assetsToUpdate.isEmpty() ) {
             List<Database.SaveResult> results = Database.update( assetsToUpdate , false );
-            NSP_ErrorLogHandler.logResults(
-                NSP_SubscriptionTriggerHelper.class.getName() ,
-                'createEntitlements:Asset' ,
-                results
-            );
+            NSP_SubscriptionTriggerHelper.handleResults( results , 'createEntitlements:Asset' );
         }
     }
 
@@ -329,11 +321,7 @@ public class NSP_SubscriptionTriggerHelper {
                 }
             }
             List<Database.SaveResult> results = Database.update( assetsToUpdate , false );
-            NSP_ErrorLogHandler.logResults(
-                NSP_SubscriptionTriggerHelper.class.getName() ,
-                'terminateSerialIds' ,
-                results
-            );
+            NSP_SubscriptionTriggerHelper.handleResults( results , 'terminateSerialIds' );
         }
     }
 
@@ -403,20 +391,12 @@ public class NSP_SubscriptionTriggerHelper {
         }
         if ( !entitlementsToUpdate.isEmpty() ) {
             List<Database.SaveResult> results = Database.update( entitlementsToUpdate , false );
-            NSP_ErrorLogHandler.logResults(
-                NSP_SubscriptionTriggerHelper.class.getName() ,
-                'remapSubscriptionsInEntitlement:NSP_Support_Entitlement__c' ,
-                results
-            );
+            NSP_SubscriptionTriggerHelper.handleResults( results , 'remapSubscriptionsInEntitlement:NSP_Support_Entitlement__c' );
         }
         if ( !assetsToUpdateMap.isEmpty() ) {
             List<Asset> assetsToUpdate = assetsToUpdateMap.values();
             List<Database.SaveResult> results = Database.update( assetsToUpdate , false );
-            NSP_ErrorLogHandler.logResults(
-                NSP_SubscriptionTriggerHelper.class.getName() ,
-                'remapSubscriptionsInEntitlement:Asset' ,
-                results
-            );
+            NSP_SubscriptionTriggerHelper.handleResults( results , 'remapSubscriptionsInEntitlement:Asset' );
         }
     }
 
@@ -435,11 +415,7 @@ public class NSP_SubscriptionTriggerHelper {
                 eachAsset.NSP_ActivationDate__c=serialIdsDateMap.get(eachAsset.SerialNumber);
             }
             List<Database.SaveResult> results = Database.update( assetsToActivate , false );
-            NSP_ErrorLogHandler.logResults(
-                NSP_SubscriptionTriggerHelper.class.getName() ,
-                'activateSerialIds' ,
-                results
-            );
+            NSP_SubscriptionTriggerHelper.handleResults( results , 'activateSerialIds' );
         }
     }
 
@@ -493,12 +469,16 @@ public class NSP_SubscriptionTriggerHelper {
         }
         if ( !opUpdateList.isEmpty() ) {
             List<Database.SaveResult> results = Database.update( opUpdateList , false );
-            NSP_ErrorLogHandler.logResults(
-                NSP_SubscriptionTriggerHelper.class.getName() ,
-                'updateTermDateonOP' ,
-                results
-            );
+            NSP_SubscriptionTriggerHelper.handleResults( results , 'updateTermDateonOP' );
         }
+    }
+
+    private static void handleResults( List<Database.SaveResult> results , String methodName ) {
+        NSP_ErrorLogHandler.logResults(
+            NSP_SubscriptionTriggerHelper.class.getName() ,
+            methodName ,
+            results
+        );
     }
 
 }
