@@ -5,7 +5,7 @@
     <externalId>false</externalId>
     <label>How will EEs punch in/out?</label>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>MultiselectPicklist</type>
     <valueSet>
