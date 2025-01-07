@@ -10,8 +10,52 @@
     <permissionSets>Implementation_Profile_Read_Only</permissionSets>
     <permissionSets>NSP_Payroll_Data_Sheet_Read_Only</permissionSets>
     <permissionSets>Named_Account_Group_Edit_Access</permissionSets>
-    <permissionSets>Request_CTM_and_Employee_Orientation_Meeting</permissionSets>
-    <permissionSets>Request_Employee_Orientation_Meeting_Revised</permissionSets>
+    <permissionSets>Organization_Wide_Email_Address_Accounts_Receivable</permissionSets>
+    <permissionSets>Organization_Wide_Email_Address_BPS_Customer_Success_Team_Box</permissionSets>
+    <permissionSets>Organization_Wide_Email_Address_Billing_Department</permissionSets>
+    <permissionSets>Organization_Wide_Email_Address_CPQ</permissionSets>
+    <permissionSets>Organization_Wide_Email_Address_Client_Sponsored_Plans</permissionSets>
+    <permissionSets>Organization_Wide_Email_Address_Contact_Center</permissionSets>
+    <permissionSets>Organization_Wide_Email_Address_Document_Management</permissionSets>
+    <permissionSets>Organization_Wide_Email_Address_Educational_Assistance</permissionSets>
+    <permissionSets>Organization_Wide_Email_Address_Employment_Screening</permissionSets>
+    <permissionSets>Organization_Wide_Email_Address_Employment_Screening_2nd</permissionSets>
+    <permissionSets>Organization_Wide_Email_Address_Equity_Payroll</permissionSets>
+    <permissionSets>Organization_Wide_Email_Address_Financial_Services</permissionSets>
+    <permissionSets>Organization_Wide_Email_Address_Garnishments</permissionSets>
+    <permissionSets>Organization_Wide_Email_Address_HR_Shared_Services</permissionSets>
+    <permissionSets>Organization_Wide_Email_Address_H_W_Leave_Administration</permissionSets>
+    <permissionSets>Organization_Wide_Email_Address_Health_Welfare_Section_125</permissionSets>
+    <permissionSets>Organization_Wide_Email_Address_ITA_Order_Processing</permissionSets>
+    <permissionSets>Organization_Wide_Email_Address_Integra</permissionSets>
+    <permissionSets>Organization_Wide_Email_Address_Orders</permissionSets>
+    <permissionSets>Organization_Wide_Email_Address_OrgPlus</permissionSets>
+    <permissionSets>Organization_Wide_Email_Address_P_C_Monopolistic_States</permissionSets>
+    <permissionSets>Organization_Wide_Email_Address_P_C_State_Compliance</permissionSets>
+    <permissionSets>Organization_Wide_Email_Address_Paid_Family_Medical_Leave</permissionSets>
+    <permissionSets>Organization_Wide_Email_Address_PerformSmart</permissionSets>
+    <permissionSets>Organization_Wide_Email_Address_R_D_Credit</permissionSets>
+    <permissionSets>Organization_Wide_Email_Address_Referral_Lead_Form_Site</permissionSets>
+    <permissionSets>Organization_Wide_Email_Address_Salesforce_Email_to_Case</permissionSets>
+    <permissionSets>Organization_Wide_Email_Address_TES_HR_Support_Center</permissionSets>
+    <permissionSets>Organization_Wide_Email_Address_Talent_Connect</permissionSets>
+    <permissionSets>Organization_Wide_Email_Address_TimeStar_Hardware</permissionSets>
+    <permissionSets>Organization_Wide_Email_Address_Time_and_Attendance</permissionSets>
+    <permissionSets>Organization_Wide_Email_Address_Unemployment_Tax</permissionSets>
+    <permissionSets>Organization_Wide_Email_Address_WX_HR_Services</permissionSets>
+    <permissionSets>Organization_Wide_Email_Address_WX_Payroll_Support</permissionSets>
+    <permissionSets>Organization_Wide_Email_Address_WX_Tax</permissionSets>
+    <permissionSets>Organization_Wide_Email_Address_W_2_Support</permissionSets>
+    <permissionSets>Organization_Wide_Email_Address_Wire_Webfocus_Report_Dev_Team</permissionSets>
+    <permissionSets>Organization_Wide_Email_Address_Withholding_Tax</permissionSets>
+    <permissionSets>Organization_Wide_Email_Address_Workers_Comp_Claims</permissionSets>
+    <permissionSets>Organization_Wide_Email_Address_Workers_Comp_Code_Changes</permissionSets>
+    <permissionSets>Organization_Wide_Email_Address_Workers_Comp_Info</permissionSets>
+    <permissionSets>Organization_Wide_Email_Address_Workers_Comp_Posters</permissionSets>
+    <permissionSets>Organization_Wide_Email_Address_XML_Utility</permissionSets>
+    <permissionSets>Organization_Wide_Email_Address_isolved_Time</permissionSets>
+    <permissionSets>Request_CTM_and_Employee_Orientation_Meeting_Detail</permissionSets>
+    <permissionSets>Request_Employee_Orientation_Meeting_Detail</permissionSets>
     <permissionSets>Required_Reporting_Fields</permissionSets>
     <permissionSets>Traction_Complete_Fields_Edit_Access</permissionSets>
     <status>Updated</status>
