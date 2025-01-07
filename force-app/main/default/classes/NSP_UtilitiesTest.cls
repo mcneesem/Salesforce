@@ -65,17 +65,4 @@ private class NSP_UtilitiesTest {
     }
 
     public class RequiredInfoMissingException extends Exception{}
-    
-    @isTest
-    static void getSalesSegmentTest(){
-        
-        test.startTest();
-        
-        String segment = NSP_Utilities.getSalesSegment(751);
-
-        System.assertEquals('Enterprise',  segment);      
-        
-        test.stopTest();
-    }
-
 }

@@ -10,21 +10,7 @@ Modification Log     :
 * Jatin Ahuja                 6/9/2022            First Iteration
 */
 public with sharing class NSP_Utilities{
-    // test w/ NSP_UtilitiesTest (40%)
-    
-    private static List<Sales_Segment_Threshold__mdt> thresholds {
-        private get {
-            if ( thresholds == null ) {
-                thresholds = [
-                    SELECT Id , Label , Minimum_Employees__c
-                    FROM Sales_Segment_Threshold__mdt
-                    ORDER BY Minimum_Employees__c DESC
-                ];
-            }
-            return thresholds;
-        }
-        private set;
-    }
+
 
     @AuraEnabled(cacheable = true)
     public static List<FieldSetField> getFieldSetFieldsByFieldSetName(String objectApiName, String fieldSetName){
@@ -138,22 +124,6 @@ public with sharing class NSP_Utilities{
         }
 
         return errors;
-    }
-
-    /*
-    * This method returns the sales segment based on the number of employees
-    * @param numEmployees
-    * @return String  
-    */
-    public static String getSalesSegment(Integer numEmployees) {
-        
-        for(Sales_Segment_Threshold__mdt threshold: thresholds){
-            if(numEmployees >= threshold.Minimum_Employees__c){
-                return threshold.label;
-            }
-        }
-
-        return null;
     }
 
     // wrapper class to set fields

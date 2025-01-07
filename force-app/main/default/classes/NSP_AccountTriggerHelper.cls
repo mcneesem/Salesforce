@@ -13,7 +13,6 @@ public class NSP_AccountTriggerHelper {
     // test w/ NSP_AccountTriggerHelperTest (79%)
     // test w/ NSP_AccountContactRelationHelperTest (34%)
     // test w/ NSP_AccountContactServiceHelperTest (38%)
-
     private static final string PARTNER_RECORDTYPE = 'NSP_Partner_Client';
     private static final Id PARTNER_RECORDTYPE_ID = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get(PARTNER_RECORDTYPE).getRecordTypeId();
     private static final string DA_ROLE = 'District Administrator';
@@ -492,7 +491,7 @@ WHERE (userRole.Name = 'Loyalty Advisor' OR userRole.Name = 'Channel Program Man
     public static void updateAccountSegment(Account accountObject) {
         
         if(Account_Segment_Threshold_Settings__c.getInstance(UserInfo.getUserId()).Is_Enabled__c){
-            accountObject.NSP_Account_Segment__c = NSP_Utilities.getSalesSegment(accountObject.NumberOfEmployees);
+            accountObject.NSP_Account_Segment__c = NSP_LeadTriggerHelper.getSalesSegment(accountObject.NumberOfEmployees);
         }
         else
         {
@@ -506,7 +505,7 @@ WHERE (userRole.Name = 'Loyalty Advisor' OR userRole.Name = 'Channel Program Man
             }
         }
     }
-
+    
     /* Description: This method sets signer to dummy user
      * BPA to Account owner if role is BPA
      * @param: accountList

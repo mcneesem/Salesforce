@@ -15,6 +15,20 @@ Modification Log     :
 public with sharing class NSP_LeadTriggerHelper {
     // test w/ NSP_LeadTriggerHelperTest (84%)
 
+    private static List<Sales_Segment_Threshold__mdt> thresholds {
+        private get {
+            if ( thresholds == null ) {
+                thresholds = [
+                    SELECT Id , Label , Minimum_Employees__c
+                    FROM Sales_Segment_Threshold__mdt
+                    ORDER BY Minimum_Employees__c DESC
+                ];
+            }
+            return thresholds;
+        }
+        private set;
+    }
+
     private static final List<String> reasonNurturingReasonsList = System.label.NSP_Lead_at_Nurturing_or_Unqualified.split( ';' );
     private static final Id NEW_LEAD_RT_ID = NSP_GenericRecordType.getRecordTypeId( 'Lead' , 'NSP_New_Lead_Record_Type' );
     private static final Id LEAD_RT_ID = NSP_GenericRecordType.getRecordTypeId( 'Lead' , 'Lead' );
@@ -966,7 +980,7 @@ if ((leadNewMap.get(leadId).NSP_Lead_Routing__c == true &&
     public static void updateAccountSegment(Lead leadObject) {
 
         if(Account_Segment_Threshold_Settings__c.getInstance(UserInfo.getUserId()).Is_Enabled__c){
-            leadObject.NSP_Account_Segment__c = NSP_Utilities.getSalesSegment(leadObject.NumberOfEmployees);
+            leadObject.NSP_Account_Segment__c = getSalesSegment(leadObject.NumberOfEmployees);
         }
         else
         {
@@ -981,6 +995,22 @@ if ((leadNewMap.get(leadId).NSP_Lead_Routing__c == true &&
                 leadObject.NSP_Account_Segment__c = null;
             }
         }
+    }
+
+    /*
+    * This method returns the sales segment based on the number of employees
+    * @param numEmployees
+    * @return String  
+    */
+    public static String getSalesSegment(Integer numEmployees) {
+        
+        for(Sales_Segment_Threshold__mdt threshold: thresholds){
+            if(numEmployees >= threshold.Minimum_Employees__c){
+                return threshold.label;
+            }
+        }
+
+        return null;
     }
 
     public void restrictDelete( List<Lead> records , Map<Id,Lead> deprecated ) {
