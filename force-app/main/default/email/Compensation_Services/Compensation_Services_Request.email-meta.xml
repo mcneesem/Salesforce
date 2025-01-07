@@ -4,7 +4,7 @@
     <description>For Compensation Services use Only</description>
     <encodingKey>ISO-8859-1</encodingKey>
     <letterhead>Insperity_HR</letterhead>
-    <name>Compensation Services Request</name>
+    <name>Compensation Services Request HTML</name>
     <style>freeForm</style>
     <subject>Compensation Services Request</subject>
     <textOnly>Hello {!Contact.Name},
