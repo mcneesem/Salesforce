@@ -1,10 +1,73 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Apex_CheckUserPermissionController</name>
+        <label>Apex-Check User Permission</label>
+        <locationX>514</locationX>
+        <locationY>792</locationY>
+        <actionName>CustomPermissionController</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Does_owner_have_CSS_Perm</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Assign_varFault_Element_Apex_Check_User_Permission</targetReference>
+        </faultConnector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>customPermissionName</name>
+            <value>
+                <stringValue>Customer_Success_Specialist</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>userId</name>
+            <value>
+                <elementReference>$Record.OwnerId</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>CustomPermissionController</nameSegment>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+        <versionSegment>1</versionSegment>
+    </actionCalls>
     <apiVersion>61.0</apiVersion>
+    <assignments>
+        <name>Assign_varFault_Element_Apex_Check_User_Permission</name>
+        <label>Assign varFault Element - Apex Check User Permission</label>
+        <locationX>1372</locationX>
+        <locationY>900</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Apex_CheckUserPermissionController</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFault_Element_Get_Public_Group_Members</name>
+        <label>Assign varFault Element - Get Public Group Members</label>
+        <locationX>1108</locationX>
+        <locationY>1116</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Public_Group_Members</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
     <decisions>
         <name>Bypass_Opportunity_Email_Alerts_Custom_Permission_check</name>
         <label>Bypass Opportunity Email Alerts Custom Permission check</label>
-        <locationX>407</locationX>
+        <locationX>563</locationX>
         <locationY>276</locationY>
         <defaultConnector>
             <targetReference>MidMarket_Email_Alert_Check</targetReference>
@@ -24,10 +87,101 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Does_owner_have_CSS_Perm</name>
+        <label>Does owner have CSS Perm?</label>
+        <locationX>514</locationX>
+        <locationY>900</locationY>
+        <defaultConnector>
+            <targetReference>Get_Public_Group_Members</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No perms</defaultConnectorLabel>
+        <rules>
+            <name>Owner_has_Customer_Success_Specialist_Permission</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Apex_CheckUserPermissionController.hasPermission</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>Owner has Customer Success Specialist Permission</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>If Opty owner HAS the custom permission for &quot;Customer Success Specialist&quot; then the email should NOT be sent</description>
+        <name>HCM_Lead_Specialist_Email_needed</name>
+        <label>HCM Lead Specialist Email needed?</label>
+        <locationX>712</locationX>
+        <locationY>1116</locationY>
+        <defaultConnectorLabel>Do Not Send HCM Email</defaultConnectorLabel>
+        <rules>
+            <name>Notify_MidMarket_Team_of_WX_WA_Opty</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>collectionGroupMembers</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Opportunity_Subflow_Email_Alerts_HCM_Email</targetReference>
+            </connector>
+            <label>Notify MidMarket Team of WX/WA Opty</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Is_this_possibly_an_HCM_Lead_Specialist_Opty</name>
+        <label>Is this possibly an HCM Lead Specialist Opty?</label>
+        <locationX>1075</locationX>
+        <locationY>684</locationY>
+        <defaultConnectorLabel>N/A</defaultConnectorLabel>
+        <rules>
+            <name>Need_to_Check_Owner_Perms</name>
+            <conditionLogic>(1 OR 2) AND 3 AND 4</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.NSP_PrimaryProduct__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>WX</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.NSP_PrimaryProduct__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>WA</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.NSP_Client_For_Life__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>WO/WS</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>New Product</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Apex_CheckUserPermissionController</targetReference>
+            </connector>
+            <label>Need to Check Owner Perms</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>MidMarket_Email_Alert_Check</name>
         <label>MidMarket Email Alert Check</label>
-        <locationX>605</locationX>
+        <locationX>1075</locationX>
         <locationY>384</locationY>
+        <defaultConnector>
+            <targetReference>Is_this_possibly_an_HCM_Lead_Specialist_Opty</targetReference>
+        </defaultConnector>
         <defaultConnectorLabel>N/A</defaultConnectorLabel>
         <rules>
             <name>Send_MidMarket_Email</name>
@@ -80,7 +234,7 @@
             <label>Send MidMarket Email</label>
         </rules>
     </decisions>
-    <description>Moved logic to decision criteria and removed redundancies</description>
+    <description>Updated for HCM Leads Specialist email for WX/WA. Moved logic to decision criteria and removed redundancies</description>
     <environments>Default</environments>
     <interviewLabel>Opportunity - Updated - Async - Primary Product Changed {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Opportunity - Updated - Async - Primary Product Changed</label>
@@ -103,6 +257,51 @@
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>Get_Public_Group_Members</name>
+        <label>Get Public Group Members</label>
+        <locationX>712</locationX>
+        <locationY>1008</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>HCM_Lead_Specialist_Email_needed</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Assign_varFault_Element_Get_Public_Group_Members</targetReference>
+        </faultConnector>
+        <filterLogic>1 AND (2 OR 3 OR 4)</filterLogic>
+        <filters>
+            <field>UserOrGroupId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.OwnerId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>GroupId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>00G4x000000x3HA</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>GroupId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>00G4x000000x3H9</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>GroupId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>00G4x000000x3Hl</stringValue>
+            </value>
+        </filters>
+        <object>GroupMember</object>
+        <outputReference>collectionGroupMembers</outputReference>
+        <queriedFields>Id</queriedFields>
+    </recordLookups>
     <start>
         <locationX>50</locationX>
         <locationY>0</locationY>
@@ -154,10 +353,38 @@
     </start>
     <status>Draft</status>
     <subflows>
+        <name>Fault_Handler_Subflow</name>
+        <label>Fault Handler Subflow</label>
+        <locationX>1372</locationX>
+        <locationY>1008</locationY>
+        <flowName>Insperity_Fault_Handler_Subflow</flowName>
+        <inputAssignments>
+            <name>faultElement</name>
+            <value>
+                <elementReference>varFaultElement</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultFlow</name>
+            <value>
+                <stringValue>Opportunity_Updated_Async_Primary_Product_Changed</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultMessage</name>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
         <name>Opportunity_Subflow_Email_Alerts</name>
         <label>Opportunity - Subflow - Email Alerts</label>
-        <locationX>473</locationX>
+        <locationX>943</locationX>
         <locationY>492</locationY>
+        <connector>
+            <targetReference>Is_this_possibly_an_HCM_Lead_Specialist_Opty</targetReference>
+        </connector>
         <flowName>Opportunity_Subflow_Email_Alerts</flowName>
         <inputAssignments>
             <name>opportunityId</name>
@@ -173,4 +400,38 @@
         </inputAssignments>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </subflows>
+    <subflows>
+        <name>Opportunity_Subflow_Email_Alerts_HCM_Email</name>
+        <label>Opportunity - Subflow - Email Alerts - HCM Email</label>
+        <locationX>580</locationX>
+        <locationY>1224</locationY>
+        <flowName>Opportunity_Subflow_Email_Alerts</flowName>
+        <inputAssignments>
+            <name>opportunityId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>varEmailAlert</name>
+            <value>
+                <stringValue>Notify_MidMarket_Team_of_WX_WA_Opportunity</stringValue>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <variables>
+        <name>collectionGroupMembers</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>GroupMember</objectType>
+    </variables>
+    <variables>
+        <name>varFaultElement</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
 </Flow>

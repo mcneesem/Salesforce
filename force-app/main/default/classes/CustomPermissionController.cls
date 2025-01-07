@@ -1,13 +1,40 @@
 public with sharing class CustomPermissionController {
-    // test w/ CustomPermissionControllerTest (96%)
+    // test w/ CustomPermissionControllerTest (100%)
     private static final String CLASS_NAME = ' ~ CustomPermissionController';
-    
+
     // check if a given User has been granted a named Custom Permission..
     // ~ when userId is the current User, respect FeatureManagement without impacting SOQL limits...
     // ~ otherwise, check the PermittedUsersMap for a matching key-value pair...
+
+    @InvocableMethod(label='Check User Permission' description='Check if a given User has been granted a named Custom Permission')
+    public static List<UserPermResponse> checkUserPermission( List<UserPermRequest> requestList ) {
+        List<UserPermResponse> responseList = new List<UserPermResponse>();
+        for ( UserPermRequest request : requestList ) {
+            UserPermResponse localResponse = new UserPermResponse();
+            localResponse.hasPermission = false;
+            if ( String.isNotBlank( request.customPermissionName ) && String.isNotBlank( request.userId ) ) {
+                localResponse.hasPermission = checkUserPermission( request.customPermissionName , request.userId );
+            }
+            responseList.add( localResponse );
+        }
+        return responseList;
+    }
+
+    public class UserPermRequest {
+        @InvocableVariable(label='Permission Name' description='API Name of Custom Permission' required=true)
+        public String customPermissionName;
+        @InvocableVariable(label='User Id' description='Record Id of User to be checked' required=true)
+        public String userId;
+    }
+
+    public class UserPermResponse {
+        @InvocableVariable(label='hasPermission' description='User has named Permission' required=true)
+        public Boolean hasPermission;
+    }
+
     public static Boolean checkUserPermission( String customPermissionName , String userId ) {
-        String METHOD_NAME = 'checkUserPermission';
-        String DEBUG_PREFIX = CLASS_NAME + '.' + METHOD_NAME;
+        String methodName = 'checkUserPermission';
+        String debugPrefix = CLASS_NAME + '.' + methodName;
         Boolean isUserPermitted = False;
         if ( userId == UserInfo.getUserId() ) {
             // 0 SOQL queries required...
@@ -29,7 +56,7 @@ public with sharing class CustomPermissionController {
                 }
             }
         }
-        System.debug( DEBUG_PREFIX + ' ~ isUserPermitted( ' + customPermissionName + ' , ' + userId + ' )=' + isUserPermitted );
+        System.debug( debugPrefix + ' ~ isUserPermitted( ' + customPermissionName + ' , ' + userId + ' )=' + isUserPermitted );
         return isUserPermitted;
     }
 
@@ -37,8 +64,8 @@ public with sharing class CustomPermissionController {
     // ~ includes all grants, both via Profile and Permission Set...
     // ~ Map( User.Id ==> User )
     public static Map<Id,User> getPermittedUsersMap( String customPermissionName ) {
-        String METHOD_NAME = 'getPermittedUsersMap';
-        String DEBUG_PREFIX = CLASS_NAME + '.' + METHOD_NAME;
+        String methodName = 'getPermittedUsersMap';
+        String debugPrefix = CLASS_NAME + '.' + methodName;
         Map<Id,User> permittedUsersMap = new Map<Id,User>();
         if ( String.isNotBlank( customPermissionName ) ) {
             // grab the relationships (SetupEntityAccess) between the CustomPermission:PermissionSet and the CustomPermission:Profile
@@ -82,7 +109,7 @@ public with sharing class CustomPermissionController {
             // convert List into the complete Map of permitted User's...
             permittedUsersMap = new Map<Id,User>( permittedUsers );
         }
-        System.debug( DEBUG_PREFIX + ' ~ permittedUsersMap( ' + customPermissionName + ' )=' + permittedUsersMap );
+        System.debug( debugPrefix + ' ~ permittedUsersMap( ' + customPermissionName + ' )=' + permittedUsersMap );
         return permittedUsersMap;
     }
 
@@ -100,8 +127,8 @@ public with sharing class CustomPermissionController {
     }
 
     public static CustomPermission getCustomPermission( String developerName ) {
-        String METHOD_NAME = 'getCustomPermission';
-        String DEBUG_PREFIX = CLASS_NAME + '.' + METHOD_NAME;
+        String methodName = 'getCustomPermission';
+        String debugPrefix = CLASS_NAME + '.' + methodName;
         CustomPermission record = null;
         if ( String.isNotBlank( developerName )
             && ( CustomPermissionController.customPermissionsMap != null )
@@ -125,7 +152,7 @@ public with sharing class CustomPermissionController {
                 }
             }
         }
-        System.debug( DEBUG_PREFIX + ' ~ CustomPermission( ' + developerName + ' )=' + record );
+        System.debug( debugPrefix + ' ~ CustomPermission( ' + developerName + ' )=' + record );
         return record;
     }
     
