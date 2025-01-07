@@ -79,12 +79,12 @@ public with sharing class OnboardingMeetingDetailHistory {
 
     // format Double
     private static String formatDoubleValue( Double value ) {
-        return ( ( value != null ) ? String.valueOf( Integer.valueOf( value ) ) : value );
+        return ( ( value != null ) ? String.valueOf( Integer.valueOf( value ) ) : null );
     }
 
     // format Date
     private static String formatDateValue( DateTime value ) {
-        return ( ( value != null ) ? value.format( 'MM-dd-yyyy' ) : value );
+        return ( ( value != null ) ? value.format( 'MM-dd-yyyy' ) : null );
     }
 
     // format TEXTAREA
