@@ -13,7 +13,7 @@ Modification Log     :
 * Harsha Khiroya  Feb 25, 2021              DF-01321
 ***************************************************************************************************/
 public with sharing class NSP_LeadTriggerHelper {
-    // test w/ NSP_LeadTriggerHelperTest (85%)
+    // test w/ NSP_LeadTriggerHelperTest (84%)
 
     private static final List<String> reasonNurturingReasonsList = System.label.NSP_Lead_at_Nurturing_or_Unqualified.split( ';' );
     private static final Id NEW_LEAD_RT_ID = NSP_GenericRecordType.getRecordTypeId( 'Lead' , 'NSP_New_Lead_Record_Type' );
@@ -960,20 +960,27 @@ if ((leadNewMap.get(leadId).NSP_Lead_Routing__c == true &&
     }
 
     /**
-* Based on the number of employees, Account segmentation field is populated.
-* @return void
-*/
+    * Based on the number of employees, Account segmentation field is populated.
+    * @return void
+    */
     public static void updateAccountSegment(Lead leadObject) {
-        if (leadObject.NumberOfEmployees > Integer.valueOf(System.Label.NSP_MidMarket_Threshold)) {
-            leadObject.NSP_Account_Segment__c = System.Label.NSP_Account_Segment_MidMarket;
-        } else if (leadObject.NumberOfEmployees > Integer.valueOf(System.Label.NSP_Emerging_Growth_Threshold_Employees) &&
-                   leadObject.NumberOfEmployees <= Integer.valueOf(System.Label.NSP_MidMarket_Threshold)) {
-                       leadObject.NSP_Account_Segment__c = System.Label.NSP_Account_Segment_Emerging_Growth;
-        } else if(leadObject.NumberOfEmployees!=null &&  leadObject.NumberOfEmployees>0 ){ // Modified as a part of Defect No:DF-01659
-                       leadObject.NSP_Account_Segment__c = System.Label.NSP_Account_Segment_Core_Sales;
-        }else if(leadObject.NumberOfEmployees==null || leadObject.NumberOfEmployees==0 ){   // added as a part of Defect No:DF-01659
-                       leadObject.NSP_Account_Segment__c = null;
-                   }
+
+        if(Account_Segment_Threshold_Settings__c.getInstance(UserInfo.getUserId()).Is_Enabled__c){
+            leadObject.NSP_Account_Segment__c = NSP_Utilities.getSalesSegment(leadObject.NumberOfEmployees);
+        }
+        else
+        {
+            if (leadObject.NumberOfEmployees > Integer.valueOf(System.Label.NSP_MidMarket_Threshold)) {
+                leadObject.NSP_Account_Segment__c = System.Label.NSP_Account_Segment_MidMarket;
+            } else if (leadObject.NumberOfEmployees > Integer.valueOf(System.Label.NSP_Emerging_Growth_Threshold_Employees) &&
+                       leadObject.NumberOfEmployees <= Integer.valueOf(System.Label.NSP_MidMarket_Threshold)) {
+                leadObject.NSP_Account_Segment__c = System.Label.NSP_Account_Segment_Emerging_Growth;
+            } else if(leadObject.NumberOfEmployees!=null &&  leadObject.NumberOfEmployees>0 ){ // Modified as a part of Defect No:DF-01659
+                leadObject.NSP_Account_Segment__c = System.Label.NSP_Account_Segment_Core_Sales;
+            }else if(leadObject.NumberOfEmployees==null || leadObject.NumberOfEmployees==0 ){   // added as a part of Defect No:DF-01659
+                leadObject.NSP_Account_Segment__c = null;
+            }
+        }
     }
 
     public void restrictDelete( List<Lead> records , Map<Id,Lead> deprecated ) {

@@ -12,6 +12,10 @@
         <valueSetName>Account_Segment</valueSetName>
         <valueSettings>
             <controllingFieldValue>Parent: Program</controllingFieldValue>
+            <valueName>Enterprise</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Parent: Program</controllingFieldValue>
             <valueName>MidMarket</valueName>
         </valueSettings>
         <valueSettings>

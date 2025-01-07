@@ -126,6 +126,24 @@ public with sharing class NSP_Utilities{
         return errors;
     }
 
+    /*
+    * This method returns the sales segment based on the number of employees
+    * @param numEmployees
+    * @return String  
+    */
+    public static String getSalesSegment(Integer numEmployees) {
+
+        List<Sales_Segment_Threshold__mdt> thresholds = [SELECT label, min_employees__c FROM Sales_Segment_Threshold__mdt ORDER BY min_employees__c DESC];
+        
+        for(Sales_Segment_Threshold__mdt threshold: thresholds){
+            if(numEmployees >= threshold.min_employees__c){
+                return threshold.label;
+            }
+        }
+
+        return null;
+    }
+
     // wrapper class to set fields
 
     public class FieldSetField{

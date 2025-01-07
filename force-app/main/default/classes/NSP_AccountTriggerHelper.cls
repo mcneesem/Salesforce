@@ -8,7 +8,7 @@
 //  Rahul Singh        Nov   29 2022        Modified as part of user story 191911
 //
 public class NSP_AccountTriggerHelper {
-    // test w/ NSP_AccountTriggerHelperTest, NSP_AccountContactRelationHelperTest, NSP_AccountContactServiceHelperTest (77%)
+    // test w/ NSP_AccountTriggerHelperTest (77%), NSP_AccountContactRelationHelperTest, NSP_AccountContactServiceHelperTest (77%)
     // test w/ NSP_AccountTriggerHelperTest, NSP_LeadTriggerHelperTest (77%)
     // test w/ NSP_AccountTriggerHelperTest (79%)
     // test w/ NSP_AccountContactRelationHelperTest (34%)
@@ -490,16 +490,20 @@ WHERE (userRole.Name = 'Loyalty Advisor' OR userRole.Name = 'Channel Program Man
      *returns void
      */
     public static void updateAccountSegment(Account accountObject) {
-        if (accountObject.NumberOfEmployees > Integer.valueOf(System.Label.NSP_MidMarket_Threshold)) {
-            accountObject.NSP_Account_Segment__c = System.Label.NSP_Account_Segment_MidMarket;
-        } else if (
-            ( accountObject.NumberOfEmployees > Integer.valueOf( System.Label.NSP_Emerging_Growth_Threshold_Employees ) )
-            && ( accountObject.NumberOfEmployees <= Integer.valueOf( System.Label.NSP_MidMarket_Threshold ) )
-            )
+        
+        if(Account_Segment_Threshold_Settings__c.getInstance(UserInfo.getUserId()).Is_Enabled__c){
+            accountObject.NSP_Account_Segment__c = NSP_Utilities.getSalesSegment(accountObject.NumberOfEmployees);
+        }
+        else
         {
-            accountObject.NSP_Account_Segment__c = System.Label.NSP_Account_Segment_Emerging_Growth;
-        } else if (accountObject.NumberOfEmployees != null) {
-            accountObject.NSP_Account_Segment__c = System.Label.NSP_Account_Segment_Core_Sales;
+            if (accountObject.NumberOfEmployees > Integer.valueOf(System.Label.NSP_MidMarket_Threshold)) {
+                accountObject.NSP_Account_Segment__c = System.Label.NSP_Account_Segment_MidMarket;
+            } else if (( accountObject.NumberOfEmployees > Integer.valueOf( System.Label.NSP_Emerging_Growth_Threshold_Employees ) )
+                && ( accountObject.NumberOfEmployees <= Integer.valueOf( System.Label.NSP_MidMarket_Threshold ) )){
+                accountObject.NSP_Account_Segment__c = System.Label.NSP_Account_Segment_Emerging_Growth;
+            } else if (accountObject.NumberOfEmployees != null) {
+                accountObject.NSP_Account_Segment__c = System.Label.NSP_Account_Segment_Core_Sales;
+            }
         }
     }
 

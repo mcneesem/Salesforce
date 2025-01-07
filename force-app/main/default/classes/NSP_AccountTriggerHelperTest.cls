@@ -26,105 +26,22 @@ public class NSP_AccountTriggerHelperTest {
     public static final String EN_US = 'en_US';
     public static final String TEXAS = 'TEXAS';
     public static final String PARTNER_CLIENT = 'NSP_Partner_Client';
+    
     @testSetup
     static void testData() {
 
-          UserRole BPArole = [SELECT Id FROM UserRole WHERE Name='Business Performance Advisor'];  
-        UserRole CPMrole = [SELECT Id FROM UserRole WHERE Name='Channel Program Manager'];
-         UserRole LArole = [SELECT Id FROM UserRole WHERE Name='Loyalty Advisor'];
-         Profile profileobj = [SELECT Id FROM Profile WHERE Name='System Administrator'];
-         UserRole DARole = [SELECT Id FROM UserRole WHERE Name = 'District Administrator'];
-   List<User> users = new List<User>();
-        //Creating User
-        User userRecord = new User(
-            ProfileId = [SELECT Id FROM Profile WHERE Name = 'Integration User'][0].Id,
-            LastName = 'TestClassUser',
-            Email = 'testuser@insperity.com',
-            Username = 'testuser@test.com' + System.currentTimeMillis(),
-            CompanyName = 'TEST',
-            Title = 'title',
-            Alias = 'alias',
-            TimeZoneSidKey = 'America/Los_Angeles',
-            EmailEncodingKey = 'UTF-8',
-            LanguageLocaleKey = EN_US,
-            LocaleSidKey = EN_US
-        );
-        users.add(userRecord);
-       
-        User BpaUser = new User(alias = 'jsmit', email='jsmith@insperity.com', 
-                                emailencodingkey=emailencodingkey, lastname='Smith', 
-                                languagelocalekey=languagekey, 
-                                localesidkey=languagekey, profileid = profileobj.Id, userroleid = BPArole.Id,
-                                timezonesidkey=timezonesidkey, NSP_Sales_Office__c='302' ,
-                                username='insperitytestadminuser@insperity.com.testUsr');
-         users.add(BpaUser);
-        User cpmUser = new User(alias = 'jBPA', email='jsmithyBPA@insperity.com', 
-                                 emailencodingkey=emailencodingkey, lastname='Smith', 
-                                 languagelocalekey=languagekey, 
-                                 localesidkey=languagekey, profileid = profileobj.Id, userroleid = CPMrole.Id,
-                                 timezonesidkey=timezonesidkey, NSP_Sales_Office__c='601' ,
-                                 username='insperitytestadminuser@insperity.com.testBPA');
-        users.add(cpmUser);
-        // Adding Sales Leader User
-        User lAUser = new User(alias = 'johnth', email='johnsmith@insperity.com', 
-                                    emailencodingkey=emailencodingkey, lastname='Smith', 
-                                    languagelocalekey=languagekey, 
-                                    localesidkey=languagekey, profileid = profileobj.Id, userroleid = LArole.Id,
-                                    timezonesidkey=timezonesidkey, 
-                                    username='insperitytestadminuser@insperity.com.test2');
-        users.add(lAUser);
-        
-        User dAUser = new User(alias = 'jsmit', email='jsmithda@insperity.com', 
-        emailencodingkey=emailencodingkey, lastname='Smithda', 
-        languagelocalekey=languagekey, 
-        localesidkey=languagekey, profileid = profileobj.Id, userroleid = DARole.Id,
-        timezonesidkey=timezonesidkey, NSP_Sales_Office__c='302' ,
-        username='insperitytestadminuserda@insperity.com.testUsr');
-        users.add(dAUser);
-
-        User dummyUser = new User(alias = 'jsmit', email='jsmithda@insperity.com', 
-                               emailencodingkey=emailencodingkey, lastname=NSP_SalesConstants.DUMMY_USER_SIGNER, 
-                               languagelocalekey=languagekey, 
-                               localesidkey=languagekey, profileid = profileobj.Id, userroleid = DARole.Id,
-                               timezonesidkey=timezonesidkey, NSP_Sales_Office__c='302' ,
-                               username='insperitytestadminuserda@insperity.com.test3');
-        users.add(dummyUser);
-        
-        User userRecord1 = new User(
-            ProfileId = [SELECT Id FROM Profile WHERE Name = 'Sales Manager'][0].Id,
-            LastName = 'TestClassUser1',
-            Email = 'testuser@insperity.com',
-            Username = 'testuser1@test.com' + System.currentTimeMillis(),
-            CompanyName = 'TEST',
-            Title = 'title',
-            Alias = 'alias',
-            TimeZoneSidKey = 'America/Los_Angeles',
-            EmailEncodingKey = 'UTF-8',
-            LanguageLocaleKey = EN_US,
-            LocaleSidKey = EN_US,
-            userroleid = BPArole.Id,
-            NSP_Sales_Office__c = '1401'
-        );
-        users.add(userRecord1);
-        database.insert(users);
-         Group gp1= new Group();
-        gp1.Name='0302 Phoenix 2';
-            Insert gp1;
-          GroupMember cpaGm = new GroupMember (UserOrGroupId = cpmUser.Id, GroupId = gp1.Id);
-        GroupMember lAGm = new GroupMember (UserOrGroupId = lAUser.Id, GroupId = gp1.Id);
-        GroupMember daGm = new GroupMember (UserOrGroupId = dAUser.Id, GroupId = gp1.Id);
-        List<GroupMember> groupMemberList= new List<GroupMember>{cpaGm,lAGm,daGm};
-            // Inserting Group Members
-            Insert groupMemberList;
-      
+        Account_Segment_Threshold_Settings__c settings1 = Account_Segment_Threshold_Settings__c.getOrgDefaults();
+        settings1.Is_Enabled__c = True;
+        upsert settings1;
     }
+
      /***********************************************************************************************
 * MethodName: setChannelPartnerAndLoyaltyAdvisor
 * Description : This method is used to populate CPM and LA on Account on insertion based on BPA sales office group
 * ********************************************************************************************/
  @isTest
     static void setChannelPartnerAndLoyaltyAdvisorTest() {
-        User BpaUser=[Select Id , Name , Email , NSP_Sales_Office__c from User WHERE Email = 'jsmith@insperity.com' Limit 1];
+        User BpaUser=[Select Id , Name , Email , NSP_Sales_Office__c from User WHERE IsActive = true AND UserRole.name = 'Business Performance Advisor' Limit 1];
         System.runAs (BpaUser) {
             //Account creation
             Test.startTest();
@@ -175,7 +92,7 @@ public class NSP_AccountTriggerHelperTest {
         Map<Id, Account> accountMap = new Map<Id, Account>();
         Id partnerRecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get(PARTNER_CLIENT).getRecordTypeId();
         //Creating User
-        User userRecord = [select id from User WHERE LastName = :LASTNAME];
+        User userRecord = [select id from User WHERE isActive = true AND UserRole.Name = 'Business Performance Advisor' LIMIT 1];
         for(integer count = 0; count < 5; count++) {
             accountList.add(New Account(Name = 'AccountTest'+String.valueOf(count), AccountNumber = String.valueOf(count), recordTypeId=partnerRecordTypeId,BillingState=TEXAS,NumberOfEmployees=150));
         }
@@ -249,7 +166,7 @@ public class NSP_AccountTriggerHelperTest {
         upsert setting;
 
         List<Account>  accountList = New List<Account>();
-         User salesManagerUser=[Select Id , Name , Email , NSP_Sales_Office__c from User WHERE Email = 'testuser@insperity.com' Limit 1];
+         User salesManagerUser=[Select Id , Name , Email , NSP_Sales_Office__c from User WHERE isActive = true AND UserRole.name = 'Business Performance Advisor' Limit 1];
         for(integer count = 0; count < 5; count++) {
             accountList.add(New Account(Name = 'AccountTestData'+String.valueOf(count), AccountNumber = String.valueOf(count), NSP_Ready_for_Integration_Sync__c = TRUE,
                                         NSP_Delete_Account_Teams__c = system.now()));
@@ -283,7 +200,7 @@ public class NSP_AccountTriggerHelperTest {
             accountMapOld.put(account.Id, account);
         }
        
-        User userRecord1 = [select id from User WHERE LastName = 'TestClassUser1'];
+        User userRecord1 = [select id from User WHERE isActive = true AND UserRole.Name = 'Business Performance Advisor' LIMIT 1];
         // Start Test
             List<Account> accountUpdateList = [Select Id, Name, NSP_Account_Owners_Profile__c,NSP_Ready_for_Integration_Sync__c,NSP_Integrated_With__c,NSP_Partner_Lifecycle__c,RecordTypeId,NSP_Account_At_Risk_Level_Image__c FROM Account WHERE Id =: accountMapOld.keySet()];
             for(Account accountRecord : accountUpdateList) {
@@ -322,7 +239,7 @@ public class NSP_AccountTriggerHelperTest {
         for(Account account : accountUpdateList) {
             account.NSP_Ready_for_Integration_Sync__c = TRUE;
         }
-        User userRecord = [select id FROM User WHERE LastName = :LASTNAME];
+        User userRecord = [select id FROM User WHERE isActive = true AND UserRole.Name = 'Business Performance Advisor' LIMIT 1];
         // Start Test
         Test.startTest();
         system.runAs(userRecord){
@@ -354,7 +271,7 @@ public class NSP_AccountTriggerHelperTest {
         for(Account account : accountUpdateList) {
             account.NSP_Ready_for_Integration_Sync__c = TRUE;
         }
-        User userRecord = [select id FROM User WHERE LastName = :LASTNAME];
+        User userRecord = [select id FROM User WHERE isActive = true AND UserRole.Name = 'Business Performance Advisor' LIMIT 1];
         // Start Test
         Test.startTest();
         system.runAs(userRecord){
@@ -430,7 +347,7 @@ public class NSP_AccountTriggerHelperTest {
         setting.IsEnabled_IntegrationOpportunityEvent__c = true;
         upsert setting;
       
-        User userRec = [select id FROM User WHERE LastName = 'TestClassUser1'];
+        User userRec = [select id FROM User WHERE isActive = true AND UserRole.Name = 'Business Performance Advisor' LIMIT 1];
          
         Account accountObject3 = new Account();
         Id partnerRecordTypeId1 = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get(PARTNER_CLIENT).getRecordTypeId();
@@ -500,10 +417,10 @@ public class NSP_AccountTriggerHelperTest {
 
     @isTest
     static void restrictAccountChangeTest() {
-    User userRecord1=[Select Id , Name , Email , NSP_Sales_Office__c FROM User WHERE Email = 'testuser@insperity.com' Limit 1];
+    User userRecord1=[Select Id , Name , Email , NSP_Sales_Office__c FROM User WHERE isActive = true AND UserRole.Name = 'Business Performance Advisor' Limit 1];
     userRecord1.NSP_Sales_Office__c = '302';
     update userRecord1;
-    List<User> userRecordList = [SELECT Id FROM User WHERE Profile.Name = 'Sales Manager' and Email = 'testuser@insperity.com' Limit 1];
+    List<User> userRecordList = [SELECT Id FROM User WHERE Profile.Name = 'Sales Manager' AND isActive = true Limit 1];
     User DAUser = userRecordList[0];
     Account accountObject3 = new Account();
         //Create Account
@@ -541,7 +458,7 @@ public class NSP_AccountTriggerHelperTest {
     static void testAccountPremierUpdate() {
 
          List<Account>  accountList = New List<Account>();
-         User salesManagerUser=[Select Id , Name , Email , NSP_Sales_Office__c FROM User WHERE Email = 'jsmith@insperity.com' Limit 1];
+         User salesManagerUser=[Select Id , Name , Email , NSP_Sales_Office__c FROM User WHERE isActive = true AND UserRole.Name = 'Business Performance Advisor' Limit 1];
         for(integer count = 0; count < 1; count++) {
             accountList.add(New Account(Name = 'AccountTestData'+String.valueOf(count), AccountNumber = String.valueOf(count), NSP_Ready_for_Integration_Sync__c = TRUE,
                                         NSP_Delete_Account_Teams__c = system.now()));
@@ -576,7 +493,7 @@ public class NSP_AccountTriggerHelperTest {
             accountMapOld.put(account.Id, account);
         }
        
-        User userRecord1 = [SELECT id FROM User WHERE LastName = 'TestClassUser1'];
+        User userRecord1 = [SELECT id FROM User WHERE isActive = true AND UserRole.Name = 'Business Performance Advisor' LIMIT 1];
         // Start Test
             List<Account> accountUpdateList = [Select Id, Name, NSP_Account_Owners_Profile__c,NSP_Ready_for_Integration_Sync__c,NSP_Integrated_With__c,NSP_Partner_Lifecycle__c,RecordTypeId,NSP_Account_At_Risk_Level_Image__c FROM Account WHERE Id =: accountMapOld.keySet()];
             for(Account accountRecord : accountUpdateList) {
@@ -694,5 +611,49 @@ public class NSP_AccountTriggerHelperTest {
 
         //  The Opportuniry Sales Office should be the same as the Account SO
         System.assertEquals(acct2.NSP_Sales_Office__c,  opp2.NSP_Sales_Office__c);
+   }
+
+   @isTest 
+   private static void testSalesSegment() {
+
+        Test.startTest();
+        List<Account> accts = new  List<Account>();
+
+        Account actt1 = new Account();
+        actt1.Name = 'Account test 1';
+        actt1.NumberOfEmployees = 5;
+
+        Account actt2 = new Account();
+        actt2.Name = 'Account test 2';
+        actt2.NumberOfEmployees = 52;
+
+        Account actt3 = new Account();
+        actt3.Name = 'Account test 3';
+        actt3.NumberOfEmployees = 150;
+
+        Account actt4 = new Account();
+        actt4.Name = 'Account test 4';
+        actt4.NumberOfEmployees = 752;
+
+        accts.add(actt1);
+        accts.add(actt2);
+        accts.add(actt3);
+        accts.add(actt4);
+
+        insert accts;
+        
+        actt1 = [SELECT NSP_Account_Segment__c FROM Account WHERE name = 'Account test 1' LIMIT 1];
+        System.assertEquals('Core', actt1.NSP_Account_Segment__c);
+
+        actt2 = [SELECT NSP_Account_Segment__c FROM Account WHERE name = 'Account test 2' LIMIT 1];
+        System.assertEquals('Emerging Growth', actt2.NSP_Account_Segment__c);
+
+        actt3 = [SELECT NSP_Account_Segment__c FROM Account WHERE name = 'Account test 3' LIMIT 1];
+        System.assertEquals('MidMarket', actt3.NSP_Account_Segment__c);
+
+        actt4 = [SELECT NSP_Account_Segment__c FROM Account WHERE name = 'Account test 4' LIMIT 1];
+        System.assertEquals('Enterprise', actt4.NSP_Account_Segment__c);
+
+        Test.stopTest();
    }
 }

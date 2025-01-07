@@ -15,9 +15,13 @@ public class NSP_LeadTriggerHelperTest {
     @testSetup
     static void testData() {
         
-        Lead_Trigger_Settings__c settings = Lead_Trigger_Settings__c.getOrgDefaults();
-        settings.AllowStatusChangedToWorking__c = True;
-        upsert settings;
+        Lead_Trigger_Settings__c settings1 = Lead_Trigger_Settings__c.getOrgDefaults();
+        settings1.AllowStatusChangedToWorking__c = True;
+        upsert settings1;
+
+        Account_Segment_Threshold_Settings__c settings2 = Account_Segment_Threshold_Settings__c.getOrgDefaults();
+        settings2.Is_Enabled__c = True;
+        upsert settings2;
         
         //Create custom setting record for lead zip to city Mapping
         NSP_Zip_To_City_Mapping__c zipToCityCustomSetting = new NSP_Zip_To_City_Mapping__c();
@@ -657,5 +661,70 @@ public class NSP_LeadTriggerHelperTest {
         }
         Test.stopTest();
     }
-    
+ 
+    @isTest 
+    private static void testSalesSegment() {
+ 
+         Test.startTest();
+ 
+         Account acct = new Account();
+         acct.Name = 'Test Lead-Account';
+         insert acct;
+ 
+         List<Lead> leads = new  List<Lead>();
+ 
+         Lead lead1 = new Lead();
+         lead1.FirstName = 'Lead first-name 1';
+         lead1.LastName = 'Lead last 1';
+         lead1.email = 'myemail1@mail.com';
+         lead1.phone = '111111';
+         lead1.company = acct.id;
+         lead1.NumberOfEmployees = 5;
+ 
+         Lead lead2 = new Lead();
+         lead2.FirstName = 'Lead first-name 2';
+         lead2.LastName = 'Lead last 2';
+         lead2.email = 'myemail2@mail.com';
+         lead2.phone = '222222';
+         lead2.company = acct.id;
+         lead2.NumberOfEmployees = 52;
+ 
+         Lead lead3 = new Lead();
+         lead3.FirstName = 'Lead first-name 3';
+         lead3.LastName = 'Lead last 3';
+         lead3.email = 'myemail3@mail.com';
+         lead3.phone = '3333333';
+         lead3.company = acct.id;
+         lead3.NumberOfEmployees = 150;
+ 
+         Lead lead4 = new Lead();
+         lead4.FirstName = 'Lead first-name 4';
+         lead4.LastName = 'Lead last 4';
+         lead4.email = 'myemail4@mail.com';
+         lead4.phone = '4444444444';
+         lead4.company = acct.id;
+         lead4.NumberOfEmployees = 752;
+ 
+         leads.add(lead1);
+         leads.add(lead2);
+         leads.add(lead3);
+         leads.add(lead4);
+ 
+         insert leads;
+
+         lead1 = [SELECT NSP_Account_Segment__c FROM Lead WHERE FirstName = 'Lead first-name 1' LIMIT 1];
+         System.assertEquals('Core', lead1.NSP_Account_Segment__c);
+ 
+         lead2 = [SELECT NSP_Account_Segment__c FROM Lead WHERE FirstName = 'Lead first-name 2' LIMIT 1];
+         System.assertEquals('Emerging Growth', lead2.NSP_Account_Segment__c);
+ 
+         lead3 = [SELECT NSP_Account_Segment__c FROM Lead WHERE FirstName = 'Lead first-name 3' LIMIT 1];
+         System.assertEquals('MidMarket', lead3.NSP_Account_Segment__c);
+ 
+         lead4 = [SELECT NSP_Account_Segment__c FROM Lead WHERE FirstName = 'Lead first-name 4' LIMIT 1];
+         System.assertEquals('Enterprise', lead4.NSP_Account_Segment__c);
+ 
+         Test.stopTest();
+    }
+ 
 }
