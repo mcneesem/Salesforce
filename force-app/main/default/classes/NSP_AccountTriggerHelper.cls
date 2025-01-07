@@ -8,11 +8,12 @@
 //  Rahul Singh        Nov   29 2022        Modified as part of user story 191911
 //
 public class NSP_AccountTriggerHelper {
-    // test w/ NSP_AccountTriggerHelperTest (77%), NSP_AccountContactRelationHelperTest, NSP_AccountContactServiceHelperTest (77%)
+    // test w/ NSP_AccountTriggerHelperTest, NSP_AccountContactRelationHelperTest, NSP_AccountContactServiceHelperTest (77%)
     // test w/ NSP_AccountTriggerHelperTest, NSP_LeadTriggerHelperTest (77%)
     // test w/ NSP_AccountTriggerHelperTest (79%)
     // test w/ NSP_AccountContactRelationHelperTest (34%)
     // test w/ NSP_AccountContactServiceHelperTest (38%)
+
     private static final string PARTNER_RECORDTYPE = 'NSP_Partner_Client';
     private static final Id PARTNER_RECORDTYPE_ID = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get(PARTNER_RECORDTYPE).getRecordTypeId();
     private static final string DA_ROLE = 'District Administrator';
@@ -483,29 +484,30 @@ WHERE (userRole.Name = 'Loyalty Advisor' OR userRole.Name = 'Channel Program Man
         }
     }
 
-    /**
-     * Based on the number of employees, Account segmentation field is populated.
-     *param accountObject
-     *returns void
-     */
-    public static void updateAccountSegment(Account accountObject) {
-        
-        if(Account_Segment_Threshold_Settings__c.getInstance(UserInfo.getUserId()).Is_Enabled__c){
-            accountObject.NSP_Account_Segment__c = NSP_LeadTriggerHelper.getSalesSegment(accountObject.NumberOfEmployees);
-        }
-        else
-        {
-            if (accountObject.NumberOfEmployees > Integer.valueOf(System.Label.NSP_MidMarket_Threshold)) {
-                accountObject.NSP_Account_Segment__c = System.Label.NSP_Account_Segment_MidMarket;
-            } else if (( accountObject.NumberOfEmployees > Integer.valueOf( System.Label.NSP_Emerging_Growth_Threshold_Employees ) )
-                && ( accountObject.NumberOfEmployees <= Integer.valueOf( System.Label.NSP_MidMarket_Threshold ) )){
-                accountObject.NSP_Account_Segment__c = System.Label.NSP_Account_Segment_Emerging_Growth;
-            } else if (accountObject.NumberOfEmployees != null) {
-                accountObject.NSP_Account_Segment__c = System.Label.NSP_Account_Segment_Core_Sales;
+    //
+    // Based on the number of employees, Account segmentation field is populated.
+    // param accountObject
+    // returns void
+    //
+    public static void updateAccountSegment( Account accountObject ) {
+        if ( accountObject != null ) {
+            if ( Account_Segment_Threshold_Settings__c.getInstance( UserInfo.getUserId() ).Is_Enabled__c ) {
+                accountObject.NSP_Account_Segment__c = NSP_LeadTriggerHelper.getSalesSegment( accountObject.NumberOfEmployees );
+            } else {
+                if ( accountObject.NumberOfEmployees > Integer.valueOf( System.Label.NSP_MidMarket_Threshold ) ) {
+                    accountObject.NSP_Account_Segment__c = System.Label.NSP_Account_Segment_MidMarket;
+                } else if ( ( accountObject.NumberOfEmployees > Integer.valueOf( System.Label.NSP_Emerging_Growth_Threshold_Employees ) )
+                    && ( accountObject.NumberOfEmployees <= Integer.valueOf( System.Label.NSP_MidMarket_Threshold ) )
+                    )
+                {
+                    accountObject.NSP_Account_Segment__c = System.Label.NSP_Account_Segment_Emerging_Growth;
+                } else if (accountObject.NumberOfEmployees != null) {
+                    accountObject.NSP_Account_Segment__c = System.Label.NSP_Account_Segment_Core_Sales;
+                }
             }
         }
     }
-    
+
     /* Description: This method sets signer to dummy user
      * BPA to Account owner if role is BPA
      * @param: accountList
