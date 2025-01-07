@@ -8,6 +8,14 @@
     <permissionSets>NSP_Main_Service_Contacts</permissionSets>
     <permissionSets>NSP_Read_Access_on_Sub_client_contact_addresses</permissionSets>
     <permissionSets>NSP_Termination_Form_Access</permissionSets>
+    <permissionSets>Organization_Wide_Email_Address_HR_Quality_Assurance</permissionSets>
+    <permissionSets>Organization_Wide_Email_Address_MM_Enterprise_Benefits_Rep</permissionSets>
+    <permissionSets>Organization_Wide_Email_Address_MM_PTO_Team</permissionSets>
+    <permissionSets>Organization_Wide_Email_Address_MM_Transition_Team</permissionSets>
+    <permissionSets>Organization_Wide_Email_Address_National_Business_Team</permissionSets>
+    <permissionSets>Organization_Wide_Email_Address_National_PTO_Specialists</permissionSets>
+    <permissionSets>Organization_Wide_Email_Address_Payroll_CAM</permissionSets>
+    <permissionSets>Organization_Wide_Email_Address_Payroll_COE_Escalation</permissionSets>
     <permissionSets>PEO_Service_Task_Owner</permissionSets>
     <permissionSets>Project_Access</permissionSets>
     <permissionSets>Project_Task_Access</permissionSets>
