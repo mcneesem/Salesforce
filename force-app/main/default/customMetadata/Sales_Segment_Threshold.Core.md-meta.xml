@@ -3,7 +3,7 @@
     <label>Core</label>
     <protected>false</protected>
     <values>
-        <field>min_employees__c</field>
+        <field>Minimum_Employees__c</field>
         <value xsi:type="xsd:double">0.0</value>
     </values>
 </CustomMetadata>

@@ -3,7 +3,7 @@
     <fullName>All_Segments</fullName>
     <columns>MasterLabel</columns>
     <columns>DeveloperName</columns>
-    <columns>min_employees__c</columns>
+    <columns>Minimum_Employees__c</columns>
     <filterScope>Everything</filterScope>
     <label>All Segments</label>
 </ListView>

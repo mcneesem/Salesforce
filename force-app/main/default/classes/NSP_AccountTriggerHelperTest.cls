@@ -26,7 +26,7 @@ public class NSP_AccountTriggerHelperTest {
     public static final String EN_US = 'en_US';
     public static final String TEXAS = 'TEXAS';
     public static final String PARTNER_CLIENT = 'NSP_Partner_Client';
-    
+
     @testSetup
     static void testData() {
 
@@ -41,7 +41,7 @@ public class NSP_AccountTriggerHelperTest {
 * ********************************************************************************************/
  @isTest
     static void setChannelPartnerAndLoyaltyAdvisorTest() {
-        User BpaUser=[Select Id , Name , Email , NSP_Sales_Office__c from User WHERE IsActive = true AND UserRole.name = 'Business Performance Advisor' Limit 1];
+        User BpaUser=[Select Id , Name , Email , NSP_Sales_Office__c from User WHERE IsActive = true AND UserRole.name = 'Business Performance Advisor' ORDER BY CreatedDate ASC Limit 1];
         System.runAs (BpaUser) {
             //Account creation
             Test.startTest();
@@ -92,7 +92,7 @@ public class NSP_AccountTriggerHelperTest {
         Map<Id, Account> accountMap = new Map<Id, Account>();
         Id partnerRecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get(PARTNER_CLIENT).getRecordTypeId();
         //Creating User
-        User userRecord = [select id from User WHERE isActive = true AND UserRole.Name = 'Business Performance Advisor' LIMIT 1];
+        User userRecord = [select id from User WHERE isActive = true AND UserRole.Name = 'Business Performance Advisor' ORDER BY CreatedDate ASC LIMIT 1];
         for(integer count = 0; count < 5; count++) {
             accountList.add(New Account(Name = 'AccountTest'+String.valueOf(count), AccountNumber = String.valueOf(count), recordTypeId=partnerRecordTypeId,BillingState=TEXAS,NumberOfEmployees=150));
         }
@@ -166,7 +166,7 @@ public class NSP_AccountTriggerHelperTest {
         upsert setting;
 
         List<Account>  accountList = New List<Account>();
-         User salesManagerUser=[Select Id , Name , Email , NSP_Sales_Office__c from User WHERE isActive = true AND UserRole.name = 'Business Performance Advisor' Limit 1];
+         User salesManagerUser=[Select Id , Name , Email , NSP_Sales_Office__c from User WHERE isActive = true AND UserRole.name = 'Business Performance Advisor' ORDER BY CreatedDate ASC Limit 1];
         for(integer count = 0; count < 5; count++) {
             accountList.add(New Account(Name = 'AccountTestData'+String.valueOf(count), AccountNumber = String.valueOf(count), NSP_Ready_for_Integration_Sync__c = TRUE,
                                         NSP_Delete_Account_Teams__c = system.now()));
@@ -200,7 +200,7 @@ public class NSP_AccountTriggerHelperTest {
             accountMapOld.put(account.Id, account);
         }
        
-        User userRecord1 = [select id from User WHERE isActive = true AND UserRole.Name = 'Business Performance Advisor' LIMIT 1];
+        User userRecord1 = [select id from User WHERE isActive = true AND UserRole.Name = 'Business Performance Advisor' ORDER BY CreatedDate ASC LIMIT 1];
         // Start Test
             List<Account> accountUpdateList = [Select Id, Name, NSP_Account_Owners_Profile__c,NSP_Ready_for_Integration_Sync__c,NSP_Integrated_With__c,NSP_Partner_Lifecycle__c,RecordTypeId,NSP_Account_At_Risk_Level_Image__c FROM Account WHERE Id =: accountMapOld.keySet()];
             for(Account accountRecord : accountUpdateList) {
@@ -239,7 +239,7 @@ public class NSP_AccountTriggerHelperTest {
         for(Account account : accountUpdateList) {
             account.NSP_Ready_for_Integration_Sync__c = TRUE;
         }
-        User userRecord = [select id FROM User WHERE isActive = true AND UserRole.Name = 'Business Performance Advisor' LIMIT 1];
+        User userRecord = [select id FROM User WHERE isActive = true AND UserRole.Name = 'Business Performance Advisor' ORDER BY CreatedDate ASC LIMIT 1];
         // Start Test
         Test.startTest();
         system.runAs(userRecord){
@@ -271,7 +271,7 @@ public class NSP_AccountTriggerHelperTest {
         for(Account account : accountUpdateList) {
             account.NSP_Ready_for_Integration_Sync__c = TRUE;
         }
-        User userRecord = [select id FROM User WHERE isActive = true AND UserRole.Name = 'Business Performance Advisor' LIMIT 1];
+        User userRecord = [select id FROM User WHERE isActive = true AND UserRole.Name = 'Business Performance Advisor' ORDER BY CreatedDate ASC LIMIT 1];
         // Start Test
         Test.startTest();
         system.runAs(userRecord){
@@ -347,7 +347,7 @@ public class NSP_AccountTriggerHelperTest {
         setting.IsEnabled_IntegrationOpportunityEvent__c = true;
         upsert setting;
       
-        User userRec = [select id FROM User WHERE isActive = true AND UserRole.Name = 'Business Performance Advisor' LIMIT 1];
+        User userRec = [select id FROM User WHERE isActive = true AND UserRole.Name = 'Business Performance Advisor' ORDER BY CreatedDate ASC LIMIT 1];
          
         Account accountObject3 = new Account();
         Id partnerRecordTypeId1 = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get(PARTNER_CLIENT).getRecordTypeId();
@@ -417,7 +417,7 @@ public class NSP_AccountTriggerHelperTest {
 
     @isTest
     static void restrictAccountChangeTest() {
-    User userRecord1=[Select Id , Name , Email , NSP_Sales_Office__c FROM User WHERE isActive = true AND UserRole.Name = 'Business Performance Advisor' Limit 1];
+    User userRecord1=[Select Id , Name , Email , NSP_Sales_Office__c FROM User WHERE isActive = true AND UserRole.Name = 'Business Performance Advisor' ORDER BY CreatedDate ASC Limit 1];
     userRecord1.NSP_Sales_Office__c = '302';
     update userRecord1;
     List<User> userRecordList = [SELECT Id FROM User WHERE Profile.Name = 'Sales Manager' AND isActive = true Limit 1];
@@ -458,7 +458,7 @@ public class NSP_AccountTriggerHelperTest {
     static void testAccountPremierUpdate() {
 
          List<Account>  accountList = New List<Account>();
-         User salesManagerUser=[Select Id , Name , Email , NSP_Sales_Office__c FROM User WHERE isActive = true AND UserRole.Name = 'Business Performance Advisor' Limit 1];
+         User salesManagerUser=[Select Id , Name , Email , NSP_Sales_Office__c FROM User WHERE isActive = true AND UserRole.Name = 'Business Performance Advisor' ORDER BY CreatedDate ASC Limit 1];
         for(integer count = 0; count < 1; count++) {
             accountList.add(New Account(Name = 'AccountTestData'+String.valueOf(count), AccountNumber = String.valueOf(count), NSP_Ready_for_Integration_Sync__c = TRUE,
                                         NSP_Delete_Account_Teams__c = system.now()));
@@ -493,7 +493,7 @@ public class NSP_AccountTriggerHelperTest {
             accountMapOld.put(account.Id, account);
         }
        
-        User userRecord1 = [SELECT id FROM User WHERE isActive = true AND UserRole.Name = 'Business Performance Advisor' LIMIT 1];
+        User userRecord1 = [SELECT id FROM User WHERE isActive = true AND UserRole.Name = 'Business Performance Advisor' ORDER BY CreatedDate ASC LIMIT 1];
         // Start Test
             List<Account> accountUpdateList = [Select Id, Name, NSP_Account_Owners_Profile__c,NSP_Ready_for_Integration_Sync__c,NSP_Integrated_With__c,NSP_Partner_Lifecycle__c,RecordTypeId,NSP_Account_At_Risk_Level_Image__c FROM Account WHERE Id =: accountMapOld.keySet()];
             for(Account accountRecord : accountUpdateList) {
@@ -582,7 +582,7 @@ public class NSP_AccountTriggerHelperTest {
 
         List<User> users = [SELECT Id, NSP_Sales_Office__c,UserRole.Name FROM User WHERE 
                             (UserRole.Name = 'Sales Support Specialist' OR UserRole.Name = 'Business Performance Advisor') 
-                            AND NSP_Sales_Office__c != null AND IsActive = true LIMIT 2];
+                            AND NSP_Sales_Office__c != null AND IsActive = true ORDER BY CreatedDate ASC LIMIT 2];
 
         Account acct = new Account();
         acct.name = 'Test Office';
