@@ -650,13 +650,6 @@
         <value>Business Performance Advisor</value>
     </labels>
     <labels>
-        <fullName>NSP_Account_Segment_Enterprise</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>NSP Account Segment Enterprise</shortDescription>
-        <value>Enterprise</value>
-    </labels>
-    <labels>
         <fullName>NSP_AccountTeam_Error</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -2757,13 +2750,6 @@
         <protected>false</protected>
         <shortDescription>EEs normal number of hours per day</shortDescription>
         <value>For exempt EEs, what are their number of hours per day?</value>
-    </labels>
-    <labels>
-        <fullName>NSP_Enterprise_Threshold</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>NSP Enterprise Threshold</shortDescription>
-        <value>751</value>
     </labels>
     <labels>
         <fullName>NSP_EMP_THRESH_150</fullName>
