@@ -4,7 +4,7 @@
     <description>Field used to store referred company name. Field is populated from Referral form, force.com site</description>
     <encryptionScheme>None</encryptionScheme>
     <externalId>false</externalId>
-    <label>Referred Company</label>
+    <label>Referrer Company</label>
     <length>40</length>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
