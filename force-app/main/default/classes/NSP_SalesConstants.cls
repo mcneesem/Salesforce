@@ -5,6 +5,8 @@
 * Name : NSP_SalesConstants
 */
 public class NSP_SalesConstants {
+    // test w/ NSP_SalesConstantsTest (100%)
+
     //To set lead stage as sales ready
     public static final String LEAD_STAGE_SRL = 'Sales Ready';
     //To set lead stage non Prioritized
@@ -133,7 +135,7 @@ public class NSP_SalesConstants {
     public static final String WO_WS = 'WO/WS';
     public static final String BPC_USER = 'Business Performance Consultant';
     public static final String NEW_CLIENT_SALES = 'New Client Sales';
-    public static final String MIDMARKETREGION  = 'Mid Market';
+    public static final String MIDMARKETREGION  = 'MidMarket';
     public static final String EloquaTaskRecordType  = 'Eloqua Task RT';
     public static final String OpportunityTeamMemberRole  = 'Other';
     public static final String TECHNOLOGY_SALES = 'Technology Sales';

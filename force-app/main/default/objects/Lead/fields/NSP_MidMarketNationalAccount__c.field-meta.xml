@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_MidMarketNationalAccount__c</fullName>
-    <description>Picklist used to store Mid Market National Account details</description>
+    <description>Picklist used to store MidMarket National Account details</description>
     <externalId>false</externalId>
     <label>MidMarket National Account</label>
     <required>false</required>
