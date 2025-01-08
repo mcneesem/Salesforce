@@ -21,6 +21,26 @@
         <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
+        <name>Email_Alert_Notify_MidMarket_Team_of_WX_WA_Opty</name>
+        <label>Email Alert - Notify MidMarket Team of WX/WA Opty</label>
+        <locationX>12722</locationX>
+        <locationY>350</locationY>
+        <actionName>Opportunity.Notify_MidMarket_Team_of_WX_WA_Opportunity</actionName>
+        <actionType>emailAlert</actionType>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Notify_MidMarket_Team_of_WX_WA_Opty</targetReference>
+        </faultConnector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>opportunityId</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>Opportunity.Notify_MidMarket_Team_of_WX_WA_Opportunity</nameSegment>
+        <versionSegment>1</versionSegment>
+    </actionCalls>
+    <actionCalls>
         <name>EmailAlert_Notice_of_Termination_For_Account_Owner</name>
         <label>Email Alert - Notice of Termination For Account Owner</label>
         <locationX>7442</locationX>
@@ -787,6 +807,23 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assign_varFaultElement_Notify_MidMarket_Team_of_WX_WA_Opty</name>
+        <label>Assign varFaultElement - Notify MidMarket Team of WX/WA Opty</label>
+        <locationX>12986</locationX>
+        <locationY>458</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Email_Alert_Notify_MidMarket_Team_of_WX_WA_Opty</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Assign_varFaultElement_Notify_Opty_Owner_Email_Alert</name>
         <label>Assign varFaultElement - Notify Opty Owner Email Alert</label>
         <locationX>8762</locationX>
@@ -891,7 +928,7 @@
     <decisions>
         <name>Verify_inputs_are_populated</name>
         <label>Verify inputs are populated</label>
-        <locationX>9686</locationX>
+        <locationX>10082</locationX>
         <locationY>134</locationY>
         <defaultConnectorLabel>Inputs missing</defaultConnectorLabel>
         <rules>
@@ -920,7 +957,7 @@
     <decisions>
         <name>Which_Email_Alert_should_be_sent</name>
         <label>Which Email Alert should be sent?</label>
-        <locationX>6386</locationX>
+        <locationX>6650</locationX>
         <locationY>242</locationY>
         <defaultConnectorLabel>N/A</defaultConnectorLabel>
         <rules>
@@ -1283,8 +1320,23 @@
             </connector>
             <label>MidMarket_Opportunity_Closed_Lost</label>
         </rules>
+        <rules>
+            <name>Notify_MidMarket_Team_of_WX_WA_Opportunity</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>varEmailAlert</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Notify_MidMarket_Team_of_WX_WA_Opportunity</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Email_Alert_Notify_MidMarket_Team_of_WX_WA_Opty</targetReference>
+            </connector>
+            <label>Notify_MidMarket_Team_of_WX_WA_Opportunity</label>
+        </rules>
     </decisions>
-    <description>MidMarket Opty Closed Lost added. Updated to check for inputs and update variables</description>
+    <description>HCM Leads Specialist email for WX/WA added. MidMarket Opty Closed Lost added. Updated to check for inputs and update variables</description>
     <environments>Default</environments>
     <interviewLabel>Opportunity - Subflow - Email Alerts {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Opportunity - Subflow - Email Alerts</label>
@@ -1308,7 +1360,7 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <start>
-        <locationX>9560</locationX>
+        <locationX>9956</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Verify_inputs_are_populated</targetReference>

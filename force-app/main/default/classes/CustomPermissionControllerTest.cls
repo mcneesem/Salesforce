@@ -1,9 +1,9 @@
-@isTest(isParallel=True) public class CustomPermissionControllerTest {
+@isTest(isParallel=True) private class CustomPermissionControllerTest {
     private static final String CLASS_NAME = ' ~ CustomPermissionControllerTest';
     private static final Boolean ENABLE_testCustomPermissionController = True;
     private static final Boolean ENABLE_testGetMissingPermissionError = True;
 
-    @isTest static void testPermissionsDirectoryController() {
+    @isTest private static void testPermissionsDirectoryController() {
         String METHOD_NAME = 'testPermissionsDirectoryController';
         String DEBUG_PREFIX = CLASS_NAME + '.' + METHOD_NAME;
         System.debug( DEBUG_PREFIX + ' ~ null=' + null );
@@ -16,7 +16,14 @@
             //
             // check an permitted user that is the current user...
             String currentUserId = UserInfo.getUserId();
-            Boolean isUserPermitted = CustomPermissionController.checkUserPermission( customPermissionName , currentUserId );
+            // leverage InvocableMethod for code coverage...
+            CustomPermissionController.UserPermRequest localRequest = new CustomPermissionController.UserPermRequest();
+            localRequest.customPermissionName = customPermissionName;
+            localRequest.userId = currentUserId;
+            List<CustomPermissionController.UserPermRequest> requestList = new List<CustomPermissionController.UserPermRequest>();
+            requestList.add( localRequest );
+            List<CustomPermissionController.UserPermResponse> results = CustomPermissionController.checkUserPermission( requestList );
+            Boolean isUserPermitted = results[0].hasPermission;
             Assert.isTrue( isUserPermitted == permittedUsersMap.keySet().contains( currentUserId ) );
             //
             // check an permitted user that is not the current user...
@@ -74,5 +81,6 @@
             Test.stopTest();
         }
     }
+
 }
 //
