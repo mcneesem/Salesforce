@@ -2357,6 +2357,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Alera - Propel Insurance</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Alera Group - CHS</fullName>
             <default>false</default>
         </values>
@@ -3850,6 +3854,10 @@
         </values>
         <values>
             <fullName>USI St%2E Louis</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>USI Tampa</fullName>
             <default>false</default>
         </values>
         <values>

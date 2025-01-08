@@ -62,6 +62,11 @@
                 <label>Best Western Hotels &amp; Resorts</label>
             </value>
             <value>
+                <fullName>Blue Collar Elite Buy, LLC</fullName>
+                <default>false</default>
+                <label>Blue Collar Elite Buy, LLC</label>
+            </value>
+            <value>
                 <fullName>Brunswick</fullName>
                 <default>false</default>
                 <label>Brunswick</label>
@@ -228,6 +233,12 @@
                 <default>false</default>
                 <isActive>false</isActive>
                 <label>Raymond James Advisor</label>
+            </value>
+            <value>
+                <fullName>The Union for Reform Judaism (Conservative Judaism)</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>The Union for Reform Judaism (Conservative Judaism)</label>
             </value>
             <value>
                 <fullName>United Franchise Group</fullName>
