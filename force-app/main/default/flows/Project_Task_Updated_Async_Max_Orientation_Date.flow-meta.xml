@@ -2,10 +2,32 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>61.0</apiVersion>
     <decisions>
+        <name>Does_user_have_Edit_Opty_Max_Orientation_Date_permission</name>
+        <label>Does user have &quot;Edit Opty Max Orientation Date&quot; permission?</label>
+        <locationX>539</locationX>
+        <locationY>276</locationY>
+        <defaultConnectorLabel>User doesn&apos;t have perm</defaultConnectorLabel>
+        <rules>
+            <name>Yes_User_has_permissions</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Permission.Edit_Opportunity_Max_Orientation_Date</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Project_Info</targetReference>
+            </connector>
+            <label>Yes - User has permissions</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Is_related_Project_WO</name>
         <label>Is related Project WO?</label>
-        <locationX>374</locationX>
-        <locationY>384</locationY>
+        <locationX>209</locationX>
+        <locationY>492</locationY>
         <defaultConnectorLabel>Project is not WO</defaultConnectorLabel>
         <rules>
             <name>Project_is_WO</name>
@@ -37,7 +59,7 @@
             <label>Project is WO</label>
         </rules>
     </decisions>
-    <description>Now accounts for Project Task status changed to &quot;Cancelled&quot;</description>
+    <description>Decision node to check for user perms at the top. Now accounts for Project Task status changed to &quot;Cancelled&quot;</description>
     <environments>Default</environments>
     <interviewLabel>Project Task - Updated - Async - Max Orientation Date {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Project Task - Updated - Async - Max Orientation Date</label>
@@ -63,8 +85,8 @@
     <recordLookups>
         <name>Get_Project_Info</name>
         <label>Get Project Info</label>
-        <locationX>374</locationX>
-        <locationY>276</locationY>
+        <locationX>209</locationX>
+        <locationY>384</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Is_related_Project_WO</targetReference>
@@ -158,7 +180,7 @@
         <recordTriggerType>Update</recordTriggerType>
         <scheduledPaths>
             <connector>
-                <targetReference>Get_Project_Info</targetReference>
+                <targetReference>Does_user_have_Edit_Opty_Max_Orientation_Date_permission</targetReference>
             </connector>
             <pathType>AsyncAfterCommit</pathType>
         </scheduledPaths>
@@ -168,8 +190,8 @@
     <subflows>
         <name>Fault_Handler_Subflow</name>
         <label>Fault Handler Subflow</label>
-        <locationX>770</locationX>
-        <locationY>384</locationY>
+        <locationX>605</locationX>
+        <locationY>492</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultElement</name>
@@ -193,8 +215,8 @@
     <subflows>
         <name>Project_Max_Orientation_Date_Subflow</name>
         <label>Project - Max Orientation Date Subflow</label>
-        <locationX>242</locationX>
-        <locationY>492</locationY>
+        <locationX>77</locationX>
+        <locationY>600</locationY>
         <flowName>Project_Max_Orientation_Date_Subflow</flowName>
         <inputAssignments>
             <name>varProject</name>
