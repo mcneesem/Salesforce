@@ -176,6 +176,7 @@
             </value>
         </assignmentItems>
         <connector>
+            <isGoTo>true</isGoTo>
             <targetReference>Fault_Handler</targetReference>
         </connector>
     </assignments>
@@ -243,7 +244,6 @@
             </value>
         </assignmentItems>
         <connector>
-            <isGoTo>true</isGoTo>
             <targetReference>Fault_Handler</targetReference>
         </connector>
     </assignments>
@@ -862,7 +862,7 @@
         <faultConnector>
             <targetReference>Set_Fault_Element_Get_Existing_Case_Contacts</targetReference>
         </faultConnector>
-        <filterLogic>or</filterLogic>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>NSP_Case__c</field>
             <operator>EqualTo</operator>
@@ -878,7 +878,7 @@
             </value>
         </filters>
         <object>NSP_Case_Contacts__c</object>
-        <outputReference>ExistingCaseContactRecords</outputReference>
+        <outputReference>existingCaseContactRecords</outputReference>
         <queriedFields>Id</queriedFields>
     </recordLookups>
     <recordLookups>
@@ -1405,7 +1405,7 @@
         </value>
     </variables>
     <variables>
-        <name>ExistingCaseContactRecords</name>
+        <name>existingCaseContactRecords</name>
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
