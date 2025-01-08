@@ -4,8 +4,8 @@
     <externalId>false</externalId>
     <label>Role</label>
     <required>false</required>
-    <trackHistory>false</trackHistory>
-    <trackTrending>true</trackTrending>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
     <type>MultiselectPicklist</type>
     <valueSet>
         <valueSetDefinition>
