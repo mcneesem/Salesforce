@@ -1,3 +1,8 @@
-Termination Form has been rejected
+Termination Form for Client#  {!NSP_Termination_Form__c.NSP_Client__c} | {!NSP_Termination_Form__c.NSP_Client_Name__c} has been rejected by {!ApprovalRequest.Process_Approver}.
 
-{!NSP_Termination_Form__c.Link}
+Review Termination Form and update/resubmit: {!NSP_Termination_Form__c.Link}
+
+CSA Term Date: {!NSP_Termination_Form__c.NSP_Last_Date_Wages_Paid_Through__c}
+Term Reason :  {!NSP_Termination_Form__c.NSP_Term_Reason__c}
+SubTerm Reason : {!NSP_Termination_Form__c.NSP_SubTerm_reason__c}
+Comments:      {!ApprovalRequest.Comments}
