@@ -208,7 +208,7 @@
         </sortOptions>
     </collectionProcessors>
     <description>New Version for Onboarding Meeting Detail Records and Multiple Task Records.
-Added OMD as record Input</description>
+01/09/2025-removed Pay Period help text</description>
     <dynamicChoiceSets>
         <name>pc_BenefitsWaitingPeriod</name>
         <dataType>Picklist</dataType>
@@ -694,7 +694,6 @@ Added OMD as record Input</description>
             </defaultValue>
             <fieldText>First Pay Period</fieldText>
             <fieldType>InputField</fieldType>
-            <helpText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Enter up to 100 characters&lt;/span&gt;&lt;/p&gt;</helpText>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <validationRule>
