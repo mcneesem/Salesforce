@@ -208,7 +208,8 @@
         </sortOptions>
     </collectionProcessors>
     <description>New Version for Onboarding Meeting Detail Records and Multiple Task Records.
-01/09/2025-removed Pay Period help text</description>
+Added OMD as record Input
+removed Pay Period help text</description>
     <dynamicChoiceSets>
         <name>pc_BenefitsWaitingPeriod</name>
         <dataType>Picklist</dataType>

@@ -253,7 +253,7 @@ This is needed to show Default Selection in data table</description>
             <sortOrder>Asc</sortOrder>
         </sortOptions>
     </collectionProcessors>
-    <description>Added Text Length Validation , 01/09-removed help text pay period</description>
+    <description>Added Text Length Validation , removed help text for pay period</description>
     <dynamicChoiceSets>
         <name>pc_BenefitsWaitingPeriod</name>
         <dataType>Picklist</dataType>
