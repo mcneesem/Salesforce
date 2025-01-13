@@ -101,23 +101,28 @@ public with sharing class NSP_ValidateOpportunityStage {
                         //Discovery
                         if ( opp.StageName.equals(NSP_SalesConstants.DISCOVERY_STAGE))
                         {
-                            String scannedEvent='';
-                            if(eventList!=null){
-                                for(Event event:eventList){
-                                    if(event.NSP_Event_Subtype__c == NSP_SalesConstants.DISCOVERY_CALL_ACTIVITY &&
-                                    event.NSP_Status__c !=NSP_SalesConstants.Cancelled){
-                                        scannedEvent += HAS_DISCOVERY;
+                            if(opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WO
+                                || opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WS
+                                || opp.NSP_PrimaryProduct__c == null)
+                            {
+                                String scannedEvent='';
+                                if(eventList!=null){
+                                    for(Event event:eventList){
+                                        if(event.NSP_Event_Subtype__c == NSP_SalesConstants.DISCOVERY_CALL_ACTIVITY &&
+                                        event.NSP_Status__c !=NSP_SalesConstants.Cancelled){
+                                            scannedEvent += HAS_DISCOVERY;
+                                        }
                                     }
                                 }
-                            }
-                            
-                            if(!scannedEvent.contains(HAS_DISCOVERY)){
-                                opp.addError(System.Label.AddDiscoveryCalls_Discovery);
-                            }
-                            
-                            if(ocrList == null || ocrList.size() == 0)
-                            {
-                                opp.addError(System.Label.AddContact_Discovery);
+                                
+                                if(!scannedEvent.contains(HAS_DISCOVERY)){
+                                    opp.addError(System.Label.AddDiscoveryCalls_Discovery);
+                                }
+                                
+                                if(ocrList == null || ocrList.size() == 0)
+                                {
+                                    opp.addError(System.Label.AddContact_Discovery);
+                                }
                             }
                         }
                         
