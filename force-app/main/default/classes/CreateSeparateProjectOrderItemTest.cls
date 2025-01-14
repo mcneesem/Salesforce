@@ -17,6 +17,9 @@
             WHERE ( Id = '0054x0000056lRZAAY' )
             LIMIT 1
         ];
+        Order_Settings__c ordSettings = new Order_Settings__c();
+        ordSettings.Bypass_Rule_PreventStatusChange__c = true;
+        insert ordSettings;
         Assert.isNotNull( deploymentManagers , 'Null Deployment Manager query results.' );
         Assert.isTrue( ( deploymentManagers.size() > 0 ) , 'No Deployment Manager query results.' );
         Assert.isTrue( ( deploymentManagers.size() == 1 ) , 'Incorrect Deployment Manager query results.' );
@@ -65,7 +68,8 @@
             list<Product2> productlist = new list<Product2>();
             trProdNames.add('Test Product');
             trProdNames.add('Test Product1');
-            list<Product2> productlst = [Select Id, Name,ProductCode,NSP_Product_Type__c,SBQQ__SubscriptionPricing__c,Separate_Project__c	 from Product2 WHERE Name IN:trProdNames LIMIT 2]; //Added WHERE Condition as part of code fix
+   
+            list<Product2> productlst = [Select Id, Name,ProductCode,NSP_Product_Type__c,SBQQ__SubscriptionPricing__c,Separate_Project__c ,Matching_Product_Code__c	 from Product2 WHERE Name IN:trProdNames LIMIT 4]; //Added WHERE Condition as part of code fix
 
             productlst[0].ProductCode = 'HCMRETIntegration';
             productlst[0].NSP_Product_Type__c = 'IWX Bundle';
@@ -139,7 +143,7 @@
             
             orderList.clear();
             
-            list<OrderItem> orderItemList = new list<OrderItem>([select Id,SBQQ__BillingFrequency__c,NSP_Project__c,NSP_Project_Name_New_Sales__c,Separate_Project__c,blng__RevenueRecognitionRule__r.NSP_Rev_Rec_Model__c,Order.Type from OrderItem WHERE Order.SBQQ__Quote__c IN:quoteids]);
+            list<OrderItem> orderItemList = new list<OrderItem>([select Id,SBQQ__BillingFrequency__c,NSP_Project__c,NSP_Project_Name_New_Sales__c,Separate_Project__c,blng__RevenueRecognitionRule__r.NSP_Rev_Rec_Model__c,Order.Type, Matching_Product_Code__c, SBQQ__QuoteLine__r.SBQQ__EffectiveQuantity__c, Product2.ProductCode, OrderId, Order.NSP_Project__c from OrderItem WHERE Order.SBQQ__Quote__c IN:quoteids]);
             integer nTwice=0;
             for ( OrderItem oi : orderItemList ) {
                  if(oi.Separate_Project__c == true) {
@@ -156,7 +160,7 @@
 
             update orderitemUpdlist;
             
-            list<Order> orderList1 = new list<Order>([select Id,NSP_Project_Name__c,Type from Order WHERE SBQQ__Quote__c IN:quoteids]);
+            list<Order> orderList1 = new list<Order>([select Id,NSP_Project_Name__c,Type, NSP_Project__c from Order WHERE SBQQ__Quote__c IN:quoteids]);
             orderList1[0].EffectiveDate = Date.Today();
             orderList1[0].Status = NSP_CPQConstants.ORDER_REVIEWED;
             orderList.add(orderList1[0]);
@@ -168,6 +172,12 @@
                 strlst.add(ord.id);
             }
             CreateSeparateProjectOrderItem.createSeparateProject(strlst);
+            orderItemList[1].Matching_Product_Code__c = 'HCMRETIntegrationxyz';
+            update orderItemList;
+            CreateSeparateProjectOrderItem.processMatchingOPs(orderItemList);
+            orderItemList[1].Matching_Product_Code__c = 'HCMRETIntegration';
+            update orderItemList;
+            CreateSeparateProjectOrderItem.processMatchingOPs(orderItemList);
         }
     }
 

@@ -1,9 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
+        <description>This Action calls the method for Creation of Separate Project for it&apos;s independent conditions</description>
+        <name>Create_Separate_Project_Action</name>
+        <label>Create Separate Project Action</label>
+        <locationX>50</locationX>
+        <locationY>1224</locationY>
+        <actionName>CreateSeparateProjectOrderItem</actionName>
+        <actionType>apex</actionType>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_For_Separate_Project</targetReference>
+        </faultConnector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>records</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>CreateSeparateProjectOrderItem</nameSegment>
+    </actionCalls>
+    <actionCalls>
         <name>Override_Rev_Rec_Rules</name>
         <label>Override Rev Rec Rules</label>
-        <locationX>1414</locationX>
+        <locationX>1546</locationX>
         <locationY>384</locationY>
         <actionName>NSP_ReviewRevRecRules</actionName>
         <actionType>apex</actionType>
@@ -21,15 +41,17 @@
             </value>
         </inputParameters>
         <nameSegment>NSP_ReviewRevRecRules</nameSegment>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <name>Set_Order_Id</name>
         <label>Set Order Id</label>
-        <locationX>50</locationX>
+        <locationX>270</locationX>
         <locationY>492</locationY>
         <actionName>NSP_CreateProjFromFlow</actionName>
         <actionType>apex</actionType>
+        <connector>
+            <targetReference>Separate_Project_Condition</targetReference>
+        </connector>
         <faultConnector>
             <targetReference>Set_Fault_Element_Set_Order_Id</targetReference>
         </faultConnector>
@@ -41,13 +63,29 @@
             </value>
         </inputParameters>
         <nameSegment>NSP_CreateProjFromFlow</nameSegment>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <apiVersion>55.0</apiVersion>
     <assignments>
+        <name>Set_Fault_Element_For_Separate_Project</name>
+        <label>Set Fault Element For Separate Project</label>
+        <locationX>314</locationX>
+        <locationY>1332</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Create_Separate_Project_Action</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Set_Fault_Element_Override_Rev_Rec_Rules</name>
         <label>Set Fault Element: Override_Rev_Rec_Rules</label>
-        <locationX>2338</locationX>
+        <locationX>2470</locationX>
         <locationY>492</locationY>
         <assignmentItems>
             <assignToReference>faultElement</assignToReference>
@@ -64,7 +102,7 @@
     <assignments>
         <name>Set_Fault_Element_Set_Order_Id</name>
         <label>Set Fault Element: Set_Order_Id</label>
-        <locationX>314</locationX>
+        <locationX>534</locationX>
         <locationY>600</locationY>
         <assignmentItems>
             <assignToReference>faultElement</assignToReference>
@@ -80,7 +118,7 @@
     <assignments>
         <name>Set_Fault_Element_Update_Order_with_Review_Rec_Rec_Flag_Set</name>
         <label>Set Fault Element: Update_Order_with_Review_Rec_Rec_Flag_Set</label>
-        <locationX>2074</locationX>
+        <locationX>2206</locationX>
         <locationY>1008</locationY>
         <assignmentItems>
             <assignToReference>faultElement</assignToReference>
@@ -97,7 +135,7 @@
     <assignments>
         <name>Set_Fault_Update_Termination_Or_Renewal_Order</name>
         <label>Set Fault Update_Termination_Or_Renewal_Order</label>
-        <locationX>1370</locationX>
+        <locationX>1502</locationX>
         <locationY>708</locationY>
         <assignmentItems>
             <assignToReference>faultElement</assignToReference>
@@ -114,7 +152,7 @@
     <assignments>
         <name>Set_New_Effective_Date</name>
         <label>Set New Effective Date</label>
-        <locationX>1810</locationX>
+        <locationX>1942</locationX>
         <locationY>708</locationY>
         <assignmentItems>
             <assignToReference>newEffectiveDate</assignToReference>
@@ -130,7 +168,7 @@
     <decisions>
         <name>Check_For_Data_Migration_User_Records</name>
         <label>Check For Data Migration User/Records</label>
-        <locationX>50</locationX>
+        <locationX>314</locationX>
         <locationY>276</locationY>
         <defaultConnector>
             <targetReference>Check_If_Project_Is_Not_Null</targetReference>
@@ -153,13 +191,16 @@
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
+            <connector>
+                <targetReference>Separate_Project_Condition</targetReference>
+            </connector>
             <label>Exit For DM User/Records</label>
         </rules>
     </decisions>
     <decisions>
         <name>Check_For_Data_Migration_User_Records1</name>
         <label>Check For Data Migration User/Records1</label>
-        <locationX>1128</locationX>
+        <locationX>1260</locationX>
         <locationY>276</locationY>
         <defaultConnector>
             <targetReference>Override_Rev_Rec_Rules</targetReference>
@@ -188,8 +229,11 @@
     <decisions>
         <name>Check_If_Project_Is_Not_Null</name>
         <label>Check If Project Is Not Null</label>
-        <locationX>314</locationX>
+        <locationX>534</locationX>
         <locationY>384</locationY>
+        <defaultConnector>
+            <targetReference>Separate_Project_Condition</targetReference>
+        </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Project_Not_Null</name>
@@ -225,7 +269,7 @@
         <description>Prevent DmlExceptions: FIELD_INTEGRITY_EXCEPTION: You can&apos;t edit Order Start Date on activated orders.</description>
         <name>Check_Order_Status</name>
         <label>Check Order Status</label>
-        <locationX>1722</locationX>
+        <locationX>1854</locationX>
         <locationY>600</locationY>
         <defaultConnector>
             <targetReference>Set_New_Effective_Date</targetReference>
@@ -250,7 +294,7 @@
     <decisions>
         <name>Check_Order_Type</name>
         <label>Check Order Type</label>
-        <locationX>1414</locationX>
+        <locationX>1546</locationX>
         <locationY>492</locationY>
         <defaultConnector>
             <targetReference>Check_Order_Status</targetReference>
@@ -277,6 +321,36 @@
                 <targetReference>Update_Termination_Or_Renewal_Order</targetReference>
             </connector>
             <label>Termination Or Renewal Order</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>To make sure that Order has Separate Project lines</description>
+        <name>Separate_Project_Condition</name>
+        <label>Separate Project Condition</label>
+        <locationX>314</locationX>
+        <locationY>1116</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Create_Separate_Project</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__Quote__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__Quote__r.Has_Separate_Project_QuoteLines__c</leftValueReference>
+                <operator>GreaterThan</operator>
+                <rightValue>
+                    <numberValue>0.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Create_Separate_Project_Action</targetReference>
+            </connector>
+            <label>Create Separate Project</label>
         </rules>
     </decisions>
     <description>Invoke Apex class from flow which in turn creates projects</description>
@@ -314,7 +388,7 @@
     <recordUpdates>
         <name>Update_Order_with_Review_Rec_Rec_Flag_Set</name>
         <label>Update Order with Review Rec Rec Flag Set</label>
-        <locationX>1722</locationX>
+        <locationX>1854</locationX>
         <locationY>900</locationY>
         <faultConnector>
             <targetReference>Set_Fault_Element_Update_Order_with_Review_Rec_Rec_Flag_Set</targetReference>
@@ -336,7 +410,7 @@
     <recordUpdates>
         <name>Update_Termination_Or_Renewal_Order</name>
         <label>Update Termination Or Renewal Order</label>
-        <locationX>1106</locationX>
+        <locationX>1238</locationX>
         <locationY>600</locationY>
         <faultConnector>
             <targetReference>Set_Fault_Update_Termination_Or_Renewal_Order</targetReference>
@@ -350,7 +424,7 @@
         <inputReference>$Record</inputReference>
     </recordUpdates>
     <start>
-        <locationX>199</locationX>
+        <locationX>397</locationX>
         <locationY>0</locationY>
         <object>Order</object>
         <recordTriggerType>Create</recordTriggerType>
@@ -381,7 +455,7 @@
     <subflows>
         <name>Insperity_Fault_Handler</name>
         <label>Insperity Fault Handler</label>
-        <locationX>314</locationX>
+        <locationX>534</locationX>
         <locationY>708</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>

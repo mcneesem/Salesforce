@@ -126,6 +126,10 @@
                 <behavior>Edit</behavior>
                 <field>SBQQ__HasConsumptionSchedule__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Matching_Product_Code__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
