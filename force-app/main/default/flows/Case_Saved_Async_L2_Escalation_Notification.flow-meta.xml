@@ -23,13 +23,13 @@
         <inputParameters>
             <name>senderType</name>
             <value>
-                <elementReference>Org_Wide_Email_Address</elementReference>
+                <stringValue>OrgWideEmailAddress</stringValue>
             </value>
         </inputParameters>
         <inputParameters>
             <name>senderAddress</name>
             <value>
-                <elementReference>SenderEmailAddress</elementReference>
+                <stringValue>time.support@insperity.com</stringValue>
             </value>
         </inputParameters>
         <inputParameters>
@@ -49,23 +49,9 @@
     </actionCalls>
     <apiVersion>63.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
-    <constants>
-        <name>Org_Wide_Email_Address</name>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>OrgWideEmailAddress</stringValue>
-        </value>
-    </constants>
-    <constants>
-        <name>SenderEmailAddress</name>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>time.support@insperity.com</stringValue>
-        </value>
-    </constants>
     <environments>Default</environments>
-    <interviewLabel>Async Send Email Notification to CaseContacts {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Async Send Email Notification to CaseContacts</label>
+    <interviewLabel>Case - Saved - Async - L2 Escalation Notification {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Case - Saved - Async - L2 Escalation Notification</label>
     <loops>
         <name>Iterated_Over_Case_Contacts</name>
         <label>Iterate Over Case Contact Records</label>
@@ -120,6 +106,13 @@
                 <booleanValue>false</booleanValue>
             </value>
         </filters>
+        <filters>
+            <field>NSP_Work_Email__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
         <getFirstRecordOnly>false</getFirstRecordOnly>
         <object>NSP_Case_Contacts__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -128,13 +121,6 @@
         <locationX>50</locationX>
         <locationY>0</locationY>
         <filterLogic>and</filterLogic>
-        <filters>
-            <field>NSP_Category__c</field>
-            <operator>IsNull</operator>
-            <value>
-                <booleanValue>false</booleanValue>
-            </value>
-        </filters>
         <filters>
             <field>NSP_Level_2__c</field>
             <operator>IsChanged</operator>
@@ -173,7 +159,7 @@
         </scheduledPaths>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <subflows>
         <name>Unable_to_Send_Email_Notification</name>
         <label>Unable to Send Email Notification</label>
@@ -183,13 +169,13 @@
         <inputAssignments>
             <name>faultElement</name>
             <value>
-                <stringValue>Email Notification To Contacts</stringValue>
+                <stringValue>Email_Notification_To_Contacts</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
             <name>faultFlow</name>
             <value>
-                <stringValue>Async Send Email Notification to Case Contacts</stringValue>
+                <stringValue>Case_Saved_Async_L2_Escalation_Notification</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
