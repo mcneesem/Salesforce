@@ -1,34 +1,17 @@
-/**
-Apex Class Name      :  NSP_EmailMessageTriggerHelperTest for NSP_EmailMessageTriggerHelper
-Version              :  1.0                                                                          
-Created Date         :  6/1/2022   
-Function             :  Test class for NSP_EmailMessageTriggerHelper 
-Story                :                                                                      
-Modification Log     :                                                                              
-*--------------------------------------------------------------------------------------------------  
-* Developer                   Date                   Description                                    
-* -------------------------------------------------------------------------------------------------  
-* Ramya                     6/9/2022            First Iteration
-*/
-
-    
-@isTest
-private class NSP_EmailMessageTriggerHelperTest {
+@isTest private class NSP_EmailMessageTriggerHelperTest {
     public static final String CONTACTCENTER = 'contact_center@insperity.com';
     public static final String QUEUE = 'Queue';
     public static final String CONTACTCENTERQUEUE = 'NSP_ContactCenter';
-   	private static final Id BPS_RECORDTYPEID = NSP_GenericRecordType.getRecordTypeId( 'Case' , 'BPS' );
+    private static final Id BPS_RECORDTYPEID = NSP_GenericRecordType.getRecordTypeId( 'Case' , 'BPS' );
     
-    @testSetup
-    static void setupTestData(){
+    @testSetup private static void setupTestData() {
         Case newCase = (Case)NSP_TestExtendedDataFactory.createSObject(new Case(), 'NSP_TestDataFactory.CaseDefaults', false);
         newCase.NSP_Category__c = 'Adaption';
         newCase.NSP_SubCategory__c = 'Claim';
         insert newCase;
     }
 
-    @isTest
-    static void markResponseAfterCloseTrueForPEOTest() {   
+    @isTest private static void markResponseAfterCloseTrueForPEOTest() {   
         test.startTest();
         Id casePEORecordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('PEO').getRecordTypeId();
 
@@ -63,6 +46,10 @@ private class NSP_EmailMessageTriggerHelperTest {
         settings.BPS_Case_Tier_1_Reopen_Days__c = 14;
         settings.BPS_Case_Tier_2_Reopen_Days__c = 30;
         upsert settings;
+        //Story : AZD-328200 - added custom setting value as test data for this function.
+        EmailMessageTriggerSettings__c asyncSwitchSetting = EmailMessageTriggerSettings__c.getOrgDefaults();
+        asyncSwitchSetting.IsAfterInsertQueueableEnabled__c = false;
+        upsert asyncSwitchSetting;
         
         Case caseRecord = [SELECT id, Status FROM Case WHERE Status = 'Open' LIMIT 1];
         caseRecord.NSP_Rating__c = 'Neutral';
@@ -326,8 +313,7 @@ private class NSP_EmailMessageTriggerHelperTest {
     * MethodName : markResponseAfterCloseMoreThanFiveForPEOTest
     * Description : This method is used to test if Mark Response field and creation of Child case base on Case closed Date
     * ********************************************************************************************/ 
-    @isTest
-    static void markResponseAfterCloseMoreThanFiveForPEOTest() {
+    @isTest private static void markResponseAfterCloseMoreThanFiveForPEOTest() {
         test.startTest();
         Account acc = new Account(Name = 'test acc');
         Id casePEORecordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('PEO').getRecordTypeId();
@@ -380,8 +366,7 @@ private class NSP_EmailMessageTriggerHelperTest {
     * MethodName : markResponseAfterCloseLessThanFiveForPEOTest
     * Description : This method is used to test if Mark Response field and reopen case based on Case closed Date
     * ********************************************************************************************/ 
-    @isTest
-    static void markResponseAfterCloseLessThanFiveForPEOTest() {   
+    @isTest private static void markResponseAfterCloseLessThanFiveForPEOTest() {   
         test.startTest();
         Id casePEORecordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('PEO').getRecordTypeId();
 
@@ -407,4 +392,5 @@ private class NSP_EmailMessageTriggerHelperTest {
         test.stopTest();
 
     }
+
 }

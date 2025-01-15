@@ -26,21 +26,37 @@ public with sharing class NSP_EmailMessageTriggerHandler implements NSP_ITrigger
         NSP_EmailMessageTriggerHelper oEmailMessageTriggerHelper = new NSP_EmailMessageTriggerHelper();
     	oEmailMessageTriggerHelper.beforeInsertionEmailMessage(newList);   
     }
-    
-    /**
-    * Handles after insert for EmailMessage
-    * @param newList List of New EmailMessage.
-    * @param newMap Map of New EmailMessage. 
-    * @return void             
-    *                
-    */
-    public void afterInsert(List<sObject> newList, Map<Id, sObject> newMap) {
-        NSP_EmailMessageTriggerHelper oEmailMessageTriggerHelper =new NSP_EmailMessageTriggerHelper();
-        oEmailMessageTriggerHelper.afterInsertionEmailMessage((List<EmailMessage>)newList,(Map<Id,EmailMessage>)newMap);
-        //Story - STY-03853
-        NSP_EmailMessageTriggerHelper.updateEmailMessageFields((List<EmailMessage>)newList);
+
+    //
+    // Handles after insert for EmailMessage
+    // @param newList List of New EmailMessage.
+    // @param newMap Map of New EmailMessage.
+    // @return void
+    //
+    public void afterInsert( List<sObject> newList , Map<Id,sObject> newMap ) {
+        EmailMessageTriggerSettings__c settings = EmailMessageTriggerSettings__c.getInstance( UserInfo.getUserId() );
+        if ( ( settings != null )
+            && settings.IsAfterInsertQueueableEnabled__c
+            && ( Limits.getQueueableJobs() < Limits.getLimitQueueableJobs() )
+            )
+        {
+            System.enqueueJob(
+                new EmailMessageQueueableHelper(
+                    (List<EmailMessage>)newList ,
+                    (Map<Id,EmailMessage>)newMap
+                )
+            );
+        } else {
+            NSP_EmailMessageTriggerHelper oEmailMessageTriggerHelper = new NSP_EmailMessageTriggerHelper();
+            oEmailMessageTriggerHelper.afterInsertionEmailMessage(
+                (List<EmailMessage>)newList ,
+                (Map<Id,EmailMessage>)newMap
+            );
+            //Story - STY-03853
+            NSP_EmailMessageTriggerHelper.updateEmailMessageFields( (List<EmailMessage>)newList );
+        }
     }
-    
+
     /**
     * Handles before update for EmailMessage
     * @param newMap Map of New EmailMessage.
