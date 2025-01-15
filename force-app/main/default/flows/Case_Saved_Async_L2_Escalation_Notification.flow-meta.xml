@@ -159,7 +159,7 @@
         </scheduledPaths>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <subflows>
         <name>Unable_to_Send_Email_Notification</name>
         <label>Unable to Send Email Notification</label>
