@@ -1558,13 +1558,17 @@ public class NSP_Implementationprofile_ServiceHelper {
             for (Id ipRecId : ipRecordsByAutomation.get(contractorType)) {
                 Implementation_Profile__c ipWithValue = (Implementation_Profile__c) data.get(IP_IDENTIFIER).get(ipRecId);
                 if (ipWithValue != null) {
-                    String subject = ipWithValue.Account__r.Name + ' is a Licensed Contractor in California';
+                    String subject = ipWithValue.Account__r.Name + ' ' + '(' + ipWithValue.NSP_AIMS_ClientNo__c + ')'  +' is a Licensed Contractor in California';
                     String effectiveDate = null;
                     if(ipWithValue.Effective_Date_Payroll_Worker_comp_EPLI__c != null){
                        effectiveDate = ipWithValue.Effective_Date_Payroll_Worker_comp_EPLI__c.format();
                     }
                     String body = 'Lockton Affinity,<br><br>'
                         + ipWithValue.Account__r.Name
+                        + ' '
+                        + '('
+                        + ipWithValue.NSP_AIMS_ClientNo__c
+                        + ')'
                         + ' is a Licensed Contractor in California. Please update the CSLB website with the client\'s new Workers\' Comp coverage through Insperity.<br><br>'
                         + 'LEGAL NAME: ' + ipWithValue.NSP_Legal_Name__c + '\n'
                         + 'CONTRACTORS CSLB#: ' + ipWithValue.Contractor_s_License__c + '\n'
