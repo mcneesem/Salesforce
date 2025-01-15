@@ -220,6 +220,33 @@
         data-name="NSP_Work_Hours__c"
         onchange={handleValueChange}></lightning-input-field>
       </div>
+
+      <c-nsp_selection-box
+        disabled={disabledFields.Does_this_client_have_an_AWW__c}
+        data-name="Does_this_client_have_an_AWW__c"
+        class={styles.Does_this_client_have_an_AWW__c}
+        label={label.doesClientHaveAlternativeWorkWeek}
+        field-api-name="Implementation_Profile__c.Does_this_client_have_an_AWW__c"
+        record-type-id={recordTypeId}
+        value={field.Does_this_client_have_an_AWW__c}
+        onchange={handleValueChange}
+        ondblclick={handleDoubleClick}
+        help-text="AWW examples can be 4/10 or 9/80. Note, Pennsylvania does not allow except for salary/non-exempt employees.">
+      </c-nsp_selection-box>
+
+      <c-nsp_selection-box
+        disabled={disabledFields.Is_client_CA_docs_submitted_for_approval__c}
+        lwc:if={visibility.Is_client_CA_docs_submitted_for_approval__c}
+        data-name="Is_client_CA_docs_submitted_for_approval__c"
+        class={styles.Is_client_CA_docs_submitted_for_approval__c}
+        label={label.isClientCADocsSubmitted}
+        field-api-name="Implementation_Profile__c.Is_client_CA_docs_submitted_for_approval__c"
+        record-type-id={recordTypeId}
+        value={field.Is_client_CA_docs_submitted_for_approval__c}
+        onchange={handleValueChange}
+        ondblclick={handleDoubleClick}>
+      </c-nsp_selection-box>
+
       <div class="slds-grid slds-gutters">
         <div class="slds-col slds-size_1-of-2">
           <lightning-input-field
