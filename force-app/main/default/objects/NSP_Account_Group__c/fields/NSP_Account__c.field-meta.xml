@@ -4,7 +4,7 @@
     <description>Account will be auto populated from code and used to concatenate the Group name</description>
     <encryptionScheme>None</encryptionScheme>
     <externalId>false</externalId>
-    <label>Account</label>
+    <label>Account Name</label>
     <length>100</length>
     <required>false</required>
     <trackHistory>true</trackHistory>
