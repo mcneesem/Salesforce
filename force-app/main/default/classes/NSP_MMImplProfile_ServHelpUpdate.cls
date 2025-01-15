@@ -2512,64 +2512,62 @@ public class NSP_MMImplProfile_ServHelpUpdate {
             for(Id ipRecId : ipRecordsByAutomation.get(DATA_VERIFICATION_MM)){
                 if(newIPs != null) {
                     Implementation_Profile__c ipRec = newIPs.get(ipRecId);
-                    if(ipRec != null) {
-                        if((isRerun || ipRec.NSP_Form_Completed__c)){
-                            pse__Proj__c proj = (pse__Proj__c) data.get(PROJECT_IDENTIFIER).get(ipRec.NSP_Project__c);
-                            if(proj != null){
-                                Id milestoneId;
-                                milestoneId=getMilestoneId(proj.pse__Milestones__r,pta.NSP_Milestone__c, proj);
-                                String milestoneKey = proj.Id + '~' + pta.NSP_Milestone__c;
-                                if(milestoneId == null && !mileStonesToInsert.containsKey(milestoneKey)){
-                                    pse__Milestone__c eachMilestone = new pse__Milestone__c(
-                                        Name=pta.NSP_Milestone__c,
-                                        RecordTypeId=milestonePEORecordtypeId,
-                                        pse__Project__c=proj.Id,
-                                        pse__Target_Date__c=proj.pse__End_Date__c);
-                                    mileStonesToInsert.put(milestoneKey, eachMilestone);
+                    if(ipRec != null && (isRerun || ipRec.NSP_Form_Completed__c)){
+                        pse__Proj__c proj = (pse__Proj__c) data.get(PROJECT_IDENTIFIER).get(ipRec.NSP_Project__c);
+                        if(proj != null){
+                            Id milestoneId;
+                            milestoneId=getMilestoneId(proj.pse__Milestones__r,pta.NSP_Milestone__c, proj);
+                            String milestoneKey = proj.Id + '~' + pta.NSP_Milestone__c;
+                            if(milestoneId == null && !mileStonesToInsert.containsKey(milestoneKey)){
+                                pse__Milestone__c eachMilestone = new pse__Milestone__c(
+                                    Name=pta.NSP_Milestone__c,
+                                    RecordTypeId=milestonePEORecordtypeId,
+                                    pse__Project__c=proj.Id,
+                                    pse__Target_Date__c=proj.pse__End_Date__c);
+                                mileStonesToInsert.put(milestoneKey, eachMilestone);
+                            }
+                            pse__Project_Task__c eachProjecttask = createProjectTaskfromIP(proj,  pta.NSP_Category__c, ipRecId,milestoneKey);
+                            eachProjecttask.NSP_Sub_Category__c=pta.NSP_Sub_Category__c;
+                            eachProjecttask.Name=pta.NSP_Task_Name__c;
+                            eachProjecttask.pse__Order__c=110;
+                            eachProjecttask.Task_Order__c=110;
+                            eachProjectTask.NSP_Visible_to_Client__c=TRUE;
+                            Implementation_Profile__c ipwithValue=(Implementation_Profile__c) data.get(IMPL_PROFILE_IDENTIFIER).get(ipRecId);
+                            if(ipwithValue != null){
+                                if(ipwithValue.NSP_Payroll_Specialist__c!=null && ipwithValue.NSP_Payroll_Specialist__r.pse__Salesforce_User__c!=null){
+                                    eachProjecttask.OwnerId=ipwithValue.NSP_Payroll_Specialist__r.pse__Salesforce_User__c;
                                 }
-                                pse__Project_Task__c eachProjecttask = createProjectTaskfromIP(proj,  pta.NSP_Category__c, ipRecId,milestoneKey);
-                                eachProjecttask.NSP_Sub_Category__c=pta.NSP_Sub_Category__c;
-                                eachProjecttask.Name=pta.NSP_Task_Name__c;
-                                eachProjecttask.pse__Order__c=110;
-                                eachProjecttask.Task_Order__c=110;
-                                eachProjectTask.NSP_Visible_to_Client__c=TRUE;
-                                Implementation_Profile__c ipwithValue=(Implementation_Profile__c) data.get(IMPL_PROFILE_IDENTIFIER).get(ipRecId);
-                                if(ipwithValue != null){
-                                    if(ipwithValue.NSP_Payroll_Specialist__c!=null && ipwithValue.NSP_Payroll_Specialist__r.pse__Salesforce_User__c!=null){
-                                        eachProjecttask.OwnerId=ipwithValue.NSP_Payroll_Specialist__r.pse__Salesforce_User__c;
-                                    }
-                                    if(ipwithValue.Account__c!=null && ipwithValue.Account__r.Id!=null){
-                                        eachProjecttask.NSP_Implementation_Account_Id__c=ipwithValue.Account__r.Id;
-                                    }
-                                    if (workCalendarRecord != null) {  
-                                        eachProjecttask.pse__Work_Calendar__c = workCalendarRecord.Id;  
-                                    }
-                                    DateTime now = DateTime.now(); 
-                                    Integer hour = now.hour();
-                                    Integer minute = now.minute();
-                                    Integer second = now.second();
-                                    if(ipwithValue.NSP_Insperity_1st_pay_date__c != null){
-                                        eachProjecttask.pse__Start_Date_Time__c = DateTime.now();
-                                        DateTime endDate = DateTime.newInstance(
-                                            ipwithValue.NSP_Insperity_1st_pay_date__c.year() ,
-                                            ipwithValue.NSP_Insperity_1st_pay_date__c.month() ,
-                                            ipwithValue.NSP_Insperity_1st_pay_date__c.day() ,
-                                            hour ,
-                                            minute ,
-                                            second
-                                        );
-                                        eachProjecttask.pse__End_Date_Time__c = endDate.addDays(-7);
-                                    }
-                                    eachProjecttask.pse__Milestone__c=milestoneId;
-                                    projectTaskList.add(eachProjecttask);
-                                    ipAutomationRecords.add(
-                                        createIPAutomation(
-                                            ipRec, 
-                                            ipa.NSP_Automation_Name__c,
-                                            ipa.NSP_Method_Name__c,ipa.NSP_Section__c
-                                        )
+                                if(ipwithValue.Account__c!=null && ipwithValue.Account__r.Id!=null){
+                                    eachProjecttask.NSP_Implementation_Account_Id__c=ipwithValue.Account__r.Id;
+                                }
+                                if (workCalendarRecord != null) {
+                                    eachProjecttask.pse__Work_Calendar__c = workCalendarRecord.Id;
+                                }
+                                DateTime now = DateTime.now();
+                                Integer hour = now.hour();
+                                Integer minute = now.minute();
+                                Integer second = now.second();
+                                if(ipwithValue.NSP_Insperity_1st_pay_date__c != null){
+                                    eachProjecttask.pse__Start_Date_Time__c = DateTime.now();
+                                    DateTime endDate = DateTime.newInstance(
+                                        ipwithValue.NSP_Insperity_1st_pay_date__c.year() ,
+                                        ipwithValue.NSP_Insperity_1st_pay_date__c.month() ,
+                                        ipwithValue.NSP_Insperity_1st_pay_date__c.day() ,
+                                        hour ,
+                                        minute ,
+                                        second
                                     );
+                                    eachProjecttask.pse__End_Date_Time__c = endDate.addDays(-7);
                                 }
+                                eachProjecttask.pse__Milestone__c=milestoneId;
+                                projectTaskList.add(eachProjecttask);
+                                ipAutomationRecords.add(
+                                    createIPAutomation(
+                                        ipRec,
+                                        ipa.NSP_Automation_Name__c,
+                                        ipa.NSP_Method_Name__c,ipa.NSP_Section__c
+                                    )
+                                );
                             }
                         }
                     }
