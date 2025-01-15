@@ -84,7 +84,7 @@ public with sharing class OnboardingMeetingDetailHistory {
 
     // format Date
     private static String formatDateValue( DateTime value ) {
-        return ( ( value != null ) ? value.format( 'MM-dd-yyyy' ) : null );
+        return ( ( value != null ) ? value.format( 'MM-dd-yyyy','UTC' ) : null );
     }
 
     // format TEXTAREA
