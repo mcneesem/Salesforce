@@ -108,7 +108,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
     private static final String CSP_MEDICAL_MM ='CSP_Medical';
     private static final String CSP_DENTAL_MM ='CSP_Dental';
     private static final String CSP_VISION_MM ='CSP_Vision';
-
+	private static final String DATA_VERIFICATION_MM ='DataVerificationMM';
     private static Id ipFSORecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Implementation_Profile__c' , NSP_ServiceConstants.FSOProfile );
     private static Id ipMMRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Implementation_Profile__c' , NSP_ServiceConstants.MMProfile );
     private static Id milestonePEORecordtypeId = NSP_GenericRecordType.getRecordTypeId( 'pse__Milestone__c' , NSP_ServiceConstants.PEOMILSTONE );
@@ -135,7 +135,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                 BACKGROUND_MM,DRUG_SCREENING_MM,SCREENING_BPS_MM,
                 PERFORMANCE_BPS_MM,ORGANIZATIONAL_BPS_MM,INSURANCE_BPS_MM,
                 RECRUITING_BPS_MM,CERTIFY_BPS_MM,CSP_HSA_MM,CSP_MEDICAL_MM,
-                CSP_DENTAL_MM,CSP_VISION_MM
+                CSP_DENTAL_MM,CSP_VISION_MM,DATA_VERIFICATION_MM
             }
         );
     }
@@ -297,6 +297,9 @@ public class NSP_MMImplProfile_ServHelpUpdate {
             if(automationsToExecute.contains(CSP_VISION_MM)){
                 checkForVision(ipRec, existingRec);
             }
+            if(automationsToExecute.contains(DATA_VERIFICATION_MM)){
+                checkForDataVerificationMM(ipRec, existingRec);
+            }
             if(automationsToExecute.contains(POST_DEDUCTION_MM)){
                 checkforPostTaxDeductions(ipRec, existingRec);
             }
@@ -442,6 +445,9 @@ public class NSP_MMImplProfile_ServHelpUpdate {
          if(ipRecordsByAutomation.containsKey(CSP_VISION_MM)){
             createProjectTaskForPreTaxHealth(148, CSP_VISION_MM);
          }
+         if(ipRecordsByAutomation.containsKey(DATA_VERIFICATION_MM)){
+            createProjectTaskForDataVerification();
+         }
          if(ipRecordsByAutomation.containsKey(RETIRE_PLANORK_MM)){
             createProjectTaskForRetirementPlans();
          }
@@ -546,7 +552,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
          }
          Map<Id, sObject> dbRec = new Map<Id, sObject>([SELECT Id,NSP_Payroll_Specialist__c, NSP_Payroll_Specialist__r.pse__Salesforce_User__c,NSP_Sr_Onboarding_Benefit_Rep__c,NSP_Sr_Onboarding_Benefit_Rep__r.pse__Salesforce_User__c, NSP_Sr_Benefit_Rep__c,
                                                         NSP_Sr_Benefit_Rep__r.pse__Salesforce_User__c, NSP_Payroll_Project_Manager__c, NSP_Payroll_Project_Manager__r.pse__Salesforce_User__c,NSP_HR_Specialist__c,NSP_HR_Specialist__r.pse__Salesforce_User__c,Select_the_applicable_LOA_types__c,
-                                                        NSP_Project_Manager__c,NSP_Project_Manager__r.pse__Salesforce_User__c,Account__r.Id, Account__c, Account__r.Name from Implementation_Profile__c WHERE Id in:ipIds]);
+                                                        NSP_Project_Manager__c,NSP_Project_Manager__r.pse__Salesforce_User__c,Account__r.Id, Account__c, Account__r.Name,NSP_Insperity_1st_pay_date__c from Implementation_Profile__c WHERE Id in:ipIds]);
          data.put(IMPL_PROFILE_IDENTIFIER, dbRec);
          
      }
@@ -2495,7 +2501,87 @@ public class NSP_MMImplProfile_ServHelpUpdate {
         //check for existing Automation record and store the new Automation records
         recToInsert.addAll(getnewAutomationListtoInsert(ipAutomationRecords));
     }
-
+	
+    public void createProjectTaskForDataVerification() {
+        List<pse__Project_Task__c> projectTaskList = new List<pse__Project_Task__c>();
+        List<NSP_Implementation_Profile_Automation__c> ipAutomationRecords = new List<NSP_Implementation_Profile_Automation__c>();
+        NSP_ProjectTask_Automation__mdt pta = NSP_ProjectTask_Automation__mdt.getInstance(DATA_VERIFICATION_MM);
+        NSP_Implementation_Automations__mdt ipa = NSP_Implementation_Automations__mdt.getInstance(DATA_VERIFICATION_MM);
+        pse__Work_Calendar__c workCalendarRecord = [SELECT Id FROM pse__Work_Calendar__c LIMIT 1]; 
+        if(ipRecordsByAutomation != null){
+            for(Id ipRecId : ipRecordsByAutomation.get(DATA_VERIFICATION_MM)){
+                if(newIPs != null) {
+                    Implementation_Profile__c ipRec = newIPs.get(ipRecId);
+                    if(ipRec != null) {
+                        if((isRerun || ipRec.NSP_Form_Completed__c)){
+                            pse__Proj__c proj = (pse__Proj__c) data.get(PROJECT_IDENTIFIER).get(ipRec.NSP_Project__c);
+                            if(proj != null){
+                                Id milestoneId;
+                                milestoneId=getMilestoneId(proj.pse__Milestones__r,pta.NSP_Milestone__c, proj);
+                                String milestoneKey = proj.Id + '~' + pta.NSP_Milestone__c;
+                                if(milestoneId == null && !mileStonesToInsert.containsKey(milestoneKey)){
+                                    pse__Milestone__c eachMilestone = new pse__Milestone__c(
+                                        Name=pta.NSP_Milestone__c,
+                                        RecordTypeId=milestonePEORecordtypeId,
+                                        pse__Project__c=proj.Id,
+                                        pse__Target_Date__c=proj.pse__End_Date__c);
+                                    mileStonesToInsert.put(milestoneKey, eachMilestone);
+                                }
+                                pse__Project_Task__c eachProjecttask = createProjectTaskfromIP(proj,  pta.NSP_Category__c, ipRecId,milestoneKey);
+                                eachProjecttask.NSP_Sub_Category__c=pta.NSP_Sub_Category__c;
+                                eachProjecttask.Name=pta.NSP_Task_Name__c;
+                                eachProjecttask.pse__Order__c=110;
+                                eachProjecttask.Task_Order__c=110;
+                                eachProjectTask.NSP_Visible_to_Client__c=TRUE;
+                                Implementation_Profile__c ipwithValue=(Implementation_Profile__c) data.get(IMPL_PROFILE_IDENTIFIER).get(ipRecId);
+                                if(ipwithValue != null){
+                                    if(ipwithValue.NSP_Payroll_Specialist__c!=null && ipwithValue.NSP_Payroll_Specialist__r.pse__Salesforce_User__c!=null){
+                                        eachProjecttask.OwnerId=ipwithValue.NSP_Payroll_Specialist__r.pse__Salesforce_User__c;
+                                    }
+                                    if(ipwithValue.Account__c!=null && ipwithValue.Account__r.Id!=null){
+                                        eachProjecttask.NSP_Implementation_Account_Id__c=ipwithValue.Account__r.Id;
+                                    }
+                                    if (workCalendarRecord != null) {  
+                                        eachProjecttask.pse__Work_Calendar__c = workCalendarRecord.Id;  
+                                    }
+                                    DateTime now = DateTime.now(); 
+                                    Integer hour = now.hour();
+                                    Integer minute = now.minute();
+                                    Integer second = now.second();
+                                    if(ipwithValue.NSP_Insperity_1st_pay_date__c != null){
+                                        eachProjecttask.pse__Start_Date_Time__c = DateTime.now();
+                                        DateTime endDate = DateTime.newInstance(
+                                            ipwithValue.NSP_Insperity_1st_pay_date__c.year() ,
+                                            ipwithValue.NSP_Insperity_1st_pay_date__c.month() ,
+                                            ipwithValue.NSP_Insperity_1st_pay_date__c.day() ,
+                                            hour ,
+                                            minute ,
+                                            second
+                                        );
+                                        eachProjecttask.pse__End_Date_Time__c = endDate.addDays(-7);
+                                    }
+                                    eachProjecttask.pse__Milestone__c=milestoneId;
+                                    projectTaskList.add(eachProjecttask);
+                                    ipAutomationRecords.add(
+                                        createIPAutomation(
+                                            ipRec, 
+                                            ipa.NSP_Automation_Name__c,
+                                            ipa.NSP_Method_Name__c,ipa.NSP_Section__c
+                                        )
+                                    );
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        //check for existing project task and store the new tasks
+        recToInsert.addAll(getnewTaskstoInsert(projectTaskList));
+        //check for existing Automation record and store the new Automation records
+        recToInsert.addAll(getnewAutomationListtoInsert(ipAutomationRecords));
+    }
+    
     public void createProjectTaskForPostDeductions(){
          //Does the client have any post-tax deductions 
          List<pse__Project_Task__c> projectTaskList = new List<pse__Project_Task__c>();
@@ -4084,7 +4170,24 @@ public class NSP_MMImplProfile_ServHelpUpdate {
             }
         }
     }
-
+	
+    private void checkForDataVerificationMM( Implementation_Profile__c newRec , Implementation_Profile__c existingRec ) {
+        if ( newRec != null ) {
+            if ( newRec.RecordTypeId == ipMMRecordTypeId 
+                && newRec.Does_this_client_have_an_AWW__c == NSP_ServiceConstants.YES
+                && newRec.NSP_Insperity_1st_pay_date__c != null
+                )
+            {
+                if ( existingRec == null
+                    || newRec.NSP_Form_Completed__c
+                    || newRec.Does_this_client_have_an_AWW__c != existingRec.Does_this_client_have_an_AWW__c
+                    )
+                {
+                    updateEligibleRecordsMap(ipRecordsByAutomation, newRec.Id, DATA_VERIFICATION_MM);
+                }
+            }
+        }
+    }
      private void checkForHandbookDevelopment(Implementation_Profile__c newRec, Implementation_Profile__c existingRec){
          
          if( newRec.RecordTypeId == ipMMRecordTypeId &&
