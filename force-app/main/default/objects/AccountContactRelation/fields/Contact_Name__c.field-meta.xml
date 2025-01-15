@@ -6,8 +6,8 @@
     NOT(ISBlANK(Contact.MiddleName)),
     Contact.FirstName&amp;&quot; &quot;&amp;Contact.MiddleName&amp;&quot; &quot;&amp;Contact.LastName,
     Contact.FirstName&amp;&quot; &quot;&amp;Contact.LastName
-
-    )</formula>
+    )
+    </formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Contact Name</label>
     <required>false</required>
