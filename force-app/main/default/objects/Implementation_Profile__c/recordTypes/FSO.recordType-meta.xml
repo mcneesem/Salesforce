@@ -2212,7 +2212,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Bluetooth Beach</fullName>
+            <fullName>Bluetooth Beacon</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3647,7 +3647,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Bluetooth Beach</fullName>
+            <fullName>Bluetooth Beacon</fullName>
             <default>false</default>
         </values>
         <values>
