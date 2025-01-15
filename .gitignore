@@ -9,3 +9,4 @@
 .sfdx/indexes/*
 .sfdx/tools/*
 .sfdx/typings/*
+.vscode/*
