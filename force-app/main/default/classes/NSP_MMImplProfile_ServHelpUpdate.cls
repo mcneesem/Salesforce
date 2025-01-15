@@ -4172,19 +4172,18 @@ public class NSP_MMImplProfile_ServHelpUpdate {
     }
 	
     private void checkForDataVerificationMM( Implementation_Profile__c newRec , Implementation_Profile__c existingRec ) {
-        if ( newRec != null ) {
-            if ( newRec.RecordTypeId == ipMMRecordTypeId 
-                && newRec.Does_this_client_have_an_AWW__c == NSP_ServiceConstants.YES
-                && newRec.NSP_Insperity_1st_pay_date__c != null
-                )
+        if ( newRec != null
+            && newRec.RecordTypeId == ipMMRecordTypeId 
+            && newRec.Does_this_client_have_an_AWW__c == NSP_ServiceConstants.YES
+            && newRec.NSP_Insperity_1st_pay_date__c != null
+           )
+        {
+            if ( existingRec == null
+                || newRec.NSP_Form_Completed__c
+                || newRec.Does_this_client_have_an_AWW__c != existingRec.Does_this_client_have_an_AWW__c
+               )
             {
-                if ( existingRec == null
-                    || newRec.NSP_Form_Completed__c
-                    || newRec.Does_this_client_have_an_AWW__c != existingRec.Does_this_client_have_an_AWW__c
-                    )
-                {
-                    updateEligibleRecordsMap(ipRecordsByAutomation, newRec.Id, DATA_VERIFICATION_MM);
-                }
+                updateEligibleRecordsMap(ipRecordsByAutomation, newRec.Id, DATA_VERIFICATION_MM);
             }
         }
     }
