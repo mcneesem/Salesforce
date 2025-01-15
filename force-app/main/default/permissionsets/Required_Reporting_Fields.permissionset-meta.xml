@@ -78,6 +78,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Asset.AMR_Multi_Year_CSA__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Asset.Equity_Processing_Approved__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -364,6 +369,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>MessagingSession.Wait_Time__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NSP_Account_Group_Member__c.AMR_Primary__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
