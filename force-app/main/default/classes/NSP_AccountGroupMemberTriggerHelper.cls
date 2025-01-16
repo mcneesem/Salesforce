@@ -71,11 +71,10 @@ public with sharing class NSP_AccountGroupMemberTriggerHelper {
     // @return void
     //
     private void updatePrimaryAccounts( Map<String,String> mapAccIdGrp ) {
-        Map<Id,Account> mapAccounts = null;
         List<NSP_Account_Group__c> lstOfAccGrps = new List<NSP_Account_Group__c>();
         List<NSP_Account_Group_Member__c> lstOfAccGrpsMembrs = new List<NSP_Account_Group_Member__c>();
         if ( mapAccIdGrp != null ) {
-            mapAccounts = new Map<Id,Account>([
+            Map<Id,Account> mapAccounts = new Map<Id,Account>([
                 SELECT Id , Name
                 FROM Account
                 WHERE ( Id IN :mapAccIdGrp.values() )
@@ -85,18 +84,28 @@ public with sharing class NSP_AccountGroupMemberTriggerHelper {
         }
         
         if (!lstOfAccGrps.isEmpty()) {
-            Database.update(lstOfAccGrps, false);
+            Database.SaveResult[] results = Database.update( lstOfAccGrps , false );
+            NSP_ErrorLogHandler.logResults(
+                NSP_AccountGroupMemberTriggerHelper.class.getName() ,
+                'updatePrimaryAccounts:NSP_Account_Group__c' ,
+                results
+            );
         }
         
         if (!lstOfAccGrpsMembrs.isEmpty()) {
-            Database.update(lstOfAccGrpsMembrs, false);
+            Database.SaveResult[] results = Database.update( lstOfAccGrpsMembrs , false );
+            NSP_ErrorLogHandler.logResults(
+                NSP_AccountGroupMemberTriggerHelper.class.getName() ,
+                'updatePrimaryAccounts:NSP_Account_Group_Member__c' ,
+                results
+            );
         }
     }
     
     private List<NSP_Account_Group__c> updateAccountGroups(Map<String, String> mapAccIdGrp, Map<Id, Account> mapAccounts) {
         List<NSP_Account_Group__c> lstOfAccGrps = new List<NSP_Account_Group__c>();
         
-        if( mapAccIdGrp != null ){
+        if( ( mapAccIdGrp != null ) && ( mapAccounts != null ) ){
             for ( NSP_Account_Group__c accGrp : [
                         SELECT Id , NSP_Account__c
                         FROM NSP_Account_Group__c
