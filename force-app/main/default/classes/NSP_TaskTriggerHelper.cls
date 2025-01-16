@@ -104,8 +104,8 @@ public with sharing class NSP_TaskTriggerHelper {
         updateActivitySales(taskNewMap.values(),taskOldMap);
         tasksFieldsToUpdate(taskOldMap, taskNewMap.values());
 
-        //Added as part of DF-04782 // ADO-327803
-        if(!orientationMeetingRequestTaskList.isEmpty() && !(CustomPermissionController.checkUserPermission('Block_Scheduling_Revised' ,UserInfo.getUserId()))){
+        //Added as part of DF-04782
+        if(!orientationMeetingRequestTaskList.isEmpty()){
             showMessageWhenTaskIsUpdated(orientationMeetingRequestTaskList);
         }
     }

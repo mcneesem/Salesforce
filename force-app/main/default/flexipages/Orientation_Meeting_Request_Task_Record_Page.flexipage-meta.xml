@@ -7,46 +7,6 @@
                     <name>actionNames</name>
                     <valueList>
                         <valueListItems>
-                            <value>Task.Update_Final_OMR_Meeting_Info</value>
-                            <visibilityRule>
-                                <booleanFilter>1 AND 2 AND 3</booleanFilter>
-                                <criteria>
-                                    <leftValue>{!Record.NSP_What_needs_to_get_done__c}</leftValue>
-                                    <operator>NE</operator>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.Type}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>Client Transition Meeting Request</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!$Permission.CustomPermission.Update_Final_OMR_Meeting_Info}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>false</rightValue>
-                                </criteria>
-                            </visibilityRule>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>Task.Update_Final_OMR_Meeting_Info_Employee_Orientation</value>
-                            <visibilityRule>
-                                <booleanFilter>1 AND 2 AND 3</booleanFilter>
-                                <criteria>
-                                    <leftValue>{!Record.NSP_What_needs_to_get_done__c}</leftValue>
-                                    <operator>NE</operator>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.Type}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>Employee Orientation Meeting Request</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!$Permission.CustomPermission.Update_Final_OMR_Meeting_Info}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>false</rightValue>
-                                </criteria>
-                            </visibilityRule>
-                        </valueListItems>
-                        <valueListItems>
                             <value>Task.Update_Final_OMR_Meeting_Info_Revised</value>
                             <visibilityRule>
                                 <booleanFilter>1 AND 2 AND 5 AND ( 3 OR 4 )</booleanFilter>
