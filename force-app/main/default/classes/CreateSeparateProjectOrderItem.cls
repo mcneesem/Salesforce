@@ -104,7 +104,6 @@ public with sharing class CreateSeparateProjectOrderItem {
 
     //method to fetch name of project
     private static string createSeparateProjectNameAmend( Orderitem orderLine ) {
-        String transactionType = null;
         Boolean isAmendment = false;
         String strProjName = orderLine.NSP_Project_Name_New_Sales__c;
         if ( ( orderLine != null )
