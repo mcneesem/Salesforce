@@ -282,6 +282,31 @@
                 <default>false</default>
                 <label>Azolla Ventures</label>
             </value>
+            <value>
+                <fullName>85</fullName>
+                <default>false</default>
+                <label>First Tee</label>
+            </value>
+            <value>
+                <fullName>86</fullName>
+                <default>false</default>
+                <label>Samsara Biocapital LLC</label>
+            </value>
+            <value>
+                <fullName>87</fullName>
+                <default>false</default>
+                <label>MAC Global Partners LLC</label>
+            </value>
+            <value>
+                <fullName>88</fullName>
+                <default>false</default>
+                <label>Sinovation Ventures</label>
+            </value>
+            <value>
+                <fullName>89</fullName>
+                <default>false</default>
+                <label>New York Angels</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
