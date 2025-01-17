@@ -176,10 +176,14 @@ async createCaseRecord(inputData){
         subject = this.reReqObj.NSP_Survey_Type__c.value +' Survey Request';
     }
     // updated for user story - 206842
-    if( this.reReqObj != null &&  this.reReqObj.NSP_AgreementType__c != null && this.reReqObj.NSP_AgreementType__c.value != null 
-        && this.reReqObj.NSP_AgreementType__c.value  != '') {
-            fields.NSP_Confidential__c = true;   
-     }
+    if ( this.reReqObj != null
+        && this.reReqObj.NSP_AgreementType__c != null
+        && this.reReqObj.NSP_AgreementType__c.value != null
+        && this.reReqObj.NSP_AgreementType__c.value != ''
+        )
+    {
+        fields.NSP_Confidential__c = true;
+    }
 
     fields.Subject = subject;
     fields.Status ='Open';

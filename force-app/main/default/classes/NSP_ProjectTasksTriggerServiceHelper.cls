@@ -1,52 +1,41 @@
-/**
-* Represents the new project task trigger helper which handles all the logic.
-*/
-public class NSP_ProjectTasksTriggerServiceHelper {
-    // test w/ NSP_ProjectTasksTriggerServiceHelperTest (85%)
+public with sharing class NSP_ProjectTasksTriggerServiceHelper {
+    // test w/ NSP_ProjectTasksTriggerServiceHelperTest, NSP_ServiceAppointmentTrigger_Test (85%)
+    // test w/ NSP_ProjectTasksTriggerServiceHelperTest (71%)
+    // test w/ NSP_ServiceAppointmentTrigger_Test (65%)
 
     private Set<Id> allProjectIds = new Set<Id>();
     public static Boolean runOwnerAssignmentLogic = true;
-    
-    /**
-* Description - This method handles all the before insert operations of project task records.
-* @return - void
-*/
-    public void beforeInsertDirector(List<pse__Project_Task__c> newProjectTasks){
-        Map<String, List<pse__Project_Task__c>> dataMap = new Map<String, List<pse__Project_Task__c>>();
-        
-        prepareBeforeInsertData(newProjectTasks, dataMap);
-        executeBeforeInsertMethods(dataMap);
+
+    //
+    // Description - This method handles all the before insert operations of project task records.
+    // @return - void
+    //
+    public void beforeInsertDirector( List<pse__Project_Task__c> newProjectTasks ) {
+        prepareBeforeInsertData( newProjectTasks );
     }
-    
+
     // Prepares a map of data according to diff
-    private void prepareBeforeInsertData(List<pse__Project_Task__c> newProjectTasks, Map<String, List<pse__Project_Task__c>> dataMap){
+    private void prepareBeforeInsertData( List<pse__Project_Task__c> newProjectTasks ) {
         Set<Id> updatePorjectTaskAccountIdSet = new Set<Id>();
-        for (pse__Project_Task__c projectTask : newProjectTasks) {
+        for ( pse__Project_Task__c projectTask : newProjectTasks ) {
             // added as a part of STY-02138
-            if(projectTask.pse__Project__c != null && projectTask.NSP_Account_Id__c == Null ){
-                updatePorjectTaskAccountIdSet.add(projectTask.pse__Project__c);
+            if ( ( projectTask.pse__Project__c != null ) && ( projectTask.NSP_Account_Id__c == null ) ) {
+                updatePorjectTaskAccountIdSet.add( projectTask.pse__Project__c );
             }
         }
         // added as a part of STY-02138
-        if(!updatePorjectTaskAccountIdSet.isEmpty()){
-            updateProjectTaskAccount(newProjectTasks,updatePorjectTaskAccountIdSet);
+        if ( !updatePorjectTaskAccountIdSet.isEmpty() ) {
+            updateProjectTaskAccount( newProjectTasks , updatePorjectTaskAccountIdSet );
         }
     }
-    
-    // Execute method if any record available for that operation
-    private void executeBeforeInsertMethods(Map<String, List<pse__Project_Task__c>> dataMap){
-        
-    }
-    
-    
-    /**
-* Iterates throught the list of new pse__Project_Task__c and passes the required attributes to other methods.
-* @param projectTaskList List of New project. 
-* @param projectTaskOldMap Map of Old project.   
-* @return void             
-*                
-*/
-    public void afterUpdateProjectTask(List<pse__Project_Task__c> projectTaskList, Map<Id, pse__Project_Task__c> projectTaskOldMap){
+
+    //
+    // Iterates throught the list of new pse__Project_Task__c and passes the required attributes to other methods.
+    // @param projectTaskList List of New project.
+    // @param projectTaskOldMap Map of Old project.
+    // @return void
+    //
+    public void afterUpdateProjectTask( List<pse__Project_Task__c> projectTaskList , Map<Id, pse__Project_Task__c> projectTaskOldMap ) {
         Map<Id,pse__Project_Task__c> mapOfProjectTaskIdAndProjecTask = new Map<Id,pse__Project_Task__c>();
         Map<Id,pse__Project_Task__c> mapOfProjectTaskIdAndProjecTask1 = new Map<Id,pse__Project_Task__c>();
         Map<String,Id> mapDispatchRegionToServiceTerritory = new Map<String,Id>(); 
@@ -83,7 +72,7 @@ public class NSP_ProjectTasksTriggerServiceHelper {
                         mapOfProjectTaskIdAndProjecTask1.put(pTask.Id, pTask);
                     }
             // added as a part of STY-02138
-            if(pTask.pse__Project__c != null && pTask.NSP_Account_Id__c != Null && 
+            if(pTask.pse__Project__c != null && pTask.NSP_Account_Id__c != null && 
                projectTaskOldMap.get(pTask.Id).NSP_Account_Id__c != pTask.NSP_Account_Id__c ){
                    projectIdSet.add(pTask.pse__Project__c);
                    accountIdProjectIdMap.put(pTask.NSP_Account_Id__c,pTask.pse__Project__c);
@@ -113,8 +102,12 @@ public class NSP_ProjectTasksTriggerServiceHelper {
             };
             List<NSP_ProjectTaskQueueEvent__e> lstTaskQueueEvent = new List<NSP_ProjectTaskQueueEvent__e>();
             lstTaskQueueEvent.add(new NSP_ProjectTaskQueueEvent__e(NSP_Input_Parameters__c = JSON.serialize(mapInputParams), NSP_MethodName__c = 'createPTAonProject', NSP_UserId__c = UserInfo.getUserId()));
-            List<Database.SaveResult> saveResults = EventBus.publish(lstTaskQueueEvent);
-            NSP_ErrorLogHandler.logSaveResultsException('NSP_ProjectTasksTriggerHelper', 'afterInsertFilter:updateProjectTaskOwnerForAutoResource', saveResults);
+            List<Database.SaveResult> results = EventBus.publish( lstTaskQueueEvent );
+            NSP_ErrorLogHandler.logResults(
+                NSP_ProjectTasksTriggerServiceHelper.class.getName() ,
+                'afterUpdateProjectTask' ,
+                results
+            );
         }
         
         //creating WorkOrder Record
@@ -136,67 +129,108 @@ public class NSP_ProjectTasksTriggerServiceHelper {
             NSP_ProjectTaskSharing.projectTaskRecordSharing(null, deleteProjTaskIdSet);
         }
     }
-    /*Updating Service Appointment STY-02085
-    * Description: If orientation address is update on project task then orientation address will be updated
-    on service appointment
-    * @param map of Project Tasks Id and ProjectTask
-    * @param map of Dispatch Region and Service Territory rec
-    * @return void    */
-    public void updateServiceAppointment(Map<Id,pse__Project_Task__c> mapProjectTasks , Map<String,Id> mapDispatchRegionToServiceTerritory){
-        pse__Project_Task__c oMapProjectTask;
-        //Map of ProjectTaskId and Service Appointment record
-        Map<Id, ServiceAppointment> mapProjectTaskIdSA = new Map<Id, ServiceAppointment>();
-        //Map of Work Order Id and Project Task and Project Task record
-        Map<Id, pse__Project_Task__c> mapWorkOrderProjectTask = new Map<Id, pse__Project_Task__c>();
-        //List of service appointment
-        List<WorkOrder> listWorkOrderToUpdate = new List<WorkOrder>();
-        //List of service appointment
-        List<ServiceAppointment> listServiceAppointments = new List<ServiceAppointment>();
-        List<sObject> recordsToUpdate = new List<sObject>();
-        //getting all work order associated with projectTask and storing the workorder id and project task record
-        for(WorkOrder oWorkOrder: [SELECT Id, NSP_Project_Task__c, ServiceTerritoryId, NSP_Orientation_Address__c, Subject, Description, OwnerId,Status,Duration,StartDate,EndDate, NSP_Meeting_Type__c
-                                   FROM WorkOrder 
-                                   WHERE NSP_Project_Task__c=: mapProjectTasks.keySet()]){
-                                       //added as part of STY-03891
-                                       WorkOrder udatedWoRec = updateWorkOrderRecord(oWorkOrder.Id, mapProjectTasks.get(oWorkOrder.NSP_Project_Task__c));
-                                       
-                                       if( mapProjectTasks.get(oWorkOrder.NSP_Project_Task__c).NSP_Dispatch_Region__c != null){
-                                            udatedWoRec.ServiceTerritoryId  = mapDispatchRegionToServiceTerritory.get(mapProjectTasks.get(oWorkOrder.NSP_Project_Task__c).NSP_Dispatch_Region__c);  
-                                       }
 
-                                        mapWorkOrderProjectTask.put(oWorkOrder.Id, mapProjectTasks.get(oWorkOrder.NSP_Project_Task__c));
-                                        listWorkOrderToUpdate.add( udatedWoRec );
-                                   }
-
-        //now updating oreientation address on service appointment to projectTask orientation address
-        for(ServiceAppointment oService: [SELECT Id,FSL__GanttLabel__c, Duration,SchedStartTime,SchedEndTime,
-                                            NSP_Orientation_Address__c, Description, Status, EarliestStartTime,ServiceTerritoryId,NSP_Meeting_Type__c,
-                                          ParentRecordId 
-                                          FROM ServiceAppointment 
-                                          WHERE ParentRecordId =: mapWorkOrderProjectTask.keySet()]){
-                                              //STY-03817 
-                                              //Assigning Service Territory on SA
-                                                ServiceAppointment updatedRec = updateServiceAppointmentRecord(oService.Id, mapWorkOrderProjectTask.get(oService.ParentRecordId));
-                                              if( mapWorkOrderProjectTask.get(oService.ParentRecordId).NSP_Dispatch_Region__c != null){
-                                                    updatedRec.ServiceTerritoryId = mapDispatchRegionToServiceTerritory.get(mapWorkOrderProjectTask.get(oService.ParentRecordId).NSP_Dispatch_Region__c);  
-                                              }
-                                                listServiceAppointments.add( updatedRec );
-                                          }
-        
-        try{
-            recordsToUpdate.addAll(listWorkOrderToUpdate);
-            recordsToUpdate.addAll(listServiceAppointments);
-            //updating Work Order and SA
-            if(!recordsToUpdate.isEmpty()){
-                List<Database.SaveResult> results1 =  Database.update( recordsToUpdate , false );
-                NSP_ErrorLogHandler.logSaveResultsException('NSP_ProjectTasksTriggerServiceHelper', 'updateServiceAppointment', results1 );
+    //
+    // Updating Service Appointment STY-02085
+    // Description: If orientation address is update on project task then orientation address will be updated on service appointment
+    // @param map of Project Tasks Id and ProjectTask
+    // @param map of Dispatch Region and Service Territory rec
+    // @return void
+    //
+    public void updateServiceAppointment( Map<Id,pse__Project_Task__c> mapProjectTasks , Map<String,Id> mapDispatchRegionToServiceTerritory ) {
+        try {
+            //Map of Work Order Id and Project Task and Project Task record
+            Map<Id,pse__Project_Task__c> mapWorkOrderProjectTask = new Map<Id,pse__Project_Task__c>();
+            //List of service appointment
+            List<WorkOrder> listWorkOrderToUpdate = new List<WorkOrder>();
+            //getting all work order associated with projectTask and storing the workorder id and project task record
+            for ( WorkOrder oWorkOrder : [
+                        SELECT
+                            Id , NSP_Project_Task__c , ServiceTerritoryId ,
+                            NSP_Orientation_Address__c , Subject ,
+                            Description , OwnerId , Status , Duration ,
+                            StartDate , EndDate , NSP_Meeting_Type__c
+                        FROM WorkOrder
+                        WHERE ( NSP_Project_Task__c= :mapProjectTasks.keySet() )
+                    ]
+                )
+            {
+                // STY-03891
+                pse__Project_Task__c workOrderProjectTask = mapProjectTasks.get( oWorkOrder.NSP_Project_Task__c );
+                if ( workOrderProjectTask != null ) {
+                    WorkOrder record = updateWorkOrderRecord(
+                        oWorkOrder.Id ,
+                        workOrderProjectTask
+                    );
+                    if ( record != null ) {
+                        if ( String.isNotBlank( workOrderProjectTask.NSP_Dispatch_Region__c ) ) {
+                            record.ServiceTerritoryId = mapDispatchRegionToServiceTerritory.get(
+                                workOrderProjectTask.NSP_Dispatch_Region__c
+                            );
+                        }
+                        mapWorkOrderProjectTask.put(
+                            oWorkOrder.Id ,
+                            workOrderProjectTask
+                        );
+                        listWorkOrderToUpdate.add( record );
+                    }
+                }
             }
-        }catch(Exception ex){
-            NSP_ErrorLogHandler.logSaveException('NSP_ProjectTasksTriggerServiceHelper', 
-                                                 'createWorkOrderTask', ex.getMessage());
+            //List of service appointment
+            List<ServiceAppointment> listServiceAppointments = new List<ServiceAppointment>();
+            //now updating oreientation address on service appointment to projectTask orientation address
+            for ( ServiceAppointment oService : [
+                        SELECT
+                            Id , FSL__GanttLabel__c , Duration , SchedStartTime , SchedEndTime ,
+                            NSP_Orientation_Address__c , Description , Status , EarliestStartTime ,
+                            ServiceTerritoryId , NSP_Meeting_Type__c , ParentRecordId 
+                        FROM ServiceAppointment 
+                        WHERE ( ParentRecordId = :mapWorkOrderProjectTask.keySet() )
+                    ]
+                )
+            {
+                // STY-03817 ~ Assigning Service Territory on SA
+                pse__Project_Task__c workOrderProjectTask = mapWorkOrderProjectTask.get( oService.ParentRecordId );
+                if ( workOrderProjectTask != null ) {
+                    ServiceAppointment record = updateServiceAppointmentRecord(
+                        oService.Id ,
+                        workOrderProjectTask
+                    );
+                    if ( record != null ) {
+                        if ( String.isNotBlank( workOrderProjectTask.NSP_Dispatch_Region__c ) ) {
+                            record.ServiceTerritoryId = mapDispatchRegionToServiceTerritory.get(
+                                workOrderProjectTask.NSP_Dispatch_Region__c
+                            );
+                        }
+                        listServiceAppointments.add( record );
+                    }
+                }
+            }
+            if ( !listWorkOrderToUpdate.isEmpty() ) {
+                List<Database.SaveResult> results = Database.update( listWorkOrderToUpdate , false );
+                NSP_ErrorLogHandler.logResults(
+                    NSP_ProjectTasksTriggerServiceHelper.class.getName() ,
+                    'updateServiceAppointment:update:WorkOrder' ,
+                    results
+                );
+            }
+            if ( !listServiceAppointments.isEmpty() ) {
+                List<Database.SaveResult> results = Database.update( listServiceAppointments , false );
+                NSP_ErrorLogHandler.logResults(
+                    NSP_ProjectTasksTriggerServiceHelper.class.getName() ,
+                    'updateServiceAppointment:update:ServiceAppointment' ,
+                    results
+                );
+            }
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_ProjectTasksTriggerServiceHelper.class.getName() ,
+                'updateServiceAppointment' ,
+                e
+            );
         }
     }
-    
+
     /***********************************************************************************************
     * MethodName: updateWorkOrderRecord
     * Description : Update the respective workorder record and return it
@@ -248,13 +282,13 @@ public class NSP_ProjectTasksTriggerServiceHelper {
         		
         		return serviceAppointmentRecToUpdate;
     }
- 
-    /** 
-    * This will create the new PTA on Project with updated Owner
-    * Project Task is changed and Auto Resource on Project is checked.
-    * @param listOfProjectTask List of updated Project Task.
-    */
-    public static void createPTAOnProject(Set<Id> pTaskOwnerIdSet, Set<Id> setProjectId,Set<Id> setProjectTaskId){
+
+    //
+    // This will create the new PTA on Project with updated Owner
+    // Project Task is changed and Auto Resource on Project is checked.
+    // @param listOfProjectTask List of updated Project Task.
+    //
+    public static void createPTAOnProject( Set<Id> pTaskOwnerIdSet , Set<Id> setProjectId , Set<Id> setProjectTaskId ) {
         
         Map<Id, Id> mapOfContactIdvsUserId = new Map<Id, Id> ();
         Map<Id, Id> mapOfUserIdvsContactId = new Map<Id, Id> ();
@@ -276,16 +310,23 @@ public class NSP_ProjectTasksTriggerServiceHelper {
             mapOfUserIdvsContactId.put(cont.pse__Salesforce_User__c,cont.Id);
         }
         Map<Id,Id> mapTaskIdContactId = new Map<Id,Id>();
-        for(pse__Project_Task_Assignment__c pta : [SELECT pse__Resource__c, pse__Project_Task__c,pse__Project_Task__r.pse__Project__c FROM pse__Project_Task_Assignment__c WHERE pse__Project_Task__c IN :setProjectTaskId]){
-            if(projectIdSet.contains(pta.pse__Project_Task__r.pse__Project__c)){
-                if(mapOfContactIdvsUserId.containsKey(pta.pse__Resource__c)){
-                    mapOfContactIdvsUserId.remove(pta.pse__Resource__c);
-                    mapTaskIdContactId.put(pta.pse__Project_Task__c,pta.pse__Resource__c);
-                }
+        for ( pse__Project_Task_Assignment__c pta : [
+                    SELECT pse__Resource__c , pse__Project_Task__c , pse__Project_Task__r.pse__Project__c
+                    FROM pse__Project_Task_Assignment__c
+                    WHERE ( pse__Project_Task__c IN :setProjectTaskId )
+                ]
+            )
+        {
+            if ( projectIdSet.contains( pta.pse__Project_Task__r.pse__Project__c )
+                && mapOfContactIdvsUserId.containsKey( pta.pse__Resource__c )
+                )
+            {
+                mapOfContactIdvsUserId.remove( pta.pse__Resource__c );
+                mapTaskIdContactId.put( pta.pse__Project_Task__c , pta.pse__Resource__c );
             }
         }
         if(!mapOfContactIdvsUserId.isEmpty()){
-            for(pse__Project_Task__c projObj : [SELECT Id,OwnerId ,pse__Project__c FROM pse__Project_Task__c WHERE Id IN:setProjectTaskId AND pse__Project__c != Null
+            for(pse__Project_Task__c projObj : [SELECT Id,OwnerId ,pse__Project__c FROM pse__Project_Task__c WHERE Id IN:setProjectTaskId AND pse__Project__c != null
                                                 AND  pse__Project__r.NSP_Auto_Resource_Project__c =: NSP_ServiceConstants.VALUE_TRUE]){
                 if(projectIdSet.contains(projObj.pse__Project__c) && !mapTaskIdContactId.containsKey(projObj.Id)){
                     Id contactId = mapOfUserIdvsContactId.get(projObj.OwnerId);
@@ -299,13 +340,16 @@ public class NSP_ProjectTasksTriggerServiceHelper {
                 } 
             }
         }
-        
-        if(!listofPTA.isEmpty()){
-            Database.SaveResult[] ptaInsertList = Database.insert(listofPTA,false);
-            NSP_ErrorLogHandler.logSaveResultsException('NSP_ProjectTasksTriggerServiceHelper', 'createPTAOnProject:ptaInsertList', ptaInsertList); 
+        if ( !listofPTA.isEmpty() ) {
+            Database.SaveResult[] results = Database.insert( listofPTA , false );
+            NSP_ErrorLogHandler.logResults(
+                NSP_ProjectTasksTriggerServiceHelper.class.getName() ,
+                'createPTAOnProject' ,
+                results
+            );
         } 
     }   
- 
+
     /**
 * Iterates throught the list of new pse__Project_Task__c and passes the required attributes to other methods.
 * @param listOfProjectTask Map of New Project Tasks
@@ -366,12 +410,12 @@ public class NSP_ProjectTasksTriggerServiceHelper {
             }
         }
     }
-    
-    /**
-* Description: Filter record for other functions
-* @return void             
-*/
-    public void afterInsertFilter(List<pse__Project_Task__c> listProjectTasks, Map<Id, pse__Project_Task__c> mapProjectTasks){
+
+    //
+    // Description: Filter record for other functions
+    // @return void
+    //
+    public void afterInsertFilter( List<pse__Project_Task__c> listProjectTasks , Map<Id,pse__Project_Task__c> mapProjectTasks ) {
         
         /*STY-02085  checking for checkBox(Create Work Order) on projectTask Object is checked 
 		and Disptach region field is set */
@@ -411,35 +455,41 @@ public class NSP_ProjectTasksTriggerServiceHelper {
             Map<String, Object> mapInputParams = new Map<String, Object>{'projectTaskIds' => projectTasksWithNoAssignments};
             List<NSP_ProjectTaskQueueEvent__e> lstTaskQueueEvent = new List<NSP_ProjectTaskQueueEvent__e>();
             lstTaskQueueEvent.add(new NSP_ProjectTaskQueueEvent__e(NSP_Input_Parameters__c = JSON.serialize(mapInputParams), NSP_MethodName__c = 'updateProjectTaskOwner', NSP_UserId__c = UserInfo.getUserId()));
-            List<Database.SaveResult> saveResults = EventBus.publish(lstTaskQueueEvent);
-            NSP_ErrorLogHandler.logSaveResultsException('NSP_ProjectTasksTriggerHelper', 'afterInsertFilter:upsertResults', saveResults);
-
+            List<Database.SaveResult> results = EventBus.publish( lstTaskQueueEvent );
+            NSP_ErrorLogHandler.logResults(
+                NSP_ProjectTasksTriggerServiceHelper.class.getName() ,
+                'afterInsertFilter:publish' ,
+                results
+            );
         }
         //Added as part of STY-04100
         if(!newprojTaskIdSet.isEmpty()){
         	NSP_ProjectTaskSharing.projectTaskRecordSharing(newprojTaskIdSet, null);
         }
-        if(!setProjectTasksForAutoResource.isEmpty() && runOwnerAssignmentLogic){
+        if ( !setProjectTasksForAutoResource.isEmpty() && NSP_ProjectTasksTriggerServiceHelper.runOwnerAssignmentLogic ) {
             Map<String, Object> mapInputParams = new Map<String, Object>{'projectTaskIds' => setProjectTasksForAutoResource};
             List<NSP_ProjectTaskQueueEvent__e> lstTaskQueueEvent = new List<NSP_ProjectTaskQueueEvent__e>();
             lstTaskQueueEvent.add(new NSP_ProjectTaskQueueEvent__e(NSP_Input_Parameters__c = JSON.serialize(mapInputParams), NSP_MethodName__c = 'updateProjectTaskOwnerForAutoResource', NSP_UserId__c = UserInfo.getUserId()));
-            List<Database.SaveResult> saveResults = EventBus.publish(lstTaskQueueEvent);
-            NSP_ErrorLogHandler.logSaveResultsException('NSP_ProjectTasksTriggerHelper', 'afterInsertFilter:updateProjectTaskOwnerForAutoResource', saveResults);
+            List<Database.SaveResult> results = EventBus.publish( lstTaskQueueEvent );
+            NSP_ErrorLogHandler.logResults(
+                NSP_ProjectTasksTriggerServiceHelper.class.getName() ,
+                'afterInsertFilter:publish:auto' ,
+                results
+            );
         }
          //creating a project account record
         if(!projectIdSet.isEmpty() && !accountIdProjectIdMap.isEmpty()){
             createProjectAccount(listProjectTasks,projectIdSet,accountIdProjectIdMap);
         }
     }
-    
-    /*Create this method based on STY-02085 
-Description: If the checkBox(Create Work Order) on projectTask Object is checked and
-Disptach region field is set then work order record is created and also Service appointment
-* @param map of Project Tasks Id and ProjectTask
-* @return void             
-*/
-    
-public void createWorkOrderTask(Map<Id,pse__Project_Task__c> mapProjectTasks){
+
+    //
+    // Create this method based on STY-02085
+    // Description: If the checkBox(Create Work Order) on projectTask Object is checked and Disptach region field is set then work order record is created and also Service appointment
+    // @param map of Project Tasks Id and ProjectTask
+    // @return void
+    //
+    public void createWorkOrderTask( Map<Id,pse__Project_Task__c> mapProjectTasks ) {
     pse__Project_Task__c oMapProjectTask;
     Map<Id, ServiceAppointment> mapProjectTaskIdSA = new Map<Id, ServiceAppointment>();
     Map<Id, pse__Project_Task__c> mapWorkOrderProjectTask = new Map<Id, pse__Project_Task__c>();
@@ -490,7 +540,7 @@ public void createWorkOrderTask(Map<Id,pse__Project_Task__c> mapProjectTasks){
     }
     }
     
-    try{
+        try {
     if(!listWorkOrders.isEmpty()){
         //Inserting list of WorkOrder record
         Database.insert(listWorkOrders);
@@ -535,21 +585,24 @@ public void createWorkOrderTask(Map<Id,pse__Project_Task__c> mapProjectTasks){
             Database.update(listServiceAppointments);
         }
     }
-    }catch(Exception ex){
-        NSP_ErrorLogHandler.logSaveException('NSP_ProjectTasksTriggerServiceHelper', 
-        'createWorkOrderTask', ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_ProjectTasksTriggerServiceHelper.class.getName() ,
+                'createWorkOrderTask' ,
+                e
+            );
+        }
     }
-}
-    
-                /***********************************************************************************************
-                 * MethodName:  emailAlertProjectTaskCompleted
-                 * Description :RET project template's tasks completion email alert
-                 * Story : STY-02214
-                 * Author :Abhishek Kumar 
-                 * Params: Map<Id,pse__Project_Task__c> newMapProjecttasks
-                 * Params: Map<Id,pse__Project_Task__c> oldMapProjecttasks
-                 * ********************************************************************************************/
-                public static void emailAlertProjectTaskCompleted(Map<Id,pse__Project_Task__c> newMapProjecttasks, Map<Id,pse__Project_Task__c> oldMapProjecttasks ){
+
+    //
+    // MethodName:  emailAlertProjectTaskCompleted
+    // Description :RET project template's tasks completion email alert
+    // Story : STY-02214
+    // Author :Abhishek Kumar 
+    // Params: Map<Id,pse__Project_Task__c> newMapProjecttasks
+    // Params: Map<Id,pse__Project_Task__c> oldMapProjecttasks
+    //
+    public static void emailAlertProjectTaskCompleted( Map<Id,pse__Project_Task__c> newMapProjecttasks , Map<Id,pse__Project_Task__c> oldMapProjecttasks ) {
         List<pse__Project_Task__c> prepareAmendmentTasks = new List<pse__Project_Task__c>();
         List<pse__Project_Task__c> submitCoversheetTasks = new List<pse__Project_Task__c>();
         List<pse__Project_Task__c> verifyAllInfoTasks = new List<pse__Project_Task__c>();
@@ -559,7 +612,7 @@ public void createWorkOrderTask(Map<Id,pse__Project_Task__c> mapProjectTasks){
         List<pse__Project_Task__c> validationOfPpttInstallTasks = new List<pse__Project_Task__c>();
         List<pse__Project_Task__c> validationOfPpttStartupTasks = new List<pse__Project_Task__c>();
         
-        try{
+        try {
             //iterate over each project task updated
             for(pse__Project_Task__c projectTask : newMapProjecttasks.values()){
                 //check if project task status is updated to complete
@@ -602,98 +655,134 @@ public void createWorkOrderTask(Map<Id,pse__Project_Task__c> mapProjectTasks){
                    }
             }
             //get email addresses stored in Retirement metadata
-            NSP_Retirement_Services__mdt Ret401kasfplanemail =  NSP_Retirement_Services__mdt.getInstance( NSP_ServiceConstants.RET_401KASFPLAN );
-            NSP_Retirement_Services__mdt Ret401kcompliance =  NSP_Retirement_Services__mdt.getInstance( NSP_ServiceConstants.RET_401KCOMPLIANCE );
-            NSP_Retirement_Services__mdt RetKWRSBusinessSolutions =  NSP_Retirement_Services__mdt.getInstance( NSP_ServiceConstants.RET_KWRSBUISNESS );
-            NSP_Retirement_Services__mdt RetVirginiaBarnes =  NSP_Retirement_Services__mdt.getInstance( NSP_ServiceConstants.RET_VIRGINIA_BARNES );
-            
+            NSP_Retirement_Services__mdt ret401kasfplanemail = NSP_Retirement_Services__mdt.getInstance( NSP_ServiceConstants.RET_401KASFPLAN );
+            NSP_Retirement_Services__mdt ret401kcompliance = NSP_Retirement_Services__mdt.getInstance( NSP_ServiceConstants.RET_401KCOMPLIANCE );
+            NSP_Retirement_Services__mdt retKWRSBusinessSolutions = NSP_Retirement_Services__mdt.getInstance( NSP_ServiceConstants.RET_KWRSBUISNESS );
+            NSP_Retirement_Services__mdt retVirginiaBarnes = NSP_Retirement_Services__mdt.getInstance( NSP_ServiceConstants.RET_VIRGINIA_BARNES );
+
             //call email alert function for prepareAmendmentTasks
-            if(!prepareAmendmentTasks.isEmpty()){
-                NSP_ProjectTaskTriggerEmailNotification.emailNotifyforTasksOnRetProjectType(prepareAmendmentTasks,
-                                                                                            'NSP_PrepareAmendmentAlertTemplate',
-                                                                                            new List<String>{Ret401kasfplanemail.NSP_Email_Address__c});
+            if ( !prepareAmendmentTasks.isEmpty() ) {
+                NSP_ProjectTaskTriggerEmailNotification.emailNotifyforTasksOnRetProjectType(
+                    prepareAmendmentTasks ,
+                    'NSP_PrepareAmendmentAlertTemplate' ,
+                    new List<String>{ ret401kasfplanemail.NSP_Email_Address__c }
+                );
             }
             //call email alert function for submitCoversheetTasks
-            if(!submitCoversheetTasks.isEmpty()){
-                NSP_ProjectTaskTriggerEmailNotification.emailNotifyforTasksOnRetProjectType(submitCoversheetTasks,
-                                                                                            'NSP_SubmitCoversheetTemplateAlert',
-                                                                                            new List<String>{Ret401kasfplanemail.NSP_Email_Address__c});
+            if ( !submitCoversheetTasks.isEmpty() ) {
+                NSP_ProjectTaskTriggerEmailNotification.emailNotifyforTasksOnRetProjectType(
+                    submitCoversheetTasks ,
+                    'NSP_SubmitCoversheetTemplateAlert' ,
+                    new List<String>{ ret401kasfplanemail.NSP_Email_Address__c }
+                );
             }
             //call email alert function for verifyAllInfoTasks
-            if(!verifyAllInfoTasks.isEmpty()){
-                NSP_ProjectTaskTriggerEmailNotification.emailNotifyforTasksOnRetProjectType(verifyAllInfoTasks,
-                                                                                            'NSP_VerifyAllInfoTemplateAlert',
-                                                                                            new List<String>{Ret401kasfplanemail.NSP_Email_Address__c});
+            if ( !verifyAllInfoTasks.isEmpty() ) {
+                NSP_ProjectTaskTriggerEmailNotification.emailNotifyforTasksOnRetProjectType(
+                    verifyAllInfoTasks ,
+                    'NSP_VerifyAllInfoTemplateAlert' ,
+                    new List<String>{ ret401kasfplanemail.NSP_Email_Address__c }
+                );
             }
             //call email alert function for collectSignedAmendTasks
-            if(!collectSignedAmendTasks.isEmpty()){
-                NSP_ProjectTaskTriggerEmailNotification.emailNotifyforTasksOnRetProjectType(collectSignedAmendTasks,
-                                                                                            'NSP_CollectSignedAmendTemplate',
-                                                                                            new List<String>{Ret401kasfplanemail.NSP_Email_Address__c,Ret401kcompliance.NSP_Email_Address__c,RetKWRSBusinessSolutions.NSP_Email_Address__c});
+            if ( !collectSignedAmendTasks.isEmpty() ) {
+                NSP_ProjectTaskTriggerEmailNotification.emailNotifyforTasksOnRetProjectType(
+                    collectSignedAmendTasks ,
+                    'NSP_CollectSignedAmendTemplate' ,
+                    new List<String>{
+                        ret401kasfplanemail.NSP_Email_Address__c ,
+                        ret401kcompliance.NSP_Email_Address__c ,
+                        retKWRSBusinessSolutions.NSP_Email_Address__c
+                    }
+                );
             }
             //call email alert function for collectDocumentTasks
-            if(!collectDocumentTasks.isEmpty()){
-                NSP_ProjectTaskTriggerEmailNotification.emailNotifyforTasksOnRetProjectType(collectDocumentTasks,
-                                                                                            'NSP_CollectAllDocsTemplate',
-                                                                                            new List<String>{Ret401kcompliance.NSP_Email_Address__c});
+            if ( !collectDocumentTasks.isEmpty() ) {
+                NSP_ProjectTaskTriggerEmailNotification.emailNotifyforTasksOnRetProjectType(
+                    collectDocumentTasks ,
+                    'NSP_CollectAllDocsTemplate' ,
+                    new List<String>{ ret401kcompliance.NSP_Email_Address__c }
+                );
             }
             //call email alert function for submitEaPackageTasks
-            if(!submitEaPackageTasks.isEmpty()){
-                NSP_ProjectTaskTriggerEmailNotification.emailNotifyforTasksOnRetProjectType(submitEaPackageTasks,
-                                                                                            'NSP_SubmitEaPackTemplate',
-                                                                                            new List<String>{Ret401kcompliance.NSP_Email_Address__c});
+            if ( !submitEaPackageTasks.isEmpty() ) {
+                NSP_ProjectTaskTriggerEmailNotification.emailNotifyforTasksOnRetProjectType(
+                    submitEaPackageTasks ,
+                    'NSP_SubmitEaPackTemplate' ,
+                    new List<String>{ ret401kcompliance.NSP_Email_Address__c }
+                );
             }
             //call email alert function for validationOfPpttInstallTasks
-            if(!validationOfPpttInstallTasks.isEmpty()){
-                NSP_ProjectTaskTriggerEmailNotification.emailNotifyforTasksOnRetProjectType(validationOfPpttInstallTasks,
-                                                                                            'NSP_ValidationOfPpttTemplate',
-                                                                                            new List<String>{RetVirginiaBarnes.NSP_Email_Address__c});
+            if ( !validationOfPpttInstallTasks.isEmpty() ) {
+                NSP_ProjectTaskTriggerEmailNotification.emailNotifyforTasksOnRetProjectType(
+                    validationOfPpttInstallTasks ,
+                    'NSP_ValidationOfPpttTemplate' ,
+                    new List<String>{ retVirginiaBarnes.NSP_Email_Address__c }
+                );
             }
             //call email alert function for validationOfPpttStartupTasks
-            if(!validationOfPpttStartupTasks.isEmpty()){
-                NSP_ProjectTaskTriggerEmailNotification.emailNotifyforTasksOnRetProjectType(validationOfPpttStartupTasks,
-                                                                                            'NSP_RET_ValidationOfPpttTemplate',
-                                                                                            new List<String>{RetVirginiaBarnes.NSP_Email_Address__c});
+            if ( !validationOfPpttStartupTasks.isEmpty() ) {
+                NSP_ProjectTaskTriggerEmailNotification.emailNotifyforTasksOnRetProjectType(
+                    validationOfPpttStartupTasks ,
+                    'NSP_RET_ValidationOfPpttTemplate' ,
+                    new List<String>{ retVirginiaBarnes.NSP_Email_Address__c }
+                );
             }
-        }catch(Exception ex ){
-            NSP_ErrorLogHandler.logSaveException('NSP_ProjectTasksTriggerServiceHelper', 'emailAlertProjectTaskCompleted', ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_ProjectTasksTriggerServiceHelper.class.getName() ,
+                'emailAlertProjectTaskCompleted' ,
+                e
+            );
         }
-    }  
-    
-    /***********************************************************************************************
-* MethodName: updatePorjectTaskAccount
-* Description : Populate the Account on Project Task on creation
-* Params: List<pse__Project_Task__c> prjTaskList
-* ********************************************************************************************/     
-    public static void updateProjectTaskAccount(List<pse__Project_Task__c> prjTaskList ,Set<Id> projectId){
-        Map<Id,Id> projectIdAccountIdMap = new Map<Id,Id>();
-        try{
-            if(!projectId.isEmpty()){
-                for(pse__Proj__c prj :[SELECT Id , pse__Account__c From pse__Proj__c WHERE Id IN:projectId AND pse__Account__c!=Null]){
-                    projectIdAccountIdMap.put(prj.Id,prj.pse__Account__c);  
-                }   
-                for(pse__Project_Task__c prjTsk:prjTaskList){
-                    if(projectIdAccountIdMap.containsKey(prjTsk.pse__Project__c)){
-                        prjTsk.NSP_Account_Id__c = projectIdAccountIdMap.get(prjTsk.pse__Project__c);
+    }
+
+    //
+    // MethodName: updatePorjectTaskAccount
+    // Description : Populate the Account on Project Task on creation
+    // Params: List<pse__Project_Task__c> prjTaskList
+    //
+    public static void updateProjectTaskAccount( List<pse__Project_Task__c> prjTaskList , Set<Id> projectId ) {
+        try {
+            Map<Id,Id> projectIdAccountIdMap = new Map<Id,Id>();
+            if ( !projectId.isEmpty() ) {
+                for( pse__Proj__c prj : [
+                            SELECT Id , pse__Account__c
+                            FROM pse__Proj__c
+                            WHERE (
+                                ( Id IN :projectId )
+                                AND ( pse__Account__c != null )
+                            )
+                        ]
+                    )
+                {
+                    projectIdAccountIdMap.put( prj.Id , prj.pse__Account__c );
+                }
+                for ( pse__Project_Task__c prjTsk : prjTaskList ) {
+                    if ( projectIdAccountIdMap.containsKey( prjTsk.pse__Project__c ) ) {
+                        prjTsk.NSP_Account_Id__c = projectIdAccountIdMap.get( prjTsk.pse__Project__c );
                     }
                 }
             }
-        }catch (Exception ex) {
-            NSP_ErrorLogHandler.logSaveException('NSP_ProjectTasksTriggerHelper', 'sendEmailToProjectResource', ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_ProjectTasksTriggerServiceHelper.class.getName() ,
+                'updateProjectTaskAccount' ,
+                e
+            );
         }
     }
-    
-    
-    /***********************************************************************************************
-* MethodName: updatePorjectTaskAccount
-* Description : Populate the Account on Project Task on creation
-* Params: List<pse__Project_Task__c> prjTaskList
-* ********************************************************************************************/     
-    public static void createProjectAccount(List<pse__Project_Task__c> prjTaskList,Set<Id> projectIdSet,Map<Id,Id> accountIdProjectIdMap){
-        Map<Id,Id> projectIdAccountIdMap = new Map<Id,Id>();
-        Map<Id,List<Id>> prjIdSetAccountIdMap = new Map<Id,List<Id>>();
-        List<Project_Account__c> projAccountList = new List<Project_Account__c>();
-        try{
+
+    //
+    // MethodName: updatePorjectTaskAccount
+    // Description : Populate the Account on Project Task on creation
+    // Params: List<pse__Project_Task__c> prjTaskList
+    //
+    public static void createProjectAccount( List<pse__Project_Task__c> prjTaskList , Set<Id> projectIdSet , Map<Id,Id> accountIdProjectIdMap ) {
+        try {
+            Map<Id,Id> projectIdAccountIdMap = new Map<Id,Id>();
+            Map<Id,List<Id>> prjIdSetAccountIdMap = new Map<Id,List<Id>>();
+            List<Project_Account__c> projAccountList = new List<Project_Account__c>();
             if(!projectIdSet.isEmpty()){
                 for(Project_Account__c prjAccount : [SELECT Id , Project__c, Account__c FROM Project_Account__c WHERE Project__c IN: projectIdSet ]){
                     if(!prjIdSetAccountIdMap.containsKey(prjAccount.Project__c)){
@@ -702,7 +791,7 @@ public void createWorkOrderTask(Map<Id,pse__Project_Task__c> mapProjectTasks){
                     prjIdSetAccountIdMap.get(prjAccount.Project__c).add(prjAccount.Account__c);
                 }
                 
-                for(pse__Proj__c prj :[SELECT Id , pse__Account__c From pse__Proj__c WHERE Id IN:projectIdSet AND pse__Account__c!=Null]){
+                for(pse__Proj__c prj :[SELECT Id , pse__Account__c From pse__Proj__c WHERE Id IN:projectIdSet AND pse__Account__c!=null]){
                     projectIdAccountIdMap.put(prj.Id,prj.pse__Account__c);  
                 }   
                 // insert project tasks
@@ -718,16 +807,23 @@ public void createWorkOrderTask(Map<Id,pse__Project_Task__c> mapProjectTasks){
                            }
                 }
             }
-            if(!projAccountList.isEmpty()){
-                List<Database.UpsertResult> upsertResults = Database.upsert(projAccountList, false);
-                NSP_ErrorLogHandler.logUpsertResultsException('NSP_ProjectTasksTriggerHelper', 'createProjectAccount:upsertResults', upsertResults);
+            if ( !projAccountList.isEmpty() ) {
+                List<Database.UpsertResult> results = Database.upsert( projAccountList , false );
+                NSP_ErrorLogHandler.logResults(
+                    NSP_ProjectTasksTriggerServiceHelper.class.getName() ,
+                    'createProjectAccount:upsert' ,
+                    results
+                );
             }
-        }catch (Exception ex) {
-            NSP_ErrorLogHandler.logSaveException('NSP_ProjectTasksTriggerHelper', 'createProjectAccount', ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_ProjectTasksTriggerServiceHelper.class.getName() ,
+                'createProjectAccount' ,
+                e
+            );
         }
-    } 
-    
-   
+    }
+
     /***********************************************************************************************
     * MethodName: syncProjectTask
     * Description : Populate the Account on Project Task on creation
@@ -746,68 +842,96 @@ public void createWorkOrderTask(Map<Id,pse__Project_Task__c> mapProjectTasks){
                 || newPT.pse__Start_Date_Time__c != oldPT.pse__Start_Date_Time__c 
                );
     }
-    
-    /***********************************************************************************************
-    * MethodName: updateProjectTaskOwner
-    * Description : assign current owner when there is no PTA
-    * Params: Set<Id> projectTaskIds
-    * ********************************************************************************************/     
-    public static void updateProjectTaskOwner(Set<Id> projectTaskIds, Id currentUserId){
-        Id peoRecordTypeId = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.PROJECT_TASK_SOBJECT_TYPE,NSP_ServiceConstants.PROJECT_TASK_PEO_RECORDTYPE);
-        Id bpsRecordTypeId = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.PROJECT_TASK_SOBJECT_TYPE,NSP_ServiceConstants.PROJECT_TASK_BPS_RECORDTYPE);
-        
-        List<pse__Project_Task__c> lstProjTasks = new List<pse__Project_Task__c>();
-        
-        String projectTaskQuery = NSP_ProjectTaskAssignmentTriggerHelper.getProjectTaskQuery(projectTaskIds, peoRecordTypeId, bpsRecordTypeId);
-        
-        try{
-            for(pse__Project_Task__c projTask : Database.query(projectTaskQuery)){
+
+    //
+    // MethodName: updateProjectTaskOwner
+    // Description : assign current owner when there is no PTA
+    // Params: Set<Id> projectTaskIds
+    //
+    public static void updateProjectTaskOwner( Set<Id> projectTaskIds , Id currentUserId ) {
+        try {
+            Id peoRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'pse__Project_Task__c' , 'PEO_Project_Task' );
+            Id bpsRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'pse__Project_Task__c'  , 'BPS_Project_Task' );
+            String projectTaskQuery = NSP_ProjectTaskAssignmentTriggerHelper.getProjectTaskQuery(
+                projectTaskIds ,
+                peoRecordTypeId ,
+                bpsRecordTypeId
+            );
+            List<pse__Project_Task__c> lstProjTasks = new List<pse__Project_Task__c>();
+            for ( pse__Project_Task__c projTask : Database.query( projectTaskQuery ) ) {
                 lstProjTasks.add(
                     new pse__Project_Task__c(
-                        Id = projTask.Id,
-                        OwnerId = currentUserId
+                        Id=projTask.Id ,
+                        OwnerId=currentUserId
                     )
                 );
             }
-
-            if(!lstProjTasks.isEmpty()){
-                List<Database.UpsertResult> upsertResults = Database.upsert(lstProjTasks, false);
-                NSP_ErrorLogHandler.logUpsertResultsException('NSP_ProjectTasksTriggerServiceHelper', 'updateProjectTaskOwner:upsertResults', upsertResults);
+            if ( !lstProjTasks.isEmpty() ) {
+                List<Database.UpsertResult> results = Database.upsert( lstProjTasks , false );
+                NSP_ErrorLogHandler.logResults(
+                    NSP_ProjectTasksTriggerServiceHelper.class.getName() ,
+                    'updateProjectTaskOwner:upsert' ,
+                    results
+                );
             }
-
-        } catch (Exception ex) {
-            NSP_ErrorLogHandler.logSaveException('NSP_ProjectTasksTriggerServiceHelper', 'updateProjectTaskOwner', ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_ProjectTasksTriggerServiceHelper.class.getName() ,
+                'updateProjectTaskOwner' ,
+                e
+            );
         }
     }
 
-    /***********************************************************************************************
-    * MethodName: updateProjectTaskOwnerForAutoResource
-    * Description : match project owner as the task owner for auto resourcing
-    * Params: Set<Id> projectTaskIds
-    * ********************************************************************************************/     
-    public static void updateProjectTaskOwnerForAutoResource(Set<Id> projectTaskIds, Id currentUserId){
-        List<pse__Project_Task__c> lstProjectTasks = new List<pse__Project_Task__c>();
+    //
+    // MethodName: updateProjectTaskOwnerForAutoResource
+    // Description : match project owner as the task owner for auto resourcing
+    // Params: Set<Id> projectTaskIds
+    //
+    public static void updateProjectTaskOwnerForAutoResource( Set<Id> projectTaskIds , Id currentUserId ) {
 
-        String projTaskQuery = new NSP_QueryBuilder('pse__Project_Task__c', new List<String>{'Id', 'OwnerId', 'pse__Number_of_Assignments__c', 'pse__Project__c', 'pse__Project__r.NSP_Auto_Resource_Project__c', 'pse__Project__r.ownerId'})
-            .addFilter('Id', new List<Id>(projectTaskIds) , NSP_QueryBuilder.Operator.INCLUDES)
-            .build();
-
-        try{
-            for(pse__Project_Task__c projTask : Database.query(projTaskQuery)){
-                if( !projTask.pse__Project__r.NSP_Auto_Resource_Project__c){
-                    lstProjectTasks.add(new pse__Project_Task__c(Id = projTask.Id, OwnerId = currentUserId));
+        try {
+            String projTaskQuery = new NSP_QueryBuilder(
+                    'pse__Project_Task__c' ,
+                    new List<String>{
+                        'Id ',
+                        'OwnerId' ,
+                        'pse__Number_of_Assignments__c' ,
+                        'pse__Project__c',
+                        'pse__Project__r.NSP_Auto_Resource_Project__c' ,
+                        'pse__Project__r.ownerId'
+                    }
+                )
+                .addFilter( 'Id' , new List<Id>(projectTaskIds) , NSP_QueryBuilder.Operator.INCLUDES )
+                .build();
+            List<pse__Project_Task__c> lstProjectTasks = new List<pse__Project_Task__c>();
+            for ( pse__Project_Task__c projTask : Database.query( projTaskQuery ) ) {
+                if ( !projTask.pse__Project__r.NSP_Auto_Resource_Project__c) {
+                    lstProjectTasks.add(
+                        new pse__Project_Task__c(
+                            Id=projTask.Id ,
+                            OwnerId=currentUserId
+                        )
+                    );
                 }
             }
-
-            if(!lstProjectTasks.isEmpty()){
-                List<Database.UpsertResult> upsertResults = Database.upsert(lstProjectTasks, false);
-                NSP_ErrorLogHandler.logUpsertResultsException('NSP_ProjectTasksTriggerServiceHelper', 'updateProjectTaskOwnerForAutoResource:upsertResults', upsertResults);
+            if ( !lstProjectTasks.isEmpty() ) {
+                List<Database.UpsertResult> results = Database.upsert( lstProjectTasks , false );
+                NSP_ErrorLogHandler.logResults(
+                    NSP_ProjectTasksTriggerServiceHelper.class.getName() ,
+                    'updateProjectTaskOwnerForAutoResource:upsert' ,
+                    results
+                );
             }
 
-        } catch (Exception ex) {
-            NSP_ErrorLogHandler.logSaveException('NSP_ProjectTasksTriggerServiceHelper', 'updateProjectTaskOwnerForAutoResource', ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_ProjectTasksTriggerServiceHelper.class.getName() ,
+                'updateProjectTaskOwnerForAutoResource' ,
+                e
+            );
         }
-
     }
-    
+
 }
+//

@@ -4,7 +4,7 @@
         <enabled>true</enabled>
         <name>View_Case_Compensation_section</name>
     </customPermissions>
-    <description>Edit Access for fields in Compensation Information section on Case</description>
+    <description>Access to the Compensation Section on Case Object - Case Record page</description>
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.Billable__c</field>
@@ -23,6 +23,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Case.NAICS_Code__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.NSP_Actual_Minutes_Spent_To_Resolve_Case__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -51,5 +56,5 @@
         <readable>true</readable>
     </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
-    <label>Case Compensation Fields - Edit</label>
+    <label>Case Compensation Access</label>
 </PermissionSet>

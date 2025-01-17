@@ -83,6 +83,10 @@
                 <stringValue>Get_OMD_Record</stringValue>
             </value>
         </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
     </assignments>
     <assignments>
         <name>Set_Fault_Element_Get_Triggering_Task_Record</name>
@@ -113,6 +117,10 @@
                 <stringValue>Update_Final_OMR_info_to_Task_Record</stringValue>
             </value>
         </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
     </assignments>
     <assignments>
         <name>Set_Fault_Element_Update_OMD_Record</name>

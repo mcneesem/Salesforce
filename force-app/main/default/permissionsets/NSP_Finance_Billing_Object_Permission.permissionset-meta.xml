@@ -4296,6 +4296,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>OrderItem.Prevent_Product_Description_Update__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>OrderItem.Separate_Project__c</field>
         <readable>true</readable>
     </fieldPermissions>

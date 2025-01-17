@@ -10,10 +10,9 @@ Apex Class Name      :  NSP_ValidateOpportunityStage
  * -------------------------------------------------------------------------------------------------
  * Tejas                 12/24/2021            First Iteration
  */
-
- public class NSP_ValidateOpportunityStage {
+public with sharing class NSP_ValidateOpportunityStage {
     // test w/ NSP_ValidateOpportunityStageTest (80%)
-    
+
     public static List<string> analysisStageCriteraTypes = System.Label.NSP_AnalysisStageCriteria.split(',');
     public static List<string> proposeStageCriteraTypes = System.Label.NSP_ProposeStageCriteria.split(',');
     public static List<string> exitCriteriaProductException = System.Label.NSP_ExitCriteriaProductException.split(',');
@@ -181,29 +180,29 @@ Apex Class Name      :  NSP_ValidateOpportunityStage
                         }
                         /////Proposal
                         if (opp.StageName.equals(NSP_SalesConstants.PROPOSAL_STAGE)){
-                            if(proposeStageCriteraTypes.contains(opp.Type)){
-                                // Modified: Primary Quote required only for Non WO opptys, hence moved Primary Quote validation to else if block
-                                // Perform WO
-                                // Added WS condition as part of DF-01869
-                                if ( opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WO || opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WS )
-                                {
-                                    String scannedTask='';
-                                    if(eventList != null){
-                                        for(Event event:eventList){ ////looking for WO Proposal
-                                            if(event.NSP_Event_Subtype__c == NSP_SalesConstants.WO_PROPOSAL && 
-                                               event.NSP_Status__c != NSP_SalesConstants.DISCOVERY_CALL_COMPLETED && event.NSP_Status__c != NSP_SalesConstants.Cancelled){
-                                                scannedTask += HAS_OPEN_WO_PROP;
-                                                break;
-                                            }
+                            // Modified: Primary Quote required only for Non WO opptys, hence moved Primary Quote validation to else if block
+                            // Perform WO
+                            // Added WS condition as part of DF-01869
+                            if ( proposeStageCriteraTypes.contains( opp.Type )
+                                && ( opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WO || opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WS )
+                                )
+                            {
+                                String scannedTask='';
+                                if(eventList != null){
+                                    for(Event event:eventList){ ////looking for WO Proposal
+                                        if(event.NSP_Event_Subtype__c == NSP_SalesConstants.WO_PROPOSAL && 
+                                            event.NSP_Status__c != NSP_SalesConstants.DISCOVERY_CALL_COMPLETED && event.NSP_Status__c != NSP_SalesConstants.Cancelled){
+                                            scannedTask += HAS_OPEN_WO_PROP;
+                                            break;
                                         }
                                     }
-                                    //Show error
-                                    if(opptyBidStatus != null && opptyBidStatus.get(opp.NSP_Bid_Status__c) != NSP_SalesConstants.BID_STATUS_APPROVED){
-                                        opp.addError(System.Label.BidApproved_Proposal);
-                                    }
-                                    if(!scannedTask.contains(HAS_OPEN_WO_PROP) ){
-                                        opp.addError(System.Label.AddWOProposal_Proposal);
-                                    }
+                                }
+                                //Show error
+                                if(opptyBidStatus != null && opptyBidStatus.get(opp.NSP_Bid_Status__c) != NSP_SalesConstants.BID_STATUS_APPROVED){
+                                    opp.addError(System.Label.BidApproved_Proposal);
+                                }
+                                if(!scannedTask.contains(HAS_OPEN_WO_PROP) ){
+                                    opp.addError(System.Label.AddWOProposal_Proposal);
                                 }
                             }
                             evaluateQuoteCriteria(opp,quoteMap);
@@ -218,12 +217,8 @@ Apex Class Name      :  NSP_ValidateOpportunityStage
                                 } else if(opp.NSP_PrimaryProduct__c == NSP_SalesConstants.HR_CONSULTING_SERVICES && opp.NSP_Client_For_Life__c != NSP_SalesConstants.WO_WS){
                                     opp.addError(System.Label.NSP_Create_Signed_Delivery_Order);
                                 }
-                            } else if(opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WO || opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WS
-                                      || opp.NSP_Order_Generated__c)
-                            {
-                                if(!opp.NSP_Closing_Appointment__c){
-                                    opp.addError(System.Label.NSP_WO_Closing_Appointment_or_Docusign);
-                                }
+                            } else if ( ( opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WO || opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WS || opp.NSP_Order_Generated__c ) && !opp.NSP_Closing_Appointment__c ) {
+                                opp.addError(System.Label.NSP_WO_Closing_Appointment_or_Docusign);
                             }
                         }
                         //closed-won criteria CR-031
@@ -291,34 +286,34 @@ Apex Class Name      :  NSP_ValidateOpportunityStage
                 }
                 /////Proposal
                 if(opp.StageName.equals(NSP_SalesConstants.PROPOSAL_STAGE)){
-                    if(proposeStageCriteraTypes.contains(opp.Type)){
-                        //Modified: Primary Quote required only for Non WO opptys, hence moved Primary Quote validation to else if block
-                        //Perform WO
-                        // Added WS condition as part of DF-01869
-                        if( opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WO || opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WS )
-                        {
-                            String scannedTask='';
-                            if(taskList != null){
-                                for(Task task:taskList){//looking for WO Profile
-                                    if(task.NSP_Task_Subtype__c == NSP_SalesConstants.WO_BUSINESS_PROFILE){
-                                        scannedTask += HAS_WO_TASK;
-                                    }
+                    //Modified: Primary Quote required only for Non WO opptys, hence moved Primary Quote validation to else if block
+                    //Perform WO
+                    // Added WS condition as part of DF-01869
+                    if ( proposeStageCriteraTypes.contains( opp.Type )
+                        && ( opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WO || opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WS )
+                        )
+                    {
+                        String scannedTask='';
+                        if(taskList != null){
+                            for(Task task:taskList){//looking for WO Profile
+                                if(task.NSP_Task_Subtype__c == NSP_SalesConstants.WO_BUSINESS_PROFILE){
+                                    scannedTask += HAS_WO_TASK;
                                 }
                             }
-                            if(eventList != null){
-                                for(Event event:eventList){////looking for discovery
-                                    if(event.NSP_Event_Subtype__c == NSP_SalesConstants.WO_BUSINESS_PROFILE){
-                                        scannedTask += HAS_WO_EVENT;
-                                    }
+                        }
+                        if(eventList != null){
+                            for(Event event:eventList){////looking for discovery
+                                if(event.NSP_Event_Subtype__c == NSP_SalesConstants.WO_BUSINESS_PROFILE){
+                                    scannedTask += HAS_WO_EVENT;
                                 }
                             }
-                            //Show error
-                            if(!scannedTask.contains(HAS_WO) ){
-                                opp.addError(System.Label.NSP_AddWOBusinessProfile);
-                            }
-                            if(opp.NSP_BidNumber__c == '' || opp.NSP_BidNumber__c == null){
-                                opp.addError(System.Label.NSP_AddBidNumber);
-                            }
+                        }
+                        //Show error
+                        if(!scannedTask.contains(HAS_WO) ){
+                            opp.addError(System.Label.NSP_AddWOBusinessProfile);
+                        }
+                        if(opp.NSP_BidNumber__c == '' || opp.NSP_BidNumber__c == null){
+                            opp.addError(System.Label.NSP_AddBidNumber);
                         }
                     }
                     evaluateQuoteCriteria(opp,quoteMap);
@@ -332,12 +327,8 @@ Apex Class Name      :  NSP_ValidateOpportunityStage
                         } else if(opp.NSP_PrimaryProduct__c == NSP_SalesConstants.HR_CONSULTING_SERVICES && opp.NSP_Client_For_Life__c != NSP_SalesConstants.WO_WS){
                             opp.addError(System.Label.NSP_Create_Signed_Delivery_Order);
                         }
-                    } else if(opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WO || opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WS
-                        || opp.NSP_Order_Generated__c)
-                    {
-                        if(!opp.NSP_Closing_Appointment__c){
-                            opp.addError(System.Label.NSP_WO_Closing_Appointment_or_Docusign);
-                        }
+                    } else if ( ( opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WO || opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WS || opp.NSP_Order_Generated__c ) && !opp.NSP_Closing_Appointment__c ) {
+                        opp.addError(System.Label.NSP_WO_Closing_Appointment_or_Docusign);
                     }
                 }
                 //closed-won criteria CR-031
@@ -467,40 +458,68 @@ Apex Class Name      :  NSP_ValidateOpportunityStage
         }
         
     }
-      
-    
+
     // Evaluate criteria related to quote
     // @param opportunityList list of New Opportunity.
     // @param  list of events
     // @param list of tasks
     // @return void
-    public static void evaluateQuoteCriteria(Opportunity opp,Map<Id,SBQQ__Quote__c> quoteMap){
-        try{
+    public static void evaluateQuoteCriteria( Opportunity opp , Map<Id,SBQQ__Quote__c> quoteMap ) {
+        try {
             // 205583/208335 - bypass QuoteCriteria is Fee Inclusive is checked
-            if(!opp.Fee_Inclusive__c && opp.NSP_PrimaryProduct__c != NSP_SalesConstants.WO && opp.NSP_PrimaryProduct__c != NSP_SalesConstants.WS){
-                if(exitCriteriaProductException.contains(opp.NSP_PrimaryProduct__c)){
-                    if(opp.NSP_PrimaryProduct__c == NSP_SalesConstants.HR_CONSULTING_SERVICES && opp.NSP_Client_For_Life__c != NSP_SalesConstants.WO_WS){
-                        if(opp.SBQQ__PrimaryQuote__c != null){
-                            if(quoteMap.get(opp.SBQQ__PrimaryQuote__c).SBQQ__Status__c != NSP_SalesConstants.APPROVAL_STATUS_APPROVED ){
-                                opp.addError(System.Label.NSP_Approve_Primary_Quote);
-                            }else if(!test.isRunningTest() && opp.StageName.equals(NSP_SalesConstants.CLOSED_WON) && (opp.NSP_PrimaryProduct__c != quoteMap.get(opp.SBQQ__PrimaryQuote__c).NSP_Opportunity_Primary_Product__c || opp.NSP_Client_For_Life__c != quoteMap.get(opp.SBQQ__PrimaryQuote__c).NSP_Client_For_Life__c)){
-                                opp.addError(System.label.NSP_Sync_Primary_Quote_With_Opportunity);
+            if ( !opp.Fee_Inclusive__c
+                && ( opp.NSP_PrimaryProduct__c != NSP_SalesConstants.WO )
+                && ( opp.NSP_PrimaryProduct__c != NSP_SalesConstants.WS )
+                )
+            {
+                SBQQ__Quote__c primaryQuote = null;
+                if ( quoteMap != null ) {
+                    primaryQuote = quoteMap.get( opp.SBQQ__PrimaryQuote__c ); // prevent NullPointerExceptions...
+                }
+                if ( exitCriteriaProductException.contains( opp.NSP_PrimaryProduct__c ) ) {
+                    if ( ( opp.NSP_PrimaryProduct__c == NSP_SalesConstants.HR_CONSULTING_SERVICES )
+                        && ( opp.NSP_Client_For_Life__c != NSP_SalesConstants.WO_WS )
+                        )
+                    {
+                        if ( opp.SBQQ__PrimaryQuote__c != null ) {
+                            if ( primaryQuote != null ) {
+                                if ( primaryQuote.SBQQ__Status__c != NSP_SalesConstants.APPROVAL_STATUS_APPROVED ) {
+                                    opp.addError(System.Label.NSP_Approve_Primary_Quote);
+                                } else if ( !test.isRunningTest()
+                                    && opp.StageName.equals( NSP_SalesConstants.CLOSED_WON )
+                                    && ( ( opp.NSP_PrimaryProduct__c != primaryQuote.NSP_Opportunity_Primary_Product__c ) || ( opp.NSP_Client_For_Life__c != primaryQuote.NSP_Client_For_Life__c ) )
+                                    )
+                                {
+                                    opp.addError(System.label.NSP_Sync_Primary_Quote_With_Opportunity);
+                                }
                             }
-                        }else{
-                            if(!test.isRunningTest()){
-                                opp.addError(System.Label.NSP_AddPrimaryQuote);
+                        } else {
+                            if ( !test.isRunningTest() ) {
+                                opp.addError( System.Label.NSP_AddPrimaryQuote );
                             }
                         }
                     }
-                }else{
-                    if(opp.SBQQ__PrimaryQuote__c != null){
-                        if(quoteMap.get(opp.SBQQ__PrimaryQuote__c).SBQQ__Status__c != NSP_SalesConstants.APPROVAL_STATUS_APPROVED ){
-                            opp.addError(System.Label.NSP_Approve_Primary_Quote);
-                        }else if(!test.isRunningTest() && opp.StageName.equals(NSP_SalesConstants.CLOSED_WON) && (opp.NSP_PrimaryProduct__c != quoteMap.get(opp.SBQQ__PrimaryQuote__c).NSP_Opportunity_Primary_Product__c || opp.NSP_Client_For_Life__c != quoteMap.get(opp.SBQQ__PrimaryQuote__c).NSP_Client_For_Life__c)){
-                            opp.addError(System.label.NSP_Sync_Primary_Quote_With_Opportunity);
+                } else {
+                    if ( opp.SBQQ__PrimaryQuote__c != null ) {
+                        if ( primaryQuote != null ) {
+                            if ( primaryQuote.SBQQ__Status__c != NSP_SalesConstants.APPROVAL_STATUS_APPROVED ) {
+                                opp.addError( System.Label.NSP_Approve_Primary_Quote );
+                            } else if ( !test.isRunningTest()
+                                && opp.StageName.equals( NSP_SalesConstants.CLOSED_WON )
+                                && ( ( opp.NSP_PrimaryProduct__c != primaryQuote.NSP_Opportunity_Primary_Product__c ) || ( opp.NSP_Client_For_Life__c != primaryQuote.NSP_Client_For_Life__c ) )
+                                )
+                            {
+                                opp.addError( System.label.NSP_Sync_Primary_Quote_With_Opportunity );
+                            }
                         }
-                    }else{
-                        if(opp.SBQQ__PrimaryQuote__c == null && (opp.Type == NSP_SalesConstants.NEW_BUSINESS_OPPORTUNITY || (opp.Type == NSP_SalesConstants.OPPORTUNITY_TYPE_EXISTING_PRODUCT && opp.NSP_AddonType__c == NSP_SalesConstants.OPPORTUNITY_SUBTYPE_AMENDMENT))){
+                    } else {
+                        if ( ( opp.SBQQ__PrimaryQuote__c == null )
+                            && (
+                                ( opp.Type == NSP_SalesConstants.NEW_BUSINESS_OPPORTUNITY )
+                                || ( ( opp.Type == NSP_SalesConstants.OPPORTUNITY_TYPE_EXISTING_PRODUCT ) && ( opp.NSP_AddonType__c == NSP_SalesConstants.OPPORTUNITY_SUBTYPE_AMENDMENT ) )
+                                )
+                            )
+                        {
                             //DF-01080 subtype Amendment check added
                             opp.addError(System.Label.NSP_AddPrimaryQuote);
                         }
@@ -631,8 +650,14 @@ Apex Class Name      :  NSP_ValidateOpportunityStage
      * Params:       String UserId
      * Author :     Nischay
      * ********************************************************************************************/
-    public static  Map<Id,User> getUserRole(List<String> UserId){        
-        Map<Id,User> userMap= new Map<Id,User>([SELECT Id, UserRole.Name, ToLabel(NSP_Sales_Office__c), ToLabel(NSP_Sales_Office_Membership__c) FROM User WHERE Id IN :UserId]);
+    public static Map<Id,User> getUserRole( List<String> recordId ) {
+        Map<Id,User> userMap= new Map<Id,User>(
+            [
+                SELECT Id , UserRole.Name , ToLabel(NSP_Sales_Office__c) , ToLabel(NSP_Sales_Office_Membership__c)
+                FROM User
+                WHERE ( Id IN :recordId )
+            ]
+        );
         return userMap;
     }
     
@@ -693,11 +718,18 @@ Apex Class Name      :  NSP_ValidateOpportunityStage
         if(String.isNotBlank(opportunitySalesOffMemb)){
             salesOfficeMembership.addAll(opportunitySalesOffMemb.split(';'));
         }
-        List<ID> TeamMemberList = new List<ID>();
-        List<OpportunityTeamMember> OpportunityTeamMemberList = [SELECT Id, UserId, TeamMemberRole from OpportunityTeamMember where OpportunityId = : opp.Id and TeamMemberRole =: closeLostRoleinOpportunityTeam];
-        if(!OpportunityTeamMemberList.isEmpty()) {
-            for(OpportunityTeamMember oppTeamMember : OpportunityTeamMemberList){
-                TeamMemberList.add(oppTeamMember.UserId);
+        List<ID> teamMemberList = new List<ID>();
+        List<OpportunityTeamMember> opportunityTeamMemberList = [
+            SELECT Id , UserId , TeamMemberRole
+            FROM OpportunityTeamMember
+            WHERE (
+                ( OpportunityId = :opp.Id )
+                AND ( TeamMemberRole = :closeLostRoleinOpportunityTeam )
+            )
+        ];
+        if(!opportunityTeamMemberList.isEmpty()) {
+            for(OpportunityTeamMember oppTeamMember : opportunityTeamMemberList){
+                teamMemberList.add(oppTeamMember.UserId);
             }
         }
         
@@ -717,7 +749,7 @@ Apex Class Name      :  NSP_ValidateOpportunityStage
             canCloseLost++;
         }else if(opp.ownerid == UserInfo.getUserId()){
             canCloseLost++;
-        }else if(TeamMemberList.contains(UserInfo.getUserId())){
+        }else if(teamMemberList.contains(UserInfo.getUserId())){
             canCloseLost++;
         }
         //Added for 578774
@@ -745,8 +777,15 @@ Apex Class Name      :  NSP_ValidateOpportunityStage
      * @return void
      * @DF-01769
      */
-    public static String getSalesOfficeGroup(Id userId, List<String> SalesOffice){
-        List <GroupMember> groupMemberList = [SELECT Id, Group.Name, UserOrGroupId FROM GroupMember WHERE UserOrGroupId = : userId and Group.Name IN:SalesOffice];
+    public static String getSalesOfficeGroup( Id recordId , List<String> salesOffice ) {
+        List <GroupMember> groupMemberList = [
+            SELECT Id , Group.Name , UserOrGroupId
+            FROM GroupMember
+            WHERE (
+                ( UserOrGroupId = :recordId )
+                AND ( Group.Name IN :salesOffice )
+            )
+        ];
         if(!groupMemberList.isEmpty()){
             return groupMemberList[0].Group.Name;
         }
@@ -764,3 +803,4 @@ Apex Class Name      :  NSP_ValidateOpportunityStage
         return fieldPicklistValues;
     }
 }
+//

@@ -4,8 +4,8 @@
     <assignments>
         <name>Assign_Campaign_info_to_varCampaign</name>
         <label>Assign Campaign info to varCampaign</label>
-        <locationX>506</locationX>
-        <locationY>492</locationY>
+        <locationX>341</locationX>
+        <locationY>600</locationY>
         <assignmentItems>
             <assignToReference>varCampaign.Id</assignToReference>
             <operator>Assign</operator>
@@ -27,8 +27,8 @@
     <decisions>
         <name>Are_there_any_Campaign_Members_attached_to_Campaign</name>
         <label>Are there any Campaign Members attached to Campaign?</label>
-        <locationX>374</locationX>
-        <locationY>384</locationY>
+        <locationX>209</locationX>
+        <locationY>492</locationY>
         <defaultConnector>
             <targetReference>Assign_Campaign_info_to_varCampaign</targetReference>
         </defaultConnector>
@@ -43,7 +43,43 @@
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>Get_Campaign_Member_records</leftValueReference>
+                <operator>IsEmpty</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
             <label>Yes - Campaign Member records exist</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Custom_Settings</name>
+        <label>Check Custom Settings</label>
+        <locationX>539</locationX>
+        <locationY>276</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Is_Enabled</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Setup.CampaignFlowSettings__c.IsEnabled__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Setup.CampaignFlowSettings__c.IsEnabledCampaignUpdatedAsyncReset__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Campaign_Member_records</targetReference>
+            </connector>
+            <label>Is Enabled</label>
         </rules>
     </decisions>
     <description>If &quot;Delivery Mechanism Type is cleared, and no related Campaign Member records exist, then reset to OOB Campaign Member Statuses</description>
@@ -72,8 +108,8 @@
     <recordLookups>
         <name>Get_Campaign_Member_records</name>
         <label>Get Campaign Member records</label>
-        <locationX>374</locationX>
-        <locationY>276</locationY>
+        <locationX>209</locationX>
+        <locationY>384</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Are_there_any_Campaign_Members_attached_to_Campaign</targetReference>
@@ -122,7 +158,7 @@
         <recordTriggerType>Update</recordTriggerType>
         <scheduledPaths>
             <connector>
-                <targetReference>Get_Campaign_Member_records</targetReference>
+                <targetReference>Check_Custom_Settings</targetReference>
             </connector>
             <pathType>AsyncAfterCommit</pathType>
         </scheduledPaths>
@@ -132,8 +168,8 @@
     <subflows>
         <name>Campaign_Subflow_Create_Update_Delete_Campaign_Member_Statuses</name>
         <label>Campaign - Subflow - Create Update Delete Campaign Member Statuses</label>
-        <locationX>506</locationX>
-        <locationY>600</locationY>
+        <locationX>341</locationX>
+        <locationY>708</locationY>
         <flowName>Campaign_Subflow_Create_Update_Delete_Campaign_Member_Statuses</flowName>
         <inputAssignments>
             <name>resetToOOBStatusesFlag</name>
@@ -151,8 +187,8 @@
     <subflows>
         <name>Fault_Handler_Subflow</name>
         <label>Fault Handler Subflow</label>
-        <locationX>770</locationX>
-        <locationY>384</locationY>
+        <locationX>605</locationX>
+        <locationY>492</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultElement</name>

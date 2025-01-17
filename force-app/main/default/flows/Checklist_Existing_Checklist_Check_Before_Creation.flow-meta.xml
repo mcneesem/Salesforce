@@ -752,7 +752,7 @@
             <label>Performance Management or Time and Attendance</label>
         </rules>
     </decisions>
-    <description>Added STP or MMC Screen. Updated with Checklist Type and MidMarket Closing Checklist path added. Updated Missing Info decision node and resulting Missing info screen, removed varOpportunityRecord</description>
+    <description>Added decision node to look for Account Segment for MM Checklist. Added STP or MMC Screen. Updated with Checklist Type and MidMarket Closing Checklist path added. Updated Missing Info decision node and resulting Missing info screen, removed varOpportunityRecord</description>
     <environments>Default</environments>
     <interviewLabel>Checklist - Existing Checklist Check Before Creation {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Checklist - Existing Checklist Check Before Creation</label>
@@ -889,6 +889,8 @@
         <queriedFields>NSP_Time_Entry_Recommendation__c</queriedFields>
         <queriedFields>MidMarket_National_Account__c</queriedFields>
         <queriedFields>Number_of_MMC_Checklists__c</queriedFields>
+        <queriedFields>NSP_Account_Segment__c</queriedFields>
+        <queriedFields>StageName</queriedFields>
     </recordLookups>
     <recordLookups>
         <name>Get_Opty_Owner_Info</name>
@@ -1150,6 +1152,79 @@
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
+            <name>Checklist_Available_STPorMMC_STPOnly</name>
+            <choiceReferences>SoldToPaid_Checklist_Choice</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Which type of Checklist do you need to create?</fieldText>
+            <fieldType>RadioButtons</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <visibilityRule>
+                <conditionLogic>1 AND 4 AND (2 OR 3)</conditionLogic>
+                <conditions>
+                    <leftValueReference>recordOpportunity.NSP_Account_Segment__c</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue>MidMarket</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>recordOpportunity.StageName</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Proposal</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>recordOpportunity.StageName</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Closing</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>recordOpportunity.NSP_Account_Segment__c</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue>Enterprise</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Checklist_Available_STPorMMC_MMOnly</name>
+            <choiceReferences>MidMarketClosing_Checklist_Choice</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Which type of Checklist do you need to create?</fieldText>
+            <fieldType>RadioButtons</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <visibilityRule>
+                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+                <conditions>
+                    <leftValueReference>recordOpportunity.StageName</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Analysis</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>recordOpportunity.NSP_Account_Segment__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>MidMarket</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>recordOpportunity.NSP_Account_Segment__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Enterprise</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
             <name>Checklist_Available_STPorMMC</name>
             <choiceReferences>SoldToPaid_Checklist_Choice</choiceReferences>
             <choiceReferences>MidMarketClosing_Checklist_Choice</choiceReferences>
@@ -1158,6 +1233,37 @@
             <fieldType>RadioButtons</fieldType>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
+            <visibilityRule>
+                <conditionLogic>(1 OR 4) AND (2 OR 3)</conditionLogic>
+                <conditions>
+                    <leftValueReference>recordOpportunity.NSP_Account_Segment__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>MidMarket</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>recordOpportunity.StageName</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Proposal</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>recordOpportunity.StageName</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Closing</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>recordOpportunity.NSP_Account_Segment__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Enterprise</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>

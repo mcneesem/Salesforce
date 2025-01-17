@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>First_Assigned_Queue__c</fullName>
+    <description>Translates the raw values of Contact_Center_Queue__c and First_Assigned_Queue_for_Transfer__c into Report-friendly values for all Voice Calls.</description>
     <externalId>false</externalId>
     <formula>IF(
   ( TEXT( CallType ) = &apos;Inbound&apos; ) ,
@@ -16,19 +17,19 @@
     &apos;401K Core&apos; , &apos;Contact Center 401K Core&apos; ,
     &apos;Escalations&apos; , &apos;Contact Center Escalations&apos; ,
     &apos;Spanish&apos; , &apos;Contact Center Spanish&apos; ,
-    &apos;W2&apos;,&apos;W2&apos;,
-    &apos;Card ID&apos;,&apos;Card ID&apos;,
-    &apos;Employment Screening&apos;,&apos;Employment Screening&apos;,
-    &apos;Intl 401K&apos;,&apos;Intl 401K&apos;,
-    &apos;Intl Benefits&apos;,&apos;Intl Benefits&apos;,
-    &apos;Intl Card ID&apos;,&apos;Intl Card ID&apos;,
-    &apos;Intl Employment Verification&apos;,&apos;Intl Employment Verification&apos;,
-    &apos;Intl No Selection&apos;,&apos;Intl No Selection&apos;,
-    &apos;Intl Recruiting/Careers&apos;,&apos;Intl Recruiting/Careers&apos;,
-    &apos;Intl Section 125&apos;,&apos;Intl Section 125&apos;,
-    &apos;Intl W2&apos;,&apos;Intl W2&apos;,
-    &apos;Intl Web Support&apos;,&apos;Intl Web Support&apos;,
-    &apos;Intl Spanish&apos;,&apos;Intl Spanish&apos;,
+    &apos;W2&apos; , &apos;W2&apos; ,
+    &apos;Card ID&apos; , &apos;Card ID&apos; ,
+    &apos;Employment Screening&apos; , &apos;Employment Screening&apos; ,
+    &apos;Intl 401K&apos; , &apos;Intl 401K&apos; ,
+    &apos;Intl Benefits&apos; , &apos;Intl Benefits&apos; ,
+    &apos;Intl Card ID&apos; , &apos;Intl Card ID&apos; ,
+    &apos;Intl Employment Verification&apos; , &apos;Intl Employment Verification&apos; ,
+    &apos;Intl No Selection&apos; , &apos;Intl No Selection&apos; ,
+    &apos;Intl Recruiting/Careers&apos; , &apos;Intl Recruiting/Careers&apos; ,
+    &apos;Intl Section 125&apos; , &apos;Intl Section 125&apos; ,
+    &apos;Intl W2&apos; , &apos;Intl W2&apos; ,
+    &apos;Intl Web Support&apos; , &apos;Intl Web Support&apos; ,
+    &apos;Intl Spanish&apos; , &apos;Intl Spanish&apos; ,
     &apos;NOT AVAILABLE&apos;
   ) ,
   IF(
@@ -48,25 +49,24 @@
       &apos;401K Core&apos; , &apos;Contact Center 401K Core&apos; ,
       &apos;Escalations&apos; , &apos;Contact Center Escalations&apos; ,
       &apos;Spanish&apos; , &apos;Contact Center Spanish&apos; ,
-      &apos;W2&apos;,&apos;W2&apos;,
-      &apos;Card ID&apos;,&apos;Card ID&apos;,
-      &apos;Employment Screening&apos;,&apos;Employment Screening&apos;,
-      &apos;Intl 401K&apos;,&apos;Intl 401K&apos;,
-      &apos;Intl Benefits&apos;,&apos;Intl Benefits&apos;,
-      &apos;Intl Card ID&apos;,&apos;Intl Card ID&apos;,
-      &apos;Intl Employment Verification&apos;,&apos;Intl Employment Verification&apos;,
-      &apos;Intl No Selection&apos;,&apos;Intl No Selection&apos;,
-      &apos;Intl Recruiting/Careers&apos;,&apos;Intl Recruiting/Careers&apos;,
-      &apos;Intl Section 125&apos;,&apos;Intl Section 125&apos;,
-      &apos;Intl W2&apos;,&apos;Intl W2&apos;,
-      &apos;Intl Web Support&apos;,&apos;Intl Web Support&apos;,
-      &apos;Intl Spanish&apos;,&apos;Intl Spanish&apos;,
+      &apos;W2&apos; , &apos;W2&apos; ,
+      &apos;Card ID&apos; , &apos;Card ID&apos; ,
+      &apos;Employment Screening&apos; , &apos;Employment Screening&apos; ,
+      &apos;Intl 401K&apos; ,&apos;Intl 401K&apos; ,
+      &apos;Intl Benefits&apos; , &apos;Intl Benefits&apos; ,
+      &apos;Intl Card ID&apos; , &apos;Intl Card ID&apos; ,
+      &apos;Intl Employment Verification&apos; , &apos;Intl Employment Verification&apos; ,
+      &apos;Intl No Selection&apos; , &apos;Intl No Selection&apos; ,
+      &apos;Intl Recruiting/Careers&apos; , &apos;Intl Recruiting/Careers&apos; ,
+      &apos;Intl Section 125&apos; , &apos;Intl Section 125&apos; ,
+      &apos;Intl W2&apos; , &apos;Intl W2&apos; ,
+      &apos;Intl Web Support&apos; , &apos;Intl Web Support&apos; ,
+      &apos;Intl Spanish&apos; , &apos;Intl Spanish&apos; ,
       &apos;NOT AVAILABLE&apos;
     ) ,
     &apos;NOT AVAILABLE&apos;
   )
 )</formula>
-    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>First Assigned Queue</label>
     <required>false</required>
     <type>Text</type>

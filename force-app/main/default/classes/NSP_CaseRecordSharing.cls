@@ -10,30 +10,38 @@ Modification Log     :
 * -------------------------------------------------------------------------------------------------  
 ***************************************************************************************************/
 public class NSP_CaseRecordSharing {
-    
-    public static Map<string, Id> grpNameGrpIdMap;
-    public static Map<string, List<String>> catSubCatGroupNamesMap;
-    public static Map<string, List<String>> catSubCatDetailGroupNamesMap;
-    private static final string NSP_CASERECORDSHARING = 'NSP_CaseRecordSharing';
-    public static List<String> fields = new List<String>{'Id', 'Type','DeveloperName'};
-    
-    /**
-* @MethodName: shareCaseOnUpdate
-* @Description: This method describes about Sharing of case to public group based on category/SubCategory Mapping.
-* @param : List<Case> caseList
-* @createdDate : 10/18/2022
-* @Story : STY-03293
-* @return void                          
-*/
-    public static void shareCaseOnUpdate(List<Case> caseList, Boolean onAfterUpdate, Set<String> categorySet, Set<String> subCatSet){
-        getMapOfCatSubCatPublicGrps(caseList, categorySet, subCatSet);
-        getGrpNameAndGrpId(caseList);
-        if(onAfterUpdate){
-            removeSharingOnCaseUpdate(caseList);
+    // test w/ NSP_CaseRecordSharingTest (85%)
+
+    private static Map<String,Id> grpNameGrpIdMap = new Map<String,Id>();
+    private static Map<String,List<String>> catSubCatGroupNamesMap = new Map<String,List<String>>();
+    private static Map<String,List<String>> catSubCatDetailGroupNamesMap = new Map<String,List<String>>();
+    private static List<String> fields = new List<String>{
+        'Id' ,
+        'Type' ,
+        'DeveloperName'
+    };
+
+    //
+    // @MethodName: shareCaseOnUpdate
+    // @Description: This method describes about Sharing of case to public group based on category/SubCategory Mapping.
+    // @param : List<Case> caseList
+    // @createdDate : 10/18/2022
+    // @Story : STY-03293
+    // @return void
+    //
+    public static void shareCaseOnUpdate( List<Case> caseList , Boolean onAfterUpdate , Set<String> categorySet , Set<String> subCatSet ) {
+        try {
+            getMapOfCatSubCatPublicGrps( caseList , categorySet , subCatSet );
+            getGrpNameAndGrpId( caseList );
+            if ( onAfterUpdate ) {
+                removeSharingOnCaseUpdate( caseList );
+            }
+            sharingOnCaseUpdate( caseList );
+        } catch ( Exception e ) {
+            NSP_CaseRecordSharing.handleException( e , 'shareCaseOnUpdate' );
         }
-        sharingOnCaseUpdate(caseList);
     }
-    
+
     /**
 * @MethodName: shareCaseOnUpdate
 * @Description: This method describes about removing Sharing of case.
@@ -49,11 +57,12 @@ public class NSP_CaseRecordSharing {
                                                CaseId IN: caseList];
             if (!oldCaseShare.isEmpty()) {
                 delete oldCaseShare;
-            }  } catch (Exception ex) {
-                NSP_ErrorLogHandler.logSaveException(NSP_CASERECORDSHARING, 'removeSharingOnCaseUpdate', ex.getMessage());
             }
+        } catch ( Exception e ) {
+            NSP_CaseRecordSharing.handleException( e , 'removeSharingOnCaseUpdate' );
+        }
     }
-    
+
     /**
 * @MethodName: sharingOnCaseUpdate
 * @Description:  This method describes about Sharing of case to public group based on Category..
@@ -79,12 +88,12 @@ public class NSP_CaseRecordSharing {
         }
             if(!caseShareInsertionList.isEmpty()){
                 database.insert(caseShareInsertionList);
-            } 
-        } catch (Exception ex) {
-            NSP_ErrorLogHandler.logSaveException(NSP_CASERECORDSHARING, 'sharingOnCaseUpdate', ex.getMessage());
+            }
+        } catch ( Exception e ) {
+            NSP_CaseRecordSharing.handleException( e , 'sharingOnCaseUpdate' );
         }
     }
-    
+
     /**
 * @MethodName: sharePrivateCases
 * @Description:  This method describes about Sharing of case to public group based on NSP_Private__c checkbox.
@@ -105,12 +114,12 @@ public class NSP_CaseRecordSharing {
             }
             if(!caseShareInsertionList.isEmpty()){
                 database.insert(caseShareInsertionList);
-            } 
-        } catch (Exception ex) {
-            NSP_ErrorLogHandler.logSaveException(NSP_CASERECORDSHARING, 'sharePrivateCases', ex.getMessage());
+            }
+        } catch ( Exception e ) {
+            NSP_CaseRecordSharing.handleException( e , 'sharePrivateCases' );
         }
     }
-    
+
     /**
 * @MethodName: getGrpNameAndGrpId
 * @Description:  This method describes about getting groupName and GroupId based on Category.
@@ -119,8 +128,8 @@ public class NSP_CaseRecordSharing {
 * @Story : STY-03293
 * @return void                           
 */   
-    public static void getGrpNameAndGrpId (List<Case> cseList){        
-        grpNameGrpIdMap = new  Map<string, Id>();  
+    public static void getGrpNameAndGrpId ( List<Case> cseList ) {
+        grpNameGrpIdMap = new Map<String,Id>();  
         if(!catSubCatDetailGroupNamesMap.isEmpty()){
             for(Case cse : [SELECT Id, NSP_Category__c, NSP_SubCategory__c,NSP_Detail__c FROM Case WHERE ID IN: cseList]){
                  List<string> getGrpList = cse.NSP_Detail__c != null ? catSubCatDetailGroupNamesMap.get(cse.NSP_Category__c+';'+cse.NSP_SubCategory__c+ ';' + cse.NSP_Detail__c)
@@ -142,9 +151,9 @@ public class NSP_CaseRecordSharing {
 * @Story : STY-03293
 * @return void                           
 */  
-    public Static void getMapOfCatSubCatPublicGrps(List<Case> cseList, Set<String> categorySet, Set<String> subCatSet){
-        catSubCatGroupNamesMap = new Map<string, List<String>>();
-        catSubCatDetailGroupNamesMap = new Map<string, List<String>>();
+    public static void getMapOfCatSubCatPublicGrps( List<Case> cseList , Set<String> categorySet , Set<String> subCatSet ) {
+        catSubCatGroupNamesMap = new Map<String,List<String>>();
+        catSubCatDetailGroupNamesMap = new Map<String,List<String>>();
         for(NSP_Category_Sub_Category_Mapping__c catSubCatMapping : [SELECT Id, NSP_Category__c, NSP_Subcategory__c, 
                                                                      NSP_Public_Groups_To_Share__c,
                                                                      NSP_Detail__c
@@ -196,26 +205,34 @@ public class NSP_CaseRecordSharing {
                 	database.insert(caseShareInsertionList);
             	}
             }
-        }catch(Exception excep){
-            NSP_ErrorLogHandler.logSaveException('NSP_CaseRecordSharing','shareMigratedCase',excep.getMessage());
-       }
-        
+        } catch ( Exception e ) {
+            NSP_CaseRecordSharing.handleException( e , 'shareMigratedCase' );
+        }
     }
-    /**
-* @MethodName: createCaseShareRecord
-* @Description:  This method describes about creating caseShareInstance.
-* @param :String userOrGrpId, String CaseId
-* @createdDate : 10/18/2022
-* @Story : STY-03293
-* @return void                           
-*/  
-    public static caseShare createCaseShareRecord (String userOrGrpId, String CaseId){  
-        CaseShare newCaseShare = new CaseShare();       
+
+    //
+    // @MethodName: createCaseShareRecord
+    // @Description:  This method describes about creating caseShareInstance.
+    // @createdDate : 10/18/2022
+    // @Story : STY-03293
+    // @return void
+    //
+    public static caseShare createCaseShareRecord( String userOrGrpId , String recordId ) {
+        CaseShare newCaseShare = new CaseShare();
         newCaseShare.RowCause = NSP_ServiceConstants.manualRowCause;
         newCaseShare.UserOrGroupId = userOrGrpId;
         newCaseShare.caseAccessLevel = NSP_ServiceConstants.editSharingAccess;
-        newCaseShare.CaseId = CaseId;
+        newCaseShare.CaseId = recordId;
         return newCaseShare;
-    }         
-    
+    }
+
+    private static void handleException( Exception e , String methodName ) {
+        NSP_ErrorLogHandler.logException(
+            NSP_CaseRecordSharing.class.getName() ,
+            methodName ,
+            e
+        );
+    }
+
 }
+//

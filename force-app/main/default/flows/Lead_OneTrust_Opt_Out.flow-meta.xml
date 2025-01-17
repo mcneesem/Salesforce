@@ -122,7 +122,7 @@
         <name>flowName</name>
         <dataType>String</dataType>
         <value>
-            <stringValue>Lead - OneTrust Opt Out</stringValue>
+            <stringValue>Lead_OneTrust_Opt_Out</stringValue>
         </value>
     </constants>
     <decisions>
@@ -271,7 +271,10 @@
     <formulas>
         <name>isCadenceTaskFormula</name>
         <dataType>Boolean</dataType>
-        <expression>CONTAINS({!Loop_over_Open_Tasks.Subject}, &quot;Cadence&quot;)</expression>
+        <expression>OR(
+  ISPICKVAL( {!Loop_over_Open_Tasks.TaskSubtype} , &apos;Cadence&apos; ) ,
+  CONTAINS( {!Loop_over_Open_Tasks.Subject} , &apos;Cadence&apos; )
+)</expression>
     </formulas>
     <interviewLabel>Lead - OneTrust Opt Out {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Lead - OneTrust Opt Out</label>
@@ -726,7 +729,7 @@ ISCHANGED({!$Record.OneTrust_Opt_Out__c} )
         <recordTriggerType>Update</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <subflows>
         <name>Fault_Handler_Subflow</name>
         <label>Fault Handler Subflow</label>
@@ -734,15 +737,15 @@ ISCHANGED({!$Record.OneTrust_Opt_Out__c} )
         <locationY>539</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
-            <name>faultMessage</name>
+            <name>faultFlow</name>
             <value>
-                <elementReference>$Flow.FaultMessage</elementReference>
+                <elementReference>flowName</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
-            <name>triggeringFlow</name>
+            <name>faultMessage</name>
             <value>
-                <elementReference>flowName</elementReference>
+                <elementReference>$Flow.FaultMessage</elementReference>
             </value>
         </inputAssignments>
     </subflows>

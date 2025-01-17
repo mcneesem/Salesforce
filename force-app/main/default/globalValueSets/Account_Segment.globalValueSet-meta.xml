@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <customValue>
-        <fullName>MidMarket</fullName>
+        <fullName>Core</fullName>
         <default>false</default>
-        <label>MidMarket</label>
+        <label>Core</label>
     </customValue>
     <customValue>
         <fullName>Emerging Growth</fullName>
@@ -11,9 +11,14 @@
         <label>Emerging Growth</label>
     </customValue>
     <customValue>
-        <fullName>Core</fullName>
+        <fullName>MidMarket</fullName>
         <default>false</default>
-        <label>Core</label>
+        <label>MidMarket</label>
+    </customValue>
+    <customValue>
+        <fullName>Enterprise</fullName>
+        <default>false</default>
+        <label>Enterprise</label>
     </customValue>
     <masterLabel>Account Segment</masterLabel>
     <sorted>false</sorted>

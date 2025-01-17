@@ -275,6 +275,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Blue Collar Elite Buy%2C LLC</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Brunswick</fullName>
             <default>false</default>
         </values>
@@ -426,6 +430,10 @@
         </values>
         <values>
             <fullName>MidMarket</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Enterprise</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -5705,6 +5713,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Alera - Propel Insurance</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Alera Group - CHS</fullName>
             <default>false</default>
         </values>
@@ -7198,6 +7210,10 @@
         </values>
         <values>
             <fullName>USI St%2E Louis</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>USI Tampa</fullName>
             <default>false</default>
         </values>
         <values>

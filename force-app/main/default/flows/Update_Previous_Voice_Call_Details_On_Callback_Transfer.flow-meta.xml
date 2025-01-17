@@ -2,10 +2,10 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>61.0</apiVersion>
     <assignments>
-        <name>Copy_Vonage_Queue_from_previous_Voice_Call</name>
-        <label>Copy Vonage Queue from previous Voice Call</label>
-        <locationX>402</locationX>
-        <locationY>587</locationY>
+        <name>Set_First_Assigned_Queue_for_Transfer</name>
+        <label>Set First Assigned Queue for Transfer</label>
+        <locationX>556</locationX>
+        <locationY>779</locationY>
         <assignmentItems>
             <assignToReference>$Record.First_Assigned_Queue_for_Transfer__c</assignToReference>
             <operator>Assign</operator>
@@ -15,10 +15,10 @@
         </assignmentItems>
     </assignments>
     <assignments>
-        <name>Relate_to_Case_from_previous_Voice_Call</name>
-        <label>Relate to Case from previous Voice Call</label>
+        <name>Use_Previous_Call_Case</name>
+        <label>Use Previous Call Case</label>
         <locationX>50</locationX>
-        <locationY>395</locationY>
+        <locationY>503</locationY>
         <assignmentItems>
             <assignToReference>$Record.CaseId__c</assignToReference>
             <operator>Assign</operator>
@@ -27,13 +27,13 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Copy_Vonage_Queue_from_previous_Voice_Call</targetReference>
+            <targetReference>Set_First_Assigned_Queue_for_Transfer</targetReference>
         </connector>
     </assignments>
     <decisions>
-        <name>Check_Call_Type_and_Vonage_Queue</name>
-        <label>Check Call Type and Vonage Queue</label>
-        <locationX>402</locationX>
+        <name>Check_Call_Type</name>
+        <label>Check Call Type</label>
+        <locationX>556</locationX>
         <locationY>287</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -47,18 +47,43 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Relate_to_Case_from_previous_Voice_Call</targetReference>
+                <targetReference>Check_Previous_Call_Case</targetReference>
             </connector>
             <label>Callback</label>
         </rules>
         <rules>
-            <name>Escalation_Transfer</name>
-            <conditionLogic>( 1 AND ( 2 OR 3 ) )</conditionLogic>
+            <name>Transfer</name>
+            <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.CallType</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Transfer</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Check_Escalation</targetReference>
+            </connector>
+            <label>Transfer</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Escalation</name>
+        <label>Check Escalation</label>
+        <locationX>622</locationX>
+        <locationY>395</locationY>
+        <defaultConnector>
+            <targetReference>Set_First_Assigned_Queue_for_Transfer</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Is_Escalation</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Contact_Center_Queue__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>401K Core</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
@@ -68,61 +93,43 @@
                     <stringValue>Escalations</stringValue>
                 </rightValue>
             </conditions>
-            <conditions>
-                <leftValueReference>$Record.Contact_Center_Queue__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>401K Core</stringValue>
-                </rightValue>
-            </conditions>
             <connector>
                 <isGoTo>true</isGoTo>
-                <targetReference>Relate_to_Case_from_previous_Voice_Call</targetReference>
+                <targetReference>Check_Previous_Call_Case</targetReference>
             </connector>
-            <label>Escalation Transfer</label>
+            <label>Is Escalation</label>
         </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Previous_Call_Case</name>
+        <label>Check Previous Call Case</label>
+        <locationX>182</locationX>
+        <locationY>395</locationY>
+        <defaultConnector>
+            <targetReference>Set_First_Assigned_Queue_for_Transfer</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>Non_Escalation_Transfer</name>
-            <conditionLogic>or</conditionLogic>
+            <name>Has_Previous_Call_Case</name>
+            <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>$Record.Contact_Center_Queue__c</leftValueReference>
-                <operator>EqualTo</operator>
+                <leftValueReference>$Record.PreviousCall.CaseId__c</leftValueReference>
+                <operator>IsNull</operator>
                 <rightValue>
-                    <stringValue>401K</stringValue>
+                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>$Record.Contact_Center_Queue__c</leftValueReference>
-                <operator>EqualTo</operator>
+                <leftValueReference>$Record.PreviousCall.CaseId__c</leftValueReference>
+                <operator>IsBlank</operator>
                 <rightValue>
-                    <stringValue>Section 125</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.Contact_Center_Queue__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>5 Employment Verification</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.Contact_Center_Queue__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Section 125</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.Contact_Center_Queue__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Web Support</stringValue>
+                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Copy_Vonage_Queue_from_previous_Voice_Call</targetReference>
+                <targetReference>Use_Previous_Call_Case</targetReference>
             </connector>
-            <label>Non-Escalation Transfer</label>
+            <label>Has Previous Call Case</label>
         </rules>
     </decisions>
     <environments>Default</environments>
@@ -148,12 +155,19 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <start>
-        <locationX>276</locationX>
+        <locationX>430</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Check_Call_Type_and_Vonage_Queue</targetReference>
+            <targetReference>Check_Call_Type</targetReference>
         </connector>
-        <filterLogic>1 OR ( 2 AND 3 )</filterLogic>
+        <filterLogic>( 1 AND ( 2 OR ( 3 AND 4 ) ) )</filterLogic>
+        <filters>
+            <field>PreviousCallId</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
         <filters>
             <field>CallType</field>
             <operator>EqualTo</operator>
@@ -169,7 +183,7 @@
             </value>
         </filters>
         <filters>
-            <field>Transfer_Queue__c</field>
+            <field>Contact_Center_Queue__c</field>
             <operator>IsChanged</operator>
             <value>
                 <booleanValue>true</booleanValue>

@@ -4,7 +4,7 @@
     <encodingKey>UTF-8</encodingKey>
     <name>Termination Form Rejected</name>
     <style>none</style>
-    <subject>Termination Form has been rejected</subject>
+    <subject>Termination Form has been rejected for {!NSP_Termination_Form__c.NSP_Client__c} | {!NSP_Termination_Form__c.NSP_Client_Name__c}</subject>
     <type>text</type>
     <uiType>Aloha</uiType>
 </EmailTemplate>

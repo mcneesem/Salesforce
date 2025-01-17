@@ -45,6 +45,10 @@
                 <behavior>Edit</behavior>
                 <field>CurrencyIsoCode</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Period_End_Date__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>

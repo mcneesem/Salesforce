@@ -57,14 +57,16 @@ public static void beforeUpdateDirector(Map<Id, blng__InvoiceLine__c> invLineNew
         updateProjectGoLiveDate(projectIds,invLineNewMap.values());
     }
 }
-public static void beforeInsertDirector(list<blng__InvoiceLine__c> newList)  {
-    updateAddProductDescription(newList);
-    populateBillingFinancePeriod(newList);
-}
 
-public static void afterInsertDirector(list<blng__InvoiceLine__c> newList)  {
-    updateAddProductDescriptionOnOrderItem(newList);
-}
+    public static void beforeInsertDirector( List<blng__InvoiceLine__c> newList ) {
+        updateAddProductDescription( newList );
+        populateBillingFinancePeriod( newList );
+    }
+
+    public static void afterInsertDirector( List<blng__InvoiceLine__c> newList) {
+        updateAddProductDescriptionOnOrderItem( newList );
+    }
+
 /***********************************************************************************************
 * MethodName: prepareForRevRecGeneration
 * Description : This method is used to get all the invoice lines and make a call to rev rec service
@@ -86,7 +88,7 @@ public static void prepareForRevRecGeneration(List<Id> elgibleLineForRevRec){
 * Params:       List<blng__InvoiceLine__c> Boolean isInsert
 * ********************************************************************************************/
 
-public static void updateAddProductDescription(list<blng__InvoiceLine__c> invLineNew)  {
+public static void updateAddProductDescription( List<blng__InvoiceLine__c> invLineNew ) {
      Map<String,NSP_AdditionalProductDescription_Setting__mdt>  additionalProductDesSetMap = NSP_AdditionalProductDescription_Setting__mdt.getAll();
      
      for(blng__InvoiceLine__c newInvoiceLine: invLineNew){
@@ -132,28 +134,59 @@ public static void updateAddProductDescription(list<blng__InvoiceLine__c> invLin
     }
 }
 
+    //
+    // MethodName : updateAddProductDescriptionOnOrderItem
+    // Description : This method is used to update additional Product Description Field on  orderitem after Insert. STY-03868
+    //
+    public static void updateAddProductDescriptionOnOrderItem( List<blng__InvoiceLine__c> invLineNew ) {
+        if ( ( invLineNew != null ) && !invLineNew.isEmpty() ) {
 
-/***********************************************************************************************
-* MethodName: updateAddProductDescriptionOnOrderItem
-* Description : This method is used to update additional Product Description Field on  orderitem after Insert. STY-03868
-* Params:       List<blng__InvoiceLine__c> Boolean isInsert
-* ********************************************************************************************/    
-public static void updateAddProductDescriptionOnOrderItem(list<blng__InvoiceLine__c> invLineNew)  {
-    Map<Id,OrderItem>  orderProductUpdateMap = new Map<Id,OrderItem>();
-    for(blng__InvoiceLine__c newInvoiceLine: invLineNew){
-        if(String.isNotBlank(newInvoiceLine.NSP_Additional_Product_Description__c) && newInvoiceLine.blng__OrderProduct__c != null ){
-            OrderItem eachProduct = new OrderItem(Id = newInvoiceLine.blng__OrderProduct__c);
-            eachProduct.NSP_Additional_Product_Description__c = newInvoiceLine.NSP_Additional_Product_Description__c;
-            orderProductUpdateMap.put(eachProduct.id,eachProduct);
+            Set<Id> orderProductIds = new Set<Id>();
+            for ( blng__InvoiceLine__c newInvoiceLine : invLineNew ) {
+                if ( String.isNotBlank( newInvoiceLine.NSP_Additional_Product_Description__c )
+                    && ( newInvoiceLine.blng__OrderProduct__c != null )
+                    )
+                {
+                    orderProductIds.add( newInvoiceLine.blng__OrderProduct__c );
+                }
+            }
+            Map<Id,OrderItem> orderItemMap = new Map<Id,OrderItem>([
+                SELECT
+                    Id ,
+                    NSP_Additional_Product_Description__c ,
+                    Prevent_Product_Description_Update__c
+                FROM OrderItem
+                WHERE ( Id IN :orderProductIds )
+            ]);
+            Map<Id,OrderItem>  orderProductUpdateMap = new Map<Id,OrderItem>();
+            for ( blng__InvoiceLine__c newInvoiceLine : invLineNew ) {
+                if ( String.isNotBlank( newInvoiceLine.NSP_Additional_Product_Description__c )
+                    && ( newInvoiceLine.blng__OrderProduct__c != null )
+                    && orderItemMap.containsKey( newInvoiceLine.blng__OrderProduct__c )
+                    )
+                {
+                    OrderItem eachProduct = orderItemMap.get( newInvoiceLine.blng__OrderProduct__c );
+                    if ( ( eachProduct != null )
+                        && !eachProduct.Prevent_Product_Description_Update__c
+                        )
+                    {
+                        eachProduct.NSP_Additional_Product_Description__c = newInvoiceLine.NSP_Additional_Product_Description__c;
+                        orderProductUpdateMap.put( eachProduct.Id , eachProduct );
+                    }
+                }
+            }
+            if ( !orderProductUpdateMap.isEmpty() ) {
+                List<Database.SaveResult> assetResults = Database.update( orderProductUpdateMap.values() , false );
+                NSP_ErrorLogHandler.logResults(
+                    NSP_InvoiceLineTriggerHelper.class.getName() ,
+                    'updateAddProductDescriptionOnOrderItem' ,
+                    assetResults
+                );
+            }
         }
     }
-    
-    if(orderProductUpdateMap.Size() > 0){
-        List<Database.SaveResult> assetResults = Database.update(orderProductUpdateMap.values(),false);
-        NSP_ErrorLogHandler.logSaveResultsException('NSP_InvoiceLineTriggerHelper', 'updateAddProductDescriptionOnOrderItem', assetResults ); //log the result
-    }
-}
-public static void populateBillingFinancePeriod(list<blng__InvoiceLine__c> invLineNew){
+
+public static void populateBillingFinancePeriod(List<blng__InvoiceLine__c> invLineNew){
     Map<String,blng__FinancePeriod__c> financePeriodsMap=getFinancePeriods();
     for(blng__InvoiceLine__c invLine:invLineNew){
         String key=invLine.blng__BillingFinanceBook__c+'_'+invLine.blng__LegalEntity__c+'_'+invLine.NSP_Invoice_Date_End_Of_Month__c;

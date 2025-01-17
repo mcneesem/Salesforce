@@ -101,7 +101,7 @@
                             <value>FeedItem.PollPost</value>
                         </valueListItems>
                         <valueListItems>
-                            <value>CustomButton.pse__Project_Task__c.Generate_Termination_Form</value>
+                            <value>CustomButton.pse__Project_Task__c.Generate_PEO_Termination_Analysis</value>
                             <visibilityRule>
                                 <criteria>
                                     <leftValue>{!Record.Name}</leftValue>
