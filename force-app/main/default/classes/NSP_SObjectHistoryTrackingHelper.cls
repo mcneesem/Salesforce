@@ -1,19 +1,17 @@
-/* **************************************************************************************************   
-Component Name :  NSP_SObjectHistoryTrackingHelper class
-Version              :  1.0                                                                          
-Created Date         :  November, 2021                                                             
-Function             :  Imported from generic utility
-                     :  Used in custom history tracking
-Story                :                                                                             
-Modification Log     :                                                                               
-*   Hemali           November 10, 2021          First Iteration
-*   Harsha Khiroya   March 3, 2022              DF-01347
-*   Anil             March 31, 2023             DF-03332
-
-***************************************************************************************************
-*/
-public class NSP_SObjectHistoryTrackingHelper implements Queueable {
-    // test w/ NSP_SObjectHistoryTrackingHelperTest (93%)
+//
+// Component Name :  NSP_SObjectHistoryTrackingHelper class
+// Version              :  1.0                                                                          
+// Created Date         :  November, 2021                                                             
+// Function             :  Imported from generic utility
+//                      :  Used in custom history tracking
+// Story                :                                                                             
+// Modification Log     :                                                                               
+// *   Hemali           November 10, 2021          First Iteration
+// *   Harsha Khiroya   March 3, 2022              DF-01347
+// *   Anil             March 31, 2023             DF-03332
+//
+public with sharing class NSP_SObjectHistoryTrackingHelper implements Queueable {
+    // test w/ NSP_SObjectHistoryTrackingHelperTest (87%)
 
     // unified entry point...
     public static void enqueueJob( Map<Id,sObject> newRecords , Map<Id,sObject> oldRecords ) {
@@ -108,19 +106,34 @@ public class NSP_SObjectHistoryTrackingHelper implements Queueable {
         this.oldMapSObject = oldMapSObject;
     }
 
-     /*
-     * Here we insert the Customer Interaction big object records,
-     * or log an error if insertion fails.
-     */
-    public void execute(QueueableContext context){
-        // 2024-03-13 ~ PMCC ~ top offender ~ throws... System.LimitException: Apex CPU time limit exceeded
-        //calling function to log history data.
-        if(recIdHistoryCountMap.isEmpty() && newMapSObject instanceof Map<Id,Implementation_Profile__c>){
-            getPreviousIPHistoryRecordCount();
-        }
-        objFields.addAll(getMetaDataFields());
-        if (objFields!=null && objFields.size() > 0){
-            fieldHistoryLogData(newMapSObject,oldMapSObject);
+    //
+    // Here we insert the Customer Interaction big object records, or log an error if insertion fails.
+    //
+    public void execute( QueueableContext context ) {
+        try {
+            if ( ( this.newMapSObject != null )
+                && ( this.newMapSObject InstanceOf Map<Id,Implementation_Profile__c> )
+                && ( this.recIdHistoryCountMap != null )
+                && this.recIdHistoryCountMap.isEmpty()
+                )
+            {
+                this.getPreviousIPHistoryRecordCount();
+            }
+            if ( this.objFields != null ) {
+                this.objFields.addAll( this.getMetaDataFields() );
+                if ( !this.objFields.isEmpty() ) {
+                    this.fieldHistoryLogData(
+                        this.newMapSObject ,
+                        this.oldMapSObject
+                    );
+                }
+            }
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_SObjectHistoryTrackingHelper.class.getName() ,
+                'execute' ,
+                e
+            );
         }
     }
 
@@ -150,13 +163,17 @@ public class NSP_SObjectHistoryTrackingHelper implements Queueable {
                 }
             }
         }
-        try{
+        try {
             if ( !trackList.isEmpty() && !Test.isRunningTest() ) {
                 Database.insertImmediate( trackList );
             }
-        } catch( Exception e ) {
-            NSP_CustomException.LogException( e );
-        }  
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_SObjectHistoryTrackingHelper.class.getName() ,
+                'fieldHistoryLogData' ,
+                e
+            );
+        }
     }
 
     /***********************************************************************************************
@@ -241,10 +258,10 @@ public class NSP_SObjectHistoryTrackingHelper implements Queueable {
         private set;
     }
 
-    /***********************************************************************************************
-    * MethodName: getMetaDataFields
-    * Description : get a list of the fields that need to be updated 
-    * ********************************************************************************************/
+    //
+    // MethodName: getMetaDataFields
+    // Description : get a list of the fields that need to be updated
+    //
     private List<NSP_SObject_Field_History__mdt> getMetaDataFields() {
         return [
             SELECT NSP_Field_API_Name__c , NSP_Field_Label__c
@@ -253,11 +270,12 @@ public class NSP_SObjectHistoryTrackingHelper implements Queueable {
         ];
     }
 
-    /***********************************************************************************************
-    * MethodName: getPreviousIPHistoryRecordCount
-    * Description : Get previous IP bigObject count
-    * ********************************************************************************************/
-    private void getPreviousIPHistoryRecordCount(){
+    //
+    // MethodName: getPreviousIPHistoryRecordCount
+    // Description : Get previous IP bigObject count
+    //
+    private void getPreviousIPHistoryRecordCount() {
+        // 2024-12-30 ~ throws ~ System.BigObjectException: Internal Salesforce.com Query Error
         for(NSP_IP_History_Tracking__b obj: [SELECT NSP_Index__c, NSP_Sobject_Record_Id__c FROM NSP_IP_History_Tracking__b WHERE NSP_Sobject_Record_Id__c IN: newMapSObject.keySet() ]){
             if(!recIdHistoryCountMap.containsKey(obj.NSP_Sobject_Record_Id__c)){
                 recIdHistoryCountMap.put(obj.NSP_Sobject_Record_Id__c, obj.NSP_Index__c >= 1 ? obj.NSP_Index__c + 1: 1 );

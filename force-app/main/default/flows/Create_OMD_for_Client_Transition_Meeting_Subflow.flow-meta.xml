@@ -469,8 +469,13 @@ Added OMD as record Input</description>
                     <dataType>String</dataType>
                     <fieldText>Preferred Transition Meeting Time within Selected Time Block (include meeting time zone)</fieldText>
                     <fieldType>InputField</fieldType>
+                    <helpText>&lt;p&gt;Enter up to 100 characters&lt;/p&gt;</helpText>
                     <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
+                    <validationRule>
+                        <errorMessage>&lt;p&gt;&lt;span style=&quot;color: rgb(255, 0, 0);&quot;&gt;Text should not exceed 100 characters&lt;/span&gt;&lt;/p&gt;</errorMessage>
+                        <formulaExpression>LEN({!Preferred_SKO_Meeting_Time_within_Selected_Time_Block} ) &lt;= 100</formulaExpression>
+                    </validationRule>
                 </fields>
                 <fields>
                     <name>Alternate_SKO_Meeting_Date_Time_s</name>
@@ -651,8 +656,13 @@ Added OMD as record Input</description>
             <dataType>String</dataType>
             <fieldText>Language(s) Needed?</fieldText>
             <fieldType>InputField</fieldType>
+            <helpText>&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;Enter up to 100 characters&lt;/span&gt;&lt;/p&gt;</helpText>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>false</isRequired>
+            <validationRule>
+                <errorMessage>&lt;p&gt;&lt;span style=&quot;color: rgb(255, 0, 0); background-color: rgb(255, 255, 255);&quot;&gt;Text should not exceed 100 characters&lt;/span&gt;&lt;/p&gt;</errorMessage>
+                <formulaExpression>LEN({!Language_s_Needed}) &lt;= 100</formulaExpression>
+            </validationRule>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
@@ -684,8 +694,13 @@ Added OMD as record Input</description>
             </defaultValue>
             <fieldText>First Pay Period</fieldText>
             <fieldType>InputField</fieldType>
+            <helpText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Enter up to 100 characters&lt;/span&gt;&lt;/p&gt;</helpText>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
+            <validationRule>
+                <errorMessage>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(255, 0, 0);&quot;&gt;Text should not exceed 100 characters&lt;/span&gt;&lt;/p&gt;</errorMessage>
+                <formulaExpression>LEN({!First_Pay_Period} ) &lt;= 100</formulaExpression>
+            </validationRule>
         </fields>
         <fields>
             <name>FirstPayDate</name>

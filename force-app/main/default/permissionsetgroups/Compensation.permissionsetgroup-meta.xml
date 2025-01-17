@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Used by Compensation Service Team</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Compensation</label>
+    <permissionSets>Case_Compensation_Access</permissionSets>
+    <permissionSets>Organization_Wide_Email_Address_Compensation_Services</permissionSets>
+    <permissionSets>Task_Record_Type_Time_Entry_DO_NOT_USE</permissionSets>
+    <status>Updated</status>
+</PermissionSetGroup>

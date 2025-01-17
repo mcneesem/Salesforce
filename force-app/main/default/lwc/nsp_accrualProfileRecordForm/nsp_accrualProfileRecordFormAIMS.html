@@ -400,7 +400,10 @@
                 </div>
   
                 <div if:true={visibility.isClientFiscalYear}>
-                  <lightning-formatted-text value="List start of fiscal year:">
+                  <lightning-formatted-text
+                    value="List start of fiscal year:"
+                    data-name="isClientFiscalYear"
+                    >
                   </lightning-formatted-text>
   
                   <lightning-input-field

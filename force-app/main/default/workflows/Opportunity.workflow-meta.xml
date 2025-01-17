@@ -344,6 +344,17 @@
         <template>NSP_Sales/NSP_Schedule_Demo_Activity_for_Opportunity</template>
     </alerts>
     <alerts>
+        <fullName>Notify_MidMarket_Team_of_WX_WA_Opportunity</fullName>
+        <description>Notify MidMarket Team of WX-WA Opportunity</description>
+        <protected>false</protected>
+        <recipients>
+            <field>NSP_Mid_Market_Sales_Email__c</field>
+            <type>email</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>NSP_Sales/Notify_MidMarket_Team_of_WX_WA_Opty</template>
+    </alerts>
+    <alerts>
         <fullName>Signed_CSA_Email_to_Opportunity_Owner_Manager_s_Manager</fullName>
         <description>Signed CSA Email to Opportunity Owner Manager&apos;s Manager</description>
         <protected>false</protected>

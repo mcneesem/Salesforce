@@ -1,5 +1,5 @@
 public with sharing class NSP_AccountTeamTriggerHelper {
-    // test w/ NSP_AccountTeamTriggerTest (82%)
+    // test w/ NSP_AccountTeamTriggerTest (79%)
 
     /**
 * Iterates throught the list of new NSP_Account_Team__c and passes the required attributes to other methods.
@@ -49,7 +49,7 @@ public with sharing class NSP_AccountTeamTriggerHelper {
             
         } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
-                NSP_AccountTeamMemberTriggerHelper.class.getName() ,
+                NSP_AccountTeamTriggerHelper.class.getName() ,
                 'beforeInsertDirector' ,
                 e
             );
@@ -81,57 +81,82 @@ public with sharing class NSP_AccountTeamTriggerHelper {
             }
         }
     }
-    
-    
-    /**
-* Iterates throught the list of new NSP_Account_Team__c and passes the required attributes to other methods.
-* @param newList List of New NSP_Account_Team__c.
-* @param newMap List of New NSP_Account_Team__c.
-* @return void
-*                
-*/
-    
-    public void afterInsertDirector(List<NSP_Account_Team__c> newList, Map<Id, NSP_Account_Team__c> newMap) {
-        try{
+
+    //
+    // Iterates throught the list of new NSP_Account_Team__c and passes the required attributes to other methods.
+    // @param newList List of New NSP_Account_Team__c.
+    // @param newMap List of New NSP_Account_Team__c.
+    // @return void
+    //
+    public void afterInsertDirector( List<NSP_Account_Team__c> newList , Map<Id,NSP_Account_Team__c> newMap ) {
+        try {
+            // collect the active Users in the List of inserted NSP_Account_Team__c records...
+            Set<Id> userIds = new Set<Id>();
+            for ( NSP_Account_Team__c record : newList ) {
+                userIds.add( record.NSP_User__c );
+            }
+            Boolean isEnabledCheckActiveUsers = AccountTeamTriggerSettings__c.getInstance( UserInfo.getUserId() ).IsEnabledCheckActiveUsers__c;
+            Map<Id,User> activeUsers = null;
+            if ( isEnabledCheckActiveUsers ) {
+                activeUsers = new Map<Id,User>([
+                    SELECT Id
+                    FROM User
+                    WHERE (
+                        ( Id IN :userIds )
+                        AND ( IsActive = true )
+                    )
+                ]);
+            }
+            // process the new NSP_Account_Team__c records...
+            Set<Id> accountIdSet = new Set<Id>();
             List<AccountTeamMember> accountTeamMemberList = new List<AccountTeamMember>();
             Map<Id,NSP_Account_Team__c> mapAccountIdtoAccountTeam = new Map<Id,NSP_Account_Team__c>();
-            
-            Set<Id> accountIdSet = new Set<Id>();
             for ( NSP_Account_Team__c accTeamMemberObj : newList ) {
                 // prepare to sync Account...
                 accountIdSet.add( accTeamMemberObj.NSP_Account__c );
-                //insert AccountTeamMeber
-                AccountTeamMember accountTeamMemberObj = new AccountTeamMember();
-                accountTeamMemberObj.AccountId = accTeamMemberObj.NSP_Account__c;
-                accountTeamMemberObj.AccountAccessLevel = NSP_IntegrationConstants.ACCOUNTACCESSLEVELEDIT;
-                accountTeamMemberObj.TeamMemberRole = NSP_IntegrationConstants.TEAMMEMBERROLE;
-                accountTeamMemberObj.UserId = accTeamMemberObj.NSP_User__c;
-                accountTeamMemberList.add(accountTeamMemberObj);
+                // prevent DmlException INACTIVE_OWNER_OR_USER by only creating new AccountTeamMember records for active Users...
+                if ( !isEnabledCheckActiveUsers
+                    || ( ( activeUsers != null ) && activeUsers.containsKey( accTeamMemberObj.NSP_User__c ) )
+                    )
+                {
+                    AccountTeamMember accountTeamMemberObj = new AccountTeamMember();
+                    accountTeamMemberObj.AccountId = accTeamMemberObj.NSP_Account__c;
+                    accountTeamMemberObj.AccountAccessLevel = NSP_IntegrationConstants.ACCOUNTACCESSLEVELEDIT;
+                    accountTeamMemberObj.TeamMemberRole = NSP_IntegrationConstants.TEAMMEMBERROLE;
+                    accountTeamMemberObj.UserId = accTeamMemberObj.NSP_User__c;
+                    accountTeamMemberList.add( accountTeamMemberObj );
+                }
                 // STY-03187: Checking if NSP_Role__c field in AccountTeam object is WX/WA Benefits Specialist
                 // or WA/WX Payroll Specialist or 401k Plan Consultant then mapping AccountId and accountTeamObject
-                if(String.isNotBlank(accTeamMemberObj.NSP_Role__c) && 
-                   (accTeamMemberObj.NSP_Role__c == NSP_ServiceConstants.WXWA_BENEFITS || 
-                    accTeamMemberObj.NSP_Role__c == NSP_ServiceConstants.WXWA_PAYROLL ||
-                    accTeamMemberObj.NSP_Role__c == NSP_ServiceConstants.PLAN_CONSULTANT)){
-                        mapAccountIdtoAccountTeam.put(accTeamMemberObj.NSP_Account__c, accTeamMemberObj);
-                    }
+                if ( String.isNotBlank( accTeamMemberObj.NSP_Role__c )
+                    && (
+                        accTeamMemberObj.NSP_Role__c == NSP_ServiceConstants.WXWA_BENEFITS
+                        || accTeamMemberObj.NSP_Role__c == NSP_ServiceConstants.WXWA_PAYROLL
+                        || accTeamMemberObj.NSP_Role__c == NSP_ServiceConstants.PLAN_CONSULTANT
+                    )
+                )
+                {
+                    mapAccountIdtoAccountTeam.put( accTeamMemberObj.NSP_Account__c , accTeamMemberObj );
+                }
             }
-            
-            if(accountTeamMemberList.size() > 0){
-                insert accountTeamMemberList;
+            // insert the new AccountTeamMember records...
+            if ( !accountTeamMemberList.isEmpty() ) {
+                List<Database.SaveResult> results = Database.insert( accountTeamMemberList , false );
+                NSP_ErrorLogHandler.logResults(
+                    NSP_AccountTeamTriggerHelper.class.getName() ,
+                    'afterInsertDirector:insert' ,
+                    results
+                );
             }
-            
             // ready to sync Accounts...
             IntegrationSyncController.setReadyForIntegrationSync( accountIdSet );
-            
-            //Checking if map of accountId and Account Team is greater than zero or not
-            if(mapAccountIdtoAccountTeam.size()>0 && !mapAccountIdtoAccountTeam.isEmpty()){
-                updateAccountTeamNameToAssetName(mapAccountIdtoAccountTeam);
+            // update the Asset name based on the current account team...
+            if ( !mapAccountIdtoAccountTeam.isEmpty() ) {
+                updateAccountTeamNameToAssetName( mapAccountIdtoAccountTeam );
             }
-            
         } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
-                NSP_AccountTeamMemberTriggerHelper.class.getName() ,
+                NSP_AccountTeamTriggerHelper.class.getName() ,
                 'afterInsertDirector' ,
                 e
             );
@@ -177,7 +202,7 @@ NSP_WX_WA_Benefits_Specialist__c, and NSP_Retirement_Service_Plan_Name__c field 
             }
         } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
-                NSP_AccountTeamMemberTriggerHelper.class.getName() ,
+                NSP_AccountTeamTriggerHelper.class.getName() ,
                 'updateAccountTeamNameToAssetName' ,
                 e
             );
@@ -251,7 +276,7 @@ NSP_WX_WA_Benefits_Specialist__c, and NSP_Retirement_Service_Plan_Name__c field 
             
         } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
-                NSP_AccountTeamMemberTriggerHelper.class.getName() ,
+                NSP_AccountTeamTriggerHelper.class.getName() ,
                 'beforeUpdateDirector' ,
                 e
             );
@@ -304,22 +329,20 @@ NSP_WX_WA_Benefits_Specialist__c, and NSP_Retirement_Service_Plan_Name__c field 
                         accTeamMemberObj.NSP_User__c
                     );
                 }
-                if ( String.isNotBlank( accTeamMemberObj.NSP_Role__c ) ) {
-                    if ( ( accTeamMemberObj.NSP_Role__c != oldMap.get(accTeamMemberObj.Id).NSP_Role__c )
+                if ( String.isNotBlank( accTeamMemberObj.NSP_Role__c )
+                    && ( ( accTeamMemberObj.NSP_Role__c != oldMap.get(accTeamMemberObj.Id).NSP_Role__c )
                         || ( accTeamMemberObj.NSP_User__c != oldMap.get(accTeamMemberObj.Id).NSP_User__c )
-                        )
-                    {
-                        if ( ( accTeamMemberObj.NSP_Role__c == NSP_ServiceConstants.WXWA_BENEFITS )
-                            || ( accTeamMemberObj.NSP_Role__c == NSP_ServiceConstants.WXWA_PAYROLL )
-                            || ( accTeamMemberObj.NSP_Role__c == NSP_ServiceConstants.PLAN_CONSULTANT )
-                            )
-                        {
-                            mapAccountIdtoAccountTeam.put(
-                                accTeamMemberObj.NSP_Account__c ,
-                                accTeamMemberObj
-                            );
-                        }
-                    }
+                    )
+                    && ( ( accTeamMemberObj.NSP_Role__c == NSP_ServiceConstants.WXWA_BENEFITS )
+                        || ( accTeamMemberObj.NSP_Role__c == NSP_ServiceConstants.WXWA_PAYROLL )
+                        || ( accTeamMemberObj.NSP_Role__c == NSP_ServiceConstants.PLAN_CONSULTANT )
+                    )
+                )
+                {
+                    mapAccountIdtoAccountTeam.put(
+                        accTeamMemberObj.NSP_Account__c ,
+                        accTeamMemberObj
+                    );
                 }
             }
             if ( !accountIdSet.isEmpty()
@@ -354,7 +377,7 @@ NSP_WX_WA_Benefits_Specialist__c, and NSP_Retirement_Service_Plan_Name__c field 
             }
         } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
-                NSP_AccountTeamMemberTriggerHelper.class.getName() ,
+                NSP_AccountTeamTriggerHelper.class.getName() ,
                 'afterUpdateDirector' ,
                 e
             );
@@ -502,7 +525,7 @@ NSP_WX_WA_Benefits_Specialist__c, and NSP_Retirement_Service_Plan_Name__c field 
             }
         } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
-                NSP_AccountTeamMemberTriggerHelper.class.getName() ,
+                NSP_AccountTeamTriggerHelper.class.getName() ,
                 'showErrorOnPrimaryCheckRole' ,
                 e
             );
@@ -634,7 +657,7 @@ NSP_WX_WA_Benefits_Specialist__c, and NSP_Retirement_Service_Plan_Name__c field 
             }
         } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
-                NSP_AccountTeamMemberTriggerHelper.class.getName() ,
+                NSP_AccountTeamTriggerHelper.class.getName() ,
                 'validationOnDeletionOfAccountTeam' ,
                 e
             );

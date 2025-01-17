@@ -4,15 +4,21 @@
 * @date 03/20/2023
 * Name : NSP_GenerateOrderFromOpportunity
 */
+public with sharing class NSP_GenerateOrderFromOpportunity {
+    // test w/ NSP_OpportunityTriggerHelperTest, NSP_OrderTriggerHelperTest (81%)
+    // test w/ NSP_OpportunityTriggerHelperTest (47%)
+    // test w/ NSP_OrderTriggerHelperTest (33%)
 
-public class NSP_GenerateOrderFromOpportunity {
-    private NSP_GenerateOrderFromOpportunity(){}
     private static final String CLOSED_LOST_STAGE = 'Closed Lost';
     private static final String CLOSED_WON_STAGE = 'Closed Won';
     private static final String SUBMITTED_TO_ORDER = 'Submitted To Order';
     private static final String STATUS_ACTIVATED = 'Activated';
     private static final String ORDER_CREATION = 'NSP_OrderCreation';
     private static final String CONTRACT_CREATION = 'NSP_ContractCreation';
+
+    // private constructor...
+    private NSP_GenerateOrderFromOpportunity() {}
+
     /**
 * Method for generating orders from quote using CPQ Ordered checkbox
 * Called from Platform Event Trigger
@@ -45,14 +51,18 @@ public class NSP_GenerateOrderFromOpportunity {
         if(quotesToOrder.size()>0){
             Savepoint orderSP = Database.setSavepoint(); //in case of exception the order cretaion should roll back
             try {
-                Database.update(quotesToOrder);
-            } catch (Exception ex){
-                Database.rollback(orderSP);
-                NSP_CustomException.LogException(ex);
+                Database.update( quotesToOrder );
+            } catch ( Exception e ) {
+                Database.rollback( orderSP );
+                NSP_ErrorLogHandler.logException(
+                    NSP_GenerateOrderFromOpportunity.class.getName() ,
+                    'orderQuoteOnOpptyCloseWon' ,
+                    e
+                );
             }
         }
     }
-    
+
         /**
 * Method for generating contracts from orders using CPQ Contracted checkbox
 * Called from Platform Event Trigger
@@ -84,12 +94,16 @@ public class NSP_GenerateOrderFromOpportunity {
         if(ordersToContract.size()>0){
             Savepoint contractSP = Database.setSavepoint(); //in case of exception the order cretaion should roll back
             try {
-                Database.update(ordersToContract);
-            } catch (Exception ex){
-                Database.rollback(contractSP);
-                NSP_CustomException.LogException(ex);
+                Database.update( ordersToContract );
+            } catch ( Exception e ) {
+                Database.rollback( contractSP );
+                NSP_ErrorLogHandler.logException(
+                    NSP_GenerateOrderFromOpportunity.class.getName() ,
+                    'createContractOnOrderActivation' ,
+                    e
+                );
             }
         }
     }
-    
 }
+//

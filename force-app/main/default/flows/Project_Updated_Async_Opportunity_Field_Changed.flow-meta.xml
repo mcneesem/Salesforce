@@ -4,8 +4,8 @@
     <assignments>
         <name>Assign_Project_Info_to_varProject</name>
         <label>Assign Project Info to varProject</label>
-        <locationX>308</locationX>
-        <locationY>276</locationY>
+        <locationX>242</locationX>
+        <locationY>384</locationY>
         <assignmentItems>
             <assignToReference>varProject.Id</assignToReference>
             <operator>Assign</operator>
@@ -24,6 +24,29 @@
             <targetReference>Project_Max_Orientation_Date_Subflow</targetReference>
         </connector>
     </assignments>
+    <decisions>
+        <name>Does_user_have_Edit_Opty_Max_Orientation_Date_permission</name>
+        <label>Does user have &quot;Edit Opty Max Orientation Date&quot; permission?</label>
+        <locationX>374</locationX>
+        <locationY>276</locationY>
+        <defaultConnectorLabel>User doesn&apos;t have perm</defaultConnectorLabel>
+        <rules>
+            <name>Yes_User_has_permissions</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Permission.Edit_Opportunity_Max_Orientation_Date</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_Project_Info_to_varProject</targetReference>
+            </connector>
+            <label>Yes - User has permissions</label>
+        </rules>
+    </decisions>
+    <description>Decision node to check for user perms at the top</description>
     <environments>Default</environments>
     <interviewLabel>Project - Updated - Async - Opportunity Field Changed {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Project - Updated - Async - Opportunity Field Changed</label>
@@ -89,7 +112,7 @@
         <recordTriggerType>Update</recordTriggerType>
         <scheduledPaths>
             <connector>
-                <targetReference>Assign_Project_Info_to_varProject</targetReference>
+                <targetReference>Does_user_have_Edit_Opty_Max_Orientation_Date_permission</targetReference>
             </connector>
             <pathType>AsyncAfterCommit</pathType>
         </scheduledPaths>
@@ -99,8 +122,8 @@
     <subflows>
         <name>Project_Max_Orientation_Date_Subflow</name>
         <label>Project - Max Orientation Date Subflow</label>
-        <locationX>308</locationX>
-        <locationY>384</locationY>
+        <locationX>242</locationX>
+        <locationY>492</locationY>
         <flowName>Project_Max_Orientation_Date_Subflow</flowName>
         <inputAssignments>
             <name>varProject</name>

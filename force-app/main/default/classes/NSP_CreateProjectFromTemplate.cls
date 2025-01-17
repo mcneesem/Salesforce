@@ -3,7 +3,9 @@
 * Purpose: Controller for creating the project from template from the 
 button "Create Project From Template "
 */
-public class NSP_CreateProjectFromTemplate {
+public with sharing class NSP_CreateProjectFromTemplate {
+    // test w/ NSP_CreateProjectFromTemplateTest (83%)
+
     // Class Level variables.
     public sObject objVal{get;set;}
     public static Map<String, String> fieldValuesMap;
@@ -134,33 +136,33 @@ using the field specified as per the object.
         //Set new project name to specified name
         projRequest.ProjectName = fieldValuesMap.get('ProjectName');
         //Call the service and create project
-        List<pse.CreateProjectFromTemplateService.CreateProjectResponse> projResponse =
-            pse.CreateProjectFromTemplateService.createProjectsFromTemplates( 
-                new List<pse.CreateProjectFromTemplateService.CreateProjectFromTemplateRequest>{projRequest});
-        //If project was created successfully then redirect
-        if(projResponse[0].isSuccess()){
-            //Obtain new project id and redirect to project page
-            Id ProjectId = projResponse[0].NewProjectId;
-            //Update the project with its related entity.
-            if(sObjName == 'Case'){
-                linkProjectWithCase(ProjectId, parentId, accountId, caseComment);
+        List<pse.CreateProjectFromTemplateService.CreateProjectResponse> projResponse = pse.CreateProjectFromTemplateService.createProjectsFromTemplates(
+            new List<pse.CreateProjectFromTemplateService.CreateProjectFromTemplateRequest>{ projRequest }
+        );
+        Id newProjectId = CreateProjectFromTemplateAction.handleCreateProjectResponse(
+            NSP_CreateProjectFromTemplate.class.getName() ,
+            'createProject:visualforce' ,
+            projResponse
+        );
+        if ( newProjectId != null ) {
+            // update the project with its related entity.
+            if ( sObjName == 'Case' ) {
+                linkProjectWithCase( newProjectId , parentId , accountId , caseComment );
             }
-
-            if(sObjName == 'Asset' || sObjName == 'Project_Asset__c'){
-                linkProjectWithAsset(ProjectId, parentId);
+            if ( sObjName == 'Asset' || sObjName == 'Project_Asset__c' ) {
+                linkProjectWithAsset( newProjectId , parentId );
             }
-            
-            PageReference nextPage = new PageReference('/' + ProjectId);
-            nextPage.setRedirect(true);
+            PageReference nextPage = new PageReference( '/' + newProjectId );
+            nextPage.setRedirect( true );
             return nextPage;
-            //If unsuccessful output error messages
-        }else{
-            for(pse.CreateProjectFromTemplateService.CreateProjectError err : projResponse[0].Errors){
-                ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR, err.Message));
+        } else {
+            for ( pse.CreateProjectFromTemplateService.CreateProjectError err : projResponse[0].Errors ) {
+                ApexPages.addMessage( new ApexPages.message( ApexPages.severity.ERROR , err.Message ) );
             }
             return null;
-        }        
+        }
     }
+
     /**
 * Name        : linkProjectWithCase
 * Purpose     : Method to link the entity to the project
@@ -254,31 +256,35 @@ using the field specified as per the object.
                 new pse.CreateProjectFromTemplateService.CreateProjectFromTemplateRequest(templateProjectId, 
                                                                                           startDate);
             projRequest.ProjectName = fieldValuesMap.get('ProjectName');
-            List<pse.CreateProjectFromTemplateService.CreateProjectResponse> projResponse =
-                pse.CreateProjectFromTemplateService.createProjectsFromTemplates( 
-                    new List<pse.CreateProjectFromTemplateService.CreateProjectFromTemplateRequest>{projRequest});
-            if(projResponse[0].isSuccess()){
-                Id ProjectId = projResponse[0].NewProjectId;
-                //Update the project with its related entity.
-                if(sObjName == 'Case'){
-                    linkProjectWithCase(ProjectId, parentId, accountId, caseComment,dueDate,projectRecordTypeId);
+            List<pse.CreateProjectFromTemplateService.CreateProjectResponse> projResponse = pse.CreateProjectFromTemplateService.createProjectsFromTemplates(
+                new List<pse.CreateProjectFromTemplateService.CreateProjectFromTemplateRequest>{ projRequest }
+            );
+            Id newProjectId = CreateProjectFromTemplateAction.handleCreateProjectResponse(
+                NSP_CreateProjectFromTemplate.class.getName() ,
+                'createProject:aura' ,
+                projResponse
+            );
+            if ( newProjectId != null ) {
+                // update the project with its related entity.
+                if ( sObjName == 'Case' ) {
+                    linkProjectWithCase( newProjectId , parentId , accountId , caseComment , dueDate , projectRecordTypeId );
                 }
-                if(sObjName == 'Asset'){
-                    update new pse__Proj__c(Id = ProjectId, RecordTypeId = projectRecordTypeId);
-                    linkProjectWithAsset(ProjectId, parentId);
+                if ( sObjName == 'Asset' ) {
+                    update new pse__Proj__c( Id=newProjectId , RecordTypeId=projectRecordTypeId );
+                    linkProjectWithAsset( newProjectId , parentId );
                 }
-                return new ResponseWrapper(true,ProjectId,'');
-                //If unsuccessful output error messages
-            }else{
+                return new ResponseWrapper( true , newProjectId , '' );
+            } else {
                 List<String> lErros = new List<String>();
-                for(pse.CreateProjectFromTemplateService.CreateProjectError err : projResponse[0].Errors){
-                    lErros.add(err.Message);
+                for ( pse.CreateProjectFromTemplateService.CreateProjectError err : projResponse[0].Errors ) {
+                    lErros.add( err.Message );
                 }
-                return new ResponseWrapper(false,'',lErros[0]);
-            }        
-        }catch(Exception ex){
-            return new ResponseWrapper(false,'',ex.getMessage());
+                return new ResponseWrapper( false , '' , lErros[0] );
+            }
+        } catch ( Exception ex ) {
+            return new ResponseWrapper( false , '' , ex.getMessage() );
         }
     }
-    
+
 }
+//

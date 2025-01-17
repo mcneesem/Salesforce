@@ -1253,7 +1253,7 @@ export default class Nsp_CustomCaseCreationPage extends NavigationMixin(Lightnin
         }
         //updated by rahul for bug 210402
         if (event.currentTarget.name == 'Sub Category') {
-            this.selectedSubCategory = event.target.value;
+            this.selectedSubCategory = event.target.value;
             if(this.selectedSubCategory==='Salary Survey'){
                 this.showRequestedJobs = true;
             }
@@ -1261,15 +1261,14 @@ export default class Nsp_CustomCaseCreationPage extends NavigationMixin(Lightnin
                 this.showRequestedJobs = false;
             }
             this.detailOptions = this.createOptions(this.categoryWrapper.mCatSubToDetails[this.selectedCategory + '-' + event.target.value]);
-            if(this.detailOptions.length > 0){
-                this.showDetail = true;
-                this.showAllDetail = false;
-            }else{
-                this.showDetail = false;
-                this.showAllDetail = false;
-                this.selectedDetail = null;
-            }
-
+            if(this.detailOptions.length > 0){
+                this.showDetail = true;
+                this.showAllDetail = false;
+            }else{
+                this.showDetail = false;
+                this.showAllDetail = false;
+                this.selectedDetail = null;
+            }
             this.showVersion = false;
             this.selectedVersion = null;
             if(this.selectedCategory.length>0 && this.selectedSubCategory.length>0 && this.accountID.length>0){

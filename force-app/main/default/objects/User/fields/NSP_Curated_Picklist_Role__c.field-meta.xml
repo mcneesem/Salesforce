@@ -51,12 +51,6 @@
                 <label>BPS Support Supervisor</label>
             </value>
             <value>
-                <fullName>BPS User</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>BPS User</label>
-            </value>
-            <value>
                 <fullName>BT CL/HRS</fullName>
                 <default>false</default>
                 <label>BT CL/HRS</label>
@@ -65,6 +59,11 @@
                 <fullName>Client Liaison</fullName>
                 <default>false</default>
                 <label>Client Liaison</label>
+            </value>
+            <value>
+                <fullName>Compensation Services</fullName>
+                <default>false</default>
+                <label>Compensation Services</label>
             </value>
             <value>
                 <fullName>Contact Center Agent</fullName>
@@ -77,6 +76,11 @@
                 <label>Contact Center Escalations</label>
             </value>
             <value>
+                <fullName>Contact Center Manager</fullName>
+                <default>false</default>
+                <label>Contact Center Manager</label>
+            </value>
+            <value>
                 <fullName>Credit Services</fullName>
                 <default>false</default>
                 <label>Credit Services</label>
@@ -87,9 +91,9 @@
                 <label>EEO</label>
             </value>
             <value>
-                <fullName>Finance Operations</fullName>
+                <fullName>Finance Service User</fullName>
                 <default>false</default>
-                <label>Finance Operations</label>
+                <label>Finance Service User</label>
             </value>
             <value>
                 <fullName>FLSA</fullName>
@@ -100,6 +104,21 @@
                 <fullName>Health &amp; Welfare</fullName>
                 <default>false</default>
                 <label>Health &amp; Welfare</label>
+            </value>
+            <value>
+                <fullName>Health &amp; Welfare Mgr/Sup</fullName>
+                <default>false</default>
+                <label>Health &amp; Welfare Mgr/Sup</label>
+            </value>
+            <value>
+                <fullName>HR COE</fullName>
+                <default>false</default>
+                <label>HR COE</label>
+            </value>
+            <value>
+                <fullName>HR Specialist</fullName>
+                <default>false</default>
+                <label>HR Specialist</label>
             </value>
             <value>
                 <fullName>IES Customer Support</fullName>
@@ -142,6 +161,11 @@
                 <label>Legal</label>
             </value>
             <value>
+                <fullName>Manager HR Services</fullName>
+                <default>false</default>
+                <label>Manager HR Services</label>
+            </value>
+            <value>
                 <fullName>MM HR Consultant</fullName>
                 <default>false</default>
                 <label>MM HR Consultant</label>
@@ -160,6 +184,16 @@
                 <fullName>Onboarding Project Manager</fullName>
                 <default>false</default>
                 <label>Onboarding Project Manager</label>
+            </value>
+            <value>
+                <fullName>Orientation Coordinator</fullName>
+                <default>false</default>
+                <label>Orientation Coordinator</label>
+            </value>
+            <value>
+                <fullName>Orientation Planner</fullName>
+                <default>false</default>
+                <label>Orientation Planner</label>
             </value>
             <value>
                 <fullName>OT Rep</fullName>
@@ -202,6 +236,11 @@
                 <label>Recruiting</label>
             </value>
             <value>
+                <fullName>Report Development</fullName>
+                <default>false</default>
+                <label>Report Development</label>
+            </value>
+            <value>
                 <fullName>RS Customer Support</fullName>
                 <default>false</default>
                 <label>RS Customer Support</label>
@@ -215,6 +254,11 @@
                 <fullName>Safety Consultant</fullName>
                 <default>false</default>
                 <label>Safety Consultant</label>
+            </value>
+            <value>
+                <fullName>Strategic Consulting Services</fullName>
+                <default>false</default>
+                <label>Strategic Consulting Services</label>
             </value>
             <value>
                 <fullName>TES Banking &amp; Tax</fullName>
@@ -247,44 +291,22 @@
                 <label>TES Support</label>
             </value>
             <value>
-                <fullName>Manager HR Services</fullName>
+                <fullName>BPS User</fullName>
                 <default>false</default>
-                <label>Manager HR Services</label>
+                <isActive>false</isActive>
+                <label>BPS User</label>
             </value>
             <value>
-                <fullName>Health &amp; Welfare Mgr/Sup</fullName>
+                <fullName>Human Resource Specialist</fullName>
                 <default>false</default>
-                <label>Health &amp; Welfare Mgr/Sup</label>
+                <isActive>false</isActive>
+                <label>Human Resource Specialist</label>
             </value>
             <value>
-                <fullName>Contact Center Manager</fullName>
+                <fullName>Onboarding Specialist</fullName>
                 <default>false</default>
-                <label>Contact Center Manager</label>
-            </value>
-            <value>
-                <fullName>HR Specialist</fullName>
-                <default>false</default>
-                <label>HR Specialist</label>
-            </value>
-            <value>
-                <fullName>HR COE</fullName>
-                <default>false</default>
-                <label>HR COE</label>
-            </value>
-            <value>
-                <fullName>Orientation Coordinator</fullName>
-                <default>false</default>
-                <label>Orientation Coordinator</label>
-            </value>
-            <value>
-                <fullName>Orientation Planner</fullName>
-                <default>false</default>
-                <label>Orientation Planner</label>
-            </value>
-            <value>
-                <fullName>Report Development</fullName>
-                <default>false</default>
-                <label>Report Development</label>
+                <isActive>false</isActive>
+                <label>Onboarding Specialist</label>
             </value>
         </valueSetDefinition>
     </valueSet>

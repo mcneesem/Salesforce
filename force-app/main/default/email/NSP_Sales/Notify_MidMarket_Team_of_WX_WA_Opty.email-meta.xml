@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Notify MidMarket Team of WX-WA Opty</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>Notify MidMarket Team of WX-WA Opty</name>
+    <style>none</style>
+    <subject>Opportunity with Primary Product WX/WA has been created/updated</subject>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

@@ -1,14 +1,16 @@
-@isTest
-public class CreateSeparateProjectOrderItemTest 
-{
-    
-    public static String accountDefaults = 'NSP_TestDataFactory.AccountDefaults';
-    public static String accountName = 'Account Test1';
+@isTest private class CreateSeparateProjectOrderItemTest {
 
-    
-     @isTest
-    public static void testSeperateProject()
-    {
+    private static String accountDefaults = 'NSP_TestDataFactory.AccountDefaults';
+    private static String accountName = 'Account Test1';
+
+    @testSetup private static void setupTestData() {
+        Order_Settings__c orderSetting = Order_Settings__c.getOrgDefaults();
+        orderSetting.EffectiveDateStartOfMonth__c = true;
+        orderSetting.Bypass_Rule_PreventStatusChange__c = true;
+        upsert orderSetting;
+    }
+
+    @isTest private static void testSeperateProject() {
         List<User> deploymentManagers = [
             SELECT Id
             FROM User
@@ -35,7 +37,7 @@ public class CreateSeparateProjectOrderItemTest
             blng__RevenueRecognitionRule__c rRule=NSP_TestHelper.createRevrecRule(NSP_CPQConstants.PROJ_REV_REC);
             blng__TaxRule__c tRule=NSP_TestHelper.createRevTaxRule();
             
-            Product2 objproduct = NSP_TestHelper.createSeparateBillingProduct('Test Product',rRule,tRule,bRule,'Monthly');                        
+            Product2 objproduct = NSP_TestHelper.createSeparateBillingProduct('Test Product',rRule,tRule,bRule,'Monthly');
             Product2 objproduct1 = NSP_TestHelper.createSeparateBillingProduct('Test Product1',rRule,tRule,bRule,'Monthly');
             
             
@@ -106,14 +108,14 @@ public class CreateSeparateProjectOrderItemTest
             set<id> quoteids=  new set<id>();
             set<id> productids=  new set<id>();
 
-			quoteids.add(objQuote1.id);
+            quoteids.add(objQuote1.id);
             quoteids.add(objQuote2.id);
 
             quotelist.add(objQuote1);
             quotelist.add(objQuote2);
             
-            productids.add(productlst[0].id);            
-			            
+            productids.add(productlst[0].id);
+
             Test.startTest();
             update quotelist;
             
@@ -139,20 +141,14 @@ public class CreateSeparateProjectOrderItemTest
             
             list<OrderItem> orderItemList = new list<OrderItem>([select Id,SBQQ__BillingFrequency__c,NSP_Project__c,NSP_Project_Name_New_Sales__c,Separate_Project__c,blng__RevenueRecognitionRule__r.NSP_Rev_Rec_Model__c,Order.Type from OrderItem WHERE Order.SBQQ__Quote__c IN:quoteids]);
             integer nTwice=0;
-            for(OrderItem oi:orderItemList)
-            {
-                 
-                 if(oi.Separate_Project__c == true)
-                {   
-                    if(nTwice <=1)
-                    {
+            for ( OrderItem oi : orderItemList ) {
+                 if(oi.Separate_Project__c == true) {
+                    if(nTwice <=1) {
                         oi.NSP_Project__c = oProj3.id;
                         nTwice++;
                     }
                     oi.NSP_Project_Name_New_Sales__c = 'iSolved - Other';
-                }
-                else
-                {
+                } else {
                     oi.NSP_Project__c= oProj2.Id;
                 }
                 orderitemUpdlist.add(oi);
@@ -165,11 +161,10 @@ public class CreateSeparateProjectOrderItemTest
             orderList1[0].Status = NSP_CPQConstants.ORDER_REVIEWED;
             orderList.add(orderList1[0]);
             orderList1[1].Status = NSP_CPQConstants.ORDER_REVIEWED;
-            orderList.add(orderList1[1]);            
+            orderList.add(orderList1[1]);
             update orderList; 
-			list<string> strlst = new list<string>();
-            for(order ord:orderList)
-            {
+            list<string> strlst = new list<string>();
+            for ( order ord:orderList ) {
                 strlst.add(ord.id);
             }
             CreateSeparateProjectOrderItem.createSeparateProject(strlst);
@@ -177,3 +172,4 @@ public class CreateSeparateProjectOrderItemTest
     }
 
 }
+//

@@ -32,6 +32,8 @@ IF(
 AND( 
 $Permission.Checklist_Create_MidMarket_Closing,
 Number_of_MMC_Checklists__c = 0,
+OR(ISPICKVAL( Account.NSP_Account_Segment__c, &quot;MidMarket&quot;),
+ISPICKVAL( Account.NSP_Account_Segment__c, &quot;Enterprise&quot;)),
 OR(
 ISPICKVAL(StageName, &quot;Analysis&quot;),
 ISPICKVAL(StageName, &quot;Proposal&quot;),

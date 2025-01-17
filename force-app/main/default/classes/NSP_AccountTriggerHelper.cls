@@ -484,22 +484,27 @@ WHERE (userRole.Name = 'Loyalty Advisor' OR userRole.Name = 'Channel Program Man
         }
     }
 
-    /**
-     * Based on the number of employees, Account segmentation field is populated.
-     *param accountObject
-     *returns void
-     */
-    public static void updateAccountSegment(Account accountObject) {
-        if (accountObject.NumberOfEmployees > Integer.valueOf(System.Label.NSP_MidMarket_Threshold)) {
-            accountObject.NSP_Account_Segment__c = System.Label.NSP_Account_Segment_MidMarket;
-        } else if (
-            ( accountObject.NumberOfEmployees > Integer.valueOf( System.Label.NSP_Emerging_Growth_Threshold_Employees ) )
-            && ( accountObject.NumberOfEmployees <= Integer.valueOf( System.Label.NSP_MidMarket_Threshold ) )
-            )
-        {
-            accountObject.NSP_Account_Segment__c = System.Label.NSP_Account_Segment_Emerging_Growth;
-        } else if (accountObject.NumberOfEmployees != null) {
-            accountObject.NSP_Account_Segment__c = System.Label.NSP_Account_Segment_Core_Sales;
+    //
+    // Based on the number of employees, Account segmentation field is populated.
+    // param accountObject
+    // returns void
+    //
+    public static void updateAccountSegment( Account accountObject ) {
+        if ( accountObject != null ) {
+            if ( Account_Segment_Threshold_Settings__c.getInstance( UserInfo.getUserId() ).Is_Enabled__c ) {
+                accountObject.NSP_Account_Segment__c = NSP_LeadTriggerHelper.getSalesSegment( accountObject.NumberOfEmployees );
+            } else {
+                if ( accountObject.NumberOfEmployees > Integer.valueOf( System.Label.NSP_MidMarket_Threshold ) ) {
+                    accountObject.NSP_Account_Segment__c = System.Label.NSP_Account_Segment_MidMarket;
+                } else if ( ( accountObject.NumberOfEmployees > Integer.valueOf( System.Label.NSP_Emerging_Growth_Threshold_Employees ) )
+                    && ( accountObject.NumberOfEmployees <= Integer.valueOf( System.Label.NSP_MidMarket_Threshold ) )
+                    )
+                {
+                    accountObject.NSP_Account_Segment__c = System.Label.NSP_Account_Segment_Emerging_Growth;
+                } else if (accountObject.NumberOfEmployees != null) {
+                    accountObject.NSP_Account_Segment__c = System.Label.NSP_Account_Segment_Core_Sales;
+                }
+            }
         }
     }
 

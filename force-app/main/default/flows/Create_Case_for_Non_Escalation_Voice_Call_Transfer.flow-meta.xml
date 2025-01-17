@@ -26,7 +26,7 @@
     <start>
         <locationX>50</locationX>
         <locationY>0</locationY>
-        <filterLogic>( 1 AND 2 AND ( 3 OR 4 OR 5 OR 6 OR 7 ) )</filterLogic>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>CallType</field>
             <operator>EqualTo</operator>
@@ -43,37 +43,16 @@
         </filters>
         <filters>
             <field>Contact_Center_Queue__c</field>
-            <operator>EqualTo</operator>
+            <operator>NotEqualTo</operator>
             <value>
-                <stringValue>1 Benefit Option</stringValue>
+                <stringValue>401K Core</stringValue>
             </value>
         </filters>
         <filters>
             <field>Contact_Center_Queue__c</field>
-            <operator>EqualTo</operator>
+            <operator>NotEqualTo</operator>
             <value>
-                <stringValue>401K</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>Contact_Center_Queue__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>5 Employment Verification</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>Contact_Center_Queue__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Web Support</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>Contact_Center_Queue__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Section 125</stringValue>
+                <stringValue>Escalations</stringValue>
             </value>
         </filters>
         <object>VoiceCall</object>

@@ -5,6 +5,7 @@
     <externalId>false</externalId>
     <label>How will EEs punch in/out?</label>
     <required>false</required>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>MultiselectPicklist</type>
     <valueSet>
@@ -22,9 +23,9 @@
                 <label>Timeclock</label>
             </value>
             <value>
-                <fullName>Bluetooth Beach</fullName>
+                <fullName>Bluetooth Beacon</fullName>
                 <default>false</default>
-                <label>Bluetooth Beach</label>
+                <label>Bluetooth Beacon</label>
             </value>
             <value>
                 <fullName>Biometric Clock</fullName>

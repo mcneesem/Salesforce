@@ -12,9 +12,9 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>MidMarket</fullName>
+                <fullName>Core</fullName>
                 <default>false</default>
-                <label>MidMarket</label>
+                <label>Core</label>
             </value>
             <value>
                 <fullName>Emerging Growth</fullName>
@@ -22,9 +22,14 @@
                 <label>Emerging Growth</label>
             </value>
             <value>
-                <fullName>Core</fullName>
+                <fullName>MidMarket</fullName>
                 <default>false</default>
-                <label>Core</label>
+                <label>MidMarket</label>
+            </value>
+            <value>
+                <fullName>Enterprise</fullName>
+                <default>false</default>
+                <label>Enterprise</label>
             </value>
         </valueSetDefinition>
     </valueSet>

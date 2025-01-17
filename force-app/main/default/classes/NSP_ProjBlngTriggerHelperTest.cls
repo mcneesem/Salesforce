@@ -1,15 +1,16 @@
-@isTest
-public class NSP_ProjBlngTriggerHelperTest {
-    public NSP_ProjBlngTriggerHelperTest() {
+@isTest private class NSP_ProjBlngTriggerHelperTest {
 
+    @testSetup private static void setupTestData(){
+        Order_Settings__c orderSetting = Order_Settings__c.getOrgDefaults();
+        orderSetting.EffectiveDateStartOfMonth__c = true;
+        orderSetting.Bypass_Rule_PreventStatusChange__c = true;
+        upsert orderSetting;
     }
 
     public static String accountDefaults = 'NSP_TestDataFactory.AccountDefaults';
     public static String accountName = 'Account Test1';
-    
-     @isTest
-    public static void testSeperateProject()
-    {
+
+     @isTest private static void testSeperateProject() {
         List<User> deploymentManagers = [
             SELECT Id
             FROM User
@@ -64,7 +65,7 @@ public class NSP_ProjBlngTriggerHelperTest {
             list<Product2> productlist = new list<Product2>();
             trProdNames.add('Test Product');
             trProdNames.add('Test Product1');
-            list<Product2> productlst = [Select Id, Name,ProductCode,NSP_Product_Type__c,SBQQ__SubscriptionPricing__c,Separate_Project__c	 from Product2 WHERE Name IN:trProdNames LIMIT 2]; //Added WHERE Condition as part of code fix
+            list<Product2> productlst = [Select Id, Name,ProductCode,NSP_Product_Type__c,SBQQ__SubscriptionPricing__c,Separate_Project__c from Product2 WHERE Name IN:trProdNames LIMIT 2]; //Added WHERE Condition as part of code fix
             productlst[0].ProductCode = 'HCMRETIntegration';
             productlst[0].NSP_Product_Type__c = 'IWX Bundle';
             //product1.SBQQ__SubscriptionType__c = 'Evergreen';
@@ -107,14 +108,14 @@ public class NSP_ProjBlngTriggerHelperTest {
             set<id> quoteids=  new set<id>();
             set<id> productids=  new set<id>();
 
-			quoteids.add(objQuote1.id);
+            quoteids.add(objQuote1.id);
             quoteids.add(objQuote2.id);
 
             quotelist.add(objQuote1);
             quotelist.add(objQuote2);
             
-            productids.add(productlst[0].id);            
-			            
+            productids.add(productlst[0].id);
+
             Test.startTest();
             update quotelist;
             
@@ -187,12 +188,9 @@ public class NSP_ProjBlngTriggerHelperTest {
             test.stopTest();
             //System.assert(orderList.size()==1,true);           
         }
-        
     }
 
-    @isTest
-    public static void testTriggerHelper(){
-        
+    @isTest private static void testTriggerHelper() {
         List<User> deploymentManagers = [
             SELECT Id
             FROM User
@@ -297,9 +295,7 @@ public class NSP_ProjBlngTriggerHelperTest {
         }
     }
 
-    @isTest
-    public static void testProjectUpdate() {
-        
+    @isTest private static void testProjectUpdate() {
         List<User> deploymentManagers = [
             SELECT Id
             FROM User
@@ -346,13 +342,9 @@ public class NSP_ProjBlngTriggerHelperTest {
             update oProj1;
             //System.assert(oProj1.Invoice_Ready__c == true,true);
         }
-        
-
     }
 
-    @isTest
-    public static void testProjectUpdate2() {
-        
+    @isTest private static void testProjectUpdate2() {
         List<User> deploymentManagers = [
             SELECT Id
             FROM User
@@ -464,13 +456,9 @@ public class NSP_ProjBlngTriggerHelperTest {
             
             //System.assert(orderItemList.size()==1,true);            
         }
-        
-
     }
-    
-    @isTest
-    public static void testTriggerUpdate(){
-        
+
+    @isTest private static void testTriggerUpdate() {
         List<User> deploymentManagers = [
             SELECT Id
             FROM User
@@ -594,6 +582,6 @@ public class NSP_ProjBlngTriggerHelperTest {
             //System.assert(orderList.size()==1,true);           
         }
     }
-        
-    
+
 }
+//

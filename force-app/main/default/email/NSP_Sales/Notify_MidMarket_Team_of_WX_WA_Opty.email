@@ -1,0 +1,1 @@
+<a href="{!Opportunity.Link}">{!Opportunity.Name}</a> with Primary Product WX/WA has been created/updated. Please take the necessary next steps.
