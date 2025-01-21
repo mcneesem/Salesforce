@@ -38,8 +38,6 @@
     <tabs>standard-Lead</tabs>
     <tabs>standard-Campaign</tabs>
     <tabs>standard-CollaborationGroup</tabs>
-    <tabs>cwbtool__ErrorLog__c</tabs>
-    <tabs>NSP_Error_Log__c</tabs>
     <uiType>Lightning</uiType>
     <utilityBar>Lead_Generation_UtilityBar</utilityBar>
 </CustomApplication>
