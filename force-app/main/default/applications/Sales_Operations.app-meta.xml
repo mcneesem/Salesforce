@@ -40,8 +40,6 @@
     <tabs>standard-Product2</tabs>
     <tabs>standard-CollaborationGroup</tabs>
     <tabs>standard-Feed</tabs>
-    <tabs>cwbtool__ErrorLog__c</tabs>
-    <tabs>NSP_Error_Log__c</tabs>
     <uiType>Lightning</uiType>
     <utilityBar>Sales_Operations_UtilityBar</utilityBar>
 </CustomApplication>
