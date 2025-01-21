@@ -54,12 +54,6 @@
     <utilityBar>LightningSalesConsole_UtilityBar</utilityBar>
     <workspaceConfig>
         <mappings>
-            <tab>NSP_Error_Log__c</tab>
-        </mappings>
-        <mappings>
-            <tab>cwbtool__ErrorLog__c</tab>
-        </mappings>
-        <mappings>
             <tab>standard-Account</tab>
         </mappings>
         <mappings>
