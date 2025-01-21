@@ -83,7 +83,7 @@
         </inputParameters>
         <nameSegment>NSP_ChatterPostController</nameSegment>
     </actionCalls>
-    <apiVersion>63.0</apiVersion>
+    <apiVersion>62.0</apiVersion>
     <assignments>
         <name>Add_Account_Owner</name>
         <label>Add Account Owner</label>
