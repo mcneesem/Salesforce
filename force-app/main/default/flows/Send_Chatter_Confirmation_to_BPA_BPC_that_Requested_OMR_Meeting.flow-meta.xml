@@ -24,7 +24,6 @@
             </value>
         </inputParameters>
         <nameSegment>chatterPost</nameSegment>
-        <offset>0</offset>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <actionCalls>
@@ -51,7 +50,6 @@
             </value>
         </inputParameters>
         <nameSegment>chatterPost</nameSegment>
-        <offset>0</offset>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <actionCalls>
@@ -68,7 +66,7 @@
         <inputParameters>
             <name>relatedId</name>
             <value>
-                <elementReference>$Record.Account.Id</elementReference>
+                <elementReference>$Record.AccountId</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -84,10 +82,8 @@
             </value>
         </inputParameters>
         <nameSegment>NSP_ChatterPostController</nameSegment>
-        <offset>0</offset>
     </actionCalls>
-    <apiVersion>57.0</apiVersion>
-    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <apiVersion>63.0</apiVersion>
     <assignments>
         <name>Add_Account_Owner</name>
         <label>Add Account Owner</label>
@@ -113,7 +109,7 @@
             <assignToReference>List_Of_Users</assignToReference>
             <operator>Add</operator>
             <value>
-                <elementReference>Iterate_over_BPA_Users.NSP_User__r.Id</elementReference>
+                <elementReference>Iterate_over_BPA_Users.NSP_User__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -129,7 +125,7 @@
             <assignToReference>List_Of_Users</assignToReference>
             <operator>Add</operator>
             <value>
-                <elementReference>Iterate_over_BPA_Users.NSP_User__r.Id</elementReference>
+                <elementReference>Iterate_over_BPA_Users.NSP_User__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -249,7 +245,7 @@
             <name>Task_Owner_same_as_Account_Owner_bpa_null</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Get_related_account_to_reference_in_Chatter_message.Owner.Id</leftValueReference>
+                <leftValueReference>Get_related_account_to_reference_in_Chatter_message.OwnerId</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <elementReference>$Record.CreatedById</elementReference>
@@ -275,7 +271,7 @@
             <name>Task_Created_User_same_as_Account_Owner</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Get_related_account_to_reference_in_Chatter_message.Owner.Id</leftValueReference>
+                <leftValueReference>Get_related_account_to_reference_in_Chatter_message.OwnerId</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <elementReference>$Record.CreatedById</elementReference>
@@ -290,7 +286,7 @@
             <name>Task_Created_User_same_as_BPA_User</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Iterate_over_BPA_Users.NSP_User__r.Id</leftValueReference>
+                <leftValueReference>Iterate_over_BPA_Users.NSP_User__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <elementReference>$Record.CreatedById</elementReference>
@@ -346,6 +342,13 @@
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>BPA_Users</leftValueReference>
+                <operator>IsEmpty</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Iterate_over_BPA_Users</targetReference>
             </connector>
@@ -368,7 +371,7 @@
                 <leftValueReference>List_Of_Users</leftValueReference>
                 <operator>Contains</operator>
                 <rightValue>
-                    <elementReference>Iterate_over_BPA_Users.NSP_User__r.Id</elementReference>
+                    <elementReference>Iterate_over_BPA_Users.NSP_User__c</elementReference>
                 </rightValue>
             </conditions>
             <connector>
@@ -390,10 +393,10 @@
             <name>Y_e_s</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Get_related_account_to_reference_in_Chatter_message.Owner.Id</leftValueReference>
+                <leftValueReference>Get_related_account_to_reference_in_Chatter_message.OwnerId</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <elementReference>Iterate_over_BPA_Users.NSP_User__r.Id</elementReference>
+                    <elementReference>Iterate_over_BPA_Users.NSP_User__c</elementReference>
                 </rightValue>
             </conditions>
             <connector>
@@ -415,7 +418,7 @@
             <name>Yes</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Iterate_over_BPA_Users.NSP_User__r.Id</leftValueReference>
+                <leftValueReference>Iterate_over_BPA_Users.NSP_User__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <elementReference>$Record.CreatedById</elementReference>
@@ -468,7 +471,7 @@
                 <leftValueReference>List_Of_Users</leftValueReference>
                 <operator>Contains</operator>
                 <rightValue>
-                    <elementReference>Iterate_over_BPA_Users.NSP_User__r.Id</elementReference>
+                    <elementReference>Iterate_over_BPA_Users.NSP_User__c</elementReference>
                 </rightValue>
             </conditions>
             <connector>
@@ -506,7 +509,7 @@
             <label>Related Account : Yes</label>
         </rules>
     </decisions>
-    <description>updates to async and chatter message</description>
+    <description>Flow updated , async ,chatter message</description>
     <environments>Default</environments>
     <interviewLabel>Send Chatter Confirmation to BPA/BPC that Requested OMR Meeting {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Send Chatter Confirmation to BPA/BPC that Requested OMR Meeting</label>
@@ -548,7 +551,7 @@
         <label>Get BPA Account Team</label>
         <locationX>649</locationX>
         <locationY>492</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Is_BPA_null</targetReference>
         </connector>
