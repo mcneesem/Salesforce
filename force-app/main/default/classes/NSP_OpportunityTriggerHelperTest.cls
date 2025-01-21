@@ -33,6 +33,10 @@ public class NSP_OpportunityTriggerHelperTest {
         setting.Is_Edit_Closed_Won_Allowed__c = true;
         insert setting;
 
+        OpportunityStageSettings__c optySettings = OpportunityStageSettings__c.getOrgDefaults();
+        optySettings.Is_Enabled_WO_WS_Stage_Entry__c = true;
+        upsert optySettings;
+
         PlatformEventSettings__c pESetting = new PlatformEventSettings__c();
         pESetting.IsEnabled_IntegrationAccountEvent__c = true;
         pESetting.IsEnabled_IntegrationAccountDeleteEvent__c = true;
@@ -1025,6 +1029,24 @@ static void createAssetTest3(){
         finally{
             Test.stopTest();
         }
+    }
+    
+    @isTest
+    static void testBackward_Stage() {
         
+        Test.startTest();
+        String expectedError = Label.Opportunity_Backward_Stage;
+
+        try{
+            Opportunity opp1 = [SELECT Id, StageName FROM Opportunity WHERE StageName =: NSP_SalesConstants.ANALYSIS_STAGE LIMIT 1] ; 
+            opp1.StageName = NSP_SalesConstants.DISCOVERY_STAGE;
+        	update opp1;
+        }
+        catch(Exception e){
+            System.assertEquals(true , e.getMessage().contains(expectedError));
+        }
+        finally{
+            Test.stopTest();
+        }
     }
 }
