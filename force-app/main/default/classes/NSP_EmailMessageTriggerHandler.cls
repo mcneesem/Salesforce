@@ -37,11 +37,12 @@ public with sharing class NSP_EmailMessageTriggerHandler implements NSP_ITrigger
         EmailMessageTriggerSettings__c settings = EmailMessageTriggerSettings__c.getInstance( UserInfo.getUserId() );
         if ( ( settings != null )
             && settings.IsAfterInsertQueueableEnabled__c
+            && ( Limits.getLimitQueueableJobs() > 1 )
             && ( Limits.getQueueableJobs() < Limits.getLimitQueueableJobs() )
             )
         {
             System.enqueueJob(
-                new EmailMessageQueueableHelper(
+                new EmailMessageQueueable(
                     (List<EmailMessage>)newList ,
                     (Map<Id,EmailMessage>)newMap
                 )
