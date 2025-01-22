@@ -1,4 +1,4 @@
-@isTest private class EmailMessageQueueableHelperTest {
+@isTest private class EmailMessageQueueableTest {
     private static final Id BPS_RECORDTYPEID = NSP_GenericRecordType.getRecordTypeId( 'Case' , 'BPS' );
 
     @testSetup private static void setupTestData() {
@@ -41,7 +41,7 @@
         lstOfEmailMessage.add(eMsg);
         Map<Id,EmailMessage> mapOfEmailMessage = new Map<Id,EmailMessage>();
         mapOfEmailMessage.put(eMsg.Id,eMsg);
-        System.enqueueJob(new EmailMessageQueueableHelper(lstOfEmailMessage , mapOfEmailMessage));
+        System.enqueueJob(new EmailMessageQueueable(lstOfEmailMessage , mapOfEmailMessage));
         test.stopTest();
         Case updatedCase = [SELECT Status FROM Case WHERE ID = : caseRecord.id];
         System.assertEquals('ReOpened', updatedCase.Status);
