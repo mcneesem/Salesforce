@@ -61,7 +61,12 @@
     &apos;81&apos; , &apos;University Lab Partners&apos; ,
     &apos;82&apos; , &apos;CH3 Capital LLC&apos; ,
     &apos;83&apos; , &apos;Lysios Capital Inc&apos; ,
-    &apos;84&apos; , &apos;Azolla Ventures&apos;,
+    &apos;84&apos; , &apos;Azolla Ventures&apos; ,
+    &apos;85&apos; , &apos;First Tee&apos; ,
+    &apos;86&apos; , &apos;Samsara Biocapital LLC&apos; ,
+    &apos;87&apos; , &apos;MAC Global Partners LLC&apos; ,
+    &apos;88&apos; , &apos;Sinovation Ventures&apos; ,
+    &apos;89&apos; , &apos;New York Angels&apos; ,
     TEXT( Account.WO_Asset__r.NSP_National_Account_Group__c )
   )
 )</formula>
