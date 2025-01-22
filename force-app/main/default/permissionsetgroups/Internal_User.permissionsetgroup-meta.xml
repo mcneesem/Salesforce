@@ -56,6 +56,7 @@
     <permissionSets>Organization_Wide_Email_Address_isolved_Time</permissionSets>
     <permissionSets>Request_CTM_and_Employee_Orientation_Meeting_Detail</permissionSets>
     <permissionSets>Request_Employee_Orientation_Meeting_Detail</permissionSets>
+    <permissionSets>Onboarding_Meeting_Request_Detail_Edit</permissionSets>
     <permissionSets>Required_Reporting_Fields</permissionSets>
     <permissionSets>Traction_Complete_Fields_Edit_Access</permissionSets>
     <status>Updated</status>
