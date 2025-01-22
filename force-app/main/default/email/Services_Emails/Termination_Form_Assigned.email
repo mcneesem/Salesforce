@@ -5,6 +5,6 @@ Review Termination Form: {!NSP_Termination_Form__c.Link}
 Termination Approval Request: {!ApprovalRequest.Internal_URL}
 
 CSA Term Date: {!NSP_Termination_Form__c.NSP_Last_Date_Wages_Paid_Through__c}
-Term Reason : {!NSP_Termination_Form__c.NSP_Term_Reason__c}
-SubTerm Reason: {!NSP_Termination_Form__c.NSP_SubTerm_reason__c} 
+Term Reason: {!NSP_Termination_Form__c.NSP_Term_Reason__c}
+SubTerm Reason: {!NSP_Termination_Form__c.NSP_SubTerm_reason__c}
 Comments:  {!ApprovalRequest.Comments}
