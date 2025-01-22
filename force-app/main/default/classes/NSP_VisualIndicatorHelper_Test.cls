@@ -203,17 +203,16 @@
         Assert.areEqual(wrapper[0].assetNationalAccount, NSP_ServiceConstants.VALUE_TRUE, 'Output value should be true');
     }
 
-    // Validate the Service Package in Asset
+    // Validate the Product Line in Asset
     @isTest private static void Test_Service_Package_Value_In_Asset() {
         Account newAccount = [SELECT ID FROM Account LIMIT 1];
-        Asset asset = [SELECT ID, AccountId, NSP_Service_Package__c, RecordTypeId FROM Asset LIMIT 1];
-        
-        asset.NSP_Service_Package__c = 'WS - Bundle Plus';
+        Asset asset = [SELECT ID, AccountId, NSP_Product_Line__c, RecordTypeId FROM Asset LIMIT 1];
+        asset.NSP_Product_Line__c = 'Workforce Synchronization';
         update asset;
         
         // ASSERTS
         Assert.areNotEqual(asset.AccountId, null, 'Account should be linked to Asset');
-        Assert.areEqual(asset.NSP_Service_Package__c, 'WS - Bundle Plus', 'The NSP_Service_Package__c value should starts with WS to pass the test case');
+        Assert.areEqual(asset.NSP_Product_Line__c, 'Workforce Synchronization', 'The NSP_Product_Line__c value should Workforce Synchronization');
         
         Test.startTest();
         List<NSP_VisualIndicatorHelper.VisualIndicatorWrapper> wrapper = NSP_VisualIndicatorHelper.gethisAccount(newAccount.Id);
@@ -221,7 +220,7 @@
         
         // ASSERTS
         Assert.isNotNull(wrapper);
-        Assert.areEqual(wrapper[0].workSyncClientTrue, NSP_ServiceConstants.VALUE_TRUE , 'Output value should starts with WS');
+        Assert.areEqual(wrapper[0].workSyncClientTrue, NSP_ServiceConstants.VALUE_TRUE , 'Output value should Workforce Synchronization');
     }
 
     // Validating the client value in Asset

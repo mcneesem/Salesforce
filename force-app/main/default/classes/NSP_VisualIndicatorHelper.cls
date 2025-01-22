@@ -1,5 +1,5 @@
 public without sharing class NSP_VisualIndicatorHelper {
-    // test w/ NSP_VisualIndicatorHelper_Test (??%)
+    // test w/ NSP_VisualIndicatorHelper_Test (96%)
 
     //
     // returns the account details for
@@ -32,7 +32,7 @@ public without sharing class NSP_VisualIndicatorHelper {
                         SELECT
                             Id , NSP_Paperless__c , NSP_Workforce_Sync__c ,
                             NSP_Client_Retained_Workers_Comp__c , NSP_Pending_Termination__c ,
-                            NSP_Service_Package__c , RecordTypeId , NSP_National_Account__c
+                            NSP_Product_Line__c , RecordTypeId , NSP_National_Account__c
                         FROM Assets
                     ) ,
                     (
@@ -75,8 +75,8 @@ public without sharing class NSP_VisualIndicatorHelper {
                     accWrapper.serviceExceptionPresent = NSP_ServiceConstants.VALUE_TRUE;
                 } 
             }
-            Id woAssetRecordTypeId = Schema.SObjectType.Asset.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.WO_ASSET_RECORDTYPE).getRecordTypeId();
-            
+            Id woAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Asset' , 'WO' );
+            String wsProductLine = 'Workforce Synchronization'; 
             
             for (Asset atleastAsset: assetList) {
                 //To check if any 1 asset is paperless
@@ -86,7 +86,7 @@ public without sharing class NSP_VisualIndicatorHelper {
                 if(atleastAsset.RecordTypeId == woAssetRecordTypeId && atleastAsset.NSP_National_Account__c == NSP_ServiceConstants.VALUE_TRUE) {
                     accWrapper.assetNationalAccount = NSP_ServiceConstants.VALUE_TRUE;
                 }
-                if(atleastAsset.NSP_Service_Package__c != null  && atleastAsset.NSP_Service_Package__c.startswith('WS') ) {
+                if(atleastAsset.RecordTypeId == woAssetRecordTypeId && atleastAsset.NSP_Product_Line__c != null  && atleastAsset.NSP_Product_Line__c == wsProductLine  ) {
                     accWrapper.workSyncClientTrue = NSP_ServiceConstants.VALUE_TRUE;
                 }             
                 if(atleastAsset.NSP_Client_Retained_Workers_Comp__c != null && atleastAsset.NSP_Client_Retained_Workers_Comp__c  == '100% Client' ) {
