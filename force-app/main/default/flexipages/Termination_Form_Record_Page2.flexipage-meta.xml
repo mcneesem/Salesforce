@@ -149,6 +149,16 @@
                 </visibilityRule>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_Revision__c</fieldItem>
+                <identifier>RecordNSP_Revision_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-9e00cc73-999c-4352-8079-070e24854bb5</name>
         <type>Facet</type>
     </flexiPageRegions>
