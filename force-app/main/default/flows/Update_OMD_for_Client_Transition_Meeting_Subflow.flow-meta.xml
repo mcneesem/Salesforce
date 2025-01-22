@@ -253,7 +253,7 @@ This is needed to show Default Selection in data table</description>
             <sortOrder>Asc</sortOrder>
         </sortOptions>
     </collectionProcessors>
-    <description>Added Text Length Validation</description>
+    <description>Added Text Length Validation , removed help text for pay period</description>
     <dynamicChoiceSets>
         <name>pc_BenefitsWaitingPeriod</name>
         <dataType>Picklist</dataType>
@@ -837,7 +837,6 @@ This is needed to show Default Selection in data table</description>
             </defaultValue>
             <fieldText>First Pay Period</fieldText>
             <fieldType>InputField</fieldType>
-            <helpText>&lt;p&gt;Enter up to 100 characters&lt;/p&gt;</helpText>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isDisabled>
                 <elementReference>f_disable_edit</elementReference>
