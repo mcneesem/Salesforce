@@ -46,7 +46,7 @@
         </inputParameters>
         <nameSegment>emailSimple</nameSegment>
     </actionCalls>
-    <apiVersion>63.0</apiVersion>
+    <apiVersion>62.0</apiVersion>
     <decisions>
         <name>Check_For_Work_Email</name>
         <label>Check For Work Email</label>
