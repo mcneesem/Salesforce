@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Separate_Project_Sort__c</fullName>
+    <description>Used in sorting the order products according to priority for Separate Project Creation</description>
+    <externalId>false</externalId>
+    <formula>IF(
+ AND(
+  OrderType__c = &quot;Amendment&quot;,
+  Order.NSP_Transaction_Type__c  = &quot;Amendment/Supplemental&quot;
+ ),
+ NSP_Priority_Amendment__c,
+ NSP_Priority_New_Sales__c 
+)</formula>
+    <label>Separate Project Sort</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackHistory>false</trackHistory>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>
