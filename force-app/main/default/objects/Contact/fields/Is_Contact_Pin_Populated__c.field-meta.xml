@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Is_Contact_Pin_Populated__c</fullName>
+    <externalId>false</externalId>
+    <formula>NOT(ISBLANK(NSP_Contact_Pin__c))</formula>
+    <label>Contact PIN Populated?</label>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

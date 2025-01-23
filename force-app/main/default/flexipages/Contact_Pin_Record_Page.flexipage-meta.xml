@@ -1443,14 +1443,14 @@
                 <visibilityRule>
                     <booleanFilter>1 OR 2</booleanFilter>
                     <criteria>
-                        <leftValue>{!$User.Profile.Name}</leftValue>
+                        <leftValue>{!$Permission.CustomPermission.Admin_Layout_Access}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>Contact Center</rightValue>
+                        <rightValue>true</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!$User.Profile.Name}</leftValue>
-                        <operator>CONTAINS</operator>
-                        <rightValue>System Admin</rightValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Contact Center</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -2837,8 +2837,9 @@
                 <identifier>c_verifyContactPin</identifier>
                 <visibilityRule>
                     <criteria>
-                        <leftValue>{!Record.NSP_Contact_Pin__c}</leftValue>
-                        <operator>NE</operator>
+                        <leftValue>{!Record.Is_Contact_Pin_Populated__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
@@ -2849,8 +2850,9 @@
                 <identifier>c_contactServiceExceptions</identifier>
                 <visibilityRule>
                     <criteria>
-                        <leftValue>{!Record.NSP_Contact_Pin__c}</leftValue>
+                        <leftValue>{!Record.Is_Contact_Pin_Populated__c}</leftValue>
                         <operator>EQUAL</operator>
+                        <rightValue>false</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
