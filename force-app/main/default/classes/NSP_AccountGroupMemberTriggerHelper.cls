@@ -65,40 +65,93 @@ public with sharing class NSP_AccountGroupMemberTriggerHelper {
         }
     }
     
-    /**
-    * Find all the group Name will be update with account if primary is checked
-    * @param mapAccIdGrp of groupId and Account.  
-    * @return void 
-    */
-    private void updatePrimaryAccounts(Map<String,String> mapAccIdGrp){
+    //
+    // Find all the group Name will be update with account if primary is checked
+    // @param mapAccIdGrp of groupId and Account.
+    // @return void
+    //
+    private void updatePrimaryAccounts( Map<String,String> mapAccIdGrp ) {
         List<NSP_Account_Group__c> lstOfAccGrps = new List<NSP_Account_Group__c>();
         List<NSP_Account_Group_Member__c> lstOfAccGrpsMembrs = new List<NSP_Account_Group_Member__c>();
-        Map<Id,Account> mapAccounts = new Map<Id,Account>([SELECT Id,Name from Account WHERE Id IN: mapAccIdGrp.values()]);
-        for(NSP_Account_Group__c accGrp: [Select Id, NSP_Account__c from NSP_Account_Group__c WHERE Id IN: mapAccIdGrp.keyset() AND NSP_Type__c !=: NSP_ServiceConstants.TYPECONTROLLEDGROUP]){
-            if(mapAccIdGrp.containskey(accGrp.Id)){
-                accGrp.NSP_Account__c = mapAccounts?.get(mapAccIdGrp?.get(accGrp.Id))?.Name;
-                lstOfAccGrps.add(accGrp);
+        if ( mapAccIdGrp != null ) {
+            Map<Id,Account> mapAccounts = new Map<Id,Account>([
+                SELECT Id , Name
+                FROM Account
+                WHERE ( Id IN :mapAccIdGrp.values() )
+            ]);
+            lstOfAccGrps = updateAccountGroups(mapAccIdGrp, mapAccounts);
+            lstOfAccGrpsMembrs = updateGroupMembers(mapAccIdGrp);
+        }
+        
+        if (!lstOfAccGrps.isEmpty()) {
+            Database.SaveResult[] results = Database.update( lstOfAccGrps , false );
+            NSP_ErrorLogHandler.logResults(
+                NSP_AccountGroupMemberTriggerHelper.class.getName() ,
+                'updatePrimaryAccounts:NSP_Account_Group__c' ,
+                results
+            );
+        }
+        
+        if (!lstOfAccGrpsMembrs.isEmpty()) {
+            Database.SaveResult[] results = Database.update( lstOfAccGrpsMembrs , false );
+            NSP_ErrorLogHandler.logResults(
+                NSP_AccountGroupMemberTriggerHelper.class.getName() ,
+                'updatePrimaryAccounts:NSP_Account_Group_Member__c' ,
+                results
+            );
+        }
+    }
+    
+    private List<NSP_Account_Group__c> updateAccountGroups(Map<String, String> mapAccIdGrp, Map<Id, Account> mapAccounts) {
+        List<NSP_Account_Group__c> lstOfAccGrps = new List<NSP_Account_Group__c>();
+        
+        if( ( mapAccIdGrp != null ) && ( mapAccounts != null ) ){
+            for ( NSP_Account_Group__c accGrp : [
+                        SELECT Id , NSP_Account__c
+                        FROM NSP_Account_Group__c
+                        WHERE (
+                            ( Id IN :mapAccIdGrp.keyset() )
+                            AND ( NSP_Type__c !=: NSP_ServiceConstants.TYPECONTROLLEDGROUP )
+                        )
+                    ]
+                )
+            {
+                Id accountId = mapAccIdGrp.get(accGrp.Id);
+                
+                if (accountId != null && mapAccounts.containsKey(accountId)) {
+                    Account account = mapAccounts.get(accountId);
+                    if (account != null) {
+                        accGrp.NSP_Account__c = account.Name;
+                        accGrp.Account__c = accountId;
+                        lstOfAccGrps.add(accGrp);
+                    }
+                }
             }
         }
-        //Update the oldRecords to unprimary which is associated to that group
-        for(NSP_Account_Group_Member__c accGrpMem: [SELECT Id, NSP_Primary__c, NSP_Group__r.NSP_Type__c 
-                                                    FROM NSP_Account_Group_Member__c 
-                                                    WHERE NSP_Group__c IN: mapAccIdGrp.keyset() 
-                                                    AND NSP_Member_Account__c 
-                                                    NOT IN: mapAccIdGrp.values() 
-                                                    AND NSP_Primary__c = true 
-                                                    AND NSP_Group__r.NSP_Type__c !=: NSP_ServiceConstants.TYPECONTROLLEDGROUP]){
-            accGrpMem.NSP_Primary__c = false;
-            lstOfAccGrpsMembrs.add(accGrpMem);
-        }
+        return lstOfAccGrps;
+    }
+    
+    private List<NSP_Account_Group_Member__c> updateGroupMembers(Map<String, String> mapAccIdGrp) {
+        List<NSP_Account_Group_Member__c> lstOfAccGrpsMembrs = new List<NSP_Account_Group_Member__c>();
         
-        if(!lstOfAccGrps.isEmpty()){
-            Database.Update(lstOfAccGrps,false);
+        if(mapAccIdGrp != null){
+            for ( NSP_Account_Group_Member__c accGrpMem : [
+                        SELECT Id , NSP_Primary__c , NSP_Group__r.NSP_Type__c
+                        FROM NSP_Account_Group_Member__c
+                        WHERE (
+                            ( NSP_Group__c IN :mapAccIdGrp.keyset() )
+                            AND ( NSP_Member_Account__c NOT IN :mapAccIdGrp.values() )
+                            AND ( NSP_Primary__c = true )
+                            AND ( NSP_Group__r.NSP_Type__c != :NSP_ServiceConstants.TYPECONTROLLEDGROUP )
+                        )
+                    ]
+                )
+            {
+                accGrpMem.NSP_Primary__c = false;
+                lstOfAccGrpsMembrs.add( accGrpMem );
+            }
         }
-        
-        if(!lstOfAccGrpsMembrs.isEmpty()){
-            Database.Update(lstOfAccGrpsMembrs,false);
-        }
+        return lstOfAccGrpsMembrs;
     }
 
     //
@@ -392,26 +445,49 @@ public with sharing class NSP_AccountGroupMemberTriggerHelper {
         return lstOfAccGrpsToUpdate;
     }
 
-    /***********************************************************************
-    * @MethodName : setAccountGroupName
-    * @Description: This method will set Account Group Name 
-    * @param      : Map<String,String> mapAccIdGrp
-    * @Story      : STY-03316
-    * @return     : void                          
-    **************************************************************************/
-    public static List<NSP_Account_Group__c> setAccountGroupName(Map<String,String> mapAccIdGrp){
+    //
+    // @MethodName : setAccountGroupName
+    // @Description: This method will set Account Group Name
+    // @param      : Map<String,String> mapAccIdGrp
+    // @Story      : STY-03316
+    // @return     : void
+    //
+    public static List<NSP_Account_Group__c> setAccountGroupName( Map<String,String> mapAccIdGrp ) {
         List<NSP_Account_Group__c> lstOfAccGrps = new List<NSP_Account_Group__c>();
-
-        List<String> accountFields = new List<String>{'Id','Name'};
-        String query = new NSP_QueryBuilder('Account', accountFields)
-                            .addFilter('Id', mapAccIdGrp.values(), NSP_QueryBuilder.Operator.INCLUDES).build();
-        List<Account> accountList = (List<Account>)Database.query(query);
-        Map<Id, Account> mapAccounts = new Map<Id, Account>(accountList);
-        
-        for(NSP_Account_Group__c accGrp: [Select Id, NSP_Account__c FROM NSP_Account_Group__c WHERE Id IN: mapAccIdGrp.keyset() AND NSP_Type__c !=: NSP_ServiceConstants.TYPECONTROLLEDGROUP]){
-            if(mapAccIdGrp.containskey(accGrp.Id)){
-                accGrp.NSP_Account__c = mapAccounts?.get(mapAccIdGrp?.get(accGrp.Id))?.Name;
-                lstOfAccGrps.add(accGrp);
+        if ( ( mapAccIdGrp != null ) && !mapAccIdGrp.isEmpty() ) {
+            String query = new NSP_QueryBuilder(
+                    'Account' ,
+                    new List<String>{ 'Id' , 'Name' }
+                )
+                .addFilter(
+                    'Id' ,
+                    mapAccIdGrp.values() ,
+                    NSP_QueryBuilder.Operator.INCLUDES
+                )
+                .build();
+            List<Account> accountList = (List<Account>)Database.query( query );
+            Map<Id,Account> mapAccounts = new Map<Id,Account>( accountList );
+            for ( NSP_Account_Group__c accGrp : [
+                        SELECT Id , NSP_Account__c
+                        FROM NSP_Account_Group__c
+                        WHERE (
+                            ( Id IN :mapAccIdGrp.keyset() )
+                            AND ( NSP_Type__c != :NSP_ServiceConstants.TYPECONTROLLEDGROUP )
+                        )
+                    ]
+                )
+            {
+                if ( mapAccIdGrp.containskey( accGrp.Id )
+                    && ( mapAccIdGrp.get( accGrp.Id ) != null )
+                    && ( mapAccounts != null )
+                    && mapAccounts.containskey( mapAccIdGrp.get( accGrp.Id ) )
+                    && ( mapAccounts.get( mapAccIdGrp.get( accGrp.Id ) ) != null )
+                    )
+                {
+                    accGrp.NSP_Account__c = mapAccounts.get( mapAccIdGrp.get( accGrp.Id ) ).Name;
+                    accGrp.Account__c = mapAccIdGrp.get( accGrp.Id );
+                    lstOfAccGrps.add( accGrp );
+                }
             }
         }
         return lstOfAccGrps;
