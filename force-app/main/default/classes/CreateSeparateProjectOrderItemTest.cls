@@ -17,9 +17,6 @@
             WHERE ( Id = '0054x0000056lRZAAY' )
             LIMIT 1
         ];
-        Order_Settings__c ordSettings = new Order_Settings__c();
-        ordSettings.Bypass_Rule_PreventStatusChange__c = true;
-        insert ordSettings;
         Assert.isNotNull( deploymentManagers , 'Null Deployment Manager query results.' );
         Assert.isTrue( ( deploymentManagers.size() > 0 ) , 'No Deployment Manager query results.' );
         Assert.isTrue( ( deploymentManagers.size() == 1 ) , 'Incorrect Deployment Manager query results.' );
