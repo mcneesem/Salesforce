@@ -2,6 +2,7 @@
 <PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
     <hasActivationRequired>false</hasActivationRequired>
     <label>Regional Administrator</label>
+    <permissionSets>Account_Edit_Other_Current_Provider</permissionSets>
     <permissionSets>Checklist_Create_Sold_To_Paid</permissionSets>
     <permissionSets>Opportunity_Closed_Lost_Fields_Edit_Access</permissionSets>
     <status>Updated</status>
