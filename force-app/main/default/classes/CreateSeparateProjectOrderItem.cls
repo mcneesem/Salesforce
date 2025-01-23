@@ -34,7 +34,7 @@ public with sharing class CreateSeparateProjectOrderItem {
             }
         }
         if ( ( oiUpdateList != null )
-            && oiUpdateList.isEmpty()
+            && !oiUpdateList.isEmpty()
             )
         {
             List<Database.SaveResult> results = Database.update( oiUpdateList , false );
