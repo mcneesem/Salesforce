@@ -13,6 +13,7 @@
     <permissionSets>Convert_Leads</permissionSets>
     <permissionSets>Edit_Integrated_Fields</permissionSets>
     <permissionSets>Lead_Create</permissionSets>
+    <permissionSets>Marketing_Fields_Edit_Access</permissionSets>
     <permissionSets>NSP_Billing_View_All</permissionSets>
     <permissionSets>NSP_Finance_Service_Objects_Permission</permissionSets>
     <permissionSets>NSP_Main_Service_Contacts</permissionSets>
