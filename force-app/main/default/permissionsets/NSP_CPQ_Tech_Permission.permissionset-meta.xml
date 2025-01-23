@@ -13509,7 +13509,7 @@
         <editable>true</editable>
         <field>SBQQ__QuoteLine__c.Matching_Product_Code__c</field>
         <readable>true</readable>
-    <fieldPermissions>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>SBQQ__QuoteLine__c.NSP_ActionType__c</field>
