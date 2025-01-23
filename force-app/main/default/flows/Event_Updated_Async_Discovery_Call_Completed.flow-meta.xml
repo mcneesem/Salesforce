@@ -4,8 +4,8 @@
     <assignments>
         <name>Assign_Discovery_Call_Completed_Date</name>
         <label>Assign Discovery Call Completed Date</label>
-        <locationX>176</locationX>
-        <locationY>492</locationY>
+        <locationX>341</locationX>
+        <locationY>600</locationY>
         <assignmentItems>
             <assignToReference>varOpportunity.Discovery_Call_Completed_Date__c</assignToReference>
             <operator>Assign</operator>
@@ -20,7 +20,7 @@
     <assignments>
         <name>Assign_varFaultElement_Get_Opty_Info</name>
         <label>Assign varFaultElement - Get Opty Info</label>
-        <locationX>880</locationX>
+        <locationX>1133</locationX>
         <locationY>384</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
@@ -36,8 +36,8 @@
     <assignments>
         <name>Assign_varFaultElement_Update_Opty</name>
         <label>Assign varFaultElement - Update Opty</label>
-        <locationX>440</locationX>
-        <locationY>708</locationY>
+        <locationX>605</locationX>
+        <locationY>816</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -51,9 +51,39 @@
         </connector>
     </assignments>
     <decisions>
+        <description>Prevent DmlExceptions: HCM Sales Consultants can modify only WX Opportunities.</description>
+        <name>Check_HCM_Rules</name>
+        <label>Check HCM Rules</label>
+        <locationX>209</locationX>
+        <locationY>492</locationY>
+        <defaultConnector>
+            <targetReference>Assign_Discovery_Call_Completed_Date</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>HCM_Not_Allowed</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$UserRole.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>HCM_Sales_Consultant</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>varOpportunity.NSP_PrimaryProduct__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>WX</stringValue>
+                </rightValue>
+            </conditions>
+            <label>HCM Not Allowed</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Related_Opportunity_Found</name>
         <label>Related Opportunity Found?</label>
-        <locationX>440</locationX>
+        <locationX>539</locationX>
         <locationY>384</locationY>
         <defaultConnectorLabel>Opty NOT found</defaultConnectorLabel>
         <rules>
@@ -67,7 +97,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Assign_Discovery_Call_Completed_Date</targetReference>
+                <targetReference>Check_HCM_Rules</targetReference>
             </connector>
             <label>Related Opty Found</label>
         </rules>
@@ -97,7 +127,7 @@
     <recordLookups>
         <name>Get_Opportunity_Info</name>
         <label>Get Opportunity Info</label>
-        <locationX>440</locationX>
+        <locationX>539</locationX>
         <locationY>276</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -118,12 +148,13 @@
         <outputReference>varOpportunity</outputReference>
         <queriedFields>Id</queriedFields>
         <queriedFields>Discovery_Call_Completed_Date__c</queriedFields>
+        <queriedFields>NSP_PrimaryProduct__c</queriedFields>
     </recordLookups>
     <recordUpdates>
         <name>Update_Opportunity</name>
         <label>Update Opportunity</label>
-        <locationX>176</locationX>
-        <locationY>600</locationY>
+        <locationX>341</locationX>
+        <locationY>708</locationY>
         <faultConnector>
             <targetReference>Assign_varFaultElement_Update_Opty</targetReference>
         </faultConnector>
@@ -200,7 +231,7 @@
     <subflows>
         <name>Fault_Handler_Subflow</name>
         <label>Fault Handler Subflow</label>
-        <locationX>880</locationX>
+        <locationX>1133</locationX>
         <locationY>492</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
