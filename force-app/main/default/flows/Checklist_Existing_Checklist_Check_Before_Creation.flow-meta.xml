@@ -672,7 +672,14 @@
             <name>User_chose_Sold_to_Paid_Checklist</name>
             <conditionLogic>or</conditionLogic>
             <conditions>
-                <leftValueReference>Checklist_Available_STPorMMC</leftValueReference>
+                <leftValueReference>CreateSTPOnly</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>SoldToPaid_Checklist_Choice</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>CreateSTPorMMC</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <elementReference>SoldToPaid_Checklist_Choice</elementReference>
@@ -688,7 +695,14 @@
             <name>User_chose_MidMarket_Closing_Checklist</name>
             <conditionLogic>or</conditionLogic>
             <conditions>
-                <leftValueReference>Checklist_Available_STPorMMC</leftValueReference>
+                <leftValueReference>CreateMMCOnly</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>MidMarketClosing_Checklist_Choice</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>CreateSTPorMMC</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <elementReference>MidMarketClosing_Checklist_Choice</elementReference>
@@ -1152,7 +1166,7 @@
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
-            <name>Checklist_Available_STPorMMC_STPOnly</name>
+            <name>CreateSTPOnly</name>
             <choiceReferences>SoldToPaid_Checklist_Choice</choiceReferences>
             <dataType>String</dataType>
             <fieldText>Which type of Checklist do you need to create?</fieldText>
@@ -1192,7 +1206,7 @@
             </visibilityRule>
         </fields>
         <fields>
-            <name>Checklist_Available_STPorMMC_MMOnly</name>
+            <name>CreateMMCOnly</name>
             <choiceReferences>MidMarketClosing_Checklist_Choice</choiceReferences>
             <dataType>String</dataType>
             <fieldText>Which type of Checklist do you need to create?</fieldText>
@@ -1225,7 +1239,7 @@
             </visibilityRule>
         </fields>
         <fields>
-            <name>Checklist_Available_STPorMMC</name>
+            <name>CreateSTPorMMC</name>
             <choiceReferences>SoldToPaid_Checklist_Choice</choiceReferences>
             <choiceReferences>MidMarketClosing_Checklist_Choice</choiceReferences>
             <dataType>String</dataType>
