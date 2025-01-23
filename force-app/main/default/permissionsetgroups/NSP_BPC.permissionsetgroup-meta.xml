@@ -16,6 +16,7 @@
     <permissionSets>NSP_Finance_Service_Objects_Permission</permissionSets>
     <permissionSets>NSP_Main_Service_Contacts</permissionSets>
     <permissionSets>NSP_Order_ViewAll</permissionSets>
+    <permissionSets>Opportunity_Closed_Lost_Fields_Edit_Access</permissionSets>
     <permissionSets>Opportunity_Spits_Elevated_Read_Edit</permissionSets>
     <permissionSets>Partner_Access</permissionSets>
     <permissionSets>Rules_Of_Engagement_Enabled</permissionSets>
