@@ -1,8 +1,11 @@
-@isTest(seeAllData = false)
-public with sharing class NSP_RetirementServiceActivationBatchTest{
-    @testSetup
-    static void setupTestData(){
-		NSP_InvoiceTriggerHandler.TriggerDisabled = true;
+@IsTest
+private class NSP_RetirementServiceActivationBatchTest {
+    @TestSetup
+    private static void setupTestData() {
+        Order_Settings__c settings = Order_Settings__c.getOrgDefaults();
+        settings.Bypass_Rule_PreventStatusChange__c = true;
+        upsert settings;
+        NSP_InvoiceTriggerHandler.TriggerDisabled = true;
         NSP_AssetTriggerHandler.TriggerDisabled = true;
         NSP_AccountTriggerHandler.TriggerDisabled = true;
         NSP_OrderItemTriggerHandler.TriggerDisabled = true;
@@ -10,7 +13,7 @@ public with sharing class NSP_RetirementServiceActivationBatchTest{
         NSP_OpportunityTriggerHandler.TriggerDisabled = true;
         NSP_QuoteTriggerHandler.TriggerDisabled = true;
         Account objaccount = NSP_TestHelper.createAccount(true);
-        Contact objcontact = NSP_TestHelper.createContact(objaccount.id, true);
+        NSP_TestHelper.createContact(objaccount.id, true);
         Product2 objproduct = NSP_TestHelper.createProduct('Test Product', false);
         objproduct.SBQQ__ChargeType__c = 'Recurring';
         objproduct.SBQQ__BillingType__c = 'Arrears';
@@ -59,9 +62,10 @@ public with sharing class NSP_RetirementServiceActivationBatchTest{
 
 
         List<blng__GLRule__c> glRuleList = new List<blng__GLRule__c>();
-        blng__GLRule__c glRule1 = new blng__GLRule__c(blng__Active__c = true, blng__Notes__c = 'Created to record: Payments', CurrencyIsoCode = 'USD', Name = 'BPS Cash (Invoice-AR)');
-        blng__GLRule__c glRule2 = new blng__GLRule__c(blng__Active__c = true, blng__Notes__c = 'Created to record: Payments', CurrencyIsoCode = 'USD', Name = 'RET Cash (Invoice-AR)');
-        blng__GLRule__c glRule3 = new blng__GLRule__c(blng__Active__c = true, blng__Notes__c = 'Created to record: Payments', CurrencyIsoCode = 'USD', Name = 'Recruiting Cash (Invoice-AR)');
+        String note = 'Created to record: Payments';
+        blng__GLRule__c glRule1 = new blng__GLRule__c(blng__Active__c = true, blng__Notes__c = note, CurrencyIsoCode = 'USD', Name = 'BPS Cash (Invoice-AR)');
+        blng__GLRule__c glRule2 = new blng__GLRule__c(blng__Active__c = true, blng__Notes__c = note, CurrencyIsoCode = 'USD', Name = 'RET Cash (Invoice-AR)');
+        blng__GLRule__c glRule3 = new blng__GLRule__c(blng__Active__c = true, blng__Notes__c = note, CurrencyIsoCode = 'USD', Name = 'Recruiting Cash (Invoice-AR)');
         glRuleList.add(glRule1);
         glRuleList.add(glRule2);
         glRuleList.add(glRule3);
@@ -83,7 +87,6 @@ public with sharing class NSP_RetirementServiceActivationBatchTest{
                             FROM Order
                             WHERE SBQQ__Quote__c = :objQuote.Id];
         ords[0].blng__BillingDayOfMonth__c = '10';
-        ords[0].Status = 'Reviewed';
         update ords;
         List<OrderItem> orderProductList = new List<OrderItem>();
         OrderItem orderProductRecord = new OrderItem();
@@ -130,11 +133,11 @@ public with sharing class NSP_RetirementServiceActivationBatchTest{
         assetRecord.NSP_Price_Level__c = 'WO';
         insert assetRecord;
 
-        Id planWORecordTypeId = Schema.sObjectType.NSP_Plan__c.getRecordTypeInfosByName().get('WO').getRecordTypeId();
+        Id planWORecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'NSP_Plan__c' , 'WO' );
         NSP_Plan__c planRecord = new NSP_Plan__c();
         planRecord.RecordTypeId = planWORecordTypeId;
         insert planRecord;
-        Id subPlanWORecordTypeId = Schema.sObjectType.NSP_Plan_SubPlan__c.getRecordTypeInfosByName().get('WO').getRecordTypeId();
+        Id subPlanWORecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'NSP_Plan_SubPlan__c' , 'WO' );
         NSP_Plan_SubPlan__c subplan = new NSP_Plan_SubPlan__c();
         subplan.NSP_Parent_Plan_ID__c = planRecord.Id;
         subplan.NSP_Plan_Type__c = '401K';
@@ -142,7 +145,7 @@ public with sharing class NSP_RetirementServiceActivationBatchTest{
         subplan.NSP_Subplan_Name__c = 'Test 1';
         subplan.RecordTypeId = subPlanWORecordTypeId;
         insert subplan;
-        Id clientSubPlanWORecordTypeId = Schema.sObjectType.NSP_Client_Sub_Plan_History__c.getRecordTypeInfosByName().get('WO').getRecordTypeId();
+        Id clientSubPlanWORecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'NSP_Client_Sub_Plan_History__c' , 'WO' );
         NSP_Client_Sub_Plan_History__c clientSubPlanHistRec = new NSP_Client_Sub_Plan_History__c();
         clientSubPlanHistRec.NSP_Asset__c = assetRecord.Id;
         clientSubPlanHistRec.NSP_End_Date__c = System.today();
@@ -154,7 +157,7 @@ public with sharing class NSP_RetirementServiceActivationBatchTest{
     }
 
     @IsTest
-    static void testBatchMethod(){
+    private static void testBatchMethod() {
 
         Test.startTest();
         NSP_Client_Sub_Plan_History__c cilentSubPlanRecord = [SELECT Id, NSP_Asset__c, NSP_Asset__r.NSP_OrderProduct__c
@@ -171,7 +174,7 @@ public with sharing class NSP_RetirementServiceActivationBatchTest{
     }
 
     @IsTest
-    static void testScheduleBatchMethod(){
+    private static void testScheduleBatchMethod() {
 
         Test.startTest();
         String cronExpression = '0 0 2 * * ?';
