@@ -1,10 +1,73 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>53.0</apiVersion>
+    <assignments>
+        <name>Set_Fault_Element_Select_Related_Opportunity</name>
+        <label>Set Fault Element: Select_Related_Opportunity</label>
+        <locationX>974</locationX>
+        <locationY>431</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Select_Related_Opportunity</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Update_Related_Opportunity</name>
+        <label>Set Fault Element: Update_Related_Opportunity</label>
+        <locationX>446</locationX>
+        <locationY>755</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Update_Related_Opportunity</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Fault_Handler</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <description>Prevent DmlExceptions: HCM Sales Consultants can modify only WX Opportunities.</description>
+        <name>Check_HCM_Rules</name>
+        <label>Check HCM Rules</label>
+        <locationX>50</locationX>
+        <locationY>539</locationY>
+        <defaultConnector>
+            <targetReference>Update_Related_Opportunity</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>HCM_Not_Allowed</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$UserRole.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>HCM_Sales_Consultant</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Select_Related_Opportunity.NSP_PrimaryProduct__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>WX</stringValue>
+                </rightValue>
+            </conditions>
+            <label>HCM Not Allowed</label>
+        </rules>
+    </decisions>
     <decisions>
         <name>Check_Related_Opportunity</name>
         <label>Check Related Opportunity</label>
-        <locationX>314</locationX>
+        <locationX>380</locationX>
         <locationY>431</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -12,13 +75,13 @@
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>Select_Related_Opportunity</leftValueReference>
-                <operator>IsNull</operator>
+                <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>update_discovery_completed_checkbox_on_Opportunity</targetReference>
+                <targetReference>Check_HCM_Rules</targetReference>
             </connector>
             <label>Found Opportunity</label>
         </rules>
@@ -49,15 +112,14 @@
     <recordLookups>
         <name>Select_Related_Opportunity</name>
         <label>Select Related Opportunity</label>
-        <locationX>314</locationX>
+        <locationX>380</locationX>
         <locationY>323</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_Related_Opportunity</targetReference>
         </connector>
         <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Fault_Handler</targetReference>
+            <targetReference>Set_Fault_Element_Select_Related_Opportunity</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -78,16 +140,17 @@
         <object>Opportunity</object>
         <queriedFields>Id</queriedFields>
         <queriedFields>Discovery_Completed__c</queriedFields>
+        <queriedFields>NSP_PrimaryProduct__c</queriedFields>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordUpdates>
         <description>once discovery call event is completed, mark discovery completed checkbox true</description>
-        <name>update_discovery_completed_checkbox_on_Opportunity</name>
-        <label>update discovery completed checkbox on Opportunity</label>
-        <locationX>50</locationX>
-        <locationY>539</locationY>
+        <name>Update_Related_Opportunity</name>
+        <label>Update Related Opportunity</label>
+        <locationX>182</locationX>
+        <locationY>647</locationY>
         <faultConnector>
-            <targetReference>Fault_Handler</targetReference>
+            <targetReference>Set_Fault_Element_Update_Related_Opportunity</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -106,7 +169,7 @@
         <object>Opportunity</object>
     </recordUpdates>
     <start>
-        <locationX>188</locationX>
+        <locationX>254</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Select_Related_Opportunity</targetReference>
@@ -148,20 +211,36 @@
     <subflows>
         <name>Fault_Handler</name>
         <label>Fault Handler</label>
-        <locationX>314</locationX>
-        <locationY>647</locationY>
+        <locationX>446</locationX>
+        <locationY>863</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
+        <inputAssignments>
+            <name>faultElement</name>
+            <value>
+                <elementReference>varFaultElement</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultFlow</name>
+            <value>
+                <stringValue>NSP_Update_Discovery_Call_Status_on_Opportunity</stringValue>
+            </value>
+        </inputAssignments>
         <inputAssignments>
             <name>faultMessage</name>
             <value>
                 <elementReference>$Flow.FaultMessage</elementReference>
             </value>
         </inputAssignments>
-        <inputAssignments>
-            <name>triggeringFlow</name>
-            <value>
-                <stringValue>NSP_Update_Discovery_Call_Status_on_Opportunity</stringValue>
-            </value>
-        </inputAssignments>
     </subflows>
+    <variables>
+        <name>varFaultElement</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue></stringValue>
+        </value>
+    </variables>
 </Flow>
