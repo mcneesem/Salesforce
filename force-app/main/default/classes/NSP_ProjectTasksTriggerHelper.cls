@@ -1351,7 +1351,6 @@ public class NSP_ProjectTasksTriggerHelper {
             Map<Id,NSP_Termination_Form__c> projectTaskTermFormMap = new Map<Id,NSP_Termination_Form__c>();
             Map<Id,Id> projectMap = new Map<Id,Id>();
             Map<Id,pse__Project_Task__c> projectTaskMap = new Map<Id,pse__Project_Task__c>();
-            //Revision
             if (!mapOfProjectTaskAndProject.isEmpty()) {
                 for ( NSP_Termination_Form__c termForm : [
                             SELECT
@@ -1360,8 +1359,8 @@ public class NSP_ProjectTasksTriggerHelper {
                                 CreatedDate ,
                                 NSP_Last_Date_Wages_Paid_Through__c ,
                                 NSP_Term_Reason__c ,
-                                NSP_SubTerm_reason__c,
-                    			NSP_Revision__c
+                                NSP_SubTerm_reason__c ,
+                                NSP_Revision__c
                             FROM NSP_Termination_Form__c
                             WHERE ( NSP_Project_Task__c IN :mapOfProjectTaskAndProject.keySet() )
                             ORDER BY CreatedDate DESC
@@ -1505,12 +1504,12 @@ public class NSP_ProjectTasksTriggerHelper {
         String mailBody = null;
         String accName = accountName+' | '+accountAIMS;
         String customUrl = URL.getOrgDomainURL().toExternalForm()+ '/'+accountId;
-        //Revision
-        String prefix = (termForm != null &&  termForm.NSP_Revision__c == 'Yes') 
-                ? 'REVISION WO Client ' 
-                : 'WO Client ';
-		subjectString = prefix + accName + ' has been approved for termination';
-		mailBody = prefix + '<a href="' + customUrl + '">' + accName + '</a>';
+        String prefix = 'WO Client ';
+        if ( ( termForm != null ) && ( termForm.NSP_Revision__c == 'Yes' ) ) {
+            prefix = 'REVISION WO Client ';
+        }
+        subjectString = prefix + accName + ' has been approved for termination';
+        mailBody = prefix + NSP_ProjectTasksTriggerHelper.buildAnchorElement( customUrl , accName );
         String termFormDetails = '';
         if (termForm != null){  
             if ( termForm.NSP_Last_Date_Wages_Paid_Through__c != null ) {
