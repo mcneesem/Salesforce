@@ -137,7 +137,6 @@ private class NSP_ClientSubPlanHistoryBatchTest {
         batchSch.execute(null);
         test.stopTest();
         Asset updatedAssetRec = [SELECT Id, Status, NSP_Termination_Date__c FROM Asset WHERE RecordTypeId =: RETWOASSETRECORDTYPE LIMIT 1];
-        System.assertNotEquals(NSP_ServiceConstants.TERMINATED, updatedAssetRec.Status);
         System.assertEquals( 'Active', updatedAssetRec.Status);
         System.assertEquals(null, updatedAssetRec.NSP_Termination_Date__c);
 
