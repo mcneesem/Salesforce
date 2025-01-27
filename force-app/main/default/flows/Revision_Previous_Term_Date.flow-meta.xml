@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>63.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>RevisionUpdate</name>
+        <label>RevisionUpdate</label>
+        <locationX>138</locationX>
+        <locationY>719</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Previous_Term_Date__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_First.NSP_Last_Date_Wages_Paid_Through__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Get_First</targetReference>
+        </connector>
+    </assignments>
+    <collectionProcessors>
+        <name>Get_Most_Recent</name>
+        <elementSubtype>SortCollectionProcessor</elementSubtype>
+        <label>Get Most Recent</label>
+        <locationX>50</locationX>
+        <locationY>503</locationY>
+        <collectionProcessorType>SortCollectionProcessor</collectionProcessorType>
+        <collectionReference>Get_existing_term_forms</collectionReference>
+        <connector>
+            <targetReference>Get_First</targetReference>
+        </connector>
+        <sortOptions>
+            <doesPutEmptyStringAndNullFirst>false</doesPutEmptyStringAndNullFirst>
+            <sortField>CreatedDate</sortField>
+            <sortOrder>Desc</sortOrder>
+        </sortOptions>
+    </collectionProcessors>
+    <decisions>
+        <name>New_Termform_is_created</name>
+        <label>New Termform is created</label>
+        <locationX>182</locationX>
+        <locationY>395</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>TermFormIsNotNull</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_existing_term_forms</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Most_Recent</targetReference>
+            </connector>
+            <label>TermFormIsNotNull</label>
+        </rules>
+    </decisions>
+    <environments>Default</environments>
+    <interviewLabel>Revision Previous Term Date {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Revision Previous Term Date</label>
+    <loops>
+        <name>Get_First</name>
+        <label>Get First</label>
+        <locationX>50</locationX>
+        <locationY>611</locationY>
+        <collectionReference>Get_existing_term_forms</collectionReference>
+        <iterationOrder>Desc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>RevisionUpdate</targetReference>
+        </nextValueConnector>
+    </loops>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>Get_existing_term_forms</name>
+        <label>Get existing term forms</label>
+        <locationX>182</locationX>
+        <locationY>287</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>New_Termform_is_created</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>NSP_Project_Task__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.NSP_Project_Task__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>NSP_Status__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Term Team Approved</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>NSP_Termination_Form__c</object>
+        <sortField>CreatedDate</sortField>
+        <sortOrder>Desc</sortOrder>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <start>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Get_existing_term_forms</targetReference>
+        </connector>
+        <filterFormula>AND(
+NOT(ISBLANK({!$Record.NSP_Project_Task__c})),
+ISPICKVAL({!$Record.NSP_Revision__c},&quot;Yes&quot;)
+)</filterFormula>
+        <object>NSP_Termination_Form__c</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Draft</status>
+</Flow>
