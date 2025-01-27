@@ -96,18 +96,11 @@ public with sharing class NSP_TaskTriggerHelper {
             if(oTask.RecordTypeId == orientationMeetingReqRecTypeId){
                 orientationMeetingRequestTaskList.add(oTask);
             }
-        } 
-        
-        if(!accountIds.isEmpty() || !lstRefferalTask.isEmpty()){
-            assignReferralTaskOwner(lstRefferalTask,accountIds);
         }
-        updateActivitySales(taskNewMap.values(),taskOldMap);
-        tasksFieldsToUpdate(taskOldMap, taskNewMap.values());
-
-        //Added as part of DF-04782
-        if(!orientationMeetingRequestTaskList.isEmpty()){
-            showMessageWhenTaskIsUpdated(orientationMeetingRequestTaskList);
-        }
+        this.handleAssignReferralTaskOwner( lstRefferalTask , accountIds );
+        this.updateActivitySales( taskNewMap.values() , taskOldMap );
+        this.tasksFieldsToUpdate( taskOldMap , taskNewMap.values() );
+        this.handleShowMessageWhenTaskIsUpdated( orientationMeetingRequestTaskList );
     }
 
     //
@@ -309,14 +302,24 @@ public void updateActivitySales(List<Task> newList,Map<Id,Task> OldTaskMap){
             }
         }
     }
-     
-     /**
-    * @MethodName: assignReferralTaskOwner
-    * @Description: Assign Referral Task Owner based on Product of Interest Added as Part of STY-00624
-    * @param : List<Task> lstRefferalTask
-    * @param : Set<Id> accountIds
-    * @return void                          
-    */ 
+
+    // helper method to defeat sonar cognitive complexity...
+    private void handleAssignReferralTaskOwner( List<Task> records , Set<Id> accountIds ) {
+        if ( ( ( accountIds != null ) && !accountIds.isEmpty() )
+            || ( ( records != null ) && !records.isEmpty() )
+            )
+        {
+            assignReferralTaskOwner( records , accountIds );
+        }
+    }
+
+    //
+    // @MethodName: assignReferralTaskOwner
+    // @Description: Assign Referral Task Owner based on Product of Interest Added as Part of STY-00624
+    // @param : List<Task> lstRefferalTask
+    // @param : Set<Id> accountIds
+    // @return void
+    //
     public void assignReferralTaskOwner(List<Task> lstRefferalTask, Set<Id> accountIds){
         
         Map<Id,Account> mapAccounts = new Map<Id,Account>();
@@ -550,7 +553,19 @@ public void updateActivitySales(List<Task> newList,Map<Id,Task> OldTaskMap){
         return relatedRecordDetailsMap;
     }
 
-    // 
+    // helper method to defeat sonar cognitive complexity...
+    private void handleShowMessageWhenTaskIsUpdated( List<Task> records ) {
+        // DF-04782
+        if ( ( records != null )
+            && !records.isEmpty()
+            && Onboarding_Meeting_Detail_Settings__c.getInstance( UserInfo.getUserId() ).Restrict_Users_Edit_Orientation_Task__c
+            )
+        {
+            showMessageWhenTaskIsUpdated( records );
+        }
+    }
+
+    //
     // MethodName: showMessageWhenTaskIsUpdated
     // Description : This method will show error message when task is updated by non orientation meeting request queue users
     // Params:       List < Task > orientationMeetingRequestTaskList
