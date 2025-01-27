@@ -1359,7 +1359,8 @@ public class NSP_ProjectTasksTriggerHelper {
                                 CreatedDate ,
                                 NSP_Last_Date_Wages_Paid_Through__c ,
                                 NSP_Term_Reason__c ,
-                                NSP_SubTerm_reason__c
+                                NSP_SubTerm_reason__c ,
+                                NSP_Revision__c
                             FROM NSP_Termination_Form__c
                             WHERE ( NSP_Project_Task__c IN :mapOfProjectTaskAndProject.keySet() )
                             ORDER BY CreatedDate DESC
@@ -1503,8 +1504,12 @@ public class NSP_ProjectTasksTriggerHelper {
         String mailBody = null;
         String accName = accountName+' | '+accountAIMS;
         String customUrl = URL.getOrgDomainURL().toExternalForm()+ '/'+accountId;
-        subjectString = 'WO Client ' + accName + ' has been approved for termination';
-        mailBody = 'WO Client ' + NSP_ProjectTasksTriggerHelper.buildAnchorElement( customUrl , accName );
+        String prefix = 'WO Client ';
+        if ( ( termForm != null ) && ( termForm.NSP_Revision__c == 'Yes' ) ) {
+            prefix = 'REVISION WO Client ';
+        }
+        subjectString = prefix + accName + ' has been approved for termination';
+        mailBody = prefix + NSP_ProjectTasksTriggerHelper.buildAnchorElement( customUrl , accName );
         String termFormDetails = '';
         if (termForm != null){  
             if ( termForm.NSP_Last_Date_Wages_Paid_Through__c != null ) {
