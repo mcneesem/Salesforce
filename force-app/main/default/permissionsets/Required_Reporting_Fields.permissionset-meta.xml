@@ -48,6 +48,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Account.NSP_Client_have_the_Sedgwick_OSHA_300__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Account.NSP_ICP_Percent__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -69,6 +74,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Account.NSP_Sales_Office__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.NSP_usng_third_pary_timekeeping_system__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
