@@ -55,10 +55,11 @@ public with sharing class OnboardingMeetingDetailHistory {
    private static string parseStringFromListOfValues(Onboarding_Meeting_Detail__History history, Schema.DescribeFieldResult fieldResult) {
         String returnValue = '';
         if ( fieldResult != null ) {
-            String oldValue = null;
-            String newValue = null;
             String fieldType = String.valueOf( fieldResult.getType() );
             if ( history != null ) {
+                String oldValue = String.valueOf( history.OldValue );
+                String newValue = String.valueOf( history.NewValue );
+
                 if ( fieldType == 'DOUBLE' ) {
                     oldValue = formatDoubleValue( (Double)(history.OldValue) );
                     newValue = formatDoubleValue( (Double)(history.NewValue) );
@@ -66,13 +67,14 @@ public with sharing class OnboardingMeetingDetailHistory {
                     oldValue = formatDateValue( (DateTime)(history.OldValue) );
                     newValue = formatDateValue( (DateTime)(history.NewValue) );
                 }
-            }
+            
             String fieldLabel = fieldResult.getLabel();
             if ( fieldType == 'TEXTAREA' ) {
                 returnValue = formatTextareaValue(fieldLabel);
             } else {
                 returnValue = '<br/>' + fieldLabel + CHANGED_FROM + OLD_VALUE + oldValue + ' to ' + NEW_VALUE + newValue;
             }
+        }
         }
         return returnValue;
     }
