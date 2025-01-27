@@ -54,7 +54,7 @@
             </value>
         </inputParameters>
         <nameSegment>emailSimple</nameSegment>
-        <offset>0</offset>
+        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <name>OnboardingMeetingDetailHistory</name>
@@ -77,11 +77,10 @@
             </value>
         </inputParameters>
         <nameSegment>OnboardingMeetingDetailHistory</nameSegment>
-        <offset>0</offset>
         <storeOutputAutomatically>true</storeOutputAutomatically>
+        <versionSegment>1</versionSegment>
     </actionCalls>
     <apiVersion>62.0</apiVersion>
-    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
         <name>Apex_Response_OMD_History_String</name>
         <label>Apex Response : OMD History String</label>
@@ -110,6 +109,10 @@
                 <stringValue>Get_Onboarding_Detail_History</stringValue>
             </value>
         </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler</targetReference>
+        </connector>
     </assignments>
     <assignments>
         <name>Set_Fault_Element_Get_Queue</name>
@@ -123,6 +126,10 @@
                 <stringValue>Get_Queue</stringValue>
             </value>
         </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler</targetReference>
+        </connector>
     </assignments>
     <assignments>
         <name>Set_Fault_Element_Notify_Orientation_Planner</name>
@@ -152,6 +159,10 @@
                 <stringValue>OnboardingMeetingDetailHistory</stringValue>
             </value>
         </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler</targetReference>
+        </connector>
     </assignments>
     <decisions>
         <name>History_Exists</name>
