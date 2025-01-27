@@ -1,19 +1,18 @@
-/**
- * Represents test class for lead trigger helper
- */
+@IsTest
+private class NSP_LeadTriggerHelperTest {
+    private static final String LEADCONVERTRECORD_EMAIL ='Allstate@Allstate.com';
+    private static final String LEADSTATUS ='Nurturing'; // Added as part of code scan fix
+    private static final String INTEREST = 'Payroll & Human Capital Management(Workforce Acceleration)';
+    private static final String TMP_EMAIL = 'tmp@tmp123.com';
 
-@isTest(SeeAllData=false)
-public class NSP_LeadTriggerHelperTest {
-    public static final String LEADCONVERTRECORD_EMAIL ='Allstate@Allstate.com';
-    public static final String LEADSTATUS ='Nurturing'; // Added as part of code scan fix
     /**
      * Does test data setup
      * @param N/A.
      * @return void
      */
     
-    @testSetup
-    static void testData() {
+    @TestSetup
+    private static void testData() {
         
         Lead_Trigger_Settings__c settings1 = Lead_Trigger_Settings__c.getOrgDefaults();
         settings1.AllowStatusChangedToWorking__c = True;
@@ -25,8 +24,9 @@ public class NSP_LeadTriggerHelperTest {
         
         //Create custom setting record for lead zip to city Mapping
         NSP_Zip_To_City_Mapping__c zipToCityCustomSetting = new NSP_Zip_To_City_Mapping__c();
-        zipToCityCustomSetting.NSP_City__c = 'New York';
-        zipToCityCustomSetting.NSP_Location_Name__c = 'New York';
+        String newyork = 'New York';
+        zipToCityCustomSetting.NSP_City__c = newyork;
+        zipToCityCustomSetting.NSP_Location_Name__c = newyork;
         zipToCityCustomSetting.NSP_State__c = 'NY';
         zipToCityCustomSetting.NSP_Zip__c = '10001';
         
@@ -36,7 +36,7 @@ public class NSP_LeadTriggerHelperTest {
         //Create Office records
         NSP_Office__c officeObj =  new NSP_Office__c();
         officeObj.NSP_Last_Index_Used__c = 0;
-        officeObj.Name ='New York';
+        officeObj.Name = newyork;
         insert officeObj;
         
         // select the oldest active User with a 'System Administrator' Profile...
@@ -88,11 +88,11 @@ public class NSP_LeadTriggerHelperTest {
         insert contactObject;
         
         //AccountContactRelation  creation
-        AccountContactRelation AccountContactRelationObject = new AccountContactRelation();
-        AccountContactRelationObject.accountid= accoutObject.Id;
-        AccountContactRelationObject.ContactId = contactObject.Id;
-        AccountContactRelationObject.NSP_Is_Primary__c = true;
-        insert AccountContactRelationObject;
+        AccountContactRelation accountContactRelationObject = new AccountContactRelation();
+        accountContactRelationObject.accountid= accoutObject.Id;
+        accountContactRelationObject.ContactId = contactObject.Id;
+        accountContactRelationObject.NSP_Is_Primary__c = true;
+        insert accountContactRelationObject;
         
         //List to store Lead objects
         List<Lead> leadList = new List<Lead>();
@@ -126,12 +126,12 @@ public class NSP_LeadTriggerHelperTest {
         leadObject3.NSP_Lead_Stage__c  =null;
         leadObject.DNB_connect_DUNS_Number__c  = '743243789';
         leadList.add(leadObject3);
-        
+
         //Lead Creation
         Lead leadObject1 = new Lead();
         leadObject1.firstname='TestLead';
         leadObject1.lastname='Company';
-        leadObject1.NSP_Product_Interest__c='Payroll & Human Capital Management(Workforce Acceleration)';
+        leadObject1.NSP_Product_Interest__c = INTEREST;
         leadObject1.NumberOfEmployees =160;
         leadObject1.Company = 'Allstate123';
         leadObject1.NSP_Referred_By_COI__c = contactObject.Id;
@@ -157,8 +157,7 @@ public class NSP_LeadTriggerHelperTest {
         Lead leadObject2 = new Lead();
         leadObject2.firstname='HelloTest';
         leadObject2.lastname='Employee';
-        leadObject2.NSP_Product_Interest__c='Payroll & Human Capital Management(Workforce Acceleration)';
-        //leadObject2.NumberOfEmployees =140;
+        leadObject2.NSP_Product_Interest__c = INTEREST;
         leadObject2.Company = 'tmp';
         leadObject2.Email = 'tmp@tmp.com';
         leadObject2.PostalCode = '10001';
@@ -173,7 +172,7 @@ public class NSP_LeadTriggerHelperTest {
         Lead leadObject4 = new Lead();
         leadObject4.firstname='TestLead1123';
         leadObject4.lastname='Child';
-        leadObject4.NSP_Product_Interest__c='Payroll & Human Capital Management(Workforce Acceleration)';
+        leadObject4.NSP_Product_Interest__c = INTEREST;
         leadObject4.NumberOfEmployees =160;
         leadObject4.Company = 'ABC';
         leadObject4.NSP_Referred_By_COI__c = contactObject.Id;
@@ -185,7 +184,7 @@ public class NSP_LeadTriggerHelperTest {
         Lead leadObject5 = new Lead();
         leadObject5.firstname='TestLead113';
         leadObject5.lastname='Acc';
-        leadObject5.NSP_Product_Interest__c='Payroll & Human Capital Management(Workforce Acceleration)';
+        leadObject5.NSP_Product_Interest__c = INTEREST;
         leadObject5.NumberOfEmployees =160;
         leadObject5.Company = 'Allstate123';
         leadObject5.NSP_Referred_By_COI__c = contactObject.Id;
@@ -198,7 +197,7 @@ public class NSP_LeadTriggerHelperTest {
         Lead leadObject6 = new Lead();
         leadObject6.firstname='TestLead1134';
         leadObject6.lastname='Acc';
-        leadObject6.NSP_Product_Interest__c='Payroll & Human Capital Management(Workforce Acceleration)';
+        leadObject6.NSP_Product_Interest__c = INTEREST;
         leadObject6.NumberOfEmployees =160;
         leadObject6.Company = 'Allstate123';
         leadObject6.NSP_Referred_By_COI__c = contactObject.Id;
@@ -217,15 +216,14 @@ public class NSP_LeadTriggerHelperTest {
      * @param N/A.
      * @return void
      */
-    @isTest
-    static void checkLeadStage() {
+    @IsTest
+    private static void checkLeadStage() {
         //Querying to get get lead with last name as
         List<Lead>  leadList = [SELECT id,nsp_fire_score__c FROM lead WHERE lastname = 'lead'];
         //Setting the fire score to greater than 80
         leadList[0].nsp_fire_score__c = 82;
         leadList[0].PostalCode = '769767';
         leadList[0].Lead_Owner_Auto_Assignment__c = false;
-        //leadList[0].Company = 'ALLSTATE';
         leadList[0].NumberOfEmployees = 120;
         Test.startTest();
         //updating the lead record
@@ -236,8 +234,8 @@ public class NSP_LeadTriggerHelperTest {
         
     }
     
-    @isTest
-    public static void convertLeadTest(){
+    @IsTest
+    private static void convertLeadTest() {
         NSP_AccountTriggerHandler.TriggerDisabled = true;
         Lead leadRecord = [SELECT Id, FirstName,OwnerId,NSP_Reason__c,Status, LastName, Email FROM Lead WHERE Email=:LEADCONVERTRECORD_EMAIL LIMIT 1];
         leadRecord.OwnerId=UserInfo.getUserId();
@@ -266,8 +264,8 @@ public class NSP_LeadTriggerHelperTest {
         Test.stopTest();
     }
     
-    @isTest
-    public static void createTasksTest(){
+    @IsTest
+    private static void createTasksTest() {
         Test.startTest();
         Lead leadRecord = [SELECT Id, FirstName,OwnerId,LastName, Status, NSP_Reason__c FROM Lead WHERE LastName='Employee' LIMIT 1];
         leadRecord.OwnerId=UserInfo.getUserId();
@@ -286,8 +284,8 @@ public class NSP_LeadTriggerHelperTest {
      * @Created date: 04/29/2022.
      * @return void
      *     */
-    @isTest
-    public static void dunsCheckBeforeUpdateTest(){
+    @IsTest
+    private static void dunsCheckBeforeUpdateTest() {
         Lead getLead = [SELECT Id, Company,NSP_DC_SetDate__c, NSP_Product_Interest__c,NumberOfEmployees,PostalCode, NSP_DC_SetTime__c,NSP_Assign_Lead__c FROM Lead 
                         WHERE firstName = 'TestLead113'];
         getLead.DNB_connect_DUNS_Number__c = '';
@@ -301,8 +299,8 @@ public class NSP_LeadTriggerHelperTest {
      * @Created date: 04/29/2022.
      * @return void
      *     */
-    @isTest
-    public static void dunsCheckBeforeUpdateMidMarketTest(){
+    @IsTest
+    private static void dunsCheckBeforeUpdateMidMarketTest() {
         Lead getLead = [SELECT Id, Company,NSP_DC_SetDate__c, NSP_Product_Interest__c,NumberOfEmployees,PostalCode, NSP_DC_SetTime__c,NSP_Assign_Lead__c FROM Lead 
                         WHERE firstName = 'TestLead113'];
         getLead.DNB_connect_DUNS_Number__c = '';
@@ -317,8 +315,8 @@ public class NSP_LeadTriggerHelperTest {
      * @Created date: 04/29/2022.
      * @return void
      *     */
-    @isTest
-    public static void dunsCheckBeforeUpdateZipCodeTest(){
+    @IsTest
+    private static void dunsCheckBeforeUpdateZipCodeTest() {
         Lead getLead = [SELECT Id, Company,NSP_DC_SetDate__c, NSP_Product_Interest__c,NumberOfEmployees,PostalCode, NSP_DC_SetTime__c,NSP_Assign_Lead__c FROM Lead 
                         WHERE firstName = 'TestLead113'];
         getLead.DNB_connect_DUNS_Number__c = '';
@@ -334,8 +332,8 @@ public class NSP_LeadTriggerHelperTest {
      * @Created date: 04/29/2022.
      * @return void
      *     */
-    @isTest
-    public static void dunsCheckBeforeUpdateCompanyTest(){
+    @IsTest
+    private static void dunsCheckBeforeUpdateCompanyTest() {
         Lead getLead = [SELECT Id, Company,NSP_DC_SetDate__c, NSP_Product_Interest__c,NumberOfEmployees,PostalCode, NSP_DC_SetTime__c,NSP_Assign_Lead__c FROM Lead 
                         WHERE Company = 'TestClass'];
         getLead.DNB_connect_DUNS_Number__c = '';
@@ -351,8 +349,8 @@ public class NSP_LeadTriggerHelperTest {
      * @Created date: 04/29/2022.
      * @return void
      *     */
-    @isTest
-    public static void dunsCheckBeforeUpdateParentLeadTest(){
+    @IsTest
+    private static void dunsCheckBeforeUpdateParentLeadTest() {
         Lead getLead = [SELECT Id, Company,NSP_DC_SetDate__c, NSP_Product_Interest__c,NumberOfEmployees,PostalCode, NSP_DC_SetTime__c,NSP_Assign_Lead__c FROM Lead 
                         WHERE firstName = 'HelloTest'];
         Lead getParentLead = [SELECT Id, Company,NSP_DC_SetDate__c, NSP_Product_Interest__c,NSP_Parent_Lead__c,NumberOfEmployees,PostalCode, NSP_DC_SetTime__c,NSP_Assign_Lead__c FROM Lead 
@@ -369,8 +367,8 @@ public class NSP_LeadTriggerHelperTest {
      * @Created date: 04/29/2022.
      * @return void
      *     */
-    @isTest
-    public static void dunsCheckBeforeInsertTest(){
+    @IsTest
+    private static void dunsCheckBeforeInsertTest() {
         Account accoutObject = new Account();
         Id partnerRecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('NSP_Partner_Client').getRecordTypeId();
         accoutObject.Name = 'Test Account';
@@ -382,9 +380,9 @@ public class NSP_LeadTriggerHelperTest {
         Lead nLead = new Lead();
         nLead.firstname='HelloTest123';
         nLead.lastname='Employee123';
-        nLead.NSP_Product_Interest__c='Payroll & Human Capital Management(Workforce Acceleration)';
+        nLead.NSP_Product_Interest__c = INTEREST;
         nLead.Company = 'tmp123';
-        nLead.Email = 'tmp@tmp123.com';
+        nLead.Email = TMP_EMAIL;
         nLead.PostalCode = '10001';
         nLead.NumberOfEmployees  =160;
         nLead.NSP_Lead_Routing__c = true;
@@ -395,9 +393,8 @@ public class NSP_LeadTriggerHelperTest {
         system.assertEquals(nLead.NumberOfEmployees, 160);
     }
     
-    @isTest
-    public static void salesOfficetest()
-    {
+    @IsTest
+    private static void salesOfficetest() {
         User currentUser = [SELECT Id,NSP_SalesDivision__c,NSP_Sales_Office__c,NSP_SalesRegion__c from user where Id =:UserInfo.getUserId()];
         currentUser.NSP_Sales_Office__c = '301';
         currentUser.NSP_SalesRegion__c = 'Central 1';
@@ -416,9 +413,9 @@ public class NSP_LeadTriggerHelperTest {
         Lead nLead = new Lead();
         nLead.firstname='HelloTest123';
         nLead.lastname='Employee123';
-        nLead.NSP_Product_Interest__c='Payroll & Human Capital Management(Workforce Acceleration)';
+        nLead.NSP_Product_Interest__c = INTEREST;
         nLead.Company = 'tmp123';
-        nLead.Email = 'tmp@tmp123.com';
+        nLead.Email = TMP_EMAIL;
         nLead.PostalCode = '10001';
         nLead.NumberOfEmployees  =160;
         nLead.NSP_Lead_Routing__c = true;
@@ -437,8 +434,8 @@ public class NSP_LeadTriggerHelperTest {
      * -------------------------------------------------------------------------------------
      * Harsha Khiroya      08/08/2022           Created this method - test method for admin user
      */
-    @isTest
-    static void testLeadDeleteByAdmin() {
+    @IsTest
+    private static void testLeadDeleteByAdmin() {
         List<Lead>  leadList = [SELECT id,nsp_fire_score__c FROM lead WHERE lastname = 'lead'];
         // Start Test
         Test.startTest();
@@ -452,8 +449,8 @@ public class NSP_LeadTriggerHelperTest {
      * -------------------------------------------------------------------------------------
      * Harsha Khiroya      08/08/2022           Created this method - test method for non admin user(sales manager here)
      */
-    @isTest
-    static void testLeadDeleteByNonAdmin() {
+    @IsTest
+    private static void testLeadDeleteByNonAdmin() {
         // select the oldest active User with a 'Sales Manager' Profile...
         List<User> testSalesManagers = [
             SELECT Id
@@ -489,15 +486,15 @@ public class NSP_LeadTriggerHelperTest {
      * @Story : STY-03751
      * @return void
      *     */
-    @isTest
-    static void serviceReferralLeadCreationTest() {
+    @IsTest
+    private static void serviceReferralLeadCreationTest() {
         List<Group> inBoundSolutionsQueue = [SELECT Id,DeveloperName,name FROM Group WHERE Type = 'Queue' AND DeveloperName = :System.label.NSP_DEVELOPERNAME_INBOUNDSOLUTIONS];
         Lead nLead = new Lead();
         nLead.firstname='HelloTest123';
         nLead.lastname='Employee123';
-        nLead.NSP_Product_Interest__c='Payroll & Human Capital Management(Workforce Acceleration)';
+        nLead.NSP_Product_Interest__c = INTEREST;
         nLead.Company = 'tmp123';
-        nLead.Email = 'tmp@tmp123.com';
+        nLead.Email = TMP_EMAIL;
         nLead.recordTypeId = NSP_LeadTriggerHelper.SERVICE_REFERRAL_RECORDTYPE_ID;
         Test.startTest();
         insert nLead;
@@ -506,7 +503,8 @@ public class NSP_LeadTriggerHelperTest {
         system.assertEquals(assertLead.Ownerid, inBoundSolutionsQueue[0].id); // Checking whether Created lead is assigned to Inbound Solutions Queue
     }
     
-    @isTest private static void testAllowStatusChangedToWorking() {
+    @IsTest
+    private static void testAllowStatusChangedToWorking() {
         List<String> allowedUserRoleNames = Label.MM_AND_BPC_USERROLE.split( ',' ); // Custom Label: MidMarket Administrator,MidMarket Sales Leader,Business Performance Consultant
         List<User> records = [
             SELECT Id
@@ -545,8 +543,8 @@ public class NSP_LeadTriggerHelperTest {
         }
     }
     
-    @isTest
-    static void testEloquaLeadInboundSolutions() {
+    @IsTest
+    private static void testEloquaLeadInboundSolutions() {
         
         User eloquaUser = [select id from User WHERE id =: Label.Eloqua_Integration_User_Id ];
         List<Group> inBoundSolutionsQueue = [SELECT Id FROM Group WHERE Type = 'Queue' AND DeveloperName = :System.label.NSP_DEVELOPERNAME_INBOUNDSOLUTIONS];
@@ -662,7 +660,7 @@ public class NSP_LeadTriggerHelperTest {
         Test.stopTest();
     }
  
-    @isTest 
+    @IsTest 
     private static void testSalesSegment() {
  
          Test.startTest();
