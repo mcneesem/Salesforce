@@ -4,7 +4,7 @@
         <name>Notify_Orientation_Planner</name>
         <label>Notify Orientation Planner</label>
         <locationX>50</locationX>
-        <locationY>2064</locationY>
+        <locationY>1032</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
         <faultConnector>
@@ -12,9 +12,9 @@
         </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
-            <name>emailAddressesArray</name>
+            <name>emailAddresses</name>
             <value>
-                <elementReference>tc_Email_Recipients</elementReference>
+                <elementReference>Get_Queue.Email</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -53,12 +53,13 @@
                 <booleanValue>true</booleanValue>
             </value>
         </inputParameters>
-        <nameSegment>emailSimple</nameSegment>        
+        <nameSegment>emailSimple</nameSegment>
+        <offset>0</offset>
     </actionCalls>
     <actionCalls>
         <name>OnboardingMeetingDetailHistory</name>
         <label>OnboardingMeetingDetailHistory</label>
-        <locationX>1667</locationX>
+        <locationX>710</locationX>
         <locationY>492</locationY>
         <actionName>OnboardingMeetingDetailHistory</actionName>
         <actionType>apex</actionType>
@@ -76,13 +77,15 @@
             </value>
         </inputParameters>
         <nameSegment>OnboardingMeetingDetailHistory</nameSegment>
+        <offset>0</offset>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <apiVersion>62.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
         <name>Apex_Response_OMD_History_String</name>
         <label>Apex Response : OMD History String</label>
-        <locationX>1172</locationX>
+        <locationX>314</locationX>
         <locationY>708</locationY>
         <assignmentItems>
             <assignToReference>response</assignToReference>
@@ -96,59 +99,9 @@
         </connector>
     </assignments>
     <assignments>
-        <description>Assign Member ID&apos;s to String Collection</description>
-        <name>Assign_Member_Ids</name>
-        <label>Assign: Member Ids</label>
-        <locationX>402</locationX>
-        <locationY>1356</locationY>
-        <assignmentItems>
-            <assignToReference>tc_GroupMembers</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <elementReference>Loop_Queue_Members.UserOrGroupId</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Loop_Queue_Members</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Assign_Recipients</name>
-        <label>Assign : Recipients</label>
-        <locationX>138</locationX>
-        <locationY>1872</locationY>
-        <assignmentItems>
-            <assignToReference>tc_Email_Recipients</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <elementReference>Loop_Users.Email</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Loop_Users</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Set_Fault_Element_Get_Member_Email_Address</name>
-        <label>Set Fault Element : Get_Member_Email_Address</label>
-        <locationX>842</locationX>
-        <locationY>1656</locationY>
-        <assignmentItems>
-            <assignToReference>FaultElement</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Get_Member_Email_Address</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Insperity_Fault_Handler</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>Set_Fault_Element_Get_Onboarding_Detail_History</name>
         <label>Set Fault Element : Get_Onboarding_Detail_History</label>
-        <locationX>2954</locationX>
+        <locationX>1898</locationX>
         <locationY>384</locationY>
         <assignmentItems>
             <assignToReference>FaultElement</assignToReference>
@@ -157,15 +110,11 @@
                 <stringValue>Get_Onboarding_Detail_History</stringValue>
             </value>
         </assignmentItems>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Insperity_Fault_Handler</targetReference>
-        </connector>
     </assignments>
     <assignments>
         <name>Set_Fault_Element_Get_Queue</name>
         <label>Set Fault Element : Get_Queue</label>
-        <locationX>1898</locationX>
+        <locationX>842</locationX>
         <locationY>924</locationY>
         <assignmentItems>
             <assignToReference>FaultElement</assignToReference>
@@ -174,33 +123,12 @@
                 <stringValue>Get_Queue</stringValue>
             </value>
         </assignmentItems>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Insperity_Fault_Handler</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Set_Fault_Element_Get_Queue_Members</name>
-        <label>Set Fault Element : Get_Queue_Members</label>
-        <locationX>1370</locationX>
-        <locationY>1140</locationY>
-        <assignmentItems>
-            <assignToReference>FaultElement</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Get_Queue_Members</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Insperity_Fault_Handler</targetReference>
-        </connector>
     </assignments>
     <assignments>
         <name>Set_Fault_Element_Notify_Orientation_Planner</name>
         <label>Set Fault Element : Notify_Orientation_Planner</label>
         <locationX>314</locationX>
-        <locationY>2172</locationY>
+        <locationY>1140</locationY>
         <assignmentItems>
             <assignToReference>FaultElement</assignToReference>
             <operator>Assign</operator>
@@ -215,7 +143,7 @@
     <assignments>
         <name>Set_Fault_Element_OnboardingMeetingDetailHistory</name>
         <label>Set Fault Element : OnboardingMeetingDetailHistory</label>
-        <locationX>2426</locationX>
+        <locationX>1370</locationX>
         <locationY>600</locationY>
         <assignmentItems>
             <assignToReference>FaultElement</assignToReference>
@@ -224,15 +152,11 @@
                 <stringValue>OnboardingMeetingDetailHistory</stringValue>
             </value>
         </assignmentItems>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Insperity_Fault_Handler</targetReference>
-        </connector>
     </assignments>
     <decisions>
         <name>History_Exists</name>
         <label>History Exists</label>
-        <locationX>2178</locationX>
+        <locationX>1172</locationX>
         <locationY>384</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -252,39 +176,9 @@
         </rules>
     </decisions>
     <decisions>
-        <description>Check if at least one queue member is exists</description>
-        <name>Queue_Members_Exists</name>
-        <label>Queue Members Exists</label>
-        <locationX>710</locationX>
-        <locationY>1140</locationY>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Yes_Valid_QM</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Get_Queue_Members</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Get_Queue_Members</leftValueReference>
-                <operator>IsEmpty</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Loop_Queue_Members</targetReference>
-            </connector>
-            <label>Yes : Valid QM</label>
-        </rules>
-    </decisions>
-    <decisions>
         <name>Valid_Queue</name>
         <label>Valid Queue?</label>
-        <locationX>1172</locationX>
+        <locationX>314</locationX>
         <locationY>924</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -298,7 +192,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Get_Queue_Members</targetReference>
+                <targetReference>Notify_Orientation_Planner</targetReference>
             </connector>
             <label>Yes : Valid</label>
         </rules>
@@ -306,7 +200,7 @@
     <decisions>
         <name>Valid_Response</name>
         <label>Valid Response ?</label>
-        <locationX>1667</locationX>
+        <locationX>710</locationX>
         <locationY>600</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -332,36 +226,7 @@
             <label>Yes : Response is valid</label>
         </rules>
     </decisions>
-    <decisions>
-        <name>Verify_User_Exists</name>
-        <label>Verify User Exists</label>
-        <locationX>314</locationX>
-        <locationY>1656</locationY>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Yes_User_Exist</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Get_Member_Email_Address</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Get_Member_Email_Address</leftValueReference>
-                <operator>IsEmpty</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Loop_Users</targetReference>
-            </connector>
-            <label>Yes : User Exist</label>
-        </rules>
-    </decisions>
-    <description>OMD History Notification</description>
+    <description>OMD History Notification , Read Queue Email</description>
     <environments>Default</environments>
     <formulas>
         <name>f_LastModifiedDateTime</name>
@@ -387,35 +252,6 @@ TEXT(YEAR({!$Record.Onboarding_Meeting_Request_Date__c}))</expression>
     </formulas>
     <interviewLabel>OMD History Notification {!$Flow.CurrentDateTime}</interviewLabel>
     <label>OMD History Notification</label>
-    <loops>
-        <description>Read All Members into text collection</description>
-        <name>Loop_Queue_Members</name>
-        <label>Loop: Queue Members</label>
-        <locationX>314</locationX>
-        <locationY>1248</locationY>
-        <collectionReference>Get_Queue_Members</collectionReference>
-        <iterationOrder>Asc</iterationOrder>
-        <nextValueConnector>
-            <targetReference>Assign_Member_Ids</targetReference>
-        </nextValueConnector>
-        <noMoreValuesConnector>
-            <targetReference>Get_Member_Email_Address</targetReference>
-        </noMoreValuesConnector>
-    </loops>
-    <loops>
-        <name>Loop_Users</name>
-        <label>Loop : Users</label>
-        <locationX>50</locationX>
-        <locationY>1764</locationY>
-        <collectionReference>Get_Member_Email_Address</collectionReference>
-        <iterationOrder>Asc</iterationOrder>
-        <nextValueConnector>
-            <targetReference>Assign_Recipients</targetReference>
-        </nextValueConnector>
-        <noMoreValuesConnector>
-            <targetReference>Notify_Orientation_Planner</targetReference>
-        </noMoreValuesConnector>
-    </loops>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -436,43 +272,9 @@ TEXT(YEAR({!$Record.Onboarding_Meeting_Request_Date__c}))</expression>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <recordLookups>
-        <description>Get email address for all queue members</description>
-        <name>Get_Member_Email_Address</name>
-        <label>Get Member Email Address</label>
-        <locationX>314</locationX>
-        <locationY>1548</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Verify_User_Exists</targetReference>
-        </connector>
-        <faultConnector>
-            <targetReference>Set_Fault_Element_Get_Member_Email_Address</targetReference>
-        </faultConnector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>IsActive</field>
-            <operator>EqualTo</operator>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </filters>
-        <filters>
-            <field>Id</field>
-            <operator>In</operator>
-            <value>
-                <elementReference>tc_GroupMembers</elementReference>
-            </value>
-        </filters>
-        <getFirstRecordOnly>false</getFirstRecordOnly>
-        <object>User</object>
-        <queriedFields>Id</queriedFields>
-        <queriedFields>Email</queriedFields>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordLookups>
         <name>Get_Onboarding_Detail_History</name>
         <label>Get Onboarding Detail History</label>
-        <locationX>2178</locationX>
+        <locationX>1172</locationX>
         <locationY>276</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -516,7 +318,7 @@ TEXT(YEAR({!$Record.Onboarding_Meeting_Request_Date__c}))</expression>
         <description>Get Onboarding Meeting Request Queue</description>
         <name>Get_Queue</name>
         <label>Get Queue</label>
-        <locationX>1172</locationX>
+        <locationX>314</locationX>
         <locationY>816</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -537,33 +339,8 @@ TEXT(YEAR({!$Record.Onboarding_Meeting_Request_Date__c}))</expression>
         <object>Group</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
-    <recordLookups>
-        <description>Get all Queue Members</description>
-        <name>Get_Queue_Members</name>
-        <label>Get Queue Members</label>
-        <locationX>710</locationX>
-        <locationY>1032</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Queue_Members_Exists</targetReference>
-        </connector>
-        <faultConnector>
-            <targetReference>Set_Fault_Element_Get_Queue_Members</targetReference>
-        </faultConnector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>GroupId</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>Get_Queue.Id</elementReference>
-            </value>
-        </filters>
-        <getFirstRecordOnly>false</getFirstRecordOnly>
-        <object>GroupMember</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
     <start>
-        <locationX>812</locationX>
+        <locationX>353</locationX>
         <locationY>0</locationY>
         <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
         <filterLogic>and</filterLogic>
@@ -589,7 +366,7 @@ TEXT(YEAR({!$Record.Onboarding_Meeting_Request_Date__c}))</expression>
         <name>Insperity_Fault_Handler</name>
         <label>Insperity Fault Handler</label>
         <locationX>314</locationX>
-        <locationY>2280</locationY>
+        <locationY>1248</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultElement</name>
