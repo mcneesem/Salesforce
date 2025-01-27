@@ -18,7 +18,7 @@ public class NSP_ClientSubPlanHistoryBatch implements Database.Batchable<sObject
         //query to get the client sub plan history records where start date is in future and end date is less than or equal to today
         return Database.getQueryLocator(
             [
-                SELECT Id , NSP_Start_Date__c , NSP_End_Date__c , NSP_Asset__c , NSP_Asset__r.RecordTypeId , CreatedDate
+                SELECT Id , NSP_Start_Date__c , NSP_End_Date__c , NSP_Asset__c , NSP_Asset__r.RecordTypeId , CreatedDate, NSP_Current_Subplan__c 
                 FROM NSP_Client_Sub_Plan_History__c
                 WHERE (
                     ( NSP_Asset__c != null )
@@ -27,7 +27,8 @@ public class NSP_ClientSubPlanHistoryBatch implements Database.Batchable<sObject
                         OR ( NSP_Asset__r.RecordTypeId = :retWOAssetRecordTypeId )
                     )
                 )
-                WITH SECURITY_ENFORCED
+                WITH SECURITY_ENFORCED 
+                ORDER BY NSP_Start_Date__c DESC 
             ]
         );
     }
@@ -36,11 +37,23 @@ public class NSP_ClientSubPlanHistoryBatch implements Database.Batchable<sObject
         Set<Id> assetIdSet = new Set<Id>();
         Set<Id> nonTermAssetIdSet = new Set<Id>();
         Map<Id,NSP_Client_Sub_Plan_History__c> assetClientSubPlanHistoryMap = new Map<Id,NSP_Client_Sub_Plan_History__c>();
+        
+        //ADO - 328811
+        Map<Id, NSP_Client_Sub_Plan_History__c> subPlanHistoryMap = new Map<Id, NSP_Client_Sub_Plan_History__c>();
+        for( NSP_Client_Sub_Plan_History__c clientSubPlanHistoryRec : scope)
+        {
+            if(!subPlanHistoryMap.containsKey(clientSubPlanHistoryRec.NSP_Asset__c))
+            {
+                subPlanHistoryMap.put(clientSubPlanHistoryRec.NSP_Asset__c, clientSubPlanHistoryRec);
+            }
+            
+        }
+        
         //Iterate through the list of client sub plan history and add asset Ids and remove those assets which will not be terminating
-        for ( NSP_Client_Sub_Plan_History__c clientSubPlanHistoryRec : scope ) {
+        for ( NSP_Client_Sub_Plan_History__c clientSubPlanHistoryRec :  subPlanHistoryMap.values()) {
             assetIdSet.add( clientSubPlanHistoryRec.NSP_Asset__c );
             if ( ( clientSubPlanHistoryRec.NSP_Start_Date__c >= Date.today() )
-                && ( clientSubPlanHistoryRec.NSP_End_Date__c == null )
+                && ( clientSubPlanHistoryRec.NSP_End_Date__c == null && clientSubPlanHistoryRec.NSP_Current_Subplan__c == true)
                 )
             {
                 assetIdSet.remove( clientSubPlanHistoryRec.NSP_Asset__c );
