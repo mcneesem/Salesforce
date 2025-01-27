@@ -1,10 +1,6 @@
 public with sharing class OnboardingMeetingDetailHistory {
     // test w/ OnboardingMeetingDetailHistoryTest (96%)
 
-    private static final String OLD_VALUE  = 'Old Value: ';
-    private static final String NEW_VALUE  = 'New Value: ';
-    private static final String CHANGED_FROM  = ' changed from ';
-
     @InvocableMethod(label='Get Onboarding Meeting Detail History' description='Read Onboarding Meeting Detail History and send the latest history detail back to the flow')
     public static List<Response> getOMDHistory(List<Request> requests) {
         List<Response> responses = new List<Response>();
@@ -53,13 +49,12 @@ public with sharing class OnboardingMeetingDetailHistory {
     }
 
    private static string parseStringFromListOfValues(Onboarding_Meeting_Detail__History history, Schema.DescribeFieldResult fieldResult) {
-        String returnValue = '';
+        String response = '';
         if ( fieldResult != null ) {
             String fieldType = String.valueOf( fieldResult.getType() );
             if ( history != null ) {
                 String oldValue = String.valueOf( history.OldValue );
                 String newValue = String.valueOf( history.NewValue );
-
                 if ( fieldType == 'DOUBLE' ) {
                     oldValue = formatDoubleValue( (Double)(history.OldValue) );
                     newValue = formatDoubleValue( (Double)(history.NewValue) );
@@ -67,16 +62,21 @@ public with sharing class OnboardingMeetingDetailHistory {
                     oldValue = formatDateValue( (DateTime)(history.OldValue) );
                     newValue = formatDateValue( (DateTime)(history.NewValue) );
                 }
-            
-            String fieldLabel = fieldResult.getLabel();
-            if ( fieldType == 'TEXTAREA' ) {
-                returnValue = formatTextareaValue(fieldLabel);
-            } else {
-                returnValue = '<br/>' + fieldLabel + CHANGED_FROM + OLD_VALUE + oldValue + ' to ' + NEW_VALUE + newValue;
+                String fieldLabel = fieldResult.getLabel();
+                if ( fieldType == 'TEXTAREA' ) {
+                    response = formatTextareaValue(fieldLabel);
+                } else {
+                    response = ''
+                        + '<br/>' + fieldLabel
+                        + ' changed from '
+                        + 'Old Value: ' + oldValue
+                        + ' to '
+                        + 'New Value: ' + newValue
+                        ;
+                }
             }
         }
-        }
-        return returnValue;
+        return response;
     }
 
     // format Double
