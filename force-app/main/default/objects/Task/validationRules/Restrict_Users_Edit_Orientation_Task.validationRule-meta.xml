@@ -4,10 +4,13 @@
     <active>true</active>
     <description>Restrict Internal User to Edit Status and Final OMR Meeting Info and allow edit only to Orientation Planner</description>
     <errorConditionFormula>AND(
-NOT($Permission.Update_Final_OMR_Meeting_Info),
-OR(ISPICKVAL(Status, &quot;Cancelled&quot; ),ISPICKVAL(Status, &quot;Completed&quot; )),
-(RecordType.DeveloperName = &apos;Orientation_Meeting_Request&apos;),
-NOT(ISNEW())
+  NOT( $Permission.Update_Final_OMR_Meeting_Info ) ,
+  NOT( ISNEW() ) ,
+  ( RecordType.DeveloperName = &apos;Orientation_Meeting_Request&apos; ) ,
+  OR(
+    ISPICKVAL( Status , &apos;Cancelled&apos; ) ,
+    ISPICKVAL( Status , &apos;Completed&apos; )
+  )
 )</errorConditionFormula>
     <errorMessage>Only members of the Orientation Meeting Request queue can update the Status to Complete or Cancelled.</errorMessage>
 </ValidationRule>
