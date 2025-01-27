@@ -105,8 +105,9 @@ public with sharing class NSP_TaskTriggerHelper {
         tasksFieldsToUpdate(taskOldMap, taskNewMap.values());
 
         //Added as part of DF-04782
-        if(!orientationMeetingRequestTaskList.isEmpty()){
-            showMessageWhenTaskIsUpdated(orientationMeetingRequestTaskList);
+        if(!orientationMeetingRequestTaskList.isEmpty() && 
+           Onboarding_Meeting_Detail_Settings__c.getInstance( UserInfo.getUserId() ).Restrict_Users_Edit_Orientation_Task__c){
+            showMessageWhenTaskIsUpdated(orientationMeetingRequestTaskList); // Suhas Commented --
         }
     }
 
