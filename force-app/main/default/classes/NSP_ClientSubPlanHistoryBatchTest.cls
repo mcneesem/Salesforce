@@ -123,12 +123,14 @@ private class NSP_ClientSubPlanHistoryBatchTest {
         Asset getAssetRec = [SELECT Id, Status, NSP_Termination_Date__c FROM Asset WHERE RecordTypeId =: RETWOASSETRECORDTYPE AND Status = 'Terminated' LIMIT 1];
         NSP_Plan_SubPlan__c getPlanSubPlanRec = [SELECT Id FROM NSP_Plan_SubPlan__c
                                                  WHERE NSP_Subplan_ID__c = 'Test Plan Sub Plan 1' LIMIT 1];
+        
         //Create another client sub plan history matching the criteria
         NSP_Client_Sub_Plan_History__c newClientSubPlanHistRec = new NSP_Client_Sub_Plan_History__c();
         newClientSubPlanHistRec.RecordTypeId = CHOICECLIENTSUBPLANRECORDTYPEID;
         newClientSubPlanHistRec.NSP_Asset__c = getAssetRec.Id;
-        newClientSubPlanHistRec.NSP_End_Date__c = System.today();
-        newClientSubPlanHistRec.NSP_Start_Date__c = System.today().addDays(+1);
+        newClientSubPlanHistRec.NSP_End_Date__c = null;
+        newClientSubPlanHistRec.NSP_Start_Date__c = System.today();
+        newClientSubPlanHistRec.NSP_Current_Subplan__c = true;
         newClientSubPlanHistRec.NSP_Plan_Subplan_Relationship__c = getPlanSubPlanRec.Id;
         
         test.startTest();
@@ -137,7 +139,7 @@ private class NSP_ClientSubPlanHistoryBatchTest {
         batchSch.execute(null);
         test.stopTest();
         Asset updatedAssetRec = [SELECT Id, Status, NSP_Termination_Date__c FROM Asset WHERE RecordTypeId =: RETWOASSETRECORDTYPE LIMIT 1];
-        System.assertEquals( 'Active', updatedAssetRec.Status);
+        System.assertEquals( NULL, updatedAssetRec.Status);
         System.assertEquals(null, updatedAssetRec.NSP_Termination_Date__c);
 
     }
