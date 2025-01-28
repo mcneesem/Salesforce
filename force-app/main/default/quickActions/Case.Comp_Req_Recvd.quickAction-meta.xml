@@ -1,53 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <QuickAction xmlns="http://soap.sforce.com/2006/04/metadata">
     <description>Used by Compensation Services team</description>
-    <fieldOverrides>
-        <field>ToAddress</field>
-        <formula>Case.Contact.NSP_Work_email__c</formula>
-    </fieldOverrides>
-    <fieldOverrides>
-        <field>ValidatedFromAddress</field>
-        <literalValue>compensation@insperity.com</literalValue>
-    </fieldOverrides>
-    <icon>dfsle__EnvelopeEmpty</icon>
+    <flowDefinition>Case_Send_Compensation_Service_request_Email</flowDefinition>
     <label>Comp Req Recvd</label>
-    <optionsCreateFeedItem>true</optionsCreateFeedItem>
-    <quickActionLayout>
-        <layoutSectionStyle>TwoColumnsLeftToRight</layoutSectionStyle>
-        <quickActionLayoutColumns>
-            <quickActionLayoutItems>
-                <emptySpace>false</emptySpace>
-                <field>ValidatedFromAddress</field>
-                <uiBehavior>Edit</uiBehavior>
-            </quickActionLayoutItems>
-            <quickActionLayoutItems>
-                <emptySpace>false</emptySpace>
-                <field>ToAddress</field>
-                <uiBehavior>Edit</uiBehavior>
-            </quickActionLayoutItems>
-            <quickActionLayoutItems>
-                <emptySpace>false</emptySpace>
-                <field>CcAddress</field>
-                <uiBehavior>Edit</uiBehavior>
-            </quickActionLayoutItems>
-            <quickActionLayoutItems>
-                <emptySpace>false</emptySpace>
-                <field>Subject</field>
-                <uiBehavior>Edit</uiBehavior>
-            </quickActionLayoutItems>
-            <quickActionLayoutItems>
-                <emptySpace>false</emptySpace>
-                <field>TextBody</field>
-                <uiBehavior>Edit</uiBehavior>
-            </quickActionLayoutItems>
-        </quickActionLayoutColumns>
-        <quickActionLayoutColumns/>
-    </quickActionLayout>
-    <quickActionSendEmailOptions>
-        <defaultEmailTemplateName>Compensation_Services/Compensation_Services</defaultEmailTemplateName>
-        <ignoreDefaultEmailTemplateSubject>false</ignoreDefaultEmailTemplateSubject>
-    </quickActionSendEmailOptions>
-    <targetObject>EmailMessage</targetObject>
-    <targetParentField>Parent</targetParentField>
-    <type>SendEmail</type>
+    <optionsCreateFeedItem>false</optionsCreateFeedItem>
+    <type>Flow</type>
 </QuickAction>
