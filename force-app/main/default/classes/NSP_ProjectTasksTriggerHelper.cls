@@ -1359,8 +1359,9 @@ public class NSP_ProjectTasksTriggerHelper {
                                 CreatedDate ,
                                 NSP_Last_Date_Wages_Paid_Through__c ,
                                 NSP_Term_Reason__c ,
-                                NSP_SubTerm_reason__c ,
-                                NSP_Revision__c
+                                NSP_SubTerm_reason__c,
+                                Previous_Term_Date__c,	
+                    			NSP_Revision__c
                             FROM NSP_Termination_Form__c
                             WHERE ( NSP_Project_Task__c IN :mapOfProjectTaskAndProject.keySet() )
                             ORDER BY CreatedDate DESC
@@ -1516,6 +1517,9 @@ public class NSP_ProjectTasksTriggerHelper {
                 termFormDetails = ' on ' + termForm.NSP_Last_Date_Wages_Paid_Through__c.format();
             }
             mailBody += ' has been approved for termination' + termFormDetails + '.' + '<br>';
+            if(termForm.NSP_Revision__c == 'Yes' && termForm.Previous_Term_Date__c != null){
+              mailBody += 'Previous Term Date: '+ termForm.Previous_Term_Date__c.format() + '<br>';
+            }
             if ( String.isNotBlank( termForm.NSP_Term_Reason__c ) ) {
                 mailBody += 'Term Reason: ' + termForm.NSP_Term_Reason__c + '<br>';
             }
