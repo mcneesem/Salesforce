@@ -1,5 +1,5 @@
 global class NSP_PrepSandbox implements SandboxPostCopy {
-    // test w/ NSP_PrepSandboxTest (79%)
+    // test w/ NSP_PrepSandboxTest (80%)
     static final string STRING_INVALID = '.invalid';
 
     public String runManualResult{get;set;}
@@ -135,7 +135,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
             NSP_PrepSandbox.handleException( e , 'doUserImport' );
         }
     }
-
+    
     public static void doCMetadata(String sandboxName) {
         try{
             Integer batch = 0;
@@ -146,83 +146,9 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
             List<NSP_PEO_Implementations__mdt> cMdPEOImps = [Select Id, Label, DeveloperName, NSP_Email_Address__c FROM NSP_PEO_Implementations__mdt WHERE Id!=null AND NSP_Email_Address__c!=null];
             List<NSP_Retirement_Services__mdt> cMdRetSvcs = [Select Id, Label, DeveloperName, NSP_Email_Address__c FROM NSP_Retirement_Services__mdt WHERE Id!=null AND NSP_Email_Address__c!=null];
 
-            for (NSP_DocuSign_Signers__mdt cMdRecord : cMdDocuSigners) {
-                string name = cMdRecord.DeveloperName;
-                string fullName = 'NSP_DocuSign_Signers.' + name; //custom metadata full name
-                string signer_Username = cMdRecord.NSP_Signer_Username__c;
-
-                MetadataService.CustomMetadata cMdUpd = new MetadataService.CustomMetadata();
-                    cMdUpd.fullName = fullName;
-                    cMdUpd.label = name;
-                MetadataService.CustomMetadataValue customField1 = new MetadataService.CustomMetadataValue();
-                    customField1.field = 'NSP_Signer_Username__c'; // the custom field API Name to be updated
-                    customField1.value = signer_Username + '.' + sandboxName;
-
-                if (cMdUpd.values != null) { //add the changes to list of changes to be deployed
-                    cMdUpd.values.add(customField1); 
-                } else {
-                    cMdUpd.values = new MetadataService.CustomMetadataValue[] { customField1 };
-                }
-
-                if (allMetadataList[batch].size() >= 200) {
-                    batch++;
-                    allMetadataList.add(new List<MetadataService.Metadata>()); // create a new batch when we fill one up
-                }
-                allMetadataList[batch].add(cMdUpd);
-            }
-
-            for (NSP_PEO_Implementations__mdt cMdRecord : cMdPEOImps) {
-                string name = cMdRecord.DeveloperName;
-                string fullName = 'NSP_PEO_Implementations.' + name; //custom metadata full name
-                MetadataService.CustomMetadata cMdUpd = new MetadataService.CustomMetadata();
-                    cMdUpd.fullName = fullName;
-                    cMdUpd.label = name;
-                MetadataService.CustomMetadataValue customField1 = new MetadataService.CustomMetadataValue();
-                    customField1.field = 'NSP_Email_Address__c'; // the custom field API Name to be updated
-                    switch on sandboxName {
-                         when 'merge','test','stage','devserva','devservb' {
-                            customField1.value = 'monica.adams@insperity.com';
-                         }
-                         when else {
-                            customField1.value = cMdRecord.NSP_Email_Address__c.substringBefore(STRING_INVALID).trim() + STRING_INVALID;
-                         }
-                     }
-
-                if (cMdUpd.values != null) { //add the changes to list of changes to be deployed
-                    cMdUpd.values.add(customField1); 
-                } else {
-                    cMdUpd.values = new MetadataService.CustomMetadataValue[] { customField1 };
-                }
-
-                if (allMetadataList[batch].size() >= 200) {
-                    batch++;
-                    allMetadataList.add(new List<MetadataService.Metadata>()); // create a new batch when we fill one up
-                }
-                allMetadataList[batch].add(cMdUpd);
-            }
-
-            for (NSP_Retirement_Services__mdt cMdRecord : cMdRetSvcs) {
-                string name = cMdRecord.DeveloperName;
-                string fullName = 'NSP_Retirement_Services.' + name; //custom metadata full name
-                MetadataService.CustomMetadata cMdUpd = new MetadataService.CustomMetadata();
-                    cMdUpd.fullName = fullName;
-                    cMdUpd.label = name;
-                MetadataService.CustomMetadataValue customField1 = new MetadataService.CustomMetadataValue();
-                    customField1.field = 'NSP_Email_Address__c'; // the custom field API Name to be updated
-                    customField1.value = cMdRecord.NSP_Email_Address__c.substringBefore(STRING_INVALID).trim() + STRING_INVALID;
-
-                if (cMdUpd.values != null) { //add the changes to list of changes to be deployed
-                    cMdUpd.values.add(customField1); 
-                } else {
-                    cMdUpd.values = new MetadataService.CustomMetadataValue[] { customField1 };
-                }
-
-                if (allMetadataList[batch].size() >= 200) {
-                    batch++;
-                    allMetadataList.add(new List<MetadataService.Metadata>()); // create a new batch when we fill one up
-                }
-                allMetadataList[batch].add(cMdUpd);
-            }
+            doDS_mdt(sandboxName, batch, allMetadataList, cMdDocuSigners);
+            doPEO_mdt(sandboxName, batch, allMetadataList, cMdPEOImps);
+            doRET_mdt(sandboxName, batch, allMetadataList, cMdRetSvcs);
 
             if (allMetadataList.size() > 0 && !Test.isRunningTest()) {
                 for (Integer i = 0; i < allMetadataList.size(); i ++) {
@@ -231,6 +157,90 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
             }
         } catch(Exception e) {
             NSP_PrepSandbox.handleException( e , 'doCMetadata' );
+        }
+    }
+
+    public static void doDS_mdt(String sandboxName, Integer batch, List<List<MetadataService.Metadata>> allMetadataList, List<NSP_DocuSign_Signers__mdt> cMdDocuSigners) {
+        for (NSP_DocuSign_Signers__mdt cMdRecord : cMdDocuSigners) {
+            string name = cMdRecord.DeveloperName;
+            string fullName = 'NSP_DocuSign_Signers.' + name; //custom metadata full name
+            string signer_Username = cMdRecord.NSP_Signer_Username__c;
+
+            MetadataService.CustomMetadata cMdUpd = new MetadataService.CustomMetadata();
+                cMdUpd.fullName = fullName;
+                cMdUpd.label = name;
+            MetadataService.CustomMetadataValue customField1 = new MetadataService.CustomMetadataValue();
+                customField1.field = 'NSP_Signer_Username__c'; // the custom field API Name to be updated
+                customField1.value = signer_Username + '.' + sandboxName;
+
+            if (cMdUpd.values != null) { //add the changes to list of changes to be deployed
+                cMdUpd.values.add(customField1); 
+            } else {
+                cMdUpd.values = new MetadataService.CustomMetadataValue[] { customField1 };
+            }
+
+            if (allMetadataList[batch].size() >= 200) {
+                batch++;
+                allMetadataList.add(new List<MetadataService.Metadata>()); // create a new batch when we fill one up
+            }
+            allMetadataList[batch].add(cMdUpd);
+        }
+    }
+
+    public static void doPEO_mdt(String sandboxName, Integer batch, List<List<MetadataService.Metadata>> allMetadataList, List<NSP_PEO_Implementations__mdt> cMdPEOImps) {
+        for (NSP_PEO_Implementations__mdt cMdRecord : cMdPEOImps) {
+            string name = cMdRecord.DeveloperName;
+            string fullName = 'NSP_PEO_Implementations.' + name; //custom metadata full name
+            MetadataService.CustomMetadata cMdUpd = new MetadataService.CustomMetadata();
+                cMdUpd.fullName = fullName;
+                cMdUpd.label = name;
+            MetadataService.CustomMetadataValue customField1 = new MetadataService.CustomMetadataValue();
+                customField1.field = 'NSP_Email_Address__c'; // the custom field API Name to be updated
+                switch on sandboxName {
+                     when 'merge','test','stage','devserva','devservb' {
+                        customField1.value = 'monica.adams@insperity.com';
+                     }
+                     when else {
+                        customField1.value = cMdRecord.NSP_Email_Address__c.substringBefore(STRING_INVALID).trim() + STRING_INVALID;
+                     }
+                 }
+
+            if (cMdUpd.values != null) { //add the changes to list of changes to be deployed
+                cMdUpd.values.add(customField1); 
+            } else {
+                cMdUpd.values = new MetadataService.CustomMetadataValue[] { customField1 };
+            }
+
+            if (allMetadataList[batch].size() >= 200) {
+                batch++;
+                allMetadataList.add(new List<MetadataService.Metadata>()); // create a new batch when we fill one up
+            }
+            allMetadataList[batch].add(cMdUpd);
+        }
+    }
+
+    public static void doRET_mdt(String sandboxName, Integer batch, List<List<MetadataService.Metadata>> allMetadataList, List<NSP_Retirement_Services__mdt> cMdRetSvcs) {
+        for (NSP_Retirement_Services__mdt cMdRecord : cMdRetSvcs) {
+            string name = cMdRecord.DeveloperName;
+            string fullName = 'NSP_Retirement_Services.' + name; //custom metadata full name
+            MetadataService.CustomMetadata cMdUpd = new MetadataService.CustomMetadata();
+                cMdUpd.fullName = fullName;
+                cMdUpd.label = name;
+            MetadataService.CustomMetadataValue customField1 = new MetadataService.CustomMetadataValue();
+                customField1.field = 'NSP_Email_Address__c'; // the custom field API Name to be updated
+                customField1.value = cMdRecord.NSP_Email_Address__c.substringBefore(STRING_INVALID).trim() + STRING_INVALID;
+
+            if (cMdUpd.values != null) { //add the changes to list of changes to be deployed
+                cMdUpd.values.add(customField1); 
+            } else {
+                cMdUpd.values = new MetadataService.CustomMetadataValue[] { customField1 };
+            }
+
+            if (allMetadataList[batch].size() >= 200) {
+                batch++;
+                allMetadataList.add(new List<MetadataService.Metadata>()); // create a new batch when we fill one up
+            }
+            allMetadataList[batch].add(cMdUpd);
         }
     }
 
@@ -248,55 +258,8 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
                 mTmplId.put(oProjTmpl.TemplateName__c, oProjTmpl.Id);
             }
 
-            for (NSP_ProjectTemplateMapping__mdt cMdTmpl : cMdTmpls) {
-                if (mTmplId.containsKey(cMdTmpl.Template_Name__c) || Test.isRunningTest()) {
-                    string name = cMdTmpl.DeveloperName;
-                    string fullName = 'NSP_ProjectTemplateMapping.' + name; //custom metadata full name
-                    MetadataService.CustomMetadata cMdUpd = new MetadataService.CustomMetadata();
-                        cMdUpd.fullName = fullName;
-                        cMdUpd.label = name;
-                    MetadataService.CustomMetadataValue customField1 = new MetadataService.CustomMetadataValue();
-                        customField1.field = 'Template_ID__c'; //the custom field API Name to be updated
-                        customField1.value = mTmplId.get(cMdTmpl.Template_Name__c);
-
-                    if (cMdUpd.values != null) { //add the changes to list of changes to be deployed
-                        cMdUpd.values.add(customField1); 
-                    } else {
-                        cMdUpd.values = new MetadataService.CustomMetadataValue[] { customField1 };
-                    }
-
-                    if (allMetadataList[batch].size() >= 200) {
-                        batch++;
-                        allMetadataList.add(new List<MetadataService.Metadata>()); // create a new batch when we fill one up
-                    }
-                    allMetadataList[batch].add(cMdUpd);
-                }
-            }
-
-            for (Template_Key_and_Id_Mapping__mdt cMdTmplKey : cMdTmplKeys) {
-                if (mTmplId.containsKey(cMdTmplKey.Template_Name__c) || Test.isRunningTest()) {
-                    string name = cMdTmplKey.DeveloperName;
-                    string fullName = 'Template_Key_and_Id_Mapping.' + name; //custom metadata full name
-                    MetadataService.CustomMetadata cMdUpd = new MetadataService.CustomMetadata();
-                        cMdUpd.fullName = fullName;
-                        cMdUpd.label = name;
-                    MetadataService.CustomMetadataValue customField2 = new MetadataService.CustomMetadataValue();
-                        customField2.field = 'Template_ID__c'; //the custom field API Name to be updated
-                        customField2.value = mTmplId.get(cMdTmplKey.Template_Name__c);
-
-                    if (cMdUpd.values != null) { //add the changes to list of changes to be deployed
-                        cMdUpd.values.add(customField2); 
-                    } else {
-                        cMdUpd.values = new MetadataService.CustomMetadataValue[] { customField2 };
-                    }
-
-                    if (allMetadataList[batch].size() >= 200) {
-                        batch++;
-                        allMetadataList.add(new List<MetadataService.Metadata>());
-                    }
-                    allMetadataList[batch].add(cMdUpd);
-                }
-            }
+            doTmpls_mdt(sandboxName, batch, mTmplId, allMetadataList, cMdTmpls);
+            doTmplKeys_mdt(sandboxName, batch, mTmplId, allMetadataList, cMdTmplKeys);
 
             if (allMetadataList.size() > 0 && !Test.isRunningTest()) {
                 for (Integer i = 0; i < allMetadataList.size(); i ++) {
@@ -307,94 +270,163 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
             NSP_PrepSandbox.handleException( e , 'doCMetadataSvc' );
         }
     }
+
+    public static void doTmpls_mdt(String sandboxName, Integer batch, Map<String, Id> mTmplId, List<List<MetadataService.Metadata>> allMetadataList, List<NSP_ProjectTemplateMapping__mdt> cMdTmpls) {
+        for (NSP_ProjectTemplateMapping__mdt cMdTmpl : cMdTmpls) {
+            if (mTmplId.containsKey(cMdTmpl.Template_Name__c) || Test.isRunningTest()) {
+                string name = cMdTmpl.DeveloperName;
+                string fullName = 'NSP_ProjectTemplateMapping.' + name; //custom metadata full name
+                MetadataService.CustomMetadata cMdUpd = new MetadataService.CustomMetadata();
+                    cMdUpd.fullName = fullName;
+                    cMdUpd.label = name;
+                MetadataService.CustomMetadataValue customField1 = new MetadataService.CustomMetadataValue();
+                    customField1.field = 'Template_ID__c'; //the custom field API Name to be updated
+                    customField1.value = mTmplId.get(cMdTmpl.Template_Name__c);
+
+                if (cMdUpd.values != null) { //add the changes to list of changes to be deployed
+                    cMdUpd.values.add(customField1); 
+                } else {
+                    cMdUpd.values = new MetadataService.CustomMetadataValue[] { customField1 };
+                }
+
+                if (allMetadataList[batch].size() >= 200) {
+                    batch++;
+                    allMetadataList.add(new List<MetadataService.Metadata>()); // create a new batch when we fill one up
+                }
+                allMetadataList[batch].add(cMdUpd);
+            }
+        }
+    }
+
+    public static void doTmplKeys_mdt(String sandboxName, Integer batch, Map<String, Id> mTmplId, List<List<MetadataService.Metadata>> allMetadataList, List<Template_Key_and_Id_Mapping__mdt> cMdTmplKeys) {
+        for (Template_Key_and_Id_Mapping__mdt cMdTmplKey : cMdTmplKeys) {
+            if (mTmplId.containsKey(cMdTmplKey.Template_Name__c) || Test.isRunningTest()) {
+                string name = cMdTmplKey.DeveloperName;
+                string fullName = 'Template_Key_and_Id_Mapping.' + name; //custom metadata full name
+                MetadataService.CustomMetadata cMdUpd = new MetadataService.CustomMetadata();
+                    cMdUpd.fullName = fullName;
+                    cMdUpd.label = name;
+                MetadataService.CustomMetadataValue customField2 = new MetadataService.CustomMetadataValue();
+                    customField2.field = 'Template_ID__c'; //the custom field API Name to be updated
+                    customField2.value = mTmplId.get(cMdTmplKey.Template_Name__c);
+
+                if (cMdUpd.values != null) { //add the changes to list of changes to be deployed
+                    cMdUpd.values.add(customField2); 
+                } else {
+                    cMdUpd.values = new MetadataService.CustomMetadataValue[] { customField2 };
+                }
+
+                if (allMetadataList[batch].size() >= 200) {
+                    batch++;
+                    allMetadataList.add(new List<MetadataService.Metadata>());
+                }
+
+                allMetadataList[batch].add(cMdUpd);
+            }
+        }
+    }
     
     public static void doCLabels(String sandboxName) {
         try {
             MetadataService.MetadataPort service = createService();
             List<MetadataService.Metadata> allMetadataList = new List<MetadataService.Metadata>();
-            string cLabels = 'NSP_FTA_Base_URL,NSP_Docusign_Account_Id,NSP_Docusign_Base_URL';
-            string[] cLNames = cLabels.split(',');
-            for(integer i=0; i < cLNames.size() ; i++){
-                MetadataService.CustomLabel cL = new MetadataService.CustomLabel();
-                if(!Test.isRunningTest()){
-                    cL = (MetadataService.CustomLabel) service.readMetadata('CustomLabel', new String[] { cLNames[i] }).getRecords()[0];
-                }else{
-                    cL.fullName = cLNames[i];
-                    cL.value = 'test';
-                }
-                if(cL.value != null){
-                    MetadataService.CustomLabel cLUpd = new MetadataService.CustomLabel();
-                    cLUpd.fullName = cL.fullName;
-                    switch on cL.fullName {
-                        when 'NSP_FTA_Base_URL' {
-                            switch on sandboxName {
-                                 when 'stage' {
-                                     cLUpd.value = 'https://stageportalapps.insperity.com/financialcomparison/financialanalysis/';
-                                 }
-                                 when 'test' {
-                                     cLUpd.value = 'https://testportalapps.insperity.com/financialcomparison/financialanalysis/';
-                                 }
-                                 when 'merge' {
-                                     cLUpd.value = 'https://devportalapps.insperity.com/financialcomparison/financialanalysis/';
-                                 }
-                                 when else {
-                                     cLUpd.value = 'https://devportalapps.insperity.com/financialcomparison/financialanalysis/';
-                                 }
-                             }
-                         }
-                        when 'NSP_Docusign_Account_Id' {
-                            switch on sandboxName {
-                                when 'merge' {
-                                    cLUpd.value = '122677';
-                                }
-                                when 'test' {
-                                    cLUpd.value = '65500';
-                                }
-                                when 'stage' {
-                                    cLUpd.value = '48945';
-                                }
-                                when else {
-                                    cLUpd.value = '50202';
-                                }
-                            }
-                        }
-                        when 'NSP_Docusign_Base_URL' {
-                           cLUpd.value = 'https://uatna11.springcm.com/atlas/doclauncher/OneClickDocGen';
-                        }
-                    }
-                    cLUpd.shortDescription = cL.shortDescription;
-                    cLUpd.language = cL.language;
-                    cLUpd.protected_x = cL.protected_x;
-                    allMetadataList.add(cLUpd);
-                }
-            }
+			
+			MetadataService.CustomLabel cL = new MetadataService.CustomLabel();
+			if(!Test.isRunningTest()){
+				cL = (MetadataService.CustomLabel) service.readMetadata('CustomLabel', new String[] { 'NSP_FTA_Base_URL' }).getRecords()[0];
+			}else{
+				cL.fullName = 'NSP_FTA_Base_URL';
+				cL.value = 'test';
+			}
+			if(cL.value != null){
+				MetadataService.CustomLabel cLUpd = new MetadataService.CustomLabel();
+				cLUpd.fullName = cL.fullName;
+				switch on sandboxName {
+					when 'stage' {
+						cLUpd.value = 'https://stageportalapps.insperity.com/financialcomparison/financialanalysis/';
+					}
+					when 'test' {
+						cLUpd.value = 'https://testportalapps.insperity.com/financialcomparison/financialanalysis/';
+					}
+					when 'merge' {
+						cLUpd.value = 'https://devportalapps.insperity.com/financialcomparison/financialanalysis/';
+					}
+					when else {
+						cLUpd.value = 'https://devportalapps.insperity.com/financialcomparison/financialanalysis/';
+					}
+				}
+				cLUpd.shortDescription = cL.shortDescription;
+				cLUpd.language = cL.language;
+				cLUpd.protected_x = cL.protected_x;
+				allMetadataList.add(cLUpd);
+			}
+
+			if(!Test.isRunningTest()){
+				cL = (MetadataService.CustomLabel) service.readMetadata('CustomLabel', new String[] { 'NSP_Docusign_Account_Id' }).getRecords()[0];
+			}else{
+				cL.fullName = 'NSP_Docusign_Account_Id';
+				cL.value = 'test';
+			}
+			if(cL.value != null){
+				MetadataService.CustomLabel cLUpd = new MetadataService.CustomLabel();
+				cLUpd.fullName = cL.fullName;
+				switch on sandboxName {
+					when 'merge' {
+						cLUpd.value = '122677';
+					}
+					when 'test' {
+						cLUpd.value = '65500';
+					}
+					when 'stage' {
+						cLUpd.value = '48945';
+					}
+					when else {
+						cLUpd.value = '50202';
+					}
+				}
+				cLUpd.shortDescription = cL.shortDescription;
+				cLUpd.language = cL.language;
+				cLUpd.protected_x = cL.protected_x;
+				allMetadataList.add(cLUpd);
+			}
+
+			if(!Test.isRunningTest()){
+				cL = (MetadataService.CustomLabel) service.readMetadata('CustomLabel', new String[] { 'NSP_Docusign_Base_URL' }).getRecords()[0];
+			}
+			if(cL.value != null){
+				MetadataService.CustomLabel cLUpd = new MetadataService.CustomLabel();
+				cLUpd.fullName = cL.fullName;
+				cLUpd.value = 'https://uatna11.springcm.com/atlas/doclauncher/OneClickDocGen';
+				cLUpd.shortDescription = cL.shortDescription;
+				cLUpd.language = cL.language;
+				cLUpd.protected_x = cL.protected_x;
+				allMetadataList.add(cLUpd);
+			}
+			
             if(allMetadataList.size() > 0 && !Test.isRunningTest()){
                 List<MetadataService.SaveResult> results = service.updateMetadata(allMetadataList);
-                // for(MetadataService.SaveResult result: results){
-                //     system.debug('Update Custom Label result success = ' + result.success);
-                // }
             }
         } catch(Exception e) {
             NSP_PrepSandbox.handleException( e , 'doCLabels' );
         }
     }
-    
+
     public static void doEmailCLabels() {
         try {
             Integer batch = 0;
             MetadataService.MetadataPort service = createService();
             List<List<MetadataService.Metadata>> allMetadataList = new List<List<MetadataService.Metadata>>();
             allMetadataList.add(new List<MetadataService.Metadata>());
-            MetadataService.CustomLabel cL = (!Test.isRunningTest()) ? (MetadataService.CustomLabel) service.readMetadata('CustomLabel', new String[] { 'Post_Refresh_Email_Labels' }).getRecords()[0] : new MetadataService.CustomLabel();
-            MetadataService.CustomLabel cL2 = (!Test.isRunningTest()) ? (MetadataService.CustomLabel) service.readMetadata('CustomLabel', new String[] { 'Post_Refresh_Email_Labels_2' }).getRecords()[0] : new MetadataService.CustomLabel();
-            if(cL.value == null) cL.value = 'dummy';
-            string[] cLNames = cL.value.split(',');
-            string[] cLNames2 = (cL2.value == null) ? new string[]{} : cL2.value.split(',');
-            if(cLNames2.size() > 0) cLNames.addAll(cLNames2);
+            MetadataService.CustomLabel cL;
+            String[] cLNames = getEmailCLabelNames();
 
             for(integer i=0; i < cLNames.size() ; i++){
-                cL = (!Test.isRunningTest()) ? (MetadataService.CustomLabel) service.readMetadata('CustomLabel', new String[] { cLNames[i] }).getRecords()[0] : new MetadataService.CustomLabel();
-                cL.value = (!Test.isRunningTest()) ? cL.value : 'test@insperity.com';
+                cL = new MetadataService.CustomLabel();
+                if ( !Test.isRunningTest() ) {
+                    cL = (MetadataService.CustomLabel) service.readMetadata('CustomLabel', new String[] { cLNames[i] }).getRecords()[0];
+                } else {
+                    cL.value = 'test@insperity.com';
+                }
                 if((cL.value != null && cL.value.indexOf('@') != -1 && cL.value.indexOf(STRING_INVALID) == -1)) {
                     MetadataService.CustomLabel cLUpd = new MetadataService.CustomLabel();
                     cLUpd.fullName = cL.fullName;
@@ -419,6 +451,22 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
         } catch(Exception e) {
             NSP_PrepSandbox.handleException( e , 'doEmailCLabels' );
         }
+    }
+
+    public static List<String> getEmailCLabelNames() {
+        List<String> cLNames = new List<String>();
+        MetadataService.MetadataPort service = createService();
+        MetadataService.CustomLabel cL = (!Test.isRunningTest()) ? (MetadataService.CustomLabel) service.readMetadata('CustomLabel', new String[] { 'Post_Refresh_Email_Labels' }).getRecords()[0] : new MetadataService.CustomLabel();
+        MetadataService.CustomLabel cL2 = (!Test.isRunningTest()) ? (MetadataService.CustomLabel) service.readMetadata('CustomLabel', new String[] { 'Post_Refresh_Email_Labels_2' }).getRecords()[0] : new MetadataService.CustomLabel();
+        if(cL.value == null) {
+            cL.value = 'dummy';
+        }
+        cLNames = cL.value.split(',');
+        String[] cLNames2 = (cL2.value == null) ? new String[]{} : cL2.value.split(',');
+        if(cLNames2.size() > 0) {
+            cLNames.addAll(cLNames2);
+        }
+        return cLNames;
     }
 
     public static void doEmailAlerts() {
@@ -488,18 +536,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
                 }
             }
 
-            if (wfaNames.size() > 0) {
-                for (Integer i = 0; i < wfaNames.size(); i++) {
-                    MetadataService.ReadResult readResult = new MetadataService.ReadResult();
-                    if (!Test.isRunningTest()) readResult.records = service.readMetadata('WorkflowAlert', wfaNames[i]).getRecords();
-                    allMetadataList.add(new List<MetadataService.Metadata>());
-                    for (MetadataService.Metadata wfaMeta : readResult.records) {
-                        MetadataService.WorkflowAlert wfa = (MetadataService.WorkflowAlert) wfaMeta;
-                        wfa.ccEmails = (!Test.isRunningTest()) ? invalidateEmailArray(wfa.ccEmails).split(',') : invalidateEmailArray(new String[]{'test@insperity.com'}).split(',');
-                        allMetadataList[i].add(wfa);
-                    }
-                }
-            }
+            setWFAlertData(wfaNames, allMetadataList);
 
             if (allMetadataList.size() > 0) {
                 for (Integer i = 0; i < allMetadataList.size(); i ++) {
@@ -508,6 +545,22 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
             }
         } catch(Exception e) {
             NSP_PrepSandbox.handleException( e , 'doEmailAlerts' );
+        }
+    }
+
+    public static void setWFAlertData(List<String[]> wfaNames, List<List<MetadataService.Metadata>> allMetadataList) {
+        if (wfaNames.size() > 0) {
+            MetadataService.MetadataPort service = createService();
+            for (Integer i = 0; i < wfaNames.size(); i++) {
+                MetadataService.ReadResult readResult = new MetadataService.ReadResult();
+                if (!Test.isRunningTest()) readResult.records = service.readMetadata('WorkflowAlert', wfaNames[i]).getRecords();
+                allMetadataList.add(new List<MetadataService.Metadata>());
+                for (MetadataService.Metadata wfaMeta : readResult.records) {
+                    MetadataService.WorkflowAlert wfa = (MetadataService.WorkflowAlert) wfaMeta;
+                    wfa.ccEmails = (!Test.isRunningTest()) ? invalidateEmailArray(wfa.ccEmails).split(',') : invalidateEmailArray(new String[]{'test@insperity.com'}).split(',');
+                    allMetadataList[i].add(wfa);
+                }
+            }
         }
     }
 
