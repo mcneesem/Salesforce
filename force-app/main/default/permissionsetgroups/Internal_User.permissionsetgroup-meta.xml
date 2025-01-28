@@ -59,5 +59,6 @@
     <permissionSets>Onboarding_Meeting_Request_Detail_Edit</permissionSets>
     <permissionSets>Required_Reporting_Fields</permissionSets>
     <permissionSets>Traction_Complete_Fields_Edit_Access</permissionSets>
+    <permissionSets>Update_Onboarding_Meetings</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>
