@@ -766,7 +766,7 @@
             <label>Performance Management or Time and Attendance</label>
         </rules>
     </decisions>
-    <description>Added decision node to look for Account Segment for MM Checklist. Added STP or MMC Screen. Updated with Checklist Type and MidMarket Closing Checklist path added. Updated Missing Info decision node and resulting Missing info screen, removed varOpportunityRecord</description>
+    <description>Reworked for WS carve out. Added decision node to look for Account Segment for MM Checklist. Added STP or MMC Screen. Updated with Checklist Type and MidMarket Closing Checklist path added. Updated Missing Info decision node and resulting Missing info screen, removed varOpportunityRecord</description>
     <environments>Default</environments>
     <interviewLabel>Checklist - Existing Checklist Check Before Creation {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Checklist - Existing Checklist Check Before Creation</label>
@@ -1174,7 +1174,7 @@
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <visibilityRule>
-                <conditionLogic>1 AND 4 AND (2 OR 3)</conditionLogic>
+                <conditionLogic>(1 AND 4 AND (2 OR 3)) OR 5</conditionLogic>
                 <conditions>
                     <leftValueReference>recordOpportunity.NSP_Account_Segment__c</leftValueReference>
                     <operator>NotEqualTo</operator>
@@ -1201,6 +1201,13 @@
                     <operator>NotEqualTo</operator>
                     <rightValue>
                         <stringValue>Enterprise</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>recordOpportunity.NSP_PrimaryProduct__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>WS</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
