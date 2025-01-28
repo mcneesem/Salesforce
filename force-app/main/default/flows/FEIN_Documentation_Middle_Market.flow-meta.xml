@@ -8,7 +8,7 @@
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
         <faultConnector>
-            <targetReference>Fault_Flow_For_Email</targetReference>
+            <targetReference>Assign_varFaultElement_FeinDocEmail</targetReference>
         </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
@@ -54,6 +54,7 @@
             </value>
         </inputParameters>
         <nameSegment>emailSimple</nameSegment>
+        <versionSegment>1</versionSegment>
     </actionCalls>
     <apiVersion>60.0</apiVersion>
     <assignments>
@@ -87,6 +88,22 @@
         </assignmentItems>
         <connector>
             <isGoTo>true</isGoTo>
+            <targetReference>Fault_Flow_For_Email</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_FeinDocEmail</name>
+        <label>Assign varFaultElement FeinDocEmail</label>
+        <locationX>314</locationX>
+        <locationY>1548</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>FeinDocumentationEmail</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
             <targetReference>Fault_Flow_For_Email</targetReference>
         </connector>
     </assignments>
@@ -409,7 +426,7 @@
         <name>Fault_Flow_For_Email</name>
         <label>Fault Handler Subflow</label>
         <locationX>314</locationX>
-        <locationY>1548</locationY>
+        <locationY>1656</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultElement</name>
