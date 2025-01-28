@@ -179,10 +179,15 @@ export function onBeforeCalculate(quote, lines, conn)
     //checkSerialIdValidationFlag(quote, lines);
     calculateEarlyTerminationFee(quote, lines)
     checkBookedSetup(quote, lines);
+    let csProducts = quote.record["Discounted_Product_codes__c"]? quote.record["Discounted_Product_codes__c"].split(',') : null;
+	let csRates = quote.record["Discounted_Consumption_Rates__c"]? quote.record["Discounted_Consumption_Rates__c"].split(',') : null;
     let Seasonal = checkSeasonalQuote(quote);
     if(Seasonal === true){
         ProcessSeasonalRates(quote,lines);
     }
+    if(csProducts != null && csRates != null){
+	    ProcessRates(quote,lines,csProducts,csRates);
+	}
     return Promise.resolve();
 }
 
@@ -214,6 +219,9 @@ export function onAfterPriceRules(quoteModel, quoteLineModels) {
     calculateWXSetupFee(quoteModel, quoteLineModels);
     let isPartnerCS = quoteModel.record["NSP_Is_Partner_CS_Applicable__c"]; console.log('partner cs : '+isPartnerCS);
     let isSeasonal = checkSeasonalQuote(quoteModel);
+    let csProducts = quoteModel.record["Discounted_Product_codes__c"]? quoteModel.record["Discounted_Product_codes__c"].split(',') : null;
+	let csRates = quoteModel.record["Discounted_Consumption_Rates__c"]? quoteModel.record["Discounted_Consumption_Rates__c"].split(',') : null;
+
 	debugger;
     if(!isPartnerCS && isSeasonal === false){
         processConsumptionSchedule(quoteModel, quoteLineModels);
@@ -221,8 +229,138 @@ export function onAfterPriceRules(quoteModel, quoteLineModels) {
     if(isSeasonal === true){
         processSeasonalDiscount(quoteModel,quoteLineModels);
     }
+    if(csProducts != null && csRates != null){
+	    processCSDiscount(quoteModel,quoteLineModels,csProducts,csRates);
+	}
     return Promise.resolve();
 }
+
+/*
+Normal Pricing Implementation
+Method - ProcessRates
+called via onBeforeCalculate
+US - 299910,294434
+*/
+export function ProcessRates(quote,lines,csProducts,csRates){
+
+    if(quote.record.SBQQ__LineItemCount__c>0){
+        lines.forEach(function(line){
+		    let productcode = 	line.record.SBQQ__ProductCode__c;
+            if(line.consumptionSchedules){
+                line.consumptionSchedules.forEach(function(cs){
+                    let CSName = cs.get("Name");
+                    if(csRates.includes(CSName) && csProducts.includes(productcode)){
+                        const rates = cs.getRates();
+                        rates.forEach(function(csRate){
+						    if(csRate){
+								let descriptionField = csRate.get("SBQQ__Description__c");
+								if(descriptionField){
+									let splitArray = descriptionField.split("_");
+									if(splitArray.length > 1){
+										let priceField = csRate.get("SBQQ__Price__c");
+										let originalPriceField = csRate.get("SBQQ__OriginalPrice__c");
+										
+										if(priceField !== parseFloat(splitArray[0])){
+											priceField = parseFloat(splitArray[0]);
+											csRate.set("SBQQ__Price__c", priceField);
+										}
+										if(originalPriceField !== parseFloat(splitArray[1])){
+											originalPriceField = parseFloat(splitArray[1]);
+											csRate.set("SBQQ__OriginalPrice__c", originalPriceField);
+										}               			
+									}
+								}
+							}
+                            let currentPrice = csRate.get("SBQQ__Price__c");
+							let originalPrice = csRate.get("SBQQ__OriginalPrice__c");
+							let descriptionArray = [];
+							let newSetPrice = currentPrice;
+
+							if(originalPrice !== currentPrice){
+								csRate.set("SBQQ__Price__c", originalPrice);
+							}
+							let newPrice = originalPrice;
+							csRate.set("SBQQ__Price__c", newPrice);
+							let newDescription = newPrice + "_" + originalPrice;
+							csRate.set("SBQQ__Description__c", newDescription);
+                        });
+                    }
+                });
+            }
+        });
+    }
+}
+
+/*
+Consumption Schedule Discount Implementation
+Method - processCSDiscount
+called via onAfterPriceRules
+US - 299910,294434
+*/
+export function processCSDiscount(quote,lines,csProducts,csRates){
+    let quotediscountCS = quote.record.Discount_Consumption_Schedules__c;
+
+    //get the discount type(percent deducted as %, Dollar deducted directly)
+    lines.forEach(function(line){
+        let percentDiscount = line.record.SBQQ__Discount__c;
+        let amountDiscount = line.record.SBQQ__AdditionalDiscountAmount__c;
+		let productcode = 	line.record.SBQQ__ProductCode__c;
+        let lineDiscount = 0;
+        let discountType = "";
+        if(percentDiscount === null || percentDiscount === ""){
+            if(amountDiscount === null || amountDiscount === ""){
+                lineDiscount = 0;
+                discountType = "no discount";
+            }else{
+                lineDiscount = amountDiscount;
+                discountType = "amount";
+            }
+        }else{
+            lineDiscount = percentDiscount;
+            discountType = "percent";
+        }
+
+        if(line.consumptionSchedules){
+            line.consumptionSchedules.forEach(function(cs){
+                let CSName = cs.get("Name");
+                if(csRates.includes(CSName) && csProducts.includes(productcode)){
+                    const rates = cs.getRates();
+                    rates.forEach(function(csRate){
+						let originalPrice = csRate.get("SBQQ__OriginalPrice__c");
+						let currentPrice =  csRate.get("SBQQ__Price__c");
+						//newSetPrice is used for calculation purpose to be populated below
+						let newSetPrice = 0;
+						if(csRates.includes(CSName) && csProducts.includes(productcode)){
+							let newPriceAmt = 0;
+							let newPricePer = 0;
+							switch (discountType){
+								case "no discount":
+									break;
+								case "amount":
+									newPriceAmt = currentPrice - lineDiscount;
+									csRate.set("SBQQ__Price__c", newPriceAmt);
+									newPriceAmt = 0;
+									originalPrice = 0;
+									break;
+								case "percent":
+									newPricePer = currentPrice * ((100-lineDiscount)/100);
+									csRate.set("SBQQ__Price__c", newPricePer);
+									newPricePer = 0;
+									originalPrice = 0;
+									break;
+							}
+						}else{
+							if(originalPrice !== currentPrice){
+								csRate.set("SBQQ__Price__c", originalPrice);
+							}
+						}
+					});
+                }
+            });
+        }
+    });
+}
+
 
 export function updateQuantityonTermination(quote, lines) {
     debugger;
@@ -1302,13 +1440,15 @@ export function processSeasonalDiscountHelper(
         let newSetPrice = 0;
         //Description stores the non discounted rolled up price
         let descriptionField = csRate.get("SBQQ__Description__c");
-        let splitArray = descriptionField.split("_");
-        if(splitArray.length > 1){
-            //use the non discounted rolled up price of the rate
-            newSetPrice = parseFloat(splitArray[1]);
-        }else{
-            //SBQQ__Price__c is already the non discounted rolled up price
-            newSetPrice = currentPrice;
+        if(descriptionField){
+            let splitArray = descriptionField.split("_");
+            if(splitArray.length > 1){
+                //use the non discounted rolled up price of the rate
+                newSetPrice = parseFloat(splitArray[1]);
+            }else{
+                //SBQQ__Price__c is already the non discounted rolled up price
+                newSetPrice = currentPrice;
+            }
         }
         if(newSetPrice!==currentPrice){
             csRate.set("SBQQ__Price__c", newSetPrice);
@@ -1430,13 +1570,15 @@ export function ProcessSeasonalRatesHelper(csRate
     }
     let newPrice = originalPrice;
     let descriptionField = csRate.get("SBQQ__Description__c");
-    let splitArray = descriptionField.split("_");
-    if(splitArray.length > 1){
-        descriptionArray = splitArray[0];
-        newSetPrice = parseFloat(splitArray[1]);
-    }
-    else{
-        descriptionArray = descriptionField;
+    if(descriptionField){
+        let splitArray = descriptionField.split("_");
+        if(splitArray.length > 1){
+            descriptionArray = splitArray[0];
+            newSetPrice = parseFloat(splitArray[1]);
+        }
+        else{
+            descriptionArray = descriptionField;
+        }
     }
     if(descriptionArray){
         const productPrices = JSON.parse(descriptionArray);
@@ -1465,17 +1607,19 @@ export function resetSeasonalRate(csRate){
     //to prevent CPQ from overiding the OG price
     if(csRate){
         let descriptionField = csRate.get("SBQQ__Description__c");
-        let splitArray = descriptionField.split("_");
-        if(splitArray.length > 1){
-            let priceField = csRate.get("SBQQ__Price__c");
-            let originalPriceField = csRate.get("SBQQ__OriginalPrice__c");
-            if(priceField !== parseFloat(splitArray[1])){
-                priceField = parseFloat(splitArray[1]);
-                csRate.set("SBQQ__Price__c", priceField);
-            }if(originalPriceField !== parseFloat(splitArray[2])){
-                originalPriceField = parseFloat(splitArray[2]);
-                csRate.set("SBQQ__OriginalPrice__c", originalPriceField);
-            }   
+        if(descriptionField){
+            let splitArray = descriptionField.split("_");
+            if(splitArray.length > 1){
+                let priceField = csRate.get("SBQQ__Price__c");
+                let originalPriceField = csRate.get("SBQQ__OriginalPrice__c");
+                if(priceField !== parseFloat(splitArray[1])){
+                    priceField = parseFloat(splitArray[1]);
+                    csRate.set("SBQQ__Price__c", priceField);
+                }if(originalPriceField !== parseFloat(splitArray[2])){
+                    originalPriceField = parseFloat(splitArray[2]);
+                    csRate.set("SBQQ__OriginalPrice__c", originalPriceField);
+                }   
+            }
         }
     }
 }
