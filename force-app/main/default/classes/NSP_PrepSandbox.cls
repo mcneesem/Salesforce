@@ -152,7 +152,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
 
             if (allMetadataList.size() > 0 && !Test.isRunningTest()) {
                 for (Integer i = 0; i < allMetadataList.size(); i ++) {
-                    List<MetadataService.SaveResult> results = service.updateMetadata(allMetadataList[i]);
+                    service.updateMetadata(allMetadataList[i]);
                 }
             }
         } catch(Exception e) {
@@ -263,7 +263,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
 
             if (allMetadataList.size() > 0 && !Test.isRunningTest()) {
                 for (Integer i = 0; i < allMetadataList.size(); i ++) {
-                    List<MetadataService.SaveResult> results = service.updateMetadata(allMetadataList[i]);
+                    service.updateMetadata(allMetadataList[i]);
                 }
             }
         } catch(Exception e) {
@@ -538,9 +538,9 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
 
             setWFAlertData(wfaNames, allMetadataList);
 
-            if (allMetadataList.size() > 0) {
+            if (allMetadataList.size() > 0 && !Test.isRunningTest()) {
                 for (Integer i = 0; i < allMetadataList.size(); i ++) {
-                    if (!Test.isRunningTest()) List<MetadataService.SaveResult> updResults = service.updateMetadata(allMetadataList[i]);
+                    service.updateMetadata(allMetadataList[i]);
                 }
             }
         } catch(Exception e) {
