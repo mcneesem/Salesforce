@@ -1,17 +1,18 @@
 global class NSP_PrepSandbox implements SandboxPostCopy {
-    // test w/ NSP_PrepSandboxTest (83%)
+    // test w/ NSP_PrepSandboxTest (79%)
+    static final string STRING_INVALID = '.invalid';
 
     public String runManualResult{get;set;}
     global void runApexClass(SandboxContext context){
         try{
             doQueues();
         } catch(Exception e) {
-            System.debug('An exception occurred in runApexClass: ' + e.getMessage());
+            NSP_PrepSandbox.handleException( e , 'runApexClass' );
         }
         try{
             doCSettings(context.sandboxName());
         } catch(Exception e) {
-            System.debug('An exception occurred in runApexClass: ' + e.getMessage());
+            NSP_PrepSandbox.handleException( e , 'runApexClass' );
         }
     }
 
@@ -99,19 +100,8 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
             //  4 - LastName
             //  5 - Profile
             //  6 - Role
-            Map<String, List<Profile>> profileNameMap = new map<String, List<Profile>>();
-            Map<String, List<UserRole>> userRoleNameMap = new map<String, List<UserRole>>();
-            for (String row : userCsv.split('\n')) { // build Profile and Role ID Maps
-                String[] col = row.split(',');
-                if(col[5].length() > 0 && !profileNameMap.containsKey(col[5])){
-                    Profile[] userProf = [SELECT Id FROM Profile WHERE Name = :col[5].trim() WITH SECURITY_ENFORCED LIMIT 1];
-                    if(!userProf.isEmpty()) profileNameMap.put(col[5], userProf);
-                }
-                if(col[6].length() > 0 && !userRoleNameMap.containsKey(col[6])){
-                    UserRole[] userRole = [SELECT Id FROM UserRole WHERE Name = :col[6].trim() WITH SECURITY_ENFORCED LIMIT 1];
-                    if(!userRole.isEmpty()) userRoleNameMap.put(col[6], userRole);
-                }
-            }
+            Map<String, List<Profile>> profileNameMap = getProfileNameMap(userCsv);
+            Map<String, List<UserRole>> userRoleNameMap = getUserRoleNameMap(userCsv);
 
             List<User> userList = new List<User>(); // list of User records to upsert
             String[] rows = userCsv.split('\n');
@@ -121,13 +111,12 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
                 if ((column[1].indexOf(sandboxName) > -1 || column[1].indexOf('CRM Team') > -1) && column[1].indexOf('integration') < 0 && column[2].indexOf('noreply') < 0){
                     userList.add(new User(
                         IsActive = true,
-                        Email = column[2].substringBefore('.invalid').trim(),
+                        Email = column[2].substringBefore(STRING_INVALID).trim(),
                         FirstName = column[3].trim(),
                         LastName = column[4].trim(),
-                        Username = column[2].substringBefore('.invalid').trim() + '.' + sandboxName,
-                        ProfileId = (sandboxName.startsWith('dev') && column[1].contains('CRM Team')) ? adminProfileId : (profileNameMap.containsKey(column[5])) ? profileNameMap.get(column[5])[0].Id : '00e4x0000012F54',
-                            // '00e4x0000012F54' is 'Minimum Access - Salesforce' Profile Id
-                        FederationIdentifier = column[2].substringBefore('.invalid').trim(),
+                        Username = column[2].substringBefore(STRING_INVALID).trim() + '.' + sandboxName,
+                        ProfileId = getImportUserProfileId(adminProfileId, sandboxName, profileNameMap, column[1], column[5]),
+                        FederationIdentifier = column[2].substringBefore(STRING_INVALID).trim(),
                         Alias = column[3].substring(0,1).toLowercase() + aliasEnd.toLowercase(),
                         UserRoleId = (userRoleNameMap.containsKey(column[6])) ? userRoleNameMap.get(column[6])[0].Id : null,
                         TimeZoneSidKey = 'America/Chicago',
@@ -137,18 +126,13 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
                     ));
                 }
             }
-            if(!Test.isRunningTest()) {
+            if(!Test.isRunningTest() && userList != null) {
                 Database.UpsertResult[] userResults = Database.upsert(userList, User.FederationIdentifier, false);
-                for (Database.UpsertResult userResult : userResults) {
-                    if (!userResult.isSuccess()) {
-                        for (Database.Error err : userResult.getErrors()) {
-                            System.debug('An exception occurred in doUserImport: ' + err.getMessage());
-                        }
-                    }
-                }
+                NSP_ErrorLogHandler.logResults( NSP_PrepSandbox.class.getName() , 'doUserImport' , userResults);
+                updateUserLogins(userResults);
             }
         } catch(Exception e) {
-            System.debug('An exception occurred in doUserImport: ' + e.getMessage());
+            NSP_PrepSandbox.handleException( e , 'doUserImport' );
         }
     }
 
@@ -200,7 +184,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
                             customField1.value = 'monica.adams@insperity.com';
                          }
                          when else {
-                            customField1.value = cMdRecord.NSP_Email_Address__c.substringBefore('.invalid').trim() + '.invalid';
+                            customField1.value = cMdRecord.NSP_Email_Address__c.substringBefore(STRING_INVALID).trim() + STRING_INVALID;
                          }
                      }
 
@@ -225,7 +209,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
                     cMdUpd.label = name;
                 MetadataService.CustomMetadataValue customField1 = new MetadataService.CustomMetadataValue();
                     customField1.field = 'NSP_Email_Address__c'; // the custom field API Name to be updated
-                    customField1.value = cMdRecord.NSP_Email_Address__c.substringBefore('.invalid').trim() + '.invalid';
+                    customField1.value = cMdRecord.NSP_Email_Address__c.substringBefore(STRING_INVALID).trim() + STRING_INVALID;
 
                 if (cMdUpd.values != null) { //add the changes to list of changes to be deployed
                     cMdUpd.values.add(customField1); 
@@ -246,7 +230,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
                 }
             }
         } catch(Exception e) {
-            System.debug('An exception occurred in doCMetadata: ' + e.getMessage());
+            NSP_PrepSandbox.handleException( e , 'doCMetadata' );
         }
     }
 
@@ -320,7 +304,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
                 }
             }
         } catch(Exception e) {
-            System.debug('An exception occurred in doCMetadataSvc: ' + e.getMessage());
+            NSP_PrepSandbox.handleException( e , 'doCMetadataSvc' );
         }
     }
     
@@ -391,7 +375,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
                 // }
             }
         } catch(Exception e) {
-            System.debug('An exception occurred in doCLabels: ' + e.getMessage());
+            NSP_PrepSandbox.handleException( e , 'doCLabels' );
         }
     }
     
@@ -411,7 +395,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
             for(integer i=0; i < cLNames.size() ; i++){
                 cL = (!Test.isRunningTest()) ? (MetadataService.CustomLabel) service.readMetadata('CustomLabel', new String[] { cLNames[i] }).getRecords()[0] : new MetadataService.CustomLabel();
                 cL.value = (!Test.isRunningTest()) ? cL.value : 'test@insperity.com';
-                if((cL.value != null && cL.value.indexOf('@') != -1 && cL.value.indexOf('.invalid') == -1)) {
+                if((cL.value != null && cL.value.indexOf('@') != -1 && cL.value.indexOf(STRING_INVALID) == -1)) {
                     MetadataService.CustomLabel cLUpd = new MetadataService.CustomLabel();
                     cLUpd.fullName = cL.fullName;
                     cLUpd.value = invalidateEmailString(cL.value);
@@ -433,7 +417,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
                 }
             }
         } catch(Exception e) {
-            System.debug('An exception occurred in doEmailCLabels: ' + e.getMessage());
+            NSP_PrepSandbox.handleException( e , 'doEmailCLabels' );
         }
     }
 
@@ -523,7 +507,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
                 }
             }
         } catch(Exception e) {
-            System.debug('An exception occurred in doEmailAlerts: ' + e.getMessage());
+            NSP_PrepSandbox.handleException( e , 'doEmailAlerts' );
         }
     }
 
@@ -545,7 +529,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
             }            
             update updDSSettings;
         } catch(Exception e) {
-            System.debug('An exception occurred in doCSettings: ' + e.getMessage());
+            NSP_PrepSandbox.handleException( e , 'doCSettings' );
         }
 
         try {
@@ -555,6 +539,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
             upsert cS1;
         } catch(Exception e) {
             System.debug('An exception occurred in doCSettings: ' + e.getMessage());
+            NSP_PrepSandbox.handleException( e , 'doCSettings' );
         }
 
         try {
@@ -565,7 +550,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
                 upsert cS2;
             }
         } catch(Exception e) {
-            System.debug('An exception occurred in doCSettings: ' + e.getMessage());
+            NSP_PrepSandbox.handleException( e , 'doCSettings' );
         }
 
         try {
@@ -578,7 +563,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
             cS3.SandboxName__c = sandboxName;
             upsert cS3;
         } catch(Exception e) {
-            System.debug('An exception occurred in doCSettings: ' + e.getMessage());
+            NSP_PrepSandbox.handleException( e , 'doCSettings' );
         }
 
         try {
@@ -599,7 +584,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
             }
             upsert cS4;    
         } catch(Exception e) {
-            System.debug('An exception occurred in doCSettings: ' + e.getMessage());
+            NSP_PrepSandbox.handleException( e , 'doCSettings' );
         }
             
         try {
@@ -607,7 +592,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
             cS5.BoxTemplateFolderId__c = '225207143235';
             upsert cS5;
         } catch(Exception e) {
-            System.debug('An exception occurred in doCSettings: ' + e.getMessage());
+            NSP_PrepSandbox.handleException( e , 'doCSettings' );
         }
     }
     
@@ -655,7 +640,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
                 List<MetadataService.SaveResult> resultsUpd = service.updateMetadata(allMetadataList);
             }
         } catch(Exception e) {
-            System.debug('An exception occurred in doE2CAddresses: ' + e.getMessage());
+            NSP_PrepSandbox.handleException( e , 'doE2CAddresses' );
         }
     }
     
@@ -663,8 +648,8 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
         try {
             List<Group> updateQueue = new List<Group>();
             for (Group queue:[SELECT id, email FROM Group WHERE type = 'Queue' AND email > '']) {
-                if(queue.email.indexOf('.invalid') == -1){
-                    queue.email = queue.email + '.invalid';
+                if(queue.email.indexOf(STRING_INVALID) == -1){
+                    queue.email = queue.email + STRING_INVALID;
                     updateQueue.add(queue);
                 }
             }
@@ -672,7 +657,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
                 update updateQueue;
             }
         } catch(Exception e) {
-            System.debug('An exception occurred in doQueues: ' + e.getMessage());
+            NSP_PrepSandbox.handleException( e , 'doQueues' );
         }
     }
     
@@ -685,7 +670,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
             if (iStep == 4) cS.PostRefreshRun4__c = true;
             upsert cS;
         } catch(Exception e) {
-            System.debug('An exception occurred in setPostRefreshRunFlag: ' + e.getMessage());
+            NSP_PrepSandbox.handleException( e , 'setPostRefreshRunFlag' );
         }
     }
     
@@ -699,7 +684,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
     private static string invalidateEmailArray(List<String> origEmails) {
         string newES = '';
         for(integer i=0; i<origEmails.size() ; i++) {
-            newES = (origEmails[i].indexOf('.invalid') == -1) ? newES + ',' + origEmails[i] + '.invalid' : newES + ',' + origEmails[i];
+            newES = (origEmails[i].indexOf(STRING_INVALID) == -1) ? newES + ',' + origEmails[i] + STRING_INVALID : newES + ',' + origEmails[i];
         }
         return newES.substringAfter(',');
     }
@@ -708,9 +693,67 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
         string[] origEmails = origES.split(',');
         string newES = '';
         for(integer i=0; i<origEmails.size() ; i++) {
-            newES = (origEmails[i].indexOf('.invalid') == -1) ? newES + ',' + origEmails[i] + '.invalid' : newES + ',' + origEmails[i];
+            newES = (origEmails[i].indexOf(STRING_INVALID) == -1) ? newES + ',' + origEmails[i] + STRING_INVALID : newES + ',' + origEmails[i];
         }
         return newES.substringAfter(',');
+    }
+    
+    private static string getImportUserProfileId(String adminProfileId, String sandboxName, Map<String, List<Profile>> profileNameMap, String col1, String col5) {
+        string profileId = '00e4x0000012F54'; // '00e4x0000012F54' is 'Minimum Access - Salesforce' Profile Id
+        if( sandboxName.startsWith('dev') && col1.contains('CRM Team') ) {
+            profileId = adminProfileId;
+        } else if ( profileNameMap.containsKey(col5) ) {
+            profileId = profileNameMap.get(col5)[0].Id;
+        }
+        return profileId;
+    }
+
+    private static Map<String, List<Profile>> getProfileNameMap(String userCsv) {
+        Map<String, List<Profile>> profileNameMap = new map<String, List<Profile>>();
+        for (String row : userCsv.split('\n')) { // build Profile Map
+            String[] col = row.split(',');
+            if(col[5].length() > 0 && !profileNameMap.containsKey(col[5])){
+                Profile[] userProf = [SELECT Id FROM Profile WHERE Name = :col[5].trim() WITH SECURITY_ENFORCED LIMIT 1];
+                if(!userProf.isEmpty()) profileNameMap.put(col[5], userProf);
+            }
+        }
+        return profileNameMap;
+    }
+
+    private static Map<String, List<UserRole>> getUserRoleNameMap(String userCsv) {
+        Map<String, List<UserRole>> userRoleNameMap = new map<String, List<UserRole>>();
+        for (String row : userCsv.split('\n')) { // build Role ID Map
+            String[] col = row.split(',');
+            if(col[6].length() > 0 && !userRoleNameMap.containsKey(col[6])){
+                UserRole[] userRole = [SELECT Id FROM UserRole WHERE Name = :col[6].trim() WITH SECURITY_ENFORCED LIMIT 1];
+                if(!userRole.isEmpty()) userRoleNameMap.put(col[6], userRole);
+            }
+        }
+        return userRoleNameMap;
+    }
+    
+    private static void updateUserLogins(Database.UpsertResult[] userResults) {
+        Set<Id> userIdSet = new Set<Id>();
+        List<UserLogin> userLoginList = new List<UserLogin>(); // list of UserLogin records to update
+        try {            
+            for (Database.UpsertResult userResult : userResults) {
+                if (userResult.isSuccess()) {
+                    userIdSet.add(userResult.getId());
+                }
+            }
+            if ( !userIdSet.isEmpty() ) {
+                for(UserLogin ulogin : [SELECT Id, IsFrozen, UserId From UserLogin Where UserId IN :userIdSet]) {
+                    ulogin.IsFrozen = false;
+                    userLoginList.add(ulogin);
+                }
+            }
+            if ( userLoginList != null ) {
+                Database.SaveResult[] userLoginResults = Database.update(userLoginList, false);
+                NSP_ErrorLogHandler.logResults( NSP_PrepSandbox.class.getName() , 'doUserImport' , userLoginResults);
+            }
+        } catch(Exception e) {
+            NSP_PrepSandbox.handleException( e , 'updateUserLogins' );
+        }
     }
 
     private class AlertResult {
@@ -741,5 +784,13 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
         public string EntityDefinitionId{get;set;}
         public MetadataService.WorkflowAlert Metadata{get;set;}
         public String FullName{get;set;}
+    }
+
+    private static void handleException( Exception e , String methodName ) {
+        NSP_ErrorLogHandler.logException(
+            NSP_PrepSandbox.class.getName() ,
+            methodName ,
+            e
+        );
     }
 }
