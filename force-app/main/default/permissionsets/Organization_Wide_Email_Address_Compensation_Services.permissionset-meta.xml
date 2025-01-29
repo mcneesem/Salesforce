@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <description>Grants the Organization-Wide Email Address: compensation@insperity.com</description>
+    <flowAccesses>
+        <enabled>true</enabled>
+        <flow>Case_Send_Compensation_Service_request_Email</flow>
+    </flowAccesses>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Organization-Wide Email Address: Compensation Services</label>
 </PermissionSet>

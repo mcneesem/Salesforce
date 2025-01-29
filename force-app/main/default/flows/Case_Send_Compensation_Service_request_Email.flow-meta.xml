@@ -154,6 +154,7 @@
     </assignments>
     <environments>Default</environments>
     <interviewLabel>Case - Send Compensation Service request Email {!$Flow.CurrentDateTime}</interviewLabel>
+    <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
     <label>Case - Send Compensation Service request Email</label>
     <processMetadataValues>
         <name>BuilderType</name>
