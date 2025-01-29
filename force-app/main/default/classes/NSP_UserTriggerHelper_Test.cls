@@ -9,26 +9,31 @@
 public with sharing class NSP_UserTriggerHelper_Test {
     public static final String ACCOUNTTEST1 = 'AccountTest';
     private static final List<String> USER_FIELDS = new List<String>{'Id', 'NSP_Profile_Name__c'};
+    private static final String phonenumber = '(112)6475261 ext415';
     public NSP_UserTriggerHelper_Test() {
         
     }
     
     @testSetup
     static void setupTestData(){
+        UserTriggerSettings__c settings = UserTriggerSettings__c.getOrgDefaults();
+        settings.AllowedAdmins__c = UserInfo.getUserId();
+        settings.BccAddresses__c = UserInfo.getUserEmail();
+        upsert settings;
         
         Account acc = (Account)NSP_TestExtendedDataFactory.createSObject(new Account(), 'NSP_TestDataFactory.AccountDefaults', false);
         acc.Name = 'Test Acc';
         insert acc;
     
         User tUser =  NSP_TestHelper.createUser(false);
-        tUser.Phone = '(112)6475261 ext415';
+        tUser.Phone = NSP_UserTriggerHelper_Test.phonenumber;
         tUser.NSP_Service_Region__c = 'MMSO - Southeast';
         tUser.NSP_Salesforce_Field_Service__c = NSP_ServiceConstants.SALESFORCE_FIELD_SERVICE_DISPATCHER;
         tUser.NSP_Dispatch_Region__c = NSP_ServiceConstants.CHILD_DISPATCH_REGION;
         insert tUser;
         
         User t1User =  NSP_TestHelper.createUser(false);
-        t1User.Phone = '(112)6475261 ext415';
+        t1User.Phone = NSP_UserTriggerHelper_Test.phonenumber;
         t1User.NSP_Financial_Force_User__c = 'Full Access';
         t1User.Username = 'testuser@test.com' + System.currentTimeMillis();
         insert t1User;
@@ -64,7 +69,7 @@ public with sharing class NSP_UserTriggerHelper_Test {
     static testMethod void updatePhoneNumberTest(){
         Test.startTest();
         User users = [Select Id, Name,Phone from User WHERE Username =: NSP_TestHelper.DEFAULT_USERNAME LIMIT 1]; //Added WHERE Condition as part of code fix
-        users.Phone = '(112)6475261 ext415';
+        users.Phone = NSP_UserTriggerHelper_Test.phonenumber;
         update users;
         users.Phone = '(122)6475261 ext415';
         update users;
@@ -145,7 +150,7 @@ public with sharing class NSP_UserTriggerHelper_Test {
     @isTest
     static void updateAssetServiceRegionTest() {
         Test.startTest();
-        User user = [SELECT Id, Phone, NSP_Service_Region__c  FROM User WHERE Phone = '(112)6475261 ext415' LIMIT 1];
+        User user = [SELECT Id, Phone, NSP_Service_Region__c  FROM User WHERE Phone = :NSP_UserTriggerHelper_Test.phonenumber LIMIT 1];
         user.NSP_Service_Region__c = 'MMSO - Houston';
         update user;
         System.assert(user.NSP_Service_Region__c == 'MMSO - Houston');
@@ -160,7 +165,7 @@ public with sharing class NSP_UserTriggerHelper_Test {
     @isTest
     static void processUserPermissionsNegativeTest() {
         Test.startTest();
-        User user = [SELECT Id, Phone, NSP_Service_Region__c  FROM User WHERE Phone = '(112)6475261 ext415' LIMIT 1];
+        User user = [SELECT Id, Phone, NSP_Service_Region__c  FROM User WHERE Phone = :NSP_UserTriggerHelper_Test.phonenumber LIMIT 1];
         user.Phone = '12345676';
         update user;
 
@@ -183,7 +188,7 @@ public with sharing class NSP_UserTriggerHelper_Test {
     @isTest
     static void processUserPermissions_Test() {
         Test.startTest();
-        User user = [SELECT Id, Phone, NSP_Service_Region__c  FROM User WHERE Phone = '(112)6475261 ext415' LIMIT 1];
+        User user = [SELECT Id, Phone, NSP_Service_Region__c  FROM User WHERE Phone = :NSP_UserTriggerHelper_Test.phonenumber LIMIT 1];
         user.NSP_Salesforce_Field_service__c = 'Resource';
         user.NSP_Dispatch_Region__c = 'Central';
         update user;
@@ -196,9 +201,6 @@ public with sharing class NSP_UserTriggerHelper_Test {
         }
 
         system.assertNotEquals(setPermissionSetName, null);
-       // system.assert(setPermissionSetName.contains('FSL_Resource_License'));
-       // system.assert(setPermissionSetName.contains('EinsteinActivityCaptureIncluded'));
-
     }
     
     /**
@@ -213,7 +215,7 @@ public with sharing class NSP_UserTriggerHelper_Test {
         List<String> profileFields = new List<String>{'Id', 'Name'};
         Profile peoProfileId =  Database.query(new NSP_QueryBuilder('Profile', profileFields).addFilter('Name', NSP_ServiceConstants.PEOSERVICE).addLimit(1).setSecurityEnforce(false).build());
         Profile integrationUserId =  Database.query(new NSP_QueryBuilder('Profile', profileFields).addFilter('Name', NSP_ServiceConstants.INTEGRATION_USER).addLimit(1).setSecurityEnforce(false).build());
-        User PEOUSER = new User(
+        User peoUser = new User(
             ProfileId = peoProfileId.Id,
             LastName = 'TestClassUser',
             Email = 'testuser@insperity.com',
@@ -226,12 +228,8 @@ public with sharing class NSP_UserTriggerHelper_Test {
             LanguageLocaleKey = 'en_US',
             LocaleSidKey = 'en_US'
         );
-        insert PEOUSER;
+        insert peoUser;
         
-        List<String> grpFields = new List<String>{'Id', 'Type','DeveloperName'};
-            List<String> grpMemFields = new List<String>{'Id', 'GroupId','UserOrGroupId'};
-                Set<Id> grpMemIdSet = new Set<Id>();
-        Id serviceProfileGroupId = NSP_sObjectSelector.selectGroupByTypeAndApiName(NSP_ServiceConstants.TYPE_REGULAR, NSP_ServiceConstants.SERVICE_PROFILE_GROUP_MEMBERS, grpFields).Id;
         
         // Query PEO User
         String userQuery = new NSP_QueryBuilder('User', USER_FIELDS).addFilter('NSP_User_Profile_Name__c', NSP_ServiceConstants.PEOSERVICE).addLimit(1).setSecurityEnforce(false).build();
@@ -241,13 +239,6 @@ public with sharing class NSP_UserTriggerHelper_Test {
         getPeoUser.ProfileId = integrationUserId.Id;
         update getPeoUser;
         Test.stopTest();
-        
-        // Query Group Member
-       /* String grpMemQuery = new NSP_QueryBuilder('GroupMember', grpMemFields).addFilter('GroupId', serviceProfileGroupId).addLimit(1).setSecurityEnforce(false).build();
-        GroupMember assertGrpMem =  Database.query(grpMemQuery);
-        
-        system.assert(assertGrpMem != null); 
-        system.assertEquals(assertGrpMem == null, false);  */
     }   
     
     /***********************************************************************************************
@@ -302,4 +293,24 @@ public with sharing class NSP_UserTriggerHelper_Test {
         }
     }
 
+    @IsTest
+    private static void testValidateProfileChanges() {
+        Test.startTest();
+        User record = new User(
+            Id=UserInfo.getUserId() ,
+            Email=UserInfo.getUserEmail() ,
+            FirstName=UserInfo.getFirstName() ,
+            ProfileId='00e4x000001r0zsAAA' // System Administrator
+        );
+        User oldRecord = new User(
+            Id=UserInfo.getUserId() ,
+            Email=UserInfo.getUserEmail() ,
+            FirstName=UserInfo.getFirstName() ,
+            ProfileId='00e4x000001dm3lAAA' // System Admin Lite
+        );
+        NSP_UserTriggerHelper helper = new NSP_UserTriggerHelper();
+        helper.testValidateProfileChanges( record , oldRecord );
+        Test.stopTest();
+    }
 }
+//
