@@ -404,7 +404,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
 			}
 			
             if(allMetadataList.size() > 0 && !Test.isRunningTest()){
-                List<MetadataService.SaveResult> results = service.updateMetadata(allMetadataList);
+                service.updateMetadata(allMetadataList);
             }
         } catch(Exception e) {
             NSP_PrepSandbox.handleException( e , 'doCLabels' );
@@ -445,7 +445,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
 
             if (allMetadataList[0].size() > 0 && !Test.isRunningTest()) {
                 for (Integer i = 0; i < allMetadataList.size(); i ++) {
-                    List<MetadataService.SaveResult> results = service.updateMetadata(allMetadataList[i]);
+                    service.updateMetadata(allMetadataList[i]);
                 }
             }
         } catch(Exception e) {
@@ -690,7 +690,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
             allMetadataList.add(cS);
 
             if (teamAddrMap.size() > 0 && allMetadataList.size() > 0 && !Test.isRunningTest()) {
-                List<MetadataService.SaveResult> resultsUpd = service.updateMetadata(allMetadataList);
+                service.updateMetadata(allMetadataList);
             }
         } catch(Exception e) {
             NSP_PrepSandbox.handleException( e , 'doE2CAddresses' );
