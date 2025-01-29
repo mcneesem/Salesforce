@@ -18,7 +18,7 @@ public class NSP_RetirementServiceActivationBatch implements Database.Batchable<
                 WHERE (
                     ( NSP_Current_Subplan__c = true )
                     AND ( NSP_Start_Date__c <= :System.today() )
-                    AND (NOT (NSP_Plan_ID__r.NSP_Plan_Id__c LIKE '7%'))
+                    AND ( NOT ( NSP_Plan_ID__r.NSP_Plan_Id__c LIKE '7%' ) )
                 )
             ]
         );
