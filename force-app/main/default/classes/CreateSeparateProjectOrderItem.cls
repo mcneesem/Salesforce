@@ -271,19 +271,27 @@ public with sharing class CreateSeparateProjectOrderItem {
                 {
                     matchingProducts = item.Matching_Product_Code__c.split(',');
                 }
-                findMatch = iterateProducts(matchingProducts, findMatch, item,allOrderProductsMap);
+                findMatch = iterateProducts(
+                    matchingProducts ,
+                    findMatch ,
+                    item ,
+                    allOrderProductsMap
+                );
             }
-            if(!findMatch){
-            		getProjectFromOrder( item , allOrderProductsMap );
+            if ( !findMatch ) {
+                getProjectFromOrder( item , allOrderProductsMap );
             }
         }
     }
-    
-    public static Boolean iterateProducts(List<String> matchingProducts, Boolean findMatch, OrderItem item, Map<String,OrderItem> allOrderProductsMap){
+
+    private static Boolean iterateProducts( List<String> matchingProducts , Boolean findMatch , OrderItem item , Map<String,OrderItem> allOrderProductsMap ) {
         for ( String prodCode : matchingProducts ) {
-            //new method that finds the key
-            if(!findMatch){
-                findMatch = populateProject( prodCode.trim() , item , allOrderProductsMap );
+            if ( !findMatch ) {
+                findMatch = populateProject(
+                    prodCode.trim() ,
+                    item ,
+                    allOrderProductsMap
+                );
             }
         }
         return findMatch;
@@ -312,7 +320,7 @@ public with sharing class CreateSeparateProjectOrderItem {
     //method to fetch project from order
     private static void getProjectFromOrder( OrderItem item , Map<String,OrderItem> allOrderProductsMap) {
         if ( ( item != null )
-            && ( allOrderProductsMap != null )           
+            && ( allOrderProductsMap != null )
             )
         {
             if ( item.Order.NSP_Project__c != null ) {
