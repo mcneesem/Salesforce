@@ -330,79 +330,75 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
         try {
             MetadataService.MetadataPort service = createService();
             List<MetadataService.Metadata> allMetadataList = new List<MetadataService.Metadata>();
-			
-			MetadataService.CustomLabel cL = new MetadataService.CustomLabel();
-			if(!Test.isRunningTest()){
-				cL = (MetadataService.CustomLabel) service.readMetadata('CustomLabel', new String[] { 'NSP_FTA_Base_URL' }).getRecords()[0];
-			}else{
-				cL.fullName = 'NSP_FTA_Base_URL';
-				cL.value = 'test';
-			}
-			if(cL.value != null){
-				MetadataService.CustomLabel cLUpd = new MetadataService.CustomLabel();
-				cLUpd.fullName = cL.fullName;
-				switch on sandboxName {
-					when 'stage' {
-						cLUpd.value = 'https://stageportalapps.insperity.com/financialcomparison/financialanalysis/';
-					}
-					when 'test' {
-						cLUpd.value = 'https://testportalapps.insperity.com/financialcomparison/financialanalysis/';
-					}
-					when 'merge' {
-						cLUpd.value = 'https://devportalapps.insperity.com/financialcomparison/financialanalysis/';
-					}
-					when else {
-						cLUpd.value = 'https://devportalapps.insperity.com/financialcomparison/financialanalysis/';
-					}
-				}
-				cLUpd.shortDescription = cL.shortDescription;
-				cLUpd.language = cL.language;
-				cLUpd.protected_x = cL.protected_x;
-				allMetadataList.add(cLUpd);
-			}
-
-			if(!Test.isRunningTest()){
-				cL = (MetadataService.CustomLabel) service.readMetadata('CustomLabel', new String[] { 'NSP_Docusign_Account_Id' }).getRecords()[0];
-			}else{
-				cL.fullName = 'NSP_Docusign_Account_Id';
-				cL.value = 'test';
-			}
-			if(cL.value != null){
-				MetadataService.CustomLabel cLUpd = new MetadataService.CustomLabel();
-				cLUpd.fullName = cL.fullName;
-				switch on sandboxName {
-					when 'merge' {
-						cLUpd.value = '122677';
-					}
-					when 'test' {
-						cLUpd.value = '65500';
-					}
-					when 'stage' {
-						cLUpd.value = '48945';
-					}
-					when else {
-						cLUpd.value = '50202';
-					}
-				}
-				cLUpd.shortDescription = cL.shortDescription;
-				cLUpd.language = cL.language;
-				cLUpd.protected_x = cL.protected_x;
-				allMetadataList.add(cLUpd);
-			}
-
-			if(!Test.isRunningTest()){
-				cL = (MetadataService.CustomLabel) service.readMetadata('CustomLabel', new String[] { 'NSP_Docusign_Base_URL' }).getRecords()[0];
-			}
-			if(cL.value != null){
-				MetadataService.CustomLabel cLUpd = new MetadataService.CustomLabel();
-				cLUpd.fullName = cL.fullName;
-				cLUpd.value = 'https://uatna11.springcm.com/atlas/doclauncher/OneClickDocGen';
-				cLUpd.shortDescription = cL.shortDescription;
-				cLUpd.language = cL.language;
-				cLUpd.protected_x = cL.protected_x;
-				allMetadataList.add(cLUpd);
-			}
-			
+            MetadataService.CustomLabel cL = new MetadataService.CustomLabel();
+            if(!Test.isRunningTest()){
+                cL = (MetadataService.CustomLabel) service.readMetadata('CustomLabel', new String[] { 'NSP_FTA_Base_URL' }).getRecords()[0];
+            }else{
+                cL.fullName = 'NSP_FTA_Base_URL';
+                cL.value = 'test';
+            }
+            if(cL.value != null){
+                MetadataService.CustomLabel cLUpd = new MetadataService.CustomLabel();
+                cLUpd.fullName = cL.fullName;
+                switch on sandboxName {
+                    when 'stage' {
+                        cLUpd.value = 'https://stageportalapps.insperity.com/financialcomparison/financialanalysis/';
+                    }
+                    when 'test' {
+                        cLUpd.value = 'https://testportalapps.insperity.com/financialcomparison/financialanalysis/';
+                    }
+                    when 'merge' {
+                        cLUpd.value = 'https://devportalapps.insperity.com/financialcomparison/financialanalysis/';
+                    }
+                    when else {
+                        cLUpd.value = 'https://devportalapps.insperity.com/financialcomparison/financialanalysis/';
+                    }
+                }
+                cLUpd.shortDescription = cL.shortDescription;
+                cLUpd.language = cL.language;
+                cLUpd.protected_x = cL.protected_x;
+                allMetadataList.add(cLUpd);
+            }
+            if(!Test.isRunningTest()){
+                cL = (MetadataService.CustomLabel) service.readMetadata('CustomLabel', new String[] { 'NSP_Docusign_Account_Id' }).getRecords()[0];
+            }else{
+                cL.fullName = 'NSP_Docusign_Account_Id';
+                cL.value = 'test';
+            }
+            if(cL.value != null){
+                MetadataService.CustomLabel cLUpd = new MetadataService.CustomLabel();
+                cLUpd.fullName = cL.fullName;
+                switch on sandboxName {
+                    when 'merge' {
+                        cLUpd.value = '122677';
+                    }
+                    when 'test' {
+                        cLUpd.value = '65500';
+                    }
+                    when 'stage' {
+                        cLUpd.value = '48945';
+                    }
+                    when else {
+                        cLUpd.value = '50202';
+                    }
+                }
+                cLUpd.shortDescription = cL.shortDescription;
+                cLUpd.language = cL.language;
+                cLUpd.protected_x = cL.protected_x;
+                allMetadataList.add(cLUpd);
+            }
+            if(!Test.isRunningTest()){
+                cL = (MetadataService.CustomLabel) service.readMetadata('CustomLabel', new String[] { 'NSP_Docusign_Base_URL' }).getRecords()[0];
+            }
+            if(cL.value != null){
+                MetadataService.CustomLabel cLUpd = new MetadataService.CustomLabel();
+                cLUpd.fullName = cL.fullName;
+                cLUpd.value = 'https://uatna11.springcm.com/atlas/doclauncher/OneClickDocGen';
+                cLUpd.shortDescription = cL.shortDescription;
+                cLUpd.language = cL.language;
+                cLUpd.protected_x = cL.protected_x;
+                allMetadataList.add(cLUpd);
+            }
             if(allMetadataList.size() > 0 && !Test.isRunningTest()){
                 service.updateMetadata(allMetadataList);
             }
