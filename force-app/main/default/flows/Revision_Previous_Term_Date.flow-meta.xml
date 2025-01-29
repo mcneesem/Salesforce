@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>62.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>AssignmentPreviousTermDate</name>
+        <label>AssignmentPreviousTermDate</label>
+        <locationX>50</locationX>
+        <locationY>503</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Previous_Term_Date__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_existing_term_forms.NSP_Last_Date_Wages_Paid_Through__c</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
     <decisions>
         <name>New_Termform_is_created</name>
         <label>New Termform is created</label>
@@ -18,17 +32,12 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Update</targetReference>
+                <targetReference>AssignmentPreviousTermDate</targetReference>
             </connector>
             <label>TermFormIsNotNull</label>
         </rules>
     </decisions>
     <environments>Default</environments>
-    <formulas>
-        <name>Termformname</name>
-        <dataType>String</dataType>
-        <expression>&quot;Revised  &quot; &amp; {!$Record.Name}</expression>
-    </formulas>
     <interviewLabel>Revision Previous Term Date {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Revision Previous Term Date</label>
     <processMetadataValues>
@@ -80,19 +89,6 @@
         <sortOrder>Desc</sortOrder>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
-    <recordUpdates>
-        <name>Update</name>
-        <label>UpdatePreviousTermDate</label>
-        <locationX>50</locationX>
-        <locationY>503</locationY>
-        <inputAssignments>
-            <field>Previous_Term_Date__c</field>
-            <value>
-                <elementReference>Get_existing_term_forms.NSP_Last_Date_Wages_Paid_Through__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputReference>$Record</inputReference>
-    </recordUpdates>
     <start>
         <locationX>56</locationX>
         <locationY>0</locationY>
@@ -119,18 +115,4 @@
         <triggerType>RecordBeforeSave</triggerType>
     </start>
     <status>Draft</status>
-    <variables>
-        <name>MostRecentDate</name>
-        <dataType>Date</dataType>
-        <isCollection>true</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>RecentDate</name>
-        <dataType>Date</dataType>
-        <isCollection>true</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
 </Flow>
