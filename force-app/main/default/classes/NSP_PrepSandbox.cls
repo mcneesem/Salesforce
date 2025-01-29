@@ -609,8 +609,17 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
         } catch(Exception e) {
             System.debug('An exception occurred in doCSettings: ' + e.getMessage());
         }
+
+        try {
+            UserTriggerSettings__c cS6 = UserTriggerSettings__c.getOrgDefaults();
+            cS6.AllowedAdmins__c = null;
+            cS6.BccAddresses__c = null;
+            upsert cS6;
+        } catch(Exception e) {
+            System.debug('An exception occurred in doCSettings: ' + e.getMessage());
+        }
     }
-    
+
     public static void doE2CAddresses(String sandboxName) {
         try {
             Map<String, Integer> orgMap = new Map<String, Integer>{'merge' => 1, 'test' => 2, 'stage' => 3};
