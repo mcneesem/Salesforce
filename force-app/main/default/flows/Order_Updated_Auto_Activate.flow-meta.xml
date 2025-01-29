@@ -27,7 +27,7 @@
             <name>Exclude</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>ExcludeProductType</leftValueReference>
+                <leftValueReference>$Setup.Order_Settings__c.Product_Type__c</leftValueReference>
                 <operator>Contains</operator>
                 <rightValue>
                     <elementReference>$Record.NSP_Order_Product_Type__c</elementReference>
@@ -37,11 +37,6 @@
         </rules>
     </decisions>
     <environments>Default</environments>
-    <formulas>
-        <name>ExcludeProductType</name>
-        <dataType>String</dataType>
-        <expression>{!$Setup.Order_Settings__c.Product_Type__c}</expression>
-    </formulas>
     <interviewLabel>Order - Updated - Auto Activate {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Order - Updated - Auto Activate</label>
     <processMetadataValues>
