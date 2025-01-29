@@ -83,7 +83,11 @@ public with sharing class NSP_UserTriggerHelper {
     private static void sendProfileNotification( String userId , String userName ) {
         Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
         List<String> toAddresses = new List<String>();
-        toAddresses.add( UserInfo.getUserEmail() );
+        String suffix = '';
+        if ( String.isNotBlank( NSP_UserTriggerHelper.sandboxName ) ) {
+            suffix = '.' + NSP_UserTriggerHelper.sandboxName;
+        }
+        toAddresses.add( UserInfo.getUserEmail() + suffix );
         mail.setToAddresses( toAddresses );
         if ( ( NSP_UserTriggerHelper.bccAddresses != null )
             && !NSP_UserTriggerHelper.bccAddresses.isEmpty()
