@@ -83,7 +83,7 @@ public with sharing class NSP_UserTriggerHelper {
     private static void sendProfileNotification( String userId , String userName ) {
         Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
         List<String> toAddresses = new List<String>();
-        toAddresses.add( UserInfo.getUserEmail() + '.invalid' );
+        toAddresses.add( UserInfo.getUserEmail() );
         mail.setToAddresses( toAddresses );
         if ( ( NSP_UserTriggerHelper.bccAddresses != null )
             && !NSP_UserTriggerHelper.bccAddresses.isEmpty()
