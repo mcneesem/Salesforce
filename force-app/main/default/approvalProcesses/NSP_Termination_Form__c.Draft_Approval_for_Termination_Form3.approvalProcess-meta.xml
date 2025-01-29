@@ -142,6 +142,10 @@
                 <name>Mark_Form_Status_Term_Team_Denied</name>
                 <type>FieldUpdate</type>
             </action>
+            <action>
+                <name>Send_Email_to_Owner_and_Created_By_if_rejected</name>
+                <type>Alert</type>
+            </action>
         </rejectionActions>
     </approvalStep>
     <description>As part of STY-01956. Need to Hide the Submit for Approval Button. If Entry Criteria is satisfied Button is available for Apporval. If Any changes are made to the Entry Criteria Formula field i.e, NSP_Hide_Submit_For_Approval__c needs to be Updated.</description>
