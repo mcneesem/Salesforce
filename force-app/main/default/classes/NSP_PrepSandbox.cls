@@ -657,7 +657,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
             cS6.BccAddresses__c = null;
             upsert cS6;
         } catch(Exception e) {
-            System.debug('An exception occurred in doCSettings: ' + e.getMessage());
+            NSP_PrepSandbox.handleException( e , 'doCSettings' );
         }
     }
 
