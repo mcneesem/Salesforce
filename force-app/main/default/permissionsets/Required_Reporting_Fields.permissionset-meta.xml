@@ -433,6 +433,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>NSP_Accrual_Profile_Account_Relationship__c.Account_Name_with_Aims_Client__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NSP_Accrual_Profile_Subclient_Relation__c.SubClient_Name_with_Aims_SubClient__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>NSP_Account_Team__c.NSP_Logged_in_User_check__c</field>
         <readable>true</readable>
     </fieldPermissions>
