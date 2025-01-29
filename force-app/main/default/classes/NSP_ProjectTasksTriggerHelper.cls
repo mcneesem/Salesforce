@@ -1511,6 +1511,12 @@ public class NSP_ProjectTasksTriggerHelper {
         }
         subjectString = prefix + accName + ' has been approved for termination';
         mailBody = prefix + NSP_ProjectTasksTriggerHelper.buildAnchorElement( customUrl , accName );
+        mailBody = NSP_ProjectTasksTriggerHelper.addTermDetails ( mailBody, termForm , assetList);
+        
+        sendEmail( listOfToAddresses , subjectString , mailBody );
+    }
+
+    private static String addTermDetails(String mailBody, NSP_Termination_Form__c termForm, List<Asset> assetList) {
         String termFormDetails = '';
         if (termForm != null){  
             if ( termForm.NSP_Last_Date_Wages_Paid_Through__c != null ) {
@@ -1536,7 +1542,7 @@ public class NSP_ProjectTasksTriggerHelper {
                 mailBody += NSP_ProjectTasksTriggerHelper.buildAnchorElement( assetUrl , asset.Name ) + '<br/>';
             }
         }
-        sendEmail( listOfToAddresses , subjectString , mailBody );
+        return mailBody;
     }
 
     private static void sendEmail( String[] listOfToAddresses , String subject , String body ) {
