@@ -1,4 +1,7 @@
-public with sharing class NSP_ChildOpportunitiesHelperFunctions {
+
+// This class should remain as "without sharing" as all its SOQL methods are called from updating a parent opty
+// by a User who may not have edit access to the desired child optys
+public without sharing class NSP_ChildOpportunitiesHelperFunctions {
     //  test w/ NSP_OpportunityTriggerHelperTest (79%)
 
     public NSP_ChildOpportunitiesHelperFunctions() { }
