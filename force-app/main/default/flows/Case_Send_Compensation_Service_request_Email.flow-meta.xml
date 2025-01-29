@@ -3,8 +3,8 @@
     <actionCalls>
         <name>Send_Compensation_Service_Request_email</name>
         <label>Send Compensation Service Request email</label>
-        <locationX>176</locationX>
-        <locationY>458</locationY>
+        <locationX>50</locationX>
+        <locationY>674</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
         <connector>
@@ -58,7 +58,7 @@
     <assignments>
         <name>Assign_varFaultElement_Get_Compensation_Services_Cases</name>
         <label>Assign varFaultElement - Get Compensation Services Cases</label>
-        <locationX>1232</locationX>
+        <locationX>1634</locationX>
         <locationY>242</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
@@ -74,8 +74,8 @@
     <assignments>
         <name>Assign_varFaultElement_Get_Contact</name>
         <label>Assign varFaultElement - Get_Contact</label>
-        <locationX>968</locationX>
-        <locationY>350</locationY>
+        <locationX>1106</locationX>
+        <locationY>458</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -91,8 +91,8 @@
     <assignments>
         <name>Assign_varFaultElement_Send_Compensation_Service_Request</name>
         <label>Assign varFaultElement - Send Compensation Service Request</label>
-        <locationX>704</locationX>
-        <locationY>566</locationY>
+        <locationX>578</locationX>
+        <locationY>782</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -108,8 +108,8 @@
     <assignments>
         <name>Assign_varFaultElement_Update_Case_Field_Sent_Email</name>
         <label>Assign varFaultElement - Update Case Field Sent Email</label>
-        <locationX>440</locationX>
-        <locationY>674</locationY>
+        <locationX>314</locationX>
+        <locationY>890</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -125,8 +125,8 @@
     <assignments>
         <name>Assignment_Variable</name>
         <label>Assignment Variable</label>
-        <locationX>176</locationX>
-        <locationY>350</locationY>
+        <locationX>50</locationX>
+        <locationY>566</locationY>
         <assignmentItems>
             <assignToReference>casenumber</assignToReference>
             <operator>Assign</operator>
@@ -148,10 +148,63 @@
                 <booleanValue>true</booleanValue>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>contactemail</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Compensation_Services_Cases.Contact.NSP_Work_email__c</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Send_Compensation_Service_Request_email</targetReference>
         </connector>
     </assignments>
+    <decisions>
+        <description>Confirms that a Case contact is listed</description>
+        <name>Is_Case_Contact_Completed</name>
+        <label>Is Case Contact Completed?</label>
+        <locationX>908</locationX>
+        <locationY>242</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>IsCompleted</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Compensation_Services_Cases.ContactId</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Contact</targetReference>
+            </connector>
+            <label>IsCompleted</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Confirms Contact has a work email address listed</description>
+        <name>Is_Contact_Work_Email_listed</name>
+        <label>Is Contact Work Email listed</label>
+        <locationX>446</locationX>
+        <locationY>458</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>IsListed</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Compensation_Services_Cases.Contact.NSP_Work_email__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assignment_Variable</targetReference>
+            </connector>
+            <label>IsListed</label>
+        </rules>
+    </decisions>
     <environments>Default</environments>
     <interviewLabel>Case - Send Compensation Service request Email {!$Flow.CurrentDateTime}</interviewLabel>
     <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
@@ -179,11 +232,11 @@
         <description>Gets and stores data from Compensation Services Case</description>
         <name>Get_Compensation_Services_Cases</name>
         <label>Get Compensation Services Cases</label>
-        <locationX>176</locationX>
+        <locationX>908</locationX>
         <locationY>134</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Get_Contact</targetReference>
+            <targetReference>Is_Case_Contact_Completed</targetReference>
         </connector>
         <faultConnector>
             <targetReference>Assign_varFaultElement_Get_Compensation_Services_Cases</targetReference>
@@ -211,11 +264,11 @@
         <description>Retrieve and Store Contact</description>
         <name>Get_Contact</name>
         <label>Get Contact</label>
-        <locationX>176</locationX>
-        <locationY>242</locationY>
+        <locationX>446</locationX>
+        <locationY>350</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Assignment_Variable</targetReference>
+            <targetReference>Is_Contact_Work_Email_listed</targetReference>
         </connector>
         <faultConnector>
             <targetReference>Assign_varFaultElement_Get_Contact</targetReference>
@@ -237,8 +290,8 @@
     <recordUpdates>
         <name>Update_Case_Field_Sent_Email</name>
         <label>Update Case Field Sent Email</label>
-        <locationX>176</locationX>
-        <locationY>566</locationY>
+        <locationX>50</locationX>
+        <locationY>782</locationY>
         <connector>
             <targetReference>Email_Sent_Message</targetReference>
         </connector>
@@ -250,8 +303,8 @@
     <screens>
         <name>Email_Sent_Message</name>
         <label>Email Sent Message</label>
-        <locationX>176</locationX>
-        <locationY>674</locationY>
+        <locationX>50</locationX>
+        <locationY>890</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -264,7 +317,7 @@
         <showHeader>true</showHeader>
     </screens>
     <start>
-        <locationX>50</locationX>
+        <locationX>782</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Compensation_Services_Cases</targetReference>
@@ -274,7 +327,7 @@
     <subflows>
         <name>Fault_Handler</name>
         <label>Fault Handler</label>
-        <locationX>1232</locationX>
+        <locationX>1634</locationX>
         <locationY>350</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>

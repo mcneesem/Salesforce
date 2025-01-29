@@ -168,12 +168,7 @@
                         <valueListItems>
                             <value>Case.Comp_Req_Recvd</value>
                             <visibilityRule>
-                                <booleanFilter>(1 OR 2) AND 3</booleanFilter>
-                                <criteria>
-                                    <leftValue>{!$Permission.CustomPermission.Admin_Layout_Access}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>true</rightValue>
-                                </criteria>
+                                <booleanFilter>1 AND 2</booleanFilter>
                                 <criteria>
                                     <leftValue>{!$Permission.CustomPermission.View_Case_Compensation_section}</leftValue>
                                     <operator>EQUAL</operator>
