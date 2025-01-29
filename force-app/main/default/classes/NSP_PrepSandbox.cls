@@ -1,5 +1,6 @@
 global class NSP_PrepSandbox implements SandboxPostCopy {
     // test w/ NSP_PrepSandboxTest (80%)
+
     static final string STRING_INVALID = '.invalid';
 
     public String runManualResult{get;set;}
