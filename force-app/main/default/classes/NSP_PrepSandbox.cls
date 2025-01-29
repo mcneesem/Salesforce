@@ -471,10 +471,9 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
 
     public static void doEmailAlerts() {
         try {
-            Integer batch = 0;
-            string host = URL.getOrgDomainUrl().toExternalForm();
-            string endPoint = host + '/services/data/v55.0/tooling/';
-            string sessionId = UserInfo.getSessionId();
+            String host = URL.getOrgDomainUrl().toExternalForm();
+            String endPoint = host + '/services/data/v55.0/tooling/';
+            String sessionId = UserInfo.getSessionId();
             List<String[]> wfaNames = new List<String[]>();
             wfaNames.add(new String[]{});
             MetadataService.MetadataPort service = createService();
@@ -487,7 +486,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
             request.setHeader('Authorization', 'Bearer '+ sessionId);
             HTTPResponse response = new HTTPResponse();
             AlertResult results = new AlertResult();
-            RecordAlert[] records = new RecordAlert[] {};
+            RecordAlert[] records = new RecordAlert[]{};
                 
             if(!Test.isRunningTest()){
                 response = new Http().send(request);
@@ -515,27 +514,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
                 records.add(rec);
             }
 
-            for (RecordAlert alert : records) {
-                // Get the Alert meta-data
-                request = new HttpRequest();
-                request.setEndpoint(host + alert.attributes.url);
-                request.setMethod('GET');
-                request.setHeader('Content-Type', 'application/json');
-                request.setHeader('Authorization', 'Bearer '+ sessionId);
-
-                if (wfaNames[batch].size() >= 10) {
-                    batch++;
-                    wfaNames.add(new String[]{}); // create a new batch when we fill one up
-                }
-                if (!Test.isRunningTest()) {
-                    response = new Http().send(request);
-                    WorkflowEmail wfe = (WorkflowEmail)JSON.deserialize(response.getBody(), WorkflowEmail.class);
-                    wfaNames[batch].add(wfe.FullName);
-                } else {
-                    wfaNames[batch].add('test');
-                }
-            }
-
+            getWFAlertData(request, records, wfaNames);
             setWFAlertData(wfaNames, allMetadataList);
 
             if (allMetadataList.size() > 0 && !Test.isRunningTest()) {
@@ -545,6 +524,33 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
             }
         } catch(Exception e) {
             NSP_PrepSandbox.handleException( e , 'doEmailAlerts' );
+        }
+    }
+
+    public static void getWFAlertData(HttpRequest request, RecordAlert[] records, List<String[]> wfaNames) {
+        Integer batch = 0;
+        HTTPResponse response = new HTTPResponse();
+        String host = URL.getOrgDomainUrl().toExternalForm();
+        String sessionId = UserInfo.getSessionId();
+        for (RecordAlert alert : records) {
+            // Get the Alert meta-data
+            request = new HttpRequest();
+            request.setEndpoint(host + alert.attributes.url);
+            request.setMethod('GET');
+            request.setHeader('Content-Type', 'application/json');
+            request.setHeader('Authorization', 'Bearer '+ sessionId);
+
+            if (wfaNames[batch].size() >= 10) {
+                batch++;
+                wfaNames.add(new String[]{}); // create a new batch when we fill one up
+            }
+            if (!Test.isRunningTest()) {
+                response = new Http().send(request);
+                WorkflowEmail wfe = (WorkflowEmail)JSON.deserialize(response.getBody(), WorkflowEmail.class);
+                wfaNames[batch].add(wfe.FullName);
+            } else {
+                wfaNames[batch].add('test');
+            }
         }
     }
 
