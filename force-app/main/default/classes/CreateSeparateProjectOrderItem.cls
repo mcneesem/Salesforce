@@ -271,17 +271,22 @@ public with sharing class CreateSeparateProjectOrderItem {
                 {
                     matchingProducts = item.Matching_Product_Code__c.split(',');
                 }
-                for ( String prodCode : matchingProducts ) {
-                    //new method that finds the key
-                    if(!findMatch){
-                        findMatch = populateProject( prodCode.trim() , item , allOrderProductsMap );
-                    }
-                }
-                if(!findMatch){
+                findMatch = iterateProducts(matchingProducts, findMatch, item,allOrderProductsMap);
+            }
+            if(!findMatch){
             		getProjectFromOrder( item , allOrderProductsMap );
-                }
             }
         }
+    }
+    
+    public static Boolean iterateProducts(List<String> matchingProducts, Boolean findMatch, OrderItem item, Map<String,OrderItem> allOrderProductsMap){
+        for ( String prodCode : matchingProducts ) {
+            //new method that finds the key
+            if(!findMatch){
+                findMatch = populateProject( prodCode.trim() , item , allOrderProductsMap );
+            }
+        }
+        return findMatch;
     }
 
     //method to populate project on order item
