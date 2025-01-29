@@ -95,8 +95,7 @@ public with sharing class CreateSeparateProjectOrderItem {
                 orderProdObj ,
                 new Map<String, OrderItem>{
                     orderProdObj.Product2.ProductCode + '_' + orderProdObj.OrderId => orderProdObj
-                } ,
-                orderProdObj.Product2.ProductCode
+                }
             );
             oiUpdateList.add( orderProdObj );
         }
@@ -262,6 +261,7 @@ public with sharing class CreateSeparateProjectOrderItem {
     private static void findMatchingOP( List<OrderItem> opWithMatchingProducts , Map<String,OrderItem> allOrderProductsMap ) {
         //find project from matching product
         for ( OrderItem item :opWithMatchingProducts ) {
+            Boolean findMatch = false;
             if ( item.SBQQ__QuoteLine__r.SBQQ__EffectiveQuantity__c > 0 ) {
                 List<String> matchingProducts = new List<String>();
                 //matching product = comma separated product codes
@@ -272,16 +272,24 @@ public with sharing class CreateSeparateProjectOrderItem {
                     matchingProducts = item.Matching_Product_Code__c.split(',');
                 }
                 for ( String prodCode : matchingProducts ) {
-                    populateProject( prodCode , item , allOrderProductsMap );
+                    //new method that finds the key
+                    if(!findMatch){
+                        findMatch = populateProject( prodCode.trim() , item , allOrderProductsMap );
+                    }
+                }
+                if(!findMatch){
+            		getProjectFromOrder( item , allOrderProductsMap );
                 }
             }
         }
     }
 
     //method to populate project on order item
-    private static void populateProject( String prodCode , OrderItem item , Map<String,OrderItem> allOrderProductsMap ) {
+    private static Boolean populateProject( String prodCode , OrderItem item , Map<String,OrderItem> allOrderProductsMap ) {
+        Boolean matchFound = false;
         String findKey = prodCode + '_' + item.OrderId;
         if ( allOrderProductsMap.containsKey(findKey) ) {
+            matchfound = true;
             //matching OP found
             if ( allOrderProductsMap.get(findKey).NSP_Project__c != null ) {
                 //matching OP has project
@@ -290,20 +298,16 @@ public with sharing class CreateSeparateProjectOrderItem {
                 allOrderProductsMap.get(item.Product2.ProductCode + '_' + item.OrderId).NSP_Project__c = reqProject;
             } else {
                 //matching OP doesnt have project
-                getProjectFromOrder( item , allOrderProductsMap , prodCode );
+                getProjectFromOrder( item , allOrderProductsMap );
             }
-        } else {
-            //no matching OP found
-            getProjectFromOrder( item , allOrderProductsMap , prodCode );
         }
+        return matchfound;
     }
 
     //method to fetch project from order
-    private static void getProjectFromOrder( OrderItem item , Map<String,OrderItem> allOrderProductsMap , String prodCode ) {
+    private static void getProjectFromOrder( OrderItem item , Map<String,OrderItem> allOrderProductsMap) {
         if ( ( item != null )
-            && ( allOrderProductsMap != null )
-            && ( prodCode != null )
-            && String.isNotBlank( prodCode )
+            && ( allOrderProductsMap != null )           
             )
         {
             if ( item.Order.NSP_Project__c != null ) {
@@ -313,7 +317,7 @@ public with sharing class CreateSeparateProjectOrderItem {
                 allOrderProductsMap.get(item.Product2.ProductCode + '_' + item.OrderId).NSP_Project__c = ordProject;
             } else {
                 //project not found on order
-                item.Matching_Product_Code__c = prodCode + '/Order has no Project';
+                item.Matching_Product_Code__c = 'Match not found/has no Project';
             }
         }
     }
