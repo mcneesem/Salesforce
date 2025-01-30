@@ -4,8 +4,8 @@
     <assignments>
         <name>Status_to_activated</name>
         <label>Status to activated</label>
-        <locationX>176</locationX>
-        <locationY>287</locationY>
+        <locationX>308</locationX>
+        <locationY>395</locationY>
         <assignmentItems>
             <assignToReference>$Record.Status</assignToReference>
             <operator>Assign</operator>
@@ -14,6 +14,28 @@
             </value>
         </assignmentItems>
     </assignments>
+    <decisions>
+        <name>Exclude_product_Type</name>
+        <label>Exclude product Type</label>
+        <locationX>176</locationX>
+        <locationY>287</locationY>
+        <defaultConnector>
+            <targetReference>Status_to_activated</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Exclude</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Setup.Order_Settings__c.Product_Type__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <elementReference>$Record.NSP_Order_Product_Type__c</elementReference>
+                </rightValue>
+            </conditions>
+            <label>Exclude</label>
+        </rules>
+    </decisions>
     <environments>Default</environments>
     <interviewLabel>Order - Updated - Auto Activate {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Order - Updated - Auto Activate</label>
@@ -40,7 +62,7 @@
         <locationX>50</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Status_to_activated</targetReference>
+            <targetReference>Exclude_product_Type</targetReference>
         </connector>
         <filterLogic>( 1 AND 2 AND ( ( 3 AND 4 ) OR 5 ) )</filterLogic>
         <filters>
