@@ -10,11 +10,11 @@ public class UserOnboardingQueuable implements Queueable {
     private String triggerOperation;
     
     //Constructor
-    public UserOnboardingQueuable(List<User> newList, Map<Id,User> newMap , Map<Id,User> oldMap , String TriggerContext){
+    public UserOnboardingQueuable(List<User> newList, Map<Id,User> newMap , Map<Id,User> oldMap , String triggerContext){
         this.newUserList = newList;
         this.newUserMap = newMap;
         this.oldUserMap = oldMap;
-        this.triggerOperation = TriggerContext;
+        this.triggerOperation = triggerContext;
     }
     
     public void execute(QueueableContext context) {
