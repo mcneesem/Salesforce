@@ -11,12 +11,22 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Contact.Workday_Employee_ID__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>NSP_Payroll__c.Account__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Contact.Workday_Employee_ID__c</field>
+        <field>NSP_Payroll__c.Middleware_Id__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_Payroll__c.Pay_Group_Number__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -27,6 +37,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>NSP_Payroll__c.Payroll_Specialist__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_Payroll__c.Source__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
