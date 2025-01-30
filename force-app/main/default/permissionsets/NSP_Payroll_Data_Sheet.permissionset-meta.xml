@@ -86,11 +86,6 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
-        <field>NSP_Payroll__c.Middleware_Id__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Payroll__c.Most_Recent_Pay_Period_End_Date__c</field>
         <readable>true</readable>
@@ -736,11 +731,6 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
-        <field>NSP_Payroll__c.Pay_Group_Number__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Payroll__c.Payroll_Reviewers__c</field>
         <readable>true</readable>
@@ -758,11 +748,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>NSP_Payroll__c.Primary_View_Payroll_Paperwork__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>NSP_Payroll__c.Source__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
