@@ -7,6 +7,16 @@
 * Version : first iteration
 */
 public class NSP_PtaSyncWithProjectTasksGrpMembrBatch implements Schedulable,Database.Batchable<SObject>{
+    
+    Public static Boolean isAllOrNone = false;
+    
+    public NSP_PtaSyncWithProjectTasksGrpMembrBatch(){
+        Project_Task_Assignment_Batch_Settings__c batchSettings = Project_Task_Assignment_Batch_Settings__c.getOrgDefaults();
+        if(batchSettings!=null){
+           isAllOrNone = batchSettings.IsAllOrNone__c; 
+        }
+        
+    }
 
     //start
     public Database.QueryLocator start(Database.BatchableContext bc){
@@ -124,12 +134,12 @@ public class NSP_PtaSyncWithProjectTasksGrpMembrBatch implements Schedulable,Dat
 			
 			//Create Assignment if List is not empty
             if( !listOfAssignmentToCreate.isEmpty() ){
-                Database.insert(listOfAssignmentToCreate);
+               handleDatabaseInsertOperation(listOfAssignmentToCreate,'pse__Assignment__c');
             }
 
             //Create PTA if List is not empty
             if( !listOfPtaToCreate.isEmpty() ){
-                Database.insert(listOfPtaToCreate);
+                handleDatabaseInsertOperation(listOfPtaToCreate,'pse__Project_Task_Assignment__c');
             }
             
         }catch(Exception ex){
@@ -260,5 +270,10 @@ public class NSP_PtaSyncWithProjectTasksGrpMembrBatch implements Schedulable,Dat
             insert projectWithScheduleMap.values();
         }
 		return projectWithScheduleMap;
+    }
+
+    private static void handleDatabaseInsertOperation(List<Sobject> sObjectList, String MethodName){
+        Database.SaveResult[] results = Database.insert(sObjectList,isAllOrNone);
+        NSP_ErrorLogHandler.logSaveResultsException('NSP_PtaSyncWithProjectTasksGrpMembrBatch',MethodName, results);        
     }
 }
