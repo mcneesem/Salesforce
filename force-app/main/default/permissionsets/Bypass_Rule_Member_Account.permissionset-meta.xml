@@ -5,5 +5,5 @@
         <name>Bypass_Rule_Member_Account</name>
     </customPermissions>
     <hasActivationRequired>false</hasActivationRequired>
-    <label>Bypass Validation Rules Member Account</label>
+    <label>Bypass Rule Member Account</label>
 </PermissionSet>
