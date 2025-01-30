@@ -72,7 +72,7 @@ public with sharing class NSP_ErrorLogHandler {
     //
 
     // DEPRECATED ~ see logException
-    // ~ 82 classes
+    // ~ 73 classes
     public static void logSaveException( String className , String methodName , String message ) {
         NSP_ErrorLogHandler.insertLog(
             className ,
@@ -83,7 +83,7 @@ public with sharing class NSP_ErrorLogHandler {
     }
 
     // DEPRECATED ~ see logResults
-    // ~ 11 classes
+    // ~ 12 classes
     public static void logSaveResult( String className , String methodName , List<Database.SaveResult> saveResultList ) {
         NSP_ErrorLogHandler.logResults(
             className ,
@@ -94,7 +94,7 @@ public with sharing class NSP_ErrorLogHandler {
 
     // DEPRECATED ~ see logResults
     // This method logs error for the failed results of Database.insert/update operation in DB.
-    // ~ 39 classes
+    // ~ 31 classes
     public static void logSaveResultsException( String className , String methodName , List<Database.SaveResult> results ) {
         NSP_ErrorLogHandler.logResults(
             className ,
@@ -105,7 +105,7 @@ public with sharing class NSP_ErrorLogHandler {
 
     // DEPRECATED ~ see logResults
     // This method logs error for the failed results of Database.delete operation in DB.
-    // ~ 7 classes
+    // ~ 5 classes
     public static void logDeleteResultsException( String className , String methodName , List<Database.DeleteResult> results ) {
         NSP_ErrorLogHandler.logResults(
             className ,
@@ -129,7 +129,7 @@ public with sharing class NSP_ErrorLogHandler {
     // SUMMARIZE DATABASE RESULTS
     //
 
-    private static List<String> summarizeDatabaseErrors( List<Database.Error> errors ) {
+    private static List<String> summarizeDatabaseErrors( List<Database.Error> errors , Id recordId ) {
         List<String> messages = new List<String>();
         if ( ( errors != null ) && !errors.isEmpty() ) {
             for ( Database.Error error : errors ) {
@@ -140,6 +140,9 @@ public with sharing class NSP_ErrorLogHandler {
                     + ': ['
                     + String.join( error.getFields() , ', ' )
                     + ']'
+                    + ' ('
+                    + recordId
+                    + ')'
                 );
             }
         }
@@ -148,13 +151,16 @@ public with sharing class NSP_ErrorLogHandler {
 
     private static List<String> summarizeDatabaseResults( List<Database.SaveResult> results ) {
         List<String> messages = new List<String>();
-        for ( Database.SaveResult result : results ) {
-            if ( !result.isSuccess() ) {
-                messages.addAll(
-                    NSP_ErrorLogHandler.summarizeDatabaseErrors(
-                        result.getErrors()
-                    )
-                );
+        if ( ( results != null ) && !results.isEmpty() ) {
+            for ( Database.SaveResult result : results ) {
+                if ( !result.isSuccess() ) {
+                    messages.addAll(
+                        NSP_ErrorLogHandler.summarizeDatabaseErrors(
+                            result.getErrors() ,
+                            result.getId()
+                        )
+                    );
+                }
             }
         }
         if ( messages.isEmpty() ) {
@@ -165,13 +171,16 @@ public with sharing class NSP_ErrorLogHandler {
 
     private static List<String> summarizeDatabaseResults( List<Database.UpsertResult> results ) {
         List<String> messages = new List<String>();
-        for ( Database.UpsertResult result : results ) {
-            if ( !result.isSuccess() ) {
-                messages.addAll(
-                    NSP_ErrorLogHandler.summarizeDatabaseErrors(
-                        result.getErrors()
-                    )
-                );
+        if ( ( results != null ) && !results.isEmpty() ) {
+            for ( Database.UpsertResult result : results ) {
+                if ( !result.isSuccess() ) {
+                    messages.addAll(
+                        NSP_ErrorLogHandler.summarizeDatabaseErrors(
+                            result.getErrors() ,
+                            result.getId()
+                        )
+                    );
+                }
             }
         }
         if ( messages.isEmpty() ) {
@@ -182,13 +191,16 @@ public with sharing class NSP_ErrorLogHandler {
 
     private static List<String> summarizeDatabaseResults( List<Database.DeleteResult> results ) {
         List<String> messages = new List<String>();
-        for ( Database.DeleteResult result : results ) {
-            if ( !result.isSuccess() ) {
-                messages.addAll(
-                    NSP_ErrorLogHandler.summarizeDatabaseErrors(
-                        result.getErrors()
-                    )
-                );
+        if ( ( results != null ) && !results.isEmpty() ) {
+            for ( Database.DeleteResult result : results ) {
+                if ( !result.isSuccess() ) {
+                    messages.addAll(
+                        NSP_ErrorLogHandler.summarizeDatabaseErrors(
+                            result.getErrors() ,
+                            result.getId()
+                        )
+                    );
+                }
             }
         }
         if ( messages.isEmpty() ) {
