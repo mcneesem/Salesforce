@@ -1356,12 +1356,12 @@ public class NSP_ProjectTasksTriggerHelper {
                             SELECT
                                 Id ,
                                 NSP_Project_Task__c ,
-                                CreatedDate ,
                                 NSP_Last_Date_Wages_Paid_Through__c ,
                                 NSP_Term_Reason__c ,
                                 NSP_SubTerm_reason__c,
-                                Previous_Term_Date__c,	
-                    			NSP_Revision__c
+                                Previous_Term_Date__c ,
+                                NSP_Revision__c ,
+                                CreatedDate
                             FROM NSP_Termination_Form__c
                             WHERE ( NSP_Project_Task__c IN :mapOfProjectTaskAndProject.keySet() )
                             ORDER BY CreatedDate DESC
@@ -1511,20 +1511,22 @@ public class NSP_ProjectTasksTriggerHelper {
         }
         subjectString = prefix + accName + ' has been approved for termination';
         mailBody = prefix + NSP_ProjectTasksTriggerHelper.buildAnchorElement( customUrl , accName );
-        mailBody = NSP_ProjectTasksTriggerHelper.addTermDetails ( mailBody, termForm , assetList);
-        
+        mailBody = NSP_ProjectTasksTriggerHelper.addTermDetails ( mailBody , termForm , assetList );
         sendEmail( listOfToAddresses , subjectString , mailBody );
     }
 
-    private static String addTermDetails(String mailBody, NSP_Termination_Form__c termForm, List<Asset> assetList) {
+    private static String addTermDetails( String mailBody , NSP_Termination_Form__c termForm , List<Asset> assetList ) {
         String termFormDetails = '';
-        if (termForm != null){  
+        if ( String.isBlank( mailBody ) ) {
+            mailBody = '';
+        }
+        if ( termForm != null ) {
             if ( termForm.NSP_Last_Date_Wages_Paid_Through__c != null ) {
                 termFormDetails = ' on ' + termForm.NSP_Last_Date_Wages_Paid_Through__c.format();
             }
             mailBody += ' has been approved for termination' + termFormDetails + '.' + '<br>';
-            if(termForm.NSP_Revision__c == 'Yes' && termForm.Previous_Term_Date__c != null){
-              mailBody += 'Previous Term Date: '+ termForm.Previous_Term_Date__c.format() + '<br>';
+            if ( ( termForm.NSP_Revision__c == 'Yes' ) && ( termForm.Previous_Term_Date__c != null ) ) {
+                mailBody += 'Previous Term Date: '+ termForm.Previous_Term_Date__c.format() + '<br>';
             }
             if ( String.isNotBlank( termForm.NSP_Term_Reason__c ) ) {
                 mailBody += 'Term Reason: ' + termForm.NSP_Term_Reason__c + '<br>';
