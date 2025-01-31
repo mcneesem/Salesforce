@@ -10,7 +10,10 @@ public class NSP_PtaSyncWithProjectTasksGrpMembrBatch implements Schedulable , D
     //
 
     public void execute( SchedulableContext sc ) {
-        Database.executeBatch( new NSP_PtaSyncWithProjectTasksGrpMembrBatch() , 200 );
+        Database.executeBatch(
+            new NSP_PtaSyncWithProjectTasksGrpMembrBatch() ,
+            NSP_PtaSyncWithProjectTasksGrpMembrBatch.batchSize
+        );
     }
 
     //
@@ -177,13 +180,13 @@ public class NSP_PtaSyncWithProjectTasksGrpMembrBatch implements Schedulable , D
         );
     }
 
-    /***********************************************************************************************
-    * MethodName: getUserContactWithSameGroupMemberValue
-    * Description : gets list of user contact mapped with group member value
-    * Story : STY-02215
-    * Author :Abhishek Kumar 
-    * Params: List<pse__Project_Task__c> groupMemberValuesList
-    * ********************************************************************************************/ 
+    //
+    // MethodName: getUserContactWithSameGroupMemberValue
+    // Description : gets list of user contact mapped with group member value
+    // Story : STY-02215
+    // Author :Abhishek Kumar
+    // Params: List<pse__Project_Task__c> groupMemberValuesList
+    //
     public static Map<String,List<Id>> getUserContactWithSameGroupMemberValue(Set<String> groupMemberValuesList ){
         Map<String,List<Id>> mapOfGroupMemberValWithContactList = new Map<String,List<Id>>();
         try {
@@ -337,6 +340,31 @@ public class NSP_PtaSyncWithProjectTasksGrpMembrBatch implements Schedulable , D
                 isAllOrNone = local;
             }
             return isAllOrNone;
+        }
+        private set;
+    }
+
+    private static Integer batchSize {
+        private get {
+            if ( batchSize == null ) {
+                Integer local = 200;
+                if ( ( NSP_PtaSyncWithProjectTasksGrpMembrBatch.settings != null )
+                    && ( NSP_PtaSyncWithProjectTasksGrpMembrBatch.settings.BatchSize__c != null )
+                    )
+                {
+                    local = NSP_PtaSyncWithProjectTasksGrpMembrBatch.settings.BatchSize__c.intValue();
+                }
+                // batch size must be greater than zero...
+                if ( local < 1 ) {
+                    local = 1;
+                }
+                // batch size must be less than or equal to 2000...
+                if ( local > 2000 ) {
+                    local = 2000;
+                }
+                batchSize = local;
+            }
+            return batchSize;
         }
         private set;
     }
