@@ -3,7 +3,7 @@
 // any or all of this sample code, you agree to assume all risk and liability associated with that use.
 //
 public with sharing class CLMDocumentTransfer {
-    // test w/ CLMDocumentTransferTest (85%)
+    // test w/ CLMDocumentTransferTest (87%)
 
     String dsAccountId;
     String iss;
@@ -101,24 +101,55 @@ public with sharing class CLMDocumentTransfer {
         Id recId = sfdcLinkedEntityId;
         String objName = String.valueOf(recId.getsobjecttype());
         if (objName == 'blng__Invoice__c') {
-            try {
-                blng__Invoice__c invToUpdate = new blng__Invoice__c();
-                invToUpdate.Id = recId;
-                invToUpdate.NSP_CLM_Document_Received__c = true;
-                NSP_InvoiceTriggerHandler.TriggerDisabled = true;
-                update invToUpdate;
-            } catch ( Exception e ) {
-                NSP_ErrorLogHandler.logException(
-                    CLMDocumentTransfer.class.getName() ,
-                    'downloadDocument' ,
-                    e
-                );
+            if ( CLMDocumentTransfer.isEnabledClmDocumentReceived ) {
+                try {
+                    blng__Invoice__c invToUpdate = new blng__Invoice__c();
+                    invToUpdate.Id = recId;
+                    invToUpdate.NSP_CLM_Document_Received__c = true;
+                    NSP_InvoiceTriggerHandler.TriggerDisabled = true;
+                    update invToUpdate;
+                } catch ( Exception e ) {
+                    NSP_ErrorLogHandler.logException(
+                        CLMDocumentTransfer.class.getName() ,
+                        'downloadDocument' ,
+                        e
+                    );
+                }
             }
             NSP_AutomationSetting__mdt invoiceEmailsEnabled = NSP_AutomationSetting__mdt.getInstance('NSP_Invoice_Email_Service');
             if (!invoiceEmailsEnabled.NSP_Disable__c) {
                 NSP_InvoiceEmailMessageService.sendInvoiceEmail(new List<String>{sfdcLinkedEntityId});
             }
         }
+    }
+
+    //
+    // attributes controlled by Custom Settings...
+    // ~ intentionally static to allow Custom Settings to modify the attributes a Scheduled job...
+    //
+
+    private static CLMDocumentTransferSettings__c settings {
+        private get {
+            if ( settings == null ) {
+                settings = CLMDocumentTransferSettings__c.getInstance( UserInfo.getUserId() );
+            }
+            return settings;
+        }
+        private set;
+    }
+
+    private static Boolean isEnabledClmDocumentReceived {
+        private get {
+            if ( isEnabledClmDocumentReceived == null ) {
+                Boolean local = False;
+                if ( CLMDocumentTransfer.settings != null ) {
+                    local = CLMDocumentTransfer.settings.IsEnabledClmDocumentReceived__c;
+                }
+                isEnabledClmDocumentReceived = local;
+            }
+            return isEnabledClmDocumentReceived;
+        }
+        private set;
     }
 
 }
