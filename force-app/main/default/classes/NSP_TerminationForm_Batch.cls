@@ -14,7 +14,7 @@ global class NSP_TerminationForm_Batch implements Schedulable , Database.Batchab
     private List<String> ccEmailAddressList = new List<String>();
 
     public Database.QueryLocator start( Database.BatchableContext bc ) {
-        Date Todaydate = Date.today();
+        Date todaydate = Date.today();
         return Database.getQueryLocator(
             [
                 SELECT
@@ -34,7 +34,7 @@ global class NSP_TerminationForm_Batch implements Schedulable , Database.Batchab
                 FROM NSP_Termination_Form__c
                 WHERE (
                     NSP_Last_Date_Wages_Paid_Through__c = LAST_N_DAYS:22
-                    AND Approval_Date__c =:Todaydate
+                    AND Approval_Date__c =:todaydate
                     AND NSP_Status__c = 'Term Team Approved'
                     AND NSP_Project_Task__r.pse__Project__r.pse__Project_Status__c != 'Complete'
                 )
