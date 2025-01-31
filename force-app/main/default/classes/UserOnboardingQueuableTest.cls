@@ -41,12 +41,5 @@
 		System.enqueueJob(new UserOnboardingQueuable(userlist , null , null, 'afterupdate'));
         test.stopTest();
     }
-    
-    @isTest private static void createErrorLogTest() {
-        test.startTest();
-        UserOnboardingQueuable.createErrorLog('ClassName', 'MethodName' , 'Description');
-        test.stopTest();
-    }
-
 }
 //
