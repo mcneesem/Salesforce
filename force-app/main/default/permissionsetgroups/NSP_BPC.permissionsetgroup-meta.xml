@@ -4,6 +4,7 @@
     <hasActivationRequired>false</hasActivationRequired>
     <label>BPC</label>
     <permissionSets>Account_Create</permissionSets>
+    <permissionSets>Account_Edit_Other_Current_Provider</permissionSets>
     <permissionSets>Allow_sending_of_List_Emails</permissionSets>
     <permissionSets>Basic_SetUp_Config_Access</permissionSets>
     <permissionSets>Bypass_Task_Event_Cancelled_Status</permissionSets>
@@ -16,6 +17,7 @@
     <permissionSets>NSP_Finance_Service_Objects_Permission</permissionSets>
     <permissionSets>NSP_Main_Service_Contacts</permissionSets>
     <permissionSets>NSP_Order_ViewAll</permissionSets>
+    <permissionSets>Opportunity_Closed_Lost_Fields_Edit_Access</permissionSets>
     <permissionSets>Opportunity_Spits_Elevated_Read_Edit</permissionSets>
     <permissionSets>Partner_Access</permissionSets>
     <permissionSets>Rules_Of_Engagement_Enabled</permissionSets>

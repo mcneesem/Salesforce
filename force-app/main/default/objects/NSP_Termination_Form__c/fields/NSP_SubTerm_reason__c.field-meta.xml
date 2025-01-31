@@ -129,22 +129,6 @@
             </value>
         </valueSetDefinition>
         <valueSettings>
-            <controllingFieldValue>5200 Health Benefits</controllingFieldValue>
-            <valueName>5201 Dissatisfied with healthcare vendor</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>5200 Health Benefits</controllingFieldValue>
-            <valueName>5202 Dissatisfied with network of physicians</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>5200 Health Benefits</controllingFieldValue>
-            <valueName>5203 Dissatisfied with network of hospitals</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>5200 Health Benefits</controllingFieldValue>
-            <valueName>5204 Lack of network providers</valueName>
-        </valueSettings>
-        <valueSettings>
             <controllingFieldValue>5300 Poor Customer Service</controllingFieldValue>
             <valueName>5301 Sales unresponsive</valueName>
         </valueSettings>
@@ -219,6 +203,22 @@
         <valueSettings>
             <controllingFieldValue>5600 Internal Company Reason</controllingFieldValue>
             <valueName>5603 Closed/Sold Business</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>5200 Health Benefits</controllingFieldValue>
+            <valueName>5201 Dissatisfied with healthcare vendor</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>5200 Health Benefits</controllingFieldValue>
+            <valueName>5202 Dissatisfied with network of physicians</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>5200 Health Benefits</controllingFieldValue>
+            <valueName>5203 Dissatisfied with network of hospitals</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>5200 Health Benefits</controllingFieldValue>
+            <valueName>5204 Lack of network providers</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>

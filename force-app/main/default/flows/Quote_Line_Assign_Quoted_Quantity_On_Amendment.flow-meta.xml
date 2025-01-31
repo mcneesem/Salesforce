@@ -32,6 +32,20 @@
                     <elementReference>$Record.NSP_Quoted_Quantity__c</elementReference>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__Quote__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__Quote__r.SBQQ__Type__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Supplemental</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Assign_Quoted_Quantity</targetReference>
             </connector>

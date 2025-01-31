@@ -84,19 +84,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Expense Management</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Human Capital Management%2FWorkforce Administration</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Organizational Planning</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Payroll Services</fullName>
             <default>false</default>
         </values>
         <values>
@@ -105,10 +93,6 @@
         </values>
         <values>
             <fullName>Retirement Services%2F401%28k%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Time and Attendance</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -127,7 +111,7 @@
         <picklist>NSP_Revision__c</picklist>
         <values>
             <fullName>No</fullName>
-            <default>false</default>
+            <default>true</default>
         </values>
         <values>
             <fullName>Yes</fullName>
@@ -314,27 +298,19 @@
     <picklistValues>
         <picklist>NSP_What_competitor__c</picklist>
         <values>
-            <fullName>ADP Total Source</fullName>
+            <fullName>OASIS</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Employer Flexible</fullName>
+            <fullName>OTHER</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Oasis</fullName>
+            <fullName>PAYCHEX</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Other</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Paychex</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Trinet</fullName>
+            <fullName>TRINET</fullName>
             <default>false</default>
         </values>
     </picklistValues>

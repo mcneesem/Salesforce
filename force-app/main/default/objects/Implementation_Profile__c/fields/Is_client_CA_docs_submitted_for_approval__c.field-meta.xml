@@ -5,7 +5,7 @@
     <externalId>false</externalId>
     <label>Is client CA docs submitted for approval</label>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
@@ -21,6 +21,11 @@
                 <fullName>No</fullName>
                 <default>false</default>
                 <label>No</label>
+            </value>
+            <value>
+                <fullName>Pending</fullName>
+                <default>false</default>
+                <label>Pending</label>
             </value>
             <value>
                 <fullName>N/A</fullName>

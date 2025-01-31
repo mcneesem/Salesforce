@@ -1771,6 +1771,16 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.Current_Bid_Expiration_Date__c</fieldItem>
+                <identifier>RecordCurrent_Bid_Expiration_Date_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.NSP_NDA__c</fieldItem>
                 <identifier>RecordNSP_NDA_cField</identifier>
             </fieldInstance>
@@ -1919,6 +1929,16 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_BidVersion__c</fieldItem>
                 <identifier>RecordNSP_BidVersion_cField2</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Current_Bid_Expiration_Date__c</fieldItem>
+                <identifier>RecordCurrent_Bid_Expiration_Date_cField2</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -3569,13 +3589,6 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_ReasonLostNotes__c</fieldItem>
                 <identifier>RecordNSP_ReasonLostNotes_cField3</identifier>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!$Permission.CustomPermission.Allow_Closed_Lost_Opportunity}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>true</rightValue>
-                    </criteria>
-                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>

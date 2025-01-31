@@ -11,6 +11,7 @@
     <permissionSets>Convert_Leads</permissionSets>
     <permissionSets>Lead_Management</permissionSets>
     <permissionSets>Lead_Modify_All</permissionSets>
+    <permissionSets>Marketing_Fields_Edit_Access</permissionSets>
     <permissionSets>Named_Account_Group_Bypass_Restrictions</permissionSets>
     <permissionSets>Opportunity_Create</permissionSets>
     <permissionSets>Opportunity_Modify_All</permissionSets>

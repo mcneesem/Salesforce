@@ -13,11 +13,6 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>ClientOFEOnlyAddendum</fullName>
-                <default>false</default>
-                <label>Client OFE Only Addendum</label>
-            </value>
-            <value>
                 <fullName>ClientServiceAgreement</fullName>
                 <default>false</default>
                 <label>ClientServiceAgreement</label>
@@ -26,11 +21,6 @@
                 <fullName>EnrollmentFeeCreditCardPayment</fullName>
                 <default>false</default>
                 <label>Docupay</label>
-            </value>
-            <value>
-                <fullName>EnhancedEPLIQuestionnaire</fullName>
-                <default>false</default>
-                <label>Enhanced EPLI Questionnaire</label>
             </value>
             <value>
                 <fullName>EnrollmentFeeMultiPaymentNonRefundable</fullName>
@@ -43,14 +33,24 @@
                 <label>GLALInsuranceCertificateRequest</label>
             </value>
             <value>
-                <fullName>IRR Addendum</fullName>
+                <fullName>NDA</fullName>
                 <default>false</default>
-                <label>IRR Addendum</label>
+                <label>NDA</label>
             </value>
             <value>
-                <fullName>Mid-MarketClientServiceAgreement</fullName>
+                <fullName>ClientOFEOnlyAddendum</fullName>
                 <default>false</default>
-                <label>Mid-MarketClientServiceAgreement</label>
+                <label>Client OFE Only Addendum</label>
+            </value>
+            <value>
+                <fullName>EnhancedEPLIQuestionnaire</fullName>
+                <default>false</default>
+                <label>Enhanced EPLI Questionnaire</label>
+            </value>
+            <value>
+                <fullName>IRRAddendum</fullName>
+                <default>false</default>
+                <label>IRR Addendum</label>
             </value>
             <value>
                 <fullName>MidMarketCSA</fullName>
@@ -66,11 +66,6 @@
                 <fullName>MidMarketEPLIAddendum</fullName>
                 <default>false</default>
                 <label>MidMarket EPLI Addendum</label>
-            </value>
-            <value>
-                <fullName>NDA</fullName>
-                <default>false</default>
-                <label>NDA</label>
             </value>
             <value>
                 <fullName>AnalysisDocumentsOver50ee</fullName>
@@ -203,6 +198,12 @@
                 <default>false</default>
                 <isActive>false</isActive>
                 <label>MasterEnrollmentFeeAddendum</label>
+            </value>
+            <value>
+                <fullName>Mid-MarketClientServiceAgreement</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Mid-MarketClientServiceAgreement</label>
             </value>
             <value>
                 <fullName>Mid-MarketFundingPacket</fullName>

@@ -9,23 +9,6 @@
     <type>Picklist</type>
     <valueSet>
         <restricted>true</restricted>
-        <valueSetDefinition>
-            <sorted>false</sorted>
-            <value>
-                <fullName>General</fullName>
-                <default>false</default>
-                <label>General</label>
-            </value>
-            <value>
-                <fullName>High - Direct</fullName>
-                <default>false</default>
-                <label>High - Direct</label>
-            </value>
-            <value>
-                <fullName>High - Event</fullName>
-                <default>false</default>
-                <label>High - Event</label>
-            </value>
-        </valueSetDefinition>
+        <valueSetName>Marketing_Priority</valueSetName>
     </valueSet>
 </CustomField>
