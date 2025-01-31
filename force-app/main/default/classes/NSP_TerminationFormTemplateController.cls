@@ -136,6 +136,7 @@ public with sharing class NSP_TerminationFormTemplateController {
         
         //This is the contructor method. When we create a new wrapAccount object we pass a Account that is set to the acc property. We also set the selected value to false
         public wrapTermination(NSP_Termination_Form__c termination, String PS, String CL) {
+            if (termination != null) { 
             clinetName = termination.NSP_Project_Task__r.pse__Project__r.pse__Account__r.Name;
             clinetNumber = termination.NSP_Project_Task__r.pse__Project__r.pse__Account__r.NSP_AIMS_Client__c;
             
@@ -156,5 +157,6 @@ public with sharing class NSP_TerminationFormTemplateController {
             Previoustermdate = termination.Previous_term_date__c;
             Subtermreason = termination.NSP_SubTerm_reason__c;
         }
+        } 
     }
 }
