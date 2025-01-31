@@ -12,7 +12,8 @@ public class NSP_salesOfficeRecordSharingTest {
     * ********************************************************************************************/
     private static final String emailencodingkey = 'UTF-8';
     private static final String languagekey = 'en_US'; 
-    private static final String timezonesidkey = 'America/Los_Angeles';   
+    private static final String timezonesidkey = 'America/Los_Angeles'; 
+    private static LeadConversionSettings__c settings = LeadConversionSettings__c.getOrgDefaults();  
     /***********************************************************************************************
     * MethodName: testData
     * Description : Creating test data for NSP_recordSharing
@@ -23,6 +24,13 @@ public class NSP_salesOfficeRecordSharingTest {
         Profile profileobj = [SELECT Id FROM Profile WHERE Name='System Administrator'];
         UserRole BPArole = [SELECT Id FROM UserRole WHERE Name='Business Performance Advisor'];
         UserRole SalesLeaderRole = [SELECT Id FROM UserRole WHERE Name='Sales Leader'];
+        User thisUser = [SELECT Id FROM User WHERE Id = :UserInfo.getUserId()];
+
+        System.runAs(thisUser){
+            settings = settings == null ? LeadConversionSettings__c.getOrgDefaults() : settings;
+            settings.Is_Enabled_SOQL_Fix__c = true;
+            upsert settings;
+        }
         // Adding BPA User
         User BpaUser = new User(alias = 'jsmit', email='BPAUSER@insperity.com', 
                                 emailencodingkey=emailencodingkey, lastname='Smith', 
@@ -137,7 +145,28 @@ public class NSP_salesOfficeRecordSharingTest {
     * Description : update User Sales Office MemberShip   
     * ********************************************************************************************/
      @isTest
-    static void userSalesOfficeUpdate(){
+    static void userSalesOfficeUpdateOld(){
+        User thisUser = [SELECT Id FROM User WHERE Id = :UserInfo.getUserId()];
+
+        System.runAs(thisUser){
+            settings.Is_Enabled_SOQL_Fix__c = false;
+            upsert settings;
+        }
+        // quering BPA user 
+        User BpaUser=[Select Id , Name ,UserRole.Name, Email , NSP_Sales_Office_Membership__c from User WHERE Email = 'BPAUSER@insperity.com' Limit 1];
+		BpaUser.NSP_Sales_Office_Membership__c='503';
+        Test.startTest();
+       		update BpaUser;      
+        Test.stopTest();
+        system.assertEquals('503',BpaUser.NSP_Sales_Office_Membership__c );      
+    }
+
+    /***********************************************************************************************
+    * MethodName: userSalesOfficeUpdate
+    * Description : update User Sales Office MemberShip   
+    * ********************************************************************************************/
+    @isTest
+    static void userSalesOfficeUpdateNew(){
         // quering BPA user 
         User BpaUser=[Select Id , Name ,UserRole.Name, Email , NSP_Sales_Office_Membership__c from User WHERE Email = 'BPAUSER@insperity.com' Limit 1];
 		BpaUser.NSP_Sales_Office_Membership__c='503';

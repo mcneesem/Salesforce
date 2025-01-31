@@ -2,10 +2,128 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>56.0</apiVersion>
     <assignments>
+        <name>Assign_Fault_Element_Get_Integration_Profile_ID</name>
+        <label>Assign Fault Element Get_Integration_Profile_ID</label>
+        <locationX>2162</locationX>
+        <locationY>384</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Integration_Profile_ID</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_Fault_Element_GetDMUserRecord</name>
+        <label>Assign Fault Element GetDMUserRecord</label>
+        <locationX>578</locationX>
+        <locationY>1524</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>GetDMUserRecord</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_Fault_Element_GetIntgUserRecord</name>
+        <label>Assign Fault Element GetIntgUserRecord</label>
+        <locationX>1898</locationX>
+        <locationY>492</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>GetIntgUserRecord</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_Fault_Element_RegionRecord</name>
+        <label>Assign Fault Element RegionRecord</label>
+        <locationX>1370</locationX>
+        <locationY>1200</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>RegionRecord</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_Fault_Element_ResourceRecordType</name>
+        <label>Assign Fault Element ResourceRecordType</label>
+        <locationX>842</locationX>
+        <locationY>1416</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>ResourceRecordType</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_Fault_Element_Update_Resource_fields</name>
+        <label>Assign Fault Element Update_Resource_fields</label>
+        <locationX>314</locationX>
+        <locationY>1632</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Update_Resource_fields</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_Fault_Element_WorkCalendarRecord</name>
+        <label>Assign Fault Element WorkCalendarRecord</label>
+        <locationX>1106</locationX>
+        <locationY>1308</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>WorkCalendarRecord</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Make_Is_Integration_User_flag_to_True</name>
         <label>Make Is Integration User flag to True</label>
-        <locationX>270</locationX>
-        <locationY>815</locationY>
+        <locationX>930</locationX>
+        <locationY>708</locationY>
         <assignmentItems>
             <assignToReference>IsIntegrationUser</assignToReference>
             <operator>Assign</operator>
@@ -55,8 +173,8 @@
     <decisions>
         <name>Check_Intg_User_ID_matches_with_created_by_ID</name>
         <label>Check Intg User ID matches with created by ID</label>
-        <locationX>402</locationX>
-        <locationY>695</locationY>
+        <locationX>1062</locationX>
+        <locationY>600</locationY>
         <defaultConnector>
             <targetReference>Iterate_through_Integration_user_list</targetReference>
         </defaultConnector>
@@ -87,8 +205,8 @@
     <decisions>
         <name>Check_the_Flag_Is_Integration_User</name>
         <label>Check the Flag Is Integration User</label>
-        <locationX>182</locationX>
-        <locationY>1127</locationY>
+        <locationX>842</locationX>
+        <locationY>984</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Update_the_Contact_record_fields</name>
@@ -106,15 +224,15 @@
             <label>Update the Contact record fields</label>
         </rules>
     </decisions>
-    <description>STY-02849</description>
+    <description>AZD Story : 323194</description>
     <environments>Default</environments>
     <interviewLabel>NSP_Region {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Contact Resource Fields Update</label>
     <loops>
         <name>Iterate_through_Integration_user_list</name>
         <label>Iterate through Integration user list</label>
-        <locationX>182</locationX>
-        <locationY>575</locationY>
+        <locationX>842</locationX>
+        <locationY>492</locationY>
         <collectionReference>IntgUserLists</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -146,12 +264,15 @@
     <recordLookups>
         <name>Get_Integration_Profile_ID</name>
         <label>Get Integration Profile ID</label>
-        <locationX>182</locationX>
-        <locationY>335</locationY>
+        <locationX>842</locationX>
+        <locationY>276</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>GetIntgUserRecord</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Assign_Fault_Element_Get_Integration_Profile_ID</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Name</field>
@@ -168,11 +289,14 @@
         <name>GetDMUserRecord</name>
         <label>GetDMUserRecord</label>
         <locationX>50</locationX>
-        <locationY>1607</locationY>
+        <locationY>1416</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Update_Resource_fields</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Assign_Fault_Element_GetDMUserRecord</targetReference>
+        </faultConnector>
         <filterLogic>or</filterLogic>
         <filters>
             <field>Name</field>
@@ -188,12 +312,15 @@
     <recordLookups>
         <name>GetIntgUserRecord</name>
         <label>GetIntgUserRecord</label>
-        <locationX>182</locationX>
-        <locationY>455</locationY>
+        <locationX>842</locationX>
+        <locationY>384</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Iterate_through_Integration_user_list</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Assign_Fault_Element_GetIntgUserRecord</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>ProfileId</field>
@@ -210,11 +337,14 @@
         <name>RegionRecord</name>
         <label>RegionRecord</label>
         <locationX>50</locationX>
-        <locationY>1247</locationY>
+        <locationY>1092</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>WorkCalendarRecord</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Assign_Fault_Element_RegionRecord</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Name</field>
@@ -231,11 +361,14 @@
         <name>ResourceRecordType</name>
         <label>ResourceRecordType</label>
         <locationX>50</locationX>
-        <locationY>1487</locationY>
+        <locationY>1308</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>GetDMUserRecord</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Assign_Fault_Element_ResourceRecordType</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>SobjectType</field>
@@ -259,11 +392,14 @@
         <name>WorkCalendarRecord</name>
         <label>WorkCalendarRecord</label>
         <locationX>50</locationX>
-        <locationY>1367</locationY>
+        <locationY>1200</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>ResourceRecordType</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Assign_Fault_Element_WorkCalendarRecord</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Name</field>
@@ -281,7 +417,10 @@
         <name>Update_Resource_fields</name>
         <label>Update Resource fields</label>
         <locationX>50</locationX>
-        <locationY>1727</locationY>
+        <locationY>1524</locationY>
+        <faultConnector>
+            <targetReference>Assign_Fault_Element_Update_Resource_fields</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>RecordTypeId</field>
@@ -324,16 +463,48 @@
         <inputReference>$Record</inputReference>
     </recordUpdates>
     <start>
-        <locationX>56</locationX>
+        <locationX>188</locationX>
         <locationY>0</locationY>
-        <connector>
-            <targetReference>Get_Integration_Profile_ID</targetReference>
-        </connector>
         <object>Contact</object>
         <recordTriggerType>Create</recordTriggerType>
+        <scheduledPaths>
+            <name>Run_Asynchronously</name>
+            <connector>
+                <targetReference>Get_Integration_Profile_ID</targetReference>
+            </connector>
+            <label>Run Asynchronously</label>
+            <offsetNumber>0</offsetNumber>
+            <offsetUnit>Hours</offsetUnit>
+            <timeSource>RecordTriggerEvent</timeSource>
+        </scheduledPaths>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Obsolete</status>
+    <status>Draft</status>
+    <subflows>
+        <name>Fault_Handler_Subflow</name>
+        <label>Fault Handler Subflow</label>
+        <locationX>2162</locationX>
+        <locationY>492</locationY>
+        <flowName>Insperity_Fault_Handler_Subflow</flowName>
+        <inputAssignments>
+            <name>faultElement</name>
+            <value>
+                <elementReference>varFaultElement</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultFlow</name>
+            <value>
+                <stringValue>NSP_Contact_Resource_Fields_Update</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultMessage</name>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
     <variables>
         <name>IntgUserLists</name>
         <dataType>SObject</dataType>
@@ -351,5 +522,12 @@
         <value>
             <booleanValue>false</booleanValue>
         </value>
+    </variables>
+    <variables>
+        <name>varFaultElement</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
     </variables>
 </Flow>

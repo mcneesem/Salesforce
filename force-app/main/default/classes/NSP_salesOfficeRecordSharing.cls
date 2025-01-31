@@ -5,9 +5,11 @@
 * Name : NSP_salesOfficeRecordSharing
 */
 public class NSP_salesOfficeRecordSharing {
+    // test w/ NSP_salesOfficeRecordSharingTest (92%)
     //constants - custom labels
     public static List<string> BusinessPerformanceRoles = System.Label.NSP_Business_Performance_Roles.split(',');
-    
+    private static Map<String,String> salesOfficeGroupMap = new Map<String,String>();
+
     /***********************************************************************************************
     * MethodName: accountRecordSharing 
     * Description : Method for sharing records With BPA Sales Offices
@@ -33,7 +35,7 @@ public class NSP_salesOfficeRecordSharing {
                 }
             } 
             // creating map of Sales Office Group name and Group Id
-            Map<String,String> salesOfficeGroupMap = mapSalesOfficePublicGroup(mapSalesOfficeSetAccountId.KeySet());
+            salesOfficeGroupMap = mapSalesOfficePublicGroup(mapSalesOfficeSetAccountId.KeySet());
             
             // Sharing Account Records with Sales Office Public Group
             for(String salesOffice:mapSalesOfficeSetAccountId.keySet() ){
@@ -111,7 +113,7 @@ public class NSP_salesOfficeRecordSharing {
                 }
             } 
             // creating map of Sales Office Group name and Group Id
-            Map<String,String> salesOfficeGroupMap = mapSalesOfficePublicGroup(mapSalesOfficeSetAccountId.KeySet());
+            salesOfficeGroupMap = mapSalesOfficePublicGroup(mapSalesOfficeSetAccountId.KeySet());
             //Seacrhing for existing Account Share Records 
             if(mapAccountIdSetOldSalesOffice!=null){
                 List<AccountShare> oldAccShareList =[Select Id, AccountId , UserorGroup.Name  from AccountShare WHERE 
@@ -176,7 +178,7 @@ public class NSP_salesOfficeRecordSharing {
                 }     
             }
             // creating map of Sales Office Group name and Group Id
-            Map<String,String> salesOfficeGroupMap = mapSalesOfficePublicGroup(mapSalesOfficeSetAccountId.KeySet());
+            salesOfficeGroupMap = mapSalesOfficePublicGroup(mapSalesOfficeSetAccountId.KeySet());
             
             // Sharing Account Records with Sales Office Public Group
             for(String salesOffice:mapSalesOfficeSetAccountId.keySet() ){
@@ -318,7 +320,7 @@ public class NSP_salesOfficeRecordSharing {
                    }
             }
             // creating map of Sales Office Group name and Group Id
-            Map<String,String> salesOfficeGroupMap = mapSalesOfficePublicGroup(mapSalesOfficeSetLeadId.KeySet());
+            salesOfficeGroupMap = mapSalesOfficePublicGroup(mapSalesOfficeSetLeadId.KeySet());
             
             // Sharing Lead Records with Sales Office Public Group
             for(String salesOffice:mapSalesOfficeSetLeadId.keySet() ){
@@ -410,7 +412,7 @@ public class NSP_salesOfficeRecordSharing {
                 } 
             }
             // creating map of Sales Office Group name and Group Id
-            Map<String,String> salesOfficeGroupMap = mapSalesOfficePublicGroup(mapSalesOfficeSetLeadId.KeySet());
+            salesOfficeGroupMap = mapSalesOfficePublicGroup(mapSalesOfficeSetLeadId.KeySet());
             //Seacrhing for existing Lead Share Records 
             if(mapLeadIdSetOldSalesOffice!=null){
                 List<LeadShare> oldLeadShareList =[Select Id, LeadId ,Lead.OwnerId, UserorGroup.Name , UserorGroupId from LeadShare WHERE 
@@ -503,7 +505,7 @@ public class NSP_salesOfficeRecordSharing {
                 }
             } 
             // creating map of Sales Office Group name and Group Id
-            Map<String,String> salesOfficeGroupMap = mapSalesOfficePublicGroup(mapSalesOfficeSetOppId.KeySet());
+            salesOfficeGroupMap = mapSalesOfficePublicGroup(mapSalesOfficeSetOppId.KeySet());
             //Seacrhing for existing Opportunity Share Records 
             if(mapOppIdSetOldSalesOffice!=null){
                 List<OpportunityShare> oldOppShareList =[Select Id, OpportunityId ,Opportunity.OwnerId, UserorGroup.Name , UserorGroupId from OpportunityShare WHERE 
@@ -571,7 +573,7 @@ public class NSP_salesOfficeRecordSharing {
                 }
             } 
             // creating map of Sales Office Group name and Group Id
-            Map<String,String> salesOfficeGroupMap = mapSalesOfficePublicGroup(mapSalesOfficeSetOpportunityId.KeySet());
+            salesOfficeGroupMap = mapSalesOfficePublicGroup(mapSalesOfficeSetOpportunityId.KeySet());
             
             // Sharing Account Records with Sales Office Public Group
             for(String salesOffice:mapSalesOfficeSetOpportunityId.keySet() ){
@@ -599,6 +601,7 @@ public class NSP_salesOfficeRecordSharing {
     * 
     * ********************************************************************************************/    
     public static Set<Id> rolesPublicGroupShare(){
+        Map<String,String> opportunityPublicGroups = new Map<String, String>();
         Set<Id> userOrGroupIdSet = new Set<Id>();
         List<Id> channelPublicGroupUsers = new List<Id>();
         // searching for Channel Operations Role Users
@@ -609,9 +612,9 @@ public class NSP_salesOfficeRecordSharing {
         // searching Group Id's of NCS and Data Science Public Group 
         List < String > oppPublicGroup = System.Label.NSP_opportunityPublicGroup.split(',');
         Set < String > publicGroups = new Set < String > ();
-        publicGroups.addAll(oppPublicGroup); 
-        Map<String,String> opportunityPublicGroups = mapSalesOfficePublicGroup(publicGroups);
-        channelPublicGroupUsers.addAll(opportunityPublicGroups.Values());
+        publicGroups.addAll(oppPublicGroup);
+        salesOfficeGroupMap = mapSalesOfficePublicGroup(publicGroups);
+        channelPublicGroupUsers.addAll(salesOfficeGroupMap.Values());
         userOrGroupIdSet.addAll(channelPublicGroupUsers);
         
         return userOrGroupIdSet;
@@ -680,15 +683,56 @@ public class NSP_salesOfficeRecordSharing {
         ldshare.LeadId = leadId;
         return ldShare;
     }
+
+    public static Map<String,String> mapSalesOfficePublicGroup(Set<String> salesOfficeSet){
+        Map<String,String> local = new Map<String,String>();
+        if(LeadConversionSettings__c.getInstance(UserInfo.getUserId()).Is_Enabled_SOQL_Fix__c)
+        {
+            local = mapSalesOfficePublicGroupCached(salesOfficeSet);            
+        }
+        else
+        {
+            local = mapSalesOfficePublicGroupQueried(salesOfficeSet);
+        }
+        return local;
+    }
     
     /***********************************************************************************************
-    * MethodName: mapSalesOfficePublicGroup 
+    * MethodName: mapSalesOfficePublicGroupNew 
     * Description : This Method will fetch and create map of Sales Office Public Group and Group Id
     * Params:      Map<String,Set<String>> mapSalesOfficeSetRecordId
     * 
     * ********************************************************************************************/    
-    public static Map<String,String> mapSalesOfficePublicGroup(Set<String> salesOfficeSet){
-        Map<String,String> salesOfficeGroupMap = new Map<String,String>();
+    private static Map<String,String> mapSalesOfficePublicGroupCached( Set<String> salesOfficeSet ){
+
+        Set<String> salesOfficeGroupNames = new  Set<String>();
+
+        for(String groupName : salesOfficeSet){
+            
+            if(!salesOfficeGroupMap.containsKey(groupName)){
+                salesOfficeGroupNames.add(groupName);
+            }
+        }
+
+        if(salesOfficeGroupNames.size() > 0){
+
+            List<Group> salesOfficeGroups = [SELECT Id, Name FROM Group WHERE Name IN:salesOfficeGroupNames];
+
+            for(Group grp:salesOfficeGroups){
+                salesOfficeGroupMap.put(grp.Name,grp.Id);
+            }
+        }
+
+        return salesOfficeGroupMap;
+    }
+
+    /***********************************************************************************************
+    * MethodName: mapSalesOfficePublicGroupOld 
+    * Description : This Method will fetch and create map of Sales Office Public Group and Group Id
+    * Params:      Map<String,Set<String>> mapSalesOfficeSetRecordId
+    * 
+    * ********************************************************************************************/
+    private static Map<String,String> mapSalesOfficePublicGroupQueried( Set<String> salesOfficeSet ){
         List<Group> salesOfficeGroups= [SELECT Id, Name FROM Group WHERE Name IN:salesOfficeSet];
         for(Group grp:salesOfficeGroups){
             salesOfficeGroupMap.put(grp.Name,grp.Id);
