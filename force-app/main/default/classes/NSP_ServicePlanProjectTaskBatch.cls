@@ -137,10 +137,12 @@ public class NSP_ServicePlanProjectTaskBatch implements Database.Batchable<sObje
                 projectTask.NSP_Category__c = NSP_ServiceConstants.Client_Management;
                 projectTask.NSP_Sub_Category__c = NSP_ServiceConstants.Quality_Touch_Point;
                 projectTask.pse__External_Task_ID__c = prj.Id+'-'+NSP_ServiceConstants.QTP1+'-'+randomNumber;
-                if(accountTeamMap.containskey(prj.pse__Account__c) && 
-                  accountTeamMap.get(prj.pse__Account__c) != null && 
-                  accountTeamMap.get(prj.pse__Account__c).NSP_User__c != null){
-                    projectTask.OwnerId = accountTeamMap.get(prj.pse__Account__c).NSP_User__c;
+                if ( accountTeamMap.containskey( prj.pse__Account__c )
+                    && ( accountTeamMap.get( prj.pse__Account__c ) != null )
+                    && ( accountTeamMap.get( prj.pse__Account__c ).NSP_User__c != null )
+                    )
+                {
+                    projectTask.OwnerId = accountTeamMap.get( prj.pse__Account__c ).NSP_User__c;
                 }
                 lstOfRecords.add(projectTask);
                 lstOfRecords.add(projTaskAssigmt);
@@ -155,10 +157,12 @@ public class NSP_ServicePlanProjectTaskBatch implements Database.Batchable<sObje
                 projectTask1.NSP_Category__c = NSP_ServiceConstants.Client_Management;
                 projectTask1.NSP_Sub_Category__c = NSP_ServiceConstants.Quality_Touch_Point;
                 projectTask1.pse__External_Task_ID__c = prj.Id+'-'+NSP_ServiceConstants.QTP2+'-'+randomNumber;
-                if(accountTeamMap.containskey(prj.pse__Account__c)  && 
-                  accountTeamMap.get(prj.pse__Account__c) != null && 
-                  accountTeamMap.get(prj.pse__Account__c).NSP_User__c != null){
-                    projectTask1.OwnerId = accountTeamMap.get(prj.pse__Account__c).NSP_User__c;
+                if ( accountTeamMap.containskey( prj.pse__Account__c )
+                    && ( accountTeamMap.get( prj.pse__Account__c ) != null )
+                    && ( accountTeamMap.get( prj.pse__Account__c ).NSP_User__c != null )
+                    )
+                {
+                    projectTask1.OwnerId = accountTeamMap.get( prj.pse__Account__c ).NSP_User__c;
                 }
                 lstOfRecords.add(projectTask1);
                 lstOfRecords.add(projTaskAssigmt2);
