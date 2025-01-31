@@ -330,6 +330,22 @@ export function processCSDiscount(quote,lines,csProducts,csRates){
 						let currentPrice =  csRate.get("SBQQ__Price__c");
 						//newSetPrice is used for calculation purpose to be populated below
 						let newSetPrice = 0;
+                        //Description stores the non discounted rolled up price
+						let descriptionField = csRate.get("SBQQ__Description__c");
+						if(descriptionField && descriptionField.length>0){
+							let splitArray = descriptionField.split("_");
+							if(splitArray.length > 1){
+								//use the non discounted rolled up price of the rate
+								newSetPrice = parseFloat(splitArray[0]);
+							}else{
+								//SBQQ__Price__c is already the non discounted rolled up price
+								newSetPrice = currentPrice;
+							}
+							if(newSetPrice!==currentPrice){
+								csRate.set("SBQQ__Price__c", newSetPrice);
+								currentPrice = newSetPrice;
+							}
+						}
 						if(csRates.includes(CSName) && csProducts.includes(productcode)){
 							let newPriceAmt = 0;
 							let newPricePer = 0;
