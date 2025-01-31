@@ -20,7 +20,7 @@ public with sharing class NSP_TerminationFormTemplateController {
         
         Map<Id, NSP_Termination_Form__c> accountWithTerminationMap = new Map<Id, NSP_Termination_Form__c>(); 
         Map<Id, List<NSP_Account_Team__c>> accountWithAccountTeammemberMap = new Map<Id, List<NSP_Account_Team__c>>(); 
-        Date Todaydate = Date.today();
+        Date todaydate = Date.today();
         List<NSP_Termination_Form__c> terminationFormList = [
             SELECT
                 Id, Name, NSP_Client_Term_Date__c,NSP_Term_Reason__c, 
@@ -33,7 +33,7 @@ public with sharing class NSP_TerminationFormTemplateController {
             FROM NSP_Termination_Form__c 
             WHERE (
                 NSP_Last_Date_Wages_Paid_Through__c = LAST_N_DAYS:22
-                AND Approval_Date__c =:Todaydate
+                AND Approval_Date__c =:todaydate
                 AND NSP_Status__c = 'Term Team Approved'
                 AND NSP_Project_Task__r.pse__Project__r.pse__Project_Status__c != 'Complete'
             )
@@ -48,7 +48,7 @@ public with sharing class NSP_TerminationFormTemplateController {
             FROM NSP_Termination_Form__c 
             WHERE (
                 NSP_Client_Term_Date__c = LAST_N_DAYS:22
-                AND Approval_Date__c =:Todaydate
+                AND Approval_Date__c =:todaydate
                 AND NSP_Status__c = 'Term Team Approved'
                 AND NSP_Project_Task__r.pse__Project__r.pse__Project_Status__c != 'Complete'
                 AND NSP_Project_Task__r.Name = :NSP_ServiceConstants.REINSTATEMENT_REQUESTED_TASK
