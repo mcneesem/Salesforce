@@ -9,6 +9,8 @@ public with sharing class UserOnboardingTriggerHelper {
     // @param newList List of New User.
     // @return void
     //
+    private static final String ERROR_MESSAGE = 'No errors found.';
+    
     public void beforeInsertUser( List<User> newList ) {
         if ( UserOnboardingToolSettings__c.getInstance( UserInfo.getUserId() ).IsEnabled__c ) {
             List<User> userList = new List<User>();
@@ -643,7 +645,7 @@ public with sharing class UserOnboardingTriggerHelper {
                 }
             }
             if (errorCount == 0 ){
-                createErrorLog(UserOnboardingTriggerHelper.class.getName(), 'assignPermission', 'No errors found.');
+                createErrorLog(UserOnboardingTriggerHelper.class.getName(), 'assignPermission', ERROR_MESSAGE);
             }
         }
     }
@@ -662,7 +664,7 @@ public with sharing class UserOnboardingTriggerHelper {
                 }
             }
             if (errorCount == 0 ){
-                createErrorLog(UserOnboardingTriggerHelper.class.getName(), 'assignGroups', 'No errors found.');
+                createErrorLog(UserOnboardingTriggerHelper.class.getName(), 'assignGroups', ERROR_MESSAGE);
             }
         }
     }
@@ -681,7 +683,7 @@ public with sharing class UserOnboardingTriggerHelper {
                 }
             }
             if (errorCount == 0 ){
-                createErrorLog(UserOnboardingTriggerHelper.class.getName(), 'permissionSetLicenseAssignment', 'No errors found.');
+                createErrorLog(UserOnboardingTriggerHelper.class.getName(), 'permissionSetLicenseAssignment', ERROR_MESSAGE);
             }
         }
     }
@@ -799,7 +801,7 @@ public with sharing class UserOnboardingTriggerHelper {
                 }
             }
             if (errorCount == 0 ){
-                createErrorLog(UserOnboardingTriggerHelper.class.getName(), methodName , 'No errors found.');
+                createErrorLog(UserOnboardingTriggerHelper.class.getName(), methodName , ERROR_MESSAGE);
             }
         }
     }
