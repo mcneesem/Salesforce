@@ -108,7 +108,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
     private static final String CSP_MEDICAL_MM ='CSP_Medical';
     private static final String CSP_DENTAL_MM ='CSP_Dental';
     private static final String CSP_VISION_MM ='CSP_Vision';
-	private static final String DATA_VERIFICATION_MM ='DataVerificationMM';
+    private static final String DATA_VERIFICATION_MM ='DataVerificationMM';
     private static Id ipFSORecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Implementation_Profile__c' , NSP_ServiceConstants.FSOProfile );
     private static Id ipMMRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Implementation_Profile__c' , NSP_ServiceConstants.MMProfile );
     private static Id milestonePEORecordtypeId = NSP_GenericRecordType.getRecordTypeId( 'pse__Milestone__c' , NSP_ServiceConstants.PEOMILSTONE );
@@ -2501,7 +2501,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
         //check for existing Automation record and store the new Automation records
         recToInsert.addAll(getnewAutomationListtoInsert(ipAutomationRecords));
     }
-	
+
     public void createProjectTaskForDataVerification() {
         NSP_ProjectTask_Automation__mdt pta = NSP_ProjectTask_Automation__mdt.getInstance(DATA_VERIFICATION_MM);
         Map<String, Object> dataMap = new Map<String, Object>();  
@@ -2557,7 +2557,8 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                     Name=pta.NSP_Milestone__c,
                     RecordTypeId=milestonePEORecordtypeId,
                     pse__Project__c=proj.Id,
-                    pse__Target_Date__c=proj.pse__End_Date__c);
+                    pse__Target_Date__c=proj.pse__End_Date__c
+                );
                 mileStonesToInsert.put(milestoneKey, eachMilestone);
             }
         }
@@ -2577,7 +2578,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
             eachProjecttask.NSP_Visible_to_Client__c=TRUE;
             Implementation_Profile__c ipwithValue=(Implementation_Profile__c) data.get(IMPL_PROFILE_IDENTIFIER).get(ipRecId);
             if(ipwithValue != null){
-				ipwithValueForDataVerification(ipwithValue,eachProjecttask,workCalendarRecord);
+                ipwithValueForDataVerification(ipwithValue,eachProjecttask,workCalendarRecord);
             }
             eachProjecttask.pse__Milestone__c=milestoneId;
             projectTaskList.add(eachProjecttask);
@@ -4203,7 +4204,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
             }
         }
     }
-	
+
     private void checkForDataVerificationMM(Implementation_Profile__c newRec, Implementation_Profile__c existingRec) {  
         if (newRec != null
             && newRec.RecordTypeId == ipMMRecordTypeId
