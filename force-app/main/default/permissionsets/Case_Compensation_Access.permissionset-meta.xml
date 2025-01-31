@@ -60,6 +60,10 @@
         <field>Case.Survey_Jobs__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <flowAccesses>
+        <enabled>true</enabled>
+        <flow>Case_Send_Compensation_Service_request_Email</flow>
+    </flowAccesses>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Case Compensation Access</label>
 </PermissionSet>

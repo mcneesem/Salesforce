@@ -148,13 +148,6 @@
                 <booleanValue>true</booleanValue>
             </value>
         </assignmentItems>
-        <assignmentItems>
-            <assignToReference>contactemail</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Get_Compensation_Services_Cases.Contact.NSP_Work_email__c</elementReference>
-            </value>
-        </assignmentItems>
         <connector>
             <targetReference>Send_Compensation_Service_Request_email</targetReference>
         </connector>
@@ -169,6 +162,13 @@
         <rules>
             <name>IsCompleted</name>
             <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Compensation_Services_Cases</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
             <conditions>
                 <leftValueReference>Get_Compensation_Services_Cases.ContactId</leftValueReference>
                 <operator>IsBlank</operator>
@@ -193,7 +193,7 @@
             <name>IsListed</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Get_Compensation_Services_Cases.Contact.NSP_Work_email__c</leftValueReference>
+                <leftValueReference>contactemail</leftValueReference>
                 <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
