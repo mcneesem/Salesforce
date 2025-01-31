@@ -57,7 +57,7 @@
         </scheduledPaths>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Draft</status>
+    <status>Obsolete</status>
     <subflows>
         <name>Error_handler</name>
         <label>Error handler</label>

@@ -76,6 +76,7 @@ const RL_FIELDS = [
   'Do_the_employee_s_work_more_than_6__c',
   'Is_the_Employee_an_Intern__c',
   'Is_the_work_performed_typically_the_same__c',
+  'Is_client_CA_docs_submitted_for_approval__c',
 ];
 
 const PREFILLED_FIELDS = {

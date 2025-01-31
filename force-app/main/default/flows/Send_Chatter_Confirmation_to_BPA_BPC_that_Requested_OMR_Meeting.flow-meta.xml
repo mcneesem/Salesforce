@@ -3,10 +3,13 @@
     <actionCalls>
         <name>Post_Chatter_Message_Confirmation_to_Account_Owner_and_Task_created_user</name>
         <label>Post Chatter Message Confirmation to Account Owner and Task created user</label>
-        <locationX>578</locationX>
-        <locationY>755</locationY>
+        <locationX>1309</locationX>
+        <locationY>816</locationY>
         <actionName>chatterPost</actionName>
         <actionType>chatterPost</actionType>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_Post_Chatter_Message_Confirmation_to_Account_Owner_and_Task_cr</targetReference>
+        </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>text</name>
@@ -20,15 +23,19 @@
                 <elementReference>Get_related_account_to_reference_in_Chatter_message.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>chatterPost</nameSegment>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <actionCalls>
         <name>Post_Chatter_Message_Confirmation_to_Account_Owner_Task_created_user</name>
         <label>Post Chatter Message Confirmation to Account Owner/Task created user</label>
-        <locationX>314</locationX>
-        <locationY>755</locationY>
+        <locationX>781</locationX>
+        <locationY>816</locationY>
         <actionName>chatterPost</actionName>
         <actionType>chatterPost</actionType>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_Post_Chatter_Message_Confirmation_to_Account_Owner_Task_create</targetReference>
+        </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>text</name>
@@ -42,20 +49,24 @@
                 <elementReference>Get_related_account_to_reference_in_Chatter_message.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>chatterPost</nameSegment>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <actionCalls>
         <name>Send_chatter</name>
         <label>Send chatter</label>
-        <locationX>50</locationX>
-        <locationY>1889</locationY>
+        <locationX>253</locationX>
+        <locationY>1950</locationY>
         <actionName>NSP_ChatterPostController</actionName>
         <actionType>apex</actionType>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_Send_chatter</targetReference>
+        </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>relatedId</name>
             <value>
-                <elementReference>$Record.Account.Id</elementReference>
+                <elementReference>$Record.AccountId</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -70,13 +81,14 @@
                 <elementReference>List_Of_Users</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>NSP_ChatterPostController</nameSegment>
     </actionCalls>
-    <apiVersion>57.0</apiVersion>
+    <apiVersion>62.0</apiVersion>
     <assignments>
         <name>Add_Account_Owner</name>
         <label>Add Account Owner</label>
-        <locationX>1018</locationX>
-        <locationY>971</locationY>
+        <locationX>1221</locationX>
+        <locationY>1032</locationY>
         <assignmentItems>
             <assignToReference>List_Of_Users</assignToReference>
             <operator>Add</operator>
@@ -91,13 +103,13 @@
     <assignments>
         <name>Add_BPA_User</name>
         <label>Add BPA User</label>
-        <locationX>1018</locationX>
-        <locationY>1271</locationY>
+        <locationX>1221</locationX>
+        <locationY>1332</locationY>
         <assignmentItems>
             <assignToReference>List_Of_Users</assignToReference>
             <operator>Add</operator>
             <value>
-                <elementReference>Iterate_over_BPA_Users.NSP_User__r.Id</elementReference>
+                <elementReference>Iterate_over_BPA_Users.NSP_User__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -107,13 +119,13 @@
     <assignments>
         <name>Add_BPA_User_Account_Owner</name>
         <label>Add BPA User/Account Owner</label>
-        <locationX>358</locationX>
-        <locationY>971</locationY>
+        <locationX>561</locationX>
+        <locationY>1032</locationY>
         <assignmentItems>
             <assignToReference>List_Of_Users</assignToReference>
             <operator>Add</operator>
             <value>
-                <elementReference>Iterate_over_BPA_Users.NSP_User__r.Id</elementReference>
+                <elementReference>Iterate_over_BPA_Users.NSP_User__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -123,8 +135,8 @@
     <assignments>
         <name>Add_Task_Created_User</name>
         <label>Add Task Created User</label>
-        <locationX>490</locationX>
-        <locationY>1379</locationY>
+        <locationX>693</locationX>
+        <locationY>1440</locationY>
         <assignmentItems>
             <assignToReference>List_Of_Users</assignToReference>
             <operator>Add</operator>
@@ -136,11 +148,95 @@
             <targetReference>Iterate_over_BPA_Users</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Get_BPA_Account_Team</name>
+        <label>Set Fault Element : Get_BPA_Account_Team</label>
+        <locationX>1837</locationX>
+        <locationY>600</locationY>
+        <assignmentItems>
+            <assignToReference>FaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_BPA_Account_Team</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Get_related_account_to_reference_in_Chatter_message</name>
+        <label>Set Fault Element : Get_related_account_to_reference_in_Chatter_message</label>
+        <locationX>2365</locationX>
+        <locationY>384</locationY>
+        <assignmentItems>
+            <assignToReference>FaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_related_account_to_reference_in_Chatter_message</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Post_Chatter_Message_Confirmation_to_Account_Owner_and_Task_cr</name>
+        <label>Set Fault Element : Post_Chatter_Message_Confirmation_to_Account_Owner_and_Task_created_user</label>
+        <locationX>1573</locationX>
+        <locationY>924</locationY>
+        <assignmentItems>
+            <assignToReference>FaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Post_Chatter_Message_Confirmation_to_Account_Owner_and_Task_created_user</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Post_Chatter_Message_Confirmation_to_Account_Owner_Task_create</name>
+        <label>Set Fault Element : Post_Chatter_Message_Confirmation_to_Account_Owner_Task_created_user</label>
+        <locationX>1045</locationX>
+        <locationY>924</locationY>
+        <assignmentItems>
+            <assignToReference>FaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Post_Chatter_Message_Confirmation_to_Account_Owner_Task_created_user</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Send_chatter</name>
+        <label>Set Fault Element : Send_chatter</label>
+        <locationX>517</locationX>
+        <locationY>2058</locationY>
+        <assignmentItems>
+            <assignToReference>FaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Send_chatter</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
     <decisions>
         <name>Checking_either_Task_created_user_is_same_as_Account_Owner</name>
         <label>Checking either Task created user is same as Account Owner</label>
-        <locationX>446</locationX>
-        <locationY>647</locationY>
+        <locationX>1045</locationX>
+        <locationY>708</locationY>
         <defaultConnector>
             <targetReference>Post_Chatter_Message_Confirmation_to_Account_Owner_and_Task_created_user</targetReference>
         </defaultConnector>
@@ -149,7 +245,7 @@
             <name>Task_Owner_same_as_Account_Owner_bpa_null</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Get_related_account_to_reference_in_Chatter_message.Owner.Id</leftValueReference>
+                <leftValueReference>Get_related_account_to_reference_in_Chatter_message.OwnerId</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <elementReference>$Record.CreatedById</elementReference>
@@ -164,8 +260,8 @@
     <decisions>
         <name>Checking_either_Task_created_user_is_same_as_Account_Owner_or_BPA_User</name>
         <label>Checking either Task created user is same as Account Owner or BPA User</label>
-        <locationX>930</locationX>
-        <locationY>1463</locationY>
+        <locationX>1133</locationX>
+        <locationY>1524</locationY>
         <defaultConnector>
             <isGoTo>true</isGoTo>
             <targetReference>Is_Task_Created_User_Present_in_List_Of_Users</targetReference>
@@ -175,7 +271,7 @@
             <name>Task_Created_User_same_as_Account_Owner</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Get_related_account_to_reference_in_Chatter_message.Owner.Id</leftValueReference>
+                <leftValueReference>Get_related_account_to_reference_in_Chatter_message.OwnerId</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <elementReference>$Record.CreatedById</elementReference>
@@ -190,7 +286,7 @@
             <name>Task_Created_User_same_as_BPA_User</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Iterate_over_BPA_Users.NSP_User__r.Id</leftValueReference>
+                <leftValueReference>Iterate_over_BPA_Users.NSP_User__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <elementReference>$Record.CreatedById</elementReference>
@@ -205,8 +301,8 @@
     <decisions>
         <name>Is_Account_Owner_Present_in_List_Of_Users</name>
         <label>Is Account Owner Present in List Of Users</label>
-        <locationX>930</locationX>
-        <locationY>863</locationY>
+        <locationX>1133</locationX>
+        <locationY>924</locationY>
         <defaultConnector>
             <targetReference>Add_Account_Owner</targetReference>
         </defaultConnector>
@@ -230,8 +326,8 @@
     <decisions>
         <name>Is_BPA_null</name>
         <label>Is BPA null</label>
-        <locationX>248</locationX>
-        <locationY>539</locationY>
+        <locationX>649</locationX>
+        <locationY>600</locationY>
         <defaultConnector>
             <targetReference>Checking_either_Task_created_user_is_same_as_Account_Owner</targetReference>
         </defaultConnector>
@@ -246,6 +342,13 @@
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>BPA_Users</leftValueReference>
+                <operator>IsEmpty</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Iterate_over_BPA_Users</targetReference>
             </connector>
@@ -255,8 +358,8 @@
     <decisions>
         <name>Is_BPA_User_Present_in_List_Of_Users</name>
         <label>Is BPA User Present in List Of Users</label>
-        <locationX>930</locationX>
-        <locationY>1163</locationY>
+        <locationX>1133</locationX>
+        <locationY>1224</locationY>
         <defaultConnector>
             <targetReference>Add_BPA_User</targetReference>
         </defaultConnector>
@@ -268,7 +371,7 @@
                 <leftValueReference>List_Of_Users</leftValueReference>
                 <operator>Contains</operator>
                 <rightValue>
-                    <elementReference>Iterate_over_BPA_Users.NSP_User__r.Id</elementReference>
+                    <elementReference>Iterate_over_BPA_Users.NSP_User__c</elementReference>
                 </rightValue>
             </conditions>
             <connector>
@@ -280,8 +383,8 @@
     <decisions>
         <name>Is_same_Account_Owner_and_BPA_User</name>
         <label>Is same Account Owner and BPA User</label>
-        <locationX>600</locationX>
-        <locationY>755</locationY>
+        <locationX>803</locationX>
+        <locationY>816</locationY>
         <defaultConnector>
             <targetReference>Is_Account_Owner_Present_in_List_Of_Users</targetReference>
         </defaultConnector>
@@ -290,10 +393,10 @@
             <name>Y_e_s</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Get_related_account_to_reference_in_Chatter_message.Owner.Id</leftValueReference>
+                <leftValueReference>Get_related_account_to_reference_in_Chatter_message.OwnerId</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <elementReference>Iterate_over_BPA_Users.NSP_User__r.Id</elementReference>
+                    <elementReference>Iterate_over_BPA_Users.NSP_User__c</elementReference>
                 </rightValue>
             </conditions>
             <connector>
@@ -305,8 +408,8 @@
     <decisions>
         <name>Is_same_user_created_Task</name>
         <label>Is same user created Task</label>
-        <locationX>270</locationX>
-        <locationY>1163</locationY>
+        <locationX>473</locationX>
+        <locationY>1224</locationY>
         <defaultConnector>
             <targetReference>Is_Task_Created_User_Present_in_List_Of_Users</targetReference>
         </defaultConnector>
@@ -315,7 +418,7 @@
             <name>Yes</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Iterate_over_BPA_Users.NSP_User__r.Id</leftValueReference>
+                <leftValueReference>Iterate_over_BPA_Users.NSP_User__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <elementReference>$Record.CreatedById</elementReference>
@@ -330,8 +433,8 @@
     <decisions>
         <name>Is_Task_Created_User_Present_in_List_Of_Users</name>
         <label>Is Task Created User Present in List Of Users</label>
-        <locationX>402</locationX>
-        <locationY>1271</locationY>
+        <locationX>605</locationX>
+        <locationY>1332</locationY>
         <defaultConnector>
             <targetReference>Add_Task_Created_User</targetReference>
         </defaultConnector>
@@ -355,8 +458,8 @@
     <decisions>
         <name>Is_User_Present_in_List_Of_Users</name>
         <label>Is User Present in List Of Users</label>
-        <locationX>270</locationX>
-        <locationY>863</locationY>
+        <locationX>473</locationX>
+        <locationY>924</locationY>
         <defaultConnector>
             <targetReference>Add_BPA_User_Account_Owner</targetReference>
         </defaultConnector>
@@ -368,7 +471,7 @@
                 <leftValueReference>List_Of_Users</leftValueReference>
                 <operator>Contains</operator>
                 <rightValue>
-                    <elementReference>Iterate_over_BPA_Users.NSP_User__r.Id</elementReference>
+                    <elementReference>Iterate_over_BPA_Users.NSP_User__c</elementReference>
                 </rightValue>
             </conditions>
             <connector>
@@ -377,14 +480,44 @@
             <label>Present</label>
         </rules>
     </decisions>
+    <decisions>
+        <name>Verify_Related_Account</name>
+        <label>Verify Related Account</label>
+        <locationX>1375</locationX>
+        <locationY>384</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Related_Account_Yes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_related_account_to_reference_in_Chatter_message</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_related_account_to_reference_in_Chatter_message</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_BPA_Account_Team</targetReference>
+            </connector>
+            <label>Related Account : Yes</label>
+        </rules>
+    </decisions>
+    <description>Flow updated , async ,chatter message</description>
     <environments>Default</environments>
     <interviewLabel>Send Chatter Confirmation to BPA/BPC that Requested OMR Meeting {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Send Chatter Confirmation to BPA/BPC that Requested OMR Meeting</label>
     <loops>
         <name>Iterate_over_BPA_Users</name>
         <label>Iterate over BPA Users</label>
-        <locationX>50</locationX>
-        <locationY>647</locationY>
+        <locationX>253</locationX>
+        <locationY>708</locationY>
         <collectionReference>BPA_Users</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -416,12 +549,15 @@
     <recordLookups>
         <name>Get_BPA_Account_Team</name>
         <label>Get BPA Account Team</label>
-        <locationX>248</locationX>
-        <locationY>431</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <locationX>649</locationX>
+        <locationY>492</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Is_BPA_null</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_Get_BPA_Account_Team</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>NSP_Account__c</field>
@@ -452,12 +588,15 @@
     <recordLookups>
         <name>Get_related_account_to_reference_in_Chatter_message</name>
         <label>Get related account to reference in Chatter message</label>
-        <locationX>248</locationX>
-        <locationY>323</locationY>
+        <locationX>1375</locationX>
+        <locationY>276</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Get_BPA_Account_Team</targetReference>
+            <targetReference>Verify_Related_Account</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_Get_related_account_to_reference_in_Chatter_message</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -471,11 +610,8 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <start>
-        <locationX>122</locationX>
+        <locationX>50</locationX>
         <locationY>0</locationY>
-        <connector>
-            <targetReference>Get_related_account_to_reference_in_Chatter_message</targetReference>
-        </connector>
         <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
         <filterLogic>1 AND (2 OR 3)</filterLogic>
         <filters>
@@ -501,9 +637,40 @@
         </filters>
         <object>Task</object>
         <recordTriggerType>Update</recordTriggerType>
+        <scheduledPaths>
+            <connector>
+                <targetReference>Get_related_account_to_reference_in_Chatter_message</targetReference>
+            </connector>
+            <pathType>AsyncAfterCommit</pathType>
+        </scheduledPaths>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
+    <subflows>
+        <name>Insperity_Fault_Handler_Subflow</name>
+        <label>Insperity Fault Handler Subflow</label>
+        <locationX>517</locationX>
+        <locationY>2166</locationY>
+        <flowName>Insperity_Fault_Handler_Subflow</flowName>
+        <inputAssignments>
+            <name>faultElement</name>
+            <value>
+                <elementReference>FaultElement</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultFlow</name>
+            <value>
+                <stringValue>Send_Chatter_Confirmation_to_BPA_BPC_that_Requested_OMR_Meeting</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultMessage</name>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
     <textTemplates>
         <name>chatter_confirmation_bpa_account_and_task</name>
         <isViewedAsPlainText>true</isViewedAsPlainText>
@@ -512,10 +679,8 @@
     </textTemplates>
     <textTemplates>
         <name>chatter_confirmation_bpa_task_or_account</name>
-        <isViewedAsPlainText>true</isViewedAsPlainText>
-        <text>Your {!$Record.Type} for &apos;{!Get_related_account_to_reference_in_Chatter_message.Name}&apos; has been confirmed.
-
-The final meeting details are as follows: {!$Record.NSP_What_needs_to_get_done__c}</text>
+        <isViewedAsPlainText>false</isViewedAsPlainText>
+        <text>&lt;p&gt;Your {!$Record.Type} for &apos;{!Get_related_account_to_reference_in_Chatter_message.Name}&apos; has been confirmed.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;The final meeting details are as follows: {!$Record.NSP_What_needs_to_get_done__c}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;If you need to update the meeting date/time or other information, use the Update Onboarding Meetings button on the Account.&lt;/p&gt;</text>
     </textTemplates>
     <textTemplates>
         <name>chatter_confirmation_to_bpa_bpc_block_scheduling</name>
@@ -533,6 +698,13 @@ The final meeting details are as follows: {!$Record.NSP_What_needs_to_get_done__
     </variables>
     <variables>
         <name>currentItemFromSourceCollection</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>FaultElement</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>

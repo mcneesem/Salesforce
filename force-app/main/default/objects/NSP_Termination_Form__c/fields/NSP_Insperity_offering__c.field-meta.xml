@@ -62,10 +62,28 @@
                 <label>Time and Attendance(TimeStar)</label>
             </value>
             <value>
+                <fullName>Expense Management</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Expense Management</label>
+            </value>
+            <value>
+                <fullName>Human Capital Management/Workforce Administration</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Human Capital Management/Workforce Administration</label>
+            </value>
+            <value>
                 <fullName>Payroll Services</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
                 <label>Payroll Services</label>
+            </value>
+            <value>
+                <fullName>Time and Attendance</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Time and Attendance</label>
             </value>
         </valueSetDefinition>
     </valueSet>

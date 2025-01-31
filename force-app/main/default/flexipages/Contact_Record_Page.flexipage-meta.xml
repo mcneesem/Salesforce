@@ -821,6 +821,16 @@
                 <identifier>RecordLastCUUpdateDateField</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Marketing_Priority__c</fieldItem>
+                <identifier>RecordMarketing_Priority_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-3ea9e031-cae1-4310-9b46-26fefe23a271</name>
         <type>Facet</type>
     </flexiPageRegions>

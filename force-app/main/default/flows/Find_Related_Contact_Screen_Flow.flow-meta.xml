@@ -449,7 +449,7 @@
             <name>No_Case_Contacts_Found</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Get_Existing_Case_Contacts</leftValueReference>
+                <leftValueReference>existingCaseContactRecords</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>

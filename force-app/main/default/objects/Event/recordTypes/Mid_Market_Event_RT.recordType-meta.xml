@@ -1702,6 +1702,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>HCM Sales 2</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Inside Sales</fullName>
             <default>false</default>
         </values>

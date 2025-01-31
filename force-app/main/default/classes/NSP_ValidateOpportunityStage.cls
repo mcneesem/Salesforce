@@ -99,7 +99,12 @@ public with sharing class NSP_ValidateOpportunityStage {
                         }
                         
                         //Discovery
-                        if ( opp.StageName.equals(NSP_SalesConstants.DISCOVERY_STAGE))
+                        if ( opp.StageName.equals( NSP_SalesConstants.DISCOVERY_STAGE )
+                            && ( ( opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WO )
+                                || ( opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WS )
+                                || ( opp.NSP_PrimaryProduct__c == null )
+                                )
+                            )
                         {
                             String scannedEvent='';
                             if(eventList!=null){
