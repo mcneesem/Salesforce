@@ -2,6 +2,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
     // test w/ NSP_PrepSandboxTest (80%)
 
     static final string STRING_INVALID = '.invalid';
+    static final string DOCUSIGN_BASE_URL = 'https://uatna11.springcm.com/atlas/doclauncher/OneClickDocGen';
 
     public String runManualResult{get;set;}
     global void runApexClass(SandboxContext context){
@@ -337,22 +338,22 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
                 when 'stage' {
                     refreshValMap.put('NSP_FTA_Base_URL', 'https://stageportalapps.insperity.com/financialcomparison/financialanalysis/');
                     refreshValMap.put('NSP_Docusign_Account_Id', '48945');
-                    refreshValMap.put('NSP_Docusign_Base_URL', 'https://uatna11.springcm.com/atlas/doclauncher/OneClickDocGen');
+                    refreshValMap.put('NSP_Docusign_Base_URL', DOCUSIGN_BASE_URL);
                 }
                 when 'test' {
                     refreshValMap.put('NSP_FTA_Base_URL', 'https://testportalapps.insperity.com/financialcomparison/financialanalysis/');
                     refreshValMap.put('NSP_Docusign_Account_Id', '65500');
-                    refreshValMap.put('NSP_Docusign_Base_URL', 'https://uatna11.springcm.com/atlas/doclauncher/OneClickDocGen');
+                    refreshValMap.put('NSP_Docusign_Base_URL', DOCUSIGN_BASE_URL);
                 }
                 when 'merge' {
                     refreshValMap.put('NSP_FTA_Base_URL', 'https://devportalapps.insperity.com/financialcomparison/financialanalysis/');
                     refreshValMap.put('NSP_Docusign_Account_Id', '122677');
-                    refreshValMap.put('NSP_Docusign_Base_URL', 'https://uatna11.springcm.com/atlas/doclauncher/OneClickDocGen');
+                    refreshValMap.put('NSP_Docusign_Base_URL', DOCUSIGN_BASE_URL);
                 }
                 when else {
                     refreshValMap.put('NSP_FTA_Base_URL', 'https://devportalapps.insperity.com/financialcomparison/financialanalysis/');
                     refreshValMap.put('NSP_Docusign_Account_Id', '50202');
-                    refreshValMap.put('NSP_Docusign_Base_URL', 'https://uatna11.springcm.com/atlas/doclauncher/OneClickDocGen');
+                    refreshValMap.put('NSP_Docusign_Base_URL', DOCUSIGN_BASE_URL);
                 }
             }
             for (String cLName : refreshValMap.keySet()) {
