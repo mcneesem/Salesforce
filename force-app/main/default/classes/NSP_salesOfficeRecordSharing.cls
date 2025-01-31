@@ -601,7 +601,6 @@ public class NSP_salesOfficeRecordSharing {
     * 
     * ********************************************************************************************/    
     public static Set<Id> rolesPublicGroupShare(){
-        Map<String,String> opportunityPublicGroups = new Map<String, String>();
         Set<Id> userOrGroupIdSet = new Set<Id>();
         List<Id> channelPublicGroupUsers = new List<Id>();
         // searching for Channel Operations Role Users
