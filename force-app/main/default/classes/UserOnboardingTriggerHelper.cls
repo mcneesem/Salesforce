@@ -2,7 +2,7 @@
 // Represents the User Onboarding trigger helper which handles all the permission assignment logic.
 //
 public with sharing class UserOnboardingTriggerHelper {
-    // test w/ UserOnboardingTriggerHelperTest (87%)
+    // test w/ UserOnboardingTriggerHelperTest (93%)
     
     //
     // Iterates throught the list of new User and passes the required attributes to other methods.
@@ -638,12 +638,12 @@ public with sharing class UserOnboardingTriggerHelper {
                 if (!sr.isSuccess()) {
                     errorCount++;
                     for(Database.Error err : sr.getErrors()) {
-                        UserOnboardingQueuable.createErrorLog(UserOnboardingTriggerHelper.class.getName(), 'assignPermission', err.getStatusCode() + ': ' + err.getMessage());
+                        createErrorLog(UserOnboardingTriggerHelper.class.getName(), 'assignPermission', err.getStatusCode() + ': ' + err.getMessage());
                     }
                 }
             }
             if (errorCount == 0 ){
-                UserOnboardingQueuable.createErrorLog(UserOnboardingTriggerHelper.class.getName(), 'assignPermission', 'No error in Permission Set/ Permission Set Group Assignment.');
+                createErrorLog(UserOnboardingTriggerHelper.class.getName(), 'assignPermission', 'No errors found.');
             }
         }
     }
@@ -657,12 +657,12 @@ public with sharing class UserOnboardingTriggerHelper {
             for (Database.SaveResult sr : results) {
                 if (!sr.isSuccess()) {
                     for(Database.Error err : sr.getErrors()) {
-                        UserOnboardingQueuable.createErrorLog(UserOnboardingTriggerHelper.class.getName(), 'assignGroups', err.getStatusCode() + ': ' + err.getMessage());
+                        createErrorLog(UserOnboardingTriggerHelper.class.getName(), 'assignGroups', err.getStatusCode() + ': ' + err.getMessage());
                     }
                 }
             }
             if (errorCount == 0 ){
-                UserOnboardingQueuable.createErrorLog(UserOnboardingTriggerHelper.class.getName(), 'assignGroups', 'No error in Queue/Public Group assignment.');
+                createErrorLog(UserOnboardingTriggerHelper.class.getName(), 'assignGroups', 'No errors found.');
             }
         }
     }
@@ -676,12 +676,12 @@ public with sharing class UserOnboardingTriggerHelper {
             for (Database.SaveResult sr : results) {
                 if (!sr.isSuccess()) {
                     for(Database.Error err : sr.getErrors()) {
-                        UserOnboardingQueuable.createErrorLog(UserOnboardingTriggerHelper.class.getName(), 'permissionSetLicenseAssignment', err.getStatusCode() + ': ' + err.getMessage());
+                        createErrorLog(UserOnboardingTriggerHelper.class.getName(), 'permissionSetLicenseAssignment', err.getStatusCode() + ': ' + err.getMessage());
                     }
                 }
             }
             if (errorCount == 0 ){
-                UserOnboardingQueuable.createErrorLog(UserOnboardingTriggerHelper.class.getName(), 'permissionSetLicenseAssignment', 'No error in Permission Set License assignment.');
+                createErrorLog(UserOnboardingTriggerHelper.class.getName(), 'permissionSetLicenseAssignment', 'No errors found.');
             }
         }
     }
@@ -761,21 +761,7 @@ public with sharing class UserOnboardingTriggerHelper {
         Map<String, List<String>> permissionSetGroupMap = createPermissionSetGroupMap(details);
         
         List<PermissionSetAssignment> assignmentsToDelete = filterPermissionAssignments(assigneeIds, oldMap, permissionSetMap, permissionSetGroupMap);
-        
-        if (!assignmentsToDelete.isEmpty()) {
-            List<Database.DeleteResult> results = Database.delete(assignmentsToDelete, false);
-            Integer errorCount = 0;
-            for (Database.DeleteResult sr : results) {
-                if (!sr.isSuccess()) {
-                    for(Database.Error err : sr.getErrors()) {
-                        UserOnboardingQueuable.createErrorLog(UserOnboardingTriggerHelper.class.getName(), 'removePermission', err.getStatusCode() + ': ' + err.getMessage());
-                    }
-                }
-            }
-            if (errorCount == 0 ){
-                UserOnboardingQueuable.createErrorLog(UserOnboardingTriggerHelper.class.getName(), 'removePermission', 'No error in Permission Set/ Permission Set Group Deletion.');
-            }
-        }
+        handleDeleteOperation (assignmentsToDelete, 'removePermission');
     }
     private void removeGroups(Set<Id> memberIds, Map<Id, User> oldMap) {
         List<User_Onboarding_Detail__mdt> details = new List<User_Onboarding_Detail__mdt>();
@@ -786,21 +772,7 @@ public with sharing class UserOnboardingTriggerHelper {
         Map<String, List<String>> groupMap = createGroupMap(details);
         
         List<GroupMember> membershipsToDelete = filtergroupAssignments(memberIds, oldMap, groupMap);
-        
-        if (!membershipsToDelete.isEmpty()) {
-            List<Database.DeleteResult> results = Database.delete(membershipsToDelete, false);
-            Integer errorCount = 0;
-            for (Database.DeleteResult sr : results) {
-                if (!sr.isSuccess()) {
-                    for(Database.Error err : sr.getErrors()) {
-                        UserOnboardingQueuable.createErrorLog(UserOnboardingTriggerHelper.class.getName(), 'removeGroups', err.getStatusCode() + ': ' + err.getMessage());
-                    }
-                }
-            }
-            if (errorCount == 0 ){
-                UserOnboardingQueuable.createErrorLog(UserOnboardingTriggerHelper.class.getName(), 'removeGroups', 'No error in Group deletion.');
-            }
-        }
+        handleDeleteOperation (membershipsToDelete, 'removeGroups');
     }
     
     private void removePermissionSetLicense(Set<Id> assigneeIds, Map<Id, User> oldMap) {
@@ -812,24 +784,25 @@ public with sharing class UserOnboardingTriggerHelper {
         Map<String, List<String>> permissionSetLicenseMap = createPermissionLicenceMap(details);
         
         List<PermissionSetLicenseAssign> assignmentsToDelete = filterAssignments(assigneeIds, oldMap, permissionSetLicenseMap);
-        
-        if (!assignmentsToDelete.isEmpty()) {
-            List<Database.DeleteResult> results = Database.delete(assignmentsToDelete, false);
+        handleDeleteOperation (assignmentsToDelete, 'removePermissionSetLicense');
+    }
+    
+    private void handleDeleteOperation( List<sObject> records , String methodName ) {
+        if (!records.isEmpty()) {
+            List<Database.DeleteResult> results = Database.delete(records, false);
             Integer errorCount = 0;
             for (Database.DeleteResult sr : results) {
                 if (!sr.isSuccess()) {
                     for(Database.Error err : sr.getErrors()) {
-                        UserOnboardingQueuable.createErrorLog(UserOnboardingTriggerHelper.class.getName(), 'removePermissionSetLicense', err.getStatusCode() + ': ' + err.getMessage());
+                        createErrorLog(UserOnboardingTriggerHelper.class.getName(), methodName , err.getStatusCode() + ': ' + err.getMessage());
                     }
                 }
             }
             if (errorCount == 0 ){
-                UserOnboardingQueuable.createErrorLog(UserOnboardingTriggerHelper.class.getName(), 'removePermissionSetLicense', 'No error in Permission Set License deletion.');
+                createErrorLog(UserOnboardingTriggerHelper.class.getName(), methodName , 'No errors found.');
             }
         }
     }
-    
-    
     
     private static Map<String, List<String>> createMap(List<User_Onboarding_Detail__mdt> details, String fieldName) {
         Map<String, List<String>> resultMap = new Map<String, List<String>>();
@@ -908,6 +881,16 @@ public with sharing class UserOnboardingTriggerHelper {
             ];
         }
         return details;
+    }
+    
+    // ************************ Write Error Log ************************
+    @future
+    private static void createErrorLog(String className, String methName, String descText){
+        NSP_Error_Log__c log = new NSP_Error_Log__c();
+        log.NSP_Class__c = className;
+        log.NSP_Method__c = methName;
+        log.NSP_Description__c = descText;
+        Insert log;
     }
 
 }
