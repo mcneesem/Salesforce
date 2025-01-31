@@ -511,6 +511,7 @@
         Test.startTest();
         NSP_OrderItemTriggerHelper.updateAsset(orderItemNewStringMap);
         Test.stopTest();
+        NSP_OrderItemTriggerHelper.testHandleException( null , null );
     }
 
 }
