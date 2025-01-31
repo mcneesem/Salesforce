@@ -3,8 +3,9 @@
     <fullName>Member_Account_Permission</fullName>
     <active>true</active>
     <errorConditionFormula>AND(
- ISCHANGED(NSP_Member_Account__c),
-$Permission.Enforce_Rule_Member_Account)</errorConditionFormula>
+  $Permission.Enforce_Rule_Member_Account ,
+  ISCHANGED( NSP_Member_Account__c )
+)</errorConditionFormula>
     <errorDisplayField>NSP_Member_Account__c</errorDisplayField>
     <errorMessage>You are not allowed to edit the Member Account field</errorMessage>
 </ValidationRule>
