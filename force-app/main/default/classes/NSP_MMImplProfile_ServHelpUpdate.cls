@@ -3981,22 +3981,26 @@ public class NSP_MMImplProfile_ServHelpUpdate {
              }
          }   
      }
- 
-     private void checkForExpenseAllowance(Implementation_Profile__c newRec, Implementation_Profile__c existingRec){
-         
-        if( newRec.RecordTypeId == ipMMRecordTypeId && newRec.Allowances__c!=null &&
-          (newRec.Allowances__c.contains(NSP_ServiceConstants.CAR) ||
-          newRec.Allowances__c.contains(NSP_ServiceConstants.PHONE) ||
-          newRec.Allowances__c.contains(NSP_ServiceConstants.PER_DIEM) ||
-          newRec.Allowances__c.contains(NSP_ServiceConstants.HOUSE)) ){
-            
-            if(existingRec == null || newRec.NSP_Form_Completed__c  ||
-               newRec.Allowances__c != existingRec.Allowances__c){
-                 updateEligibleRecordsMap(ipRecordsByAutomation, newRec.Id, ALLOWNCE_EXPENSE_MM);
-            }
-        }   
+
+     private void checkForExpenseAllowance( Implementation_Profile__c newRec , Implementation_Profile__c existingRec ) {
+        if ( ( newRec != null )
+            && ( newRec.RecordTypeId == ipMMRecordTypeId )
+            && ( newRec.Allowances__c != null )
+            && newRec.Allowances__c.contains( NSP_ServiceConstants.PHONE )
+            && ( ( existingRec == null )
+                || newRec.NSP_Form_Completed__c
+                || ( newRec.Allowances__c != existingRec.Allowances__c )
+                )
+            )
+        {
+            updateEligibleRecordsMap(
+                ipRecordsByAutomation ,
+                newRec.Id ,
+                ALLOWNCE_EXPENSE_MM
+            );
+        }
     }
- 
+
      private void checkForDependentCare(Implementation_Profile__c newRec, Implementation_Profile__c existingRec){
          
          if( newRec.RecordTypeId == ipMMRecordTypeId &&
