@@ -307,6 +307,26 @@
                 <default>false</default>
                 <label>New York Angels</label>
             </value>
+            <value>
+                <fullName>90</fullName>
+                <default>false</default>
+                <label>Blue Startups</label>
+            </value>
+            <value>
+                <fullName>91</fullName>
+                <default>false</default>
+                <label>Quartus Capital Partners</label>
+            </value>
+            <value>
+                <fullName>92</fullName>
+                <default>false</default>
+                <label>Store Local</label>
+            </value>
+            <value>
+                <fullName>93</fullName>
+                <default>false</default>
+                <label>Blue Collar Success Group</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
