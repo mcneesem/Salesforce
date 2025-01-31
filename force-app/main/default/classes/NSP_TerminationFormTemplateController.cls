@@ -20,11 +20,12 @@ public with sharing class NSP_TerminationFormTemplateController {
         
         Map<Id, NSP_Termination_Form__c> accountWithTerminationMap = new Map<Id, NSP_Termination_Form__c>(); 
         Map<Id, List<NSP_Account_Team__c>> accountWithAccountTeammemberMap = new Map<Id, List<NSP_Account_Team__c>>(); 
+        Date Todaydate = Date.today();
         List<NSP_Termination_Form__c> terminationFormList = [
             SELECT
                 Id, Name, NSP_Client_Term_Date__c,NSP_Term_Reason__c, 
-                NSP_Status__c, NSP_Term_Code__c, NSP_Number_of_Active_Employees__c,
-                NSP_Benefit_Termination_Date__c,NSP_Last_Date_Wages_Paid_Through__c, 
+                NSP_Status__c, NSP_Term_Code__c, NSP_Number_of_Active_Employees__c,Approval_Date__c,NSP_How_many_employees_were_moved__c,
+                NSP_Benefit_Termination_Date__c,NSP_Last_Date_Wages_Paid_Through__c,NSP_Revision__c,NSP_New_Client_Name__c,NSP_New_Client_Number__c,Previous_term_date__c,NSP_SubTerm_reason__c, 
                 NSP_Project_Task__r.pse__Project__r.pse__Account__c,
                 NSP_Project_Task__r.pse__Project__r.pse__Account__r.Name, 
                 NSP_Project_Task__r.pse__Project__r.pse__Account__r.NSP_AIMS_Client__c,  
@@ -32,6 +33,7 @@ public with sharing class NSP_TerminationFormTemplateController {
             FROM NSP_Termination_Form__c 
             WHERE (
                 NSP_Last_Date_Wages_Paid_Through__c = LAST_N_DAYS:22
+                AND Approval_Date__c =:Todaydate
                 AND NSP_Status__c = 'Term Team Approved'
                 AND NSP_Project_Task__r.pse__Project__r.pse__Project_Status__c != 'Complete'
             )
@@ -46,6 +48,7 @@ public with sharing class NSP_TerminationFormTemplateController {
             FROM NSP_Termination_Form__c 
             WHERE (
                 NSP_Client_Term_Date__c = LAST_N_DAYS:22
+                AND Approval_Date__c =:Todaydate
                 AND NSP_Status__c = 'Term Team Approved'
                 AND NSP_Project_Task__r.pse__Project__r.pse__Project_Status__c != 'Complete'
                 AND NSP_Project_Task__r.Name = :NSP_ServiceConstants.REINSTATEMENT_REQUESTED_TASK
@@ -125,17 +128,33 @@ public with sharing class NSP_TerminationFormTemplateController {
         public Date csaTerm {get; set;}
         public Date beneterm {get; set;}
         public String reason {get; set;}
+        public String clientnumber {get; set;}
+        public String clientname {get; set;}
+        public String Revision {get; set;}
+        public Date Previoustermdate {get; set;}
+        public String Subtermreason {get; set;}
         
         //This is the contructor method. When we create a new wrapAccount object we pass a Account that is set to the acc property. We also set the selected value to false
         public wrapTermination(NSP_Termination_Form__c termination, String PS, String CL) {
             clinetName = termination.NSP_Project_Task__r.pse__Project__r.pse__Account__r.Name;
             clinetNumber = termination.NSP_Project_Task__r.pse__Project__r.pse__Account__r.NSP_AIMS_Client__c;
+            
+            if(termination.NSP_Term_Reason__c == '1900 Merger with Insperity Client' || termination.NSP_Term_Reason__c =='2700 Change in FEIN'){
+            eeNumber = termination.NSP_How_many_employees_were_moved__c;      
+            } else {
             eeNumber = termination.NSP_Number_of_Active_Employees__c;
+            }
+        
             psName = PS;
             clName = CL;
             csaTerm = termination.NSP_Last_Date_Wages_Paid_Through__c;
             beneterm = termination.NSP_Benefit_Termination_Date__c;
             reason = termination.NSP_Term_Reason__c;
+            clientnumber = termination.NSP_New_Client_Number__c;
+            clientname = termination.NSP_New_Client_Name__c; 
+            Revision = termination.NSP_Revision__c;
+            Previoustermdate = termination.Previous_term_date__c;
+            Subtermreason = termination.NSP_SubTerm_reason__c;
         }
     }
 }

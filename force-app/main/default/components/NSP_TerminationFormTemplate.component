@@ -9,10 +9,25 @@
         <apex:column style="padding-left:2%; padding-bottom:1%;">
             Client:  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{!termination.clinetName}<br/>
             Client#: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{!termination.clinetNumber}<br/>
-            <div>
-            CSA Term:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <apex:outputText value="{0,date,MM/dd/yyyy}">
-                    <apex:param value="{!termination.csaTerm}" />
+            # EE's:  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<apex:outputText value="{!termination.eeNumber}"/>
+            <apex:outputText value=" (MOVED)" rendered="{!OR(termination.reason == '1900 Merger with Insperity Client', termination.reason == '2700 Change in FEIN')}"/>
+            <br/>
+            <div> 
+                CSA Term:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <apex:outputText value="{!IF(
+                                        termination.Revision == 'Yes', 
+                                        'REVISED ' & 
+                                        TEXT(MONTH(termination.csaterm)) & '/' & 
+                                        TEXT(DAY(termination.csaterm)) & '/' & 
+                                        TEXT(YEAR(termination.csaterm)) & 
+                                        ' (Previous term date: ' & 
+                                        TEXT(MONTH(termination.Previoustermdate)) & '/' & 
+                                        TEXT(DAY(termination.Previoustermdate)) & '/' & 
+                                        TEXT(YEAR(termination.Previoustermdate)) & ')', 
+                                        TEXT(MONTH(termination.csaterm)) & '/' & 
+                                        TEXT(DAY(termination.csaterm)) & '/' & 
+                                        TEXT(YEAR(termination.csaterm))
+                                        )}">
                 </apex:outputText>
             </div>
             <div>
@@ -21,7 +36,31 @@
                     <apex:param value="{!termination.beneterm}" />
                 </apex:outputText>
             </div>
-            Reason: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{!termination.reason}
+            <apex:outputPanel layout="block" style="display: inline-block;">
+                <apex:outputText value="Reason: " escape="false"/>
+                <apex:outputText value="{!IF(
+                                        OR(
+                                        termination.reason == '1900 Merger with Insperity Client',
+                                        termination.reason == '2700 Change in FEIN'
+                                        ),
+                                        termination.reason,
+                                        IF(
+                                        NOT(ISBLANK(termination.subtermreason)),
+                                        termination.reason & ' / Sub Term Reason: ' & termination.subtermreason,
+                                        termination.reason
+                                        )
+                                        )}" style="padding-left: 50px;"/>
+            </apex:outputPanel>
+            
+            <apex:outputText value="<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{!IF(
+                                    OR(
+                                    termination.reason == '1900 Merger with Insperity Client',
+                                    termination.reason == '2700 Change in FEIN'
+                                    ),
+                                    '(' & termination.clientname & ' - ' & termination.clientnumber & ')',
+                                    ''
+                                    )}" escape="false" rendered="{!OR(termination.reason == '1900 Merger with Insperity Client', termination.reason == '2700 Change in FEIN')}" />
+            
         </apex:column>
     </apex:dataTable>
     <div style="padding-left:2%;">

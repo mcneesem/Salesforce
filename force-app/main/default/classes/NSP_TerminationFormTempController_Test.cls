@@ -31,6 +31,7 @@ private class NSP_TerminationFormTempController_Test {
         TF1.NSP_Number_of_Active_Employees__c = 40;
         TF1.NSP_Benefit_Termination_Date__c = System.today();
         TF1.NSP_Project_Task__c = ProjectTask.Id;
+         TF1.Approval_Date__c = System.Today();
         insert TF1;
         
         
@@ -79,7 +80,8 @@ private class NSP_TerminationFormTempController_Test {
                                        NSP_Number_of_Active_Employees__c,
                                        NSP_Last_Date_Wages_Paid_Through__c,
                                        NSP_Benefit_Termination_Date__c,
-                                       NSP_Term_Reason__c
+                                       NSP_Term_Reason__c,
+                                       NSP_Revision__c,NSP_New_Client_Name__c,NSP_New_Client_Number__c,Previous_term_date__c,NSP_SubTerm_reason__c
                                        FROM NSP_Termination_Form__c WHERE NSP_Last_Date_Wages_Paid_Through__c != NULL LIMIT 1];
         Test.startTest();
         NSP_TerminationFormTemplateController.wrapTermination wrapper = new NSP_TerminationFormTemplateController.wrapTermination(TF1, 'Test_PS','Test_CL');
