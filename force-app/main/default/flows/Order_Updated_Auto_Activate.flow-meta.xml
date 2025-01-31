@@ -33,6 +33,13 @@
                     <elementReference>$Record.NSP_Order_Product_Type__c</elementReference>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>$Record.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>New Product</stringValue>
+                </rightValue>
+            </conditions>
             <label>Exclude</label>
         </rules>
     </decisions>
