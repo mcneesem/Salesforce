@@ -2,6 +2,10 @@
 private class CLMDocumentTransferTest {
 
     @isTest private static void testCLMDocSettings() {
+        CLMDocumentTransferSettings__c settings = CLMDocumentTransferSettings__c.getOrgDefaults();
+        settings.IsEnabledClmDocumentReceived__c = true;
+        upsert settings;
+
         account acct = new account();
         acct.name='Test';
         insert acct;
