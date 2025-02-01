@@ -6,6 +6,7 @@
 */
 public class NSP_salesOfficeRecordSharing {
     // test w/ NSP_salesOfficeRecordSharingTest (92%)
+
     //constants - custom labels
     public static List<string> BusinessPerformanceRoles = System.Label.NSP_Business_Performance_Roles.split(',');
     private static Map<String,String> salesOfficeGroupMap = new Map<String,String>();
@@ -685,59 +686,57 @@ public class NSP_salesOfficeRecordSharing {
 
     public static Map<String,String> mapSalesOfficePublicGroup(Set<String> salesOfficeSet){
         Map<String,String> local = new Map<String,String>();
-        if(LeadConversionSettings__c.getInstance(UserInfo.getUserId()).Is_Enabled_SOQL_Fix__c)
-        {
-            local = mapSalesOfficePublicGroupCached(salesOfficeSet);            
-        }
-        else
-        {
-            local = mapSalesOfficePublicGroupQueried(salesOfficeSet);
+        if ( LeadConversionSettings__c.getInstance( UserInfo.getUserId() ).Is_Enabled_SOQL_Fix__c ) {
+            local = mapSalesOfficePublicGroupCached( salesOfficeSet );
+        } else {
+            local = mapSalesOfficePublicGroupQueried( salesOfficeSet );
         }
         return local;
     }
-    
-    /***********************************************************************************************
-    * MethodName: mapSalesOfficePublicGroupNew 
-    * Description : This Method will fetch and create map of Sales Office Public Group and Group Id
-    * Params:      Map<String,Set<String>> mapSalesOfficeSetRecordId
-    * 
-    * ********************************************************************************************/    
-    private static Map<String,String> mapSalesOfficePublicGroupCached( Set<String> salesOfficeSet ){
 
-        Set<String> salesOfficeGroupNames = new  Set<String>();
-
-        for(String groupName : salesOfficeSet){
-            
-            if(!salesOfficeGroupMap.containsKey(groupName)){
-                salesOfficeGroupNames.add(groupName);
+    //
+    // MethodName: mapSalesOfficePublicGroupNew
+    // Description : This Method will fetch and create map of Sales Office Public Group and Group Id
+    // Params: Map<String,Set<String>> mapSalesOfficeSetRecordId
+    //
+    private static Map<String,String> mapSalesOfficePublicGroupCached( Set<String> salesOfficeSet ) {
+        Set<String> salesOfficeGroupNames = new Set<String>();
+        if ( ( salesOfficeSet != null ) && !salesOfficeSet.isEmpty() ) {
+            for ( String groupName : salesOfficeSet ) {
+                if ( !salesOfficeGroupMap.containsKey( groupName ) ) {
+                    salesOfficeGroupNames.add( groupName );
+                }
             }
         }
-
-        if(salesOfficeGroupNames.size() > 0){
-
-            List<Group> salesOfficeGroups = [SELECT Id, Name FROM Group WHERE Name IN:salesOfficeGroupNames];
-
-            for(Group grp:salesOfficeGroups){
-                salesOfficeGroupMap.put(grp.Name,grp.Id);
+        if ( !salesOfficeGroupNames.isEmpty() ) {
+            List<Group> salesOfficeGroups = [
+                SELECT Id , Name
+                FROM Group
+                WHERE ( Name IN :salesOfficeGroupNames )
+            ];
+            for ( Group grp : salesOfficeGroups ) {
+                salesOfficeGroupMap.put( grp.Name , grp.Id );
             }
         }
-
         return salesOfficeGroupMap;
     }
 
-    /***********************************************************************************************
-    * MethodName: mapSalesOfficePublicGroupOld 
-    * Description : This Method will fetch and create map of Sales Office Public Group and Group Id
-    * Params:      Map<String,Set<String>> mapSalesOfficeSetRecordId
-    * 
-    * ********************************************************************************************/
-    private static Map<String,String> mapSalesOfficePublicGroupQueried( Set<String> salesOfficeSet ){
-        List<Group> salesOfficeGroups= [SELECT Id, Name FROM Group WHERE Name IN:salesOfficeSet];
-        for(Group grp:salesOfficeGroups){
-            salesOfficeGroupMap.put(grp.Name,grp.Id);
+    //
+    // MethodName: mapSalesOfficePublicGroupOld
+    // Description : This Method will fetch and create map of Sales Office Public Group and Group Id
+    // Params: Map<String,Set<String>> mapSalesOfficeSetRecordId
+    //
+    private static Map<String,String> mapSalesOfficePublicGroupQueried( Set<String> salesOfficeSet ) {
+        List<Group> salesOfficeGroups = [
+            SELECT Id , Name
+            FROM Group
+            WHERE ( Name IN :salesOfficeSet )
+        ];
+        for ( Group grp:salesOfficeGroups ) {
+            salesOfficeGroupMap.put( grp.Name , grp.Id );
         }
         return salesOfficeGroupMap;
-        
     }
 
 }
+//
