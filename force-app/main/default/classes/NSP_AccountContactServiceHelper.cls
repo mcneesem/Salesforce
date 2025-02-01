@@ -30,14 +30,16 @@ public class NSP_AccountContactServiceHelper {
         Set<Id> permissionIdSet = new Set<Id>();
         Set<Id> inactiveUserIdSet = new Set<Id>();
         try{
-            Id communityUserProfileId = [SELECT Id FROM Profile WHERE Name = :NSP_ServiceConstants.communityUserProfilePlus ].Id;
+            Id communityUserProfileId = [
+                SELECT Id
+                FROM Profile
+                WHERE Name = :NSP_ServiceConstants.communityUserProfilePlus
+            ].Id;
             // fetching all the permission set from the metadata
             Map<String, NSP_Assign_permission_set_to_Community__mdt> assignPermSetMap = NSP_Assign_permission_set_to_Community__mdt.getAll();
-
             for(NSP_Assign_permission_set_to_Community__mdt permSet:assignPermSetMap.values() ){
                 permissionIdSet.add(permSet.Permission_Set_Id__c);
             }
-
             for(AccountContactRelation acr:newACRMap.values()){
                 // create new portal user or activating existing user
                 if(acr.NSP_Community_Access__c != null && acr.NSP_Community_Access__c.contains(NSP_ServiceConstants.peoCommunityAccess)){
@@ -52,7 +54,14 @@ public class NSP_AccountContactServiceHelper {
             }
             
             // fetching list of ACR's for given contact Id
-            List <AccountContactRelation> acrList = [SELECT Id, ContactId, NSP_Community_Access__c FROM AccountContactRelation WHERE ContactId IN:acrContactIdSet AND NSP_Community_Access__c != null ];
+            List <AccountContactRelation> acrList = [
+                SELECT Id, ContactId, NSP_Community_Access__c
+                FROM AccountContactRelation
+                WHERE (
+                    ContactId IN :acrContactIdSet
+                    AND NSP_Community_Access__c != null
+                )
+            ];
             // creating a map of contact Id and Peo Project Communities
             for(AccountContactRelation acr:acrList){
                 if(acr.NSP_Community_Access__c.Contains(NSP_ServiceConstants.peoCommunityAccess)){
@@ -66,11 +75,15 @@ public class NSP_AccountContactServiceHelper {
                     mapContactIdUserId.put(user.ContactId,user.Id);
                     
                     // creating a list of users to be deactivated                
-                    if(acrList.isEmpty() && mapContactIdUserDeactive.containsKey(user.ContactId) && mapContactIdUserDeactive.get(user.ContactId) == NSP_ServiceConstants.DeactivateUser ){
+                    if ( acrList.isEmpty()
+                        && mapContactIdUserDeactive.containsKey(user.ContactId)
+                        && mapContactIdUserDeactive.get(user.ContactId) == NSP_ServiceConstants.DeactivateUser
+                        )
+                    {
                         deactivateUserId.add(user.Id);
                     }
 
-                    // creating a list of users where project permission needs to be removed                    
+                    // creating a list of users where project permission needs to be removed
                     if(!mapConIdCommAccess.containsKey(user.ContactId) && mapContactIdUserPerm.containsKey(user.ContactId) && mapContactIdUserPerm.get(user.ContactId) == NSP_ServiceConstants.RemovePermission){
                         removePermUserIdSet.add(user.Id);
                     }  
@@ -82,7 +95,13 @@ public class NSP_AccountContactServiceHelper {
                 }
             }
             // creating Users for Contacts
-            for(Contact con :[SELECT Id, NSP_Preferred_First_Name__c, FirstName, LastName, NSP_Work_email__c, NSP_Per_ID__c FROM Contact  WHERE  Id  IN: acrContactIdSet]){
+            for ( Contact con : [
+                        SELECT Id , NSP_Preferred_First_Name__c , FirstName , LastName , NSP_Work_email__c , NSP_Per_ID__c
+                        FROM Contact
+                        WHERE ( Id IN :acrContactIdSet )
+                    ]
+                )
+            {
                 // creating Community User
                 if( (mapContactIdUserId.isEmpty() && mapContactIdInactiveUserId.isEmpty() ) || (!mapContactIdUserId.containsKey(con.Id) && !mapContactIdInactiveUserId.containsKey(con.Id)) ){
                     User commUser = createUser(con , communityUserProfileId);
@@ -92,8 +111,8 @@ public class NSP_AccountContactServiceHelper {
                 // reactivate deactivated portal Users
                 else if(mapContactIdInactiveUserId.containsKey(con.Id)){
                     inactiveUserIdSet.add(mapContactIdInactiveUserId.get(con.Id));
-                } 
-            } 
+                }
+            }
             if(!inactiveUserIdSet.isEmpty()){
                 System.enqueueJob( new NSP_portalUserUpdate( reactivatedUserIdSet,true,permissionIdSet,removePermUserIdSet,permissionIdSet));
             }
