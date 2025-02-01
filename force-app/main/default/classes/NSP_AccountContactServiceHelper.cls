@@ -6,7 +6,7 @@
 * Modification History
 * Rahul Singh        May  24 2023        Modified as part of DF-04216
 */
-public class NSP_AccountContactServiceHelper {
+public with sharing class NSP_AccountContactServiceHelper {
     // test w/ NSP_AccountContactServiceHelperTest (95%)
 
     /***********************************************************************************************
