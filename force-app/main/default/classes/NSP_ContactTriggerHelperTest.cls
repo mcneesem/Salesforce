@@ -1,8 +1,5 @@
-/**
-* Represents test class for Contact trigger helper
-*/
 @isTest
-public class NSP_ContactTriggerHelperTest {
+private class NSP_ContactTriggerHelperTest {
     private static final List<String> CONTACT_FIELDS = new List<String>{
         'Id',
         'recordTypeId',
@@ -11,21 +8,21 @@ public class NSP_ContactTriggerHelperTest {
         'Id',
         'AccountId', 'ContactId', 'NSP_Work_Email__c', 'NSP_Work_Phone__c'
     };
-        private static final List<String> ACCOUNT_FIELDS = new List<String>{
+    private static final List<String> ACCOUNT_FIELDS = new List<String>{
         'Id',
         'Name'
     };
     private static LeadConversionSettings__c settings = LeadConversionSettings__c.getOrgDefaults();
     private static final String TEST_ACCOUNT = 'TestAccount';
     private static final String TEST_ACCOUNT2 = 'TestAccount2';
-    /**
-    * Checks the Contact After Insert Trigger
-    * @param N/A.
-    * @return void
-    */
 
+    //
+    // Checks the Contact After Insert Trigger
+    // @param N/A.
+    // @return void
+    //
     @testSetup
-    static void testContactInsert() {
+    private static void testContactInsert() {
         pse__Region__c region = new pse__Region__c();
         region.Name = NSP_ServiceConstants.UnitedStatesRegion;
         insert region;
@@ -83,11 +80,13 @@ public class NSP_ContactTriggerHelperTest {
     }
 
     @isTest
-    static void testSalesOffice(){
+    private static void testSalesOffice(){
         
-        User currentUser = [SELECT Id,NSP_SalesDivision__c,NSP_Sales_Office__c,NSP_SalesRegion__c
-                            FROM user
-                            WHERE Id =:UserInfo.getUserId()];
+        User currentUser = [
+            SELECT Id,NSP_SalesDivision__c,NSP_Sales_Office__c,NSP_SalesRegion__c
+            FROM user
+            WHERE Id =:UserInfo.getUserId()
+        ];
         currentUser.NSP_Sales_Office__c = '301';
         currentUser.NSP_SalesRegion__c = 'Central 1';
         currentUser.NSP_SalesDivision__c = 'Central';
@@ -113,14 +112,14 @@ public class NSP_ContactTriggerHelperTest {
         Test.stopTest();
         System.assert(contactList.size() > 0);
     }
-    
-    /**
-    * @Description: This test method is used to check new Recordtype assignment
-    * @Created date: 12/14/2022.
-    * @return void
-    */
+
+    //
+    // @Description: This test method is used to check new Recordtype assignment
+    // @Created date: 12/14/2022.
+    // @return void
+    //
     @isTest
-    static void newRecordTypeTest(){ 
+    private static void newRecordTypeTest(){ 
         Contact assertPossitiveCon = [SELECT Id, recordTypeId FROM Contact WHERE FirstName = 'newRecordType' LIMIT 1];
         Contact assertNegativeCon = [SELECT Id, recordTypeId FROM Contact WHERE FirstName = 'oldRecordType' LIMIT 1];
         Test.startTest();
@@ -129,13 +128,14 @@ public class NSP_ContactTriggerHelperTest {
         system.assertNotEquals(assertNegativeCon.RecordTypeId, NSP_ContactTriggerHelper.NEW_CON_REC_TYPE_ID); // Negative Test
         system.assertEquals(assertPossitiveCon.RecordTypeId, NSP_ContactTriggerHelper.RESOURCE_REC_TYPE_ID); // Positive Test
     }
-    /**
-    * @Description: This test method is used to check updateWorkPhoneEmailOnACR
-    * @Created date: 12/14/2022.
-    * @return void
-    */
+
+    //
+    // @Description: This test method is used to check updateWorkPhoneEmailOnACR
+    // @Created date: 12/14/2022.
+    // @return void
+    //
     @isTest
-    static void updateWorkPhoneEmailOnACROldTest(){
+    private static void updateWorkPhoneEmailOnACROldTest(){
         settings.Is_Enabled_SOQL_Fix__c = false;
         upsert settings;
         String accQuery = new NSP_QueryBuilder('Account', ACCOUNT_FIELDS).addFilter('Name', TEST_ACCOUNT).addLimit(1).build();
@@ -151,14 +151,14 @@ public class NSP_ContactTriggerHelperTest {
         AccountContactRelation acr =  Database.query(acrQuery);
         system.assertEquals(acr.NSP_Work_Email__c, 'test@gmail.com');
     }
-    
-    /**
-    * @Description: This test method is used to check updateWorkPhoneEmailOnACR
-    * @Created date: 12/14/2022.
-    * @return void
-    */
+
+    //
+    // @Description: This test method is used to check updateWorkPhoneEmailOnACR
+    // @Created date: 12/14/2022.
+    // @return void
+    //
     @isTest
-    static void updateWorkPhoneEmailOnACROldNegativeTest(){
+    private static void updateWorkPhoneEmailOnACROldNegativeTest(){
         settings.Is_Enabled_SOQL_Fix__c = false;
         upsert settings;
         String accQuery = new NSP_QueryBuilder('Account', ACCOUNT_FIELDS).addFilter('Name', TEST_ACCOUNT).addLimit(1).build();
@@ -174,13 +174,13 @@ public class NSP_ContactTriggerHelperTest {
         system.assertNotEquals(acr.NSP_Work_Email__c, 'test@gmail.com'); // Negative Test
     }
 
-    /**
-    * @Description: This test method is used to check updateWorkPhoneEmailOnACR
-    * @Created date: 12/14/2022.
-    * @return void
-    */
+    //
+    // @Description: This test method is used to check updateWorkPhoneEmailOnACR
+    // @Created date: 12/14/2022.
+    // @return void
+    //
     @isTest
-    static void updateWorkPhoneEmailOnACRNewTest(){
+    private static void updateWorkPhoneEmailOnACRNewTest(){
         String accQuery = new NSP_QueryBuilder('Account', ACCOUNT_FIELDS).addFilter('Name', TEST_ACCOUNT).addLimit(1).build();
         Account acc =  Database.query(accQuery);
         String conQuery = new NSP_QueryBuilder('Contact', CONTACT_FIELDS).addFilter('FirstName', 'newRecordType').addLimit(1).build();
@@ -193,15 +193,15 @@ public class NSP_ContactTriggerHelperTest {
         String acrQuery = new NSP_QueryBuilder('AccountContactRelation', ACR_FIELDS).addFilter('ContactId', getContact.Id).addLimit(1).build();
         AccountContactRelation acr =  Database.query(acrQuery);
         system.assertEquals(acr.NSP_Work_Email__c, 'test@gmail.com');
-    } 
+    }
 
-    /**
-    * @Description: This test method is used to check updateWorkPhoneEmailOnACR
-    * @Created date: 12/14/2022.
-    * @return void
-    */
+    //
+    // @Description: This test method is used to check updateWorkPhoneEmailOnACR
+    // @Created date: 12/14/2022.
+    // @return void
+    //
     @isTest
-    static void updateWorkPhoneEmailOnACRNewNegativeTest(){
+    private static void updateWorkPhoneEmailOnACRNewNegativeTest(){
         String accQuery = new NSP_QueryBuilder('Account', ACCOUNT_FIELDS).addFilter('Name', TEST_ACCOUNT).addLimit(1).build();
         Account acc =  Database.query(accQuery);
         String conQuery = new NSP_QueryBuilder('Contact', CONTACT_FIELDS).addFilter('FirstName', 'newRecordType').addLimit(1).build();
@@ -214,9 +214,9 @@ public class NSP_ContactTriggerHelperTest {
         AccountContactRelation acr =  Database.query(acrQuery);
         system.assertNotEquals(acr.NSP_Work_Email__c, 'test@gmail.com'); // Negative Test
     }
-    
+
     @isTest
-    public static void updateContact(){
+    private static void updateContact(){
         Test.startTest();
         Account acc = New Account(Name = TEST_ACCOUNT2, AccountNumber = '123456');
         insert acc;
