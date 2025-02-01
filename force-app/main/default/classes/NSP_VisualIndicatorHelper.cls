@@ -7,54 +7,73 @@ public without sharing class NSP_VisualIndicatorHelper {
     // @return void
     //
     @AuraEnabled(cacheable=true)
-    public static List<VisualIndicatorWrapper> gethisAccount(String accId) {
-        List<VisualIndicatorWrapper> resultList = new List<VisualIndicatorWrapper>();  
-        
-        try {   
-            if (accId != null && !String.isBlank(accId)) {  
-                List<Account> accList = getAccounts(accId);  
-                
-                if (accList != null && !accList.isEmpty()) {  
-                    List<NSP_Service_Exception__c> expList = extractServiceExceptions(accList);  
-                    List<Asset> assetList = extractAssets(accList);  
-                    List<NSP_Survey__c> surveyList = extractSurveys(accList);  
-                    
-                    VisualIndicatorWrapper accWrapper = createVisualIndicatorWrapper(expList, assetList, surveyList);  
-                    resultList = wrapAccounts(accList, accWrapper);  
-                } 
+    public static List<VisualIndicatorWrapper> gethisAccount( String accId ) {
+        try {
+            List<VisualIndicatorWrapper> resultList = new List<VisualIndicatorWrapper>();
+            if (accId != null && !String.isBlank(accId)) {
+                List<Account> accList = getAccounts( accId );
+                if (accList != null && !accList.isEmpty()) {
+                    List<NSP_Service_Exception__c> expList = extractServiceExceptions(accList);
+                    List<Asset> assetList = extractAssets(accList);
+                    List<NSP_Survey__c> surveyList = extractSurveys(accList);
+                    VisualIndicatorWrapper accWrapper = createVisualIndicatorWrapper(expList, assetList, surveyList);
+                    resultList = wrapAccounts(accList, accWrapper);
+                }
             }
-            return resultList;  
-        } catch (Exception excep) {  
-            throw NSP_Utilities.getAuraException(excep);  
-        }  
+            return resultList;
+        } catch (Exception excep) {
+            throw NSP_Utilities.getAuraException(excep);
+        }
     }
-    
-    private static List<Account> getAccounts(String accId) {
-        Id vocSurveyRecordTypeId = Schema.SObjectType.NSP_Survey__c
-            .getRecordTypeInfosByDeveloperName()
-            .get('VOC')
-            .getRecordTypeId();
+
+    private static List<Account> getAccounts( String accId ) {
+        Id vocSurveyRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'NSP_Survey__c' , 'VOC' );
         List<Account> accounts = new List<Account>();
         if (accId != null && !String.isBlank(accId)) { 
             accounts = [
                 SELECT
-                Id, Name, Industry, NSP_Account_Health__c, NSP_Paperless__c, NSP_Renewal_Probability__c,
-                (SELECT Id, NSP_End_Date__c FROM Service_Exceptions__r),
-                (SELECT Id, NSP_Paperless__c, NSP_Workforce_Sync__c, NSP_Client_Retained_Workers_Comp__c, 
-                 NSP_Pending_Termination__c, NSP_Product_Line__c, RecordTypeId, NSP_National_Account__c
-                 FROM Assets),
-                (SELECT Id, Survey_End_Date__c
-                 FROM Surveys__r
-                 WHERE (RecordTypeId = :vocSurveyRecordTypeId AND Survey_End_Date__c != null)
-                 ORDER BY Survey_End_Date__c DESC LIMIT 1)
+                    Id ,
+                    Name ,
+                    Industry ,
+                    NSP_Account_Health__c ,
+                    NSP_Paperless__c ,
+                    NSP_Renewal_Probability__c ,
+                    (
+                        SELECT
+                            Id ,
+                            NSP_End_Date__c
+                        FROM Service_Exceptions__r
+                    ) ,
+                    (
+                        SELECT
+                            Id ,
+                            NSP_Paperless__c ,
+                            NSP_Workforce_Sync__c ,
+                            NSP_Client_Retained_Workers_Comp__c ,
+                            NSP_Pending_Termination__c ,
+                            NSP_Product_Line__c ,
+                            RecordTypeId ,
+                            NSP_National_Account__c
+                        FROM Assets
+                    ) ,
+                    (
+                        SELECT Id, Survey_End_Date__c
+                        FROM Surveys__r
+                        WHERE (
+                            RecordTypeId = :vocSurveyRecordTypeId
+                            AND Survey_End_Date__c != null
+                        )
+                        ORDER BY Survey_End_Date__c DESC
+                        LIMIT 1
+                    )
                 FROM Account
-                WHERE Id = :accId
+                WHERE ( Id = :accId )
             ];
         }
         return accounts;
     }
-    
-    private static List<NSP_Service_Exception__c> extractServiceExceptions(List<Account> accList) {
+
+    private static List<NSP_Service_Exception__c> extractServiceExceptions( List<Account> accList ) {
         List<NSP_Service_Exception__c> expList = new List<NSP_Service_Exception__c>();
         if (accList != null) {
             for (Account acc : accList) {
@@ -65,54 +84,55 @@ public without sharing class NSP_VisualIndicatorHelper {
         }
         return expList;
     }
-    
-    private static List<Asset> extractAssets(List<Account> accList) {
+
+    private static List<Asset> extractAssets( List<Account> accList ) {
         List<Asset> assetList = new List<Asset>();
-        if (accList != null) { 
+        if (accList != null) {
             for (Account acc : accList) {
-                if (acc.Assets != null && !acc.Assets.isEmpty()) {  
-                    assetList.addAll(acc.Assets);  
-                } 
+                if (acc.Assets != null && !acc.Assets.isEmpty()) {
+                    assetList.addAll(acc.Assets);
+                }
             }
         }
         return assetList;
     }
-    
-    private static List<NSP_Survey__c> extractSurveys(List<Account> accList) {  
+
+    private static List<NSP_Survey__c> extractSurveys( List<Account> accList ) {
         List<NSP_Survey__c> surveyList = new List<NSP_Survey__c>();  
-        if (accList != null) {  
-            for (Account acc : accList) {  
-                if (acc.Surveys__r != null && !acc.Surveys__r.isEmpty()) {  
+        if (accList != null) {
+            for (Account acc : accList) {
+                if (acc.Surveys__r != null && !acc.Surveys__r.isEmpty()) {
                     surveyList.addAll(acc.Surveys__r);  
-                }  
-            }  
-        }  
-        return surveyList;  
-    }  
-    
+                }
+            }
+        }
+        return surveyList;
+    }
+
     private static VisualIndicatorWrapper createVisualIndicatorWrapper(
-        List<NSP_Service_Exception__c> expList,
-        List<Asset> assetList,
+        List<NSP_Service_Exception__c> expList ,
+        List<Asset> assetList ,
         List<NSP_Survey__c> surveyList
-    ) {
+        )
+    {
         VisualIndicatorWrapper accWrapper = new VisualIndicatorWrapper();
-        
-        if (expList != null) {  
-            checkServiceExceptions(expList, accWrapper);  
-        }  
-        if (assetList != null) {  
-            checkAssets(assetList, accWrapper);  
-        }  
-        if (surveyList != null) {  
-            checkSurveys(surveyList, accWrapper);  
-        }  
-        
+        if (expList != null) {
+            checkServiceExceptions(expList, accWrapper);
+        }
+        if (assetList != null) {
+            checkAssets(assetList, accWrapper);
+        }
+        if (surveyList != null) {
+            checkSurveys(surveyList, accWrapper);
+        }
         return accWrapper;
     }
-    
+
     private static void checkServiceExceptions(
-        List<NSP_Service_Exception__c> expList, VisualIndicatorWrapper accWrapper
-    ) {
+        List<NSP_Service_Exception__c> expList ,
+        VisualIndicatorWrapper accWrapper
+        )
+    {
         if (expList != null && !expList.isEmpty() && accWrapper != null) {
             for (NSP_Service_Exception__c eachException : expList) {
                 if (eachException.NSP_End_Date__c == null || eachException.NSP_End_Date__c >= Date.today()) {
@@ -121,17 +141,17 @@ public without sharing class NSP_VisualIndicatorHelper {
             }
         }
     }
-    
-    private static void checkAssets(List<Asset> assetList, VisualIndicatorWrapper accWrapper) {
+
+    private static void checkAssets( List<Asset> assetList , VisualIndicatorWrapper accWrapper ) {
         if (assetList != null && !assetList.isEmpty() && accWrapper != null){
             for (Asset asset : assetList) {
                 getAssets(asset,accWrapper);
             }
         }
     }
-    
-    private static void getAssets(Asset asset, VisualIndicatorWrapper accWrapper) {
-        Id woAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId('Asset', 'WO');
+
+    private static void getAssets( Asset asset , VisualIndicatorWrapper accWrapper ) {
+        Id woAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Asset' , 'WO' );
         String wsProductLine = 'Workforce Synchronization';
         if (asset.RecordTypeId == woAssetRecordTypeId) {
             if (asset.NSP_Paperless__c == NSP_ServiceConstants.VALUE_TRUE) {
@@ -154,7 +174,8 @@ public without sharing class NSP_VisualIndicatorHelper {
             accWrapper.pendingTermination = NSP_ServiceConstants.VALUE_TRUE;
         }
     }
-    private static void checkSurveys(List<NSP_Survey__c> surveyList, VisualIndicatorWrapper accWrapper) {
+
+    private static void checkSurveys( List<NSP_Survey__c> surveyList , VisualIndicatorWrapper accWrapper ) {
         accWrapper.vocSurveyIndicator = false;
         if (surveyList != null && !surveyList.isEmpty()) {
             Date surveyLimitDate = surveyList[0].Survey_End_Date__c.addDays(180);
@@ -163,10 +184,12 @@ public without sharing class NSP_VisualIndicatorHelper {
             }
         }
     }
-    
+
     private static List<VisualIndicatorWrapper> wrapAccounts(
-        List<Account> accList, VisualIndicatorWrapper accWrapper
-    ) {
+        List<Account> accList ,
+        VisualIndicatorWrapper accWrapper
+        )
+    {
         List<VisualIndicatorWrapper> accWrapperList = new List<VisualIndicatorWrapper>();
         if (accList != null && accWrapper != null){
             for (Account acc : accList) {
