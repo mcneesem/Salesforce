@@ -216,27 +216,21 @@ public with sharing class NSP_ContactTriggerHelper {
                             || oldContact.NSP_Job_Title__c != conObj.NSP_Job_Title__c
                             )
                         {
-                            if(LeadConversionSettings__c.getInstance(UserInfo.getUserId()).Is_Enabled_SOQL_Fix__c)
-                            {
-                                contactIdSet.add(conObj.Id);
-                            }
-                            else
-                            {
-                                conIdcontactMap.put(conObj.Id, conObj);
+                            if ( LeadConversionSettings__c.getInstance( UserInfo.getUserId() ).Is_Enabled_SOQL_Fix__c ) {
+                                contactIdSet.add( conObj.Id );
+                            } else {
+                                conIdcontactMap.put( conObj.Id , conObj );
                             }
                         }
                     }
                 }
-
-                if( !conIdcontactMap.isEmpty() ) {
-                    updateWorkPhoneEmailOnACROld(conIdcontactMap);
+                if ( !conIdcontactMap.isEmpty() ) {
+                    updateWorkPhoneEmailOnACROld( conIdcontactMap );
+                } else if( !contactIdSet.isEmpty() ) {
+                    updateWorkPhoneEmailOnACRNew( contactIdSet );
                 }
-                else if( !contactIdSet.isEmpty() ) {
-                    updateWorkPhoneEmailOnACRNew(contactIdSet);
-                }
-
-                if(clientRefernceContactList.size() > 0){
-                    createTaskforClientReference(clientRefernceContactList);
+                if ( !clientRefernceContactList.isEmpty() ) {
+                    createTaskforClientReference( clientRefernceContactList );
                 }
             }
             NSP_SObjectHistoryTrackingHelper.enqueueJob(
@@ -349,14 +343,14 @@ public String formatPhoneNumbers(String input) {
     return requiredOutput;
 }
 
-    /**
-    * Method Name : formatCommonPattern 
-    * Description : Method to construct common pattern and format Phone number
-    * Author : Raksha       Date : 22/02/2022
-    * @param String input called from formatPhoneNumbers.  
-    * @return String  
-    */ 
-    public String formatCommonPattern(String input) {
+    //
+    // Method Name : formatCommonPattern
+    // Description : Method to construct common pattern and format Phone number
+    // Author : Raksha       Date : 22/02/2022
+    // @param String input called from formatPhoneNumbers.
+    // @return String
+    //
+    public String formatCommonPattern( String input ) {
         if(input.length() == 10){
             String number1 = input.replaceFirst('(\\d{3})(\\d{3})(\\d+)', '($1) $2-$3');
             return number1;
@@ -364,7 +358,7 @@ public String formatPhoneNumbers(String input) {
         String substring = input.length() > 10 ? input.substring(input.length() - 10) : input;
         String codeNumber = substring.replaceFirst('(\\d{3})(\\d{3})(\\d+)', '+1 ($1) $2-$3');
         return codeNumber;
-    }   
+    }
 
     /* Description: This method sets sales office details from user 
      * 
@@ -503,35 +497,53 @@ public String formatPhoneNumbers(String input) {
         Contact cont;
         List<Profile> integrationUser = new NSP_sObjectSelector('Profile').setSecurityEnforce(false).selectByName(NSP_ServiceConstants.INTEGRATION_USER, null, true);
         try {
-            for(Contact con : [SELECT Id, NSP_isContactInsertion__c, NSP_Work_email__c, NSP_Work_Phone__c, NSP_Employee_Status__c, NSP_Status_Date__c, NSP_Job_Title__c FROM Contact WHERE Id IN: contactIdSet]){
+            for ( Contact con : [
+                        SELECT
+                            Id ,
+                            NSP_isContactInsertion__c ,
+                            NSP_Work_email__c ,
+                            NSP_Work_Phone__c ,
+                            NSP_Employee_Status__c ,
+                            NSP_Status_Date__c ,
+                            NSP_Job_Title__c
+                        FROM Contact
+                        WHERE Id IN: contactIdSet
+                    ]
+                )
+            {
                 conIdcontactMap.put(con.Id, con);
             }
-
-            for(AccountContactRelation acr : [SELECT Id, AccountId, 
-                                              ContactId,
-                                              Contact.NSP_isContactInsertion__c,
-                                              NSP_Work_Email__c, 
-                                              NSP_Work_Phone__c,
-                                              IsDirect,
-                                              createdById,
-                                              CreatedBy.ProfileId
-                                              FROM AccountContactRelation 
-                                              WHERE ContactId IN: contactIdSet 
-                                              AND isDirect = true
-                                              AND CreatedBy.ProfileId !=: integrationUser[0].Id]){
-                                                  if(conIdcontactMap.containsKey(acr.ContactId))
-                                                  {
-                                                    cont = conIdcontactMap.get(acr.ContactId);
-                                                    cont.NSP_isContactInsertion__c = false;
-                									conUpdateList.add(cont);
-                                                    acr.NSP_Work_Email__c = cont.NSP_Work_email__c;
-                                                    acr.NSP_Work_Phone__c = cont.NSP_Work_Phone__c;
-                                                    acr.NSP_Employee_Status__c = cont.NSP_Employee_Status__c;
-                                                    acr.NSP_Status_Date__c = cont.NSP_Status_Date__c;
-                                                    acr.NSP_Job_Title__c = cont.NSP_Job_Title__c;
-                                                    acrList.add(acr);
-                                                  }
-                                              }
+            for ( AccountContactRelation acr : [
+                        SELECT
+                            Id ,
+                            AccountId ,
+                            ContactId ,
+                            Contact.NSP_isContactInsertion__c ,
+                            NSP_Work_Email__c ,
+                            NSP_Work_Phone__c ,
+                            IsDirect ,
+                            CreatedById ,
+                            CreatedBy.ProfileId
+                        FROM AccountContactRelation 
+                        WHERE (
+                            ContactId IN :contactIdSet
+                            AND isDirect = true
+                            AND CreatedBy.ProfileId != :integrationUser[0].Id
+                    ]
+                )
+            {
+                if ( conIdcontactMap.containsKey(acr.ContactId ) ) {
+                    cont = conIdcontactMap.get(acr.ContactId);
+                    cont.NSP_isContactInsertion__c = false;
+                    conUpdateList.add(cont);
+                    acr.NSP_Work_Email__c = cont.NSP_Work_email__c;
+                    acr.NSP_Work_Phone__c = cont.NSP_Work_Phone__c;
+                    acr.NSP_Employee_Status__c = cont.NSP_Employee_Status__c;
+                    acr.NSP_Status_Date__c = cont.NSP_Status_Date__c;
+                    acr.NSP_Job_Title__c = cont.NSP_Job_Title__c;
+                    acrList.add(acr);
+                }
+            }
             
             if(!acrList.isEmpty()){
                 update acrList ; // Don't change to Database.update
@@ -552,9 +564,7 @@ public String formatPhoneNumbers(String input) {
     // @return String profileName
     //
     public String getLoggedInUserProfileName() {
-        
-        if(this.profileName == '')
-        {
+        if(this.profileName == ''){
             List<User> autouser = [ SELECT Alias FROM User WHERE ( Id = :UserInfo.getUserId() ) ];
             if ( !autoUser.isEmpty() && ( autoUser[0].Alias == 'autoproc' ) ) {
                 profileName = 'AutoProc';
@@ -615,7 +625,7 @@ public String formatPhoneNumbers(String input) {
             NSP_ContactTriggerHelper.handleException( e , methodName );
         }
     }
-    
+
     private static void handleException( Exception e , String methodName ) {
         NSP_ErrorLogHandler.logException(
             NSP_ContactTriggerHelper.class.getName() ,
@@ -623,4 +633,6 @@ public String formatPhoneNumbers(String input) {
             e
         );
     }
+
 }
+//
