@@ -2,6 +2,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
     // test w/ NSP_PrepSandboxTest (80%)
 
     static final string STRING_INVALID = '.invalid';
+    static final string DOCUSIGN_BASE_URL = 'https://uatna11.springcm.com/atlas/doclauncher/OneClickDocGen';
 
     public String runManualResult{get;set;}
     global void runApexClass(SandboxContext context){
@@ -326,85 +327,62 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
             }
         }
     }
-    
+
     public static void doCLabels(String sandboxName) {
         try {
             MetadataService.MetadataPort service = createService();
             List<MetadataService.Metadata> allMetadataList = new List<MetadataService.Metadata>();
             MetadataService.CustomLabel cL = new MetadataService.CustomLabel();
-            if(!Test.isRunningTest()){
-                cL = (MetadataService.CustomLabel) service.readMetadata('CustomLabel', new String[] { 'NSP_FTA_Base_URL' }).getRecords()[0];
-            }else{
-                cL.fullName = 'NSP_FTA_Base_URL';
-                cL.value = 'test';
-            }
-            if(cL.value != null){
-                MetadataService.CustomLabel cLUpd = new MetadataService.CustomLabel();
-                cLUpd.fullName = cL.fullName;
-                switch on sandboxName {
-                    when 'stage' {
-                        cLUpd.value = 'https://stageportalapps.insperity.com/financialcomparison/financialanalysis/';
-                    }
-                    when 'test' {
-                        cLUpd.value = 'https://testportalapps.insperity.com/financialcomparison/financialanalysis/';
-                    }
-                    when 'merge' {
-                        cLUpd.value = 'https://devportalapps.insperity.com/financialcomparison/financialanalysis/';
-                    }
-                    when else {
-                        cLUpd.value = 'https://devportalapps.insperity.com/financialcomparison/financialanalysis/';
-                    }
+            Map<String, String> refreshValMap = new Map<String, String>();
+            switch on sandboxName {
+                when 'stage' {
+                    refreshValMap.put('NSP_FTA_Base_URL', 'https://stageportalapps.insperity.com/financialcomparison/financialanalysis/');
+                    refreshValMap.put('NSP_Docusign_Account_Id', '48945');
+                    refreshValMap.put('NSP_Docusign_Base_URL', DOCUSIGN_BASE_URL);
                 }
-                cLUpd.shortDescription = cL.shortDescription;
-                cLUpd.language = cL.language;
-                cLUpd.protected_x = cL.protected_x;
-                allMetadataList.add(cLUpd);
-            }
-            if(!Test.isRunningTest()){
-                cL = (MetadataService.CustomLabel) service.readMetadata('CustomLabel', new String[] { 'NSP_Docusign_Account_Id' }).getRecords()[0];
-            }else{
-                cL.fullName = 'NSP_Docusign_Account_Id';
-                cL.value = 'test';
-            }
-            if(cL.value != null){
-                MetadataService.CustomLabel cLUpd = new MetadataService.CustomLabel();
-                cLUpd.fullName = cL.fullName;
-                switch on sandboxName {
-                    when 'merge' {
-                        cLUpd.value = '122677';
-                    }
-                    when 'test' {
-                        cLUpd.value = '65500';
-                    }
-                    when 'stage' {
-                        cLUpd.value = '48945';
-                    }
-                    when else {
-                        cLUpd.value = '50202';
-                    }
+                when 'test' {
+                    refreshValMap.put('NSP_FTA_Base_URL', 'https://testportalapps.insperity.com/financialcomparison/financialanalysis/');
+                    refreshValMap.put('NSP_Docusign_Account_Id', '65500');
+                    refreshValMap.put('NSP_Docusign_Base_URL', DOCUSIGN_BASE_URL);
                 }
-                cLUpd.shortDescription = cL.shortDescription;
-                cLUpd.language = cL.language;
-                cLUpd.protected_x = cL.protected_x;
-                allMetadataList.add(cLUpd);
+                when 'merge' {
+                    refreshValMap.put('NSP_FTA_Base_URL', 'https://devportalapps.insperity.com/financialcomparison/financialanalysis/');
+                    refreshValMap.put('NSP_Docusign_Account_Id', '122677');
+                    refreshValMap.put('NSP_Docusign_Base_URL', DOCUSIGN_BASE_URL);
+                }
+                when else {
+                    refreshValMap.put('NSP_FTA_Base_URL', 'https://devportalapps.insperity.com/financialcomparison/financialanalysis/');
+                    refreshValMap.put('NSP_Docusign_Account_Id', '50202');
+                    refreshValMap.put('NSP_Docusign_Base_URL', DOCUSIGN_BASE_URL);
+                }
             }
-            if(!Test.isRunningTest()){
-                cL = (MetadataService.CustomLabel) service.readMetadata('CustomLabel', new String[] { 'NSP_Docusign_Base_URL' }).getRecords()[0];
+            for (String cLName : refreshValMap.keySet()) {
+                setCLabelData(service, cL, allMetadataList, cLName, refreshValMap);
             }
-            if(cL.value != null){
-                MetadataService.CustomLabel cLUpd = new MetadataService.CustomLabel();
-                cLUpd.fullName = cL.fullName;
-                cLUpd.value = 'https://uatna11.springcm.com/atlas/doclauncher/OneClickDocGen';
-                cLUpd.shortDescription = cL.shortDescription;
-                cLUpd.language = cL.language;
-                cLUpd.protected_x = cL.protected_x;
-                allMetadataList.add(cLUpd);
-            }
+
             if(allMetadataList.size() > 0 && !Test.isRunningTest()){
                 service.updateMetadata(allMetadataList);
             }
         } catch(Exception e) {
             NSP_PrepSandbox.handleException( e , 'doCLabels' );
+        }
+    }
+
+    private static void setCLabelData(MetadataService.MetadataPort service, MetadataService.CustomLabel cL, List<MetadataService.Metadata> allMetadataList, String cLName, Map<String, String> refreshValMap) {
+        if(!Test.isRunningTest()){
+            cL = (MetadataService.CustomLabel) service.readMetadata('CustomLabel', new String[] { cLName }).getRecords()[0];
+        }else{
+            cL.fullName = cLName;
+            cL.value = 'test';
+        }
+        if(cL.value != null){
+            MetadataService.CustomLabel cLUpd = new MetadataService.CustomLabel();
+            cLUpd.fullName = cL.fullName;
+            cLUpd.value = refreshValMap.get(cLName);
+            cLUpd.shortDescription = cL.shortDescription;
+            cLUpd.language = cL.language;
+            cLUpd.protected_x = cL.protected_x;
+            allMetadataList.add(cLUpd);
         }
     }
 
