@@ -38,8 +38,9 @@ const RL_FIELDS = [
   'Non_exempt_EEs_on_semi_monthly_pay_freq__c',
   'Semi_monthly_pay_freq_comply_w_state_law__c',
   'Monthly_pay_freq_comply_w_state_laws__c',
-  'NSP_Any_special_pay_codes_Needed__c'
-
+  'NSP_Any_special_pay_codes_Needed__c',
+  'Does_this_client_have_an_AWW__c',
+  'Is_client_CA_docs_submitted_for_approval__c'
 ];
 
 const SECTION_FIELDS = [
@@ -171,7 +172,9 @@ const SECTION_FIELDS = [
   'Client_runs_expenses_or_payroll__c',
   'Expenses__c',
   'classing_req_a_new_download_for_Subacc__c',
-  'Has_expenses_allowances_through_payroll__c'
+  'Has_expenses_allowances_through_payroll__c',
+  'Does_this_client_have_an_AWW__c',
+  'Is_client_CA_docs_submitted_for_approval__c'
 ];
 const EMP_TABLE_FIELDS = {
   Client_have_any_EEs_on_F1_or_J1_Visa_s__c: [
