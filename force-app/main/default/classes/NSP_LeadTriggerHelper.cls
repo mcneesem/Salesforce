@@ -322,123 +322,173 @@ if ((leadNewMap.get(leadId).NSP_Lead_Routing__c == true &&
     //
     public void restrictLeadOwnerChange( Map<Id,Lead> leadNewMap , Map<Id,Lead> leadOldMap ) {
         // only enforced during before-update Triggers that contain a new Lead record Map...
-        if ( Trigger.isBefore && Trigger.isUpdate && ( leadNewMap != null ) ) {
-            // determine if the current User is allowed to bypass this restriction...
-            Id currentUserId = UserInfo.getUserId();
-            List<User> records = [
-                SELECT Id , Name , UserRoleId , UserRole.Name , ProfileId , Profile.Name
-                FROM User
-                WHERE ( Id = :currentUserId )
-            ];
-            User currentUser = null;
-            if ( ( records != null ) && !records.isEmpty() ) {
-                currentUser = records[0];
-            }
-            // check Profile...
-            Boolean isAllowedProfile = (
-                ( currentUser != null )
-                && ( currentUser.ProfileId != null )
-                && ( currentUser.Profile != null )
-                && (
-                    ( String.isNotBlank( currentUser.Profile.Name ) && currentUser.Profile.Name.startsWith( 'System Admin' ) )
-                    || ( currentUser.Profile.Name == 'Integration User' )
-                )
-            );
-            // check UserRole...
-            List<String> labelUserRoles = Label.MM_AND_BPC_USERROLE.split( ',' ); // Custom Label: MidMarket Administrator,MidMarket Sales Leader,Business Performance Consultant
-            Boolean isAllowedRole = (
-                ( currentUser != null )
-                && ( currentUser.UserRoleId != null )
-                && labelUserRoles.contains( currentUser.UserRole.Name )
-            );
-            // only enforce restrict if User is NOT allowed to bypass...
-            // ~ having "correct" Profile OR "correct" Role allows the bypass...
-            if ( !isAllowedProfile && !isAllowedRole ) {
-                // collect the previous record OwnerId (User.Id) values...
-                Set<Id> ownerIdset = new Set<Id>();
+        if ( Trigger.isBefore
+            && Trigger.isUpdate
+            && ( leadNewMap != null )
+            && this.isEnabledRestrictLeadOwnerChange()
+            )
+        {
+            // collect the previous record OwnerId (User.Id) values...
+            Set<Id> ownerIdset = this.collectOwnerIdset( leadNewMap , leadOldMap );
+            // collect previous Lead Owner's salesoffice details...
+            Set<String> salesOfficeSet = this.selectSalesOfficeSet( ownerIdset );
+            // restrict Lead edit access/change owner if current User not part of the previous Lead Owner's salesoffice group...
+            List<GroupMember> groupMemberList = this.selectGroupMemberList( salesOfficeSet );
+            if ( ( groupMemberList == null ) || groupMemberList.isEmpty() ) {
                 for ( Id leadId : leadNewMap.keySet() ) {
-                    Lead oldRecord = null;
-                    if ( ( leadOldMap != null ) && leadOldMap.containsKey( leadId ) ) {
-                        oldRecord = leadOldMap.get( leadId );
-                    }
-                    // current Lead Owner is-a User
-                    // current User not equal to previous Lead Owner
-                    if ( ( oldRecord != null )
-                        && ( oldRecord.OwnerId != null )
-                        && ( oldRecord.OwnerId.getSObjectType() == User.SObjectType )
-                        && ( currentUserId != oldRecord.OwnerId )
-                        )
-                    {
-                        ownerIdset.add( oldRecord.OwnerId );
-                    }
-                }
-                // collect previous Lead Owner's salesoffice details...
-                Set<String> salesOfficeSet = new Set<String>();
-                if ( !ownerIdset.isEmpty() ) {
-                    List<User> ownerIdList = [
-                        SELECT Id , ToLabel(NSP_Sales_Office_Membership__c)
-                        FROM User
-                        WHERE ( Id IN :ownerIdset )
-                    ];
-                    if ( !ownerIdList.isEmpty() ) {
-                        for ( User record : ownerIdList ) {
-                            if ( String.isNotBlank( record.NSP_Sales_Office_Membership__c ) ) {
-                                salesOfficeSet.addAll( new List<String>( record.NSP_Sales_Office_Membership__c.split( ';' ) ) );
-                            }
-                        }
-                    }
-                }
-                // collect the groupmembers of previous Lead Owner's salesoffices...
-                List<GroupMember> groupMemberList = new List<GroupMember>();
-                if ( !salesOfficeSet.isEmpty() ) {
-                    groupMemberList = [
-                        SELECT Id , Group.Name , UserOrGroupId
-                        FROM GroupMember
-                        WHERE (
-                            ( UserOrGroupId = :currentUserId )
-                            AND ( Group.Name IN :salesOfficeSet )
-                        )
-                    ];
-                }
-                // restrict Lead edit access/change owner if current User not part of the previous Lead Owner's salesoffice group...
-                if ( groupMemberList.isEmpty() ) {
-                    for ( Id leadId : leadNewMap.keySet() ) {
-                        Lead oldRecord = null;
-                        if ( ( leadOldMap != null ) && leadOldMap.containsKey( leadId ) ) {
-                            oldRecord = leadOldMap.get( leadId );
-                        }
-                        if ( ( oldRecord != null )
-                            && ( oldRecord.OwnerId != null )
-                            && ( oldRecord.OwnerId.getSObjectType() == User.SObjectType )
-                            && ( currentUserId != oldRecord.OwnerId )
-                            )
-                        {
-                            // prevent unhandled Flow Errors within the Task_Created Flow within the Update_Lead_Record Flow Element...
-                            // ~ allow Lead.Status change to 'Working' when a related Task.Status is 'Completed'...
-                            Boolean isStatusChangedToWorking = False;
-                            if ( Lead_Trigger_Settings__c.getInstance( UserInfo.getUserId() ).AllowStatusChangedToWorking__c ) {
-                                Lead newRecord = null;
-                                if ( ( leadNewMap != null ) && leadNewMap.containsKey( leadId ) ) {
-                                    newRecord = leadNewMap.get( leadId );
-                                }
-                                if ( ( newRecord != null )
-                                    && ( newRecord.Status != oldRecord.Status )
-                                    && ( newRecord.Status == 'Working' )
-                                    )
-                                {
-                                    isStatusChangedToWorking = True;
-                                }
-                            }
-                            if ( !isStatusChangedToWorking ) {
-                                // for any other change to the Lead...
-                                // ~ throw DmlException FIELD_CUSTOM_VALIDATION_EXCEPTION
-                                leadNewMap.get( leadId ).Id.addError( System.Label.NSP_LeadTriggerError );
-                            }
-                        }
+                    Lead newRecord = this.getMappedLeadSafe( leadNewMap , leadId );
+                    Lead oldRecord = this.getMappedLeadSafe( leadOldMap , leadId );
+                    if ( this.isRestrictedLeadOwnerChange( newRecord , oldRecord ) ) {
+                        // for any restricted change to the Lead...
+                        // ~ throw DmlException FIELD_CUSTOM_VALIDATION_EXCEPTION
+                        leadNewMap.get( leadId ).Id.addError( System.Label.NSP_LeadTriggerError );
                     }
                 }
             }
         }
+    }
+
+    // helper method to defeat sonar cognitive complexity...
+    private Lead getMappedLeadSafe( Map<Id,Lead> leadMap , Id recordId ) {
+        Lead record = null;
+        if ( ( leadMap != null ) && leadMap.containsKey( recordId ) ) {
+            record = leadMap.get( recordId );
+        }
+        return record;
+    }
+
+    // determine if the current User is allowed to bypass this restriction...
+    private Boolean isEnabledRestrictLeadOwnerChange() {
+        Id currentUserId = UserInfo.getUserId();
+        List<User> records = [
+            SELECT Id , Name , UserRoleId , UserRole.Name , ProfileId , Profile.Name
+            FROM User
+            WHERE ( Id = :currentUserId )
+        ];
+        User currentUser = null;
+        if ( ( records != null ) && !records.isEmpty() ) {
+            currentUser = records[0];
+        }
+        // check Profile...
+        Boolean isAllowedProfile = (
+            ( currentUser != null )
+            && ( currentUser.ProfileId != null )
+            && ( currentUser.Profile != null )
+            && (
+                ( String.isNotBlank( currentUser.Profile.Name ) && currentUser.Profile.Name.startsWith( 'System Admin' ) )
+                || ( currentUser.Profile.Name == 'Integration User' )
+            )
+        );
+        // check UserRole...
+        List<String> labelUserRoles = Label.MM_AND_BPC_USERROLE.split( ',' ); // Custom Label: MidMarket Administrator,MidMarket Sales Leader,Business Performance Consultant
+        Boolean isAllowedRole = (
+            ( currentUser != null )
+            && ( currentUser.UserRoleId != null )
+            && labelUserRoles.contains( currentUser.UserRole.Name )
+        );
+        // only enforce restriction if User is NOT allowed to bypass...
+        // ~ having "correct" Profile OR "correct" Role allows the bypass...
+        return ( !isAllowedProfile && !isAllowedRole );
+    }
+
+    // collect the previous record OwnerId (User.Id) values...
+    private Set<Id> collectOwnerIdset( Map<Id,Lead> newLeadMap , Map<Id,Lead> oldLeadMap ) {
+        Set<Id> ownerIdset = new Set<Id>();
+        if ( ( newLeadMap != null ) && !newLeadMap.isEmpty() ) {
+            for ( Id leadId : newLeadMap.keySet() ) {
+                Lead oldRecord = this.getMappedLeadSafe( oldLeadMap , leadId );
+                // current Lead Owner is-a User
+                // current User not equal to previous Lead Owner
+                if ( ( oldRecord != null )
+                    && ( oldRecord.OwnerId != null )
+                    && ( oldRecord.OwnerId.getSObjectType() == User.SObjectType )
+                    && ( UserInfo.getUserId() != oldRecord.OwnerId )
+                    )
+                {
+                    ownerIdset.add( oldRecord.OwnerId );
+                }
+            }
+        }
+        return ownerIdset;
+    }
+
+    // collect previous Lead Owner's salesoffice details...
+    private Set<String> selectSalesOfficeSet( Set<Id> ownerIdset ) {
+        Set<String> salesOfficeSet = new Set<String>();
+        if ( ( ownerIdset != null ) && !ownerIdset.isEmpty() ) {
+            List<User> ownerIdList = [
+                SELECT Id , ToLabel(NSP_Sales_Office_Membership__c)
+                FROM User
+                WHERE ( Id IN :ownerIdset )
+            ];
+            if ( !ownerIdList.isEmpty() ) {
+                for ( User record : ownerIdList ) {
+                    if ( String.isNotBlank( record.NSP_Sales_Office_Membership__c ) ) {
+                        salesOfficeSet.addAll( new List<String>( record.NSP_Sales_Office_Membership__c.split( ';' ) ) );
+                    }
+                }
+            }
+        }
+        return salesOfficeSet;
+    }
+
+    // collect the groupmembers of previous Lead Owner's salesoffices...
+    private List<GroupMember> selectGroupMemberList( Set<String> salesOfficeSet ) {
+        List<GroupMember> groupMemberList = new List<GroupMember>();
+        if ( ( salesOfficeSet != null ) && !salesOfficeSet.isEmpty() ) {
+            groupMemberList = [
+                SELECT Id , Group.Name , UserOrGroupId
+                FROM GroupMember
+                WHERE (
+                    ( UserOrGroupId = :UserInfo.getUserId() )
+                    AND ( Group.Name IN :salesOfficeSet )
+                )
+            ];
+        }
+        return groupMemberList;
+    }
+
+    // restrict Lead edit access/change owner if current User not part of the previous Lead Owner's salesoffice group...
+    private Boolean isRestrictedLeadOwnerChange( Lead newRecord , Lead oldRecord ) {
+        Boolean response = false;
+        if ( ( newRecord != null )
+            && ( oldRecord != null )
+            && ( oldRecord.OwnerId != null )
+            && ( oldRecord.OwnerId.getSObjectType() == User.SObjectType )
+            && ( UserInfo.getUserId() != oldRecord.OwnerId )
+            && ( !NSP_LeadTriggerHelper.settings.IsolateOwnershipValidation__c || ( newRecord.OwnerId != oldRecord.OwnerId ) )
+            )
+        {
+            // prevent unhandled Flow Errors within the Task_Created Flow within the Update_Lead_Record Flow Element...
+            // ~ allow Lead.Status change to 'Working' when a related Task.Status is 'Completed'...
+            Boolean isStatusChangedToWorking = (
+                settings.AllowStatusChangedToWorking__c
+                && ( newRecord.Status != oldRecord.Status )
+                && ( newRecord.Status == 'Working' )
+            );
+            // prevent unhandled Flow Errors within the Campaign_Member_Created_Async_Populate_Most_Recent_Campaign & Campaign_Member_Deleted_Update_Most_Recent_Campaign Flows...
+            // ~ allow modifications to Lead.Most_Recent_Campaign__c...
+            Boolean isChangedMostRecentCampaign = (
+                settings.AllowChangedMostRecentCampaign__c
+                && ( newRecord.Most_Recent_Campaign__c != oldRecord.Most_Recent_Campaign__c )
+            );
+            if ( !isStatusChangedToWorking && !isChangedMostRecentCampaign ) {
+                // for any other change to the Lead...
+                // ~ throw DmlException FIELD_CUSTOM_VALIDATION_EXCEPTION
+                response = true;
+            }
+        }
+        return response;
+    }
+
+    private static Lead_Trigger_Settings__c settings {
+        private get {
+            if ( settings == null ) {
+                settings = Lead_Trigger_Settings__c.getInstance( UserInfo.getUserId() );
+            }
+            return settings;
+        }
+        private set;
     }
 
     /**
