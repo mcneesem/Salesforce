@@ -4,6 +4,7 @@
     <externalId>false</externalId>
     <label>Project Template for New Plan</label>
     <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
