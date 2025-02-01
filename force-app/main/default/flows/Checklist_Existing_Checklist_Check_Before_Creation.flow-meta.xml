@@ -1174,12 +1174,26 @@
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <visibilityRule>
-                <conditionLogic>(1 AND 4 AND (2 OR 3)) OR 5</conditionLogic>
+                <conditionLogic>( 1 OR ( 2 AND 3 AND ( 4 OR 5 ) ) )</conditionLogic>
+                <conditions>
+                    <leftValueReference>recordOpportunity.NSP_PrimaryProduct__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>WS</stringValue>
+                    </rightValue>
+                </conditions>
                 <conditions>
                     <leftValueReference>recordOpportunity.NSP_Account_Segment__c</leftValueReference>
                     <operator>NotEqualTo</operator>
                     <rightValue>
                         <stringValue>MidMarket</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>recordOpportunity.NSP_Account_Segment__c</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue>Enterprise</stringValue>
                     </rightValue>
                 </conditions>
                 <conditions>
@@ -1194,20 +1208,6 @@
                     <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue>Closing</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>recordOpportunity.NSP_Account_Segment__c</leftValueReference>
-                    <operator>NotEqualTo</operator>
-                    <rightValue>
-                        <stringValue>Enterprise</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>recordOpportunity.NSP_PrimaryProduct__c</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>WS</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
