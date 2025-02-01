@@ -507,7 +507,7 @@ public String formatPhoneNumbers(String input) {
                             NSP_Status_Date__c ,
                             NSP_Job_Title__c
                         FROM Contact
-                        WHERE Id IN: contactIdSet
+                        WHERE ( Id IN :contactIdSet )
                     ]
                 )
             {
@@ -529,6 +529,7 @@ public String formatPhoneNumbers(String input) {
                             ContactId IN :contactIdSet
                             AND isDirect = true
                             AND CreatedBy.ProfileId != :integrationUser[0].Id
+                        )
                     ]
                 )
             {
