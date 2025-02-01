@@ -42,13 +42,10 @@ public without sharing class NSP_UpdateRelatedAccounts {
     }
 
     public static void updateAccountStatus( Set<String> accountIdSet ) {
-        if(LeadConversionSettings__c.getInstance(UserInfo.getUserId()).Is_Enabled_SOQL_Fix__c)
-        {
-            updateAccountStatusFuture(accountIdSet);
-        }
-        else
-        {
-            updateAccountStatusInternal(accountIdSet);
+        if ( LeadConversionSettings__c.getInstance( UserInfo.getUserId() ).Is_Enabled_SOQL_Fix__c ) {
+            updateAccountStatusFuture( accountIdSet );
+        } else {
+            updateAccountStatusInternal( accountIdSet );
         }
     }
 
