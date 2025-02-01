@@ -300,6 +300,8 @@ export default class Nsp_accrualProfileRecordForm extends NavigationMixin(
   handleSubClientSelection({ detail }) {
     const selectedOption = { ...this.subClientMap[detail] };
 
+    selectedOption.label = selectedOption.label+' ('+selectedOption.aimsSubClient+')';
+    selectedOption.accName = selectedOption.accName+' ('+selectedOption.accAimsClient+')';
     this.selectedSubClients = [...this.selectedSubClients, selectedOption];
     this.addParentAccount(selectedOption);
 
@@ -331,6 +333,7 @@ export default class Nsp_accrualProfileRecordForm extends NavigationMixin(
   handleAccountSelection({ detail }) {
     const selectedOption = this.accountMap[detail];
 
+    selectedOption.label = selectedOption.label+' ('+selectedOption.info+')';
     this.selectedAccounts = [...this.selectedAccounts, selectedOption];
     this.accountSearchResults = this.accountSearchResults.filter(
       (option) => option.value !== detail
@@ -564,7 +567,7 @@ export default class Nsp_accrualProfileRecordForm extends NavigationMixin(
   updateApsrRows(records) {
     this.selectedSubClients = this.getPreSelectedOptions(
       records,
-      'NSP_Sub_Client__r',
+      'SubClient_Name_with_Aims_SubClient__c',
       'NSP_Sub_Client__c'
     );
   }
@@ -572,7 +575,7 @@ export default class Nsp_accrualProfileRecordForm extends NavigationMixin(
   updateAparRows(records) {
     this.selectedAccounts = this.getPreSelectedOptions(
       records,
-      'NSP_Account__r',
+      'Account_Name_with_Aims_Client__c',
       'NSP_Account__c'
     );
   }
@@ -593,7 +596,7 @@ export default class Nsp_accrualProfileRecordForm extends NavigationMixin(
       const { fields } = row;
 
       return this.getOption(
-        fields[labelField].displayValue,
+        fields[labelField].value,
         fields[valueField].value,
         row.id
       );
@@ -622,6 +625,7 @@ export default class Nsp_accrualProfileRecordForm extends NavigationMixin(
         'NSP_Sub_Client__c',
         'NSP_Account__c',
         'NSP_Account__r.Name',
+        'NSP_Account__r.NSP_AIMS_Client__c',
         'NSP_Client__c',
       ].join(','),
       resultSize: 10,
@@ -632,13 +636,15 @@ export default class Nsp_accrualProfileRecordForm extends NavigationMixin(
         const options = results.map((option) => {
           const infoObj = JSON.parse(option.info);
           const accName = infoObj['NSP_Account__r.Name'];
+          const accAimsClient = infoObj['NSP_Account__r.NSP_AIMS_Client__c'];
           const accId = infoObj.NSP_Account__c;
+          const aimsSubClient = infoObj.NSP_Sub_Client__c;
           const info =
             (infoObj.NSP_Sub_Client__c || '') +
             SEPARATOR +
             (infoObj.NSP_Client__c || '');
 
-          return { ...option, info, accName, accId };
+          return { ...option, info, aimsSubClient, accName, accId, accAimsClient };
         });
 
         this.subClientSearchResults = options;

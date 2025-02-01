@@ -228,7 +228,7 @@ export default class Nsp_accrualProfileRecordViewForm extends LightningElement {
   populateApsrRows(records) {
     this.selectedSubClients = this.getPreSelectedOptions(
       records,
-      'NSP_Sub_Client__r',
+      'SubClient_Name_with_Aims_SubClient__c',
       'NSP_Sub_Client__c'
     );
   }
@@ -236,7 +236,7 @@ export default class Nsp_accrualProfileRecordViewForm extends LightningElement {
   populateAparRows(records) {
     this.selectedAccounts = this.getPreSelectedOptions(
       records,
-      'NSP_Account__r',
+      'Account_Name_with_Aims_Client__c',
       'NSP_Account__c'
     );
   }
@@ -246,7 +246,7 @@ export default class Nsp_accrualProfileRecordViewForm extends LightningElement {
       const { fields } = row;
 
       return this.getOption(
-        fields[labelField].displayValue,
+        fields[labelField].value,
         fields[valueField].value,
         row.id
       );
