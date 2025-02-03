@@ -2,7 +2,7 @@
 // Represents the User Onboarding trigger helper which handles all the permission assignment logic.
 //
 public with sharing class UserOnboardingTriggerHelper {
-    // test w/ UserOnboardingTriggerHelperTest (93%)
+    // test w/ UserOnboardingTriggerHelperTest (94%)
     
     //
     // Iterates throught the list of new User and passes the required attributes to other methods.
@@ -161,17 +161,18 @@ public with sharing class UserOnboardingTriggerHelper {
             oldMap != null;
     }
     private Boolean isUserEligibleForUpdate(User usr, Map<Id, User> oldMap) {
-        if (oldMap == null || oldMap.get(usr.Id) == null) {
-            return false;
+        Boolean isUserEligible = false;
+        if (oldMap != null && oldMap.containsKey(usr.Id)) {
+            User oldUser = oldMap.get(usr.Id);
+            
+            isUserEligible = usr.Run_Permission_Automation__c &&
+                String.isNotBlank(usr.Business_Title__c) &&
+                usr.IsActive &&
+                (oldUser.Run_Permission_Automation__c != usr.Run_Permission_Automation__c ||
+                 oldUser.Business_Title__c != usr.Business_Title__c ||
+                 oldUser.IsActive != usr.IsActive);
         }
-        
-        User oldUser = oldMap.get(usr.Id);
-        return usr.Run_Permission_Automation__c &&
-            String.isNotBlank(usr.Business_Title__c) &&
-            usr.IsActive &&
-            (oldUser.Run_Permission_Automation__c != usr.Run_Permission_Automation__c ||
-             oldUser.Business_Title__c != usr.Business_Title__c ||
-             oldUser.IsActive != usr.IsActive);
+        return isUserEligible;
     }
 
     //
@@ -425,7 +426,7 @@ public with sharing class UserOnboardingTriggerHelper {
         } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
                 UserOnboardingTriggerHelper.class.getName(),
-                'processUserAssignments - ' + entityType,
+                'processUserAssignments:' + entityType,
                 e
             );
         }
@@ -632,62 +633,18 @@ public with sharing class UserOnboardingTriggerHelper {
     
     private static void assignPermission(Map<Id, String> assigneeToPSMap) {
         List<PermissionSetAssignment> assignments = createAssignments(assigneeToPSMap);
-        
-        if (!assignments.isEmpty()) {
-            List<Database.SaveResult> results = Database.insert(assignments, false);
-            Integer errorCount = 0;
-            for (Database.SaveResult sr : results) {
-                if (!sr.isSuccess()) {
-                    errorCount++;
-                    for(Database.Error err : sr.getErrors()) {
-                        createErrorLog(UserOnboardingTriggerHelper.class.getName(), 'assignPermission', err.getStatusCode() + ': ' + err.getMessage());
-                    }
-                }
-            }
-            if (errorCount == 0 ){
-                createErrorLog(UserOnboardingTriggerHelper.class.getName(), 'assignPermission', ERROR_MESSAGE);
-            }
-        }
+        handleInsertOperation (assignments , 'assignPermission' );
     }
     
     private static void assignGroups(Map<Id, String> memberToGroupMap) {
         List<GroupMember> memberships = createAssignmentsForGroups(memberToGroupMap);
-        
-        if (!memberships.isEmpty()) {
-            List<Database.SaveResult> results = Database.insert(memberships, false);
-            Integer errorCount = 0;
-            for (Database.SaveResult sr : results) {
-                if (!sr.isSuccess()) {
-                    for(Database.Error err : sr.getErrors()) {
-                        createErrorLog(UserOnboardingTriggerHelper.class.getName(), 'assignGroups', err.getStatusCode() + ': ' + err.getMessage());
-                    }
-                }
-            }
-            if (errorCount == 0 ){
-                createErrorLog(UserOnboardingTriggerHelper.class.getName(), 'assignGroups', ERROR_MESSAGE);
-            }
-        }
+        handleInsertOperation (memberships , 'assignGroups' );
     }
     
     private static void permissionSetLicenseAssignment(Map<Id, String> assigneeToPSLMap) {
         List<PermissionSetLicenseAssign> assignments = createAssignmentsForLicenses(assigneeToPSLMap);
-        
-        if (!assignments.isEmpty()) {
-            List<Database.SaveResult> results = Database.insert(assignments, false);
-            Integer errorCount = 0;
-            for (Database.SaveResult sr : results) {
-                if (!sr.isSuccess()) {
-                    for(Database.Error err : sr.getErrors()) {
-                        createErrorLog(UserOnboardingTriggerHelper.class.getName(), 'permissionSetLicenseAssignment', err.getStatusCode() + ': ' + err.getMessage());
-                    }
-                }
-            }
-            if (errorCount == 0 ){
-                createErrorLog(UserOnboardingTriggerHelper.class.getName(), 'permissionSetLicenseAssignment', ERROR_MESSAGE);
-            }
-        }
+        handleInsertOperation (assignments , 'permissionSetLicenseAssignment');
     }
-    
     
     private List<PermissionSetAssignment> filterPermissionAssignments(
         Set<Id> assigneeIds,
@@ -787,6 +744,24 @@ public with sharing class UserOnboardingTriggerHelper {
         
         List<PermissionSetLicenseAssign> assignmentsToDelete = filterAssignments(assigneeIds, oldMap, permissionSetLicenseMap);
         handleDeleteOperation (assignmentsToDelete, 'removePermissionSetLicense');
+    }
+    
+    private static void handleInsertOperation( List<sObject> records , String methodName ) {
+        if (!records.isEmpty()) {
+            List<Database.SaveResult> results = Database.insert(records, false);
+            Integer errorCount = 0;
+            for (Database.SaveResult sr : results) {
+                if (!sr.isSuccess()) {
+                    errorCount++;
+                    for(Database.Error err : sr.getErrors()) {
+                        createErrorLog(UserOnboardingTriggerHelper.class.getName(), methodName , err.getStatusCode() + ': ' + err.getMessage());
+                    }
+                }
+            }
+            if (errorCount == 0 ){
+                createErrorLog(UserOnboardingTriggerHelper.class.getName(), methodName , ERROR_MESSAGE);
+            }
+        }
     }
     
     private void handleDeleteOperation( List<sObject> records , String methodName ) {

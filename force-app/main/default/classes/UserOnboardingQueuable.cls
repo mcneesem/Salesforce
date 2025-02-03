@@ -1,4 +1,4 @@
-public class UserOnboardingQueuable implements Queueable {
+public with sharing class UserOnboardingQueuable implements Queueable {
     // test w/ UserOnboardingQueuableTest (100%)
 /**
  * Handles after insert for User Onboarding asynchronously
