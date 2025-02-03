@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Discounted_Consumption_Rates__c</fullName>
     <externalId>false</externalId>
-    <formula>$Setup.Consumption_Schedule_Discount_Settings__c.Consumption_rates__c</formula>
+    <formula>$Setup.Consumption_Schedule_Discount_Settings__c.Consumption_Rates__c</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Discounted Consumption Rates</label>
     <required>false</required>

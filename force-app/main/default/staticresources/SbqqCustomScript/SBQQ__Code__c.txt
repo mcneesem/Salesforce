@@ -179,7 +179,7 @@ export function onBeforeCalculate(quote, lines, conn)
     //checkSerialIdValidationFlag(quote, lines);
     calculateEarlyTerminationFee(quote, lines)
     checkBookedSetup(quote, lines);
-    let csProducts = quote.record["Discounted_Product_codes__c"]? quote.record["Discounted_Product_codes__c"].split(',') : null;
+    let csProducts = quote.record["Discounted_Product_Codes__c"]? quote.record["Discounted_Product_Codes__c"].split(',') : null;
 	let csRates = quote.record["Discounted_Consumption_Rates__c"]? quote.record["Discounted_Consumption_Rates__c"].split(',') : null;
     let Seasonal = checkSeasonalQuote(quote);
     if(Seasonal === true){
@@ -219,7 +219,7 @@ export function onAfterPriceRules(quoteModel, quoteLineModels) {
     calculateWXSetupFee(quoteModel, quoteLineModels);
     let isPartnerCS = quoteModel.record["NSP_Is_Partner_CS_Applicable__c"]; console.log('partner cs : '+isPartnerCS);
     let isSeasonal = checkSeasonalQuote(quoteModel);
-    let csProducts = quoteModel.record["Discounted_Product_codes__c"]? quoteModel.record["Discounted_Product_codes__c"].split(',') : null;
+    let csProducts = quoteModel.record["Discounted_Product_Codes__c"]? quoteModel.record["Discounted_Product_Codes__c"].split(',') : null;
 	let csRates = quoteModel.record["Discounted_Consumption_Rates__c"]? quoteModel.record["Discounted_Consumption_Rates__c"].split(',') : null;
 
 	debugger;
