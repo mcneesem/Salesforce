@@ -2,8 +2,16 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Transaction_Status__c</fullName>
     <externalId>false</externalId>
-    <formula>TEXT(Invoice_Line__r.blng__InvoiceLineStatus__c)</formula>
-    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <formula>CASE(
+  Type__c ,
+  &quot;Invoice&quot; , TEXT( Invoice_Line__r.blng__InvoiceLineStatus__c ) ,
+  &quot;Credit_Note&quot; ,  TEXT( Credit_Note_Line__r.blng__Status__c ) ,
+  &quot;Debit_Note&quot; , TEXT( Debit_Note_Line__r.blng__Status__c ) ,
+  &quot;Payment&quot; , TEXT( Payment__r.blng__Status__c ) ,
+  &quot;Refund&quot; , TEXT( Refund__r.blng__Status__c ) ,
+  &quot;Revenue_Schedule&quot; , TEXT( Revenue_Transaction__r.blng__Status__c ) ,
+  &quot;&quot;
+)</formula>
     <label>Transaction Status</label>
     <required>false</required>
     <trackHistory>false</trackHistory>
