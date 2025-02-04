@@ -31,3 +31,21 @@ jobs:
       blackduckScaScanFull: true
       detectArgs: '--detect.project.name=Repo:$(Build.Repository.Name)/Sln:$(SolutionName) --detect.project.version.name=$(Build.SourceBranchName) --detect.project.version.phase=$(versionPhase) --detect.project.version.update=true --detect.project.version.name: production'
     condition: eq(variables['Build.Reason'], 'PullRequest')
+  - task: BlackDuckSecurityScan@2
+    inputs:
+      scanType: blackducksca
+      blackduckScaUrl: $(BlackDuck_URL)
+      blackduckScaToken: $(BlackDuck_API)
+      blackduckScaPrCommentEnabled: true
+      blackduckScaScanFull: true
+      detectArgs: --detect.project.name=Repo:$(Build.Repository.Name)/Sln:$(SolutionName) --detect.project.version.name=$(Build.SourceBranchName) --detect.project.version.phase=$(versionPhase) --detect.project.version.update=true
+    condition: not(eq(variables['Build.Reason'], 'PullRequest'))
+  - task: BlackDuckSecurityScan@2
+    inputs:
+      scanType: blackducksca
+      blackduckScaUrl: $(BlackDuck_URL)
+      blackduckScaToken: $(BlackDuck_API)
+      blackduckScaPrCommentEnabled: true
+      blackduckScaScanFull: true
+      detectArgs: '--detect.project.name=Repo:$(Build.Repository.Name)/Sln:$(SolutionName) --detect.project.version.name=$(Build.SourceBranchName) --detect.project.version.phase=$(versionPhase) --detect.project.version.update=true --detect.project.version.name: production'
+    condition: eq(variables['Build.Reason'], 'PullRequest')
