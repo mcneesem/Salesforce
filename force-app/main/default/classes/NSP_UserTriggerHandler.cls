@@ -3,6 +3,7 @@
 //
 public with sharing class NSP_UserTriggerHandler implements NSP_ITriggerHandler{
     // test w/ NSP_UserTriggerHelper_Test (92%)
+    // test w/ UserOnboardingTriggerHelperTest (100%)
 
     // Use this variable to disable this trigger from transaction
     public static Boolean TriggerDisabled = false;
@@ -38,11 +39,19 @@ public with sharing class NSP_UserTriggerHandler implements NSP_ITriggerHandler{
     public void afterInsert( List<sObject> newList , Map<Id,sObject> newMap ) {
         NSP_UserTriggerHelper userTriggerHelperObject = new NSP_UserTriggerHelper();
         userTriggerHelperObject.afterInsertUser( (List<User>)newList );
-        if( ( Limits.getLimitQueueableJobs() > 1 )
+        if ( ( Limits.getLimitQueueableJobs() > 1 )
             && ( Limits.getQueueableJobs() < Limits.getLimitQueueableJobs() )
-          ){
-              System.enqueueJob(new UserOnboardingQueuable((List<User>)newList, null , null, 'afterinsert'));
-          }
+            )
+        {
+            System.enqueueJob(
+                new UserOnboardingQueuable(
+                    (List<User>)newList ,
+                    null ,
+                    null ,
+                    'afterinsert'
+                )
+            );
+        }
     }
 
     //
@@ -71,11 +80,19 @@ public with sharing class NSP_UserTriggerHandler implements NSP_ITriggerHandler{
         userTriggerHelperObject.afterUpdateUser( (Map<Id,User>)newMap , (Map<Id,User>)oldMap );
         // Added as a part of STY-02108
         NSP_UserTriggerHelper.updateAssetServiceRegion( (Map<Id,User>)newMap , (Map<Id,User>)oldMap );
-        if( ( Limits.getLimitQueueableJobs() > 1 )
+        if ( ( Limits.getLimitQueueableJobs() > 1 )
             && ( Limits.getQueueableJobs() < Limits.getLimitQueueableJobs() )
-          ){
-              System.enqueueJob(new UserOnboardingQueuable(null, (Map<Id,User>)newMap , (Map<Id,User>)oldMap , 'afterupdate'));
-          }
+            )
+        {
+            System.enqueueJob(
+                new UserOnboardingQueuable(
+                    null ,
+                    (Map<Id,User>)newMap ,
+                    (Map<Id,User>)oldMap ,
+                    'afterupdate'
+                )
+            );
+        }
     }
 
     //
