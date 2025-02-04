@@ -287,7 +287,10 @@ public class NSP_TaskTriggerHelperTest {
     ***********************************/
     @isTest
     private static void showMessageWhenTaskIsUpdatedTest(){
-
+        Onboarding_Meeting_Detail_Settings__c customSetting = new Onboarding_Meeting_Detail_Settings__c();
+        customSetting.Restrict_Users_Edit_Orientation_Task__c = true;
+        insert customSetting;
+        
         List<String> userFields = new List<String>{'Id', 'email'};
         List<String> ACCOUNT_FIELDS = new List<String>{'Id','Name'};
         Id orientationMeetingReqRecTypeId = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.Task,NSP_ServiceConstants.ORIENTATION_MEETING_REQUEST);
