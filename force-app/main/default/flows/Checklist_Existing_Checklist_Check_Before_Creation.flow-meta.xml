@@ -766,7 +766,7 @@
             <label>Performance Management or Time and Attendance</label>
         </rules>
     </decisions>
-    <description>Added decision node to look for Account Segment for MM Checklist. Added STP or MMC Screen. Updated with Checklist Type and MidMarket Closing Checklist path added. Updated Missing Info decision node and resulting Missing info screen, removed varOpportunityRecord</description>
+    <description>Reworked for WS carve out. Added decision node to look for Account Segment for MM Checklist. Added STP or MMC Screen. Updated with Checklist Type and MidMarket Closing Checklist path added. Updated Missing Info decision node and resulting Missing info screen, removed varOpportunityRecord</description>
     <environments>Default</environments>
     <interviewLabel>Checklist - Existing Checklist Check Before Creation {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Checklist - Existing Checklist Check Before Creation</label>
@@ -1174,12 +1174,26 @@
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <visibilityRule>
-                <conditionLogic>1 AND 4 AND (2 OR 3)</conditionLogic>
+                <conditionLogic>( 1 OR ( 2 AND 3 AND ( 4 OR 5 ) ) )</conditionLogic>
+                <conditions>
+                    <leftValueReference>recordOpportunity.NSP_PrimaryProduct__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>WS</stringValue>
+                    </rightValue>
+                </conditions>
                 <conditions>
                     <leftValueReference>recordOpportunity.NSP_Account_Segment__c</leftValueReference>
                     <operator>NotEqualTo</operator>
                     <rightValue>
                         <stringValue>MidMarket</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>recordOpportunity.NSP_Account_Segment__c</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue>Enterprise</stringValue>
                     </rightValue>
                 </conditions>
                 <conditions>
@@ -1196,13 +1210,6 @@
                         <stringValue>Closing</stringValue>
                     </rightValue>
                 </conditions>
-                <conditions>
-                    <leftValueReference>recordOpportunity.NSP_Account_Segment__c</leftValueReference>
-                    <operator>NotEqualTo</operator>
-                    <rightValue>
-                        <stringValue>Enterprise</stringValue>
-                    </rightValue>
-                </conditions>
             </visibilityRule>
         </fields>
         <fields>
@@ -1214,7 +1221,7 @@
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <visibilityRule>
-                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+                <conditionLogic>1 AND (2 OR 3) AND (4 OR 5)</conditionLogic>
                 <conditions>
                     <leftValueReference>recordOpportunity.StageName</leftValueReference>
                     <operator>EqualTo</operator>
@@ -1236,6 +1243,20 @@
                         <stringValue>Enterprise</stringValue>
                     </rightValue>
                 </conditions>
+                <conditions>
+                    <leftValueReference>recordOpportunity.NSP_PrimaryProduct__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>WX</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>recordOpportunity.NSP_PrimaryProduct__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>WO</stringValue>
+                    </rightValue>
+                </conditions>
             </visibilityRule>
         </fields>
         <fields>
@@ -1248,12 +1269,19 @@
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <visibilityRule>
-                <conditionLogic>(1 OR 4) AND (2 OR 3)</conditionLogic>
+                <conditionLogic>( ( 1 OR 2 ) AND ( 3 OR 4 ) AND ( 5 OR 6 ) )</conditionLogic>
                 <conditions>
                     <leftValueReference>recordOpportunity.NSP_Account_Segment__c</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue>MidMarket</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>recordOpportunity.NSP_Account_Segment__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Enterprise</stringValue>
                     </rightValue>
                 </conditions>
                 <conditions>
@@ -1271,10 +1299,17 @@
                     </rightValue>
                 </conditions>
                 <conditions>
-                    <leftValueReference>recordOpportunity.NSP_Account_Segment__c</leftValueReference>
+                    <leftValueReference>recordOpportunity.NSP_PrimaryProduct__c</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue>Enterprise</stringValue>
+                        <stringValue>WX</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>recordOpportunity.NSP_PrimaryProduct__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>WO</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
