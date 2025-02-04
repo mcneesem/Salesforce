@@ -455,12 +455,12 @@
     <textTemplates>
         <name>EmailBody</name>
         <isViewedAsPlainText>true</isViewedAsPlainText>
-        <text>&lt;p&gt;The IRS Documentation for&amp;lt;{!GetIp.NSP_AIMS_Client_Name__c}&amp;gt; ({!GetIp.NSP_AIMS_ClientNo__c}) has been collected and is attached.&lt;br&gt;&lt;br&gt;{!ContentRecordLink}&lt;br&gt;Regards,&lt;br&gt;{!GetIp.NSP_Project_Manager__r.FirstName} {!GetIp.NSP_Project_Manager__r.LastName}&lt;br&gt;{!GetIp.NSP_Project_Manager__r.NSP_Job_Title__c}&lt;/p&gt;</text>
+        <text>&lt;p&gt;The IRS Documentation for {!GetIp.NSP_AIMS_Client_Name__c} ({!GetIp.NSP_AIMS_ClientNo__c}) has been collected and is attached.&lt;br&gt;&lt;br&gt;{!ContentRecordLink}&lt;br&gt;Regards,&lt;br&gt;{!GetIp.NSP_Project_Manager__r.FirstName} {!GetIp.NSP_Project_Manager__r.LastName}&lt;br&gt;{!GetIp.NSP_Project_Manager__r.NSP_Job_Title__c}&lt;/p&gt;</text>
     </textTemplates>
     <textTemplates>
         <name>EmailSubject</name>
         <isViewedAsPlainText>true</isViewedAsPlainText>
-        <text>&lt;{!GetIp.NSP_AIMS_Client_Name__c}&gt;({!GetIp.NSP_AIMS_ClientNo__c}) –IRS Documentation collected</text>
+        <text>{!GetIp.NSP_AIMS_Client_Name__c} ({!GetIp.NSP_AIMS_ClientNo__c}) – IRS Documentation collected</text>
     </textTemplates>
     <variables>
         <name>ContentRecordLink</name>
