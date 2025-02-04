@@ -7,7 +7,7 @@
         upsert settings;
         //
         User u = new User(
-         ProfileId = [SELECT Id FROM Profile WHERE Name = 'Sales Manager'].Id,
+        ProfileId = [SELECT Id FROM Profile WHERE Name = 'Sales Manager'].Id,
             LastName = 'Test',
             Email = 'hackathon@insperity.com',
             Username = 'hackathon@insperity.com' + System.currentTimeMillis(),
@@ -31,15 +31,16 @@
     @isTest private static void insertTest() {
         test.startTest();
         List<user> userList = [SELECT ID from User Where CompanyName = 'TESTHACK'];
-		System.enqueueJob(new UserOnboardingQueuable(userlist , null , null, 'afterinsert'));
+        System.enqueueJob(new UserOnboardingQueuable(userlist , null , null, 'afterinsert'));
         test.stopTest();
     }
-    
+
     @isTest private static void updateTest() {
         test.startTest();
         List<user> userList = [SELECT ID from User Where CompanyName = 'TESTHACK'];
-		System.enqueueJob(new UserOnboardingQueuable(userlist , null , null, 'afterupdate'));
+        System.enqueueJob(new UserOnboardingQueuable(userlist , null , null, 'afterupdate'));
         test.stopTest();
     }
+
 }
 //
