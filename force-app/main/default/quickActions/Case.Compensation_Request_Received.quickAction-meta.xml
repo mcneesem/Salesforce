@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QuickAction xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Used by Compensation Services team</description>
+    <flowDefinition>Case_Send_Compensation_Service_Request_Email</flowDefinition>
+    <label>Compensation Request Received</label>
+    <optionsCreateFeedItem>false</optionsCreateFeedItem>
+    <type>Flow</type>
+</QuickAction>
