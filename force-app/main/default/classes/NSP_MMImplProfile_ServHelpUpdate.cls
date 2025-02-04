@@ -2575,7 +2575,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
             eachProjecttask.Name=pta.NSP_Task_Name__c;
             eachProjecttask.pse__Order__c=110;
             eachProjecttask.Task_Order__c=110;
-            eachProjecttask.NSP_Visible_to_Client__c=TRUE;
+            eachProjecttask.NSP_Visible_to_Client__c=FALSE;
             Implementation_Profile__c ipwithValue=(Implementation_Profile__c) data.get(IMPL_PROFILE_IDENTIFIER).get(ipRecId);
             if(ipwithValue != null){
                 ipwithValueForDataVerification(ipwithValue,eachProjecttask,workCalendarRecord);
