@@ -1,51 +1,30 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
 pool: Linux
+
 trigger: none
+
 jobs:
 - job: CheckOnly
   condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/merge-claudette'))
   steps:
-  - task: UseNode@1
-  - bash: npm install sfdx-cli --global
-    displayName: Install Salesforce CLI
-  - bash: sfdx force:auth:jwt:grant --clientid $(salesforceDevOrgClientId) --jwtkeyfile ./buildfiles/server.key --username $(salesforceDevOrgUserName) --instanceurl $(salesforceDevOrgInstanceURL) -a devOrg
-    displayName: Authorize salesforce org
-  - bash: sfdx force:source:convert -r ./force-app -d ./toDeploy
-    displayName: Convert to deploy source
-  - bash: sfdx force:mdapi:deploy -l NoTestRun -c -d ./toDeploy -u devOrg -w 10
-    displayName: Run validation on source code
-  - task: BlackDuckSecurityScan@2
-    inputs:
-      scanType: blackducksca
-      blackduckScaUrl: $(BlackDuck_URL)
-      blackduckScaToken: $(BlackDuck_API)
-      blackduckScaPrCommentEnabled: true
-      blackduckScaScanFull: true
-      detectArgs: --detect.project.name=Repo:$(Build.Repository.Name)/Sln:$(SolutionName) --detect.project.version.name=$(Build.SourceBranchName) --detect.project.version.phase=$(versionPhase) --detect.project.version.update=true
-    condition: not(eq(variables['Build.Reason'], 'PullRequest'))
-  - task: BlackDuckSecurityScan@2
-    inputs:
-      scanType: blackducksca
-      blackduckScaUrl: $(BlackDuck_URL)
-      blackduckScaToken: $(BlackDuck_API)
-      blackduckScaPrCommentEnabled: true
-      blackduckScaScanFull: true
-      detectArgs: '--detect.project.name=Repo:$(Build.Repository.Name)/Sln:$(SolutionName) --detect.project.version.name=$(Build.SourceBranchName) --detect.project.version.phase=$(versionPhase) --detect.project.version.update=true --detect.project.version.name: production'
-    condition: eq(variables['Build.Reason'], 'PullRequest')
-  - task: BlackDuckSecurityScan@2
-    inputs:
-      scanType: blackducksca
-      blackduckScaUrl: $(BlackDuck_URL)
-      blackduckScaToken: $(BlackDuck_API)
-      blackduckScaPrCommentEnabled: true
-      blackduckScaScanFull: true
-      detectArgs: --detect.project.name=Repo:$(Build.Repository.Name)/Sln:$(SolutionName) --detect.project.version.name=$(Build.SourceBranchName) --detect.project.version.phase=$(versionPhase) --detect.project.version.update=true
-    condition: not(eq(variables['Build.Reason'], 'PullRequest'))
-  - task: BlackDuckSecurityScan@2
-    inputs:
-      scanType: blackducksca
-      blackduckScaUrl: $(BlackDuck_URL)
-      blackduckScaToken: $(BlackDuck_API)
-      blackduckScaPrCommentEnabled: true
-      blackduckScaScanFull: true
-      detectArgs: '--detect.project.name=Repo:$(Build.Repository.Name)/Sln:$(SolutionName) --detect.project.version.name=$(Build.SourceBranchName) --detect.project.version.phase=$(versionPhase) --detect.project.version.update=true --detect.project.version.name: production'
-    condition: eq(variables['Build.Reason'], 'PullRequest')
+    - task: UseNode@1
+    - bash:
+        npm install sfdx-cli --global
+      displayName: Install Salesforce CLI
+    - bash:
+        sfdx force:auth:jwt:grant --clientid $(salesforceDevOrgClientId) --jwtkeyfile ./buildfiles/server.key --username $(salesforceDevOrgUserName) --instanceurl $(salesforceDevOrgInstanceURL) -a devOrg
+      displayName: Authorize salesforce org
+    - bash:
+        sfdx force:source:convert -r ./force-app -d ./toDeploy
+      displayName: Convert to deploy source
+    - bash:
+        sfdx force:mdapi:deploy -l NoTestRun -c -d ./toDeploy -u devOrg -w 10
+      displayName: Run validation on source code
+
+#
+#
+#
