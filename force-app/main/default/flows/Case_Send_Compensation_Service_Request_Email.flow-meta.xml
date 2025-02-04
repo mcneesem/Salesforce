@@ -206,9 +206,9 @@
         </rules>
     </decisions>
     <environments>Default</environments>
-    <interviewLabel>Case - Send Compensation Service request Email {!$Flow.CurrentDateTime}</interviewLabel>
+    <interviewLabel>Case - Send Compensation Service Request Email {!$Flow.CurrentDateTime}</interviewLabel>
     <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
-    <label>Case - Send Compensation Service request Email</label>
+    <label>Case - Send Compensation Service Request Email</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -339,7 +339,7 @@
         <inputAssignments>
             <name>faultFlow</name>
             <value>
-                <stringValue>Case_Send_Compensation_Service_request_Email</stringValue>
+                <stringValue>Case_Send_Compensation_Service_Request_Email</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
