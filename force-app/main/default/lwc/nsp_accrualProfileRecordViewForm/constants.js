@@ -125,13 +125,13 @@ const APG_FIELDS = [
 const APAR_FIELDS = [
   'NSP_Accrual_Profile_Account_Relationship__c.Id',
   'NSP_Accrual_Profile_Account_Relationship__c.NSP_Account__c',
-  'NSP_Accrual_Profile_Account_Relationship__c.NSP_Account__r.Name',
+  'NSP_Accrual_Profile_Account_Relationship__c.Account_Name_with_Aims_Client__c',
 ];
 
 const APSR_FIELDS = [
   'NSP_Accrual_Profile_Subclient_Relation__c.Id',
   'NSP_Accrual_Profile_Subclient_Relation__c.NSP_Sub_Client__c',
-  'NSP_Accrual_Profile_Subclient_Relation__c.NSP_Sub_Client__r.Name',
+  'NSP_Accrual_Profile_Subclient_Relation__c.SubClient_Name_with_Aims_SubClient__c',
 ];
 
 const APG_ROW_ACTIONS = [

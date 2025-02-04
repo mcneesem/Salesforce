@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SubClient_Name_with_Aims_SubClient__c</fullName>
+    <externalId>false</externalId>
+    <formula>NSP_Sub_Client__r.Name +&apos; (&apos;+  NSP_Sub_Client__r.NSP_Sub_Client__c +&apos;)&apos;</formula>
+    <label>SubClient Name with Aims SubClient #</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>
