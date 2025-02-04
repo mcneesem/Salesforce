@@ -95,6 +95,7 @@ global class NSP_ProcessOrderChangeBatch implements ISelfSchedulable , Schedulab
                     objNewQuote.SBQQ__StartDate__c = System.today().toStartOfMonth();
                     objNewQuote.NSP_Change_Order_Process_Source_Asset__c = eachAsset.Id;
                     objNewQuote.NSP_Lead_Parent_Asset_Id__c = eachAsset.NSP_RET_lead_parent__c;
+                    objNewQuote.NSP_Billing_Account__c = eachAsset.NSP_OrderProduct__r.Order.NSP_Billing_Account__c;
                     model = this.modelHelper( model );
                     String quoteJSON = SBQQ.ServiceRouter.save( 'SBQQ.QuoteAPI.QuoteSaver' , JSON.serialize( model ) ); 
                     JSON.deserialize( quoteJSON , QuoteModel.class );
