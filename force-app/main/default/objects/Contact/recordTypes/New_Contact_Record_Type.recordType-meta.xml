@@ -1217,6 +1217,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Consultant</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Customer</fullName>
             <default>false</default>
         </values>
@@ -1242,6 +1246,10 @@
         </values>
         <values>
             <fullName>Project Implementer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Project Manager</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1306,6 +1314,10 @@
         </values>
         <values>
             <fullName>Time Analyst</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Trainer</fullName>
             <default>false</default>
         </values>
     </picklistValues>
