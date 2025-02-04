@@ -183,6 +183,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
     }
  
      private void populateEligibleRecords(){
+         Implementation_Profile_Settings__c ipSettings =  Implementation_Profile_Settings__c.getInstance(UserInfo.getUserId());
          for(Implementation_Profile__c ipRec : newIPs.values()){
              Implementation_Profile__c existingRec = oldIPs != null ? oldIPs.get(ipRec.Id) : null;
              
@@ -237,7 +238,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
              if(automationsToExecute.contains(GARNISHMENT_MM)){
                 checkforGarnishments(ipRec, existingRec);
             }
-            if(automationsToExecute.contains(TAX_LEVIES_MM)){
+            if(ipSettings.Is_Enabled_Levies__c && automationsToExecute.contains(TAX_LEVIES_MM)){
                 checkforTaxLevies(ipRec, existingRec);
             }
             if(automationsToExecute.contains(PRE_TAX_MM)){
