@@ -1,6 +1,6 @@
-
-// This class should remain as "without sharing" as all its SOQL methods are called from updating a parent opty
-// by a User who may not have edit access to the desired child optys
+// This class should remain as "without sharing" as all its SOQL methods
+// are called from updating a parent Opportunity by a User who may not have
+// record visibility to the desired child Opportunities.
 public without sharing class NSP_ChildOpportunitiesHelperFunctions {
     //  test w/ NSP_OpportunityTriggerHelperTest (79%)
 
