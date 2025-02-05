@@ -1907,7 +1907,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                             
                 pse__Project_Task__c eachProjecttask = createProjectTaskfromIP(proj, pta.NSP_Category__c, ipRecId,milestoneKey);
                                                         eachProjecttask.NSP_Sub_Category__c=pta.NSP_Sub_Category__c;
-                                                        eachProjecttask.Name=NSP_ServiceConstants.SETUP+ipRec.Allowances__c+ ' '+ pta.NSP_Task_Name__c;
+                                                        eachProjecttask.Name=pta.NSP_Task_Name__c;
                                                         eachProjecttask.pse__Order__c=90;
                                                         eachProjecttask.Task_Order__c=90;
                                                         eachProjectTask.NSP_Visible_to_Client__c=FALSE;
@@ -4102,22 +4102,26 @@ public class NSP_MMImplProfile_ServHelpUpdate {
              }
          }   
      }
- 
-     private void checkForExpenseAllowance(Implementation_Profile__c newRec, Implementation_Profile__c existingRec){
-         
-        if( newRec.RecordTypeId == ipMMRecordTypeId && newRec.Allowances__c!=null &&
-          (newRec.Allowances__c.contains(NSP_ServiceConstants.CAR) ||
-          newRec.Allowances__c.contains(NSP_ServiceConstants.PHONE) ||
-          newRec.Allowances__c.contains(NSP_ServiceConstants.PER_DIEM) ||
-          newRec.Allowances__c.contains(NSP_ServiceConstants.HOUSE)) ){
-            
-            if(existingRec == null || newRec.NSP_Form_Completed__c  ||
-               newRec.Allowances__c != existingRec.Allowances__c){
-                 updateEligibleRecordsMap(ipRecordsByAutomation, newRec.Id, ALLOWNCE_EXPENSE_MM);
-            }
-        }   
+
+     private void checkForExpenseAllowance( Implementation_Profile__c newRec , Implementation_Profile__c existingRec ) {
+        if ( ( newRec != null )
+            && ( newRec.RecordTypeId == ipMMRecordTypeId )
+            && ( newRec.Allowances__c != null )
+            && newRec.Allowances__c.contains( NSP_ServiceConstants.PHONE )
+            && ( ( existingRec == null )
+                || newRec.NSP_Form_Completed__c
+                || ( newRec.Allowances__c != existingRec.Allowances__c )
+                )
+            )
+        {
+            updateEligibleRecordsMap(
+                ipRecordsByAutomation ,
+                newRec.Id ,
+                ALLOWNCE_EXPENSE_MM
+            );
+        }
     }
- 
+
      private void checkForDependentCare(Implementation_Profile__c newRec, Implementation_Profile__c existingRec){
          
          if( newRec.RecordTypeId == ipMMRecordTypeId &&
