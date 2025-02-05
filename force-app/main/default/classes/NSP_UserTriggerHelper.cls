@@ -412,9 +412,13 @@ public with sharing class NSP_UserTriggerHelper {
             }
         }
 
-        if(lstServiceResource != null && !lstServiceResource.isEmpty()){
-            List<Database.UpsertResult> upsertResults =  Database.upsert(lstServiceResource,false);
-            NSP_ErrorLogHandler.logUpsertResultsException('NSP_UserTriggerHelper', 'processUserPermissions:lstServiceResource', upsertResults);
+        if ( !lstServiceResource.isEmpty() ) {
+            List<Database.UpsertResult> results =  Database.upsert( lstServiceResource , false );
+            NSP_ErrorLogHandler.logResults(
+                NSP_UserTriggerHelper.class.getName() ,
+                'processUserPermissions:upsert' ,
+                results
+            );
         }
 
         for(User usr: lstUser){
@@ -450,12 +454,22 @@ public with sharing class NSP_UserTriggerHelper {
             }
         }
 
-        if(lstTerritoryMemberToDelete != null){
-            Database.DeleteResult[] DeleteResults = Database.Delete(lstTerritoryMemberToDelete, false);
+        if ( !lstTerritoryMemberToDelete.isEmpty() ) {
+            Database.DeleteResult[] results = Database.delete( lstTerritoryMemberToDelete , false );
+            NSP_ErrorLogHandler.logResults(
+                NSP_UserTriggerHelper.class.getName() ,
+                'processUserPermissions:delete' ,
+                results
+            );
         }
 
-        if(!lstTerritoryMember.isEmpty() ){
-            Database.SaveResult[] result =  Database.insert(lstTerritoryMember,false);
+        if ( !lstTerritoryMember.isEmpty() ) {
+            Database.SaveResult[] results =  Database.insert( lstTerritoryMember , false );
+            NSP_ErrorLogHandler.logResults(
+                NSP_UserTriggerHelper.class.getName() ,
+                'processUserPermissions:insert' ,
+                results
+            );
         }
 
         System.enqueueJob(new NSP_AssignFSLUserPermissions(lstUser, Trigger.isUpdate));
