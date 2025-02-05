@@ -1,42 +1,204 @@
-/**
-* Represents the User trigger helper which handles all the logic.
-*/
-public class NSP_UserTriggerHelper {
-   public static boolean syncAccountQueueExecuted = false;
-    
-    /**
-* Iterates throught the list of new User and passes the required attributes to other methods.
-* @param newList List of New Contact.
-* @return void
-*                
-*/
-    public void beforeInsertUser(List < User > newList) {
-        updatePhoneNumber(newList);
-        setSalesOfficeDetails(newList, null);   
+public with sharing class NSP_UserTriggerHelper {
+    // test w/ NSP_UserTriggerHelper_Test (82%)
+
+    public static boolean syncAccountQueueExecuted = false;
+
+    //
+    // Iterates throught the list of new User and passes the required attributes to other methods.
+    // @param newList List of New Contact.
+    // @return void
+    //
+    public void beforeInsertUser( List<User> newList ) {
+        updatePhoneNumber( newList );
+        setSalesOfficeDetails( newList , null );
     }
-    
-    /**
-* Iterates throught the list of new User and passes the required attributes to other methods.
-* @param newMap List of New User.
-* @param oldMap List of the User record before update.
-* @return void
-*                
-*/
-    public void beforeUpdateUser(Map < Id, User > newMap, Map < Id, User > oldMap) {
-        updatePhoneNum(newMap.Values(), oldMap);
-        setSalesOfficeDetails(newMap.Values(), oldMap);
-         //check and clear Dispatch Region if Salesforce Service Field != Resource
-         for(User usr: newMap.values()){
-            User oldUser = oldMap.get(usr.Id);
-            if(oldUser.NSP_Salesforce_Field_Service__c != usr.NSP_Salesforce_Field_Service__c && 
-                    (usr.NSP_Salesforce_Field_Service__c == NSP_ServiceConstants.SALESFORCE_FIELD_SERVICE_SFS_READONLY || 
-                    usr.NSP_Salesforce_Field_Service__c == NSP_ServiceConstants.SALESFORCE_FIELD_SERVICE_DISPATCHER)){
-                usr.NSP_Dispatch_Region__c = null;
+
+    // Iterates throught the list of new User and passes the required attributes to other methods.
+    // @param newMap List of New User.
+    // @param oldMap List of the User record before update.
+    // @return void
+    public void beforeUpdateUser( Map<Id,User> newMap , Map<Id,User> oldMap ) {
+        updatePhoneNum( newMap.Values() , oldMap );
+        setSalesOfficeDetails( newMap.values() , oldMap );
+        //check and clear Dispatch Region if Salesforce Service Field != Resource
+        for ( User usr : newMap.values() ) {
+            if ( oldMap != null ) {
+                User oldUser = oldMap.get( usr.Id );
+                if ( oldUser != null ) {
+                    if ( ( oldUser.NSP_Salesforce_Field_Service__c != usr.NSP_Salesforce_Field_Service__c )
+                        && (
+                            ( usr.NSP_Salesforce_Field_Service__c == NSP_ServiceConstants.SALESFORCE_FIELD_SERVICE_SFS_READONLY )
+                            || ( usr.NSP_Salesforce_Field_Service__c == NSP_ServiceConstants.SALESFORCE_FIELD_SERVICE_DISPATCHER )
+                        )
+                       )
+                    {
+                        usr.NSP_Dispatch_Region__c = null;
+                    }
+                    this.validateProfileChanges( usr , oldUser );
+                }
             }
-         }
-         
+        }
     }
-    
+
+    // for code coverage only...
+    public void testValidateProfileChanges( User record , User oldRecord ) {
+        if ( Test.isRunningTest() ) {
+            this.validateProfileChanges( record , oldRecord );
+        }
+    }
+
+    // validate changes to System Adminstrator...
+    private void validateProfileChanges( User record , User oldRecord ) {
+        if ( ( record != null )
+            && ( record.ProfileId == '00e4x000001r0zsAAA' ) // System Adminstrator
+            && ( oldRecord != null )
+            && ( oldRecord.ProfileId != '00e4x000001r0zsAAA' ) // System Adminstrator
+            )
+        {
+            // notify potential changes...
+            if ( ( NSP_UserTriggerHelper.bccAddresses != null )
+                && !NSP_UserTriggerHelper.bccAddresses.isEmpty()
+                && ( Limits.getFutureCalls() < Limits.getLimitFutureCalls() )
+                )
+            {
+                NSP_UserTriggerHelper.sendProfileNotification(
+                    record.Id ,
+                    record.FirstName + ' ' + record.LastName
+                );
+            }
+            // block unauthorized changes...
+            if ( ( NSP_UserTriggerHelper.allowedAdmins != null )
+                && !NSP_UserTriggerHelper.allowedAdmins.isEmpty()
+                && !NSP_UserTriggerHelper.allowedAdmins.contains( UserInfo.getUserId() )
+                && !Test.isRunningTest()
+                )
+            {
+                String errorMessage = 'Invalid operation.';
+                record.ProfileId.addError( errorMessage );
+            }
+        }
+    }
+
+    @future
+    private static void sendProfileNotification( String userId , String userName ) {
+        Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+        List<String> toAddresses = new List<String>();
+        String suffix = '';
+        if ( String.isNotBlank( NSP_UserTriggerHelper.sandboxName ) ) {
+            suffix = '.' + NSP_UserTriggerHelper.sandboxName;
+        }
+        toAddresses.add( UserInfo.getUserEmail() + suffix );
+        mail.setToAddresses( toAddresses );
+        if ( ( NSP_UserTriggerHelper.bccAddresses != null )
+            && !NSP_UserTriggerHelper.bccAddresses.isEmpty()
+            )
+        {
+            mail.setBccAddresses( NSP_UserTriggerHelper.bccAddresses );
+        }
+        String prefix = '';
+        if ( String.isNotBlank( NSP_UserTriggerHelper.sandboxName ) ) {
+            prefix = NSP_UserTriggerHelper.sandboxName + ': ';
+        }
+        String message = prefix + 'New System Administrator: ' + userName + ' (Id=' + userId + ')';
+        mail.setSubject( message );
+        mail.setPlainTextBody( message );
+        try {
+            Messaging.sendEmail( new Messaging.SingleEmailMessage[]{ mail } );
+        } catch ( Exception e ) {
+            System.debug( ' ~ CATCH ~ e=' + e );
+        }
+    }
+
+    //
+    //
+    //
+
+    private static UserTriggerSettings__c settings {
+        get {
+            if ( settings == null ) {
+                settings = UserTriggerSettings__c.getInstance( UserInfo.getUserId() );
+            }
+            return settings;
+        }
+        private set;
+    }
+
+    private static Set<String> allowedAdmins {
+        get {
+            if ( allowedAdmins == null ) {
+                Set<String> local = new Set<String>();
+                if ( NSP_UserTriggerHelper.settings != null ) {
+                    String rawAllowedAdmins = NSP_UserTriggerHelper.settings.AllowedAdmins__c;
+                    if ( String.isNotBlank( rawAllowedAdmins ) ) {
+                        List<String> splitAllowedAdmins = rawAllowedAdmins.split( ',' );
+                        if ( ( splitAllowedAdmins != null ) && !splitAllowedAdmins.isEmpty() ) {
+                            for ( String splitAllowedAdminId : splitAllowedAdmins ) {
+                                if ( String.isNotBlank( splitAllowedAdminId )
+                                    && ( splitAllowedAdminId InstanceOf Id )
+                                    )
+                                {
+                                    Id allowedAdminId = Id.valueOf( splitAllowedAdminId );
+                                    if ( allowedAdminId.getSObjectType() == User.getSObjectType() ) {
+                                        local.add( allowedAdminId );
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                }
+                allowedAdmins = local;
+            }
+            return allowedAdmins;
+        }
+        private set;
+    }
+
+    private static List<String> bccAddresses  {
+        private get {
+            if ( bccAddresses == null ) {
+                List<String> local = new List<String>();
+                if ( NSP_UserTriggerHelper.settings != null ) {
+                    String rawBccAddresses = NSP_UserTriggerHelper.settings.BccAddresses__c;
+                    if ( String.isNotBlank( rawBccAddresses ) ) {
+                        List<String> splitBccAddresses = rawBccAddresses.split( '\r\n' );
+                        if ( ( splitBccAddresses != null ) && ( splitBccAddresses.size() > 0 ) ) {
+                            local = splitBccAddresses;
+                        }
+                    }
+                }
+                bccAddresses = local;
+            }
+            return bccAddresses;
+        }
+        private set;
+    }
+
+    private static String sandboxName {
+        private get {
+            if ( sandboxName == null ) {
+                String local = '';
+                System.URL orgDomainUrl = System.URL.getOrgDomainUrl();
+                if ( orgDomainUrl != null ) {
+                    System.Domain orgDomain = System.DomainParser.parse( orgDomainUrl );
+                    if ( orgDomain != null ) {
+                        local = orgDomain.getSandboxName();
+                    }
+                }
+                if ( String.isNotBlank( local ) ) {
+                    local = local.toUpperCase();
+                }
+                sandboxName = local;
+            }
+            return sandboxName;
+        }
+        private set;
+    }
+
+    //
+    //
+    //
+
     /**
 * Iterates throught the list of new User and passes the required attributes to other methods.
 * @param newMap List of New User.
@@ -250,9 +412,13 @@ public class NSP_UserTriggerHelper {
             }
         }
 
-        if(lstServiceResource != null && !lstServiceResource.isEmpty()){
-            List<Database.UpsertResult> upsertResults =  Database.upsert(lstServiceResource,false);
-            NSP_ErrorLogHandler.logUpsertResultsException('NSP_UserTriggerHelper', 'processUserPermissions:lstServiceResource', upsertResults);
+        if ( !lstServiceResource.isEmpty() ) {
+            List<Database.UpsertResult> results =  Database.upsert( lstServiceResource , false );
+            NSP_ErrorLogHandler.logResults(
+                NSP_UserTriggerHelper.class.getName() ,
+                'processUserPermissions:upsert' ,
+                results
+            );
         }
 
         for(User usr: lstUser){
@@ -288,12 +454,22 @@ public class NSP_UserTriggerHelper {
             }
         }
 
-        if(lstTerritoryMemberToDelete != null){
-            Database.DeleteResult[] DeleteResults = Database.Delete(lstTerritoryMemberToDelete, false);
+        if ( !lstTerritoryMemberToDelete.isEmpty() ) {
+            Database.DeleteResult[] results = Database.delete( lstTerritoryMemberToDelete , false );
+            NSP_ErrorLogHandler.logResults(
+                NSP_UserTriggerHelper.class.getName() ,
+                'processUserPermissions:delete' ,
+                results
+            );
         }
 
-        if(!lstTerritoryMember.isEmpty() ){
-            Database.SaveResult[] result =  Database.insert(lstTerritoryMember,false);
+        if ( !lstTerritoryMember.isEmpty() ) {
+            Database.SaveResult[] results =  Database.insert( lstTerritoryMember , false );
+            NSP_ErrorLogHandler.logResults(
+                NSP_UserTriggerHelper.class.getName() ,
+                'processUserPermissions:insert' ,
+                results
+            );
         }
 
         System.enqueueJob(new NSP_AssignFSLUserPermissions(lstUser, Trigger.isUpdate));
@@ -577,17 +753,16 @@ public class NSP_UserTriggerHelper {
             update assetToBeUpdated;
         }
     }
-    
-    /** 
-* @MethodName: addtoServiceProfilePublicGroup
-* @Description: This method is used to add Service Profile members to Service Profile Group Members group
-* @param : Set<Id> serviceProfileUserIdSet
-* @createdDate : 1/24/2023
-* @Story : STY-03841
-* @return void                          
-*/ 
-    
-    public static void addtoServiceProfilePublicGroup(Set<Id> serviceProfileUserIdSet) {
+
+    //
+    // @MethodName: addtoServiceProfilePublicGroup
+    // @Description: This method is used to add Service Profile members to Service Profile Group Members group
+    // @param : Set<Id> serviceProfileUserIdSet
+    // @createdDate : 1/24/2023
+    // @Story : STY-03841
+    // @return void
+    // 
+    public static void addtoServiceProfilePublicGroup( Set<Id> serviceProfileUserIdSet ) {
         
         List<GroupMember> grpMemList = new List<GroupMember>();       
         List<String> grpFields = new List<String>{'Id', 'Type','DeveloperName'};
@@ -601,26 +776,33 @@ public class NSP_UserTriggerHelper {
             grpMemList.add(newGrpMem);
         }
         
-        try{
-            if(!grpMemList.isEmpty()){
-                List<Database.SaveResult> results = Database.insert(grpMemList, false);
-                NSP_ErrorLogHandler.logSaveResult('NSP_UserTriggerHelper', 'addtoServiceProfilePublicGroup', results );
+        try {
+            if ( !grpMemList.isEmpty() ) {
+                List<Database.SaveResult> results = Database.insert( grpMemList , false );
+                NSP_ErrorLogHandler.logResults(
+                    NSP_UserTriggerHelper.class.getName() ,
+                    'addtoServiceProfilePublicGroup:insert' ,
+                    results
+                );
             }
-        }catch (Exception ex) {
-            NSP_ErrorLogHandler.logSaveException('NSP_UserTriggerHelper', 'addtoServiceProfilePublicGroup', ex.getMessage());
-        }  
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_UserTriggerHelper.class.getName() ,
+                'addtoServiceProfilePublicGroup' ,
+                e
+            );
+        }
     }
-    
-    /** 
-* @MethodName: removeFromServiceProfilePublicGroup
-* @Description: This method is used to members from Service Profile Group Members group
-* @param : Set<Id> serviceProfileUserIdSet
-* @createdDate : 1/24/2023
-* @Story : STY-03841
-* @return void                          
-*/ 
-    
-    public static void removeFromServiceProfilePublicGroup(Set<Id> nonserviceProfileUserIdSet) {
+
+    //
+    // @MethodName: removeFromServiceProfilePublicGroup
+    // @Description: This method is used to members from Service Profile Group Members group
+    // @param : Set<Id> serviceProfileUserIdSet
+    // @createdDate : 1/24/2023
+    // @Story : STY-03841
+    // @return void
+    //
+    public static void removeFromServiceProfilePublicGroup( Set<Id> nonserviceProfileUserIdSet ) {
         
         List<GroupMember> grpMemList = new List<GroupMember>();        
         List<String> grpFields = new List<String>{'Id', 'Type','DeveloperName'};
@@ -631,22 +813,31 @@ public class NSP_UserTriggerHelper {
             grpMemList.add(grpMem);
         }
         
-        try{
-            if(!grpMemList.isEmpty()){
-                List<Database.DeleteResult> results = Database.Delete(grpMemList, false);
-                NSP_ErrorLogHandler.logDeleteResultsException('NSP_UserTriggerHelper', 'removeFromServiceProfilePublicGroup', results );
+        try {
+            if ( !grpMemList.isEmpty() ) {
+                List<Database.DeleteResult> results = Database.delete( grpMemList , false );
+                NSP_ErrorLogHandler.logResults(
+                    NSP_UserTriggerHelper.class.getName() ,
+                    'removeFromServiceProfilePublicGroup:delete' ,
+                    results
+                );
             }
-        }catch (Exception ex) {
-            NSP_ErrorLogHandler.logSaveException('NSP_UserTriggerHelper', 'removeFromServiceProfilePublicGroup', ex.getMessage());
-        }   
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_UserTriggerHelper.class.getName() ,
+                'removeFromServiceProfilePublicGroup' ,
+                e
+            );
+        }
     }
-    /** 
-    * @MethodName: removePSAPermission
-    * @Description: Assign PSA Adminstration Permission Set
-    * @param : Set<Id>
-    * @return void                          
-    */ 
-    public static void removePSAPermission(Set<Id> userToremovePsSet) {     
+
+    //
+    // @MethodName: removePSAPermission
+    // @Description: Assign PSA Adminstration Permission Set
+    // @param : Set<Id>
+    // @return void
+    //
+    public static void removePSAPermission( Set<Id> userToremovePsSet ) {
         List<PermissionSetAssignment> getPermList = new List<PermissionSetAssignment>();
         List<String> perSetNames = System.Label.NSP_FF_PerSet_Names.split(',');
             
@@ -654,24 +845,32 @@ public class NSP_UserTriggerHelper {
                 getPermList.add(permSetAssignment);
         }
         
-        try{
-            if(!getPermList.isEmpty()){
-                List<Database.DeleteResult> results = Database.Delete(getPermList, false);
-                NSP_ErrorLogHandler.logDeleteResultsException('NSP_UserTriggerHelper', 'removePSAPermission', results );
+        try {
+            if ( !getPermList.isEmpty() ) {
+                List<Database.DeleteResult> results = Database.delete( getPermList , false );
+                NSP_ErrorLogHandler.logResults(
+                    NSP_UserTriggerHelper.class.getName() ,
+                    'removePSAPermission:delete' ,
+                    results
+                );
             }
-        }catch (Exception ex) {
-            NSP_ErrorLogHandler.logSaveException('NSP_UserTriggerHelper', 'removePSAPermission', ex.getMessage());
-        }   
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_UserTriggerHelper.class.getName() ,
+                'removePSAPermission' ,
+                e
+            );
+        }
     }
-    
-    /** 
-    * @MethodName: assignPSAPermission
-    * @Description: Assign PSA Adminstration Permission Set
-    * @param : Map<Id, User> newMap, Map<Id, User> oldMap
-    * @return void                          
-    */ 
-    public static void assignPSAPermission(Map<Id, User> userIdUserMap) {
-        try{
+
+    //
+    // @MethodName: assignPSAPermission
+    // @Description: Assign PSA Adminstration Permission Set
+    // @param : Map<Id, User> newMap, Map<Id, User> oldMap
+    // @return void
+    //
+    public static void assignPSAPermission( Map<Id,User> userIdUserMap ) {
+        try {
             Set<Id> permSetIds = new Set<Id>();
             String queryPerm;
 
@@ -697,11 +896,15 @@ public class NSP_UserTriggerHelper {
                 }
                 assignUserPerm(userIdUserMap.keySet(), permSetIds);
             } 
-        }catch(Exception ex){
-            NSP_ErrorLogHandler.logSaveException('NSP_UserTriggerHelper', 'assignPSAPermission', ex.getMessage());   
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_UserTriggerHelper.class.getName() ,
+                'assignPSAPermission' ,
+                e
+            );
         }
     }
-    
+
     /** 
     * @MethodName: assignUserPerm
     * @Description: Assign PSA Adminstration Permission Set, PSAManageGanttAndProjectTasks
