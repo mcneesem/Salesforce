@@ -9,12 +9,12 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
         try{
             doQueues();
         } catch(Exception e) {
-            NSP_PrepSandbox.handleException( e , 'runApexClass:doQueues' );
+            NSP_PrepSandbox.handleException( e , 'runApexClass' );
         }
         try{
             doCSettings(context.sandboxName());
         } catch(Exception e) {
-            NSP_PrepSandbox.handleException( e , 'runApexClass:doCSettings' );
+            NSP_PrepSandbox.handleException( e , 'runApexClass' );
         }
     }
 
@@ -130,7 +130,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
             }
             if(!Test.isRunningTest() && userList != null) {
                 Database.UpsertResult[] userResults = Database.upsert(userList, User.FederationIdentifier, false);
-                NSP_ErrorLogHandler.logResults( NSP_PrepSandbox.class.getName() , 'doUserImport:upsert' , userResults );
+                NSP_ErrorLogHandler.logResults( NSP_PrepSandbox.class.getName() , 'doUserImport' , userResults);
                 updateUserLogins(userResults);
             }
         } catch(Exception e) {
@@ -560,10 +560,10 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
                     cLMBaseURL = docusignSettings.CLMBaseUrl__c;
                 }
                 updDSSettings.add(docusignSettings);
-            }
+            }            
             update updDSSettings;
         } catch(Exception e) {
-            NSP_PrepSandbox.handleException( e , 'doCSettings:DocuSign_Settings__c' );
+            NSP_PrepSandbox.handleException( e , 'doCSettings' );
         }
 
         try {
@@ -573,7 +573,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
             upsert cS1;
         } catch(Exception e) {
             System.debug('An exception occurred in doCSettings: ' + e.getMessage());
-            NSP_PrepSandbox.handleException( e , 'doCSettings:NSP_GoogleRecaptchaSettings__c' );
+            NSP_PrepSandbox.handleException( e , 'doCSettings' );
         }
 
         try {
@@ -584,7 +584,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
                 upsert cS2;
             }
         } catch(Exception e) {
-            NSP_PrepSandbox.handleException( e , 'doCSettings:NSP_Docusign_Account_Details__c' );
+            NSP_PrepSandbox.handleException( e , 'doCSettings' );
         }
 
         try {
@@ -597,7 +597,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
             cS3.SandboxName__c = sandboxName;
             upsert cS3;
         } catch(Exception e) {
-            NSP_PrepSandbox.handleException( e , 'doCSettings:OrgSettings__c' );
+            NSP_PrepSandbox.handleException( e , 'doCSettings' );
         }
 
         try {
@@ -616,29 +616,20 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
                     cS4.NSP_Detailed_Data__c = 'dev1';
                 }
             }
-            upsert cS4;
+            upsert cS4;    
         } catch(Exception e) {
-            NSP_PrepSandbox.handleException( e , 'doCSettings:NSP_Environment_Details__c' );
+            NSP_PrepSandbox.handleException( e , 'doCSettings' );
         }
-
+            
         try {
             BoxFileRequest__c cS5 = BoxFileRequest__c.getOrgDefaults();
             cS5.BoxTemplateFolderId__c = '225207143235';
             upsert cS5;
         } catch(Exception e) {
-            NSP_PrepSandbox.handleException( e , 'doCSettings:BoxFileRequest__c' );
-        }
-
-        try {
-            UserTriggerSettings__c cS6 = UserTriggerSettings__c.getOrgDefaults();
-            cS6.AllowedAdmins__c = null;
-            cS6.BccAddresses__c = null;
-            upsert cS6;
-        } catch(Exception e) {
-            NSP_PrepSandbox.handleException( e , 'doCSettings:UserTriggerSettings__c' );
+            NSP_PrepSandbox.handleException( e , 'doCSettings' );
         }
     }
-
+    
     public static void doE2CAddresses(String sandboxName) {
         try {
             Map<String, Integer> orgMap = new Map<String, Integer>{'merge' => 1, 'test' => 2, 'stage' => 3};
@@ -705,7 +696,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
     }
     
     public static void setPostRefreshRunFlag(Integer iStep) {
-        try {
+        try {            
             OrgSettings__c cS = OrgSettings__c.getOrgDefaults();
             if (iStep == 1) cS.PostRefreshRun__c = true;
             if (iStep == 2) cS.PostRefreshRun2__c = true;
@@ -792,7 +783,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
             }
             if ( userLoginList != null ) {
                 Database.SaveResult[] userLoginResults = Database.update(userLoginList, false);
-                NSP_ErrorLogHandler.logResults( NSP_PrepSandbox.class.getName() , 'updateUserLogins:update' , userLoginResults );
+                NSP_ErrorLogHandler.logResults( NSP_PrepSandbox.class.getName() , 'doUserImport' , userLoginResults);
             }
         } catch(Exception e) {
             NSP_PrepSandbox.handleException( e , 'updateUserLogins' );
@@ -802,7 +793,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
     private class AlertResult {
         public Integer totalSize;
         public Boolean done;
-        public String queryLocator;
+        public String queryLocator;   
         public RecordAlert[] records;
     }
 
