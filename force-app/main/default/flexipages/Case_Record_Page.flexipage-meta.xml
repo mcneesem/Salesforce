@@ -166,7 +166,7 @@
                             <value>Clone</value>
                         </valueListItems>
                         <valueListItems>
-                            <value>Case.Comp_Req_Recvd</value>
+                            <value>Case.Compensation_Request_Received</value>
                             <visibilityRule>
                                 <booleanFilter>1 AND 2</booleanFilter>
                                 <criteria>
