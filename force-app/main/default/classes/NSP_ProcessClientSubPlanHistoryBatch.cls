@@ -4,7 +4,8 @@
 // @date 23/12/2022
 // Name : NSP_ProcessClientSubPlanHistoryBatch
 //
-public class NSP_ProcessClientSubPlanHistoryBatch implements Database.Batchable<sObject>,Schedulable {
+public class NSP_ProcessClientSubPlanHistoryBatch implements Schedulable , Database.Batchable<sObject> {
+    // test w/ NSP_ProcessClientSubPlanHistoryBatchTest (??%)
 
     //
     // Schedulable
