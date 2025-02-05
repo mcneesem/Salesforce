@@ -456,47 +456,46 @@ public with sharing class UserOnboardingTriggerHelper {
         String entityType
         )
     {
-        Map<String,List<String>> titleToPermissionMap = new Map<String,List<String>>();
+        Map<String,List<String>> titleToEntityMap = new Map<String,List<String>>();
         if ( ( details != null ) && !details.isEmpty() ) {
             for ( User_Onboarding_Detail__mdt detail : details ) {
                 if ( String.isNotBlank( detail.Title__c ) ) {
-                    if ( ( entityType == 'PermissionSet' )
-                        && String.isNotBlank( detail.Permission_Set_Name__c )
-                        )
-                    {
-                        titleToPermissionMap.put(
-                            detail.Title__c ,
-                            detail.Permission_Set_Name__c.split( ',' )
-                        );
-                    } else if ( ( entityType == 'PermissionSetGroup' )
-                        && String.isNotBlank( detail.Permission_Set_Group_Name__c )
-                        )
-                    {
-                        titleToPermissionMap.put(
-                            detail.Title__c ,
-                            detail.Permission_Set_Group_Name__c.split( ',' )
-                        );
-                    } else if ( ( entityType == 'Group' )
-                        && String.isNotBlank( detail.Queue_Name__c )
-                        )
-                    {
-                        titleToPermissionMap.put(
-                            detail.Title__c ,
-                            detail.Queue_Name__c.split( ',' )
-                        );
-                    } else if ( ( entityType == 'PermissionSetLicense' )
-                        && String.isNotBlank( detail.Permission_Set_License__c )
-                        )
-                    {
-                        titleToPermissionMap.put(
-                            detail.Title__c ,
-                            detail.Permission_Set_License__c.split( ',' )
-                        );
-                    }
+                    titleToEntityMap.put(
+                        detail.Title__c ,
+                        this.buildEntityList( detail , entityType )
+                    );
                 }
             }
         }
-        return titleToPermissionMap;
+        return titleToEntityMap;
+    }
+
+    private List<String> buildEntityList( User_Onboarding_Detail__mdt detail , String entityType ) {
+        List<String> entityList = new List<String>();
+        if ( detail != null ) {
+            if ( ( entityType == 'PermissionSet' )
+                && String.isNotBlank( detail.Permission_Set_Name__c )
+                )
+            {
+                entityList = detail.Permission_Set_Name__c.split( ',' );
+            } else if ( ( entityType == 'PermissionSetGroup' )
+                && String.isNotBlank( detail.Permission_Set_Group_Name__c )
+                )
+            {
+                entityList = detail.Permission_Set_Group_Name__c.split( ',' );
+            } else if ( ( entityType == 'Group' )
+                && String.isNotBlank( detail.Queue_Name__c )
+                )
+            {
+                entityList = detail.Queue_Name__c.split( ',' );
+            } else if ( ( entityType == 'PermissionSetLicense' )
+                && String.isNotBlank( detail.Permission_Set_License__c )
+                )
+            {
+                entityList = detail.Permission_Set_License__c.split( ',' );
+            }
+        }
+        return entityList;
     }
 
     private Set<String> extractEntityNames( Map<String,List<String>> titleToEntityMap ) {
@@ -751,22 +750,8 @@ public with sharing class UserOnboardingTriggerHelper {
                 oldBusinessTitle = oldMap.get( assignment.AssigneeId ).Business_Title__c;
             }
             if ( String.isNotBlank( oldBusinessTitle ) ) {
-                List<String> entity = new List<String>();
-                if ( ( entityMap != null )
-                    && entityMap.containsKey( oldBusinessTitle )
-                    && ( entityMap.get( oldBusinessTitle ) != null )
-                    )
-                {
-                    entity = entityMap.get( oldBusinessTitle );
-                }
-                List<String> entityPsg = new List<String>();
-                if ( ( entityPsgMap != null )
-                    && entityPsgMap.containsKey( oldBusinessTitle )
-                    && ( entityPsgMap.get( oldBusinessTitle ) != null )
-                    )
-                {
-                    entityPsg = entityPsgMap.get( oldBusinessTitle );
-                }
+                List<String> entity = this.getMappedEntity( entityMap , oldBusinessTitle );
+                List<String> entityPsg = this.getMappedEntity( entityPsgMap , oldBusinessTitle );
                 if ( ( entity.contains( assignment.PermissionSet.Name ) )
                     || ( entityPsg.contains( assignment.PermissionSetGroup.DeveloperName ) )
                     )
@@ -776,6 +761,18 @@ public with sharing class UserOnboardingTriggerHelper {
             }
         }
         return filteredAssignments;
+    }
+
+    private List<String> getMappedEntity( Map<String,List<String>> entityMap , String key ) {
+        List<String> entity = new List<String>();
+        if ( ( entityMap != null )
+            && entityMap.containsKey( key )
+            && ( entityMap.get( key ) != null )
+            )
+        {
+            entity = entityMap.get( key );
+        }
+        return entity;
     }
 
     private List<PermissionSetLicenseAssign> filterAssignments(
