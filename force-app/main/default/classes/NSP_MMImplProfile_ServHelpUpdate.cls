@@ -1906,7 +1906,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                             
                 pse__Project_Task__c eachProjecttask = createProjectTaskfromIP(proj, pta.NSP_Category__c, ipRecId,milestoneKey);
                                                         eachProjecttask.NSP_Sub_Category__c=pta.NSP_Sub_Category__c;
-                                                        eachProjecttask.Name=NSP_ServiceConstants.SETUP+ipRec.Allowances__c+ ' '+ pta.NSP_Task_Name__c;
+                                                        eachProjecttask.Name=pta.NSP_Task_Name__c;
                                                         eachProjecttask.pse__Order__c=90;
                                                         eachProjecttask.Task_Order__c=90;
                                                         eachProjectTask.NSP_Visible_to_Client__c=FALSE;
