@@ -195,6 +195,8 @@ public class NSP_MMImplProfile_UpdateTest {
         ip.NSP_Payroll_Project_Manager__c=cont.id;
         ip.NSP_Payroll_Specialist__c=cont.id;
         ip.NSP_Form_Completed__c = true;
+        ip.Does_this_client_have_an_AWW__c = NSP_ServiceConstants.Yes;
+        ip.NSP_Insperity_1st_pay_date__c = system.today();
         ip.NSP_Sr_Onboarding_Benefit_Rep__c = cont.id;
         Test.startTest();
         //update ip record for the above fields

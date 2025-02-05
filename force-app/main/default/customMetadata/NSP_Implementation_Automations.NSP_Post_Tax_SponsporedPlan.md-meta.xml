@@ -7,6 +7,10 @@
         <value xsi:type="xsd:string">Post-Tax Client Setup</value>
     </values>
     <values>
+        <field>NSP_Automation_Order__c</field>
+        <value xsi:type="xsd:double">13.0</value>
+    </values>
+    <values>
         <field>NSP_Class_Name__c</field>
         <value xsi:type="xsd:string">NSP_MMImplProfile_ServHelpUpdate</value>
     </values>
