@@ -4,7 +4,7 @@
     <apex:actionFunction name="callPostRefresh" action="{!runManualStepsButton}" rerender="result" status="Status1"/>
     <apex:outputPanel id="postRefreshAlreadyRun" style="font-size:14px;color:black" rendered="{!$Setup.OrgSettings__c.PostRefreshRun__c}"><i>&nbsp;&nbsp;Post-refresh steps have been run.</i></apex:outputPanel>
     <br/>
-    <apex:commandButton style="font-size:12px" value="Import Org Users    " action="{!resetResult}" rerender="result"  oncomplete="callUserImport();"/>
+    <apex:commandButton style="font-size:12px" value="Import Org Users    " action="{!resetResult}" rendered="{!CONTAINS(lower($Setup.OrgSettings__c.SandboxApiName__c),'dev')}" rerender="result" oncomplete="callUserImport();"/>
     <apex:actionFunction name="callUserImport" action="{!doUserImportPage}" rerender="result" status="Status2"/>
     <apex:outputPanel id="postRefreshAlreadyRun2" style="font-size:14px;color:black" rendered="{!$Setup.OrgSettings__c.PostRefreshRun2__c}"><i>&nbsp;&nbsp;Import Users step has been run.</i></apex:outputPanel>
     <br/>
