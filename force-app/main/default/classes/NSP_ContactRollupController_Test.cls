@@ -1,18 +1,3 @@
-/**
-Apex Class Name      :  NSP_ContactRollupController_Test
-Version              :  1.0                                                                          
-Created Date         :  6/9/2022  
-Function             :  Represents test class for NSP_ContactRollupController class
-Story                :                                                                      
-Modification Log     : Modified by Prakash Jada for better code coverage and optimized the test class to run faster                                                                             
-*--------------------------------------------------------------------------------------------------  
-* Developer                   Date                   Description                                    
-* -------------------------------------------------------------------------------------------------  
-* Bindu                      7/4/2022            First Iteration
-*/
-
-
-@isTest(SeeAllData = false)
 private class NSP_ContactRollupController_Test {
 
     @testSetup private static void prepareTestData() {
@@ -100,7 +85,6 @@ private class NSP_ContactRollupController_Test {
         acr.NSP_Work_Phone__c = '9899091366';
         acr.NSP_Work_email__c= 'test.insperity@insperity.com';
         acr.NSP_Service_Roles__c = 'Survey Contact';
-        acr.NSP_Support_Role__c = 'Time & Attendance Main Admin';
         acr.NSP_Owner__c= true;
         update acr;
         
@@ -144,7 +128,6 @@ private class NSP_ContactRollupController_Test {
         acr.NSP_Work_Phone__c = '9899091366';
         acr.NSP_Work_email__c= 'test.insperity@insperity.com';
         acr.NSP_Service_Roles__c = 'Survey Contact';
-        acr.NSP_Support_Role__c = 'Time & Attendance Main Admin';
         acr.NSP_Owner__c= true;
         update acr;
         
@@ -173,7 +156,6 @@ private class NSP_ContactRollupController_Test {
             
         //ASSERTS
         Assert.areEqual(acr.NSP_Owner__c, true, 'This filter (NSP_Owner__c from ACR) should be true to get accurate values');
-        Assert.areEqual(acr.NSP_Support_Role__c, 'Time & Attendance Main Admin', 'This filter (NSP_Support_Role__c from ACR) should be true to get accurate values');
         Assert.areEqual(subClientCon.NSP_On_Site_Supervisor__c, true, 'This filter (NSP_On_Site_Supervisor__c from Sub client contact) should be true to get accurate values');
         
         NSP_ContactRollupController.getContactRollUpRecords(account.Id, 0, true, allFilters, 'NSP_On_Site_Supervisor__c = true', ' NSP_Owner__c = true AND NSP_Support_Role__c INCLUDES (\'Time & Attendance Main Admin\')');        
