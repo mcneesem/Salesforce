@@ -131,7 +131,7 @@ private class NSP_AssetServiceHelperTest {
         System.assertEquals(1, assetList.size());
     }
     @isTest
-    private createTimeAndAttendence(){
+    private static void createTimeAndAttendence(){
         Test.startTest();
         // GIVEN
         

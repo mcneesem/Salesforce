@@ -1,3 +1,4 @@
+@isTest
 private class NSP_ContactRollupController_Test {
 
     @testSetup private static void prepareTestData() {

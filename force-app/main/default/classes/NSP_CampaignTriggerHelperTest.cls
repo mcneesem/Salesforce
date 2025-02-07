@@ -1,3 +1,4 @@
+@isTest
 private class NSP_CampaignTriggerHelperTest {
 
     private static final String emailencodingkey = 'UTF-8';
