@@ -3,7 +3,7 @@
     <fullName>NSP_ITA_Project_Manager__c</fullName>
     <deleteConstraint>SetNull</deleteConstraint>
     <externalId>false</externalId>
-    <label>ITA Project Manager</label>
+    <label>ITA Manager</label>
     <referenceTo>Contact</referenceTo>
     <relationshipLabel>Implementation Profiles (ITA Project Manager)</relationshipLabel>
     <relationshipName>Implementation_Profiles1ncC</relationshipName>
