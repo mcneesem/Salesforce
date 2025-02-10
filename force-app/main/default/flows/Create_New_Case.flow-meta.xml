@@ -65,6 +65,13 @@
             <stringValue>Yes</stringValue>
         </value>
     </choices>
+    <constants>
+        <name>objectName</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>case</stringValue>
+        </value>
+    </constants>
     <decisions>
         <name>Confidential_Decision</name>
         <label>Confidential Decision</label>
@@ -430,6 +437,12 @@
                         <name>selectedRecordTypeId</name>
                         <value>
                             <elementReference>selectedRecordTypeId</elementReference>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>objectApiName</name>
+                        <value>
+                            <elementReference>objectName</elementReference>
                         </value>
                     </inputParameters>
                     <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>

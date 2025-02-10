@@ -33,7 +33,7 @@ export default class CaseCatSubCatComponent extends LightningElement {
     
     
     @api 
-    validate(event) {
+    validate() {
         let response = {
             isValid: true
         };
