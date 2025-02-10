@@ -12,35 +12,37 @@ export default class CaseCatSubCatComponent extends LightningElement {
     @api showAllCategory;
     @api showAllSubCategory;
 
-    handleConfidentialField(event){
-        this.showConfidential = event.detail;
+    handleConfidentialField(event) {
+        if (event && event.detail !== undefined) {
+            this.showConfidential = event.detail;
+        }
     }
    
-    handleSelectedValues(){
-        this.selectedCategory = this.template.querySelector('c-case-cat-subcat-detail').selectedCategory;
-        this.selectedSubCategory = this.template.querySelector('c-case-cat-subcat-detail').selectedSubCategory;
-        this.selectedDetail = this.template.querySelector('c-case-cat-subcat-detail').selectedDetail;
-        this.selectedVersion = this.template.querySelector('c-case-cat-subcat-detail').selectedVersion;
-        this.showAllCategory = this.template.querySelector('c-case-cat-subcat-detail').showAllCategory;
-        this.showAllSubCategory = this.template.querySelector('c-case-cat-subcat-detail').showAllSubCategory;               
+    handleSelectedValues() {
+        const categoryComponent = this.template.querySelector('c-case-cat-subcat-detail');
+
+        if (categoryComponent) {
+            this.selectedCategory = categoryComponent.selectedCategory;
+            this.selectedSubCategory = categoryComponent.selectedSubCategory;
+            this.selectedDetail = categoryComponent.selectedDetail;
+            this.selectedVersion = categoryComponent.selectedVersion;
+            this.showAllCategory = categoryComponent.showAllCategory;
+            this.showAllSubCategory = categoryComponent.showAllSubCategory;
+        }
     }
     
     
     @api 
-    validate(event){
-        if(
-           (this.selectedCategory===undefined || this.selectedCategory===null || this.selectedCategory==='') ||
-           (this.selectedSubCategory===undefined || this.selectedSubCategory===null || this.selectedSubCategory==='')
-        ){
-            return {
-                isValid: false,
-                errorMessage: "Category and Subcategory are mandatory."
-            }
+    validate(event) {
+        let response = {
+            isValid: true
+        };
+
+        if (!this.selectedCategory || !this.selectedSubCategory) {
+            response.isValid = false;
+            response.errorMessage = "Category and Subcategory are mandatory.";
         }
-        else{
-            return {
-                isValid: true,
-               }       
-        }
+
+        return response;
     }
 }
