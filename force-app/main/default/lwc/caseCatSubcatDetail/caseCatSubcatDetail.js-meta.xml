@@ -10,6 +10,8 @@
             <property name="selectedCategory" type="String" label="Category" description="select category"/>
             <property name="selectedSubCategory" type="String" label="SubCategory" description="select subcategory"/>
             <property name="selectedDetail" type="String" label="Detail" description="select detail"/>
+            <property name="selectedVersion" type="String" label="Version" description="select Version"/>
+            <property name="recTypeId" type="String" label="Record Type Id" description="record Type"/>
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>
