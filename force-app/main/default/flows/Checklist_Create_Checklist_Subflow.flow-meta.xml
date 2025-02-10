@@ -4466,6 +4466,10 @@
                     <fieldType>LargeTextArea</fieldType>
                     <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
+                    <validationRule>
+                        <errorMessage>&lt;p&gt;&lt;span style=&quot;color: rgb(250, 7, 7);&quot;&gt;Notes must be 6k characters or less.&lt;/span&gt;&lt;/p&gt;</errorMessage>
+                        <formulaExpression>LEN({!Additional_Notes_MMC_WoWx})&lt;=6000</formulaExpression>
+                    </validationRule>
                 </fields>
                 <fields>
                     <name>Reason_why_client_bought_MMC_WoWx</name>
@@ -4725,6 +4729,10 @@
                     <fieldType>LargeTextArea</fieldType>
                     <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
+                    <validationRule>
+                        <errorMessage>&lt;p&gt;&lt;span style=&quot;color: rgb(250, 7, 7);&quot;&gt;Notes must be 6k characters or less.&lt;/span&gt;&lt;/p&gt;</errorMessage>
+                        <formulaExpression>LEN({!AdditionalNotes_SEQ_PS})&lt;=6000</formulaExpression>
+                    </validationRule>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -5137,6 +5145,10 @@
                     <fieldType>LargeTextArea</fieldType>
                     <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
+                    <validationRule>
+                        <errorMessage>&lt;p&gt;&lt;span style=&quot;color: rgb(250, 7, 7);&quot;&gt;Notes must be 6k characters or less.&lt;/span&gt;&lt;/p&gt;</errorMessage>
+                        <formulaExpression>LEN({!AdditionalNotes_SEQ_TA})&lt;=6000</formulaExpression>
+                    </validationRule>
                 </fields>
                 <fields>
                     <name>NonExemptEmployees_SEQ_TA</name>
@@ -5631,6 +5643,10 @@
             <fieldType>LargeTextArea</fieldType>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>false</isRequired>
+            <validationRule>
+                <errorMessage>&lt;p&gt;&lt;span style=&quot;color: rgb(250, 7, 7);&quot;&gt;Notes must be 6k characters or less.&lt;/span&gt;&lt;/p&gt;</errorMessage>
+                <formulaExpression>LEN({!AdditionalNotes_SEQ_WX})&lt;=6000</formulaExpression>
+            </validationRule>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
