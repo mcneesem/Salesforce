@@ -1360,14 +1360,14 @@
             <assignToReference>recordChecklist.NSP_Number_of_Employees__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>recordOpportunity.NSP_Number_of_Employees__c</elementReference>
+                <elementReference>NumberOfEmployees_SEQ_TA</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>recordChecklist.NSP_On_call_pay__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>On_Call_Pay_SEQ_TA</elementReference>
+                <elementReference>OnCallPay_SEQ_TA</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -1437,7 +1437,7 @@
             <assignToReference>recordChecklist.NSP_Time_collection_option__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>recordOpportunity.NSP_Time_Entry_Recommendation__c</elementReference>
+                <elementReference>TimeCollection_SEQ_TA</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -2627,7 +2627,7 @@
             <label>Booking - WO</label>
         </rules>
     </decisions>
-    <description>Updated Num of Employees and On Call Pay mapping for SEQ Time and Attendance. MidMarket Closing added. &quot;Additional Notes&quot; long text and &quot;Gov&apos;t Contract Approval Email&quot; added to SEQ - WX</description>
+    <description>MidMarket Closing added. &quot;Additional Notes&quot; long text and &quot;Gov&apos;t Contract Approval Email&quot; added to SEQ - WX</description>
     <dynamicChoiceSets>
         <name>activeBenefitContinuationPeriodPicklist</name>
         <dataType>Picklist</dataType>
@@ -4467,7 +4467,7 @@
                     <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <validationRule>
-                        <errorMessage>&lt;p&gt;&lt;span style=&quot;color: rgb(250, 7, 7);&quot;&gt;Notes must be 6k characters or less.&lt;/span&gt;&lt;/p&gt;</errorMessage>
+                        <errorMessage>&lt;p&gt;&lt;span style=&quot;color: rgb(250, 7, 7);&quot;&gt;&lt;span class=&quot;ql-cursor&quot;&gt;﻿&lt;/span&gt;Notes must be shorter than 6k characters&lt;/span&gt;&lt;/p&gt;</errorMessage>
                         <formulaExpression>LEN({!Additional_Notes_MMC_WoWx})&lt;=6000</formulaExpression>
                     </validationRule>
                 </fields>
@@ -4730,7 +4730,7 @@
                     <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <validationRule>
-                        <errorMessage>&lt;p&gt;&lt;span style=&quot;color: rgb(250, 7, 7);&quot;&gt;Notes must be 6k characters or less.&lt;/span&gt;&lt;/p&gt;</errorMessage>
+                        <errorMessage>&lt;p&gt;&lt;span style=&quot;color: rgb(250, 7, 7);&quot;&gt;Notes must be shorter than 6k characters&lt;/span&gt;&lt;/p&gt;</errorMessage>
                         <formulaExpression>LEN({!AdditionalNotes_SEQ_PS})&lt;=6000</formulaExpression>
                     </validationRule>
                 </fields>
@@ -5146,7 +5146,7 @@
                     <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <validationRule>
-                        <errorMessage>&lt;p&gt;&lt;span style=&quot;color: rgb(250, 7, 7);&quot;&gt;Notes must be 6k characters or less.&lt;/span&gt;&lt;/p&gt;</errorMessage>
+                        <errorMessage>&lt;p&gt;&lt;span style=&quot;color: rgb(250, 7, 7);&quot;&gt;Notes must be shorter than 6k characters&lt;/span&gt;&lt;/p&gt;</errorMessage>
                         <formulaExpression>LEN({!AdditionalNotes_SEQ_TA})&lt;=6000</formulaExpression>
                     </validationRule>
                 </fields>
@@ -5335,10 +5335,12 @@
                     <isRequired>false</isRequired>
                 </fields>
                 <fields>
-                    <name>On_Call_Pay_SEQ_TA</name>
+                    <name>OnCallPay_SEQ_TA</name>
+                    <choiceReferences>Yes</choiceReferences>
+                    <choiceReferences>No</choiceReferences>
                     <dataType>String</dataType>
-                    <fieldText>On Call Pay?</fieldText>
-                    <fieldType>InputField</fieldType>
+                    <fieldText>On call pay?</fieldText>
+                    <fieldType>DropdownBox</fieldType>
                     <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
@@ -5644,7 +5646,7 @@
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>false</isRequired>
             <validationRule>
-                <errorMessage>&lt;p&gt;&lt;span style=&quot;color: rgb(250, 7, 7);&quot;&gt;Notes must be 6k characters or less.&lt;/span&gt;&lt;/p&gt;</errorMessage>
+                <errorMessage>&lt;p&gt;&lt;span style=&quot;color: rgb(250, 7, 7);&quot;&gt;Notes must be shorter than 6k characters&lt;/span&gt;&lt;/p&gt;</errorMessage>
                 <formulaExpression>LEN({!AdditionalNotes_SEQ_WX})&lt;=6000</formulaExpression>
             </validationRule>
         </fields>
