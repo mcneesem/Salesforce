@@ -1,0 +1,28 @@
+<template>
+    <lightning-layout>
+       <lightning-layout-item padding="around-large">
+       </lightning-layout-item>
+        <lightning-layout-item padding="around-large">
+         <template if:true={error}>
+          <div class="slds-theme_error">
+            <p class="slds-text-color_error">Error: {error.body.message}</p>
+          </div>
+          </template><br/><br/>
+                <template if:true={recordTypes}>
+                   <h1 style="text-align: left;">Select a record type</h1>
+                   <div style="padding-left: 120px;">
+                   <lightning-radio-group
+                      options={recordTypes}
+                      name="recordTypeOptions"
+                      value={selectedRecordTypeId}
+                      onchange={handleRecordTypeChange}>
+                   </lightning-radio-group></div><br/><br/>
+                   <div style="padding-left: 300px;">
+                   </div>
+                </template>
+        </lightning-layout-item>
+                <lightning-layout-item padding="around-large">
+                   
+                </lightning-layout-item>
+    </lightning-layout>
+ </template>
