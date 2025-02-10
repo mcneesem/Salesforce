@@ -472,7 +472,7 @@
             <targetReference>Record_Type_Selection</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <variables>
         <name>accessibleCaseRecordTypes</name>
         <dataType>SObject</dataType>
