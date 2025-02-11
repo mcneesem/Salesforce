@@ -933,16 +933,6 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Number_of_Employees__c</fieldItem>
-                <identifier>RecordNSP_Number_of_Employees__cField2</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
                 <fieldItem>Record.NSP_there_morethan1companyinthe_system__c</fieldItem>
                 <identifier>RecordNSP_there_morethan1companyinthe_system__cField</identifier>
             </fieldInstance>
