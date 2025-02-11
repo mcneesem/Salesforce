@@ -15,14 +15,21 @@
         </assignmentItems>
     </assignments>
     <decisions>
-        <name>Check_if_Event_created_from_Oulook</name>
-        <label>Check if Event created from Oulook</label>
+        <name>Check_if_Event_created_from_Outlook</name>
+        <label>Check if Event created from Outlook</label>
         <locationX>182</locationX>
         <locationY>395</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>isOutlookEvent</name>
-            <conditionLogic>3 AND ( 1 OR 2 )</conditionLogic>
+            <conditionLogic>( 1 AND ( 2 OR 3 ) )</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_User_Record</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
             <conditions>
                 <leftValueReference>Get_User_Record.NSP_Salesforce_Field_Service__c</leftValueReference>
                 <operator>EqualTo</operator>
@@ -35,13 +42,6 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Resource</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Get_User_Record</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -79,7 +79,7 @@
         <locationY>287</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Check_if_Event_created_from_Oulook</targetReference>
+            <targetReference>Check_if_Event_created_from_Outlook</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -99,7 +99,7 @@
         <connector>
             <targetReference>Get_User_Record</targetReference>
         </connector>
-        <filterLogic>1 AND 2 AND NOT(3) AND 4</filterLogic>
+        <filterLogic>( 1 AND 2 AND NOT(3) AND 4 )</filterLogic>
         <filters>
             <field>IsRecurrence2</field>
             <operator>EqualTo</operator>
