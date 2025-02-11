@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
-        <name>Redirect_to_case</name>
-        <label>Redirect to case</label>
+        <name>Case_Redirect</name>
+        <label>Case Redirect</label>
         <locationX>380</locationX>
         <locationY>1058</locationY>
-        <actionName>c:NavigateToRecordDetail</actionName>
+        <actionName>c:NSP_NavigateToRecord</actionName>
         <actionType>component</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
@@ -176,7 +176,7 @@
         <locationY>950</locationY>
         <assignRecordIdToReference>CaseId</assignRecordIdToReference>
         <connector>
-            <targetReference>Redirect_to_case</targetReference>
+            <targetReference>Case_Redirect</targetReference>
         </connector>
         <faultConnector>
             <targetReference>Error_Display</targetReference>
@@ -434,15 +434,15 @@
                     <extensionName>c:recordtypeSelectionNew</extensionName>
                     <fieldType>ComponentInstance</fieldType>
                     <inputParameters>
-                        <name>selectedRecordTypeId</name>
-                        <value>
-                            <elementReference>selectedRecordTypeId</elementReference>
-                        </value>
-                    </inputParameters>
-                    <inputParameters>
                         <name>objectApiName</name>
                         <value>
                             <elementReference>objectName</elementReference>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>selectedRecordTypeId</name>
+                        <value>
+                            <elementReference>selectedRecordTypeId</elementReference>
                         </value>
                     </inputParameters>
                     <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>

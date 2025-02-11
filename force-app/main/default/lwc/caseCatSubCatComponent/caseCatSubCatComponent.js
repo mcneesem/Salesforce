@@ -19,7 +19,7 @@ export default class CaseCatSubCatComponent extends LightningElement {
     }
    
     handleSelectedValues() {
-        const categoryComponent = this.template.querySelector('c-case-cat-subcat-detail');
+        const categoryComponent = this.template.querySelector('c-case-category-subcategory-component');
 
         if (categoryComponent) {
             this.selectedCategory = categoryComponent.selectedCategory;
@@ -30,7 +30,6 @@ export default class CaseCatSubCatComponent extends LightningElement {
             this.showAllSubCategory = categoryComponent.showAllSubCategory;
         }
     }
-    
     
     @api 
     validate() {

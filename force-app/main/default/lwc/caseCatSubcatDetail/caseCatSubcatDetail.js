@@ -51,10 +51,6 @@ export default class CaseCatSubcatDetail extends LightningElement {
     recordTypeMap = new Map();
     renderCallOnce = false;
     userPartOfQueue = false;
-    @api flowContext;
-    isPreviousButtonClicked = false;
-    isShowAllFromPrevious = false;
-    isShowAllSubCatFromPrevious = false;
 
     verifyCompensationQueue(){
         isUserInQueue()
@@ -140,17 +136,6 @@ export default class CaseCatSubcatDetail extends LightningElement {
     }
     connectedCallback() {
         this.handleProfileName();
-        if(this.selectedCategory!==undefined){
-           this.isPreviousButtonClicked = true;
-        }
-        if(this.showAllCategory){
-           this.isShowAllFromPrevious = true;
-           this.handleCategoryViewAll();
-        }
-        if(this.showAllSubCategory){
-           this.isShowAllSubCatFromPrevious = true;
-           this.handleSubCategoryViewAll();
-        }
     }
     handleProfileName(){
         getProfileName().
@@ -280,11 +265,6 @@ export default class CaseCatSubcatDetail extends LightningElement {
         this.getAllCatSubDetValues();
         this.getFiteredSubCatValues();
         this.getCatDependenciesMap();
-        if(this.isPreviousButtonClicked && !this.isShowAllFromPrevious){
-           this.selectedSubCategory = null;
-           this.selectedDetail = null;
-           this.handleDisplayConfidentialCheckBox();
-        }
     }
 
     getAllCatSubDetValues(){
@@ -425,13 +405,7 @@ export default class CaseCatSubcatDetail extends LightningElement {
     renderedCallback(){
         if(this.categoryWrapper.mCatToSubCatogories!==undefined && this.categoryWrapper.mCatSubToDetails!==undefined  && this.selectedCategory!==undefined && this.selectedSubCategory!==undefined && !this.renderCallOnce){
             this.renderCallOnce = true;
-            if(!this.isShowAllSubCatFromPrevious){
-              this.handleSubCategoryFiltered();
-            }
-            else{
-              this.getFiteredSubCatValues();
-            }
-            
+            this.getFiteredSubCatValues();
             const localKey = this.selectedCategory + '-' + this.selectedSubCategory;
             if(this.selectedDetail!==undefined && this.selectedDetail!==null){
                 this.showDetail = true;

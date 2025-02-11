@@ -1,4 +1,4 @@
-public with sharing class CreateCaseController {
+public with sharing class RecordTypeSelectorController {
 
     @AuraEnabled(Cacheable=true)
     public static List<RecordType> getRecordTypes( String objectApiName ) {
@@ -15,8 +15,7 @@ public with sharing class CreateCaseController {
                     response.add(
                         new RecordType(
                             Id=info.getRecordTypeId() ,
-                            Name=info.getName() ,
-                            DeveloperName=info.getDeveloperName()
+                            Name=info.getName()
                         )
                     );
                 }
@@ -26,4 +25,3 @@ public with sharing class CreateCaseController {
     }
 
 }
-//
