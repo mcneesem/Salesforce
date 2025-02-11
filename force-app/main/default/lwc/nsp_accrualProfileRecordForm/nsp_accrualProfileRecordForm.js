@@ -59,6 +59,7 @@ import upsertAndDeleteRecords from '@salesforce/apex/NSP_sObjectOperationControl
 import linkFilesToRecord from '@salesforce/apex/NSP_AccrualProfileController.linkFilesToRecord';
 import getPlanOptions from '@salesforce/apex/NSP_AccrualProfileController.getPlanOptions';
 import getAttachedFiles from '@salesforce/apex/NSP_AccrualProfileController.getAttachedFiles';
+import hasAPTemplateEditPermission from '@salesforce/customPermission/Accrual_Profile_Template_Edit'; 
 export default class Nsp_accrualProfileRecordForm extends NavigationMixin(
   LightningElement
 ) {
@@ -170,8 +171,11 @@ export default class Nsp_accrualProfileRecordForm extends NavigationMixin(
 
       if (this.isClone) {
         this.fieldValue.NSP_Status__c = 'Draft';
+        if(this.recordTypeIdITA === this.fieldValue.recordTypeId){
+          this.fieldValue.Template__c = this.isClone;
+          this.fieldValue.Cloned_from_Template__c = this.recordId;
+        }
       }
-
       this.doOneTimeActions(this.fieldValue);
       this.addStyleOnLoad();
     }
@@ -180,6 +184,21 @@ export default class Nsp_accrualProfileRecordForm extends NavigationMixin(
     }
   }
 
+  get checkAccrualProfileEditPermission() {
+    return hasAPTemplateEditPermission;
+  }
+
+  get isReadOnly(){
+    return !this.checkAccrualProfileEditPermission;
+  }
+
+  get apFieldPermission() {
+    let hasEditPermission = false;
+    if((this.fieldValue != null && this.recordTypeIdITA === this.fieldValue.recordTypeId) && ((this.isCloned!= null && this.isCloned) || this.fieldValue.Template__c) &&  !this.checkAccrualProfileEditPermission){
+      hasEditPermission = true;
+    }
+    return hasEditPermission;
+  }
   @wire(getPlanOptions, {
     subClientIds: '$selectedSubClientIds',
   })
@@ -1152,8 +1171,16 @@ export default class Nsp_accrualProfileRecordForm extends NavigationMixin(
       columnConfig.push(maximumBalanceCapHours);
     }
     columnConfig.push(action);
-
-    return columnConfig;
+    let columnArr = [];
+    if(columnConfig != null && columnConfig.length > 0){
+      columnConfig.forEach((config) => {
+        if(config.type != 'action'){
+          config.editable = !this.APfieldPermission;
+          columnArr.push(config);
+        }
+      });
+    }
+    return columnArr;
   }
 
   get apgColumnsAims() {
