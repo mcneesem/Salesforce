@@ -688,20 +688,23 @@ public with sharing class NSP_ServiceAppointmentTriggerHelper {
     * Description : return new related Event record
     * Params: ServiceAppointment relatedSa
     * ********************************************************************************************/  
-    public static Event createNewEventRec( ServiceAppointment relatedSa  , Map<Id,Id> saToSerResUserIdMap){
-        
+    private static Event createNewEventRec( ServiceAppointment relatedSa  , Map<Id,Id> saToSerResUserIdMap){
         //Create new event record if service Appointment Scheduled
-                Event newFreeEvent = new Event();
-                newFreeEvent.WhatId = relatedSa.id;
-                newFreeEvent.ShowAs = 'Free';
-                newFreeEvent.Subject = relatedSa.Subject;
-                newFreeEvent.Description = relatedSa.Description;
-                newFreeEvent.Location = relatedSa.NSP_Orientation_Address__c;
-                newFreeEvent.StartDateTime = relatedSa.SchedStartTime;
-                newFreeEvent.EndDateTime = relatedSa.SchedEndTime;
+        Event newFreeEvent = new Event();
+        if( relatedSa != null ){
+            newFreeEvent.WhatId = relatedSa.id;
+            newFreeEvent.FSL__Event_Type__c = 'Service Appointment';
+            newFreeEvent.ShowAs = 'Free';
+            newFreeEvent.Subject = relatedSa.Subject;
+            newFreeEvent.Description = relatedSa.Description;
+            newFreeEvent.Location = relatedSa.NSP_Orientation_Address__c;
+            newFreeEvent.StartDateTime = relatedSa.SchedStartTime;
+            newFreeEvent.EndDateTime = relatedSa.SchedEndTime;
+            if( saToSerResUserIdMap != null && saToSerResUserIdMap.containsKey(relatedSa.Id) ){
                 newFreeEvent.OwnerId =  saToSerResUserIdMap.get( relatedSa.Id );
-        		
-        		return newFreeEvent;
+            }
+        }
+        return newFreeEvent;
     }
 
     //
