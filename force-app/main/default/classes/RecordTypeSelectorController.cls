@@ -1,3 +1,4 @@
+// test w/ RecordTypeSelectorControllerTest (100%)
 public with sharing class RecordTypeSelectorController {
 
     @AuraEnabled(Cacheable=true)
