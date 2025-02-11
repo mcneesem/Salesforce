@@ -1,12 +1,11 @@
 import { LightningElement, wire, api } from 'lwc';
-import getAccessibleRecordTypes from '@salesforce/apex/CreateCaseController.getRecordTypes';
+import getAccessibleRecordTypes from '@salesforce/apex/RecordTypeSelectorController.getRecordTypes';
 
 export default class RecordtypeSelectionNew extends LightningElement {
     @api objectApiName; 
     recordTypes = [];
     error;
     @api selectedRecordTypeId;
-    @api availableActions = [];
     
     @wire(getAccessibleRecordTypes, { objectApiName: '$objectApiName' })
     wiredRecordTypes({ error, data }){
@@ -18,7 +17,7 @@ export default class RecordtypeSelectionNew extends LightningElement {
             
             this.error = undefined;
 
-            if (this.recordTypes.length === 1){
+            if (this.recordTypes.length > 0) {
                 this.selectedRecordTypeId = this.recordTypes[0].value;
             }
         }else if(error){

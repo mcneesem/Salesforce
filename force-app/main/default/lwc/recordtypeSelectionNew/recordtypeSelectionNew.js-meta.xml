@@ -7,7 +7,7 @@
     </targets>
     <targetConfigs>
         <targetConfig targets="lightning__FlowScreen">
-            <property name="objectApiName" type="String" label="Object API Name" />
+            <property name="objectApiName" type="String" label="Object API Name" role='inputOnly' />
             <property name="selectedRecordTypeId" type="String" label="Record Type Id" />
         </targetConfig>
     </targetConfigs>
