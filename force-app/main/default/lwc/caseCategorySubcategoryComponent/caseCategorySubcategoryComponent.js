@@ -75,57 +75,52 @@ export default class CaseCategorySubcategoryComponent extends LightningElement {
         }
     }
 
-    @wire(getCategoryList, {recordTypeId: '$recTypeId', isCatViewAll : '$showAllCategory'})
+    @wire(getCategoryList, { recordTypeId: '$recTypeId', isCatViewAll: '$showAllCategory' })
     wiredgetCategoryList(result) {
         if (result.data) {
-            this.error = undefined;
-            this.categoryArray = new Array();
-            this.recordTypeCategoryMap = new Map();
-            this.categorySubCategoryMap = new Map();
-            this.categoryConfidentialMap = new Map();
-            this.categoryDetailMap = new Map();
-            this.categorySubCategoryConfidentialMap = new Map();
-            this.categorySubCategoryDetailMap = new Map();
-            this.categorySubCategoryDetailConfidentialMap = new Map();
+            this.initializeMaps();
+            this.isBPSUser = result.data.some(element => element.NSP_UserTitle__c === 'BPS User');
+            
             result.data.forEach(element => {
-                if(element.NSP_UserTitle__c == 'BPS User'){
-                    this.isBPSUser = true;
-                }else{
-                    this.isBPSUser = false;
-                }
-                this.recordTypeMap = new Map();
-                let categorySubCategoryKey = element.NSP_Category__c + '-' + element.NSP_Subcategory__c;
-                let categorySubCategoryKeyDetail = element.NSP_Category__c + '-' + element.NSP_Subcategory__c + '-' + element.NSP_Detail__c;
-                if (!this.recordTypeCategoryMap.has(categorySubCategoryKey)) {
-                    this.recordTypeCategoryMap.set(categorySubCategoryKey, this.recordTypeMap.get(element.NSP_RecordType__c));
-                }
-                if (!this.categorySubCategoryMap.has(element.NSP_Category__c)) {
-                    this.categorySubCategoryMap.set(element.NSP_Category__c, new Array());
-                }
-                this.categorySubCategoryMap.get(element.NSP_Category__c).push(element.NSP_Subcategory__c);
-                if (!this.categoryConfidentialMap.has(element.NSP_Category__c)) {
-                    this.categoryConfidentialMap.set(element.NSP_Category__c, new Array());
-                }
-                this.categoryConfidentialMap.get(element.NSP_Category__c).push(element.NSP_Display_confidential_popup__c);
-                if (!this.categoryDetailMap.has(categorySubCategoryKey)) {
-                    this.categoryDetailMap.set(categorySubCategoryKey, new Array());
-                    this.categorySubCategoryConfidentialMap.set(categorySubCategoryKey, new Array());
-                }
-                this.categoryDetailMap.get(categorySubCategoryKey).push(element.NSP_Detail__c);
-                this.categorySubCategoryConfidentialMap.get(categorySubCategoryKey).push(element.NSP_Display_confidential_popup__c);
-                if (!this.categorySubCategoryDetailMap.has(categorySubCategoryKeyDetail)) {
-                    this.categorySubCategoryDetailConfidentialMap.set(categorySubCategoryKeyDetail, new Array());
-                }
-                this.categorySubCategoryDetailConfidentialMap.get(categorySubCategoryKeyDetail).push(element.NSP_Display_confidential_popup__c);
+                this.populateMaps(element);
             });
-            let arrayTemp = Array.from(this.categorySubCategoryMap.keys());
-            arrayTemp.forEach(element => {
-                this.categoryArray.push({ label: element, value: element });
-            });
+            
+            this.categoryArray = Array.from(this.categorySubCategoryMap.keys()).map(key => ({ label: key, value: key }));
         } else if (result.error) {
             this.error = result.error;
         }
     }
+
+    initializeMaps() {
+        this.error = undefined;
+        this.categoryArray = [];
+        this.recordTypeCategoryMap = new Map();
+        this.categorySubCategoryMap = new Map();
+        this.categoryConfidentialMap = new Map();
+        this.categoryDetailMap = new Map();
+        this.categorySubCategoryConfidentialMap = new Map();
+        this.categorySubCategoryDetailMap = new Map();
+        this.categorySubCategoryDetailConfidentialMap = new Map();
+    }
+
+    populateMaps(element) {
+        let categorySubCategoryKey = `${element.NSP_Category__c}-${element.NSP_Subcategory__c}`;
+        let categorySubCategoryKeyDetail = `${categorySubCategoryKey}-${element.NSP_Detail__c}`;
+
+        this.updateMap(this.categorySubCategoryMap, element.NSP_Category__c, element.NSP_Subcategory__c);
+        this.updateMap(this.categoryConfidentialMap, element.NSP_Category__c, element.NSP_Display_confidential_popup__c);
+        this.updateMap(this.categoryDetailMap, categorySubCategoryKey, element.NSP_Detail__c);
+        this.updateMap(this.categorySubCategoryConfidentialMap, categorySubCategoryKey, element.NSP_Display_confidential_popup__c);
+        this.updateMap(this.categorySubCategoryDetailConfidentialMap, categorySubCategoryKeyDetail, element.NSP_Display_confidential_popup__c);
+    }
+
+    updateMap(map, key, value) {
+        if (!map.has(key)) {
+            map.set(key, []);
+        }
+        map.get(key).push(value);
+    }
+
     connectedCallback() {
         this.handleProfileName();
         if(this.selectedCategory!==undefined){
@@ -161,60 +156,62 @@ export default class CaseCategorySubcategoryComponent extends LightningElement {
     
     }
 
-    handleChange(event) {
-        if (event.currentTarget.name == 'Category') {
-            this.selectedCategory = event.target.value;
-            this.subCategoryOptions = this.createOptions(this.categoryWrapper.mCatToSubCatogories[this.selectedCategory]);
-            this.showDetail = false;
-            this.selectedDetail = null;
-            this.showVersion = false;
-            this.selectedVersion = null;
-            this.showAllDetail = false;
-            this.showAllSubCategory = false;
-            if(this.isBPSUser == false && this.subCategoryOptions.length > 0){
-                this.showAllSubCategoryButton = true;
-            }
+    handleChange(event) { 
+        const { name, value, fieldName } = event.currentTarget;
+        
+        switch (name) {
+            case 'Category':
+                this.handleCategoryChange(value);
+                break;
+            case 'Sub Category':
+                this.handleSubCategoryChange(value);
+                break;
+            case 'Detail':
+                this.handleDetailChange(value);
+                break;
+            case 'Version':
+                this.selectedVersion = event.detail.value;
+                break;
         }
-        if (event.currentTarget.name == 'Sub Category') {
-            this.selectedSubCategory = event.target.value;
-            this.detailOptions = this.createOptions(this.categoryWrapper.mCatSubToDetails[this.selectedCategory + '-' + event.target.value]);
-            if(this.detailOptions.length > 0){
-                this.showDetail = true;
-                this.showAllDetail = false;
-            }else{
-                this.showDetail = false;
-                this.showAllDetail = false;
-                this.selectedDetail = null;
-            }
-            this.versionOptions = this.createOptions(this.categoryWrapper.mCatSubDetailToVersions[this.selectedCategory + '-' + this.selectedSubCategory + '-' + this.selectedDetail]);
-            if(this.versionOptions.length > 0){
-                this.showVersion = true;
-            }else{
-                this.showVersion = false;
-                this.selectedVersion = null;
-            }
-            this.recordTypeID = this.recordTypeCategoryMap.get(this.selectedCategory + '-' + this.selectedSubCategory);
-        }
-        if (event.currentTarget.name == 'Detail') {
-            this.selectedDetail = event.target.value;
-            this.versionOptions = this.createOptions(this.categoryWrapper.mCatSubDetailToVersions[this.selectedCategory + '-' + this.selectedSubCategory + '-' + event.target.value]);
-            if(this.versionOptions.length > 0){
-                this.showVersion = true;
-            }else{
-                this.showVersion = false;
-                this.selectedVersion = null;
-            }
-        }
-        if (event.currentTarget.name == 'Version') {
-            this.selectedVersion = event.detail.value;
-        }
-        if(event.currentTarget.fieldName = 'Type'){
+        
+        if (fieldName === 'Type') {
             this.selectedType = event.detail.value;
         }
+        
         this.handleDisplayConfidentialCheckBox();
-        //to pass selected values to confidential component
-        const selectEvent = new CustomEvent('changefields',{});
-        this.dispatchEvent(selectEvent);
+        this.dispatchEvent(new CustomEvent('changefields', {}));
+    }
+
+    handleCategoryChange(value) {
+        this.selectedCategory = value;
+        this.subCategoryOptions = this.createOptions(this.categoryWrapper.mCatToSubCatogories[this.selectedCategory]);
+        this.resetDetailAndVersion();
+        
+        if (!this.isBPSUser && this.subCategoryOptions.length > 0) {
+            this.showAllSubCategoryButton = true;
+        }
+    }
+
+    handleSubCategoryChange(value) {
+        this.selectedSubCategory = value;
+        this.detailOptions = this.createOptions(this.categoryWrapper.mCatSubToDetails[`${this.selectedCategory}-${value}`]);
+        this.showDetail = this.detailOptions.length > 0;
+        
+        this.versionOptions = this.createOptions(this.categoryWrapper.mCatSubDetailToVersions[`${this.selectedCategory}-${this.selectedSubCategory}-${this.selectedDetail}`]);
+        this.showVersion = this.versionOptions.length > 0;
+        
+        this.recordTypeID = this.recordTypeCategoryMap.get(`${this.selectedCategory}-${this.selectedSubCategory}`);
+    }
+
+    handleDetailChange(value) {
+        this.selectedDetail = value;
+        this.versionOptions = this.createOptions(this.categoryWrapper.mCatSubDetailToVersions[`${this.selectedCategory}-${this.selectedSubCategory}-${value}`]);
+        this.showVersion = this.versionOptions.length > 0;
+    }
+
+    resetDetailAndVersion() {
+        this.showDetail = this.showVersion = this.showAllDetail = this.showAllSubCategory = false;
+        this.selectedDetail = this.selectedVersion = null;
     }
 
     createOptions(lValues){
