@@ -7,11 +7,11 @@
     <duplicateRuleFilter>
         <booleanFilter xsi:nil="true"/>
         <duplicateRuleFilterItems>
-            <field>CreatedByID</field>
-            <operation>notEqual</operation>
-            <value>0054x0000057QWJAA2</value>
+            <field>Username</field>
+            <operation>notContain</operation>
+            <value>Eloqua</value>
             <sortOrder>1</sortOrder>
-            <table>Lead</table>
+            <table>User</table>
         </duplicateRuleFilterItems>
     </duplicateRuleFilter>
     <duplicateRuleMatchRules>
