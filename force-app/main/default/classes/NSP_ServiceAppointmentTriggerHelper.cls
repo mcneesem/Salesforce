@@ -683,25 +683,32 @@ public with sharing class NSP_ServiceAppointmentTriggerHelper {
         }
     }
 
-    /***********************************************************************************************
-    * MethodName: createNewEventRec
-    * Description : return new related Event record
-    * Params: ServiceAppointment relatedSa
-    * ********************************************************************************************/  
-    public static Event createNewEventRec( ServiceAppointment relatedSa  , Map<Id,Id> saToSerResUserIdMap){
-        
-        //Create new event record if service Appointment Scheduled
-                Event newFreeEvent = new Event();
-                newFreeEvent.WhatId = relatedSa.id;
-                newFreeEvent.ShowAs = 'Free';
-                newFreeEvent.Subject = relatedSa.Subject;
-                newFreeEvent.Description = relatedSa.Description;
-                newFreeEvent.Location = relatedSa.NSP_Orientation_Address__c;
-                newFreeEvent.StartDateTime = relatedSa.SchedStartTime;
-                newFreeEvent.EndDateTime = relatedSa.SchedEndTime;
-                newFreeEvent.OwnerId =  saToSerResUserIdMap.get( relatedSa.Id );
-        		
-        		return newFreeEvent;
+    //
+    // MethodName: createNewEventRec
+    // Description : return new related Event record
+    // Params: ServiceAppointment relatedSa
+    //
+    private static Event createNewEventRec( ServiceAppointment relatedSa  , Map<Id,Id> saToSerResUserIdMap ) {
+        // create new event record when a Service Appointment is scheduled...
+        Event newFreeEvent = new Event();
+        if ( relatedSa != null ) {
+            newFreeEvent.WhatId = relatedSa.id;
+            newFreeEvent.FSL__Event_Type__c = 'Service Appointment';
+            newFreeEvent.ShowAs = 'Free';
+            newFreeEvent.Subject = relatedSa.Subject;
+            newFreeEvent.Description = relatedSa.Description;
+            newFreeEvent.Location = relatedSa.NSP_Orientation_Address__c;
+            newFreeEvent.StartDateTime = relatedSa.SchedStartTime;
+            newFreeEvent.EndDateTime = relatedSa.SchedEndTime;
+            if ( ( saToSerResUserIdMap != null )
+                && saToSerResUserIdMap.containsKey( relatedSa.Id )
+                && ( saToSerResUserIdMap.get( relatedSa.Id ) != null )
+                )
+            {
+                newFreeEvent.OwnerId = saToSerResUserIdMap.get( relatedSa.Id );
+            }
+        }
+        return newFreeEvent;
     }
 
     //
