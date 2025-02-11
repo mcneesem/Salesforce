@@ -683,15 +683,15 @@ public with sharing class NSP_ServiceAppointmentTriggerHelper {
         }
     }
 
-    /***********************************************************************************************
-    * MethodName: createNewEventRec
-    * Description : return new related Event record
-    * Params: ServiceAppointment relatedSa
-    * ********************************************************************************************/  
-    private static Event createNewEventRec( ServiceAppointment relatedSa  , Map<Id,Id> saToSerResUserIdMap){
-        //Create new event record if service Appointment Scheduled
+    //
+    // MethodName: createNewEventRec
+    // Description : return new related Event record
+    // Params: ServiceAppointment relatedSa
+    //
+    private static Event createNewEventRec( ServiceAppointment relatedSa  , Map<Id,Id> saToSerResUserIdMap ) {
+        // create new event record when a Service Appointment is scheduled...
         Event newFreeEvent = new Event();
-        if( relatedSa != null ){
+        if ( relatedSa != null ) {
             newFreeEvent.WhatId = relatedSa.id;
             newFreeEvent.FSL__Event_Type__c = 'Service Appointment';
             newFreeEvent.ShowAs = 'Free';
@@ -700,8 +700,12 @@ public with sharing class NSP_ServiceAppointmentTriggerHelper {
             newFreeEvent.Location = relatedSa.NSP_Orientation_Address__c;
             newFreeEvent.StartDateTime = relatedSa.SchedStartTime;
             newFreeEvent.EndDateTime = relatedSa.SchedEndTime;
-            if( saToSerResUserIdMap != null && saToSerResUserIdMap.containsKey(relatedSa.Id) ){
-                newFreeEvent.OwnerId =  saToSerResUserIdMap.get( relatedSa.Id );
+            if ( ( saToSerResUserIdMap != null )
+                && saToSerResUserIdMap.containsKey( relatedSa.Id )
+                && ( saToSerResUserIdMap.get( relatedSa.Id ) != null )
+                )
+            {
+                newFreeEvent.OwnerId = saToSerResUserIdMap.get( relatedSa.Id );
             }
         }
         return newFreeEvent;
