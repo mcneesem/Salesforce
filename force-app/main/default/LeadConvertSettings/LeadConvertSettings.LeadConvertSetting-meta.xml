@@ -120,6 +120,10 @@
             <outputField>NSP_If_other_please_indicate_how__c</outputField>
         </mappingFields>
         <mappingFields>
+            <inputField>NSP_Lead_ID_18__c</inputField>
+            <outputField>Converted_Lead_Id__c</outputField>
+        </mappingFields>
+        <mappingFields>
             <inputField>NSP_MedicalRenewal__c</inputField>
             <outputField>NSP_MedicalRenewal__c</outputField>
         </mappingFields>
