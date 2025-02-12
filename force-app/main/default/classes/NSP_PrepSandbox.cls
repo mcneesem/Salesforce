@@ -735,7 +735,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
     
     private static string getImportUserProfileId(String adminProfileId, String sandboxName, Map<String, List<Profile>> profileNameMap, String userName, String profName, String orgNames) {
         string profileId = '00e4x0000012F54'; // '00e4x0000012F54' is 'Minimum Access - Salesforce' Profile Id
-        string[] allowedOrgs = orgNames.split(':');
+        string[] allowedOrgs = orgNames.split(',');
         if( allowedOrgs.contains(sandboxName.toLowercase()) && sandboxName.startsWith('dev') && userName.contains('CRM Team') ) {
             profileId = adminProfileId;
         } else if ( profileNameMap.containsKey(profName) ) {
