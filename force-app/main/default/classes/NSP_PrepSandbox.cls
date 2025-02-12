@@ -102,7 +102,6 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
             //  4 - LastName
             //  5 - Profile
             //  6 - Role
-            //  7 - Orgs
             Map<String, List<Profile>> profileNameMap = getProfileNameMap(userCsv);
             Map<String, List<UserRole>> userRoleNameMap = getUserRoleNameMap(userCsv);
 
@@ -118,7 +117,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
                         FirstName = column[3].trim(),
                         LastName = column[4].trim(),
                         Username = column[2].substringBefore(STRING_INVALID).trim() + '.' + sandboxName,
-                        ProfileId = getImportUserProfileId(adminProfileId, sandboxName, profileNameMap, column[1], column[5], column[7].toLowercase()),
+                        ProfileId = getImportUserProfileId(adminProfileId, sandboxName, profileNameMap, column[1], column[5]),
                         FederationIdentifier = column[2].substringBefore(STRING_INVALID).trim(),
                         Alias = column[3].substring(0,1).toLowercase() + aliasEnd.toLowercase(),
                         UserRoleId = (userRoleNameMap.containsKey(column[6])) ? userRoleNameMap.get(column[6])[0].Id : null,
@@ -629,6 +628,15 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
         } catch(Exception e) {
             NSP_PrepSandbox.handleException( e , 'doCSettings:BoxFileRequest__c' );
         }
+
+        try {
+            UserTriggerSettings__c cS6 = UserTriggerSettings__c.getOrgDefaults();
+            cS6.AllowedAdmins__c = null;
+            cS6.BccAddresses__c = null;
+            upsert cS6;
+        } catch(Exception e) {
+            NSP_PrepSandbox.handleException( e , 'doCSettings:UserTriggerSettings__c' );
+        }
     }
 
     public static void doE2CAddresses(String sandboxName) {
@@ -733,13 +741,12 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
         return newES.substringAfter(',');
     }
     
-    private static string getImportUserProfileId(String adminProfileId, String sandboxName, Map<String, List<Profile>> profileNameMap, String userName, String profName, String orgNames) {
+    private static string getImportUserProfileId(String adminProfileId, String sandboxName, Map<String, List<Profile>> profileNameMap, String col1, String col5) {
         string profileId = '00e4x0000012F54'; // '00e4x0000012F54' is 'Minimum Access - Salesforce' Profile Id
-        string[] allowedOrgs = orgNames.split(',');
-        if( allowedOrgs.contains(sandboxName.toLowercase()) && sandboxName.startsWith('dev') && userName.contains('CRM Team') ) {
+        if( sandboxName.startsWith('dev') && col1.contains('CRM Team') ) {
             profileId = adminProfileId;
-        } else if ( profileNameMap.containsKey(profName) ) {
-            profileId = profileNameMap.get(profName)[0].Id;
+        } else if ( profileNameMap.containsKey(col5) ) {
+            profileId = profileNameMap.get(col5)[0].Id;
         }
         return profileId;
     }
