@@ -81,7 +81,6 @@ export default class CaseCatSubcatDetail extends LightningElement {
                 }
                 this.verifyCompensationQueue();
                 this.getCatDependenciesMap();
-
             });                
         }
     }
@@ -174,73 +173,88 @@ export default class CaseCatSubcatDetail extends LightningElement {
     }
 
     handleChange(event) {
-        if (event.currentTarget.name == 'Category') {
-            this.selectedCategory = event.target.value;
-            this.subCategoryOptions = this.createOptions(this.categoryWrapper.mCatToSubCatogories[this.selectedCategory]);
+    const { name, fieldName, value } = event.currentTarget;
+
+    if (name) {
+        switch (name) {
+            case 'Category':
+                this.handleCategoryChange(value);
+                break;
+            case 'Sub Category':
+                this.handleSubCategoryChange(value);
+                break;
+            case 'Detail':
+                this.handleDetailChange(value);
+                break;
+            case 'Version':
+                this.selectedVersion = event.detail.value;
+                break;
+        }
+    } else if (fieldName === 'Type') {
+        this.selectedType = event.detail.value;
+    }
+
+    if (this.disableButton) {
+        this.disableButton = false;
+    }
+
+    this.handleDisplayConfidentialCheckBox();
+    this.dispatchEvent(new CustomEvent('changefields', {}));
+}
+
+    handleCategoryChange(value) {
+        this.selectedCategory = value;
+        this.subCategoryOptions = this.createOptions(this.categoryWrapper.mCatToSubCatogories[value]);
+
+        this.resetSelection(['Detail', 'Version']);
+        this.showAllSubCategoryButton = !this.isBPSUser && this.subCategoryOptions.length > 0;
+
+        this.dispatchEvent(new CustomEvent('catsubcatselect', { 
+            detail: { type: 'Category', value: this.selectedCategory } 
+        }));
+    }
+
+    handleSubCategoryChange(value) {
+        this.selectedSubCategory = value;
+
+        this.dispatchEvent(new CustomEvent('catsubcatselect', { 
+            detail: { type: 'SubCategory', value } 
+        }));
+
+        this.detailOptions = this.createOptions(this.categoryWrapper.mCatSubToDetails[`${this.selectedCategory}-${value}`]);
+        this.showDetail = this.detailOptions.length > 0;
+
+        this.versionOptions = this.createOptions(this.categoryWrapper.mCatSubDetailToVersions[
+            `${this.selectedCategory}-${this.selectedSubCategory}-${this.selectedDetail}`
+        ]);
+        this.showVersion = this.versionOptions.length > 0;
+
+        this.recordTypeID = this.recordTypeCategoryMap.get(`${this.selectedCategory}-${this.selectedSubCategory}`);
+
+        if (this.selectedCategory && this.selectedSubCategory && this.accountID) {
+            this.handlePopulateAsset();
+        }
+    }
+
+    handleDetailChange(value) {
+        this.selectedDetail = value;
+        this.versionOptions = this.createOptions(this.categoryWrapper.mCatSubDetailToVersions[
+            `${this.selectedCategory}-${this.selectedSubCategory}-${value}`
+        ]);
+        this.showVersion = this.versionOptions.length > 0;
+    }
+
+    resetSelection(fields) {
+        if (fields.includes('Detail')) {
             this.showDetail = false;
             this.selectedDetail = null;
+        }
+        if (fields.includes('Version')) {
             this.showVersion = false;
             this.selectedVersion = null;
-            this.showAllDetail = false;
-            this.showAllSubCategory = false;
-            if(this.isBPSUser == false && this.subCategoryOptions.length > 0){
-                this.showAllSubCategoryButton = true;
-            }
-            const selectEvent = new CustomEvent('catsubcatselect',{detail: {type:'Category',value:this.selectedCategory}});
-            this.dispatchEvent(selectEvent);
         }
-        if (event.currentTarget.name == 'Sub Category') {
-            this.selectedSubCategory = event.target.value;
-            const selectEvent = new CustomEvent('catsubcatselect',{detail: {type:'SubCategory',value:this.selectedSubCategory}});
-            this.dispatchEvent(selectEvent);
-            
-            this.detailOptions = this.createOptions(this.categoryWrapper.mCatSubToDetails[this.selectedCategory + '-' + event.target.value]);
-            if(this.detailOptions.length > 0){
-                this.showDetail = true;
-                this.showAllDetail = false;
-            }else{
-                this.showDetail = false;
-                this.showAllDetail = false;
-                this.selectedDetail = null;
-            }
-            this.versionOptions = this.createOptions(this.categoryWrapper.mCatSubDetailToVersions[this.selectedCategory + '-' + this.selectedSubCategory + '-' + this.selectedDetail]);
-            if(this.versionOptions.length > 0){
-                this.showVersion = true;
-            }else{
-                this.showVersion = false;
-                this.selectedVersion = null;
-            }
-            this.recordTypeID = this.recordTypeCategoryMap.get(this.selectedCategory + '-' + this.selectedSubCategory);
-            if(this.selectedCategory.length>0 && this.selectedSubCategory.length>0 && this.accountID.length>0){
-                this.handlePopulateAsset(event);
-            }
-             
-            
-        }
-        if (event.currentTarget.name == 'Detail') {
-            this.selectedDetail = event.target.value;
-            this.versionOptions = this.createOptions(this.categoryWrapper.mCatSubDetailToVersions[this.selectedCategory + '-' + this.selectedSubCategory + '-' + event.target.value]);
-            if(this.versionOptions.length > 0){
-                this.showVersion = true;
-            }else{
-                this.showVersion = false;
-                this.selectedVersion = null;
-            }
-        }
-        if (event.currentTarget.name == 'Version') {
-            this.selectedVersion = event.detail.value;
-        }
-        if(event.currentTarget.fieldName == 'Type'){
-            this.selectedType = event.detail.value;
-        }
-        if (this.disableButton) {
-            this.disableButton = false;
-        }
-        this.handleDisplayConfidentialCheckBox();
-        //to pass selected values to confidential component
-        const selectEvent = new CustomEvent('changefields',{});
-        this.dispatchEvent(selectEvent);
     }
+
 
     createOptions(lValues){
         lValues = lValues || [];
