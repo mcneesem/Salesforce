@@ -18,6 +18,8 @@ const RL_FIELDS = [
   'NSP_Account_HRS__c',
   'NSP_Submitted_by__c',
   'CustomOwnerId__c',
+  'Template__c',
+  'Cloned_from_Template__c',
   'NSP_Contact__c',
   'NSP_NewExisting_Client_or_Change_order__c',
   'Enter_Case_number__c',

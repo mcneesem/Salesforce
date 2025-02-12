@@ -90,6 +90,23 @@
                 value={fieldValue.CustomOwnerId__c}
                 onchange={handleLookUpChange}>
               </lightning-input-field>
+
+              <lightning-input-field 
+                disabled={isReadOnly}
+                field-name="Template__c"
+                data-name="Template__c"
+                data-field="Template__c"
+                value={fieldValue.Template__c}
+                onchange={handleCheckBoxChange}>
+              </lightning-input-field>
+
+              <lightning-input-field disabled
+                field-name="Cloned_from_Template__c"
+                data-name="Cloned_from_Template__c"
+                value={fieldValue.Cloned_from_Template__c}
+                onchange={handleLookUpChange}>
+              </lightning-input-field>
+
             </div>
             <div class="slds-col slds-size_1-of-2">
               <lightning-input-field
@@ -142,6 +159,7 @@
               <lightning-input-field
                 field-name="NSP_Type_of_Policy__c"
                 data-name="NSP_Type_of_Policy__c"
+                disabled={apFieldPermission}
                 onchange={handleValueChange}>
               </lightning-input-field>
 
@@ -185,6 +203,7 @@
                 value={fieldValue.NSP_New_Revised__c}
                 data-name="NSP_New_Revised__c"
                 class="slds-show slds-var-m-bottom_medium"
+                disabled={apFieldPermission}
                 onchange={handleValueChange}
                 fiel>
               </c-nsp_selection-box>
@@ -258,6 +277,7 @@
                 value={fieldValue.NSP_Submitted_to_satisfy_compliance_need__c}
                 field-name="NSP_Submitted_to_satisfy_compliance_need__c"
                 data-name="NSP_Submitted_to_satisfy_compliance_need__c"
+                disabled={apFieldPermission}
                 onchange={handleValueChange}>
               </lightning-input-field>
 
@@ -274,6 +294,7 @@
                 field-name="NSP_Compliance_Location__c"
                 value={fieldValue.NSP_Compliance_Location__c}
                 data-name="NSP_Compliance_Location__c"
+                disabled={apFieldPermission}
                 onchange={handleValueChange}>
               </lightning-input-field>
 
@@ -298,6 +319,7 @@
                 field-name="NSP_Accrual_Levels__c"
                 data-name="NSP_Accrual_Levels__c"
                 value={fieldValue.NSP_Accrual_Levels__c}
+                disabled={apFieldPermission}
                 onchange={handleValueChange}>
               </lightning-input-field>
 
@@ -651,6 +673,7 @@
                 data-name="NSP_Delay_in_the_Accrual_start_time__c"
                 variant="label-hidden"
                 value={fieldValue.NSP_Delay_in_the_Accrual_start_time__c}
+                disabled={apFieldPermission}
                 onchange={handleValueChange}>
               </lightning-input-field>
 
@@ -668,6 +691,7 @@
                 variant="label-hidden"
                 value={fieldValue.NSP_Do_balances_carry_over_into_next_yer__c}
                 class="slds-show slds-var-p-horizontal_xx-small"
+                disabled={apFieldPermission}
                 onchange={handleValueChange}>
               </lightning-input-field>
 
@@ -730,6 +754,7 @@
                 variant="label-hidden"
                 value={fieldValue.NSP_Once_limit_is_hit_they_do_not_accrue__c}
                 class="slds-show slds-var-p-horizontal_xx-small"
+                disabled={apFieldPermission}
                 onchange={handleValueChange}>
               </lightning-input-field>
 
@@ -737,6 +762,7 @@
                 field-name="NSP_Is_there_a_Maximum_Balance_Cap__c"
                 data-name="NSP_Is_there_a_Maximum_Balance_Cap__c"
                 value={fieldValue.NSP_Is_there_a_Maximum_Balance_Cap__c}
+                disabled={apFieldPermission}
                 onchange={handleValueChange}>
               </lightning-input-field>
 
