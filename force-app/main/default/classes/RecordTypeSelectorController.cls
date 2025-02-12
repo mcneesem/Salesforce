@@ -1,5 +1,5 @@
-// test w/ RecordTypeSelectorControllerTest (100%)
 public with sharing class RecordTypeSelectorController {
+    // test w/ RecordTypeSelectorControllerTest (100%)
 
     @AuraEnabled(Cacheable=true)
     public static List<RecordType> getAccessibleRecordTypes( String objectApiName ) {
