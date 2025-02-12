@@ -2,7 +2,7 @@
 public with sharing class RecordTypeSelectorController {
 
     @AuraEnabled(Cacheable=true)
-    public static List<RecordType> getRecordTypes( String objectApiName ) {
+    public static List<RecordType> getAccessibleRecordTypes( String objectApiName ) {
         List<RecordType> response = new List<RecordType>();
         Map<String,Schema.RecordTypeInfo> recordTypeMap = NSP_GenericRecordType.getRecordTypeMap( objectApiName );
         if ( recordTypeMap != null ) {

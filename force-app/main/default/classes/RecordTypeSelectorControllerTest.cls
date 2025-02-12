@@ -5,7 +5,7 @@ public class RecordTypeSelectorControllerTest {
     static void testGetRecordTypes() {
         // Start the test execution
         Test.startTest();
-        List<RecordType> result = RecordTypeSelectorController.getRecordTypes('Case');
+        List<RecordType> result = RecordTypeSelectorController.getAccessibleRecordTypes('Case');
         Test.stopTest();
 
         // Assertions
