@@ -430,19 +430,19 @@
                 <name>Record_Type_Selection_Section1_Column2</name>
                 <fieldType>Region</fieldType>
                 <fields>
-                    <name>reSelectionOption</name>
-                    <extensionName>c:recordtypeSelectionNew</extensionName>
+                    <name>recordTypeSection</name>
+                    <extensionName>c:recordTypeSelector</extensionName>
                     <fieldType>ComponentInstance</fieldType>
-                    <inputParameters>
-                        <name>objectApiName</name>
-                        <value>
-                            <elementReference>objectName</elementReference>
-                        </value>
-                    </inputParameters>
                     <inputParameters>
                         <name>selectedRecordTypeId</name>
                         <value>
                             <elementReference>selectedRecordTypeId</elementReference>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>objectApiName</name>
+                        <value>
+                            <elementReference>objectName</elementReference>
                         </value>
                     </inputParameters>
                     <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>

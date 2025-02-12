@@ -1,7 +1,7 @@
 import { LightningElement, wire, api } from 'lwc';
 import getAccessibleRecordTypes from '@salesforce/apex/RecordTypeSelectorController.getAccessibleRecordTypes';
 
-export default class RecordtypeSelectionNew extends LightningElement {
+export default class RecordTypeSelector extends LightningElement {
     @api objectApiName; 
     recordTypes = [];
     error;

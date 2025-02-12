@@ -173,34 +173,34 @@ export default class CaseCatSubcatDetail extends LightningElement {
     }
 
     handleChange(event) {
-    const { name, fieldName, value } = event.currentTarget;
+        const { name, fieldName, value } = event.currentTarget;
 
-    if (name) {
-        switch (name) {
-            case 'Category':
-                this.handleCategoryChange(value);
-                break;
-            case 'Sub Category':
-                this.handleSubCategoryChange(value);
-                break;
-            case 'Detail':
-                this.handleDetailChange(value);
-                break;
-            case 'Version':
-                this.selectedVersion = event.detail.value;
-                break;
+        if (name) {
+            switch (name) {
+                case 'Category':
+                    this.handleCategoryChange(value);
+                    break;
+                case 'Sub Category':
+                    this.handleSubCategoryChange(value);
+                    break;
+                case 'Detail':
+                    this.handleDetailChange(value);
+                    break;
+                case 'Version':
+                    this.selectedVersion = event.detail.value;
+                    break;
+            }
+        } else if (fieldName === 'Type') {
+            this.selectedType = event.detail.value;
         }
-    } else if (fieldName === 'Type') {
-        this.selectedType = event.detail.value;
-    }
 
-    if (this.disableButton) {
-        this.disableButton = false;
-    }
+        if (this.disableButton) {
+            this.disableButton = false;
+        }
 
-    this.handleDisplayConfidentialCheckBox();
-    this.dispatchEvent(new CustomEvent('changefields', {}));
-}
+        this.handleDisplayConfidentialCheckBox();
+        this.dispatchChangeFields();
+    }   
 
     handleCategoryChange(value) {
         this.selectedCategory = value;
@@ -299,8 +299,7 @@ export default class CaseCatSubcatDetail extends LightningElement {
            this.selectedDetail = null;
            this.handleDisplayConfidentialCheckBox();
         }
-       const selectEvent = new CustomEvent('changefields',{});
-       this.dispatchEvent(selectEvent);
+        this.dispatchChangeFields();
     }
 
     getAllCatSubDetValues(){
@@ -371,8 +370,7 @@ export default class CaseCatSubcatDetail extends LightningElement {
             this.selectedVersion = event.detail.value;
         }
         this.handleDisplayConfidentialCheckBox();
-        const selectEvent = new CustomEvent('changefields',{});
-        this.dispatchEvent(selectEvent);
+        this.dispatchChangeFields();
     }
 
     handleCategoryFilteredView(event){
@@ -380,8 +378,7 @@ export default class CaseCatSubcatDetail extends LightningElement {
         this.showAllSubCategory = true;
         this.subCategoryOptions = this.createOptions(this.categoryWrapper.mCatToSubCatogories[this.selectedCategory]);
         this.handleDisplayConfidentialCheckBox();
-        const selectEvent = new CustomEvent('changefields',{});
-        this.dispatchEvent(selectEvent);
+        this.dispatchChangeFields();
     }
 
     handleSubCategoryViewAll(event){
@@ -390,20 +387,18 @@ export default class CaseCatSubcatDetail extends LightningElement {
         this.showAllSubCategoryButton = false;
         this.getFiteredSubCatValues();
         this.handleDisplayConfidentialCheckBox();
-        const selectEvent = new CustomEvent('changefields',{});
-        this.dispatchEvent(selectEvent);
+        this.dispatchChangeFields();
     }
 
     handleSubCategoryFiltered(event){
         this.showAllSubCategory = false;
         this.showAllSubCategoryButton = true;
         this.showFilterSubCategoryButton = false;
-        if(this.categoryWrapper.mCatToSubCatogories!==undefined){
+        if(this.categoryWrapper && this.categoryWrapper.mCatToSubCatogories && this.categoryWrapper.mCatToSubCatogories!==undefined){
           this.subCategoryOptions = this.createOptions(this.categoryWrapper.mCatToSubCatogories[this.selectedCategory]);
         }
         this.handleDisplayConfidentialCheckBox();
-        const selectEvent = new CustomEvent('changefields',{});
-        this.dispatchEvent(selectEvent);        
+        this.dispatchChangeFields();        
     }
 
     getCatDependenciesMap(){
@@ -423,6 +418,10 @@ export default class CaseCatSubcatDetail extends LightningElement {
             this.categoryWrapper = result;
         }).catch((error) => {
         })
+    }
+
+    dispatchChangeFields(){
+        this.dispatchEvent(new CustomEvent('changefields', {}));
     }
 
     @api
