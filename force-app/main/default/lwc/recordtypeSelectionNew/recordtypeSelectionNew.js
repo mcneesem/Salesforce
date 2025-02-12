@@ -17,7 +17,7 @@ export default class RecordtypeSelectionNew extends LightningElement {
             
             this.error = undefined;
 
-            if (this.recordTypes.length > 0) {
+            if (!this.selectedRecordTypeId && this.recordTypes.length > 0) {
                 this.selectedRecordTypeId = this.recordTypes[0].value;
             }
         }else if(error){
