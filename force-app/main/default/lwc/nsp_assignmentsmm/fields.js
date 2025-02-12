@@ -4,6 +4,7 @@ const SECTION_FIELDS = [
  'NSP_Payroll_Project_Manager__c',
  'NSP_Transition_Specialist__c',
  'NSP_Sr_Onboarding_Benefit_Rep__c',
+ 'NSP_ITA_Analyst__c',
  'NSP_Account_Executive__c',
  'NSP_Payroll_Specialist__c',
  'NSP_Payroll_Supervisor__c',
