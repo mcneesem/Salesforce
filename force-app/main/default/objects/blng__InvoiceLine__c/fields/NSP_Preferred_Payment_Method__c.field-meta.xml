@@ -17,6 +17,11 @@
                 <default>false</default>
                 <label>ACH</label>
             </value>
+            <value>
+                <fullName>ACH - Wingspan</fullName>
+                <default>false</default>
+                <label>ACH - Wingspan</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

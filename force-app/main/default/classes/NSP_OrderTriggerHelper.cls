@@ -388,7 +388,7 @@ public class NSP_OrderTriggerHelper {
         Set<Id> billToContactIds = new Set<Id>();
         Set<Id> accountIds = new Set<Id>();
         Set<String> uniqueAcrIds = new Set<String>();
-        Map<Id,String> paymentMethodMap = new Map<Id,String> ();
+        Map<String,blng__PaymentMethod__c> paymentMethodMap = new Map<String,blng__PaymentMethod__c> ();
         List<OrderItem> payMethodList = new List<OrderItem>();
         Set<Id> projGoLiveIdSet = new Set<Id>();
         Set<Id> projectLiveBeforeReviewIds = new Set<Id>();
@@ -436,10 +436,10 @@ public class NSP_OrderTriggerHelper {
                 }
             }
             if(accountIdSet != null && accountIdSet.size() > 0){
-                List<blng__PaymentMethod__c> paymentMList=[SELECT Id,blng__Account__c FROM blng__PaymentMethod__c WHERE blng__Account__c IN :accountIdSet and blng__Active__c = true AND NSP_Active_Custom__c = true AND blng__PaymentType__c =:'ACH'];
+                List<blng__PaymentMethod__c> paymentMList=[SELECT Id,blng__Account__c,Payment_Method_Type__c FROM blng__PaymentMethod__c WHERE blng__Account__c IN :accountIdSet and blng__Active__c = true AND NSP_Active_Custom__c = true];
                 for(blng__PaymentMethod__c pmObj : paymentMList){
                     if(!paymentMethodMap.containskey(pmObj.blng__Account__c)){
-                        paymentMethodMap.put(pmObj.blng__Account__c,pmObj.Id);
+                        paymentMethodMap.put(pmObj.blng__Account__c,pmObj);
                     }
                 }
             }
@@ -454,7 +454,7 @@ public class NSP_OrderTriggerHelper {
                 //calling method to check and stamp dunning email checkbox on contact acr record
                 stampDunningEmailonContact (billToContactIds,accountIds,uniqueAcrIds);
                 //end of method call
-                List<OrderItem> orderProductList=[SELECT Id,Order.Project_Status__c,SBQQ__Status__c,EndDate,SBQQ__SubscriptionTerm__c,Order.Type,Order.NSP_Transaction_Type__c,Order.NSP_Change_Order_Process_Quote__c,NSP_Preferred_Payment_Method__c, NSP_Order_Activation_Trigger__c,NSP_Order_Activation_Trigger_Amend__c,Order.AccountId,NSP_Payment_Method__c,ServiceDate,SBQQ__BillingFrequency__c,NSP_AnniversaryBlngApplicable__c FROM OrderItem WHERE OrderId IN :orderIdSet];
+                List<OrderItem> orderProductList=[SELECT Id,Order.Project_Status__c,SBQQ__Status__c,EndDate,SBQQ__SubscriptionTerm__c,Order.Type,Order.NSP_Transaction_Type__c,Order.NSP_Change_Order_Process_Quote__c,NSP_Preferred_Payment_Method__c, NSP_Order_Activation_Trigger__c,NSP_Order_Activation_Trigger_Amend__c,Order.AccountId,NSP_Payment_Method__c,ServiceDate,SBQQ__BillingFrequency__c,NSP_AnniversaryBlngApplicable__c,blng__BillingAccount__c FROM OrderItem WHERE OrderId IN :orderIdSet];
                 for(OrderItem orderItemObj :orderProductList){ 
                     if(orderItemObj.SBQQ__Status__c != NSP_CPQConstants.ORDER_ACTIVATED){
                         //Checks if Order Product is eligible for Anniversay Billing and activates the order product and sets the bill through Date as Satrt Date + (Subscription Term - 1) when Order is reviewed
@@ -494,15 +494,14 @@ public class NSP_OrderTriggerHelper {
                             }
                         }   
                     }
-                    if(orderItemObj.NSP_Preferred_Payment_Method__c == 'ACH'){
-                        if(paymentMethodMap.containskey(orderItemObj.Order.AccountId)){
-                            orderItemObj.NSP_Payment_Method__c = paymentMethodMap.get(orderItemObj.Order.AccountId);
+                    if(paymentMethodMap.containskey(orderItemObj.blng__BillingAccount__c) && 
+                       orderItemObj.NSP_Preferred_Payment_Method__c == paymentMethodMap.get( orderItemObj.blng__BillingAccount__c ).Payment_Method_Type__c){
+                            orderItemObj.NSP_Payment_Method__c = paymentMethodMap.get( orderItemObj.blng__BillingAccount__c )?.Id;
                             if(orderItemObj.NSP_Order_Activation_Trigger__c == NSP_CPQConstants.IMMEDIATE && orderItemObj.Order.NSP_Change_Order_Process_Quote__c == FALSE){
                                 orderItemObj.ServiceDate = System.today();
                                 orderItemObj.SBQQ__Status__c = NSP_CPQConstants.ORDER_ACTIVATED;
                             }
                             payMethodList.add(orderItemObj);
-                        }
                     }
                 } 
                 try{

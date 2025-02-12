@@ -45,9 +45,10 @@ public class NSP_OrderItemTriggerHelper {
             for ( OrderItem oi : OrderItemNewList ) {
                 Order currOrder = ordersMap.get( oi.OrderId );
                 if ( ordersMap.containsKey( oi.OrderId )
-                    && ( oi.NSP_Preferred_Payment_Method__c == 'ACH' )
                     && ( oi.blng__BillingAccount__c != null )
-                    )
+                    && (billingActPaymentMap.containsKey(oi.blng__BillingAccount__c))
+                    && ( oi.NSP_Preferred_Payment_Method__c == billingActPaymentMap.get( oi.blng__BillingAccount__c ).Payment_Method_Type__c)
+                   )
                 {
                     oi.NSP_Payment_Method__c = billingActPaymentMap.get( oi.blng__BillingAccount__c )?.Id;
                 }
@@ -756,7 +757,7 @@ public class NSP_OrderItemTriggerHelper {
 */   
     private static Map<String,blng__PaymentMethod__c> retrieveACHActivePaymentMethods(Set<String> billingAccounts){
         Map<String,blng__PaymentMethod__c> billingActPaymentMap= new Map<String,blng__PaymentMethod__c>();
-        for(blng__PaymentMethod__c method :[SELECT Id,blng__Account__c FROM blng__PaymentMethod__c WHERE blng__Account__c IN:billingAccounts AND NSP_Active_Custom__c=TRUE]){
+        for(blng__PaymentMethod__c method :[SELECT Id,blng__Account__c,Payment_Method_Type__c FROM blng__PaymentMethod__c WHERE blng__Account__c IN:billingAccounts AND NSP_Active_Custom__c=TRUE]){
             billingActPaymentMap.put(method.blng__Account__c,method);
         }
         return billingActPaymentMap;
