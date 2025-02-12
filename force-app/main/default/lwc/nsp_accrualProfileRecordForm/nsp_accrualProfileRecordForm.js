@@ -60,7 +60,6 @@ import linkFilesToRecord from '@salesforce/apex/NSP_AccrualProfileController.lin
 import getPlanOptions from '@salesforce/apex/NSP_AccrualProfileController.getPlanOptions';
 import getAttachedFiles from '@salesforce/apex/NSP_AccrualProfileController.getAttachedFiles';
 import hasAPTemplateEditPermission from '@salesforce/customPermission/Accrual_Profile_Template_Edit'; 
-import hasAPTemplateEditPermission from '@salesforce/customPermission/Accrual_Profile_Template_Edit'; 
 export default class Nsp_accrualProfileRecordForm extends NavigationMixin(
   LightningElement
 ) {
