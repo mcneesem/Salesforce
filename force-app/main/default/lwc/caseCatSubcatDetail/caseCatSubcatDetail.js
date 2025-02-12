@@ -285,6 +285,8 @@ export default class CaseCatSubcatDetail extends LightningElement {
            this.selectedDetail = null;
            this.handleDisplayConfidentialCheckBox();
         }
+       const selectEvent = new CustomEvent('changefields',{});
+       this.dispatchEvent(selectEvent);
     }
 
     getAllCatSubDetValues(){
@@ -364,6 +366,8 @@ export default class CaseCatSubcatDetail extends LightningElement {
         this.showAllSubCategory = true;
         this.subCategoryOptions = this.createOptions(this.categoryWrapper.mCatToSubCatogories[this.selectedCategory]);
         this.handleDisplayConfidentialCheckBox();
+        const selectEvent = new CustomEvent('changefields',{});
+        this.dispatchEvent(selectEvent);
     }
 
     handleSubCategoryViewAll(event){
@@ -372,6 +376,8 @@ export default class CaseCatSubcatDetail extends LightningElement {
         this.showAllSubCategoryButton = false;
         this.getFiteredSubCatValues();
         this.handleDisplayConfidentialCheckBox();
+        const selectEvent = new CustomEvent('changefields',{});
+        this.dispatchEvent(selectEvent);
     }
 
     handleSubCategoryFiltered(event){
@@ -381,7 +387,9 @@ export default class CaseCatSubcatDetail extends LightningElement {
         if(this.categoryWrapper.mCatToSubCatogories!==undefined){
           this.subCategoryOptions = this.createOptions(this.categoryWrapper.mCatToSubCatogories[this.selectedCategory]);
         }
-        this.handleDisplayConfidentialCheckBox();        
+        this.handleDisplayConfidentialCheckBox();
+        const selectEvent = new CustomEvent('changefields',{});
+        this.dispatchEvent(selectEvent);        
     }
 
     getCatDependenciesMap(){
