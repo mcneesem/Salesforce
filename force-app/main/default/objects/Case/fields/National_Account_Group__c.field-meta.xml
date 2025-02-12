@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>National_Account_Group__c</fullName>
-    <description>Translates the API values to the Label values from Asset National Account Group (Asset.NSP_National_Account_Group__c).</description>
+    <description>When a new value is added to National Account Group on Asset (Asset.National_Account_Group__c), make sure to update this formula and the formula for Project National Account Group (pse__proj__c.National_Account_Group__c).</description>
     <externalId>false</externalId>
     <formula>IF(
   ISBLANK( TEXT( Account.WO_Asset__r.NSP_National_Account_Group__c  ) ) ,
@@ -67,10 +67,12 @@
     &apos;87&apos; , &apos;MAC Global Partners LLC&apos; ,
     &apos;88&apos; , &apos;Sinovation Ventures&apos; ,
     &apos;89&apos; , &apos;New York Angels&apos; ,
-    &apos;90&apos; , &apos;Blue Startups&apos; ,
-    &apos;91&apos; , &apos;Quartus Capital Partners&apos; ,
-    &apos;92&apos; , &apos;Store Local&apos; ,
-    &apos;93&apos; , &apos;Blue Collar Success Group&apos; ,
+    &apos;90&apos; , &apos;Blue Startups&apos;,
+    &apos;91&apos; , &apos;Quartus Capital Partners&apos;,
+    &apos;92&apos; , &apos;Store Local&apos;,
+    &apos;93&apos; , &apos;Blue Collar Success Group&apos;,
+    &apos;94&apos; , &apos;5Iron&apos; ,
+    &apos;95&apos; , &apos;NextGen&apos; ,
     TEXT( Account.WO_Asset__r.NSP_National_Account_Group__c )
   )
 )</formula>
