@@ -23,7 +23,7 @@ export default class CaseCatSubcatDetail extends LightningElement {
     versionOptions= [];
     @api selectedVersion = null;
     showAllDetail = false;
-    showAllSubCategory = false;
+    @api showAllSubCategory = false;
     subCategoryOptions= [];
     detailOptions= [];
     categoryOptions= [];
@@ -38,7 +38,7 @@ export default class CaseCatSubcatDetail extends LightningElement {
     @api parentId = '';
     assetId = '';
     isBPSUser = false;
-    showAllCategory = false;
+    @api showAllCategory = false;
     categoryArray = false;
     recordTypeCategoryMap = new Map();
     categorySubCategoryMap = new Map();
@@ -51,6 +51,9 @@ export default class CaseCatSubcatDetail extends LightningElement {
     recordTypeMap = new Map();
     renderCallOnce = false;
     userPartOfQueue = false;
+    isPreviousButtonClicked = false;
+    isShowAllFromPrevious = false;
+    isShowAllSubCatFromPrevious = false;
 
     verifyCompensationQueue(){
         isUserInQueue()
@@ -78,7 +81,8 @@ export default class CaseCatSubcatDetail extends LightningElement {
                 }
                 this.verifyCompensationQueue();
                 this.getCatDependenciesMap();
-            });
+
+            });                
         }
     }
 
@@ -136,6 +140,17 @@ export default class CaseCatSubcatDetail extends LightningElement {
     }
     connectedCallback() {
         this.handleProfileName();
+        if(this.selectedCategory!==undefined){
+           this.isPreviousButtonClicked = true;
+        }
+        if(this.showAllCategory){
+           this.isShowAllFromPrevious = true;
+           this.handleCategoryViewAll();
+        }
+        if(this.showAllSubCategory){
+           this.isShowAllSubCatFromPrevious = true;
+           this.handleSubCategoryViewAll();
+        }
     }
     handleProfileName(){
         getProfileName().
@@ -215,13 +230,16 @@ export default class CaseCatSubcatDetail extends LightningElement {
         if (event.currentTarget.name == 'Version') {
             this.selectedVersion = event.detail.value;
         }
-        if(event.currentTarget.fieldName = 'Type'){
+        if(event.currentTarget.fieldName == 'Type'){
             this.selectedType = event.detail.value;
         }
         if (this.disableButton) {
             this.disableButton = false;
         }
         this.handleDisplayConfidentialCheckBox();
+        //to pass selected values to confidential component
+        const selectEvent = new CustomEvent('changefields',{});
+        this.dispatchEvent(selectEvent);
     }
 
     createOptions(lValues){
@@ -262,6 +280,11 @@ export default class CaseCatSubcatDetail extends LightningElement {
         this.getAllCatSubDetValues();
         this.getFiteredSubCatValues();
         this.getCatDependenciesMap();
+        if(this.isPreviousButtonClicked && !this.isShowAllFromPrevious){
+           this.selectedSubCategory = null;
+           this.selectedDetail = null;
+           this.handleDisplayConfidentialCheckBox();
+        }
     }
 
     getAllCatSubDetValues(){
@@ -332,12 +355,15 @@ export default class CaseCatSubcatDetail extends LightningElement {
             this.selectedVersion = event.detail.value;
         }
         this.handleDisplayConfidentialCheckBox();
+        const selectEvent = new CustomEvent('changefields',{});
+        this.dispatchEvent(selectEvent);
     }
 
     handleCategoryFilteredView(event){
         this.showAllCategory = false;
         this.showAllSubCategory = true;
         this.subCategoryOptions = this.createOptions(this.categoryWrapper.mCatToSubCatogories[this.selectedCategory]);
+        this.handleDisplayConfidentialCheckBox();
     }
 
     handleSubCategoryViewAll(event){
@@ -345,13 +371,17 @@ export default class CaseCatSubcatDetail extends LightningElement {
         this.showFilterSubCategoryButton = true;
         this.showAllSubCategoryButton = false;
         this.getFiteredSubCatValues();
+        this.handleDisplayConfidentialCheckBox();
     }
 
     handleSubCategoryFiltered(event){
         this.showAllSubCategory = false;
         this.showAllSubCategoryButton = true;
         this.showFilterSubCategoryButton = false;
-        this.subCategoryOptions = this.createOptions(this.categoryWrapper.mCatToSubCatogories[this.selectedCategory]);
+        if(this.categoryWrapper.mCatToSubCatogories!==undefined){
+          this.subCategoryOptions = this.createOptions(this.categoryWrapper.mCatToSubCatogories[this.selectedCategory]);
+        }
+        this.handleDisplayConfidentialCheckBox();        
     }
 
     getCatDependenciesMap(){
@@ -386,24 +416,30 @@ export default class CaseCatSubcatDetail extends LightningElement {
             let catSubCategory = this.selectedCategory + '-' + this.selectedSubCategory;
             showConfidentialField = this.categorySubCategoryConfidentialMap.get(catSubCategory) != null ? this.categorySubCategoryConfidentialMap.get(catSubCategory)[0] : false;
         }
-        if(showConfidentialField===true){
         const confidentailevent = new CustomEvent('confidentailevent', {
             detail: showConfidentialField
         });
         this.dispatchEvent(confidentailevent);
-        }
     }
     
     renderedCallback(){
-        if(this.selectedCategory!==undefined && this.selectedSubCategory!==undefined && this.renderCallOnce==false){
+        if(this.categoryWrapper.mCatToSubCatogories!==undefined && this.categoryWrapper.mCatSubToDetails!==undefined  && this.selectedCategory!==undefined && this.selectedSubCategory!==undefined && !this.renderCallOnce){
             this.renderCallOnce = true;
-            this.handleSubCategoryFiltered();
+            if(!this.isShowAllSubCatFromPrevious){
+              this.handleSubCategoryFiltered();
+            }
+            else{
+              this.getFiteredSubCatValues();
+            }
+            
             const localKey = this.selectedCategory + '-' + this.selectedSubCategory;
             if(this.selectedDetail!==undefined && this.selectedDetail!==null){
                 this.showDetail = true;
-                this.detailOptions = this.createOptions(
+                if(this.categoryWrapper.mCatSubToDetails!==undefined){
+                    this.detailOptions = this.createOptions(
                     this.categoryWrapper.mCatSubToDetails[localKey]
-                );
+                    );
+                }
             }
             if(this.selectedVersion!==undefined && this.selectedVersion!==null){
                 this.showVersion = true;
@@ -411,7 +447,7 @@ export default class CaseCatSubcatDetail extends LightningElement {
                     this.categoryWrapper.mCatSubDetailToVersions[localKey + '-' + this.selectedDetail]
                 );
             }
+            this.handleDisplayConfidentialCheckBox();
         }
     }
-
 }

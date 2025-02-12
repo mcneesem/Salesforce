@@ -19,7 +19,7 @@ export default class CaseCatSubCatComponent extends LightningElement {
     }
    
     handleSelectedValues() {
-        const categoryComponent = this.template.querySelector('c-case-category-subcategory-component');
+        const categoryComponent = this.template.querySelector('c-case-cat-subcat-detail');
 
         if (categoryComponent) {
             this.selectedCategory = categoryComponent.selectedCategory;
