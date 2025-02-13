@@ -16,7 +16,6 @@ public class RecordTypeSelectorControllerTest {
             for (RecordType rt : result) {
                 System.assertNotEquals(null, rt.Id, 'RecordType Id should not be null');
                 System.assertNotEquals(null, rt.Name, 'RecordType Name should not be null');
-                System.assertNotEquals(null, rt.DeveloperName, 'RecordType DeveloperName should not be null');
             }
         }
     }

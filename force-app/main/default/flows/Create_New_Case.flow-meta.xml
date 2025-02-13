@@ -368,6 +368,22 @@
         <showHeader>false</showHeader>
     </screens>
     <screens>
+        <name>Error_Display</name>
+        <label>Error Display</label>
+        <locationX>754</locationX>
+        <locationY>1166</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>false</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>ErrorMessage</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 13px; color: rgb(189, 36, 36);&quot;&gt;{!$Flow.FaultMessage}&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
         <name>Record_Type_Selection</name>
         <label>Record Type Selection</label>
         <locationX>380</locationX>
@@ -457,6 +473,9 @@
         <label>Create Case Fault Handler</label>
         <locationX>754</locationX>
         <locationY>1058</locationY>
+        <connector>
+            <targetReference>Error_Display</targetReference>
+        </connector>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultedOrg</name>
