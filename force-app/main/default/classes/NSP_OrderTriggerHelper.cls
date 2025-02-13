@@ -371,7 +371,6 @@ public class NSP_OrderTriggerHelper {
         Set<Id> orderIdSet = new Set<Id>();
         Set<Id> projCompletedIdSet = new Set<Id>();
         Set<Id> accountIdSet = new Set<Id>();
-        Order orderObj = new Order();  
         List<OrderItem> orderItemListToUpdate = new List<OrderItem>();
         List<OrderItem> milestoneOpList = new List<OrderItem>();
         Set<Id> billToContactIds = new Set<Id>();
@@ -382,7 +381,6 @@ public class NSP_OrderTriggerHelper {
         Set<Id> projGoLiveIdSet = new Set<Id>();
         Set<Id> projectLiveBeforeReviewIds = new Set<Id>();
         Set<Id> orderIdPT = new Set<Id>();
-        //Date endDate;
         Set<Id> orderIds = new Set<Id>();
         if(!NSP_CPQConstants.HAS_BLK_RAN){
             NSP_CPQConstants.HAS_BLK_RAN = true;
@@ -1093,7 +1091,7 @@ public static void setProjNameSupplement(Set < ID > orderListSuppl,List < Order 
         //Queuable job which queries the billing transactions associated with the order products and update the override next billing date on Billing transaction
         NSP_UpdateProjMilestone updateJob = new NSP_UpdateProjMilestone(projCompletedIdSet);
        // enqueue the job for processing , updates Override Next Billing Date on Billing transaction
-       ID jobID = System.enqueueJob(updateJob);
+       System.enqueueJob(updateJob);
    }
         //Platform event to trigger Project creation, when Create Project field is checked
         if ( billingEvents.size() > 0 ) {
