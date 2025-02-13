@@ -1,3 +1,3 @@
-A termination is being processed for {!Account.Name}. Please login to review details of the termination.
+A termination is being processed for the {!Opportunity.NSP_PrimaryProduct__c} for {!Account.Name}. Please login to review details of the {!Opportunity.NSP_PrimaryProduct__c} termination.
 
 <a href={!Account.Link}>{!Account.Name}</a>
