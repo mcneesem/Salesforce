@@ -3,8 +3,8 @@
     <fullName>Require_Field_When_ACH_Active</fullName>
     <active>true</active>
     <errorConditionFormula>AND(
- NSP_Active_Custom__c = TRUE,
- ISPICKVAL( Payment_Method_Type__c , &quot;&quot;) 
+  NSP_Active_Custom__c ,
+  ISPICKVAL( Payment_Method_Type__c , &quot;&quot; )
 )</errorConditionFormula>
     <errorDisplayField>Payment_Method_Type__c</errorDisplayField>
     <errorMessage>Please enter value for Payment Method Type when ACH Active is True</errorMessage>
