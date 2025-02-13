@@ -15,7 +15,6 @@ public class NSP_OrderItemTriggerHelper {
     public void populateFieldValuesOnInsert( List<OrderItem> orderItemNewList ) {
         List<String> orderIds = new List<String> ();
         Set<String> billingAccounts = new Set<String>();
-        Set<String> productsByLegalEntity = new Set<String>( System.Label.NSP_InvoiceByLegalEntityProducts.split( ',' ) );
         for ( OrderItem oli : orderItemNewList ) {
             if ( ( oli.OrderId != null ) && ( oli.blng__BillingAccount__c == null ) ) {
                 orderIds.add( oli.OrderId );
