@@ -12,11 +12,11 @@ public class NSP_OrderItemTriggerHelper {
     // @param newList List of New OrderItems.
     // @return void
     //
-    public void populateFieldValuesOnInsert(List<OrderItem> OrderItemNewList)  {
+    public void populateFieldValuesOnInsert(List<OrderItem> orderItemNewList)  {
         List<String> orderIds = new List<String> (); 
         Set<String> billingAccounts= new Set<String>();  
         Set<String> productsByLegalEntity = new Set<String>(System.Label.NSP_InvoiceByLegalEntityProducts.split(','));
-            for(OrderItem oli : OrderItemNewList) {
+            for(OrderItem oli : orderItemNewList) {
                 if(oli.OrderId !=null && oli.blng__BillingAccount__c==null){
                     orderIds.add(oli.OrderId);
                 }
@@ -27,7 +27,7 @@ public class NSP_OrderItemTriggerHelper {
         }
         if ( orderIds.size() > 0 ) {
             Map<Id,Order> ordersMap = new Map<Id,Order>([Select Id, Status, AccountId,  NSP_Billing_Account__c, ShippingPostalCode, NSP_Partner__r.Name,blng__BillingAccount__c  FROM Order WHERE Id IN:orderIds]);
-            for (OrderItem oi : OrderItemNewList) {
+            for (OrderItem oi : orderItemNewList) {
                 if(orderIds.contains(oi.OrderId)) {
                     if(ordersMap.containsKey(oi.OrderId)) {
                         Order currOrder = ordersMap.get(oi.OrderId);
@@ -42,11 +42,13 @@ public class NSP_OrderItemTriggerHelper {
                 }
             }
             Map<String,blng__PaymentMethod__c> billingActPaymentMap=retrieveACHActivePaymentMethods( billingAccounts );
-            for ( OrderItem oi : OrderItemNewList ) {
+            for ( OrderItem oi : orderItemNewList ) {
                 Order currOrder = ordersMap.get( oi.OrderId );
                 if ( ordersMap.containsKey( oi.OrderId )
                     && ( oi.blng__BillingAccount__c != null )
+                    && ( billingActPaymentMap != null )
                     && (billingActPaymentMap.containsKey(oi.blng__BillingAccount__c))
+                    && ( billingActPaymentMap.get( oi.blng__BillingAccount__c ) != null )
                     && ( oi.NSP_Preferred_Payment_Method__c == billingActPaymentMap.get( oi.blng__BillingAccount__c ).Payment_Method_Type__c)
                    )
                 {
@@ -559,17 +561,17 @@ public class NSP_OrderItemTriggerHelper {
 * Method Name : populateLegalEntityOnOrderItem 
 * Description : Method to copy legal entity from Proudcts to Order Products
 * Author : Samba Raju      Date : 10/17/2022
-* @param OrderItemNewList List of new OrderItems.   
+* @param orderItemNewList List of new OrderItems.   
 * @return void  
 */
-    public void populateLegalEntityOnOrderItem(List<OrderItem> OrderItemNewList){
+    public void populateLegalEntityOnOrderItem(List<OrderItem> orderItemNewList){
         Set<Id> productIds= new Set<Id>();
-        for(OrderItem op :OrderItemNewList){
+        for(OrderItem op :orderItemNewList){
             productIds.add(op.Product2Id);
         }
         Map<Id,Product2> productsMap = new Map<Id,Product2>([Select Id, NSP_Legal_Entity__c FROM Product2 WHERE Id IN:productIds]);
         List<OrderItem> orderItemsToUpdate= new List<OrderItem>();
-            for (OrderItem oi : OrderItemNewList) {
+            for (OrderItem oi : orderItemNewList) {
                 if(productsMap.containskey(oi.Product2Id)){
                     OrderItem op = new OrderItem(Id=oi.Id,blng__LegalEntity__c=productsMap.get(oi.Product2Id).NSP_Legal_Entity__c);
                     orderItemsToUpdate.add(op);
