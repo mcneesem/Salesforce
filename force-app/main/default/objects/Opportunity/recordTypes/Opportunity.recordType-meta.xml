@@ -843,19 +843,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>IRRAddendum</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>MidMarketCSA</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>MidMarketCSAAnnualRenewal</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>MidMarketEPLIAddendum</fullName>
+            <fullName>Mid-MarketClientServiceAgreement</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1469,6 +1457,10 @@
         </values>
         <values>
             <fullName>WX</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Wingspan</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -4156,10 +4148,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>USI Ohio</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>USI Southern California</fullName>
             <default>false</default>
         </values>
@@ -4539,6 +4527,10 @@
         </values>
         <values>
             <fullName>Retirement Services</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Wingspan</fullName>
             <default>false</default>
         </values>
     </picklistValues>

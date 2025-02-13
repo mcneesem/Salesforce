@@ -3,7 +3,6 @@
     <fullName>SBQQ__TargetField__c</fullName>
     <deprecated>false</deprecated>
     <description>Field on the Product Option that sources remaining metadata and holds the value.</description>
-    <externalId>false</externalId>
     <inlineHelpText>Specify field on Product Option that will hold this attribute&apos;s value.</inlineHelpText>
     <label>Target Field</label>
     <required>false</required>
@@ -126,6 +125,16 @@
                 <fullName>NSP_Implementation_Start_Date__c</fullName>
                 <default>false</default>
                 <label>NSP_Implementation_Start_Date__c</label>
+            </value>
+            <value>
+                <fullName>Active_1099_Employees__c</fullName>
+                <default>false</default>
+                <label>Active_1099_Employees__c</label>
+            </value>
+            <value>
+                <fullName>Active_1099_Employees_CW__c</fullName>
+                <default>false</default>
+                <label>Active_1099_Employees_CW__c</label>
             </value>
         </valueSetDefinition>
     </valueSet>

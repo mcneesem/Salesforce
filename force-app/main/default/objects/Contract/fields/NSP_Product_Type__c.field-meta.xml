@@ -2,7 +2,6 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_Product_Type__c</fullName>
     <description>To store Priduct Type from Quote on contract.</description>
-    <externalId>false</externalId>
     <label>Product Type</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
@@ -121,6 +120,17 @@
                 <fullName>Supplemental</fullName>
                 <default>false</default>
                 <label>Supplemental</label>
+            </value>
+            <value>
+                <fullName>Wingspan</fullName>
+                <default>false</default>
+                <label>Wingspan</label>
+            </value>
+            <value>
+                <fullName>Wingspan Bundle</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Wingspan Bundle</label>
             </value>
         </valueSetDefinition>
     </valueSet>

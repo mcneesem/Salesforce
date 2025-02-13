@@ -2,7 +2,6 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_Product_Category__c</fullName>
     <description>Field use to Categories product so that that they can be used in filter</description>
-    <externalId>false</externalId>
     <label>Product Category</label>
     <required>false</required>
     <trackHistory>false</trackHistory>
@@ -120,6 +119,11 @@
                 <fullName>Supplemental</fullName>
                 <default>false</default>
                 <label>Supplemental</label>
+            </value>
+            <value>
+                <fullName>Wingspan</fullName>
+                <default>false</default>
+                <label>Wingspan</label>
             </value>
         </valueSetDefinition>
     </valueSet>
