@@ -388,6 +388,7 @@
         objPaymntMethod.NSP_Active_Custom__c = true;
         objPaymntMethod.NSP_ACH_method__c = 'BoFA';
         objPaymntMethod.blng__PaymentType__c = 'ACH';
+        objPaymntMethod.Payment_Method_Type__c = 'ACH';
         insert objPaymntMethod;
         test.stopTest();
   }
@@ -585,7 +586,7 @@ update project;*/
     @isTest private static void createInvoiceMethod(){
         List<Order> orderList = [Select Id, Status, SBQQ__Quote__c, NSP_Project_Go_Live_Date__c, NSP_Project_Go_Live_Approved__c, NSP_First_usage_upload__c, Type, NSP_Project_Name__c, blng__InvoiceBatch__c, NSP_Billing_Address__c, NSP_Shipping_Address__c, NSP_Billing_Account__c
                                  From Order WHERE Id!=null LIMIT 10];
-        List<blng__PaymentMethod__c> objPaymntMethod = [SELECT Id, blng__Account__c FROM blng__PaymentMethod__c WHERE blng__BankAccountName__c = 'saving'];
+        List<blng__PaymentMethod__c> objPaymntMethod = [SELECT Id, blng__Account__c,Payment_Method_Type__c FROM blng__PaymentMethod__c WHERE blng__BankAccountName__c = 'saving'];
         Test.startTest();
         orderList[0].Status = 'Reviewed';
         List<OrderItem> ObjOrderProductList = [SELECT Id, SBQQ__Status__c, ServiceDate, NSP_Order_Activation_Trigger__c
@@ -621,7 +622,7 @@ update project;*/
         NSP_AccountTriggerHandler.TriggerDisabled = true;
         List<Order> orderList = [Select Id, Status, SBQQ__Quote__c, NSP_Project_Go_Live_Date__c, NSP_Project_Go_Live_Approved__c, NSP_First_usage_upload__c, Type, NSP_Project_Name__c, blng__InvoiceBatch__c, NSP_Billing_Address__c, NSP_Shipping_Address__c, NSP_Billing_Account__c
                                  From Order  WHERE Id!=null  LIMIT 10];
-        List<blng__PaymentMethod__c> objPaymntMethod = [SELECT Id, blng__Account__c
+        List<blng__PaymentMethod__c> objPaymntMethod = [SELECT Id, blng__Account__c,Payment_Method_Type__c
                                                         FROM blng__PaymentMethod__c WHERE Id!=null  LIMIT 10];
         List<OrderItem> orderItemList = [SELECT Id, SBQQ__Status__c, Order.Type, NSP_Preferred_Payment_Method__c, NSP_Order_Activation_Trigger__c, NSP_Order_Activation_Trigger_Amend__c, Order.AccountId, NSP_Payment_Method__c, ServiceDate, SBQQ__BillingFrequency__c, NSP_AnniversaryBlngApplicable__c, SBQQ__SubscriptionTerm__c
                                          FROM OrderItem
@@ -642,7 +643,7 @@ update project;*/
         NSP_AccountTriggerHandler.TriggerDisabled = true;
         List<Order> orderList = [Select Id, blng__BillingAccount__c,NSP_Rev_Rec_Rules_Reviewed__c,Status, SBQQ__Quote__c, NSP_Project_Go_Live_Date__c, NSP_Project_Go_Live_Approved__c, NSP_First_usage_upload__c, Type, NSP_Project_Name__c, blng__InvoiceBatch__c, NSP_Billing_Address__c, NSP_Shipping_Address__c, NSP_Billing_Account__c
                                  From Order WHERE Id!=null LIMIT 10];
-        List<blng__PaymentMethod__c> objPaymntMethod = [SELECT Id, blng__Account__c
+        List<blng__PaymentMethod__c> objPaymntMethod = [SELECT Id, blng__Account__c,Payment_Method_Type__c
                                                         FROM blng__PaymentMethod__c  WHERE Id!=null LIMIT 10];
         List<OrderItem> orderItemList = [SELECT Id, blng__TaxRule__c,SBQQ__Status__c, Order.Type, NSP_Preferred_Payment_Method__c, NSP_Order_Activation_Trigger__c, NSP_Order_Activation_Trigger_Amend__c, Order.AccountId, NSP_Payment_Method__c, ServiceDate, SBQQ__BillingFrequency__c, NSP_AnniversaryBlngApplicable__c, SBQQ__SubscriptionTerm__c
                                          FROM OrderItem  WHERE OrderId IN:orderList LIMIT 10];
