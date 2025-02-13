@@ -134,6 +134,73 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Implemented_Type__c</picklist>
+        <values>
+            <fullName>Accrual Tracking</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Accruals Only to Full Time tracking</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Full Time Tracking to Accruals only</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Time Tracking</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Time Tracking and Accruals</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Layout__c</picklist>
+        <values>
+            <fullName>BPS Generic</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ITA Impl</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PEO Billable</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PEO FSO Impl</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PEO Generic</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PEO MM Impl</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PEO SCS LDS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RET</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>TES</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>TalentConnect</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+    <picklistValues>
         <picklist>NSP_Asset_Type__c</picklist>
         <values>
             <fullName>Applicant_Tracking</fullName>
