@@ -1471,6 +1471,10 @@
             <fullName>WX</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Wingspan</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>NSP_Product_Interest__c</picklist>
@@ -4539,6 +4543,10 @@
         </values>
         <values>
             <fullName>Retirement Services</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Wingspan</fullName>
             <default>false</default>
         </values>
     </picklistValues>
