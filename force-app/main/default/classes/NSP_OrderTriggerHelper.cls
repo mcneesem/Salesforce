@@ -19,28 +19,28 @@ public class NSP_OrderTriggerHelper {
     
     /**
 * Iterates throught the Order map and identifies the records that needs to worked based on various criterias.
-* @param OrderNewMap Map of New Order. 
-* @param OrderOldMap Map of Old Order. 
+* @param orderNewMap Map of New Order. 
+* @param orderOldMap Map of Old Order. 
 * @return void             
 *                
 */
-    public void beforeUpdateDirector(Map<Id, Order> OrderNewMap,Map<Id, Order> OrderOldMap){
-        updateBillingShippingAddress(OrderNewMap.values(),OrderOldMap);
-        createContract(OrderNewMap.values(),OrderOldMap);
+    public void beforeUpdateDirector(Map<Id, Order> orderNewMap,Map<Id, Order> orderOldMap){
+        updateBillingShippingAddress(orderNewMap.values(),orderOldMap);
+        createContract(orderNewMap.values(),orderOldMap);
     }
     
     /**
 * Iterates throught the list of new Orders and passes the required attributes to other methods.
-* @param OrderNewMap Map of New Order. 
-* @param OrderOldMap Map of Old Order.   
+* @param orderNewMap Map of New Order. 
+* @param orderOldMap Map of Old Order.   
 * @return void             
 *                
 */
     
-    public void afterUpdateDirector(Map<Id,Order> OrderNewMap,Map<Id, Order> OrderOldMap){   
-        checkProjectGoLiveChanged(OrderNewMap.values(),OrderOldMap);  
-        activateHardwareAssets(OrderNewMap.values(), OrderOldMap);
-        createInvoice(OrderNewMap.values(),OrderOldMap);
+    public void afterUpdateDirector(Map<Id,Order> orderNewMap,Map<Id, Order> orderOldMap){   
+        checkProjectGoLiveChanged(orderNewMap.values(),orderOldMap);  
+        activateHardwareAssets(orderNewMap.values(), orderOldMap);
+        createInvoice(orderNewMap.values(),orderOldMap);
        
     }  
     
@@ -92,8 +92,8 @@ public class NSP_OrderTriggerHelper {
 * Method Name : updateOrderStartDate 
 * Description : Method to set Start date on termination Order to Termination Date+1 [DF-04145]
 * Author : Sancharini       Date : 05/16/2023
-* @param OrderNewMap Map of New Order. 
-* @param OrderOldMap Map of Old Order.   
+* @param orderNewMap Map of New Order. 
+* @param orderOldMap Map of Old Order.   
 * @return void  
 */
     @future
@@ -114,11 +114,11 @@ public class NSP_OrderTriggerHelper {
 * Method Name : updateBillingShippingAddress 
 * Description : Method to set custom address fields on Order
 * Author : Sales Team       Date : 28/10/2021
-* @param OrderNewMap Map of New Order. 
-* @param OrderOldMap Map of Old Order.   
+* @param orderNewMap Map of New Order. 
+* @param orderOldMap Map of Old Order.   
 * @return void  
 */
-    public static void updateBillingShippingAddress(List<Order> newList,Map<Id, Order> OrderOldMap){
+    public static void updateBillingShippingAddress(List<Order> newList,Map<Id, Order> orderOldMap){
         Set<Id> addressIdSet = new Set<Id>();
         Set<Id> accountIdSet = new Set<Id>();
         set<Id> processOrderIdSet = new set<Id>();
@@ -128,7 +128,7 @@ public class NSP_OrderTriggerHelper {
         String accountParam = STRING_ACCOUNT;
         
         for(Order newOrder : newList){
-            Order oldOrder = OrderOldMap != null ? OrderOldMap.get(newOrder.Id):null;
+            Order oldOrder = orderOldMap != null ? orderOldMap.get(newOrder.Id):null;
             
             if( (Trigger.isInsert && newOrder.blng__InvoiceBatch__c == 'Standalone Order') ||
                 (Trigger.isUpdate && (newOrder.NSP_Billing_Address__c !=  oldOrder.NSP_Billing_Address__c
@@ -270,11 +270,11 @@ public class NSP_OrderTriggerHelper {
 * Method Name : createContract 
 * Description : Method to create Contract on activated Order
 * Author : CPQ Team       Date : 07/20/2022
-* @param OrderNewMap Map of New Order. 
-* @param OrderOldMap Map of Old Order.   
+* @param orderNewMap Map of New Order. 
+* @param orderOldMap Map of Old Order.   
 * @return void  
 */
-    public static void createContract(List<Order> newList,Map<Id, Order> OrderOldMap){
+    public static void createContract(List<Order> newList,Map<Id, Order> orderOldMap){
         Set<Id> orderIdNew = new Set<Id>();
         Set<Id> orderIdAmend = new Set<Id>();
         Set<Id> orderIdSuppl = new Set<Id>();
@@ -288,7 +288,7 @@ public class NSP_OrderTriggerHelper {
         //STY-03797 End
 
         for(Order newOrder : newList){
-            Order oldOrder = OrderOldMap != null ? OrderOldMap.get(newOrder.Id):null;
+            Order oldOrder = orderOldMap != null ? orderOldMap.get(newOrder.Id):null;
             if(oldOrder.NSP_First_usage_upload__c == false && newOrder.NSP_First_usage_upload__c == true && 
                newOrder.Status != NSP_CPQConstants.ORDER_ACTIVATED
                && newOrder.Type == NSP_CPQConstants.ORDER_TYPE_NEW
@@ -374,11 +374,11 @@ public class NSP_OrderTriggerHelper {
 * Method Name : createInvoice 
 * Description : Method to create Contract on activated Order
 * Author : CPQ Team       Date : 07/20/2022
-* @param OrderNewMap Map of New Order. 
-* @param OrderOldMap Map of Old Order.   
+* @param orderNewMap Map of New Order. 
+* @param orderOldMap Map of Old Order.   
 * @return void  
 */
-    public static void createInvoice(List<Order> newList,Map<Id, Order> OrderOldMap){
+    public static void createInvoice(List<Order> newList,Map<Id, Order> orderOldMap){
         Set<Id> orderIdSet = new Set<Id>();
         Set<Id> projCompletedIdSet = new Set<Id>();
         Set<Id> accountIdSet = new Set<Id>();
@@ -398,7 +398,7 @@ public class NSP_OrderTriggerHelper {
         if(!NSP_CPQConstants.HAS_BLK_RAN){
             NSP_CPQConstants.HAS_BLK_RAN = true;
             for(Order newOrder : newList){
-                Order oldOrder = OrderOldMap != null ? OrderOldMap.get(newOrder.Id):null;
+                Order oldOrder = orderOldMap != null ? orderOldMap.get(newOrder.Id):null;
                 //List<Order> createProjList = new List<Order>();
                 
                 if(oldOrder.Status == NSP_CPQConstants.ORDER_DRAFT && newOrder.Status == NSP_CPQConstants.ORDER_REVIEWED) {
@@ -495,6 +495,7 @@ public class NSP_OrderTriggerHelper {
                         }   
                     }
                     if(paymentMethodMap.containskey(orderItemObj.blng__BillingAccount__c) && 
+                       paymentMethodMap.get( orderItemObj.blng__BillingAccount__c ) != null &&
                        orderItemObj.NSP_Preferred_Payment_Method__c == paymentMethodMap.get( orderItemObj.blng__BillingAccount__c ).Payment_Method_Type__c){
                             orderItemObj.NSP_Payment_Method__c = paymentMethodMap.get( orderItemObj.blng__BillingAccount__c )?.Id;
                             if(orderItemObj.NSP_Order_Activation_Trigger__c == NSP_CPQConstants.IMMEDIATE && orderItemObj.Order.NSP_Change_Order_Process_Quote__c == FALSE){
@@ -540,8 +541,8 @@ public class NSP_OrderTriggerHelper {
 * Method Name : setProjNameNew 
 * Description : Method to update Project Template on Order for New transaction
 * Author : CPQ Team       Date : 08/29/2022
-* @param OrderNewMap Map of New Order. 
-* @param OrderOldMap Map of Old Order.   
+* @param orderNewMap Map of New Order. 
+* @param orderOldMap Map of Old Order.   
 * @return void  
 */
     public static void setProjNameNew(Set < ID > orderListNew,List < Order > newList) {
@@ -566,8 +567,8 @@ public class NSP_OrderTriggerHelper {
 * Method Name : setProjNameAmend 
 * Description : Method to update Project Template on Order for Amendment transaction
 * Author : CPQ Team       Date : 08/29/2022
-* @param OrderNewMap Map of New Order. 
-* @param OrderOldMap Map of Old Order.   
+* @param orderNewMap Map of New Order. 
+* @param orderOldMap Map of Old Order.   
 * @return void  
 */
     public static void setProjNameAmend(Set < ID > orderListAmend,List < Order > newList) {
@@ -666,8 +667,8 @@ public static void setProjNameSupplement(Set < ID > orderListSuppl,List < Order 
 * Method Name : activateOrderProduct 
 * Description : Method to activate order product based on order activation trigger
 * Author : CPQ Team       Date : 09/06/2022
-* @param OrderNewMap Map of New Order. 
-* @param OrderOldMap Map of Old Order.   
+* @param orderNewMap Map of New Order. 
+* @param orderOldMap Map of Old Order.   
 * @return void  
 */
     public static void activateOrderProduct( List<Order> newList , Set<Id> projCompletedIdSet ) {
@@ -1040,16 +1041,16 @@ public static void setProjNameSupplement(Set < ID > orderListSuppl,List < Order 
 * Description : Method to set a flag when Project go live date change to a different period
 * Author : CPQ Team       Date : 11/10/2022
 * @param newList Map of New Orders. 
-* @param OrderOldMap Map of Old Order.   
+* @param orderOldMap Map of Old Order.   
 * @return void  
 */
-    public static void checkProjectGoLiveChanged( List<Order> newList , Map<Id,Order> OrderOldMap ) {
+    public static void checkProjectGoLiveChanged( List<Order> newList , Map<Id,Order> orderOldMap ) {
     Set<String> backoutOrders = new Set<String>();
     Set<Id> createProjectIds = new Set<Id>();
     Set<ID> projCompletedIdSet = new Set<Id>();
     List<Process_Billing_Event__e> billingEvents= new List<Process_Billing_Event__e>();
     for(Order newOrder :newList){
-        Order oldOrder=OrderOldMap.get(newOrder.Id);
+        Order oldOrder=orderOldMap.get(newOrder.Id);
         if(newOrder.NSP_Back_Out__c && newOrder.NSP_Back_Out__c != oldOrder.NSP_Back_Out__c) {
             backoutOrders.add(newOrder.Id);
         }
@@ -1260,11 +1261,11 @@ public static void createAndStampSalesTaxContact(Set<Id> accountIdSet, List<Orde
      * @param List of new Orders,Map of Old Orders
      * @return void
      */
-    private void activateHardwareAssets(List<Order> newList, Map<Id, Order> OrderOldMap){
+    private void activateHardwareAssets(List<Order> newList, Map<Id, Order> orderOldMap){
         List<Id> optyIds = new List<Id>();
         List<Asset> assetsToActivate= new List<Asset>();
         for (Order newOrder : newList){
-            Order oldOrder = OrderOldMap.get(newOrder.Id);
+            Order oldOrder = orderOldMap.get(newOrder.Id);
             if (newOrder.Status == NSP_CPQConstants.ORDER_ACTIVATED && oldOrder.Status != newOrder.Status && newOrder.OpportunityId != null){
                 optyIds.add(newOrder.OpportunityId);
             }
