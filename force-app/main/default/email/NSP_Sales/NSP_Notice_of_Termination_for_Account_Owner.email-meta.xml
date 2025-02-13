@@ -5,6 +5,7 @@
     <name>Notice of Termination for Account Owner</name>
     <style>none</style>
     <subject>Notice of Termination for {!Account.Name} - {!Opportunity.NSP_PrimaryProduct__c}</subject>
+    <textOnly>A termination is being processed for the {!Opportunity.NSP_PrimaryProduct__c} for {!Account.Name}. Please login to review details of the {!Opportunity.NSP_PrimaryProduct__c} termination. {!Account.Name}</textOnly>
     <type>custom</type>
     <uiType>Aloha</uiType>
 </EmailTemplate>
