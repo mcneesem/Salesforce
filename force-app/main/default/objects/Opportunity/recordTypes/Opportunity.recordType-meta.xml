@@ -843,7 +843,19 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Mid-MarketClientServiceAgreement</fullName>
+            <fullName>IRRAddendum</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MidMarketCSA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MidMarketCSAAnnualRenewal</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MidMarketEPLIAddendum</fullName>
             <default>false</default>
         </values>
         <values>
@@ -4145,6 +4157,10 @@
         </values>
         <values>
             <fullName>USI Northern California</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>USI Ohio</fullName>
             <default>false</default>
         </values>
         <values>

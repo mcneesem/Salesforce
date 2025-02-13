@@ -4615,6 +4615,22 @@
             <fullName>2024 WX Free Months</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>2025 2-year Agreement</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2025 Admin Cap</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2025 Credit Promotion</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2025 WX Free Months</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>Type</picklist>
