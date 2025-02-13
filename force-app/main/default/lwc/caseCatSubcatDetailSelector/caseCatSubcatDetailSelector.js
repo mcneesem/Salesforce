@@ -1,6 +1,6 @@
 import { LightningElement, api } from 'lwc';
 
-export default class CaseCatSubCatComponent extends LightningElement {    
+export default class CaseCatSubcatDetailSelector extends LightningElement {    
     
     @api selectedRecTypeId='';
     isCQAChildCase;
@@ -36,7 +36,6 @@ export default class CaseCatSubCatComponent extends LightningElement {
         let response = {
             isValid: true
         };
-
         if (!this.selectedCategory || !this.selectedSubCategory) {
             response.isValid = false;
             response.errorMessage = "Category and Subcategory are mandatory.";
