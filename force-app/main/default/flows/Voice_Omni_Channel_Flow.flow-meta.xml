@@ -333,13 +333,6 @@
                     <stringValue>Recruiting/Careers</stringValue>
                 </rightValue>
             </conditions>
-            <conditions>
-                <leftValueReference>input_record.Contact_Center_Queue__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>W2</stringValue>
-                </rightValue>
-            </conditions>
             <label>Exclude Vonage Queues</label>
         </rules>
     </decisions>
