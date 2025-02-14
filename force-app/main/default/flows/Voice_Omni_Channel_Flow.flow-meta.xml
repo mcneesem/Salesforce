@@ -4,7 +4,7 @@
         <name>Open_Case</name>
         <label>Open Case</label>
         <locationX>567</locationX>
-        <locationY>1442</locationY>
+        <locationY>1484</locationY>
         <actionName>addScreenPop</actionName>
         <actionType>addScreenPop</actionType>
         <connector>
@@ -29,7 +29,7 @@
         <name>Route_to_Basic_Queue</name>
         <label>Route to Basic Queue</label>
         <locationX>567</locationX>
-        <locationY>1550</locationY>
+        <locationY>1592</locationY>
         <actionName>routeWork</actionName>
         <actionType>routeWork</actionType>
         <connector>
@@ -125,7 +125,7 @@
         <name>Set_Fault_Element_Create_Case</name>
         <label>Set Fault Element: Create Case</label>
         <locationX>1766</locationX>
-        <locationY>1442</locationY>
+        <locationY>1484</locationY>
         <assignmentItems>
             <assignToReference>faultElement</assignToReference>
             <operator>Assign</operator>
@@ -142,7 +142,7 @@
         <name>Set_Fault_Element_Get_Callback_Case</name>
         <label>Set Fault Element: Get_Callback_Case</label>
         <locationX>358</locationX>
-        <locationY>908</locationY>
+        <locationY>950</locationY>
         <assignmentItems>
             <assignToReference>faultElement</assignToReference>
             <operator>Assign</operator>
@@ -159,7 +159,7 @@
         <name>Set_Fault_Element_Open_Case</name>
         <label>Set Fault Element: Open Case</label>
         <locationX>1502</locationX>
-        <locationY>1550</locationY>
+        <locationY>1592</locationY>
         <assignmentItems>
             <assignToReference>faultElement</assignToReference>
             <operator>Assign</operator>
@@ -176,7 +176,7 @@
         <name>Set_Fault_Element_Route_to_Basic_Queue</name>
         <label>Set Fault Element: Route to Basic Queue</label>
         <locationX>1238</locationX>
-        <locationY>1658</locationY>
+        <locationY>1700</locationY>
         <assignmentItems>
             <assignToReference>faultElement</assignToReference>
             <operator>Assign</operator>
@@ -193,7 +193,7 @@
         <name>Set_Fault_Element_Update_Voice_Call</name>
         <label>Set Fault Element: Update Voice Call</label>
         <locationX>974</locationX>
-        <locationY>1874</locationY>
+        <locationY>1916</locationY>
         <assignmentItems>
             <assignToReference>faultElement</assignToReference>
             <operator>Assign</operator>
@@ -209,7 +209,7 @@
         <name>Set_Related_Case</name>
         <label>Set Related Case</label>
         <locationX>567</locationX>
-        <locationY>1658</locationY>
+        <locationY>1700</locationY>
         <assignmentItems>
             <assignToReference>input_record.CaseId__c</assignToReference>
             <operator>Assign</operator>
@@ -225,7 +225,7 @@
         <name>Check_Callback_Case</name>
         <label>Check Callback Case</label>
         <locationX>336</locationX>
-        <locationY>692</locationY>
+        <locationY>734</locationY>
         <defaultConnector>
             <targetReference>Create_Case</targetReference>
         </defaultConnector>
@@ -278,7 +278,7 @@
         <name>Check_Callback_Case_Selection</name>
         <label>Check Callback Case Selection</label>
         <locationX>50</locationX>
-        <locationY>908</locationY>
+        <locationY>950</locationY>
         <defaultConnector>
             <targetReference>Create_Case</targetReference>
         </defaultConnector>
@@ -333,17 +333,6 @@
                     <stringValue>Recruiting/Careers</stringValue>
                 </rightValue>
             </conditions>
-            <conditions>
-                <leftValueReference>input_record.Contact_Center_Queue__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>W2</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <isGoTo>true</isGoTo>
-                <targetReference>Create_Case</targetReference>
-            </connector>
             <label>Exclude Vonage Queues</label>
         </rules>
     </decisions>
@@ -351,7 +340,7 @@
         <name>Is_Enabled_Check_Callback_Case</name>
         <label>Is Enabled Check Callback Case?</label>
         <locationX>567</locationX>
-        <locationY>584</locationY>
+        <locationY>626</locationY>
         <defaultConnector>
             <targetReference>Create_Case</targetReference>
         </defaultConnector>
@@ -427,7 +416,7 @@ Routes each call to the default queue (Basic Queue) and, if the agent accepts, s
         <name>Create_Case</name>
         <label>Create Case</label>
         <locationX>567</locationX>
-        <locationY>1334</locationY>
+        <locationY>1376</locationY>
         <assignRecordIdToReference>caseRecord.Id</assignRecordIdToReference>
         <connector>
             <targetReference>Open_Case</targetReference>
@@ -465,7 +454,7 @@ Routes each call to the default queue (Basic Queue) and, if the agent accepts, s
         <name>Get_Callback_Case</name>
         <label>Get Callback Case</label>
         <locationX>50</locationX>
-        <locationY>800</locationY>
+        <locationY>842</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_Callback_Case_Selection</targetReference>
@@ -493,7 +482,7 @@ Routes each call to the default queue (Basic Queue) and, if the agent accepts, s
         <name>Update_Voice_Call</name>
         <label>Update Voice Call</label>
         <locationX>567</locationX>
-        <locationY>1766</locationY>
+        <locationY>1808</locationY>
         <faultConnector>
             <targetReference>Set_Fault_Element_Update_Voice_Call</targetReference>
         </faultConnector>
@@ -511,7 +500,7 @@ Routes each call to the default queue (Basic Queue) and, if the agent accepts, s
         <name>Fault_Handler</name>
         <label>Fault Handler</label>
         <locationX>974</locationX>
-        <locationY>1982</locationY>
+        <locationY>2024</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultElement</name>
