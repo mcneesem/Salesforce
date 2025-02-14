@@ -1,8 +1,8 @@
 @IsTest
-public class RecordTypeSelectorControllerTest {
-    
+private class RecordTypeSelectorControllerTest {
+
     @IsTest
-    static void testGetRecordTypes() {
+    private static void testGetRecordTypes() {
         // Start the test execution
         Test.startTest();
         List<RecordType> result = RecordTypeSelectorController.getAccessibleRecordTypes('Case');
@@ -19,4 +19,6 @@ public class RecordTypeSelectorControllerTest {
             }
         }
     }
+    
 }
+//

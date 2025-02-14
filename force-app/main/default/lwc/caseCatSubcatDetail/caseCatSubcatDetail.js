@@ -51,18 +51,18 @@ export default class CaseCatSubcatDetail extends LightningElement {
     recordTypeMap = new Map();
     renderCallOnce = false;
     userPartOfQueue = false;
-    isPreviousButtonClicked = false;
-    isShowAllFromPrevious = false;
-    isShowAllSubCatFromPrevious = false;
+    isConnectedWithSelectedCategory = false;
+    isConnectedWithShowAllCategory = false;
+    isConnectedWithShowAllSubCategory = false;
 
     verifyCompensationQueue(){
         isUserInQueue()
         .then(result => {
-			this.userPartOfQueue = result;
-		})
-		.catch(error => {
+            this.userPartOfQueue = result;
+        })
+        .catch(error => {
             this.userPartOfQueue = false;
-		})
+        })
     }
 
     @wire(getAllCategoryList, {recordTypeId: '$recTypeId'})
@@ -81,7 +81,7 @@ export default class CaseCatSubcatDetail extends LightningElement {
                 }
                 this.verifyCompensationQueue();
                 this.getCatDependenciesMap();
-            });                
+            });
         }
     }
 
@@ -139,16 +139,16 @@ export default class CaseCatSubcatDetail extends LightningElement {
     }
     connectedCallback() {
         this.handleProfileName();
-        if(this.selectedCategory!==undefined){
-           this.isPreviousButtonClicked = true;
+        if ( this.selectedCategory !== undefined ) {
+            this.isConnectedWithSelectedCategory = true;
         }
-        if(this.showAllCategory){
-           this.isShowAllFromPrevious = true;
-           this.handleCategoryViewAll();
+        if ( this.showAllCategory ) {
+            this.isConnectedWithShowAllCategory = true;
+            this.handleCategoryViewAll();
         }
-        if(this.showAllSubCategory){
-           this.isShowAllSubCatFromPrevious = true;
-           this.handleSubCategoryViewAll();
+        if ( this.showAllSubCategory ) {
+            this.isConnectedWithShowAllSubCategory = true;
+            this.handleSubCategoryViewAll();
         }
     }
     handleProfileName(){
@@ -174,7 +174,6 @@ export default class CaseCatSubcatDetail extends LightningElement {
 
     handleChange(event) {
         const { name, fieldName, value } = event.currentTarget;
-
         if (name) {
             switch (name) {
                 case 'Category':
@@ -205,10 +204,8 @@ export default class CaseCatSubcatDetail extends LightningElement {
     handleCategoryChange(value) {
         this.selectedCategory = value;
         this.subCategoryOptions = this.createOptions(this.categoryWrapper.mCatToSubCatogories[value]);
-
         this.resetSelection(['Detail', 'Version']);
         this.showAllSubCategoryButton = !this.isBPSUser && this.subCategoryOptions.length > 0;
-
         this.dispatchEvent(new CustomEvent('catsubcatselect', { 
             detail: { type: 'Category', value: this.selectedCategory } 
         }));
@@ -216,21 +213,16 @@ export default class CaseCatSubcatDetail extends LightningElement {
 
     handleSubCategoryChange(value) {
         this.selectedSubCategory = value;
-
         this.dispatchEvent(new CustomEvent('catsubcatselect', { 
             detail: { type: 'SubCategory', value } 
         }));
-
         this.detailOptions = this.createOptions(this.categoryWrapper.mCatSubToDetails[`${this.selectedCategory}-${value}`]);
         this.showDetail = this.detailOptions.length > 0;
-
         this.versionOptions = this.createOptions(this.categoryWrapper.mCatSubDetailToVersions[
             `${this.selectedCategory}-${this.selectedSubCategory}-${this.selectedDetail}`
         ]);
         this.showVersion = this.versionOptions.length > 0;
-
         this.recordTypeID = this.recordTypeCategoryMap.get(`${this.selectedCategory}-${this.selectedSubCategory}`);
-
         if (this.selectedCategory && this.selectedSubCategory && this.accountID) {
             this.handlePopulateAsset();
         }
@@ -254,7 +246,6 @@ export default class CaseCatSubcatDetail extends LightningElement {
             this.selectedVersion = null;
         }
     }
-
 
     createOptions(lValues){
         lValues = lValues || [];
@@ -294,10 +285,10 @@ export default class CaseCatSubcatDetail extends LightningElement {
         this.getAllCatSubDetValues();
         this.getFiteredSubCatValues();
         this.getCatDependenciesMap();
-        if(this.isPreviousButtonClicked && !this.isShowAllFromPrevious){
-           this.selectedSubCategory = null;
-           this.selectedDetail = null;
-           this.handleDisplayConfidentialCheckBox();
+        if(this.isConnectedWithSelectedCategory && !this.isConnectedWithShowAllCategory){
+            this.selectedSubCategory = null;
+            this.selectedDetail = null;
+            this.handleDisplayConfidentialCheckBox();
         }
         this.dispatchChangeFields();
     }
@@ -358,7 +349,6 @@ export default class CaseCatSubcatDetail extends LightningElement {
             if(this.selectedCategory.length>0 && this.selectedSubCategory.length>0 && this.accountID.length>0){
                 this.handlePopulateAsset(event);
             }
-            
             const selectEvent = new CustomEvent('catsubcatselect',{detail: {type:'SubCategory',value:this.selectedSubCategory}});
             this.dispatchEvent(selectEvent);
         }
@@ -395,10 +385,10 @@ export default class CaseCatSubcatDetail extends LightningElement {
         this.showAllSubCategoryButton = true;
         this.showFilterSubCategoryButton = false;
         if(this.categoryWrapper && this.categoryWrapper.mCatToSubCatogories && this.categoryWrapper.mCatToSubCatogories!==undefined){
-          this.subCategoryOptions = this.createOptions(this.categoryWrapper.mCatToSubCatogories[this.selectedCategory]);
+            this.subCategoryOptions = this.createOptions(this.categoryWrapper.mCatToSubCatogories[this.selectedCategory]);
         }
         this.handleDisplayConfidentialCheckBox();
-        this.dispatchChangeFields();        
+        this.dispatchChangeFields();
     }
 
     getCatDependenciesMap(){
@@ -429,7 +419,7 @@ export default class CaseCatSubcatDetail extends LightningElement {
         return this.template.querySelectorAll('lightning-combobox');
     }
     handleDisplayConfidentialCheckBox(){
-        let showConfidentialField = false; 
+        let showConfidentialField = false;
         if(this.selectedSubCategory != null && this.selectedCategory != null && this.selectedDetail != null){
                 let catSubCatDetail = this.selectedCategory + '-' + this.selectedSubCategory + '-' + this.selectedDetail;
                 showConfidentialField = this.categorySubCategoryDetailConfidentialMap.get(catSubCatDetail) != null ? this.categorySubCategoryDetailConfidentialMap.get(catSubCatDetail)[0] : false;
@@ -446,13 +436,11 @@ export default class CaseCatSubcatDetail extends LightningElement {
     renderedCallback(){
         if(this.categoryWrapper.mCatToSubCatogories!==undefined && this.categoryWrapper.mCatSubToDetails!==undefined  && this.selectedCategory!==undefined && this.selectedSubCategory!==undefined && !this.renderCallOnce){
             this.renderCallOnce = true;
-            if(!this.isShowAllSubCatFromPrevious){
-              this.handleSubCategoryFiltered();
+            if ( !this.isConnectedWithShowAllSubCategory ) {
+                this.handleSubCategoryFiltered();
+            } else {
+                this.getFiteredSubCatValues();
             }
-            else{
-              this.getFiteredSubCatValues();
-            }
-            
             const localKey = this.selectedCategory + '-' + this.selectedSubCategory;
             if(this.selectedDetail!==undefined && this.selectedDetail!==null){
                 this.showDetail = true;

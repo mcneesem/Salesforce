@@ -4,24 +4,66 @@
         <name>Case_Redirect</name>
         <label>Case Redirect</label>
         <locationX>380</locationX>
-        <locationY>1058</locationY>
+        <locationY>1766</locationY>
         <actionName>c:NSP_NavigateToRecord</actionName>
         <actionType>component</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>recordId</name>
             <value>
-                <elementReference>CaseId</elementReference>
+                <elementReference>recordId</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>c:NSP_NavigateToRecord</nameSegment>
+        <offset>0</offset>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
+    <actionCalls>
+        <name>Get_Accessible_Record_Types</name>
+        <label>Get Accessible Record Types</label>
+        <locationX>786</locationX>
+        <locationY>134</locationY>
+        <actionName>RecordTypeSelectorAction</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Check_Accessible_Record_Types</targetReference>
+        </connector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>objectApiName</name>
+            <value>
+                <elementReference>objectApiName</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>RecordTypeSelectorAction</nameSegment>
+        <offset>0</offset>
+        <outputParameters>
+            <assignToReference>accessibleRecordTypes</assignToReference>
+            <name>accessibleRecordTypes</name>
+        </outputParameters>
+    </actionCalls>
     <apiVersion>62.0</apiVersion>
+    <assignments>
+        <name>Assign_Selected_Record_Type</name>
+        <label>Assign Selected Record Type</label>
+        <locationX>536</locationX>
+        <locationY>674</locationY>
+        <assignmentItems>
+            <assignToReference>selectedRecordTypeId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Iterate_Accessible_Record_Types.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Iterate_Accessible_Record_Types</targetReference>
+        </connector>
+    </assignments>
     <assignments>
         <name>ConfidentialNoAssignment</name>
         <label>ConfidentialNoAssignment</label>
         <locationX>314</locationX>
-        <locationY>674</locationY>
+        <locationY>1382</locationY>
         <assignmentItems>
             <assignToReference>selectedConfidential</assignToReference>
             <operator>Assign</operator>
@@ -37,7 +79,7 @@
         <name>ConfidentialYesAssignment</name>
         <label>ConfidentialYesAssignment</label>
         <locationX>50</locationX>
-        <locationY>674</locationY>
+        <locationY>1382</locationY>
         <assignmentItems>
             <assignToReference>selectedConfidential</assignToReference>
             <operator>Assign</operator>
@@ -47,6 +89,22 @@
         </assignmentItems>
         <connector>
             <targetReference>Create_Case</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Count_Accessible_Record_Types</name>
+        <label>Count Accessible Record Types</label>
+        <locationX>380</locationX>
+        <locationY>350</locationY>
+        <assignmentItems>
+            <assignToReference>countAccessibleRecordTypes</assignToReference>
+            <operator>AssignCount</operator>
+            <value>
+                <elementReference>accessibleRecordTypes</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Check_Count_Accessible_Record_Types</targetReference>
         </connector>
     </assignments>
     <choices>
@@ -65,18 +123,77 @@
             <stringValue>Yes</stringValue>
         </value>
     </choices>
-    <constants>
-        <name>objectName</name>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>case</stringValue>
-        </value>
-    </constants>
+    <decisions>
+        <name>Check_Accessible_Record_Types</name>
+        <label>Check Accessible Record Types</label>
+        <locationX>786</locationX>
+        <locationY>242</locationY>
+        <defaultConnector>
+            <targetReference>Screen_No_Accessible_Record_Types</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Found_Accessible_Record_Types</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>accessibleRecordTypes</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Count_Accessible_Record_Types</targetReference>
+            </connector>
+            <label>Found Accessible Record Types</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Count_Accessible_Record_Types</name>
+        <label>Check Count Accessible Record Types</label>
+        <locationX>380</locationX>
+        <locationY>458</locationY>
+        <defaultConnector>
+            <targetReference>Record_Type_Selection</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Multiple</defaultConnectorLabel>
+        <rules>
+            <name>None</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>countAccessibleRecordTypes</leftValueReference>
+                <operator>LessThan</operator>
+                <rightValue>
+                    <numberValue>1.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <isGoTo>true</isGoTo>
+                <targetReference>Screen_No_Accessible_Record_Types</targetReference>
+            </connector>
+            <label>None</label>
+        </rules>
+        <rules>
+            <name>Single</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>countAccessibleRecordTypes</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <numberValue>1.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Iterate_Accessible_Record_Types</targetReference>
+            </connector>
+            <label>Single</label>
+        </rules>
+    </decisions>
     <decisions>
         <name>Confidential_Decision</name>
         <label>Confidential Decision</label>
         <locationX>182</locationX>
-        <locationY>566</locationY>
+        <locationY>1274</locationY>
         <defaultConnector>
             <targetReference>ConfidentialNoAssignment</targetReference>
         </defaultConnector>
@@ -101,7 +218,7 @@
         <name>ShowConfidentialDecision</name>
         <label>ShowConfidentialDecision</label>
         <locationX>380</locationX>
-        <locationY>350</locationY>
+        <locationY>1058</locationY>
         <defaultConnector>
             <targetReference>Create_Case</targetReference>
         </defaultConnector>
@@ -132,6 +249,20 @@
     <environments>Default</environments>
     <interviewLabel>Create New Case {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Create New Case</label>
+    <loops>
+        <name>Iterate_Accessible_Record_Types</name>
+        <label>Iterate Accessible Record Types</label>
+        <locationX>448</locationX>
+        <locationY>566</locationY>
+        <collectionReference>accessibleRecordTypes</collectionReference>
+        <iterationOrder>Desc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Assign_Selected_Record_Type</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Category_Sub_Category</targetReference>
+        </noMoreValuesConnector>
+    </loops>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -155,8 +286,8 @@
         <name>Create_Case</name>
         <label>Create Case</label>
         <locationX>380</locationX>
-        <locationY>950</locationY>
-        <assignRecordIdToReference>CaseId</assignRecordIdToReference>
+        <locationY>1658</locationY>
+        <assignRecordIdToReference>recordId</assignRecordIdToReference>
         <connector>
             <targetReference>Case_Redirect</targetReference>
         </connector>
@@ -206,7 +337,7 @@
         <name>Category_Sub_Category</name>
         <label>Category Sub Category</label>
         <locationX>380</locationX>
-        <locationY>242</locationY>
+        <locationY>950</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -308,7 +439,7 @@
         <name>Confidential_Confirmation</name>
         <label>Confidential Confirmation</label>
         <locationX>182</locationX>
-        <locationY>458</locationY>
+        <locationY>1166</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -339,6 +470,7 @@
                     <dataType>String</dataType>
                     <fieldText>Would you like to mark this Case as Confidential?</fieldText>
                     <fieldType>RadioButtons</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <inputParameters>
@@ -370,14 +502,14 @@
     <screens>
         <name>Error_Display</name>
         <label>Error Display</label>
-        <locationX>754</locationX>
-        <locationY>1166</locationY>
+        <locationX>928</locationX>
+        <locationY>1874</locationY>
         <allowBack>true</allowBack>
         <allowFinish>false</allowFinish>
         <allowPause>false</allowPause>
         <fields>
             <name>ErrorMessage</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 13px; color: rgb(189, 36, 36);&quot;&gt;{!$Flow.FaultMessage}&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;{!$Flow.FaultMessage}&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -386,8 +518,8 @@
     <screens>
         <name>Record_Type_Selection</name>
         <label>Record Type Selection</label>
-        <locationX>380</locationX>
-        <locationY>134</locationY>
+        <locationX>664</locationX>
+        <locationY>566</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -395,84 +527,61 @@
             <targetReference>Category_Sub_Category</targetReference>
         </connector>
         <fields>
-            <name>Record_Type_Selection_Section1</name>
-            <fieldType>RegionContainer</fieldType>
-            <fields>
-                <name>Record_Type_Selection_Section1_Column1</name>
-                <fieldType>Region</fieldType>
-                <inputParameters>
-                    <name>width</name>
-                    <value>
-                        <stringValue>4</stringValue>
-                    </value>
-                </inputParameters>
-                <isRequired>false</isRequired>
-            </fields>
-            <fields>
-                <name>Record_Type_Selection_Section1_Column2</name>
-                <fieldType>Region</fieldType>
-                <fields>
-                    <name>recordTypeSection</name>
-                    <extensionName>c:recordTypeSelector</extensionName>
-                    <fieldType>ComponentInstance</fieldType>
-                    <inputParameters>
-                        <name>selectedRecordTypeId</name>
-                        <value>
-                            <elementReference>selectedRecordTypeId</elementReference>
-                        </value>
-                    </inputParameters>
-                    <inputParameters>
-                        <name>objectApiName</name>
-                        <value>
-                            <elementReference>objectName</elementReference>
-                        </value>
-                    </inputParameters>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-                    <isRequired>true</isRequired>
-                    <outputParameters>
-                        <assignToReference>selectedRecordTypeId</assignToReference>
-                        <name>selectedRecordTypeId</name>
-                    </outputParameters>
-                </fields>
-                <inputParameters>
-                    <name>width</name>
-                    <value>
-                        <stringValue>4</stringValue>
-                    </value>
-                </inputParameters>
-                <isRequired>false</isRequired>
-            </fields>
-            <fields>
-                <name>Record_Type_Selection_Section1_Column3</name>
-                <fieldType>Region</fieldType>
-                <inputParameters>
-                    <name>width</name>
-                    <value>
-                        <stringValue>4</stringValue>
-                    </value>
-                </inputParameters>
-                <isRequired>false</isRequired>
-            </fields>
-            <isRequired>false</isRequired>
-            <regionContainerType>SectionWithoutHeader</regionContainerType>
+            <name>recordTypeSection</name>
+            <extensionName>c:recordTypeSelector</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>selectedRecordTypeId</name>
+                <value>
+                    <elementReference>selectedRecordTypeId</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>objectApiName</name>
+                <value>
+                    <elementReference>objectApiName</elementReference>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <outputParameters>
+                <assignToReference>selectedRecordTypeId</assignToReference>
+                <name>selectedRecordTypeId</name>
+            </outputParameters>
         </fields>
         <nextOrFinishButtonLabel>Next</nextOrFinishButtonLabel>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
+    <screens>
+        <name>Screen_No_Accessible_Record_Types</name>
+        <label>No Accessible Record Types</label>
+        <locationX>1192</locationX>
+        <locationY>350</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>false</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>Message_No_Accessible_Record_Types</name>
+            <fieldText>&lt;p&gt;No accessible {!objectApiName} Record Types found.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
     <start>
-        <locationX>254</locationX>
+        <locationX>660</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Record_Type_Selection</targetReference>
+            <targetReference>Get_Accessible_Record_Types</targetReference>
         </connector>
     </start>
     <status>Draft</status>
     <subflows>
         <name>Create_Case_Fault_Handler</name>
         <label>Create Case Fault Handler</label>
-        <locationX>754</locationX>
-        <locationY>1058</locationY>
+        <locationX>928</locationX>
+        <locationY>1766</locationY>
         <connector>
             <targetReference>Error_Display</targetReference>
         </connector>
@@ -509,11 +618,40 @@
         </inputAssignments>
     </subflows>
     <variables>
-        <name>CaseId</name>
+        <name>accessibleRecordTypes</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>RecordType</objectType>
+    </variables>
+    <variables>
+        <name>countAccessibleRecordTypes</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>0</scale>
+        <value>
+            <numberValue>0.0</numberValue>
+        </value>
+    </variables>
+    <variables>
+        <name>objectApiName</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
-        <isInput>true</isInput>
-        <isOutput>true</isOutput>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue>Case</stringValue>
+        </value>
+    </variables>
+    <variables>
+        <name>recordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
     </variables>
     <variables>
         <name>selectedCategory</name>

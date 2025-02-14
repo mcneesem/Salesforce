@@ -1,7 +1,6 @@
-import { LightningElement, api } from 'lwc';
+import { LightningElement , api } from 'lwc';
 
-export default class CaseCatSubcatDetailSelector extends LightningElement {    
-    
+export default class CaseCatSubcatDetailSelector extends LightningElement {
     @api selectedRecTypeId='';
     isCQAChildCase;
     @api selectedCategory;
@@ -17,10 +16,9 @@ export default class CaseCatSubcatDetailSelector extends LightningElement {
             this.showConfidential = event.detail;
         }
     }
-   
+
     handleSelectedValues() {
         const categoryComponent = this.template.querySelector('c-case-cat-subcat-detail');
-
         if (categoryComponent) {
             this.selectedCategory = categoryComponent.selectedCategory;
             this.selectedSubCategory = categoryComponent.selectedSubCategory;
@@ -30,8 +28,8 @@ export default class CaseCatSubcatDetailSelector extends LightningElement {
             this.showAllSubCategory = categoryComponent.showAllSubCategory;
         }
     }
-    
-    @api 
+
+    @api
     validate() {
         let response = {
             isValid: true
@@ -40,7 +38,7 @@ export default class CaseCatSubcatDetailSelector extends LightningElement {
             response.isValid = false;
             response.errorMessage = "Category and Subcategory are mandatory.";
         }
-
         return response;
     }
+
 }
