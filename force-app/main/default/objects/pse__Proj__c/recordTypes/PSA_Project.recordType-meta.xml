@@ -200,7 +200,6 @@
         </values>
     </picklistValues>
     <picklistValues>
-    <picklistValues>
         <picklist>NSP_Asset_Type__c</picklist>
         <values>
             <fullName>Applicant_Tracking</fullName>
