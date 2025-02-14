@@ -16,9 +16,9 @@
                 <label>ACH</label>
             </value>
             <value>
-                <fullName>ACH - Wingspan</fullName>
+                <fullName>Contingent Workforce</fullName>
                 <default>false</default>
-                <label>ACH - Wingspan</label>
+                <label>Contingent Workforce</label>
             </value>
         </valueSetDefinition>
     </valueSet>
