@@ -15,12 +15,12 @@
                 <outputField>DNB_Connect_DUNS_Number__c</outputField>
             </mappingFields>
             <mappingFields>
-                <inputField>DnB_FEIN__c</inputField>
-                <outputField>NSP_FEIN__c</outputField>
+                <inputField>DnB_Domestic_Ultimate_DUNS__c</inputField>
+                <outputField>DnB_Domestic_Ultimate_DUNS__c</outputField>
             </mappingFields>
             <mappingFields>
-                <inputField>Named_Account_Group__c</inputField>
-                <outputField>Named_Account_Group__c</outputField>
+                <inputField>DnB_FEIN__c</inputField>
+                <outputField>NSP_FEIN__c</outputField>
             </mappingFields>
             <outputObject>Account</outputObject>
         </objectMapping>
