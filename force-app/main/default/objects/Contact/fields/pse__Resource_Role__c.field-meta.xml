@@ -2,7 +2,6 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>pse__Resource_Role__c</fullName>
     <deprecated>false</deprecated>
-    <externalId>false</externalId>
     <label>Resource Role</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
@@ -122,11 +121,6 @@
                 <label>Project Coordinator</label>
             </value>
             <value>
-                <fullName>Project Manager</fullName>
-                <default>false</default>
-                <label>Project Manager</label>
-            </value>
-            <value>
                 <fullName>Intake Specialist</fullName>
                 <default>false</default>
                 <label>Intake Specialist</label>
@@ -156,10 +150,25 @@
                 <default>false</default>
                 <label>Payroll Implementer</label>
             </value>
-            <value>                                
+            <value>
                 <fullName>Software Analyst</fullName>
                 <default>false</default>
                 <label>Software Analyst</label>
+            </value>
+            <value>
+                <fullName>Consultant</fullName>
+                <default>false</default>
+                <label>Consultant</label>
+            </value>
+            <value>
+                <fullName>Project Manager</fullName>
+                <default>false</default>
+                <label>Project Manager</label>
+            </value>
+            <value>
+                <fullName>Trainer</fullName>
+                <default>false</default>
+                <label>Trainer</label>
             </value>
         </valueSetDefinition>
     </valueSet>

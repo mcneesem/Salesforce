@@ -67,6 +67,10 @@
     &apos;87&apos; , &apos;MAC Global Partners LLC&apos; ,
     &apos;88&apos; , &apos;Sinovation Ventures&apos; ,
     &apos;89&apos; , &apos;New York Angels&apos; ,
+    &apos;90&apos; , &apos;Blue Startups&apos; ,
+    &apos;91&apos; , &apos;Quartus Capital Partners&apos; ,
+    &apos;92&apos; , &apos;Store Local&apos; ,
+    &apos;93&apos; , &apos;Blue Collar Success Group&apos; ,
     TEXT( Account.WO_Asset__r.NSP_National_Account_Group__c )
   )
 )</formula>

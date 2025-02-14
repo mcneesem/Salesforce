@@ -19,10 +19,9 @@ Retirement Services - CSP Installation,401kcspinstall.merge@insperity.com,401kcs
 Retirement Services - CSP Processing,401kcspoperations.merge@insperity.com,401kcspoperations.test@insperity.com,401kcspoperations.stage@insperity.com
 Retirement Services - Processing,test.401kasfplan.merge@insperity.com,test.401kasfplan@insperity.com,test.401kasfplan_uat@insperity.com
 Salesforce Email to Case,test.salesforce_emailtocase.merge@insperity.com,test.salesforce_emailtocase@insperity.com,salesforce_emailtocase_uat@insperity.com
-TES HR Support Center,test.hrsupportcenter.merge@insperity.com,test.hrsupportcenter@insperity.com,test.hrsupportcenter_uat@insperity.com
+TES HR Support Center,test.hrsupportcenter.merge@insperity.com,test.hrsupportcenter@insperity.com,test.hrsupportcenter_uat@insperity.com
 Talent Connect,test.itcinfo.merge@insperity.com,test.itcinfo.test@insperity.com,test.itcinfo.stage@insperity.com
 Time and Attendance,test.time.support.merge@insperity.com,test.time.support@insperity.com,test.time.support_uat@insperity.com
-TimeStar Hardware,test.datacollection.merge@insperity.com,test.datacollection@insperity.com,test.datacollection_uat@insperity.com
 WX Business Team,wxbusinessteam.merge@insperity.com,wxbusinessteam.test@insperity.com,wxbusinessteam.stage@insperity.com
 WX COS Team,merge.wxcosteam@insperity.com,test.wxcosteam@insperity.com,stage.wxcosteam@insperity.com
 WX HR Services,test.wkforceacceleratnhr.merge@insperity.com,test.wkforceacceleratnhr@insperity.com,test.wkforceacceleratnhr_uat@insperity.com

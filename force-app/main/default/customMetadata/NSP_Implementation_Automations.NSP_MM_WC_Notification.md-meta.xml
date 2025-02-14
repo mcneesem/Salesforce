@@ -7,6 +7,10 @@
         <value xsi:type="xsd:string">Workers’ Comp Notification</value>
     </values>
     <values>
+        <field>NSP_Automation_Order__c</field>
+        <value xsi:type="xsd:double">12.0</value>
+    </values>
+    <values>
         <field>NSP_Class_Name__c</field>
         <value xsi:type="xsd:string">NSP_Implprofile_ServiceHelperUpdate</value>
     </values>

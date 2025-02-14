@@ -1,5 +1,5 @@
 public class NSP_InvoiceBatch implements Database.Batchable<SObject> , Database.Stateful , Schedulable {
-    // test w/ NSP_InvoiceBatch_Test (87%)
+    // test w/ NSP_InvoiceBatch_Test (84%)
 
     private Integer processedRecords = 0;
     private List<Id> invoiceIds = null;
@@ -12,6 +12,13 @@ public class NSP_InvoiceBatch implements Database.Batchable<SObject> , Database.
     }
 
     public Database.QueryLocator start( Database.BatchableContext bc ) {
+        if ( bc != null ) {
+            AsyncApexJob job = this.selectAsyncApexJob( bc.getJobId() );
+            this.sendEmailNotification(
+                job ,
+                'The batch apex job started.'
+            );
+        }
         Database.QueryLocator locator = Database.getQueryLocator(
             [
                 SELECT Id , blng__InvoiceStatus__c
@@ -64,30 +71,60 @@ public class NSP_InvoiceBatch implements Database.Batchable<SObject> , Database.
     }
 
     public void finish( Database.BatchableContext bc ) {
-        try {
-            AsyncApexJob async = [
+        if ( bc != null ) {
+            AsyncApexJob job = this.selectAsyncApexJob( bc.getJobId() );
+            this.sendEmailNotification(
+                job ,
+                'The batch apex job processed ' + job.TotalJobItems
+                + ' batches with ' + job.NumberOfErrors + ' failures.'
+                + ' Total Records :' + this.processedRecords
+            );
+        }
+    }
+
+    private AsyncApexJob selectAsyncApexJob( String jobId ) {
+        List<AsyncApexJob> jobs = null;
+        if ( String.isNotBlank( jobId ) ) {
+            jobs = [
                 SELECT Id , Status , NumberOfErrors , JobItemsProcessed , TotalJobItems , CreatedBy.Email
                 FROM AsyncApexJob
-                WHERE Id = :bc.getJobId()
+                WHERE ( Id = :jobId )
             ];
+        }
+        AsyncApexJob job = null;
+        if ( ( jobs != null ) && !jobs.isEmpty() ) {
+            job = jobs[0];
+        }
+        return job;
+    }
+
+    private void sendEmailNotification( AsyncApexJob job , String plainTextBody ) {
+        try {
             Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
             List<String> toAddresses = new List<String>();
-            toAddresses.add( async.CreatedBy.Email );
+            if ( job != null ) {
+                toAddresses.add( job.CreatedBy.Email );
+            } else {
+                toAddresses.add( UserInfo.getUserEmail() );
+            }
             mail.setToAddresses( toAddresses );
             if ( ( NSP_InvoiceBatch.bccAddresses != null ) && !NSP_InvoiceBatch.bccAddresses.isEmpty() ) {
                 mail.setBccAddresses( NSP_InvoiceBatch.bccAddresses );
             }
-            mail.setSubject( 'Draft Invoice post Batch ' + async.Status );
-            mail.setPlainTextBody(
-                'The batch Apex job processed ' + async.TotalJobItems
-                + ' batches with ' + async.NumberOfErrors + ' failures.'
-                + ' Total Records :' + this.processedRecords
-            );
+            String statusSuffix = '';
+            if ( job != null ) {
+                statusSuffix = ': ' + job.Status;
+            }
+            mail.setSubject( 'Draft Invoice Batch Job' + statusSuffix );
+            if ( String.isBlank( plainTextBody ) ) {
+                plainTextBody = '.';
+            }
+            mail.setPlainTextBody( plainTextBody );
             Messaging.sendEmail( new Messaging.SingleEmailMessage[]{ mail } );
         } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
                 NSP_InvoiceBatch.class.getName() ,
-                'finish' ,
+                'sendEmailNotification' ,
                 e
             );
         }

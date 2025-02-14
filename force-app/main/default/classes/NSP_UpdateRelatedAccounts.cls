@@ -41,10 +41,26 @@ public without sharing class NSP_UpdateRelatedAccounts {
         }
     }
 
+    public static void updateAccountStatus( Set<String> accountIdSet ) {
+        if ( LeadConversionSettings__c.getInstance( UserInfo.getUserId() ).Is_Enabled_SOQL_Fix__c ) {
+            updateAccountStatusFuture( accountIdSet );
+        } else {
+            updateAccountStatusInternal( accountIdSet );
+        }
+    }
+
     // Update Account status to 'Prospecting' once opportunity is added and there are no assets
     // @param accountIdSet Set of account ids related to opportunity.
     // @return void
-    public static void updateAccountStatus( Set<String> accountIdSet ) {
+    @future
+    public static void updateAccountStatusFuture( Set<String> accountIdSet ) {
+        updateAccountStatusInternal(accountIdSet);
+    }
+
+    // Update Account status to 'Prospecting' once opportunity is added and there are no assets
+    // @param accountIdSet Set of account ids related to opportunity.
+    // @return void
+    private static void updateAccountStatusInternal( Set<String> accountIdSet ){
         List<Account> accountTobeUpdatedList = new List<Account>();
         for ( Account accountObj : [
                     SELECT

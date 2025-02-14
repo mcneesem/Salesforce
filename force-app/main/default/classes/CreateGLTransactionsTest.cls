@@ -1,6 +1,11 @@
 @isTest private class CreateGLTransactionsTest {
 
     @testSetup private static void createTestData() {
+        Order_Settings__c orderSetting = Order_Settings__c.getOrgDefaults();
+        orderSetting.EffectiveDateStartOfMonth__c = true;
+        orderSetting.Bypass_Rule_PreventStatusChange__c = true;
+        upsert orderSetting;
+
         GLTransactionsBatchSettings__c batchSetting = new GLTransactionsBatchSettings__c();
         batchSetting.BatchSize__c = 200;
         batchSetting.IsEnabled__c = true;

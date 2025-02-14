@@ -1356,10 +1356,12 @@ public class NSP_ProjectTasksTriggerHelper {
                             SELECT
                                 Id ,
                                 NSP_Project_Task__c ,
-                                CreatedDate ,
                                 NSP_Last_Date_Wages_Paid_Through__c ,
                                 NSP_Term_Reason__c ,
-                                NSP_SubTerm_reason__c
+                                NSP_SubTerm_reason__c,
+                                Previous_Term_Date__c ,
+                                NSP_Revision__c ,
+                                CreatedDate
                             FROM NSP_Termination_Form__c
                             WHERE ( NSP_Project_Task__c IN :mapOfProjectTaskAndProject.keySet() )
                             ORDER BY CreatedDate DESC
@@ -1503,14 +1505,29 @@ public class NSP_ProjectTasksTriggerHelper {
         String mailBody = null;
         String accName = accountName+' | '+accountAIMS;
         String customUrl = URL.getOrgDomainURL().toExternalForm()+ '/'+accountId;
-        subjectString = 'WO Client ' + accName + ' has been approved for termination';
-        mailBody = 'WO Client ' + NSP_ProjectTasksTriggerHelper.buildAnchorElement( customUrl , accName );
+        String prefix = 'WO Client ';
+        if ( ( termForm != null ) && ( termForm.NSP_Revision__c == 'Yes' ) ) {
+            prefix = 'REVISION WO Client ';
+        }
+        subjectString = prefix + accName + ' has been approved for termination';
+        mailBody = prefix + NSP_ProjectTasksTriggerHelper.buildAnchorElement( customUrl , accName );
+        mailBody = NSP_ProjectTasksTriggerHelper.addTermDetails ( mailBody , termForm , assetList );
+        sendEmail( listOfToAddresses , subjectString , mailBody );
+    }
+
+    private static String addTermDetails( String mailBody , NSP_Termination_Form__c termForm , List<Asset> assetList ) {
         String termFormDetails = '';
-        if (termForm != null){  
+        if ( String.isBlank( mailBody ) ) {
+            mailBody = '';
+        }
+        if ( termForm != null ) {
             if ( termForm.NSP_Last_Date_Wages_Paid_Through__c != null ) {
                 termFormDetails = ' on ' + termForm.NSP_Last_Date_Wages_Paid_Through__c.format();
             }
             mailBody += ' has been approved for termination' + termFormDetails + '.' + '<br>';
+            if ( ( termForm.NSP_Revision__c == 'Yes' ) && ( termForm.Previous_Term_Date__c != null ) ) {
+                mailBody += 'Previous Term Date: '+ termForm.Previous_Term_Date__c.format() + '<br>';
+            }
             if ( String.isNotBlank( termForm.NSP_Term_Reason__c ) ) {
                 mailBody += 'Term Reason: ' + termForm.NSP_Term_Reason__c + '<br>';
             }
@@ -1527,7 +1544,7 @@ public class NSP_ProjectTasksTriggerHelper {
                 mailBody += NSP_ProjectTasksTriggerHelper.buildAnchorElement( assetUrl , asset.Name ) + '<br/>';
             }
         }
-        sendEmail( listOfToAddresses , subjectString , mailBody );
+        return mailBody;
     }
 
     private static void sendEmail( String[] listOfToAddresses , String subject , String body ) {

@@ -4,8 +4,8 @@
     <assignments>
         <name>Assign_AccountId</name>
         <label>Assign AccountId</label>
-        <locationX>1282</locationX>
-        <locationY>539</locationY>
+        <locationX>1370</locationX>
+        <locationY>647</locationY>
         <assignmentItems>
             <assignToReference>accountId</assignToReference>
             <operator>Assign</operator>
@@ -20,8 +20,8 @@
     <assignments>
         <name>Assign_Fault_Element_GetAccountInfo</name>
         <label>Assign Fault Element</label>
-        <locationX>1722</locationX>
-        <locationY>539</locationY>
+        <locationX>1810</locationX>
+        <locationY>647</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -37,8 +37,8 @@
     <assignments>
         <name>Assign_Fault_Element_GetLeadInfo</name>
         <label>Assign Fault Element</label>
-        <locationX>2778</locationX>
-        <locationY>539</locationY>
+        <locationX>2866</locationX>
+        <locationY>647</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -54,8 +54,8 @@
     <assignments>
         <name>Assign_Fault_Element_GetOpportunityInfo</name>
         <label>Assign Fault Element</label>
-        <locationX>754</locationX>
-        <locationY>539</locationY>
+        <locationX>842</locationX>
+        <locationY>647</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -71,8 +71,8 @@
     <assignments>
         <name>Assign_Fault_Element_UpdateAccountRecord</name>
         <label>Assign Fault Element</label>
-        <locationX>1282</locationX>
-        <locationY>863</locationY>
+        <locationX>1370</locationX>
+        <locationY>971</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -88,8 +88,8 @@
     <assignments>
         <name>Assign_Fault_Element_UpdateEventRecord</name>
         <label>Assign Fault Element</label>
-        <locationX>3306</locationX>
-        <locationY>1487</locationY>
+        <locationX>1744</locationX>
+        <locationY>1745</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -105,8 +105,8 @@
     <assignments>
         <name>Assign_Fault_Element_UpdateLeadRecord</name>
         <label>Assign Fault Element</label>
-        <locationX>2250</locationX>
-        <locationY>863</locationY>
+        <locationX>2338</locationX>
+        <locationY>971</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -121,8 +121,8 @@
     <assignments>
         <name>Assign_Fault_Element_UpdateOpportunityRecord</name>
         <label>Assign Fault Element</label>
-        <locationX>314</locationX>
-        <locationY>863</locationY>
+        <locationX>402</locationX>
+        <locationY>1079</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -138,8 +138,8 @@
     <assignments>
         <name>Assign_LeadId</name>
         <label>Assign LeadId</label>
-        <locationX>2250</locationX>
-        <locationY>539</locationY>
+        <locationX>2338</locationX>
+        <locationY>647</locationY>
         <assignmentItems>
             <assignToReference>leadId</assignToReference>
             <operator>Assign</operator>
@@ -154,8 +154,8 @@
     <assignments>
         <name>Assign_OpportunityId_and_AccountId</name>
         <label>Assign OpportunityId and AccountId</label>
-        <locationX>314</locationX>
-        <locationY>539</locationY>
+        <locationX>358</locationX>
+        <locationY>647</locationY>
         <assignmentItems>
             <assignToReference>opportunityId</assignToReference>
             <operator>Assign</operator>
@@ -184,10 +184,10 @@
     <decisions>
         <name>Check_Account_Last_Updated</name>
         <label>Check Account Last Updated</label>
-        <locationX>1282</locationX>
-        <locationY>647</locationY>
+        <locationX>1370</locationX>
+        <locationY>755</locationY>
         <defaultConnector>
-            <targetReference>Update_Event_Record_if_Status_not_Cancelled</targetReference>
+            <targetReference>Check_Event</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -207,12 +207,96 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Check_Autolaunched_Flow_Bypass</name>
+        <label>Check Autolaunched Flow Bypass</label>
+        <locationX>721</locationX>
+        <locationY>323</locationY>
+        <defaultConnector>
+            <targetReference>What_type_of_record_is_in_WhatId</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Is_Bypassed</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Setup.NSP_Trigger_Switch__c.AutoLaunchedFlows__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>Is Bypassed</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Event</name>
+        <label>Check Event</label>
+        <locationX>1744</locationX>
+        <locationY>1529</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Update_Required_Event</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.NSP_Account__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>accountId</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.NSP_Opportunity__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>opportunityId</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Event_Record_if_Status_not_Cancelled</targetReference>
+            </connector>
+            <label>Update Required (Event)</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Prevent DmlExceptions: HCM Sales Consultants can modify only WX Opportunities.</description>
+        <name>Check_HCM_Rules</name>
+        <label>Check HCM Rules</label>
+        <locationX>50</locationX>
+        <locationY>863</locationY>
+        <defaultConnector>
+            <targetReference>Update_Opportunity_Record</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>HCM_Not_Allowed</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$UserRole.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>HCM_Sales_Consultant</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Opportunity_Info.NSP_PrimaryProduct__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>WX</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Check_Event</targetReference>
+            </connector>
+            <label>HCM Not Allowed</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Check_Opportunity_Last_Updated</name>
         <label>Check Opportunity Last Updated</label>
-        <locationX>314</locationX>
-        <locationY>647</locationY>
+        <locationX>358</locationX>
+        <locationY>755</locationY>
         <defaultConnector>
-            <targetReference>Update_Event_Record_if_Status_not_Cancelled</targetReference>
+            <targetReference>Check_Event</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -233,7 +317,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Update_Opportunity_Record</targetReference>
+                <targetReference>Check_HCM_Rules</targetReference>
             </connector>
             <label>Opportunity Update Needed</label>
         </rules>
@@ -241,8 +325,8 @@
     <decisions>
         <name>Is_Event_Status_Completed_and_should_Lead_Status_be_changed_to_Working</name>
         <label>Is Event Status &quot;Completed&quot; and should Lead Status be changed to &quot;Working&quot;?</label>
-        <locationX>2250</locationX>
-        <locationY>647</locationY>
+        <locationX>2338</locationX>
+        <locationY>755</locationY>
         <defaultConnectorLabel>Lead status does not need to be updated</defaultConnectorLabel>
         <rules>
             <name>Yes_Event_is_Completed_and_Lead_should_move_to_Working</name>
@@ -270,8 +354,8 @@
     <decisions>
         <name>What_type_of_record_is_in_WhatId</name>
         <label>What type of record is in WhatId?</label>
-        <locationX>1678</locationX>
-        <locationY>323</locationY>
+        <locationX>1744</locationX>
+        <locationY>431</locationY>
         <defaultConnectorLabel>Not related to a relevant record</defaultConnectorLabel>
         <rules>
             <name>Related_to_Opportunity</name>
@@ -345,8 +429,8 @@
     <recordLookups>
         <name>Get_Account_Info</name>
         <label>Get Account Info</label>
-        <locationX>1282</locationX>
-        <locationY>431</locationY>
+        <locationX>1370</locationX>
+        <locationY>539</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Assign_AccountId</targetReference>
@@ -369,8 +453,8 @@
     <recordLookups>
         <name>Get_Lead_Info</name>
         <label>Get Lead Info</label>
-        <locationX>2250</locationX>
-        <locationY>431</locationY>
+        <locationX>2338</locationX>
+        <locationY>539</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Assign_LeadId</targetReference>
@@ -393,8 +477,8 @@
     <recordLookups>
         <name>Get_Opportunity_Info</name>
         <label>Get Opportunity Info</label>
-        <locationX>314</locationX>
-        <locationY>431</locationY>
+        <locationX>358</locationX>
+        <locationY>539</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Assign_OpportunityId_and_AccountId</targetReference>
@@ -417,10 +501,10 @@
     <recordUpdates>
         <name>Update_Account_Record</name>
         <label>Update Account Record</label>
-        <locationX>1018</locationX>
-        <locationY>755</locationY>
+        <locationX>1106</locationX>
+        <locationY>863</locationY>
         <connector>
-            <targetReference>Update_Event_Record_if_Status_not_Cancelled</targetReference>
+            <targetReference>Check_Event</targetReference>
         </connector>
         <faultConnector>
             <targetReference>Assign_Fault_Element_UpdateAccountRecord</targetReference>
@@ -444,8 +528,8 @@
     <recordUpdates>
         <name>Update_Event_Record_if_Status_not_Cancelled</name>
         <label>Update Event Record if Status not Cancelled</label>
-        <locationX>1678</locationX>
-        <locationY>1379</locationY>
+        <locationX>1480</locationX>
+        <locationY>1637</locationY>
         <faultConnector>
             <targetReference>Assign_Fault_Element_UpdateEventRecord</targetReference>
         </faultConnector>
@@ -474,8 +558,8 @@
     <recordUpdates>
         <name>Update_Lead_Record</name>
         <label>Update Lead Record</label>
-        <locationX>1986</locationX>
-        <locationY>755</locationY>
+        <locationX>2074</locationX>
+        <locationY>863</locationY>
         <faultConnector>
             <targetReference>Assign_Fault_Element_UpdateLeadRecord</targetReference>
         </faultConnector>
@@ -498,10 +582,10 @@
     <recordUpdates>
         <name>Update_Opportunity_Record</name>
         <label>Update Opportunity Record</label>
-        <locationX>50</locationX>
-        <locationY>755</locationY>
+        <locationX>138</locationX>
+        <locationY>971</locationY>
         <connector>
-            <targetReference>Update_Event_Record_if_Status_not_Cancelled</targetReference>
+            <targetReference>Check_Event</targetReference>
         </connector>
         <faultConnector>
             <targetReference>Assign_Fault_Element_UpdateOpportunityRecord</targetReference>
@@ -523,10 +607,10 @@
         <object>Opportunity</object>
     </recordUpdates>
     <start>
-        <locationX>1552</locationX>
+        <locationX>595</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>What_type_of_record_is_in_WhatId</targetReference>
+            <targetReference>Check_Autolaunched_Flow_Bypass</targetReference>
         </connector>
         <filterFormula>NOT(ISPICKVAL({!$Record.NSP_Status__c}, &quot;Cancelled&quot;))
 &amp;&amp;
@@ -541,8 +625,8 @@ NOT( {!$Setup.NSP_Trigger_Switch__c.AutoLaunchedFlows__c} )</filterFormula>
     <subflows>
         <name>Fault_Handler_subflow</name>
         <label>Fault Handler subflow</label>
-        <locationX>2250</locationX>
-        <locationY>971</locationY>
+        <locationX>2338</locationX>
+        <locationY>1079</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultElement</name>

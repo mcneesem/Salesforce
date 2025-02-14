@@ -4,6 +4,11 @@
         <enabled>true</enabled>
         <name>Checklist_Create_Sales_Engineer_Questionnaire</name>
     </customPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Opportunity.NSP_Number_of_Employees__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Checklist - Create - Sales Engineer Questionnaire</label>
 </PermissionSet>

@@ -1360,14 +1360,14 @@
             <assignToReference>recordChecklist.NSP_Number_of_Employees__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>NumberOfEmployees_SEQ_TA</elementReference>
+                <elementReference>recordOpportunity.NSP_Number_of_Employees__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>recordChecklist.NSP_On_call_pay__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>OnCallPay_SEQ_TA</elementReference>
+                <elementReference>On_Call_Pay_SEQ_TA</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -1437,7 +1437,7 @@
             <assignToReference>recordChecklist.NSP_Time_collection_option__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>TimeCollection_SEQ_TA</elementReference>
+                <elementReference>recordOpportunity.NSP_Time_Entry_Recommendation__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -2627,7 +2627,7 @@
             <label>Booking - WO</label>
         </rules>
     </decisions>
-    <description>MidMarket Closing added. &quot;Additional Notes&quot; long text and &quot;Gov&apos;t Contract Approval Email&quot; added to SEQ - WX</description>
+    <description>Updated Num of Employees and On Call Pay mapping for SEQ Time and Attendance. MidMarket Closing added. &quot;Additional Notes&quot; long text and &quot;Gov&apos;t Contract Approval Email&quot; added to SEQ - WX</description>
     <dynamicChoiceSets>
         <name>activeBenefitContinuationPeriodPicklist</name>
         <dataType>Picklist</dataType>
@@ -5323,12 +5323,10 @@
                     <isRequired>false</isRequired>
                 </fields>
                 <fields>
-                    <name>OnCallPay_SEQ_TA</name>
-                    <choiceReferences>Yes</choiceReferences>
-                    <choiceReferences>No</choiceReferences>
+                    <name>On_Call_Pay_SEQ_TA</name>
                     <dataType>String</dataType>
-                    <fieldText>On call pay?</fieldText>
-                    <fieldType>DropdownBox</fieldType>
+                    <fieldText>On Call Pay?</fieldText>
+                    <fieldType>InputField</fieldType>
                     <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>

@@ -71,7 +71,7 @@ public with sharing class NSP_sObjectOperationController {
                 ];
             } else if ( objectApiName == 'NSP_Sub_Client__c' ) {
                 results = [
-                    SELECT Name , NSP_Sub_Client__c , NSP_Account__c , NSP_Account__r.Name , NSP_Client__c
+                    SELECT Name , NSP_Sub_Client__c , NSP_Account__c , NSP_Account__r.Name , NSP_Account__r.NSP_AIMS_Client__c , NSP_Client__c
                     FROM NSP_Sub_Client__c 
                     WHERE (
                         ( Id NOT IN :recordsToExclude )

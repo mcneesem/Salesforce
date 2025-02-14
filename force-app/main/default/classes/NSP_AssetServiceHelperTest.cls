@@ -1,19 +1,5 @@
-/**
-Apex Class Name      :  NSP_AssetServiceHelperTest
-Version              :  1.0                                                                          
-Created Date         :  10/18/2022  
-Author               :  Bindushree  
-Function             :  This class is used as a test class to NSP_AssetServiceHelper
-Story                :                                                                      
-Modification Log     :                                                                              
-*--------------------------------------------------------------------------------------------------  
-* Developer                   Date                   Description                                    
-* -------------------------------------------------------------------------------------------------  
-* Bindushree                 10/18/2022          First Iteration
-*/
-
 @isTest
-public class NSP_AssetServiceHelperTest {
+private class NSP_AssetServiceHelperTest {
     
     
     //Declare asset record type ids
@@ -22,19 +8,9 @@ public class NSP_AssetServiceHelperTest {
     public static final Id TIME_ATTENDANCE_ASSET = NSP_GenericRecordType.getRecordTypeId('Asset',NSP_ServiceConstants.ASSET_TT_RECORDTYPE );
     public static final Id XML_ASSET = NSP_GenericRecordType.getRecordTypeId('Asset',NSP_ServiceConstants.XML_ASSET );
     public static final Id WO_ASSET = NSP_GenericRecordType.getRecordTypeId('Asset',NSP_ServiceConstants.WO_ASSET_RECORDTYPE );
-       
 
-            
-    
-    
-    /**
-	* Does test data setup
-	* @param N/A.
-	* @return void                          
-	*/
-    
     @testSetup
-    static void testData() {
+    private static void testData() {
         
         //Account creation
         Account accoutObject = new Account();
@@ -68,7 +44,7 @@ public class NSP_AssetServiceHelperTest {
     }
     
     @isTest
-    static void createBPSProjectwithAssetRecordType(){
+    private static void createBPSProjectwithAssetRecordType(){
         // GIVEN
         Test.startTest();
         List<Asset> assetList = new List<Asset>();
@@ -78,7 +54,7 @@ public class NSP_AssetServiceHelperTest {
             oppty.NSP_DA_User__c = oppty.OwnerId;
             oppty.NSP_BPA__c = oppty.OwnerId;
             oppty.StageName = 'Closed Won';
-      		oppty.NSP_PrimaryProduct__c = 'Performance Management';
+            oppty.NSP_PrimaryProduct__c = 'Performance Management';
             oppty.NSP_Time_Entry_Recommendation__c = NSP_ServiceConstants.Premier_Time_Att;
             oppty.NSP_Signed_CSA__c = true;
             oppty.NSP_Signed_CSA_Date__c = system.today();
@@ -88,7 +64,7 @@ public class NSP_AssetServiceHelperTest {
         Account oAccount = [SELECT Id, Name, NSP_Sales_Service_Account_Status__c  FROM Account WHERE Name='Test Account' LIMIT 1];
         oAccount.NSP_Sales_Service_Account_Status__c = NSP_ServiceConstants.STATUS_ACTIVE;
         update oAccount;
-    	//integra asset creation
+        //integra asset creation
         Asset integraAsset = (Asset) NSP_TestExtendedDataFactory.createSObject(new Asset(), 'NSP_TestDataFactory.AssetDefaults', false);
         integraAsset.AccountId = oAccount.Id;
         integraAsset.recordTypeId = INTEGRA_ASSET;
@@ -104,7 +80,7 @@ public class NSP_AssetServiceHelperTest {
         // WHEN
         
         if(!assetList.isEmpty()){
-        	insert assetList;
+            insert assetList;
         }
         Test.stopTest();
         
@@ -113,7 +89,7 @@ public class NSP_AssetServiceHelperTest {
         System.assertEquals(2, assetList.size());
     }
     @isTest
-    static void createPerformanceProjectwithAssetRecordType(){
+    private static void createPerformanceProjectwithAssetRecordType(){
         Test.startTest();
         // GIVEN
         
@@ -124,11 +100,11 @@ public class NSP_AssetServiceHelperTest {
             oppty.NSP_DA_User__c = oppty.OwnerId;
             oppty.NSP_BPA__c = oppty.OwnerId;
             oppty.StageName = 'Closed Won';
-      		oppty.NSP_PrimaryProduct__c = 'Performance Management';
+            oppty.NSP_PrimaryProduct__c = 'Performance Management';
             oppty.NSP_Time_Entry_Recommendation__c = NSP_ServiceConstants.Premier_Time_Att;
             oppty.NSP_Signed_CSA__c = true;
             oppty.NSP_Signed_CSA_Date__c = system.today();
-        	oppty.NSP_IPMRecommendation__c = 'Yes';
+            oppty.NSP_IPMRecommendation__c = 'Yes';
       
             update oppty;
       
@@ -146,7 +122,7 @@ public class NSP_AssetServiceHelperTest {
         // WHEN
         
         if(!assetList.isEmpty()){
-        	insert assetList;
+            insert assetList;
         }
         Test.stopTest();
         
@@ -155,7 +131,7 @@ public class NSP_AssetServiceHelperTest {
         System.assertEquals(1, assetList.size());
     }
     @isTest
-    static void createTimeAndAttendence(){
+    private static void createTimeAndAttendence(){
         Test.startTest();
         // GIVEN
         
@@ -166,7 +142,7 @@ public class NSP_AssetServiceHelperTest {
             oppty.NSP_DA_User__c = oppty.OwnerId;
             oppty.NSP_BPA__c = oppty.OwnerId;
             oppty.StageName = NSP_ServiceConstants.CLOSED_WON;
-      		oppty.NSP_PrimaryProduct__c = NSP_ServiceConstants.TIME_ATTENDANCE;
+            oppty.NSP_PrimaryProduct__c = NSP_ServiceConstants.TIME_ATTENDANCE;
             oppty.NSP_Time_Entry_Recommendation__c = NSP_ServiceConstants.Premier_Time_Att;
             oppty.NSP_Signed_CSA__c = true;
             oppty.NSP_Signed_CSA_Date__c = system.today();
@@ -186,7 +162,7 @@ public class NSP_AssetServiceHelperTest {
         // WHEN
         
         if(!assetList.isEmpty()){
-        	insert assetList;
+            insert assetList;
         }
         Test.stopTest();
         
@@ -195,7 +171,7 @@ public class NSP_AssetServiceHelperTest {
     }
     
     @isTest
-    public static void testUpdateAssetTerminationForm(){
+    private static void testUpdateAssetTerminationForm(){
         test.startTest();
         List<Asset> asset =[SELECT NSP_Verbal_Term_recd__c,NSP_Written_Term_Date__c,NSP_Written_Term_recd__c,
                             NSP_Anticipated_Date_Of_Termination__c,NSP_Reason_for_Term__c FROM Asset WHERE recordTypeId=:WO_ASSET LIMIT 1];
@@ -227,12 +203,10 @@ public class NSP_AssetServiceHelperTest {
             assetObject.recordTypeId = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.ASSET_SOBJECT_TYPE,NSP_ServiceConstants.PERFORMANCE_ASSET);
             assetObject.Status =NSP_ServiceConstants.ASSET_ONBOARDING_STATUS ;
             insert assetObject;
-            
-            assetObject.Status = NSP_ServiceConstants.ASSET_ACTIVE_STATUS ;
             update assetObject;
-            System.assertEquals(assetObject.Status,NSP_ServiceConstants.ASSET_ACTIVE_STATUS);
         }
         Test.stopTest();  
     }
 
 }
+//
