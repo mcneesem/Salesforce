@@ -1,0 +1,27 @@
+<template>
+    <template lwc:if={error}>
+        <div class="slds-theme_error slds-p-around_medium">
+            <p class="slds-text-color_error">Error: {error.body.message}</p>
+        </div>
+    </template>
+    <template lwc:if={recordTypes}>
+        <lightning-layout class="slds-m-top_large" horizontal-align="center">
+            <lightning-layout-item>
+                <span class="slds-m-bottom_xxx-small slds-p-top_xx-small slds-p-right_large slds-text-align_right">Select a record type</span>
+            </lightning-layout-item>
+            <lightning-layout-item>
+                <lightning-radio-group
+                    label="Select a record type"
+                    options={recordTypes}
+                    value={selectedRecordTypeId}
+                    type="radio"
+                    onchange={handleRecordTypeChange}
+                    variant="label-hidden"
+                    class="slds-m-top_large"
+                    required
+                    >
+                </lightning-radio-group>
+            </lightning-layout-item>
+        </lightning-layout>
+    </template>
+</template>
