@@ -1267,7 +1267,7 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Layout__c</fieldItem>
+                <fieldItem>Record.Layout_BOB__c</fieldItem>
                 <identifier>RecordLayout_cField</identifier>
             </fieldInstance>
         </itemInstances>

@@ -155,7 +155,7 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>Layout__c</picklist>
+        <picklist>Layout_BOB__c</picklist>
         <values>
             <fullName>BPS Generic</fullName>
             <default>false</default>
