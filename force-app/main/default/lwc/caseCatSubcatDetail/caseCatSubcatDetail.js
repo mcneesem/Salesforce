@@ -23,7 +23,7 @@ export default class CaseCatSubcatDetail extends LightningElement {
     versionOptions= [];
     @api selectedVersion = null;
     showAllDetail = false;
-    showAllSubCategory = false;
+    @api showAllSubCategory = false;
     subCategoryOptions= [];
     detailOptions= [];
     categoryOptions= [];
@@ -38,7 +38,7 @@ export default class CaseCatSubcatDetail extends LightningElement {
     @api parentId = '';
     assetId = '';
     isBPSUser = false;
-    showAllCategory = false;
+    @api showAllCategory = false;
     categoryArray = false;
     recordTypeCategoryMap = new Map();
     categorySubCategoryMap = new Map();
@@ -51,15 +51,18 @@ export default class CaseCatSubcatDetail extends LightningElement {
     recordTypeMap = new Map();
     renderCallOnce = false;
     userPartOfQueue = false;
+    isConnectedWithSelectedCategory = false;
+    isConnectedWithShowAllCategory = false;
+    isConnectedWithShowAllSubCategory = false;
 
     verifyCompensationQueue(){
         isUserInQueue()
         .then(result => {
-			this.userPartOfQueue = result;
-		})
-		.catch(error => {
+            this.userPartOfQueue = result;
+        })
+        .catch(error => {
             this.userPartOfQueue = false;
-		})
+        })
     }
 
     @wire(getAllCategoryList, {recordTypeId: '$recTypeId'})
@@ -136,6 +139,17 @@ export default class CaseCatSubcatDetail extends LightningElement {
     }
     connectedCallback() {
         this.handleProfileName();
+        if ( this.selectedCategory !== undefined ) {
+            this.isConnectedWithSelectedCategory = true;
+        }
+        if ( this.showAllCategory ) {
+            this.isConnectedWithShowAllCategory = true;
+            this.handleCategoryViewAll();
+        }
+        if ( this.showAllSubCategory ) {
+            this.isConnectedWithShowAllSubCategory = true;
+            this.handleSubCategoryViewAll();
+        }
     }
     handleProfileName(){
         getProfileName().
@@ -159,69 +173,78 @@ export default class CaseCatSubcatDetail extends LightningElement {
     }
 
     handleChange(event) {
-        if (event.currentTarget.name == 'Category') {
-            this.selectedCategory = event.target.value;
-            this.subCategoryOptions = this.createOptions(this.categoryWrapper.mCatToSubCatogories[this.selectedCategory]);
-            this.showDetail = false;
-            this.selectedDetail = null;
-            this.showVersion = false;
-            this.selectedVersion = null;
-            this.showAllDetail = false;
-            this.showAllSubCategory = false;
-            if(this.isBPSUser == false && this.subCategoryOptions.length > 0){
-                this.showAllSubCategoryButton = true;
+        const { name, fieldName, value } = event.currentTarget;
+        if (name) {
+            switch (name) {
+                case 'Category':
+                    this.handleCategoryChange(value);
+                    break;
+                case 'Sub Category':
+                    this.handleSubCategoryChange(value);
+                    break;
+                case 'Detail':
+                    this.handleDetailChange(value);
+                    break;
+                case 'Version':
+                    this.selectedVersion = event.detail.value;
+                    break;
             }
-            const selectEvent = new CustomEvent('catsubcatselect',{detail: {type:'Category',value:this.selectedCategory}});
-            this.dispatchEvent(selectEvent);
-        }
-        if (event.currentTarget.name == 'Sub Category') {
-            this.selectedSubCategory = event.target.value;
-            const selectEvent = new CustomEvent('catsubcatselect',{detail: {type:'SubCategory',value:this.selectedSubCategory}});
-            this.dispatchEvent(selectEvent);
-            
-            this.detailOptions = this.createOptions(this.categoryWrapper.mCatSubToDetails[this.selectedCategory + '-' + event.target.value]);
-            if(this.detailOptions.length > 0){
-                this.showDetail = true;
-                this.showAllDetail = false;
-            }else{
-                this.showDetail = false;
-                this.showAllDetail = false;
-                this.selectedDetail = null;
-            }
-            this.versionOptions = this.createOptions(this.categoryWrapper.mCatSubDetailToVersions[this.selectedCategory + '-' + this.selectedSubCategory + '-' + this.selectedDetail]);
-            if(this.versionOptions.length > 0){
-                this.showVersion = true;
-            }else{
-                this.showVersion = false;
-                this.selectedVersion = null;
-            }
-            this.recordTypeID = this.recordTypeCategoryMap.get(this.selectedCategory + '-' + this.selectedSubCategory);
-            if(this.selectedCategory.length>0 && this.selectedSubCategory.length>0 && this.accountID.length>0){
-                this.handlePopulateAsset(event);
-            }
-             
-            
-        }
-        if (event.currentTarget.name == 'Detail') {
-            this.selectedDetail = event.target.value;
-            this.versionOptions = this.createOptions(this.categoryWrapper.mCatSubDetailToVersions[this.selectedCategory + '-' + this.selectedSubCategory + '-' + event.target.value]);
-            if(this.versionOptions.length > 0){
-                this.showVersion = true;
-            }else{
-                this.showVersion = false;
-                this.selectedVersion = null;
-            }
-        }
-        if (event.currentTarget.name == 'Version') {
-            this.selectedVersion = event.detail.value;
-        }
-        if(event.currentTarget.fieldName = 'Type'){
+        } else if (fieldName === 'Type') {
             this.selectedType = event.detail.value;
         }
+
         if (this.disableButton) {
             this.disableButton = false;
         }
+
         this.handleDisplayConfidentialCheckBox();
+        this.dispatchChangeFields();
+    }   
+
+    handleCategoryChange(value) {
+        this.selectedCategory = value;
+        this.subCategoryOptions = this.createOptions(this.categoryWrapper.mCatToSubCatogories[value]);
+        this.resetSelection(['Detail', 'Version']);
+        this.showAllSubCategoryButton = !this.isBPSUser && this.subCategoryOptions.length > 0;
+        this.dispatchEvent(new CustomEvent('catsubcatselect', { 
+            detail: { type: 'Category', value: this.selectedCategory } 
+        }));
+    }
+
+    handleSubCategoryChange(value) {
+        this.selectedSubCategory = value;
+        this.dispatchEvent(new CustomEvent('catsubcatselect', { 
+            detail: { type: 'SubCategory', value } 
+        }));
+        this.detailOptions = this.createOptions(this.categoryWrapper.mCatSubToDetails[`${this.selectedCategory}-${value}`]);
+        this.showDetail = this.detailOptions.length > 0;
+        this.versionOptions = this.createOptions(this.categoryWrapper.mCatSubDetailToVersions[
+            `${this.selectedCategory}-${this.selectedSubCategory}-${this.selectedDetail}`
+        ]);
+        this.showVersion = this.versionOptions.length > 0;
+        this.recordTypeID = this.recordTypeCategoryMap.get(`${this.selectedCategory}-${this.selectedSubCategory}`);
+        if (this.selectedCategory && this.selectedSubCategory && this.accountID) {
+            this.handlePopulateAsset();
+        }
+    }
+
+    handleDetailChange(value) {
+        this.selectedDetail = value;
+        this.versionOptions = this.createOptions(this.categoryWrapper.mCatSubDetailToVersions[
+            `${this.selectedCategory}-${this.selectedSubCategory}-${value}`
+        ]);
+        this.showVersion = this.versionOptions.length > 0;
+    }
+
+    resetSelection(fields) {
+        if (fields.includes('Detail')) {
+            this.showDetail = false;
+            this.selectedDetail = null;
+        }
+        if (fields.includes('Version')) {
+            this.showVersion = false;
+            this.selectedVersion = null;
+        }
     }
 
     createOptions(lValues){
@@ -262,6 +285,12 @@ export default class CaseCatSubcatDetail extends LightningElement {
         this.getAllCatSubDetValues();
         this.getFiteredSubCatValues();
         this.getCatDependenciesMap();
+        if(this.isConnectedWithSelectedCategory && !this.isConnectedWithShowAllCategory){
+            this.selectedSubCategory = null;
+            this.selectedDetail = null;
+            this.handleDisplayConfidentialCheckBox();
+        }
+        this.dispatchChangeFields();
     }
 
     getAllCatSubDetValues(){
@@ -320,7 +349,6 @@ export default class CaseCatSubcatDetail extends LightningElement {
             if(this.selectedCategory.length>0 && this.selectedSubCategory.length>0 && this.accountID.length>0){
                 this.handlePopulateAsset(event);
             }
-            
             const selectEvent = new CustomEvent('catsubcatselect',{detail: {type:'SubCategory',value:this.selectedSubCategory}});
             this.dispatchEvent(selectEvent);
         }
@@ -332,12 +360,15 @@ export default class CaseCatSubcatDetail extends LightningElement {
             this.selectedVersion = event.detail.value;
         }
         this.handleDisplayConfidentialCheckBox();
+        this.dispatchChangeFields();
     }
 
     handleCategoryFilteredView(event){
         this.showAllCategory = false;
         this.showAllSubCategory = true;
         this.subCategoryOptions = this.createOptions(this.categoryWrapper.mCatToSubCatogories[this.selectedCategory]);
+        this.handleDisplayConfidentialCheckBox();
+        this.dispatchChangeFields();
     }
 
     handleSubCategoryViewAll(event){
@@ -345,13 +376,19 @@ export default class CaseCatSubcatDetail extends LightningElement {
         this.showFilterSubCategoryButton = true;
         this.showAllSubCategoryButton = false;
         this.getFiteredSubCatValues();
+        this.handleDisplayConfidentialCheckBox();
+        this.dispatchChangeFields();
     }
 
     handleSubCategoryFiltered(event){
         this.showAllSubCategory = false;
         this.showAllSubCategoryButton = true;
         this.showFilterSubCategoryButton = false;
-        this.subCategoryOptions = this.createOptions(this.categoryWrapper.mCatToSubCatogories[this.selectedCategory]);
+        if(this.categoryWrapper && this.categoryWrapper.mCatToSubCatogories && this.categoryWrapper.mCatToSubCatogories!==undefined){
+            this.subCategoryOptions = this.createOptions(this.categoryWrapper.mCatToSubCatogories[this.selectedCategory]);
+        }
+        this.handleDisplayConfidentialCheckBox();
+        this.dispatchChangeFields();
     }
 
     getCatDependenciesMap(){
@@ -373,12 +410,16 @@ export default class CaseCatSubcatDetail extends LightningElement {
         })
     }
 
+    dispatchChangeFields(){
+        this.dispatchEvent(new CustomEvent('changefields', {}));
+    }
+
     @api
     getAllComboboxes() {
         return this.template.querySelectorAll('lightning-combobox');
     }
     handleDisplayConfidentialCheckBox(){
-        let showConfidentialField = false; 
+        let showConfidentialField = false;
         if(this.selectedSubCategory != null && this.selectedCategory != null && this.selectedDetail != null){
                 let catSubCatDetail = this.selectedCategory + '-' + this.selectedSubCategory + '-' + this.selectedDetail;
                 showConfidentialField = this.categorySubCategoryDetailConfidentialMap.get(catSubCatDetail) != null ? this.categorySubCategoryDetailConfidentialMap.get(catSubCatDetail)[0] : false;
@@ -386,24 +427,28 @@ export default class CaseCatSubcatDetail extends LightningElement {
             let catSubCategory = this.selectedCategory + '-' + this.selectedSubCategory;
             showConfidentialField = this.categorySubCategoryConfidentialMap.get(catSubCategory) != null ? this.categorySubCategoryConfidentialMap.get(catSubCategory)[0] : false;
         }
-        if(showConfidentialField===true){
         const confidentailevent = new CustomEvent('confidentailevent', {
             detail: showConfidentialField
         });
         this.dispatchEvent(confidentailevent);
-        }
     }
     
     renderedCallback(){
-        if(this.selectedCategory!==undefined && this.selectedSubCategory!==undefined && this.renderCallOnce==false){
+        if(this.categoryWrapper.mCatToSubCatogories!==undefined && this.categoryWrapper.mCatSubToDetails!==undefined  && this.selectedCategory!==undefined && this.selectedSubCategory!==undefined && !this.renderCallOnce){
             this.renderCallOnce = true;
-            this.handleSubCategoryFiltered();
+            if ( !this.isConnectedWithShowAllSubCategory ) {
+                this.handleSubCategoryFiltered();
+            } else {
+                this.getFiteredSubCatValues();
+            }
             const localKey = this.selectedCategory + '-' + this.selectedSubCategory;
             if(this.selectedDetail!==undefined && this.selectedDetail!==null){
                 this.showDetail = true;
-                this.detailOptions = this.createOptions(
+                if(this.categoryWrapper.mCatSubToDetails!==undefined){
+                    this.detailOptions = this.createOptions(
                     this.categoryWrapper.mCatSubToDetails[localKey]
-                );
+                    );
+                }
             }
             if(this.selectedVersion!==undefined && this.selectedVersion!==null){
                 this.showVersion = true;
@@ -411,7 +456,7 @@ export default class CaseCatSubcatDetail extends LightningElement {
                     this.categoryWrapper.mCatSubDetailToVersions[localKey + '-' + this.selectedDetail]
                 );
             }
+            this.handleDisplayConfidentialCheckBox();
         }
     }
-
 }
