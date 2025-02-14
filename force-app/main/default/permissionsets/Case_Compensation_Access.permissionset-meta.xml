@@ -32,6 +32,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Case.NSP_Case_Contact_Name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Case.Number_of_Employees__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -55,6 +60,10 @@
         <field>Case.Survey_Jobs__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <flowAccesses>
+        <enabled>true</enabled>
+        <flow>Case_Send_Compensation_Service_Request_Email</flow>
+    </flowAccesses>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Case Compensation Access</label>
 </PermissionSet>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Transaction_Date__c</fullName>
+    <formula>CASE(
+  Type__c ,
+  &quot;Invoice&quot; , Invoice_Line__r.NSP_Invoice_Date_End_Of_Month__c ,
+  &quot;Credit_Note&quot; , Credit_Note_Line__r.blng__CreditNoteLineDate__c ,
+  &quot;Debit_Note&quot; , Debit_Note_Line__r.blng__DebitNoteLineDate__c ,
+  &quot;Revenue_Schedule&quot; ,  Revenue_Transaction__r.blng__RevenueSchedule__r.blng__FullRecognitionDate__c ,
+  &quot;Refund&quot; , Refund__r.blng__RefundDate__c ,
+  &quot;Payment&quot; , Payment__r.blng__PaymentDate__c ,
+  NULL
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Transaction Date</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Date</type>
+</CustomField>

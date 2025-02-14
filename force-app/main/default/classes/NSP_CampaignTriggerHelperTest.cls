@@ -1,22 +1,12 @@
-/**
-* Represents test class for 
-* Account trigger helper
-* Author: Rahul Singh
-* Created Date: 8/16/22
-*/
+@isTest
+private class NSP_CampaignTriggerHelperTest {
 
-@isTest(SeeAllData=false)
-public class NSP_CampaignTriggerHelperTest {
-    
-    /***********************************************************************************************
-Variables
-********************************************************************************************/
     private static final String emailencodingkey = 'UTF-8';
     private static final String languagekey = 'en_US'; 
     private static final String timezonesidkey = 'America/Los_Angeles';   
-    
+
     @testSetup
-    static void testData() {
+    private static void testData() {
        
         Profile profileobj = [SELECT Id FROM Profile WHERE Name='System Administrator'];
         Profile profileMark = [SELECT Id FROM Profile WHERE Name='Marketing Channel'];
@@ -48,26 +38,26 @@ Variables
         
         
     }
-    /***********************************************************************************************
-* MethodName: setChannelPartnerAndLoyaltyAdvisor
-* Description : This method is used to populate CPM and LA on Account on insertion based on BPA sales office group
-* ********************************************************************************************/
+
     @isTest
-    static void updateCampaignFieldOfficeTest() {
+    private static void updateCampaignFieldOfficeTest() {
         User dAUser=[Select Id , Name , Email ,NSP_SalesDivision__c,NSP_Sales_Office__c,NSP_SalesRegion__c from User WHERE Email = 'jsmithda@insperity.com' Limit 1];
         System.runAs (dAUser) {
             //Campaign creation
             Test.startTest();
-            Campaign campaignObject = new Campaign(    
-            Name = 'HelloTest',
-            OwnerId = UserInfo.getUserId());
+            Campaign campaignObject = new Campaign(
+                RecordTypeId='0124x000000yRv1AAE' ,
+                Name='HelloTest' ,
+                OwnerId=UserInfo.getUserId()
+            );
             insert campaignObject;
             Test.stopTest();
             System.assertEquals('HelloTest', campaignObject.Name);
         }
     }
+
     @isTest
-    static void updateCampaignFieldSellsOfficeTest() {
+    private static void updateCampaignFieldSellsOfficeTest() {
         
         User LAUser=[Select Id , Name , Email ,NSP_Sales_Office__c from User WHERE Email = 'jsmithyBPA@insperity.com' Limit 1];
         System.runAs (LAUser) {
@@ -81,13 +71,16 @@ Variables
             officeMapping.NSP_End_Date__c = system.today()+100;
             insert officeMapping;
 
-            Campaign campaignObject = new Campaign(    
-            Name = 'HelloTest1',
-            NSP_Sales_Office__c = '1081'
+            Campaign campaignObject = new Campaign(
+                RecordTypeId='0124x000000yRv1AAE' ,
+                Name='HelloTest1' ,
+                NSP_Sales_Office__c='1081'
             );
             insert campaignObject;
             Test.stopTest();
             System.assertEquals('HelloTest1', campaignObject.Name);
         }
     }
+
 }
+//

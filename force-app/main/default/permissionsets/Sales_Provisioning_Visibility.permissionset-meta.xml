@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Grant Tab Visibility for Sales Provisioning.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Sales Provisioning Visibility</label>
+    <tabSettings>
+        <tab>NSP_Sales_Provisioning</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+</PermissionSet>

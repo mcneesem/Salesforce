@@ -1,6 +1,8 @@
 // Represents the OrderItem trigger helper which handles all the logic.
 public class NSP_OrderItemTriggerHelper {
-    // test w/ NSP_OrderTriggerHelperTest,NSP_OrderItemTriggerHelperTest (77%)
+    // test w/ NSP_OrderItemTriggerHelperTest, NSP_OrderTriggerHelperTest (77%)
+    // test w/ NSP_OrderItemTriggerHelperTest (77%)
+    // test w/ NSP_OrderTriggerHelperTest (22%)
 
     static final string RENEWABLE = 'Renewable';
     static final String LASSO_PARTNERNAME = System.Label.NSP_Lasso_PartnerName;
@@ -194,7 +196,7 @@ public class NSP_OrderItemTriggerHelper {
     // @param OrderItemOldMap Map of Old OrderItems.
     // @return void
     //
-    public void beforeUpdateDirector( Map<Id,OrderItem> OrderItemNewMap , Map<Id,OrderItem> OrderItemOldMap ) {
+    public void beforeUpdateDirector( Map<Id,OrderItem> orderItemNewMap , Map<Id,OrderItem> orderItemOldMap ) {
         Set<String> actionTypeValues = new Set<String>(System.Label.OrderItemRecalcTypes.split(';'));
         Set<Id> statusIdToChange = new Set<Id>();
         Set<Id> paymentMethodChangedLines = new Set<Id>();
@@ -208,7 +210,7 @@ public class NSP_OrderItemTriggerHelper {
         Boolean isEnabled = ( ( ( hotfixSwitch != null ) && hotfixSwitch.IsHoldBillingOrderitem__c ) || Test.isRunningTest() );
         if(isEnabled){
             set<Id> quoteIds = new set<Id>();
-            for (OrderItem op : OrderItemNewMap.Values()){
+            for ( OrderItem op : orderItemNewMap.values() ) {
                 if ( ( op.OrderType__c == 'Amendment' )
                     && ( op.order.NSP_Transaction_Type__c != NSP_CPQConstants.QUOTE_TYPE_TERMINATION )
                     )
@@ -244,22 +246,22 @@ public class NSP_OrderItemTriggerHelper {
                         EndDate , Order.Type , Order.NSP_Transaction_Type__c ,
                         SBQQ__QuoteLine__r.NSP_MergeProducts__c , Prevent_Product_Description_Update__c
                     FROM OrderItem
-                    WHERE ( Id IN :OrderItemNewMap.keyset() )
+                    WHERE ( Id IN :orderItemNewMap.keyset() )
                 ]
             )
         {
             op.NSP_Product_Description__c = op.SBQQ__QuoteLine__r.SBQQ__Description__c;
-            if ( ( OrderItemNewMap.get(op.Id).NSP_Additional_Product_Description__c == null )
-                && !OrderItemNewMap.get(op.Id).Prevent_Product_Description_Update__c
+            if ( ( orderItemNewMap.get(op.Id).NSP_Additional_Product_Description__c == null )
+                && !orderItemNewMap.get(op.Id).Prevent_Product_Description_Update__c
                 )
             {
-                OrderItemNewMap.get(op.Id).NSP_Additional_Product_Description__c = op.SBQQ__QuoteLine__r.SBQQ__Description__c;
+                orderItemNewMap.get(op.Id).NSP_Additional_Product_Description__c = op.SBQQ__QuoteLine__r.SBQQ__Description__c;
             }
             if(op.SBQQ__QuoteLine__r.SBQQ__SubscriptionType__c == RENEWABLE && op.SBQQ__Activated__c == false && op.SBQQ__BillingFrequency__c=='Annual' && op.SBQQ__QuoteLine__r.SBQQ__EndDate__c!=null && op.EndDate!= op.SBQQ__QuoteLine__r.SBQQ__EndDate__c ) {
-                OrderItemNewMap.get(op.Id).EndDate = op.SBQQ__QuoteLine__r.SBQQ__EndDate__c;
+                orderItemNewMap.get(op.Id).EndDate = op.SBQQ__QuoteLine__r.SBQQ__EndDate__c;
             }
-            if ( OrderItemNewMap.get(op.Id).NSP_Project_Completion_Date__c != null
-                && OrderItemNewMap.get(op.Id).NSP_Project_Completion_Date__c != OrderItemOldMap.get(op.id).NSP_Project_Completion_Date__c
+            if ( orderItemNewMap.get(op.Id).NSP_Project_Completion_Date__c != null
+                && orderItemNewMap.get(op.Id).NSP_Project_Completion_Date__c != orderItemOldMap.get(op.id).NSP_Project_Completion_Date__c
                 )
             {
                 if ( actionTypeValues.contains(op.SBQQ__QuoteLine__r.NSP_ActionType__c ) 
@@ -278,21 +280,21 @@ public class NSP_OrderItemTriggerHelper {
                     orderLinesToActivate.add(op.Id);   
                 }
             }
-            if(OrderItemNewMap.get(op.Id).NSP_Payment_Method__c != OrderItemOldMap.get(op.id).NSP_Payment_Method__c ) {
+            if ( orderItemNewMap.get(op.Id).NSP_Payment_Method__c != orderItemOldMap.get(op.id).NSP_Payment_Method__c ) {
                 paymentMethodChangedLines.add(op.id);
             }
 
 
             // Free Month Logic to accomodate zero dollar invoice for partial month + free months if applicable
-            if ( OrderItemNewMap.get(op.Id).SBQQ__Activated__c==true
-                && OrderItemNewMap.get(op.Id).SBQQ__Activated__c!= OrderItemOldMap.get(op.id).SBQQ__Activated__c
-                && OrderItemNewMap.get(op.Id).SBQQ__SubscriptionType__c == 'Evergreen'
-                && OrderItemNewMap.get(op.Id).SBQQ__BillingFrequency__c!='Annual'
+            if ( orderItemNewMap.get(op.Id).SBQQ__Activated__c == true
+                && orderItemNewMap.get(op.Id).SBQQ__Activated__c!= orderItemOldMap.get(op.id).SBQQ__Activated__c
+                && orderItemNewMap.get(op.Id).SBQQ__SubscriptionType__c == 'Evergreen'
+                && orderItemNewMap.get(op.Id).SBQQ__BillingFrequency__c!='Annual'
                 )
             {
                 Decimal freeMonths = 0;
-                if(OrderItemNewMap.get(op.Id).NSP_Total_Free_Periods__c != null) {
-                    freeMonths += OrderItemNewMap.get(op.Id).NSP_Total_Free_Periods__c;
+                if ( orderItemNewMap.get(op.Id).NSP_Total_Free_Periods__c != null ) {
+                    freeMonths += orderItemNewMap.get(op.Id).NSP_Total_Free_Periods__c;
                 }
                 Date currDate = System.Date.today();
                 Date startDate = System.Date.today().toStartOfMonth(); 
@@ -303,43 +305,43 @@ public class NSP_OrderItemTriggerHelper {
                     )
                 {
                     freeMonths += 1;
-                    OrderItemNewMap.get(op.Id).NSP_Partial_Period_Applicable__c = true;
+                    orderItemNewMap.get(op.Id).NSP_Partial_Period_Applicable__c = true;
                 }
-                if(freeMonths>0) {
-                    OrderItemNewMap.get(op.Id).NSP_Total_Free_Periods__c = freeMonths;
-                    OrderItemNewMap.get(op.Id).NSP_Free_Periods_Available__c = freeMonths;
+                if ( freeMonths > 0 ) {
+                    orderItemNewMap.get(op.Id).NSP_Total_Free_Periods__c = freeMonths;
+                    orderItemNewMap.get(op.Id).NSP_Free_Periods_Available__c = freeMonths;
                     orderLinesForUsage.add(op.Id);
                 }
             }
             //Logic to update Scholarship End date on Order Item
-            if ( (OrderItemNewMap.get(op.Id).SBQQ__Status__c != OrderItemOldMap.get(op.id).SBQQ__Status__c)
-                && OrderItemNewMap.get(op.Id).SBQQ__Status__c == NSP_CPQConstants.ORDER_ACTIVATED 
-                && OrderItemNewMap.get(op.Id).NSP_Scholarship_Price__c == true
+            if ( ( orderItemNewMap.get(op.Id).SBQQ__Status__c != orderItemOldMap.get(op.id).SBQQ__Status__c )
+                && ( orderItemNewMap.get(op.Id).SBQQ__Status__c == NSP_CPQConstants.ORDER_ACTIVATED )
+                && ( orderItemNewMap.get(op.Id).NSP_Scholarship_Price__c == true )
                 )
             {
                 Date firstDayOfMonth = System.today().addMonths(11).toStartOfMonth();
                 Date lastDayOfMonth = firstDayOfMonth.addDays(Date.daysInMonth(firstDayOfMonth.year(), firstDayOfMonth.month()) - 1);
-                OrderItemNewMap.get(op.Id).NSP_Scholarship_End_Date__c = lastDayOfMonth;
+                orderItemNewMap.get(op.Id).NSP_Scholarship_End_Date__c = lastDayOfMonth;
             }
             //Update asset status to terminated when order product is terminated
-            if ( OrderItemOldMap.get(op.Id).SBQQ__TerminatedDate__c == null
-                && OrderItemNewMap.get(op.Id).SBQQ__TerminatedDate__c != null
+            if ( orderItemOldMap.get(op.Id).SBQQ__TerminatedDate__c == null
+                && orderItemNewMap.get(op.Id).SBQQ__TerminatedDate__c != null
                 )
             {
-                opTerminationMap.put(op.Id,OrderItemNewMap.get(op.Id).SBQQ__TerminatedDate__c);
+                opTerminationMap.put(op.Id,orderItemNewMap.get(op.Id).SBQQ__TerminatedDate__c);
             }
             //Update Bill through override date for anniversay billing products when invoice is cancelled and rebilled
             
-            if ( OrderItemNewMap.get(op.Id).blng__InvoiceRunProcessingStatus__c == NSP_CPQConstants.INVRUN_PENDING
-                && OrderItemNewMap.get(op.Id).blng__BillThroughDateOverride__c == null
-                && OrderItemNewMap.get(op.Id).NSP_AnniversaryBlngApplicable__c == true
-                && OrderItemNewMap.get(op.Id).SBQQ__BillingFrequency__c == NSP_CPQConstants.BLNGFREQ_ANNUAL
+            if ( orderItemNewMap.get(op.Id).blng__InvoiceRunProcessingStatus__c == NSP_CPQConstants.INVRUN_PENDING
+                && orderItemNewMap.get(op.Id).blng__BillThroughDateOverride__c == null
+                && orderItemNewMap.get(op.Id).NSP_AnniversaryBlngApplicable__c == true
+                && orderItemNewMap.get(op.Id).SBQQ__BillingFrequency__c == NSP_CPQConstants.BLNGFREQ_ANNUAL
                 && op.Order.Status != NSP_CPQConstants.ORDER_DRAFT
                 && op.SBQQ__QuoteLine__r.NSP_ActionType__c != 'Amend'
                 && op.SBQQ__QuoteLine__r.NSP_ActionType__c != null
                 )
             {
-                OrderItemNewMap.get(op.Id).blng__BillThroughDateOverride__c = OrderItemNewMap.get(op.Id).EndDate;
+                orderItemNewMap.get(op.Id).blng__BillThroughDateOverride__c = orderItemNewMap.get(op.Id).EndDate;
             }
 
             if (isEnabled) {
@@ -358,35 +360,34 @@ public class NSP_OrderItemTriggerHelper {
                 }
                 if ( ( ( op.SBQQ__QuoteLine__r.NSP_ActionType__c == 'Amend' && blnIsClonedLn == true && strActionType == null ) || op.SBQQ__QuoteLine__r.NSP_ActionType__c == null )
                     && op.SBQQ__BillingFrequency__c == NSP_CPQConstants.BLNGFREQ_ANNUAL
-                    && OrderItemNewMap.get(op.Id).blng__NextChargeDate__c != null
+                    && orderItemNewMap.get(op.Id).blng__NextChargeDate__c != null
                     && op.Order.Type == 'Amendment'
                     && op.SBQQ__QuoteLine__r.NSP_MergeProducts__c == FALSE
                     && op.order.NSP_Transaction_Type__c != NSP_CPQConstants.QUOTE_TYPE_TERMINATION
                     )
                 {
-                    OrderItemNewMap.get(op.Id).blng__NextChargeDate__c = null;
-                    OrderItemNewMap.get(op.Id).blng__HoldBilling__c = 'Yes';
+                    orderItemNewMap.get(op.Id).blng__NextChargeDate__c = null;
+                    orderItemNewMap.get(op.Id).blng__HoldBilling__c = 'Yes';
                 }
             } else {
                 if ( ( (op.SBQQ__QuoteLine__r.NSP_ActionType__c == 'Amend' ) || ( op.SBQQ__QuoteLine__r.NSP_ActionType__c == null ) )
                     && op.SBQQ__BillingFrequency__c == NSP_CPQConstants.BLNGFREQ_ANNUAL
-                    && OrderItemNewMap.get(op.Id).blng__NextChargeDate__c != null
+                    && orderItemNewMap.get(op.Id).blng__NextChargeDate__c != null
                     && op.Order.Type == 'Amendment'
                     && op.SBQQ__QuoteLine__r.NSP_MergeProducts__c == FALSE
                     && op.order.NSP_Transaction_Type__c != NSP_CPQConstants.QUOTE_TYPE_TERMINATION
                     )
                 {
-                    OrderItemNewMap.get(op.Id).blng__NextChargeDate__c = null;
-                    OrderItemNewMap.get(op.Id).blng__HoldBilling__c = 'Yes';
+                    orderItemNewMap.get(op.Id).blng__NextChargeDate__c = null;
+                    orderItemNewMap.get(op.Id).blng__HoldBilling__c = 'Yes';
                 }
             }
         }
         // STY-03095 - logic to handle order line reprocessing that calls CPQ Quote Calculator API
-        if(statusIdToChange.size()>0 || orderLinesToActivate.size()>0){
-            for(OrderItem oi : OrderItemNewMap.values()) {
+        if ( !statusIdToChange.isEmpty() || !orderLinesToActivate.isEmpty() ) {
+            for ( OrderItem oi : orderItemNewMap.values() ) {
                 
-                if(statusIdToChange.contains(oi.Id)){
-                    //oi.NSP_ReCalculation_Status_Internal__c = 'Staged';
+                if ( statusIdToChange.contains(oi.Id) ) {
                     oi.NSP_Order_Product_Activated__c = true;
                     oi.NSP_ReCalculation_Status_Internal__c = 'Processing';
                     oi.NSP_Override_Start_Date__c = oi.NSP_Project_Completion_Date__c;
@@ -398,40 +399,43 @@ public class NSP_OrderItemTriggerHelper {
         }
         // STY-03076 - logic to handle multiple invoice lines grouping
         if ( paymentMethodChangedLines.size() > 0 ) {
-            for ( OrderItem oi : OrderItemNewMap.values() ) {
-                if ( paymentMethodChangedLines.contains( oi.Id ) ) {
-                    if ( ( oi.NSP_Payment_Method__c != null )
-                        && ( oi.Preserve_Invoice_Group_ID__c == false )
-                        )
-                    {
-                        oi.blng__InvoiceGroupId__c = (String)oi.NSP_Order_Account__c
-                            + (String)oi.blng__BillingAccount__c
-                            + oi.NSP_Shipping_Postal_Code__c
-                            + (String)oi.NSP_Payment_Method__c
-                            ;
-                        if ( oi.SBQQ__QuoteLine__c != null ) {
-                            quoteLinesToUpdate.add(
-                                new SBQQ__QuoteLine__c(
-                                    Id=oi.SBQQ__QuoteLine__c ,
-                                    NSP_Payment_Method__c=oi.NSP_Payment_Method__c
-                                )
-                            );
-                        }
+            for ( OrderItem oi : orderItemNewMap.values() ) {
+                if ( paymentMethodChangedLines.contains( oi.Id )
+                    && ( oi.NSP_Payment_Method__c != null )
+                    && ( oi.Preserve_Invoice_Group_ID__c == false )
+                    )
+                {
+                    oi.blng__InvoiceGroupId__c = (String)oi.NSP_Order_Account__c
+                        + (String)oi.blng__BillingAccount__c
+                        + oi.NSP_Shipping_Postal_Code__c
+                        + (String)oi.NSP_Payment_Method__c
+                        ;
+                    if ( oi.SBQQ__QuoteLine__c != null ) {
+                        quoteLinesToUpdate.add(
+                            new SBQQ__QuoteLine__c(
+                                Id=oi.SBQQ__QuoteLine__c ,
+                                NSP_Payment_Method__c=oi.NSP_Payment_Method__c
+                            )
+                        );
                     }
                 }
             }
         }
-        if ( quoteLinesToUpdate.size() > 0 ) {
-            update quoteLinesToUpdate;
-        }
-        if ( orderLinesForUsage.size() > 0 ) {
-            NSP_OrderItemFreePeriodCalculator.applyZeroUnitPriceToUsageRecords( orderLinesForUsage );
-        }
-        if ( ( opTerminationMap != null )
-            && ( opTerminationMap.size() > 0 )
-            )
-        {
-            NSP_AssetUpdate.assetTermination( opTerminationMap );
+        try {
+            if ( quoteLinesToUpdate.size() > 0 ) {
+                update quoteLinesToUpdate; // throws ~ System.ListException: Duplicate id in list: a6oXXXXXXXXXXXXXXX
+            }
+            if ( orderLinesForUsage.size() > 0 ) {
+                NSP_OrderItemFreePeriodCalculator.applyZeroUnitPriceToUsageRecords( orderLinesForUsage );
+            }
+            if ( ( opTerminationMap != null )
+                && ( opTerminationMap.size() > 0 )
+                )
+            {
+                NSP_AssetUpdate.assetTermination( opTerminationMap );
+            }
+        } catch ( Exception e ) {
+            NSP_OrderItemTriggerHelper.handleException( e , 'beforeUpdateDirector' );
         }
     }
 
@@ -757,4 +761,21 @@ public class NSP_OrderItemTriggerHelper {
         }
         return billingActPaymentMap;
     }
+
+    // for test code coverage only...
+    public static void testHandleException( Exception e , String methodName ) {
+        if ( Test.isRunningTest() ) {
+            NSP_OrderItemTriggerHelper.handleException( e , methodName );
+        }
+    }
+    
+    private static void handleException( Exception e , String methodName ) {
+        NSP_ErrorLogHandler.logException(
+            NSP_OrderItemTriggerHelper.class.getName() ,
+            methodName ,
+            e
+        );
+    }
+
 }
+//

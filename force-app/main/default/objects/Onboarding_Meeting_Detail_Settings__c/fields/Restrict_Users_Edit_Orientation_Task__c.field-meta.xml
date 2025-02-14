@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Restrict_Users_Edit_Orientation_Task__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Switch used to bypass the Apex Custom Validation - NSP_TaskTriggerHelper</description>
+    <externalId>false</externalId>
+    <label>Restrict Users Edit Orientation Task</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

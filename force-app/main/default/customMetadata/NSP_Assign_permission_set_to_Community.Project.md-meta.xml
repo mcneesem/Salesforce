@@ -6,4 +6,8 @@
         <field>NSP_Permission_Set_Name__c</field>
         <value xsi:type="xsd:string">NSP_Project_Community_User</value>
     </values>
+    <values>
+        <field>Permission_Set_Id__c</field>
+        <value xsi:type="xsd:string">0PS4x000001a27mGAA</value>
+    </values>
 </CustomMetadata>

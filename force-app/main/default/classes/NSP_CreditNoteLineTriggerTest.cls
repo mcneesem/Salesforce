@@ -1,7 +1,13 @@
 @isTest
-public class NSP_CreditNoteLineTriggerTest {
+private class NSP_CreditNoteLineTriggerTest {
+
     @testSetup
-    static void setupTestData(){
+    private static void setupTestData() {
+        Order_Settings__c orderSetting = Order_Settings__c.getOrgDefaults();
+        orderSetting.EffectiveDateStartOfMonth__c = true;
+        orderSetting.Bypass_Rule_PreventStatusChange__c = true;
+        upsert orderSetting;
+
         NSP_InvoiceTriggerHandler.TriggerDisabled = true;
         NSP_AccountTriggerHandler.TriggerDisabled = true;
         NSP_OrderItemTriggerHandler.TriggerDisabled = true;
@@ -90,8 +96,9 @@ public class NSP_CreditNoteLineTriggerTest {
         Assert.isNotNull(objOpprtunity.Id);
         Test.stopTest();
     }
+
     @isTest
-    private static void creditLineTest(){
+    private static void creditLineTest() {
         String name='Test RevRec Rule '+NSP_CPQConstants.PROJ_REV_REC;
         List<blng__CreditNoteLine__c> credLineList= new List<blng__CreditNoteLine__c>();
         Test.startTest();
@@ -141,8 +148,9 @@ public class NSP_CreditNoteLineTriggerTest {
         system.assertEquals('Activated', orderList[0].Status);
         Test.stopTest();  
     }
+
     @isTest
-    private static void standaloneCreditNoteLineTest(){
+    private static void standaloneCreditNoteLineTest() {
         Map<String,Date> projectGoLiveDateMap= new Map<String,Date>();
         Test.startTest();
         Account objaccount  = [Select Id, Name from Account WHERE Name =: NSP_TestHelper.DEFAULT_COMPANY_NAME LIMIT 1];
@@ -172,4 +180,6 @@ public class NSP_CreditNoteLineTriggerTest {
 
         Test.stopTest(); 
     }
+
 }
+//

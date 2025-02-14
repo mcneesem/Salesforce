@@ -18,7 +18,14 @@ public class NSP_ClientSubPlanHistoryBatch implements Database.Batchable<sObject
         //query to get the client sub plan history records where start date is in future and end date is less than or equal to today
         return Database.getQueryLocator(
             [
-                SELECT Id , NSP_Start_Date__c , NSP_End_Date__c , NSP_Asset__c , NSP_Asset__r.RecordTypeId , CreatedDate
+                SELECT
+                    Id ,
+                    NSP_Start_Date__c ,
+                    NSP_End_Date__c ,
+                    NSP_Asset__c ,
+                    NSP_Asset__r.RecordTypeId ,
+                    NSP_Current_Subplan__c ,
+                    CreatedDate
                 FROM NSP_Client_Sub_Plan_History__c
                 WHERE (
                     ( NSP_Asset__c != null )
@@ -28,19 +35,21 @@ public class NSP_ClientSubPlanHistoryBatch implements Database.Batchable<sObject
                     )
                 )
                 WITH SECURITY_ENFORCED
+                ORDER BY NSP_Start_Date__c DESC
             ]
         );
     }
 
     public void execute( Database.BatchableContext bc , List<NSP_Client_Sub_Plan_History__c> scope ) {
+        // ADO-328811
+        Map<Id,NSP_Client_Sub_Plan_History__c> subPlanHistoryMap = this.buildSubPlanHistoryMap( scope );
+        //Iterate through the list of client sub plan history and add asset Ids and remove those assets which will not be terminating
         Set<Id> assetIdSet = new Set<Id>();
         Set<Id> nonTermAssetIdSet = new Set<Id>();
-        Map<Id,NSP_Client_Sub_Plan_History__c> assetClientSubPlanHistoryMap = new Map<Id,NSP_Client_Sub_Plan_History__c>();
-        //Iterate through the list of client sub plan history and add asset Ids and remove those assets which will not be terminating
-        for ( NSP_Client_Sub_Plan_History__c clientSubPlanHistoryRec : scope ) {
+        for ( NSP_Client_Sub_Plan_History__c clientSubPlanHistoryRec :  subPlanHistoryMap.values()) {
             assetIdSet.add( clientSubPlanHistoryRec.NSP_Asset__c );
             if ( ( clientSubPlanHistoryRec.NSP_Start_Date__c >= Date.today() )
-                && ( clientSubPlanHistoryRec.NSP_End_Date__c == null )
+                && ( clientSubPlanHistoryRec.NSP_End_Date__c == null && clientSubPlanHistoryRec.NSP_Current_Subplan__c == true)
                 )
             {
                 assetIdSet.remove( clientSubPlanHistoryRec.NSP_Asset__c );
@@ -72,6 +81,7 @@ public class NSP_ClientSubPlanHistoryBatch implements Database.Batchable<sObject
             )
         ];
         //Link the most recently created client sub plan history to the asset 
+        Map<Id,NSP_Client_Sub_Plan_History__c> assetClientSubPlanHistoryMap = new Map<Id,NSP_Client_Sub_Plan_History__c>();
         for(NSP_Client_Sub_Plan_History__c clientSubPlanHistoryRec: clientSubPlanHistoryList){
             if(assetClientSubPlanHistoryMap.get(clientSubPlanHistoryRec.NSP_Asset__c) == NULL){
                 assetClientSubPlanHistoryMap.put(clientSubPlanHistoryRec.NSP_Asset__c, clientSubPlanHistoryRec);                
@@ -93,33 +103,51 @@ public class NSP_ClientSubPlanHistoryBatch implements Database.Batchable<sObject
             eachNonTermAsset.Status = NSP_ServiceConstants.ASSET_ACTIVE_STATUS;
             eachNonTermAsset.NSP_Termination_Date__c = NULL;
         }
+        this.handleDmlOperations( assetRecordToUpdate , nonTermAssetToUpdate );
+    }
+
+    // ADO-328811
+    private Map<Id,NSP_Client_Sub_Plan_History__c> buildSubPlanHistoryMap( List<NSP_Client_Sub_Plan_History__c> scope ) {
+        Map<Id,NSP_Client_Sub_Plan_History__c> subPlanHistoryMap = new Map<Id,NSP_Client_Sub_Plan_History__c>();
+        if ( ( scope != null ) && !scope.isEmpty() ) {
+            for ( NSP_Client_Sub_Plan_History__c clientSubPlanHistoryRec : scope ) {
+                if ( !subPlanHistoryMap.containsKey( clientSubPlanHistoryRec.NSP_Asset__c ) ) {
+                    subPlanHistoryMap.put( clientSubPlanHistoryRec.NSP_Asset__c , clientSubPlanHistoryRec );
+                }
+            }
+        }
+        return subPlanHistoryMap;
+    }
+
+    // helper method to defeat sonar cognitive complexity...
+    private void handleDmlOperations( List<Asset> assetRecordToUpdate , List<Asset> nonTermAssetToUpdate ) {
         try {
-            if ( !assetRecordToUpdate.isEmpty() ) {
+            if ( ( assetRecordToUpdate != null ) && !assetRecordToUpdate.isEmpty() ) {
                 List<Database.SaveResult> results = Database.update(
                     assetRecordToUpdate ,
                     NSP_ClientSubPlanHistoryBatch.isAllOrNone
                 );
                 NSP_ErrorLogHandler.logResults(
                     NSP_ClientSubPlanHistoryBatch.class.getName() ,
-                    'execute:update:terminatedAssets' ,
+                    'handleDmlOperations:update:terminatedAssets' ,
                     results
                 );
             }
-            if ( !nonTermAssetToUpdate.isEmpty() ) {
+            if ( ( nonTermAssetToUpdate != null ) && !nonTermAssetToUpdate.isEmpty() ) {
                 List<Database.SaveResult> results = Database.update(
                     nonTermAssetToUpdate ,
                     NSP_ClientSubPlanHistoryBatch.isAllOrNone
                 );
                 NSP_ErrorLogHandler.logResults(
                     NSP_ClientSubPlanHistoryBatch.class.getName() ,
-                    'execute:update:nonTerminatedAssets' ,
+                    'handleDmlOperations:update:nonTerminatedAssets' ,
                     results
                 );
             }
         } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
                 NSP_ClientSubPlanHistoryBatch.class.getName() ,
-                'execute' ,
+                'handleDmlOperations' ,
                 e
             );
         }

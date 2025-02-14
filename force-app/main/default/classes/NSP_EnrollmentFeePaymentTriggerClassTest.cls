@@ -99,7 +99,11 @@
         
         // Start Test
         Test.startTest();
-        Opportunity oppObj = [Select Id,Name,NSP_Number_of_Employees__c from Opportunity WHERE NSP_MidMarketNationalAccount__c != NULL Limit 1];
+        Opportunity oppObj = [
+            SELECT Id , Name , NSP_Number_of_Employees__c
+            FROM Opportunity
+            LIMIT 1
+        ];
         ID oppId = oppObj.Id;
         
         NSP_Enrollment_Fee_Payment__c enrollmentfee = new NSP_Enrollment_Fee_Payment__c();

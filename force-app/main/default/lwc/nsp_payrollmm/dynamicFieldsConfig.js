@@ -367,6 +367,12 @@ const DYNAMIC_FIELDS = {
       dependentFields: ['Paid_sick_leave_exemption_reason__c'],
     },
   ],
+  Does_this_client_have_an_AWW__c: [
+    {
+      expValue: ["Yes"],
+      dependentFields: ["Is_client_CA_docs_submitted_for_approval__c"]
+    }
+  ],
 };
 
 export { DYNAMIC_FIELDS };

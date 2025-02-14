@@ -3,8 +3,11 @@
     <description>Group of Permission Sets to be granted to Team L1 Users.</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Team L1</label>
+    <permissionSets>Assign_App_Sales</permissionSets>
+    <permissionSets>Assign_App_Service_Operation</permissionSets>
     <permissionSets>Freeze_Users</permissionSets>
     <permissionSets>Manage_Internal_Users</permissionSets>
     <permissionSets>Monitor_Login_History</permissionSets>
+    <permissionSets>Sales_Provisioning_Visibility</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>
