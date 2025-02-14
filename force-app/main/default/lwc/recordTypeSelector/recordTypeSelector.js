@@ -1,4 +1,4 @@
-import { LightningElement, wire, api } from 'lwc';
+import { LightningElement , wire , api } from 'lwc';
 import getAccessibleRecordTypes from '@salesforce/apex/RecordTypeSelectorController.getAccessibleRecordTypes';
 
 export default class RecordTypeSelector extends LightningElement {
@@ -6,7 +6,7 @@ export default class RecordTypeSelector extends LightningElement {
     recordTypes = [];
     error;
     @api selectedRecordTypeId;
-    
+
     @wire(getAccessibleRecordTypes, { objectApiName: '$objectApiName' })
     wiredRecordTypes({ error, data }){
         if (data){
@@ -14,9 +14,7 @@ export default class RecordTypeSelector extends LightningElement {
                 label: recordType.Name,
                 value: recordType.Id
             }));
-            
             this.error = undefined;
-
             if (!this.selectedRecordTypeId && this.recordTypes.length > 0) {
                 this.selectedRecordTypeId = this.recordTypes[0].value;
             }
@@ -27,21 +25,19 @@ export default class RecordTypeSelector extends LightningElement {
         }
     }
 
-
     handleRecordTypeChange(event) {
         if (event && event.target && event.target.value) {
             this.selectedRecordTypeId = event.target.value;
         }
     }
 
-    @api 
+    @api
     validate() {
         const response = { isValid: !!this.selectedRecordTypeId };
-
         if (!response.isValid) {
-            response.errorMessage = "Please select a record type.";
+            response.errorMessage = 'Selection required.';
         }
-
         return response;
     }
+
 }
