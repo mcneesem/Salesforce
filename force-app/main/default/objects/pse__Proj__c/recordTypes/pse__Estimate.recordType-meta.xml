@@ -132,6 +132,7 @@
             <default>false</default>
         </values>
     </picklistValues>
+    <picklistValues>
         <picklist>Implemented_Type__c</picklist>
         <values>
             <fullName>Accrual Tracking</fullName>
