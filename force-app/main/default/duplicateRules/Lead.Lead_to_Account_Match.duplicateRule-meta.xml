@@ -25,7 +25,7 @@
             <outputObject>Account</outputObject>
         </objectMapping>
     </duplicateRuleMatchRules>
-    <isActive>true</isActive>
+    <isActive>false</isActive>
     <masterLabel>Lead to Account Match</masterLabel>
     <operationsOnInsert>Report</operationsOnInsert>
     <securityOption>BypassSharingRules</securityOption>
