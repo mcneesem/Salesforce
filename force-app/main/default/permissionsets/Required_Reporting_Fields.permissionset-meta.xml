@@ -98,7 +98,17 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Asset.AMR_IES_e_Verify_Client__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Asset.AMR_Multi_Year_CSA__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Asset.AMR_Union_Employees__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
