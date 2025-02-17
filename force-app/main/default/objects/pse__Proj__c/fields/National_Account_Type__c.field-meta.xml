@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>National_Account_Type__c</fullName>
+    <description>When a new value is added to National Account Type on Asset (Asset.National_Account_Type__c), make sure to update this formula and the formula for Case National Account Type  (Case. National_Account_Type__c).</description>
+    <externalId>false</externalId>
+    <formula>IF(
+  ISBLANK( TEXT( pse__Account__r.WO_Asset__r.National_Account_Type__c ) ) ,
+  null ,
+  CASE(
+    TEXT(pse__Account__r.WO_Asset__r.National_Account_Type__c) ,
+    &apos;82005&apos; , &apos;Broker&apos; ,
+    &apos;82004&apos; , &apos;Franchise&apos; ,
+    &apos;82006&apos; , &apos;Private Capital Markets&apos; ,
+    &apos;82007&apos; , &apos;Other&apos; ,
+    TEXT( pse__Account__r.WO_Asset__r.National_Account_Type__c )
+  )
+)</formula>
+    <label>National Account Type</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>
