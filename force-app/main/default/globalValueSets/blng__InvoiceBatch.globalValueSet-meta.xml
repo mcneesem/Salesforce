@@ -100,6 +100,11 @@
         <default>false</default>
         <label>Standalone Order</label>
     </customValue>
+	<customValue>
+        <fullName>Contingent Workforce</fullName>
+        <default>false</default>
+        <label>Contingent Workforce</label>
+    </customValue>
     <customValue>
         <fullName>Not Invoice Ready</fullName>
         <default>false</default>
