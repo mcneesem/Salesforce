@@ -62,6 +62,13 @@
                 <stringValue>00G4x000001fXXSEA2</stringValue>
             </value>
         </filters>
+        <filters>
+            <field>OwnerId</field>
+            <operator>StartsWith</operator>
+            <value>
+                <stringValue>005</stringValue>
+            </value>
+        </filters>
         <object>MessagingSession</object>
         <recordTriggerType>Create</recordTriggerType>
         <scheduledPaths>
