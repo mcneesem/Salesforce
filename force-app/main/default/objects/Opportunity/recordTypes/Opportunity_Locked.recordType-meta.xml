@@ -955,6 +955,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Next Generation Manufacturing</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>North American Trailer Dealer Association %28NATDA%29</fullName>
             <default>false</default>
         </values>
