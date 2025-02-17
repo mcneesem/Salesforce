@@ -13830,10 +13830,6 @@
     </flowAccesses>
     <flowAccesses>
         <enabled>false</enabled>
-        <flow>NSP_User_Perm_Check</flow>
-    </flowAccesses>
-    <flowAccesses>
-        <enabled>false</enabled>
         <flow>New_Lead_Flow</flow>
     </flowAccesses>
     <flowAccesses>
