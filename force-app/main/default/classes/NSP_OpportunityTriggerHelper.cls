@@ -15,7 +15,7 @@ Modification Log     :
 * Rahul Singh           02/02/2023            user story - 192368
 */
 public with sharing class NSP_OpportunityTriggerHelper {
-    // test w/ NSP_OpportunityTriggerHelperTest, NSP_AccountTriggerHelperTest (77%)
+    // test w/ NSP_OpportunityTriggerHelperTest, OpportunityCloseWonTest (79%)
     // test w/ NSP_OpportunityTriggerHelperTest (76%)
     // test w/ NSP_AccountTriggerHelperTest (40%)
 
@@ -810,8 +810,13 @@ public with sharing class NSP_OpportunityTriggerHelper {
         }
         List<Asset> existingAssets = [
             SELECT
-                Id , Name , AccountId , Product2Id ,
-                NSP_ProductBundle__c , Product2.NSP_ServiceAssetCategory__c
+                Id ,
+                Name ,
+                AccountId ,
+                Product2Id ,
+                NSP_ProductBundle__c ,
+                Product2.NSP_ServiceAssetCategory__c ,
+                NSP_Product_Line__c 
             FROM Asset
             WHERE (
                 ( AccountId IN :accountIds )
@@ -846,8 +851,14 @@ public with sharing class NSP_OpportunityTriggerHelper {
                         )
                     {
                         isAssetFound=FALSE;
-                    } 
-                    else{
+                    } else if ( ( ( existingAsset.NSP_Product_Line__c == NSP_SalesConstants.PROD_WA ) || ( existingAsset.NSP_Product_Line__c == NSP_salesConstants.PROD_WX ) )
+                        && ( assetMap.get(draftAsset).NSP_Product_Line__c == NSP_SalesConstants.PROD_WA )
+                        && ( assetMap.get(draftAsset).NSP_ProductBundle__c == NSP_SalesConstants.WOSS )
+                        )
+                    {
+                        //Condition to allow woss asset creation
+                        isAssetFound=FALSE;
+                    } else {
                         isAssetFound=TRUE;
                         Break;
                     }
