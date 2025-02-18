@@ -8,7 +8,7 @@
             <field>NSP_CSS_Email__c</field>
             <type>email</type>
         </recipients>
-        <senderAddress>pwc_qa@insperity.com</senderAddress>
+        <senderAddress>no-reply@insperity.com</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
         <template>Dunning_Templates/Template_for_CSS_Dunning_Case_Resolved</template>
     </alerts>
