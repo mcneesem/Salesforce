@@ -35,7 +35,34 @@
         insert eMsg;
         test.stopTest();
 
-    }     
+    }
+    
+    @isTest private static void markResponseAfterCloseTrueForPEOTest2() {   
+        test.startTest();
+        Id casePEORecordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('PEO').getRecordTypeId();
+        List<String> contactCenterEmailAddresses = System.Label.NSP_Contact_Center_Email_Addresses.toLowerCase().split( ',' );
+
+        Case caseRecord = [SELECT id, Status FROM  Case WHERE Status = 'Open' LIMIT 1];
+        caseRecord.NSP_Rating__c = 'Neutral';
+        caseRecord.Status = 'Closed';
+        caseRecord.RecordTypeId = casePEORecordTypeId;
+        caseRecord.NSP_Category__c = 'Adaption';
+        caseRecord.NSP_SubCategory__c = 'Claim';              
+        update caseRecord;
+        //Email message creation
+        EmailMessage eMsg = new EmailMessage ();
+        eMsg.FromAddress = 'test@test.com';
+        eMsg.Incoming = True;
+        eMsg.ToAddress= contactCenterEmailAddresses[0];
+        eMsg.Subject = 'Test email Subject';
+        eMsg.HtmlBody = 'Test email body';
+        eMsg.ParentId = caseRecord.id;
+        
+        //inserting Email message
+        insert eMsg;
+        test.stopTest();
+
+    }
 
     @isTest  
     private static void reOpenCaseForBPSTest() {  
@@ -242,13 +269,44 @@
     @isTest
     private static void sendEmailToHealthWelfareExternal(){
         test.startTest();
+        List<String> lstHealthWelfareSection = System.Label.NSP_Health_Welfare_Section_125.toLowerCase().split( ',' );
         List<String> caseFields = new List<String>{'Id', 'NSP_Confidential__c', 'NSP_Category__c', 'Status'};
             String query = new NSP_QueryBuilder('Case', caseFields)
             .addFilter('Status', NSP_ServiceConstants.CASE_OPEN_STATUS)
             .addLimit(1).build();
-        Case caseRecord = Database.query(query);   
+        Case caseRecord = Database.query(query);  
+        
+        EmailMessageTriggerSettings__c switchEnabled = EmailMessageTriggerSettings__c.getInstance( UserInfo.getUserId() );
+        switchEnabled.IsHealthAndWelfareEmailMessageEnabled__c = false;
+        upsert switchEnabled;
+        
         EmailMessage eMessage = new EmailMessage ();
-        eMessage.ToAddress = 'test.customer.service@insperity.com';
+        eMessage.ToAddress = lstHealthWelfareSection[0];
+        eMessage.Subject = 'test';
+        eMessage.Incoming = true;
+        eMessage.FromAddress = 'test@insperity.com';
+        eMessage.ParentId = caseRecord.Id;
+        Database.insert(eMessage);
+        system.assertEquals(eMessage.Subject, 'test');
+        test.stopTest();
+    }
+    
+    @isTest
+    private static void sendEmailToHealthWelfareExternal2(){
+        test.startTest();
+        List<String> lstHealthWelfareSection = System.Label.NSP_Health_Welfare_Section_125.toLowerCase().split( ',' );
+        List<String> caseFields = new List<String>{'Id', 'NSP_Confidential__c', 'NSP_Category__c', 'Status'};
+            String query = new NSP_QueryBuilder('Case', caseFields)
+            .addFilter('Status', NSP_ServiceConstants.CASE_OPEN_STATUS)
+            .addLimit(1).build();
+        Case caseRecord = Database.query(query);  
+        
+        EmailMessageTriggerSettings__c switchEnabled = EmailMessageTriggerSettings__c.getInstance( UserInfo.getUserId() );
+        switchEnabled.IsHealthAndWelfareEmailMessageEnabled__c = false;
+        upsert switchEnabled;
+        
+        EmailMessage eMessage = new EmailMessage ();
+        eMessage.ToAddress = 'test.service@insperity.com';
         eMessage.Subject = 'test';
         eMessage.Incoming = true;
         eMessage.FromAddress = 'test@pwc.com';
@@ -321,7 +379,29 @@
         Map<Case,EmailMessage> CaseToSubjectMap = new Map<Case,EmailMessage>();
         Map<Case,EmailMessage> ParentCaseToEmailMessageMap = new Map<Case,EmailMessage>();
         List<Case> caseList = new List<Case>();
+        
+        EmailMessageTriggerSettings__c messageTriggerSetting = EmailMessageTriggerSettings__c.getOrgDefaults();
+        messageTriggerSetting.isRelatedEmailMessageEnabled__c = true;
+        upsert messageTriggerSetting;
 
+        Case newCase = (Case)NSP_TestExtendedDataFactory.createSObject(new Case(), 'NSP_TestDataFactory.CaseDefaults', false);
+        insert newCase;
+        newCase.NSP_Rating__c = 'Neutral';
+        newCase.Status = 'Closed';
+        newCase.RecordTypeId = casePEORecordTypeId;
+        newCase.NSP_Category__c = 'Adaption';
+        newCase.NSP_SubCategory__c = 'Claim';
+        newCase.NSP_Date_Closed__c = Date.Today().addDays(-10);
+        newCase.AccountId = acc.Id;
+        newCase.assetId = null;
+        newCase.ContactId = null;
+        newCase.NSP_Category__c = 'Test Category';
+        newCase.NSP_SubCategory__c = 'Test Sub-Category';
+        newCase.Priority = 'Test Priority';
+        newCase.Origin = 'Test Origin';
+        newCase.Subject = 'Test Subject';
+        update newCase;
+        
         Case caseRecord = [SELECT id, Status FROM  Case WHERE Status = 'Open' LIMIT 1];
         caseRecord.NSP_Rating__c = 'Neutral';
         caseRecord.Status = 'Closed';
@@ -337,6 +417,7 @@
         caseRecord.Priority = 'Test Priority';
         caseRecord.Origin = 'Test Origin';
         caseRecord.Subject = 'Test Subject';
+        caseRecord.ParentId = newCase.Id;
         update caseRecord;
         
         
@@ -347,10 +428,123 @@
         eMsg.ToAddress= 'integrasupport@insperity.com';
         eMsg.Subject = 'Test email Subject';
         eMsg.HtmlBody = 'Test email body';
-        eMsg.ParentId = caseRecord.id;
+        eMsg.ParentId = newCase.id;
         
         //inserting Email message
         insert eMsg;
+        //Create ContentVersion Test Record
+        ContentVersion content=new ContentVersion(); 
+        content.Title='Test_Header_Picture1'; 
+        content.PathOnClient='/' + content.Title + '.jpg'; 
+        Blob bodyBlob=Blob.valueOf('Unit Test ContentVersion Body'); 
+        content.VersionData=bodyBlob;
+        content.origin = 'H';
+        //inserting Content Version record.
+        insert content;
+
+        // Create ContentDocumentLink Test Record
+        ContentDocumentLink contentlink=new ContentDocumentLink();
+        contentlink.LinkedEntityId=eMsg.id;
+        contentlink.contentdocumentid=[select contentdocumentid from contentversion where id =: content.id].contentdocumentid;
+        contentlink.ShareType = 'I';
+        contentlink.Visibility = 'AllUsers'; 
+        //inserting ContentDocumentLink record.
+        insert contentlink;
+        
+        CaseToSubjectMap.put(caseRecord,eMsg);
+        ParentCaseToEmailMessageMap.put(caseRecord,eMsg);
+        caseList.add(caseRecord);
+        
+        NSP_EmailMessageTriggerHelper.createCaseFromEmail(CaseToSubjectMap, contactCenterQueueId, null, null);                                                                      
+        NSP_EmailMessageTriggerHelper.updateRelatedCaseOnEmailMessage(ParentCaseToEmailMessageMap,caseList);
+        
+        test.stopTest();        
+
+    }
+    
+    /***********************************************************************************************
+    * MethodName : markResponseAfterCloseMoreThanFiveForPEOTest2
+    * Description : This method is used to test if Mark Response field and creation of Child case base on Case closed Date
+    * ********************************************************************************************/ 
+    @isTest private static void markResponseAfterCloseMoreThanFiveForPEOTest2() {
+        test.startTest();
+        Account acc = new Account(Name = 'test acc');
+        Id casePEORecordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('PEO').getRecordTypeId();
+        ID contactCenterQueueId = ([SELECT ID FROM Group WHERE Type = :QUEUE AND DeveloperNAME = :CONTACTCENTERQUEUE]).ID;
+        Map<Case,EmailMessage> CaseToSubjectMap = new Map<Case,EmailMessage>();
+        Map<Case,EmailMessage> ParentCaseToEmailMessageMap = new Map<Case,EmailMessage>();
+        List<Case> caseList = new List<Case>();
+        
+        EmailMessageTriggerSettings__c messageTriggerSetting = EmailMessageTriggerSettings__c.getOrgDefaults();
+        messageTriggerSetting.isRelatedEmailMessageEnabled__c = false;
+        upsert messageTriggerSetting;
+
+        Case newCase = (Case)NSP_TestExtendedDataFactory.createSObject(new Case(), 'NSP_TestDataFactory.CaseDefaults', false);
+        insert newCase;
+        newCase.NSP_Rating__c = 'Neutral';
+        newCase.Status = 'Closed';
+        newCase.RecordTypeId = casePEORecordTypeId;
+        newCase.NSP_Category__c = 'Adaption';
+        newCase.NSP_SubCategory__c = 'Claim';
+        newCase.NSP_Date_Closed__c = Date.Today().addDays(-10);
+        newCase.AccountId = acc.Id;
+        newCase.assetId = null;
+        newCase.ContactId = null;
+        newCase.NSP_Category__c = 'Test Category';
+        newCase.NSP_SubCategory__c = 'Test Sub-Category';
+        newCase.Priority = 'Test Priority';
+        newCase.Origin = 'Test Origin';
+        newCase.Subject = 'Test Subject';
+        update newCase;
+        
+        Case caseRecord = [SELECT id, Status FROM  Case WHERE Status = 'Open' LIMIT 1];
+        caseRecord.NSP_Rating__c = 'Neutral';
+        caseRecord.Status = 'Closed';
+        caseRecord.RecordTypeId = casePEORecordTypeId;
+        caseRecord.NSP_Category__c = 'Adaption';
+        caseRecord.NSP_SubCategory__c = 'Claim';
+        caseRecord.NSP_Date_Closed__c = Date.Today().addDays(-10);
+        caseRecord.AccountId = acc.Id;
+        caseRecord.assetId = null;
+        caseRecord.ContactId = null;
+        caseRecord.NSP_Category__c = 'Test Category';
+        caseRecord.NSP_SubCategory__c = 'Test Sub-Category';
+        caseRecord.Priority = 'Test Priority';
+        caseRecord.Origin = 'Test Origin';
+        caseRecord.Subject = 'Test Subject';
+        caseRecord.ParentId = newCase.Id;
+        update caseRecord;
+        
+        
+        //Email message creation
+        EmailMessage eMsg = new EmailMessage ();
+        eMsg.FromAddress = 'test@test.com';
+        eMsg.Incoming = True;
+        eMsg.ToAddress= 'integrasupport@insperity.com';
+        eMsg.Subject = 'Test email Subject';
+        eMsg.HtmlBody = 'Test email body';
+        eMsg.ParentId = newCase.id;
+        
+        //inserting Email message
+        insert eMsg;
+        //Create ContentVersion Test Record
+        ContentVersion content=new ContentVersion(); 
+        content.Title='Test_Header_Picture1'; 
+        content.PathOnClient='/' + content.Title + '.jpg'; 
+        Blob bodyBlob=Blob.valueOf('Unit Test ContentVersion Body'); 
+        content.VersionData=bodyBlob;
+        content.origin = 'H';
+        //inserting Content Version record.
+        insert content;
+
+        // Create ContentDocumentLink Test Record
+        ContentDocumentLink contentlink=new ContentDocumentLink();
+        contentlink.LinkedEntityId=eMsg.id;
+        contentlink.contentdocumentid=[select contentdocumentid from contentversion where id =: content.id].contentdocumentid;
+        contentlink.ShareType = 'I';
+        contentlink.Visibility = 'AllUsers'; 
+        //inserting ContentDocumentLink record.
+        insert contentlink;
         
         CaseToSubjectMap.put(caseRecord,eMsg);
         ParentCaseToEmailMessageMap.put(caseRecord,eMsg);
