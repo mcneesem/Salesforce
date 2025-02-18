@@ -3,7 +3,11 @@
     <fullName>AMR_Union_Employees__c</fullName>
     <description>This field is created to be used in Docusign only, so that it can display &quot;Yes&quot; instead of &quot;true&quot; and blank instead of &quot;false&quot;</description>
     <externalId>false</externalId>
-    <formula>IF(NSP_Union_Employees__c, &quot;Yes&quot;,&quot;&quot;)</formula>
+    <formula>IF(
+  NSP_Union_Employees__c ,
+  &quot;Yes&quot; ,
+  &quot;&quot;
+)</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>AMR Union Employees</label>
     <required>false</required>
