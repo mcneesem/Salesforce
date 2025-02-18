@@ -11,6 +11,7 @@
     <permissionSets>Basic_SetUp_Config_Access</permissionSets>
     <permissionSets>Bypass_Campaign_Dates</permissionSets>
     <permissionSets>Bypass_Task_Event_Cancelled_Status</permissionSets>
+    <permissionSets>Campaign_Update_Sales_Office_Info_Owner_Assigned</permissionSets>
     <permissionSets>Checklist_Create_MidMarket_Closing</permissionSets>
     <permissionSets>Checklist_Create_Sold_To_Paid</permissionSets>
     <permissionSets>Checklist_Read_Create</permissionSets>
