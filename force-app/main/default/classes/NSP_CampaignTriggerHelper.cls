@@ -23,8 +23,6 @@ public class NSP_CampaignTriggerHelper {
     set<String> officeSet = new set<String>();
     Map<Id,User> ownerBasedUserMap = CustomPermissionController.getPermittedUsersMap('Campaign_Update_Sales_Office_Info_Owner_Assigned');
     Map<Id,User> campaignBasedUserMap = CustomPermissionController.getPermittedUsersMap('Campaign_Update_Sales_Office_Info_Campaign_Assigned');
-    /*set<string> ownerRoleNameSet = new set<string>{'District Administrator','District Manager','Business Performance Consultant','MidMarket Administrator','BPS Administrator','BPS Sales Manager','Business Performance Consultant','HCM Sales Consultant'};
-    set<string> salesRoleNameSet = new set<string>{'Loyalty Advisor','Channel Program Manager','Marketing Operations Manager'};*/
     Map<Id,User> userMap = new Map<Id,User>([SELECT Id,Name,Userrole.Name from user where Name != null]);
         
     for(Campaign newCampaign : newList)
