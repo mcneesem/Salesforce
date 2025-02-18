@@ -2,7 +2,11 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>AMR_IES_e_Verify_Client__c</fullName>
     <externalId>false</externalId>
-    <formula>IF(NSP_IES_e_Verify_Client__c,&quot;Yes&quot;,&quot;&quot;)</formula>
+    <formula>IF(
+  NSP_IES_e_Verify_Client__c ,
+  &quot;Yes&quot; ,
+  &quot;&quot;
+)</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>AMR IES e Verify Client</label>
     <required>false</required>
