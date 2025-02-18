@@ -8,7 +8,7 @@
     OwnerId = &quot;00G4x000001fXXQEA2&quot;,
     OwnerId = &quot;00G4x000001fXXREA2&quot;,
     OwnerId = &quot;00G4x000001fXXSEA2&quot;,
-    BEGINS(OwnerId, &quot;005&quot;)
+    BEGINS(Owner:User.UserRole.DeveloperName, &quot;Contact_Center_&quot;)
 )</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Is Case Follows</label>
