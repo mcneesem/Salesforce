@@ -1437,7 +1437,7 @@
             <assignToReference>recordChecklist.NSP_Time_collection_option__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>TimeCollection_SEQ_TA</elementReference>
+                <elementReference>recordOpportunity.NSP_Time_Entry_Recommendation__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
