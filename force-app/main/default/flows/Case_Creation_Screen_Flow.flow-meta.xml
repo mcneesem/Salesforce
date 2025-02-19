@@ -247,8 +247,8 @@
         </rules>
     </decisions>
     <environments>Default</environments>
-    <interviewLabel>Create New Case {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Create New Case</label>
+    <interviewLabel>Case Creation Screen Flow {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Case Creation Screen Flow</label>
     <loops>
         <name>Iterate_Accessible_Record_Types</name>
         <label>Iterate Accessible Record Types</label>
@@ -595,13 +595,13 @@
         <inputAssignments>
             <name>faultElement</name>
             <value>
-                <elementReference>Create_Case</elementReference>
+                <stringValue>Create_Case</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
             <name>faultFlow</name>
             <value>
-                <stringValue>Create New Case</stringValue>
+                <stringValue>Case_Creation_Screen_Flow</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
