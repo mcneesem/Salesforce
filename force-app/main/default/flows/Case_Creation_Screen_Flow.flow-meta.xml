@@ -587,12 +587,6 @@
         </connector>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
-            <name>faultedOrg</name>
-            <value>
-                <stringValue>devservb</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
             <name>faultElement</name>
             <value>
                 <stringValue>Create_Case</stringValue>
@@ -608,12 +602,6 @@
             <name>faultMessage</name>
             <value>
                 <elementReference>$Flow.FaultMessage</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>triggeringFlow</name>
-            <value>
-                <stringValue>Create New Case</stringValue>
             </value>
         </inputAssignments>
     </subflows>
