@@ -1360,7 +1360,7 @@
             <assignToReference>recordChecklist.NSP_Number_of_Employees__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>NumberOfEmployees_SEQ_TA</elementReference>
+                <elementReference>recordOpportunity.NSP_Number_of_Employees__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
