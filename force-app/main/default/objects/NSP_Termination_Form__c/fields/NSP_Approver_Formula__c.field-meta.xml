@@ -4,44 +4,23 @@
     <description>created as part of DF_03863</description>
     <externalId>false</externalId>
     <formula>IF(
+  ( RecordType.DeveloperName = &apos;NSP_Credit_Specialist_Form&apos; ) ,
+  &apos;Termination Team&apos; ,
+  IF(
     AND(
-        OR(
-            RecordType.DeveloperName = &apos;NSP_Credit_Specialist_Form&apos;,
-            RecordType.DeveloperName = &apos;NSP_Client_Reinstatement&apos;
-        ),
-        NOT(
-            AND(
-                CreatedBy.UserRole.DeveloperName = &apos;Payroll_Specialist&apos;,
-                OR(
-                    $Profile.Name = &apos;System Administrator&apos;,
-                    $Profile.Name = &apos;System Admin Lite&apos;
-                )
-            )
-        )
-    ),
-    &apos;Termination Team&apos;,
+      ( RecordType.DeveloperName = &apos;NSP_Client_Reinstatement&apos; ) ,
+      ( CreatedBy.UserRole.DeveloperName = &apos;Finance_Service_User&apos; )
+    ) ,
+    &apos;Termination Team&apos; ,
     IF(
-        AND(
-            CreatedBy.UserRole.DeveloperName = &apos;Finance_User&apos;,
-            OR(
-                $Profile.Name = &apos;System Administrator&apos;,
-                $Profile.Name = &apos;System Admin Lite&apos;
-            )
-        ),
-        &apos;Termination Team&apos;,
-        IF(
-            CreatedBy.UserRole.DeveloperName = &apos;Payroll_Specialist&apos;,
-            NSP_Approver__r.FirstName &amp; &apos; &apos; &amp; NSP_Approver__r.MiddleName &amp; &apos; &apos; &amp; NSP_Approver__r.LastName,
-            IF(
-                AND(
-                    CreatedBy.UserRole.DeveloperName = &apos;Credit_Specialist&apos;,
-                    $UserRole.DeveloperName != &apos;System_Admin&apos;
-                ),
-                NSP_Approver__r.FirstName &amp; &apos; &apos; &amp; NSP_Approver__r.MiddleName &amp; &apos; &apos; &amp; NSP_Approver__r.LastName,
-                &apos;Termination Team&apos;
-            )
-        )
+      AND(
+        ( RecordType.DeveloperName = &apos;NSP_Client_Reinstatement&apos; ) ,
+        ( CreatedBy.UserRole.DeveloperName = &apos;Payroll_Specialist&apos; )
+      ) ,
+      NSP_Approver__r.FirstName &amp; &apos; &apos; &amp; NSP_Approver__r.MiddleName &amp; &apos; &apos; &amp; NSP_Approver__r.LastName ,
+      NSP_Approver__r.FirstName &amp; &apos; &apos; &amp; NSP_Approver__r.MiddleName &amp; &apos; &apos; &amp; NSP_Approver__r.LastName
     )
+  )
 )</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Approver</label>
