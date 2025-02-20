@@ -1,6 +1,7 @@
 public with sharing class NSP_TaskTriggerHelper {
-    // test w/ NSP_TaskTriggerHelperTest, NSP_CreateReferralLeadTest (82%)
-    // test w/ NSP_TaskTriggerHelperTest (81%)
+    // test w/ NSP_TaskTriggerHelperTest, LeadLastActivityDateHelperTest, NSP_CreateReferralLeadTest (85%)
+    // test w/ NSP_TaskTriggerHelperTest (84%)
+    // test w/ LeadLastActivityDateHelperTest (35%)
     // test w/ NSP_CreateReferralLeadTest (34%)
 
     public static Id referralRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Task' , 'Referral_Task' );
@@ -138,56 +139,7 @@ public with sharing class NSP_TaskTriggerHelper {
                     whoIds.add( record.WhoId );
                 }
             }
-            List<Lead> relatedLeads = null;
-            if ( ( whoIds != null ) && !whoIds.isEmpty() ) {
-                relatedLeads = [
-                    SELECT Id , DNB_Connect_DUNS_Number__c , LastActivityDate
-                    FROM Lead
-                    WHERE (
-                        ( Id IN : whoIds )
-                        AND ( DNB_Connect_DUNS_Number__c != null )
-                        AND ( LastActivityDate != null )
-                    )
-                ];
-            }
-            Map<String,Date> lastActivityDateMap = new Map<String,Date>();
-            if ( ( relatedLeads != null ) && !relatedLeads.isEmpty() ) {
-                for ( Lead relatedLead : relatedLeads ) {
-                    lastActivityDateMap.put(
-                        relatedLead.DNB_Connect_DUNS_Number__c ,
-                        relatedLead.LastActivityDate
-                    );
-                }
-            }
-            List<Lead> leadsWithDuns = null;
-            if ( ( lastActivityDateMap != null ) && !lastActivityDateMap.isEmpty() ) {
-                leadsWithDuns = [
-                    SELECT Id , DNB_Connect_DUNS_Number__c , LastActivityDate , NSP_Last_Activity__c 
-                    FROM Lead
-                    WHERE ( DNB_Connect_DUNS_Number__c IN :lastActivityDateMap.keySet() )
-                    ORDER BY LastActivityDate DESC NULLS LAST
-                ];
-            }
-            List<Lead> leadsToUpdate = new List<Lead> ();
-            if ( ( leadsWithDuns != null ) && !leadsWithDuns.isEmpty() ) {
-                Date leadLastActivityDate = leadsWithDuns[0].LastActivityDate;
-                if ( leadLastActivityDate != null ) {
-                    for ( Lead leadWithDuns : leadsWithDuns ) {
-                        if ( leadWithDuns.NSP_Last_Activity__c != leadLastActivityDate ) {
-                            leadWithDuns.NSP_Last_Activity__c = leadLastActivityDate;
-                            leadsToUpdate.add( leadWithDuns );
-                        }
-                    }
-                }
-            }
-            if ( !leadsToUpdate.isEmpty() ) {
-                List<Database.SaveResult> results = Database.update( leadsToUpdate , false );
-                NSP_ErrorLogHandler.logResults(
-                    NSP_TaskTriggerHelper.class.getName() ,
-                    'updateActivityDate:update' ,
-                    results
-                );
-            }
+            LeadLastActivityDateHelper.updateLeadLastActivityDate( whoIds );
         } catch ( Exception e ) {
             NSP_TaskTriggerHelper.handleException( e , 'updateActivityDate' );
         }
@@ -340,25 +292,26 @@ public void updateActivitySales(List<Task> newList,Map<Id,Task> OldTaskMap){
         }
     }
 
-    private void checkOpportunityStageCriteria(List<Task> newList) {
+    private void checkOpportunityStageCriteria( List<Task> newList ) {
         List<Id> updateOpportunityIds = new List<Id>();
         if ( NSP_TaskTriggerHelper.Is_Enabled_WO_WS_Stage_Entry ) {
-            for(Task task : newList) {
-                if(task != NULL && task.WhatId != NULL && task.Subject != NULL) {
-                    if ( task.Status == NSP_SalesConstants.COMPLETED
-                        && ( task.WhatId.getSObjectType() == Opportunity.getSObjectType() )
-                        && (
-                            task.Subject.equalsIgnoreCase( System.Label.Business_Profile_Started )
-                            || task.Subject.equalsIgnoreCase( System.Label.Bid_Generated_in_AIMS )
-                            || task.Subject.equalsIgnoreCase( System.Label.Bid_Sent_to_Pricing_and_Review )
-                            )
+            for ( Task task : newList ) {
+                if ( ( task != null )
+                    && ( task.WhatId != null )
+                    && ( task.Subject != null )
+                    && ( task.Status == NSP_SalesConstants.COMPLETED )
+                    && ( task.WhatId.getSObjectType() == Opportunity.getSObjectType() )
+                    && (
+                        task.Subject.equalsIgnoreCase( System.Label.Business_Profile_Started )
+                        || task.Subject.equalsIgnoreCase( System.Label.Bid_Generated_in_AIMS )
+                        || task.Subject.equalsIgnoreCase( System.Label.Bid_Sent_to_Pricing_and_Review )
                         )
-                    {
-                        updateOpportunityIds.add(task.WhatId);
-                    }
+                    )
+                {
+                    updateOpportunityIds.add( task.WhatId );
                 }
             }
-            AutomateOpportunityStage.automateOpportunityStageAsync(updateOpportunityIds);
+            AutomateOpportunityStage.automateOpportunityStageAsync( updateOpportunityIds );
         }
     }
 

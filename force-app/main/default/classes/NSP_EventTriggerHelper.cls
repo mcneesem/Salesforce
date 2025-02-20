@@ -1,14 +1,14 @@
-/**
-* Represents the Event trigger helper which handles all the logic.
-*/
-public class NSP_EventTriggerHelper {
-    // test w/ NSP_EventTriggerHelperTest (88%)
-    
-    public static String DISCOVERY_CALL = 'Discovery Call';
-    public static String WO_PROPOSAL = 'WO Proposal';
+public with sharing class NSP_EventTriggerHelper {
+    // test w/ NSP_EventTriggerHelperTest, LeadLastActivityDateHelperTest (82%)
+    // test w/ NSP_EventTriggerHelperTest (82%)
+    // test w/ LeadLastActivityDateHelperTest (35%)
+
+    private static final String DISCOVERY_CALL = 'Discovery Call';
+    private static final String WO_PROPOSAL = 'WO Proposal';
     private static final String EMPTY_STRING = '';
     private static final String WORD_SEPARATOR =  ' : ';
-    private static Boolean Is_Enabled_WO_WS_Stage_Entry = OpportunityStageSettings__c.getInstance(UserInfo.getUserId()).Is_Enabled_WO_WS_Stage_Entry__c;
+    private static Id coreSalesEventRecordType = NSP_GenericRecordType.getRecordTypeId( 'Event' , 'Core_Sales_Event_RT' );
+    private static Boolean Is_Enabled_WO_WS_Stage_Entry = OpportunityStageSettings__c.getInstance( UserInfo.getUserId() ).Is_Enabled_WO_WS_Stage_Entry__c;
 
     // Iterates throught the list of new Event and passes the required attributes to other methods.
     // @param newList List of New Event.  
@@ -107,123 +107,121 @@ public class NSP_EventTriggerHelper {
     // @param Map of Event. 
     // @return void  
     //
-    private void updateResourceAbsenceDate(Map<Id,Event> rescheduledEventsMap){
-        List<ResourceAbsence> resourceAbsenceList = new List<ResourceAbsence>();
-        List<ResourceAbsence> resourceAbsenceToUpdateList = new List<ResourceAbsence>();
-        try{
-            if (rescheduledEventsMap.size() > 0){
+    private void updateResourceAbsenceDate( Map<Id,Event> rescheduledEventsMap ) {
+        try {
+            List<ResourceAbsence> resourceAbsenceList = new List<ResourceAbsence>();
+            if ( !rescheduledEventsMap.isEmpty() ) {
                 resourceAbsenceList = [
-                    SELECT ID, Start, End, Event_Id__c
+                    SELECT Id , Start , End, Event_Id__c
                     FROM ResourceAbsence
-                    WHERE Event_Id__c IN: rescheduledEventsMap.keySet()
+                    WHERE ( Event_Id__c IN :rescheduledEventsMap.keySet() )
                 ];
             }
-            if (resourceAbsenceList.size() > 0){
-                for (ResourceAbsence eachRA : resourceAbsenceList){
+            List<ResourceAbsence> resourceAbsenceToUpdateList = new List<ResourceAbsence>();
+            if ( !resourceAbsenceList.isEmpty() ) {
+                for ( ResourceAbsence eachRA : resourceAbsenceList ) {
                     if ( rescheduledEventsMap.containsKey( eachRA.Event_Id__c ) ) {
                         Event record = rescheduledEventsMap.get( eachRA.Event_Id__c );
                         if ( record != null ) {
                             eachRA.Start = record.StartDateTime;
                             eachRA.End = record.EndDateTime;
-                            resourceAbsenceToUpdateList.add(eachRA);
+                            resourceAbsenceToUpdateList.add( eachRA );
                         }
                     }
                 }
             }
-            if (resourceAbsenceToUpdateList.size() > 0){
+            if ( !resourceAbsenceToUpdateList.isEmpty() ) {
                 Update resourceAbsenceToUpdateList;
             }
         } catch ( Exception e ) {
-            NSP_ErrorLogHandler.logException(
-                NSP_EventTriggerHelper.class.getName() ,
-                'updateResourceAbsenceDate' ,
-                e
-            );
+            NSP_EventTriggerHelper.handleException( e , 'updateResourceAbsenceDate' );
         }
     }
 
-    /**
-    * Iterates throught the list of old Events and map of old Events and passes the required attributes to other methods.
-    * @param eventOldList List of Old Event.
-    * @param eventOldMap Map of Old Event.
-    * @return void
-    */
-    public void beforeDeleteDirector(List<Event> eventOldList, Map<Id, Event> eventOldMap) {
+    //
+    // Iterates throught the list of old Events and map of old Events and passes the required attributes to other methods.
+    // @param eventOldList List of Old Event.
+    // @param eventOldMap Map of Old Event.
+    // @return void
+    //
+    public void beforeDeleteDirector( List<Event> eventOldList , Map<Id,Event> eventOldMap ) {
         Set<String> subjectSet = new Set<String>();
-        Map<Id, Event> recurringEvents = new Map<Id,Event>();
-        Id eventRecordType = Schema.SObjectType.Event.getRecordTypeInfosByDeveloperName().get('Core_Sales_Event_RT')?.getRecordTypeId();
+        Map<Id,Event> recurringEvents = new Map<Id,Event>();
         try {
-            if (eventOldMap != null) {
-                for (Event eachEvent : eventOldMap.values()) {
-                    if ( ( eachEvent.RecordTypeId == eventRecordType )
-                        && ( eachEvent.WhatId == NULL && eachEvent.Type == NULL )
-                        && ( eachEvent.IsRecurrence2 == TRUE || eachEvent.IsRecurrence == TRUE )
+            if ( eventOldMap != null ) {
+                for ( Event eachEvent : eventOldMap.values() ) {
+                    if ( ( eachEvent.RecordTypeId == NSP_EventTriggerHelper.coreSalesEventRecordType )
+                        && ( eachEvent.WhatId == null )
+                        && ( eachEvent.Type == null )
+                        && ( eachEvent.IsRecurrence2 == true || eachEvent.IsRecurrence == true )
                         )
                     {
-                        subjectSet.add(eachEvent.Subject);  
-                        recurringEvents.put(eachEvent.Id, eachEvent);  
+                        subjectSet.add( eachEvent.Subject );
+                        recurringEvents.put( eachEvent.Id , eachEvent );
                     }
                 }
             }
-            Map<Id, Event> attendeesEventMap = getAttendeesEvent(subjectSet,recurringEvents);
-            if (attendeesEventMap != null && attendeesEventMap.size() > 0) {
-                deleteResourceAbsence(attendeesEventMap);
+            Map<Id,Event> attendeesEventMap = getAttendeesEvent( subjectSet , recurringEvents );
+            if ( ( attendeesEventMap != null ) && !attendeesEventMap.isEmpty() ) {
+                deleteResourceAbsence( attendeesEventMap );
             }
         } catch ( Exception e ) {
-            NSP_ErrorLogHandler.logException(
-                NSP_EventTriggerHelper.class.getName() ,
-                'beforeDeleteDirector' ,
-                e
-            );
+            NSP_EventTriggerHelper.handleException( e , 'beforeDeleteDirector' );
         }
     }
 
-    /**
-    * Method Name : getAttendeesEvent
-    * Description : Method to update start and end date on RAs for recurring events
-    * @param newList Map of Event.
-    * @return Map of ResourceAbsence
-    */
-    private Map<Id, Event> getAttendeesEvent(Set<String> subjectSet,Map<Id, Event> recurringEvents){
+    //
+    // Method Name : getAttendeesEvent
+    // Description : Method to update start and end date on RAs for recurring events
+    // @param newList Map of Event.
+    // @return Map of ResourceAbsence
+    //
+    private Map<Id, Event> getAttendeesEvent( Set<String> subjectSet , Map<Id,Event> recurringEvents ) {
         List<Event> eventWithSameSubject = new List<Event>();
-        Map<Id, ResourceAbsence> childResourceAbsenceMap = new Map<Id, ResourceAbsence>();
-        String DISPATCHER_RESOURCE = 'Dispatcher + Resource';
-        String RESOURCE = 'Resource';
-        Map<Id,Event> attendeesEventMap = new Map<Id,Event>();
-        Id eventRecordType = Schema.SObjectType.Event.getRecordTypeInfosByDeveloperName().get('Core_Sales_Event_RT')?.getRecordTypeId();
-        if (subjectSet != null && subjectSet.size() > 0){
+        if ( ( subjectSet != null ) && !subjectSet.isEmpty() ) {
             eventWithSameSubject = [
-                SELECT Id, Subject, StartDateTime, EndDateTime, ShowAs, Description, CreatedById, Location
+                SELECT Id , Subject , StartDateTime , EndDateTime , ShowAs , Description , CreatedById , Location
                 FROM Event
                 WHERE (
-                    Subject IN :subjectSet
-                    AND IsChild = TRUE
-                    AND (CreatedBy.NSP_Salesforce_Field_Service__c = :DISPATCHER_RESOURCE OR CreatedBy.NSP_Salesforce_Field_Service__c = :RESOURCE)
-                    AND RecordTypeId = :eventRecordType
-                    AND WhatId = NULL
-                    AND Type = NULL
-                    AND (IsRecurrence2 = TRUE OR IsRecurrence = TRUE)
+                    ( Subject IN :subjectSet )
+                    AND ( IsChild = true )
+                    AND (
+                        ( CreatedBy.NSP_Salesforce_Field_Service__c = 'Dispatcher + Resource' )
+                        OR ( CreatedBy.NSP_Salesforce_Field_Service__c = 'Resource' )
+                    )
+                    AND ( RecordTypeId = :NSP_EventTriggerHelper.coreSalesEventRecordType )
+                    AND ( WhatId = null )
+                    AND ( Type = null )
+                    AND (
+                        ( IsRecurrence2 = true )
+                        OR ( IsRecurrence = true )
+                    )
                 )
             ];
         }
-        if (recurringEvents != null && recurringEvents.size() > 0){
-            for (Event eachEvent : recurringEvents.values()) {
+        Map<Id,Event> attendeesEventMap = new Map<Id,Event>();
+        if ( ( recurringEvents != null ) && !recurringEvents.isEmpty() ) {
+            for ( Event eachEvent : recurringEvents.values() ) {
                 Set<String> eventAttributes = new Set<String>{
-                    eachEvent.Subject, eachEvent.ShowAs, eachEvent.Description, eachEvent.Location
+                    eachEvent.Subject ,
+                    eachEvent.ShowAs ,
+                    eachEvent.Description ,
+                    eachEvent.Location
                 };
                 Set<Datetime> eventDateAttributes = new Set<Datetime>{
-                    eachEvent.StartDateTime, eachEvent.EndDateTime
+                    eachEvent.StartDateTime ,
+                    eachEvent.EndDateTime
                 };
-                for (Event childEvent : eventWithSameSubject) {
-                    if (eventAttributes.contains(childEvent.Subject)
-                        && eventDateAttributes.contains(childEvent.StartDateTime)
-                        && eventDateAttributes.contains(childEvent.EndDateTime)
-                        && eventAttributes.contains(childEvent.ShowAs)
-                        && eventAttributes.contains(childEvent.Description)
-                        && eventAttributes.contains(childEvent.Location)
+                for ( Event childEvent : eventWithSameSubject ) {
+                    if ( eventAttributes.contains( childEvent.Subject )
+                        && eventDateAttributes.contains( childEvent.StartDateTime )
+                        && eventDateAttributes.contains( childEvent.EndDateTime )
+                        && eventAttributes.contains( childEvent.ShowAs )
+                        && eventAttributes.contains( childEvent.Description )
+                        && eventAttributes.contains( childEvent.Location )
                         )
-                    {  
-                        attendeesEventMap.put(childEvent.Id,childEvent);
+                    {
+                        attendeesEventMap.put( childEvent.Id , childEvent );
                     }
                 }
             }
@@ -231,59 +229,57 @@ public class NSP_EventTriggerHelper {
         return attendeesEventMap;
     }
 
-    /**
-    * Iterates throught the list of old Events and passes the required attributes to other methods.
-    * @param eventOldList List of Old Event.
-    * @param eventOldMap Map of Old Event.
-    * @return void
-    */
-    public void afterDeleteDirector(List<Event> eventOldList,Map<Id, Event> eventOldMap){
-        try{
-            if (eventOldMap != null && eventOldMap.size() > 0){
-                deleteResourceAbsence(eventOldMap);
+    //
+    // Iterates throught the list of old Events and passes the required attributes to other methods.
+    // @param eventOldList List of Old Event.
+    // @param eventOldMap Map of Old Event.
+    // @return void
+    //
+    public void afterDeleteDirector( List<Event> eventOldList , Map<Id,Event> eventOldMap ) {
+        try {
+            if ( ( eventOldMap != null ) && !eventOldMap.isEmpty() ) {
+                deleteResourceAbsence( eventOldMap );
             }
         } catch ( Exception e ) {
-            NSP_ErrorLogHandler.logException(
-                NSP_EventTriggerHelper.class.getName() ,
-                'afterDeleteDirector' ,
-                e
-            );
+            NSP_EventTriggerHelper.handleException( e , 'afterDeleteDirector' );
         }
     }
 
-    /**
-    * Method to deleted Resource Absences.
-    * @param eventMap Map of Event.
-    * @return void
-    */
-    private void deleteResourceAbsence(Map<Id, Event> eventMap){
-        List<ResourceAbsence> resourceAbsenceList = new List<ResourceAbsence>();
-        try{
-            if (eventMap != null && eventMap.size() > 0){
-                resourceAbsenceList = [SELECT ID,Event_Id__c From ResourceAbsence WHERE Event_Id__c IN: eventMap.keySet()];
+    //
+    // Method to deleted Resource Absences.
+    // @param eventMap Map of Event.
+    // @return void
+    //
+    private void deleteResourceAbsence( Map<Id,Event> eventMap ) {
+        try {
+            List<ResourceAbsence> resourceAbsenceList = new List<ResourceAbsence>();
+            if ( ( eventMap != null ) && !eventMap.isEmpty() ) {
+                resourceAbsenceList = [
+                    SELECT Id , Event_Id__c
+                    FROM ResourceAbsence
+                    WHERE ( Event_Id__c IN :eventMap.keySet() )
+                ];
             }
-            if (resourceAbsenceList.size() > 0){
-                Delete resourceAbsenceList;
+            if ( !resourceAbsenceList.isEmpty() ) {
+                delete resourceAbsenceList;
             }
         } catch ( Exception e ) {
-            NSP_ErrorLogHandler.logException(
-                NSP_EventTriggerHelper.class.getName() ,
-                'deleteResourceAbsence' ,
-                e
-            );
+            NSP_EventTriggerHelper.handleException( e , 'deleteResourceAbsence' );
         }
     }
 
-    private void updateOpportunitiesWithDiscoverCalls(List<Event> newList) {
-        Set<ID> updateOpportunityIDList = new Set<ID>();
-        List<Opportunity> updateOpportunityList = new List<Opportunity>();
-        try{
-            for(Event event : newList){
-                if(event != NULL && event.WhatId != NULL && event.NSP_Event_Subtype__c != NULL){
-                    if(event.NSP_Event_Subtype__c.equalsIgnoreCase(DISCOVERY_CALL) && 
-                       event.WhatId.getSObjectType() == Opportunity.getSObjectType()) {
-                        updateOpportunityIDList.add(event.WhatId);
-                    }
+    private void updateOpportunitiesWithDiscoverCalls( List<Event> newList ) {
+        try {
+            Set<Id> updateOpportunityIDList = new Set<Id>();
+            for ( Event event : newList ) {
+                if ( ( event != null )
+                    && ( event.WhatId != null )
+                    && ( event.NSP_Event_Subtype__c != null )
+                    && event.NSP_Event_Subtype__c.equalsIgnoreCase( NSP_EventTriggerHelper.DISCOVERY_CALL )
+                    && ( event.WhatId.getSObjectType() == Opportunity.getSObjectType() )
+                    )
+                {
+                    updateOpportunityIDList.add(event.WhatId);
                 }
             }
             List<Opportunity> listOpportunity = [
@@ -291,42 +287,39 @@ public class NSP_EventTriggerHelper {
                 FROM Opportunity 
                 WHERE ( Id IN :updateOpportunityIDList )
             ];
-
-            for(Opportunity oppty : listOpportunity){
+            List<Opportunity> updateOpportunityList = new List<Opportunity>();
+            for ( Opportunity oppty : listOpportunity ) {
                 Opportunity opp = new Opportunity();
                 opp.Id = oppty.Id;
                 opp.NSP_Ready_for_Integration_Sync__c = true;
-                updateOpportunityList.add(opp);
+                updateOpportunityList.add( opp );
             }
-            if(!updateOpportunityList.isEmpty()){
-                Database.update(updateOpportunityList);
+            if ( !updateOpportunityList.isEmpty() ) {
+                Database.update( updateOpportunityList );
             }
         } catch ( Exception e ) {
-            NSP_ErrorLogHandler.logException(
-                NSP_EventTriggerHelper.class.getName() ,
-                'updateOpportunitiesWithDiscoverCalls' ,
-                e
-            );
+            NSP_EventTriggerHelper.handleException( e , 'updateOpportunitiesWithDiscoverCalls' );
         }
     }
 
-    public void checkOpportunityStageCriteria(List<Event> newList) {
+    public void checkOpportunityStageCriteria( List<Event> newList ) {
         List<Id> updateOpportunityIds = new List<Id>();
         if ( NSP_EventTriggerHelper.Is_Enabled_WO_WS_Stage_Entry ) {
-            for(Event event : newList){
-                if(event != NULL && event.WhatId != NULL && event.NSP_Event_Subtype__c != NULL){
-                    if ( ( event.WhatId.getSObjectType() == Opportunity.getSObjectType() )
-                        && (
-                            event.NSP_Event_Subtype__c.equalsIgnoreCase(DISCOVERY_CALL)
-                            || event.NSP_Event_Subtype__c.equalsIgnoreCase(WO_PROPOSAL)
-                            )
+            for ( Event event : newList ) {
+                if ( event != NULL
+                    && event.WhatId != NULL
+                    && event.NSP_Event_Subtype__c != NULL
+                    && ( event.WhatId.getSObjectType() == Opportunity.getSObjectType() )
+                    && (
+                        event.NSP_Event_Subtype__c.equalsIgnoreCase( NSP_EventTriggerHelper.DISCOVERY_CALL )
+                        || event.NSP_Event_Subtype__c.equalsIgnoreCase( NSP_EventTriggerHelper.WO_PROPOSAL )
                         )
-                    {
-                        updateOpportunityIds.add(event.WhatId);
-                    }
+                    )
+                {
+                    updateOpportunityIds.add( event.WhatId );
                 }
             }
-            AutomateOpportunityStage.automateOpportunityStageAsync(updateOpportunityIds);
+            AutomateOpportunityStage.automateOpportunityStageAsync( updateOpportunityIds );
         }
     }
 
@@ -336,48 +329,25 @@ public class NSP_EventTriggerHelper {
     // @param newList List of New Event.
     // @param eventOldMap Map of Old Event.
     // @return void
-    public void updateActivityDate(List<Event> newList,Map<Id,Event> eventOldMap){
-        Set < Id > leadIdSet = new Set < Id > ();
-        List < Lead > leadResult = new List<Lead> ();
-        List < Lead > leadWithDuns = new List<Lead> ();
-        Map < String, Date > lastActivityDateMap = new Map < String, Date > ();
-        List < Lead > leadToUpdate = new List<Lead> ();
-        for(Event event : newList){
-            Event oldEvent = eventOldMap != null ? eventOldMap.get(event.Id):null;
-            if((Trigger.isInsert || event.StartDateTime != oldEvent.StartDateTime) && event.StartDateTime != null && event.WhoId!= null){
-            leadIdSet.add(event.WhoId);
-        }
-        }
-        if(!leadIdSet.isEmpty()){
-            leadResult = [SELECT Id, Salutation, FirstName, MiddleName, LastName, NSP_Parent_Lead__c, DNB_Connect_DUNS_Number__c,LastActivityDate FROM Lead WHERE Id IN: leadIdSet];
-            if(!leadResult.isEmpty()) {
-                for(Lead leadObj :leadResult){
-                    if(leadObj.LastActivityDate != null && leadObj.DNB_Connect_DUNS_Number__c !=null) {
-                        lastActivityDateMap.put(leadObj.DNB_Connect_DUNS_Number__c,leadObj.LastActivityDate);
-                    }
+    public void updateActivityDate( List<Event> newList , Map<Id,Event> oldMap ) {
+        try {
+            Set<Id> whoIds = new Set<Id>();
+            for ( Event record : newList ) {
+                Event oldRecord = null;
+                if ( oldMap != null ) {
+                    oldRecord = oldMap.get( record.Id );
                 }
-                if(!lastActivityDateMap.isEmpty()) {
-                    leadWithDuns = [SELECT Id, Salutation, FirstName, NSP_Last_Activity__c, LastName, NSP_Parent_Lead__c, DNB_Connect_DUNS_Number__c,LastActivityDate FROM Lead WHERE DNB_Connect_DUNS_Number__c IN: lastActivityDateMap.keySet()];
-                    Lead lastActive = [SELECT LastActivityDate FROM Lead WHERE DNB_Connect_DUNS_Number__c IN: lastActivityDateMap.keySet() AND LastActivityDate != null ORDER BY LastActivityDate DESC LIMIT 1];
-                    if(!leadWithDuns.isEmpty()){
-                        for(Lead leadObject : leadWithDuns){
-                            leadObject.NSP_Last_Activity__c = lastActive.LastActivityDate;
-                            leadToUpdate.add(leadObject);
-                        }
-                    }
+                if ( ( ( oldRecord == null ) || ( record.StartDateTime != oldRecord.StartDateTime ) )
+                    && ( record.StartDateTime != null )
+                    && ( record.WhoId != null )
+                    )
+                {
+                    whoIds.add( record.WhoId );
                 }
             }
-        }
-        try{
-            if(!leadToUpdate.isEmpty()){
-                update leadToUpdate;
-            }
+            LeadLastActivityDateHelper.updateLeadLastActivityDate( whoIds );
         } catch ( Exception e ) {
-            NSP_ErrorLogHandler.logException(
-                NSP_EventTriggerHelper.class.getName() ,
-                'updateActivityDate' ,
-                e
-            );
+            NSP_EventTriggerHelper.handleException( e , 'updateActivityDate' );
         }
     }
 
@@ -460,14 +430,39 @@ public class NSP_EventTriggerHelper {
         }
     }
 
-    private Map<Id, String> getRelatedRecordDetails(String objectName, String fieldName, Set<String> recordIds, String objectLabel) {
-        Map<Id, String> relatedRecordDetailsMap = new Map<Id, String>();
-        List<String> fieldList = new List<String>{fieldName};
-        NSP_sObjectSelector sObjectSelector = new NSP_sObjectSelector(objectName, fieldList);
-        for(sObject record: sObjectSelector.selectById(new List<String>(recordIds))) {
-            relatedRecordDetailsMap.put(record.Id, objectLabel + WORD_SEPARATOR + record.get(fieldName));
+    private Map<Id,String> getRelatedRecordDetails(
+        String objectName ,
+        String fieldName ,
+        Set<String> recordIds ,
+        String objectLabel
+        )
+    {
+        Map<Id,String> relatedRecordDetailsMap = new Map<Id,String>();
+        List<String> fieldList = new List<String>{ fieldName };
+        NSP_sObjectSelector sObjectSelector = new NSP_sObjectSelector( objectName , fieldList );
+        for ( sObject record : sObjectSelector.selectById( new List<String>( recordIds ) ) ) {
+            relatedRecordDetailsMap.put(
+                record.Id ,
+                objectLabel + WORD_SEPARATOR + record.get( fieldName )
+            );
         }
         return relatedRecordDetailsMap;
     }
 
+    // for test code coverage only...
+    public static void testHandleException( Exception e , String methodName ) {
+        if ( Test.isRunningTest() ) {
+            NSP_EventTriggerHelper.handleException( e , methodName );
+        }
+    }
+    
+    private static void handleException( Exception e , String methodName ) {
+        NSP_ErrorLogHandler.logException(
+            NSP_EventTriggerHelper.class.getName() ,
+            methodName ,
+            e
+        );
+    }
+
 }
+//

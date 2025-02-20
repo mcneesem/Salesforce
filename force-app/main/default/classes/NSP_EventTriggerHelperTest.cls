@@ -1,8 +1,9 @@
 @isTest
-public without sharing class NSP_EventTriggerHelperTest {
+private class NSP_EventTriggerHelperTest {
+    private static final String DISCOVERY_CALL = 'Discovery Call';
     
     @testSetup
-    public static void setupTestData(){
+    private static void setupTestData(){
         //Creating account
         List<Account> accList = new List<Account>();
         Account acc = (Account)NSP_TestExtendedDataFactory.createSObject(new Account(), 'NSP_TestDataFactory.AccountDefaults', false);
@@ -27,7 +28,6 @@ public without sharing class NSP_EventTriggerHelperTest {
         
         //Creating Lead
         List<Lead> leadList = new List<Lead>(); 
-        Id referralLeadRecId = Schema.SObjectType.Lead.getRecordTypeInfosByDeveloperName().get('Referral').getRecordTypeId(); //Mani
         Lead leadObject = (Lead)NSP_TestExtendedDataFactory.createSObject(new Lead(), 'NSP_TestDataFactory.LeadDefaults', false);
         leadObject.firstname='Test';
         leadObject.lastname='Lead';
@@ -54,7 +54,7 @@ public without sharing class NSP_EventTriggerHelperTest {
         newEvent.DurationInMinutes = 60;
         newEvent.ActivityDateTime = system.today();
         newEvent.StartDateTime = system.today();
-        newEvent.NSP_Event_Subtype__c = 'Discovery Call';
+        newEvent.NSP_Event_Subtype__c = DISCOVERY_CALL;
         insert newEvent;
         
         //Insert User
@@ -111,7 +111,6 @@ public without sharing class NSP_EventTriggerHelperTest {
         newEventRec.IsAllDayEvent =false;
         newEventRec.DurationInMinutes =60;
         newEventRec.RecordTypeId = eventRecordType;
-        //insert newEventRec; 
         system.runAs(tUser){
             insert newEventRec; 
         }
@@ -156,6 +155,7 @@ public without sharing class NSP_EventTriggerHelperTest {
         system.runAs(tUser2){
             insert newEventRec1; 
         }
+        NSP_EventTriggerHelper.testHandleException( null , null );
     }
     
         
@@ -166,23 +166,20 @@ public without sharing class NSP_EventTriggerHelperTest {
     * Note we can only cover negative scenario for updateOutlookEvents method beacuse we cannot update IsRecurrence2 field
     */
     @isTest
-    public static void updateOoutlookevent(){
-        List<String> EVENT_FIELD = new List<String>{'Id', 'WhatId'};
-        List<String> ID_FIELD = new List<String>{'Id'};
+    private static void updateOoutlookevent(){
+        List<String> eventField = new List<String>{'Id', 'WhatId'};
+        List<String> idField = new List<String>{'Id'};
         //Get sfsUser user rec
-        String accquery = new NSP_QueryBuilder('Account', ID_FIELD)
+        String accquery = new NSP_QueryBuilder('Account', idField)
                             .addFilter('Name', 'Test Account').addLimit(1).build();
         Account accTest = Database.query(accquery);
         
-        String conquery = new NSP_QueryBuilder('Contact', ID_FIELD)
+        String conquery = new NSP_QueryBuilder('Contact', idField)
                             .addFilter('LastName', 'Test con').addLimit(1).build();
         Contact conTest = Database.query(conquery);
         
         User sfsUser = [SELECT Id FROM User WHERE firstname = 'Test SFS User' LIMIT 1];
         
-        String acc1query = new NSP_QueryBuilder('Account', ID_FIELD)
-                            .addFilter('Name', 'Test Account 1').addLimit(1).build();
-        Account accTest1 = Database.query(acc1query);
         //New Test Event 
         Event newEvent = new Event();
         newEvent.OwnerId = sfsUser.Id;
@@ -190,10 +187,10 @@ public without sharing class NSP_EventTriggerHelperTest {
         newEvent.DurationInMinutes = 60;
         newEvent.ActivityDateTime = system.today();
         newEvent.StartDateTime     = system.today();
-        newEvent.NSP_Event_Subtype__c = 'Discovery Call';
+        newEvent.NSP_Event_Subtype__c = DISCOVERY_CALL;
         newEvent.WhoId = conTest.Id;
         newEvent.WhatId = accTest.Id;
-        String con1query = new NSP_QueryBuilder('Contact', ID_FIELD)
+        String con1query = new NSP_QueryBuilder('Contact', idField)
                             .addFilter('LastName', 'Test con1').addLimit(1).build();
         Contact conTest1 = Database.query(con1query);
 
@@ -204,7 +201,7 @@ public without sharing class NSP_EventTriggerHelperTest {
         update newEvent;
         Test.stopTest();
         //then
-        String query = new NSP_QueryBuilder('Event', EVENT_FIELD)
+        String query = new NSP_QueryBuilder('Event', eventField)
                             .addFilter('Subject', 'Test Subject For Event').addLimit(1).build();
         Event  eventRec = Database.query(query);
         System.assertequals(true,eventRec.WhatId != null);
@@ -216,14 +213,14 @@ public without sharing class NSP_EventTriggerHelperTest {
     * @return void  
     */
     @isTest
-    public static void updateActivityDate(){
-        List<String> EVENT_FIELD = new List<String>{'Id', 'WhatId'};
-        List<String> ID_FIELD = new List<String>{'Id'};
+    private static void updateActivityDate(){
+        List<String> eventField = new List<String>{'Id', 'WhatId'};
+        List<String> idField = new List<String>{'Id'};
         //Get sfsUser user rec and lead rec
-        String userquery = new NSP_QueryBuilder('User', ID_FIELD)
+        String userquery = new NSP_QueryBuilder('User', idField)
                             .addFilter('firstname ', 'Test SFS User').addLimit(1).build();
         User sfsUser = Database.query(userquery);
-        String leadquery = new NSP_QueryBuilder('Lead', ID_FIELD)
+        String leadquery = new NSP_QueryBuilder('Lead', idField)
                             .addFilter('FirstName ', 'Test').addLimit(1).build();
         Lead leadTest = Database.query(leadquery);
 
@@ -232,7 +229,7 @@ public without sharing class NSP_EventTriggerHelperTest {
         newEvent2.OwnerId = sfsUser.Id;
         newEvent2.Subject = 'Test Subject For Event 2';
         newEvent2.DurationInMinutes = 65;
-        newEvent2.NSP_Event_Subtype__c = 'Discovery Call';
+        newEvent2.NSP_Event_Subtype__c = DISCOVERY_CALL;
         newEvent2.ActivityDateTime = system.today()-1;
         newEvent2.StartDateTime     = system.today()-1;
         insert newEvent2;
@@ -244,7 +241,7 @@ public without sharing class NSP_EventTriggerHelperTest {
         update newEvent2;
         Test.stopTest();
         //then
-        String query = new NSP_QueryBuilder('Event', EVENT_FIELD)
+        String query = new NSP_QueryBuilder('Event', eventField)
                             .addFilter('Subject', 'Test Subject For Event 2').addLimit(1).build();
         Event  eventRec = Database.query(query);
         System.assertequals(null,eventRec.WhatId);
