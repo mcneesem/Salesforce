@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <masterLabel>Case Cat/Subcat/Detail Selector</masterLabel>
+    <apiVersion>62.0</apiVersion>
+    <isExposed>true</isExposed>
+    <targets>
+        <target>lightning__FlowScreen</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__FlowScreen">
+            <property label="Category" name="selectedCategory"  type="String" />
+            <property label="Subcategory" name="selectedSubCategory" type="String" />
+            <property label="Detail" name="selectedDetail" type="String" />
+            <property label="Version" name="selectedVersion" type="String" />
+            <property label="showConfidential" name="showConfidential" type="Boolean"/>
+            <property label="showAllCategory" name="showAllCategory" type="Boolean" default="false"/>
+            <property label="showAllSubCategory" name="showAllSubCategory" type="Boolean" default="false"/>
+            <property label="selectedRecTypeId" name="selectedRecTypeId" type="String"/>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>
