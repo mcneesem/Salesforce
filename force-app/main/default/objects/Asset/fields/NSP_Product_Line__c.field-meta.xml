@@ -97,9 +97,9 @@
                 <label>Integra</label>
             </value>
             <value>
-                <fullName>Wingspan</fullName>
+                <fullName>Contingent Workforce</fullName>
                 <default>false</default>
-                <label>Wingspan</label>
+                <label>Contingent Workforce</label>
             </value>
         </valueSetDefinition>
     </valueSet>

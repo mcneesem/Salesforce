@@ -114,9 +114,9 @@
                 <label>Choice Retirement Services</label>
             </value>
             <value>
-                <fullName>Wingspan</fullName>
+                <fullName>Contingent Workforce</fullName>
                 <default>false</default>
-                <label>Wingspan</label>
+                <label>Contingent Workforce</label>
             </value>
         </valueSetDefinition>
         <valueSettings>
@@ -253,7 +253,7 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>List Price</controllingFieldValue>
-            <valueName>Wingspan</valueName>
+            <valueName>Contingent Workforce</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>WX</controllingFieldValue>

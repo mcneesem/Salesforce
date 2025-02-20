@@ -4,10 +4,10 @@
     <protected>false</protected>
     <values>
         <field>NSP_Batch_Name__c</field>
-        <value xsi:type="xsd:string">Wingspan</value>
+        <value xsi:type="xsd:string">Contingent Workforce</value>
     </values>
     <values>
         <field>NSP_Order_Product_Type__c</field>
-        <value xsi:type="xsd:string">Wingspan Bundle</value>
+        <value xsi:type="xsd:string">Contingent Workforce</value>
     </values>
 </CustomMetadata>
