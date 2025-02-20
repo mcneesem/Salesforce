@@ -4,7 +4,7 @@
     <assignments>
         <name>Assign_Opty_Sync_Flag_TRUE</name>
         <label>Assign Opty Sync Flag TRUE</label>
-        <locationX>176</locationX>
+        <locationX>435</locationX>
         <locationY>492</locationY>
         <assignmentItems>
             <assignToReference>varOpportunity.NSP_Ready_for_Integration_Sync__c</assignToReference>
@@ -14,13 +14,30 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Update_Opty</targetReference>
+            <targetReference>Check_Customer_Signer</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Get_Customer_Signer</name>
+        <label>Assign varFaultElement - Get_Customer_Signer</label>
+        <locationX>556</locationX>
+        <locationY>816</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Customer_Signer</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Assign_varFaultElement_Get_Opty_Info</name>
         <label>Assign varFaultElement - Get Opty Info</label>
-        <locationX>968</locationX>
+        <locationX>1524</locationX>
         <locationY>384</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
@@ -36,8 +53,8 @@
     <assignments>
         <name>Assign_varFaultElement_Update_Opty</name>
         <label>Assign varFaultElement - Update Opty</label>
-        <locationX>440</locationX>
-        <locationY>708</locationY>
+        <locationX>996</locationX>
+        <locationY>1500</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -51,9 +68,81 @@
         </connector>
     </assignments>
     <decisions>
+        <description>Prevent DmlExceptions: FIELD_FILTER_VALIDATION_EXCEPTION: When Customer Signer is populated, the related Contact must have an Account.</description>
+        <name>Check_Customer_Signer</name>
+        <label>Check Customer Signer</label>
+        <locationX>435</locationX>
+        <locationY>600</locationY>
+        <defaultConnector>
+            <targetReference>Update_Opty</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Has_Customer_Signer</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>varOpportunity.NSP_Customer_Signer__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Customer_Signer</targetReference>
+            </connector>
+            <label>Has Customer Signer</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Prevent DmlExceptions: FIELD_FILTER_VALIDATION_EXCEPTION: When Customer Signer is populated, the related Contact must have an Account.</description>
+        <name>Check_Customer_Signer_Account</name>
+        <label>Check Customer Signer (Account)</label>
+        <locationX>248</locationX>
+        <locationY>924</locationY>
+        <defaultConnector>
+            <targetReference>Update_Opty</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Invalid_Customer_Signer</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Customer_Signer.AccountId</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>Invalid Customer Signer</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Prevent DmlExceptions: FIELD_FILTER_VALIDATION_EXCEPTION: When Customer Signer is populated, the related Contact must have an Account.</description>
+        <name>Check_Customer_Signer_Contact</name>
+        <label>Check Customer Signer (Contact)</label>
+        <locationX>50</locationX>
+        <locationY>816</locationY>
+        <defaultConnector>
+            <targetReference>Check_Customer_Signer_Account</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Customer_Signer_Not_Found</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Customer_Signer</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>Customer Signer Not Found</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Opty_null_check</name>
         <label>Opty null check</label>
-        <locationX>440</locationX>
+        <locationX>847</locationX>
         <locationY>384</locationY>
         <defaultConnectorLabel>No opty update needed</defaultConnectorLabel>
         <rules>
@@ -96,10 +185,36 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <recordLookups>
+        <name>Get_Customer_Signer</name>
+        <label>Get Customer Signer</label>
+        <locationX>50</locationX>
+        <locationY>708</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_Customer_Signer_Contact</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Get_Customer_Signer</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>varOpportunity.NSP_Customer_Signer__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Contact</object>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>AccountId</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <description>Prevent DmlExceptions.  Closed Won Opportunities can not be modified due to Opportunity Validation Rules.</description>
         <name>Get_Opty_Info</name>
         <label>Get Opty Info</label>
-        <locationX>440</locationX>
+        <locationX>847</locationX>
         <locationY>276</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -134,19 +249,20 @@
         <outputReference>varOpportunity</outputReference>
         <queriedFields>Id</queriedFields>
         <queriedFields>NSP_Ready_for_Integration_Sync__c</queriedFields>
+        <queriedFields>NSP_Customer_Signer__c</queriedFields>
     </recordLookups>
     <recordUpdates>
         <name>Update_Opty</name>
         <label>Update Opty</label>
-        <locationX>176</locationX>
-        <locationY>600</locationY>
+        <locationX>435</locationX>
+        <locationY>1392</locationY>
         <faultConnector>
             <targetReference>Assign_varFaultElement_Update_Opty</targetReference>
         </faultConnector>
         <inputReference>varOpportunity</inputReference>
     </recordUpdates>
     <start>
-        <locationX>50</locationX>
+        <locationX>91</locationX>
         <locationY>0</locationY>
         <filterLogic>1 AND 2 AND (3 OR 4)</filterLogic>
         <filters>
@@ -191,7 +307,7 @@
     <subflows>
         <name>Fault_Handler_Subflow</name>
         <label>Fault Handler Subflow</label>
-        <locationX>968</locationX>
+        <locationX>1524</locationX>
         <locationY>492</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
