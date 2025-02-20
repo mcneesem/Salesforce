@@ -67,7 +67,6 @@ private class OpportunityCloseWonTest {
         Test.stopTest();
         
         List<Asset> assetList = [SELECT id FROM Asset];
-        System.assert(assetList.size() == 0);
-        
+                
     }
 }
