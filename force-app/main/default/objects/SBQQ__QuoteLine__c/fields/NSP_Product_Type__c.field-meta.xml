@@ -162,6 +162,11 @@
                 <default>false</default>
                 <label>Learning Hosting</label>
             </value>
+            <value>
+                <fullName>Wingspan Bundle</fullName>
+                <default>false</default>
+                <label>Wingspan Bundle</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

@@ -96,6 +96,11 @@
                 <default>false</default>
                 <label>Integra</label>
             </value>
+            <value>
+                <fullName>Wingspan</fullName>
+                <default>false</default>
+                <label>Wingspan</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

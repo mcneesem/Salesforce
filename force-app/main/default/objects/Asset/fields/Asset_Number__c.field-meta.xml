@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Asset_Number__c</fullName>
+    <description>Establish a unique ID for External Programs to Utilize</description>
+    <displayFormat>A{0}</displayFormat>
+    <externalId>false</externalId>
+    <inlineHelpText>Unique value to share with 3rd Party Platforms</inlineHelpText>
+    <label>Asset Number</label>
+    <trackHistory>false</trackHistory>
+    <type>AutoNumber</type>
+</CustomField>
