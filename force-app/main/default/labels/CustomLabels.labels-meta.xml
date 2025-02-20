@@ -4375,7 +4375,7 @@ Meeting - Project Related - Fiduciary,Mutual Fund Corrections - Pricing, Manual 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>NSP_OwnerBasedCriteriaRoles</shortDescription>
-        <value>Business Performance Advisor,Business Performance Consultant,Technology Sales,Retirement Sales Manager,Retirement Sales Consultant</value>
+        <value>Business Performance Advisor,Business Performance Consultant,Technology Sales,Retirement Sales Manager,Retirement Sales Consultant,HCM Sales Consultant</value>
     </labels>
     <labels>
         <fullName>NSP_Owner_Not_Valid_Resource</fullName>
