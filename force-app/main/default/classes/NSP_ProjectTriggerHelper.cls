@@ -1,6 +1,6 @@
 public with sharing class NSP_ProjectTriggerHelper {
     // test w/ NSP_ProjectTriggerHelperTest, NSP_AssetServiceTriggerHelperTest (82%)
-    // test w/ NSP_ProjectTriggerHelperTest (80%)
+    // test w/ NSP_ProjectTriggerHelperTest (81%)
     // test w/ NSP_AssetServiceTriggerHelperTest (29%)
 
     public Static Set<Id> dupPreventionSet = new Set<Id>();
@@ -642,23 +642,41 @@ public with sharing class NSP_ProjectTriggerHelper {
     {
         try {
             List<pse__Assignment__c> relatedAssignmentList = new List<pse__Assignment__c>();       
-            for(Id projectId : changedProjectMap.keyset()){
-                if(userWithContactMap.get(changedProjectMap.get(projectId).Project_Coordinator__c) !=
-                    userWithContactMap.get(changedProjectMap.get(projectId).Project_Implementer__c)){
-                        if(userWithContactMap.get(changedProjectMap.get(projectId).Project_Implementer__c) != null){
-                            relatedAssignmentList.addAll(linkAssignmentToResource(projectId, userWithContactMap.get(changedProjectMap.get(projectId).Project_Implementer__c), projectWithScheduleMap.get(projectId).Id));
-                        }
-                        if(userWithContactMap.get(changedProjectMap.get(projectId).Project_Coordinator__c) != null){
-                            relatedAssignmentList.addAll(linkAssignmentToResource(projectId, userWithContactMap.get(changedProjectMap.get(projectId).Project_Coordinator__c), projectWithScheduleMap.get(projectId).Id));
-                        }
-                }else if(userWithContactMap.get(changedProjectMap.get(projectId).Project_Coordinator__c) ==
-                    userWithContactMap.get(changedProjectMap.get(projectId).Project_Implementer__c)){
-                    relatedAssignmentList.addAll(linkAssignmentToResource(projectId, userWithContactMap.get(changedProjectMap.get(projectId).Project_Implementer__c), projectWithScheduleMap.get(projectId).Id));
+            for ( Id projectId : changedProjectMap.keyset() ) {
+                pse__Proj__c project = changedProjectMap.get( projectId );
+                Id projectCoordinator = userWithContactMap.get( project.Project_Coordinator__c );
+                Id projectImplementor = userWithContactMap.get( project.Project_Implementer__c );
+                Id resourceId = null;
+                if ( projectCoordinator != projectImplementor ) {
+                    if ( projectImplementor != null ) {
+                        resourceId = projectImplementor;
+                    }
+                    if ( projectCoordinator != null ) {
+                        resourceId = projectCoordinator;
+                    }
+                } else if ( projectCoordinator == projectImplementor ) {
+                    resourceId = projectImplementor;
+                }
+                pse__Schedule__c schedule = projectWithScheduleMap.get( projectId );
+                if ( schedule != null ) {
+                    relatedAssignmentList.add(
+                        this.buildLinkedAssignment(
+                            projectId ,
+                            resourceId ,
+                            schedule.Id
+                        )
+                    );
                 }
             }   
             // Adding Test.isRunningTest to bypass in test class as we need staffing permission for the assignment's resource and the assignment's
             if ( !relatedAssignmentList.isEmpty() && !Test.isRunningTest() ) {
-                insert relatedAssignmentList; // throws DmlException ~ FIELD_CUSTOM_VALIDATION_EXCEPTION, You are not allowed to create the assignment *** You must be granted the Staffing permission for the assignment's resource and the assignment's project.
+                // throws DmlException ~ FIELD_CUSTOM_VALIDATION_EXCEPTION, You are not allowed to create the assignment *** You must be granted the Staffing permission for the assignment's resource and the assignment's project.
+                List<Database.SaveResult> results = Database.insert( relatedAssignmentList , false );
+                NSP_ErrorLogHandler.logResults(
+                    NSP_ProjectTriggerHelper.class.getName() ,
+                    'createAssignments:insert' ,
+                    results
+                );
             }
             this.linkAssignmentToProjectTask(
                 'pse__Project_Task__c' ,
@@ -675,20 +693,13 @@ public with sharing class NSP_ProjectTriggerHelper {
         }
     }
 
-    /**
-    * method to link assignement with resource.
-    * @param Id resourceId, Map<Id, pse__Schedule__c> projectWithScheduleMap  
-    * @return void             
-    */
-    public List<pse__Assignment__c> linkAssignmentToResource(Id projectId, Id resourceId, Id scheduleId){
-        List<pse__Assignment__c> relatedAssignmentList = new List<pse__Assignment__c>();
-            pse__Assignment__c relatedAssignment = new pse__Assignment__c();
-            relatedAssignment.pse__Project__c = projectId;
-            relatedAssignment.pse__Bill_Rate__c = 0.00;
-            relatedAssignment.pse__Resource__c = resourceId;
-            relatedAssignment.pse__Schedule__c = scheduleId;
-            relatedAssignmentList.add(relatedAssignment);
-        return relatedAssignmentList;
+    private pse__Assignment__c buildLinkedAssignment( Id projectId , Id resourceId , Id scheduleId ) {
+        pse__Assignment__c relatedAssignment = new pse__Assignment__c();
+        relatedAssignment.pse__Project__c = projectId;
+        relatedAssignment.pse__Bill_Rate__c = 0.00;
+        relatedAssignment.pse__Resource__c = resourceId;
+        relatedAssignment.pse__Schedule__c = scheduleId;
+        return relatedAssignment;
     }
 
     //
@@ -1291,28 +1302,58 @@ public with sharing class NSP_ProjectTriggerHelper {
         }
     }
 
-    /***********************************************************************************************
-    * MethodName:   updateAssetProductSegment
-    * Description : This Method updates the product segment on Asset
-    * Params:       List< pse__Proj__c> projectList ,  Map<Id,pse__Proj__c> oldProjectMap
-    * Author :      Nischay Jindal
-    * ********************************************************************************************/   
-    public static void updateAssetProductSegment(Set<Id> projectIdSet, Map<String,String> projectAssetRecordTypeMap){
-        List<Asset> updateAssetList = new List<Asset>();
-        try{
-            if(!projectIdSet.isEmpty()){
-                for(Project_Asset__c prjAst :[SELECT Id , Asset__c ,Asset__r.RecordType.DeveloperName, Asset__r.NSP_Product_Segment__c, Project__c, Project__r.TemplateName__c ,Project__r.NSP_Client_Size__c 
-                                                FROM  Project_Asset__c WHERE Project__c IN:projectIdSet 
-                                                AND  (Asset__r.Status = :NSP_ServiceConstants.ASSET_ONBOARDING_STATUS OR Asset__r.Status =: NSP_ServiceConstants.ASSET_ACTIVE_STATUS)]){
-                    if(isValidProjectAsset(prjAst,projectAssetRecordTypeMap)){
-                        Asset ast = new Asset();
-                        ast.Id = prjAst.Asset__c;
-                        ast.NSP_Product_Segment__c = prjAst.Project__r.NSP_Client_Size__c;
-                        updateAssetList.add(ast);
+    //
+    // MethodName: updateAssetProductSegment
+    // Description : This Method updates the product segment on Asset
+    // Params: List< pse__Proj__c> projectList ,  Map<Id,pse__Proj__c> oldProjectMap
+    // Author : Nischay Jindal
+    //
+    public static void updateAssetProductSegment( Set<Id> projectIdSet , Map<String,String> projectAssetRecordTypeMap ) {
+        try {
+            if( ( projectIdSet != null ) && !projectIdSet.isEmpty() ) {
+                Map<Id,Asset> updateAssetMap = new Map<Id,Asset>();
+                for ( Project_Asset__c prjAst : [
+                            SELECT
+                                Id ,
+                                Asset__c ,
+                                Asset__r.RecordType.DeveloperName ,
+                                Asset__r.NSP_Product_Segment__c ,
+                                Project__c ,
+                                Project__r.TemplateName__c ,
+                                Project__r.NSP_Client_Size__c
+                            FROM Project_Asset__c
+                            WHERE (
+                                ( Project__c IN :projectIdSet )
+                                AND (
+                                    ( Asset__r.Status = :NSP_ServiceConstants.ASSET_ONBOARDING_STATUS )
+                                    OR ( Asset__r.Status = :NSP_ServiceConstants.ASSET_ACTIVE_STATUS )
+                                )
+                            )
+                        ]
+                    )
+                {
+                    if ( NSP_ProjectTriggerHelper.isValidProjectAsset( prjAst , projectAssetRecordTypeMap )
+                        && !updateAssetMap.containsKey( prjAst.Asset__c )
+                        )
+                    {
+                        // prevent ~ ListException: Duplicate id in list...
+                        updateAssetMap.put(
+                            prjAst.Asset__c ,
+                            new Asset(
+                                Id=prjAst.Asset__c ,
+                                NSP_Product_Segment__c=prjAst.Project__r.NSP_Client_Size__c
+                            )
+                        );
                     }
                 }
-                if(!updateAssetList.isEmpty()){
-                    update updateAssetList; 
+                if ( !updateAssetMap.isEmpty() ) {
+                    // throws ~ System.DmlException: FIELD_CUSTOM_VALIDATION_EXCEPTION, You don't have the permission to edit this field: [NSP_Product_Segment__c]
+                    List<Database.SaveResult> results = Database.update( updateAssetMap.values() , false );
+                    NSP_ErrorLogHandler.logResults(
+                        NSP_ProjectTriggerHelper.class.getName() ,
+                        'updateAssetProductSegment:update' ,
+                        results
+                    );
                 }
             }
         } catch ( Exception e ) {
