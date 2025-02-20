@@ -100,7 +100,7 @@
         <default>false</default>
         <label>Standalone Order</label>
     </customValue>
-	<customValue>
+    <customValue>
         <fullName>Contingent Workforce</fullName>
         <default>false</default>
         <label>Contingent Workforce</label>
