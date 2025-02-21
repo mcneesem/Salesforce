@@ -276,14 +276,17 @@ public class NSP_PtaSyncWithProjectTasksGrpMembrBatch implements Schedulable , D
     {
         List<pse__Assignment__c> listOfAssignToBeCreated = new List<pse__Assignment__c>();
         try {
-            if(!mapOfGroupMemberValWithContactList?.isEmpty() && mapOfGroupMemberValWithContactList.containsKey(groupMembershipVal) && 
-            mapOfGroupMemberValWithContactList.get(groupMembershipVal) != null)
+            if ( ( mapOfProjectIdWithResource != null )
+                && ( mapOfGroupMemberValWithContactList != null )
+                && mapOfGroupMemberValWithContactList.containsKey( groupMembershipVal )
+                && ( mapOfGroupMemberValWithContactList.get( groupMembershipVal ) != null )
+                )
             {
                 //iterate over contact with groupMembershipVal
-                for ( Id eachContactRec : mapOfGroupMemberValWithContactList.get(groupMembershipVal) ) {
+                for ( Id eachContactRec : mapOfGroupMemberValWithContactList.get( groupMembershipVal ) ) {
                     //check if project does not contain Assignment with this contact
                     if ( ( mapOfProjectIdWithResource.get( projectId ) == null )
-                        || !mapOfProjectIdWithResource.get(projectId).contains( eachContactRec )
+                        || !mapOfProjectIdWithResource.get( projectId ).contains( eachContactRec )
                         )
                     {
                         //initialize new Assignment Rec
@@ -296,7 +299,6 @@ public class NSP_PtaSyncWithProjectTasksGrpMembrBatch implements Schedulable , D
                     }
                 }
             }
-
         } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
                 NSP_PtaSyncWithProjectTasksGrpMembrBatch.class.getName() ,
@@ -326,15 +328,18 @@ public class NSP_PtaSyncWithProjectTasksGrpMembrBatch implements Schedulable , D
     {
         List<pse__Project_Task_Assignment__c> listOfPtaToBeCreated = new List<pse__Project_Task_Assignment__c>();
         try {
-            if(!mapOfProjectTaskIdWithPtaResource?.isEmpty() && mapOfProjectTaskIdWithPtaResource.containsKey(groupMembershipVal) && 
-            mapOfGroupMemberValWithContactList.get( groupMembershipVal ) != null)
+            if ( ( mapOfProjectTaskIdWithPtaResource != null )
+                && ( mapOfGroupMemberValWithContactList != null )
+                && mapOfGroupMemberValWithContactList.containsKey( groupMembershipVal )
+                && ( mapOfGroupMemberValWithContactList.get( groupMembershipVal ) != null )
+                )
             {
                 //iterate over contact with groupMembershipVal
                 for ( Id eachContactRec : mapOfGroupMemberValWithContactList.get( groupMembershipVal ) ) {
                     //check if project does not contain PTA with this contact
                     if ( ( mapOfProjectTaskIdWithPtaResource.get( projectTaskId ) == null ) 
-                    || !mapOfProjectTaskIdWithPtaResource.get(projectTaskId).contains( eachContactRec )
-                    )
+                        || !mapOfProjectTaskIdWithPtaResource.get( projectTaskId ).contains( eachContactRec )
+                        )
                     {
                         //initialize new PTA Rec
                         pse__Project_Task_Assignment__c newPtaRec = new pse__Project_Task_Assignment__c();
@@ -344,7 +349,6 @@ public class NSP_PtaSyncWithProjectTasksGrpMembrBatch implements Schedulable , D
                     }
                 }
             }
-
         } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
                 NSP_PtaSyncWithProjectTasksGrpMembrBatch.class.getName() ,
