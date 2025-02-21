@@ -22,6 +22,7 @@
     <permissionSets>NSP_Payroll_Data_Sheet</permissionSets>
     <permissionSets>NSP_Termination_Form_Access</permissionSets>
     <permissionSets>NVMStatsSF__View_NVM_Stats</permissionSets>
+    <permissionSets>Onboarding_Profile_Edit</permissionSets>
     <permissionSets>Project_Task_Access</permissionSets>
     <permissionSets>Project_Template_Editor</permissionSets>
     <permissionSets>Resource_Absence_record_type_access</permissionSets>
