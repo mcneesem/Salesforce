@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Report_Development_IM_In_Process</fullName>
+    <columns>CASES.CREATED_DATE_DATE_ONLY</columns>
+    <columns>CASES.CASE_NUMBER</columns>
+    <columns>CASES.SUBJECT</columns>
+    <columns>NSP_ClientNumber__c</columns>
+    <columns>ACCOUNT.NAME</columns>
+    <columns>NSP_Segment__c</columns>
+    <columns>CASES.STATUS</columns>
+    <columns>NSP_Case_Sub_Status__c</columns>
+    <columns>CASES.PRIORITY</columns>
+    <columns>OWNER_NAME</columns>
+    <columns>NSP_Category__c</columns>
+    <columns>NSP_SubCategory__c</columns>
+    <columns>NSP_Detail__c</columns>
+    <filterScope>Everything</filterScope>
+    <label>Report Development-IM In Process</label>
+    <sharedTo>
+        <group>Report_Development_Team</group>
+    </sharedTo>
+</ListView>
