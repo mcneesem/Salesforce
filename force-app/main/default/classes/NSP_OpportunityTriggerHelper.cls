@@ -63,13 +63,12 @@ public with sharing class NSP_OpportunityTriggerHelper {
 
             // AZD-191924 AZD-232114 AZD-232117
             //  If primary product IS 'Workforce Optimization' then calculate fees
-            if(opportunityObject.NSP_PrimaryProduct__c != null){
-                if(String.isNotBlank(opportunityObject.Accountid) && 
+            if( opportunityObject.NSP_PrimaryProduct__c != null &&
+                String.isNotBlank(opportunityObject.Accountid) && 
                 (opportunityObject.NSP_PrimaryProduct__c.equals(NSP_SalesConstants.WO) || 
                 opportunityObject.NSP_PrimaryProduct__c.equals(NSP_SalesConstants.WS) ) && 
-                opportunityObject.NSP_lock_enrollment_fee__c == false){
+                opportunityObject.NSP_lock_enrollment_fee__c == false ) {
                    calculateFrees.add(opportunityObject);
-               }
             }
 
             // Checking if account id is not blank
@@ -220,7 +219,6 @@ public with sharing class NSP_OpportunityTriggerHelper {
         List<String> primaryProductChanged = new List<String>();
         
         //docusign merge template
-        Set<String> docuSignTemplateName = new Set<String>();
         List<Opportunity> opptyListToStampDocusignTemplateId = new List<Opportunity>();
         List<Opportunity> closedOppList =  new List<Opportunity>();
 
@@ -255,13 +253,12 @@ public with sharing class NSP_OpportunityTriggerHelper {
 
             // AZD-191924 AZD-232114 AZD-232117 
             //  If primary product IS 'Workforce Optimization' then calculate fees
-            if(newOpportunity.NSP_PrimaryProduct__c != null){
-               if(String.isNotBlank(newOpportunity.Accountid) && 
-               (newOpportunity.NSP_PrimaryProduct__c.equals(NSP_SalesConstants.WO) ||
-               newOpportunity.NSP_PrimaryProduct__c.equals(NSP_SalesConstants.WS)) &&
-                !newOpportunity.NSP_lock_enrollment_fee__c){
+            if( newOpportunity.NSP_PrimaryProduct__c != null
+               && String.isNotBlank(newOpportunity.Accountid)
+               && (newOpportunity.NSP_PrimaryProduct__c.equals(NSP_SalesConstants.WO)
+                 || newOpportunity.NSP_PrimaryProduct__c.equals(NSP_SalesConstants.WS))
+               && !newOpportunity.NSP_lock_enrollment_fee__c ) {
                    calculateFrees.add(newOpportunity);
-                }
             }
 
             if(newOpportunity.OwnerId != oldOpportunity.OwnerId){
@@ -276,11 +273,10 @@ public with sharing class NSP_OpportunityTriggerHelper {
             }
 
             //Checking if the primary quote id updated on the record
-            if(opportunityNewMap.get(opportunityId).SBQQ__PrimaryQuote__c != null){
-                if(opportunityNewMap.get(opportunityId).SBQQ__PrimaryQuote__c != opportunityOldMap.get(opportunityId).SBQQ__PrimaryQuote__c){
+            if ( opportunityNewMap.get(opportunityId).SBQQ__PrimaryQuote__c != null 
+                 && opportunityNewMap.get(opportunityId).SBQQ__PrimaryQuote__c != opportunityOldMap.get(opportunityId).SBQQ__PrimaryQuote__c ) {
                     quoteId = opportunityNewMap.get(opportunityId).SBQQ__PrimaryQuote__c;
                     optyList.add(opportunityNewMap.get(opportunityId));
-                }
             }
 
             if(opportunityNewMap.get(opportunityId).StageName != opportunityOldMap.get(opportunityId).StageName) {
@@ -312,7 +308,7 @@ public with sharing class NSP_OpportunityTriggerHelper {
             {
                 opportunitiesToClosingStageList.add(opportunityNewMap.get(opportunityId));
             }
-            
+
             if(opportunityNewMap.get(opportunityId).StageName != opportunityOldMap.get(opportunityId).StageName
                && (opportunityNewMap.get(opportunityId).StageName.equals(NSP_SalesConstants.CLOSED_WON) 
                    ||opportunityNewMap.get(opportunityId).StageName.equals(NSP_SalesConstants.CLOSED_LOST)) ){
@@ -331,12 +327,12 @@ public with sharing class NSP_OpportunityTriggerHelper {
             {
                 opportunityWoWxList.add(opportunityNewMap.get(opportunityId));
             }
-            
+
             if(String.isNotBlank(opportunityNewMap.get(opportunityId).NSP_PrimaryProduct__c) && 
                (opportunityNewMap.get(opportunityId).NSP_PrimaryProduct__c != opportunityOldMap.get(opportunityId).NSP_PrimaryProduct__c)) {
                    updatePriceBookList.add(opportunityNewMap.get(opportunityId));
                }
-            
+
             //create list to populate docusign template id for merge on demand templates
             if ( !String.isBlank(newOpportunity.NSP_Merge_On_Demand_Template_Selection__c)
                 && newOpportunity.NSP_Merge_On_Demand_Template_Selection__c != oldOpportunity.NSP_Merge_On_Demand_Template_Selection__c
@@ -355,6 +351,8 @@ public with sharing class NSP_OpportunityTriggerHelper {
             {
                 closedOppList.add(newOpportunity);
             }
+
+            checkPrimaryProductChange(newOpportunity, oldOpportunity, primaryProductChanged);
         }
 
         NSP_OpportunityTriggerHelperFunctions oppHelperFuncObj = new NSP_OpportunityTriggerHelperFunctions();
@@ -418,7 +416,6 @@ public with sharing class NSP_OpportunityTriggerHelper {
         List<Opportunity> closedWonOpptyList = new List<Opportunity>();
         List<Integration_Opportunity_Event__e> opportunityEventList = New List<Integration_Opportunity_Event__e>();
         List<Id> stageAutoOpportunityIds = new List<Id>();
-        List<Opportunity> updateStageOpportunityList = new List<Opportunity>();
         List<Opportunity> updateResyncFlagOpportunityList = new List<Opportunity>();
         List<Opportunity> closedOpptyList = new List<Opportunity>();
         List<String> productCodeList = new List<String>{'Employment Screening','Expense Management','Insurance Services'};
@@ -445,25 +442,24 @@ public with sharing class NSP_OpportunityTriggerHelper {
             Opportunity oldOpportunity = opportunityOldMap.get(opportunityId);
             
             if( ( newOpportunity.NSP_Signed_Delivery_Order__c && newOpportunity.NSP_Signed_Delivery_Order__c != oldOpportunity.NSP_Signed_Delivery_Order__c )
-                || ( newOpportunity.NSP_MOD_Document_Signed__c && newOpportunity.NSP_MOD_Document_Signed__c != oldOpportunity.NSP_MOD_Document_Signed__c )
-                )
+                 || ( newOpportunity.NSP_MOD_Document_Signed__c && newOpportunity.NSP_MOD_Document_Signed__c != oldOpportunity.NSP_MOD_Document_Signed__c )
+              )
             {
                 partnerOpportunityList.add(newOpportunity);
                 partnerAccountIdSet.add(newOpportunity.AccountId);
             }
 
-            if(Is_Enabled_WO_WS_Stage_Entry) {
+            if( Is_Enabled_WO_WS_Stage_Entry
                 // Bid_Status__c,NSP_Closing_Appointment__c,NSP_Number_of_Employees__c,NSP_PrimaryProduct__c,NSP_Forecast_Status__c,Type are triggers for Stage progression automation
-                if( opportunityNewMap.get(opportunityId).NSP_Bid_Status__c != opportunityOldMap.get(opportunityId).NSP_Bid_Status__c
+                && ( opportunityNewMap.get(opportunityId).NSP_Bid_Status__c != opportunityOldMap.get(opportunityId).NSP_Bid_Status__c
                     || opportunityNewMap.get(opportunityId).NSP_Closing_Appointment__c != opportunityOldMap.get(opportunityId).NSP_Closing_Appointment__c
                     || opportunityNewMap.get(opportunityId).NSP_Number_of_Employees__c != opportunityOldMap.get(opportunityId).NSP_Number_of_Employees__c
                     || opportunityNewMap.get(opportunityId).NSP_PrimaryProduct__c != opportunityOldMap.get(opportunityId).NSP_PrimaryProduct__c
                     || opportunityNewMap.get(opportunityId).NSP_Forecast_Status__c != opportunityOldMap.get(opportunityId).NSP_Forecast_Status__c
                     || opportunityNewMap.get(opportunityId).Type != opportunityOldMap.get(opportunityId).Type
-                    )
-                {
-                    stageAutoOpportunityIds.add(opportunityId);
-                }
+                   ) )
+            {
+                stageAutoOpportunityIds.add(opportunityId);
             }
 
             // if the parent opty is closed lost then adding it to the list
@@ -570,7 +566,6 @@ public with sharing class NSP_OpportunityTriggerHelper {
             NSP_EventAndTaskHelperFunctions.createTaskRecordsForNCSQueue(newTaskOpportunityList, null);
         }
 
-       // NSP_EventAndTaskHelperFunctions.createTaskForPrimaryQuote(opportunitiesWithPrimaryQuote);// commented as part of user story 128436
         setPartnerAccount(partnerOpportunityList,partnerAccountIdSet);
 
         NSP_EnrollmentFeePaymentSharing.onOppClose(opportunityNewMap);
@@ -945,8 +940,8 @@ public with sharing class NSP_OpportunityTriggerHelper {
         for (AccountContactRelation accountContactRelation: [Select Id , ContactId ,NSP_Is_Primary__c, AccountId from AccountContactRelation WHERE NSP_Is_Primary__c =true AND AccountId IN: accountId]) {
             accountACRMap.put(accountContactRelation.AccountId,accountContactRelation );
         }
-        List<Opportunity> OpportunityList =[Select Id, AccountId from Opportunity WHERE Id IN:OpportunityIds];
-        for(Opportunity opp:OpportunityList){
+        List<Opportunity> opportunityList =[Select Id, AccountId from Opportunity WHERE Id IN:OpportunityIds];
+        for(Opportunity opp:opportunityList){
             if(accountACRMap.containsKey(opp.AccountId) && accountACRMap.get(opp.AccountId)!=null){
                OppAccountId.add(opp.AccountId); 
             }
@@ -955,59 +950,6 @@ public with sharing class NSP_OpportunityTriggerHelper {
             NSP_OpportunityTriggerHelperFunctions.getAccountOwnerEmail(OppAccountId);
         }
     }   
-
-/***********************************************************************************************
-* MethodName: validateByNonProfitAndProfile
-* Description : 
-* Params:       Opportunity opp
-* User-Story:   US-198540
-* ********************************************************************************************/ 
-/*public static boolean validateByNonProfitAndRole(Opportunity opp){
-  
-    if(byPassValidationOnRole== null){
-        byPassValidationOnRole = new set<Id>();
-        for(UserRole role : [SELECT Id FROM UserRole WHERE DeveloperName IN ('NSP_L1_Support', 'NSP_L2_Support_Admin')]){
-            byPassValidationOnRole.add(role.id); 
-        }
-    }
-
-    //  Check if User's Profile is in the Profile List
-    if(byPassValidationOnRole.contains(UserInfo.getUserRoleId())){
-        //  Check if stage is closed won OR closed lost
-        return 'Closed Won'.equals(opp.StageName) || 'Closed Lost'.equals(opp.StageName);
-    }
-  
-
-  return false;
-}*/
-
-/***********************************************************************************************
-* MethodName: validateClosedDate
-* Description : This method will throw error when Opportunity close date is less than today for all users except for the users
-                in NCS Public group
-* Params:       List<Opportunity>OpportunityList
-* Defect:       DF-01716
-* ********************************************************************************************/ 
-/*public static void validateClosedDate(List<Opportunity> OpportunityList){
-
-    Id loggedInUserId = UserInfo.getUserId();   
-    set<Id> ncsGrpMemIdSet = new set<Id>();
-    List<String> groupList = new List<String>{'NCS', 'Sales Compensation'};
-    List<group> ncsGroup = [SELECT Id,Name FROM group WHERE group.Name IN: groupList];
-        for(groupMember ncsGrpMembers: [SELECT UserOrGroupId FROM GroupMember WHERE GroupId IN: ncsGroup]){
-            ncsGrpMemIdSet.add(ncsGrpMembers.UserOrGroupId); 
-        }
-
-        for(Opportunity opp: OpportunityList){
-            if(!ncsGrpMemIdSet.contains(loggedInUserId)){
-                if(validateByNonProfitAndRole(opp) == false
-                && true == false){ // always skip per story 211853
-              opp.addError(Label.NSP_Opportunity_Close_Date_Validation);
-            }  
-        } 
-    }
-    
-}*/
 
 /* Description: This method sets sales office details from user 
      * 
@@ -1492,6 +1434,34 @@ public with sharing class NSP_OpportunityTriggerHelper {
             }
         }
     }
+
+    public static void checkPrimaryProductChange(Opportunity newOpportunity, Opportunity oldOpportunity, List<String> primaryProductChanged) {
+        if ( String.isnotBlank(newOpportunity.NSP_PrimaryProduct__c)
+            && ( newOpportunity.NSP_PrimaryProduct__c != oldOpportunity.NSP_PrimaryProduct__c )
+            && ( String.isBlank(newOpportunity.NSP_Parent_Opportunity__c) )
+            && ( (
+                    (newOpportunity.NSP_PrimaryProduct__c.equals(NSP_SalesConstants.WO)
+                      || newOpportunity.NSP_PrimaryProduct__c.equals(NSP_SalesConstants.WS)
+                    )
+                  && (oldOpportunity.NSP_PrimaryProduct__c.equals(NSP_SalesConstants.WA)
+                      || oldOpportunity.NSP_PrimaryProduct__c.equals(NSP_SalesConstants.WX)
+                    )
+                 )
+               ||
+                 (
+                    (newOpportunity.NSP_PrimaryProduct__c.equals(NSP_SalesConstants.WA)
+                      || newOpportunity.NSP_PrimaryProduct__c.equals(NSP_SalesConstants.WX)
+                    )
+                  && (oldOpportunity.NSP_PrimaryProduct__c.equals(NSP_SalesConstants.WO)
+                      || oldOpportunity.NSP_PrimaryProduct__c.equals(NSP_SalesConstants.WS)
+                    )
+                 )
+               )
+            )
+        {
+            primaryProductChanged.add(newOpportunity.Id);
+        }
+    }       
 
     public static Map<String, Integer> retrieveFieldPicklistOrder(Schema.sObjectField field) {
         Map<String, Integer> fieldPicklistOrder = new Map<String, Integer>();
