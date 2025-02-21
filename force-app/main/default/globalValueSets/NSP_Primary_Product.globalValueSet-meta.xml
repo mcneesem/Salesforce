@@ -76,21 +76,16 @@
         <label>Time &amp; Attendance</label>
     </customValue>
     <customValue>
-        <fullName>Wingspan</fullName>
+        <fullName>BPS Only</fullName>
         <default>false</default>
-        <label>Wingspan</label>
+        <isActive>false</isActive>
+        <label>BPS Only</label>
     </customValue>
     <customValue>
         <fullName>Consulting Services</fullName>
         <default>false</default>
         <isActive>false</isActive>
         <label>Consulting Services</label>
-    </customValue>
-    <customValue>
-        <fullName>BPS Only</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>BPS Only</label>
     </customValue>
     <masterLabel>Primary Product</masterLabel>
     <sorted>false</sorted>

@@ -121,11 +121,6 @@
                 <default>false</default>
                 <label>Supplemental</label>
             </value>
-            <value>
-                <fullName>Wingspan</fullName>
-                <default>false</default>
-                <label>Wingspan</label>
-            </value>
         </valueSetDefinition>
     </valueSet>
     <visibleLines>3</visibleLines>

@@ -127,16 +127,6 @@
                 <default>false</default>
                 <label>NSP_Implementation_Start_Date__c</label>
             </value>
-            <value>
-                <fullName>Active_1099_Employees__c</fullName>
-                <default>false</default>
-                <label>Active_1099_Employees__c</label>
-            </value>
-            <value>
-                <fullName>Active_1099_Employees_CW__c</fullName>
-                <default>false</default>
-                <label>Active_1099_Employees_CW__c</label>
-            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

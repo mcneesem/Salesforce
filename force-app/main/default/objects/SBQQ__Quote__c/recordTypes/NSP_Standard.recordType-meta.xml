@@ -283,10 +283,6 @@
             <fullName>WX</fullName>
             <default>false</default>
         </values>
-        <values>
-            <fullName>Wingspan</fullName>
-            <default>false</default>
-        </values>
     </picklistValues>
     <picklistValues>
         <picklist>NSP_Opportunity_Type__c</picklist>
@@ -424,10 +420,6 @@
         </values>
         <values>
             <fullName>WS Consulting Services</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Wingspan</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1005,17 +997,6 @@
         </values>
         <values>
             <fullName>Termination</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>Seasonal_Pricing__c</picklist>
-        <values>
-            <fullName>Not Applicable</fullName>
-            <default>true</default>
-        </values>
-        <values>
-            <fullName>Seasonal Consumption Schedule</fullName>
             <default>false</default>
         </values>
     </picklistValues>
