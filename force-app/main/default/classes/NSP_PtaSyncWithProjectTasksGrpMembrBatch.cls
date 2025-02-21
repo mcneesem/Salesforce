@@ -337,7 +337,7 @@ public class NSP_PtaSyncWithProjectTasksGrpMembrBatch implements Schedulable , D
                 //iterate over contact with groupMembershipVal
                 for ( Id eachContactRec : mapOfGroupMemberValWithContactList.get( groupMembershipVal ) ) {
                     //check if project does not contain PTA with this contact
-                    if ( ( mapOfProjectTaskIdWithPtaResource.get( projectTaskId ) == null ) 
+                    if ( ( mapOfProjectTaskIdWithPtaResource.get( projectTaskId ) == null )
                         || !mapOfProjectTaskIdWithPtaResource.get( projectTaskId ).contains( eachContactRec )
                         )
                     {
