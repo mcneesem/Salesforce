@@ -96,11 +96,6 @@
                 <default>false</default>
                 <label>HR Consulting Services</label>
             </value>
-            <value>
-                <fullName>Wingspan</fullName>
-                <default>false</default>
-                <label>Wingspan</label>
-            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

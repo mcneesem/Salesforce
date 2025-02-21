@@ -113,11 +113,6 @@
                 <default>false</default>
                 <label>Choice Retirement Services</label>
             </value>
-            <value>
-                <fullName>Wingspan</fullName>
-                <default>false</default>
-                <label>Wingspan</label>
-            </value>
         </valueSetDefinition>
         <valueSettings>
             <controllingFieldValue>RET- White Label FBT Fee Schedule</controllingFieldValue>
@@ -250,10 +245,6 @@
             <controllingFieldValue>WA</controllingFieldValue>
             <controllingFieldValue>WO</controllingFieldValue>
             <valueName>Additional Timestar Products</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>List Price</controllingFieldValue>
-            <valueName>Wingspan</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>WX</controllingFieldValue>

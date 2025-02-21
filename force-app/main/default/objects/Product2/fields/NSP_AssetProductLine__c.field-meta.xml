@@ -71,11 +71,6 @@
                 <default>false</default>
                 <label>Insurance Services</label>
             </value>
-            <value>
-                <fullName>Wingspan</fullName>
-                <default>false</default>
-                <label>Wingspan</label>
-            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
