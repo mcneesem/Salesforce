@@ -4,8 +4,8 @@
     <assignments>
         <name>Collect_Project_Task_Id</name>
         <label>Collect Project Task Id</label>
-        <locationX>440</locationX>
-        <locationY>492</locationY>
+        <locationX>666</locationX>
+        <locationY>600</locationY>
         <assignmentItems>
             <assignToReference>StoreProjectTaskAssignmentIds</assignToReference>
             <operator>Add</operator>
@@ -20,8 +20,8 @@
     <assignments>
         <name>Collect_Project_Tasks_To_Update</name>
         <label>Collect Project Tasks To Update</label>
-        <locationX>440</locationX>
-        <locationY>900</locationY>
+        <locationX>402</locationX>
+        <locationY>1116</locationY>
         <assignmentItems>
             <assignToReference>Loop_Project_Task.pse__Status__c</assignToReference>
             <operator>Assign</operator>
@@ -40,6 +40,143 @@
             <targetReference>Loop_Project_Task</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Get_Project_Task_Assignment</name>
+        <label>Set Fault Element: Get_Project_Task_Assignment</label>
+        <locationX>1634</locationX>
+        <locationY>384</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Project_Task_Assignment</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Flow_for_Project_Task_Status_Change</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Get_Project_Tasks</name>
+        <label>Set Fault Element: Get_Project_Tasks</label>
+        <locationX>1106</locationX>
+        <locationY>900</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Project_Tasks</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Flow_for_Project_Task_Status_Change</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Update_Project_Task_Status</name>
+        <label>Set Fault Element: Update_Project_Task_Status</label>
+        <locationX>314</locationX>
+        <locationY>1524</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Update_Project_Task_Status</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Fault_Flow_for_Project_Task_Status_Change</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>Check_Project_Task_Assignments</name>
+        <label>Check  Project Task Assignments</label>
+        <locationX>974</locationX>
+        <locationY>384</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Found_Project_Task_Assignments</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Project_Task_Assignment</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Project_Task_Assignment</leftValueReference>
+                <operator>IsEmpty</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Loop_Project_Task_Assignments</targetReference>
+            </connector>
+            <label>Found Project Task Assignments</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Project_Tasks</name>
+        <label>Check Project Tasks</label>
+        <locationX>578</locationX>
+        <locationY>900</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Found_Project_Tasks</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Project_Tasks</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Project_Tasks</leftValueReference>
+                <operator>IsEmpty</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Loop_Project_Task</targetReference>
+            </connector>
+            <label>Found Project Tasks</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Project_Tasks_To_Update</name>
+        <label>Check Project Tasks To Update</label>
+        <locationX>314</locationX>
+        <locationY>1308</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Has_Project_Tasks_To_Update</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ProjectTaskToUpdate</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>ProjectTaskToUpdate</leftValueReference>
+                <operator>IsEmpty</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Project_Task_Status</targetReference>
+            </connector>
+            <label>Has Project Tasks To Update</label>
+        </rules>
+    </decisions>
     <environments>Default</environments>
     <formulas>
         <name>Convert18To15</name>
@@ -66,26 +203,26 @@ TRIM(MID({!TextValue}, FIND(&apos;+&apos;, {!TextValue}) + 1, LEN({!TextValue}))
         <expression>TEXT({!$Record.Roles_To_Cancel_Project_Tasks__c})</expression>
     </formulas>
     <interviewLabel>Cancel Project Task Status {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Cancel Project Task Status </label>
+    <label>Cancel Project Task Status</label>
     <loops>
         <name>Loop_Project_Task</name>
         <label>Loop Project Task</label>
-        <locationX>352</locationX>
-        <locationY>792</locationY>
+        <locationX>314</locationX>
+        <locationY>1008</locationY>
         <collectionReference>Get_Project_Tasks</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
             <targetReference>Collect_Project_Tasks_To_Update</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
-            <targetReference>Update_Project_Task_Status</targetReference>
+            <targetReference>Check_Project_Tasks_To_Update</targetReference>
         </noMoreValuesConnector>
     </loops>
     <loops>
         <name>Loop_Project_Task_Assignments</name>
         <label>Loop Project Task Assignments</label>
-        <locationX>352</locationX>
-        <locationY>384</locationY>
+        <locationX>578</locationX>
+        <locationY>492</locationY>
         <collectionReference>Get_Project_Task_Assignment</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -117,25 +254,28 @@ TRIM(MID({!TextValue}, FIND(&apos;+&apos;, {!TextValue}) + 1, LEN({!TextValue}))
     <recordLookups>
         <name>Get_Project_Task_Assignment</name>
         <label>Get Project Task Assignment</label>
-        <locationX>352</locationX>
+        <locationX>974</locationX>
         <locationY>276</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Loop_Project_Task_Assignments</targetReference>
+            <targetReference>Check_Project_Task_Assignments</targetReference>
         </connector>
-        <filterLogic>(1 OR 3) AND 2</filterLogic>
-        <filters>
-            <field>pse__Resource_Role__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>FirstValue</elementReference>
-            </value>
-        </filters>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_Get_Project_Task_Assignment</targetReference>
+        </faultConnector>
+        <filterLogic>( 1 AND ( 2 OR 3 ) )</filterLogic>
         <filters>
             <field>pse__Project_ID__c</field>
             <operator>EqualTo</operator>
             <value>
                 <elementReference>Convert18To15</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>pse__Resource_Role__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>FirstValue</elementReference>
             </value>
         </filters>
         <filters>
@@ -152,12 +292,15 @@ TRIM(MID({!TextValue}, FIND(&apos;+&apos;, {!TextValue}) + 1, LEN({!TextValue}))
     <recordLookups>
         <name>Get_Project_Tasks</name>
         <label>Get Project Tasks</label>
-        <locationX>352</locationX>
-        <locationY>684</locationY>
+        <locationX>578</locationX>
+        <locationY>792</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Loop_Project_Task</targetReference>
+            <targetReference>Check_Project_Tasks</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_Get_Project_Tasks</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -175,15 +318,15 @@ TRIM(MID({!TextValue}, FIND(&apos;+&apos;, {!TextValue}) + 1, LEN({!TextValue}))
     <recordUpdates>
         <name>Update_Project_Task_Status</name>
         <label>Update Project Task Status</label>
-        <locationX>352</locationX>
-        <locationY>1092</locationY>
+        <locationX>50</locationX>
+        <locationY>1416</locationY>
         <faultConnector>
-            <targetReference>Fault_Flow_for_Project_Task_Status_Change</targetReference>
+            <targetReference>Set_Fault_Element_Update_Project_Task_Status</targetReference>
         </faultConnector>
         <inputReference>ProjectTaskToUpdate</inputReference>
     </recordUpdates>
     <start>
-        <locationX>50</locationX>
+        <locationX>254</locationX>
         <locationY>0</locationY>
         <filterLogic>and</filterLogic>
         <filters>
@@ -214,13 +357,13 @@ TRIM(MID({!TextValue}, FIND(&apos;+&apos;, {!TextValue}) + 1, LEN({!TextValue}))
     <subflows>
         <name>Fault_Flow_for_Project_Task_Status_Change</name>
         <label>Fault Flow for Project Task Status Change</label>
-        <locationX>616</locationX>
-        <locationY>1200</locationY>
+        <locationX>314</locationX>
+        <locationY>1632</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultElement</name>
             <value>
-                <stringValue>Update_Project_Task_Status</stringValue>
+                <elementReference>faultElement</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -236,6 +379,16 @@ TRIM(MID({!TextValue}, FIND(&apos;+&apos;, {!TextValue}) + 1, LEN({!TextValue}))
             </value>
         </inputAssignments>
     </subflows>
+    <variables>
+        <name>faultElement</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue></stringValue>
+        </value>
+    </variables>
     <variables>
         <name>ProjectTaskToUpdate</name>
         <dataType>SObject</dataType>
