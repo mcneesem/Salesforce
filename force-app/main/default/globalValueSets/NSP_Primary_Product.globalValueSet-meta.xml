@@ -81,11 +81,6 @@
         <label>Wingspan</label>
     </customValue>
     <customValue>
-        <fullName>Contingent Workforce</fullName>
-        <default>false</default>
-        <label>Contingent Workforce</label>
-    </customValue>
-    <customValue>
         <fullName>Consulting Services</fullName>
         <default>false</default>
         <isActive>false</isActive>
