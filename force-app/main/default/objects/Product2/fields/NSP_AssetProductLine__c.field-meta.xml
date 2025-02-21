@@ -72,9 +72,9 @@
                 <label>Insurance Services</label>
             </value>
             <value>
-                <fullName>Contingent Workforce</fullName>
+                <fullName>Wingspan</fullName>
                 <default>false</default>
-                <label>Contingent Workforce</label>
+                <label>Wingspan</label>
             </value>
         </valueSetDefinition>
     </valueSet>

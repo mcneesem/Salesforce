@@ -163,9 +163,9 @@
                 <label>Learning Hosting</label>
             </value>
             <value>
-                <fullName>Contingent Workforce</fullName>
+                <fullName>Wingspan Bundle</fullName>
                 <default>false</default>
-                <label>Contingent Workforce</label>
+                <label>Wingspan Bundle</label>
             </value>
         </valueSetDefinition>
     </valueSet>
