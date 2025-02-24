@@ -23,7 +23,9 @@ global class NSP_TerminationForm_Batch implements Schedulable , Database.Batchab
                 NSP_Status__c ,
                 NSP_Term_Code__c ,
                 NSP_Client_Term_Date__c ,
-                NSP_Term_Reason__c ,
+                NSP_Term_Reason__c,
+                Approval_Date__c,
+                NSP_Number_of_Active_Employees__c,
                 NSP_Benefit_Termination_Date__c ,
                 NSP_Project_Task__r.pse__Project__r.pse__Account__c ,
                 NSP_Project_Task__r.pse__Project__r.pse__Account__r.Name ,
@@ -31,7 +33,7 @@ global class NSP_TerminationForm_Batch implements Schedulable , Database.Batchab
                 NSP_Project_Task__r.pse__Project__r.pse__Project_Status__c
                 FROM NSP_Termination_Form__c
                 WHERE (
-                    NSP_Last_Date_Wages_Paid_Through__c = LAST_N_DAYS:22
+                    ( Approval_Date__c > :NSP_TerminationForm_Batch.dateBefore ) AND ( Approval_Date__c < :NSP_TerminationForm_Batch.dateAfter )
                     AND NSP_Status__c = 'Term Team Approved'
                     AND NSP_Project_Task__r.pse__Project__r.pse__Project_Status__c != 'Complete'
                 )
@@ -62,7 +64,7 @@ global class NSP_TerminationForm_Batch implements Schedulable , Database.Batchab
                             WHERE (
                                 NSP_Account__c IN :relatedAccoutIdSet
                                 AND (
-                                    NSP_Role__c = 'Manager,HR Services'
+                                    NSP_Role__c = 'Manager, HR Services'
                                     OR NSP_Role__c = 'Payroll Specialist'
                                     OR NSP_Role__c = 'Payroll Supervisor'
                                     OR NSP_Role__c = 'Client Liaison'
@@ -87,7 +89,85 @@ global class NSP_TerminationForm_Batch implements Schedulable , Database.Batchab
             );
         }
     }
-
+    private static TerminationFormBatchSettings__c settings {
+        private get {
+            if ( settings == null ) {
+                settings = TerminationFormBatchSettings__c.getInstance( UserInfo.getUserId() );
+            }
+            return settings;
+        }
+        private set;
+    }
+    
+    // translates soqlDaysBeforeLimit into a specific Date value...
+    public static Date dateBefore {
+        public get {
+            if ( dateBefore == null ) {
+                dateBefore = System.today().addDays( -1* NSP_TerminationForm_Batch.soqlDaysBeforeLimit );
+                System.debug('*dateBefore' + dateBefore);
+            }
+            return dateBefore;
+            
+        }
+        private set;
+    }
+    
+    // how far before (in days) should be terminated???
+    private static Integer soqlDaysBeforeLimit {
+        private get {
+            if ( soqlDaysBeforeLimit == null ) {
+                Integer local = 90;
+                if ( ( NSP_TerminationForm_Batch.settings != null )
+                    && ( NSP_TerminationForm_Batch.settings.SoqlDaysBeforeLimit__c != null )
+                   )
+                {
+                    local = NSP_TerminationForm_Batch.settings.SoqlDaysBeforeLimit__c.intValue();
+                }
+                // limit must be non-negative...
+                if ( local < 0 ) {
+                    local = 0;
+                }
+                soqlDaysBeforeLimit = local;
+            }
+            return soqlDaysBeforeLimit;
+        }
+        private set;
+    }
+    
+    // translates soqlDaysAfterLimit into a specific Date value...
+    public static Date dateAfter {
+        public get {
+            if ( dateAfter == null ) {
+                dateAfter = System.today().addDays( 1 * NSP_TerminationForm_Batch.soqlDaysAfterLimit );
+                System.debug('*dateAfter' + dateAfter);
+            }
+            return dateAfter;
+        }
+        private set;
+    }
+    
+    // how far after (in days) should be terminated???
+    private static Integer soqlDaysAfterLimit {
+        private get {
+            if ( soqlDaysAfterLimit == null ) {
+                Integer local = 90;
+                if ( ( NSP_TerminationForm_Batch.settings != null )
+                    && ( NSP_TerminationForm_Batch.settings.SoqlDaysAfterLimit__c != null )
+                   )
+                {
+                    local = NSP_TerminationForm_Batch.settings.SoqlDaysAfterLimit__c.intValue();
+                }
+                // limit must be non-negative...
+                if ( local < 0 ) {
+                    local = 0;
+                }
+                soqlDaysAfterLimit = local;
+            }
+            return soqlDaysAfterLimit;
+        }
+        private set;
+    }
+    
     public void finish( Database.BatchableContext bc ) {
         if ( String.isNotBlank( System.Label.NSP_TerminationFormBatchGenericToAddress ) ) {
             EmailTemplate emailTemplate = [SELECT Id, Body FROM EmailTemplate WHERE DeveloperName = 'NSP_Termination_Form_Email_Template'];
