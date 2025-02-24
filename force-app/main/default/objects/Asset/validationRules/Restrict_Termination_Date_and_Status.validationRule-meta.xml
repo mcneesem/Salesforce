@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Restrict_Termination_Date_and_Status</fullName>
+    <active>true</active>
+    <errorConditionFormula>(ISCHANGED( NSP_Termination_Date__c )  ||  ISCHANGED( Status)) &amp;&amp;  RecordTypeName__c  = &apos;WO&apos;</errorConditionFormula>
+    <errorMessage>Termination Date and Status fields are read-only for WO Record Type.</errorMessage>
+</ValidationRule>
