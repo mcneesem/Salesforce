@@ -5,7 +5,7 @@
 // Name : NSP_ServiceAppointmentTriggerHelper
 //
 public with sharing class NSP_ServiceAppointmentTriggerHelper {
-    // test w/ NSP_ServiceAppointmentTrigger_Test (84%)
+    // test w/ NSP_ServiceAppointmentTrigger_Test (85%)
     // ~ Apex Test Requires: Permission Set: Field Service Admin Permissions
 
     //map of service resource Id and operating hrs name
@@ -335,7 +335,12 @@ public with sharing class NSP_ServiceAppointmentTriggerHelper {
     // @param map of Assigned Resource Id Id and Service Resource Id
     // @return void
     //
-    public static void syncProjTaskOwnerSA( Map<Id,ServiceAppointment> workOrderIdServiceAppointment , Map<Id,Id> serviceAppIdAssigResMap , Map<Id,Id> assignResIdServiceResMap ) {
+    public static void syncProjTaskOwnerSA(
+        Map<Id,ServiceAppointment> workOrderIdServiceAppointment ,
+        Map<Id,Id> serviceAppIdAssigResMap ,
+        Map<Id,Id> assignResIdServiceResMap
+        )
+    {
         ServiceAppointment serviceApp;
         List<WorkOrder> lstWorKOrderToUpdate = new List<WorkOrder>();
         List<pse__Project_Task__c> lstProjectTaskToUpdate = new List<pse__Project_Task__c>();
@@ -343,7 +348,14 @@ public with sharing class NSP_ServiceAppointmentTriggerHelper {
         List<ServiceAppointment> serviceAppList = updateServiceAppointments( serviceAppIdAssigResMap , assignResIdServiceResMap );
         //quering the workorder to update
         for ( WorkOrder oWorkOrder : [
-                    SELECT Id , NSP_Project_Task__c
+                    SELECT
+                        Id ,
+                        StartDate ,
+                        EndDate ,
+                        NSP_Project_Task__c ,
+                        NSP_Project_Task__r.pse__Start_Date_Time__c ,
+                        NSP_Project_Task__r.pse__End_Date_Time__c ,
+                        LastModifiedDate
                     FROM WorkOrder
                     WHERE ( Id IN :workOrderIdServiceAppointment.keySet() )
                 ]
@@ -546,42 +558,62 @@ public with sharing class NSP_ServiceAppointmentTriggerHelper {
         }
         return serviceAppList;
     }
-    
-    /**********************************************************************************************
-    * Description: this method will update WorkOrder fields
-    * @param WorkOrder record
-    * @param map of service appointment Id and Assigned resource Id
-    * @param map of Assigned resource Id and Resource Service User Id
-    * @return List of Service Appointment           
-    *********************************************************************************************/
-    private static WorkOrder updateWorkOrder(WorkOrder oWorkOrder, ServiceAppointment serviceApp, Map<Id, Id> serviceAppIdAssigResMap, Map<Id, Id> assignResIdServiceResMap){
-        return new WorkOrder(
-                Id = oWorkOrder.Id,
-                OwnerId = assignResIdServiceResMap.get(serviceAppIdAssigResMap.get(serviceApp.Id)),
-                StartDate = serviceApp.EarliestStartTime,
-                Status = serviceApp.Status,
-                Description = serviceApp.Description,
-            	NSP_Meeting_Type__c = serviceApp.NSP_Meeting_Type__c
-            );
-    }
-    
-    /**********************************************************************************************
-    * Description: this method will update Project Task fields
-    * @param WorkOrder record
-    * @param Service Appointment record
-    * @param map of service appointment Id and Assigned resource Id
-    * @param map of Assigned resource Id and Resource Service User Id
-    * @return List of Service Appointment           
-    *********************************************************************************************/
-    private static pse__Project_Task__c updateProjectTask(WorkOrder oWorkOrder, ServiceAppointment serviceApp, Map<Id, Id> serviceAppIdAssigResMap, Map<Id, Id> assignResIdServiceResMap){
 
-        return new pse__Project_Task__c(
-            Id = oWorkOrder.NSP_Project_Task__c,
-            OwnerId = assignResIdServiceResMap.get(serviceAppIdAssigResMap.get(serviceApp.Id)),
-            pse__Start_Date_Time__c = serviceApp.EarliestStartTime,
-            pse__Status__c = serviceApp.Status,
-            NSP_Meeting_Type__c = serviceApp.NSP_Meeting_Type__c,
-            pse__Long_Description__c = serviceApp.Description);
+    //
+    // Description: this method will update WorkOrder fields
+    // @param WorkOrder record
+    // @param map of service appointment Id and Assigned resource Id
+    // @param map of Assigned resource Id and Resource Service User Id
+    // @return List of Service Appointment           
+    //
+    private static WorkOrder updateWorkOrder(
+        WorkOrder oWorkOrder ,
+        ServiceAppointment serviceApp ,
+        Map<Id,Id> serviceAppIdAssigResMap ,
+        Map<Id,Id> assignResIdServiceResMap
+        )
+    {
+        WorkOrder response = new WorkOrder(
+            Id=oWorkOrder.Id ,
+            OwnerId=assignResIdServiceResMap.get( serviceAppIdAssigResMap.get( serviceApp.Id ) ) ,
+            Status=serviceApp.Status ,
+            Description=serviceApp.Description ,
+            NSP_Meeting_Type__c=serviceApp.NSP_Meeting_Type__c
+        );
+        // prevent ~ FIELD_INTEGRITY_EXCEPTION, The Start Date must be equal to or earlier than the End Date.: Start Date: [StartDate]
+        if ( serviceApp.EarliestStartTime <= oWorkOrder.EndDate ) {
+            response.StartDate = serviceApp.EarliestStartTime;
+        }
+        return response;
+    }
+
+    //
+    // Description: this method will update Project Task fields
+    // @param WorkOrder record
+    // @param Service Appointment record
+    // @param map of service appointment Id and Assigned resource Id
+    // @param map of Assigned resource Id and Resource Service User Id
+    // @return List of Service Appointment           
+    //
+    private static pse__Project_Task__c updateProjectTask(
+        WorkOrder oWorkOrder ,
+        ServiceAppointment serviceApp ,
+        Map<Id,Id> serviceAppIdAssigResMap ,
+        Map<Id,Id> assignResIdServiceResMap
+        )
+    {
+        pse__Project_Task__c response = new pse__Project_Task__c(
+            Id=oWorkOrder.NSP_Project_Task__c ,
+            OwnerId=assignResIdServiceResMap.get( serviceAppIdAssigResMap.get( serviceApp.Id ) ) ,
+            pse__Status__c=serviceApp.Status ,
+            NSP_Meeting_Type__c=serviceApp.NSP_Meeting_Type__c ,
+            pse__Long_Description__c=serviceApp.Description
+        );
+        // prevent ~ FIELD_CUSTOM_VALIDATION_EXCEPTION, Start date &amp; time must be before the end date &amp; time: [pse__End_Date_Time__c]
+        if ( serviceApp.EarliestStartTime <= oWorkOrder.NSP_Project_Task__r.pse__End_Date_Time__c ) {
+            response.pse__Start_Date_Time__c = serviceApp.EarliestStartTime;
+        }
+        return response;
     }
 
     //
