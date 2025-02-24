@@ -91,7 +91,6 @@ public with sharing class NSP_TerminationFormTemplateController {
         return reinstatementList;
     }
     private List<NSP_Termination_Form__c> getTerFormList(){
-        Date todaydate = Date.today();
         List<NSP_Termination_Form__c> terminationFormList = [
             SELECT
             Id, Name, NSP_Client_Term_Date__c,NSP_Term_Reason__c, 
