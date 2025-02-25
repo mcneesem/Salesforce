@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Sandbox_Only</fullName>
+    <active>true</active>
+    <description>Field Trip Field Analysis is allowed in Sandboxes only.</description>
+    <errorConditionFormula>NOT( $Setup.OrgSettings__c.IsSandbox__c )</errorConditionFormula>
+    <errorMessage>Field Trip Field Analysis is allowed in Sandboxes only.</errorMessage>
+</ValidationRule>
