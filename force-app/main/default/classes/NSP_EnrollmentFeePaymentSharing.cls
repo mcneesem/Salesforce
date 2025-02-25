@@ -17,6 +17,7 @@ public with sharing class NSP_EnrollmentFeePaymentSharing {
             Map<Id, String> oppToSalesOfficeMap = new Map<Id, String>();
             Map<String, List<User>> salesOfficeDADMMap = new Map<String, List<User>>();
             Set<String> salesOffices = new Set<String>();
+            Map<Id,User> efpSharingUserMap = CustomPermissionController.getPermittedUsersMap('Enrollment_Fee_Payment_Edit_Sharing');
 
             //Getting Opportunity team members related to the opportunity ids
             List<OpportunityTeamMember> oppTeamMembers = [SELECT OpportunityId, OpportunityTeamMember.Opportunity.StageName, OpportunityTeamMember.Opportunity.NSP_Sales_Office__c, UserId, TeamMemberRole FROM OpportunityTeamMember WHERE OpportunityId IN:opportunityIds];
@@ -35,11 +36,21 @@ public with sharing class NSP_EnrollmentFeePaymentSharing {
             //Getting the list of sales offices to the opportunity ids
             salesOffices.addAll(oppToSalesOfficeMap.values());
 
-            //Getting DAs and DMs for the list of sales offices
-            List<User> dADMUsers = [SELECT Id, Name, Userrole.Name, NSP_Sales_Office_Membership__c from user where NSP_Sales_Office_Membership__c IN: salesOffices and Userrole.Name IN ('District Administrator', 'District Manager')];
+            //Getting all the users for the sales offices
+            List<User> salesOfficeUsers = [SELECT Id, Name, Userrole.Name, NSP_Sales_Office_Membership__c from user where NSP_Sales_Office_Membership__c IN: salesOffices];
             
+            List<User> dADMUsersList = new List<User>();
+
+            for(User user: salesOfficeUsers)
+            {
+                if(efpSharingUserMap.keySet().contains(user.userId))
+                {
+                    dADMUsersList.add(efpSharingUserMap.get(user.userId));
+                }
+            }
+
             //Creating a map of sales office to DA and DMs
-            for(User user : dADMUsers)
+            for(User user : dADMUsersList)
             {
                 if(salesOfficeDADMMap.containsKey(user.NSP_Sales_Office_Membership__c)){
                     salesOfficeDADMMap.get(user.NSP_Sales_Office_Membership__c).add(user);
