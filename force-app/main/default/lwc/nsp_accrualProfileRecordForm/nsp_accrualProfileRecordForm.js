@@ -1200,20 +1200,33 @@ export default class Nsp_accrualProfileRecordForm extends NavigationMixin(
     columnConfig.push(action);
 
     let columnArr = [];
-    if(columnConfig != null && columnConfig.length > 0){
-      columnConfig.forEach((config) => {
-        if(config.type != 'action'){
+    columnArr = this.handleapgColumnArrList(columnConfig);
+    return columnArr;
+  }
+
+  handleapgColumnArrList(objList){
+    let columnArr = [];
+    const action = 'action';
+    if(objList != null && objList.length > 0){
+      objList.forEach((config) => {
+        if(config.type != action){
           config.editable = !this.apFieldPermission;
         }
-        else if(config.type == 'action' && this.apFieldPermission){
-            config.typeAttributes.rowActions.forEach((rowaction) => {
-            rowaction.disabled =  this.apFieldPermission;
-          })
+        else if(config.type == action && this.apFieldPermission){
+          this.handleapgColumnRowActions(config);            
         }
         columnArr.push(config);
       });
     }
     return columnArr;
+  }
+
+  handleapgColumnRowActions(obj){
+    if(obj!=null){
+      obj.typeAttributes.rowActions.forEach((rowaction) => {
+        rowaction.disabled =  this.apFieldPermission;
+      })
+    }
   }
 
   get apgColumnsAims() {
