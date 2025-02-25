@@ -1,6 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
+        <name>Email_Alert_Child_Opportunity_Closed_Lost_Email_Alert</name>
+        <label>Email Alert - Child Opportunity Closed Lost Email Alert</label>
+        <locationX>13250</locationX>
+        <locationY>350</locationY>
+        <actionName>Opportunity.NSP_Child_Opportunity_Closed_Lost_Email_Alert</actionName>
+        <actionType>emailAlert</actionType>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Email_Alert_Child_Opportunity_Closed_Lost_Email_Alert</targetReference>
+        </faultConnector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>opportunityId</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>Opportunity.NSP_Child_Opportunity_Closed_Lost_Email_Alert</nameSegment>
+    </actionCalls>
+    <actionCalls>
         <name>Email_Alert_MidMarket_Opportunity_Closed_Lost</name>
         <label>Email Alert - MidMarket_Opportunity_Closed_Lost</label>
         <locationX>12194</locationX>
@@ -18,7 +37,6 @@
             </value>
         </inputParameters>
         <nameSegment>Opportunity.MidMarket_Opportunity_Closed_Lost</nameSegment>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <name>Email_Alert_Notify_MidMarket_Team_of_WX_WA_Opty</name>
@@ -38,7 +56,6 @@
             </value>
         </inputParameters>
         <nameSegment>Opportunity.Notify_MidMarket_Team_of_WX_WA_Opportunity</nameSegment>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <name>EmailAlert_Notice_of_Termination_For_Account_Owner</name>
@@ -58,7 +75,6 @@
             </value>
         </inputParameters>
         <nameSegment>Opportunity.NSP_Notice_of_Termination_for_Account_Owner</nameSegment>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <name>EmailAlert_NSP_Alert_Mid_Market_sales_when_Opportunity_created_for_Account</name>
@@ -78,7 +94,6 @@
             </value>
         </inputParameters>
         <nameSegment>Opportunity.NSP_Alert_Mid_Market_sales_when_Opportunity_created_for_Account_with_more_than_1</nameSegment>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <name>EmailAlert_NSP_Alert_Mid_when_opportunity_primary_product_is_updated</name>
@@ -98,7 +113,6 @@
             </value>
         </inputParameters>
         <nameSegment>Opportunity.NSP_Alert_Mid_when_opportunity_primary_product_is_updated</nameSegment>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <name>EmailAlert_NSP_Alert_Mid_when_opportunity_related_account_number_of_ee_is_updat</name>
@@ -118,7 +132,6 @@
             </value>
         </inputParameters>
         <nameSegment>Opportunity.NSP_Alert_Mid_when_opportunity_related_account_number_of_ee_is_updated</nameSegment>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <name>EmailAlert_NSP_Alert_Mid_when_opportunity_updated_with_more_then_150_employee</name>
@@ -138,7 +151,6 @@
             </value>
         </inputParameters>
         <nameSegment>Opportunity.NSP_Alert_Mid_when_opportunity_updated_with_more_then_150_employee</nameSegment>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <name>EmailAlert_NSP_Alert_when_Order_is_Generated_for_an_Opportunity</name>
@@ -158,7 +170,6 @@
             </value>
         </inputParameters>
         <nameSegment>Opportunity.NSP_Alert_when_Order_is_Generated_for_an_Opportunity</nameSegment>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <name>EmailAlert_NSP_Email_Alert_Primary_Product_Change_on_Parent_Oppty</name>
@@ -178,7 +189,6 @@
             </value>
         </inputParameters>
         <nameSegment>Opportunity.NSP_Email_Alert_Primary_Product_Change_on_Parent_Oppty</nameSegment>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <name>EmailAlert_NSP_Engage_Service_Team_Email</name>
@@ -198,7 +208,6 @@
             </value>
         </inputParameters>
         <nameSegment>Opportunity.NSP_Engage_Service_Team_Email</nameSegment>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <name>EmailAlert_NSP_Engage_Service_Team_Email_for_WX_Opportunities</name>
@@ -218,7 +227,6 @@
             </value>
         </inputParameters>
         <nameSegment>Opportunity.NSP_Engage_Service_Team_Email_for_WX_Opportunities</nameSegment>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <name>EmailAlert_NSP_Interest_in_BPS_Email_Alert_for_Non_WX_WA</name>
@@ -238,7 +246,6 @@
             </value>
         </inputParameters>
         <nameSegment>Opportunity.NSP_Interest_in_BPS_Email_Alert_for_Non_WX_WA</nameSegment>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <name>EmailAlert_NSP_Interest_in_BPS_Email_Alert_for_WX_WA</name>
@@ -258,7 +265,6 @@
             </value>
         </inputParameters>
         <nameSegment>Opportunity.NSP_Interest_in_BPS_Email_Alert_for_WX_WA</nameSegment>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <name>EmailAlert_NSP_Interest_in_Certify_Email_Alert</name>
@@ -278,7 +284,6 @@
             </value>
         </inputParameters>
         <nameSegment>Opportunity.NSP_Interest_in_Certify_Email_Alert</nameSegment>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <name>EmailAlert_NSP_Interest_in_Employment_Screening_Email_Alert</name>
@@ -298,7 +303,6 @@
             </value>
         </inputParameters>
         <nameSegment>Opportunity.NSP_Interest_in_Employment_Screening_Email_Alert</nameSegment>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <name>EmailAlert_NSP_Interest_in_Insurance_Services_Email_Alert</name>
@@ -318,7 +322,6 @@
             </value>
         </inputParameters>
         <nameSegment>Opportunity.NSP_Interest_in_Insurance_Services_Email_Alert</nameSegment>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <name>EmailAlert_NSP_Interest_in_Integra_Email_Alert</name>
@@ -338,7 +341,6 @@
             </value>
         </inputParameters>
         <nameSegment>Opportunity.NSP_Interest_in_Integra_Email_Alert</nameSegment>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <name>EmailAlert_NSP_Interest_in_Recruiting_Email_Alert</name>
@@ -358,7 +360,6 @@
             </value>
         </inputParameters>
         <nameSegment>Opportunity.NSP_Interest_in_Recruiting_Email_Alert</nameSegment>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <name>EmailAlert_NSP_Interest_in_Retirement_Services_Email_Alert</name>
@@ -378,7 +379,6 @@
             </value>
         </inputParameters>
         <nameSegment>Opportunity.NSP_Interest_in_Retirement_Services_Email_Alert</nameSegment>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <name>EmailAlert_NSP_Notify_Account_Owner_on_Creation_of_New_Opportunity</name>
@@ -398,7 +398,6 @@
             </value>
         </inputParameters>
         <nameSegment>Opportunity.NSP_Notify_Account_Owner_on_Creation_of_New_Opportunity</nameSegment>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <name>EmailAlert_NSP_Notify_Child_Opportunity_Owner_of_Closed_Won</name>
@@ -418,7 +417,6 @@
             </value>
         </inputParameters>
         <nameSegment>Opportunity.NSP_Notify_Child_Opportunity_Owner_of_Closed_Won</nameSegment>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <name>EmailAlert_NSP_Notify_Opportunity_Owner_of_Closed_Won</name>
@@ -438,7 +436,6 @@
             </value>
         </inputParameters>
         <nameSegment>Opportunity.NSP_Notify_Opportunity_Owner_of_Closed_Won</nameSegment>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <name>EmailAlert_NSP_Notify_Oppty_Owner_Email_Alert</name>
@@ -458,7 +455,6 @@
             </value>
         </inputParameters>
         <nameSegment>Opportunity.NSP_Notify_Oppty_Owner_Email_Alert</nameSegment>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <name>EmailAlert_NSP_Parent_opportunity_Closed_Lost_Email_Alert</name>
@@ -478,7 +474,6 @@
             </value>
         </inputParameters>
         <nameSegment>Opportunity.NSP_Parent_opportunity_Closed_Lost_Email_Alert</nameSegment>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <name>EmailAlert_Signed_CSA_Email_to_Opportunity_Owner_Manager_s_Manager</name>
@@ -498,7 +493,6 @@
             </value>
         </inputParameters>
         <nameSegment>Opportunity.Signed_CSA_Email_to_Opportunity_Owner_Manager_s_Manager</nameSegment>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <apiVersion>61.0</apiVersion>
     <assignments>
@@ -739,6 +733,23 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assign_varFaultElement_Email_Alert_Child_Opportunity_Closed_Lost_Email_Alert</name>
+        <label>Assign varFaultElement - Email Alert - Child Opportunity Closed Lost Email Alert</label>
+        <locationX>13514</locationX>
+        <locationY>458</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Email_Alert_Child_Opportunity_Closed_Lost_Email_Alert</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Assign_varFaultElement_Engage_Service_Team_Email</name>
         <label>Assign varFaultElement - Engage Service Team Email</label>
         <locationX>10346</locationX>
@@ -928,7 +939,7 @@
     <decisions>
         <name>Verify_inputs_are_populated</name>
         <label>Verify inputs are populated</label>
-        <locationX>10082</locationX>
+        <locationX>10478</locationX>
         <locationY>134</locationY>
         <defaultConnectorLabel>Inputs missing</defaultConnectorLabel>
         <rules>
@@ -957,7 +968,7 @@
     <decisions>
         <name>Which_Email_Alert_should_be_sent</name>
         <label>Which Email Alert should be sent?</label>
-        <locationX>6650</locationX>
+        <locationX>6914</locationX>
         <locationY>242</locationY>
         <defaultConnectorLabel>N/A</defaultConnectorLabel>
         <rules>
@@ -1335,6 +1346,21 @@
             </connector>
             <label>Notify_MidMarket_Team_of_WX_WA_Opportunity</label>
         </rules>
+        <rules>
+            <name>NSP_Child_Opportunity_Closed_Lost_Email_Alert</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>varEmailAlert</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NSP_Child_Opportunity_Closed_Lost_Email_Alert</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Email_Alert_Child_Opportunity_Closed_Lost_Email_Alert</targetReference>
+            </connector>
+            <label>NSP_Child_Opportunity_Closed_Lost_Email_Alert</label>
+        </rules>
     </decisions>
     <description>HCM Leads Specialist email for WX/WA added. MidMarket Opty Closed Lost added. Updated to check for inputs and update variables</description>
     <environments>Default</environments>
@@ -1360,7 +1386,7 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <start>
-        <locationX>9956</locationX>
+        <locationX>10352</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Verify_inputs_are_populated</targetReference>
