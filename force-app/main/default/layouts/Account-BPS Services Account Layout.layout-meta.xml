@@ -78,6 +78,10 @@
                 <behavior>Edit</behavior>
                 <field>TickerSymbol</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>iSolved_ID__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
