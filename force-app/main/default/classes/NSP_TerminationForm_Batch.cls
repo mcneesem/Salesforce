@@ -104,7 +104,6 @@ global class NSP_TerminationForm_Batch implements Schedulable , Database.Batchab
         public get {
             if ( dateBefore == null ) {
                 dateBefore = System.today().addDays( -1* NSP_TerminationForm_Batch.soqlDaysBeforeLimit );
-                System.debug('*dateBefore' + dateBefore);
             }
             return dateBefore;
             
@@ -139,7 +138,6 @@ global class NSP_TerminationForm_Batch implements Schedulable , Database.Batchab
         public get {
             if ( dateAfter == null ) {
                 dateAfter = System.today().addDays( 1 * NSP_TerminationForm_Batch.soqlDaysAfterLimit );
-                System.debug('*dateAfter' + dateAfter);
             }
             return dateAfter;
         }
