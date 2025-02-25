@@ -59,6 +59,7 @@ import upsertAndDeleteRecords from '@salesforce/apex/NSP_sObjectOperationControl
 import linkFilesToRecord from '@salesforce/apex/NSP_AccrualProfileController.linkFilesToRecord';
 import getPlanOptions from '@salesforce/apex/NSP_AccrualProfileController.getPlanOptions';
 import getAttachedFiles from '@salesforce/apex/NSP_AccrualProfileController.getAttachedFiles';
+import hasAPTemplateEditPermission from '@salesforce/customPermission/Accrual_Profile_Template_Edit'; 
 export default class Nsp_accrualProfileRecordForm extends NavigationMixin(
   LightningElement
 ) {
@@ -170,6 +171,7 @@ export default class Nsp_accrualProfileRecordForm extends NavigationMixin(
 
       if (this.isClone) {
         this.fieldValue.NSP_Status__c = 'Draft';
+        this.assignTemplateValues();
       }
 
       this.doOneTimeActions(this.fieldValue);
@@ -178,6 +180,45 @@ export default class Nsp_accrualProfileRecordForm extends NavigationMixin(
     if (error) {
       this.showErrorToast(error.body.message);
     }
+  }
+
+  assignTemplateValues(){
+    if(this.recordTypeIdITA === this.fieldValue.recordTypeId){
+      this.fieldValue.Template__c = false;
+      this.fieldValue.Cloned_from_AP_Template__c = this.fieldValue.Name;
+    }
+  }
+
+  stringIsNotBlank(str){
+    let isNotBlank = false;
+    if(str != undefined && str != null && str != '' && str.trim().length > 0){
+      isNotBlank = true;
+    }
+    return isNotBlank;
+  }
+
+  get showClonedFromTemplate(){
+    let showClonedFromAP = false;
+    if( this.stringIsNotBlank(this.fieldValue.Cloned_from_AP_Template__c) && (this.recordTypeIdITA === this.fieldValue.recordTypeId)){
+      showClonedFromAP = true;
+    }
+    return showClonedFromAP;
+  }
+
+  get checkAccrualProfileEditPermission() {
+    return hasAPTemplateEditPermission;
+  }
+
+  get isReadOnly(){
+    return !this.checkAccrualProfileEditPermission;
+  }
+
+  get apFieldPermission() {
+    let hasEditPermission = false;
+    if((this.fieldValue != null && this.recordTypeIdITA === this.fieldValue.recordTypeId) && ((this.isClone!= null && this.isClone) || this.stringIsNotBlank(this.fieldValue.Cloned_from_AP_Template__c) ) &&  !this.checkAccrualProfileEditPermission){
+      hasEditPermission = true;
+    }
+    return hasEditPermission;
   }
 
   @wire(getPlanOptions, {
@@ -660,11 +701,16 @@ export default class Nsp_accrualProfileRecordForm extends NavigationMixin(
       NSP_Accrual_Profile_Account_Relationship__c: aparRecords,
       NSP_Accrual_Profile_Subclient_Relation__c: apsrRecords,
     };
-    const recordsToDeleteMap = {
-      NSP_Accrual_Profile_Grid__c: _apgDataToDeleteRecords,
-      NSP_Accrual_Profile_Account_Relationship__c : aparDataToDeleteRecords,
-      NSP_Accrual_Profile_Subclient_Relation__c : apscrDataToDeleteRecords
-    };
+    let recordsToDeleteMap = new Map();
+    if(_apgDataToDeleteRecords) {
+      recordsToDeleteMap.set('NSP_Accrual_Profile_Grid__c', _apgDataToDeleteRecords);
+    }
+    if(_apgDataToDeleteRecords) {
+      recordsToDeleteMap.set('NSP_Accrual_Profile_Account_Relationship__c', aparDataToDeleteRecords);
+    }
+    if(_apgDataToDeleteRecords) {
+      recordsToDeleteMap.set('NSP_Accrual_Profile_Subclient_Relation__c', apscrDataToDeleteRecords);
+    }
 
     upsertAndDeleteRecords({ recordsToUpsertMap, recordsToDeleteMap })
       .then(() => this.navigateToRecord())
@@ -1153,7 +1199,21 @@ export default class Nsp_accrualProfileRecordForm extends NavigationMixin(
     }
     columnConfig.push(action);
 
-    return columnConfig;
+    let columnArr = [];
+    if(columnConfig != null && columnConfig.length > 0){
+      columnConfig.forEach((config) => {
+        if(config.type != 'action'){
+          config.editable = !this.apFieldPermission;
+        }
+        else if(config.type == 'action' && this.apFieldPermission){
+            config.typeAttributes.rowActions.forEach((rowaction) => {
+            rowaction.disabled =  this.apFieldPermission;
+          })
+        }
+        columnArr.push(config);
+      });
+    }
+    return columnArr;
   }
 
   get apgColumnsAims() {
