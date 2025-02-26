@@ -13,6 +13,10 @@
         <name>Case_Creation_Screen_Flow</name>
     </customPermissions>
     <description>Grants the Custom Permission to access Case Creation Screen Flow</description>
+    <flowAccesses>
+        <enabled>true</enabled>
+        <flow>Case_Creation_Screen_Flow</flow>
+    </flowAccesses>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Case Creation Screen Flow</label>
     <license>Salesforce</license>
