@@ -245,36 +245,40 @@ public with sharing class NSP_ProjectTriggerHelper {
 
     //== Method to set the project client segment on before save // ADO - 329309
     private static void setProjectSegmentOnBeforeSave( List<pse__Proj__c> projectsList , Map<Id,Account> projAccIdNameMap ) {
-        Set<String> projectStatusSet = new Set<String>{'Complete', 'Cancelled'};
+        Set<String> projectStatusSet = new Set<String>{
+            'Complete' ,
+            'Cancelled'
+        };
         if ( !projAccIdNameMap?.isEmpty() && !projectsList?.isEmpty() ) {
             for ( pse__Proj__c project : projectsList ) {
-                if ( projAccIdNameMap.containsKey( project.pse__Account__c ) && !projectStatusSet.contains(project.pse__Project_Status__c)) {
-                    Account account = projAccIdNameMap.get( project.pse__Account__c );
-                    project.Client_Segment__c = getSegmentValue(account);
+                if ( projAccIdNameMap.containsKey( project.pse__Account__c )
+                    && !projectStatusSet.contains( project.pse__Project_Status__c )
+                    )
+                {
+                    project.Client_Segment__c = NSP_ProjectTriggerHelper.getSegmentValue(
+                        projAccIdNameMap.get( project.pse__Account__c ) ,
+                        project.Client_Segment__c
+                    );
                 }
             }
         }
     }
 
-private static String getSegmentValue(Account account)
-{
-    string returnValue;
-    string accountSegment = 'Enterprise';
-
-    if ( String.isNotBlank( account.NSP_Service_Segment__c ) ) 
-    {
-        returnValue = account.NSP_Service_Segment__c;
-    } 
-    else if ( String.isNotBlank( account.NSP_Account_Segment__c ) ) {
-        returnValue = account.NSP_Account_Segment__c;
-        if(accountSegment.equalsIgnoreCase(account.NSP_Account_Segment__c))
-        {
-           returnValue = 'Middle Market Enterprise'; 
+    private static String getSegmentValue( Account record , String defaultValue ) {
+        String returnValue = defaultValue;
+        if ( record != null ) {
+            if ( String.isNotBlank( record.NSP_Service_Segment__c ) ) {
+                returnValue = record.NSP_Service_Segment__c;
+            } else if ( String.isNotBlank( record.NSP_Account_Segment__c ) ) {
+                returnValue = record.NSP_Account_Segment__c;
+                String accountSegment = 'Enterprise';
+                if ( accountSegment.equalsIgnoreCase( record.NSP_Account_Segment__c ) ) {
+                    returnValue = 'Middle Market Enterprise'; 
+                }
+            }
         }
+        return returnValue;
     }
-
-    return returnValue;
-}
 
     //
     // Iterates throught the list of new leads and passes the required attributes to other methods.
