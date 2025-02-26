@@ -2,13 +2,15 @@
 // Represents the User Onboarding trigger helper which handles all the permission assignment logic.
 //
 public with sharing class UserOnboardingTriggerHelper {
-    // test w/ UserOnboardingTriggerHelperTest (87%)
+    // test w/ UserOnboardingTriggerHelperTest (88%)
 
     //
     // Iterates throught the list of new User and passes the required attributes to other methods.
     // @param newList List of New User.
     // @return void
     //
+    private static final String ERROR_MESSAGE = 'No errors found.';
+
     public void beforeInsertUser( List<User> newList ) {
         if ( UserOnboardingToolSettings__c.getInstance( UserInfo.getUserId() ).IsEnabled__c ) {
             List<User> userList = new List<User>();
@@ -112,10 +114,10 @@ public with sharing class UserOnboardingTriggerHelper {
                 }
             }
             if ( !userList.isEmpty() ) {
-                this.assignPermissionSetLicense( userList , null );
-                this.assignPermissionSetToUser( userList , null );
+                this.assignPermissionSetLicense( userList );
+                this.assignPermissionSetToUser( userList );
                 this.assignPermissionSetGroupToUser( userList );
-                this.addUserToPublicGroup( userList , null );
+                this.addUserToPublicGroup( userList );
             }
         }
     }
@@ -132,32 +134,48 @@ public with sharing class UserOnboardingTriggerHelper {
             Set<Id> userToremovePerm = new Set<Id>();
             if ( ( newMap != null ) && !newMap.isEmpty() ){
                 for ( User usr : newMap.values() ) {
-                    if ( ( oldMap != null ) && ( oldMap.get( usr.Id ) != null ) ){
-                        User oldUser = oldMap.get( usr.Id );
-                        if ( usr.Run_Permission_Automation__c
-                            && String.isNotBlank( usr.Business_Title__c )
-                            && usr.IsActive
-                            && ( oldUser != null )
-                            && (
-                                ( oldUser.Run_Permission_Automation__c != usr.Run_Permission_Automation__c )
-                                || ( oldUser.Business_Title__c != usr.Business_Title__c )
-                                || ( oldUser.IsActive != usr.IsActive )
-                                )
-                            )
-                        {
-                            userList.add( usr );
-                            userToremovePerm.add( usr.Id );
-                        }
+                    if ( this.isUserEligibleForUpdate( usr , oldMap ) ) {
+                        userList.add( usr );
+                        userToremovePerm.add( usr.Id );
                     }
                 }
             }
-            if ( !userList.isEmpty() ){
-                this.assignPermissionSetLicense( userList , userToremovePerm );
-                this.assignPermissionSetToUser( userList , userToremovePerm );
+            if ( this.shouldHandleRemoval( userToRemovePerm , oldMap ) ) {
+                this.handleRemoval( userToremovePerm , oldMap , 'PermissionSet' );
+                this.handleRemoval( userToremovePerm , oldMap , 'Group' );
+                this.handleRemoval( userToremovePerm , oldMap , 'PermissionSetLicense' );
+            }
+            if ( !userList.isEmpty() ) {
+                this.assignPermissionSetLicense( userList );
+                this.assignPermissionSetToUser( userList );
                 this.assignPermissionSetGroupToUser( userList );
-                this.addUserToPublicGroup( userList , userToremovePerm );
+                this.addUserToPublicGroup( userList );
             }
         }
+    }
+
+    private Boolean shouldHandleRemoval( Set<Id> userToRemovePerm , Map<Id,User> oldMap ) {
+        return (
+            UserOnboardingToolSettings__c.getInstance( UserInfo.getUserId() ).IsEnabledRemoval__c
+            && ( userToRemovePerm != null )
+            && !userToRemovePerm.isEmpty()
+            && ( oldMap != null )
+        );
+    }
+
+    private Boolean isUserEligibleForUpdate( User usr , Map<Id,User> oldMap ) {
+        Boolean isUserEligible = false;
+        if (oldMap != null && oldMap.containsKey(usr.Id)) {
+            User oldUser = oldMap.get(usr.Id);
+            
+            isUserEligible = usr.Run_Permission_Automation__c &&
+                String.isNotBlank(usr.Business_Title__c) &&
+                usr.IsActive &&
+                (oldUser.Run_Permission_Automation__c != usr.Run_Permission_Automation__c ||
+                 oldUser.Business_Title__c != usr.Business_Title__c ||
+                 oldUser.IsActive != usr.IsActive);
+        }
+        return isUserEligible;
     }
 
     //
@@ -346,590 +364,571 @@ public with sharing class UserOnboardingTriggerHelper {
     }
 
     //
-    // @description: Method to assign permission set on User Creation
-    // @parameters: List of users
-    // @return: void
     //
-    private void assignPermissionSetToUser( List<User> newList , Set<Id> assigneeIds ) {
-        try {
-            if ( UserOnboardingToolSettings__c.getInstance( UserInfo.getUserId() ).IsEnabledRemoval__c
-                && ( assigneeIds != null )
-                && !assigneeIds.isEmpty()
-                )
-            {
-                this.removePermission( assigneeIds );
-            }
-            Map<String,List<String>> mapOfUserTitleToPermissionSetNames = new Map<String,List<String>>();
-            List<User_Onboarding_Detail__mdt> details = this.getUserOnboardingDetails( newList );
-            if ( ( details != null ) && !details.isEmpty() ) {
-                for ( User_Onboarding_Detail__mdt detail : details ){
-                    if ( String.isNotBlank( detail.Permission_Set_Name__c ) ) {
-                        mapOfUserTitleToPermissionSetNames.put(
-                            detail.Title__c ,
-                            detail.Permission_Set_Name__c.split( ',' )
-                        );
-                    }
-                }
-            }
-            Set<String> permissionSetNames = new Set<String>();
-            if ( !mapOfUserTitleToPermissionSetNames.isEmpty() ) {
-                for ( List<String> names : mapOfUserTitleToPermissionSetNames.values() ) {
-                    permissionSetNames.addAll( names );
-                }
-            }
-            Map<Id,PermissionSet> permissionSetMap = null;
-            if ( !permissionSetNames.isEmpty() ) {
-                
-                permissionSetMap = new Map<Id,PermissionSet>(
-                    [
-                        SELECT Id , Name
-                        FROM PermissionSet
-                        WHERE ( Name IN :permissionSetNames )
-                    ]
-                );
-            }
-            Map<String,Id> permissionSetNameToIdMap = new Map<String,Id>();        
-            if ( ( permissionSetMap != null ) && !permissionSetMap.isEmpty() ) {
-                for ( PermissionSet record : permissionSetMap.values() ) {
-                    permissionSetNameToIdMap.put(
-                        record.Name ,
-                        record.Id
-                    );
-                }
-            }
-            Map<Id,String> assigneeToPSMap = new Map<Id,String>();
-            if ( ( newList != null ) && !newList.isEmpty() ) {
-                for ( User assignee : newList ) {
-                    if ( String.isNotBlank( assignee.Business_Title__c )
-                        && mapOfUserTitleToPermissionSetNames.containsKey( assignee.Business_Title__c )
-                        )
-                    {
-                        for ( String psNames : mapOfUserTitleToPermissionSetNames.get( assignee.Business_Title__c ) ) {
-                            // serializing into Map<Id,String> because Map<Id,List<Id>> is not supported by future method...
-                            // ~ Map keyed on UserId containing comma-separated values of PermissionSetIds
-                            if ( permissionSetNameToIdMap.containsKey( psNames ) ) {
-                                if ( assigneeToPSMap.containsKey( assignee.Id ) ) {
-                                    assigneeToPSMap.put(
-                                        assignee.Id ,
-                                        assigneeToPSMap.get(assignee.Id) + ',' + permissionSetNameToIdMap.get( psNames )
-                                    );
-                                }else{
-                                    assigneeToPSMap.put(
-                                        assignee.Id ,
-                                        permissionSetNameToIdMap.get( psNames )
-                                    );
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            if ( !assigneeToPSMap.isEmpty() ) {
-                UserOnboardingTriggerHelper.assignPermission( assigneeToPSMap );
-            }
-        } catch ( Exception e ) {
-            NSP_ErrorLogHandler.logException(
-                UserOnboardingTriggerHelper.class.getName() ,
-                'assignPermissionSetToUser' ,
-                e
-            );
+    //
+
+    private void assignPermissionSetToUser( List<User> newList ) {
+        if ( ( newList != null ) && !newList.isEmpty() ) {
+            this.processUserAssignments( newList , 'PermissionSet' );
         }
     }
 
-    //
-    // @description: Method to assign permission set group on User Creation
-    // @parameters: List of users
-    // @return: void
-    //
     private void assignPermissionSetGroupToUser( List<User> newList ) {
-        try{
-            Map<String,List<String>> mapOfUserTitleToPermissionSetGroupDeveloperNames = new Map<String,List<String>>();
-            List<User_Onboarding_Detail__mdt> details = this.getUserOnboardingDetails( newList );
+        if ( ( newList != null ) && !newList.isEmpty() ) {
+            this.processUserAssignments( newList , 'PermissionSetGroup' );
+        }
+    }
+
+    private void addUserToPublicGroup(List<User> newList ) {
+        if ( ( newList != null ) && !newList.isEmpty() ) {
+            this.processUserAssignments( newList , 'Group' );
+        }
+    }
+
+    private void assignPermissionSetLicense(List<User> newList ) {
+        if ( ( newList != null ) && !newList.isEmpty() ) {
+            this.processUserAssignments( newList , 'PermissionSetLicense' );
+        }
+    }
+
+    private void processUserAssignments(
+        List<User> newList ,
+        String entityType
+        )
+    {
+        List<User_Onboarding_Detail__mdt> details = new List<User_Onboarding_Detail__mdt>();
+        Map<String,List<String>> titleToEntityMap = new Map<String,List<String>>();
+        Set<String> entityNames = new Set<String>();
+        Map<String,Id> entityNameToIdMap = new Map<String,Id>();
+        Map<Id,String> userToEntityMap = new Map<Id,String>();
+        try {
+            // Retrieve user onboarding details
+            if ( ( newList != null ) && !newList.isEmpty() ) {
+                details = this.getUserOnboardingDetails( newList );
+            }
+            // Build a mapping of user titles to entity developer names
             if ( ( details != null ) && !details.isEmpty() ) {
-                for ( User_Onboarding_Detail__mdt detail : details ) {
-                    if ( String.isNotBlank( detail.Permission_Set_Group_Name__c ) ) {
-                        mapOfUserTitleToPermissionSetGroupDeveloperNames.put(
-                            detail.Title__c ,
-                            detail.Permission_Set_Group_Name__c.split( ',' )
-                        );
-                    }
+                titleToEntityMap = this.buildTitleToEntityMap( details , entityType );
+            }
+            // Fetch entity developer names
+            if ( ( titleToEntityMap != null ) && !titleToEntityMap.isEmpty() ) {
+                entityNames = this.extractEntityNames( titleToEntityMap );
+            }
+            if ( ( entityNames != null ) && !entityNames.isEmpty() ) {
+                entityNameToIdMap = this.fetchEntityIdsByName( entityNames , entityType );
+            }
+            // Build user-to-entity mapping
+            if ( ( entityNameToIdMap != null )
+                && !entityNameToIdMap.isEmpty()
+                && ( titleToEntityMap != null )
+                && !titleToEntityMap.isEmpty()
+                )
+            {
+                userToEntityMap = this.buildUserToEntityMap( newList , titleToEntityMap , entityNameToIdMap );
+            }
+            // Assign entities to users
+            if ( ( userToEntityMap != null ) && !userToEntityMap.isEmpty() ) {
+                this.assignEntitiesToUsers( userToEntityMap , entityType );
+            }
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                UserOnboardingTriggerHelper.class.getName(),
+                'processUserAssignments:' + entityType,
+                e
+            );
+        }
+    }
+
+    private void handleRemoval( Set<Id> ids , Map<Id,User> oldMap , String entityType ) {
+        if ( String.isNotBlank( entityType ) ) {
+            if ( entityType == 'PermissionSet' ) {
+                this.removePermission( ids , oldMap );
+            } else if ( entityType == 'Group' ) {
+                this.removeGroups( ids , oldMap );
+            } else if ( entityType == 'PermissionSetLicense' ) {
+                this.removePermissionSetLicense( ids , oldMap );
+            }
+        }
+    }
+
+    private Map<String,List<String>> buildTitleToEntityMap(
+        List<User_Onboarding_Detail__mdt> details ,
+        String entityType
+        )
+    {
+        Map<String,List<String>> titleToEntityMap = new Map<String,List<String>>();
+        if ( ( details != null ) && !details.isEmpty() ) {
+            for ( User_Onboarding_Detail__mdt detail : details ) {
+                if ( String.isNotBlank( detail.Title__c ) ) {
+                    titleToEntityMap.put(
+                        detail.Title__c ,
+                        this.buildEntityList( detail , entityType )
+                    );
                 }
             }
-            Set<String> permissionSetGroupDeveloperNames = new Set<String>(); 
-            if ( !mapOfUserTitleToPermissionSetGroupDeveloperNames.isEmpty() ) {
-                for ( List<String> str : mapOfUserTitleToPermissionSetGroupDeveloperNames.values()){
-                    permissionSetGroupDeveloperNames.addAll(str);
-                }
+        }
+        return titleToEntityMap;
+    }
+
+    private List<String> buildEntityList( User_Onboarding_Detail__mdt detail , String entityType ) {
+        List<String> entityList = new List<String>();
+        if ( detail != null ) {
+            if ( ( entityType == 'PermissionSet' )
+                && String.isNotBlank( detail.Permission_Set_Name__c )
+                )
+            {
+                entityList = detail.Permission_Set_Name__c.split( ',' );
+            } else if ( ( entityType == 'PermissionSetGroup' )
+                && String.isNotBlank( detail.Permission_Set_Group_Name__c )
+                )
+            {
+                entityList = detail.Permission_Set_Group_Name__c.split( ',' );
+            } else if ( ( entityType == 'Group' )
+                && String.isNotBlank( detail.Queue_Name__c )
+                )
+            {
+                entityList = detail.Queue_Name__c.split( ',' );
+            } else if ( ( entityType == 'PermissionSetLicense' )
+                && String.isNotBlank( detail.Permission_Set_License__c )
+                )
+            {
+                entityList = detail.Permission_Set_License__c.split( ',' );
             }
-            Map<Id,PermissionSet> permissionSetMap = null;
-            if ( !permissionSetGroupDeveloperNames.isEmpty() ) {
-                permissionSetMap = new Map<Id,PermissionSet>(
-                    [
-                        SELECT Id , PermissionSetGroup.DeveloperName
+        }
+        return entityList;
+    }
+
+    private Set<String> extractEntityNames( Map<String,List<String>> titleToEntityMap ) {
+        Set<String> entityNames = new Set<String>();
+        if ( ( titleToEntityMap != null ) && !titleToEntityMap.isEmpty() ) {
+            for ( List<String> names : titleToEntityMap.values() ) {
+                entityNames.addAll( names );
+            }
+        }
+        return entityNames;
+    }
+
+    private Map<String, Id> fetchEntityIdsByName( Set<String> names , String entityType ) {
+        Map<String,Id> nameToIdMap = new Map<String,Id>();
+        if ( isInputValid( names , entityType ) ) {
+            nameToIdMap = fetchEntityData( names , entityType );
+        }
+        return nameToIdMap;
+    }
+
+    private Boolean isInputValid( Set<String> names , String entityType ) {
+        return (
+            ( entityType != null )
+            && ( names != null )
+            && !names.isEmpty()
+        );
+    }
+    
+    private Map<String, Id> fetchEntityData( Set<String> names , String entityType ) {
+        Map<String,Id> nameToIdMap = new Map<String,Id>();
+        if ( entityType == 'PermissionSet' ) {
+            for ( PermissionSet ps : [ SELECT Id , Name FROM PermissionSet WHERE Name IN :names ] ) {
+                nameToIdMap.put( ps.Name , ps.Id );
+            }
+        } else if ( entityType == 'PermissionSetGroup' ) {
+            for ( PermissionSet ps : [
+                        SELECT
+                            Id ,
+                            PermissionSetGroup.DeveloperName
                         FROM PermissionSet
-                        WHERE (
-                            PermissionSetGroupId IN (
-                                SELECT Id
-                                FROM PermissionSetGroup
-                                WHERE ( DeveloperName IN :permissionSetGroupDeveloperNames )
-                            )
+                        WHERE PermissionSetGroupId IN (
+                            SELECT Id FROM PermissionSetGroup WHERE DeveloperName IN :names
                         )
                     ]
-                );
-            }
-            Map<String,Id> permissionSetGroupDeveloperNameToIdMap = new Map<String,Id>();
-            if ( ( permissionSetMap != null ) && !permissionSetMap.isEmpty() ) {
-                for ( PermissionSet eachPS : permissionSetMap.values() ) {
-                    permissionSetGroupDeveloperNameToIdMap.put(
-                        eachPS.PermissionSetGroup.DeveloperName ,
-                        eachPS.Id
-                    );
-                }
-            }
-            Map<Id,String> assigneeToPSMap = new Map<Id,String>();
-            if ( ( newList != null ) && !newList.isEmpty() ) {
-                for ( User assignee : newList ) {
-                    if ( String.isNotBlank( assignee.Business_Title__c )
-                        && mapOfUserTitleToPermissionSetGroupDeveloperNames.containsKey( assignee.Business_Title__c )
-                        )
-                    {
-                        for ( String psgDeveloperName : mapOfUserTitleToPermissionSetGroupDeveloperNames.get( assignee.Business_Title__c ) ) {
-                            // serializing into Map<Id,String> because Map<Id,List<Id>> is not supported by future method...
-                            // ~ Map keyed on UserId containing comma-separated values of PermissionSetIds
-                            if ( permissionSetGroupDeveloperNameToIdMap.containsKey( psgDeveloperName ) ) {
-                                if ( assigneeToPSMap.containsKey( assignee.Id ) ) {
-                                    assigneeToPSMap.put(
-                                        assignee.Id ,
-                                        assigneeToPSMap.get( assignee.Id ) + ',' + permissionSetGroupDeveloperNameToIdMap.get( psgDeveloperName )
-                                    );
-                                }else{
-                                    assigneeToPSMap.put(
-                                        assignee.Id ,
-                                        permissionSetGroupDeveloperNameToIdMap.get( psgDeveloperName )
-                                    );
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            if ( !assigneeToPSMap.isEmpty() ) {
-                UserOnboardingTriggerHelper.assignPermission( assigneeToPSMap );
-            }
-        } catch ( Exception e ) {
-            NSP_ErrorLogHandler.logException(
-                UserOnboardingTriggerHelper.class.getName() ,
-                'assignPermissionSetGroupToUser' ,
-                e
-            );
-        }
-    }
-
-    //
-    // @description: Method to add User to Public Group on User Creation
-    // @parameters: List of users
-    // @return: void
-    //
-    private void addUserToPublicGroup( List<User> newList , Set<Id> memberIds ) {
-        try {
-            if ( UserOnboardingToolSettings__c.getInstance( UserInfo.getUserId() ).IsEnabledRemoval__c
-                && ( memberIds != null )
-                && !memberIds.isEmpty()
                 )
             {
-                this.removeGroups( memberIds );
+                nameToIdMap.put( ps.PermissionSetGroup.DeveloperName , ps.Id );
             }
-            Map<String,List<String>> mapOfUserTitleToGroupDeveloperName = new Map<String,List<String>>();
-            List<User_Onboarding_Detail__mdt> details = this.getUserOnboardingDetails( newList );
-            if ( ( details != null ) && !details.isEmpty() ) {
-                for ( User_Onboarding_Detail__mdt detail : details ) {
-                    if ( String.isNotBlank( detail.Queue_Name__c ) ) {
-                        mapOfUserTitleToGroupDeveloperName.put(
-                            detail.Title__c ,
-                            detail.Queue_Name__c.split( ',' )
-                        );
-                    }
-                }
+        } else if ( entityType == 'Group' ) {
+            for ( Group userGroup : [ SELECT Id , DeveloperName FROM Group WHERE DeveloperName IN :names ] ) {
+                nameToIdMap.put( userGroup.DeveloperName , userGroup.Id );
             }
-            Set<String> groupDeveloperNames = new Set<String>();
-            if ( !mapOfUserTitleToGroupDeveloperName.isEmpty() ) {
-                for ( List<String> developerNames : mapOfUserTitleToGroupDeveloperName.values() ) {
-                    groupDeveloperNames.addAll( developerNames );
-                }
-            }
-            Map<Id,Group> groupMap = null;
-            if ( !groupDeveloperNames.isEmpty() ) {
-                groupMap = new Map<Id,Group>(
-                    [
-                        SELECT Id , DeveloperName
-                        FROM Group
-                        WHERE ( DeveloperName IN :groupDeveloperNames )
-                    ]
-                );
-            }
-            Map<String,Id> groupDeveloperNameToIdMap = new Map<String,Id>();
-            if ( ( groupMap != null ) && !groupMap.isEmpty() ) {
-                for ( Group record : groupMap.values() ) {
-                    groupDeveloperNameToIdMap.put(
-                        record.DeveloperName ,
-                        record.Id
-                    );
-                }
-            }
-            Map<Id,String> memberToGroupMap = new Map<Id,String>();
-            if ( ( newList != null ) && !newList.isEmpty() ) {
-                for ( User member : newList ) {
-                    if ( String.isNotBlank( member.Business_Title__c )
-                        && mapOfUserTitleToGroupDeveloperName.containsKey( member.Business_Title__c )
-                        )
-                    {
-                        for ( String groupDeveloperName : mapOfUserTitleToGroupDeveloperName.get( member.Business_Title__c ) ) {
-                            // serializing into Map<Id,String> because Map<Id,List<Id>> is not supported by future method...
-                            // ~ Map keyed on UserId containing comma-separated values of GroupIds
-                            if ( groupDeveloperNameToIdMap.containsKey( groupDeveloperName ) ) {
-                                if ( memberToGroupMap.containsKey( member.Id ) ) {
-                                    memberToGroupMap.put(
-                                        member.Id ,
-                                        memberToGroupMap.get( member.Id ) + ',' + groupDeveloperNameToIdMap.get( groupDeveloperName )
-                                    );
-                                }else{
-                                    memberToGroupMap.put(
-                                        member.Id ,
-                                        groupDeveloperNameToIdMap.get( groupDeveloperName )
-                                    );
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            if ( !memberToGroupMap.isEmpty() ) {
-                UserOnboardingTriggerHelper.assignGroups( memberToGroupMap );
-            }
-        } catch ( Exception e ) {
-            NSP_ErrorLogHandler.logException(
-                UserOnboardingTriggerHelper.class.getName() ,
-                'addUserToPublicGroup' ,
-                e
-            );
-        }
-    }
-
-    //
-    // @description: Assign Permission Set License To Users
-    // @parameters: List of users
-    // @return: void
-    //
-    private void assignPermissionSetLicense( List<User> newList , Set<Id> assigneeIds ){
-        try {
-            if ( UserOnboardingToolSettings__c.getInstance( UserInfo.getUserId() ).IsEnabledRemoval__c
-                && ( assigneeIds != null )
-                && !assigneeIds.isEmpty()
-                )
-            {
-                this.removePermissionSetLicense( assigneeIds );
-            }
-            Map<String,List<String>> mapOfUserTitleToPermissionSetLicenseDeveloperNames = new Map<String,List<String>>();
-            List<User_Onboarding_Detail__mdt> details = this.getUserOnboardingDetails( newList );
-            if ( ( details != null ) && !details.isEmpty() ) {
-                for ( User_Onboarding_Detail__mdt detail : details ) {
-                    if ( String.isNotBlank( detail.Permission_Set_License__c ) ) {
-                        mapOfUserTitleToPermissionSetLicenseDeveloperNames.put(
-                            detail.Title__c ,
-                            detail.Permission_Set_License__c.split( ',' )
-                        );
-                    }
-                }
-            }
-            Set<String> permissionSetLicenseDeveloperNames = new Set<String>(); 
-            if ( !mapOfUserTitleToPermissionSetLicenseDeveloperNames.isEmpty() ) {
-                for ( List<String> developerNames : mapOfUserTitleToPermissionSetLicenseDeveloperNames.values() ) {
-                    permissionSetLicenseDeveloperNames.addAll( developerNames );
-                }
-            }
-            Map<Id,PermissionSetLicense> permissionSetLicenseMap = null;
-            if ( !permissionSetLicenseDeveloperNames.isEmpty() ) {
-                permissionSetLicenseMap = new Map<Id,PermissionSetLicense>(
-                    [
+        } else if ( entityType == 'PermissionSetLicense' ) {
+            for ( PermissionSetLicense psl : [
                         SELECT Id , DeveloperName
                         FROM PermissionSetLicense
-                        WHERE ( DeveloperName IN :permissionSetLicenseDeveloperNames )
+                        WHERE DeveloperName IN :names
                     ]
-                );
+                )
+            {
+                nameToIdMap.put( psl.DeveloperName , psl.Id );
             }
-            Map<String,String> permissionSetLicenseDeveloperNameToIdMap = new Map<String,String>();        
-            if ( ( permissionSetLicenseMap != null ) && !permissionSetLicenseMap.isEmpty() ) {
-                for ( PermissionSetLicense license : permissionSetLicenseMap.values() ) {
-                    permissionSetLicenseDeveloperNameToIdMap.put(
-                        license.DeveloperName ,
-                        String.valueOf( license.Id )
-                    );
-                }
-            }
-            Map<Id,String> assigneeToPSLMap = new Map<Id,String>();
-            if ( ( newList != null ) && !newList.isEmpty() ) {
-                for ( User assignee : newList ) {
-                    if ( String.isNotBlank( assignee.Business_Title__c )
-                        && mapOfUserTitleToPermissionSetLicenseDeveloperNames.containsKey( assignee.Business_Title__c )
-                        )
-                    {
-                        for ( String permissionSetLicenseDeveloperName : mapOfUserTitleToPermissionSetLicenseDeveloperNames.get( assignee.Business_Title__c ) ) {
-                            // serializing into Map<Id,String> because Map<Id,List<Id>> is not supported by future method...
-                            // ~ Map keyed on UserId containing comma-separated values of PermissionSetLicenseIds...
-                            if(permissionSetLicenseDeveloperNameToIdMap.containsKey(permissionSetLicenseDeveloperName)){
-                                if ( assigneeToPSLMap.containsKey( assignee.Id ) ) {
-                                    assigneeToPSLMap.put(
-                                        assignee.Id ,
-                                        assigneeToPSLMap.get( assignee.Id ) + ',' + permissionSetLicenseDeveloperNameToIdMap.get( permissionSetLicenseDeveloperName )
-                                    );
-                                } else {
-                                    assigneeToPSLMap.put(
-                                        assignee.Id ,
-                                        permissionSetLicenseDeveloperNameToIdMap.get( permissionSetLicenseDeveloperName )
-                                    );
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            if ( !assigneeToPSLMap.isEmpty() ) {
-                UserOnboardingTriggerHelper.permissionSetLicenseAssignment( assigneeToPSLMap );
-            }
-        } catch ( Exception e ) {
-            NSP_ErrorLogHandler.logException(
-                UserOnboardingTriggerHelper.class.getName() ,
-                'assignPermissionSetLicense' ,
-                e
-            );
         }
+        return nameToIdMap;
     }
 
-    //
-    // @MethodName: assignPermission
-    // @Description: Assign Permission Set
-    // @param Map keyed on UserId containing comma-separated values of PermissionSetIds
-    // @return void
-    //
-    @future
-    private static void assignPermission( Map<Id,String> assigneeToPSMap ) {
-        try {
-            List<PermissionSetAssignment> assignments = new List<PermissionSetAssignment>();
-            if ( ( assigneeToPSMap != null ) && !assigneeToPSMap.isEmpty() ) {
-                for ( Id assigneeId :assigneeToPSMap.keySet() ) {
-                    List<String> permissionSetIds = assigneeToPSMap.get( assigneeId ).split( ',' );
-                    if ( ( permissionSetIds != null ) && !permissionSetIds.isEmpty() ) {
-                        for ( String permissionSetId : permissionSetIds ) {
-                            PermissionSetAssignment assignment = new PermissionSetAssignment();
-                            assignment.AssigneeId = assigneeId;
-                            assignment.PermissionSetId = permissionSetId;
-                            assignments.add( assignment );
-                        }
-                    }
-                }
-            }
-            if ( ( assignments != null ) && !assignments.isEmpty() ) {
-                List<Database.SaveResult> results = Database.insert( assignments , false );
-                NSP_ErrorLogHandler.logSaveResult(
-                    UserOnboardingTriggerHelper.class.getName() ,
-                    'assignPermission' ,
-                    results
-                );
-            }
-        }catch ( Exception e ) {
-            NSP_ErrorLogHandler.logException(
-                UserOnboardingTriggerHelper.class.getName() ,
-                'assignPermission' ,
-                e
-            );
-        }
-    }
-
-    //
-    // @MethodName: removePermission
-    // @Description: Remove Permission Set and PS Group
-    // @param : Set<Id>
-    // @return void
-    //
-    private void removePermission( Set<Id> assigneeIds ) {
-        try {
-            List<PermissionSetAssignment> assignments = new List<PermissionSetAssignment>();
-            if ( ( assigneeIds != null ) && !assigneeIds.isEmpty() ) {
-                for ( PermissionSetAssignment assignment : [
-                            SELECT Id , AssigneeId
-                            FROM PermissionSetAssignment
-                            WHERE ( AssigneeId IN :assigneeIds )
-                        ]
+    private Map<Id, String> buildUserToEntityMap(
+        List<User> users ,
+        Map<String,List<String>> titleToEntityMap ,
+        Map<String,Id> entityNameToIdMap
+        )
+    {
+        Map<Id,String> userToEntityMap = new Map<Id,String>();
+        if ( ( users != null )
+            && !users.isEmpty()
+            && ( titleToEntityMap != null )
+            && ( entityNameToIdMap != null )
+            )
+        {
+            for ( User eachuser : users ) {
+                if ( String.isNotBlank( eachuser.Business_Title__c )
+                    && titleToEntityMap.containsKey( eachuser.Business_Title__c )
                     )
                 {
-                    assignments.add( assignment );
-                }
-            }
-            if ( ( assignments != null ) && !assignments.isEmpty() ) {
-                List<Database.DeleteResult> results = Database.delete( assignments , false );
-                NSP_ErrorLogHandler.logResults(
-                    UserOnboardingTriggerHelper.class.getName() ,
-                    'removePermission' ,
-                    results
-                );
-            } 
-        } catch ( Exception e ) {
-            NSP_ErrorLogHandler.logException(
-                UserOnboardingTriggerHelper.class.getName() ,
-                'removePermission' ,
-                e
-            );
-        }
-    }
-
-    //
-    // Assign Public Group and Queue
-    // @param Map keyed on UserId containing comma-separated values of GroupIds
-    // @return void
-    //
-    @future
-    private static void assignGroups( Map<Id,String> memberToGroupMap ) {
-        try {
-            List<GroupMember> memberships = new List<GroupMember>();
-            if ( ( memberToGroupMap != null ) && !memberToGroupMap.isEmpty() ) {
-                for ( Id memberId : memberToGroupMap.keySet() ) {
-                    List<String> groupIds = memberToGroupMap.get( memberId ).split( ',' );
-                    if ( ( groupIds != null ) && !groupIds.isEmpty() ) {
-                        for ( String groupId : groupIds ) {
-                            GroupMember membership = new GroupMember();
-                            membership.GroupId = groupId;
-                            membership.UserOrGroupId = memberId;
-                            memberships.add( membership );
-                        }
+                    for ( String entityName : titleToEntityMap.get( eachuser.Business_Title__c ) ) {
+                        addEntityToUserMap( entityName , userToEntityMap , entityNameToIdMap , eachUser );
                     }
                 }
             }
-            if ( !memberships.isEmpty() ) {
-                List<Database.SaveResult> results = Database.insert( memberships , false );
-                NSP_ErrorLogHandler.logSaveResult(
-                    UserOnboardingTriggerHelper.class.getName() ,
-                    'assignGroups' ,
-                    results
+        }
+        return userToEntityMap;
+    }
+
+    private void addEntityToUserMap(
+        String entityName ,
+        Map<Id,String> userToEntityMap ,
+        Map<String,Id> entityNameToIdMap ,
+        user eachUser
+        )
+    {
+        //do not remove this if
+        if ( ( entityNameToIdMap != null )
+            && entityNameToIdMap.containsKey( entityName )
+            && ( userToEntityMap != null )
+            )
+        {
+            if ( userToEntityMap.containsKey( eachuser.Id ) ) {
+                userToEntityMap.put(
+                    eachuser.Id ,
+                    userToEntityMap.get( eachuser.Id ) + ',' + entityNameToIdMap.get( entityName )
                 );
+            } else {
+                userToEntityMap.put( eachuser.Id , entityNameToIdMap.get( entityName ) );
             }
-        } catch ( Exception e ) {
-            NSP_ErrorLogHandler.logException(
+        }
+    }
+
+    private void assignEntitiesToUsers( Map<Id,String> userToEntityMap , String entityType ) {
+        if ( String.isNotBlank( entityType ) ) {
+            if ( entityType == 'PermissionSet' ) {
+                this.assignPermission( userToEntityMap );
+            } else if ( entityType == 'PermissionSetGroup' ) {
+                this.assignPermission( userToEntityMap );
+            } else if ( entityType == 'Group' ) {
+                this.assignGroups( userToEntityMap );
+            } else if ( entityType == 'PermissionSetLicense' ) {
+                this.permissionSetLicenseAssignment( userToEntityMap );
+            }
+        }
+    }
+
+    private void assignPermission( Map<Id,String> assigneeToPSMap ) {
+        this.handleInsertOperation(
+            UserOnboardingTriggerHelper.createAssignments( assigneeToPSMap ) ,
+            'assignPermission'
+        );
+    }
+
+    private void assignGroups( Map<Id,String> memberToGroupMap ) {
+        this.handleInsertOperation(
+            UserOnboardingTriggerHelper.createAssignmentsForGroups( memberToGroupMap ) ,
+            'assignGroups'
+        );
+    }
+
+    private void permissionSetLicenseAssignment( Map<Id,String> assigneeToPSLMap ) {
+        this.handleInsertOperation(
+            UserOnboardingTriggerHelper.createAssignmentsForLicenses( assigneeToPSLMap ) ,
+            'permissionSetLicenseAssignment'
+        );
+    }
+
+    private void handleInsertOperation( List<sObject> records , String methodName ) {
+        if ( !records.isEmpty() ) {
+            List<Database.SaveResult> results = Database.insert( records , false );
+            UserOnboardingTriggerHelper.createErrorLog(
                 UserOnboardingTriggerHelper.class.getName() ,
-                'assignGroups' ,
-                e
+                methodName ,
+                UserOnboardingTriggerHelper.buildMessage(
+                    UserOnboardingTriggerHelper.summarizeDatabaseResults( results )
+                )
             );
         }
     }
 
-    //
-    // Remove Public Group and Queue
-    // @param list that contains the userid
-    // @return void
-    //
-    private void removeGroups( Set<Id> memberIds ) {
-        try {
-            List<GroupMember> memberships = new List<GroupMember>();
-            if ( ( memberIds != null ) && !memberIds.isEmpty() ) {
-                for ( GroupMember membership : [
-                            SELECT Id , GroupId , UserOrGroupId
-                            FROM GroupMember
-                            WHERE ( UserOrGroupId IN :memberIds )
-                        ]
-                    )
-                {
-                    memberships.add( membership );
-                }
-            }
-            if ( !memberships.isEmpty() ) {
-                List<Database.DeleteResult> results = Database.delete( memberships , false );
-                NSP_ErrorLogHandler.logResults(
-                    UserOnboardingTriggerHelper.class.getName() ,
-                    'removeGroups' ,
-                    results
-                );
-            }
-        } catch ( Exception e ) {
-            NSP_ErrorLogHandler.logException(
-                UserOnboardingTriggerHelper.class.getName() ,
-                'removeGroups' ,
-                e
-            );
-        }
-    }
-
-    //
-    // Permission Set License Assignment
-    // @param Map keyed on UserId containing comma-separated values of PermissionSetLicenseIds
-    // @return void
-    //
-    @future
-    private static void permissionSetLicenseAssignment( Map<Id,String> assigneeToPSLMap ) {
-        try {
-            List<PermissionSetLicenseAssign> assignments = new List<PermissionSetLicenseAssign>();
-            if ( ( assigneeToPSLMap != null ) && !assigneeToPSLMap.isEmpty() ) {
-                for ( Id assigneeId : assigneeToPSLMap.keySet() ) {
-                    List<String> permissionSetLicenseIds = assigneeToPSLMap.get( assigneeId ).split( ',' );
-                    if ( ( permissionSetLicenseIds != null ) && !permissionSetLicenseIds.isEmpty() ) {
-                        for ( String permissionSetLicenseId : permissionSetLicenseIds ) {
-                            PermissionSetLicenseAssign assignment = new PermissionSetLicenseAssign();
-                            assignment.AssigneeId = assigneeId;
-                            assignment.PermissionSetLicenseId = Id.valueOf( permissionSetLicenseId );
-                            assignments.add( assignment );
-                        }
+    private static List<PermissionSetAssignment> createAssignments( Map<Id,String> inputMap ) {
+        List<PermissionSetAssignment> assignments = new List<PermissionSetAssignment>();
+        if ( ( inputMap != null ) && !inputMap.isEmpty() ) {
+            for ( Id assigneeId : inputMap.keySet() ) {
+                if ( inputMap.get( assigneeId ) != null ) {
+                    List<String> permissionSetIds = inputMap.get( assigneeId ).split( ',' );
+                    for ( String permissionSetId : permissionSetIds ) {
+                        assignments.add(
+                            new PermissionSetAssignment(
+                                AssigneeId=assigneeId ,
+                                PermissionSetId=permissionSetId
+                            )
+                        );
                     }
                 }
             }
-            if ( !assignments.isEmpty() ) {
-                List<Database.SaveResult> results = Database.insert( assignments , false );
-                NSP_ErrorLogHandler.logSaveResult(
-                    UserOnboardingTriggerHelper.class.getName() ,
-                    'permissionSetLicenseAssignment' ,
-                    results
-                );
+        }
+        return assignments;
+    }
+
+    private static List<GroupMember> createAssignmentsForGroups( Map<Id,String> inputMap ) {
+        List<GroupMember> memberships = new List<GroupMember>();
+        if ( ( inputMap != null ) && !inputMap.isEmpty() ) {
+            for ( Id memberId : inputMap.keySet() ) {
+                if ( inputMap.get( memberId ) != null ) {
+                    List<String> groupIds = inputMap.get( memberId ).split( ',' );
+                    for ( String groupId : groupIds ) {
+                        memberships.add(
+                            new GroupMember(
+                                UserOrGroupId=memberId ,
+                                GroupId=groupId
+                            )
+                        );
+                    }
+                }
             }
-        } catch ( Exception e ) {
-            NSP_ErrorLogHandler.logException(
+        }
+        return memberships;
+    }
+
+    private static List<PermissionSetLicenseAssign> createAssignmentsForLicenses( Map<Id,String> inputMap ) {
+        List<PermissionSetLicenseAssign> assignments = new List<PermissionSetLicenseAssign>();
+        if ( ( inputMap != null ) && !inputMap.isEmpty() ) {
+            for ( Id assigneeId : inputMap.keySet() ) {
+                if ( inputMap.get( assigneeId ) != null ) {
+                    List<String> permissionSetLicenseIds = inputMap.get( assigneeId ).split( ',' );
+                    for ( String permissionSetLicenseId : permissionSetLicenseIds ) {
+                        assignments.add(
+                            new PermissionSetLicenseAssign(
+                                AssigneeId=assigneeId ,
+                                PermissionSetLicenseId=Id.valueOf( permissionSetLicenseId )
+                            )
+                        );
+                    }
+                }
+            }
+        }
+        return assignments;
+    }
+
+    private List<PermissionSetAssignment> filterPermissionAssignments(
+        Set<Id> assigneeIds ,
+        Map<Id, User> oldMap ,
+        Map<String,List<String>> entityMap ,
+        Map<String,List<String>> entityPsgMap
+        )
+    {
+        List<PermissionSetAssignment> filteredAssignments = new List<PermissionSetAssignment>();
+        for ( PermissionSetAssignment assignment : [
+                    SELECT
+                        Id ,
+                        AssigneeId ,
+                        PermissionSet.Name ,
+                        PermissionSetGroup.DeveloperName ,
+                        Assignee.Business_Title__c
+                    FROM PermissionSetAssignment
+                    WHERE ( AssigneeId IN :assigneeIds )
+                ]
+            )
+        {
+            String oldBusinessTitle = null;
+            if ( ( oldMap != null )
+                && oldMap.containsKey( assignment.AssigneeId )
+                && ( oldMap.get( assignment.AssigneeId ) != null )
+                )
+            {
+                oldBusinessTitle = oldMap.get( assignment.AssigneeId ).Business_Title__c;
+            }
+            if ( String.isNotBlank( oldBusinessTitle ) ) {
+                List<String> entity = this.getMappedEntity( entityMap , oldBusinessTitle );
+                List<String> entityPsg = this.getMappedEntity( entityPsgMap , oldBusinessTitle );
+                if ( ( entity.contains( assignment.PermissionSet.Name ) )
+                    || ( entityPsg.contains( assignment.PermissionSetGroup.DeveloperName ) )
+                    )
+                {
+                    filteredAssignments.add( assignment );
+                }
+            }
+        }
+        return filteredAssignments;
+    }
+
+    private List<String> getMappedEntity( Map<String,List<String>> entityMap , String key ) {
+        List<String> entity = new List<String>();
+        if ( ( entityMap != null )
+            && entityMap.containsKey( key )
+            && ( entityMap.get( key ) != null )
+            )
+        {
+            entity = entityMap.get( key );
+        }
+        return entity;
+    }
+
+    private List<PermissionSetLicenseAssign> filterAssignments(
+        Set<Id> assigneeIds ,
+        Map<Id,User> oldMap ,
+        Map<String,List<String>> entityMap
+        )
+    {
+        List<PermissionSetLicenseAssign> filteredAssignments = new List<PermissionSetLicenseAssign>();
+        for ( PermissionSetLicenseAssign assignment : [
+                    SELECT
+                        Id ,
+                        AssigneeId ,
+                        PermissionSetLicense.DeveloperName ,
+                        Assignee.Business_Title__c
+                    FROM PermissionSetLicenseAssign
+                    WHERE ( AssigneeId IN :assigneeIds )
+                ]
+            )
+        {
+            String oldBusinessTitle = null;
+            if ( ( oldMap != null )
+                && oldMap.containsKey( assignment.AssigneeId )
+                && ( oldMap.get( assignment.AssigneeId ) != null )
+                )
+            {
+                oldBusinessTitle = oldMap.get( assignment.AssigneeId ).Business_Title__c;
+            }
+            if ( String.isNotBlank( oldBusinessTitle )
+                && ( entityMap != null )
+                && entityMap.containsKey( oldBusinessTitle )
+                && ( entityMap.get( oldBusinessTitle ) != null )
+                && entityMap.get( oldBusinessTitle ).contains( assignment.PermissionSetLicense.DeveloperName )
+                )
+            {
+                filteredAssignments.add( assignment );
+            }
+        }
+        return filteredAssignments;
+    }
+
+    private List<GroupMember> filtergroupAssignments(
+        Set<Id> memberIds ,
+        Map<Id,User> oldMap ,
+        Map<String,List<String>> groupMap
+        )
+    {
+        List<GroupMember> filteredAssignments = new List<GroupMember>();
+        for ( GroupMember membership : [
+                    SELECT
+                        Id ,
+                        Group.DeveloperName ,
+                        UserOrGroupId ,
+                        UserOrGroup.Business_Title__c
+                    FROM GroupMember
+                    WHERE ( UserOrGroupId IN :memberIds )
+                ]
+            )
+        {
+            String oldBusinessTitle = null;
+            if ( ( oldMap != null )
+                && oldMap.containsKey( membership.UserOrGroupId )
+                && ( oldMap.get( membership.UserOrGroupId ) != null )
+                )
+            {
+                oldBusinessTitle = oldMap.get( membership.UserOrGroupId ).Business_Title__c;
+            }
+            if ( String.isNotBlank( oldBusinessTitle )
+                && ( groupMap != null )
+                && groupMap.containsKey( oldBusinessTitle )
+                && ( groupMap.get( oldBusinessTitle ) != null )
+                && groupMap.get( oldBusinessTitle ).contains( membership.Group.DeveloperName )
+                )
+            {
+                filteredAssignments.add( membership );
+            }
+        }
+        return filteredAssignments;
+    }
+
+    private void removePermission( Set<Id> assigneeIds , Map<Id,User> oldMap ) {
+        List<User_Onboarding_Detail__mdt> details = new List<User_Onboarding_Detail__mdt>();
+        if ( oldMap != null ) {
+            details = this.getUserOnboardingDetails( oldMap.values() );
+        }
+        Map<String,List<String>> permissionSetMap = this.createPermissionSetMap( details );
+        Map<String,List<String>> permissionSetGroupMap = this.createPermissionSetGroupMap( details );
+        List<PermissionSetAssignment> assignmentsToDelete = this.filterPermissionAssignments(
+            assigneeIds ,
+            oldMap ,
+            permissionSetMap ,
+            permissionSetGroupMap
+        );
+        this.handleDeleteOperation( assignmentsToDelete , 'removePermission' );
+    }
+
+    private void removeGroups( Set<Id> memberIds , Map<Id,User> oldMap ) {
+        List<User_Onboarding_Detail__mdt> details = new List<User_Onboarding_Detail__mdt>();
+        if( oldMap != null ) {
+            details = this.getUserOnboardingDetails( oldMap.values() );
+        }
+        Map<String,List<String>> groupMap = this.createGroupMap( details );
+        List<GroupMember> membershipsToDelete = this.filtergroupAssignments( memberIds , oldMap , groupMap );
+        this.handleDeleteOperation( membershipsToDelete , 'removeGroups' );
+    }
+
+    private void removePermissionSetLicense( Set<Id> assigneeIds , Map<Id, User> oldMap ) {
+        List<User_Onboarding_Detail__mdt> details = new List<User_Onboarding_Detail__mdt>();
+        if ( oldMap != null ) {
+            details = this.getUserOnboardingDetails( oldMap.values() );
+        }
+        Map<String,List<String>> permissionSetLicenseMap = this.createPermissionLicenceMap( details );
+        List<PermissionSetLicenseAssign> assignmentsToDelete = this.filterAssignments( assigneeIds , oldMap , permissionSetLicenseMap );
+        this.handleDeleteOperation( assignmentsToDelete , 'removePermissionSetLicense' );
+    }
+
+    private void handleDeleteOperation( List<sObject> records , String methodName ) {
+        if ( !records.isEmpty() ) {
+            List<Database.DeleteResult> results = Database.delete( records , false );
+            UserOnboardingTriggerHelper.createErrorLog(
                 UserOnboardingTriggerHelper.class.getName() ,
-                'permissionSetLicenseAssignment' ,
-                e
+                methodName ,
+                UserOnboardingTriggerHelper.buildMessage(
+                    UserOnboardingTriggerHelper.summarizeDatabaseResults( results )
+                )
             );
         }
     }
 
-    //
-    // Remove Permission Set License Assignment
-    // @param list that contains the userid
-    // @return void
-    //
-    private void removePermissionSetLicense( Set<Id> assigneeIds ) {
-        try {
-            List<PermissionSetLicenseAssign> assignments = new List<PermissionSetLicenseAssign>();
-            if ( ( assigneeIds != null ) && !assigneeIds.isEmpty() ) {
-                for ( PermissionSetLicenseAssign assignment : [
-                            SELECT Id , AssigneeId , PermissionSetLicenseId
-                            FROM PermissionSetLicenseAssign
-                            WHERE ( AssigneeId IN :assigneeIds )
-                        ]
-                    )
-                {
-                    assignments.add( assignment );
+    private Map<String,List<String>> createPermissionSetMap( List<User_Onboarding_Detail__mdt> details ) {
+        return this.createMap( details , 'Permission_Set_Name__c' );
+    }
+
+    private Map<String,List<String>> createPermissionSetGroupMap( List<User_Onboarding_Detail__mdt> details ) {
+        return this.createMap( details , 'Permission_Set_Group_Name__c' );
+    }
+    
+    private Map<String,List<String>> createGroupMap( List<User_Onboarding_Detail__mdt> details ) {
+        return this.createMap( details , 'Queue_Name__c' );
+    }
+    
+    private Map<String,List<String>> createPermissionLicenceMap( List<User_Onboarding_Detail__mdt> details ) {
+        return this.createMap( details , 'Permission_Set_License__c' );
+    }
+
+    private Map<String,List<String>> createMap( List<User_Onboarding_Detail__mdt> details , String fieldName ) {
+        Map<String,List<String>> resultMap = new Map<String,List<String>>();
+        if ( ( details != null ) && !details.isEmpty() ) {
+            for ( User_Onboarding_Detail__mdt detail : details ) {
+                String value = (String)detail.get( fieldName );
+                if ( String.isNotBlank( value ) ) {
+                    resultMap.put( detail.Title__c , value.split( ',' ) );
                 }
             }
-            if ( !assignments.isEmpty() ) {
-                List<Database.DeleteResult> results = Database.delete( assignments , false );
-                NSP_ErrorLogHandler.logResults(
-                    UserOnboardingTriggerHelper.class.getName() ,
-                    'removePermissionSetLicense' ,
-                    results
-                );
-            }
-        } catch ( Exception e ) {
-            NSP_ErrorLogHandler.logException(
-                UserOnboardingTriggerHelper.class.getName() ,
-                'removePermissionSetLicense' ,
-                e
-            );
         }
+        return resultMap;
     }
 
     //
@@ -981,6 +980,87 @@ public with sharing class UserOnboardingTriggerHelper {
             ];
         }
         return details;
+    }
+
+    //
+    //
+    //
+
+    private static List<String> summarizeDatabaseResults( List<Database.SaveResult> results ) {
+        List<String> messages = new List<String>();
+        if ( ( results != null ) && !results.isEmpty() ) {
+            for ( Database.SaveResult result : results ) {
+                if ( !result.isSuccess() ) {
+                    messages.addAll(
+                        UserOnboardingTriggerHelper.summarizeDatabaseErrors(
+                            result.getErrors() ,
+                            result.getId()
+                        )
+                    );
+                }
+            }
+        }
+        if ( messages.isEmpty() ) {
+            messages.add( UserOnboardingTriggerHelper.ERROR_MESSAGE );
+        }
+        return messages;
+    }
+
+    private static List<String> summarizeDatabaseResults( List<Database.DeleteResult> results ) {
+        List<String> messages = new List<String>();
+        if ( ( results != null ) && !results.isEmpty() ) {
+            for ( Database.DeleteResult result : results ) {
+                if ( !result.isSuccess() ) {
+                    messages.addAll(
+                        UserOnboardingTriggerHelper.summarizeDatabaseErrors(
+                            result.getErrors() ,
+                            result.getId()
+                        )
+                    );
+                }
+            }
+        }
+        if ( messages.isEmpty() ) {
+            messages.add( UserOnboardingTriggerHelper.ERROR_MESSAGE );
+        }
+        return messages;
+    }
+
+    private static String buildMessage( List<String> messages ) {
+        String message = null;
+        if ( ( messages != null ) && !messages.isEmpty() ) {
+            message = String.join( messages , '\r\n' );
+        }
+        return message;
+    }
+
+    private static List<String> summarizeDatabaseErrors( List<Database.Error> errors , Id recordId ) {
+        List<String> messages = new List<String>();
+        if ( ( errors != null ) && !errors.isEmpty() ) {
+            for ( Database.Error error : errors ) {
+                messages.add(
+                    error.getStatusCode()
+                    + ', '
+                    + error.getMessage()
+                    + ': ['
+                    + String.join( error.getFields() , ', ' )
+                    + ']'
+                    + ' ('
+                    + recordId
+                    + ')'
+                );
+            }
+        }
+        return messages;
+    }
+
+    @future
+    private static void createErrorLog( String className , String methName , String descText ) {
+        NSP_Error_Log__c log = new NSP_Error_Log__c();
+        log.NSP_Class__c = className;
+        log.NSP_Method__c = methName;
+        log.NSP_Description__c = descText;
+        Insert log;
     }
 
 }
