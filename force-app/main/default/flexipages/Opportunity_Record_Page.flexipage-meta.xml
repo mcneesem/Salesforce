@@ -193,7 +193,7 @@
                             <value>Opportunity.Update_Opportunity_Team_Member</value>
                             <visibilityRule>
                                 <criteria>
-                                    <leftValue>{!$Permission.CustomPermission.Opportunity_Team_Member_Elevated_Access}</leftValue>
+                                    <leftValue>{!$Permission.CustomPermission.OpportunityTeamMember_Elevated_Access}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>true</rightValue>
                                 </criteria>

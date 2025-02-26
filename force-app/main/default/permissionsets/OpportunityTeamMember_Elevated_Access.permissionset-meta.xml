@@ -2,7 +2,7 @@
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <customPermissions>
         <enabled>true</enabled>
-        <name>Opportunity_Team_Member_Elevated_Access</name>
+        <name>OpportunityTeamMember_Elevated_Access</name>
     </customPermissions>
     <hasActivationRequired>false</hasActivationRequired>
     <label>OpportunityTeamMember - Elevated Access</label>

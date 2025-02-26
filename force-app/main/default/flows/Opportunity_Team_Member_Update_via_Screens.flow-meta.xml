@@ -147,7 +147,7 @@
             <name>User_has_Opportunity_Team_Member_Elevated_Access_Permission</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>$Permission.Opportunity_Team_Member_Elevated_Access</leftValueReference>
+                <leftValueReference>$Permission.OpportunityTeamMember_Elevated_Access</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -252,6 +252,7 @@
             <label>RecordId has been set and is for Opty</label>
         </rules>
     </decisions>
+    <description>Runs in System Mode to bypass hierarchy restriction and give users with Custom Perm &quot;OpportunityTeamMember - Elevated Access&quot; the ability to update Opportunity Team Member&apos;s Role</description>
     <dynamicChoiceSets>
         <name>optyTeamMemberCollectionChoiceSet</name>
         <collectionReference>collectionOriginalOpportunityTeamMembers</collectionReference>
