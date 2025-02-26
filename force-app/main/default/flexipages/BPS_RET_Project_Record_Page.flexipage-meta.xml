@@ -165,6 +165,16 @@
                     <name>uiBehavior</name>
                     <value>readonly</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.Client_Segment__c</fieldItem>
+                <identifier>RecordClient_Segment_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Visible_to_Client__c</fieldItem>
                 <identifier>RecordNSP_Visible_to_Client__cField</identifier>
             </fieldInstance>
