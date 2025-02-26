@@ -502,7 +502,7 @@
                     <value>none</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Source__c</fieldItem>
-                <identifier>RecordSource__cField</identifier>
+                <identifier>RecordSource_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-d7b63c61-eacd-4163-83e1-c4d0df58ddb6</name>
@@ -526,7 +526,7 @@
                     <value>none</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Pay_Group_Number__c</fieldItem>
-                <identifier>RecordPay_Group_Number__cField</identifier>
+                <identifier>RecordPay_Group_Number_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-8473b482-f249-4a7e-9bb5-fad183bb0bd5</name>
