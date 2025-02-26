@@ -27,6 +27,7 @@
     <permissionSets>Marketing_Fields_Edit_Access</permissionSets>
     <permissionSets>NSP_Payroll_Data_Sheet</permissionSets>
     <permissionSets>NSP_Termination_Form_Access</permissionSets>
+    <permissionSets>OpportunityTeamMember_Elevated_Access</permissionSets>
     <permissionSets>Opportunity_Edit_and_Max_Orientation_Date_Edit</permissionSets>
     <permissionSets>Project_Task_Access</permissionSets>
     <permissionSets>Project_Template_Data_Load</permissionSets>
