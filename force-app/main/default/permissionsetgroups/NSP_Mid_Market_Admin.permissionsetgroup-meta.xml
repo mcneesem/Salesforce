@@ -27,9 +27,9 @@
     <permissionSets>NSP_Main_Service_Contacts</permissionSets>
     <permissionSets>NSP_Order_ViewAll</permissionSets>
     <permissionSets>NSP_Template_Field_permission</permissionSets>
+    <permissionSets>OpportunityTeamMember_Elevated_Access</permissionSets>
     <permissionSets>Opportunity_Closed_Lost_Fields_Edit_Access</permissionSets>
     <permissionSets>Opportunity_Spits_Elevated_Read_Edit</permissionSets>
-    <permissionSets>Opportunity_Team_Member_Elevated_Access</permissionSets>
     <permissionSets>Program_Agreement_Functionality</permissionSets>
     <permissionSets>Report_export_and_print_access</permissionSets>
     <permissionSets>Sales_Service_Object_Permission</permissionSets>

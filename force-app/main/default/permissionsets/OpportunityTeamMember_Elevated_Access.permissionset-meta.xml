@@ -5,5 +5,5 @@
         <name>Opportunity_Team_Member_Elevated_Access</name>
     </customPermissions>
     <hasActivationRequired>false</hasActivationRequired>
-    <label>Opportunity Team Member Elevated Access</label>
+    <label>OpportunityTeamMember - Elevated Access</label>
 </PermissionSet>
