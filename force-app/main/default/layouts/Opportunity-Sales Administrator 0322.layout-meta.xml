@@ -554,6 +554,10 @@
                 <behavior>Readonly</behavior>
                 <field>NSP_Opportunity_Owner_Role__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>NextStep</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
