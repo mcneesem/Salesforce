@@ -8,6 +8,10 @@
         <apexClass>RecordTypeSelectorController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Case_Creation_Screen_Flow</name>
+    </customPermissions>
     <description>Grants the Custom Permission to access Case Creation Screen Flow</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Case Creation Screen Flow</label>
