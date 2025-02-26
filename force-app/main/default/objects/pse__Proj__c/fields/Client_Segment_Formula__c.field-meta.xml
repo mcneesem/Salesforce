@@ -3,7 +3,19 @@
     <fullName>Client_Segment_Formula__c</fullName>
     <description>Field to populate the segment from Account</description>
     <externalId>false</externalId>
-    <formula>IF( NOT( ISBLANK( pse__Account__r.NSP_Service_Segment__c ) ) ,  pse__Account__r.NSP_Service_Segment__c  ,  IF( NOT( ISBLANK(  TEXT( pse__Account__r.NSP_Account_Segment__c ) )) , IF( UPPER(TEXT( pse__Account__r.NSP_Account_Segment__c)) = &apos;ENTERPRISE&apos; , &apos;Middle Market Enterprise&apos;, TEXT(pse__Account__r.NSP_Account_Segment__c)), &apos;&apos;) )</formula>
+    <formula>IF(
+  NOT( ISBLANK( pse__Account__r.NSP_Service_Segment__c ) ) ,
+  pse__Account__r.NSP_Service_Segment__c ,
+  IF(
+    NOT( ISBLANK( TEXT( pse__Account__r.NSP_Account_Segment__c ) ) ) ,
+    IF(
+      UPPER( TEXT( pse__Account__r.NSP_Account_Segment__c ) ) = &apos;ENTERPRISE&apos; ,
+      &apos;Middle Market Enterprise&apos; ,
+      TEXT( pse__Account__r.NSP_Account_Segment__c )
+    ) ,
+    &apos;&apos;
+  )
+)</formula>
     <label>Client Segment Formula</label>
     <required>false</required>
     <trackHistory>false</trackHistory>
