@@ -10,6 +10,7 @@
     <permissionSets>Admin_Layout_Access</permissionSets>
     <permissionSets>Allow_Delete_Accounts</permissionSets>
     <permissionSets>Allow_Delete_Leads</permissionSets>
+    <permissionSets>Bundle_Template_Flag_fields_Permission</permissionSets>    
     <permissionSets>Case_Compensation_Access</permissionSets>
     <permissionSets>Client_goal_project_task_junction_access</permissionSets>
     <permissionSets>Edit_Integrated_Fields</permissionSets>
