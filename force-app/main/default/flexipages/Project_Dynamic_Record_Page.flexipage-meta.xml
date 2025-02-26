@@ -68,10 +68,6 @@
         <itemInstances>
             <fieldInstance>
                 <fieldInstanceProperties>
-                    <name>conditionalFormatRuleset</name>
-                    <value>Middle_Market_Enterprise</value>
-                </fieldInstanceProperties>
-                <fieldInstanceProperties>
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
