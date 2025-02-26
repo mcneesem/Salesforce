@@ -63,7 +63,6 @@
         <offset>0</offset>
     </actionCalls>
     <apiVersion>63.0</apiVersion>
-    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
         <name>Assign_FaultElement_Send_Email_Alert</name>
         <label>Assign FaultElement - Send Email Alert</label>
