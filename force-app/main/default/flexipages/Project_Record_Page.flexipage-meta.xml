@@ -179,9 +179,9 @@
                 <identifier>RecordNSP_Auto_Resource_Project_cField</identifier>
                 <visibilityRule>
                     <criteria>
-                        <leftValue>{!$User.Profile.Name}</leftValue>
-                        <operator>CONTAINS</operator>
-                        <rightValue>System Admin</rightValue>
+                        <leftValue>{!$Permission.CustomPermission.Admin_Layout_Access}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
