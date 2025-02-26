@@ -270,8 +270,8 @@
         <picklistObject>OpportunityTeamMember</picklistObject>
     </dynamicChoiceSets>
     <environments>Default</environments>
-    <interviewLabel>Opportunity Team Member - Update via Screens {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Opportunity Team Member - Update via Screens</label>
+    <interviewLabel>OpportunityTeamMember - Update via Screens {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>OpportunityTeamMember - Update via Screens</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -451,7 +451,7 @@
         <inputAssignments>
             <name>faultFlow</name>
             <value>
-                <stringValue>Opportunity_Team_Member_Update_via_Screens</stringValue>
+                <stringValue>OpportunityTeamMember_Update_via_Screens</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
