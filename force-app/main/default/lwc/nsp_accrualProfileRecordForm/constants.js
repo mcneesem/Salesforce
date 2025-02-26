@@ -13,6 +13,8 @@ const RL_FIELDS = [
   'NSP_Does_this_plan_replace_other_plans__c',
   'NSP_If_hired_midway_through_pay_period__c',
   'OwnerId',
+  'Template__c',
+  'Cloned_from_AP_Template__c',
   'NSP_Status__c',
   'Is_Client_MM_or_MM_Enterprise__c',
   'NSP_Account_HRS__c',
