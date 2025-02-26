@@ -149,7 +149,7 @@ LEFT($Api.Enterprise_Server_URL_530,(FIND(&apos;com/&apos;,$Api.Enterprise_Serve
         </scheduledPaths>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <subflows>
         <name>Insperity_Fault_Handler_Subflow_Flow_1</name>
         <label>Insperity Fault Handler Subflow Flow 1</label>
