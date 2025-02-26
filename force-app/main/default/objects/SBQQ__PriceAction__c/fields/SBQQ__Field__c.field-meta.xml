@@ -2,7 +2,6 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>SBQQ__Field__c</fullName>
     <deprecated>false</deprecated>
-    <externalId>false</externalId>
     <inlineHelpText>Select the field you want updated when the conditions are met.</inlineHelpText>
     <label>Target Field</label>
     <required>false</required>
@@ -497,6 +496,11 @@
                 <default>false</default>
                 <label>Bundle_Template_Determination_Flag__c</label>
             </value>
+            <value>
+                <fullName>CWU_Summary_Variable__c</fullName>
+                <default>false</default>
+                <label>CWU_Summary_Variable__c</label>
+            </value>
         </valueSetDefinition>
         <valueSettings>
             <controllingFieldValue>Quote</controllingFieldValue>
@@ -882,6 +886,10 @@
         <valueSettings>
             <controllingFieldValue>Quote Line</controllingFieldValue>
             <valueName>Bundle_Template_Determination_Flag__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote Line</controllingFieldValue>
+            <valueName>CWU_Summary_Variable__c</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Quote Line Pricing Guidance</controllingFieldValue>
