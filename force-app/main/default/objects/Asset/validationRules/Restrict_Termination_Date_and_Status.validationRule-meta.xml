@@ -3,5 +3,16 @@
     <fullName>Restrict_Termination_Date_and_Status</fullName>
     <active>true</active>
     <errorConditionFormula>(ISCHANGED( NSP_Termination_Date__c )  ||  ISCHANGED( Status)) &amp;&amp;  RecordTypeName__c  = &apos;WO&apos;</errorConditionFormula>
+  NOT(
+
+ OR(
+
+$Profile.Id = &quot;00e4x000001r0zs&quot;,
+
+
+$Profile.Id = &quot;00e4x000001dm3l&quot;
+
+ )
+)</errorConditionFormula>
     <errorMessage>Termination Date and Status fields are read-only for WO Record Type.</errorMessage>
 </ValidationRule>
