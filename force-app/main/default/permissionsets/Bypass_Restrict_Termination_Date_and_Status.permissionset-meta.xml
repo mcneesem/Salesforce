@@ -4,6 +4,7 @@
         <enabled>true</enabled>
         <name>Bypass_Restrict_Termination_Date_and_Status</name>
     </customPermissions>
+    <description>Grants the Custom Permission: Bypass Restrict Termination Date and Status</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Bypass Restrict Termination Date and Status</label>
 </PermissionSet>
