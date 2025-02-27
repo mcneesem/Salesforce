@@ -2,11 +2,15 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Is_Owner_Editable__c</fullName>
     <formula>IF(
-  (  NSP_Category__c = &quot;Compensation Services&quot; &amp;&amp;   NSP_SubCategory__c = &quot;Salary Survey&quot; &amp;&amp;  Required_Documentation_Attached__c = FALSE &amp;&amp;   Requested_Jobs__c  &lt;&gt;  0 )
-  || (  NSP_Category__c = &quot;Compensation Services&quot; &amp;&amp;   NSP_SubCategory__c = &quot;Salary Survey&quot; &amp;&amp;  Required_Documentation_Attached__c = FALSE &amp;&amp;   Requested_Jobs__c  =  0 )
-  || (  NSP_Category__c = &quot;Compensation Services&quot; &amp;&amp;   NSP_SubCategory__c = &quot;Salary Survey&quot; &amp;&amp;  Required_Documentation_Attached__c = TRUE &amp;&amp;   Requested_Jobs__c = 0 )
-  || (  NSP_Category__c = &quot;Compensation Services&quot; &amp;&amp;    NSP_SubCategory__c = &quot;Client Consultation&quot; &amp;&amp;  Required_Documentation_Attached__c = FALSE )
-  ,
+  AND(
+    ( NSP_Category__c = &quot;Compensation Services&quot; ) ,
+    OR(
+      ( NSP_SubCategory__c = &quot;Salary Survey&quot; &amp;&amp; Required_Documentation_Attached__c = FALSE &amp;&amp; Requested_Jobs__c  &lt;&gt;  0 ) ,
+      ( NSP_SubCategory__c = &quot;Salary Survey&quot; &amp;&amp; Required_Documentation_Attached__c = FALSE &amp;&amp; Requested_Jobs__c  =  0 ) ,
+      ( NSP_SubCategory__c = &quot;Salary Survey&quot; &amp;&amp; Required_Documentation_Attached__c = TRUE &amp;&amp; Requested_Jobs__c = 0 ) ,
+      ( NSP_SubCategory__c = &quot;Client Consultation&quot; &amp;&amp; Required_Documentation_Attached__c = FALSE )
+    )
+  ) ,
   true ,
   false
 )</formula>
