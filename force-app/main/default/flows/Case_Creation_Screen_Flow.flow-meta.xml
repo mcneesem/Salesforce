@@ -246,6 +246,7 @@
     </decisions>
     <environments>Default</environments>
     <interviewLabel>Case Creation Screen Flow {!$Flow.CurrentDateTime}</interviewLabel>
+    <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>    
     <label>Case Creation Screen Flow</label>
     <loops>
         <name>Iterate_Accessible_Record_Types</name>
