@@ -51,10 +51,10 @@
             </value>
         </inputParameters>
         <nameSegment>emailSimple</nameSegment>
-        <offset>0</offset>
+
     </actionCalls>
     <apiVersion>62.0</apiVersion>
-    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    
     <assignments>
         <name>Assign_varFaultElement_Get_Compensation_Services_Cases</name>
         <label>Assign varFaultElement - Get Compensation Services Cases</label>
@@ -323,7 +323,7 @@
             <targetReference>Get_Compensation_Services_Cases</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <subflows>
         <name>Fault_Handler</name>
         <label>Fault Handler</label>
