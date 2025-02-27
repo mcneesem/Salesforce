@@ -9,7 +9,7 @@
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Is_Valid</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>1 AND 2 AND 3 AND 4 AND (5 OR 6 OR 7 OR 8 OR 9 OR 10)</conditionLogic>
             <conditions>
                 <leftValueReference>messagingSessionRecord</leftValueReference>
                 <operator>IsNull</operator>
@@ -36,6 +36,48 @@
                 <operator>NotEqualTo</operator>
                 <rightValue>
                     <stringValue>Closed</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>messagingSessionRecord.OwnerId</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>00G4x000001fXXPEA2</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>messagingSessionRecord.OwnerId</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>00G4x000001fXV6EAM</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>messagingSessionRecord.OwnerId</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>00G4x000001fXXQEA2</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>messagingSessionRecord.OwnerId</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>00G4x000001fXXREA2</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>messagingSessionRecord.OwnerId</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>00G4x000001fXXSEA2</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>messagingSessionRecord.Owner:User.UserRole.DeveloperName</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Contact_Center_</stringValue>
                 </rightValue>
             </conditions>
             <connector>
