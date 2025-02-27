@@ -4,6 +4,7 @@
         <enabled>true</enabled>
         <name>Bypass_Read_Only_Case_Owner</name>
     </customPermissions>
+    <description>Grants the Custom Permission: Bypass Read Only Case Owner</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Bypass Read Only Case Owner</label>
 </PermissionSet>
