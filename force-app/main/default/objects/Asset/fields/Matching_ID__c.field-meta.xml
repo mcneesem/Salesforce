@@ -3,7 +3,11 @@
     <fullName>Matching_ID__c</fullName>
     <description>Find Order Product Matching ID from the NSP_OrderProduct field</description>
     <externalId>false</externalId>
-    <formula>IF(NSP_OrderProduct__c != &apos; &apos;, NSP_OrderProduct__r.NSP_Matching_Id__c , &apos;&apos;)</formula>
+    <formula>IF(
+  NSP_OrderProduct__c != &apos; &apos; ,
+  NSP_OrderProduct__r.NSP_Matching_Id__c ,
+  &apos;&apos;
+)</formula>
     <label>Matching ID</label>
     <required>false</required>
     <trackHistory>false</trackHistory>
