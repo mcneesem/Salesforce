@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <classAccesses>
+        <apexClass>RecordTypeSelectorAction</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>RecordTypeSelectorController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Case_Creation_Screen_Flow</name>
+    </customPermissions>
+    <description>Grants the Custom Permission to access Case Creation Screen Flow</description>
+    <flowAccesses>
+        <enabled>true</enabled>
+        <flow>Case_Creation_Screen_Flow</flow>
+    </flowAccesses>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Case Creation Screen Flow</label>
+    <license>Salesforce</license>
+</PermissionSet>
