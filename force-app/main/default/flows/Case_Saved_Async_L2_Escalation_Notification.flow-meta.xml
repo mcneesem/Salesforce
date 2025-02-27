@@ -51,10 +51,10 @@
             </value>
         </inputParameters>
         <nameSegment>emailSimple</nameSegment>
-        <offset>0</offset>
+
     </actionCalls>
     <apiVersion>62.0</apiVersion>
-    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+
     <decisions>
         <name>Check_For_Work_Email</name>
         <label>Check For Work Email</label>
@@ -190,7 +190,7 @@
         </scheduledPaths>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <subflows>
         <name>Unable_to_Send_Email_Notification</name>
         <label>Unable to Send Email Notification</label>
