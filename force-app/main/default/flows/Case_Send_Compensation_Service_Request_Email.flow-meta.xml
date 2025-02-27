@@ -51,10 +51,8 @@
             </value>
         </inputParameters>
         <nameSegment>emailSimple</nameSegment>
-
     </actionCalls>
     <apiVersion>62.0</apiVersion>
-    
     <assignments>
         <name>Assign_varFaultElement_Get_Compensation_Services_Cases</name>
         <label>Assign varFaultElement - Get Compensation Services Cases</label>
