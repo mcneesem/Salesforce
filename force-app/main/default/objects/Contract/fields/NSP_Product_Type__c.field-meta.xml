@@ -122,6 +122,11 @@
                 <default>false</default>
                 <label>Supplemental</label>
             </value>
+            <value>
+                <fullName>Contingent Workforce</fullName>
+                <default>false</default>
+                <label>Contingent Workforce</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
     <visibleLines>4</visibleLines>
