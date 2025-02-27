@@ -18,6 +18,7 @@
     <permissionSets>DOZISF__ZoomInfo_User</permissionSets>
     <permissionSets>Edit_Closed_Won_Create_Box_Folder</permissionSets>
     <permissionSets>LID_Sales_Navigator</permissionSets>
+    <permissionSets>Lead_DUNS_Account_Owner_Routing</permissionSets>
     <permissionSets>List_View_Enhanced_Access</permissionSets>
     <permissionSets>NSP_Billing_View_All</permissionSets>
     <permissionSets>NSP_Finance_Service_Objects_Permission</permissionSets>
