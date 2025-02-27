@@ -352,7 +352,22 @@
     <textTemplates>
         <name>emailbody</name>
         <isViewedAsPlainText>false</isViewedAsPlainText>
-        <text>&lt;p&gt;&lt;img src=&quot;https://insperity.my.salesforce.com/servlet/servlet.ImageServer?id=0154x000001Eo64&amp;amp;oid=00D4x000003x74T&quot;&gt;&lt;/p&gt;&lt;p&gt;Hello {!contactname} ,&lt;/p&gt;&lt;p&gt;We will be happy to assist you with your request. Please allow at least &lt;strong&gt;2-3 business days &lt;/strong&gt;to complete your survey request. If your request requires additional time to complete due to its size or if additional information is needed, one of our Specialists will reach out.&lt;/p&gt;&lt;p&gt;For compensation-related projects, one of our Consultants will be in touch and will communicate anticipated turnaround time.&lt;/p&gt;&lt;p&gt;If you have an urgent request or if you have any questions, please feel free to reach out to us.&lt;/p&gt;&lt;p&gt;We look forward to working with you.&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Compensation Services&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;img src=&quot;https://insperity.my.salesforce.com/servlet/servlet.ImageServer?id=0154x000001Eo63&amp;amp;oid=00D4x000003x74T&quot;&gt;&lt;/p&gt;</text>
+        <text>&lt;div style=&quot;max-width: 751px;&quot;&gt;
+&lt;p&gt;
+&lt;img src=&quot;https://insperity.my.salesforce.com/servlet/servlet.ImageServer?id=0154x000001Eo64&amp;amp;oid=00D4x000003x74T&quot;&gt;&lt;/p&gt;
+&lt;br/&gt;
+&lt;table width=&quot;751&quot;&gt;&lt;tr&gt;&lt;td&gt;
+&lt;p&gt;Hello {!contactname},&lt;/p&gt;
+&lt;p&gt;We will be happy to assist you with your request. Please allow at least &lt;strong&gt;2-3 business days &lt;/strong&gt;to complete your survey request. If your request requires additional time to complete due to its size or if additional information is needed, one of our Specialists will reach out.&lt;/p&gt;
+&lt;p&gt;For compensation-related projects, one of our Consultants will be in touch and will communicate anticipated turnaround time.&lt;/p&gt;
+&lt;p&gt;If you have an urgent request or if you have any questions, please feel free to reach out to us.&lt;/p&gt;
+&lt;p&gt;We look forward to working with you.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Compensation Services&lt;/strong&gt;&lt;/p&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;br/&gt;
+&lt;p&gt;&lt;img src=&quot;https://insperity.my.salesforce.com/servlet/servlet.ImageServer?id=0154x000001Eo63&amp;amp;oid=00D4x000003x74T&quot;&gt;
+&lt;/p&gt;
+&lt;/div&gt;</text>
     </textTemplates>
     <variables>
         <name>casenumber</name>
