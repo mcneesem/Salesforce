@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<CustomPermission xmlns="http://soap.sforce.com/2006/04/metadata">
-    <description>Bypass Validation Rules for SubClient</description>
-    <isLicensed>false</isLicensed>
-    <label>Bypass Validation Rules Restrict_Termination_Date_and_Status</label>
-</CustomPermission>
