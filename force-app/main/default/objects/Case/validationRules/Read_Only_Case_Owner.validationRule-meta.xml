@@ -2,6 +2,10 @@
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Read_Only_Case_Owner</fullName>
     <active>true</active>
-    <errorConditionFormula>NOT($Permission.Bypass_Read_Only_Case_Owner) &amp;&amp; Is_Owner_Editable__c = TRUE &amp;&amp;  ISCHANGED(  OwnerId )</errorConditionFormula>
-    <errorMessage>Unable to edit due to missing requirements</errorMessage>
+    <errorConditionFormula>AND(
+  NOT( $Permission.Bypass_Read_Only_Case_Owner ) ,
+  NOT( Is_Owner_Editable__c ) ,
+  ISCHANGED( OwnerId )
+)</errorConditionFormula>
+    <errorMessage>Case Owner is not editable.</errorMessage>
 </ValidationRule>
