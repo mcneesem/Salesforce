@@ -4,7 +4,7 @@
     <decisions>
         <name>Bypass_Opportunity_Email_Alerts_Custom_Permission_check</name>
         <label>Bypass Opportunity Email Alerts Custom Permission check</label>
-        <locationX>407</locationX>
+        <locationX>431</locationX>
         <locationY>276</locationY>
         <defaultConnector>
             <targetReference>Was_Parent_Opty_Closed_Lost_and_not_Retirement_Services</targetReference>
@@ -26,7 +26,7 @@
     <decisions>
         <name>Was_Parent_Opty_Closed_Lost_and_not_Retirement_Services</name>
         <label>Was Parent Opty Closed Lost and not Retirement Services?</label>
-        <locationX>605</locationX>
+        <locationX>679</locationX>
         <locationY>384</locationY>
         <defaultConnector>
             <targetReference>Was_Parent_Opty_Closed_Won</targetReference>
@@ -58,8 +58,8 @@
     <decisions>
         <name>Was_Parent_Opty_Closed_Won</name>
         <label>Was Parent Opty Closed Won?</label>
-        <locationX>605</locationX>
-        <locationY>684</locationY>
+        <locationX>910</locationX>
+        <locationY>492</locationY>
         <defaultConnector>
             <targetReference>Was_Parent_Primary_Product_is_changed_and_Retirement_Services</targetReference>
         </defaultConnector>
@@ -83,8 +83,8 @@
     <decisions>
         <name>Was_Parent_Primary_Product_is_changed_and_Retirement_Services</name>
         <label>Was Parent Primary Product is changed and Retirement Services?</label>
-        <locationX>605</locationX>
-        <locationY>984</locationY>
+        <locationX>1108</locationX>
+        <locationY>600</locationY>
         <defaultConnectorLabel>N/A</defaultConnectorLabel>
         <rules>
             <name>Parent_Primary_Product_is_changed</name>
@@ -248,11 +248,8 @@
     <subflows>
         <name>Opportunity_Subflow_Email_Alerts_ParentClosedLost</name>
         <label>Opportunity - Subflow - Email Alerts</label>
-        <locationX>473</locationX>
+        <locationX>448</locationX>
         <locationY>492</locationY>
-        <connector>
-            <targetReference>Was_Parent_Opty_Closed_Won</targetReference>
-        </connector>
         <flowName>Opportunity_Subflow_Email_Alerts</flowName>
         <inputAssignments>
             <name>opportunityId</name>
@@ -271,11 +268,8 @@
     <subflows>
         <name>Opportunity_Subflow_Email_Alerts_ParentClosedWon</name>
         <label>Opportunity - Subflow - Email Alerts</label>
-        <locationX>473</locationX>
-        <locationY>792</locationY>
-        <connector>
-            <targetReference>Was_Parent_Primary_Product_is_changed_and_Retirement_Services</targetReference>
-        </connector>
+        <locationX>712</locationX>
+        <locationY>600</locationY>
         <flowName>Opportunity_Subflow_Email_Alerts</flowName>
         <inputAssignments>
             <name>opportunityId</name>
@@ -294,8 +288,8 @@
     <subflows>
         <name>Opportunity_Subflow_Email_Alerts_ParentProductChanged</name>
         <label>Opportunity - Subflow - Email Alerts</label>
-        <locationX>473</locationX>
-        <locationY>1092</locationY>
+        <locationX>976</locationX>
+        <locationY>708</locationY>
         <flowName>Opportunity_Subflow_Email_Alerts</flowName>
         <inputAssignments>
             <name>opportunityId</name>

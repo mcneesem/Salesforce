@@ -407,9 +407,10 @@ public with sharing class NSP_OpportunityTriggerHelper {
     // @param opportunityNewMap Map of New Opportunity. 
     // @param opportunityOldMap Map of Old Opportunity.   
     // @return void
-    public void afterUpdateDirector(Map<Id, Opportunity> opportunityNewMap,Map<Id, Opportunity> opportunityOldMap){        
+    public void afterUpdateDirector(Map<Id, Opportunity> opportunityNewMap,Map<Id, Opportunity> opportunityOldMap){
         List<String> closedOpportunityIdList = new List<String>();
         List<String> closedWonOpportunityIdList = new List<String>();
+        List<String> reopenedOpportunityIdList = new List<String>();
         Set<String> accountIdSet = new Set<String>();
         Set<String> recordTypeSet = new Set<String>();
         Set<String> backoutOptySet = new Set<String>();
@@ -464,9 +465,18 @@ public with sharing class NSP_OpportunityTriggerHelper {
 
             // if the parent opty is closed lost then adding it to the list
             if((String.isBlank(opportunityNewMap.get(opportunityId).NSP_Parent_Opportunity__c) || opportunityNewMap.get(opportunityId).NSP_Parent_Opportunity__c == null)
-               && opportunityNewMap.get(opportunityId).stagename.equals(NSP_SalesConstants.CLOSED_LOST) ){   
+               && opportunityNewMap.get(opportunityId).stagename.equals(NSP_SalesConstants.CLOSED_LOST) ){
                    closedOpportunityIdList.add(opportunityId);
-               }
+            }
+
+            // if the parent opty is reopened then adding it to the list
+            if((String.isBlank(newOpportunity.NSP_Parent_Opportunity__c) || newOpportunity.NSP_Parent_Opportunity__c == null)
+                && newOpportunity.StageName != oldOpportunity.StageName 
+                && newOpportunity.StageName != NSP_SalesConstants.CLOSED_LOST 
+                && newOpportunity.StageName != NSP_SalesConstants.CLOSED_WON ) {
+                    reopenedOpportunityIdList.add(opportunityId);
+            }
+
             //STY-01519 - Asset creation from Opportunity line item
             if(opportunityNewMap.get(opportunityId).stagename != opportunityOldMap.get(opportunityId).stagename
                && opportunityNewMap.get(opportunityId).stagename.equals(NSP_SalesConstants.CLOSED_WON)){
@@ -531,11 +541,16 @@ public with sharing class NSP_OpportunityTriggerHelper {
                 this.publishEventBus( opportunityEventList , updateResyncFlagOpportunityList );
             }
         }
-        //List is empty or not
+
         if(!closedOpportunityIdList.isEmpty()){
             NSP_ChildOpportunitiesHelperFunctions childHlprObj = new NSP_ChildOpportunitiesHelperFunctions();
             childHlprObj.updatesOnChildOpportunity(closedOpportunityIdList);
         }
+
+        if(!reopenedOpportunityIdList.isEmpty()){
+            NSP_ChildOpportunitiesHelperFunctions.updateChildOpportunityOnReopen(reopenedOpportunityIdList);
+        }
+
         //569718-to send notification to open child opportunities - upsell opportunities enhancement
         if(!closedWonOpportunityIdList.isEmpty()){
             NSP_ChildOpportunitiesHelperFunctions childHlprObj = new NSP_ChildOpportunitiesHelperFunctions();

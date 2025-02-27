@@ -437,11 +437,13 @@ public class NSP_OpportunityTriggerHelperTest {
             Test.startTest();
             System.runAs(userRecord) {
                 Opportunity opp = [SELECT ID,NSP_PrimaryProduct__c,stagename FROM OPPORTUNITY WHERE NSP_Parent_Opportunity__c = null LIMIT 1];
+                List<String> pOppIdSet = new List<String>{opp.Id};
                 opp.ownerId = userRecord.Id;
                 opp.NSP_PrimaryProduct__c = 'Insurance Services';
                 opp.NSP_Lost_Reason__c = 'Backout';
                 opp.stagename = NSP_SalesConstants.CLOSED_LOST;
                 database.update(opp);
+                NSP_ChildOpportunitiesHelperFunctions.updateChildOpportunityOnReopen(pOppIdSet);
                 Test.stopTest();
                 System.assertEquals(NSP_SalesConstants.CLOSED_LOST, opp.stagename);
             }
@@ -589,13 +591,12 @@ public class NSP_OpportunityTriggerHelperTest {
         System.assertEquals(NSP_SalesConstants.WX, opportunityList[0].NSP_PrimaryProduct__c);
     }
    
-       /**
-* @Description: This test method is used to cover updatesOnChildOpportunity method
-* @Created date: 03/03/2022.
-* @return void            
-*                
-*/
-
+    /**
+    * @Description: This test method is used to cover updatesOnChildOpportunity method
+    * @Created date: 03/03/2022.
+    * @return void            
+    *                
+    */
     @isTest
     static void defaultFieldsOnChildOpportunityTest(){
        Test.startTest();
@@ -1033,7 +1034,6 @@ static void createAssetTest3(){
     
     @isTest
     static void testBackward_Stage() {
-        
         Test.startTest();
         String expectedError = Label.Opportunity_Backward_Stage;
 
