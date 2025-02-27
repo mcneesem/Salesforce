@@ -743,6 +743,16 @@
             </fieldInstance>
         </itemInstances>
         <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Required_Documentation_Attached__c</fieldItem>
+                <identifier>RecordRequired_Documentation_Attached_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
             <componentInstance>
                 <componentName>flexipage:blankSpace</componentName>
                 <identifier>flexipage_blankSpace</identifier>
