@@ -392,7 +392,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Increase_Booking_Checklist_Count_on_Opty_Booking_WO</targetReference>
+            <targetReference>Increase_Booking_Checklist_Count_on_Opty_WO</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -492,7 +492,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Increase_Checklist_Count_on_Opty_Booking_WX</targetReference>
+            <targetReference>Increase_Booking_Checklist_Count_on_Opty_WX</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -1553,7 +1553,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>ncrease_Checklist_Count_on_Opty_SEQ_TA</targetReference>
+            <targetReference>Increase_SEQ_Checklist_Count_on_Opty_SEQ_TA</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -1758,7 +1758,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Increase_Checklist_Count_on_Opty_SEQ_WX</targetReference>
+            <targetReference>Increase_SEQ_Checklist_Count_on_Opty_SEQ_WX</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -2033,7 +2033,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Increase_STP_Checklist_Count_on_Opty_STP_WO</targetReference>
+            <targetReference>Increase_STP_Checklist_Count_on_Opty_WOWS</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -2280,19 +2280,26 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Increase_Checklist_Count_on_Opty_STP_WX</targetReference>
+            <targetReference>Increase_STP_Checklist_Count_on_Opty_WX</targetReference>
         </connector>
     </assignments>
     <assignments>
-        <name>Increase_Booking_Checklist_Count_on_Opty_Booking_WO</name>
+        <name>Increase_Booking_Checklist_Count_on_Opty_WO</name>
         <label>Increase Booking Checklist Count on Opty</label>
         <locationX>1898</locationX>
         <locationY>566</locationY>
         <assignmentItems>
-            <assignToReference>recordOpportunity.Number_of_Booking_Checklists__c</assignToReference>
-            <operator>Add</operator>
+            <assignToReference>updateOpportunity.Id</assignToReference>
+            <operator>Assign</operator>
             <value>
-                <numberValue>1.0</numberValue>
+                <elementReference>recordOpportunity.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>updateOpportunity.Number_of_Booking_Checklists__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>increaseNumberOfBookingChecklist</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -2300,15 +2307,22 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Increase_Checklist_Count_on_Opty_Booking_WX</name>
+        <name>Increase_Booking_Checklist_Count_on_Opty_WX</name>
         <label>Increase Booking Checklist Count on Opty</label>
         <locationX>1634</locationX>
         <locationY>566</locationY>
         <assignmentItems>
-            <assignToReference>recordOpportunity.Number_of_Booking_Checklists__c</assignToReference>
-            <operator>Add</operator>
+            <assignToReference>updateOpportunity.Id</assignToReference>
+            <operator>Assign</operator>
             <value>
-                <numberValue>1.0</numberValue>
+                <elementReference>recordOpportunity.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>updateOpportunity.Number_of_Booking_Checklists__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>increaseNumberOfBookingChecklist</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -2321,42 +2335,17 @@
         <locationX>50</locationX>
         <locationY>566</locationY>
         <assignmentItems>
-            <assignToReference>recordOpportunity.Number_of_SEQ_Checklists__c</assignToReference>
-            <operator>Add</operator>
+            <assignToReference>updateOpportunity.Id</assignToReference>
+            <operator>Assign</operator>
             <value>
-                <numberValue>1.0</numberValue>
+                <elementReference>recordOpportunity.Id</elementReference>
             </value>
         </assignmentItems>
-        <connector>
-            <targetReference>Create_Checklist</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Increase_Checklist_Count_on_Opty_SEQ_WX</name>
-        <label>Increase SEQ Checklist Count on Opty</label>
-        <locationX>578</locationX>
-        <locationY>566</locationY>
         <assignmentItems>
-            <assignToReference>recordOpportunity.Number_of_SEQ_Checklists__c</assignToReference>
-            <operator>Add</operator>
+            <assignToReference>updateOpportunity.Number_of_SEQ_Checklists__c</assignToReference>
+            <operator>Assign</operator>
             <value>
-                <numberValue>1.0</numberValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Create_Checklist</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Increase_Checklist_Count_on_Opty_STP_WX</name>
-        <label>Increase STP Checklist Count on Opty</label>
-        <locationX>842</locationX>
-        <locationY>566</locationY>
-        <assignmentItems>
-            <assignToReference>recordOpportunity.Number_of_STP_Checklists__c</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <numberValue>1.0</numberValue>
+                <elementReference>increaseNumberOfSEQChecklist</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -2369,26 +2358,17 @@
         <locationX>1370</locationX>
         <locationY>566</locationY>
         <assignmentItems>
-            <assignToReference>recordOpportunity.Number_of_MMC_Checklists__c</assignToReference>
-            <operator>Add</operator>
+            <assignToReference>updateOpportunity.Id</assignToReference>
+            <operator>Assign</operator>
             <value>
-                <numberValue>1.0</numberValue>
+                <elementReference>recordOpportunity.Id</elementReference>
             </value>
         </assignmentItems>
-        <connector>
-            <targetReference>Create_Checklist</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Increase_STP_Checklist_Count_on_Opty_STP_WO</name>
-        <label>Increase STP Checklist Count on Opty</label>
-        <locationX>1106</locationX>
-        <locationY>566</locationY>
         <assignmentItems>
-            <assignToReference>recordOpportunity.Number_of_STP_Checklists__c</assignToReference>
-            <operator>Add</operator>
+            <assignToReference>updateOpportunity.Number_of_MMC_Checklists__c</assignToReference>
+            <operator>Assign</operator>
             <value>
-                <numberValue>1.0</numberValue>
+                <elementReference>increaseNumberOfMMCChecklist</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -2396,15 +2376,91 @@
         </connector>
     </assignments>
     <assignments>
-        <name>ncrease_Checklist_Count_on_Opty_SEQ_TA</name>
+        <name>Increase_SEQ_Checklist_Count_on_Opty_SEQ_TA</name>
         <label>Increase SEQ Checklist Count on Opty</label>
         <locationX>314</locationX>
         <locationY>566</locationY>
         <assignmentItems>
-            <assignToReference>recordOpportunity.Number_of_SEQ_Checklists__c</assignToReference>
-            <operator>Add</operator>
+            <assignToReference>updateOpportunity.Id</assignToReference>
+            <operator>Assign</operator>
             <value>
-                <numberValue>1.0</numberValue>
+                <elementReference>recordOpportunity.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>updateOpportunity.Number_of_SEQ_Checklists__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>increaseNumberOfSEQChecklist</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Create_Checklist</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Increase_SEQ_Checklist_Count_on_Opty_SEQ_WX</name>
+        <label>Increase SEQ Checklist Count on Opty</label>
+        <locationX>578</locationX>
+        <locationY>566</locationY>
+        <assignmentItems>
+            <assignToReference>updateOpportunity.Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>recordOpportunity.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>updateOpportunity.Number_of_SEQ_Checklists__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>increaseNumberOfSEQChecklist</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Create_Checklist</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Increase_STP_Checklist_Count_on_Opty_WOWS</name>
+        <label>Increase STP Checklist Count on Opty</label>
+        <locationX>1106</locationX>
+        <locationY>566</locationY>
+        <assignmentItems>
+            <assignToReference>updateOpportunity.Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>recordOpportunity.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>updateOpportunity.Number_of_STP_Checklists__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>increaseNumberOfSTPChecklist</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Create_Checklist</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Increase_STP_Checklist_Count_on_Opty_WX</name>
+        <label>Increase STP Checklist Count on Opty</label>
+        <locationX>842</locationX>
+        <locationY>566</locationY>
+        <assignmentItems>
+            <assignToReference>updateOpportunity.Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>recordOpportunity.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>updateOpportunity.Number_of_STP_Checklists__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>increaseNumberOfSTPChecklist</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -2627,7 +2683,7 @@
             <label>Booking - WO</label>
         </rules>
     </decisions>
-    <description>MidMarket Closing added. &quot;Additional Notes&quot; long text and &quot;Gov&apos;t Contract Approval Email&quot; added to SEQ - WX</description>
+    <description>Additional in-flow validations and changed &quot;Update Opty&quot; to only update &quot;Number of ___ Checklist&quot; fields. MidMarket Closing added. &quot;Additional Notes&quot; long text and &quot;Gov&apos;t Contract Approval Email&quot; added to SEQ - WX</description>
     <dynamicChoiceSets>
         <name>activeBenefitContinuationPeriodPicklist</name>
         <dataType>Picklist</dataType>
@@ -3125,6 +3181,30 @@
         <picklistObject>NSP_Checklist__c</picklistObject>
     </dynamicChoiceSets>
     <environments>Default</environments>
+    <formulas>
+        <name>increaseNumberOfBookingChecklist</name>
+        <dataType>Number</dataType>
+        <expression>{!recordOpportunity.Number_of_Booking_Checklists__c} + 1</expression>
+        <scale>0</scale>
+    </formulas>
+    <formulas>
+        <name>increaseNumberOfMMCChecklist</name>
+        <dataType>Number</dataType>
+        <expression>{!recordOpportunity.Number_of_MMC_Checklists__c} + 1</expression>
+        <scale>0</scale>
+    </formulas>
+    <formulas>
+        <name>increaseNumberOfSEQChecklist</name>
+        <dataType>Number</dataType>
+        <expression>{!recordOpportunity.Number_of_SEQ_Checklists__c} + 1</expression>
+        <scale>0</scale>
+    </formulas>
+    <formulas>
+        <name>increaseNumberOfSTPChecklist</name>
+        <dataType>Number</dataType>
+        <expression>{!recordOpportunity.Number_of_STP_Checklists__c} + 1</expression>
+        <scale>0</scale>
+    </formulas>
     <interviewLabel>Checklist - Create Checklist Subflow {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Checklist - Create Checklist Subflow</label>
     <processMetadataValues>
@@ -3167,7 +3247,7 @@
         <faultConnector>
             <targetReference>Assign_Fault_Element_Update_Opportunity_Record</targetReference>
         </faultConnector>
-        <inputReference>recordOpportunity</inputReference>
+        <inputReference>updateOpportunity</inputReference>
     </recordUpdates>
     <runInMode>SystemModeWithoutSharing</runInMode>
     <screens>
@@ -4193,6 +4273,10 @@
                     <fieldType>InputField</fieldType>
                     <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
+                    <validationRule>
+                        <errorMessage>&lt;p&gt;&lt;span style=&quot;color: rgb(250, 7, 7);&quot;&gt;Pay Period notes must be less than 80 characters&lt;/span&gt;&lt;/p&gt;</errorMessage>
+                        <formulaExpression>LEN({!Pay_Period_MMC})&lt;=80</formulaExpression>
+                    </validationRule>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -5869,6 +5953,10 @@
                     <fieldType>LargeTextArea</fieldType>
                     <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
+                    <validationRule>
+                        <errorMessage>&lt;p&gt;&lt;span style=&quot;color: rgb(250, 7, 7);&quot;&gt;Notes must be shorter than 6k characters&lt;/span&gt;&lt;/p&gt;</errorMessage>
+                        <formulaExpression>LEN({!CommentsFromNCS_STP_WO})&lt;=6000</formulaExpression>
+                    </validationRule>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -6449,6 +6537,14 @@
         <isInput>true</isInput>
         <isOutput>true</isOutput>
         <objectType>User</objectType>
+    </variables>
+    <variables>
+        <name>updateOpportunity</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Opportunity</objectType>
     </variables>
     <variables>
         <name>varFaultElement</name>
