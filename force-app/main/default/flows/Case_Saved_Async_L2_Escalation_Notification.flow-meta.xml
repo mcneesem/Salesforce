@@ -44,9 +44,17 @@
                 <elementReference>Email_Body</elementReference>
             </value>
         </inputParameters>
+        <inputParameters>
+            <name>sendRichBody</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputParameters>
         <nameSegment>emailSimple</nameSegment>
+        <offset>0</offset>
     </actionCalls>
     <apiVersion>62.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <decisions>
         <name>Check_For_Work_Email</name>
         <label>Check For Work Email</label>
@@ -182,7 +190,7 @@
         </scheduledPaths>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <subflows>
         <name>Unable_to_Send_Email_Notification</name>
         <label>Unable to Send Email Notification</label>
@@ -210,15 +218,25 @@
     </subflows>
     <textTemplates>
         <name>Email_Body</name>
-        <isViewedAsPlainText>true</isViewedAsPlainText>
-        <text>Hi {!Iterated_Over_Case_Contacts.NSP_Contact__r.FirstName},
-
-Your request for assistance has been reviewed and advanced to our level 2 technicians. They will be in touch as soon as they are available. We appreciate your patience.
- 
-If you have additional questions or concerns in the meantime, please let us know and we will be happy to help.
-
-
-Thank you,</text>
+        <isViewedAsPlainText>false</isViewedAsPlainText>
+        <text>&lt;div style=&quot;max-width: 751px;&quot;&gt;
+&lt;img src=&quot;https://insperity.my.salesforce.com/servlet/servlet.ImageServer?id=0154x000001Eo64&amp;amp;oid=00D4x000003x74T&quot;&gt;
+&lt;br/&gt;
+&lt;table width=&quot;751&quot;&gt;&lt;tr&gt;&lt;td&gt;
+&lt;p&gt;
+Hello,&lt;br/&gt;&lt;br/&gt;
+Your request for assistance has been reviewed and advanced to our level 2 technicians. They will be in touch as soon as they are available. We appreciate your patience.&lt;br/&gt;&lt;br/&gt;
+If you have additional questions or concerns in the meantime, please let us know and we will be happy to help.&lt;br/&gt;&lt;br/&gt;
+Thank you,&lt;br/&gt;
+Insperity Time and Attendance Support&lt;br/&gt;&lt;br/&gt;
+Office: 800-314-8223&lt;br/&gt;
+&lt;a href=&quot;http://www.insperity.com&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot;&gt;&lt;strong&gt;www.Insperity.com&lt;/strong&gt;&lt;/a&gt;&lt;br/&gt;
+Time and Attendance Help Center: &lt;a href=&quot;https://help.insperity.com/bps/categories/ita/&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot;&gt;&lt;strong&gt;www.help.insperity.com&lt;/strong&gt;&lt;/a&gt;
+&lt;/p&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;br/&gt;
+&lt;img src=&quot;https://insperity.my.salesforce.com/servlet/servlet.ImageServer?id=0154x000001Eo63&amp;amp;oid=00D4x000003x74T&quot;&gt;
+&lt;/div&gt;</text>
     </textTemplates>
     <textTemplates>
         <name>EmailSubject</name>
