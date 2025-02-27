@@ -106,18 +106,6 @@
         <label>Contingent Workforce</label>
     </customValue>
     <customValue>
-        <fullName>Retirement Services Recurring - Non WO</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Retirement Services Recurring - Non WO</label>
-    </customValue>
-    <customValue>
-        <fullName>Retirement Services Recurring - WO</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Retirement Services Recurring - WO</label>
-    </customValue>
-    <customValue>
         <fullName>Not Invoice Ready</fullName>
         <default>false</default>
         <isActive>false</isActive>
