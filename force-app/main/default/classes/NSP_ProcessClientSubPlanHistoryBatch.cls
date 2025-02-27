@@ -76,7 +76,7 @@ public class NSP_ProcessClientSubPlanHistoryBatch implements ISelfSchedulable , 
                     chsUpdateList.add( eachCSH );
                 }
                 if ( eachCSH.NSP_Future_Lead_Parent__c != null
-                    && eachCSH.NSP_Future_Lead_Parent__c == System.today()
+                    && eachCSH.NSP_Future_Lead_Parent__c <= System.today()
                     )
                 {
                     // asset added as lead parent 
