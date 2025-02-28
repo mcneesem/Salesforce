@@ -32,3 +32,5 @@ NSP_Is_Partner_CS_Applicable__c
 Seasonal_Pricing__c
 SBQQ__LineItemCount__c
 Seasonal_Pricing_Enabled__c
+Discounted_Product_Codes__c
+Discounted_Consumption_Rates__c
