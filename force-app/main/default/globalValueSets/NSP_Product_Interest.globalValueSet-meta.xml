@@ -76,6 +76,11 @@
         <label>Integra (need to check)</label>
     </customValue>
     <customValue>
+        <fullName>Contingent Workforce</fullName>
+        <default>false</default>
+        <label>Contingent Workforce</label>
+    </customValue>
+    <customValue>
         <fullName>Bookkeeping Services</fullName>
         <default>false</default>
         <isActive>false</isActive>

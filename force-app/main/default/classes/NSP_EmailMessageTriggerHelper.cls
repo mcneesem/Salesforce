@@ -1,5 +1,5 @@
 public with sharing class NSP_EmailMessageTriggerHelper {
-    // test w/ NSP_EmailMessageTriggerHelperTest (87%)
+    // test w/ NSP_EmailMessageTriggerHelperTest (83%)
 
     public static boolean isFirst = false;
     private static List<String> ContactCenterEmailAddresses = System.Label.NSP_Contact_Center_Email_Addresses.toLowerCase().split( ',' );
@@ -383,29 +383,39 @@ public with sharing class NSP_EmailMessageTriggerHelper {
         // List to keep clone Email Messages
         List<EmailMessage> emailMessageClonedList = new List<EmailMessage>();
         // List to delete the cloned Email Message
-        List<Id> emailMessageTobeDeleted = new List<Id>();
+        List<EmailMessage> emailMessageInserted = new List<EmailMessage>();
+        Set<Id> emailMessageTobeDeleted = new Set<Id>();
+        Boolean isRelatedEmailMessageEnabled = EmailMessageTriggerSettings__c.getInstance( UserInfo.getUserId() ).IsRelatedEmailMessageEnabled__c;
         try{
             for ( EmailMessage emailMessage : ParentCaseToEmailMessageMap.Values() ) {
-                if ( emailMessage.ParentId != null ) {
-                    emailMessageTobeDeleted.add( emailMessage.Id );
+                if ( emailMessage != null && emailMessage.ParentId != null ) {
                     // Clonning the Email Message
                     EmailMessage emailMessageCloned = emailMessage.clone( false , true , false , false );
+                    if ( isRelatedEmailMessageEnabled ) {
+                        emailMessageCloned.Related_Email_Message__c = emailMessage.Id;
+                    } else {
+                        emailMessageTobeDeleted.add( emailMessage.Id );
+                    }
                     emailMessageClonedList.add( emailMessageCloned );
                 }
             }
             // insert updated cases
             if ( !emailMessageClonedList.isEmpty() ) {
-                updateParentIdOnClonedEmailMessage( emailMessageClonedList , insertedCaseList );
+                emailMessageInserted = updateParentIdOnClonedEmailMessage(
+                    emailMessageClonedList ,
+                    insertedCaseList
+                );
             }
-            // After process, delete all the Email Message Records which are cloned.
-            if ( !emailMessageTobeDeleted.isEmpty() ) {
-                List<EmailMessage> emailMessageTobeD = [
-                    SELECT Id
-                    FROM EmailMessage
-                    WHERE ( Id = :emailMessageTobeDeleted )
-                ];
-                if ( ( emailMessageTobeD != null ) && !emailMessageTobeD.isEmpty() ) {
-                    delete emailMessageTobeD;
+            if ( !emailMessageInserted.isEmpty() ) {
+                if ( isRelatedEmailMessageEnabled ) {
+                    Map<Id,Id> oldVsNewEmailMessageMap = new Map<Id,Id>();
+                    for ( EmailMessage em : emailMessageInserted ) {
+                        oldVsNewEmailMessageMap.put( em.Related_Email_Message__c , em.id );
+                    }
+                    handleDmlOperationsRelatedEmailMessages( oldVsNewEmailMessageMap );
+                } else {
+                    // After process, delete all the Email Message Records which are cloned.
+                    deleteEmailMessages( emailMessageTobeDeleted );
                 }
             }
         } catch ( Exception e ) {
@@ -417,13 +427,88 @@ public with sharing class NSP_EmailMessageTriggerHelper {
         }
     }
 
-    //
+    // MethodName: handleDmlOperationsRelatedEmailMessages
+    // Description: Handles Dml Operations of Related EmailMessages
+    // Story: AZD-320679
+    // Params: Map<Id,Id> linkedEntityIdMap
+    private static void handleDmlOperationsRelatedEmailMessages( Map<Id,Id> linkedEntityIdMap ) {
+        cloneContentDocumentLinks(linkedEntityIdMap);
+        // After process, delete all the Email Message Records which are cloned.
+        if ( ( linkedEntityIdMap != null ) && !linkedEntityIdMap.isEmpty() ) {
+            deleteEmailMessages( linkedEntityIdMap.keySet() );
+        }
+    }
+
+    // MethodName: cloneContentDocumentLinks
+    // Description: Method to create ContentDocumentLink of cloned Email Message record.
+    // Story: AZD-320679
+    // Params: Map<Id,Id> linkedEntityIdMap
+    private static void cloneContentDocumentLinks( Map<Id,Id> linkedEntityIdMap ) {
+        List<ContentDocumentLink> contentDocumentLinkClonedList = new list<ContentDocumentLink>();
+        List<ContentDocumentLink> contentDocumentLinkList = new List<ContentDocumentLink>();
+        try {
+            if ( ( linkedEntityIdMap != null ) && !linkedEntityIdMap.isEmpty() ) {
+                contentDocumentLinkList = [
+                    SELECT Id , ContentDocumentId , LinkedEntityId
+                    FROM ContentDocumentLink
+                    WHERE ( LinkedEntityId IN :linkedEntityIdMap.keySet() )
+                ];
+            }
+            if ( !contentDocumentLinkList.isEmpty() ) {
+                for ( ContentDocumentLink cLink : contentDocumentLinkList ) {
+                    if ( ( cLink.LinkedEntityId != null )
+                        && linkedEntityIdMap.containsKey( cLink.LinkedEntityId )
+                        )
+                    {
+                        ContentDocumentLink contentDocumentLinkCloned = cLink.clone( false , true , false , false );
+                        contentDocumentLinkCloned.LinkedEntityId = linkedEntityIdMap.get( cLink.LinkedEntityId );
+                        contentDocumentLinkClonedList.add( contentDocumentLinkCloned );
+                    }
+                }
+            }
+            if ( !contentDocumentLinkClonedList.isEmpty() ) {
+                insert contentDocumentLinkClonedList;
+            }
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_EmailMessageTriggerHelper.class.getName() ,
+                'cloneContentDocumentLinks' ,
+                e
+            );
+        }
+    }
+
+    // MethodName: deleteEmailMessages
+    // Description: Method to delete cloned Email Message record.
+    // Story: AZD-320679
+    // Params: Set<Id> recordIds 
+    private static void deleteEmailMessages( Set<Id> recordIds ) {
+        try {
+            if ( ( recordIds != null ) && !recordIds.isEmpty() ) {
+                List<EmailMessage> emailMessageTobeDeleted = [
+                    SELECT Id
+                    FROM EmailMessage
+                    WHERE ( Id IN :recordIds )
+                ];
+                if ( ( emailMessageTobeDeleted != null ) && !emailMessageTobeDeleted.isEmpty() ) {
+                      delete emailMessageTobeDeleted;
+                }
+            }
+          } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_EmailMessageTriggerHelper.class.getName() ,
+                'deleteEmailMessages' ,
+                e
+            );
+        }
+    }
+
     // MethodName    : updateParentIdOnClonedEmailMessage
     // Description   : Method to insert updated Email Message record.
     // Story         : STY-04647
     // Params        : List<EmailMessage> emailMessageClonedList, List<Case> insertedCaseList
     //
-    private static void updateParentIdOnClonedEmailMessage( List<EmailMessage> emailMessageClonedList , List<Case> insertedCaseList ) {
+    private static List<EmailMessage> updateParentIdOnClonedEmailMessage( List<EmailMessage> emailMessageClonedList , List<Case> insertedCaseList ) {
         List<EmailMessage> emailMessageToBeInserted = New List<EmailMessage>();
         Map<Id,Id> parentCaseIdToCaseIdMap = new Map<Id,Id>();
         try{
@@ -451,6 +536,7 @@ public with sharing class NSP_EmailMessageTriggerHelper {
                 e
             );
         }
+        return emailMessageToBeInserted;
     }
 
     // MethodName    : restrictEmailFromRestrictedSenders
@@ -610,7 +696,7 @@ public with sharing class NSP_EmailMessageTriggerHelper {
             List<String> sendToList = new List<String>();
             sendToList.add(ToAddress);
             List<String> emailTempFields = new List<String>{'ID'};
-                EmailTemplate emailTemplate = NSP_sObjectSelector.selectByDeveloperName(emailTempFields, emailTemplateName);   
+            EmailTemplate emailTemplate = NSP_sObjectSelector.selectByDeveloperName(emailTempFields, emailTemplateName);
             Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
             email= Messaging.renderStoredEmailTemplate(emailTemplate.Id, null, caseRecId);
             email.setTemplateId(emailTemplate.Id); 
@@ -649,7 +735,7 @@ public with sharing class NSP_EmailMessageTriggerHelper {
             //List to keep clone Email Messages
             List<EmailMessage> emailMessageClonedList = new List<EmailMessage>();
             //List to delete the cloned Email Message
-            List<Id> emailMessageTobeDeleted = new List<Id>();
+            Set<Id> emailMessageTobeDeleted = new Set<Id>();
             //To Keep external id with its related case Id
             Map<String, String> caseExtrnlIdsByCaseIds = new Map<String, String>();
             
@@ -685,8 +771,7 @@ public with sharing class NSP_EmailMessageTriggerHelper {
 
                 //Finally after process, delete all the Email Message Records which are cloned.
                if(!emailMessageTobeDeleted.isEmpty()) {
-                    List<EmailMessage> emailMessageTobeD = [Select Id From EmailMessage WHERE Id =:emailMessageTobeDeleted];
-                    delete emailMessageTobeD;
+                    deleteEmailMessages( emailMessageTobeDeleted );
                 }
             }
             

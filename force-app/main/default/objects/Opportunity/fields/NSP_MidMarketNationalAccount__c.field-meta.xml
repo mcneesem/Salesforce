@@ -132,6 +132,11 @@
                 <label>MDVIP</label>
             </value>
             <value>
+                <fullName>Next Generation Manufacturing</fullName>
+                <default>false</default>
+                <label>Next Generation Manufacturing</label>
+            </value>
+            <value>
                 <fullName>North American Trailer Dealer Association (NATDA)</fullName>
                 <default>false</default>
                 <label>North American Trailer Dealer Association (NATDA)</label>

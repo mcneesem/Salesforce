@@ -4,7 +4,7 @@
     <defaultValue>true</defaultValue>
     <description>to mark if case is First Call Resolution</description>
     <externalId>false</externalId>
-    <label>First Call Resolution</label>
+    <label>First Contact Resolution</label>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
