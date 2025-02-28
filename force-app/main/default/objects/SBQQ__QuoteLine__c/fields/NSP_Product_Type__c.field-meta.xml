@@ -162,6 +162,11 @@
                 <default>false</default>
                 <label>Learning Hosting</label>
             </value>
+            <value>
+                <fullName>Contingent Workforce</fullName>
+                <default>false</default>
+                <label>Contingent Workforce</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
