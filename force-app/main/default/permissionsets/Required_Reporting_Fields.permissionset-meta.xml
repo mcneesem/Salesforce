@@ -298,6 +298,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Case.Required_Documentation_Attached__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Case.Sent_Email__c</field>
         <readable>true</readable>
     </fieldPermissions>
