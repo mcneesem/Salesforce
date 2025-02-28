@@ -608,13 +608,13 @@ public with sharing class NSP_OpportunityTriggerHelper {
             if( !productCodeList.contains(newOpportunity.NSP_PrimaryProduct__c) ) {
                 closedWonOpptyList.add(newOpportunity);
             } else if( newOpportunity.NSP_PrimaryProduct__c!= null && productCodeList.contains(newOpportunity.NSP_PrimaryProduct__c) ) {
-                if(newOpportunity.NSP_PrimaryProduct__c == NSP_SalesConstants.PROD_INSURANCE){
-                    rectype =  Schema.SObjectType.ASSET.getRecordTypeInfosByName().get(NSP_SalesConstants.ASSETRECTYPE_INSURANCE).getRecordTypeId();
+                if( newOpportunity.NSP_PrimaryProduct__c == NSP_SalesConstants.PROD_INSURANCE ) {
+                    rectype =  Schema.SObjectType.ASSET.getRecordTypeInfosByDeveloperName().get(NSP_SalesConstants.ASSETRECTYPENAME_INSURANCE).getRecordTypeId();
                 }
-                else if(newOpportunity.NSP_PrimaryProduct__c == NSP_SalesConstants.PROD_EXPENSEMANAGEMENT){
-                     rectype = Schema.SObjectType.ASSET.getRecordTypeInfosByName().get(NSP_SalesConstants.ASSETRECTYPE_CERTIFY).getRecordTypeId();
-               } else {
-                rectype = Schema.SObjectType.ASSET.getRecordTypeInfosByName().get(newOpportunity.NSP_PrimaryProduct__c).getRecordTypeId();
+                else if( newOpportunity.NSP_PrimaryProduct__c == NSP_SalesConstants.PROD_EXPENSEMANAGEMENT ) {
+                    rectype = Schema.SObjectType.ASSET.getRecordTypeInfosByDeveloperName().get(NSP_SalesConstants.ASSETRECTYPE_CERTIFY).getRecordTypeId();
+                } else {
+                    rectype = Schema.SObjectType.ASSET.getRecordTypeInfosByName().get(newOpportunity.NSP_PrimaryProduct__c).getRecordTypeId();
                 }
                 recordTypeSet.add(rectype);
                 closedOpptyList.add(newOpportunity);
