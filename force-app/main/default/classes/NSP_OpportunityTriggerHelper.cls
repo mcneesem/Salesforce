@@ -42,7 +42,7 @@ public with sharing class NSP_OpportunityTriggerHelper {
     // @param newList List of New Opportunity.
     // @return void
     //
-    public void beforeInsertDirector(List<Opportunity> newList){        
+    public void beforeInsertDirector(List<Opportunity> newList) {
         
         Set<String> accountIdSet =  new Set<String>();
         List<Opportunity> opportunityWoWxList =  new List<Opportunity>();
@@ -154,7 +154,7 @@ public with sharing class NSP_OpportunityTriggerHelper {
         List<Opportunity> updateResyncFlagOpportunityList = new List<Opportunity>();
         //Opportunity list to capture opportunities created with HSA contribution data
         List<Opportunity> newTaskOpportunityList = new List<Opportunity>();
-        Set<Id> OpportunityAccountId= new Set<Id>(); 
+        Set<Id> opportunityAccountId= new Set<Id>(); 
         for(Id opportunityId : opportunityNewMap.keySet()){
             accountIdSet.add(opportunityNewMap.get(opportunityId).accountid);
             if(opportunityNewMap.get(opportunityId).NSP_Ready_for_Integration_Sync__c){ 
@@ -169,7 +169,7 @@ public with sharing class NSP_OpportunityTriggerHelper {
             // Added as a part of DF-01497   
             if(opportunityNewMap.get(opportunityId).NSP_Primary_Contact__c==Null || 
                opportunityNewMap.get(opportunityId).NSP_Customer_Signer__c==Null){
-                OpportunityAccountId.add(opportunityNewMap.get(opportunityId).accountId);
+                opportunityAccountId.add(opportunityNewMap.get(opportunityId).accountId);
             }
         }
         /* Moving to NSP_UpdateRelatedAccounts class as part of DF-01058 */
@@ -182,7 +182,7 @@ public with sharing class NSP_OpportunityTriggerHelper {
             NSP_EventAndTaskHelperFunctions.createTaskRecordsForNCSQueue(newTaskOpportunityList, null);
         }
         // added as a part of DF-01497
-        getRelatedACR(OpportunityAccountId,opportunityNewMap.keySet());
+        getRelatedACR(opportunityAccountId,opportunityNewMap.keySet());
         
         // Send the list to publish event bus
         if(PlatformEventSettings__c.getInstance(UserInfo.getUserId()).IsEnabled_IntegrationOpportunityEvent__c) {
@@ -410,7 +410,7 @@ public with sharing class NSP_OpportunityTriggerHelper {
     public void afterUpdateDirector(Map<Id, Opportunity> opportunityNewMap,Map<Id, Opportunity> opportunityOldMap){
         List<String> closedOpportunityIdList = new List<String>();
         List<String> closedWonOpportunityIdList = new List<String>();
-        List<String> reopenedOpportunityIdList = new List<String>();
+        List<String> reopenedOpportunityIdList = new List<String>(); 
         Set<String> accountIdSet = new Set<String>();
         Set<String> recordTypeSet = new Set<String>();
         Set<String> backoutOptySet = new Set<String>();
@@ -536,10 +536,9 @@ public with sharing class NSP_OpportunityTriggerHelper {
             );
         }
         // Send the list to publish event bus
-        if(updateResyncFlagOpportunityList.size() > 0){
-            if(PlatformEventSettings__c.getInstance(UserInfo.getUserId()).IsEnabled_IntegrationOpportunityEvent__c) {
-                this.publishEventBus( opportunityEventList , updateResyncFlagOpportunityList );
-            }
+        if( updateResyncFlagOpportunityList.size() > 0
+           && (PlatformEventSettings__c.getInstance(UserInfo.getUserId()).IsEnabled_IntegrationOpportunityEvent__c) ) {
+            this.publishEventBus( opportunityEventList , updateResyncFlagOpportunityList );
         }
 
         if(!closedOpportunityIdList.isEmpty()){
