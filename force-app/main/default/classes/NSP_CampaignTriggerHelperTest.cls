@@ -33,16 +33,17 @@ private class NSP_CampaignTriggerHelperTest {
                                username='insperitytestadminuserda@insperity.com.testUsr');
         users.add(dAUser);
         
-
-        database.insert(users);
-        
-        
     }
 
     @isTest
     private static void updateCampaignFieldOfficeTest() {
         User dAUser=[Select Id , Name , Email ,NSP_SalesDivision__c,NSP_Sales_Office__c,NSP_SalesRegion__c from User WHERE Email = 'jsmithda@insperity.com' Limit 1];
         System.runAs (dAUser) {
+            PermissionSet permSet = [SELECT Id FROM PermissionSet WHERE Name = 'Campaign_Update_Sales_Office_Info_Owner_Assigned'];
+            if (permSet != null) {
+                insert new PermissionSetAssignment(AssigneeId = dAUser.id, PermissionSetId = permSet.Id);
+            }
+        
             //Campaign creation
             Test.startTest();
             Campaign campaignObject = new Campaign(
@@ -61,6 +62,11 @@ private class NSP_CampaignTriggerHelperTest {
         
         User LAUser=[Select Id , Name , Email ,NSP_Sales_Office__c from User WHERE Email = 'jsmithyBPA@insperity.com' Limit 1];
         System.runAs (LAUser) {
+            PermissionSet permSet = [SELECT Id FROM PermissionSet WHERE Name = 'Campaign_Update_Sales_Office_Info_Campaign_Assigned'];
+            if (permSet != null) {
+                insert new PermissionSetAssignment(AssigneeId = LAUser.id, PermissionSetId = permSet.Id);
+            }
+            
             //Campaign creation
             Test.startTest();
             NSP_Sales_Office_Mapping__c officeMapping = new NSP_Sales_Office_Mapping__c();
