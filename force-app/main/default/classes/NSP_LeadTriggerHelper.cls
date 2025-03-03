@@ -130,11 +130,11 @@ public with sharing class NSP_LeadTriggerHelper {
             if(!inboundSolutionsList.isEmpty()){
                 assignLeadToInboundSolutions(inboundSolutionsList);
             }
-            //Assigning to Outbound Team 
+            //Assigning to Outbound Team
             if(!outboundTeamList.isEmpty()){
                 assignLeadToOutboundTeam(outboundTeamList);
             }
-            //Assigning to Field Marketing Team 
+            //Assigning to Field Marketing Team
             if(!fieldMarketingTeamList.isEmpty()){
                 assignLeadToFieldMarketingTeam(fieldMarketingTeamList);
             }
@@ -190,7 +190,7 @@ public with sharing class NSP_LeadTriggerHelper {
                     parentLead = leadNewMap.get(leadId);
                     isOwnerUpdated = true;
                 }
-                //STY-03447  whenuser change the referral user on detail page, field should not be empty 
+                // STY-03447  whenuser change the referral user on detail page, field should not be empty
                 if(leadNewMap.get(leadId).RecordTypeId == SERVICE_REFERRAL_RECORDTYPE_ID
                     && leadNewMap.get(leadId).NSP_Referral_User__c == NULL
                     )
@@ -210,7 +210,7 @@ public with sharing class NSP_LeadTriggerHelper {
                     )
                 {
                     leadNewMap.get(leadId).NSP_DC_SetTime__c += Integer.valueOf(System.Label.NSP_12_hours_Milliseconds);
-                }  
+                }
                 // Added as part of DF-01301
                 // As part of DF-00998 comments
                 // If the loggedIn user is either Inbound or Outbound and Assign Lead Checkbox is checked then only Lead assignment rule will trigger
@@ -259,16 +259,14 @@ public with sharing class NSP_LeadTriggerHelper {
                             )
                         )
                     {
-                        /* If Postal Code is not blank, Number of Employees is null or < 150 and Product of interest is WO/WX assign to Sales office */
+                        // If Postal Code is not blank, Number of Employees is null or < 150 and Product of interest is WO/WX assign to Sales office
                         leadsForRoundRobin.add(leadNewMap.get(leadId));
                         zipCodeList.add(leadNewMap.get(leadId).PostalCode.substring(0,5));
                         isZipCodeUpdate = true;
-                    } 
-                    else {
+                    } else {
                         leadNewMap.get(leadId).NSP_Lead_Routing__c = FALSE;
-                    }   
-                }      
-                else {
+                    }
+                } else {
                     leadNewMap.get(leadId).NSP_Lead_Routing__c = FALSE;
                 }
                 //collect all Leads to change AccountSegment value based on number of employees
@@ -322,7 +320,7 @@ public with sharing class NSP_LeadTriggerHelper {
                 assignLeadToPayrollHCM(payrollHCMList);
             }
             //Added as part of CR--027 (Convert the child Leads to contacts on Parent Lead Conversion)
-            createContact(leadNewMap.Values());        
+            createContact(leadNewMap.values());
             setSalesOfficeDetails(leadNewMap.values(),leadOldMap);  // added for STY-03154
         } catch ( Exception e ) {
             NSP_LeadTriggerHelper.handleException( e , 'beforeUpdateDirector' );
@@ -548,7 +546,7 @@ public with sharing class NSP_LeadTriggerHelper {
                 }
                 if (leadObject.NSP_Skip_Validation__c == true) {
                     leadToUpdate = new Lead(Id=leadObject.id);
-                    leadToUpdate.NSP_Skip_Validation__c= false;  
+                    leadToUpdate.NSP_Skip_Validation__c= false;
                 }
                 if (leadObject.isconverted && !String.isBlank(leadObject.NSP_Referred_By_COI__c)) {
                     accountLeadMap.put(leadObject.convertedAccountId, leadObject);
