@@ -757,7 +757,17 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>NSP_Payroll__c.Source__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>NSP_Payroll__c.User__c</field>
+        <readable>true</readable>
+     </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NSP_Payroll__c.Pay_Group_Number__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
