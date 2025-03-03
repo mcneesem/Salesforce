@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>57.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
         <name>Set_Billing_Finance_Book</name>
         <label>Set Billing Finance Book</label>
@@ -211,8 +212,8 @@
         </rules>
     </decisions>
     <environments>Default</environments>
-    <interviewLabel>Payment Fields Initializer {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Payment Fields Initializer</label>
+    <interviewLabel>Payment - Before Create - Field Initializer {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Payment - Before Create - Field Initializer</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -362,7 +363,7 @@
         <recordTriggerType>Create</recordTriggerType>
         <triggerType>RecordBeforeSave</triggerType>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <variables>
         <name>InvLineLegalEntity</name>
         <dataType>String</dataType>

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>57.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
         <name>Set_Billing_Finance_Period</name>
         <label>Set Billing Finance Period</label>
@@ -173,8 +174,8 @@
 DATE( YEAR({!$Record.blng__PaymentDate__c}), 12, 31 ),
 DATE( YEAR({!$Record.blng__PaymentDate__c}), MONTH({!$Record.blng__PaymentDate__c}) + 1, 1) - 1)</expression>
     </formulas>
-    <interviewLabel>Payment Fields Updater {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Payment Fields Updater</label>
+    <interviewLabel>Payment - Before Save - Field Optimizer {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Payment - Before Save - Field Optimizer</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -317,7 +318,7 @@ DATE( YEAR({!$Record.blng__PaymentDate__c}), MONTH({!$Record.blng__PaymentDate__
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
         <triggerType>RecordBeforeSave</triggerType>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <variables>
         <name>InvLineLegalEntity</name>
         <dataType>String</dataType>
