@@ -318,7 +318,7 @@ DATE( YEAR({!$Record.blng__PaymentDate__c}), MONTH({!$Record.blng__PaymentDate__
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
         <triggerType>RecordBeforeSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <variables>
         <name>InvLineLegalEntity</name>
         <dataType>String</dataType>
