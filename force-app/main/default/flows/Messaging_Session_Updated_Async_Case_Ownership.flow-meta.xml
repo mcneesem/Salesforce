@@ -77,7 +77,7 @@
             </value>
         </filters>
         <filters>
-            <field>Status</field>
+            <field>AcceptTime</field>
             <operator>IsChanged</operator>
             <value>
                 <booleanValue>true</booleanValue>
