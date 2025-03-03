@@ -92,44 +92,51 @@ public static void updateAddProductDescription( List<blng__InvoiceLine__c> invLi
      Map<String,NSP_AdditionalProductDescription_Setting__mdt>  additionalProductDesSetMap = NSP_AdditionalProductDescription_Setting__mdt.getAll();
      
      for(blng__InvoiceLine__c newInvoiceLine: invLineNew){
-        if(newInvoiceLine.NSP_Product_Code__c != null && additionalProductDesSetMap.containsKey(newInvoiceLine.NSP_Product_Code__c)) {
-            NSP_AdditionalProductDescription_Setting__mdt descriptionSetting = additionalProductDesSetMap.get(newInvoiceLine.NSP_Product_Code__c);
-            string prodDescStr = descriptionSetting.NSP_Product_Description_Syntex__c;
-            Decimal perunitPrice = newInvoiceLine.NSP_Consumption_Rate_Per_Unit__c != null ? newInvoiceLine.NSP_Consumption_Rate_Per_Unit__c:newInvoiceLine.blng__UnitPrice__c;
-             
-            //DF-05546 -- updating prices with accounting format
-             List<String> args = new String[]{'0','number','###,###,##0.00'};
-             String pepm_Text = '$'+String.format(perunitPrice.setScale(2).format(), args);
-             //monthly minimum should be removed if it's 0 or null
-             String mm_Text = (newInvoiceLine.NSP_Consumption_Rate_Flat_Price__c!=null && newInvoiceLine.NSP_Consumption_Rate_Flat_Price__c!=0) ?
-                                 '$'+String.format(newInvoiceLine.NSP_Consumption_Rate_Flat_Price__c.setScale(2).format(), args) :
-                                 null;
+        OrderItem orderItem = [SELECT Id,Prevent_Product_Description_Update__c,NSP_Additional_Product_Description__c
+                                FROM OrderItem
+                                WHERE Id =:newInvoiceLine.blng__OrderProduct__c];
+        if(orderItem != null && orderItem.Prevent_Product_Description_Update__c){
+            newInvoiceLine.NSP_Additional_Product_Description__c = orderItem.NSP_Additional_Product_Description__c;
+        }else{
+            if(newInvoiceLine.NSP_Product_Code__c != null && additionalProductDesSetMap.containsKey(newInvoiceLine.NSP_Product_Code__c)) {
+                NSP_AdditionalProductDescription_Setting__mdt descriptionSetting = additionalProductDesSetMap.get(newInvoiceLine.NSP_Product_Code__c);
+                string prodDescStr = descriptionSetting.NSP_Product_Description_Syntex__c;
+                Decimal perunitPrice = newInvoiceLine.NSP_Consumption_Rate_Per_Unit__c != null ? newInvoiceLine.NSP_Consumption_Rate_Per_Unit__c:newInvoiceLine.blng__UnitPrice__c;
+                
+                //DF-05546 -- updating prices with accounting format
+                List<String> args = new String[]{'0','number','###,###,##0.00'};
+                String pepm_Text = '$'+String.format(perunitPrice.setScale(2).format(), args);
+                //monthly minimum should be removed if it's 0 or null
+                String mm_Text = (newInvoiceLine.NSP_Consumption_Rate_Flat_Price__c!=null && newInvoiceLine.NSP_Consumption_Rate_Flat_Price__c!=0) ?
+                                    '$'+String.format(newInvoiceLine.NSP_Consumption_Rate_Flat_Price__c.setScale(2).format(), args) :
+                                    null;
+                
+                prodDescStr = (prodDescStr.contains('{Unit Price}') && perunitPrice != null) ? prodDescStr.replace('{Unit Price}',pepm_Text):prodDescStr;
             
-             prodDescStr = (prodDescStr.contains('{Unit Price}') && perunitPrice != null) ? prodDescStr.replace('{Unit Price}',pepm_Text):prodDescStr;
-         
-             prodDescStr = (prodDescStr.contains('{Upper Tier_Flat Price}') && mm_Text != null) ? prodDescStr.replace('{Upper Tier_Flat Price}',mm_Text)
-                             :prodDescStr.contains(', {Upper Tier_Flat Price} Monthly Minimum') ? prodDescStr.replace(', {Upper Tier_Flat Price} Monthly Minimum','')
-                             :prodDescStr.contains('{Upper Tier_Flat Price} monthly minimum; ') ? prodDescStr.replace('{Upper Tier_Flat Price} monthly minimum; ',''):prodDescStr;
- 
-             prodDescStr = (prodDescStr.contains('{Qty}') && newInvoiceLine.blng__Quantity__c != null ) ? prodDescStr.replace('{Qty}',string.valueof(newInvoiceLine.blng__Quantity__c)):prodDescStr;
- 
-            if(newInvoiceLine.NSP_Product_Code__c == 'Lasso'   ){
-                prodDescStr = newInvoiceLine.NSP_Order_Product_Account__c;
-            }
+                prodDescStr = (prodDescStr.contains('{Upper Tier_Flat Price}') && mm_Text != null) ? prodDescStr.replace('{Upper Tier_Flat Price}',mm_Text)
+                                :prodDescStr.contains(', {Upper Tier_Flat Price} Monthly Minimum') ? prodDescStr.replace(', {Upper Tier_Flat Price} Monthly Minimum','')
+                                :prodDescStr.contains('{Upper Tier_Flat Price} monthly minimum; ') ? prodDescStr.replace('{Upper Tier_Flat Price} monthly minimum; ',''):prodDescStr;
+    
+                prodDescStr = (prodDescStr.contains('{Qty}') && newInvoiceLine.blng__Quantity__c != null ) ? prodDescStr.replace('{Qty}',string.valueof(newInvoiceLine.blng__Quantity__c)):prodDescStr;
+    
+                if(newInvoiceLine.NSP_Product_Code__c == 'Lasso'   ){
+                    prodDescStr = newInvoiceLine.NSP_Order_Product_Account__c;
+                }
 
-            newInvoiceLine.NSP_Additional_Product_Description__c = prodDescStr;
-             
-        }
-        else if(string.isNotBlank(newInvoiceLine.NSP_Order_Product_Type__c) && newInvoiceLine.NSP_Order_Product_Type__c == 'Lasso'){
-            newInvoiceLine.NSP_Additional_Product_Description__c = newInvoiceLine.NSP_Order_Product_Account__c;
-        }
-        //updating desc to not contain '(See appendix)' - DF-03861
-        String str = newInvoiceLine.NSP_Additional_Product_Description__c;
-        String removal = '(See';
-        String various = '(various';
-        if(str!=null && (str.contains(removal) || str.contains(various))){
-            String truncatedDesc = str.contains(removal)?str.substring(0,str.indexOf(removal,0)):str.substring(0,str.indexOf(various,0));
-            newInvoiceLine.NSP_Additional_Product_Description__c = truncatedDesc;
+                newInvoiceLine.NSP_Additional_Product_Description__c = prodDescStr;
+                
+            }
+            else if(string.isNotBlank(newInvoiceLine.NSP_Order_Product_Type__c) && newInvoiceLine.NSP_Order_Product_Type__c == 'Lasso'){
+                newInvoiceLine.NSP_Additional_Product_Description__c = newInvoiceLine.NSP_Order_Product_Account__c;
+            }
+            //updating desc to not contain '(See appendix)' - DF-03861
+            String str = newInvoiceLine.NSP_Additional_Product_Description__c;
+            String removal = '(See';
+            String various = '(various';
+            if(str!=null && (str.contains(removal) || str.contains(various))){
+                String truncatedDesc = str.contains(removal)?str.substring(0,str.indexOf(removal,0)):str.substring(0,str.indexOf(various,0));
+                newInvoiceLine.NSP_Additional_Product_Description__c = truncatedDesc;
+            }
         }
     }
 }
