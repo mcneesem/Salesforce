@@ -43,7 +43,7 @@ public class NSP_LeadTriggerHandler implements NSP_ITriggerHandler {
     public void beforeUpdate( Map<Id,sObject> newMap , Map<Id,sObject> oldMap ) {
         NSP_LeadTriggerHelper helper = new NSP_LeadTriggerHelper();
         helper.beforeUpdateDirector( (Map<Id,Lead>)newMap , (Map<Id,Lead>)oldMap );
-        /*DF-01301*/
+        // DF-01301
         helper.restrictLeadOwnerChange( (Map<Id,Lead>)newMap , (Map<Id,Lead>)oldMap ); 
     }
 
