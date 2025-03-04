@@ -3,7 +3,7 @@
     <fullName>Restrict_Termination_Date_and_Status</fullName>
     <active>true</active>
     <errorConditionFormula>AND(
-  NOT( $Permission.Bypass_Restrict_Termination_Date_and_Status )
+  NOT( $Permission.Bypass_Restrict_Termination_Date_and_Status ) ,
   OR(
     ISCHANGED( NSP_Termination_Date__c ) ,
     ISCHANGED( Status )
