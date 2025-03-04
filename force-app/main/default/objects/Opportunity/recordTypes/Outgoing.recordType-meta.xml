@@ -6,21 +6,6 @@
     <description>The RT used to track Opportunities that have been handed off to Vendor Partners (ie - Workday)</description>
     <label>Outgoing</label>
     <picklistValues>
-        <picklist>DB_Competitor__c</picklist>
-        <values>
-            <fullName>Competitor A</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Competitor B</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Competitor C</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>ForecastCategoryName</picklist>
         <values>
             <fullName>Best Case</fullName>
