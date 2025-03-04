@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Client_Communication_Contact__c</fullName>
+    <defaultValue>false</defaultValue>
+    <inlineHelpText>This is the contact shown in the AIMS Owner screen, which has been repurposed to capture the Client Communication Contact. To find actual Client Ownership, please go to the Section 125 Maintenance screen in AIMS.</inlineHelpText>
+    <label>Client Communication Contact</label>
+    <type>Checkbox</type>
+</CustomField>
