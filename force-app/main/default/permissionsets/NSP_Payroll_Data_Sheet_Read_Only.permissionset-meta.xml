@@ -745,11 +745,13 @@
         <field>NSP_Payroll__c.On_site_Supervisor_Notes_Txt__c</field>
         <readable>true</readable>
     </fieldPermissions>
-    <fieldPermissions>
+     <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Payroll__c.Other_Type__c</field>
         <readable>true</readable>
-    
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>NSP_Payroll__c.Pay_Group_has_Union_EEs__c</field>
         <readable>true</readable>
     </fieldPermissions>
