@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>Platform event to get status of OrderItemPriceUpdateBatch</description>
+    <eventType>HighVolume</eventType>
+    <label>PriceUpdateBatchJobStatus</label>
+    <pluralLabel>PriceUpdateBatchJobStatus</pluralLabel>
+    <publishBehavior>PublishImmediately</publishBehavior>
+</CustomObject>
