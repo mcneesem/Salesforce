@@ -9,5 +9,5 @@
   ISPICKVAL( PRIORVALUE( NSP_Account_Segment__c ) , &apos;MidMarket&apos; )
 )</errorConditionFormula>
     <errorDisplayField>NSP_Account_Segment__c</errorDisplayField>
-    <errorMessage>You do not have permission to take that action on this record.</errorMessage>
+    <errorMessage>You do not have permission to modify Account Segment on this record.</errorMessage>
 </ValidationRule>
