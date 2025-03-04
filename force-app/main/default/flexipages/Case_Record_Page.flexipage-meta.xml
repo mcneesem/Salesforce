@@ -498,7 +498,31 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.OwnerId</fieldItem>
-                <identifier>RecordOwnerIdField</identifier>
+                <identifier>RecordOwnerIdFieldEditable</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Is_Owner_Editable__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.OwnerId</fieldItem>
+                <identifier>RecordOwnerIdFieldReadOnly</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Is_Owner_Editable__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>false</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -740,6 +764,16 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Number_of_Employees__c</fieldItem>
                 <identifier>Recordof_Employees__cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Required_Documentation_Attached__c</fieldItem>
+                <identifier>RecordRequired_Documentation_Attached_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
