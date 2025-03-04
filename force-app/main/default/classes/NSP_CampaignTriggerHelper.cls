@@ -7,10 +7,18 @@ public class NSP_CampaignTriggerHelper {
     // test w/ NSP_CampaignTriggerHelperTest (100%)
 
      public void beforeInsertDirector(List<Campaign> newList){
-        updateCampaignField(newList,null);
+        try {
+            updateCampaignField( newList , null );
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_CampaignTriggerHelper.class.getName() ,
+                'beforeInsertDirector' ,
+                e
+            );
+        }
     }
 
-    public void updateCampaignField(List<Campaign> newList,Map<Id,Campaign> oldCampaignMap){
+    private void updateCampaignField(List<Campaign> newList,Map<Id,Campaign> oldCampaignMap){
         Set<Id> ownerIdSet = new set<Id>();
         Set<String> officeSet = new set<String>();
         Map<Id,User> ownerBasedUserMap = CustomPermissionController.getPermittedUsersMap('Campaign_Update_Sales_Office_Info_Owner_Assigned');
@@ -38,7 +46,7 @@ public class NSP_CampaignTriggerHelper {
 
     }
 
-    public void updateCampaignSOFieldsFromOwner(Set<Id> ownerIdSet, List<Campaign> newList, Map<Id,Campaign> oldCampaignMap){
+    private void updateCampaignSOFieldsFromOwner(Set<Id> ownerIdSet, List<Campaign> newList, Map<Id,Campaign> oldCampaignMap){
         if(ownerIdSet.Size() > 0)
         {
             Map<Id,User> userIdMap = new Map<Id,User>([SELECT Id,NSP_SalesDivision__c,NSP_Sales_Office__c,NSP_SalesRegion__c,userrole.name 
@@ -55,14 +63,13 @@ public class NSP_CampaignTriggerHelper {
                         newCampaign.NSP_Sales_Region__c = eachUser.NSP_SalesRegion__c;  // sales region
                         newCampaign.NSP_Sales_Division__c = eachUser.NSP_SalesDivision__c; // sales division
                         newCampaign.NSP_Sales_Office__c = eachUser.NSP_Sales_Office__c; // sales office
-                        
                     }                   
                 }
             }
         }
     }
 
-    public void updateCampaignSOFieldsFromCampaign(Set<String> officeSet, List<Campaign> newList, Map<Id,Campaign> oldCampaignMap){
+    private void updateCampaignSOFieldsFromCampaign(Set<String> officeSet, List<Campaign> newList, Map<Id,Campaign> oldCampaignMap){
         if(officeSet.Size() > 0)
         {
             map<String,NSP_Sales_Office_Mapping__c> salesOfficeToMappingMap =  new map<String,NSP_Sales_Office_Mapping__c>();
