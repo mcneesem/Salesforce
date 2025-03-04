@@ -494,7 +494,7 @@ public with sharing class NSP_OpportunityTriggerHelper {
         /* Moving to NSP_UpdateRelatedAccounts class as part of DF-01058 */
         NSP_UpdateRelatedAccounts.updateRelatedAccounts(accountIdSet);
 
-        recordTypeSet = optyGetrRecTypeList(closedOpptyList, recordTypeSet);
+        recordTypeSet = optyGetRecTypeList(closedOpptyList, recordTypeSet);
         optyCreateAssets(closedWonOpptyList, closedOpptyList, accountIdSet, recordTypeSet);
 
         //Calling Quote to Order method for generating order from Opportunity via a Quote update @utpal Utkalit
@@ -661,7 +661,7 @@ public with sharing class NSP_OpportunityTriggerHelper {
         return closedOpptyList;
     }
 
-    private Set<String> optyGetrRecTypeList(List<Opportunity> opportunityList, Set<String> recordTypeSet){
+    private Set<String> optyGetRecTypeList(List<Opportunity> opportunityList, Set<String> recordTypeSet){
         String rectype = null;
         for(Opportunity opportunityRecord : opportunityList){
             if( opportunityRecord.NSP_PrimaryProduct__c == NSP_SalesConstants.PROD_INSURANCE ) {
