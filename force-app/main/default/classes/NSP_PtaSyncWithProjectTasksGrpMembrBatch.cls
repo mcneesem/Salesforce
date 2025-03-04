@@ -2,7 +2,7 @@
 // @description  :  Batch Class to Syn PTA Rec with Project Task's group member field value populated
 // Story : STY-02215
 //
-public class NSP_PtaSyncWithProjectTasksGrpMembrBatch implements Schedulable , Database.Batchable<SObject> {
+public class NSP_PtaSyncWithProjectTasksGrpMembrBatch implements ISelfSchedulable , Schedulable , Database.Batchable<SObject> {
     // test w/ NSP_PtaSyncPrjtTaskGrpMembrBatchTest (89%)
 
     //
@@ -13,6 +13,18 @@ public class NSP_PtaSyncWithProjectTasksGrpMembrBatch implements Schedulable , D
         Database.executeBatch(
             new NSP_PtaSyncWithProjectTasksGrpMembrBatch() ,
             NSP_PtaSyncWithProjectTasksGrpMembrBatch.batchSize
+        );
+    }
+
+    public static String schedule() {
+        String suffix = '';
+        if ( Test.isRunningTest() ) {
+            suffix = ' ~ TEST';
+        }
+        return System.schedule(
+            'NSP_PtaSyncWithProjectTasksGrpMembrBatch ~ When new plan projects are created, all users/contacts with a matching "Group Member For Plan Projects" list value designation are added to the project for time tracking ~ everyday at 4 AM' + suffix ,
+            '0 0 4 * * ? *' ,
+            new NSP_PtaSyncWithProjectTasksGrpMembrBatch()
         );
     }
 
