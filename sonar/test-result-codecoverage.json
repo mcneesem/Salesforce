@@ -7660,7 +7660,7 @@
   {
     "id": "01p4x00000NS3lmAAD",
     "name": "NSP_EventTriggerHelper",
-    "totalLines": 256,
+    "totalLines": 255,
     "lines": {
       "7": 1,
       "8": 1,
@@ -7916,10 +7916,9 @@
       "465": 1,
       "466": 1,
       "467": 1,
-      "468": 1,
-      "470": 1
+      "468": 1
     },
-    "totalCovered": 210,
+    "totalCovered": 209,
     "coveredPercent": 82
   },
   {
@@ -8411,7 +8410,7 @@
   {
     "id": "01p4x00000NS3lyAAD",
     "name": "NSP_LeadTriggerHandler",
-    "totalLines": 20,
+    "totalLines": 19,
     "lines": {
       "6": 1,
       "14": 1,
@@ -8431,10 +8430,9 @@
       "71": 1,
       "83": 1,
       "84": 1,
-      "85": 1,
-      "95": 1
+      "85": 1
     },
-    "totalCovered": 20,
+    "totalCovered": 19,
     "coveredPercent": 100
   },
   {
@@ -10957,7 +10955,7 @@
   {
     "id": "01p4x00000NS3n1AAD",
     "name": "NSP_TaskTriggerHelper",
-    "totalLines": 296,
+    "totalLines": 276,
     "lines": {
       "6": 1,
       "7": 1,
@@ -11234,29 +11232,9 @@
       "559": 1,
       "560": 1,
       "561": 1,
-      "564": 1,
-      "575": 1,
-      "576": 1,
-      "577": 1,
-      "578": 1,
-      "581": 1,
-      "584": 1,
-      "585": 1,
-      "587": 1,
-      "588": 1,
-      "589": 1,
-      "592": 0,
-      "593": 0,
-      "598": 1,
-      "599": 1,
-      "600": 1,
-      "604": 1,
-      "605": 1,
-      "606": 1,
-      "607": 1,
-      "608": 1
+      "564": 1
     },
-    "totalCovered": 257,
+    "totalCovered": 239,
     "coveredPercent": 87
   },
   {
