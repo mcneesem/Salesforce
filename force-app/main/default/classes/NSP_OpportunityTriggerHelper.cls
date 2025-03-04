@@ -450,7 +450,7 @@ public with sharing class NSP_OpportunityTriggerHelper {
             accountIdSet.add(newOpportunity.AccountId);
             stageAutoOpportunityIds = optyStageAutomationCheck(newOpportunity, oldOpportunity, stageAutoOpportunityIds);
             partnerAccountOpportunityMap = optyPartnerCheck(newOpportunity, oldOpportunity, partnerAccountOpportunityMap);
-            closedOpportunityIdList = optyClosedLostCheck(newOpportunity, oldOpportunity, closedOpportunityIdList);
+            closedOpportunityIdList = optyClosedLostCheck(newOpportunity, closedOpportunityIdList);
             reopenedOpportunityIdList = optyReopenCheck(newOpportunity, oldOpportunity, reopenedOpportunityIdList);
             closedWonOpptyList = optyClosedWonCheck(newOpportunity, oldOpportunity, productCodeList, closedWonOpptyList);
             closedWonOpportunityIdList = optyClosedWonParentCheck(newOpportunity, oldOpportunity, closedWonOpportunityIdList);
@@ -606,10 +606,10 @@ public with sharing class NSP_OpportunityTriggerHelper {
         return partnerAccountOpportunityMap;
     }
     
-    private List<String> optyClosedLostCheck(Opportunity newOpportunity, Opportunity oldOpportunity, List<String> closedOpportunityIdList){
+    private List<String> optyClosedLostCheck(Opportunity newOpportunity, List<String> closedOpportunityIdList){
         // if the parent opty is closed lost then adding it to the list
-        if((String.isBlank(newOpportunity.NSP_Parent_Opportunity__c) || newOpportunity.NSP_Parent_Opportunity__c == null)
-             && newOpportunity.stagename.equals(NSP_SalesConstants.CLOSED_LOST) ) {
+        if( (String.isBlank(newOpportunity.NSP_Parent_Opportunity__c) || newOpportunity.NSP_Parent_Opportunity__c == null )
+           && ( newOpportunity.stagename.equals(NSP_SalesConstants.CLOSED_LOST) ) ){
             closedOpportunityIdList.add(newOpportunity.Id);
         }
         return closedOpportunityIdList;
@@ -617,46 +617,39 @@ public with sharing class NSP_OpportunityTriggerHelper {
     
     private List<String> optyReopenCheck(Opportunity newOpportunity, Opportunity oldOpportunity, List<String> reopenedOpportunityIdList){
         // if the parent opty is reopened then adding it to the list
-        if((String.isBlank(newOpportunity.NSP_Parent_Opportunity__c) || newOpportunity.NSP_Parent_Opportunity__c == null)
-             && newOpportunity.StageName != oldOpportunity.StageName
-             && newOpportunity.StageName != NSP_SalesConstants.CLOSED_LOST
-             && newOpportunity.StageName != NSP_SalesConstants.CLOSED_WON ) {
+        if( (String.isBlank(newOpportunity.NSP_Parent_Opportunity__c) || newOpportunity.NSP_Parent_Opportunity__c == null)
+           && ( newOpportunity.StageName != oldOpportunity.StageName )
+           && ( newOpportunity.StageName != NSP_SalesConstants.CLOSED_LOST )
+           && ( newOpportunity.StageName != NSP_SalesConstants.CLOSED_WON ) ){
             reopenedOpportunityIdList.add(newOpportunity.Id);
         }
         return reopenedOpportunityIdList;
     }
 
     private List<Opportunity> optyClosedWonCheck(Opportunity newOpportunity, Opportunity oldOpportunity, List<String> productCodeList, List<Opportunity> closedWonOpptyList){
-        String rectype = null;
-        if( newOpportunity.stagename != oldOpportunity.stagename
-           && newOpportunity.stagename.equals(NSP_SalesConstants.CLOSED_WON) ) {
-            if( !productCodeList.contains(newOpportunity.NSP_PrimaryProduct__c) ) {
+        if( ( newOpportunity.stagename != oldOpportunity.stagename )
+           && ( newOpportunity.stagename.equals(NSP_SalesConstants.CLOSED_WON) )
+           && ( !productCodeList.contains(newOpportunity.NSP_PrimaryProduct__c) ) ){
                 closedWonOpptyList.add(newOpportunity);
-            }
         }
         return closedWonOpptyList;
     }
 
     private List<String> optyClosedWonParentCheck(Opportunity newOpportunity, Opportunity oldOpportunity, List<String> closedWonOpportunityIdList){
-        if( newOpportunity.stagename != oldOpportunity.stagename
-           && newOpportunity.stagename.equals(NSP_SalesConstants.CLOSED_WON) ) {
-            //569718- if parent opportunity - send notification to open child opportunities 
-            if(String.isBlank(newOpportunity.NSP_Parent_Opportunity__c) || newOpportunity.NSP_Parent_Opportunity__c == null){
+        if( ( newOpportunity.stagename != oldOpportunity.stagename )
+           && ( newOpportunity.stagename.equals(NSP_SalesConstants.CLOSED_WON) )
+           && ( String.isBlank(newOpportunity.NSP_Parent_Opportunity__c) || newOpportunity.NSP_Parent_Opportunity__c == null ) ){
              closedWonOpportunityIdList.add(newOpportunity.Id);
-           }
         }
         return closedWonOpportunityIdList;
     }
 
     private List<Opportunity> optyClosedWonProductCheck(Opportunity newOpportunity, Opportunity oldOpportunity, List<String> productCodeList, List<Opportunity> closedOpptyList){
-        //STY-01519 - Asset creation from Opportunity line item
-        String rectype = null;
-        if( newOpportunity.stagename != oldOpportunity.stagename
-           && newOpportunity.stagename.equals(NSP_SalesConstants.CLOSED_WON) ) {
-            if( productCodeList.contains(newOpportunity.NSP_PrimaryProduct__c) 
-                && newOpportunity.NSP_PrimaryProduct__c!= null && productCodeList.contains(newOpportunity.NSP_PrimaryProduct__c) ) {
+        if( ( newOpportunity.stagename != oldOpportunity.stagename )
+           && ( newOpportunity.stagename.equals(NSP_SalesConstants.CLOSED_WON) )
+           && ( productCodeList.contains(newOpportunity.NSP_PrimaryProduct__c) )
+           && ( newOpportunity.NSP_PrimaryProduct__c != null && productCodeList.contains(newOpportunity.NSP_PrimaryProduct__c) ) ){
                 closedOpptyList.add(newOpportunity);
-            }
         }
         return closedOpptyList;
     }
