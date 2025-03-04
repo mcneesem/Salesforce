@@ -45,7 +45,7 @@ public class NSP_CampaignTriggerHelper {
                         NSP_SalesDivision__c ,
                         NSP_Sales_Office__c ,
                         NSP_SalesRegion__c ,
-                        Userrole.Rame
+                        UserRole.Name
                     FROM User
                     WHERE (
                         ( Id IN :ownerIdSet )
@@ -55,13 +55,17 @@ public class NSP_CampaignTriggerHelper {
             );
             for ( Campaign newCampaign : newList ) {
                 Campaign oldCampaign = ( oldCampaignMap != null ) ? oldCampaignMap.get( newCampaign.Id ) : null;
-                if ( Trigger.isInsert || ( newCampaign.OwnerId != oldCampaign.OwnerId ) ) {
-                    if ( userIdMap.containsKey( newCampaign.ownerId ) ) {
-                        user eachUser = userIdMap.get( newCampaign.OwnerId );
-                        newCampaign.NSP_Sales_Region__c = eachUser.NSP_SalesRegion__c; // sales region
-                        newCampaign.NSP_Sales_Division__c = eachUser.NSP_SalesDivision__c; // sales division
-                        newCampaign.NSP_Sales_Office__c = eachUser.NSP_Sales_Office__c; // sales office
-                    }
+                if ( Trigger.isInsert
+                    || (
+                        ( newCampaign.OwnerId != oldCampaign.OwnerId )
+                        && userIdMap.containsKey( newCampaign.ownerId )
+                        )
+                    )
+                {
+                    user eachUser = userIdMap.get( newCampaign.OwnerId );
+                    newCampaign.NSP_Sales_Region__c = eachUser.NSP_SalesRegion__c; // sales region
+                    newCampaign.NSP_Sales_Division__c = eachUser.NSP_SalesDivision__c; // sales division
+                    newCampaign.NSP_Sales_Office__c = eachUser.NSP_Sales_Office__c; // sales office
                 }
             }
         }
