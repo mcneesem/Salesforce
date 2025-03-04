@@ -55,11 +55,8 @@ public class NSP_CampaignTriggerHelper {
             );
             for ( Campaign newCampaign : newList ) {
                 Campaign oldCampaign = ( oldCampaignMap != null ) ? oldCampaignMap.get( newCampaign.Id ) : null;
-                if ( Trigger.isInsert
-                    || (
-                        ( newCampaign.OwnerId != oldCampaign.OwnerId )
-                        && userIdMap.containsKey( newCampaign.ownerId )
-                        )
+                if ( userIdMap.containsKey( newCampaign.ownerId )
+                    && ( Trigger.isInsert || ( newCampaign.OwnerId != oldCampaign.OwnerId ) )
                     )
                 {
                     user eachUser = userIdMap.get( newCampaign.OwnerId );
