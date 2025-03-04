@@ -5,7 +5,7 @@
     <externalId>false</externalId>
     <label>Additional Earnings Information</label>
     <length>5000</length>
-    <trackHistory>false</trackHistory>
+    <trackHistory>True</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Html</type>
     <visibleLines>25</visibleLines>
