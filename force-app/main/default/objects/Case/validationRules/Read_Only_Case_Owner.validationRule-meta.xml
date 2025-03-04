@@ -7,5 +7,5 @@
   NOT( Is_Owner_Editable__c ) ,
   ISCHANGED( OwnerId )
 )</errorConditionFormula>
-    <errorMessage>Case Owner is not editable.</errorMessage>
+    <errorMessage>Unable to edit Case Owner due to missing requirements</errorMessage>
 </ValidationRule>
