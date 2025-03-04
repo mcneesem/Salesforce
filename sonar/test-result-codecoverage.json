@@ -8937,7 +8937,7 @@
   {
     "id": "01p4x00000NS3lyAAD",
     "name": "NSP_LeadTriggerHandler",
-    "totalLines": 20,
+    "totalLines": 19,
     "lines": {
       "6": 1,
       "14": 1,
@@ -8957,10 +8957,9 @@
       "71": 1,
       "83": 1,
       "84": 1,
-      "85": 1,
-      "95": 1
+      "85": 1
     },
-    "totalCovered": 20,
+    "totalCovered": 19,
     "coveredPercent": 100
   },
   {
