@@ -3,10 +3,13 @@
     <actionCalls>
         <name>Contact_Center_Web2Case_Email_Alert</name>
         <label>Contact Center Web2Case Email Alert</label>
-        <locationX>638</locationX>
+        <locationX>578</locationX>
         <locationY>384</locationY>
         <actionName>Case.NSP_Web_Contact_Center</actionName>
         <actionType>emailAlert</actionType>
+        <faultConnector>
+            <targetReference>Set_Fault_element_Web2Case_Email_Alert</targetReference>
+        </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>SObjectRowId</name>
@@ -14,14 +17,18 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>Case.NSP_Web_Contact_Center</nameSegment>
     </actionCalls>
     <actionCalls>
         <name>Expensable_Case_Created_email_alert</name>
         <label>Expensable Case Created email alert</label>
-        <locationX>110</locationX>
+        <locationX>50</locationX>
         <locationY>384</locationY>
         <actionName>Case.ExpensAble_Case_Created</actionName>
         <actionType>emailAlert</actionType>
+        <faultConnector>
+            <targetReference>Set_Fault_element_Expensable_Case_Created_Email_Alert</targetReference>
+        </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>SObjectRowId</name>
@@ -29,27 +36,46 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
-    </actionCalls>
-    <actionCalls>
-        <name>WX_Tax_Case_Creation_email_alert</name>
-        <label>WX Tax Case Creation email alert</label>
-        <locationX>374</locationX>
-        <locationY>384</locationY>
-        <actionName>Case.WX_Tax_Case_Created</actionName>
-        <actionType>emailAlert</actionType>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
-        <inputParameters>
-            <name>SObjectRowId</name>
-            <value>
-                <elementReference>$Record.Id</elementReference>
-            </value>
-        </inputParameters>
+        <nameSegment>Case.ExpensAble_Case_Created</nameSegment>
     </actionCalls>
     <apiVersion>60.0</apiVersion>
+    <assignments>
+        <name>Set_Fault_element_Expensable_Case_Created_Email_Alert</name>
+        <label>Set Fault element : Expensable Case Created  Email Alert</label>
+        <locationX>314</locationX>
+        <locationY>492</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Expensable_Case_Created_email_alert</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Handle_Fault</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_element_Web2Case_Email_Alert</name>
+        <label>Set Fault element : Web2Case Email Alert</label>
+        <locationX>842</locationX>
+        <locationY>492</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Contact_Center_Web2Case_Email_Alert</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Handle_Fault</targetReference>
+        </connector>
+    </assignments>
     <decisions>
         <name>Original_Assigned_Queue_Check</name>
         <label>Original Assigned Queue Check</label>
-        <locationX>506</locationX>
+        <locationX>578</locationX>
         <locationY>276</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -66,21 +92,6 @@
                 <targetReference>Expensable_Case_Created_email_alert</targetReference>
             </connector>
             <label>Expensable Queue</label>
-        </rules>
-        <rules>
-            <name>WX_Tax_Queue</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>$Record.NSP_Assigned_Queue__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>WX Tax</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>WX_Tax_Case_Creation_email_alert</targetReference>
-            </connector>
-            <label>WX Tax Queue</label>
         </rules>
         <rules>
             <name>Contact_Center_Queue</name>
@@ -128,9 +139,9 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <start>
-        <locationX>50</locationX>
+        <locationX>56</locationX>
         <locationY>0</locationY>
-        <filterLogic>( 1 AND 2 AND 3 AND 4 AND ( 5 OR 6 OR 7 ) )</filterLogic>
+        <filterLogic>( 1 AND 2 AND 3 AND 4 AND ( 5 OR 6 ) )</filterLogic>
         <filters>
             <field>NSP_IsCaseCreatedNotificationEmailSent__c</field>
             <operator>IsChanged</operator>
@@ -170,13 +181,6 @@
             <field>NSP_Assigned_Queue__c</field>
             <operator>EqualTo</operator>
             <value>
-                <stringValue>WX Tax</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>NSP_Assigned_Queue__c</field>
-            <operator>EqualTo</operator>
-            <value>
                 <stringValue>Contact Center</stringValue>
             </value>
         </filters>
@@ -191,4 +195,39 @@
         <triggerType>RecordAfterSave</triggerType>
     </start>
     <status>Draft</status>
+    <subflows>
+        <name>Handle_Fault</name>
+        <label>Handle Fault</label>
+        <locationX>314</locationX>
+        <locationY>600</locationY>
+        <flowName>Insperity_Fault_Handler_Subflow</flowName>
+        <inputAssignments>
+            <name>faultElement</name>
+            <value>
+                <elementReference>faultElement</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultFlow</name>
+            <value>
+                <stringValue>Case_Automation_Email_Alerts</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultMessage</name>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <variables>
+        <name>faultElement</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue></stringValue>
+        </value>
+    </variables>
 </Flow>
