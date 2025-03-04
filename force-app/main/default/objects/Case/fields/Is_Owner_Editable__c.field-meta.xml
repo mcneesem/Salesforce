@@ -11,7 +11,7 @@
     AND(
       ( NSP_SubCategory__c = &quot;Salary Survey&quot; ) ,
       Required_Documentation_Attached__c ,
-      Requested_Jobs__c $gt; 0
+      Requested_Jobs__c &gt; 0
     ) ,
     AND(
       ( NSP_SubCategory__c = &quot;Client Consultation&quot; ) ,
