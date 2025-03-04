@@ -5,6 +5,10 @@
   ( NSP_Category__c != &quot;Compensation Services&quot; ) ,
   OR(
     AND(
+      ( NSP_SubCategory__c != &quot;Salary Survey&quot; ) ,
+      ( NSP_SubCategory__c != &quot;Client Consultation&quot; )
+    ) ,
+    AND(
       ( NSP_SubCategory__c = &quot;Salary Survey&quot; ) ,
       Required_Documentation_Attached__c ,
       Requested_Jobs__c $gt; 0
