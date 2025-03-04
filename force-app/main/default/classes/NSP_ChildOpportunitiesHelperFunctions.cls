@@ -184,11 +184,11 @@ public without sharing class NSP_ChildOpportunitiesHelperFunctions {
                 List<Database.SaveResult> results = Database.update( opportunityToUpdateList , false );
                 NSP_ErrorLogHandler.logResults(
                     NSP_ChildOpportunitiesHelperFunctions.class.getName() ,
-                    'updatesOnOpenChildOpportunity' ,
+                    'updateChildOpportunityOnReopen:update' ,
                     results
                 );
             } catch ( Exception e ) {
-                NSP_ChildOpportunitiesHelperFunctions.handleException( e , 'updatesOnOpenChildOpportunity' );
+                NSP_ChildOpportunitiesHelperFunctions.handleException( e , 'updateChildOpportunityOnReopen' );
             }
         }
     }
