@@ -20,24 +20,20 @@ public class NSP_PtaSyncWithProjectTasksGrpMembrBatch implements Schedulable , D
     // Batchable
     //
 
-    public Database.QueryLocator start( Database.BatchableContext bc ) 
-    {
-        Set<String> projectTaskStatus = new Set<String>
-        {
-            NSP_ServiceConstants.PROJECT_TASK_CANCELLED, 
+    public Database.QueryLocator start( Database.BatchableContext bc ) {
+        Set<String> projectTaskStatus = new Set<String>{
+            NSP_ServiceConstants.PROJECT_TASK_CANCELLED ,
             NSP_ServiceConstants.TASKCOMPLETE
         };
-        Set<String> projectTemplateNameSet = new Set<String>
-        {
-            NSP_ServiceConstants.PROJECT_GENERAL_BUSINESS_TEMPLATE, 
-            NSP_ServiceConstants.PROJECT_NON_REIMBURSABLE, 
-            NSP_ServiceConstants.PROJECT_ORK_RELATED, 
+        Set<String> projectTemplateNameSet = new Set<String>{
+            NSP_ServiceConstants.PROJECT_GENERAL_BUSINESS_TEMPLATE ,
+            NSP_ServiceConstants.PROJECT_NON_REIMBURSABLE ,
+            NSP_ServiceConstants.PROJECT_ORK_RELATED ,
             NSP_ServiceConstants.PROJECT_STANDARD_PLAN_PROJECT
         };
-        Set<String> pseProjectStatusSet = new Set<String>
-        {
-            NSP_ServiceConstants.PROJECTSTATUSCOMPLETED, 
-            NSP_ServiceConstants.PROJECTSTATUSCANCELLED,
+        Set<String> pseProjectStatusSet = new Set<String>{
+            NSP_ServiceConstants.PROJECTSTATUSCOMPLETED ,
+            NSP_ServiceConstants.PROJECTSTATUSCANCELLED ,
             NSP_ServiceConstants.LostProject
         };
         Id retProjectRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'pse__Proj__c' , NSP_ServiceConstants.PROJECT_RET_RECORDTYPE );
@@ -48,9 +44,9 @@ public class NSP_PtaSyncWithProjectTasksGrpMembrBatch implements Schedulable , D
                     RecordTypeId ,
                     NSP_Group_Membership_for_Plan_Projects__c ,
                     pse__Status__c ,
-                    pse__Project__c, 
-                    pse__Project__r.pse__Start_Date__c , 
-                    pse__Project__r.pse__End_Date__c 
+                    pse__Project__c ,
+                    pse__Project__r.pse__Start_Date__c ,
+                    pse__Project__r.pse__End_Date__c
                 FROM pse__Project_Task__c
                 WHERE (
                     NSP_Group_Membership_for_Plan_Projects__c != null
@@ -65,71 +61,56 @@ public class NSP_PtaSyncWithProjectTasksGrpMembrBatch implements Schedulable , D
         );
     }
 
-    public void execute( Database.BatchableContext bc , List<pse__Project_Task__c> projectTaskList ) 
-    {
-        try
-        {
+    public void execute( Database.BatchableContext bc , List<pse__Project_Task__c> projectTaskList ) {
+        try {
             Map<Id,pse__Proj__c> projectNewMap = new Map<Id,pse__Proj__c>();
-            Set<Id> projectTaskIdSet           = new Set<Id>();
-            Set<Id> projectIdSet               = new Set<Id>();
-
+            Set<Id> projectTaskIdSet = new Set<Id>();
+            Set<Id> projectIdSet = new Set<Id>();
             //iterating over project task to get grp member values
-            for( pse__Project_Task__c eachProjectTaskRec : projectTaskList ) 
-            {
-                projectTaskIdSet.add(eachProjectTaskRec.Id);
-                projectIdSet.add(eachProjectTaskRec.pse__Project__c);
-
+            for ( pse__Project_Task__c eachProjectTaskRec : projectTaskList ) {
+                projectTaskIdSet.add( eachProjectTaskRec.Id );
+                projectIdSet.add( eachProjectTaskRec.pse__Project__c );
                 //Creating Map of project Id and Project
-                projectNewMap.put(eachProjectTaskRec.pse__Project__c, 
-                new pse__Proj__c(
-                    id=eachProjectTaskRec.pse__Project__c, 
-                    pse__Start_Date__c=eachProjectTaskRec.pse__Project__r.pse__Start_Date__c, 
-                    pse__End_Date__c=eachProjectTaskRec.pse__Project__r.pse__End_Date__c
-                    ));
+                projectNewMap.put(
+                    eachProjectTaskRec.pse__Project__c ,
+                    new pse__Proj__c(
+                        Id=eachProjectTaskRec.pse__Project__c ,
+                        pse__Start_Date__c=eachProjectTaskRec.pse__Project__r.pse__Start_Date__c ,
+                        pse__End_Date__c=eachProjectTaskRec.pse__Project__r.pse__End_Date__c
+                    )
+                );
             }
-
             // Get project task related group members
             Map<String,Set<String>> mapOfProjectTaskIdWithGrpMemberVal = getProjectTaskRelatedGroupMembers( projectTaskList );
-            
             // Get all the group member values
             Set<String> groupMemberValuesSet = new Set<String>();
-            for (Set<String> groupMemberValues : mapOfProjectTaskIdWithGrpMemberVal.values()) 
-            {
-                groupMemberValuesSet.addAll(groupMemberValues);
+            for ( Set<String> groupMemberValues : mapOfProjectTaskIdWithGrpMemberVal.values() ) {
+                groupMemberValuesSet.addAll( groupMemberValues );
             }
-
-
             //get all the project related group member values
             Map<Id,Set<String>> mapOfProjectIdWithGrpMemberVal = getProjectRelatedGroupMembers( projectTaskList );
-           
             // Create Schedule for assignments
-            Map<Id,pse__Schedule__c> projectWithScheduleMap                 =  createSchedule( projectNewMap );
-           
+            Map<Id,pse__Schedule__c> projectWithScheduleMap = createSchedule( projectNewMap );
             // getting map of group member val with contact list
             Map<String,List<Id>> mapOfGroupMemberValWithContactList = getUserContactWithSameGroupMemberValue( groupMemberValuesSet );
-            
             // Get Project with related to resources
             Map<Id,List<Id>> mapOfProjectIdWithResource = getProjectIdWithResource( projectIdSet );
-
             // Get lit of Assignments to Create
-            List<pse__Assignment__c> listOfAssignmentToCreate               = getListOfAssignmentsToCreate(
-                mapOfProjectIdWithGrpMemberVal, 
-                mapOfProjectIdWithResource, 
-                mapOfGroupMemberValWithContactList, 
+            List<pse__Assignment__c> listOfAssignmentToCreate = getListOfAssignmentsToCreate(
+                mapOfProjectIdWithGrpMemberVal ,
+                mapOfProjectIdWithResource ,
+                mapOfGroupMemberValWithContactList ,
                 projectWithScheduleMap
             );
-
             // Get the project task realted pta resources
             Map<Id,List<Id>> mapOfProjectTaskIdWithPtaResource = getProjectTaskIdWithPtaResource( projectTaskIdSet );
-            
             // Get all pta records to create
             List<pse__Project_Task_Assignment__c> listOfPtaToCreate = getListOfPtaRecordsToCreate(
-                mapOfProjectTaskIdWithGrpMemberVal, 
-                mapOfProjectTaskIdWithPtaResource, 
+                mapOfProjectTaskIdWithGrpMemberVal ,
+                mapOfProjectTaskIdWithPtaResource ,
                 mapOfGroupMemberValWithContactList
-                );
-
-            // Coditions beofre the dml operations
+            );
+            // Conditions before the dml operations
             if ( !listOfAssignmentToCreate.isEmpty() ) {
                 this.handleDatabaseInsertOperation(
                    listOfAssignmentToCreate ,
@@ -142,9 +123,7 @@ public class NSP_PtaSyncWithProjectTasksGrpMembrBatch implements Schedulable , D
                     'execute:insert:pse__Project_Task_Assignment__c'
                 );
             }
-        } 
-        catch ( Exception e ) 
-        {
+        } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
                 NSP_PtaSyncWithProjectTasksGrpMembrBatch.class.getName() ,
                 'execute' ,
@@ -154,13 +133,11 @@ public class NSP_PtaSyncWithProjectTasksGrpMembrBatch implements Schedulable , D
     }
 
     //== Finish Method
-    public void finish( Database.BatchableContext bc ) 
-    {
-    } 
+    public void finish( Database.BatchableContext bc ) {
+    }
 
     //== Database operations
-    private void handleDatabaseInsertOperation( List<Sobject> sObjectList , String methodName ) 
-    {
+    private void handleDatabaseInsertOperation( List<Sobject> sObjectList , String methodName ) {
         Database.SaveResult[] results = Database.insert(
             sObjectList ,
             NSP_PtaSyncWithProjectTasksGrpMembrBatch.isAllOrNone
@@ -174,32 +151,31 @@ public class NSP_PtaSyncWithProjectTasksGrpMembrBatch implements Schedulable , D
 
     //== Returns the list of pta records to create
     private static List<pse__Project_Task_Assignment__c> getListOfPtaRecordsToCreate(
-        Map<String, Set<String>> mapOfProjectTaskIdWithGrpMemberVal , 
-        Map<Id,List<Id>> mapOfProjectTaskIdWithPtaResource, 
-        Map<String,List<Id>> mapOfGroupMemberValWithContactList)
+        Map<String, Set<String>> mapOfProjectTaskIdWithGrpMemberVal ,
+        Map<Id,List<Id>> mapOfProjectTaskIdWithPtaResource ,
+        Map<String,List<Id>> mapOfGroupMemberValWithContactList
+        )
     {
         List<pse__Project_Task_Assignment__c> listOfPtaToCreate = new List<pse__Project_Task_Assignment__c>();
-
-        //iterating over Project Task to create list of PTA to be created
-        for ( Id projectTaskId : mapOfProjectTaskIdWithGrpMemberVal.keySet() ) 
-        {
-            //over Project Task group member values
-            for( String eachgrpMemberVal : mapOfProjectTaskIdWithGrpMemberVal.get( projectTaskId ) ) 
-            {
-                //getting list of PTAs to be created
-                listOfPtaToCreate.addAll(
-                    getListOfPtaToCreate(
-                        mapOfProjectTaskIdWithPtaResource ,
-                        mapOfGroupMemberValWithContactList ,
-                        eachgrpMemberVal ,
-                        projectTaskId
-                    )
-                );
+        if ( ( mapOfProjectTaskIdWithGrpMemberVal != null ) && !mapOfProjectTaskIdWithGrpMemberVal.isEmpty() ) {
+            //iterating over Project Task to create list of PTA to be created
+            for ( Id projectTaskId : mapOfProjectTaskIdWithGrpMemberVal.keySet() ) {
+                //over Project Task group member values
+                for ( String eachgrpMemberVal : mapOfProjectTaskIdWithGrpMemberVal.get( projectTaskId ) ) {
+                    //getting list of PTAs to be created
+                    listOfPtaToCreate.addAll(
+                        getListOfPtaToCreate(
+                            mapOfProjectTaskIdWithPtaResource ,
+                            mapOfGroupMemberValWithContactList ,
+                            eachgrpMemberVal ,
+                            projectTaskId
+                        )
+                    );
+                }
             }
         }
-
         return listOfPtaToCreate;
-    } 
+    }
 
     //== Method to reatun the project task Id with Pta resouce as value
     private static Map<Id,List<Id>> getProjectTaskIdWithPtaResource( Set<Id> projectTaskIdSet ) {
@@ -233,35 +209,34 @@ public class NSP_PtaSyncWithProjectTasksGrpMembrBatch implements Schedulable , D
     }
 
     //== Returns the list of assignments to create
-    private static List<pse__Assignment__c>  getListOfAssignmentsToCreate(
-        Map<Id,Set<String>> mapOfProjectIdWithGrpMemberVal, 
-        Map<Id,List<Id>>  mapOfProjectIdWithResource, 
-        Map<String,List<Id>> mapOfGroupMemberValWithContactList, 
-        Map<Id,pse__Schedule__c> projectWithScheduleMap)
+    private static List<pse__Assignment__c> getListOfAssignmentsToCreate(
+        Map<Id,Set<String>> mapOfProjectIdWithGrpMemberVal ,
+        Map<Id,List<Id>> mapOfProjectIdWithResource ,
+        Map<String,List<Id>> mapOfGroupMemberValWithContactList ,
+        Map<Id,pse__Schedule__c> projectWithScheduleMap
+        )
     {
         List<pse__Assignment__c> listOfAssignmentToCreate = new List<pse__Assignment__c>();
-        
-        //iterating over Project to create list of Assignments to be created
-        for ( Id projectId: mapOfProjectIdWithGrpMemberVal.keySet() ) 
-        {
-            //over Project Task group member values
-            for ( String eachgrpMemberVal:  mapOfProjectIdWithGrpMemberVal.get( projectId ) ) 
-            {
-                //getting list of PTAs to be created
-                listOfAssignmentToCreate.addAll(
-                    getListOfAssignmentToCreate(
-                        mapOfProjectIdWithResource ,
-                        mapOfGroupMemberValWithContactList ,
-                        eachgrpMemberVal ,
-                        projectId ,
-                        projectWithScheduleMap
-                    )
-                );
+        if ( ( mapOfProjectIdWithGrpMemberVal != null ) && !mapOfProjectIdWithGrpMemberVal.isEmpty() ) {
+            //iterating over Project to create list of Assignments to be created
+            for ( Id projectId : mapOfProjectIdWithGrpMemberVal.keySet() ) {
+                //over Project Task group member values
+                for ( String eachgrpMemberVal : mapOfProjectIdWithGrpMemberVal.get( projectId ) ) {
+                    //getting list of PTAs to be created
+                    listOfAssignmentToCreate.addAll(
+                        getListOfAssignmentToCreate(
+                            mapOfProjectIdWithResource ,
+                            mapOfGroupMemberValWithContactList ,
+                            eachgrpMemberVal ,
+                            projectId ,
+                            projectWithScheduleMap
+                        )
+                    );
+                }
             }
         }
-
         return listOfAssignmentToCreate;
-    } 
+    }
 
     //== Returns the project with related resources
     private static Map<Id,List<Id>> getProjectIdWithResource( Set<Id> projectIdSet ) {
