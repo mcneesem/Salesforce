@@ -8,6 +8,24 @@
                     <valueList>
                         <valueListItems>
                             <value>Edit</value>
+                            <visibilityRule>
+                                <booleanFilter>1 OR 2 OR 3</booleanFilter>
+                                <criteria>
+                                    <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>ITA</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Template__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>false</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!$Permission.CustomPermission.Accrual_Profile_Template_Edit}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>true</rightValue>
+                                </criteria>
+                            </visibilityRule>
                         </valueListItems>
                         <valueListItems>
                             <value>Submit</value>

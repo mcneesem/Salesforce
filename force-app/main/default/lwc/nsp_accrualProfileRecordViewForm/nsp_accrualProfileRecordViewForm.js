@@ -367,6 +367,22 @@ export default class Nsp_accrualProfileRecordViewForm extends LightningElement {
     return this.selectedAccounts.map(({ value }) => value);
   }
 
+  stringIsNotBlank(str){
+    let isNotBlank = false;
+    if(str != undefined && str != null && str != '' && str.trim().length > 0){
+      isNotBlank = true;
+    }
+    return isNotBlank;
+  }
+
+  get showClonedFromTemplate(){
+    let showClonedFromAP = false;
+    if( this.stringIsNotBlank(this.fieldValue.Cloned_from_AP_Template__c) && (this.recordTypeIdITA === this.fieldValue.recordTypeId)){
+      showClonedFromAP = true;
+    }
+    return showClonedFromAP;
+  }
+  
   get selectedSubClientIds() {
     return this.selectedSubClients.map(({ value }) => value);
   }
