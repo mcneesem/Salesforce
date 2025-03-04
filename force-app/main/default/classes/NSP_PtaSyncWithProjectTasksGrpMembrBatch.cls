@@ -276,20 +276,27 @@ public class NSP_PtaSyncWithProjectTasksGrpMembrBatch implements Schedulable , D
     {
         List<pse__Assignment__c> listOfAssignToBeCreated = new List<pse__Assignment__c>();
         try {
-            //iterate over contact with groupMembershipVal
-            for ( Id eachContactRec : mapOfGroupMemberValWithContactList.get(groupMembershipVal) ) {
-                //check if project does not contain Assignment with this contact
-                if ( ( mapOfProjectIdWithResource.get( projectId ) == null )
-                    || !mapOfProjectIdWithResource.get(projectId).contains( eachContactRec )
-                    )
-                {
-                    //initialize new Assignment Rec
-                    pse__Assignment__c newAssRec = new pse__Assignment__c();
-                    newAssRec.pse__Resource__c = eachContactRec;
-                    newAssRec.pse__Project__c = projectId;
-                    newAssRec.pse__Schedule__c = projectWithScheduleMap.get( projectId ).Id;
-                    newAssRec.pse__Bill_Rate__c = 0.0000;
-                    listOfAssignToBeCreated.add( newAssRec );
+            if ( ( mapOfProjectIdWithResource != null )
+                && ( mapOfGroupMemberValWithContactList != null )
+                && mapOfGroupMemberValWithContactList.containsKey( groupMembershipVal )
+                && ( mapOfGroupMemberValWithContactList.get( groupMembershipVal ) != null )
+                )
+            {
+                //iterate over contact with groupMembershipVal
+                for ( Id eachContactRec : mapOfGroupMemberValWithContactList.get( groupMembershipVal ) ) {
+                    //check if project does not contain Assignment with this contact
+                    if ( ( mapOfProjectIdWithResource.get( projectId ) == null )
+                        || !mapOfProjectIdWithResource.get( projectId ).contains( eachContactRec )
+                        )
+                    {
+                        //initialize new Assignment Rec
+                        pse__Assignment__c newAssRec = new pse__Assignment__c();
+                        newAssRec.pse__Resource__c = eachContactRec;
+                        newAssRec.pse__Project__c = projectId;
+                        newAssRec.pse__Schedule__c = projectWithScheduleMap.get( projectId ).Id;
+                        newAssRec.pse__Bill_Rate__c = 0.0000;
+                        listOfAssignToBeCreated.add( newAssRec );
+                    }
                 }
             }
         } catch ( Exception e ) {
@@ -321,18 +328,25 @@ public class NSP_PtaSyncWithProjectTasksGrpMembrBatch implements Schedulable , D
     {
         List<pse__Project_Task_Assignment__c> listOfPtaToBeCreated = new List<pse__Project_Task_Assignment__c>();
         try {
-            //iterate over contact with groupMembershipVal
-            for ( Id eachContactRec : mapOfGroupMemberValWithContactList.get( groupMembershipVal ) ) {
-                //check if project does not contain PTA with this contact
-                if ( ( mapOfProjectTaskIdWithPtaResource.get( projectTaskId ) == null )
-                    || !mapOfProjectTaskIdWithPtaResource.get(projectTaskId).contains( eachContactRec )
-                    )
-                {
-                    //initialize new PTA Rec
-                    pse__Project_Task_Assignment__c newPtaRec = new pse__Project_Task_Assignment__c();
-                    newPtaRec.pse__Resource__c = eachContactRec;
-                    newPtaRec.pse__Project_Task__c = projectTaskId;
-                    listOfPtaToBeCreated.add( newPtaRec );
+            if ( ( mapOfProjectTaskIdWithPtaResource != null )
+                && ( mapOfGroupMemberValWithContactList != null )
+                && mapOfGroupMemberValWithContactList.containsKey( groupMembershipVal )
+                && ( mapOfGroupMemberValWithContactList.get( groupMembershipVal ) != null )
+                )
+            {
+                //iterate over contact with groupMembershipVal
+                for ( Id eachContactRec : mapOfGroupMemberValWithContactList.get( groupMembershipVal ) ) {
+                    //check if project does not contain PTA with this contact
+                    if ( ( mapOfProjectTaskIdWithPtaResource.get( projectTaskId ) == null )
+                        || !mapOfProjectTaskIdWithPtaResource.get( projectTaskId ).contains( eachContactRec )
+                        )
+                    {
+                        //initialize new PTA Rec
+                        pse__Project_Task_Assignment__c newPtaRec = new pse__Project_Task_Assignment__c();
+                        newPtaRec.pse__Resource__c = eachContactRec;
+                        newPtaRec.pse__Project_Task__c = projectTaskId;
+                        listOfPtaToBeCreated.add( newPtaRec );
+                    }
                 }
             }
         } catch ( Exception e ) {
