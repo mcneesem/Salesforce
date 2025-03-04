@@ -115,7 +115,7 @@ public class NSP_InvoiceBatch implements Database.Batchable<SObject> , Database.
             if ( job != null ) {
                 statusSuffix = ': ' + job.Status;
             }
-            mail.setSubject( 'Draft Invoice Batch Job' + statusSuffix );
+            mail.setSubject( 'Draft Invoice Post Batch Job' + statusSuffix );
             if ( String.isBlank( plainTextBody ) ) {
                 plainTextBody = '.';
             }
