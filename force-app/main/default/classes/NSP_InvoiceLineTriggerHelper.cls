@@ -90,12 +90,21 @@ public static void prepareForRevRecGeneration(List<Id> elgibleLineForRevRec){
 
 public static void updateAddProductDescription( List<blng__InvoiceLine__c> invLineNew ) {
      Map<String,NSP_AdditionalProductDescription_Setting__mdt>  additionalProductDesSetMap = NSP_AdditionalProductDescription_Setting__mdt.getAll();
-     
+
+     Set<Id> orderProductIds = new Set<Id>();
+     for (blng__InvoiceLine__c newInvoiceLine : invLineNew) {
+        orderProductIds.add(newInvoiceLine.blng__OrderProduct__c);
+     }
+     Map<Id, OrderItem> orderItemMap = new Map<Id, OrderItem>([
+        SELECT Id, Prevent_Product_Description_Update__c, NSP_Additional_Product_Description__c
+        FROM OrderItem
+        WHERE Id IN :orderProductIds
+     ]);
+
      for(blng__InvoiceLine__c newInvoiceLine: invLineNew){
-        OrderItem orderItem = [SELECT Id,Prevent_Product_Description_Update__c,NSP_Additional_Product_Description__c
-                                FROM OrderItem
-                                WHERE Id =:newInvoiceLine.blng__OrderProduct__c];
-        if(orderItem != null && orderItem.Prevent_Product_Description_Update__c){
+        if(orderItemMap != null && orderItemMap.containsKey(newInvoiceLine.blng__OrderProduct__c) 
+          && orderItemMap.get(newInvoiceLine.blng__OrderProduct__c).Prevent_Product_Description_Update__c){
+            OrderItem orderItem = orderItemMap.get(newInvoiceLine.blng__OrderProduct__c);
             newInvoiceLine.NSP_Additional_Product_Description__c = orderItem.NSP_Additional_Product_Description__c;
         }else{
             if(newInvoiceLine.NSP_Product_Code__c != null && additionalProductDesSetMap.containsKey(newInvoiceLine.NSP_Product_Code__c)) {
