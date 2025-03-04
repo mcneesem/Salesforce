@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Group of Permission Sets to be granted to access/run Field Trips.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Field Trip User</label>
+    <permissionSets>Field_Analysis_Visibility</permissionSets>
+    <permissionSets>Field_Analytic_Config_Visibility</permissionSets>
+    <permissionSets>Field_Trip_Visibility</permissionSets>
+    <permissionSets>Field_Trip_Visualforce_Page_Access</permissionSets>
+    <status>Updated</status>
+</PermissionSetGroup>
