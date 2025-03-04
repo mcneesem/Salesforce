@@ -4,7 +4,7 @@
     <assignments>
         <name>Assign_AccountId</name>
         <label>Assign AccountId</label>
-        <locationX>1370</locationX>
+        <locationX>1502</locationX>
         <locationY>647</locationY>
         <assignmentItems>
             <assignToReference>accountId</assignToReference>
@@ -20,7 +20,7 @@
     <assignments>
         <name>Assign_LeadId</name>
         <label>Assign LeadId</label>
-        <locationX>2338</locationX>
+        <locationX>2470</locationX>
         <locationY>647</locationY>
         <assignmentItems>
             <assignToReference>leadId</assignToReference>
@@ -36,7 +36,7 @@
     <assignments>
         <name>Assign_OpportunityId_and_AccountId</name>
         <label>Assign OpportunityId and AccountId</label>
-        <locationX>358</locationX>
+        <locationX>424</locationX>
         <locationY>647</locationY>
         <assignmentItems>
             <assignToReference>opportunityId</assignToReference>
@@ -66,7 +66,7 @@
     <decisions>
         <name>Check_Account_Last_Updated</name>
         <label>Check Account Last Updated</label>
-        <locationX>1370</locationX>
+        <locationX>1502</locationX>
         <locationY>755</locationY>
         <defaultConnector>
             <targetReference>Check_Task</targetReference>
@@ -91,7 +91,7 @@
     <decisions>
         <name>Check_Autolaunched_Flow_Bypass</name>
         <label>Check Autolaunched Flow Bypass</label>
-        <locationX>721</locationX>
+        <locationX>748</locationX>
         <locationY>323</locationY>
         <defaultConnector>
             <targetReference>What_type_of_record_is_in_WhatId_or_WhoId</targetReference>
@@ -111,13 +111,46 @@
         </rules>
     </decisions>
     <decisions>
+        <description>Prevent DmlExceptions: FIELD_FILTER_VALIDATION_EXCEPTION: When Customer Signer is populated, the related Contact must have an Account.</description>
+        <name>Check_Customer_Signer</name>
+        <label>Check Customer Signer</label>
+        <locationX>182</locationX>
+        <locationY>971</locationY>
+        <defaultConnector>
+            <targetReference>Update_Opportunity_Record</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Invalid_Customer_Signer</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Opportunity_Info.NSP_Customer_Signer__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Opportunity_Info.NSP_Customer_Signer__r.AccountId</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Check_Task</targetReference>
+            </connector>
+            <label>Invalid Customer Signer</label>
+        </rules>
+    </decisions>
+    <decisions>
         <description>Prevent DmlExceptions: HCM Sales Consultants can modify only WX Opportunities.</description>
         <name>Check_HCM_Rules</name>
         <label>Check HCM Rules</label>
         <locationX>50</locationX>
         <locationY>863</locationY>
         <defaultConnector>
-            <targetReference>Update_Opportunity_Record</targetReference>
+            <targetReference>Check_Customer_Signer</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -146,7 +179,7 @@
     <decisions>
         <name>Check_Opportunity_Last_Updated</name>
         <label>Check Opportunity Last Updated</label>
-        <locationX>358</locationX>
+        <locationX>424</locationX>
         <locationY>755</locationY>
         <defaultConnector>
             <targetReference>Check_Task</targetReference>
@@ -178,8 +211,8 @@
     <decisions>
         <name>Check_Task</name>
         <label>Check Task</label>
-        <locationX>1744</locationX>
-        <locationY>1379</locationY>
+        <locationX>1843</locationX>
+        <locationY>1571</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Update_Required_Task</name>
@@ -207,7 +240,7 @@
     <decisions>
         <name>Is_Task_Status_Completed_and_should_Lead_Status_be_changed_to_Working</name>
         <label>Is Task Status &quot;Completed&quot; and should Lead Status be changed to &quot;Working&quot;?</label>
-        <locationX>2338</locationX>
+        <locationX>2470</locationX>
         <locationY>755</locationY>
         <defaultConnectorLabel>Lead status does not need to be updated</defaultConnectorLabel>
         <rules>
@@ -244,7 +277,7 @@
     <decisions>
         <name>What_type_of_record_is_in_WhatId_or_WhoId</name>
         <label>What type of record is in WhatId or WhoId?</label>
-        <locationX>1744</locationX>
+        <locationX>1843</locationX>
         <locationY>431</locationY>
         <defaultConnectorLabel>Not related to a relevant record</defaultConnectorLabel>
         <rules>
@@ -319,7 +352,7 @@
     <recordLookups>
         <name>Get_Account_Info</name>
         <label>Get Account Info</label>
-        <locationX>1370</locationX>
+        <locationX>1502</locationX>
         <locationY>539</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -344,7 +377,7 @@
     <recordLookups>
         <name>Get_Lead_Info</name>
         <label>Get Lead Info</label>
-        <locationX>2338</locationX>
+        <locationX>2470</locationX>
         <locationY>539</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -369,7 +402,7 @@
     <recordLookups>
         <name>Get_Opportunity_Info</name>
         <label>Get Opportunity Info</label>
-        <locationX>358</locationX>
+        <locationX>424</locationX>
         <locationY>539</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -394,7 +427,7 @@
     <recordUpdates>
         <name>Update_Account_Record</name>
         <label>Update Account Record</label>
-        <locationX>1106</locationX>
+        <locationX>1238</locationX>
         <locationY>863</locationY>
         <connector>
             <targetReference>Check_Task</targetReference>
@@ -422,7 +455,7 @@
     <recordUpdates>
         <name>Update_Lead_Record</name>
         <label>Update Lead Record</label>
-        <locationX>2074</locationX>
+        <locationX>2206</locationX>
         <locationY>863</locationY>
         <faultConnector>
             <isGoTo>true</isGoTo>
@@ -447,8 +480,8 @@
     <recordUpdates>
         <name>Update_Opportunity_Record</name>
         <label>Update Opportunity Record</label>
-        <locationX>138</locationX>
-        <locationY>971</locationY>
+        <locationX>270</locationX>
+        <locationY>1079</locationY>
         <connector>
             <targetReference>Check_Task</targetReference>
         </connector>
@@ -475,8 +508,8 @@
     <recordUpdates>
         <name>Update_Task_Record_if_Status_not_Cancelled</name>
         <label>Update Task Record if Status not Cancelled</label>
-        <locationX>1480</locationX>
-        <locationY>1487</locationY>
+        <locationX>1579</locationX>
+        <locationY>1679</locationY>
         <faultConnector>
             <targetReference>Fault_Handler_subflow</targetReference>
         </faultConnector>
@@ -503,7 +536,7 @@
         <inputReference>$Record</inputReference>
     </recordUpdates>
     <start>
-        <locationX>595</locationX>
+        <locationX>622</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Check_Autolaunched_Flow_Bypass</targetReference>
@@ -545,8 +578,8 @@
     <subflows>
         <name>Fault_Handler_subflow</name>
         <label>Fault Handler subflow</label>
-        <locationX>1744</locationX>
-        <locationY>1595</locationY>
+        <locationX>1843</locationX>
+        <locationY>1787</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultFlow</name>
