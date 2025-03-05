@@ -32,6 +32,8 @@ private class NSP_CampaignTriggerHelperTest {
                                timezonesidkey=timezonesidkey,NSP_Sales_Office__c='4401' ,NSP_SalesDivision__c='Central',NSP_SalesRegion__c='Central 1',
                                username='insperitytestadminuserda@insperity.com.testUsr');
         users.add(dAUser);
+
+        database.insert(users);
         
     }
 
@@ -87,6 +89,5 @@ private class NSP_CampaignTriggerHelperTest {
             System.assertEquals('HelloTest1', campaignObject.Name);
         }
     }
-
 }
 //
