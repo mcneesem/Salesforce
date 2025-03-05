@@ -15,7 +15,12 @@ public without sharing class NSP_ChildOpportunitiesHelperFunctions {
         List<Opportunity> opportunityToUpdateList = new List<Opportunity>();
         //Querying the child oppotunities that is not closed lost and is not parent
         for ( Opportunity opportunityObject : [
-                    SELECT Id , StageName , NSP_PrimaryProduct__c , NSP_Parent_Opportunity__r.NSP_PrimaryProduct__c , NSP_Parent_Opportunity__r.NSP_Lost_Reason__c
+                    SELECT
+                        Id ,
+                        StageName ,
+                        NSP_PrimaryProduct__c ,
+                        NSP_Parent_Opportunity__r.NSP_PrimaryProduct__c ,
+                        NSP_Parent_Opportunity__r.NSP_Lost_Reason__c
                     FROM Opportunity
                     WHERE (
                         NSP_Parent_Opportunity__c IN :opportunityList
@@ -164,7 +169,11 @@ public without sharing class NSP_ChildOpportunitiesHelperFunctions {
     public static void updateChildOpportunityOnReopen( List<String> opportunityList ) {
         List<Opportunity> opportunityToUpdateList = new List<Opportunity>();
         for ( Opportunity opportunityObject : [
-                    SELECT Id , StageName , NSP_Is_Parent_Opportunity_Closed_Lost__c , NSP_Is_Parent_Opportunity_Closed_Won__c
+                    SELECT
+                        Id ,
+                        StageName ,
+                        NSP_Is_Parent_Opportunity_Closed_Lost__c ,
+                        NSP_Is_Parent_Opportunity_Closed_Won__c
                     FROM Opportunity
                     WHERE (
                         NSP_Parent_Opportunity__c IN :opportunityList
