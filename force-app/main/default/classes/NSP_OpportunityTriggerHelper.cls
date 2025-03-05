@@ -705,11 +705,11 @@ public with sharing class NSP_OpportunityTriggerHelper {
         String rectype = null;
         for ( Opportunity opportunityRecord : opportunityList ) {
             if ( opportunityRecord.NSP_PrimaryProduct__c == NSP_SalesConstants.PROD_INSURANCE ) {
-                rectype = NSP_OpportunityTriggerHelper.insuranceServiceAssetRecordTypeId
+                rectype = NSP_OpportunityTriggerHelper.insuranceServiceAssetRecordTypeId;
             } else if ( opportunityRecord.NSP_PrimaryProduct__c == NSP_SalesConstants.PROD_EXPENSEMANAGEMENT ) {
-                rectype = NSP_OpportunityTriggerHelper.certifyAssetRecordTypeId
+                rectype = NSP_OpportunityTriggerHelper.certifyAssetRecordTypeId;
             } else {
-                rectype = NSP_OpportunityTriggerHelper.getAssetRecordTypeIdByName( opportunityRecord.NSP_PrimaryProduct__ );
+                rectype = NSP_OpportunityTriggerHelper.getAssetRecordTypeIdByName( opportunityRecord.NSP_PrimaryProduct__c );
             }
             recordTypeSet.add( rectype );
         }
