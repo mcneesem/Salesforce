@@ -26,7 +26,6 @@ public with sharing class NSP_OpportunityTriggerHelper {
     public static final String RETIREMENT_SERVICES_FOR_NON_WO_PRODUCTS = System.Label.Retirement_Services_For_Non_WO_Products; 
     public static final String SELECT_PRIMARY_CONTACT = System.Label.NSP_Select_Primary_Contact;
     private static final string ASSET_RECORDTYPE = System.Label.NSP_Asset_Product;
-    public static final Id ASSET_RECORDTYPE_ID = Schema.SObjectType.ASSET.getRecordTypeInfosByDeveloperName().get(ASSET_RECORDTYPE).getRecordTypeId();
     public static boolean valueAssignedFromUser = false;
     public static boolean createRewardsOnce = false;
     private static final string ClosedWonErrorMessage = System.Label.NSP_ClosedWonChecklistValidation;
@@ -36,6 +35,10 @@ public with sharing class NSP_OpportunityTriggerHelper {
     public static Map<String, Integer> opptyStageOrder = retrieveFieldPicklistOrder(Opportunity.StageName);
     private static Boolean hasAdminPermission = CustomPermissionController.checkUserPermission('Advanced_Salesforce_Administrator', UserInfo.getUserId());
     private static Boolean Is_Enabled_WO_WS_Stage_Entry = OpportunityStageSettings__c.getInstance(UserInfo.getUserId()).Is_Enabled_WO_WS_Stage_Entry__c;
+
+    private static final Id insuranceServiceAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Asset' , 'Insurance_Service' );
+    private static final Id certifyAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Asset' , 'Certify' );
+    private static final Id lockedOpportunityRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Opportunity' , 'Opportunity_Locked' );
 
     //
     // Iterates throught the list of new Opportunity and passes the required attributes to other methods.
@@ -702,23 +705,22 @@ public with sharing class NSP_OpportunityTriggerHelper {
         String rectype = null;
         for ( Opportunity opportunityRecord : opportunityList ) {
             if ( opportunityRecord.NSP_PrimaryProduct__c == NSP_SalesConstants.PROD_INSURANCE ) {
-                rectype = Schema.SObjectType.ASSET.getRecordTypeInfosByDeveloperName().get( NSP_SalesConstants.ASSETRECTYPENAME_INSURANCE ).getRecordTypeId();
+                rectype = NSP_OpportunityTriggerHelper.insuranceServiceAssetRecordTypeId
             } else if ( opportunityRecord.NSP_PrimaryProduct__c == NSP_SalesConstants.PROD_EXPENSEMANAGEMENT ) {
-                rectype = Schema.SObjectType.ASSET.getRecordTypeInfosByDeveloperName().get( NSP_SalesConstants.ASSETRECTYPE_CERTIFY ).getRecordTypeId();
+                rectype = NSP_OpportunityTriggerHelper.certifyAssetRecordTypeId
             } else {
-                rectype = Schema.SObjectType.ASSET.getRecordTypeInfosByName().get( opportunityRecord.NSP_PrimaryProduct__c ).getRecordTypeId();
+                rectype = NSP_OpportunityTriggerHelper.getAssetRecordTypeIdByName( opportunityRecord.NSP_PrimaryProduct__ );
             }
             recordTypeSet.add( rectype );
         }
         return recordTypeSet;
     }
 
-    /**
-    * When Opportunity in Proposal Stage meets all criterias then update the stage to Closing
-    * @param opportunityList list of New Opportunity.
-    * @return void
-    *
-    */
+    //
+    // When Opportunity in Proposal Stage meets all criterias then update the stage to Closing
+    // @param opportunityList list of New Opportunity.
+    // @return void
+    //
     public void moveOpportunityToClosingStage(List<Opportunity> opportunityList){
         for(Opportunity opportunityRecord : opportunityList){
             
@@ -737,21 +739,17 @@ public with sharing class NSP_OpportunityTriggerHelper {
             }
         }
     }
-    
-    
-    /**
-* When Opportunity in closed won/lost change the record type to lock the page layout
-* @param opportunityList list of New Opportunity.  
-* @return void             
-*                
-*/  
-    public void changeOpportunityRecordType(List<Opportunity> opportunityList){
-        Id opportunityRecordType = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get(NSP_SalesConstants.LOCKED_OPPORTUNITY).getRecordTypeId();
-        for(Opportunity opportunityRecord : opportunityList){
-            opportunityRecord.RecordTypeId = opportunityRecordType;
+
+    //
+    // When Opportunity in closed won/lost change the record type to lock the page layout
+    // @param opportunityList list of New Opportunity.
+    // @return void
+    //
+    public void changeOpportunityRecordType( List<Opportunity> opportunityList ) {
+        for ( Opportunity opportunityRecord : opportunityList ) {
+            opportunityRecord.RecordTypeId = NSP_OpportunityTriggerHelper.lockedOpportunityRecordTypeId;
         }
     }
-    
 
     
 /**
@@ -1084,19 +1082,16 @@ public with sharing class NSP_OpportunityTriggerHelper {
         }
     }
 
-	/* Description: This method sets sales office details from user 
-     * 
-     * @param: opportunityList, opportunityMap
-     * @return: void
-     * Modification History:
-     * -------------------------------------------------------------------------------------
-     *  Date              | Description
-     * -------------------------------------------------------------------------------------
-     *  08/05/2022          created this new method added for STY-03154
-     * 
-     * 
-    */
-    
+    //
+    // Description: This method sets sales office details from user 
+    // @param: opportunityList, opportunityMap
+    // @return: void
+    // Modification History:
+    // -------------------------------------------------------------------------------------
+    //  Date | Description
+    // -------------------------------------------------------------------------------------
+    //  08/05/2022 created this new method added for STY-03154
+    //
     public void setSalesOfficeDetails(List<Opportunity> newList,Map<Id, Opportunity> opportunityOldMap){
         set<Id> ownerIdSet = new set<Id>(); // owner id set
         set<string> officeSet = new set<string>(); // sales office set
@@ -1614,4 +1609,50 @@ public with sharing class NSP_OpportunityTriggerHelper {
             e
         );
     }
+
+    // PMCC ~ move getAssetRecordTypeIdByName( recordTypeLabel ) method to an Asset-related Apex Class...
+    public static Id getAssetRecordTypeIdByName( String name ) {
+        Id recordTypeId = null;
+        if ( String.isNotBlank( name )
+            && ( NSP_OpportunityTriggerHelper.assetRecordTypeNameMap != null )
+            && NSP_OpportunityTriggerHelper.assetRecordTypeNameMap.containsKey( name )
+            )
+        {
+            Schema.RecordTypeInfo info = NSP_OpportunityTriggerHelper.assetRecordTypeNameMap.get( name );
+            if ( info != null ) {
+                recordTypeId = info.getRecordTypeId();
+            }
+        }
+        return recordTypeId;
+    }
+
+    // Map from RecordType.Name to RecordTypeInfo...
+    private static Map<String,Schema.RecordTypeInfo> assetRecordTypeNameMap {
+        private get {
+            if ( assetRecordTypeNameMap == null ) {
+                Map<String,Schema.RecordTypeInfo> local = new Map<String,Schema.RecordTypeInfo>();
+                if ( NSP_OpportunityTriggerHelper.assetRecordTypeMap != null ) {
+                    for ( Schema.RecordTypeInfo info : NSP_OpportunityTriggerHelper.assetRecordTypeMap.values() ) {
+                        local.put( info.getName() , info );
+                    }
+                }
+                assetRecordTypeNameMap = local;
+            }
+            return assetRecordTypeNameMap;
+        }
+        private set;
+    }
+
+    // Map from RecordType.DeveloperName to RecordTypeInfo...
+    private static Map<String,Schema.RecordTypeInfo> assetRecordTypeMap {
+        private get {
+            if ( assetRecordTypeMap == null ) {
+                assetRecordTypeMap = NSP_GenericRecordType.getRecordTypeMap( 'Asset' );
+            }
+            return assetRecordTypeMap;
+        }
+        private set;
+    }
+
 }
+//
