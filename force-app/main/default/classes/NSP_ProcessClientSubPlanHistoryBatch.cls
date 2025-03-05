@@ -51,7 +51,7 @@ public class NSP_ProcessClientSubPlanHistoryBatch implements ISelfSchedulable , 
                 WHERE (
                     (
                         NSP_Future_Lead_Parent__c <= TODAY
-                        OR NSP_Start_Date__c <= TODAY
+                        OR NSP_Start_Date__c = TODAY
                     )
                     AND NSP_Asset__r.RecordTypeId IN :recordTypeIdSet
                     AND NSP_Active_Date__c = true
@@ -76,7 +76,7 @@ public class NSP_ProcessClientSubPlanHistoryBatch implements ISelfSchedulable , 
                     chsUpdateList.add( eachCSH );
                 }
                 if ( eachCSH.NSP_Future_Lead_Parent__c != null
-                    && eachCSH.NSP_Future_Lead_Parent__c == System.today()
+                    && eachCSH.NSP_Future_Lead_Parent__c <= System.today()
                     )
                 {
                     // asset added as lead parent 
