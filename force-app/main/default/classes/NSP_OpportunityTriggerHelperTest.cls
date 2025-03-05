@@ -7,8 +7,8 @@ Modification Log     :
 *--------------------------------------------------------------------------------------------------  
 * Developer                   Date                   Description                                    
 * -------------------------------------------------------------------------------------------------  
-* Rahul Singh      		26/10/2022			         Create OCR as part of user story - 128223
-* Rahul Singh      		22/12/2022			         Create for enrollment fee payment user story - 194265
+* Rahul Singh 26/10/2022 Create OCR as part of user story - 128223
+* Rahul Singh 22/12/2022 Create for enrollment fee payment user story - 194265
 */
 
 @isTest(SeeAllData=false)
@@ -165,7 +165,7 @@ public class NSP_OpportunityTriggerHelperTest {
         opportuniytObject4.Type ='CAMS';
         opportuniytObject4.NSP_Upsell_Product_add_ons__c = OPP_NSP_UPSELL_PRODUCT_ADD_ONS_RETIREMENT_SERVICES;
         opportuniytObject4.NSP_Mid_Market_Sales_Email__c='test4@insperity.com';
-       	oppList2.add(opportuniytObject4);
+        oppList2.add(opportuniytObject4);
         insert oppList2;
         
         SBQQ__Quote__c quoteRec = new SBQQ__Quote__c();
@@ -194,7 +194,7 @@ public class NSP_OpportunityTriggerHelperTest {
         insert quoteRec1;
 
         opportuniytObject6.StageName = NSP_SalesConstants.PROPOSAL_STAGE;
-	    opportuniytObject6.SBQQ__PrimaryQuote__c = quoteRec1.id;
+        opportuniytObject6.SBQQ__PrimaryQuote__c = quoteRec1.id;
         Update opportuniytObject6;
 
         opportuniytObject6.StageName = NSP_SalesConstants.CLOSED_WON_STAGE;
@@ -212,7 +212,7 @@ public class NSP_OpportunityTriggerHelperTest {
         childopportuniytObject.NSP_Number_of_Employees__c = 100;
         childopportuniytObject.NSP_PrimaryProduct__c = 'Retirement Services';
         childopportuniytObject.NSP_Parent_Opportunity__c = opportuniytObject.id;
-       	childOppList.add(childopportuniytObject);
+        childOppList.add(childopportuniytObject);
         
         //Create child opportuniy for Insurance Service
         Opportunity childopportuniytObject1 = new Opportunity();
@@ -225,7 +225,7 @@ public class NSP_OpportunityTriggerHelperTest {
         childopportuniytObject1.NSP_PrimaryProduct__c = 'Insurance Services';
         childopportuniytObject1.NSP_Parent_Opportunity__c = opportuniytObject.id;
         //insert childopportuniytObject1;
- 		childOppList.add(childopportuniytObject1);
+        childOppList.add(childopportuniytObject1);
         insert childOppList;
         
         Pricebook2 pricebook = new Pricebook2(Name = 'Non-CPQ Product Pricebook');
@@ -437,11 +437,13 @@ public class NSP_OpportunityTriggerHelperTest {
             Test.startTest();
             System.runAs(userRecord) {
                 Opportunity opp = [SELECT ID,NSP_PrimaryProduct__c,stagename FROM OPPORTUNITY WHERE NSP_Parent_Opportunity__c = null LIMIT 1];
+                List<String> pOppIdSet = new List<String>{opp.Id};
                 opp.ownerId = userRecord.Id;
                 opp.NSP_PrimaryProduct__c = 'Insurance Services';
                 opp.NSP_Lost_Reason__c = 'Backout';
                 opp.stagename = NSP_SalesConstants.CLOSED_LOST;
                 database.update(opp);
+                NSP_ChildOpportunitiesHelperFunctions.updateChildOpportunityOnReopen(pOppIdSet);
                 Test.stopTest();
                 System.assertEquals(NSP_SalesConstants.CLOSED_LOST, opp.stagename);
             }
@@ -588,14 +590,12 @@ public class NSP_OpportunityTriggerHelperTest {
         Test.stopTest();
         System.assertEquals(NSP_SalesConstants.WX, opportunityList[0].NSP_PrimaryProduct__c);
     }
-   
-       /**
-* @Description: This test method is used to cover updatesOnChildOpportunity method
-* @Created date: 03/03/2022.
-* @return void            
-*                
-*/
 
+    //
+    // @Description: This test method is used to cover updatesOnChildOpportunity method
+    // @Created date: 03/03/2022.
+    // @return void
+    //
     @isTest
     static void defaultFieldsOnChildOpportunityTest(){
        Test.startTest();
@@ -1020,10 +1020,10 @@ static void createAssetTest3(){
             opp1[0].Create_Box_com_Folder_s__c = true;
 
             //  Update Opportunity
-        	update opp1;
+            update opp1;
         }
         catch(Exception e){
-            //	An error is expected
+            // An error is expected
             System.assertEquals(true , e.getMessage().contains(expectedError));
         }
         finally{
@@ -1033,14 +1033,13 @@ static void createAssetTest3(){
     
     @isTest
     static void testBackward_Stage() {
-        
         Test.startTest();
         String expectedError = Label.Opportunity_Backward_Stage;
 
         try{
             Opportunity opp1 = [SELECT Id, StageName FROM Opportunity WHERE StageName =: NSP_SalesConstants.ANALYSIS_STAGE LIMIT 1] ; 
             opp1.StageName = NSP_SalesConstants.DISCOVERY_STAGE;
-        	update opp1;
+            update opp1;
         }
         catch(Exception e){
             System.assertEquals(true , e.getMessage().contains(expectedError));

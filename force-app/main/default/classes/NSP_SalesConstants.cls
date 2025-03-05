@@ -194,6 +194,7 @@ public class NSP_SalesConstants {
     public static final String PROD_EXPENSEMANAGEMENT = 'Expense Management';
     public static final String PROD_INSURANCE = 'Insurance Services';
     public static final String ASSETRECTYPE_INSURANCE = 'Insurance Service';
+    public static final String ASSETRECTYPENAME_INSURANCE = 'Insurance_Service';
     public static final String ASSETRECTYPE_CERTIFY = 'Certify';
     public static final String BACKOUT_STATUS = 'Backout';
     public static final String TERMINATED_STATUS = 'Terminated';

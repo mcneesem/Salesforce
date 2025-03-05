@@ -4,7 +4,7 @@
     <encodingKey>UTF-8</encodingKey>
     <name>Primary Product Change on Parent Oppty</name>
     <style>none</style>
-    <subject>Change to primary product on {!Opportunity.pse__Parent_Opportunity__c}</subject>
+    <subject>Change to primary product on {!Opportunity.NSP_Parent_Opportunity__c}</subject>
     <type>custom</type>
     <uiType>Aloha</uiType>
 </EmailTemplate>
