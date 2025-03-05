@@ -60,14 +60,7 @@ global class NSP_TerminationForm_Batch implements ISelfSchedulable , Schedulable
                             FROM NSP_Account_Team__c 
                             WHERE (
                                 NSP_Account__c IN :relatedAccoutIdSet
-                                AND (
-                                    NSP_Role__c = 'Manager, HR Services'
-                                    OR NSP_Role__c = 'Payroll Specialist'
-                                    OR NSP_Role__c = 'Payroll Supervisor'
-                                    OR NSP_Role__c = 'Client Liaison'
-                                    OR NSP_Role__c = 'HR Specialist'
-                                    OR NSP_Role__c = 'Renewal Coordinator'
-                                )
+                                AND NSP_Role__c IN :NSP_TerminationForm_Batch.accountTeamRoles
                             )
                         ]
                     )
@@ -208,6 +201,26 @@ global class NSP_TerminationForm_Batch implements ISelfSchedulable , Schedulable
                 soqlDaysAfterLimit = local;
             }
             return soqlDaysAfterLimit;
+        }
+        private set;
+    }
+
+    private static List<String> accountTeamRoles {
+        private get {
+            if ( accountTeamRoles == null ) {
+                List<String> local = new List<String>();
+                if ( NSP_TerminationForm_Batch.settings != null ) {
+                    String rawAccountTeamRoles = NSP_TerminationForm_Batch.settings.Account_Team_Roles__c;
+                    if ( String.isNotBlank( rawAccountTeamRoles ) ) {
+                        List<String> splitAccountTeamRoles = rawAccountTeamRoles.split( ',' );
+                        if ( ( splitAccountTeamRoles != null ) && ( splitAccountTeamRoles.size() > 0 ) ) {
+                            local = splitAccountTeamRoles;
+                        }
+                    }
+                }
+                accountTeamRoles = local;
+            }
+            return accountTeamRoles;
         }
         private set;
     }
