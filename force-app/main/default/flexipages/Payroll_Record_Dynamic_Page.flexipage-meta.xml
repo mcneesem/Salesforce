@@ -2290,6 +2290,16 @@
                 <identifier>RecordCreatedByIdField</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Source__c</fieldItem>
+                <identifier>RecordSource_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-fad5dd9a-0543-4452-b5b9-863bf17c1ed0</name>
         <type>Facet</type>
     </flexiPageRegions>
