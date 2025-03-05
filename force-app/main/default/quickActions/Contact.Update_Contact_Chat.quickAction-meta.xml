@@ -28,8 +28,8 @@
             </quickActionLayoutItems>
             <quickActionLayoutItems>
                 <emptySpace>false</emptySpace>
-                <field>NSP_Date_Of_Birth_Unmasked__c</field>
-                <uiBehavior>Edit</uiBehavior>
+                <field>NSP_Date_of_Birth__c</field>
+                <uiBehavior>Readonly</uiBehavior>
             </quickActionLayoutItems>
             <quickActionLayoutItems>
                 <emptySpace>false</emptySpace>
