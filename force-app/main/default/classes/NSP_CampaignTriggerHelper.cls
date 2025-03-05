@@ -1,5 +1,5 @@
 public class NSP_CampaignTriggerHelper {
-    // test w/ NSP_CampaignTriggerHelperTest (100%)
+    // test w/ NSP_CampaignTriggerHelperTest (86%)
 
      public void beforeInsertDirector( List<Campaign> newList ) {
         try {
@@ -18,7 +18,6 @@ public class NSP_CampaignTriggerHelper {
         Set<String> officeSet = new set<String>();
         Map<Id,User> ownerBasedUserMap = CustomPermissionController.getPermittedUsersMap('Campaign_Update_Sales_Office_Info_Owner_Assigned');
         Map<Id,User> campaignBasedUserMap = CustomPermissionController.getPermittedUsersMap('Campaign_Update_Sales_Office_Info_Campaign_Assigned');
-        Map<Id,User> userMap = new Map<Id,User>([SELECT Id,Name,Userrole.Name from user where Name != null]);
         for ( Campaign newCampaign : newList ) {
             Campaign oldCampaign = ( oldCampaignMap != null ) ? oldCampaignMap.get(newCampaign.Id) : null;
             if ( Trigger.isInsert || ( newCampaign.OwnerId != oldCampaign.OwnerId ) ) {
@@ -72,7 +71,11 @@ public class NSP_CampaignTriggerHelper {
         if ( ( officeSet != null ) && !officeSet.isEmpty() ) {
             Map<String,NSP_Sales_Office_Mapping__c> salesOfficeToMappingMap =  new Map<String,NSP_Sales_Office_Mapping__c>();
             for ( NSP_Sales_Office_Mapping__c eachMapping : [
-                        SELECT Id , NSP_Sales_Office__c , NSP_Sales_Division__c , NSP_Sales_Region__c
+                        SELECT 
+                            Id , 
+                            NSP_Sales_Office__c , 
+                            NSP_Sales_Division__c , 
+                            NSP_Sales_Region__c
                         FROM NSP_Sales_Office_Mapping__c
                         WHERE (
                             ( NSP_Sales_Office__c IN :officeSet )
@@ -99,6 +102,5 @@ public class NSP_CampaignTriggerHelper {
             }
         }
     }
-
 }
 //
