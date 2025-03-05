@@ -2,9 +2,66 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>60.0</apiVersion>
     <decisions>
+        <name>Validate_Session_Owner</name>
+        <label>Validate Session Owner</label>
+        <locationX>314</locationX>
+        <locationY>242</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Is_Contact_Center_Owner</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>messagingSessionRecord.OwnerId</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>00G4x000001fXXPEA2</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>messagingSessionRecord.OwnerId</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>00G4x000001fXV6EAM</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>messagingSessionRecord.OwnerId</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>00G4x000001fXXQEA2</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>messagingSessionRecord.OwnerId</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>00G4x000001fXXREA2</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>messagingSessionRecord.OwnerId</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>00G4x000001fXXSEA2</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>messagingSessionRecord.Owner:User.UserRole.DeveloperName</leftValueReference>
+                <operator>StartsWith</operator>
+                <rightValue>
+                    <stringValue>Contact_Center_</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Case_Owner</targetReference>
+            </connector>
+            <label>Is Contact Center Owner</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Validating_the_Messaging_Session</name>
         <label>Validating the Messaging Session</label>
-        <locationX>314</locationX>
+        <locationX>578</locationX>
         <locationY>134</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -39,7 +96,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Update_Case_Owner</targetReference>
+                <targetReference>Validate_Session_Owner</targetReference>
             </connector>
             <label>Is Valid</label>
         </rules>
@@ -70,7 +127,7 @@
         <name>Update_Case_Owner</name>
         <label>Update Case Owner</label>
         <locationX>50</locationX>
-        <locationY>242</locationY>
+        <locationY>350</locationY>
         <faultConnector>
             <targetReference>Unable_to_update_the_Case_Owner</targetReference>
         </faultConnector>
@@ -91,7 +148,7 @@
         <object>Case</object>
     </recordUpdates>
     <start>
-        <locationX>188</locationX>
+        <locationX>452</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Validating_the_Messaging_Session</targetReference>
@@ -102,8 +159,14 @@
         <name>Unable_to_update_the_Case_Owner</name>
         <label>Unable to update the Case Owner</label>
         <locationX>314</locationX>
-        <locationY>350</locationY>
+        <locationY>458</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
+        <inputAssignments>
+            <name>faultElement</name>
+            <value>
+                <stringValue>Update_Case_Owner</stringValue>
+            </value>
+        </inputAssignments>
         <inputAssignments>
             <name>faultFlow</name>
             <value>
