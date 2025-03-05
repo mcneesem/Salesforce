@@ -177,6 +177,16 @@
                     <name>actionNames</name>
                     <valueList>
                         <valueListItems>
+                            <value>Contact.New_Case</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!$Permission.CustomPermission.Case_Creation_Screen_Flow}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>true</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
                             <value>CustomButton.Contact.NSP_Detailed_Data</value>
                             <visibilityRule>
                                 <booleanFilter>1 OR 2 OR 3 OR 4</booleanFilter>
