@@ -1562,9 +1562,9 @@ public with sharing class NSP_OpportunityTriggerHelper {
 
     private static void checkPrimaryProductChange( Opportunity newOpportunity , Opportunity oldOpportunity , List<String> primaryProductChanged ) {
         if ( ( newOpportunity != null )
-            && String.isNotBlank( oldOpportunity.NSP_PrimaryProduct__c )
-            && ( oldOpportunity != null )
             && String.isNotBlank( newOpportunity.NSP_PrimaryProduct__c )
+            && ( oldOpportunity != null )
+            && String.isNotBlank( oldOpportunity.NSP_PrimaryProduct__c )
             && ( newOpportunity.NSP_PrimaryProduct__c != oldOpportunity.NSP_PrimaryProduct__c )
             && String.isBlank( newOpportunity.NSP_Parent_Opportunity__c )
             && (
