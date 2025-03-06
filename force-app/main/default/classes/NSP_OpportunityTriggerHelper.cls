@@ -426,7 +426,6 @@ public with sharing class NSP_OpportunityTriggerHelper {
         List<Opportunity> updateResyncFlagOpportunityList = new List<Opportunity>();
         List<Opportunity> closedOpptyList = new List<Opportunity>();
         List<String> productCodeList = new List<String>{'Employment Screening','Expense Management','Insurance Services'};
-        String rectype = null;
         //opportunity list to store oppty records where Primary Quote is newly created
         //List<Opportunity> opportunitiesWithPrimaryQuote = new List<Opportunity>();// commeted as part of user story 128436
         
@@ -435,8 +434,6 @@ public with sharing class NSP_OpportunityTriggerHelper {
         
         //opportunities with Partner Accounts populated
         Map<Id,Opportunity> partnerAccountOpportunityMap = new Map<Id,Opportunity>();
-        List<Opportunity> partnerOpportunityList = new List<Opportunity>();
-        Set<Id> partnerAccountIdSet = new Set<Id>();
         //Sending list to update enrollment fee payment
         enrollmentFeeCheck(opportunityNewMap,opportunityOldMap);
         
