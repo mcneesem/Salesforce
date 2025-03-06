@@ -3,7 +3,7 @@
     <fullName>NSP_HR_Quality_Support_Team_Member__c</fullName>
     <deleteConstraint>SetNull</deleteConstraint>
     <externalId>false</externalId>
-    <label>HR Quality Support Team Member</label>
+    <label>HR Client Implementation Team Member</label>
     <referenceTo>Contact</referenceTo>
     <relationshipLabel>Implementation Profiles (HR Quality Support Team Member)</relationshipLabel>
     <relationshipName>Implementation_ProfilesjqFN</relationshipName>
