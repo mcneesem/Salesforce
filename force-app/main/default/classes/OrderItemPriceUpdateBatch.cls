@@ -206,7 +206,7 @@ public with sharing class OrderItemPriceUpdateBatch implements Database.Batchabl
 
     //disable CPQ triggers, perform DML & log results
     private void performDML( List<sObject> records ) {
-        if ( records != null ) && !records.isEmpty() ) {
+        if ( ( records != null ) && !records.isEmpty() ) {
             Schema.sObjectType soType = records[0].getSobjectType();
             Schema.DescribeSObjectResult soTypeDescribe = soType.getDescribe();
             String sObjectAPIName = soTypeDescribe.getName();
