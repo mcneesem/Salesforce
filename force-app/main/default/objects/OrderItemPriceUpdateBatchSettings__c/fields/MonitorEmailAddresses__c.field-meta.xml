@@ -3,11 +3,8 @@
     <fullName>MonitorEmailAddresses__c</fullName>
     <description>Used for monitoring the email used to provide status updates from the batch</description>
     <encryptionScheme>None</encryptionScheme>
-    <externalId>false</externalId>
     <label>MonitorEmailAddresses</label>
-    <length>255</length>
     <required>false</required>
     <trackTrending>false</trackTrending>
-    <type>Text</type>
-    <unique>false</unique>
+    <type>TextArea</type>
 </CustomField>
