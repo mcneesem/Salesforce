@@ -173,6 +173,19 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
+                <componentName>orderItemPriceUpdate</componentName>
+                <identifier>c_orderItemPriceUpdate</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!$Permission.CustomPermission.Run_Price_Updates}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
                 <componentName>permissionsDirectory</componentName>
                 <identifier>c_permissionsDirectory</identifier>
                 <visibilityRule>
