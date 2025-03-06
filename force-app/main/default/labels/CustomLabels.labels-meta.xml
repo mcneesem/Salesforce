@@ -5658,7 +5658,7 @@ Climate Plus: https://nexus.insperity.com/groups/38605/posts/3272612-climate-plu
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>TerminationFormBatchGenericToAddress</shortDescription>
-        <value>terminations_team@insperity.com,Form8973@insperity.com</value>
+        <value>terminations@insperity.com</value>
     </labels>
     <labels>
         <fullName>NSP_Termination_Date_Error</fullName>
