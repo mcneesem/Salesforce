@@ -82,7 +82,7 @@ public static void prepareForRevRecGeneration(List<Id> elgibleLineForRevRec){
     }
 }
 
-    private Map<Id,OrderItem> selectInvoiceLineOrderItems( List<blng__InvoiceLine__c> records ) {
+    private static Map<Id,OrderItem> selectInvoiceLineOrderItems( List<blng__InvoiceLine__c> records ) {
         Set<Id> orderProductIds = new Set<Id>();
         if ( ( records != null ) && !records.isEmpty() ) {
             for ( blng__InvoiceLine__c record : records ) {
@@ -107,7 +107,7 @@ public static void prepareForRevRecGeneration(List<Id> elgibleLineForRevRec){
         return response;
     }
 
-    private OrderItem getInvoiceLineOrderItem( Id recordId , Map<Id,OrderItem> orderItemMap ) {
+    private static OrderItem getInvoiceLineOrderItem( Id recordId , Map<Id,OrderItem> orderItemMap ) {
         OrderItem record = null;
         if ( ( recordId != null )
             && ( orderItemMap != null )
