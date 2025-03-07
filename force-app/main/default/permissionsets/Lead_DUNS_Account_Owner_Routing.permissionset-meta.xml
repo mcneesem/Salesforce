@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Lead_DUNS_Account_Owner_Routing</name>
+    </customPermissions>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Lead - DUNS Account Owner Routing</label>
+    <tabSettings>
+        <tab>standard-SemanticModel</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+</PermissionSet>

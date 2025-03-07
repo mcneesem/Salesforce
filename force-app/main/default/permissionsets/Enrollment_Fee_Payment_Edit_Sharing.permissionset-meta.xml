@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Enrollment_Fee_Payment_Edit_Sharing</name>
+    </customPermissions>
+    <description>Provides edit access to the DA/DMs of the sales office associated with the opportunity to the EFP records on the opportunity.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Enrollment Fee Payment - Edit Sharing</label>
+    <tabSettings>
+        <tab>standard-SemanticModel</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+</PermissionSet>

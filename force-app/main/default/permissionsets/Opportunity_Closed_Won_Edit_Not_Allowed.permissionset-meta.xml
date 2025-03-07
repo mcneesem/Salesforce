@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Opportunity_Closed_Won_Edit_Not_Allowed</name>
+    </customPermissions>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Opportunity - Closed Won Edit Not Allowed</label>
+    <tabSettings>
+        <tab>standard-SemanticModel</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+</PermissionSet>
