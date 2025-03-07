@@ -1,5 +1,5 @@
 public with sharing class NSP_TerminationFormTriggerHelper {
-    // test w/ NSP_TerminationFormTriggerHelperTest (84%)
+    // test w/ NSP_TerminationFormTriggerHelperTest (83%)
 
     private static final string SUPERVISOR_DENIED = 'PR Supervisor Denied';
     private static final string TERM_TEAM_DENIED = 'Term Team Denied';
@@ -678,20 +678,35 @@ public with sharing class NSP_TerminationFormTriggerHelper {
         }
     }
 
-    public void deleteTerminationFormSharing(Map<Id,Set<Id>> mDeleteSharingIds){
-        String query = 'SELECT ID FROM NSP_Termination_Form__Share WHERE';
-        for(Id iTForm : mDeleteSharingIds.keySet()){
-            query += ' ( ParentID = \'' + iTForm + '\' AND UserorGroupId in (\'';
-            for(Id userId : mDeleteSharingIds.get(iTForm)){
-                query +=  userId + '\',\'';
+    private void deleteTerminationFormSharing( Map<Id,Set<Id>> mDeleteSharingIds ) {
+        try {
+            if ( ( mDeleteSharingIds != null ) && !mDeleteSharingIds.isEmpty() ) {
+                String query = 'SELECT Id FROM NSP_Termination_Form__Share WHERE';
+                for ( Id iTForm : mDeleteSharingIds.keySet() ) {
+                    query += ' ( ParentId = \'' + iTForm + '\' AND UserOrGroupId in (\'';
+                    for ( Id userId : mDeleteSharingIds.get( iTForm ) ) {
+                        query +=  userId + '\',\'';
+                    }
+                    query = query.removeEnd( ',\'' );
+                    query += ')) OR';
+                }
+                query = query.removeEnd( ' OR' );
+                List<NSP_Termination_Form__Share> lDeleteSharing = (List<NSP_Termination_Form__Share>)Database.query( query );
+                if ( !lDeleteSharing.isEmpty() ) {
+                    List<Database.DeleteResult> results = Database.delete( lDeleteSharing , false );
+                    NSP_ErrorLogHandler.logResults(
+                        NSP_TerminationFormTriggerHelper.class.getName() ,
+                        'deleteTerminationFormSharing:delete' ,
+                        results
+                    );
+                }
             }
-            query = query.removeEnd(',\'');
-            query += ')) OR';
-        }
-        query = query.removeEnd(' OR');
-        List<NSP_Termination_Form__Share> lDeleteSharing = (List<NSP_Termination_Form__Share>)Database.query(query);
-        if(lDeleteSharing.size() > 0){
-            delete lDeleteSharing;
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_TerminationFormTriggerHelper.class.getName() ,
+                'deleteTerminationFormSharing' ,
+                e
+            );
         }
     }
 
