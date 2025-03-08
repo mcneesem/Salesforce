@@ -1111,7 +1111,6 @@ if ((leadNewMap.get(leadId).NSP_Lead_Routing__c == true &&
                 for (Account dunsAcc: accResult) {
                     if ( ( dunsAcc.OwnerId != userAvailableId )
                         && ( dunsAcc.NSP_Account_Status__c == NSP_SalesConstants.INACTIVE )
-                        && ( dunsAcc.Owner.UserRole != null )
                         && ( permittedUserMap.keySet().contains(dunsAcc.OwnerId) )
                         )
                     {
