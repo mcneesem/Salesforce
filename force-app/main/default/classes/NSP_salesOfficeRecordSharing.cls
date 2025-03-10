@@ -150,8 +150,6 @@ public class NSP_salesOfficeRecordSharing {
         Map<String,Set<String>> mapSalesOfficeSetAccountId = new  Map<String,Set<String>>();
         List<AccountShare> accountShareList = new List<AccountShare>();
         try{   
-            /*Map<Id,NSP_Account_Team__c> accountTeamMap = new Map<Id,NSP_Account_Team__c>([SELECT Id,NSP_Role__c,NSP_Account__c,NSP_User__c,TOLabel(NSP_Account__r.Owner.NSP_Sales_Office_Membership__c),TOLabel(NSP_User__r.NSP_Sales_Office_Membership__c) FROM NSP_Account_Team__c 
-                                                                                          WHERE Id IN:newAccountTeamMap.keySet() AND NSP_User__r.NSP_Sales_Office_Membership__c != null AND NSP_Role__c =:Label.NSP_AccountTeamMemberRole]);*/
             Map<Id,NSP_Account_Team__c> accountTeamMap = new Map<Id,NSP_Account_Team__c>([SELECT Id,NSP_Role__c,NSP_Account__c,NSP_User__c,TOLabel(NSP_Account__r.Owner.NSP_Sales_Office_Membership__c),TOLabel(NSP_User__r.NSP_Sales_Office_Membership__c) FROM NSP_Account_Team__c 
                                                                                           WHERE Id IN:newAccountTeamMap.keySet() AND NSP_User__r.NSP_Sales_Office_Membership__c != null ]);                                                                           
             for(NSP_Account_Team__c acTeam:accountTeamMap.values()){
@@ -356,7 +354,7 @@ public class NSP_salesOfficeRecordSharing {
                         if(mapoldOwnerIdSetLeadId.get(oldLeadMap.get(lead.Id).OwnerId)==null){
                             mapoldOwnerIdSetLeadId.put(oldLeadMap.get(lead.Id).OwnerId, new Set <String>());
                         }
-                        mapoldOwnerIdSetLeadId.get(oldLeadMap.get(lead.Id).OwnerId).add(lead.Id);  
+                        mapoldOwnerIdSetLeadId.get(oldLeadMap.get(lead.Id).OwnerId).add(lead.Id);
                     }
                 }
             }
@@ -390,7 +388,7 @@ public class NSP_salesOfficeRecordSharing {
                         if(!oldLeadSalesOfficeList.isEmpty() && oldLeadSalesOfficeList.contains(newSalesOffice) ){
                             oldLeadSalesOfficeList.remove(newSalesOffice);
                         }
-                    }  
+                    }
                 }
                 // creating a map of  Lead Id and set of Old Sales office
                 if(!oldLeadSalesOfficeList.isEmpty()){
