@@ -28,7 +28,7 @@
             <assignToReference>Faultelement</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Get_WX_Tax_Queu</stringValue>
+                <stringValue>Get_WX_Tax_Queue</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -61,7 +61,7 @@
             <name>Found_Match</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Get_WX_Tax_Queu</leftValueReference>
+                <leftValueReference>Get_WX_Tax_Queue</leftValueReference>
                 <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -71,7 +71,7 @@
                 <leftValueReference>$Record.OwnerId</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <elementReference>Get_WX_Tax_Queu.Id</elementReference>
+                    <elementReference>Get_WX_Tax_Queue.Id</elementReference>
                 </rightValue>
             </conditions>
             <connector>
@@ -102,7 +102,7 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <recordLookups>
-        <name>Get_WX_Tax_Queu</name>
+        <name>Get_WX_Tax_Queue</name>
         <label>Get WX Tax Queue</label>
         <locationX>440</locationX>
         <locationY>276</locationY>
@@ -177,8 +177,9 @@
         <recordTriggerType>Create</recordTriggerType>
         <scheduledPaths>
             <connector>
-                <targetReference>Get_WX_Tax_Queu</targetReference>
+                <targetReference>Get_WX_Tax_Queue</targetReference>
             </connector>
+            <pathType>AsyncAfterCommit</pathType>
         </scheduledPaths>
         <triggerType>RecordAfterSave</triggerType>
     </start>
