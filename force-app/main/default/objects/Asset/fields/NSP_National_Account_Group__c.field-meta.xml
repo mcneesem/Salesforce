@@ -328,14 +328,24 @@
                 <label>Blue Collar Success Group</label>
             </value>
             <value>
-                <fullName>94</fullName>
+                <fullName>96</fullName>
                 <default>false</default>
-                <label>5Iron</label>
+                <label>Revelstroke</label>
             </value>
             <value>
-                <fullName>95</fullName>
+                <fullName>97</fullName>
                 <default>false</default>
-                <label>NextGen</label>
+                <label>Skytale Group</label>
+            </value>
+            <value>
+                <fullName>98</fullName>
+                <default>false</default>
+                <label>Resilient Capital</label>
+            </value>
+            <value>
+                <fullName>99</fullName>
+                <default>false</default>
+                <label>Housatonic Partners</label>
             </value>
         </valueSetDefinition>
     </valueSet>
