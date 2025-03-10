@@ -338,6 +338,7 @@ public class NSP_salesOfficeRecordSharing {
     * Params:       Map<Id,Lead> newLeadMap, Map<Id,Lead>oldLead
     * ********************************************************************************************/
     public static void shareLeadsonUpdate(Map < Id, Lead > newLeadMap, Map < Id, Lead > oldLeadMap) {
+        Map<Id,User> permittedShareSOUserMap = CustomPermissionController.getPermittedUsersMap('Lead_Owner_Update_Share_SO');
         Map<String,Set<String>> mapLeadIdSetOldSalesOffice = new  Map<String,Set<String>>();
         Map<String,Set<String>> mapSalesOfficeSetLeadId = new  Map<String,Set<String>>();
         Map<String,Set<String>> mapnewOwnerIdSetLeadId = new Map<String,Set<String>>();
@@ -357,18 +358,19 @@ public class NSP_salesOfficeRecordSharing {
                         }
                         mapoldOwnerIdSetLeadId.get(oldLeadMap.get(lead.Id).OwnerId).add(lead.Id);  
                     }
-                }      
+                }
             }
-            Map<Id,User> leadNewOwnerMap = new Map<Id,User>([SELECT Id,ToLabel(NSP_Sales_Office_Membership__c) FROM User WHERE Id IN:mapnewOwnerIdSetLeadId.KeySet() AND
-                                                             UserRole.Name =:NSP_SalesConstants.BPARole ]);                                              
+            Map<Id,User> leadNewOwnerMap = new Map<Id,User>([ SELECT Id,ToLabel(NSP_Sales_Office_Membership__c) FROM User WHERE Id IN:mapnewOwnerIdSetLeadId.KeySet() ]);                                              
 
-            Map<Id,User> leadOldOwnerMap = new Map<Id,User>([SELECT Id,UserRole.Name,ToLabel(NSP_Sales_Office_Membership__c) FROM User WHERE Id IN:mapoldOwnerIdSetLeadId.KeySet() 
+            Map<Id,User> leadOldOwnerMap = new Map<Id,User>([ SELECT Id,UserRole.Name,ToLabel(NSP_Sales_Office_Membership__c) FROM User WHERE Id IN:mapoldOwnerIdSetLeadId.KeySet() 
                                                              AND NSP_Sales_Office_Membership__c != null ]);
             for(Lead lead :newLeadMap.values()){
                 Set<String> oldLeadSalesOfficeList = new Set<String>();
                 Set<String> newLeadSalesOfficeList = new Set<String>();
                 // creating List of New Owner Sales Office
-                if(leadNewOwnerMap.containsKey(lead.OwnerId) && leadNewOwnerMap.get(lead.OwnerId).NSP_Sales_Office_Membership__c != null){
+                if( ( leadNewOwnerMap.containsKey(lead.OwnerId) )
+                 && ( leadNewOwnerMap.get(lead.OwnerId).NSP_Sales_Office_Membership__c != null )
+                 && ( permittedShareSOUserMap.containsKey(lead.OwnerId) ) ){
                     newLeadSalesOfficeList.addAll(new List<String>(leadNewOwnerMap.get(lead.OwnerId).NSP_Sales_Office_Membership__c.Split(';')));
                 }
                 // creating list of old owner sales office

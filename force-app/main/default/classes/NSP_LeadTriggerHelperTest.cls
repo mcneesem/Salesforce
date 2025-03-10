@@ -724,5 +724,4 @@ private class NSP_LeadTriggerHelperTest {
  
          Test.stopTest();
     }
- 
 }
