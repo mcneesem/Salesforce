@@ -4,8 +4,7 @@
     <active>true</active>
     <description>This validation rule is created as part of CR-020. This describes, Product of Interest, Zip Code, Number of Employees should be populated to check Assign Lead Check box for If user role is Inbound rep or Inbound Manager.</description>
     <errorConditionFormula>AND( 
-  OR($UserRole.Name = &apos;Inbound Rep&apos;, 
-     $UserRole.Name = &apos;Inbound Manager&apos;),
+  $Permission.Lead_Assign_Lead_Check,
   OR(ISBLANK(NumberOfEmployees), 
      ISBLANK(PostalCode),
       INCLUDES(NSP_Product_Interest__c, &apos;&apos;)),
