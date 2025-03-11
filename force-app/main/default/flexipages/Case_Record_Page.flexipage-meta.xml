@@ -774,6 +774,24 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Required_Documentation_Attached__c</fieldItem>
                 <identifier>RecordRequired_Documentation_Attached_cField</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 OR 2 OR 3</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Category_Picklist__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Compensation Services</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Subcategory_Picklist__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Client Consultation</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Subcategory_Picklist__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Salary Survey</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
