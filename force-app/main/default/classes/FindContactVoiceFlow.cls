@@ -1,4 +1,4 @@
-public class FindContactVoiceFlow {
+public with sharing class FindContactVoiceFlow {
     // test w/ FindContactVoiceFlowTest (95%)
 
     @InvocableMethod(label='Get Contacts by Phone')
