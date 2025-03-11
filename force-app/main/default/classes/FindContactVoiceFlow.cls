@@ -15,7 +15,7 @@ public class FindContactVoiceFlow {
                 List<List<Contact>> searchResults = [
                     FIND :input IN PHONE FIELDS
                     RETURNING Contact(
-                        Id , Name , Email , HomePhone , NSP_Work_Phone__c , MobilePhone
+                        Id , Name , Email , HomePhone , NSP_Work_Phone__c , MobilePhone , NSP_Last_4Digit_Of_SSN__c , NSP_Per_ID__c , NSP_Date_Of_Birth_Unmasked__c , MailingAddress
                         WHERE ( CreatedDate >= :(limitDate) )
                         LIMIT :FindContactVoiceFlow.limitSearch
                     )
