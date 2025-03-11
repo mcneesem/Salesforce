@@ -777,8 +777,8 @@
                 <visibilityRule>
                     <booleanFilter>1 OR 2 OR 3</booleanFilter>
                     <criteria>
-                        <leftValue>{!Record.NSP_Category_Picklist__c}</leftValue>
-                        <operator>NE</operator>
+                        <leftValue>{!Record.NSP_Category__c}</leftValue>
+                        <operator>EQUAL</operator>
                         <rightValue>Compensation Services</rightValue>
                     </criteria>
                     <criteria>
