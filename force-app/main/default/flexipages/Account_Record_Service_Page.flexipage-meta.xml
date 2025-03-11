@@ -139,7 +139,14 @@
                             </visibilityRule>
                         </valueListItems>
                         <valueListItems>
-                            <value>CustomButton.Account.Account_Management_Report</value>
+                            <value>Account.Account_Management_Report</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!$Permission.CustomPermission.AMR_Button}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>true</rightValue>
+                                </criteria>
+                            </visibilityRule>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
