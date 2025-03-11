@@ -355,7 +355,7 @@ public class NSP_salesOfficeRecordSharing {
         Map<String,Set<String>> mapoldOwnerIdSetLeadId = new Map<String,Set<String>>();
         List<LeadShare> deleteLeadShareList = new List<LeadShare>();
         List<LeadShare> newLeadShareList = new List<LeadShare>();
-        try{
+        try{ 
             for(Lead lead:newLeadMap.values()){
                 if(lead.OwnerId !=oldLeadMap.get(lead.Id).OwnerId && String.valueOf(lead.OwnerId).startsWith('005') ){
                     mapnewOwnerIdSetLeadId = getNewOwnerIdSetLeadIdMap(mapnewOwnerIdSetLeadId, lead, oldLeadMap);
