@@ -712,7 +712,7 @@
         <name>Is_First_Call_Resolution_Enabled</name>
         <label>Is First Call Resolution Enabled</label>
         <locationX>732</locationX>
-        <locationY>5780</locationY>
+        <locationY>5522</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Is_Enabled_First_Call_Resolution</name>
@@ -1095,8 +1095,8 @@
     <screens>
         <name>Fault_Screen</name>
         <label>Fault Screen</label>
-        <locationX>842</locationX>
-        <locationY>5456</locationY>
+        <locationX>4186</locationX>
+        <locationY>458</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1192,7 +1192,7 @@
                     <inputParameters>
                         <name>columns</name>
                         <value>
-                            <stringValue>[{&quot;apiName&quot;:&quot;Name&quot;,&quot;guid&quot;:&quot;column-02f9&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:0,&quot;label&quot;:&quot;Full Name&quot;,&quot;type&quot;:&quot;text&quot;},{&quot;apiName&quot;:&quot;Email&quot;,&quot;guid&quot;:&quot;column-7f30&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:1,&quot;label&quot;:&quot;Email&quot;,&quot;type&quot;:&quot;email&quot;},{&quot;apiName&quot;:&quot;NSP_Work_Phone__c&quot;,&quot;guid&quot;:&quot;column-7b98&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:2,&quot;label&quot;:&quot;Work Phone #&quot;,&quot;type&quot;:&quot;phone&quot;},{&quot;apiName&quot;:&quot;MobilePhone&quot;,&quot;guid&quot;:&quot;column-85f3&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:3,&quot;label&quot;:&quot;Mobile Phone&quot;,&quot;type&quot;:&quot;phone&quot;},{&quot;apiName&quot;:&quot;HomePhone&quot;,&quot;guid&quot;:&quot;column-ec33&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:4,&quot;label&quot;:&quot;Home Phone&quot;,&quot;type&quot;:&quot;phone&quot;}]</stringValue>
+                            <stringValue>[{&quot;apiName&quot;:&quot;Name&quot;,&quot;guid&quot;:&quot;column-02f9&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:0,&quot;label&quot;:&quot;Full Name&quot;,&quot;type&quot;:&quot;text&quot;},{&quot;apiName&quot;:&quot;Email&quot;,&quot;guid&quot;:&quot;column-7f30&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:1,&quot;label&quot;:&quot;Email&quot;,&quot;type&quot;:&quot;email&quot;},{&quot;apiName&quot;:&quot;NSP_Last_4Digit_Of_SSN__c&quot;,&quot;guid&quot;:&quot;column-4603&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:2,&quot;label&quot;:&quot;Last 4 Digit of SSN&quot;,&quot;type&quot;:&quot;text&quot;},{&quot;apiName&quot;:&quot;NSP_Per_ID__c&quot;,&quot;guid&quot;:&quot;column-5c92&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:3,&quot;label&quot;:&quot;Per ID&quot;,&quot;type&quot;:&quot;text&quot;},{&quot;apiName&quot;:&quot;NSP_Date_Of_Birth_Unmasked__c&quot;,&quot;guid&quot;:&quot;column-6e2f&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:4,&quot;label&quot;:&quot;Date Of Birth&quot;,&quot;type&quot;:&quot;date-local&quot;},{&quot;apiName&quot;:&quot;MailingAddress&quot;,&quot;guid&quot;:&quot;column-784f&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:false,&quot;order&quot;:5,&quot;label&quot;:&quot;Mailing Address&quot;,&quot;type&quot;:&quot;customAddress&quot;}]</stringValue>
                         </value>
                     </inputParameters>
                     <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -1293,8 +1293,8 @@
     <subflows>
         <name>Fault_Handler</name>
         <label>Fault Handler</label>
-        <locationX>842</locationX>
-        <locationY>5348</locationY>
+        <locationX>4186</locationX>
+        <locationY>350</locationY>
         <connector>
             <targetReference>Fault_Screen</targetReference>
         </connector>
@@ -1322,7 +1322,7 @@
         <name>Handle_First_Call_Resolution</name>
         <label>Handle First Call Resolution</label>
         <locationX>600</locationX>
-        <locationY>5888</locationY>
+        <locationY>5630</locationY>
         <flowName>Handle_First_Call_Resolution</flowName>
         <inputAssignments>
             <name>firstCallResolutionHours</name>
