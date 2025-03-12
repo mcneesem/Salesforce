@@ -25,8 +25,8 @@ export default class DocusignAMR extends LightningElement {
     @wire(getDocusignURL)  
     getCustomSettingValues({ error, data }) {  
         if (data) {  
-            this.accountId = data.AccountNumber__c;  
-            this.clmBaseUrl = data.CLMBaseUrl__c;  
+            this.accountId = data.Docusign_Account_Id__c;  
+            this.clmBaseUrl = data.CLM_Base_URL__c;  
         }else if(error) {
             this.showToast('Error', error.message, 'error');
         }
