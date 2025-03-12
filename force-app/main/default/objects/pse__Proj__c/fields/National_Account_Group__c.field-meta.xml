@@ -73,10 +73,10 @@
     &apos;93&apos; , &apos;Blue Collar Success Group&apos; ,
     &apos;94&apos; , &apos;5Iron&apos; ,
     &apos;95&apos; , &apos;NextGen&apos; ,
-&apos;96&apos; , &apos;Revelstroke&apos;,
-&apos;97&apos; , &apos;Skytale Group&apos;,
-&apos;98&apos; , &apos;Resilient Capital&apos;,
-&apos;99&apos; , &apos;Housatonic Partners&apos;,
+    &apos;96&apos; , &apos;Revelstroke&apos;,
+    &apos;97&apos; , &apos;Skytale Group&apos;,
+    &apos;98&apos; , &apos;Resilient Capital&apos;,
+    &apos;99&apos; , &apos;Housatonic Partners&apos;,
 TEXT(pse__Account__r.WO_Asset__r.NSP_National_Account_Group__c)
 )
 )</formula>
