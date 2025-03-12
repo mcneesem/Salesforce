@@ -6,7 +6,7 @@
     </classAccesses>
     <customPermissions>
         <enabled>true</enabled>
-        <name>AMR_Button</name>
+        <name>Docusign_Account_Management_Report</name>
     </customPermissions>
     <description>Permission Set for Account Management Report button</description>
     <hasActivationRequired>false</hasActivationRequired>
