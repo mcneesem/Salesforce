@@ -68,8 +68,8 @@ public with sharing class OrderItemPriceUpdateBatch implements Database.Batchabl
                 SBQQ__QuotedListPrice__c ,
                 blng__BillableUnitPrice__c ,
                 UnitPrice ,
-                NSP_Consumption_Rate_Per_Unit__c,
-                Update_Record_Price__c 
+                NSP_Consumption_Rate_Per_Unit__c ,
+                Update_Record_Price__c
             FROM OrderItem
             WHERE (
                 ( Price_Increase_Status__c = 'Pending' )
@@ -379,24 +379,24 @@ public with sharing class OrderItemPriceUpdateBatch implements Database.Batchabl
                 op.Price_Increase_Status__c = 'Executed';
                 op.Last_Batch_Execution_Date__c = system.today();
                 //check price update requirement
-                if(op.Update_Record_Price__c == False){               
+                if ( !op.Update_Record_Price__c ) {
                     continue; //skip price updates
                 }
                 //perform flat price update
-                populateFlatPrice(op);
+                populateFlatPrice( op );
                 //perform per unit update
-                populatePerUnitPrices(op);
+                populatePerUnitPrices( op );
             }
         }
     }
-    
+
     //update OrderItem flat prices
-    private static void populateFlatPrice(OrderItem op){
+    private static void populateFlatPrice( OrderItem op ) {
         //check conditional monthly update
-        if ( 
-            ( op != null ) 
-            && ( String.isNotBlank( op.Monthly_Minimum_Price_Increase_Type__c ) )
-        ) {
+        if ( ( op != null ) 
+            && String.isNotBlank( op.Monthly_Minimum_Price_Increase_Type__c )
+            )
+        {
             String monthlyType = op.Monthly_Minimum_Price_Increase_Type__c;
             //if increase value is null assign 0
             Decimal monthlyIncrease = ( ( op.Monthly_Minimum_Price_Increase_Value__c != null ) ? op.Monthly_Minimum_Price_Increase_Value__c : 0 );
@@ -407,13 +407,13 @@ public with sharing class OrderItemPriceUpdateBatch implements Database.Batchabl
             op.NSP_Consumption_Rate_Flat_Price__c = ( monthlyType == PERCENT ) ? ( currPrice * monthlyFactor ) : ( currPrice + monthlyIncrease );
         }
     }
-    
+
     //update OrderItem Per unit prices
-    private static void populatePerUnitPrices(OrderItem op){
-        if (
-            ( op != null ) 
-            && ( String.isNotBlank(op.Per_Unit_Price_Increase_Type__c ) ) 
-        ) {
+    private static void populatePerUnitPrices( OrderItem op ) {
+        if ( ( op != null ) 
+            && String.isNotBlank(op.Per_Unit_Price_Increase_Type__c )
+            )
+        {
             String increaseType = op.Per_Unit_Price_Increase_Type__c;
             Decimal increaseValue = ( ( op.Per_Unit_Price_Increase_Value__c != null ) ? op.Per_Unit_Price_Increase_Value__c : 0 );
             Decimal increaseFactor = ( 1 + ( increaseValue / 100 ) );
