@@ -40,14 +40,13 @@ public with sharing class DocusignAMR {
     }
     
     @AuraEnabled(cacheable=true)
-    public static DocuSign_Settings__c getDocusignURL() {
-        DocuSign_Settings__c result = null;
+    public static NSP_Docusign_Account_Details__c getDocusignURL() {
+        NSP_Docusign_Account_Details__c result = null;
         
-        // Query to get the DocuSign settings where IsEnabled__c is TRUE
-        List<DocuSign_Settings__c> docusignSettingsList = [
-            SELECT AccountId__c, AccountNumber__c, CLMBaseUrl__c 
-            FROM DocuSign_Settings__c 
-            WHERE IsEnabled__c = TRUE
+        // Query to get the DocuSign settings
+        List<NSP_Docusign_Account_Details__c> docusignSettingsList = [
+            SELECT Docusign_Account_Id__c, CLM_Base_URL__c 
+            FROM NSP_Docusign_Account_Details__c 
             LIMIT 1
         ];
         
