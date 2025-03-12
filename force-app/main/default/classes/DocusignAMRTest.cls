@@ -2,7 +2,7 @@
 private class DocusignAMRTest {
 
     @TestSetup
-    public static void setUpData(){
+    private static void setUpData(){
         Account oAccount = (Account)NSP_TestExtendedDataFactory.createSObject(new Account(), 'NSP_TestDataFactory.AccountDefaults', false);
         oAccount.Name = 'Test Account';
         insert oAccount;
@@ -31,7 +31,7 @@ private class DocusignAMRTest {
         insert customSetting;
     }
     @IsTest 
-    public static void getPrimaryAccountTest() {
+    private static void getPrimaryAccountTest() {
         Test.startTest();
         Account acc = [SELECT Id FROM Account WHERE Name = 'Test Account' LIMIT 1];
         Map<Id, String> accountMap = DocusignAMR.getPrimaryAccount(acc.Id);
@@ -40,7 +40,7 @@ private class DocusignAMRTest {
     }
     
     @IsTest 
-    public static void getDocusignURLTest() {
+    private static void getDocusignURLTest() {
         Test.startTest();
         DocuSign_Settings__c result = DocusignAMR.getDocusignURL();
         System.assertEquals('50202', result.AccountNumber__c);
