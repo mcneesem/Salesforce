@@ -22,12 +22,9 @@ private class DocusignAMRTest {
         accGrpMem.NSP_Primary__c = TRUE;
         INSERT accGrpMem;
         
-        DocuSign_Settings__c customSetting = new DocuSign_Settings__c();
-        customSetting.AccountId__c = 'e22ffda7-6a07-476c-89df-175b2404dd77';
-        customSetting.Name = 'DEV';
-        customSetting.AccountNumber__c = '50202';
-        customSetting.CLMBaseUrl__c = 'uatna11.springcm.com';
-        customSetting.IsEnabled__c = TRUE;
+        NSP_Docusign_Account_Details__c customSetting = new NSP_Docusign_Account_Details__c();
+        customSetting.Docusign_Account_Id__c = '50202';
+        customSetting.CLM_Base_URL__c = 'uatna11.springcm.com';
         insert customSetting;
     }
     @IsTest 
@@ -42,8 +39,8 @@ private class DocusignAMRTest {
     @IsTest 
     private static void getDocusignURLTest() {
         Test.startTest();
-        DocuSign_Settings__c result = DocusignAMR.getDocusignURL();
-        System.assertEquals('50202', result.AccountNumber__c);
+        NSP_Docusign_Account_Details__c  result = DocusignAMR.getDocusignURL();
+        System.assertEquals('50202', result.Docusign_Account_Id__c);
         Test.stopTest();
     }
 }
