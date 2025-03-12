@@ -1,5 +1,5 @@
 public with sharing class DocusignAMR {
-    // test w/ DocusignAMRTest (95%)
+    // test w/ DocusignAMRTest (94%)
     
     @AuraEnabled(cacheable=true)  
     public static Map<Id, String> getPrimaryAccount(Id accountId) {
@@ -41,13 +41,6 @@ public with sharing class DocusignAMR {
     
     @AuraEnabled(cacheable=true)
     public static NSP_Docusign_Account_Details__c getDocusignURL() {
-        // Query to get the DocuSign settings
-        List<NSP_Docusign_Account_Details__c> docusignSettingsList = [
-            SELECT Docusign_Account_Id__c, CLM_Base_URL__c 
-            FROM NSP_Docusign_Account_Details__c 
-            LIMIT 1
-        ];
-        
         return NSP_Docusign_Account_Details__c.getInstance( UserInfo.getUserId() );
     }
 }
