@@ -10,7 +10,7 @@
     </customPermissions>
     <description>Permission Set for Account Management Report button</description>
     <hasActivationRequired>false</hasActivationRequired>
-    <label>DocuSign AMR</label>
+    <label>Docusign Account Management Report</label>
     <tabSettings>
         <tab>standard-SemanticModel</tab>
         <visibility>Visible</visibility>
