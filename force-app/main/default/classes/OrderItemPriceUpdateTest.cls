@@ -119,7 +119,8 @@ private class OrderItemPriceUpdateTest {
                 Last_Batch_Execution_Date__c,
                 SBQQ__QuotedListPrice__c ,
                 blng__BillableUnitPrice__c ,
-                UnitPrice
+                UnitPrice,
+                Price_Update_Records__c 
             FROM OrderItem
             LIMIT 1
         ];
@@ -128,6 +129,7 @@ private class OrderItemPriceUpdateTest {
         op.Per_Unit_Price_Increase_Type__c = 'Percentage';
         op.Per_Unit_Price_Increase_Value__c = 1;
         op.Price_Increase_Status__c = 'Pending';
+        op.Price_Update_Records__c = 'OrderItem;SBQQ__OrderItemConsumptionRate__c;SBQQ__Subscription__c;SBQQ__SubscriptionConsumptionRate__c';
         
         update op;
         

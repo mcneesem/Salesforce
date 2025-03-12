@@ -379,31 +379,52 @@ public with sharing class OrderItemPriceUpdateBatch implements Database.Batchabl
                 op.Price_Increase_Status__c = 'Executed';
                 op.Last_Batch_Execution_Date__c = system.today();
                 //check price update requirement
-                if(op.Update_Record_Price__c == False){                    
+                if(op.Update_Record_Price__c == False){               
                     continue; //skip price updates
                 }
-                //check conditional monthly update
-                if ( String.isNotBlank( op.Monthly_Minimum_Price_Increase_Type__c ) ) {
-                    String monthlyType = op.Monthly_Minimum_Price_Increase_Type__c;
-                    Decimal monthlyIncrease = ( ( op.Monthly_Minimum_Price_Increase_Value__c != null ) ? op.Monthly_Minimum_Price_Increase_Value__c : 0 );
-                    Decimal monthlyFactor = ( 1 + ( monthlyIncrease / 100 ) );
-                    Decimal currPrice = ( ( op.NSP_Consumption_Rate_Flat_Price__c != null ) ? op.NSP_Consumption_Rate_Flat_Price__c : 0 );
-                    op.NSP_Consumption_Rate_Flat_Price__c = ( monthlyType == PERCENT ) ? ( currPrice * monthlyFactor ) : ( currPrice + monthlyIncrease );
-                }
+                //perform flat price update
+                populateFlatPrice(op);
                 //perform per unit update
-                if ( String.isNotBlank(op.Per_Unit_Price_Increase_Type__c ) ) {
-                    String increaseType = op.Per_Unit_Price_Increase_Type__c;
-                    Decimal increaseValue = ( ( op.Per_Unit_Price_Increase_Value__c != null ) ? op.Per_Unit_Price_Increase_Value__c : 0 );
-                    Decimal increaseFactor = ( 1 + ( increaseValue / 100 ) );
-                    //update all price fields
-                    for ( String priceField : opPriceFields ) {
-                        Decimal price = ( ( (Decimal)op.get( priceField ) != null ) ? (Decimal)op.get( priceField ) : 0 );
-                        op.put(
-                            priceField ,
-                            ( ( increaseType == PERCENT ) ? ( price * increaseFactor ) : ( price + increaseValue ) )
-                        );
-                    }
-                }
+                populatePerUnitPrices(op);
+            }
+        }
+    }
+    
+    //update OrderItem flat prices
+    private static void populateFlatPrice(OrderItem op){
+        //check conditional monthly update
+        if ( 
+            ( op != null ) 
+            && ( String.isNotBlank( op.Monthly_Minimum_Price_Increase_Type__c ) )
+        ) {
+            String monthlyType = op.Monthly_Minimum_Price_Increase_Type__c;
+            //if increase value is null assign 0
+            Decimal monthlyIncrease = ( ( op.Monthly_Minimum_Price_Increase_Value__c != null ) ? op.Monthly_Minimum_Price_Increase_Value__c : 0 );
+            Decimal monthlyFactor = ( 1 + ( monthlyIncrease / 100 ) );
+            //check current price
+            Decimal currPrice = ( ( op.NSP_Consumption_Rate_Flat_Price__c != null ) ? op.NSP_Consumption_Rate_Flat_Price__c : 0 );
+            //update current price
+            op.NSP_Consumption_Rate_Flat_Price__c = ( monthlyType == PERCENT ) ? ( currPrice * monthlyFactor ) : ( currPrice + monthlyIncrease );
+        }
+    }
+    
+    //update OrderItem Per unit prices
+    private static void populatePerUnitPrices(OrderItem op){
+        if (
+            ( op != null ) 
+            && ( String.isNotBlank(op.Per_Unit_Price_Increase_Type__c ) ) 
+        ) {
+            String increaseType = op.Per_Unit_Price_Increase_Type__c;
+            Decimal increaseValue = ( ( op.Per_Unit_Price_Increase_Value__c != null ) ? op.Per_Unit_Price_Increase_Value__c : 0 );
+            Decimal increaseFactor = ( 1 + ( increaseValue / 100 ) );
+            //update all price fields
+            for ( String priceField : opPriceFields ) {
+                //get current price
+                Decimal price = ( ( (Decimal)op.get( priceField ) != null ) ? (Decimal)op.get( priceField ) : 0 );
+                op.put(
+                    priceField ,
+                    ( ( increaseType == PERCENT ) ? ( price * increaseFactor ) : ( price + increaseValue ) )
+                );
             }
         }
     }
