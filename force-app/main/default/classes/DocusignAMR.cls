@@ -41,8 +41,6 @@ public with sharing class DocusignAMR {
     
     @AuraEnabled(cacheable=true)
     public static NSP_Docusign_Account_Details__c getDocusignURL() {
-        NSP_Docusign_Account_Details__c result = null;
-        
         // Query to get the DocuSign settings
         List<NSP_Docusign_Account_Details__c> docusignSettingsList = [
             SELECT Docusign_Account_Id__c, CLM_Base_URL__c 
@@ -50,10 +48,6 @@ public with sharing class DocusignAMR {
             LIMIT 1
         ];
         
-        if (!docusignSettingsList.isEmpty()) {
-            result = docusignSettingsList[0];
-        }
-        
-        return result;
+        return NSP_Docusign_Account_Details__c.getInstance( UserInfo.getUserId() );
     }
 }
