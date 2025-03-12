@@ -23,6 +23,8 @@ public class NSP_AccountTriggerHelper {
     public static List<string> MMRoles = System.Label.NSP_MidMarket_Roles.split(',');
     // Added as part of 215091
     public static List<string> allowedAssignAvailableRoles = System.Label.NSP_Assign_Avail_Roles.split(',');
+    private static Map<Id,User> ownerUpdatePermittedUserMap = CustomPermissionController.getPermittedUsersMap('Account_Owner_Restrict_Update');
+    private static Map<Id,User> templSelectUpdPermittedUserMap = CustomPermissionController.getPermittedUsersMap('Template_Selection_Owner_Update');
     
     /**
      * Iterates throught the list of new Account and passes the required attributes to other methods.
@@ -45,18 +47,18 @@ public class NSP_AccountTriggerHelper {
                 if (accountObj.RecordTypeId == PARTNER_RECORDTYPE_ID) {
                     accountObj.NSP_Partner_Lifecycle__c = NSP_SalesConstants.EVALUATION;
                 }
-                if ( accountObj.RecordTypeId==PARTNER_RECORDTYPE_ID
-                    && userDetails.UserRole.Name == NSP_SalesConstants.BPA_User
-                    && String.isNotBlank(userDetails.NSP_Sales_Office__c)
-                    )
+                if ( ( accountObj.RecordTypeId==PARTNER_RECORDTYPE_ID )
+                     && ( CustomPermissionController.checkUserPermission( 'Account_Partner_Update_Loyalty_from_SO' , UserInfo.getUserId() ) )
+                     && ( String.isNotBlank(userDetails.NSP_Sales_Office__c) )
+                   )
                 {
                     // Added as part of DF-01154
                     bpaAccountList.add(accountObj);
                     salesOfficeSet.add(userDetails.NSP_Sales_Office__c);
                 }
-                if ( accountObj.RecordTypeId==PARTNER_RECORDTYPE_ID
-                    && userDetails.UserRole.Name == NSP_SalesConstants.BPC_USER
-                    )
+                if ( ( accountObj.RecordTypeId==PARTNER_RECORDTYPE_ID )
+                     && ( CustomPermissionController.checkUserPermission( 'Account_Partner_MidMarket_Seller' , UserInfo.getUserId() ) )
+                   )
                 {
                     accountObj.NSP_Channel_Program_Manager__c = system.label.NSP_CPM_USER;
                 }
@@ -90,8 +92,8 @@ public class NSP_AccountTriggerHelper {
      * @param accountOldMap Map of Old Account.
      * @return void
      *
-     */    
-    //Moved out of beforeUpdateDirector to fix SOQL issue _ DF-04068    
+     */
+    //Moved out of beforeUpdateDirector to fix SOQL issue _ DF-04068
     public void accountUpdate( Map<Id,Account> accountNewMap , Map<Id,Account> accountOldMap ) {
         try {
             User userDetails =[SELECT Id, Name, UserRoleId, UserRole.Name, Profile.Name, ToLabel(NSP_Sales_Office__c) FROM User WHERE Id =: userinfo.getUserId() ];
@@ -108,12 +110,18 @@ public class NSP_AccountTriggerHelper {
                 'Named_Account_Group_Bypass_Restrictions',
                 UserInfo.getUserId()
             );
+            Boolean hasAllowUpdateMMRole = CustomPermissionController.checkUserPermission(
+                'Allow_Update_MidMarket_Role',
+                UserInfo.getUserId()
+            );
             //Added as part of 128176
             // Modified on 02/2023-part of 194459- Bypass for MM roles
-            if(!hasNamedAccountGroupBypass && userDetails.Profile.Name == NSP_SalesConstants.SalesManager && (!MMRoles.contains(userDetails.UserRole.Name))){
-                if(!getPermSet.isEmpty() || Test.isRunningTest()){
+            if( ( !hasNamedAccountGroupBypass )
+             && ( userDetails.Profile.Name == NSP_SalesConstants.SalesManager )
+             && ( !hasAllowUpdateMMRole ) 
+             && ( ( !getPermSet.isEmpty() )
+                || ( Test.isRunningTest() ) ) ){
                     restrictAccountChange(accountNewMap, accountOldMap, userDetails);
-                }
             }
         } catch ( Exception e ) {
             NSP_AccountTriggerHelper.handleException( e , 'accountUpdate' );
@@ -527,7 +535,7 @@ WHERE (userRole.Name = 'Loyalty Advisor' OR userRole.Name = 'Channel Program Man
                 //if Opportunity owner is BPA
                 //set BPA as owner or set as dummy user
                 if (accountObj.NSP_BPA__c == null) {
-                    if (accountObj.Account_Owner_Role__c == NSP_SalesConstants.BPA_User) {
+                    if ( templSelectUpdPermittedUserMap.keySet().contains( accountObj.OwnerId ) ) {
                         accountObj.NSP_BPA__c = accountObj.OwnerId;
                     } else {
                         accountObj.NSP_BPA__c = dummyUser[0].Id;
@@ -566,12 +574,11 @@ WHERE (userRole.Name = 'Loyalty Advisor' OR userRole.Name = 'Channel Program Man
             Map<String, string> accOwnerSalesOfficeMap = this.selectAccountOwnerSalesOfficeMap( accountOldMap );
             Set<Id> accountTeamMemberId = this.selectAccountTeamMemberIds( accountNewMap );
             Id availableUserId = '0054x000008PgqNAAS'; // 'Available' User Id...
-            String loggedInUserRoleName = loggedinUser.UserRole.Name;
             for ( Account acc : accountNewMap.values() ) {
                 Account oldRecord = accountOldMap.get( acc.Id );
                 Boolean isAllowAssignAvailable = (
                     ( acc.OwnerId != availableUserId )
-                    && NSP_AccountTriggerHelper.allowedAssignAvailableRoles.contains( loggedInUserRoleName )
+                    && ( CustomPermissionController.checkUserPermission( 'Account_Allow_Assign_Available' , UserInfo.getUserId() ) )
                 );
                 Boolean isValidCurrentUser = (
                     (
@@ -587,7 +594,7 @@ WHERE (userRole.Name = 'Loyalty Advisor' OR userRole.Name = 'Channel Program Man
                     ( oldRecord.OwnerId == availableUserId ) ,
                     isAllowAssignAvailable ,
                     accOwnerSalesOfficeMap.isEmpty() ,
-                    NSP_AccountTriggerHelper.MMRoles.contains( loggedInUserRoleName ) ,
+                    CustomPermissionController.checkUserPermission( 'Allow_Update_MidMarket_Role' , UserInfo.getUserId() ) ,
                     isValidCurrentUser
                 );
                 if ( !isAllowUpdate ) {
@@ -619,8 +626,8 @@ WHERE (userRole.Name = 'Loyalty Advisor' OR userRole.Name = 'Channel Program Man
                 isAllowUpdate = true;
             }
         } else if (
-            isEmptyAccountOwnerSalesOfficeMap
-            || isValidCurrentUserRole
+            ( isEmptyAccountOwnerSalesOfficeMap )
+            || ( isValidCurrentUserRole )
             || ( isValidCurrentUser )
             )
         {
@@ -657,7 +664,7 @@ WHERE (userRole.Name = 'Loyalty Advisor' OR userRole.Name = 'Channel Program Man
                         FROM Account
                         WHERE (
                             ( Id IN :oldMap.keySet() )
-                            AND ( Owner.UserRole.Name IN :NSP_AccountTriggerHelper.salesRoles )
+                            AND ( Id IN :ownerUpdatePermittedUserMap.keySet() )
                         )
                     ]
                 )
