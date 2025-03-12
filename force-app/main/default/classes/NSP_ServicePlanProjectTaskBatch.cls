@@ -91,12 +91,18 @@ public class NSP_ServicePlanProjectTaskBatch implements Database.Batchable<sObje
                             for(pse__Project_Task__c projTask : project.pse__Project_Tasks__r){
                                 Date startDate = Date.valueOf(projTask.pse__Start_Date_Time__c);
                                 if(projTask.Name == NSP_ServiceConstants.QTP1){
-                                    if ( ( startDate == renewalDate.addDays( NSP_ServicePlanProjectTaskBatch.qtp1StartDays ) ) || ( startDate > renewalDate ) ) {
+                                    if ( ( startDate == renewalDate.addDays( NSP_ServicePlanProjectTaskBatch.qtp1StartDays ) )
+                                        || ( startDate > renewalDate )
+                                        )
+                                    {
                                         taskPresent = true;
                                         break;
                                     }
                                 } else {
-                                    if ( ( startDate == renewalDate.addDays( NSP_ServicePlanProjectTaskBatch.qtp2StartDays ) ) || ( startDate > renewalDate ) ) {
+                                    if ( ( startDate == renewalDate.addDays( NSP_ServicePlanProjectTaskBatch.qtp2StartDays ) )
+                                        || ( startDate > renewalDate )
+                                        )
+                                    {
                                         taskPresent = true;
                                         break;
                                     }
@@ -132,8 +138,8 @@ public class NSP_ServicePlanProjectTaskBatch implements Database.Batchable<sObje
                 projectTask.Name = NSP_ServiceConstants.QTP1;
                 projectTask.pse__Project__c = prj.Id;
                 projectTask.RecordTypeId = peoProjectTaskRecordTypeId;
-                projectTask.pse__Start_Date_Time__c = mapOfAccountIdAndRenewalDate.get(prj.pse__Account__c).addDays(NSP_ServicePlanProjectTaskBatch.qtp1StartDays );
-                projectTask.pse__End_Date_Time__c = mapOfAccountIdAndRenewalDate.get(prj.pse__Account__c).addDays(NSP_ServicePlanProjectTaskBatch.qtp1EndDays);
+                projectTask.pse__Start_Date_Time__c = mapOfAccountIdAndRenewalDate.get( prj.pse__Account__c ).addDays( NSP_ServicePlanProjectTaskBatch.qtp1StartDays );
+                projectTask.pse__End_Date_Time__c = mapOfAccountIdAndRenewalDate.get( prj.pse__Account__c ).addDays( NSP_ServicePlanProjectTaskBatch.qtp1EndDays );
                 projectTask.NSP_Category__c = NSP_ServiceConstants.Client_Management;
                 projectTask.NSP_Sub_Category__c = NSP_ServiceConstants.Quality_Touch_Point;
                 projectTask.pse__External_Task_ID__c = prj.Id+'-'+NSP_ServiceConstants.QTP1+'-'+randomNumber;
@@ -152,8 +158,8 @@ public class NSP_ServicePlanProjectTaskBatch implements Database.Batchable<sObje
                 projectTask1.Name = NSP_ServiceConstants.QTP2;
                 projectTask1.pse__Project__c = prj.Id;
                 projectTask1.RecordTypeId = peoProjectTaskRecordTypeId;
-                projectTask1.pse__Start_Date_Time__c = mapOfAccountIdAndRenewalDate.get(prj.pse__Account__c).addDays(NSP_ServicePlanProjectTaskBatch.qtp2StartDays);
-                projectTask1.pse__End_Date_Time__c = mapOfAccountIdAndRenewalDate.get(prj.pse__Account__c).addDays(NSP_ServicePlanProjectTaskBatch.qtp2EndDays);
+                projectTask1.pse__Start_Date_Time__c = mapOfAccountIdAndRenewalDate.get( prj.pse__Account__c ).addDays( NSP_ServicePlanProjectTaskBatch.qtp2StartDays );
+                projectTask1.pse__End_Date_Time__c = mapOfAccountIdAndRenewalDate.get( prj.pse__Account__c ).addDays( NSP_ServicePlanProjectTaskBatch.qtp2EndDays );
                 projectTask1.NSP_Category__c = NSP_ServiceConstants.Client_Management;
                 projectTask1.NSP_Sub_Category__c = NSP_ServiceConstants.Quality_Touch_Point;
                 projectTask1.pse__External_Task_ID__c = prj.Id+'-'+NSP_ServiceConstants.QTP2+'-'+randomNumber;
@@ -236,7 +242,7 @@ public class NSP_ServicePlanProjectTaskBatch implements Database.Batchable<sObje
     private static Integer qtp1StartDays {
         private get {
             if ( qtp1StartDays == null ) {
-                Integer local = 90;            
+                Integer local = 90;
                 if ( ( NSP_ServicePlanProjectTaskBatch.settings != null )
                     && ( NSP_ServicePlanProjectTaskBatch.settings.QTP1StartDays__c != null )
                     )
@@ -253,29 +259,29 @@ public class NSP_ServicePlanProjectTaskBatch implements Database.Batchable<sObje
         }
         private set;
     }
-    
-        private static Integer qtp1EndDays {
+
+    private static Integer qtp1EndDays {
         private get {
             if ( qtp1EndDays == null ) {
                 Integer local = 120;
                 if ( ( NSP_ServicePlanProjectTaskBatch.settings != null )
-                    && ( NSP_ServicePlanProjectTaskBatch.settings.QTP1EndDays__c != null )				
+                    && ( NSP_ServicePlanProjectTaskBatch.settings.QTP1EndDays__c != null )
                     )
                 {
                     local = NSP_ServicePlanProjectTaskBatch.settings.QTP1EndDays__c.intValue();
                 }
-                if (local <  qtp1StartDays )
-                {
-                    local = qtp1StartDays;
+                // end days must be greater than or equal to start days...
+                if ( local < NSP_ServicePlanProjectTaskBatch.qtp1StartDays ) {
+                    local = NSP_ServicePlanProjectTaskBatch.qtp1StartDays;
                 }
-                    qtp1EndDays = local;
+                qtp1EndDays = local;
             }
             return qtp1EndDays;
         }
         private set;
     }
-    
-        private static Integer qtp2StartDays {
+
+    private static Integer qtp2StartDays {
         private get {
             if ( qtp2StartDays == null ) {
                 Integer local = 185;
@@ -295,29 +301,26 @@ public class NSP_ServicePlanProjectTaskBatch implements Database.Batchable<sObje
         }
         private set;
     }
-    
-        private static Integer qtp2EndDays {
+
+    private static Integer qtp2EndDays {
         private get {
             if ( qtp2EndDays == null ) {
-                Integer local = 215;			
+                Integer local = 215;
                 if ( ( NSP_ServicePlanProjectTaskBatch.settings != null )
                     && ( NSP_ServicePlanProjectTaskBatch.settings.QTP2EndDays__c != null )
                     )
                 {
                     local = NSP_ServicePlanProjectTaskBatch.settings.QTP2EndDays__c.intValue();
                 }
-                if (local <  qtp2StartDays )
-                {
-                    local = qtp2StartDays;
+                // end days must be greater than or equal to start days...
+                if ( local < NSP_ServicePlanProjectTaskBatch.qtp2StartDays ) {
+                    local = NSP_ServicePlanProjectTaskBatch.qtp2StartDays;
                 }
-    
                 qtp2EndDays = local;
             }
             return qtp2EndDays;
         }
         private set;
     }
-
-    
 
 }
