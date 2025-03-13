@@ -975,6 +975,7 @@ public with sharing class NSP_OpportunityTriggerHelper {
                     } else if ( ( ( existingAsset.NSP_Product_Line__c == NSP_SalesConstants.PROD_WA ) || ( existingAsset.NSP_Product_Line__c == NSP_salesConstants.PROD_WX ) )
                         && ( assetMap.get(draftAsset).NSP_Product_Line__c == NSP_SalesConstants.PROD_WA )
                         && ( assetMap.get(draftAsset).NSP_ProductBundle__c == NSP_SalesConstants.WOSS )
+                        && ( optyType != NSP_SalesConstants.TRANSACTION_TYPE_TERMINATION )
                         )
                     {
                         //Condition to allow woss asset creation
