@@ -96,8 +96,4 @@
     </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Edit Integrated Fields</label>
-    <tabSettings>
-        <tab>standard-SemanticModel</tab>
-        <visibility>Visible</visibility>
-    </tabSettings>
 </PermissionSet>
