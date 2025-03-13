@@ -31,7 +31,7 @@ private class DocusignAccountManagementReportTest {
     private static void getPrimaryAccountTest() {
         Test.startTest();
         Account acc = [SELECT Id FROM Account WHERE Name = 'Test Account' LIMIT 1];
-        Map<Id, String> accountMap = DocusignAMR.getPrimaryAccount(acc.Id);
+        Map<Id, String> accountMap = DocusignAccountManagementReport.getPrimaryAccount(acc.Id);
         System.assertNotEquals(null, accountMap);
         Test.stopTest();
     }
@@ -39,7 +39,7 @@ private class DocusignAccountManagementReportTest {
     @IsTest 
     private static void getDocusignURLTest() {
         Test.startTest();
-        NSP_Docusign_Account_Details__c  result = DocusignAMR.getDocusignURL();
+        NSP_Docusign_Account_Details__c  result = DocusignAccountManagementReport.getDocusignURL();
         System.assertEquals('50202', result.Docusign_Account_Id__c);
         Test.stopTest();
     }
