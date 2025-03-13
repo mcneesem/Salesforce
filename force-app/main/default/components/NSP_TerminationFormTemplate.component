@@ -43,7 +43,7 @@
                     <td style="margin: 0; padding: 0;">
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<apex:outputText value="{!IF(termination.revision == 'Yes','REVISED ' & TEXT(MONTH(termination.csaterm)) & '/' & TEXT(DAY(termination.csaterm)) & '/' &
                             TEXT(YEAR(termination.csaterm)) &
-                            ' (Previous term date: ' &
+                            ' (Previous Term Date: ' &
                             TEXT(MONTH(termination.previousTermDate)) & '/' &
                             TEXT(DAY(termination.previousTermDate)) & '/' &
                             TEXT(YEAR(termination.previousTermDate)) & ')',
@@ -57,38 +57,78 @@
                 <tr>
                     <td style="width: 10%; margin: 0; padding: 0;">Bene Term:</td>
                     <td style="margin: 0; padding: 0;">
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<apex:outputText value="{!IF(
-                            termination.beneterm == Null,
-                            'NA',
-                            TEXT(MONTH(termination.beneterm)) & '/' &
-                            TEXT(DAY(termination.beneterm)) & '/' &
-                            TEXT(YEAR(termination.beneterm))
-                        )}"/>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<apex:outputText value="{!IF(
+                                                termination.beneterm == Null,
+                                                'NA',
+                                                IF(
+                                                termination.revision == 'Yes',
+                                                'REVISED ' & 
+                                                TEXT(MONTH(termination.beneterm)) & '/' &
+                                                TEXT(DAY(termination.beneterm)) & '/' &
+                                                TEXT(YEAR(termination.beneterm)) & ' ' & 
+                                                IF(
+                                                termination.previousBeneTerm == Null,
+                                                '(Previous Bene Date: NA)',
+                                                '(Previous Bene Date: ' &
+                                                TEXT(MONTH(termination.previousBeneTerm)) & '/' &
+                                                TEXT(DAY(termination.previousBeneTerm)) & '/' &
+                                                TEXT(YEAR(termination.previousBeneTerm)) & ')'
+                                                ),
+                                                TEXT(MONTH(termination.beneterm)) & '/' &
+                                                TEXT(DAY(termination.beneterm)) & '/' &
+                                                TEXT(YEAR(termination.beneterm))
+                                                )
+                                                )}"/>
+                        
                     </td>
                 </tr>
                 <tr>
                     <td style="width: 10%; margin: 0; padding: 0;">Reason:</td>
                     <td style="margin: 0; padding: 0;">
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<apex:outputText value="{!IF(
-                            OR(
-                                termination.reason == '1900 Merger with Insperity Client',
-                                termination.reason == '2700 Change in FEIN'
-                            ),
-                            termination.reason,
-                            IF(
-                                NOT(ISBLANK(termination.subTermReason)),
-                                termination.reason & ' / Sub Term Reason: ' & termination.subTermReason,
-                                termination.reason
-                            )
-                        )}" />
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<apex:outputText value="{!IF(
-                            OR(
-                                termination.reason == '1900 Merger with Insperity Client',
-                                termination.reason == '2700 Change in FEIN'
-                            ),
-                            '(' & termination.clientname & ' - ' & termination.clientnumber & ')',
-                            ''
-                        )}" escape="false" rendered="{!OR(termination.reason == '1900 Merger with Insperity Client', termination.reason == '2700 Change in FEIN')}" />
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<apex:outputText value="{!IF(
+                                                termination.reason == Null,
+                                                'NA',
+                                                IF(termination.revision == 'Yes', 'REVISED ', '') & 
+                                                IF(
+                                                OR(
+                                                termination.reason == '1900 Merger with Insperity Client',
+                                                termination.reason == '2700 Change in FEIN'
+                                                ),
+                                                termination.reason,
+                                                IF(
+                                                NOT(ISBLANK(termination.subTermReason)),
+                                                termination.reason & ' / ' & termination.subTermReason,
+                                                termination.reason
+                                                )
+                                                ))}" />
+                        <apex:outputText value="{!IF(
+                                                termination.reason == Null,
+                                                'NA',
+                                                IF(
+                                                OR(
+                                                termination.reason == '1900 Merger with Insperity Client',
+                                                termination.reason == '2700 Change in FEIN'
+                                                ),
+                                                '&nbsp;',
+                                                ''
+                                                ))}" escape="false" />
+                        <apex:outputText value="{!IF(
+                                                termination.reason == Null,
+                                                'NA',
+                                                IF(
+                                                OR(
+                                                termination.reason == '1900 Merger with Insperity Client',
+                                                termination.reason == '2700 Change in FEIN'
+                                                ),
+                                                IF(termination.revision == 'Yes', 'REVISED ', '') & 
+                                                '(' & termination.clientname & ' - ' & termination.clientnumber & ')',
+                                                ''
+                                                ))}" escape="false" 
+                                         rendered="{!OR(termination.reason == '1900 Merger with Insperity Client', termination.reason == '2700 Change in FEIN')}" />  
+                        
+                        <apex:outputPanel rendered="{!termination.revision == 'Yes'}">
+                         &nbsp;<apex:outputText value="{!'(Previous Reason: ' & termination.previousReason & '/' & termination.previousSubtermReason & ')'}" escape="false" />
+                        </apex:outputPanel>
                     </td>
                 </tr>
             </table>
@@ -98,30 +138,52 @@
     <!-- Reinstatement Section -->
     <div style="padding-left:2%; text-align:left;">
         <b>REINSTATEMENTS</b>
-    </div>
-   
-    <apex:dataTable value="{!reinstatementList}" var="reinstatement" width="100%">
+    </div>  
+    <apex:dataTable value="{!wrapReinstatementList}" var="reinstatement" width="100%">
         <apex:column style="padding-left:2%; padding-bottom:1%;">
             <table style="width: 100%; table-layout: fixed; text-align:left;">
                 <tr>
                     <td style="width: 10%; margin: 0; padding: 0;">Client:</td>
-                    <td style="margin: 0; padding: 0;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{!reinstatement.NSP_Project_Task__r.pse__Project__r.pse__Account__r.Name}</td>
+                    <td style="margin: 0; padding: 0;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{!reinstatement.clinetName}</td>
                 </tr>
                 <tr>
-                    <td style="width: 10%; margin: 0; padding: 0;">Client#:</td>
-                    <td style="margin: 0; padding: 0;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{!reinstatement.NSP_Project_Task__r.pse__Project__r.pse__Account__r.NSP_AIMS_Client__c}</td>
+                    <td style="width: 10%; margin: 0; padding: 0;">Client #:</td>
+                    <td style="margin: 0; padding: 0;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{!reinstatement.clinetNumber}</td>
+                </tr>
+                <tr>
+                    <td style="width: 10%; margin: 0; padding: 0;">PS:</td>
+                    <td style="margin: 0; padding: 0;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{!reinstatement.psName}</td>
+                </tr>
+                <tr>
+                    <td style="width: 10%; margin: 0; padding: 0;">SA:</td>
+                    <td style="margin: 0; padding: 0;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{!reinstatement.saName}</td>
+                </tr>
+                <tr>
+                    <td style="width: 10%; margin: 0; padding: 0;">CL:</td>
+                    <td style="margin: 0; padding: 0;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{!reinstatement.clName}</td>
                 </tr>
                 <tr>
                     <td style="width: 10%; margin: 0; padding: 0;">CSA Term:</td>
                     <td style="margin: 0; padding: 0;">
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<apex:outputText value="{0,date,MM/dd/yyyy}">
-                            <apex:param value="{!reinstatement.NSP_Client_Term_Date__c}" />
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<apex:outputText value="{!IF(
+                                                 reinstatement.clientermdate == Null,
+                                                'NA',
+                                                IF(reinstatement.revision == 'Yes','REVISED ' & TEXT(MONTH(reinstatement.clientermdate)) & '/' & TEXT(DAY(reinstatement.clientermdate)) & '/' &
+                                                TEXT(YEAR(reinstatement.clientermdate)) &
+                                                ' (Previous Term Date: ' &
+                                                TEXT(MONTH(reinstatement.previousClientTermdate)) & '/' &
+                                                TEXT(DAY(reinstatement.previousClientTermdate)) & '/' &
+                                                TEXT(YEAR(reinstatement.previousClientTermdate)) & ')',
+                                                TEXT(MONTH(reinstatement.clientermdate)) & '/' &
+                                                TEXT(DAY(reinstatement.clientermdate)) & '/' &
+                                                TEXT(YEAR(reinstatement.clientermdate))
+                                                ))}">
                         </apex:outputText>
                     </td>
                 </tr>
                 <tr>
                     <td style="width: 10%; margin: 0; padding: 0;">Reason:</td>
-                    <td style="margin: 0; padding: 0;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{!reinstatement.NSP_Term_Reason__c}</td>
+                    <td style="margin: 0; padding: 0;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{!reinstatement.reason}</td>
                 </tr>
             </table>
         </apex:column>
