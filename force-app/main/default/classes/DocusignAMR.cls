@@ -1,5 +1,5 @@
 public with sharing class DocusignAMR {
-    // test w/ DocusignAMRTest (94%)
+    // test w/ DocusignAMRTest (100%)
     
     @AuraEnabled(cacheable=true)  
     public static Map<Id, String> getPrimaryAccount(Id accountId) {
