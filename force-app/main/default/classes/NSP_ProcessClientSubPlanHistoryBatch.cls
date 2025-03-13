@@ -4,17 +4,31 @@
 // @date 23/12/2022
 // Name : NSP_ProcessClientSubPlanHistoryBatch
 //
-public class NSP_ProcessClientSubPlanHistoryBatch implements Schedulable , Database.Batchable<sObject> {
-    // test w/ NSP_ProcessClientSubPlanHistoryBatchTest (??%)
+public class NSP_ProcessClientSubPlanHistoryBatch implements ISelfSchedulable , Schedulable , Database.Batchable<sObject> {
+    // test w/ NSP_ProcessClientSubPlanHistoryBatchTest (97%)
 
     //
     // Schedulable
     //
     public void execute( SchedulableContext sc ) {
-        //execute the batch with batch size 10.
-        Database.executeBatch(
-            new NSP_ProcessClientSubPlanHistoryBatch() ,
-            Integer.valueof( System.label.NSP_ClientSubPlanHistoryBatchSize )
+        if ( NSP_ProcessClientSubPlanHistoryBatch.isEnabled ) {
+            Database.executeBatch(
+                new NSP_ProcessClientSubPlanHistoryBatch() ,
+                NSP_ProcessClientSubPlanHistoryBatch.batchSize
+            );
+        }
+    }
+
+    // runs M-F at 8pm central...
+    public static String schedule() {
+        String suffix = '';
+        if ( Test.isRunningTest() ) {
+            suffix = ' ~ TEST';
+        }
+        return System.schedule(
+            'NSP_ProcessClientSubPlanHistoryBatch ~ M-F at 8 PM' + suffix ,
+            '0 0 20 ? * 1-5 *' ,
+            new NSP_ProcessClientSubPlanHistoryBatch()
         );
     }
 
@@ -37,7 +51,7 @@ public class NSP_ProcessClientSubPlanHistoryBatch implements Schedulable , Datab
                 WHERE (
                     (
                         NSP_Future_Lead_Parent__c <= TODAY
-                        OR NSP_Start_Date__c <= TODAY
+                        OR NSP_Start_Date__c = TODAY
                     )
                     AND NSP_Asset__r.RecordTypeId IN :recordTypeIdSet
                     AND NSP_Active_Date__c = true
@@ -48,47 +62,51 @@ public class NSP_ProcessClientSubPlanHistoryBatch implements Schedulable , Datab
     }
 
     public void execute( Database.BatchableContext bc , List<NSP_Client_Sub_Plan_History__c> clientSubPlanHistoryList ) {
-        Set<Id> assetIdset = new Set<Id>();
-        Map<Id,Asset> assetUpdateMap = new Map<Id,Asset>();
-        List<NSP_Client_Sub_Plan_History__c> chsUpdateList = new List<NSP_Client_Sub_Plan_History__c>();
-        for ( NSP_Client_Sub_Plan_History__c eachCSH : clientSubPlanHistoryList ) {
-            eachCSH.Processed_Client_Subplan_History__c = true;
-            if ( !eachCSH.NSP_Current_Subplan__c ) {
-                // if CSH is not current subplan
-                eachCSH.NSP_Current_Subplan__c = true; 
-            }
-            chsUpdateList.add( eachCSH );
-            if ( eachCSH.NSP_Future_Lead_Parent__c != null
-                && eachCSH.NSP_Future_Lead_Parent__c == System.today()
-                )
-            {
-                // asset added as lead parent 
-                if ( eachCSH.NSP_Asset__r.NSP_Client_is_Lead_Parent__c ) {
-                    // if asset is already marked as client is lead parent
-                    assetIdset.add( eachCSH.NSP_Asset__c );
-                } else {
+        if ( NSP_ProcessClientSubPlanHistoryBatch.isEnabled ) {
+            Set<Id> assetIdset = new Set<Id>();
+            Map<Id,Asset> assetUpdateMap = new Map<Id,Asset>();
+            List<NSP_Client_Sub_Plan_History__c> chsUpdateList = new List<NSP_Client_Sub_Plan_History__c>();
+            for ( NSP_Client_Sub_Plan_History__c eachCSH : clientSubPlanHistoryList ) {
+                if ( NSP_ProcessClientSubPlanHistoryBatch.isEnabledCurrentSubPlan ) {
+                    eachCSH.Processed_Client_Subplan_History__c = true;
+                    if ( !eachCSH.NSP_Current_Subplan__c ) {
+                        // if CSH is not current subplan
+                        eachCSH.NSP_Current_Subplan__c = true; 
+                    }
+                    chsUpdateList.add( eachCSH );
+                }
+                if ( eachCSH.NSP_Future_Lead_Parent__c != null
+                    && eachCSH.NSP_Future_Lead_Parent__c <= System.today()
+                    )
+                {
+                    // asset added as lead parent 
+                    if ( eachCSH.NSP_Asset__r.NSP_Client_is_Lead_Parent__c ) {
+                        // if asset is already marked as client is lead parent
+                        assetIdset.add( eachCSH.NSP_Asset__c );
+                    } else {
+                        Asset eachAsset = New Asset( Id=eachCSH.NSP_Asset__c ); // Set Data on Asset
+                        eachAsset.NSP_Client_is_Lead_Parent__c = true;
+                        eachAsset.NSP_RET_lead_parent__c = null;
+                        eachAsset.NSP_Process_Order_Change__c = false;
+                        eachAsset.NSP_Change_Order_Process_Contract_Status__c = null;
+                        assetUpdateMap.put( eachAsset.Id , eachAsset );
+                    }
+                } else if ( eachCSH.NSP_Start_Date__c != null
+                    && eachCSH.NSP_Start_Date__c == System.today()
+                    && eachCSH.NSP_Plan_Subplan_Relationship__r.NSP_Subplan_Lead_Parent__c != null
+                    )
+                {
+                    // for asset added as memeber and not lead parent
                     Asset eachAsset = New Asset( Id=eachCSH.NSP_Asset__c ); // Set Data on Asset
-                    eachAsset.NSP_Client_is_Lead_Parent__c = true;
-                    eachAsset.NSP_RET_lead_parent__c = null;
+                    eachAsset.NSP_Client_is_Lead_Parent__c = false;
+                    eachAsset.NSP_RET_lead_parent__c = eachCSH.NSP_Plan_Subplan_Relationship__r.NSP_Subplan_Lead_Parent__c;
                     eachAsset.NSP_Process_Order_Change__c = false;
                     eachAsset.NSP_Change_Order_Process_Contract_Status__c = null;
                     assetUpdateMap.put( eachAsset.Id , eachAsset );
                 }
-            } else if ( eachCSH.NSP_Start_Date__c != null
-                && eachCSH.NSP_Start_Date__c == System.today()
-                && eachCSH.NSP_Plan_Subplan_Relationship__r.NSP_Subplan_Lead_Parent__c != null
-                )
-            {
-                // for asset added as memeber and not lead parent
-                Asset eachAsset = New Asset( Id=eachCSH.NSP_Asset__c ); // Set Data on Asset
-                eachAsset.NSP_Client_is_Lead_Parent__c = false;
-                eachAsset.NSP_RET_lead_parent__c = eachCSH.NSP_Plan_Subplan_Relationship__r.NSP_Subplan_Lead_Parent__c;
-                eachAsset.NSP_Process_Order_Change__c = false;
-                eachAsset.NSP_Change_Order_Process_Contract_Status__c = null;
-                assetUpdateMap.put( eachAsset.Id , eachAsset );
             }
+            this.handleDmlOperations( chsUpdateList , assetIdset , assetUpdateMap );
         }
-        this.handleDmlOperations( chsUpdateList , assetIdset , assetUpdateMap );
     }
 
     // helper method to defeat sonar cognitive complexity...
@@ -122,6 +140,74 @@ public class NSP_ProcessClientSubPlanHistoryBatch implements Schedulable , Datab
     }
 
     public void finish( Database.BatchableContext bc ) {
+    }
+
+    //
+    // attributes controlled by Custom Settings...
+    // ~ intentionally static to allow Custom Settings to modify the attributes a Scheduled job...
+    //
+
+    private static ProcessClientSubPlanHistoryBatchSettings__c settings {
+        private get {
+            if ( settings == null ) {
+                settings = ProcessClientSubPlanHistoryBatchSettings__c.getInstance( UserInfo.getUserId() );
+            }
+            return settings;
+        }
+        private set;
+    }
+
+    private static Boolean isEnabled {
+        private get {
+            if ( isEnabled == null ) {
+                Boolean local = False;
+                if ( NSP_ProcessClientSubPlanHistoryBatch.settings != null ) {
+                    local = NSP_ProcessClientSubPlanHistoryBatch.settings.IsEnabled__c;
+                }
+                isEnabled = local;
+            }
+            return isEnabled;
+        }
+        private set;
+    }
+
+    private static Boolean isEnabledCurrentSubPlan {
+        private get {
+            if ( isEnabledCurrentSubPlan == null ) {
+                Boolean local = False;
+                if ( NSP_ProcessClientSubPlanHistoryBatch.settings != null ) {
+                    local = NSP_ProcessClientSubPlanHistoryBatch.settings.IsEnabledCurrentSubPlan__c;
+                }
+                isEnabledCurrentSubPlan = local;
+            }
+            return isEnabledCurrentSubPlan;
+        }
+        private set;
+    }
+
+    private static Integer batchSize {
+        private get {
+            if ( batchSize == null ) {
+                Integer local = 200;
+                if ( ( NSP_ProcessClientSubPlanHistoryBatch.settings != null )
+                    && ( NSP_ProcessClientSubPlanHistoryBatch.settings.BatchSize__c != null )
+                    )
+                {
+                    local = NSP_ProcessClientSubPlanHistoryBatch.settings.BatchSize__c.intValue();
+                }
+                // batch size must be greater than zero...
+                if ( local < 1 ) {
+                    local = 1;
+                }
+                // batch size must be less than or equal to 2000...
+                if ( local > 2000 ) {
+                    local = 2000;
+                }
+                batchSize = local;
+            }
+            return batchSize;
+        }
+        private set;
     }
 
 }

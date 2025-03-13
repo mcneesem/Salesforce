@@ -6,6 +6,11 @@
     </customPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>AccountContactRelation.Client_Communication_Contact__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Asset.National_Account_Type__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -71,7 +76,12 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>NSP_Sub_Client__c.Middleware_Id__c</field>
+        <field>NSP_Sub_Client__c.Pay_Group_Number__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_Sub_Client__c.Source__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

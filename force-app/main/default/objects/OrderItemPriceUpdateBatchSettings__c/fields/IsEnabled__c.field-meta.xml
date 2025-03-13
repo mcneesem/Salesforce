@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IsEnabled__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Enabling this checkbox allows the batch to process the records.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Enabling this checkbox allows the batch to process the records</inlineHelpText>
+    <label>IsEnabled</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

@@ -1,6 +1,6 @@
 public with sharing class NSP_ProjectTriggerHelper {
     // test w/ NSP_ProjectTriggerHelperTest, NSP_AssetServiceTriggerHelperTest (82%)
-    // test w/ NSP_ProjectTriggerHelperTest (80%)
+    // test w/ NSP_ProjectTriggerHelperTest (81%)
     // test w/ NSP_AssetServiceTriggerHelperTest (29%)
 
     public Static Set<Id> dupPreventionSet = new Set<Id>();
@@ -40,7 +40,6 @@ public with sharing class NSP_ProjectTriggerHelper {
     public void beforeInsertDirector(List<pse__Proj__c> newProjectsList){
         Set<Id> accIdSet = new Set<Id>();
         Map<Id, Account> projAccIdNameMap;
-        List<pse__Proj__c> updatePrjNameList = new List<pse__Proj__c>();       
         //getting PEO Billable Project Record Id
         Id billableSerRecordTypeId = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.PROJECT, NSP_ServiceConstants.PEO_BILL_RECORDTYPE);       
         List<pse__Proj__c> projectsList = new List<pse__Proj__c>();//<STY-04002>
@@ -54,18 +53,19 @@ public with sharing class NSP_ProjectTriggerHelper {
                 accIdSet.add(project.pse__Account__c);
             }
             //update start date as today
-            
-            if(project.recordTypeId == PEOPROJECTTECORDTYPEID && project.TemplateName__c == NSP_ServiceConstants.WO_WX_TEMPLATE){
-                project.pse__Start_Date__c = System.today();
-                project.pse__End_Date__c = System.today().addDays(30);
-            }
+            project = setProjectStartAndEndDates(
+                project ,
+                PEOPROJECTTECORDTYPEID ,
+                NSP_ServiceConstants.WO_WX_TEMPLATE ,
+                System.today().addDays(30)
+            );
+            project = setProjectStartAndEndDates(
+                project ,
+                TESBPSPROJECTTECORDTYPEID ,
+                NSP_ServiceConstants.ITA_IMPLEMENTATION ,
+                System.today().addmonths(12)
+            );
 
-            if(project.recordTypeId == TESBPSPROJECTTECORDTYPEID && project.TemplateName__c == NSP_ServiceConstants.ITA_IMPLEMENTATION){
-                project.pse__Start_Date__c = System.today();
-                project.pse__End_Date__c = system.today().addmonths(12);
-            }
-        
-            updatePrjNameList.add(project);
               //<STY-04002> if loop to check if RT is PEO Project Billable
             if(!project.pse__Is_Template__c && project.recordTypeID == billableSerRecordTypeId){                            
                 if(project.pse__Account__c!= null){
@@ -86,15 +86,15 @@ public with sharing class NSP_ProjectTriggerHelper {
             }
         }        
 
-        if(!accIdSet.isEmpty()){
-            projAccIdNameMap = new Map<Id, Account>([SELECT Id, Name FROM Account WHERE Id IN: accIdSet]);
-        }
+        projAccIdNameMap = getProjectRelatedAccounts(accIdSet);
+        
+        // ADO - 329309
+        setProjectSegmentOnBeforeSave(newProjectsList, projAccIdNameMap);
 
         //Update ProjectName
-        if(!newProjectsList.isEmpty()){
-            //update Asset Type --DF_04021
-            updateAssetTypeProject(newProjectsList);
-        }
+        //update Asset Type --DF_04021
+        updateAssetTypeProject(newProjectsList);
+
         // Added this condition as part of STY-02092
         if(!projectNameList.isEmpty()){
             updateProjectNameonBeforeInsert(projectNameList, projAccIdNameMap);  
@@ -109,6 +109,18 @@ public with sharing class NSP_ProjectTriggerHelper {
         if(!servicePlanProjectsList.isEmpty()){
             updateProjOwnerForServicePlanProjectType(servicePlanProjectsList, servicePlanAccountIDs);
         }
+    }
+
+    private static pse__Proj__c setProjectStartAndEndDates( pse__Proj__c project , Id recordTypeId , String templateName , Date endDate ) {
+        if ( ( project != null )
+            && ( project.recordTypeId == recordTypeId )
+            && ( project.TemplateName__c == templateName )
+            )
+        {
+            project.pse__Start_Date__c = System.today();
+            project.pse__End_Date__c = endDate;
+        }
+        return project;
     }
 
     /**
@@ -193,9 +205,10 @@ public with sharing class NSP_ProjectTriggerHelper {
             assetList = (List<Asset>)Database.query(queryAsset);
         }
        
-        if(!accIdSet.isEmpty()){
-            projAccIdNameMap = new Map<Id, Account>([SELECT Id, Name FROM Account WHERE Id IN: accIdSet]);
-        }
+        projAccIdNameMap = getProjectRelatedAccounts(accIdSet);
+        
+        // ADO - 329309
+        setProjectSegmentOnBeforeSave(newProjectsMap.values(), projAccIdNameMap);
         
         if(!sProjectIds.isEmpty() && !assetList.isEmpty()){
             handleProjectCompletion(newProjectsMap,mOldProjects,sProjectIds); 
@@ -215,6 +228,56 @@ public with sharing class NSP_ProjectTriggerHelper {
         if(!newProjectsList.isEmpty() && projAccIdNameMap != null){
             updateProjectNameonBeforeInsert(newProjectsList, projAccIdNameMap);
         }
+    }
+
+    //== Return Account Based on project records
+    private static Map<Id,Account> getProjectRelatedAccounts( Set<Id> accIdSet ) {
+        Map<Id,Account> accountMap = new Map<Id,Account>();
+        if( !accIdSet?.isEmpty() ) {
+            accountMap = new Map<Id,Account>([
+                SELECT Id , Name , NSP_Account_Segment__c , NSP_Service_Segment__c
+                FROM Account
+                WHERE ( Id IN :accIdSet )
+            ]);
+        }
+        return accountMap;
+    }
+
+    //== Method to set the project client segment on before save // ADO - 329309
+    private static void setProjectSegmentOnBeforeSave( List<pse__Proj__c> projectsList , Map<Id,Account> projAccIdNameMap ) {
+        Set<String> projectStatusSet = new Set<String>{
+            'Complete' ,
+            'Cancelled'
+        };
+        if ( !projAccIdNameMap?.isEmpty() && !projectsList?.isEmpty() ) {
+            for ( pse__Proj__c project : projectsList ) {
+                if ( projAccIdNameMap.containsKey( project.pse__Account__c )
+                    && !projectStatusSet.contains( project.pse__Project_Status__c )
+                    )
+                {
+                    project.Client_Segment__c = NSP_ProjectTriggerHelper.getSegmentValue(
+                        projAccIdNameMap.get( project.pse__Account__c ) ,
+                        project.Client_Segment__c
+                    );
+                }
+            }
+        }
+    }
+
+    private static String getSegmentValue( Account record , String defaultValue ) {
+        String returnValue = defaultValue;
+        if ( record != null ) {
+            if ( String.isNotBlank( record.NSP_Service_Segment__c ) ) {
+                returnValue = record.NSP_Service_Segment__c;
+            } else if ( String.isNotBlank( record.NSP_Account_Segment__c ) ) {
+                returnValue = record.NSP_Account_Segment__c;
+                String accountSegment = 'Enterprise';
+                if ( accountSegment.equalsIgnoreCase( record.NSP_Account_Segment__c ) ) {
+                    returnValue = 'Middle Market Enterprise'; 
+                }
+            }
+        }
+        return returnValue;
     }
 
     //
@@ -482,17 +545,20 @@ public with sharing class NSP_ProjectTriggerHelper {
         List<pse__Proj__c> projectTemplate = Database.query(query);
         return projectTemplate.isEmpty() ? null : projectTemplate[0].NSP_Asset_Type__c;
     }
-    /***********************************************************************************************
-    * MethodName: updateAssetTypeProject
-    * Description : update project Asset Type name with project template Asset Type
-    * Params:      List<pse__Proj__c> newProjectsList
-    * 
-    * ********************************************************************************************/   
-    public void updateAssetTypeProject(List<pse__Proj__c> newProjectsList){
-        for(pse__Proj__c project : newProjectsList){
-            project.NSP_Asset_Type__c = getProjectAssetFromTemp(project.TemplateName__c);
+
+    //
+    // MethodName: updateAssetTypeProject
+    // Description : update project Asset Type name with project template Asset Type
+    // Params: List<pse__Proj__c> newProjectsList
+    //
+    public void updateAssetTypeProject( List<pse__Proj__c> newProjectsList ) {
+        if ( !newProjectsList?.isEmpty() ) {
+            for ( pse__Proj__c project : newProjectsList ) {
+                project.NSP_Asset_Type__c = getProjectAssetFromTemp( project.TemplateName__c );
+            }
         }
     }
+
     /**
     * call the method to Update the child records with closed status.
     * @param projectId set of New project.    
@@ -642,23 +708,41 @@ public with sharing class NSP_ProjectTriggerHelper {
     {
         try {
             List<pse__Assignment__c> relatedAssignmentList = new List<pse__Assignment__c>();       
-            for(Id projectId : changedProjectMap.keyset()){
-                if(userWithContactMap.get(changedProjectMap.get(projectId).Project_Coordinator__c) !=
-                    userWithContactMap.get(changedProjectMap.get(projectId).Project_Implementer__c)){
-                        if(userWithContactMap.get(changedProjectMap.get(projectId).Project_Implementer__c) != null){
-                            relatedAssignmentList.addAll(linkAssignmentToResource(projectId, userWithContactMap.get(changedProjectMap.get(projectId).Project_Implementer__c), projectWithScheduleMap.get(projectId).Id));
-                        }
-                        if(userWithContactMap.get(changedProjectMap.get(projectId).Project_Coordinator__c) != null){
-                            relatedAssignmentList.addAll(linkAssignmentToResource(projectId, userWithContactMap.get(changedProjectMap.get(projectId).Project_Coordinator__c), projectWithScheduleMap.get(projectId).Id));
-                        }
-                }else if(userWithContactMap.get(changedProjectMap.get(projectId).Project_Coordinator__c) ==
-                    userWithContactMap.get(changedProjectMap.get(projectId).Project_Implementer__c)){
-                    relatedAssignmentList.addAll(linkAssignmentToResource(projectId, userWithContactMap.get(changedProjectMap.get(projectId).Project_Implementer__c), projectWithScheduleMap.get(projectId).Id));
+            for ( Id projectId : changedProjectMap.keyset() ) {
+                pse__Proj__c project = changedProjectMap.get( projectId );
+                Id projectCoordinator = userWithContactMap.get( project.Project_Coordinator__c );
+                Id projectImplementor = userWithContactMap.get( project.Project_Implementer__c );
+                Id resourceId = null;
+                if ( projectCoordinator != projectImplementor ) {
+                    if ( projectImplementor != null ) {
+                        resourceId = projectImplementor;
+                    }
+                    if ( projectCoordinator != null ) {
+                        resourceId = projectCoordinator;
+                    }
+                } else if ( projectCoordinator == projectImplementor ) {
+                    resourceId = projectImplementor;
+                }
+                pse__Schedule__c schedule = projectWithScheduleMap.get( projectId );
+                if ( schedule != null ) {
+                    relatedAssignmentList.add(
+                        this.buildLinkedAssignment(
+                            projectId ,
+                            resourceId ,
+                            schedule.Id
+                        )
+                    );
                 }
             }   
             // Adding Test.isRunningTest to bypass in test class as we need staffing permission for the assignment's resource and the assignment's
             if ( !relatedAssignmentList.isEmpty() && !Test.isRunningTest() ) {
-                insert relatedAssignmentList; // throws DmlException ~ FIELD_CUSTOM_VALIDATION_EXCEPTION, You are not allowed to create the assignment *** You must be granted the Staffing permission for the assignment's resource and the assignment's project.
+                // throws DmlException ~ FIELD_CUSTOM_VALIDATION_EXCEPTION, You are not allowed to create the assignment *** You must be granted the Staffing permission for the assignment's resource and the assignment's project.
+                List<Database.SaveResult> results = Database.insert( relatedAssignmentList , false );
+                NSP_ErrorLogHandler.logResults(
+                    NSP_ProjectTriggerHelper.class.getName() ,
+                    'createAssignments:insert' ,
+                    results
+                );
             }
             this.linkAssignmentToProjectTask(
                 'pse__Project_Task__c' ,
@@ -675,20 +759,13 @@ public with sharing class NSP_ProjectTriggerHelper {
         }
     }
 
-    /**
-    * method to link assignement with resource.
-    * @param Id resourceId, Map<Id, pse__Schedule__c> projectWithScheduleMap  
-    * @return void             
-    */
-    public List<pse__Assignment__c> linkAssignmentToResource(Id projectId, Id resourceId, Id scheduleId){
-        List<pse__Assignment__c> relatedAssignmentList = new List<pse__Assignment__c>();
-            pse__Assignment__c relatedAssignment = new pse__Assignment__c();
-            relatedAssignment.pse__Project__c = projectId;
-            relatedAssignment.pse__Bill_Rate__c = 0.00;
-            relatedAssignment.pse__Resource__c = resourceId;
-            relatedAssignment.pse__Schedule__c = scheduleId;
-            relatedAssignmentList.add(relatedAssignment);
-        return relatedAssignmentList;
+    private pse__Assignment__c buildLinkedAssignment( Id projectId , Id resourceId , Id scheduleId ) {
+        pse__Assignment__c relatedAssignment = new pse__Assignment__c();
+        relatedAssignment.pse__Project__c = projectId;
+        relatedAssignment.pse__Bill_Rate__c = 0.00;
+        relatedAssignment.pse__Resource__c = resourceId;
+        relatedAssignment.pse__Schedule__c = scheduleId;
+        return relatedAssignment;
     }
 
     //
@@ -1291,28 +1368,58 @@ public with sharing class NSP_ProjectTriggerHelper {
         }
     }
 
-    /***********************************************************************************************
-    * MethodName:   updateAssetProductSegment
-    * Description : This Method updates the product segment on Asset
-    * Params:       List< pse__Proj__c> projectList ,  Map<Id,pse__Proj__c> oldProjectMap
-    * Author :      Nischay Jindal
-    * ********************************************************************************************/   
-    public static void updateAssetProductSegment(Set<Id> projectIdSet, Map<String,String> projectAssetRecordTypeMap){
-        List<Asset> updateAssetList = new List<Asset>();
-        try{
-            if(!projectIdSet.isEmpty()){
-                for(Project_Asset__c prjAst :[SELECT Id , Asset__c ,Asset__r.RecordType.DeveloperName, Asset__r.NSP_Product_Segment__c, Project__c, Project__r.TemplateName__c ,Project__r.NSP_Client_Size__c 
-                                                FROM  Project_Asset__c WHERE Project__c IN:projectIdSet 
-                                                AND  (Asset__r.Status = :NSP_ServiceConstants.ASSET_ONBOARDING_STATUS OR Asset__r.Status =: NSP_ServiceConstants.ASSET_ACTIVE_STATUS)]){
-                    if(isValidProjectAsset(prjAst,projectAssetRecordTypeMap)){
-                        Asset ast = new Asset();
-                        ast.Id = prjAst.Asset__c;
-                        ast.NSP_Product_Segment__c = prjAst.Project__r.NSP_Client_Size__c;
-                        updateAssetList.add(ast);
+    //
+    // MethodName: updateAssetProductSegment
+    // Description : This Method updates the product segment on Asset
+    // Params: List< pse__Proj__c> projectList ,  Map<Id,pse__Proj__c> oldProjectMap
+    // Author : Nischay Jindal
+    //
+    public static void updateAssetProductSegment( Set<Id> projectIdSet , Map<String,String> projectAssetRecordTypeMap ) {
+        try {
+            if( ( projectIdSet != null ) && !projectIdSet.isEmpty() ) {
+                Map<Id,Asset> updateAssetMap = new Map<Id,Asset>();
+                for ( Project_Asset__c prjAst : [
+                            SELECT
+                                Id ,
+                                Asset__c ,
+                                Asset__r.RecordType.DeveloperName ,
+                                Asset__r.NSP_Product_Segment__c ,
+                                Project__c ,
+                                Project__r.TemplateName__c ,
+                                Project__r.NSP_Client_Size__c
+                            FROM Project_Asset__c
+                            WHERE (
+                                ( Project__c IN :projectIdSet )
+                                AND (
+                                    ( Asset__r.Status = :NSP_ServiceConstants.ASSET_ONBOARDING_STATUS )
+                                    OR ( Asset__r.Status = :NSP_ServiceConstants.ASSET_ACTIVE_STATUS )
+                                )
+                            )
+                        ]
+                    )
+                {
+                    if ( NSP_ProjectTriggerHelper.isValidProjectAsset( prjAst , projectAssetRecordTypeMap )
+                        && !updateAssetMap.containsKey( prjAst.Asset__c )
+                        )
+                    {
+                        // prevent ~ ListException: Duplicate id in list...
+                        updateAssetMap.put(
+                            prjAst.Asset__c ,
+                            new Asset(
+                                Id=prjAst.Asset__c ,
+                                NSP_Product_Segment__c=prjAst.Project__r.NSP_Client_Size__c
+                            )
+                        );
                     }
                 }
-                if(!updateAssetList.isEmpty()){
-                    update updateAssetList; 
+                if ( !updateAssetMap.isEmpty() ) {
+                    // throws ~ System.DmlException: FIELD_CUSTOM_VALIDATION_EXCEPTION, You don't have the permission to edit this field: [NSP_Product_Segment__c]
+                    List<Database.SaveResult> results = Database.update( updateAssetMap.values() , false );
+                    NSP_ErrorLogHandler.logResults(
+                        NSP_ProjectTriggerHelper.class.getName() ,
+                        'updateAssetProductSegment:update' ,
+                        results
+                    );
                 }
             }
         } catch ( Exception e ) {
@@ -1891,26 +1998,32 @@ public with sharing class NSP_ProjectTriggerHelper {
              }           
          }                                                      
      }
-     
-    /***********************************************************************************************
-    * MethodName: handleBeforeDeleteOfProjTemp
-    * Description : Helper method to check before deleting a project
-    * Params:       List<pse__Proj__c> projects
-    * Created as part of STY-04554
-    * ********************************************************************************************/
-    public void handleBeforeDeleteOfProjTemp(List<pse__Proj__c> projects) {
-        
-        try{
-            List<String> userList = new List<String>{'Id','Name','NSP_Service_Stakeholder__c'};
-            String query = new NSP_QueryBuilder('User', userList)
-                .addFilter('Id', UserInfo.getUserId()).addLimit(1).setSecurityEnforce(false).build();
-            User userDetails = Database.query(query);
-            
-            for (pse__Proj__c project : projects) {
-                if (project.pse__Is_Template__c && !userDetails.Name.contains('Deployment') && !userDetails.NSP_Service_Stakeholder__c) {
+
+    //
+    // MethodName: handleBeforeDeleteOfProjTemp
+    // Description : Helper method to check before deleting a project
+    // Params: List<pse__Proj__c> projects
+    // Created as part of STY-04554
+    //
+    public void handleBeforeDeleteOfProjTemp( List<pse__Proj__c> projects ) {
+        String errorMessage = 'You do not have permission to delete project templates';
+        try {
+            List<String> userList = new List<String>{ 'Id' , 'Name' , 'NSP_Service_Stakeholder__c' };
+            String query = new NSP_QueryBuilder( 'User' , userList )
+                .addFilter( 'Id' , UserInfo.getUserId() )
+                .addLimit( 1 )
+                .setSecurityEnforce( false )
+                .build();
+            User userDetails = Database.query( query );
+            for ( pse__Proj__c project : projects ) {
+                if ( project.pse__Is_Template__c
+                    && !userDetails.Name.contains( 'Deployment' )
+                    && !userDetails.NSP_Service_Stakeholder__c
+                    )
+                {
                     //After the custom label gets deployed please change the below line to
                     //project.addError(System.Label.NSP_ProjTemplateDeleteError);
-                    project.addError('You do not have permission to delete project templates');
+                    project.addError( errorMessage );
                 }
             }
         } catch ( Exception e ) {

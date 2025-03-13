@@ -3662,6 +3662,14 @@
     <picklistValues>
         <picklist>NSP_How_will_the_payroll_be_funded__c</picklist>
         <values>
+            <fullName>Credit Required Prepayment</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Credit Required Wire</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Direct Debit</fullName>
             <default>false</default>
         </values>

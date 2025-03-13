@@ -4,7 +4,7 @@
     <encodingKey>UTF-8</encodingKey>
     <name>Child Opportunity Closed Lost</name>
     <style>none</style>
-    <subject>Opportunity associated with {!Opportunity.pse__Parent_Opportunity__c} has been closed</subject>
+    <subject>Opportunity associated with {!Opportunity.NSP_Parent_Opportunity__c} has been closed</subject>
     <type>custom</type>
     <uiType>Aloha</uiType>
 </EmailTemplate>

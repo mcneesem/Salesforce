@@ -1,14 +1,10 @@
-/**
-*************************************************************
-* 
-* @description  : Batch Class to process the termination form for the email template.
-* @author Shruti Patil
-* @date : 10/18/2021
-* Name : NSP_TerminationForm_Batch
-*
-*************************************************************
-*/
-global class NSP_TerminationForm_Batch implements Schedulable , Database.Batchable<SObject> , Database.Stateful {
+//
+// @description : Batch Class to process the termination form for the email template.
+// @author : Shruti Patil
+// @date : 10/18/2021
+// Name : NSP_TerminationForm_Batch
+//
+global class NSP_TerminationForm_Batch implements ISelfSchedulable , Schedulable , Database.Batchable<SObject> , Database.Stateful {
     // test w/ NSP_TerminationForm_Batch_Test (88%)
 
     private List<String> ccEmailAddressList = new List<String>();
@@ -24,6 +20,8 @@ global class NSP_TerminationForm_Batch implements Schedulable , Database.Batchab
                 NSP_Term_Code__c ,
                 NSP_Client_Term_Date__c ,
                 NSP_Term_Reason__c ,
+                Approval_Date__c ,
+                NSP_Number_of_Active_Employees__c ,
                 NSP_Benefit_Termination_Date__c ,
                 NSP_Project_Task__r.pse__Project__r.pse__Account__c ,
                 NSP_Project_Task__r.pse__Project__r.pse__Account__r.Name ,
@@ -31,9 +29,10 @@ global class NSP_TerminationForm_Batch implements Schedulable , Database.Batchab
                 NSP_Project_Task__r.pse__Project__r.pse__Project_Status__c
                 FROM NSP_Termination_Form__c
                 WHERE (
-                    NSP_Last_Date_Wages_Paid_Through__c = LAST_N_DAYS:22
-                    AND NSP_Status__c = 'Term Team Approved'
-                    AND NSP_Project_Task__r.pse__Project__r.pse__Project_Status__c != 'Complete'
+                    ( Approval_Date__c > :NSP_TerminationForm_Batch.dateBefore )
+                    AND ( Approval_Date__c < :NSP_TerminationForm_Batch.dateAfter )
+                    AND ( NSP_Status__c = 'Term Team Approved' )
+                    AND ( NSP_Project_Task__r.pse__Project__r.pse__Project_Status__c != 'Complete' )
                 )
             ]
         );  
@@ -61,14 +60,7 @@ global class NSP_TerminationForm_Batch implements Schedulable , Database.Batchab
                             FROM NSP_Account_Team__c 
                             WHERE (
                                 NSP_Account__c IN :relatedAccoutIdSet
-                                AND (
-                                    NSP_Role__c = 'Manager,HR Services'
-                                    OR NSP_Role__c = 'Payroll Specialist'
-                                    OR NSP_Role__c = 'Payroll Supervisor'
-                                    OR NSP_Role__c = 'Client Liaison'
-                                    OR NSP_Role__c = 'HR Specialist'
-                                    OR NSP_Role__c = 'Renewal Coordinator'
-                                )
+                                AND NSP_Role__c IN :NSP_TerminationForm_Batch.accountTeamRoles
                             )
                         ]
                     )
@@ -90,14 +82,18 @@ global class NSP_TerminationForm_Batch implements Schedulable , Database.Batchab
 
     public void finish( Database.BatchableContext bc ) {
         if ( String.isNotBlank( System.Label.NSP_TerminationFormBatchGenericToAddress ) ) {
-            EmailTemplate emailTemplate = [SELECT Id, Body FROM EmailTemplate WHERE DeveloperName = 'NSP_Termination_Form_Email_Template'];
-            List<String> toEmailAddressList = System.Label.NSP_TerminationFormBatchGenericToAddress.split(',');
+            EmailTemplate emailTemplate = [
+                SELECT Id , Body
+                FROM EmailTemplate
+                WHERE ( DeveloperName = 'NSP_Termination_Form_Email_Template' )
+            ];
+            List<String> toEmailAddressList = System.Label.NSP_TerminationFormBatchGenericToAddress.split( ',' );
             Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
-            email.setToAddresses(toEmailAddressList);
-            email.setSaveAsActivity(false);
-            email.setTemplateId(emailTemplate.Id);
-            email.setTargetObjectId(userinfo.getUserId());
-            email.setCcAddresses(ccEmailAddressList);
+            email.setToAddresses( toEmailAddressList );
+            email.setSaveAsActivity( false );
+            email.setTemplateId( emailTemplate.Id );
+            email.setTargetObjectId( userinfo.getUserId() );
+            email.setCcAddresses( ccEmailAddressList );
             try {
                 if ( !Test.isRunningTest() ) {
                     Messaging.sendEmail( new Messaging.SingleEmailMessage[]{ email } );
@@ -128,4 +124,106 @@ global class NSP_TerminationForm_Batch implements Schedulable , Database.Batchab
         );
     }
 
+    //
+    // attributes controlled by Custom Settings...
+    // ~ intentionally static to allow Custom Settings to modify the attributes a Scheduled job...
+    //
+
+    private static TerminationFormBatchSettings__c settings {
+        private get {
+            if ( settings == null ) {
+                settings = TerminationFormBatchSettings__c.getInstance( UserInfo.getUserId() );
+            }
+            return settings;
+        }
+        private set;
+    }
+
+    // translates soqlDaysBeforeLimit into a specific Date value...
+    public static Date dateBefore {
+        public get {
+            if ( dateBefore == null ) {
+                dateBefore = System.today().addDays( -1 * NSP_TerminationForm_Batch.soqlDaysBeforeLimit );
+            }
+            return dateBefore;
+        }
+        private set;
+    }
+
+    // how far before (in days) should be terminated???
+    private static Integer soqlDaysBeforeLimit {
+        private get {
+            if ( soqlDaysBeforeLimit == null ) {
+                Integer local = 90;
+                if ( ( NSP_TerminationForm_Batch.settings != null )
+                    && ( NSP_TerminationForm_Batch.settings.SoqlDaysBeforeLimit__c != null )
+                   )
+                {
+                    local = NSP_TerminationForm_Batch.settings.SoqlDaysBeforeLimit__c.intValue();
+                }
+                // limit must be non-negative...
+                if ( local < 0 ) {
+                    local = 0;
+                }
+                soqlDaysBeforeLimit = local;
+            }
+            return soqlDaysBeforeLimit;
+        }
+        private set;
+    }
+
+    // translates soqlDaysAfterLimit into a specific Date value...
+    public static Date dateAfter {
+        public get {
+            if ( dateAfter == null ) {
+                dateAfter = System.today().addDays( 1 * NSP_TerminationForm_Batch.soqlDaysAfterLimit );
+            }
+            return dateAfter;
+        }
+        private set;
+    }
+
+    // how far after (in days) should be terminated???
+    private static Integer soqlDaysAfterLimit {
+        private get {
+            if ( soqlDaysAfterLimit == null ) {
+                Integer local = 90;
+                if ( ( NSP_TerminationForm_Batch.settings != null )
+                    && ( NSP_TerminationForm_Batch.settings.SoqlDaysAfterLimit__c != null )
+                   )
+                {
+                    local = NSP_TerminationForm_Batch.settings.SoqlDaysAfterLimit__c.intValue();
+                }
+                // limit must be non-negative...
+                if ( local < 0 ) {
+                    local = 0;
+                }
+                soqlDaysAfterLimit = local;
+            }
+            return soqlDaysAfterLimit;
+        }
+        private set;
+    }
+
+    private static List<String> accountTeamRoles {
+        private get {
+            if ( accountTeamRoles == null ) {
+                List<String> local = new List<String>();
+                if ( NSP_TerminationForm_Batch.settings != null ) {
+                    String rawAccountTeamRoles = NSP_TerminationForm_Batch.settings.Account_Team_Roles__c;
+                    if ( String.isNotBlank( rawAccountTeamRoles ) ) {
+                        List<String> splitAccountTeamRoles = rawAccountTeamRoles.split( ',' );
+                        if ( ( splitAccountTeamRoles != null ) && ( splitAccountTeamRoles.size() > 0 ) ) {
+                            local = splitAccountTeamRoles;
+                        }
+                    }
+                }
+                accountTeamRoles = local;
+            }
+            return accountTeamRoles;
+        }
+        private set;
+    }
+
 }
+//

@@ -59,6 +59,10 @@
                 <field>Project_Access_Type__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Client_Segment__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>NSP_Visible_to_Client__c</field>
             </layoutItems>

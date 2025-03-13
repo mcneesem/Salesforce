@@ -1,13 +1,19 @@
 @isTest
-public class NSP_ProcessClientSubPlanHistoryBatchTest {
-	
-    public static final Id CHOICECLIENTSUBPLANRECORDTYPEID = NSP_GenericRecordType.getRecordTypeId('NSP_Client_Sub_Plan_History__c', 'Choice');
-	public static final Id RETSERVICESASSETRECORDTYPEID = NSP_GenericRecordType.getRecordTypeId('Asset', NSP_ServiceConstants.RET_CHOICE_ASSET_RECORDTYPE);
+private class NSP_ProcessClientSubPlanHistoryBatchTest {
+
+    private static final Id CHOICECLIENTSUBPLANRECORDTYPEID = NSP_GenericRecordType.getRecordTypeId('NSP_Client_Sub_Plan_History__c', 'Choice');
+    private static final Id RETSERVICESASSETRECORDTYPEID = NSP_GenericRecordType.getRecordTypeId('Asset', NSP_ServiceConstants.RET_CHOICE_ASSET_RECORDTYPE);
        
     @testSetup
-    public static void setUpTestData(){
-		Id choicePlanSubPlanRecordTypeId = NSP_GenericRecordType.getRecordTypeId('NSP_Plan_SubPlan__c', 'Choice');
-    	Id choicePlanRecordTypeId = NSP_GenericRecordType.getRecordTypeId('NSP_Plan__c', 'Choice');
+    private static void setUpTestData() {
+        ProcessClientSubPlanHistoryBatchSettings__c settings = ProcessClientSubPlanHistoryBatchSettings__c.getOrgDefaults();
+        settings.IsEnabled__c = true;
+        settings.IsEnabledCurrentSubPlan__c = true;
+        settings.BatchSize__c = 10;
+        upsert settings;
+
+        Id choicePlanSubPlanRecordTypeId = NSP_GenericRecordType.getRecordTypeId('NSP_Plan_SubPlan__c', 'Choice');
+        Id choicePlanRecordTypeId = NSP_GenericRecordType.getRecordTypeId('NSP_Plan__c', 'Choice');
  
         //Creat a new Asset Record
         Asset newAsset = (Asset)NSP_TestExtendedDataFactory.createSObject(new Asset(), 'NSP_TestDataFactory.AssetDefaults', false);
@@ -36,7 +42,7 @@ public class NSP_ProcessClientSubPlanHistoryBatchTest {
         //Create a new Client Sub Plan History Record and link it to Asset and Plan Sub Plan
         NSP_Client_Sub_Plan_History__c clientSubPlanHistRec = new NSP_Client_Sub_Plan_History__c();
         clientSubPlanHistRec.RecordTypeId = CHOICECLIENTSUBPLANRECORDTYPEID;
-		clientSubPlanHistRec.NSP_Asset__c = newAsset.Id;
+        clientSubPlanHistRec.NSP_Asset__c = newAsset.Id;
         clientSubPlanHistRec.NSP_End_Date__c = null;
         clientSubPlanHistRec.NSP_Current_Subplan__c = true;
         clientSubPlanHistRec.NSP_Plan_Subplan_Relationship__c = planSubPlanRec.Id;
@@ -46,7 +52,7 @@ public class NSP_ProcessClientSubPlanHistoryBatchTest {
         
         NSP_Client_Sub_Plan_History__c clientMSubPlanHistRec = new NSP_Client_Sub_Plan_History__c();
         clientMSubPlanHistRec.RecordTypeId = CHOICECLIENTSUBPLANRECORDTYPEID;
-		clientMSubPlanHistRec.NSP_Asset__c = newMemberAsset.Id;
+        clientMSubPlanHistRec.NSP_Asset__c = newMemberAsset.Id;
         clientMSubPlanHistRec.NSP_End_Date__c = null;
         clientMSubPlanHistRec.NSP_Current_Subplan__c = true;
         clientMSubPlanHistRec.NSP_Plan_Subplan_Relationship__c = planSubPlanRec.Id;
@@ -54,7 +60,8 @@ public class NSP_ProcessClientSubPlanHistoryBatchTest {
         Database.insert(clientMSubPlanHistRec);
     }
     
-    static testMethod void runBatchTest(){
+    @isTest
+    private static void runBatchTest(){
         list<NSP_Client_Sub_Plan_History__c> eacHistroy = new list<NSP_Client_Sub_Plan_History__c>([SELECT id,NSP_Current_Subplan__c from  NSP_Client_Sub_Plan_History__c WHERE NSP_Asset__c != null]);
         for(NSP_Client_Sub_Plan_History__c csph : eacHistroy){
             csph.NSP_Current_Subplan__c = false;
@@ -62,23 +69,32 @@ public class NSP_ProcessClientSubPlanHistoryBatchTest {
         update eacHistroy;
         Test.startTest();
         NSP_ProcessClientSubPlanHistoryBatch bch = new NSP_ProcessClientSubPlanHistoryBatch();
-		Database.executeBatch(bch,10);
+        Database.executeBatch(bch,10);
         System.assert(eacHistroy[0].NSP_Current_Subplan__c == false);
         Test.stopTest();
     }
     
-    static testMethod void runBatchAssetTest(){
+    @isTest
+    private static void runBatchAssetTest(){
         Asset assobj  = [Select id,NSP_Client_is_Lead_Parent__c from Asset WHERE NSP_Client_is_Lead_Parent__c = true limit 1];
-		assobj.NSP_Client_is_Lead_Parent__c = false;
-		update  assobj;       
+        assobj.NSP_Client_is_Lead_Parent__c = false;
+        update  assobj;       
         
         
         Test.startTest();
         NSP_ProcessClientSubPlanHistoryBatch bch = new NSP_ProcessClientSubPlanHistoryBatch();
-		
         String sch = '20 30 8 10 2 ?';
-        String jobID = System.schedule('ClientSubP '+system.Now(), sch, bch);
+        System.schedule('ClientSubP '+system.Now(), sch, bch);
         Test.stopTest();
         System.assert(assobj.NSP_Client_is_Lead_Parent__c == false);
     }
+
+    @isTest
+    private static void testSelfSchedulable() {
+        Test.startTest();
+        NSP_ProcessClientSubPlanHistoryBatch.schedule();
+        Test.stopTest();
+    }
+
 }
+//

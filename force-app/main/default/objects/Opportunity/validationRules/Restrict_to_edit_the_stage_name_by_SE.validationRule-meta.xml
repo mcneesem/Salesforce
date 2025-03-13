@@ -4,5 +4,5 @@
     <active>true</active>
     <description>Restricted to edit the stage name by Sales Engineer</description>
     <errorConditionFormula>AND(NOT(ISNEW()), ISCHANGED( StageName ), $UserRole.Name = &quot;Sales Engineer&quot;)</errorConditionFormula>
-    <errorMessage>Error Message: Sales Engineers may not update the Opportunity Stage. Please reach out to the Opportunity Owner.</errorMessage>
+    <errorMessage>Sales Engineers may not update the Opportunity Stage. Please reach out to the Opportunity Owner.</errorMessage>
 </ValidationRule>

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
     <customButtons>AVA_SFCLOUD__Sync_AvaTax_Tax_Code</customButtons>
+    <excludeButtons>OpenSlackRecordChannel</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
         <customLabel>false</customLabel>
@@ -847,6 +848,10 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <relatedList>SBQQ__ProductFeature__c.SBQQ__ConfiguredSKU__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
         <fields>SBQQ__Active__c</fields>
         <fields>SBQQ__ConstrainingOption__c</fields>
         <fields>SBQQ__ConstrainedOption__c</fields>
@@ -918,7 +923,16 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>NSP_Lower_Bound__c</fields>
+        <fields>NSP_Upper_Bound__c</fields>
+        <fields>NSP_List_Price__c</fields>
+        <fields>Seasonal_Pricing__c</fields>
+        <fields>NSP_Start_Date__c</fields>
+        <fields>NSP_End_Date__c</fields>
+        <fields>NSP_Pricing_Model__c</fields>
         <relatedList>NSP_Pricing_Table__c.NSP_Product__c</relatedList>
+        <sortField>NSP_Lower_Bound__c</sortField>
+        <sortOrder>Asc</sortOrder>
     </relatedLists>
     <relatedLists>
         <fields>ConsumptionSchedule</fields>
@@ -939,7 +953,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h7d000002d60N</masterLabel>
+        <masterLabel>00h4x000003Em8K</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

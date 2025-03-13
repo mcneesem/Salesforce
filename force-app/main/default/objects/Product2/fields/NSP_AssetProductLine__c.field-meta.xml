@@ -71,6 +71,11 @@
                 <default>false</default>
                 <label>Insurance Services</label>
             </value>
+            <value>
+                <fullName>Contingent Workforce</fullName>
+                <default>false</default>
+                <label>Contingent Workforce</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

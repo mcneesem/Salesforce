@@ -154,17 +154,17 @@
             <name>Yes_Parent_is_Closed_Lost_and_Product_IS_Retirement_Services</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>$Record.pse__Parent_Opportunity__c</leftValueReference>
+                <leftValueReference>$Record.NSP_Parent_Opportunity__c</leftValueReference>
                 <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>$Record.Parent_Opportunity_Stage__c</leftValueReference>
+                <leftValueReference>$Record.NSP_Is_Parent_Opportunity_Closed_Lost__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>Closed Lost</stringValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
