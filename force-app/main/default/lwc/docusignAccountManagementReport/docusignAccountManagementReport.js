@@ -1,12 +1,12 @@
 import { LightningElement, api,wire } from 'lwc';  
 import { CloseActionScreenEvent } from 'lightning/actions';
-import getDocusignURL from '@salesforce/apex/DocusignAMR.getDocusignURL';
-import getPrimaryAccount from '@salesforce/apex/DocusignAMR.getPrimaryAccount';
+import getDocusignURL from '@salesforce/apex/DocusignAccountManagementReport.getDocusignURL';
+import getPrimaryAccount from '@salesforce/apex/DocusignAccountManagementReport.getPrimaryAccount';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { getRecord } from 'lightning/uiRecordApi';
 
 const FIELDS = ['Account.Name'];
-export default class DocusignAMR extends LightningElement {
+export default class DocusignAccountManagementReport extends LightningElement {
     @api recordId; // This will hold the current Account record ID  
     accountName; // To hold the Account Name  
     accountId;  
