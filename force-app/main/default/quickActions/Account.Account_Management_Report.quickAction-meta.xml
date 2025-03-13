@@ -2,7 +2,7 @@
 <QuickAction xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionSubtype>ScreenAction</actionSubtype>
     <label>Account Management Report</label>
-    <lightningWebComponent>docusignamr</lightningWebComponent>
+    <lightningWebComponent>docusignAccountManagementReport</lightningWebComponent>
     <optionsCreateFeedItem>false</optionsCreateFeedItem>
     <type>LightningWebComponent</type>
 </QuickAction>
