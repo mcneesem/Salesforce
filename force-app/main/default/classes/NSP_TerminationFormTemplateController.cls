@@ -155,26 +155,33 @@ public with sharing class NSP_TerminationFormTemplateController {
         ];
         return terminationFormList;
     }
-    public Map<String,String> getRoleMap (Map<Id, List<NSP_Account_Team__c>> accountWithAccountTeammemberMap , Id accountId) {
-        Map<String,String> roleMap = new Map<String,String>();
-        if(accountId != null && accountWithAccountTeammemberMap != null && accountWithAccountTeammemberMap.containsKey(accountId) ){
-            for(NSP_Account_Team__c accTeamMember : accountWithAccountTeammemberMap.get(accountId)){
-                String role = accTeamMember.NSP_Role__c;
-                String fullName = accTeamMember.NSP_First_Name__c + ' ' + accTeamMember.NSP_Last_Name__c;
-                if (accTeamMember.NSP_Primary__c) {
-                    // If primary, add at the beginning
-                    roleMap.put(role, fullName + (roleMap.containsKey(role) ? ', ' + roleMap.get(role) : ''));
-                } else {
-                    if (roleMap.containsKey(role)) {
-                        roleMap.put(role, roleMap.get(role) + ', ' + fullName);
-                    } else {
-                        roleMap.put(role, fullName);
-                    }
-                }
-            }}
-        return roleMap;
+    public Map<String, String> getRoleMap(Map<Id, List<NSP_Account_Team__c>> accountWithAccountTeammemberMap, Id accountId) {
+    Map<String, String> roleMap = new Map<String, String>();
+    
+    if (isValidInput(accountWithAccountTeammemberMap, accountId)) {
+        List<NSP_Account_Team__c> teamMembers = accountWithAccountTeammemberMap.get(accountId);
+        for (NSP_Account_Team__c accTeamMember : teamMembers) {
+            addTeamMemberToRoleMap(roleMap, accTeamMember);
+        }
     }
+    
+    return roleMap;
+}
 
+    private Boolean isValidInput(Map<Id, List<NSP_Account_Team__c>> accountWithAccountTeammemberMap, Id accountId) {
+          return accountId != null && accountWithAccountTeammemberMap != null && accountWithAccountTeammemberMap.containsKey(accountId);
+}
+
+    private void addTeamMemberToRoleMap(Map<String, String> roleMap, NSP_Account_Team__c accTeamMember) {
+        String role = accTeamMember.NSP_Role__c;
+        String fullName = accTeamMember.NSP_First_Name__c + ' ' + accTeamMember.NSP_Last_Name__c;
+    
+    if (accTeamMember.NSP_Primary__c) {
+        roleMap.put(role, fullName + (roleMap.containsKey(role) ? ', ' + roleMap.get(role) : ''));
+    } else {
+        roleMap.put(role, roleMap.containsKey(role) ? roleMap.get(role) + ', ' + fullName : fullName);
+    }
+}
     // Getting the Document Id and creating a Document Url.
     public String getTopLogoUrl() {
         return new NSP_EmailImageController().getServiceOperationsLogoUrl();
