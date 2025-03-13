@@ -1,25 +1,17 @@
-/**
-Apex Class Name      :  NSP_DocuSignInvoiceDocumentBatchTest
-Version              :  1.0   
-Author               :  Rakesh                                                                       
-Created Date         :  02/24/2023 
-Function             :   Represent test class for NSP_DocuSignInvoiceDocumentBatch
-Story                :                                                                      
-Modification Log     :                                                                              
-*--------------------------------------------------------------------------------------------------  
-* Developer                   Date                   Description                                    
-* -------------------------------------------------------------------------------------------------  
-* Rakesh               02/24/2023          First Iteration
-*/
+@isTest
+private class NSP_DocuSignInvoiceDocumentBatchTest {
 
-@isTest(isParallel=false)
-public with sharing class NSP_DocuSignInvoiceDocumentBatchTest {
-    public NSP_DocuSignInvoiceDocumentBatchTest() {
-        
-    }
-    
     @TestSetup
-    public static void createTestData(){
+    private static void createTestData() {
+        Order_Settings__c orderSetting = Order_Settings__c.getOrgDefaults();
+        orderSetting.Bypass_Rule_PreventStatusChange__c = true;
+        upsert orderSetting;
+
+        DocusignInvoiceDocumentBatchSettings__c settings = DocusignInvoiceDocumentBatchSettings__c.getOrgDefaults();
+        settings.IsEnabled__c = true;
+        settings.BatchSize__c = 25;
+        settings.BccAddresses__c = UserInfo.getUserEmail();
+        upsert settings;
         //Test Data Setup
         // NSP_InvoiceTriggerHandler.TriggerDisabled = true;
         NSP_AccountTriggerHandler.TriggerDisabled = true;
@@ -31,7 +23,7 @@ public with sharing class NSP_DocuSignInvoiceDocumentBatchTest {
         
         Account objaccount = NSP_TestHelper.createAccount(true);
         
-        Contact objcontact = NSP_TestHelper.createContact(objaccount.id, true);
+        NSP_TestHelper.createContact(objaccount.id, true);
         Product2 objproduct = NSP_TestHelper.createProduct('Test Product',false);
         objproduct.SBQQ__ChargeType__c = 'Recurring';
         objproduct.SBQQ__BillingType__c = 'Arrears';
@@ -62,10 +54,6 @@ public with sharing class NSP_DocuSignInvoiceDocumentBatchTest {
         objproduct.blng__TaxRule__c = taxRuleObj.Id;
         update objproduct;
         
-        // Query account and product
-        //Account objaccount  = [Select Id, Name from Account WHERE Name =: NSP_TestHelper.DEFAULT_COMPANY_NAME LIMIT 1];
-        //Product2 objproduct  = [Select Id, Name from Product2 WHERE Name = 'Test Product' LIMIT 1];
-        
         // create opportunity
         Opportunity objOpprtunity = NSP_TestHelper.createOpenOpportunity(objaccount.Id,'New Product',true);
         
@@ -82,30 +70,21 @@ public with sharing class NSP_DocuSignInvoiceDocumentBatchTest {
         objQuote.SBQQ__Ordered__c = true;
         update objQuote;
         
-        //NSP_OrderTriggerHandler.TriggerDisabled = true;
-        //NSP_InvoiceTriggerHandler.TriggerDisabled = true;
         Test.startTest();
         List<Order> ords =[SELECT Id, OrderNumber, blng__BillingDayOfMonth__c FROM Order where SBQQ__Quote__c=:objQuote.Id ];
         ords[0].blng__BillingDayOfMonth__c = '1';
         ords[0].Status = 'Reviewed';
-        //ords[0].blng__BillNow__c = TRUE;
         update ords;
         
         ords[0].Status = 'Activated';
         update ords;
         Test.stopTest(); 
     }
-    
-    
-/**
-* Description : Test method to test the invoice doc gen batch class
-* Name : testInvoiceEmailMessageService
-*/
+
     @isTest
-    static void testInvoiceDocGenBatch(){
+    private static void testInvoiceDocGenBatch() {
         Test.setMock(HttpCalloutMock.class, new CLMHttpMockResponseGenerator());
         Test.startTest();
-        Account objaccount  = [Select Id, Name from Account WHERE Name =: NSP_TestHelper.DEFAULT_COMPANY_NAME LIMIT 1];
         List<Order> ords =[SELECT Id, OrderNumber, blng__BillingDayOfMonth__c FROM Order WHERE Status = 'Activated'];
         ords[0].blng__BillNow__c = TRUE;
         update ords;
@@ -119,16 +98,11 @@ public with sharing class NSP_DocuSignInvoiceDocumentBatchTest {
         ID ebatchprocessid = Database.executeBatch(invBatch,1);
         System.assertNotEquals(null, ebatchprocessid); 
     }
-    
-/**
-* Description : Test method to test the invoice doc gen trigger invoke
-* Name : testInvoiceDocGenTrigger
-*/
+
     @isTest
-    static void testInvoiceDocGenTrigger(){
+    private static void testInvoiceDocGenTrigger() {
         Test.setMock(HttpCalloutMock.class, new CLMHttpMockResponseGenerator());
-       	
-        Account objaccount  = [Select Id, Name from Account WHERE Name =: NSP_TestHelper.DEFAULT_COMPANY_NAME LIMIT 1];
+
         List<Order> ords =[SELECT Id, OrderNumber, blng__BillingDayOfMonth__c FROM Order WHERE Status = 'Activated'];
         ords[0].blng__BillNow__c = TRUE;
         update ords;
@@ -138,11 +112,23 @@ public with sharing class NSP_DocuSignInvoiceDocumentBatchTest {
         update invc;
         Test.startTest();
         NSP_TriggerAction.resetAllHasRun();
-        //NSP_InvoiceTriggerHandler.TriggerDisabled = false;
         List<blng__Invoice__c> upInvc = [Select Id, Name, blng__Account__c,blng__Balance__c,NSP_CLM_Document_Received__c,blng__InvoiceStatus__c FROM blng__Invoice__c LIMIT 1];
         upInvc[0].NSP_CLM_Document_Received__c = FALSE;
         update upInvc;
         Test.stopTest();
         
-    }    
+    }
+
+    @isTest
+    private static void testSchedulable() {
+        Test.startTest();
+        System.schedule(
+            'NSP_DocuSignInvoiceDocumentBatch ~ everyday at 3 AM' + ' ~ TEST' ,
+            '0 0 3 * * ? *' ,
+            new NSP_DocuSignInvoiceDocumentBatch()
+        );
+        Test.stopTest();
+    }
+
 }
+//

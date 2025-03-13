@@ -24,6 +24,21 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Contract_Term__c</picklist>
+        <values>
+            <fullName>1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>3</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>NSP_BPS_Billing_Frequency__c</picklist>
         <values>
             <fullName>Annual</fullName>
@@ -229,6 +244,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Contingent Workforce</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Employment Screening</fullName>
             <default>false</default>
         </values>
@@ -357,6 +376,10 @@
         </values>
         <values>
             <fullName>Choice Retirement Services</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Contingent Workforce</fullName>
             <default>false</default>
         </values>
         <values>

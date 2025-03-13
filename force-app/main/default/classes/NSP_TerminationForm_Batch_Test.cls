@@ -31,7 +31,7 @@
         TF1.NSP_Number_of_Active_Employees__c = 40;
         TF1.NSP_Benefit_Termination_Date__c = System.today() +21;
         TF1.NSP_Project_Task__c = ProjectTask.Id;
-        TF1.NSP_Last_Date_Wages_Paid_Through__c = System.Today().addDays(-2);
+        TF1.Approval_Date__c = System.Today();
         insert TF1;
     }
 

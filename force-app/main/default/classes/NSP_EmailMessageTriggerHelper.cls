@@ -1,5 +1,5 @@
 public with sharing class NSP_EmailMessageTriggerHelper {
-    // test w/ NSP_EmailMessageTriggerHelperTest (83%)
+    // test w/ NSP_EmailMessageTriggerHelperTest (86%)
 
     public static boolean isFirst = false;
     private static List<String> ContactCenterEmailAddresses = System.Label.NSP_Contact_Center_Email_Addresses.toLowerCase().split( ',' );
@@ -331,10 +331,10 @@ public with sharing class NSP_EmailMessageTriggerHelper {
                                 record.TextBody ,
                                 sObjectType.Case.Fields.Description
                             );
-                            String queueName = '';
-                            if ( mapOfEmailAddressToQueueName != null ) {
-                                queueName = mapOfEmailAddressToQueueName.get( record.ToAddress );
-                            }
+                            String queueName = NSP_EmailMessageTriggerHelper.getQueueNameFromEmail(
+                                mapOfEmailAddressToQueueName ,
+                                record
+                            );
                             if ( String.isNotBlank( queueName )
                                 && ( mapOfQueueNameToQueueId != null )
                                 && mapOfQueueNameToQueueId.containsKey( queueName )
@@ -371,6 +371,27 @@ public with sharing class NSP_EmailMessageTriggerHelper {
             );
         }
         return caseToInsert;
+    }
+
+    //Method to get queue name from email address.
+    private static String getQueueNameFromEmail( Map<String,String> mapOfEmailAddressToQueueName , EmailMessage record ) {
+        String queueName = '';
+        if ( ( mapOfEmailAddressToQueueName != null ) && ( record != null ) ) {
+            if ( String.isNotBlank( record.ToAddress )
+                && mapOfEmailAddressToQueueName.containsKey( record.ToAddress )
+                && String.isNotBlank( mapOfEmailAddressToQueueName.get( record.ToAddress ) )
+                )
+            {
+                queueName = mapOfEmailAddressToQueueName.get( record.ToAddress );
+            } else if ( String.isNotBlank( record.CcAddress )
+                && mapOfEmailAddressToQueueName.containsKey( record.CcAddress )
+                && String.isNotBlank( mapOfEmailAddressToQueueName.get( record.CcAddress ) )
+                )
+            {
+                queueName = mapOfEmailAddressToQueueName.get( record.CcAddress );
+            }
+        }
+        return queueName;
     }
 
     //
@@ -804,14 +825,7 @@ public with sharing class NSP_EmailMessageTriggerHelper {
     private static Map<String,String> getMapOfEmailAddressToQueueName(List<EmailMessage> emailMessages) {
         Map<String,String> mapOfEmailAddressToQueueName = new Map<String,String>();
         if((emailMessages != null) && !emailMessages.isEmpty()) {
-            Set<String> allToEmailAddress = new Set<String>();
-                
-            for (EmailMessage eMessage : emailMessages) {
-                if(String.isNotBlank(eMessage.ToAddress)) {
-                    allToEmailAddress.add(eMessage.ToAddress);
-                }
-            }
-            
+            Set<String> allToEmailAddress = NSP_EmailMessageTriggerHelper.getAllReceiverAddresses( emailMessages );
             if(allToEmailAddress != null && !allToEmailAddress.isEmpty()) {
                 List<Email_Address_to_Case_Owner_Mapping__mdt> eacoList = [SELECT Id, Case_Owner_Name__c, Email_Address__c FROM Email_Address_to_Case_Owner_Mapping__mdt WHERE Email_Address__c IN :allToEmailAddress];
                 if(eacoList != null && !eacoList.isEmpty()) {
@@ -825,8 +839,23 @@ public with sharing class NSP_EmailMessageTriggerHelper {
         }      
         return mapOfEmailAddressToQueueName;
     }
-    
-    
+
+    //Method returns a set of receiver(To and Cc address) email addresses.
+    private static Set<String> getAllReceiverAddresses( List<EmailMessage> records ) {
+        Set<String> allReceiverAddress = new Set<String>();
+        if ( ( records != null ) && !records.isEmpty() ){
+            for ( EmailMessage record : records ) {
+                if ( String.isNotBlank( record.ToAddress ) ) {
+                    allReceiverAddress.add( record.ToAddress );
+                }
+                if ( String.isNotBlank( record.CcAddress ) ) {
+                    allReceiverAddress.add( record.CcAddress );
+                }
+            }
+        }
+        return allReceiverAddress;
+    }
+
     private static Map<String,String> getMapOfQueueNameToQueueId(Map<String,String> mapOfEmailAddressToQueueName) {
         Map<String,String> mapOfQueueNameToQueueId = new Map<String,String>();
         if(mapOfEmailAddressToQueueName != null && mapOfEmailAddressToQueueName.values() != null) {

@@ -13,6 +13,8 @@
     <permissionSets>Asset_Hardware_Edit</permissionSets>
     <permissionSets>Billing_and_CPQ_Data_Load</permissionSets>
     <permissionSets>Bundle_Template_Flag_fields_Permission</permissionSets>
+    <permissionSets>Bypass_Read_Only_Case_Owner</permissionSets>
+    <permissionSets>Bypass_Restrict_Termination_Date_and_Status</permissionSets>
     <permissionSets>Case_Compensation_Access</permissionSets>
     <permissionSets>Client_goal_project_task_junction_access</permissionSets>
     <permissionSets>Config_Admin</permissionSets>
@@ -25,12 +27,14 @@
     <permissionSets>Marketing_Fields_Edit_Access</permissionSets>
     <permissionSets>NSP_Payroll_Data_Sheet</permissionSets>
     <permissionSets>NSP_Termination_Form_Access</permissionSets>
+    <permissionSets>OpportunityTeamMember_Elevated_Access</permissionSets>
     <permissionSets>Opportunity_Edit_and_Max_Orientation_Date_Edit</permissionSets>
     <permissionSets>Project_Task_Access</permissionSets>
     <permissionSets>Project_Template_Data_Load</permissionSets>
     <permissionSets>Project_Template_Editor</permissionSets>
     <permissionSets>Resource_Absence_record_type_access</permissionSets>
     <permissionSets>Sales_Enablement</permissionSets>
+    <permissionSets>User_Management</permissionSets>
     <permissionSets>force__PipelineInspectionIncluded</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>

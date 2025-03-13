@@ -67,6 +67,11 @@
                 <label>XML Input</label>
             </value>
             <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+            <value>
                 <fullName>Web Payroll</fullName>
                 <default>false</default>
                 <isActive>false</isActive>

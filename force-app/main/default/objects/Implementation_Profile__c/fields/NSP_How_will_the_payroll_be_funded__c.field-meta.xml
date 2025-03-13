@@ -21,6 +21,16 @@
                 <default>false</default>
                 <label>Direct Debit</label>
             </value>
+            <value>
+                <fullName>Credit Required Wire</fullName>
+                <default>false</default>
+                <label>Credit Required Wire</label>
+            </value>
+            <value>
+                <fullName>Credit Required Prepayment</fullName>
+                <default>false</default>
+                <label>Credit Required Prepayment</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

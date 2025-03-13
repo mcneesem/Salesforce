@@ -1,0 +1,43 @@
+<template>
+    <lightning-card title="Order Item Price Update">
+        <div slot="actions"> 
+            <lightning-button 
+            label='Run Batch' 
+            onclick={handleClick}
+            disabled={isProcessing}></lightning-button>
+        </div>
+        <div class="slds-grid slds-align-items-center slds-m-left_medium">
+            <div class="slds-col slds-grow-none slds-p-vertical_xx-small" if:true={stage}><b>Status: </b><lightning-badge label={stage} class="slds-badge_lightest slds-m-horizontal_small"></lightning-badge></div>
+            <div class="slds-col slds-m-left_medium slds-grow-none slds-is-relative">
+                <template lwc:if = {spinner}>
+                    <lightning-spinner alternative-text="Loading"
+                     size="medium" class = "slds-m-left_small " ></lightning-spinner>
+                </template>
+            </div>
+        </div>
+
+        <div class="slds-m-around_medium" if:true={hasSuccessCounts}>
+            <template lwc:if = {hasSuccessCounts}>
+                <p><b>Success Counts:</b></p>
+            </br>
+                <ul>
+                    <li>Subscription Consumption Rates: {successCounts.SubscriptionCSRate}</li>
+                    <li>Subscriptions: {successCounts.Subscription}</li>
+                    <li>Order Product Consumption Rates: {successCounts.OrderItemCSRate}</li>
+                    <li>Order Products: {successCounts.OrderItem}</li>
+                </ul>
+            </template>
+        </br></br>
+            <template lwc:if = {hasFailureCounts}>
+                <p><b>Failure Counts:</b></p>
+            </br>
+                <ul>
+                    <li>Subscription Consumption Rates: {failureCounts.SubscriptionCSRate}</li>
+                    <li>Subscriptions: {failureCounts.Subscription}</li>
+                    <li>Order Product Consumption Rates: {failureCounts.OrderItemCSRate}</li>
+                    <li>Order Products: {failureCounts.OrderItem}</li>
+                </ul>
+            </template>
+        </div>
+    </lightning-card>
+</template>

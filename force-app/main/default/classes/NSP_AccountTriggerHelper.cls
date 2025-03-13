@@ -8,8 +8,8 @@
 //  Rahul Singh        Nov   29 2022        Modified as part of user story 191911
 //
 public class NSP_AccountTriggerHelper {
-    // test w/ NSP_AccountTriggerHelperTest, NSP_AccountContactRelationHelperTest, NSP_AccountContactServiceHelperTest (77%)
-    // test w/ NSP_AccountTriggerHelperTest, NSP_LeadTriggerHelperTest (77%)
+    // test w/ NSP_AccountTriggerHelperTest, NSP_AccountContactRelationHelperTest, NSP_AccountContactServiceHelperTest (80%)
+    // test w/ NSP_AccountTriggerHelperTest, NSP_LeadTriggerHelperTest (79%)
     // test w/ NSP_AccountTriggerHelperTest (79%)
     // test w/ NSP_AccountContactRelationHelperTest (34%)
     // test w/ NSP_AccountContactServiceHelperTest (38%)
@@ -561,57 +561,128 @@ WHERE (userRole.Name = 'Loyalty Advisor' OR userRole.Name = 'Channel Program Man
     // Modified on 02/2023-part of 194459- Bypass for MM roles
     // Matt McNeese      05/26/2023       	 Modified for user story 215091
     public void restrictAccountChange( Map<Id,Account> accountNewMap , Map<Id,Account> accountOldMap , User loggedinUser ) {
-        Map<String, string> accOwnerSalesOfficeMap = new Map<String, string>();
-        Set<Id> accOwnerIdSet = new Set<Id>();
-        List<String> loggedInUserGrpName = new List<String>();
-        Set<Id> accountTeamMemberId = new Set<Id>();
-        List<User> userAvailable =[SELECT Id, Name FROM User WHERE Name = 'Available'];
-        for(GroupMember gMem: [
-                    SELECT Id, GroupId, Group.Name, UserOrGroupId
-                    FROM GroupMember
-                    WHERE UserOrGroupId =: userinfo.getUserId()
-                ]
-            )
-        {
-            loggedInUserGrpName.add(gMem.Group.Name);
-        }
-        for(Account acc : [
-                    SELECT Id, OwnerId, owner.userRoleId, owner.UserRole.Name, ToLabel(owner.NSP_Sales_Office__c), ToLabel(owner.NSP_Sales_Office_Membership__c) 
-                    FROM Account
-                    WHERE Id IN: accountOldMap.keySet() AND Owner.UserRole.Name IN :salesRoles
-                ]
-            )
-        {
-            accOwnerSalesOfficeMap.put(acc.OwnerId, (acc.owner.NSP_Sales_Office__c));
-        }
-        for(NSP_Account_Team__c accTeam : [
-                    SELECT ID, NSP_User__c,NSP_Account__c
-                    FROM NSP_Account_Team__c
-                    WHERE NSP_Account__c =:accountNewMap.keySet()
-                ]
-            )
-        {
-            accountTeamMemberId.add(accTeam.NSP_User__c);
-        }
         try {
-            for(Account acc : accountNewMap.values()){
-                Integer isallowUpdate = 0;
-                if(accountOldMap.get(acc.Id).Zip_Based_Location__c != acc.Zip_Based_Location__c){
-                    isallowUpdate++;
-                } else if(!userAvailable.isEmpty() && accountOldMap.get(acc.Id).OwnerId == userAvailable[0].Id){
-                    if(accountNewMap.get(acc.Id).OwnerId != userAvailable[0].Id && allowedAssignAvailableRoles.contains(loggedinUser.UserRole.Name)){
-                        isallowUpdate++;
-                    }
-                } else if(accOwnerSalesOfficeMap.isEmpty() || MMRoles.contains(loggedinUser.UserRole.Name) || ((!loggedInUserGrpName.isEmpty() && loggedInUserGrpName.contains(accOwnerSalesOfficeMap.get(accountOldMap.get(acc.ID).ownerId))) || accountTeamMemberId.contains(userInfo.getUserId()) || (accOwnerSalesOfficeMap.containsKey(userInfo.getUserId())))){
-                    isallowUpdate++;
-                }
-                if(isallowUpdate == 0){
-                    acc.addError(system.label.NSP_AccountTriggerError);
+            List<String> loggedInUserGrpName = this.selectLoggedInUserGroupName();
+            Map<String, string> accOwnerSalesOfficeMap = this.selectAccountOwnerSalesOfficeMap( accountOldMap );
+            Set<Id> accountTeamMemberId = this.selectAccountTeamMemberIds( accountNewMap );
+            Id availableUserId = '0054x000008PgqNAAS'; // 'Available' User Id...
+            String loggedInUserRoleName = loggedinUser.UserRole.Name;
+            for ( Account acc : accountNewMap.values() ) {
+                Account oldRecord = accountOldMap.get( acc.Id );
+                Boolean isAllowAssignAvailable = (
+                    ( acc.OwnerId != availableUserId )
+                    && NSP_AccountTriggerHelper.allowedAssignAvailableRoles.contains( loggedInUserRoleName )
+                );
+                Boolean isValidCurrentUser = (
+                    (
+                        !loggedInUserGrpName.isEmpty()
+                        && loggedInUserGrpName.contains( accOwnerSalesOfficeMap.get( oldRecord.ownerId ) )
+                    )
+                    || accountTeamMemberId.contains( UserInfo.getUserId() )
+                    || accOwnerSalesOfficeMap.containsKey( UserInfo.getUserId() )
+                );
+                Boolean isAllowUpdate = this.isAllowedAccountChange(
+                    ( acc.NSP_Last_Updated__c != oldRecord.NSP_Last_Updated__c ) ,
+                    ( acc.Zip_Based_Location__c != oldRecord.Zip_Based_Location__c ) ,
+                    ( oldRecord.OwnerId == availableUserId ) ,
+                    isAllowAssignAvailable ,
+                    accOwnerSalesOfficeMap.isEmpty() ,
+                    NSP_AccountTriggerHelper.MMRoles.contains( loggedInUserRoleName ) ,
+                    isValidCurrentUser
+                );
+                if ( !isAllowUpdate ) {
+                    acc.addError( System.label.NSP_AccountTriggerError );
                 }
             }
         } catch ( Exception e ) {
             NSP_AccountTriggerHelper.handleException( e , 'restrictAccountChange' );
         }
+    }
+
+    // helper method to defeat sonar cognitive complexity...
+    private Boolean isAllowedAccountChange(
+        Boolean isChangedLastUpdated ,
+        Boolean isChangedZipBasedLocation ,
+        Boolean isAvailablePreviousOwner ,
+        Boolean isAllowAssignAvailable ,
+        Boolean isEmptyAccountOwnerSalesOfficeMap ,
+        Boolean isValidCurrentUserRole ,
+        Boolean isValidCurrentUser
+        )
+    {
+        Boolean isAllowUpdate = (
+            isChangedLastUpdated
+            || isChangedZipBasedLocation
+        );
+        if ( isAvailablePreviousOwner ) {
+            if ( isAllowAssignAvailable ) {
+                isAllowUpdate = true;
+            }
+        } else if (
+            isEmptyAccountOwnerSalesOfficeMap
+            || isValidCurrentUserRole
+            || ( isValidCurrentUser )
+            )
+        {
+            isAllowUpdate = true;
+        }
+        return isAllowUpdate;
+    }
+
+    private List<String> selectLoggedInUserGroupName() {
+        List<String> response = new List<String>();
+        for ( GroupMember member: [
+                    SELECT Id , GroupId , Group.Name , UserOrGroupId
+                    FROM GroupMember
+                    WHERE ( UserOrGroupId = :Userinfo.getUserId() )
+                ]
+            )
+        {
+            response.add( member.Group.Name );
+        }
+        return response;
+    }
+
+    private Map<String,String> selectAccountOwnerSalesOfficeMap( Map<Id,Account> oldMap ) {
+        Map<String,String> response = new Map<String,String>();
+        if ( ( oldMap != null ) && !oldMap.isEmpty() ) {
+            for ( Account acc : [
+                        SELECT
+                            Id ,
+                            OwnerId ,
+                            Owner.UserRoleId ,
+                            Owner.UserRole.Name ,
+                            ToLabel( Owner.NSP_Sales_Office__c ) ,
+                            ToLabel( Owner.NSP_Sales_Office_Membership__c )
+                        FROM Account
+                        WHERE (
+                            ( Id IN :oldMap.keySet() )
+                            AND ( Owner.UserRole.Name IN :NSP_AccountTriggerHelper.salesRoles )
+                        )
+                    ]
+                )
+            {
+                response.put(
+                    acc.OwnerId ,
+                    acc.Owner.NSP_Sales_Office__c
+                );
+            }
+        }
+        return response;
+    }
+
+    private Set<Id> selectAccountTeamMemberIds( Map<Id,Account> newMap ) {
+        Set<Id> response = new Set<Id>();
+        for ( NSP_Account_Team__c accTeam : [
+                    SELECT Id , NSP_User__c , NSP_Account__c
+                    FROM NSP_Account_Team__c
+                    WHERE ( NSP_Account__c = :newMap.keySet() )
+                ]
+            )
+        {
+            response.add( accTeam.NSP_User__c );
+        }
+        return response;
     }
 
     /* Description: This method sets sales office details from user 

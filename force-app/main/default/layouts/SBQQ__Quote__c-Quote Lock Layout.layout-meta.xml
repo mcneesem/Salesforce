@@ -115,6 +115,10 @@
                 <behavior>Edit</behavior>
                 <field>NSP_Has_BPS_non_PEO__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Contract_Term__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

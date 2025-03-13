@@ -1,46 +1,133 @@
 <apex:component controller="NSP_TerminationFormTemplateController" access="global">
-    <apex:image id="Logo" url="{!TopLogoUrl}"  width="510" height="100"/><br/>
+    <apex:image id="Logo" url="{!TopLogoUrl}" width="510" height="100"/><br/>
     <apex:outputText value="TERMINATIONS / REINSTATEMENTS" style="padding-left: 135px; font-weight:bold;"/><br/>
     <apex:outputText value="PLEASE PROCESS TERMS AS STATED" style="padding-left: 135px; font-weight:bold;"/><br/><br/>
-    <div style="padding-left:2%;">
+   
+    <!-- Termination Section -->
+    <div style="padding-left:2%; text-align:left;">
         <b>TERMINATIONS</b>
     </div>
+   
     <apex:dataTable value="{!wrapTerminationList}" var="termination" width="100%">
         <apex:column style="padding-left:2%; padding-bottom:1%;">
-            Client:  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{!termination.clinetName}<br/>
-            Client#: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{!termination.clinetNumber}<br/>
-            <div>
-            CSA Term:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <apex:outputText value="{0,date,MM/dd/yyyy}">
-                    <apex:param value="{!termination.csaTerm}" />
-                </apex:outputText>
-            </div>
-            <div>
-             Bene Term:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <apex:outputText value="{0,date,MM/dd/yyyy}">
-                    <apex:param value="{!termination.beneterm}" />
-                </apex:outputText>
-            </div>
-            Reason: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{!termination.reason}
+            <table style="width: 100%; table-layout: fixed; text-align:left;">
+                <tr>
+                    <td style="width: 10%; margin: 0; padding: 0;">Client:</td>
+                    <td style="margin: 0; padding: 0;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{!termination.clinetName}</td>
+                </tr>
+                <tr>
+                    <td style="width: 10%; margin: 0; padding: 0;">Client #:</td>
+                    <td style="margin: 0; padding: 0;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{!termination.clinetNumber}</td>
+                </tr>
+                <tr>
+                    <td style="width: 10%; margin: 0; padding: 0;"># EE's:</td>
+                    <td style="margin: 0; padding: 0;">
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{!termination.eeNumber}
+                        <apex:outputText value=" (MOVED)" rendered="{!OR(termination.reason == '1900 Merger with Insperity Client', termination.reason == '2700 Change in FEIN')}"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 10%; margin: 0; padding: 0;">PS:</td>
+                    <td style="margin: 0; padding: 0;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{!termination.psName}</td>
+                </tr>
+                <tr>
+                    <td style="width: 10%; margin: 0; padding: 0;">SA:</td>
+                    <td style="margin: 0; padding: 0;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{!termination.saName}</td>
+                </tr>
+                <tr>
+                    <td style="width: 10%; margin: 0; padding: 0;">CL:</td>
+                    <td style="margin: 0; padding: 0;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{!termination.clName}</td>
+                </tr>
+                <tr>
+                    <td style="width: 10%; margin: 0; padding: 0;">CSA Term:</td>
+                    <td style="margin: 0; padding: 0;">
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<apex:outputText value="{!IF(termination.revision == 'Yes','REVISED ' & TEXT(MONTH(termination.csaterm)) & '/' & TEXT(DAY(termination.csaterm)) & '/' &
+                            TEXT(YEAR(termination.csaterm)) &
+                            ' (Previous term date: ' &
+                            TEXT(MONTH(termination.previousTermDate)) & '/' &
+                            TEXT(DAY(termination.previousTermDate)) & '/' &
+                            TEXT(YEAR(termination.previousTermDate)) & ')',
+                            TEXT(MONTH(termination.csaterm)) & '/' &
+                            TEXT(DAY(termination.csaterm)) & '/' &
+                            TEXT(YEAR(termination.csaterm))
+                        )}">
+                        </apex:outputText>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 10%; margin: 0; padding: 0;">Bene Term:</td>
+                    <td style="margin: 0; padding: 0;">
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<apex:outputText value="{!IF(
+                            termination.beneterm == Null,
+                            'NA',
+                            TEXT(MONTH(termination.beneterm)) & '/' &
+                            TEXT(DAY(termination.beneterm)) & '/' &
+                            TEXT(YEAR(termination.beneterm))
+                        )}"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 10%; margin: 0; padding: 0;">Reason:</td>
+                    <td style="margin: 0; padding: 0;">
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<apex:outputText value="{!IF(
+                            OR(
+                                termination.reason == '1900 Merger with Insperity Client',
+                                termination.reason == '2700 Change in FEIN'
+                            ),
+                            termination.reason,
+                            IF(
+                                NOT(ISBLANK(termination.subTermReason)),
+                                termination.reason & ' / Sub Term Reason: ' & termination.subTermReason,
+                                termination.reason
+                            )
+                        )}" />
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<apex:outputText value="{!IF(
+                            OR(
+                                termination.reason == '1900 Merger with Insperity Client',
+                                termination.reason == '2700 Change in FEIN'
+                            ),
+                            '(' & termination.clientname & ' - ' & termination.clientnumber & ')',
+                            ''
+                        )}" escape="false" rendered="{!OR(termination.reason == '1900 Merger with Insperity Client', termination.reason == '2700 Change in FEIN')}" />
+                    </td>
+                </tr>
+            </table>
         </apex:column>
     </apex:dataTable>
-    <div style="padding-left:2%;">
+   
+    <!-- Reinstatement Section -->
+    <div style="padding-left:2%; text-align:left;">
         <b>REINSTATEMENTS</b>
     </div>
+   
     <apex:dataTable value="{!reinstatementList}" var="reinstatement" width="100%">
         <apex:column style="padding-left:2%; padding-bottom:1%;">
-            Client:  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{!reinstatement.NSP_Project_Task__r.pse__Project__r.pse__Account__r.Name}<br/>
-            Client#: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{!reinstatement.NSP_Project_Task__r.pse__Project__r.pse__Account__r.NSP_AIMS_Client__c}<br/>
-            <div>
-                CSA Term: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <apex:outputText value="{0,date,MM/dd/yyyy}">
-                    <apex:param value="{!reinstatement.NSP_Client_Term_Date__c}" />
-                </apex:outputText>
-            </div>
-            Reason:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{!reinstatement.NSP_Term_Reason__c}
+            <table style="width: 100%; table-layout: fixed; text-align:left;">
+                <tr>
+                    <td style="width: 10%; margin: 0; padding: 0;">Client:</td>
+                    <td style="margin: 0; padding: 0;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{!reinstatement.NSP_Project_Task__r.pse__Project__r.pse__Account__r.Name}</td>
+                </tr>
+                <tr>
+                    <td style="width: 10%; margin: 0; padding: 0;">Client#:</td>
+                    <td style="margin: 0; padding: 0;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{!reinstatement.NSP_Project_Task__r.pse__Project__r.pse__Account__r.NSP_AIMS_Client__c}</td>
+                </tr>
+                <tr>
+                    <td style="width: 10%; margin: 0; padding: 0;">CSA Term:</td>
+                    <td style="margin: 0; padding: 0;">
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<apex:outputText value="{0,date,MM/dd/yyyy}">
+                            <apex:param value="{!reinstatement.NSP_Client_Term_Date__c}" />
+                        </apex:outputText>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 10%; margin: 0; padding: 0;">Reason:</td>
+                    <td style="margin: 0; padding: 0;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{!reinstatement.NSP_Term_Reason__c}</td>
+                </tr>
+            </table>
         </apex:column>
-    </apex:datatable>
-            <b><big>Terminations Team </big></b><br/>
-    <apex:image id="Logo2" url="{!AddressLogoUrl}"  width="500" height="100"/><br/>
-    <apex:image id="Logo1" url="{!BottomLogoUrl}"  width="500" height="30"/>
+    </apex:dataTable>
+   
+    <b><big>Terminations Team </big></b><br/>
+    <apex:image id="Logo2" url="{!AddressLogoUrl}" width="500" height="100"/><br/>
+    <apex:image id="Logo1" url="{!BottomLogoUrl}" width="500" height="30"/>
 </apex:component>

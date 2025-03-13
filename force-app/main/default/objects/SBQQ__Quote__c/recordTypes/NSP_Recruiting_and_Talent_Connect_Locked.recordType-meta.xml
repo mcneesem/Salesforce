@@ -5,6 +5,21 @@
     <description>Locked record type for Recruiting and Talent Connect</description>
     <label>Recruiting and Talent Connect Locked</label>
     <picklistValues>
+        <picklist>Contract_Term__c</picklist>
+        <values>
+            <fullName>1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>3</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>NSP_Final_Template__c</picklist>
         <values>
             <fullName>ALTULA</fullName>

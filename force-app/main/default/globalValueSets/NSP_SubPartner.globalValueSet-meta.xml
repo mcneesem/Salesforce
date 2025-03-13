@@ -1911,6 +1911,11 @@
         <label>Maniaci Insurance Services, In</label>
     </customValue>
     <customValue>
+        <fullName>McGriff Insurance Services</fullName>
+        <default>false</default>
+        <label>McGriff Insurance Services</label>
+    </customValue>
+    <customValue>
         <fullName>Melissa Whitaker International</fullName>
         <default>false</default>
         <label>Melissa Whitaker International</label>
@@ -2491,34 +2496,16 @@
         <label>Vistage Worldwide</label>
     </customValue>
     <customValue>
-        <fullName>FSI- CADARET, GRANT &amp; CO., INC.</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>FSI- CADARET, GRANT &amp; CO., INC.</label>
-    </customValue>
-    <customValue>
         <fullName>FSI-  JW Cole</fullName>
         <default>false</default>
         <isActive>false</isActive>
         <label>FSI-  JW Cole</label>
     </customValue>
     <customValue>
-        <fullName>FSI- Not Registered with FSI</fullName>
+        <fullName>Acisure</fullName>
         <default>false</default>
         <isActive>false</isActive>
-        <label>FSI- Not Registered with FSI</label>
-    </customValue>
-    <customValue>
-        <fullName>FSI- Atlas Brown, Inc.</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>FSI- Atlas Brown, Inc.</label>
-    </customValue>
-    <customValue>
-        <fullName>Alera Group – TRISURE</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Alera Group – TRISURE</label>
+        <label>Acisure</label>
     </customValue>
     <customValue>
         <fullName>FSI- Grove Point Invesmtents</fullName>
@@ -2527,16 +2514,34 @@
         <label>FSI- Grove Point Invesmtents</label>
     </customValue>
     <customValue>
+        <fullName>Alera Group – TRISURE</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Alera Group – TRISURE</label>
+    </customValue>
+    <customValue>
         <fullName>Alera Group – Forum</fullName>
         <default>false</default>
         <isActive>false</isActive>
         <label>Alera Group – Forum</label>
     </customValue>
     <customValue>
-        <fullName>Acisure</fullName>
+        <fullName>FSI- Atlas Brown, Inc.</fullName>
         <default>false</default>
         <isActive>false</isActive>
-        <label>Acisure</label>
+        <label>FSI- Atlas Brown, Inc.</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- Not Registered with FSI</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>FSI- Not Registered with FSI</label>
+    </customValue>
+    <customValue>
+        <fullName>FSI- CADARET, GRANT &amp; CO., INC.</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>FSI- CADARET, GRANT &amp; CO., INC.</label>
     </customValue>
     <masterLabel>Sub Partner</masterLabel>
     <sorted>false</sorted>

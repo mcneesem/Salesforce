@@ -6,6 +6,11 @@
         <label>Applicant Tracking</label>
     </customValue>
     <customValue>
+        <fullName>Contingent Workforce</fullName>
+        <default>false</default>
+        <label>Contingent Workforce</label>
+    </customValue>    
+    <customValue>
         <fullName>Employment Screening</fullName>
         <default>false</default>
         <label>Employment Screening</label>
@@ -26,9 +31,24 @@
         <label>HR Consulting Services</label>
     </customValue>
     <customValue>
+        <fullName>Insurance Services (Health &amp; Wellness)</fullName>
+        <default>false</default>
+        <label>Insurance Services (Health &amp; Wellness)</label>
+    </customValue>
+    <customValue>
+        <fullName>Insurance Services (Property &amp; Casualty)</fullName>
+        <default>false</default>
+        <label>Insurance Services (Property &amp; Casualty)</label>
+    </customValue>
+    <customValue>
         <fullName>Quickbooks Integration(Insperity Integra)</fullName>
         <default>false</default>
         <label>Integra</label>
+    </customValue>
+    <customValue>
+        <fullName>Integra</fullName>
+        <default>false</default>
+        <label>Integra (need to check)</label>
     </customValue>
     <customValue>
         <fullName>Organizational Planning</fullName>
@@ -56,29 +76,14 @@
         <label>Retirement Services</label>
     </customValue>
     <customValue>
-        <fullName>Insurance Services (Health &amp; Wellness)</fullName>
-        <default>false</default>
-        <label>Insurance Services (Health &amp; Wellness)</label>
-    </customValue>
-    <customValue>
-        <fullName>Insurance Services (Property &amp; Casualty)</fullName>
-        <default>false</default>
-        <label>Insurance Services (Property &amp; Casualty)</label>
-    </customValue>
-    <customValue>
         <fullName>Time and Attendance</fullName>
         <default>false</default>
         <label>Time and Attendance</label>
     </customValue>
     <customValue>
-        <fullName>Integra</fullName>
+        <fullName>Workday</fullName>
         <default>false</default>
-        <label>Integra (need to check)</label>
-    </customValue>
-    <customValue>
-        <fullName>Contingent Workforce</fullName>
-        <default>false</default>
-        <label>Contingent Workforce</label>
+        <label>Workday</label>
     </customValue>
     <customValue>
         <fullName>Bookkeeping Services</fullName>

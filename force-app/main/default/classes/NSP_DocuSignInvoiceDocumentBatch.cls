@@ -1,79 +1,243 @@
-/**
-* @description  : Batch Class to generate invoice documents using DocuSIgn CLM API
-* @author Rakesh Das
-* @date 02/16/2023
-* Name : NSP_DocuSignInvoiceDocumentBatch
-*/
-public class NSP_DocuSignInvoiceDocumentBatch implements Database.Batchable<SObject>, Database.Stateful, Database.AllowsCallouts, Schedulable {
-    // test w/ NSP_DocuSignInvoiceDocumentBatchTest (80%)
+//
+// @description  : Batch Class to generate invoice documents using DocuSIgn CLM API
+// @author Rakesh Das
+// @date 02/16/2023
+// Name : NSP_DocuSignInvoiceDocumentBatch
+//
+public class NSP_DocuSignInvoiceDocumentBatch implements Schedulable , Database.Batchable<SObject> , Database.Stateful , Database.AllowsCallouts {
+    // test w/ NSP_DocuSignInvoiceDocumentBatchTest (87%)
 
-    public Integer recordsProcessed = 0;
-    public String query;
-    public List<String> invcIdList;
-    public List<String> processedInvcNumbers = new List<String>();
-    //parameterized constructor
-    public NSP_DocuSignInvoiceDocumentBatch(List<String> sfInvIds) {
-        invcIdList = sfInvIds; 
-        query='SELECT Id, Name, blng__InvoiceStatus__c, NSP_CLM_Document_Received__c FROM blng__Invoice__c WHERE Id IN:invcIdList AND blng__InvoiceStatus__c = \'Posted\' AND NSP_CLM_Document_Received__c=FALSE AND NSP_Invoice_External_ID__c = null LIMIT 10000';
+    //
+    // Schedulable
+    //
+
+    public void execute( SchedulableContext sc ) {
+        if ( NSP_DocuSignInvoiceDocumentBatch.isEnabled ) {
+            Database.executeBatch(
+                new NSP_DocuSignInvoiceDocumentBatch() ,
+                Integer.valueOf( NSP_DocuSignInvoiceDocumentBatch.batchSize )
+            );
+        }
     }
-    //default constructor
+
+    //
+    // Batchable
+    //
+
+    private List<String> invcIdList = null;
+    private List<String> processedInvcNumbers = new List<String>();
+
     public NSP_DocuSignInvoiceDocumentBatch() {
-       query='SELECT Id, Name, blng__InvoiceStatus__c, NSP_CLM_Document_Received__c FROM blng__Invoice__c WHERE blng__InvoiceStatus__c = \'Posted\' AND NSP_CLM_Document_Received__c=FALSE AND NSP_Invoice_Email_Sent__c=FALSE AND NSP_Invoice_External_ID__c = null LIMIT 10000'; 
     }
-    
-    //start method of batch class
-    public Database.QueryLocator start(Database.BatchableContext bc){
-      //returns QueryLocator to execute method.
-      return Database.getQueryLocator(query);
-	}
-    
-     //Execute Method of Batch Class.
-	public void execute(Database.BatchableContext bc, List<blng__Invoice__c> scope){
+
+    public NSP_DocuSignInvoiceDocumentBatch( List<String> sfInvIds ) {
+        this.invcIdList = sfInvIds; 
+    }
+
+    public Database.QueryLocator start( Database.BatchableContext bc ) {
+        if ( bc != null ) {
+            AsyncApexJob job = this.selectAsyncApexJob( bc.getJobId() );
+            this.sendEmailNotification(
+                job ,
+                'The batch apex job started.'
+            );
+        }
+        Database.QueryLocator locator = Database.getQueryLocator(
+            [
+                SELECT
+                    Id ,
+                    Name ,
+                    blng__InvoiceStatus__c ,
+                    NSP_CLM_Document_Received__c
+                FROM blng__Invoice__c
+                WHERE (
+                    blng__InvoiceStatus__c = 'Posted'
+                    AND NSP_CLM_Document_Received__c = false
+                    AND NSP_Invoice_Email_Sent__c = false
+                    AND NSP_Invoice_External_ID__c = null
+                )
+                LIMIT 10000
+            ]
+        );
+        if ( this.invcIdList != null ) {
+            locator = Database.getQueryLocator(
+                [
+                    SELECT
+                        Id ,
+                        Name ,
+                        blng__InvoiceStatus__c ,
+                        NSP_CLM_Document_Received__c
+                    FROM blng__Invoice__c
+                    WHERE (
+                        Id IN :this.invcIdList
+                        AND blng__InvoiceStatus__c = 'Posted'
+                        AND NSP_CLM_Document_Received__c = false
+                        AND NSP_Invoice_External_ID__c = null
+                    )
+                    LIMIT 10000
+                ]
+            );
+        }
+        return locator;
+    }
+
+    public void execute( Database.BatchableContext bc , List<blng__Invoice__c> scope ) {
+        if ( NSP_DocuSignInvoiceDocumentBatch.isEnabled ) {
+            try {
+                List<String> invIdsToGenerateDocs = new List<String> ();
+                for ( blng__Invoice__c inv : scope ) {
+                    invIdsToGenerateDocs.add( inv.id );
+                    this.processedInvcNumbers.add( inv.Name );
+                }
+                // method to call DocuSign CLM API to invoke workflowss
+                if ( invIdsToGenerateDocs.size() > 0 ) {
+                    NSP_DocuSignRESTUtility.startInvoiceWorkflow( invIdsToGenerateDocs );
+                }
+            } catch( Exception e ) {
+                NSP_ErrorLogHandler.logException(
+                    NSP_DocuSignInvoiceDocumentBatch.class.getName() ,
+                    'execute' ,
+                    e
+                );
+            }
+        }
+    }
+
+    public void finish( Database.BatchableContext bc ) {
+        if ( bc != null ) {
+            AsyncApexJob job = this.selectAsyncApexJob( bc.getJobId() );
+            this.sendEmailNotification(
+                job ,
+                'The batch apex job processed ' + job.TotalJobItems
+                + ' batches with ' + job.NumberOfErrors + ' failures.'
+                + ' Total Records :' + this.processedInvcNumbers.size()
+                + '\n'
+                + 'Invoice Numbers : \n'+ String.join( this.processedInvcNumbers , ',' )
+            );
+        }
+    }
+
+    private AsyncApexJob selectAsyncApexJob( String jobId ) {
+        List<AsyncApexJob> jobs = null;
+        if ( String.isNotBlank( jobId ) ) {
+            jobs = [
+                SELECT Id , Status , NumberOfErrors , JobItemsProcessed , TotalJobItems , CreatedBy.Email
+                FROM AsyncApexJob
+                WHERE ( Id = :jobId )
+            ];
+        }
+        AsyncApexJob job = null;
+        if ( ( jobs != null ) && !jobs.isEmpty() ) {
+            job = jobs[0];
+        }
+        return job;
+    }
+
+    private void sendEmailNotification( AsyncApexJob job , String plainTextBody ) {
         try {
-        List<String> invIdsToGenerateDocs = new List<String> ();
-        for (blng__Invoice__c inv : scope) {
-            invIdsToGenerateDocs.add(inv.id);
-            recordsProcessed = recordsProcessed + 1;
-            processedInvcNumbers.add(inv.Name);
-        }
-        // method to call DocuSign CLM API to invoke workflowss
-        if(invIdsToGenerateDocs.size()>0) {
-            NSP_DocuSignRESTUtility.startInvoiceWorkflow(invIdsToGenerateDocs);
-        }
-    	}catch(Exception ex){
-            NSP_ErrorLogHandler.logSaveException('NSP_DocuSignInvoiceDocumentBatch','execute',ex.getMessage());
+            Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+            List<String> toAddresses = new List<String>();
+            if ( job != null ) {
+                toAddresses.add( job.CreatedBy.Email );
+            } else {
+                toAddresses.add( UserInfo.getUserEmail() );
+            }
+            mail.setToAddresses( toAddresses );
+            if ( ( NSP_DocuSignInvoiceDocumentBatch.bccAddresses != null ) && !NSP_DocuSignInvoiceDocumentBatch.bccAddresses.isEmpty() ) {
+                mail.setBccAddresses( NSP_DocuSignInvoiceDocumentBatch.bccAddresses );
+            }
+            String statusSuffix = '';
+            if ( job != null ) {
+                statusSuffix = ': ' + job.Status;
+            }
+            mail.setSubject( 'Docusign Invoice Generation Batch Job' + statusSuffix );
+            if ( String.isBlank( plainTextBody ) ) {
+                plainTextBody = '.';
+            }
+            mail.setPlainTextBody( plainTextBody );
+            Messaging.sendEmail( new Messaging.SingleEmailMessage[]{ mail } );
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_DocuSignInvoiceDocumentBatch.class.getName() ,
+                'sendEmailNotification' ,
+                e
+            );
         }
     }
-    
-    public void finish(Database.BatchableContext bc){
-        
-        System.debug('Total Records : '+recordsProcessed);
-       //THIS COMMENT IS INTENTIONAL. DO NOT DELETE.
-      // This sends an email to Operations team DL. 
-       // Get the ID of the AsyncApexJob representing this batch job
-       // from Database.BatchableContext.
-       // Query the AsyncApexJob object to retrieve the current job's information.
-       AsyncApexJob async = [SELECT Id, Status, NumberOfErrors, JobItemsProcessed,
-          TotalJobItems, CreatedBy.Email
-          FROM AsyncApexJob WHERE Id =
-          :bc.getJobId()];
-       // OPTIONAL: Send an email to the Apex job's submitter notifying of job completion.
-       Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-       //String opsEmail = Label.NSP_Operations_Team_DL;
-       String[] toAddresses = new String[] {async.CreatedBy.Email};
-       mail.setToAddresses(toAddresses);
-       mail.setSubject('DocuSign Invoice Generation Batch ' + async.Status);
-       mail.setPlainTextBody
-       ('The batch Apex job processed ' + async.TotalJobItems +
-       ' batches with '+ async.NumberOfErrors + ' failures.' +
-       'Total Records :'+recordsProcessed + '\n'+
-       'Invoice Numbers : \n'+ String.join(processedInvcNumbers,','));
-       Messaging.sendEmail(new Messaging.SingleEmailMessage[] { mail });
- 
+
+    //
+    // attributes controlled by Custom Settings...
+    // ~ intentionally static to allow Custom Settings to modify the attributes a Scheduled job...
+    //
+
+    private static DocusignInvoiceDocumentBatchSettings__c settings {
+        private get {
+            if ( settings == null ) {
+                settings = DocusignInvoiceDocumentBatchSettings__c.getInstance( UserInfo.getUserId() );
+            }
+            return settings;
+        }
+        private set;
     }
-    
-    public void execute(SchedulableContext ctx) {
-        NSP_DocuSignInvoiceDocumentBatch batchObject = new NSP_DocuSignInvoiceDocumentBatch();
-          Database.executeBatch(batchObject, Integer.valueOf(Label.NSP_BATCH_SIZE) );   
-      }
+
+    private static Boolean isEnabled {
+        private get {
+            if ( isEnabled == null ) {
+                Boolean local = False;
+                if ( NSP_DocuSignInvoiceDocumentBatch.settings != null ) {
+                    local = NSP_DocuSignInvoiceDocumentBatch.settings.IsEnabled__c;
+                }
+                isEnabled = local;
+            }
+            return isEnabled;
+        }
+        private set;
+    }
+
+    private static Integer batchSize {
+        private get {
+            if ( batchSize == null ) {
+                Integer local = 200;
+                if ( ( NSP_DocuSignInvoiceDocumentBatch.settings != null )
+                    && ( NSP_DocuSignInvoiceDocumentBatch.settings.BatchSize__c != null )
+                    )
+                {
+                    local = NSP_DocuSignInvoiceDocumentBatch.settings.BatchSize__c.intValue();
+                }
+                // batch size must be greater than zero...
+                if ( local < 1 ) {
+                    local = 1;
+                }
+                // batch size must be less than or equal to 2000...
+                if ( local > 2000 ) {
+                    local = 2000;
+                }
+                batchSize = local;
+            }
+            return batchSize;
+        }
+        private set;
+    }
+
+    private static List<String> bccAddresses  {
+        private get {
+            if ( bccAddresses == null ) {
+                List<String> local = new List<String>();
+                if ( NSP_DocuSignInvoiceDocumentBatch.settings != null ) {
+                    String rawBccAddresses = NSP_DocuSignInvoiceDocumentBatch.settings.BccAddresses__c;
+                    if ( String.isNotBlank( rawBccAddresses ) ) {
+                        List<String> splitBccAddresses = rawBccAddresses.split( '\r\n' );
+                        if ( ( splitBccAddresses != null ) && ( splitBccAddresses.size() > 0 ) ) {
+                            local = splitBccAddresses;
+                        }
+                    }
+                }
+                bccAddresses = local;
+            }
+            return bccAddresses;
+        }
+        private set;
+    }
+
 }
+//

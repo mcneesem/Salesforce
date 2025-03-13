@@ -458,6 +458,7 @@ public with sharing class NSP_TerminationFormTriggerHelper {
                 && (
                     ( terminationForm.RecordTypeId == payrollRecordTypeId && terminationForm.NSP_Status__c == SUPERVISOR_DENIED )
                     || ( terminationForm.RecordTypeId == creditRecordTypeId && terminationForm.NSP_Status__c == TERM_TEAM_DENIED )
+                    || ( terminationForm.RecordTypeId == payrollRecordTypeId && terminationForm.NSP_Status__c == TERM_TEAM_DENIED )
                     || ( terminationForm.RecordTypeId == creditRecordTypeId && terminationForm.NSP_Status__c == TERM_TEAM_APPROVED )
                     || ( terminationForm.RecordTypeId == payrollRecordTypeId && terminationForm.NSP_Status__c == TERM_TEAM_APPROVED )
                     || ( terminationForm.RecordTypeId == reinstateRecordTypeId && terminationForm.NSP_Status__c == TERM_TEAM_DENIED )
@@ -542,7 +543,25 @@ public with sharing class NSP_TerminationFormTriggerHelper {
                 )
             {
                 specialistIds.add( term.NSP_Payroll_Specialist__c );
-            } else if ( ( term.RecordTypeId == creditRecordTypeId )
+            } else if (
+                ( ( term.RecordTypeId == payrollRecordTypeId ) || ( term.RecordTypeId == reinstateRecordTypeId ) )
+                && ( term.NSP_Status__c == TERM_TEAM_DENIED )
+                )
+            {
+                if ( ( term.NSP_Payroll_Specialist__c != null )
+                    && term.NSP_Payroll_Specialist__r.IsActive
+                    )
+                {
+                    specialistIds.add( term.NSP_Payroll_Specialist__c );
+                }
+                if ( ( term.OwnerId != null )
+                    && term.Owner.IsActive
+                    )
+                {
+                    specialistIds.add( term.OwnerId );
+                }
+            } else if (
+                ( term.RecordTypeId == creditRecordTypeId )
                 && ( term.NSP_Status__c == TERM_TEAM_DENIED )
                 && ( term.Credit_Specialist__c != null )
                 && ( term.Credit_Specialist__r.pse__Salesforce_User__c != null )

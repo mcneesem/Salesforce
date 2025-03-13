@@ -60,6 +60,10 @@
                 <behavior>Readonly</behavior>
                 <field>NSP_Quantity_of_Estimated_Employees__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Contract_Term__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

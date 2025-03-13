@@ -2,7 +2,7 @@
 // are called from updating a parent Opportunity by a User who may not have
 // record visibility to the desired child Opportunities.
 public without sharing class NSP_ChildOpportunitiesHelperFunctions {
-    //  test w/ NSP_OpportunityTriggerHelperTest (79%)
+    //  test w/ NSP_OpportunityTriggerHelperTest (91%)
 
     public NSP_ChildOpportunitiesHelperFunctions() { }
 
@@ -15,7 +15,12 @@ public without sharing class NSP_ChildOpportunitiesHelperFunctions {
         List<Opportunity> opportunityToUpdateList = new List<Opportunity>();
         //Querying the child oppotunities that is not closed lost and is not parent
         for ( Opportunity opportunityObject : [
-                    SELECT Id , StageName , NSP_PrimaryProduct__c , NSP_Parent_Opportunity__r.NSP_PrimaryProduct__c
+                    SELECT
+                        Id ,
+                        StageName ,
+                        NSP_PrimaryProduct__c ,
+                        NSP_Parent_Opportunity__r.NSP_PrimaryProduct__c ,
+                        NSP_Parent_Opportunity__r.NSP_Lost_Reason__c
                     FROM Opportunity
                     WHERE (
                         NSP_Parent_Opportunity__c IN :opportunityList
@@ -29,7 +34,7 @@ public without sharing class NSP_ChildOpportunitiesHelperFunctions {
                 //Update the stage to closed lost on child optys
                 opportunityObject.stagename = NSP_SalesConstants.CLOSED_LOST;
                 //Entering the lost reason as well
-                opportunityObject.NSP_Lost_Reason__c = 'Other';
+                opportunityObject.NSP_Lost_Reason__c = opportunityObject.NSP_Parent_Opportunity__r.NSP_Lost_Reason__c;
                 opportunityObject.NSP_Is_Parent_Opportunity_Closed_Lost__c = TRUE;
                 opportunityToUpdateList.add( opportunityObject );
             }
@@ -152,6 +157,47 @@ public without sharing class NSP_ChildOpportunitiesHelperFunctions {
                 );
             } catch ( Exception e ) {
                 NSP_ChildOpportunitiesHelperFunctions.handleException( e , 'updatesOnOpenChildOpportunity' );
+            }
+        }
+    }
+
+    //
+    // 569718-Updates the NSP_Is_Parent_Opportunity_Closed_Won__c on open child opportunity to true.
+    // @param opportunityList list of New Opportunity.
+    // @return void
+    //
+    public static void updateChildOpportunityOnReopen( List<String> opportunityList ) {
+        List<Opportunity> opportunityToUpdateList = new List<Opportunity>();
+        for ( Opportunity opportunityObject : [
+                    SELECT
+                        Id ,
+                        StageName ,
+                        NSP_Is_Parent_Opportunity_Closed_Lost__c ,
+                        NSP_Is_Parent_Opportunity_Closed_Won__c
+                    FROM Opportunity
+                    WHERE (
+                        NSP_Parent_Opportunity__c IN :opportunityList
+                        AND ( NSP_Is_Parent_Opportunity_Closed_Lost__c = true
+                            OR NSP_Is_Parent_Opportunity_Closed_Won__c = true )
+                    )
+                ]
+            )
+        {
+            opportunityObject.NSP_Is_Parent_Opportunity_Closed_Lost__c = false;
+            opportunityObject.NSP_Is_Parent_Opportunity_Closed_Won__c = false;
+            opportunityToUpdateList.add( opportunityObject );
+        }
+        // updating the child opportunity records
+        if ( !opportunityToUpdateList.isEmpty() ) {
+            try {
+                List<Database.SaveResult> results = Database.update( opportunityToUpdateList , false );
+                NSP_ErrorLogHandler.logResults(
+                    NSP_ChildOpportunitiesHelperFunctions.class.getName() ,
+                    'updateChildOpportunityOnReopen:update' ,
+                    results
+                );
+            } catch ( Exception e ) {
+                NSP_ChildOpportunitiesHelperFunctions.handleException( e , 'updateChildOpportunityOnReopen' );
             }
         }
     }

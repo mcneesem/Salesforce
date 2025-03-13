@@ -21,18 +21,23 @@ private class NSP_TerminationFormTempController_Test {
         
         pse__Project_Task__c ProjectTask= (pse__Project_Task__c) NSP_TestDataFactory.createSObject(new pse__Project_Task__c(), 'NSP_TestDataFactory.ProjectTaskDefaults');
         ProjectTask.pse__Project__c = Project.Id;
+        ProjectTask.Name = 'Submit Termination Checklist';
         insert ProjectTask;
         
         NSP_Termination_Form__c TF1 = (NSP_Termination_Form__c)NSP_TestDataFactory.createSObject(new NSP_Termination_Form__c(), 'NSP_TestDataFactory.TerminationFormDefaults');
-        TF1.NSP_Status__c = NSP_ServiceConstants.TERM_SUPERVISOR_APPROVED;
-        TF1.NSP_Last_Date_Wages_Paid_Through__c = System.today()-21;
+        TF1.NSP_Status__c = 'Term Team Approved';
         TF1.NSP_Term_Code__c = 'Client Requested Termination Codes';
         TF1.NSP_Term_Reason__c = ' 5200 Health Benefits';
         TF1.NSP_Number_of_Active_Employees__c = 40;
         TF1.NSP_Benefit_Termination_Date__c = System.today();
         TF1.NSP_Project_Task__c = ProjectTask.Id;
+        TF1.Approval_Date__c = System.Today();
         insert TF1;
         
+        TerminationFormBatchSettings__c setting = new TerminationFormBatchSettings__c();
+        setting.SoqlDaysBeforeLimit__c = 6;
+        setting.SoqlDaysAfterLimit__c = 7;
+        insert setting;
         
         Document doc1 = new Document();
         doc1.DeveloperName = 'Insperity_HR_Logo';
@@ -79,11 +84,24 @@ private class NSP_TerminationFormTempController_Test {
                                        NSP_Number_of_Active_Employees__c,
                                        NSP_Last_Date_Wages_Paid_Through__c,
                                        NSP_Benefit_Termination_Date__c,
-                                       NSP_Term_Reason__c
-                                       FROM NSP_Termination_Form__c WHERE NSP_Last_Date_Wages_Paid_Through__c != NULL LIMIT 1];
-        Test.startTest();
-        NSP_TerminationFormTemplateController.wrapTermination wrapper = new NSP_TerminationFormTemplateController.wrapTermination(TF1, 'Test_PS','Test_CL');
-        System.assertEquals('Test_PS', wrapper.psName);
+                                       NSP_Term_Reason__c,
+                                       NSP_Revision__c,NSP_New_Client_Name__c,NSP_New_Client_Number__c,Previous_term_date__c,NSP_SubTerm_reason__c
+                                       FROM NSP_Termination_Form__c Where Approval_Date__c = Today LIMIT 1];
+        Map<String, String> roleMapDetails = new Map<String, String>{
+            NSP_ServiceConstants.PAYROLL_SPECIALIST => 'Payroll Specialist',
+                NSP_ServiceConstants.CLIENT_LIAISION => 'Client Liaison',
+                NSP_ServiceConstants.BUS_TEAM_HRSP_CL => 'Bus Team HRSp CL',
+                NSP_ServiceConstants.MID_MARKET_ACC_EX => 'MidMarket Account Exec',
+                NSP_ServiceConstants.BUSINESS_PERFORMANCE_ADVISOR => 'Business Performance Advisor',
+                NSP_ServiceConstants.BUSINESS_PERFORMANCE_CONSULTANT => 'Business Performance Consultant'
+                };
+                    Test.startTest();
+        NSP_TerminationFormTemplateController.wrapTermination wrapper = new NSP_TerminationFormTemplateController.wrapTermination(TF1,roleMapDetails);
+        System.assertEquals('acc1', wrapper.clinetName);
+        System.assertEquals('client1', wrapper.clinetNumber);
+        System.assertEquals(40, wrapper.eeNumber);
+        System.assertEquals('Payroll Specialist', wrapper.psName);
+        System.assertEquals('5200 Health Benefits', wrapper.reason);
         Test.stopTest();
     }
 
