@@ -6,34 +6,35 @@ public with sharing class DocusignAMR {
         Map<Id, String> accountMap = new Map<Id, String>();
         if (accountId != null) {
             // Query to get the primary account Id associated with the given accountId
-            NSP_Account_Group_Member__c accountGroupMember = [
+            List<NSP_Account_Group_Member__c> accountGroupMembers = [
                 SELECT NSP_Group__r.Account__c 
                 FROM NSP_Account_Group_Member__c 
                 WHERE NSP_Type__c =: NSP_ServiceConstants.RENEWAL_PROBABILITY 
                 AND NSP_Member_Account__c = :accountId
                 LIMIT 1
             ];
+            NSP_Account_Group_Member__c accountGroupMember = null;
+            if ( ( accountGroupMembers != null ) && !accountGroupMembers.isEmpty() ) {
+                accountGroupMember = accountGroupMembers[0];
+            }
             
-            Id primaryAccountId = null;
+            Id primaryAccountId = accountId;
             if (accountGroupMember != null && accountGroupMember.NSP_Group__r != null && accountGroupMember.NSP_Group__r.Account__c != null) {
                 primaryAccountId = accountGroupMember.NSP_Group__r.Account__c;
-            } else {
-                //If no Primary Account in Acc Group Member, take the current Account ID
-                primaryAccountId = accountId;
             }
             
             // Query to get the account name
-            Account account = null;
-            if(primaryAccountId != null){
-                account = [
+            List<Account> records = null;
+            if ( primaryAccountId != null ) {
+                records = [
                     SELECT Name 
                     FROM Account 
                     WHERE Id = :primaryAccountId
                     LIMIT 1
                 ];
             }
-            if (account != null) {
-                accountMap.put(primaryAccountId, account.Name);
+            if ( ( records != null ) && !records.isEmpty() ) {
+                accountMap.put( primaryAccountId , records[0].Name );
             }
         }
         return accountMap;
