@@ -369,11 +369,27 @@ private class NSP_LeadTriggerHelperTest {
      *     */
     @IsTest
     private static void dunsCheckBeforeInsertTest() {
+        Map<Id,User> dunsPermittedUserMap = CustomPermissionController.getPermittedUsersMap('Lead_DUNS_Account_Owner_Routing');        
+        List<User> testUsers = [
+            SELECT Id
+            FROM User
+            WHERE (
+                ( Id IN :dunsPermittedUserMap.keySet() )
+                AND ( IsActive = True )
+            )
+            ORDER BY CreatedDate ASC
+            LIMIT 1
+        ];
+
         Account accoutObject = new Account();
         Id partnerRecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('NSP_Partner_Client').getRecordTypeId();
         accoutObject.Name = 'Test Account';
         accoutObject.recordTypeId=partnerRecordTypeId;
-        accoutObject.DNB_Connect_DUNS_Number__c = '876543987';
+        accoutObject.DNB_Connect_DUNS_Number__c = '876543988';
+        if (!testUsers.isEmpty()) {
+        	accoutObject.OwnerId = testUsers[0].Id;   
+        }
+        accoutObject.NSP_Account_Status__c = NSP_SalesConstants.INACTIVE;
         //Inserting account object
         insert accoutObject;
         
@@ -391,6 +407,9 @@ private class NSP_LeadTriggerHelperTest {
         insert nLead;
         Test.stopTest();
         system.assertEquals(nLead.NumberOfEmployees, 160);
+        if (!testUsers.isEmpty()) {
+        	system.assertEquals(nLead.OwnerId, accoutObject.OwnerId);
+        }
     }
     
     @IsTest
