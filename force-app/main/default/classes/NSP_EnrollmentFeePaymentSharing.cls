@@ -45,11 +45,9 @@ public with sharing class NSP_EnrollmentFeePaymentSharing {
             {
                 if(efpSharingUserMap.keySet().contains(user.Id))
                 {
-                    dADMUsersList.add(efpSharingUserMap.get(user.Id));
+                    dADMUsersList.add(user);
                 }
             }
-
-            System.debug(dADMUsersList);
 
             //Creating a map of sales office to DA and DMs
             for(User user : dADMUsersList)
