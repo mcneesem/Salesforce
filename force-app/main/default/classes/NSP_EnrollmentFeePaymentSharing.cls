@@ -49,8 +49,6 @@ public with sharing class NSP_EnrollmentFeePaymentSharing {
                 }
             }
 
-            System.debug(dADMUsersList);
-
             //Creating a map of sales office to DA and DMs
             for(User user : dADMUsersList)
             {
