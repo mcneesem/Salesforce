@@ -1,5 +1,5 @@
 @isTest
-private class DocusignAMRTest {
+private class DocusignAccountManagementReportTest {
 
     @TestSetup
     private static void setUpData(){
