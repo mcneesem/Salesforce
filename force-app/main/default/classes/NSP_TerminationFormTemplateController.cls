@@ -42,8 +42,7 @@ public with sharing class NSP_TerminationFormTemplateController {
         return initializeWrapList(terminationFormList, wrapReinstatementList);
     }
     private Map<Id, NSP_Termination_Form__c> getMapAccountsToTerminations(List<NSP_Termination_Form__c> terminationFormList) {
-        Map<Id, NSP_Termination_Form__c> accountWithTerminationMap = new Map<Id, NSP_Termination_Form__c>();
-        Map<Id, NSP_Termination_Form__c> accountWithReinstatementMap = new Map<Id, NSP_Termination_Form__c>();  
+        Map<Id, NSP_Termination_Form__c> accountWithTerminationMap = new Map<Id, NSP_Termination_Form__c>(); 
         for (NSP_Termination_Form__c termination : terminationFormList) {
             Id accountId = termination.NSP_Project_Task__r?.pse__Project__r?.pse__Account__c;
             if (accountId != null) {
