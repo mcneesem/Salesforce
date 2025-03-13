@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <classAccesses>
-        <apexClass>DocusignAMR</apexClass>
+        <apexClass>DocusignAccountManagementReport</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <customPermissions>
@@ -11,8 +11,4 @@
     <description>Permission Set for Account Management Report button</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Docusign Account Management Report</label>
-    <tabSettings>
-        <tab>standard-SemanticModel</tab>
-        <visibility>Visible</visibility>
-    </tabSettings>
 </PermissionSet>
