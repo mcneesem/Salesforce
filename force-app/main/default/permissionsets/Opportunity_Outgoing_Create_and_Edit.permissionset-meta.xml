@@ -12,15 +12,6 @@
     </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Opportunity - Outgoing - Create and Edit</label>
-    <objectPermissions>
-        <allowCreate>true</allowCreate>
-        <allowDelete>false</allowDelete>
-        <allowEdit>true</allowEdit>
-        <allowRead>true</allowRead>
-        <modifyAllRecords>false</modifyAllRecords>
-        <object>Opportunity</object>
-        <viewAllRecords>false</viewAllRecords>
-    </objectPermissions>
     <recordTypeVisibilities>
         <recordType>Opportunity.Outgoing</recordType>
         <visible>true</visible>
