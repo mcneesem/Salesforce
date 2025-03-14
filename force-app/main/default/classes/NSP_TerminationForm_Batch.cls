@@ -212,7 +212,7 @@ global class NSP_TerminationForm_Batch implements ISelfSchedulable , Schedulable
                 if ( NSP_TerminationForm_Batch.settings != null ) {
                     String rawAccountTeamRoles = NSP_TerminationForm_Batch.settings.Account_Team_Roles__c;
                     if ( String.isNotBlank( rawAccountTeamRoles ) ) {
-                        List<String> splitAccountTeamRoles = rawAccountTeamRoles.split( ',' );
+                        List<String> splitAccountTeamRoles = rawAccountTeamRoles.split( ';' );
                         if ( ( splitAccountTeamRoles != null ) && ( splitAccountTeamRoles.size() > 0 ) ) {
                             local = splitAccountTeamRoles;
                         }

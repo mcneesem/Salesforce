@@ -13,6 +13,34 @@
                 <elementReference>Get_existing_term_forms.NSP_Last_Date_Wages_Paid_Through__c</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Previous_Bene_Date__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_existing_term_forms.NSP_Benefit_Termination_Date__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Previous_Term_Reason__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_existing_term_forms.NSP_Term_Reason__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Previous_Sub_Term_Reason__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_existing_term_forms.NSP_SubTerm_reason__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Previous_Client_Term_Date__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_existing_term_forms.NSP_Client_Term_Date__c</elementReference>
+            </value>
+        </assignmentItems>
     </assignments>
     <decisions>
         <name>New_Termform_is_created</name>
