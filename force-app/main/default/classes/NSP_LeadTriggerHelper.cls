@@ -13,7 +13,7 @@ Modification Log     :
 * Harsha Khiroya  Feb 25, 2021              DF-01321
 ***************************************************************************************************/
 public with sharing class NSP_LeadTriggerHelper {
-    // test w/ NSP_LeadTriggerHelperTest (84%)
+    // test w/ NSP_LeadTriggerHelperTest (85%)
 
     private static final List<String> reasonNurturingReasonsList = System.label.NSP_Lead_at_Nurturing_or_Unqualified.split( ';' );
     private static final Id NEW_LEAD_RT_ID = NSP_GenericRecordType.getRecordTypeId( 'Lead' , 'NSP_New_Lead_Record_Type' );
