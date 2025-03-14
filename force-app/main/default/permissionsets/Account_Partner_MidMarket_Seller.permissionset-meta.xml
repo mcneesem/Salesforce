@@ -6,8 +6,4 @@
     </customPermissions>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Account - Partner MidMarket Seller</label>
-    <tabSettings>
-        <tab>standard-SemanticModel</tab>
-        <visibility>Visible</visibility>
-    </tabSettings>
 </PermissionSet>

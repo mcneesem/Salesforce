@@ -6,8 +6,4 @@
     </customPermissions>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Opportunity - NCS Email - Core MidMarket</label>
-    <tabSettings>
-        <tab>standard-SemanticModel</tab>
-        <visibility>Visible</visibility>
-    </tabSettings>
 </PermissionSet>

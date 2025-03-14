@@ -6,8 +6,4 @@
     </customPermissions>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Opportunity - Closed Won Opp Owner</label>
-    <tabSettings>
-        <tab>standard-SemanticModel</tab>
-        <visibility>Visible</visibility>
-    </tabSettings>
 </PermissionSet>

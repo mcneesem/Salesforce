@@ -6,8 +6,4 @@
     </customPermissions>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Account - Partner Update Loyalty from SO</label>
-    <tabSettings>
-        <tab>standard-SemanticModel</tab>
-        <visibility>Visible</visibility>
-    </tabSettings>
 </PermissionSet>

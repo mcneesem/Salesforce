@@ -7,8 +7,4 @@
     <description>Provides edit access to the DA/DMs of the sales office associated with the opportunity to the EFP records on the opportunity.</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Enrollment Fee Payment - Edit Sharing</label>
-    <tabSettings>
-        <tab>standard-SemanticModel</tab>
-        <visibility>Visible</visibility>
-    </tabSettings>
 </PermissionSet>

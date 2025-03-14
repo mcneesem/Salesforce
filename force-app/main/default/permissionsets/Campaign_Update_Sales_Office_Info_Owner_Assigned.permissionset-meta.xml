@@ -7,8 +7,4 @@
     <description>Sales office info on the Campaign record is updated from the Owner assigned sales office.</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Campaign - Update Sales Office Info - Owner Assigned</label>
-    <tabSettings>
-        <tab>standard-SemanticModel</tab>
-        <visibility>Visible</visibility>
-    </tabSettings>
 </PermissionSet>
