@@ -42,11 +42,7 @@ public with sharing class NSP_TerminationFormTemplateController {
         return initializeWrapList(terminationFormList, wrapReinstatementList);
     }
     private Map<Id, NSP_Termination_Form__c> getMapAccountsToTerminations(List<NSP_Termination_Form__c> terminationFormList) {
-<<<<<<< HEAD
         Map<Id, NSP_Termination_Form__c> accountWithTerminationMap = new Map<Id, NSP_Termination_Form__c>();
-=======
-        Map<Id, NSP_Termination_Form__c> accountWithTerminationMap = new Map<Id, NSP_Termination_Form__c>(); 
->>>>>>> 72c12dde89f8c61736dd1cd51a7089dc391b6c5f
         for (NSP_Termination_Form__c termination : terminationFormList) {
             Id accountId = termination.NSP_Project_Task__r?.pse__Project__r?.pse__Account__c;
             if (accountId != null) {
@@ -126,31 +122,31 @@ public with sharing class NSP_TerminationFormTemplateController {
     private List<NSP_Termination_Form__c> getTermFormList(){
         List<NSP_Termination_Form__c> terminationFormList = [
             SELECT
-            Id, 
-            Name, 
-            NSP_Client_Term_Date__c,
-            NSP_Term_Reason__c, 
-            NSP_Status__c, 
-            NSP_Term_Code__c, 
-            NSP_Number_of_Active_Employees__c,
-            NSP_How_many_employees_were_moved__c,
-            NSP_Benefit_Termination_Date__c,
-            NSP_Last_Date_Wages_Paid_Through__c,
-            NSP_Revision__c ,
-            NSP_New_Client_Name__c ,
-            NSP_New_Client_Number__c , 
-            NSP_SubTerm_reason__c,
-            Approval_Date__c,
-            NSP_Project_Task__r.pse__Project__r.pse__Account__c,
-            NSP_Project_Task__r.pse__Project__r.pse__Account__r.Name, 
-            NSP_Project_Task__r.pse__Project__r.pse__Account__r.NSP_AIMS_Client__c,  
-            NSP_Project_Task__r.pse__Project__r.pse__Project_Status__c,
-            Previous_term_date__c ,
-            Previous_Bene_Date__c, 
-            Previous_Term_Reason__c,
-            Previous_Sub_Term_Reason__c,
-            Previous_Client_Term_Date__c
-            FROM NSP_Termination_Form__c 
+                Id ,
+                Name ,
+                NSP_Client_Term_Date__c ,
+                NSP_Term_Reason__c ,
+                NSP_Status__c ,
+                NSP_Term_Code__c ,
+                NSP_Benefit_Termination_Date__c ,
+                NSP_Last_Date_Wages_Paid_Through__c ,
+                NSP_Revision__c ,
+                NSP_New_Client_Name__c ,
+                NSP_New_Client_Number__c ,
+                Previous_term_date__c ,
+                NSP_SubTerm_reason__c ,
+                Approval_Date__c ,
+                NSP_Project_Task__r.pse__Project__r.pse__Account__c ,
+                NSP_Project_Task__r.pse__Project__r.pse__Account__r.Name ,
+                NSP_Project_Task__r.pse__Project__r.pse__Account__r.NSP_AIMS_Client__c ,
+                NSP_Project_Task__r.pse__Project__r.pse__Project_Status__c ,
+                NSP_How_many_employees_were_moved__c ,
+                NSP_Number_of_Active_Employees__c,
+                Previous_Bene_Date__c,
+                Previous_Term_Reason__c,
+                Previous_Sub_Term_Reason__c,
+                Previous_Client_Term_Date__c
+            FROM NSP_Termination_Form__c
             WHERE (
                 ( Approval_Date__c > :NSP_TerminationForm_Batch.dateBefore )
                 AND ( Approval_Date__c < :NSP_TerminationForm_Batch.dateAfter )
@@ -187,8 +183,6 @@ public with sharing class NSP_TerminationFormTemplateController {
             roleMap.put(role, roleMap.containsKey(role) ? roleMap.get(role) + ', ' + fullName : fullName);
         }
     }
-    
-=======
     private Map<String, String> getRoleMap(Map<Id, List<NSP_Account_Team__c>> accountWithAccountTeammemberMap, Id accountId) {
     Map<String, String> roleMap = new Map<String, String>();
     
