@@ -2,7 +2,7 @@
 * Represents the Implementation profile tirgger for update scenario.
 */ 
 public class NSP_Implprofile_ServiceHelperUpdate {
-    // test w/ NSP_Implprofile_ServiceHelperUpdate_Test (82%)
+    // test w/ NSP_Implprofile_ServiceHelperUpdate_Test (85%)
 
     private  Boolean isRerun =false;
     private Boolean isSaveForm = false;
@@ -2779,98 +2779,233 @@ public class NSP_Implprofile_ServiceHelperUpdate {
     * ********************************************************************************************/
     public void emailNotifyInternalDiscovery(){
         for(Id ipRecId : ipRecordsByAutomation.get(INTERNAL_DISCOVERY_FN)){
-            Boolean isSendEmail = false;
             Implementation_Profile__c ipRec = newIPs.get(ipRecId);
              Implementation_Profile__c existingRec =  oldIPs.get(ipRec.Id);
             if((isRerun || ipRec.NSP_Form_Completed__c) && !isSaveForm ){ 
-            NSP_PEO_Implementations__mdt pf = NSP_PEO_Implementations__mdt.getInstance(INTERNAL_DISCOVERY_FN);
-            NSP_PEO_Implementations__mdt pf1 = NSP_PEO_Implementations__mdt.getInstance(NSP_ServiceConstants.ALLOSCOORDINATOR);
-            NSP_PEO_Implementations__mdt pf2 = NSP_PEO_Implementations__mdt.getInstance(NSP_ServiceConstants.HRSUPPORT);
-            NSP_PEO_Implementations__mdt pf3 = NSP_PEO_Implementations__mdt.getInstance(NSP_ServiceConstants.ORIENTCOORDINATOR);
-            NSP_PEO_Implementations__mdt pf4 = NSP_PEO_Implementations__mdt.getInstance(NSP_ServiceConstants.CLIENTACCOUNTMANAGEMENT);
-
             pse__Proj__c proj = (pse__Proj__c) data.get(PROJECT_IDENTIFIER).get(ipRec.NSP_Project__c);
               
             if( proj.pse__Project_Tasks__r.size()>0){   
                 List<String> completedTasks = mapOfCompletedTasks.get(proj.Id);
                     if( completedTasks.contains(NSP_ServiceConstants.CLIENTTRANSITION)) {
                         Implementation_Profile__c ipwithValue=(Implementation_Profile__c) data.get(IMPL_PROFILE_IDENTIFIER).get(ipRecId);
-                        List<String> listOfTOAddresses = new List<String>();
                         //get list of email address for to address
-                        listOfTOAddresses.add(pf.NSP_Email_Address__c);
-                        listOfTOAddresses.add(pf1.NSP_Email_Address__c);
-                        listOfTOAddresses.add(pf2.NSP_Email_Address__c);
-                        listOfTOAddresses.add(pf3.NSP_Email_Address__c);
-                        listOfTOAddresses.add(pf4.NSP_Email_Address__c);
-                        if(ipwithValue.NSP_Transition_Specialist__c!=null && ipwithValue.NSP_Transition_Specialist__r.NSP_Work_email__c!=null){
-                           listOfTOAddresses.add(ipwithValue.NSP_Transition_Specialist__r.NSP_Work_email__c); 
-                        }
-                        if(ipwithValue.NSP_OT_Representative__c!=null && ipwithValue.NSP_OT_Representative__r.NSP_Work_email__c!=null){
-                           listOfTOAddresses.add(ipwithValue.NSP_OT_Representative__r.NSP_Work_email__c); 
-                        }
-                        
-                        if(ipwithValue.NSP_Client_Liaison__c!=null && ipwithValue.NSP_Client_Liaison__r.NSP_Work_email__c!=null){
-                           listOfTOAddresses.add(ipwithValue.NSP_Client_Liaison__r.NSP_Work_email__c); 
-                        }
-                        if(ipwithValue.NSP_Payroll_Specialist__c!=null && ipwithValue.NSP_Payroll_Specialist__r.NSP_Work_email__c!=null){
-                           listOfTOAddresses.add(ipwithValue.NSP_Payroll_Specialist__r.NSP_Work_email__c); 
-                        }
-                        if(ipwithValue.NSP_HR_Specialist__c!=null && ipwithValue.NSP_HR_Specialist__r.NSP_Work_email__c!=null){
-                           listOfTOAddresses.add(ipwithValue.NSP_HR_Specialist__r.NSP_Work_email__c); 
-                        }
-                        // Added HR QS Team Member
-                        if ( ( ipwithValue.NSP_HR_Quality_Support_Team_Member__c != null )
-                            && ( ipwithValue.NSP_HR_Quality_Support_Team_Member__r.NSP_Work_email__c != null )
-                            )
-                        {
-                            listOfTOAddresses.add( ipwithValue.NSP_HR_Quality_Support_Team_Member__r.NSP_Work_email__c );
-                        }
+                        List<String> listOfTOAddresses = NSP_Implprofile_ServiceHelperUpdate.getToAddresses( ipwithValue );
                         //prepare email template for subject and body
+                        Boolean isSendEmail = NSP_Implprofile_ServiceHelperUpdate.getIsSendEmail( ipRec );
                         String subjectString = ipRec.NSP_AIMS_Client_Name__c+' ('+ipRec.NSP_AIMS_ClientNo__c+')'+': Key Information updated';
-                        String mailBody ='The following information for  ' +ipRec.NSP_AIMS_Client_Name__c+' ('+ipRec.NSP_AIMS_ClientNo__c+')';
-                        mailBody += 'has been updated since the Transition Meeting.'+'<br/><br/>';
-                        if(ipRec.NSP_Old_Effective_Date_EPLI__c!=null && 
-                        ipRec.Effective_Date_Payroll_Worker_comp_EPLI__c!=ipRec.NSP_Old_Effective_Date_EPLI__c){
-                            isSendEmail = true;
-                            mailBody +='The Insperity effective date for Payroll/Worker’s Comp/EPLI has changed from '
-                            + ipRec.NSP_Old_Effective_Date_EPLI__c.format() +' to '+ ipRec.Effective_Date_Payroll_Worker_comp_EPLI__c.format()+'.';
-                        }
-                        mailBody += '<br/>';
-                        if(ipRec.NSP_Old_Insperity_Ben_effective_date__c!=null && 
-                        ipRec.Insperity_benefits_effective_date__c!=ipRec.NSP_Old_Insperity_Ben_effective_date__c){
-                            isSendEmail = true;
-                            mailBody +='The Insperity benefits effective date has changed from '
-                            + (ipRec.NSP_Old_Insperity_Ben_effective_date__c).format()+' to '+ (ipRec.Insperity_benefits_effective_date__c).format()+'.';
-                        }
-                        mailBody += '<br/>';
-                        if(ipRec.NSP_Old_Benefits_Package__c!=null && 
-                        ipRec.Benefits_Package__c!=ipRec.NSP_Old_Benefits_Package__c){
-                            isSendEmail = true;
-                            mailBody +='The Medical Package has changed from  '
-                            + ipRec.NSP_Old_Benefits_Package__c +' to '+ ipRec.Benefits_Package__c+'.';
-                        }
-                        mailBody += '<br/><br/>'+'Regards,'+'<br/>';
-                        mailBody += ipwithValue.NSP_Project_Manager__r.Name+'<br/>';
-                                            	// update IP record 
-                        String ImpProfKey = proj.Id + '~' + ipRec.Name;
+                        String mailBody = NSP_Implprofile_ServiceHelperUpdate.prepareMailBody( ipRec, ipwithValue );
+                        // update IP record 
+                        String impProfKey = proj.Id + '~' + ipRec.Name;
                         Implementation_Profile__c impProfile = new Implementation_Profile__c();
                         impProfile.Id = ipRec.Id;
                         impProfile.NSP_Old_Effective_Date_EPLI__c = ipRec.Effective_Date_Payroll_Worker_comp_EPLI__c;
                         impProfile.NSP_Old_Insperity_Ben_effective_date__c = ipRec.Insperity_benefits_effective_date__c;
                         impProfile.NSP_Old_Benefits_Package__c = ipRec.Benefits_Package__c;
-                        impProfileToUpdate.put(ImpProfKey,impProfile);
-                        if ( !listOfTOAddresses.isEmpty() && isSendEmail ) {
-                       		 NSP_ProjectTaskTriggerEmailNotification.sendMail(subjectString,mailBody,listOfTOAddresses,null,null);
-                        }
-
-                       
+                        impProfileToUpdate.put(impProfKey,impProfile);
+                        NSP_Implprofile_ServiceHelperUpdate.sendMail(
+                            subjectString ,
+                            mailBody ,
+                            listOfTOAddresses ,
+                            isSendEmail
+                        );
                    }
               }
-        
             }
-                   
         }
-           
+    }
+
+    private static Boolean getIsSendEmail( Implementation_Profile__c ipRec ) {
+        Boolean isSendEmail = false;
+        if ( ipRec!= null
+            && (
+                ( ( ipRec.NSP_Old_Effective_Date_EPLI__c != null ) && ( ipRec.Effective_Date_Payroll_Worker_comp_EPLI__c != ipRec.NSP_Old_Effective_Date_EPLI__c ) )
+                || ( ( ipRec.NSP_Old_Insperity_Ben_effective_date__c != null ) && ( ipRec.Insperity_benefits_effective_date__c != ipRec.NSP_Old_Insperity_Ben_effective_date__c ) )
+                )
+            )
+        {
+            isSendEmail = true;
+        }
+        return isSendEmail;
+    }
+
+    private static List<String> getToAddresses( Implementation_Profile__c ipwithValue ) {
+        List<String> listOfTOAddresses = new List<String>();
+        listOfTOAddresses.addAll( NSP_Implprofile_ServiceHelperUpdate.metadataInstanceEmails );
+        if ( ipwithValue!= null ) {
+            listOfTOAddresses = NSP_Implprofile_ServiceHelperUpdate.addWorkEmail(
+                ipwithValue.NSP_Transition_Specialist__r ,
+                listOfTOAddresses
+            );
+            listOfTOAddresses = NSP_Implprofile_ServiceHelperUpdate.addWorkEmail(
+                ipwithValue.NSP_OT_Representative__r ,
+                listOfTOAddresses
+            );
+            listOfTOAddresses = NSP_Implprofile_ServiceHelperUpdate.addWorkEmail(
+                ipwithValue.NSP_Client_Liaison__r ,
+                listOfTOAddresses
+            );
+            listOfTOAddresses = NSP_Implprofile_ServiceHelperUpdate.addWorkEmail(
+                ipwithValue.NSP_Payroll_Specialist__r ,
+                listOfTOAddresses
+            );
+            listOfTOAddresses = NSP_Implprofile_ServiceHelperUpdate.addWorkEmail(
+                ipwithValue.NSP_HR_Specialist__r ,
+                listOfTOAddresses
+            );
+            listOfTOAddresses = NSP_Implprofile_ServiceHelperUpdate.addWorkEmail(
+                ipwithValue.NSP_HR_Quality_Support_Team_Member__r ,
+                listOfTOAddresses
+            );
+            listOfTOAddresses = NSP_Implprofile_ServiceHelperUpdate.addWorkEmail(
+                ipwithValue.NSP_Project_Manager__r ,
+                listOfTOAddresses
+            );
+        }
+        return listOfTOAddresses;
+    }
+
+    private static List<String> addWorkEmail( Contact reference , List<String> collection ) {
+        if ( collection == null ) {
+            collection = new List<String>();
+        }
+        if ( ( reference != null )
+            && String.isNotBlank( reference.NSP_Work_email__c )
+            )
+        {
+            collection.add( reference.NSP_Work_email__c );
+        }
+        return collection;
+    }
+
+    private static List<String> metadataInstanceEmails {
+        
+        private get {
+            List<String> metadataEmailsList = new List<String>();
+            if ( metadataEmailsList == null || metadataEmailsList.isEmpty()) {
+                List<String> local = new List<String>();
+                local = NSP_Implprofile_ServiceHelperUpdate.addMetadataInstanceEmail(
+                    NSP_Implprofile_ServiceHelperUpdate.INTERNAL_DISCOVERY_FN ,
+                    local
+                );
+                local = NSP_Implprofile_ServiceHelperUpdate.addMetadataInstanceEmail(
+                    NSP_ServiceConstants.ALLOSCOORDINATOR ,
+                    local
+                );
+                local = NSP_Implprofile_ServiceHelperUpdate.addMetadataInstanceEmail(
+                    NSP_ServiceConstants.HRSUPPORT ,
+                    local
+                );
+                local = NSP_Implprofile_ServiceHelperUpdate.addMetadataInstanceEmail(
+                    NSP_ServiceConstants.ORIENTCOORDINATOR ,
+                    local
+                );
+                local = NSP_Implprofile_ServiceHelperUpdate.addMetadataInstanceEmail(
+                    NSP_ServiceConstants.CLIENTACCOUNTMANAGEMENT ,
+                    local
+                );
+                metadataEmailsList = local;
+            }
+            return metadataEmailsList;
+        }
+        private set;
+    }
+
+    private static List<String> addMetadataInstanceEmail( String key , List<String> collection ) {
+        if ( collection == null ) {
+            collection = new List<String>();
+        }
+        String value = NSP_Implprofile_ServiceHelperUpdate.getMetadataInstanceEmail( key );
+        if ( String.isNotBlank( value ) ) {
+            collection.add( value );
+        }
+        return collection;
+    }
+
+    private static String getMetadataInstanceEmail( String key ) {
+        String response = null;
+        if ( String.isNotBlank( key ) ) {
+            NSP_PEO_Implementations__mdt instance = NSP_PEO_Implementations__mdt.getInstance( key );
+            if ( ( instance != null ) && String.isNotBlank( instance.NSP_Email_Address__c ) ) {
+                response = instance.NSP_Email_Address__c;
+            }
+        }
+        return response;
+    }
+
+    private static String prepareMailBody( Implementation_Profile__c ipRec, Implementation_Profile__c ipwithValue ) {
+        String mailBody = '';
+        if ( ipRec != null && ipWithValue != null ) {
+            mailBody += 'The following information for '
+                + ipRec.NSP_AIMS_Client_Name__c
+                + ' ('
+                + ipRec.NSP_AIMS_ClientNo__c
+                + ')'
+                ;
+            mailBody += 'has been updated since the Transition Meeting.'+'<br/><br/>';
+            if ( ipRec.NSP_Old_Effective_Date_EPLI__c != null
+                && ipRec.Effective_Date_Payroll_Worker_comp_EPLI__c != ipRec.NSP_Old_Effective_Date_EPLI__c
+                )
+            {
+                mailBody += 'The Insperity effective date for Payroll/Worker’s Comp/EPLI has changed from '
+                    + ipRec.NSP_Old_Effective_Date_EPLI__c.format()
+                    + ' to '
+                    + ipRec.Effective_Date_Payroll_Worker_comp_EPLI__c.format()
+                    +'.'
+                    ;
+            }
+            mailBody += '<br/>';
+            if ( ipRec.NSP_Old_Insperity_Ben_effective_date__c != null
+                && ipRec.Insperity_benefits_effective_date__c != ipRec.NSP_Old_Insperity_Ben_effective_date__c
+                )
+            {
+                mailBody += 'The Insperity benefits effective date has changed from '
+                    + (ipRec.NSP_Old_Insperity_Ben_effective_date__c).format()
+                    + ' to '
+                    + (ipRec.Insperity_benefits_effective_date__c).format()
+                    +'.'
+                    ;
+            }
+            mailBody += '<br/>';
+            if ( ipRec.NSP_Old_Benefits_Package__c != null
+                && ipRec.Benefits_Package__c != ipRec.NSP_Old_Benefits_Package__c
+                )
+            {
+                mailBody += 'The Medical Package has changed from  '
+                    + ipRec.NSP_Old_Benefits_Package__c
+                    + ' to '
+                    + ipRec.Benefits_Package__c
+                    + '.'
+                    ;
+            }
+            mailBody += '<br/><br/>'+'Regards,'+'<br/>';
+            mailBody += ipwithValue.NSP_Project_Manager__r.Name
+                + '<br/>'
+                ;
+        }
+        return mailBody;
+    }
+
+    private static void sendMail(
+        String subjectString ,
+        String mailBody ,
+        List<String> listOfTOAddresses ,
+        Boolean isSendEmail
+        )
+    {
+        if ( String.isNotBlank( subjectString )
+            && ( listOfTOAddresses != null )
+            && !listOfTOAddresses.isEmpty()
+            && isSendEmail
+            )
+        {
+            NSP_ProjectTaskTriggerEmailNotification.sendMail(
+                subjectString ,
+                mailBody ,
+                listOfTOAddresses ,
+                null ,
+                null
+            );
+        }
     }
     
     /***********************************************************************************************
