@@ -96,8 +96,8 @@ public with sharing class NSP_TerminationFormTemplateController {
             NSP_Last_Date_Wages_Paid_Through__c,
             NSP_Revision__c , 
             NSP_New_Client_Name__c ,
-            NSP_New_Client_Number__c , P
-            revious_term_date__c ,
+            NSP_New_Client_Number__c , 
+            Previous_term_date__c ,
             NSP_SubTerm_reason__c,
             NSP_Benefit_Termination_Date__c,
             Previous_Bene_Date__c,
@@ -117,7 +117,7 @@ public with sharing class NSP_TerminationFormTemplateController {
         ];
         return reinstatementList;
     }
-    public List<NSP_Termination_Form__c> getTermFormList(){
+    private List<NSP_Termination_Form__c> getTermFormList(){
         List<NSP_Termination_Form__c> terminationFormList = [
             SELECT
             Id,
@@ -155,7 +155,7 @@ public with sharing class NSP_TerminationFormTemplateController {
         ];
         return terminationFormList;
     }
-    public Map<String, String> getRoleMap(Map<Id, List<NSP_Account_Team__c>> accountWithAccountTeammemberMap, Id accountId) {
+    private Map<String, String> getRoleMap(Map<Id, List<NSP_Account_Team__c>> accountWithAccountTeammemberMap, Id accountId) {
     Map<String, String> roleMap = new Map<String, String>();
     
     if (isValidInput(accountWithAccountTeammemberMap, accountId)) {
