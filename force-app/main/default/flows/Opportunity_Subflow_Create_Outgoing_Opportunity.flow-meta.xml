@@ -71,7 +71,7 @@
             <assignToReference>varOutgoingOpty.RecordTypeId</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>012dx000000vEz7AAE</stringValue>
+                <stringValue>012Pb000002Hr5CIAS</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -136,6 +136,7 @@
             <label>Yes - Primary Opty found</label>
         </rules>
     </decisions>
+    <description>Populated with PROD Outgoing RTID</description>
     <environments>Default</environments>
     <interviewLabel>Opportunity - Subflow - Create Outgoing Opportunity {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Opportunity - Subflow - Create Outgoing Opportunity</label>
