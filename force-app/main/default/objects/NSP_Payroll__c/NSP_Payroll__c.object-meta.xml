@@ -167,7 +167,9 @@
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Payroll Data Sheets</pluralLabel>
-    <searchLayouts></searchLayouts>
+    <searchLayouts>
+        <excludedStandardButtons>New</excludedStandardButtons>
+    </searchLayouts>
     <sharingModel>Read</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>
