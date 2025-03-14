@@ -1,5 +1,5 @@
 public class NSP_ProjectTasksTriggerHelper {
-    // test w/ NSP_ProjectTasksTriggerHelperTest, NSP_Implprofile_ServiceHelperUpdate_Test (81%)
+    // test w/ NSP_ProjectTasksTriggerHelperTest, NSP_Implprofile_ServiceHelperUpdate_Test (77%)
 
     private static final String HUNDRED_PERCENT =  '100%';
     private static final String COBRA_MM ='NSP_COBRA';
@@ -1046,30 +1046,51 @@ public class NSP_ProjectTasksTriggerHelper {
         }
     }
 
-    public static void updateMilestonePercentComplete(Set<Id> setOfMilestone){
-        List<pse__Milestone__c> listOfMilestone = new List<pse__Milestone__c>();
-
-            AggregateResult[] groupedResults = [SELECT SUM(NSP_PercentageCompleteFormula__c),Count(id),pse__Milestone__c 
-                                                FROM pse__Project_Task__c 
-                                                WHERE pse__Milestone__c IN :setOfMilestone and 
-                                                (pse__Status__c !=: NSP_ServiceConstants.PROJECT_TASK_CANCELLED OR
-                                                    pse__Status__c !=: NSP_ServiceConstants.PROJECTSTATUSCOMPLETED ) AND
-                                                pse__Synchronize_Milestone_And_Task__c = false 
-                                                GROUP BY pse__Milestone__c ];
-            
-            for(AggregateResult ar:groupedResults) {
-                Id pMilestone = (ID)ar.get('pse__Milestone__c');
-                
-                Decimal count = (Decimal)ar.get('expr0');
-                Decimal countOfrecords = (Decimal)ar.get('expr1');
-                pse__Milestone__c milestone = new pse__Milestone__c(Id = pMilestone);
-                milestone.NSP_Milestone_Complete__c= count/countOfrecords;
-                
-                listOfMilestone.add(milestone);
-        }
-        
-        if(!listOfMilestone.isEmpty()){
-            Database.update(listOfMilestone);
+    private static void updateMilestonePercentComplete( Set<Id> milestoneIds ) {
+        try {
+            AggregateResult[] groupedResults = [
+                SELECT
+                    SUM(NSP_PercentageCompleteFormula__c) ,
+                    COUNT(Id) ,
+                    pse__Milestone__c 
+                FROM pse__Project_Task__c 
+                WHERE (
+                    ( pse__Milestone__c IN :milestoneIds )
+                    AND (
+                        ( pse__Status__c != :NSP_ServiceConstants.PROJECT_TASK_CANCELLED )
+                        OR ( pse__Status__c != :NSP_ServiceConstants.PROJECTSTATUSCOMPLETED )
+                    )
+                    AND ( pse__Synchronize_Milestone_And_Task__c = false )
+                )
+                GROUP BY pse__Milestone__c
+            ];
+            List<pse__Milestone__c> records = new List<pse__Milestone__c>();
+            for ( AggregateResult ar : groupedResults ) {
+                if ( ar.get( 'pse__Milestone__c' ) != null ) {
+                    Id milestoneId = (Id)ar.get( 'pse__Milestone__c' );
+                    Decimal count = (Decimal)ar.get( 'expr0' );
+                    Decimal countOfRecords = (Decimal)ar.get( 'expr1' );
+                    pse__Milestone__c record = new pse__Milestone__c(
+                        Id=milestoneId
+                    );
+                    record.NSP_Milestone_Complete__c = ( count / countOfRecords );
+                    records.add( record );
+                }
+            }
+            if ( !records.isEmpty() ) {
+                List<Database.SaveResult> results = Database.update( records , false );
+                NSP_ErrorLogHandler.logResults(
+                    NSP_ProjectTasksTriggerHelper.class.getName() ,
+                    'updateMilestonePercentComplete:update' ,
+                    results
+                );
+            }
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_ProjectTasksTriggerHelper.class.getName() ,
+                'updateMilestonePercentComplete' ,
+                e
+            );
         }
     }
 
@@ -1078,41 +1099,50 @@ public class NSP_ProjectTasksTriggerHelper {
     // @return void
     // STY-00717
     //
-    @future private static void updateProjectPercentageComplete( Set<Id> projectIds ) {
-        List<pse__Proj__c> listOfProject = new List<pse__Proj__c>();
-        AggregateResult[] groupedResults = [
-            SELECT SUM(NSP_PercentageCompleteFormula__c) , Count(Id) , pse__Project__c
-            FROM pse__Project_Task__c 
-            WHERE (
-                ( pse__Project__c IN :projectIds )
-                AND (
-                    ( pse__Status__c != :NSP_ServiceConstants.PROJECT_TASK_CANCELLED )
-                    OR ( pse__Status__c != :NSP_ServiceConstants.PROJECTSTATUSCOMPLETED )
+    @future
+    private static void updateProjectPercentageComplete( Set<Id> projectIds ) {
+        try {
+            AggregateResult[] groupedResults = [
+                SELECT
+                    SUM(NSP_PercentageCompleteFormula__c) ,
+                    COUNT(Id) ,
+                    pse__Project__c
+                FROM pse__Project_Task__c 
+                WHERE (
+                    ( pse__Project__c IN :projectIds )
+                    AND (
+                        ( pse__Status__c != :NSP_ServiceConstants.PROJECT_TASK_CANCELLED )
+                        OR ( pse__Status__c != :NSP_ServiceConstants.PROJECTSTATUSCOMPLETED )
+                    )
                 )
-            )
-            GROUP BY pse__Project__c
-        ];
-        for( AggregateResult ar : groupedResults ) {
-            if( ar.get( NSP_ServiceConstants.PSE_PROJECT ) != null ) {
-                Id pProject = (Id)ar.get( NSP_ServiceConstants.PSE_PROJECT );
-                Decimal count = (Decimal)ar.get( 'expr0' );
-                Decimal countOfrecords = (Decimal)ar.get( 'expr1' );
-                pse__Proj__c projectObj = new pse__Proj__c(
-                    Id=pProject
-                );
-                projectObj.NSP_Project_Complete__c = ( count / countOfrecords );
-                listOfProject.add( projectObj );
+                GROUP BY pse__Project__c
+            ];
+            List<pse__Proj__c> records = new List<pse__Proj__c>();
+            for ( AggregateResult ar : groupedResults ) {
+                if ( ar.get( 'pse__Project__c' ) != null ) {
+                    Id projectId = (Id)ar.get( 'pse__Project__c' );
+                    Decimal count = (Decimal)ar.get( 'expr0' );
+                    Decimal countOfRecords = (Decimal)ar.get( 'expr1' );
+                    pse__Proj__c record = new pse__Proj__c(
+                        Id=projectId
+                    );
+                    record.NSP_Project_Complete__c = ( count / countOfRecords );
+                    records.add( record );
+                }
             }
-        }
-        if ( !listOfProject.isEmpty() ) {
-            try {
-                Database.update( listOfProject );
-            } catch ( Exception e ) {
-                NSP_ProjectTasksTriggerHelper.handleException(
-                    e ,
-                    'updateProjectPercentageComplete'
+            if ( !records.isEmpty() ) {
+                List<Database.SaveResult> results = Database.update( records , false );
+                NSP_ErrorLogHandler.logResults(
+                    NSP_ProjectTasksTriggerHelper.class.getName() ,
+                    'updateProjectPercentageComplete:update' ,
+                    results
                 );
             }
+        } catch ( Exception e ) {
+            NSP_ProjectTasksTriggerHelper.handleException(
+                e ,
+                'updateProjectPercentageComplete'
+            );
         }
     }
 
