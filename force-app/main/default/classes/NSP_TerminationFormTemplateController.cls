@@ -43,7 +43,6 @@ public with sharing class NSP_TerminationFormTemplateController {
     }
     private Map<Id, NSP_Termination_Form__c> getMapAccountsToTerminations(List<NSP_Termination_Form__c> terminationFormList) {
         Map<Id, NSP_Termination_Form__c> accountWithTerminationMap = new Map<Id, NSP_Termination_Form__c>();
-        Map<Id, NSP_Termination_Form__c> accountWithReinstatementMap = new Map<Id, NSP_Termination_Form__c>();  
         for (NSP_Termination_Form__c termination : terminationFormList) {
             Id accountId = termination.NSP_Project_Task__r?.pse__Project__r?.pse__Account__c;
             if (accountId != null) {
@@ -91,22 +90,22 @@ public with sharing class NSP_TerminationFormTemplateController {
             Approval_Date__c,
             NSP_Number_of_Active_Employees__c,  
             NSP_Project_Task__r.pse__Project__r.pse__Account__c,
+            NSP_Revision__c , 
+            NSP_New_Client_Name__c ,
+            NSP_New_Client_Number__c ,
+            NSP_SubTerm_reason__c,
+            NSP_Benefit_Termination_Date__c,
+            NSP_Project_Task__r.pse__Project__r.pse__Account__r.Name, 
+            NSP_Project_Task__r.pse__Project__r.pse__Account__r.NSP_AIMS_Client__c,
             NSP_Client_Term_Date__c,
+            Previous_term_date__c ,
             NSP_Term_Reason__c,
             NSP_How_many_employees_were_moved__c,
             NSP_Last_Date_Wages_Paid_Through__c,
-            NSP_Revision__c , 
-            NSP_New_Client_Name__c ,
-            NSP_New_Client_Number__c , P
-            revious_term_date__c ,
-            NSP_SubTerm_reason__c,
-            NSP_Benefit_Termination_Date__c,
             Previous_Bene_Date__c,
             Previous_Term_Reason__c,
             Previous_Sub_Term_Reason__c,
-            Previous_Client_Term_Date__c,
-            NSP_Project_Task__r.pse__Project__r.pse__Account__r.Name, 
-            NSP_Project_Task__r.pse__Project__r.pse__Account__r.NSP_AIMS_Client__c
+            Previous_Client_Term_Date__c
             FROM NSP_Termination_Form__c
             WHERE (
                 ( Approval_Date__c > :NSP_TerminationForm_Batch.dateBefore )
@@ -121,10 +120,10 @@ public with sharing class NSP_TerminationFormTemplateController {
     public List<NSP_Termination_Form__c> getTermFormList(){
         List<NSP_Termination_Form__c> terminationFormList = [
             SELECT
-            Id,
-             Name, 
-             lient_Term_Date__c,
-             NSP_Term_Reason__c, 
+            Id, 
+            Name, 
+            NSP_Client_Term_Date__c,
+            NSP_Term_Reason__c, 
             NSP_Status__c, 
             NSP_Term_Code__c, 
             NSP_Number_of_Active_Employees__c,
@@ -132,19 +131,19 @@ public with sharing class NSP_TerminationFormTemplateController {
             NSP_Benefit_Termination_Date__c,
             NSP_Last_Date_Wages_Paid_Through__c,
             NSP_Revision__c ,
-             NSP_New_Client_Name__c ,
+            NSP_New_Client_Name__c ,
             NSP_New_Client_Number__c , 
-            Previous_term_date__c ,
             NSP_SubTerm_reason__c,
             Approval_Date__c,
-            Previous_Bene_Date__c, 
-            Previous_Term_Reason__c,
-            Previous_Sub_Term_Reason__c,
-            Previous_Client_Term_Date__c, 
             NSP_Project_Task__r.pse__Project__r.pse__Account__c,
             NSP_Project_Task__r.pse__Project__r.pse__Account__r.Name, 
             NSP_Project_Task__r.pse__Project__r.pse__Account__r.NSP_AIMS_Client__c,  
-            NSP_Project_Task__r.pse__Project__r.pse__Project_Status__c 
+            NSP_Project_Task__r.pse__Project__r.pse__Project_Status__c,
+            Previous_term_date__c ,
+            Previous_Bene_Date__c, 
+            Previous_Term_Reason__c,
+            Previous_Sub_Term_Reason__c,
+            Previous_Client_Term_Date__c
             FROM NSP_Termination_Form__c 
             WHERE (
                 ( Approval_Date__c > :NSP_TerminationForm_Batch.dateBefore )
@@ -156,26 +155,33 @@ public with sharing class NSP_TerminationFormTemplateController {
         ];
         return terminationFormList;
     }
-    public Map<String,String> getRoleMap (Map<Id, List<NSP_Account_Team__c>> accountWithAccountTeammemberMap , Id accountId) {
-        Map<String,String> roleMap = new Map<String,String>();
-        if(accountId != null && accountWithAccountTeammemberMap != null && accountWithAccountTeammemberMap.containsKey(accountId) ){
-            for(NSP_Account_Team__c accTeamMember : accountWithAccountTeammemberMap.get(accountId)){
-                String role = accTeamMember.NSP_Role__c;
-                String fullName = accTeamMember.NSP_First_Name__c + ' ' + accTeamMember.NSP_Last_Name__c;
-                if (accTeamMember.NSP_Primary__c) {
-                    // If primary, add at the beginning
-                    roleMap.put(role, fullName + (roleMap.containsKey(role) ? ', ' + roleMap.get(role) : ''));
-                } else {
-                    if (roleMap.containsKey(role)) {
-                        roleMap.put(role, roleMap.get(role) + ', ' + fullName);
-                    } else {
-                        roleMap.put(role, fullName);
-                    }
-                }
-            }}
+    public Map<String, String> getRoleMap(Map<Id, List<NSP_Account_Team__c>> accountWithAccountTeammemberMap, Id accountId) {
+        Map<String, String> roleMap = new Map<String, String>();
+        if (isValidInput(accountWithAccountTeammemberMap, accountId)) {
+            List<NSP_Account_Team__c> teamMembers = accountWithAccountTeammemberMap.get(accountId);
+            for (NSP_Account_Team__c accTeamMember : teamMembers) {
+                addTeamMemberToRoleMap(roleMap, accTeamMember);
+            }
+        }
+        
         return roleMap;
     }
-
+    
+    private Boolean isValidInput(Map<Id, List<NSP_Account_Team__c>> accountWithAccountTeammemberMap, Id accountId) {
+        return accountId != null && accountWithAccountTeammemberMap != null && accountWithAccountTeammemberMap.containsKey(accountId);
+    }
+    
+    private void addTeamMemberToRoleMap(Map<String, String> roleMap, NSP_Account_Team__c accTeamMember) {
+        String role = accTeamMember.NSP_Role__c;
+        String fullName = accTeamMember.NSP_First_Name__c + ' ' + accTeamMember.NSP_Last_Name__c;
+        
+        if (accTeamMember.NSP_Primary__c) {
+            roleMap.put(role, fullName + (roleMap.containsKey(role) ? ', ' + roleMap.get(role) : ''));
+        } else {
+            roleMap.put(role, roleMap.containsKey(role) ? roleMap.get(role) + ', ' + fullName : fullName);
+        }
+    }
+    
     // Getting the Document Id and creating a Document Url.
     public String getTopLogoUrl() {
         return new NSP_EmailImageController().getServiceOperationsLogoUrl();
