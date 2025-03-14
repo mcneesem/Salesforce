@@ -1,4 +1,4 @@
-public class NSP_CampaignTriggerHelper {
+public with sharing class NSP_CampaignTriggerHelper {
     // test w/ NSP_CampaignTriggerHelperTest (86%)
 
      public void beforeInsertDirector( List<Campaign> newList ) {
