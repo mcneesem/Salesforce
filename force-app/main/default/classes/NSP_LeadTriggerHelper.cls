@@ -13,7 +13,7 @@ Modification Log     :
 * Harsha Khiroya  Feb 25, 2021              DF-01321
 ***************************************************************************************************/
 public with sharing class NSP_LeadTriggerHelper {
-    // test w/ NSP_LeadTriggerHelperTest (83%)
+    // test w/ NSP_LeadTriggerHelperTest (84%)
 
     private static final List<String> reasonNurturingReasonsList = System.label.NSP_Lead_at_Nurturing_or_Unqualified.split( ';' );
     private static final Id NEW_LEAD_RT_ID = NSP_GenericRecordType.getRecordTypeId( 'Lead' , 'NSP_New_Lead_Record_Type' );
@@ -410,11 +410,9 @@ public with sharing class NSP_LeadTriggerHelper {
             )
         );
         // check UserRole...
-        List<String> labelUserRoles = Label.MM_AND_BPC_USERROLE.split( ',' ); // Custom Label: MidMarket Administrator,MidMarket Sales Leader,Business Performance Consultant
         Boolean isAllowedRole = (
             ( currentUser != null )
-            && ( currentUser.UserRoleId != null )
-            && labelUserRoles.contains( currentUser.UserRole.Name )
+            && ( CustomPermissionController.checkUserPermission( 'Allow_Update_MidMarket_Role' , UserInfo.getUserId() ) )
         );
         // only enforce restriction if User is NOT allowed to bypass...
         // ~ having "correct" Profile OR "correct" Role allows the bypass...
@@ -1130,6 +1128,7 @@ public with sharing class NSP_LeadTriggerHelper {
     // @return void
     //
     public Boolean dunsCheck(Lead leadObject) {
+        Map<Id,User> permittedUserMap = CustomPermissionController.getPermittedUsersMap('Lead_DUNS_Account_Owner_Routing');
         List<User> userAvailable = [SELECT Id, Name FROM User WHERE Name = 'Available'];
         Id userAvailableId = ( !userAvailable.isEmpty() ? userAvailable[0].Id : null );
         Boolean isOwnerUpdated = false;
@@ -1139,8 +1138,7 @@ public with sharing class NSP_LeadTriggerHelper {
                 for (Account dunsAcc: accResult) {
                     if ( ( dunsAcc.OwnerId != userAvailableId )
                         && ( dunsAcc.NSP_Account_Status__c == NSP_SalesConstants.INACTIVE )
-                        && ( dunsAcc.Owner.UserRole != null )
-                        && ( dunsAcc.Owner.UserRole.Name == System.Label.NSP_PartnerAccountRoles || dunsAcc.Owner.UserRole.Name == NSP_SalesConstants.BPC_USER )
+                        && ( permittedUserMap.keySet().contains(dunsAcc.OwnerId) )
                         )
                     {
                         leadObject.OwnerId = dunsAcc.OwnerId;
@@ -1440,6 +1438,5 @@ public with sharing class NSP_LeadTriggerHelper {
             );
         }
     }
-
 }
 //
