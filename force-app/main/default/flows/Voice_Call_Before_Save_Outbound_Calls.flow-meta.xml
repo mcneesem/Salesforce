@@ -74,8 +74,8 @@
         <dataType>String</dataType>
         <expression>RIGHT({!$Record.EndUser.MessagingPlatformKey},10)</expression>
     </formulas>
-    <interviewLabel>Update Previous CaseId On Outbound Call {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Update Previous CaseId On Outbound Call</label>
+    <interviewLabel>Voice Call - Before Save - Outbound Calls {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Voice Call - Before Save - Outbound Calls</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
