@@ -112,7 +112,6 @@ public with sharing class NSP_TerminationFormTemplateController {
                 NSP_Status__c ,
                 Approval_Date__c ,
                 NSP_Project_Task__r.pse__Project__r.pse__Account__c ,
-                NSP_Term_Reason__c ,
                 NSP_Project_Task__r.pse__Project__r.pse__Account__r.Name ,
                 NSP_Project_Task__r.pse__Project__r.pse__Account__r.NSP_AIMS_Client__c ,
                 NSP_How_many_employees_were_moved__c ,
