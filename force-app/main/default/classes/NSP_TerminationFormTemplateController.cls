@@ -88,37 +88,30 @@ public with sharing class NSP_TerminationFormTemplateController {
     private List<NSP_Termination_Form__c> getReinstatementList() {
         List<NSP_Termination_Form__c> reinstatementList = [
             SELECT
-            Id, 
-            Name, 
-            NSP_Status__c,
-            Approval_Date__c,
-            NSP_Number_of_Active_Employees__c,  
-            NSP_Project_Task__r.pse__Project__r.pse__Account__c,
-            NSP_Revision__c , 
-            NSP_New_Client_Name__c ,
-            NSP_New_Client_Number__c ,
-            NSP_SubTerm_reason__c,
-            NSP_Benefit_Termination_Date__c,
-            NSP_Project_Task__r.pse__Project__r.pse__Account__r.Name, 
-            NSP_Project_Task__r.pse__Project__r.pse__Account__r.NSP_AIMS_Client__c,
-            NSP_Client_Term_Date__c,
-            Previous_term_date__c ,
-            NSP_Term_Reason__c,
-            NSP_How_many_employees_were_moved__c,
-            NSP_Last_Date_Wages_Paid_Through__c,
-<<<<<<< HEAD
-=======
-            NSP_Revision__c , 
-            NSP_New_Client_Name__c ,
-            NSP_New_Client_Number__c , 
-            Previous_term_date__c ,
-            NSP_SubTerm_reason__c,
-            NSP_Benefit_Termination_Date__c,
->>>>>>> 72c12dde89f8c61736dd1cd51a7089dc391b6c5f
-            Previous_Bene_Date__c,
-            Previous_Term_Reason__c,
-            Previous_Sub_Term_Reason__c,
-            Previous_Client_Term_Date__c
+            Id ,
+                Name ,
+                NSP_Status__c ,
+                Approval_Date__c ,
+                NSP_Project_Task__r.pse__Project__r.pse__Account__c ,
+                NSP_Client_Term_Date__c ,
+                NSP_Term_Reason__c ,
+                NSP_Project_Task__r.pse__Project__r.pse__Account__r.Name ,
+                NSP_Project_Task__r.pse__Project__r.pse__Account__r.NSP_AIMS_Client__c ,
+                NSP_How_many_employees_were_moved__c ,
+                NSP_Number_of_Active_Employees__c,
+                NSP_Client_Term_Date__c,
+                Previous_term_date__c ,
+                NSP_Term_Reason__c,
+                NSP_Last_Date_Wages_Paid_Through__c,
+                NSP_Revision__c , 
+                NSP_New_Client_Name__c ,
+                NSP_New_Client_Number__c , 
+                NSP_SubTerm_reason__c,
+                NSP_Benefit_Termination_Date__c,
+                Previous_Bene_Date__c,
+                Previous_Term_Reason__c,
+                Previous_Sub_Term_Reason__c,
+                Previous_Client_Term_Date__c
             FROM NSP_Termination_Form__c
             WHERE (
                 ( Approval_Date__c > :NSP_TerminationForm_Batch.dateBefore )
@@ -168,8 +161,7 @@ public with sharing class NSP_TerminationFormTemplateController {
         ];
         return terminationFormList;
     }
-<<<<<<< HEAD
-    public Map<String, String> getRoleMap(Map<Id, List<NSP_Account_Team__c>> accountWithAccountTeammemberMap, Id accountId) {
+    private Map<String, String> getRoleMap(Map<Id, List<NSP_Account_Team__c>> accountWithAccountTeammemberMap, Id accountId) {
         Map<String, String> roleMap = new Map<String, String>();
         if (isValidInput(accountWithAccountTeammemberMap, accountId)) {
             List<NSP_Account_Team__c> teamMembers = accountWithAccountTeammemberMap.get(accountId);
@@ -224,7 +216,6 @@ public with sharing class NSP_TerminationFormTemplateController {
         roleMap.put(role, roleMap.containsKey(role) ? roleMap.get(role) + ', ' + fullName : fullName);
     }
 }
->>>>>>> 72c12dde89f8c61736dd1cd51a7089dc391b6c5f
     // Getting the Document Id and creating a Document Url.
     public String getTopLogoUrl() {
         return new NSP_EmailImageController().getServiceOperationsLogoUrl();
@@ -264,7 +255,7 @@ public with sharing class NSP_TerminationFormTemplateController {
         public Date previousClientTermdate {get; set;}
         
         //This is the contructor method. When we create a new wrapAccount object we pass a Account that is set to the acc property. We also set the selected value to false
-        public wrapTermination(NSP_Termination_Form__c termination, Map<String, String> roleMapDetails) {
+        public wrapTermination( NSP_Termination_Form__c termination , Map<String,String> roleMapDetails ) {
             clinetName = termination.NSP_Project_Task__r.pse__Project__r.pse__Account__r.Name;
             clinetNumber = termination.NSP_Project_Task__r.pse__Project__r.pse__Account__r.NSP_AIMS_Client__c;
             eeNumber = termination.NSP_Number_of_Active_Employees__c;
