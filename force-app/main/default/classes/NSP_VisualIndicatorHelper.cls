@@ -250,47 +250,6 @@ public without sharing class NSP_VisualIndicatorHelper {
         }
         return emailToCaseConfirmed;
     }
-    
-    //== Method to return the boolean based on asset logic
-    @AuraEnabled(cacheable=true)
-    public static Boolean showSupportInformationCheck(string recordId)
-    {
-        Boolean returnValue = false;
-        Schema.SObjectType assetObject = Schema.Asset.getSObjectType();
-        Schema.SObjecttype record = Id.valueOf(recordId).getSObjectType();
-        System.debug(LoggingLevel.WARN, ' Oject Type Match : ' + record + ' <--> '+assetObject);
-        if(assetObject == record)
-        {
-            Asset asset = getAssetFieldsBasedOnRecordId(recordId);
-            System.debug(LoggingLevel.WARN, ' Query Result : ' + asset);
-            if(asset != null)
-            {
-                returnValue = true;
-            }
-        }
-        
-        System.debug(LoggingLevel.WARN, ' Before Return statement : ' + returnValue);
-        return returnValue;
-    }
-    
-    //== Method to retrieve the Asset record based on asset Id
-    private static Asset getAssetFieldsBasedOnRecordId(string recordId)
-    {
-        Set<String> acceptedAssetStatusValues = new Set<String>{'Active', 'Terminated'};
-        String[] recordTypes = System.Label.Supported_Assert_Record_Types_For_Visual_Indictors.split(',');
-        
-        Asset asset = [SELECT ID, Status 
-                       FROM Asset 
-                       WHERE ID = : recordId 
-                       AND  
-                       RecordType.Name =:recordTypes 
-                      AND 
-                      Status = :acceptedAssetStatusValues];
-        
-        return asset;
-        
-    }
-
 
     //
     // returns the account details wrapper for 

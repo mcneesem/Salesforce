@@ -4,10 +4,6 @@ import gethisAccount from '@salesforce/apex/NSP_VisualIndicatorHelper.gethisAcco
 import getAccountId from '@salesforce/apex/NSP_VisualIndicatorHelper.getAccountId';
 import isCaseFromEmail from '@salesforce/apex/NSP_VisualIndicatorHelper.isCaseFromEmail';
 
-// Asset visual Indicator settings
-import Asset_Time_And_Attendance_Email from '@salesforce/label/c.ITA_Time_And_Attendance_Email';
-import Asset_Time_And_Attendance_Phone from '@salesforce/label/c.ITA_Time_And_Attendance_Phone';
-import showSupportInformationCheck from '@salesforce/apex/NSP_VisualIndicatorHelper.showSupportInformationCheck';
 
 export default class vi2 extends LightningElement {
     @api recordId;
@@ -48,10 +44,6 @@ export default class vi2 extends LightningElement {
     crwc = nsp_ReportingResource + '/nsp_ReportingResource/images/crwc.png';
     emailToCase = nsp_ReportingResource + '/nsp_ReportingResource/images/emailToCase.png';
 
-    asset_email = Asset_Time_And_Attendance_Email;
-    asset_Phone = Asset_Time_And_Attendance_Phone;
-    @track showassetindicator = false;
-
     @wire(isCaseFromEmail, { caseId: '$recordId' })
     wiredResult({ error, data }) {
         if (data !== undefined) {
@@ -63,7 +55,6 @@ export default class vi2 extends LightningElement {
 
     connectedCallback(){
         this.callGetAccountId();
-        this.callGetAssetIndicator();
     }  
     
     callGetThisAccount(){
@@ -151,18 +142,5 @@ export default class vi2 extends LightningElement {
         .catch((error)=>{
             console.log('@@error: '+error);
             });
-    }
-    
-    callGetAssetIndicator()
-    {
-        console.log(`Asset Record Id : ${this.recordId}`);
-        showSupportInformationCheck({ recordId: this.recordId })
-        .then(result => {
-            console.log(`Return Statement : ${result}`);
-            this.showassetindicator = result;  
-        })
-        .catch((error) => {
-            console.log(`Error with Asset : ${error}`);
-        })
-    }
+    }          
 }
