@@ -77,80 +77,6 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Number_of_Employees__c</fieldItem>
-                <identifier>RecordNSP_Number_of_Employees_cField5</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Account_Segment__c</fieldItem>
-                <identifier>RecordNSP_Account_Segment_cField3</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.MidMarket_National_Account__c</fieldItem>
-                <identifier>RecordMidMarket_National_Account_cField4</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.NSP_PrimaryProduct__c</fieldItem>
-                <identifier>RecordNSP_PrimaryProduct_cField4</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Product_Interest__c</fieldItem>
-                <identifier>RecordNSP_Product_Interest_cField4</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Product_Purchased__c</fieldItem>
-                <identifier>RecordProduct_Purchased_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Total_EEs_All_Companies__c</fieldItem>
-                <identifier>RecordNSP_Total_EEs_All_Companies_cField4</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <name>Facet-50b01189-1f7e-41d8-9352-81f01dd93f0f</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
                     <value>required</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Name</fieldItem>
@@ -171,10 +97,10 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>required</value>
+                    <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.CloseDate</fieldItem>
-                <identifier>RecordCloseDateField4</identifier>
+                <fieldItem>Record.NSP_PrimaryProduct__c</fieldItem>
+                <identifier>RecordNSP_PrimaryProduct_cField4</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -183,8 +109,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Sales_Office__c</fieldItem>
-                <identifier>RecordNSP_Sales_Office_cField5</identifier>
+                <fieldItem>Record.NSP_Product_Interest__c</fieldItem>
+                <identifier>RecordNSP_Product_Interest_cField4</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -215,6 +141,70 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Parent_Opportunity__c</fieldItem>
                 <identifier>RecordNSP_Parent_Opportunity_cField4</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <name>Facet-50b01189-1f7e-41d8-9352-81f01dd93f0f</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_Account_Segment__c</fieldItem>
+                <identifier>RecordNSP_Account_Segment_cField3</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.MidMarket_National_Account__c</fieldItem>
+                <identifier>RecordMidMarket_National_Account_cField4</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>required</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.CloseDate</fieldItem>
+                <identifier>RecordCloseDateField4</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_Sales_Office__c</fieldItem>
+                <identifier>RecordNSP_Sales_Office_cField5</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_Number_of_Employees__c</fieldItem>
+                <identifier>RecordNSP_Number_of_Employees_cField5</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_Total_EEs_All_Companies__c</fieldItem>
+                <identifier>RecordNSP_Total_EEs_All_Companies_cField4</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-900ee374-8aae-480c-b5b6-f9d850c48e82</name>
@@ -295,6 +285,16 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Annual_Contract_Value__c</fieldItem>
                 <identifier>RecordAnnual_Contract_Value_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Product_Purchased__c</fieldItem>
+                <identifier>RecordProduct_Purchased_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -2657,7 +2657,7 @@
         <name>sidebar</name>
         <type>Region</type>
     </flexiPageRegions>
-    <masterLabel>Outgoing Opportunity Record Page</masterLabel>
+    <masterLabel>Opportunity - Outgoing - Record Page</masterLabel>
     <parentFlexiPage>sfa__Opportunity_rec_L</parentFlexiPage>
     <sobjectType>Opportunity</sobjectType>
     <template>
