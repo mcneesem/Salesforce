@@ -2,15 +2,12 @@
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Prevent_Override_Sales_region_Division</fullName>
     <active>true</active>
-    <errorConditionFormula>
-AND(
+    <errorConditionFormula>AND(
   NOT( $Setup.NSP_Trigger_Switch__c.OpportunityValidations__c ) ,
   NOT( CONTAINS( $Profile.Name , &apos;System Admin&apos; ) ) ,
   $Profile.Name &lt;&gt; &apos;Data Migration&apos; ,
   $Profile.Name &lt;&gt; &apos;Integration User&apos; ,
-  $UserRole.DeveloperName != &quot;New_Client_Sales&quot; ,
-  $UserRole.DeveloperName != &quot;Sales_Compensation&quot; ,
-  $UserRole.DeveloperName != &apos;Sales_Administrator&apos; ,
+  NOT( $Permission.Opportunity_Credit_Bypass_Closed_Won_Lock ) ,
   NOT( ISNEW() ) ,
   ISCHANGED( NSP_Override_Sales_Region_Division__c )
 )</errorConditionFormula>
