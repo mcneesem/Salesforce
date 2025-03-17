@@ -2,7 +2,7 @@
 * Represents the Implementation profile tirgger for update scenario.
 */ 
 public class NSP_Implprofile_ServiceHelperUpdate {
-    // test w/ NSP_Implprofile_ServiceHelperUpdate_Test (85%)
+    // test w/ NSP_Implprofile_ServiceHelperUpdate_Test (82%)
 
     private  Boolean isRerun =false;
     private Boolean isSaveForm = false;
@@ -2780,7 +2780,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
     public void emailNotifyInternalDiscovery(){
         for(Id ipRecId : ipRecordsByAutomation.get(INTERNAL_DISCOVERY_FN)){
             Implementation_Profile__c ipRec = newIPs.get(ipRecId);
-             Implementation_Profile__c existingRec =  oldIPs.get(ipRec.Id);
+            Implementation_Profile__c existingRec =  oldIPs.get(ipRec.Id);
             if((isRerun || ipRec.NSP_Form_Completed__c) && !isSaveForm ){ 
             pse__Proj__c proj = (pse__Proj__c) data.get(PROJECT_IDENTIFIER).get(ipRec.NSP_Project__c);
               
@@ -2793,7 +2793,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
                         //prepare email template for subject and body
                         Boolean isSendEmail = NSP_Implprofile_ServiceHelperUpdate.getIsSendEmail( ipRec );
                         String subjectString = ipRec.NSP_AIMS_Client_Name__c+' ('+ipRec.NSP_AIMS_ClientNo__c+')'+': Key Information updated';
-                        String mailBody = NSP_Implprofile_ServiceHelperUpdate.prepareMailBody( ipRec, ipwithValue );
+                        String mailBody = NSP_Implprofile_ServiceHelperUpdate.prepareMailBody( ipRec , ipwithValue );
                         // update IP record 
                         String impProfKey = proj.Id + '~' + ipRec.Name;
                         Implementation_Profile__c impProfile = new Implementation_Profile__c();
@@ -2878,10 +2878,8 @@ public class NSP_Implprofile_ServiceHelperUpdate {
     }
 
     private static List<String> metadataInstanceEmails {
-        
         private get {
-            List<String> metadataEmailsList = new List<String>();
-            if ( metadataEmailsList == null || metadataEmailsList.isEmpty()) {
+            if ( metadataInstanceEmails == null ) {
                 List<String> local = new List<String>();
                 local = NSP_Implprofile_ServiceHelperUpdate.addMetadataInstanceEmail(
                     NSP_Implprofile_ServiceHelperUpdate.INTERNAL_DISCOVERY_FN ,
@@ -2903,9 +2901,9 @@ public class NSP_Implprofile_ServiceHelperUpdate {
                     NSP_ServiceConstants.CLIENTACCOUNTMANAGEMENT ,
                     local
                 );
-                metadataEmailsList = local;
+                metadataInstanceEmails = local;
             }
-            return metadataEmailsList;
+            return metadataInstanceEmails;
         }
         private set;
     }
@@ -2932,9 +2930,9 @@ public class NSP_Implprofile_ServiceHelperUpdate {
         return response;
     }
 
-    private static String prepareMailBody( Implementation_Profile__c ipRec, Implementation_Profile__c ipwithValue ) {
+    private static String prepareMailBody( Implementation_Profile__c ipRec , Implementation_Profile__c ipwithValue ) {
         String mailBody = '';
-        if ( ipRec != null && ipWithValue != null ) {
+        if ( ( ipRec != null ) && ( ipWithValue != null ) ) {
             mailBody += 'The following information for '
                 + ipRec.NSP_AIMS_Client_Name__c
                 + ' ('
