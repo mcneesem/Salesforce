@@ -182,7 +182,7 @@ export default class Nsp_accrualProfileRecordForm extends NavigationMixin(
   }
   clonedAssignment(){
     this.fieldValue.NSP_Status__c = 'Draft';
-    if(this.fieldValue.Template__c == TRUE){
+    if(this.fieldValue.Template__c == true){
       this.assignTemplateValues();
     }
   }
