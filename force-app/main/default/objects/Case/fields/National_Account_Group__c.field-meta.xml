@@ -79,7 +79,7 @@
     &apos;97&apos; , &apos;Skytale Group&apos; ,
     &apos;98&apos; , &apos;Resilient Capital&apos; ,
     &apos;99&apos; , &apos;Housatonic Partners&apos; ,
-    &apos;100&apos;, &apos;ExclusiveCFO Inc&apos; ,
+    &apos;100&apos; , &apos;ExclusiveCFO Inc&apos; ,
     TEXT( Account.WO_Asset__r.NSP_National_Account_Group__c )
   )
 )</formula>
