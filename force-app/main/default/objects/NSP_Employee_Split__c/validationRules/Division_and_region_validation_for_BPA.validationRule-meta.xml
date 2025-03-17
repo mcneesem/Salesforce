@@ -5,5 +5,5 @@
     <errorConditionFormula>(ISCHANGED( NSP_Sales_Division__c ) || ISCHANGED( NSP_Sales_Region__c )) &amp;&amp;
 ($Permission.Opportunity_Credit_Restrict_Edit_Sales_Fields)
 &amp;&amp; $Setup.NSP_Trigger_Switch__c.OpportunityValidations__c!=TRUE</errorConditionFormula>
-    <errorMessage>Sales Division and Sales Region are currently are locked for update. Please contact New Client Sales for fields to be adjusted</errorMessage>
+    <errorMessage>Sales Division and Sales Region are currently locked for update. Please contact New Client Sales to make any adjustments.</errorMessage>
 </ValidationRule>
