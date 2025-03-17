@@ -170,10 +170,7 @@ export default class Nsp_accrualProfileRecordForm extends NavigationMixin(
       this.isFirstTimeCopyAction = false;
 
       if (this.isClone) {
-        this.fieldValue.NSP_Status__c = 'Draft';
-        if(this.fieldValue.Template__c == TRUE){
-          this.assignTemplateValues();
-        }
+      this.clonedAssignment();  
       }
 
       this.doOneTimeActions(this.fieldValue);
@@ -181,6 +178,12 @@ export default class Nsp_accrualProfileRecordForm extends NavigationMixin(
     }
     if (error) {
       this.showErrorToast(error.body.message);
+    }
+  }
+  clonedAssignment(){
+    this.fieldValue.NSP_Status__c = 'Draft';
+    if(this.fieldValue.Template__c == TRUE){
+      this.assignTemplateValues();
     }
   }
 
