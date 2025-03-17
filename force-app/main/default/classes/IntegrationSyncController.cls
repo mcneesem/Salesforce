@@ -1,5 +1,6 @@
 // unified solution for setting "sync flags", publishing "integration sync" events, and clearing "sync flags"...
-public with sharing class IntegrationSyncController {
+// intentionally `without sharing` to prevent ~ INSUFFICIENT_ACCESS_OR_READONLY, insufficient access rights on object id
+public without sharing class IntegrationSyncController {
     // test w/ IntegrationSyncControllerTest (82%)
     // test w/ NSP_AccountContactRelationHelperTest (29%)
     // test w/ NSP_AccountTeamMemberTriggerHelperTest (29%)
