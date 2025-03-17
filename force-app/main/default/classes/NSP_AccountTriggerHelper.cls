@@ -10,7 +10,7 @@
 public class NSP_AccountTriggerHelper {
     // test w/ NSP_AccountTriggerHelperTest, NSP_AccountContactRelationHelperTest, NSP_AccountContactServiceHelperTest (80%)
     // test w/ NSP_AccountTriggerHelperTest, NSP_LeadTriggerHelperTest (79%)
-    // test w/ NSP_AccountTriggerHelperTest (79%)
+    // test w/ NSP_AccountTriggerHelperTest (76%)
     // test w/ NSP_AccountContactRelationHelperTest (34%)
     // test w/ NSP_AccountContactServiceHelperTest (38%)
 
@@ -22,7 +22,6 @@ public class NSP_AccountTriggerHelper {
     // Added as part of 194459
     public static List<string> MMRoles = System.Label.NSP_MidMarket_Roles.split(',');
     // Added as part of 215091
-    public static List<string> allowedAssignAvailableRoles = System.Label.NSP_Assign_Avail_Roles.split(',');
     private static Map<Id,User> ownerUpdatePermittedUserMap = CustomPermissionController.getPermittedUsersMap('Account_Owner_Restrict_Update');
     private static Map<Id,User> templSelectUpdPermittedUserMap = CustomPermissionController.getPermittedUsersMap('Template_Selection_Owner_Update');
     
@@ -205,7 +204,7 @@ public class NSP_AccountTriggerHelper {
     }
 
     /**
-     * Iterates throught the list of new Account and passes the required attributes to other methods.
+     * Iterates through the list of new Account and passes the required attributes to other methods.
      * @param newList List of New Account.
      * @param newMap List of New Account.
      * @return void
@@ -435,7 +434,7 @@ public class NSP_AccountTriggerHelper {
         if (accountIdsSet.size() > 0) {
             List < Task > taskstoUpdate = [SELECT Id, Subject, Status, NSP_Task_type__c, NSP_Task_Subtype__c FROM Task WHERE WhatId IN: accountIdsSet
                 AND NSP_Task_type__c =: NSP_SalesConstants.CHANNELS AND NSP_Task_Subtype__c =: NSP_SalesConstants.PARTNER_AGREEMENT
-AND Status != :NSP_SalesConstants.COMPLETED];
+				AND Status != :NSP_SalesConstants.COMPLETED];
             for (Task taskRecord: taskstoUpdate) {
                 taskRecord.Status = NSP_SalesConstants.COMPLETED;
                 tasksToUpsert.add(taskRecord);
@@ -471,7 +470,9 @@ AND Status != :NSP_SalesConstants.COMPLETED];
             if (!grpIdGrpMemMap.isEmpty()) {
                 //mapping  group Name and userId
                 for (User getUser: [SELECT Id, UserRoleId, userRole.Name FROM User
-WHERE (userRole.Name = 'Loyalty Advisor' OR userRole.Name = 'Channel Program Manager') AND Id IN: grpIdGrpMemMap.keySet()]){
+									WHERE (userRole.Name = 'Loyalty Advisor' 
+                                           OR userRole.Name = 'Channel Program Manager') 
+                                    	   AND Id IN: grpIdGrpMemMap.keySet()]){
                     if (getUser.userRole.Name == 'Loyalty Advisor') {
                         grpNameLAUserMap.put(grpIdGrpMemMap.get(getUser.Id), getUser.Id);
                     } else if (getUser.userRole.Name == 'Channel Program Manager') {
@@ -939,6 +940,5 @@ WHERE (userRole.Name = 'Loyalty Advisor' OR userRole.Name = 'Channel Program Man
             e
         );
     }
-
 }
 //
