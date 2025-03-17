@@ -738,10 +738,6 @@
     <picklistValues>
         <picklist>NSP_National_Account_Group__c</picklist>
         <values>
-            <fullName>100</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>22</fullName>
             <default>false</default>
         </values>
@@ -1015,6 +1011,10 @@
         </values>
         <values>
             <fullName>99</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>100</fullName>
             <default>false</default>
         </values>
     </picklistValues>
