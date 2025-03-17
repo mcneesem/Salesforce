@@ -68,7 +68,7 @@
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>Project_Records</leftValueReference>
-                <operator>IsBlank</operator>
+                <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
@@ -154,7 +154,7 @@
             <field>NSP_Queued_for_Delete__c</field>
             <operator>EqualTo</operator>
             <value>
-                <booleanValue>true</booleanValue>
+                <booleanValue>false</booleanValue>
             </value>
         </filters>
         <object>pse__Proj__c</object>
