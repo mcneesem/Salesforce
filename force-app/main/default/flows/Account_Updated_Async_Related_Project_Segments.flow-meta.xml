@@ -116,6 +116,7 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <recordLookups>
+        <description>Prevent DmlExceptions.  Projects queued for deletion can not be modified.</description>
         <name>Get_Related_Project_Records</name>
         <label>Get Related Project Records</label>
         <locationX>484</locationX>
@@ -147,6 +148,13 @@
             <operator>NotEqualTo</operator>
             <value>
                 <stringValue>Cancelled</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>NSP_Queued_for_Delete__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>false</booleanValue>
             </value>
         </filters>
         <object>pse__Proj__c</object>
