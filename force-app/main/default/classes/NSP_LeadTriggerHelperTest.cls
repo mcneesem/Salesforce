@@ -5,15 +5,8 @@ private class NSP_LeadTriggerHelperTest {
     private static final String INTEREST = 'Payroll & Human Capital Management(Workforce Acceleration)';
     private static final String TMP_EMAIL = 'tmp@tmp123.com';
 
-    /**
-     * Does test data setup
-     * @param N/A.
-     * @return void
-     */
-
     @TestSetup
     private static void testData() {
-
         Lead_Trigger_Settings__c settings1 = Lead_Trigger_Settings__c.getOrgDefaults();
         settings1.AllowStatusChangedToWorking__c = True;
         upsert settings1;
@@ -368,8 +361,8 @@ private class NSP_LeadTriggerHelperTest {
      * @return void
      *     */
     @IsTest
-    private static void dunsCheckBeforeInsertTest() {        
-    	Map<Id,User> dunsPermittedUserMap = CustomPermissionController.getPermittedUsersMap('Lead_DUNS_Account_Owner_Routing');        
+    private static void dunsCheckBeforeInsertTest() {
+        Map<Id,User> dunsPermittedUserMap = CustomPermissionController.getPermittedUsersMap('Lead_DUNS_Account_Owner_Routing');        
         List<User> testUsers = [
             SELECT Id
             FROM User
@@ -388,7 +381,7 @@ private class NSP_LeadTriggerHelperTest {
         accoutObject.recordTypeId=partnerRecordTypeId;
         accoutObject.DNB_Connect_DUNS_Number__c = '876543988';
         if (!testUsers.isEmpty()) {
-        	accoutObject.OwnerId = testUsers[0].Id;   
+            accoutObject.OwnerId = testUsers[0].Id;   
         }
         accoutObject.NSP_Account_Status__c = NSP_SalesConstants.INACTIVE;
         //Inserting account object
@@ -409,7 +402,7 @@ private class NSP_LeadTriggerHelperTest {
         system.assertEquals(nLead.NumberOfEmployees, 160);
         if (!testUsers.isEmpty()) {
             List<Lead>  leadList = [SELECT Id , OwnerId FROM lead WHERE Id = :nLead.Id];
-        	system.assertEquals(leadList[0].OwnerId, testUsers[0].Id);
+            system.assertEquals(leadList[0].OwnerId, testUsers[0].Id);
         }
     }
     
