@@ -2,7 +2,7 @@
 * Represents the Implementation profile tirgger for update scenario.
 */ 
 public class NSP_Implprofile_ServiceHelperUpdate {
-    // test w/ NSP_Implprofile_ServiceHelperUpdate_Test (82%)
+    // test w/ NSP_Implprofile_ServiceHelperUpdate_Test (85%)
 
     private  Boolean isRerun =false;
     private Boolean isSaveForm = false;
@@ -2628,7 +2628,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
                 NSP_HR_Quality_Support_Team_Member__r.NSP_Work_email__c,
                 NSP_Project_Manager__r.NSP_Job_Title__c,
                 NSP_Project_Manager__r.pse__Salesforce_User__c,
-                Account__c, Account__r.Name,NSP_Old_Benefits_Package__c,
+                Account__c, Account__r.Name,NSP_Old_Benefits_Package__c, Benefits_Package__c,
                 NSP_Old_Effective_Date_EPLI__c,NSP_Old_Insperity_Ben_effective_date__c
                 FROM Implementation_Profile__c
                 WHERE ( Id IN :ipIds )
@@ -2820,6 +2820,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
             && (
                 ( ( ipRec.NSP_Old_Effective_Date_EPLI__c != null ) && ( ipRec.Effective_Date_Payroll_Worker_comp_EPLI__c != ipRec.NSP_Old_Effective_Date_EPLI__c ) )
                 || ( ( ipRec.NSP_Old_Insperity_Ben_effective_date__c != null ) && ( ipRec.Insperity_benefits_effective_date__c != ipRec.NSP_Old_Insperity_Ben_effective_date__c ) )
+                || ( ( ipRec.NSP_Old_Benefits_Package__c != null ) && ( ipRec.Benefits_Package__c != ipRec.NSP_Old_Benefits_Package__c ) )
                 )
             )
         {
