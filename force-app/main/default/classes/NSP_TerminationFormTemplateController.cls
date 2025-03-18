@@ -190,8 +190,8 @@ public with sharing class NSP_TerminationFormTemplateController {
             clinetName = termination.NSP_Project_Task__r.pse__Project__r.pse__Account__r.Name;
             clinetNumber = termination.NSP_Project_Task__r.pse__Project__r.pse__Account__r.NSP_AIMS_Client__c;
             eeNumber = termination.NSP_Number_of_Active_Employees__c;
-            if ( ( termination.NSP_Term_Reason__c =='1900 Merger with Insperity Client' )
-                || ( termination.NSP_Term_Reason__c =='2700 Change in FEIN' )
+            if ( ( termination.NSP_Term_Reason__c == '1900 Merger with Insperity Client' )
+                || ( termination.NSP_Term_Reason__c == '2700 Change in FEIN' )
                 )
             {
                 eeNumber = termination.NSP_How_many_employees_were_moved__c;
