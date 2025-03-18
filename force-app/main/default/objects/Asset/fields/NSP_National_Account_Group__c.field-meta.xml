@@ -337,6 +337,26 @@
                 <default>false</default>
                 <label>NextGen</label>
             </value>
+            <value>
+                <fullName>96</fullName>
+                <default>false</default>
+                <label>Revelstroke</label>
+            </value>
+            <value>
+                <fullName>97</fullName>
+                <default>false</default>
+                <label>Skytale Group</label>
+            </value>
+            <value>
+                <fullName>98</fullName>
+                <default>false</default>
+                <label>Resilient Capital</label>
+            </value>
+            <value>
+                <fullName>99</fullName>
+                <default>false</default>
+                <label>Housatonic Partners</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
