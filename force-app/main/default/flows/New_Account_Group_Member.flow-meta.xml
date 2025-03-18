@@ -380,7 +380,7 @@
                 <leftValueReference>varAccountGroupMember.Id</leftValueReference>
                 <operator>WasSet</operator>
                 <rightValue>
-                    <booleanValue>false</booleanValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
