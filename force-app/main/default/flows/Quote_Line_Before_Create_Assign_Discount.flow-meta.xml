@@ -64,8 +64,8 @@
         </rules>
     </decisions>
     <environments>Default</environments>
-    <interviewLabel>Quote Line Process {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Quote Line Process flow</label>
+    <interviewLabel>Quote Line - Before Create - Assign Discount {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Quote Line - Before Create - Assign Discount</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
