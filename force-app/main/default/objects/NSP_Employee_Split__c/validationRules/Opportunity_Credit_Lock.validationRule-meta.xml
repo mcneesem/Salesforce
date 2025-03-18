@@ -4,14 +4,14 @@
     <active>true</active>
     <description>Opportunity credit is locked when opportunity is lock.</description>
     <errorConditionFormula>AND(
-ISPICKVAL( NSP_Opportunity__r.StageName , &quot;Closed Won&quot; ) ,
-NOT( $Setup.NSP_Trigger_Switch__c.OpportunityValidations__c ) ,
-NOT( $Permission.Opportunity_Credit_Bypass_Closed_Won_Lock ) ,
-AND(
-( $Profile.Name &lt;&gt; &apos;Data Migration&apos; ) ,
-( $Profile.Name &lt;&gt; &apos;Integration User&apos; ) ,
-NOT( CONTAINS( $Profile.Name , &apos;System Admin&apos; ) )
-)
+  NOT( $Permission.Opportunity_Credit_Bypass_Closed_Won_Lock ) ,
+  NOT( $Setup.NSP_Trigger_Switch__c.OpportunityValidations__c ) ,
+  ISPICKVAL( NSP_Opportunity__r.StageName , &quot;Closed Won&quot; ) ,
+  AND(
+    ( $Profile.Name &lt;&gt; &apos;Data Migration&apos; ) ,
+    ( $Profile.Name &lt;&gt; &apos;Integration User&apos; ) ,
+    NOT( CONTAINS( $Profile.Name , &apos;System Admin&apos; ) )
+  )
 )</errorConditionFormula>
     <errorMessage>Once an Opportunity is Closed Won, the Opportunity Credits cannot be modified. Please contact Sales Operations team.</errorMessage>
 </ValidationRule>
