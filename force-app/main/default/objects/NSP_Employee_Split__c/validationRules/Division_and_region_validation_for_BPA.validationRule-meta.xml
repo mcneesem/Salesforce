@@ -2,8 +2,13 @@
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Division_and_region_validation_for_BPA</fullName>
     <active>true</active>
-    <errorConditionFormula>(ISCHANGED( NSP_Sales_Division__c ) || ISCHANGED( NSP_Sales_Region__c )) &amp;&amp;
-($Permission.Opportunity_Credit_Restrict_Edit_Sales_Fields)
-&amp;&amp; $Setup.NSP_Trigger_Switch__c.OpportunityValidations__c!=TRUE</errorConditionFormula>
+    <errorConditionFormula>AND(
+  $Permission.Opportunity_Credit_Restrict_Edit_Sales_Fields ,
+  NOT( $Setup.NSP_Trigger_Switch__c.OpportunityValidations__c ) ,
+  OR(
+    ISCHANGED( NSP_Sales_Division__c ) ,
+    ISCHANGED( NSP_Sales_Region__c )
+  )
+)</errorConditionFormula>
     <errorMessage>Sales Division and Sales Region are currently locked for update. Please contact New Client Sales to make any adjustments.</errorMessage>
 </ValidationRule>
