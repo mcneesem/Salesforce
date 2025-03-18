@@ -5,8 +5,8 @@
     <assignments>
         <name>Update_Additional_Discount_Percent1</name>
         <label>Update Additional Discount Percent</label>
-        <locationX>958</locationX>
-        <locationY>589</locationY>
+        <locationX>242</locationX>
+        <locationY>503</locationY>
         <assignmentItems>
             <assignToReference>$Record.SBQQ__AdditionalDiscountAmount__c</assignToReference>
             <operator>Assign</operator>
@@ -22,10 +22,10 @@
     <decisions>
         <name>Is_Trigger_Switch_On</name>
         <label>Is Trigger Switch On</label>
-        <locationX>744</locationX>
-        <locationY>503</locationY>
+        <locationX>176</locationX>
+        <locationY>287</locationY>
         <defaultConnector>
-            <targetReference>Update_Additional_Discount_Percent1</targetReference>
+            <targetReference>Renewed_Subscription_Line</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -41,6 +41,28 @@
             <label>True</label>
         </rules>
     </decisions>
+    <decisions>
+        <name>Renewed_Subscription_Line</name>
+        <label>Renewed Subscription Line?</label>
+        <locationX>374</locationX>
+        <locationY>395</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>True1</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__RenewedSubscription__r.SBQQ__Discount__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Additional_Discount_Percent1</targetReference>
+            </connector>
+            <label>True</label>
+        </rules>
+    </decisions>
     <environments>Default</environments>
     <interviewLabel>Quote Line Process {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Quote Line Process flow</label>
@@ -53,7 +75,7 @@
     <processMetadataValues>
         <name>CanvasMode</name>
         <value>
-            <stringValue>FREE_FORM_CANVAS</stringValue>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
         </value>
     </processMetadataValues>
     <processMetadataValues>
@@ -64,8 +86,8 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <start>
-        <locationX>543</locationX>
-        <locationY>48</locationY>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
         <connector>
             <targetReference>Is_Trigger_Switch_On</targetReference>
         </connector>
