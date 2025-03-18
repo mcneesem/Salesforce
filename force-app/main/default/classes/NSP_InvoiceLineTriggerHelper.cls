@@ -82,11 +82,11 @@ public static void prepareForRevRecGeneration(List<Id> elgibleLineForRevRec){
     }
 }
 
-/***********************************************************************************************
-* MethodName: selectInvoiceLineOrderItems
-* Description : This method is used to Create a Map of OrderItem Ids and OrderItem records
-* Params:       List<blng__InvoiceLine__c> records
-* ********************************************************************************************/
+    //
+    // MethodName: selectInvoiceLineOrderItems
+    // Description : This method is used to Create a Map of OrderItem Ids and OrderItem records
+    // Params: List<blng__InvoiceLine__c> records
+    //
     private static Map<Id,OrderItem> selectInvoiceLineOrderItems( List<blng__InvoiceLine__c> records ) {
         Set<Id> orderProductIds = new Set<Id>();
         if ( ( records != null ) && !records.isEmpty() ) {
@@ -112,11 +112,11 @@ public static void prepareForRevRecGeneration(List<Id> elgibleLineForRevRec){
         return response;
     }
 
-/***********************************************************************************************
-* MethodName: getInvoiceLineOrderItem
-* Description : This method is used to return OrderItem record for Invoice Line
-* Params:       Id recordId , Map<Id,OrderItem> orderItemMap
-* ********************************************************************************************/
+    //
+    // MethodName: getInvoiceLineOrderItem
+    // Description : This method is used to return OrderItem record for Invoice Line
+    // Params: Id recordId , Map<Id,OrderItem> orderItemMap
+    //
     private static OrderItem getInvoiceLineOrderItem( Id recordId , Map<Id,OrderItem> orderItemMap ) {
         OrderItem record = null;
         if ( ( recordId != null )
@@ -130,11 +130,11 @@ public static void prepareForRevRecGeneration(List<Id> elgibleLineForRevRec){
         return record;
     }
 
-/***********************************************************************************************
-* MethodName: selectInvoiceLineUsageSummaries
-* Description : This method is used to Create a Map of Usage Summary Ids and Usage Summary records
-* Params:       List<blng__InvoiceLine__c> newInvLines
-* ********************************************************************************************/
+    //
+    // MethodName: selectInvoiceLineUsageSummaries
+    // Description : This method is used to Create a Map of Usage Summary Ids and Usage Summary records
+    // Params: List<blng__InvoiceLine__c> newInvLines
+    //
     private static Map<Id,blng__UsageSummary__c> selectInvoiceLineUsageSummaries( List<blng__InvoiceLine__c> records ) {
         Set<Id> usageSummaryIds = new Set<Id>();
         if ( ( records != null ) && !records.isEmpty() ) {
@@ -159,11 +159,11 @@ public static void prepareForRevRecGeneration(List<Id> elgibleLineForRevRec){
         return response;
     }
 
-/***********************************************************************************************
-* MethodName: getInvoiceLineUsageSummary
-* Description : This method is used to return usageSummary record for Invoice Line
-* Params:       Id recordId , Map<Id,blng__UsageSummary__c> usageSummaryMap
-* ********************************************************************************************/
+    //
+    // MethodName: getInvoiceLineUsageSummary
+    // Description : This method is used to return usageSummary record for Invoice Line
+    // Params: Id recordId , Map<Id,blng__UsageSummary__c> usageSummaryMap
+    //
     private static blng__UsageSummary__c getInvoiceLineUsageSummary( Id recordId , Map<Id,blng__UsageSummary__c> usageSummaryMap ) {
         blng__UsageSummary__c record = null;
         if ( ( recordId != null )
