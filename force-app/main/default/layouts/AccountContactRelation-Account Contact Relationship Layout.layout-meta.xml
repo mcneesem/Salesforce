@@ -68,7 +68,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>NSP_Owner__c</field>
+                <field>Client_Communication_Contact__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
