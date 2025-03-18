@@ -5,6 +5,7 @@
     <label>Regional Team</label>
     <permissionSets>Account_Assignment_Method_Edit_Access</permissionSets>
     <permissionSets>Account_Create</permissionSets>
+    <permissionSets>Account_Owner_Restrict_Update</permissionSets>
     <permissionSets>Advanced_User_Details_Hire_Date_Termination_Date</permissionSets>
     <permissionSets>Bypass_Task_Event_Cancelled_Status</permissionSets>
     <permissionSets>Checklist_Read_Create</permissionSets>
@@ -17,6 +18,10 @@
     <permissionSets>NSP_Main_Service_Contacts</permissionSets>
     <permissionSets>NSP_Order_ViewAll</permissionSets>
     <permissionSets>NSP_Template_Field_permission</permissionSets>
+    <permissionSets>Opportunity_Closed_Lost_SO_Opp</permissionSets>
+    <permissionSets>Opportunity_Closed_Lost_SO_Opp_Owner</permissionSets>
+    <permissionSets>Opportunity_NCS_Email_Core_MidMarket</permissionSets>
+    <permissionSets>Opportunity_Team_Group_Check</permissionSets>
     <permissionSets>Report_export_and_print_access</permissionSets>
     <permissionSets>Sales_Service_Object_Permission</permissionSets>
     <permissionSets>bloomfirex__Bloomfire_User</permissionSets>

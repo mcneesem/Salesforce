@@ -5,6 +5,8 @@
     <label>BPA</label>
     <permissionSets>Account_Create</permissionSets>
     <permissionSets>Account_Edit_Other_Current_Provider</permissionSets>
+    <permissionSets>Account_Owner_Restrict_Update</permissionSets>
+    <permissionSets>Account_Partner_Update_Loyalty_from_SO</permissionSets>
     <permissionSets>Allow_sending_of_List_Emails</permissionSets>
     <permissionSets>Basic_SetUp_Config_Access</permissionSets>
     <permissionSets>Bloomfire_Custom_User</permissionSets>
@@ -18,18 +20,26 @@
     <permissionSets>DOZISF__ZoomInfo_User</permissionSets>
     <permissionSets>Edit_Closed_Won_Create_Box_Folder</permissionSets>
     <permissionSets>LID_Sales_Navigator</permissionSets>
+    <permissionSets>Lead_DUNS_Account_Owner_Routing</permissionSets>
+    <permissionSets>Lead_Owner_Update_Share_SO</permissionSets>
     <permissionSets>List_View_Enhanced_Access</permissionSets>
     <permissionSets>NSP_Billing_View_All</permissionSets>
     <permissionSets>NSP_Finance_Service_Objects_Permission</permissionSets>
     <permissionSets>NSP_Main_Service_Contacts</permissionSets>
     <permissionSets>NSP_Order_ViewAll</permissionSets>
     <permissionSets>Opportunity_Closed_Lost_Fields_Edit_Access</permissionSets>
+    <permissionSets>Opportunity_Closed_Won_Edit_Not_Allowed</permissionSets>
+    <permissionSets>Opportunity_Closed_Won_Opp_Owner</permissionSets>
+    <permissionSets>Opportunity_Credit_Restrict_Edit_Sales_Fields</permissionSets>
+    <permissionSets>Opportunity_NCS_Email_Core_MidMarket</permissionSets>
     <permissionSets>Opportunity_Spits_Elevated_Read_Edit</permissionSets>
     <permissionSets>Opportunity_Splits_Elevated_Create_Read_Edit</permissionSets>
     <permissionSets>Rules_Of_Engagement_Enabled</permissionSets>
     <permissionSets>Sales_Service_Object_Permission</permissionSets>
     <permissionSets>Task_Due_Date_Required</permissionSets>
+    <permissionSets>Template_Selection_Owner_Update</permissionSets>
     <permissionSets>Upsell_Task</permissionSets>
+    <permissionSets>User_Share_SO_Update</permissionSets>
     <permissionSets>Xactly_Permission_Set</permissionSets>
     <permissionSets>bloomfirex__Bloomfire_User</permissionSets>
     <permissionSets>force__EinsteinActivityCaptureIncluded</permissionSets>
