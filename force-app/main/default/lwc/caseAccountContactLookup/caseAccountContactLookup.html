@@ -1,0 +1,31 @@
+<template>
+    <div class="slds-m-around_medium">
+        <div class="slds-grid slds-gutters">
+            <!-- Account Lookup -->
+            <div class="slds-col slds-size_1-of-2">
+                <lightning-record-picker
+                    label="Account"
+                    placeholder="Search Accounts..."
+                    object-api-name="Account"
+                    fields={accountFields}
+                    filters={accountFilters}
+                    value={selectedAccountId}
+                    onchange={handleAccountChange}
+                ></lightning-record-picker>
+            </div>
+
+            <!-- Contact Lookup -->
+            <div class="slds-col slds-size_1-of-2">
+                <lightning-record-picker
+                    label="Contact"
+                    placeholder="Search Contacts..."
+                    object-api-name="Contact"
+                    fields={contactFields}
+                    filters={contactFilters}
+                    value={selectedContactId}
+                    onchange={handleContactChange}
+                ></lightning-record-picker>
+            </div>
+        </div>
+    </div>
+</template>
