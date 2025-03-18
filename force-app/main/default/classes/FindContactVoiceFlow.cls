@@ -1,5 +1,4 @@
-// intentionally `without sharing` to ensure proper SOQL results for Contact Center Agents...
-public without sharing class FindContactVoiceFlow {
+public class FindContactVoiceFlow {
     // test w/ FindContactVoiceFlowTest (95%)
 
     @InvocableMethod(label='Get Contacts by Phone')
