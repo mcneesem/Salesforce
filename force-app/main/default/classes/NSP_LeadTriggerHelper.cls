@@ -412,7 +412,10 @@ public with sharing class NSP_LeadTriggerHelper {
         // check UserRole...
         Boolean isAllowedRole = (
             ( currentUser != null )
-            && ( CustomPermissionController.checkUserPermission( 'Allow_Update_MidMarket_Role' , UserInfo.getUserId() ) )
+            && CustomPermissionController.checkUserPermission(
+                'Allow_Update_MidMarket_Role' ,
+                UserInfo.getUserId()
+            )
         );
         // only enforce restriction if User is NOT allowed to bypass...
         // ~ having "correct" Profile OR "correct" Role allows the bypass...
@@ -1128,17 +1131,29 @@ public with sharing class NSP_LeadTriggerHelper {
     // @return void
     //
     public Boolean dunsCheck(Lead leadObject) {
-        Map<Id,User> permittedUserMap = CustomPermissionController.getPermittedUsersMap('Lead_DUNS_Account_Owner_Routing');
+        Map<Id,User> permittedUserMap = CustomPermissionController.getPermittedUsersMap( 'Lead_DUNS_Account_Owner_Routing' );
         List<User> userAvailable = [SELECT Id, Name FROM User WHERE Name = 'Available'];
         Id userAvailableId = ( !userAvailable.isEmpty() ? userAvailable[0].Id : null );
         Boolean isOwnerUpdated = false;
         if (leadObject.DNB_Connect_DUNS_Number__c != null && leadObject.NSP_Lead_Routing__c == true) {
-            List < Account > accResult = [SELECT Id, OwnerId, Owner.Name, Owner.UserRole.Name, NSP_Account_Status__c FROM Account WHERE DNB_Connect_DUNS_Number__c != null AND DNB_Connect_DUNS_Number__c =: leadObject.DNB_Connect_DUNS_Number__c];
+            List < Account > accResult = [
+                SELECT
+                    Id ,
+                    OwnerId ,
+                    Owner.Name ,
+                    Owner.UserRole.Name ,
+                    NSP_Account_Status__c
+                FROM Account
+                WHERE (
+                    ( DNB_Connect_DUNS_Number__c != null )
+                    AND ( DNB_Connect_DUNS_Number__c = :leadObject.DNB_Connect_DUNS_Number__c )
+                )
+            ];
             if (accResult.size() == 1) {
                 for (Account dunsAcc: accResult) {
                     if ( ( dunsAcc.OwnerId != userAvailableId )
                         && ( dunsAcc.NSP_Account_Status__c == NSP_SalesConstants.INACTIVE )
-                        && ( permittedUserMap.keySet().contains(dunsAcc.OwnerId) )
+                        && permittedUserMap.keySet().contains( dunsAcc.OwnerId )
                         )
                     {
                         leadObject.OwnerId = dunsAcc.OwnerId;
