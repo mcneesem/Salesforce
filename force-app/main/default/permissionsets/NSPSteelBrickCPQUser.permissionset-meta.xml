@@ -4800,6 +4800,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>SBQQ__PriceRule__c.Price_Rule_Number__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>SBQQ__PriceRule__c.SBQQ__Active__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -6154,6 +6159,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__QuoteLine__c.Price_Rule_Log__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>SBQQ__QuoteLine__c.Price_Update_Stable_Quantity__c</field>
         <readable>true</readable>
@@ -7301,6 +7311,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>SBQQ__Quote__c.Has_Separate_Project_QuoteLines__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SBQQ__Quote__c.Invoice_To_Email_DocuSign_Name__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
