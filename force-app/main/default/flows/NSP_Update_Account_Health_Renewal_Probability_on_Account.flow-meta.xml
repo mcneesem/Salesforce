@@ -4,7 +4,7 @@
     <assignments>
         <name>Add_Account_Id_in_Collection</name>
         <label>Add Account Id in Collection</label>
-        <locationX>286</locationX>
+        <locationX>138</locationX>
         <locationY>600</locationY>
         <assignmentItems>
             <assignToReference>accountIds</assignToReference>
@@ -20,7 +20,7 @@
     <assignments>
         <name>Add_Account_Ids_in_Collection</name>
         <label>Add Account Ids in Collection</label>
-        <locationX>638</locationX>
+        <locationX>1018</locationX>
         <locationY>600</locationY>
         <assignmentItems>
             <assignToReference>accountIdSet</assignToReference>
@@ -33,11 +33,78 @@
             <targetReference>Extract_Renewal_Account_Ids</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Get_Associcate_Account_members_Account_Ids</name>
+        <label>Set Fault Element: Get_Associcate_Account_members_Account_Ids</label>
+        <locationX>578</locationX>
+        <locationY>492</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Associcate_Account_members_Account_Ids</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Get_Renewal_Probability_Account_members_Account_Ids</name>
+        <label>Set Fault Element: Get_Renewal_Probability_Account_members_Account_Ids</label>
+        <locationX>1458</locationX>
+        <locationY>492</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Renewal_Probability_Account_members_Account_Ids</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Update_Account_Health_on_Account</name>
+        <label>Set Fault Element: Update_Account_Health_on_Account</label>
+        <locationX>314</locationX>
+        <locationY>900</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Update_Account_Health_on_Account</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Update_Renewal_Probability_on_Account</name>
+        <label>Set Fault Element: Update_Renewal_Probability_on_Account</label>
+        <locationX>1194</locationX>
+        <locationY>900</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Update_Renewal_Probability_on_Account</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Fault_Handler</targetReference>
+        </connector>
+    </assignments>
     <decisions>
         <description>Check if the Account group type is account health or Renewal Probability</description>
         <name>Check_Account_Group_Type</name>
         <label>Check Account Group Type</label>
-        <locationX>506</locationX>
+        <locationX>886</locationX>
         <locationY>276</locationY>
         <defaultConnectorLabel>Default outcome</defaultConnectorLabel>
         <rules>
@@ -78,7 +145,7 @@
     <loops>
         <name>Extract_Account_Ids</name>
         <label>Extract Account Ids</label>
-        <locationX>198</locationX>
+        <locationX>50</locationX>
         <locationY>492</locationY>
         <collectionReference>Get_Associcate_Account_members_Account_Ids</collectionReference>
         <iterationOrder>Asc</iterationOrder>
@@ -92,7 +159,7 @@
     <loops>
         <name>Extract_Renewal_Account_Ids</name>
         <label>Extract Renewal Account Ids</label>
-        <locationX>550</locationX>
+        <locationX>930</locationX>
         <locationY>492</locationY>
         <collectionReference>Get_Renewal_Probability_Account_members_Account_Ids</collectionReference>
         <iterationOrder>Asc</iterationOrder>
@@ -125,12 +192,15 @@
     <recordLookups>
         <name>Get_Associcate_Account_members_Account_Ids</name>
         <label>Get Associcate Account members Account Ids</label>
-        <locationX>198</locationX>
+        <locationX>50</locationX>
         <locationY>384</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Extract_Account_Ids</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_Get_Associcate_Account_members_Account_Ids</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>NSP_Group__c</field>
@@ -148,12 +218,15 @@
     <recordLookups>
         <name>Get_Renewal_Probability_Account_members_Account_Ids</name>
         <label>Get Renewal Probability Account members Account Ids</label>
-        <locationX>550</locationX>
+        <locationX>930</locationX>
         <locationY>384</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Extract_Renewal_Account_Ids</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_Get_Renewal_Probability_Account_members_Account_Ids</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>NSP_Group__c</field>
@@ -171,14 +244,24 @@
     <recordUpdates>
         <name>Update_Account_Health_on_Account</name>
         <label>Update Account Health on Account</label>
-        <locationX>198</locationX>
+        <locationX>50</locationX>
         <locationY>792</locationY>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_Update_Account_Health_on_Account</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>In</operator>
             <value>
                 <elementReference>accountIds</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>NSP_Account_Health__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <elementReference>$Record.NSP_Account_Health__c</elementReference>
             </value>
         </filters>
         <inputAssignments>
@@ -192,14 +275,24 @@
     <recordUpdates>
         <name>Update_Renewal_Probability_on_Account</name>
         <label>Update Renewal Probability on Account</label>
-        <locationX>550</locationX>
+        <locationX>930</locationX>
         <locationY>792</locationY>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_Update_Renewal_Probability_on_Account</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>In</operator>
             <value>
                 <elementReference>accountIdSet</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>NSP_Renewal_Probability__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <elementReference>$Record.NSP_Renewal_Probability__c</elementReference>
             </value>
         </filters>
         <inputAssignments>
@@ -211,7 +304,7 @@
         <object>Account</object>
     </recordUpdates>
     <start>
-        <locationX>50</locationX>
+        <locationX>166</locationX>
         <locationY>0</locationY>
         <filterLogic>1 AND (2 OR 3)</filterLogic>
         <filters>
@@ -246,6 +339,31 @@
         <triggerType>RecordAfterSave</triggerType>
     </start>
     <status>Draft</status>
+    <subflows>
+        <name>Fault_Handler</name>
+        <label>Fault Handler</label>
+        <locationX>1194</locationX>
+        <locationY>1008</locationY>
+        <flowName>Insperity_Fault_Handler_Subflow</flowName>
+        <inputAssignments>
+            <name>faultElement</name>
+            <value>
+                <elementReference>varFaultElement</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultFlow</name>
+            <value>
+                <stringValue>NSP_Update_Account_Health_Renewal_Probability_on_Account</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultMessage</name>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
     <variables>
         <name>accountIds</name>
         <dataType>String</dataType>
@@ -259,5 +377,15 @@
         <isCollection>true</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>varFaultElement</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue></stringValue>
+        </value>
     </variables>
 </Flow>
