@@ -502,7 +502,17 @@ public with sharing class NSP_LeadTriggerHelper {
                 settings.AllowChangedMostRecentCampaign__c
                 && ( newRecord.Most_Recent_Campaign__c != oldRecord.Most_Recent_Campaign__c )
             );
-            if ( !isStatusChangedToWorking && !isChangedMostRecentCampaign ) {
+            // prevent unhandled Apex Exceptions within LeadLastActivityDateHelper.updateLeadLastActivityDate...
+            // ~ allow modifications to Lead.NSP_Last_Activity__c...
+            Boolean isChangedLastActivity = (
+                settings.AllowChangedLastActivity__c
+                && ( newRecord.NSP_Last_Activity__c != oldRecord.NSP_Last_Activity__c )
+            );
+            if ( !isStatusChangedToWorking
+                && !isChangedMostRecentCampaign
+                && !isChangedLastActivity
+                )
+            {
                 // for any other change to the Lead...
                 // ~ throw DmlException FIELD_CUSTOM_VALIDATION_EXCEPTION
                 response = true;
