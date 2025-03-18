@@ -4800,11 +4800,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>SBQQ__PriceRule__c.Price_Rule_Number__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>SBQQ__PriceRule__c.SBQQ__Active__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -6156,11 +6151,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>SBQQ__QuoteLine__c.Parent_Amend_Required_is_Red__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>SBQQ__QuoteLine__c.Price_Rule_Log__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
