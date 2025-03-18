@@ -479,6 +479,20 @@
         <value>Client maintaining their own FSA.  CSP Set Up Required to take pre-tax deductions.  Receive and submit necessary documents to H&amp;W.</value>
     </labels>
     <labels>
+        <fullName>ITA_Time_And_Attendance_Email</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ITA Time And Attendance Email</shortDescription>
+        <value>time.support@insperity.com</value>
+    </labels>
+    <labels>
+        <fullName>ITA_Time_And_Attendance_Phone</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ITA Time And Attendance Phone</shortDescription>
+        <value>(800) 314-8223</value>
+    </labels>
+    <labels>
         <fullName>If_Itemized_they_must_use_Integra</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -6701,19 +6715,5 @@ Climate Plus: https://nexus.insperity.com/groups/38605/posts/3272612-climate-plu
         <protected>false</protected>
         <shortDescription>nsp Associate Client subplan History</shortDescription>
         <value>Associate a Plan History Record With This Client</value>
-    </labels>
-    <labels>
-        <fullName>ITA_Time_And_Attendance_Email</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ITA Time And Attendance Email</shortDescription>
-        <value>time.support@insperity.com</value>
-    </labels>
-    <labels>
-        <fullName>ITA_Time_And_Attendance_Phone</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ITA Time And Attendance Phone</shortDescription>
-        <value>(800) 314-8223</value>
     </labels>
 </CustomLabels>
