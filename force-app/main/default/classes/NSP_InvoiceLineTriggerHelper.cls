@@ -203,10 +203,13 @@ public static void prepareForRevRecGeneration(List<Id> elgibleLineForRevRec){
                 if(newInvoiceLine.NSP_Product_Code__c != null && additionalProductDesSetMap.containsKey(newInvoiceLine.NSP_Product_Code__c)) {
                     NSP_AdditionalProductDescription_Setting__mdt descriptionSetting = additionalProductDesSetMap.get(newInvoiceLine.NSP_Product_Code__c);
                     string prodDescStr = descriptionSetting.NSP_Product_Description_Syntex__c;
+                    String prodDescType = descriptionSetting.Type__c;
                     Decimal perunitPrice = newInvoiceLine.NSP_Consumption_Rate_Per_Unit__c != null ? newInvoiceLine.NSP_Consumption_Rate_Per_Unit__c:newInvoiceLine.blng__UnitPrice__c;
-                    if( usageSummary != null && usageSummary.blng__UnitPrice__c != null){
+                    
+                    if( usageSummary != null && usageSummary.blng__UnitPrice__c != null && prodDescType == 'Dynamic'){
                             perunitPrice = usageSummary.blng__UnitPrice__c;
                     }
+                    
                     //DF-05546 -- updating prices with accounting format
                     List<String> args = new String[]{'0','number','###,###,##0.00'};
                     String pepm_Text = '$'+String.format(perunitPrice.setScale(2).format(), args);
@@ -214,9 +217,6 @@ public static void prepareForRevRecGeneration(List<Id> elgibleLineForRevRec){
                     String mm_Text = (newInvoiceLine.NSP_Consumption_Rate_Flat_Price__c!=null && newInvoiceLine.NSP_Consumption_Rate_Flat_Price__c!=0) ?
                                         '$'+String.format(newInvoiceLine.NSP_Consumption_Rate_Flat_Price__c.setScale(2).format(), args) :
                                         null;
-                    if( ( usageSummary != null )  && usageSummary.blng__UnitPrice__c != null) {
-                            mm_Text = '$'+String.format(usageSummary.blng__UnitPrice__c.setScale(2).format(), args);
-                    }
                     prodDescStr = (prodDescStr.contains('{Unit Price}') && perunitPrice != null) ? prodDescStr.replace('{Unit Price}',pepm_Text):prodDescStr;
                 
                     prodDescStr = (prodDescStr.contains('{Upper Tier_Flat Price}') && mm_Text != null) ? prodDescStr.replace('{Upper Tier_Flat Price}',mm_Text)
