@@ -184,7 +184,7 @@ public static void prepareForRevRecGeneration(List<Id> elgibleLineForRevRec){
     public static void updateAddProductDescription( List<blng__InvoiceLine__c> invLineNew ) {
         Map<String,NSP_AdditionalProductDescription_Setting__mdt>  additionalProductDesSetMap = NSP_AdditionalProductDescription_Setting__mdt.getAll();
         Map<Id,OrderItem> orderItemMap = NSP_InvoiceLineTriggerHelper.selectInvoiceLineOrderItems( invLineNew );
-        Map<Id, blng__UsageSummary__c> usageSummaryMap = NSP_InvoiceLineTriggerHelper.selectInvoiceLineUsageSummaries (invLineNew);
+        Map<Id,blng__UsageSummary__c> usageSummaryMap = NSP_InvoiceLineTriggerHelper.selectInvoiceLineUsageSummaries( invLineNew );
         for ( blng__InvoiceLine__c newInvoiceLine : invLineNew ) {
             OrderItem item = NSP_InvoiceLineTriggerHelper.getInvoiceLineOrderItem(
                 newInvoiceLine.blng__OrderProduct__c ,
@@ -203,11 +203,15 @@ public static void prepareForRevRecGeneration(List<Id> elgibleLineForRevRec){
                 if(newInvoiceLine.NSP_Product_Code__c != null && additionalProductDesSetMap.containsKey(newInvoiceLine.NSP_Product_Code__c)) {
                     NSP_AdditionalProductDescription_Setting__mdt descriptionSetting = additionalProductDesSetMap.get(newInvoiceLine.NSP_Product_Code__c);
                     string prodDescStr = descriptionSetting.NSP_Product_Description_Syntex__c;
-                    String prodDescType = descriptionSetting.Type__c;
                     Decimal perunitPrice = newInvoiceLine.NSP_Consumption_Rate_Per_Unit__c != null ? newInvoiceLine.NSP_Consumption_Rate_Per_Unit__c:newInvoiceLine.blng__UnitPrice__c;
                     
-                    if( usageSummary != null && usageSummary.blng__UnitPrice__c != null && prodDescType == 'Dynamic'){
-                            perunitPrice = usageSummary.blng__UnitPrice__c;
+                    String prodDescType = descriptionSetting.Type__c;
+                    if ( ( usageSummary != null )
+                        && ( usageSummary.blng__UnitPrice__c != null )
+                        && ( prodDescType == 'Dynamic' )
+                        )
+                    {
+                        perunitPrice = usageSummary.blng__UnitPrice__c;
                     }
                     
                     //DF-05546 -- updating prices with accounting format
