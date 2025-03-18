@@ -32,23 +32,23 @@ public with sharing class NSP_EnrollmentFeePaymentSharing {
                 }
                 oppToSalesOfficeMap.put(oppTeamMember.opportunityId, oppTeamMember.Opportunity.NSP_Sales_Office__c);
             }
-			
-            //Getting the list of sales offices to the opportunity ids
-            salesOffices.addAll(oppToSalesOfficeMap.values());
 
+            //Getting the list of sales offices to the opportunity ids
+            salesOffices.addAll( oppToSalesOfficeMap.values() );
             //Getting DAs and DMs for the list of sales offices
             List<User> dADMUsersList = NSP_EnrollmentFeePaymentSharing.selectPermittedSalesOfficeUsers( salesOffices );
-            
             //Creating a map of sales office to DA and DMs
-            for(User user : dADMUsersList)
-            {
-                if(salesOfficeDADMMap.containsKey(user.NSP_Sales_Office_Membership__c)){
-                    salesOfficeDADMMap.get(user.NSP_Sales_Office_Membership__c).add(user);
+            for ( User record : dADMUsersList ) {
+                if ( salesOfficeDADMMap.containsKey( record.NSP_Sales_Office_Membership__c ) ) {
+                    salesOfficeDADMMap.get( record.NSP_Sales_Office_Membership__c ).add( record );
                 } else {
-                    salesOfficeDADMMap.put(user.NSP_Sales_Office_Membership__c, new List<User> {user});
+                    salesOfficeDADMMap.put(
+                        record.NSP_Sales_Office_Membership__c ,
+                        new List<User>{ record }
+                    );
                 }
             }
-            
+
             //Sharing the efp records with DA, DM related to sales office and Opportunity Team Members
             for(NSP_Enrollment_Fee_Payment__c feepayment : listOfEnrollmentFee){
                 String opportunityId = feepayment.NSP_Opportunity__c;
