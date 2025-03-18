@@ -87,7 +87,9 @@ public with sharing class NSP_TerminationFormTemplateController {
                 NSP_Client_Term_Date__c ,
                 NSP_Term_Reason__c ,
                 NSP_Project_Task__r.pse__Project__r.pse__Account__r.Name ,
-                NSP_Project_Task__r.pse__Project__r.pse__Account__r.NSP_AIMS_Client__c
+                NSP_Project_Task__r.pse__Project__r.pse__Account__r.NSP_AIMS_Client__c ,
+                NSP_How_many_employees_were_moved__c ,
+                NSP_Number_of_Active_Employees__c
             FROM NSP_Termination_Form__c
             WHERE (
                 ( Approval_Date__c > :NSP_TerminationForm_Batch.dateBefore )
@@ -109,7 +111,6 @@ public with sharing class NSP_TerminationFormTemplateController {
                 NSP_Term_Reason__c ,
                 NSP_Status__c ,
                 NSP_Term_Code__c ,
-                NSP_Number_of_Active_Employees__c ,
                 NSP_Benefit_Termination_Date__c ,
                 NSP_Last_Date_Wages_Paid_Through__c ,
                 NSP_Revision__c ,
@@ -121,7 +122,9 @@ public with sharing class NSP_TerminationFormTemplateController {
                 NSP_Project_Task__r.pse__Project__r.pse__Account__c ,
                 NSP_Project_Task__r.pse__Project__r.pse__Account__r.Name ,
                 NSP_Project_Task__r.pse__Project__r.pse__Account__r.NSP_AIMS_Client__c ,
-                NSP_Project_Task__r.pse__Project__r.pse__Project_Status__c
+                NSP_Project_Task__r.pse__Project__r.pse__Project_Status__c ,
+                NSP_How_many_employees_were_moved__c ,
+                NSP_Number_of_Active_Employees__c
             FROM NSP_Termination_Form__c
             WHERE (
                 ( Approval_Date__c > :NSP_TerminationForm_Batch.dateBefore )
@@ -187,6 +190,12 @@ public with sharing class NSP_TerminationFormTemplateController {
             clinetName = termination.NSP_Project_Task__r.pse__Project__r.pse__Account__r.Name;
             clinetNumber = termination.NSP_Project_Task__r.pse__Project__r.pse__Account__r.NSP_AIMS_Client__c;
             eeNumber = termination.NSP_Number_of_Active_Employees__c;
+            if ( ( termination.NSP_Term_Reason__c == '1900 Merger with Insperity Client' )
+                || ( termination.NSP_Term_Reason__c == '2700 Change in FEIN' )
+                )
+            {
+                eeNumber = termination.NSP_How_many_employees_were_moved__c;
+            }
             if (roleMapDetails != null) {
                 psName = getRoleName(roleMapDetails, NSP_ServiceConstants.PAYROLL_SPECIALIST);
                 clName = getJoinedRoleNames(
