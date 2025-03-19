@@ -79,14 +79,29 @@ private class NSP_TerminationFormTempController_Test {
     }
     
     @isTest private static void wrapTerminationTest(){
-        NSP_Termination_Form__c TF1 = [SELECT Id, NSP_Project_Task__r.pse__Project__r.pse__Account__r.Name, 
-                                       NSP_Project_Task__r.pse__Project__r.pse__Account__r.NSP_AIMS_Client__c,
-                                       NSP_Number_of_Active_Employees__c,
-                                       NSP_Last_Date_Wages_Paid_Through__c,
-                                       NSP_Benefit_Termination_Date__c,
-                                       NSP_Term_Reason__c,
-                                       NSP_Revision__c,NSP_New_Client_Name__c,NSP_New_Client_Number__c,Previous_term_date__c,NSP_SubTerm_reason__c
-                                       FROM NSP_Termination_Form__c Where Approval_Date__c = Today LIMIT 1];
+        NSP_Termination_Form__c TF1 = [
+            SELECT
+                Id ,
+                NSP_Project_Task__r.pse__Project__r.pse__Account__r.Name ,
+                NSP_Project_Task__r.pse__Project__r.pse__Account__r.NSP_AIMS_Client__c ,
+                NSP_Number_of_Active_Employees__c ,
+                NSP_Last_Date_Wages_Paid_Through__c ,
+                NSP_Benefit_Termination_Date__c ,
+                NSP_Term_Reason__c ,
+                NSP_Revision__c ,
+                NSP_New_Client_Name__c ,
+                NSP_New_Client_Number__c ,
+                Previous_term_date__c ,
+                NSP_SubTerm_reason__c ,
+                Previous_Bene_Date__c ,
+                NSP_Client_Term_Date__c ,
+                Previous_Term_Reason__c ,
+                Previous_Sub_Term_Reason__c ,
+                Previous_Client_Term_Date__c
+            FROM NSP_Termination_Form__c
+            WHERE Approval_Date__c = Today
+            LIMIT 1
+        ];
         Map<String, String> roleMapDetails = new Map<String, String>{
             NSP_ServiceConstants.PAYROLL_SPECIALIST => 'Payroll Specialist',
                 NSP_ServiceConstants.CLIENT_LIAISION => 'Client Liaison',
