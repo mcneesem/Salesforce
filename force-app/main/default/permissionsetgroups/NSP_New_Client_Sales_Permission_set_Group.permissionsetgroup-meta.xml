@@ -16,6 +16,10 @@
     <permissionSets>NSP_Main_Service_Contacts</permissionSets>
     <permissionSets>NSP_Order_ViewAll</permissionSets>
     <permissionSets>New_Client_Sales</permissionSets>
+    <permissionSets>Opportunity_Closed_Won_NCS_User</permissionSets>
+    <permissionSets>Opportunity_Create_Rewards</permissionSets>
+    <permissionSets>Opportunity_Credit_Bypass_Closed_Won_Lock</permissionSets>
+    <permissionSets>Opportunity_Forecast_Category_Edit_Allowed</permissionSets>
     <permissionSets>Opportunity_Lock_Enrollment_Fee_Edit_Access</permissionSets>
     <permissionSets>Opportunity_Non_Docupay_field_edit_permission</permissionSets>
     <permissionSets>Opportunity_Splits_Elevated_Create_Read_Edit</permissionSets>

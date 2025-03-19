@@ -27,6 +27,7 @@
     <permissionSets>NSP_Template_Field_permission</permissionSets>
     <permissionSets>Opportunity_Closed_Lost_Fields_Edit_Access</permissionSets>
     <permissionSets>Opportunity_Splits_Elevated_Create_Read_Edit</permissionSets>
+    <permissionSets>Opportunity_Team_Group_Check</permissionSets>
     <permissionSets>Partner_Access</permissionSets>
     <permissionSets>Report_export_and_print_access</permissionSets>
     <permissionSets>Sales_Service_Object_Permission</permissionSets>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomPermission xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Sales office info on the Campaign record is updated from the Owner assigned sales office.</description>
+    <isLicensed>false</isLicensed>
+    <label>Campaign - Update Sales Office Info - Owner Assigned</label>
+</CustomPermission>
