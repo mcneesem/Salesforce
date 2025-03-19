@@ -13,13 +13,14 @@ Modification Log     :
 * Harsha Khiroya  Feb 25, 2021              DF-01321
 ***************************************************************************************************/
 public with sharing class NSP_LeadTriggerHelper {
-    // test w/ NSP_LeadTriggerHelperTest (83%)
+    // test w/ NSP_LeadTriggerHelperTest (84%)
 
     private static final List<String> reasonNurturingReasonsList = System.label.NSP_Lead_at_Nurturing_or_Unqualified.split( ';' );
     private static final Id NEW_LEAD_RT_ID = NSP_GenericRecordType.getRecordTypeId( 'Lead' , 'NSP_New_Lead_Record_Type' );
     private static final Id LEAD_RT_ID = NSP_GenericRecordType.getRecordTypeId( 'Lead' , 'Lead' );
     private static final Id REFERRAL_RECORDTYPE_ID = NSP_GenericRecordType.getRecordTypeId( 'Lead' , 'Referral' );
     public static final Id SERVICE_REFERRAL_RECORDTYPE_ID = NSP_GenericRecordType.getRecordTypeId( 'Lead' , 'Service_Referral_Lead' );
+    private static Map<Id,User> permittedUserMap = CustomPermissionController.getPermittedUsersMap( 'Lead_DUNS_Account_Owner_Routing' );
 
     //
     // Iterates throught the list of new leads and passes the required attributes to other methods.
@@ -410,11 +411,12 @@ public with sharing class NSP_LeadTriggerHelper {
             )
         );
         // check UserRole...
-        List<String> labelUserRoles = Label.MM_AND_BPC_USERROLE.split( ',' ); // Custom Label: MidMarket Administrator,MidMarket Sales Leader,Business Performance Consultant
         Boolean isAllowedRole = (
             ( currentUser != null )
-            && ( currentUser.UserRoleId != null )
-            && labelUserRoles.contains( currentUser.UserRole.Name )
+            && CustomPermissionController.checkUserPermission(
+                'Allow_Update_MidMarket_Role' ,
+                UserInfo.getUserId()
+            )
         );
         // only enforce restriction if User is NOT allowed to bypass...
         // ~ having "correct" Profile OR "correct" Role allows the bypass...
@@ -1139,25 +1141,35 @@ public with sharing class NSP_LeadTriggerHelper {
     // @param leadObject Current Lead Object Data.
     // @return void
     //
-    public Boolean dunsCheck(Lead leadObject) {
-        List<User> userAvailable = [SELECT Id, Name FROM User WHERE Name = 'Available'];
-        Id userAvailableId = ( !userAvailable.isEmpty() ? userAvailable[0].Id : null );
+    public Boolean dunsCheck( Lead leadObject ) {
         Boolean isOwnerUpdated = false;
         if (leadObject.DNB_Connect_DUNS_Number__c != null && leadObject.NSP_Lead_Routing__c == true) {
-            List < Account > accResult = [SELECT Id, OwnerId, Owner.Name, Owner.UserRole.Name, NSP_Account_Status__c FROM Account WHERE DNB_Connect_DUNS_Number__c != null AND DNB_Connect_DUNS_Number__c =: leadObject.DNB_Connect_DUNS_Number__c];
+            List < Account > accResult = [
+                SELECT
+                    Id ,
+                    OwnerId ,
+                    Owner.Name ,
+                    Owner.UserRole.Name ,
+                    NSP_Account_Status__c
+                FROM Account
+                WHERE (
+                    ( DNB_Connect_DUNS_Number__c != null )
+                    AND ( DNB_Connect_DUNS_Number__c = :leadObject.DNB_Connect_DUNS_Number__c )
+                )
+            ];
             if (accResult.size() == 1) {
                 for (Account dunsAcc: accResult) {
-                    if ( ( dunsAcc.OwnerId != userAvailableId )
+                    if ( ( dunsAcc.OwnerId != NSP_LeadTriggerHelper.availableUserId )
                         && ( dunsAcc.NSP_Account_Status__c == NSP_SalesConstants.INACTIVE )
-                        && ( dunsAcc.Owner.UserRole != null )
-                        && ( dunsAcc.Owner.UserRole.Name == System.Label.NSP_PartnerAccountRoles || dunsAcc.Owner.UserRole.Name == NSP_SalesConstants.BPC_USER )
+                        && ( NSP_LeadTriggerHelper.permittedUserMap != null )
+                        && NSP_LeadTriggerHelper.permittedUserMap.containsKey( dunsAcc.OwnerId )
                         )
                     {
                         leadObject.OwnerId = dunsAcc.OwnerId;
                         leadObject.NSP_Lead_Routing__c = FALSE;
                         isOwnerUpdated = true;
                     }
-                    if ( ( dunsAcc.OwnerId != userAvailableId )
+                    if ( ( dunsAcc.OwnerId != NSP_LeadTriggerHelper.availableUserId )
                         && ( dunsAcc.NSP_Account_Status__c != NSP_SalesConstants.INACTIVE )
                         )
                     {
@@ -1182,6 +1194,37 @@ public with sharing class NSP_LeadTriggerHelper {
             }
         }
         return isOwnerUpdated;
+    }
+
+    // prevent LimitExceptions
+    // ~ cache SOQL results for the 'Available' User...
+    private static List<User> availableUsers {
+        private get {
+            if ( availableUsers == null ) {
+                availableUsers = [
+                    SELECT Id , Name
+                    FROM User
+                    WHERE Name = 'Available'
+                    LIMIT 1
+                ];
+            }
+            return availableUsers;
+        }
+        private set;
+    }
+
+    private static Id availableUserId {
+        private get {
+            if ( ( availableUserId == null )
+                && ( NSP_LeadTriggerHelper.availableUsers != null )
+                && !NSP_LeadTriggerHelper.availableUsers.isEmpty()
+                )
+            {
+                availableUserId = NSP_LeadTriggerHelper.availableUsers[0].Id;
+            }
+            return availableUserId;
+        }
+        private set;
     }
 
     //
@@ -1450,6 +1493,5 @@ public with sharing class NSP_LeadTriggerHelper {
             );
         }
     }
-
 }
 //
