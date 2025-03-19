@@ -798,6 +798,13 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Required_Documentation_Attached__c</fieldItem>
                 <identifier>RecordRequired_Documentation_Attached_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Category__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Compensation Services</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
