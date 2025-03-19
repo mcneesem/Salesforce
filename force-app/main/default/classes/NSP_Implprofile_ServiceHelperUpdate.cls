@@ -2610,26 +2610,35 @@ public class NSP_Implprofile_ServiceHelperUpdate {
         Map<Id, sObject> dbRec = new Map<Id, sObject>(
             [
                 SELECT
-                Id,NSP_Payroll_Specialist__c,First_Pay_Date__c,
-                NSP_Payroll_Specialist__r.pse__Salesforce_User__c,
-                NSP_Transition_Specialist__c,NSP_OT_Representative__c,
-                NSP_Client_Liaison__c,NSP_HR_Specialist__c,
-                NSP_HR_Specialist__r.NSP_Work_email__c,
-                NSP_Client_Liaison__r.NSP_Work_email__c,
-                NSP_OT_Representative__r.NSP_Work_email__c,
-                NSP_Transition_Specialist__r.NSP_Work_email__c,
-                NSP_Payroll_Specialist__r.NSP_Work_email__c,
-                NSP_Onboarding_Specialist_Coordinator__c,
-                NSP_Onboarding_Specialist_Coordinator__r.pse__Salesforce_User__c,
-                NSP_Onboarding_Specialist_Coordinator__r.Email,
-                NSP_Project_Manager__c,NSP_Project_Manager__r.Name,
-                NSP_Project_Manager__r.NSP_Work_email__c,
-                NSP_HR_Quality_Support_Team_Member__c,
-                NSP_HR_Quality_Support_Team_Member__r.NSP_Work_email__c,
-                NSP_Project_Manager__r.NSP_Job_Title__c,
-                NSP_Project_Manager__r.pse__Salesforce_User__c,
-                Account__c, Account__r.Name,NSP_Old_Benefits_Package__c, Benefits_Package__c,
-                NSP_Old_Effective_Date_EPLI__c,NSP_Old_Insperity_Ben_effective_date__c
+                    Id ,
+                    NSP_Payroll_Specialist__c ,
+                    First_Pay_Date__c ,
+                    NSP_Payroll_Specialist__r.pse__Salesforce_User__c ,
+                    NSP_Transition_Specialist__c ,
+                    NSP_OT_Representative__c ,
+                    NSP_Client_Liaison__c ,
+                    NSP_HR_Specialist__c ,
+                    NSP_HR_Specialist__r.NSP_Work_email__c ,
+                    NSP_Client_Liaison__r.NSP_Work_email__c ,
+                    NSP_OT_Representative__r.NSP_Work_email__c ,
+                    NSP_Transition_Specialist__r.NSP_Work_email__c ,
+                    NSP_Payroll_Specialist__r.NSP_Work_email__c ,
+                    NSP_Onboarding_Specialist_Coordinator__c ,
+                    NSP_Onboarding_Specialist_Coordinator__r.pse__Salesforce_User__c ,
+                    NSP_Onboarding_Specialist_Coordinator__r.Email ,
+                    NSP_Project_Manager__c ,
+                    NSP_Project_Manager__r.Name ,
+                    NSP_Project_Manager__r.NSP_Work_email__c ,
+                    NSP_HR_Quality_Support_Team_Member__c ,
+                    NSP_HR_Quality_Support_Team_Member__r.NSP_Work_email__c ,
+                    NSP_Project_Manager__r.NSP_Job_Title__c ,
+                    NSP_Project_Manager__r.pse__Salesforce_User__c ,
+                    Account__c ,
+                    Account__r.Name ,
+                    NSP_Old_Benefits_Package__c ,
+                    Benefits_Package__c ,
+                    NSP_Old_Effective_Date_EPLI__c ,
+                    NSP_Old_Insperity_Ben_effective_date__c
                 FROM Implementation_Profile__c
                 WHERE ( Id IN :ipIds )
             ]
@@ -2772,27 +2781,34 @@ public class NSP_Implprofile_ServiceHelperUpdate {
             updateEligibleRecordsMap(ipRecordsByAutomation, newIp.Id, INTERNAL_DISCOVERY_FN);
         }
     }
-    /***********************************************************************************************
-    * MethodName: emailNotifyInternalDiscovery
-    * Description : This Method trigger email for FSO IP
-    * Author :      Bindushree R
-    * ********************************************************************************************/
-    public void emailNotifyInternalDiscovery(){
-        for(Id ipRecId : ipRecordsByAutomation.get(INTERNAL_DISCOVERY_FN)){
-            Implementation_Profile__c ipRec = newIPs.get(ipRecId);
-            Implementation_Profile__c existingRec =  oldIPs.get(ipRec.Id);
-            if((isRerun || ipRec.NSP_Form_Completed__c) && !isSaveForm ){ 
-            pse__Proj__c proj = (pse__Proj__c) data.get(PROJECT_IDENTIFIER).get(ipRec.NSP_Project__c);
-              
-            if( proj.pse__Project_Tasks__r.size()>0){   
-                List<String> completedTasks = mapOfCompletedTasks.get(proj.Id);
-                    if( completedTasks.contains(NSP_ServiceConstants.CLIENTTRANSITION)) {
-                        Implementation_Profile__c ipwithValue=(Implementation_Profile__c) data.get(IMPL_PROFILE_IDENTIFIER).get(ipRecId);
+
+    //
+    // MethodName: emailNotifyInternalDiscovery
+    // Description : This Method trigger email for FSO IP
+    // Author : Bindushree R
+    //
+    public void emailNotifyInternalDiscovery() {
+        for ( Id ipRecId : ipRecordsByAutomation.get( INTERNAL_DISCOVERY_FN ) ) {
+            Implementation_Profile__c ipRec = newIPs.get( ipRecId );
+            Implementation_Profile__c existingRec =  oldIPs.get( ipRec.Id );
+            if ( ( isRerun || ipRec.NSP_Form_Completed__c )
+                && !isSaveForm
+                )
+            {
+                pse__Proj__c proj = (pse__Proj__c)data.get( PROJECT_IDENTIFIER ).get( ipRec.NSP_Project__c );
+                if ( !proj.pse__Project_Tasks__r.isEmpty() ) {
+                    List<String> completedTasks = mapOfCompletedTasks.get( proj.Id );
+                    if ( completedTasks.contains( NSP_ServiceConstants.CLIENTTRANSITION ) ) {
+                        Implementation_Profile__c ipwithValue=(Implementation_Profile__c)data.get( IMPL_PROFILE_IDENTIFIER ).get( ipRecId );
                         //get list of email address for to address
                         List<String> listOfTOAddresses = NSP_Implprofile_ServiceHelperUpdate.getToAddresses( ipwithValue );
                         //prepare email template for subject and body
                         Boolean isSendEmail = NSP_Implprofile_ServiceHelperUpdate.getIsSendEmail( ipRec );
-                        String subjectString = ipRec.NSP_AIMS_Client_Name__c+' ('+ipRec.NSP_AIMS_ClientNo__c+')'+': Key Information updated';
+                        String subjectString = ''
+                            + ipRec.NSP_AIMS_Client_Name__c
+                            + ' (' + ipRec.NSP_AIMS_ClientNo__c + ')'
+                            + ': Key Information updated'
+                            ;
                         String mailBody = NSP_Implprofile_ServiceHelperUpdate.prepareMailBody( ipRec , ipwithValue );
                         // update IP record 
                         String impProfKey = proj.Id + '~' + ipRec.Name;
@@ -2801,15 +2817,15 @@ public class NSP_Implprofile_ServiceHelperUpdate {
                         impProfile.NSP_Old_Effective_Date_EPLI__c = ipRec.Effective_Date_Payroll_Worker_comp_EPLI__c;
                         impProfile.NSP_Old_Insperity_Ben_effective_date__c = ipRec.Insperity_benefits_effective_date__c;
                         impProfile.NSP_Old_Benefits_Package__c = ipRec.Benefits_Package__c;
-                        impProfileToUpdate.put(impProfKey,impProfile);
+                        impProfileToUpdate.put( impProfKey , impProfile );
                         NSP_Implprofile_ServiceHelperUpdate.sendMail(
                             subjectString ,
                             mailBody ,
                             listOfTOAddresses ,
                             isSendEmail
                         );
-                   }
-              }
+                    }
+                }
             }
         }
     }
