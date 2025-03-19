@@ -3,8 +3,9 @@ public with sharing class NSP_EnrollmentFeePaymentSharing {
     // test w/ NSP_EnrollmentFeePaymentTriggerClassTest (63%)
     // test w/ NSP_OpportunityTeamMemberTriggerTest (28%)
 
-    public static void onEfpRecordInsert(List<NSP_Enrollment_Fee_Payment__c> listOfEnrollmentFee)
-    {
+    private static Map<Id,User> efpSharingUserMap = CustomPermissionController.getPermittedUsersMap( 'Enrollment_Fee_Payment_Edit_Sharing' );
+
+    public static void onEfpRecordInsert( List<NSP_Enrollment_Fee_Payment__c> listOfEnrollmentFee ) {
         Set<id> opportunityIds=new Set<id>();
         List<NSP_Enrollment_Fee_Payment__Share> efpShareList = new List<NSP_Enrollment_Fee_Payment__Share>();
 
@@ -31,23 +32,23 @@ public with sharing class NSP_EnrollmentFeePaymentSharing {
                 }
                 oppToSalesOfficeMap.put(oppTeamMember.opportunityId, oppTeamMember.Opportunity.NSP_Sales_Office__c);
             }
-			
-            //Getting the list of sales offices to the opportunity ids
-            salesOffices.addAll(oppToSalesOfficeMap.values());
 
+            //Getting the list of sales offices to the opportunity ids
+            salesOffices.addAll( oppToSalesOfficeMap.values() );
             //Getting DAs and DMs for the list of sales offices
-            List<User> dADMUsers = [SELECT Id, Name, Userrole.Name, NSP_Sales_Office_Membership__c from user where NSP_Sales_Office_Membership__c IN: salesOffices and Userrole.Name IN ('District Administrator', 'District Manager')];
-            
+            List<User> dADMUsersList = NSP_EnrollmentFeePaymentSharing.selectPermittedSalesOfficeUsers( salesOffices );
             //Creating a map of sales office to DA and DMs
-            for(User user : dADMUsers)
-            {
-                if(salesOfficeDADMMap.containsKey(user.NSP_Sales_Office_Membership__c)){
-                    salesOfficeDADMMap.get(user.NSP_Sales_Office_Membership__c).add(user);
+            for ( User record : dADMUsersList ) {
+                if ( salesOfficeDADMMap.containsKey( record.NSP_Sales_Office_Membership__c ) ) {
+                    salesOfficeDADMMap.get( record.NSP_Sales_Office_Membership__c ).add( record );
                 } else {
-                    salesOfficeDADMMap.put(user.NSP_Sales_Office_Membership__c, new List<User> {user});
+                    salesOfficeDADMMap.put(
+                        record.NSP_Sales_Office_Membership__c ,
+                        new List<User>{ record }
+                    );
                 }
             }
-            
+
             //Sharing the efp records with DA, DM related to sales office and Opportunity Team Members
             for(NSP_Enrollment_Fee_Payment__c feepayment : listOfEnrollmentFee){
                 String opportunityId = feepayment.NSP_Opportunity__c;
@@ -82,6 +83,32 @@ public with sharing class NSP_EnrollmentFeePaymentSharing {
                 e
             );
         }
+    }
+
+    // select the permitted Users for the Sales Offices...
+    private static List<User> selectPermittedSalesOfficeUsers( Set<String> salesOffices ) {
+        List<User> response = new List<User>();
+        if ( ( NSP_EnrollmentFeePaymentSharing.efpSharingUserMap != null )
+            && !NSP_EnrollmentFeePaymentSharing.efpSharingUserMap.isEmpty()
+            )
+        {
+            List<User> salesOfficeUsers = new List<User>();
+            if ( ( salesOffices != null ) && !salesOffices.isEmpty() ) {
+                salesOfficeUsers = [
+                    SELECT Id , Name , UserRole.Name , NSP_Sales_Office_Membership__c
+                    FROM User
+                    WHERE ( NSP_Sales_Office_Membership__c IN: salesOffices )
+                ];
+            }
+            if ( ( salesOfficeUsers != null ) && !salesOfficeUsers.isEmpty() ) {
+                for ( User record : salesOfficeUsers ) {
+                    if ( NSP_EnrollmentFeePaymentSharing.efpSharingUserMap.containsKey( record.Id ) ) {
+                        response.add( record );
+                    }
+                }
+            }
+        }
+        return response;
     }
 
     public static void onOppTeamMemberInsert( List<OpportunityTeamMember> newList ) {
@@ -241,5 +268,6 @@ public with sharing class NSP_EnrollmentFeePaymentSharing {
 
         return oppIdEfpShareRecordsMap;
     }
+
 }
 //
