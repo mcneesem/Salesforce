@@ -103,6 +103,11 @@ export default class OrderItemPriceUpdate extends LightningElement {
             value => value > 0);
     }
 
+    get hasResults(){
+        return Object.values(this.successCounts).some(value => value > 0) 
+        || Object.values(this.failureCounts).some(value => value > 0);
+    }
+
     showToast(title, message, variant){
         const event = new ShowToastEvent({
             title: title,
