@@ -492,6 +492,10 @@
                 <behavior>Edit</behavior>
                 <field>Price_Increase_Status__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Price_Update_Records__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -505,6 +509,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Last_Batch_Execution_Date__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Update_Record_Price__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
