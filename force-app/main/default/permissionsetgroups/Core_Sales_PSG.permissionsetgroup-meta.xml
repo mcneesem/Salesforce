@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Core Sales PSG</label>
+    <permissionSets>Opportunity_NCS_Email_Core_MidMarket</permissionSets>
+    <status>Updated</status>
+</PermissionSetGroup>
