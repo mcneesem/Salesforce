@@ -1,4 +1,4 @@
-<apex:page controller="NSP_PrepSandbox">
+<apex:page controller="NSP_PrepSandbox" rendered="{!$Setup.OrgSettings__c.IsSandbox__c}">
  <apex:form >
     <apex:commandButton style="font-size:12px" value="Post-Refresh Steps" action="{!resetResult}" rerender="result" status="Status1" oncomplete="callPostRefresh();"/>
     <apex:actionFunction name="callPostRefresh" action="{!runManualStepsButton}" rerender="result" status="Status1"/>
