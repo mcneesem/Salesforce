@@ -18,10 +18,8 @@
             </value>
         </inputParameters>
         <nameSegment>Opportunity.NSP_Opportunity_requires_assignment_to_New_Client_Sales_Specialist</nameSegment>
-        <offset>0</offset>
     </actionCalls>
     <apiVersion>54.0</apiVersion>
-    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
         <name>Assign_varFauleElement_NCS_Notify</name>
         <label>Assign varFauleElement - NCS_Notify</label>
