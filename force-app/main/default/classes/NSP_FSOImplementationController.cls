@@ -4,7 +4,7 @@
 * Author : Nischay .J
 * Name : NSP_FSOImplementationController
 */
-public class NSP_FSOImplementationController {
+public with sharing class NSP_FSOImplementationController {
     // test w/ NSP_FSOImplementationControllerTest (??%)
 
     /***********************************************************************************************
