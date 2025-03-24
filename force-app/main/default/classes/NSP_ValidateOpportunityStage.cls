@@ -612,14 +612,6 @@ public with sharing class NSP_ValidateOpportunityStage {
     }
     
     private static void evaluateClosedWonStageCriteriaOld(Opportunity opp, Map<Id,User> opportunityOwnerRoleMap){
-        String opportunityOwnerRoleName = null;
-        if ( opportunityOwnerRoleMap.containsKey( opp.OwnerId ) ) {
-            User opportunityOwner = opportunityOwnerRoleMap.get( opp.OwnerId );
-            if ( ( opportunityOwner != null ) && ( opportunityOwner.UserRole != null ) ) {
-                opportunityOwnerRoleName = opportunityOwner.UserRole.Name;
-            }
-        }
-
         if(permittedCWOppOwnerUserMap.containsKey( opp.OwnerId )
         && !hasAllowCWNCSUserPerm && ownerBasedCriteriaProducts.contains(opp.NSP_PrimaryProduct__c) ){
             opp.AddError(System.Label.NSP_CANNOT_MOVE_TO_CLOSEDWON);
@@ -689,14 +681,10 @@ public with sharing class NSP_ValidateOpportunityStage {
         }
         
         //Added for 579280
-        String opportunityOwnerRoleName = null;
         String opportunitySalesOffMemb = null;
         if ( opportunityOwnerRoleMap.containsKey( opp.OwnerId ) ) {
             User opportunityOwner = opportunityOwnerRoleMap.get( opp.OwnerId );
             if ( opportunityOwner != null ) {
-                if ( opportunityOwner.UserRole != null ) {
-                    opportunityOwnerRoleName = opportunityOwner.UserRole.Name;
-                }
                 opportunitySalesOffMemb = opportunityOwner.NSP_Sales_Office_Membership__c;
             }
         }
@@ -720,40 +708,39 @@ public with sharing class NSP_ValidateOpportunityStage {
             }
         }
         
-        Integer canCloseLost =0;
-        if(FeatureManagement.checkPermission('Allow_Closed_Lost_Opportunity')){
-            canCloseLost++;
-        }
-        else if( permittedBPCUserMap.containsKey( opp.OwnerId ) && hasAllowCLMMPerm ){
-            canCloseLost++;
-        }else if( permittedRETSCUserMap.containsKey( opp.OwnerId ) && hasAllowCLRETPerm ){
-            canCloseLost++;
-        }else if( permittedInsSalesUserMap.containsKey( opp.OwnerId ) && hasAllowCLInsurancePerm ){
-            canCloseLost++;
-        }else if( permittedRecSalesUserMap.containsKey( opp.OwnerId ) && hasAllowCLRecruitingPerm ){
-            canCloseLost++;
-        }else if( permittedTechSalesUserMap.containsKey( opp.OwnerId ) && hasAllowCLTechnologyPerm ){
-            canCloseLost++;
-        }else if( opp.ownerid == UserInfo.getUserId() ){
-            canCloseLost++;
-        }else if( teamMemberList.contains(UserInfo.getUserId()) ){
-            canCloseLost++;
-        }
-        //Added for 578774
-        else if( opp.NSP_Account_Segment__c == NSP_SalesConstants.MIDMARKET_SALES && hasAllowCLMMPerm ){
-            canCloseLost++;
-        }
-        //Added for 579280
-        else if(getSalesOfficeGroup(UserInfo.getUserId(),salesOfficeMembership) != '' && hasCLSOOppOwnerPermission ){
-            canCloseLost++;
-        }
-        //Added for 579279
-        else if(getSalesOfficeGroup(UserInfo.getUserId(),salesOfficeList) != '' && hasCLSOOppPermission){
-            canCloseLost++;
-        }
+        Integer canCloseLost = checkAllowClosedLost(opp, teamMemberList, salesOfficeMembership, salesOfficeList);
         if(canCloseLost == 0){
             opp.AddError(System.Label.NSP_CANNOT_MOVE_TO_CLOSEDLOST);
         }
+    }
+    
+    private static Integer checkAllowClosedLost(Opportunity opp, List<ID> teamMemberList, List<String> salesOfficeMembership, List<String> salesOfficeList) {
+        Integer canCloseLost = 0;
+        if(FeatureManagement.checkPermission('Allow_Closed_Lost_Opportunity')){
+            canCloseLost++;
+        } else if( permittedBPCUserMap.containsKey( opp.OwnerId ) && hasAllowCLMMPerm ){
+            canCloseLost++;
+        } else if( permittedRETSCUserMap.containsKey( opp.OwnerId ) && hasAllowCLRETPerm ){
+            canCloseLost++;
+        } else if( permittedInsSalesUserMap.containsKey( opp.OwnerId ) && hasAllowCLInsurancePerm ){
+            canCloseLost++;
+        } else if( permittedRecSalesUserMap.containsKey( opp.OwnerId ) && hasAllowCLRecruitingPerm ){
+            canCloseLost++;
+        } else if( permittedTechSalesUserMap.containsKey( opp.OwnerId ) && hasAllowCLTechnologyPerm ){
+            canCloseLost++;
+        } else if( opp.ownerid == UserInfo.getUserId() ){
+            canCloseLost++;
+        } else if( teamMemberList.contains(UserInfo.getUserId()) ){
+            canCloseLost++;
+        } else if( opp.NSP_Account_Segment__c == NSP_SalesConstants.MIDMARKET_SALES && hasAllowCLMMPerm ){
+            canCloseLost++;
+        } else if(getSalesOfficeGroup(UserInfo.getUserId(),salesOfficeMembership) != '' && hasCLSOOppOwnerPermission ){
+            canCloseLost++;
+        } else if(getSalesOfficeGroup(UserInfo.getUserId(),salesOfficeList) != '' && hasCLSOOppPermission){
+            canCloseLost++;
+        }
+
+        return canCloseLost;
     }
     
     /**
