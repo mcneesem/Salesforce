@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
-    <description>03/20/2024 - ADO-335321 Profile to PS migration Story - PEO Service</description>
+    <description>03/20/2024 - ADO-335321 Profile to PS migration Story - PEO Service Profile</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>PEO Service Object Permissions</label>
     <objectPermissions>
