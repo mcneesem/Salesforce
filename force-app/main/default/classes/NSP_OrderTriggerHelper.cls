@@ -38,6 +38,91 @@ public class NSP_OrderTriggerHelper {
         checkProjectGoLiveChanged( orderNewMap.values() , orderOldMap );
         activateHardwareAssets( orderNewMap.values() , orderOldMap );
         createInvoice( orderNewMap.values() , orderOldMap );
+        setFlagAsset(OrderNewMap.values(),OrderOldMap); 
+    }  
+    
+    public static void setFlagAsset( List<Order> newList , Map<Id,Order> orderOldMap ) 
+    {
+        list<Id> ordlist  = new list<Id>();
+        for(Order ord:newList)
+        {
+            if((orderOldMap.get(ord.Id).status == NSP_CPQConstants.ORDER_REVIEWED
+            && ord.Status == NSP_CPQConstants.ORDER_ACTIVATED) || 
+            (orderOldMap.get(ord.Id).status == NSP_CPQConstants.ORDER_DRAFT
+            && ord.Status == NSP_CPQConstants.ORDER_ACTIVATED || (orderOldMap.get(ord.Id).status == NSP_CPQConstants.ORDER_DRAFT
+            && ord.Status == NSP_CPQConstants.ORDER_REVIEWED)) && ord.Mismatch_Asset__c == false) {
+             ordlist.add(ord.Id);
+        	}
+        }
+        
+        if(!ordlist.isEmpty())
+        {
+            if(!system.isfuture() && !system.isbatch())
+            {           
+               NSP_OrderTriggerHelper.setFlagAssetCheckerAsync(ordlist); 
+            }
+            else
+            {
+               NSP_OrderTriggerHelper.setflagassetcheckerstatic(ordlist); 
+            }  
+        }
+                
+    }
+
+    @future
+    public static void setFlagAssetCheckerAsync(List<Id> ordlist)
+    {
+		NSP_OrderTriggerHelper.setFlagAssetCheckerStatic(ordlist);
+    }
+    public static void setFlagAssetCheckerStatic(List<Id> ordlist)
+    {
+        
+        Map<id,orderitem> mapAsstOI = new Map<id,orderitem>();
+        Map<id,order> mapOrdOPr = new Map<id,order>();
+
+
+            for(Order ord:[SELECT Id,Mismatch_Asset__c,(SELECT Id,Mismatch_AssetId__c,NSP_ServiceAsset__c FROM orderitems) FROM Order WHERE Id IN:ordlist AND Mismatch_Asset__c = false])
+            {
+                for(OrderItem oi:ord.OrderItems)
+                {
+                    if(oi.NSP_ServiceAsset__c != null)
+                    {
+                        mapAsstOI.put(oi.NSP_ServiceAsset__c,oi);
+                        mapOrdOPr.put(oi.Id,ord);
+                    }                
+                }            
+            }
+
+
+        List<OrderItem> ordItemsToBeUpdated = new List<OrderItem>();
+        List<Order> ordsTobeUpdated = new List<Order>();
+        
+
+        for(Asset ast:[SELECT Id,NSP_OrderProduct__c FROM Asset WHERE Id IN:mapAsstOI.keyset()])
+        {
+            if(ast.NSP_OrderProduct__c != null && ast.NSP_OrderProduct__c != mapAsstOI.get(ast.Id).Id)
+            {
+                mapOrdOPr.get(mapAsstOI.get(ast.Id).Id).Mismatch_Asset__c = true;
+                mapAsstOI.get(ast.Id).Mismatch_AssetId__c = ast.Id;
+                Order  objorder = new Order();
+                objorder.Id = mapOrdOPr.get(mapAsstOI.get(ast.Id).Id).Id;
+                objorder.Mismatch_Asset__c = true;
+                ordsTobeUpdated.add(objorder);
+                
+                OrderItem oi = new OrderItem();
+                oi.Id = mapAsstOI.get(ast.Id).Id;
+                oi.Mismatch_AssetId__c = ast.Id;
+                ordItemsToBeUpdated.add(oi);
+            }
+        }
+        
+
+       if(!ordItemsToBeUpdated.IsEmpty() && !ordsTobeUpdated.IsEmpty())
+       {
+            database.update(ordItemsToBeUpdated);
+            database.update(ordsTobeUpdated);
+       }
+
     }
 
     /**
