@@ -37342,8 +37342,8 @@
         <enabled>true</enabled>
         <name>ViewRoles</name>
     </userPermissions>
-        <userPermissions>        
-	<enabled>false</enabled>
+    <userPermissions>
+        <enabled>false</enabled>
         <name>ManageDynamicDashboards</name> 
     </userPermissions>
     <userPermissions>
