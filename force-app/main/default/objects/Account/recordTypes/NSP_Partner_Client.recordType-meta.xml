@@ -323,6 +323,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Institute for Nonprofit News %28INN%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>LG Electronics</fullName>
             <default>false</default>
         </values>
@@ -503,6 +507,10 @@
         </values>
         <values>
             <fullName>Certify</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Contingent Workforce</fullName>
             <default>false</default>
         </values>
         <values>
