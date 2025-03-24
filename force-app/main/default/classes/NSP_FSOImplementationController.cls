@@ -4,7 +4,7 @@
 * Author : Nischay .J
 * Name : NSP_FSOImplementationController
 */
-public with sharing class NSP_FSOImplementationController {
+public class NSP_FSOImplementationController {
     // test w/ NSP_FSOImplementationControllerTest (??%)
 
     /***********************************************************************************************
@@ -13,211 +13,65 @@ public with sharing class NSP_FSOImplementationController {
     * Params:       String recordId
     * ********************************************************************************************/
     @AuraEnabled
-    public static List<IPAutomationWrapper> loadAutomationRecords(String recordId, String recordTypeId) {
+    public static List<IPAutomationWrapper>  loadAutomationRecords(String recordId, String recordTypeId){
+        Map<String,NSP_Implementation_Profile_Automation__c> mapAutomationNameIPRecord = new   Map<String,NSP_Implementation_Profile_Automation__c>();
+        Map<String,List<IPAutomationList>> mapSectionNameListSectionTable = new  Map<String,List<IPAutomationList>>();
         List<IPAutomationWrapper> ipWrapperList = new List<IPAutomationWrapper>();
-        try {
-            // Fetch the implementation record type name
-            String impRecordTypeName = getImplementationRecordTypeName(recordTypeId);
-    
-            // Get automation metadata table for the specific record type
-            List<NSP_Implementation_Automations__mdt> automationTable = getAutomationTable(impRecordTypeName);
-    
-            // Filter out certain automation types based on trigger settings
-            filterAutomations(automationTable);
+        Map<Id, Implementation_Profile__c>  impProfileMap = new Map<Id, Implementation_Profile__c>();
+        Implementation_Profile__c impProfile = new Implementation_Profile__c ();
+        Map<String, Set<Id>> ipRecordsByAutomationMap = new Map<String, Set<Id>> ();
+        Map<String, Set<Id>> ipRecordsByAutomationTaskMap = new Map<String, Set<Id>> ();
+        List<NSP_Implementation_Profile_Automation__c> ipAutomationRecordsList = new List<NSP_Implementation_Profile_Automation__c> ();
+        try{
+            String impRecordTypeName = Schema.getGlobalDescribe().get(NSP_ServiceConstants.implProfile).getDescribe().getRecordTypeInfosById().get(recordTypeId).getName();
+            
+            // Searching for all the automations in the metadata for the FSO IP  
+            List<NSP_Implementation_Automations__mdt> automationTable = [SELECT Id, Sort_Order__c,NSP_Automation_Order__c,DeveloperName, MasterLabel, Label, NSP_Automation_Name__c, NSP_Type_of_Automation__c, 
+                                                                         NSP_Section__c, NSP_Method_Name__c, NSP_Class_Name__c, NSP_IP_Record_Type__c,NSP_IP_Record_Type_IP__c 
+                                                                         FROM NSP_Implementation_Automations__mdt WHERE NSP_IP_Record_Type__c =: impRecordTypeName AND NSP_Section__c!=null 
+                                                                         Order By Sort_Order__c , NSP_Automation_Order__c NULLS  LAST  ];
 
-            // Load implementation profile and automation records
-            Map<Id,Implementation_Profile__c> impProfileMap = loadImplementationProfile( recordId );
-            Implementation_Profile__c impProfile = new Implementation_Profile__c();
-            if ( ( impProfileMap != null ) && !impProfileMap.values().isEmpty() ) {
-                impProfile = impProfileMap.values()[0];
-            }
-
-            // Get task automation records
-            Map<String, Set<Id>> ipRecordsByAutomationMap = executeAutomationTasks(impProfile, impRecordTypeName);
-    
-            // Fetch existing automation records for the given profile
-            Map<String, NSP_Implementation_Profile_Automation__c> mapAutomationNameIPRecord = getExistingAutomationRecords(recordId, impProfile);
-    
-            // Create map of automation sections and associated automation list
-            Map<String, List<IPAutomationList>> mapSectionNameListSectionTable = getSectionAutomationTable(automationTable, impProfile, mapAutomationNameIPRecord, ipRecordsByAutomationMap);
-    
-            // Prepare the response wrapper for the UI
-            ipWrapperList = prepareIPAutomationWrappers(mapSectionNameListSectionTable);
-    
-        } catch (Exception ex) {
-            throw new AuraHandledException(ex.getMessage());
-        }
-        return ipWrapperList;
-    }
-
-    private static String getImplementationRecordTypeName( String recordTypeId ) {
-        Map<String,Schema.RecordTypeInfo> recordTypeMap = NSP_GenericRecordType.getRecordTypeMap( 'Implementation_Profile__c' );
-        String recordTypeName = null;
-        if ( recordTypeMap != null ) {
-            for ( Schema.RecordTypeInfo info : recordTypeMap.values() ) {
-                if ( info.getRecordTypeId() == recordTypeId ) {
-                    recordTypeName = info.getName();
+            if(recordId !=null){
+                impProfileMap = NSP_ImpAutomationsController.getIpRecord(recordId);
+                impProfile =impProfileMap.values()[0];
+                NSP_Implementationprofile_ServiceHelper impService = new NSP_Implementationprofile_ServiceHelper(impProfileMap, null);
+                ipRecordsByAutomationMap= impService.executeAutomation();
+                
+                if(impRecordTypeName == NSP_ServiceConstants.FSOAutomations){
+                    NSP_Implprofile_ServiceHelperUpdate impTasks = new NSP_Implprofile_ServiceHelperUpdate(impProfileMap, null);
+                    ipRecordsByAutomationTaskMap= impTasks.executeAutomation();
+                }
+                else {
+                    NSP_MMImplProfile_ServHelpUpdate impTasks = new NSP_MMImplProfile_ServHelpUpdate(impProfileMap, null);
+                    ipRecordsByAutomationTaskMap= impTasks.executeAutomation();
+                }
+                
+                // searching for the existing automation for the given IP 
+                ipAutomationRecordsList =[SELECT Id, OwnerId, Name, NSP_Last_Run__c, NSP_Method_Name__c, NSP_Class_Name__c, NSP_Implementation_Profile__c,NSP_Implementation_Profile__r.NSP_Form_Completed__c, NSP_Section__c,
+                                          NSP_Record_Type__c FROM NSP_Implementation_Profile_Automation__c WHERE NSP_Implementation_Profile__c =:recordId AND  NSP_Record_Type__c =:impProfile.recordType.Name ];
+                
+                // creating a map of automation Name and Automation record
+                for(NSP_Implementation_Profile_Automation__c ipAutomation:ipAutomationRecordsList ){
+                    mapAutomationNameIPRecord.put(ipAutomation.Name,ipAutomation);
                 }
             }
-        }
-        return recordTypeName;
-    }
-
-    private static List<NSP_Implementation_Automations__mdt> getAutomationTable( String impRecordTypeName ) {
-        List<NSP_Implementation_Automations__mdt> automationList = new List<NSP_Implementation_Automations__mdt> (); 
-        if ( impRecordTypeName!= null ) {
-            automationList = [
-                SELECT
-                    Id ,
-                    Sort_Order__c ,
-                    NSP_Automation_Order__c ,
-                    DeveloperName ,
-                    MasterLabel ,
-                    Label ,
-                    NSP_Automation_Name__c ,
-                    NSP_Type_of_Automation__c ,
-                    NSP_Section__c ,
-                    NSP_Method_Name__c ,
-                    NSP_Class_Name__c ,
-                    NSP_IP_Record_Type__c ,
-                    NSP_IP_Record_Type_IP__c
-                FROM NSP_Implementation_Automations__mdt
-                WHERE (
-                    NSP_IP_Record_Type__c = :impRecordTypeName
-                    AND NSP_Section__c != null
-                )
-                ORDER BY Sort_Order__c , NSP_Automation_Order__c NULLS LAST
-            ];
-        }
-        return automationList;
-    }
-
-    private static void filterAutomations( List<NSP_Implementation_Automations__mdt> automationTable ) {
-        NSP_Trigger_Switch__c triggerSwitch = NSP_Trigger_Switch__c.getInstance( UserInfo.getUserId() );
-        Implementation_Profile_Settings__c ipSettings = Implementation_Profile_Settings__c.getInstance( UserInfo.getUserId() );
-        if ( ( automationTable != null )
-            && !automationTable.isEmpty()
-            && ( triggerSwitch != null )
-            && ( ipSettings != null )
-            )
-        {
-            for (Integer i = automationTable.size() - 1; i >= 0; i--) {
-                if (shouldRemovePremierPerformanceAutomation(automationTable[i], triggerSwitch)) {
-                    automationTable.remove(i);
-                } else if (shouldRemoveLeviesAutomation(automationTable[i], ipSettings)) {
-                    automationTable.remove(i);
-                }
-            }
-        }
-    }
-
-    private static Boolean shouldRemovePremierPerformanceAutomation( NSP_Implementation_Automations__mdt automation , NSP_Trigger_Switch__c triggerSwitch ) {
-        Boolean premierPerformance = false;
-        if ( ( automation != null )
-            && ( automation.NSP_Automation_Name__c == NSP_ServiceConstants.PremierPerformance )
-            && triggerSwitch.Premier_Performance_Automation__c
-            )
-        {
-            premierPerformance = true;
-        }
-        return premierPerformance;
-    }
-
-    private static Boolean shouldRemoveLeviesAutomation( NSP_Implementation_Automations__mdt automation , Implementation_Profile_Settings__c ipSettings ) {
-        Boolean removeLevies = false;
-        if ( ( automation != null )
-            && ( automation.NSP_Automation_Name__c == NSP_ServiceConstants.LEVIES )
-            && ( automation.NSP_IP_Record_Type__c == NSP_ServiceConstants.MIDDLEMARKET )
-            && !ipSettings.Is_Enabled_Levies__c
-            )
-        {
-            removeLevies = true;
-        }
-        return removeLevies;
-    }
-
-    private static Map<Id,Implementation_Profile__c> loadImplementationProfile( String recordId ) {
-        Map<Id,Implementation_Profile__c> ipMap = new Map<Id,Implementation_Profile__c>();
-        if ( recordId != null ) {
-            ipMap = NSP_ImpAutomationsController.getIpRecord( recordId );
-        }
-        return ipMap;
-    }
-
-    private static Map<String,Set<Id>> executeAutomationTasks( Implementation_Profile__c impProfile , String impRecordTypeName ) {
-        Map<String,Set<Id>> ipRecordsByAutomationMap = new Map<String,Set<Id>>();
-        if ( impProfile != null ) {
-            if ( String.isNotBlank( impRecordTypeName ) && ( impRecordTypeName == NSP_ServiceConstants.FSOAutomations ) ) {
-                NSP_Implprofile_ServiceHelperUpdate impTasks = new NSP_Implprofile_ServiceHelperUpdate(new Map<Id, Implementation_Profile__c>{ impProfile.Id => impProfile }, null);
-                ipRecordsByAutomationMap = impTasks.executeAutomation();
-            } else {
-                NSP_MMImplProfile_ServHelpUpdate impTasks = new NSP_MMImplProfile_ServHelpUpdate(new Map<Id, Implementation_Profile__c>{ impProfile.Id => impProfile }, null);
-                ipRecordsByAutomationMap = impTasks.executeAutomation();
-            }
-        }
-        return ipRecordsByAutomationMap;
-    }
-
-    private static Map<String, NSP_Implementation_Profile_Automation__c> getExistingAutomationRecords(String recordId, Implementation_Profile__c impProfile) {
-        List<NSP_Implementation_Profile_Automation__c> ipAutomationRecordsList = new List<NSP_Implementation_Profile_Automation__c>();
-        if ( String.isNotBlank(recordId) && ( impProfile != null ) && ( impProfile.RecordType != null ) ) {
-            ipAutomationRecordsList = [
-                SELECT
-                    Id ,
-                    OwnerId ,
-                    Name ,
-                    NSP_Last_Run__c ,
-                    NSP_Method_Name__c ,
-                    NSP_Class_Name__c ,
-                    NSP_Implementation_Profile__c ,
-                    NSP_Implementation_Profile__r.NSP_Form_Completed__c ,
-                    NSP_Section__c ,
-                    NSP_Record_Type__c
-                FROM NSP_Implementation_Profile_Automation__c
-                WHERE (
-                    NSP_Implementation_Profile__c = :recordId
-                    AND NSP_Record_Type__c = :impProfile.recordType.Name
-                )
-            ];
-        }
-        Map<String, NSP_Implementation_Profile_Automation__c> mapAutomationNameIPRecord = new Map<String, NSP_Implementation_Profile_Automation__c>();
-        if(ipAutomationRecordsList != null){
-            for (NSP_Implementation_Profile_Automation__c ipAutomation : ipAutomationRecordsList) {
-                mapAutomationNameIPRecord.put(ipAutomation.Name, ipAutomation);
-            }
-        }
-        return mapAutomationNameIPRecord;
-    }
-
-    private static Map<String,List<IPAutomationList>> getSectionAutomationTable(
-        List<NSP_Implementation_Automations__mdt> automationTable ,
-        Implementation_Profile__c impProfile ,
-        Map<String,NSP_Implementation_Profile_Automation__c> mapAutomationNameIPRecord ,
-        Map<String,Set<Id>> ipRecordsByAutomationMap
-        )
-    {
-        return getmapSectionNameListSectionTable(
-            automationTable ,
-            impProfile ,
-            mapAutomationNameIPRecord ,
-            ipRecordsByAutomationMap ,
-            new Map<String,Set<Id>>()
-        );
-    }
-
-    private static List<IPAutomationWrapper> prepareIPAutomationWrappers( Map<String,List<IPAutomationList>> mapSectionNameListSectionTable ) {
-        List<IPAutomationWrapper> ipWrapperList = new List<IPAutomationWrapper>();
-        if(mapSectionNameListSectionTable!= null && !mapSectionNameListSectionTable.isEmpty()) {
-            for (String sectionName : mapSectionNameListSectionTable.keySet()) {
+            mapSectionNameListSectionTable = getmapSectionNameListSectionTable(automationTable,impProfile, 
+                                                                               mapAutomationNameIPRecord,ipRecordsByAutomationMap,ipRecordsByAutomationTaskMap);
+            
+            
+            for(String IPAutomation: mapSectionNameListSectionTable.Keyset()){
                 IPAutomationWrapper ipWrapper = new IPAutomationWrapper();
-                ipWrapper.sectionName = sectionName;
-                ipWrapper.automationTableList = mapSectionNameListSectionTable.get(sectionName);
+                ipWrapper.sectionName = IPAutomation;
+                ipWrapper.automationTableList = mapSectionNameListSectionTable.get(IPAutomation);
                 ipWrapperList.add(ipWrapper);
             }
+        }catch(Exception ex){
+            throw new AuraHandledException(ex.getMessage());
         }
+        // returning wrapper to UI 
         return ipWrapperList;
     }
-
+    
     /***********************************************************************************************
     * MethodName: mapSectionNameListSectionTable
     * Description : This method will set and filter all the automations  

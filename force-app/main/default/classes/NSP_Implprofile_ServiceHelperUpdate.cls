@@ -58,7 +58,6 @@ public class NSP_Implprofile_ServiceHelperUpdate {
     private static final String SUBTASK_LEVIES_FN='leviesSubtask';
     private static final String INTERNAL_DISCOVERY_FN ='NSP_Internal_Discovery';
     private static final String ONSITE_DISCOVERY_FN ='NSP_Onsite_Discovery';
-    private static final String premierPerformance_FN ='premierPerformance';
     private static final String enrollFee_FN ='enrollFee';
     private static final String DATA_VERIFICATION ='dataVerification';
     private static  Integer Counter=0;
@@ -95,7 +94,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
                 MISSING_LOA_FN , COBRA_FORM_COLLECTED_FN ,
                 COBRA_FORM_NOT_COLLECTED_FN , SUBTASK_GARNISH_FN ,
                 SUBTASK_LEVIES_FN , INTERNAL_DISCOVERY_FN ,
-                ONSITE_DISCOVERY_FN , premierPerformance_FN ,
+                ONSITE_DISCOVERY_FN ,
                 enrollFee_FN , DATA_VERIFICATION
             }
         );
@@ -245,9 +244,6 @@ public class NSP_Implprofile_ServiceHelperUpdate {
         }  
         if(ipRecordsByAutomation.containsKey(DATA_VERIFICATION)){
             createProjecttaskforDataVerification();
-        }
-        if(ipRecordsByAutomation.containsKey(premierPerformance_FN)){
-            createProjecttaskforPermierPerfomance();
         }
         if(ipRecordsByAutomation.containsKey(INTERNAL_DISCOVERY_FN)){
             emailNotifyInternalDiscovery();
@@ -443,10 +439,6 @@ public class NSP_Implprofile_ServiceHelperUpdate {
             if(automationsToExecute.contains(ONSITE_DISCOVERY_FN)){
                 checkOnsiteDiscovery(ipRec, existingRec);
             }
-            NSP_Trigger_Switch__c triggerSwitch =  NSP_Trigger_Switch__c.getInstance(UserInfo.getUserId());
-            if(automationsToExecute.contains(premierPerformance_FN) && triggerSwitch.Premier_Performance_Automation__c){
-                checkPermierPerfomance(ipRec, existingRec);
-            }
             if(automationsToExecute.contains(enrollFee_FN)){
                 checkEnrollFee(ipRec, existingRec);
             }
@@ -488,20 +480,6 @@ public class NSP_Implprofile_ServiceHelperUpdate {
         }
     }
 
-    private  void checkPermierPerfomance(Implementation_Profile__c newRec, Implementation_Profile__c existingRec){
-        if( newRec.RecordTypeId != ipFSORecordTypeId || newRec.Client_Implementing_Premier_Performance__c == null 
-           || newRec.Client_Implementing_Premier_Performance__c != NSP_ServiceConstants.YES) {
-               return;
-           }
-        
-        
-        if( newRec.RecordTypeId == ipFSORecordTypeId && newRec.Client_Implementing_Premier_Performance__c == NSP_ServiceConstants.YES){
-            if(existingRec == null || newRec.NSP_Form_Completed__c ||  
-               newRec.Client_Implementing_Premier_Performance__c != existingRec.Client_Implementing_Premier_Performance__c){
-                   updateEligibleRecordsMap(ipRecordsByAutomation, newRec.Id, premierPerformance_FN);
-               }
-        }
-    }   
     private void checkForClientSposoredPlans(Implementation_Profile__c newRec, Implementation_Profile__c existingRec) {
         
         
@@ -3126,55 +3104,6 @@ public class NSP_Implprofile_ServiceHelperUpdate {
               }     
           }
       }
-           
-   }
-    public  void createProjecttaskforPermierPerfomance(){
-        
-        List<pse__Project_Task__c> projectTaskList = new List<pse__Project_Task__c>();
-        List<NSP_Implementation_Profile_Automation__c> ipAutomationRecords = new List<NSP_Implementation_Profile_Automation__c>();
-        
-        for(Id ipRecId : ipRecordsByAutomation.get(premierPerformance_FN)){
-            Implementation_Profile__c ipRec = newIPs.get(ipRecId);
-            if((isRerun || ipRec.NSP_Form_Completed__c) && !isSaveForm){
-                pse__Proj__c proj = (pse__Proj__c) data.get(PROJECT_IDENTIFIER).get(ipRec.NSP_Project__c);
-                Id milestoneId;
-                pse__Milestone__c eachMilestone = new pse__Milestone__c(Name=NSP_ServiceConstants.MILESTONE, RecordTypeId=milestonePEORecordtypeId, pse__Project__c=proj.Id, pse__Target_Date__c=proj.pse__End_Date__c);
-                milestoneId = getMilestoneId(proj.pse__Milestones__r,NSP_ServiceConstants.MILESTONE); 
-
-                        String milestoneKey = proj.Id + '~' + NSP_ServiceConstants.MILESTONE;
-                                                            
-                        if(milestoneId == null && !mileStonesToInsert.containsKey(milestoneKey)){
-                            pse__Milestone__c eachMilestone1 = new pse__Milestone__c(Name=NSP_ServiceConstants.BENEFITS, RecordTypeId=milestonePEORecordtypeId, pse__Project__c=proj.Id, pse__Target_Date__c=proj.pse__End_Date__c);
-                            mileStonesToInsert.put(milestoneKey, eachMilestone1);
-                        }
-            
-                pse__Project_Task__c eachProjecttask = createProjectTaskfromIP(proj,  NSP_ServiceConstants.CLIENTIMPL,milestoneKey);
-                eachProjecttask.NSP_Sub_Category__c=NSP_ServiceConstants.MILESTONE;
-                eachProjecttask.Name=NSP_ServiceConstants.PermierPerformanceTask;
-                eachProjecttask.pse__Order__c=24;
-                eachProjecttask.Task_Order__c=24;
-                Implementation_Profile__c ipwithValue=(Implementation_Profile__c) data.get(IMPL_PROFILE_IDENTIFIER).get(ipRecId);
-                if(ipwithValue.NSP_Project_Manager__c != null && ipwithValue.NSP_Project_Manager__r.pse__Salesforce_User__c!=null ){
-                    eachProjecttask.OwnerId=ipwithValue.NSP_Project_Manager__r.pse__Salesforce_User__c;
-                }
-                if(ipwithValue.Account__c!=null && ipwithValue.Account__r.Name!=null){
-                    eachProjecttask.NSP_Implementation_Profile_Account__c=ipwithValue.Account__r.Name;
-                }
-                if(ipwithValue.Account__c!=null && ipwithValue.Account__r.Id!=null){
-                    eachProjecttask.NSP_Implementation_Account_Id__c=ipwithValue.Account__r.Id;
-                }
-                eachProjecttask.pse__Milestone__c=milestoneId;
-                
-                projectTaskList.add(eachProjecttask);               
-                
-                ipAutomationRecords.add(NSP_Implprofile_ServiceHelperUpdate.createIPAutomation(ipRecId, NSP_ServiceConstants.PremierPerformance,premierPerformance_FN,NSP_ServiceConstants.GENERAL,NSP_ServiceConstants.FSOProfile));
-       
-            }
-        }
-        //check for existing project task and store the new tasks
-        recToInsert.addAll(getnewTaskstoInsert(projectTaskList));
-        //check for existing Automation record and store the new Automation records
-        getnewAutomationListtoInsert(ipAutomationRecords,recToInsert,recToUpdate);
         
     }
 
