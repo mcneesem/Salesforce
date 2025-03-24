@@ -2,13 +2,9 @@
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
     <customButtons>NSP_Generate_Document</customButtons>
     <customButtons>Send_For_Signature</customButtons>
-    <excludeButtons>DataDotComAccountInsights</excludeButtons>
-    <excludeButtons>DataDotComClean</excludeButtons>
-    <excludeButtons>DataDotComCompanyHierarchy</excludeButtons>
     <excludeButtons>DisableCustomerPortalAccount</excludeButtons>
     <excludeButtons>DisablePartnerPortalAccount</excludeButtons>
     <excludeButtons>IncludeOffline</excludeButtons>
-    <excludeButtons>OpenSlackRecordChannel</excludeButtons>
     <excludeButtons>Share</excludeButtons>
     <layoutSections>
         <customLabel>false</customLabel>
@@ -796,6 +792,7 @@
         <fields>pse__Start_Date__c</fields>
         <fields>pse__Is_Active__c</fields>
         <fields>pse__Is_Billable__c</fields>
+        <fields>pse__Project_Type__c</fields>
         <relatedList>pse__Proj__c.pse__Account__c</relatedList>
     </relatedLists>
     <relatedLists>
