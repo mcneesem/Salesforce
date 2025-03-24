@@ -3,10 +3,6 @@
     <description>03/20/2024 - ADO-335321 Profile to PS migration Story - PEO Service</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>PEO Service System Permissions</label>
-    <tabSettings>
-        <tab>standard-SemanticModel</tab>
-        <visibility>Visible</visibility>
-    </tabSettings>
     <userPermissions>
         <enabled>true</enabled>
         <name>ActivitiesAccess</name>
