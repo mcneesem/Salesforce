@@ -545,23 +545,13 @@ public with sharing class NSP_ValidateOpportunityStage {
         }
     }
 
-    /**
-     * Evaluate entry criteria for Closed Won stage
-     * @param opportunityList list of New Opportunity.
-     *
-     * @return void
-     *  *
-     *
-     */
+    //
+    // Evaluate entry criteria for Closed Won stage
+    // @param opportunityList list of New Opportunity
+    // @return void
+    // 
     private static void evaluateClosedWonStageCriteria(Opportunity opp, Map<Id,NSP_Checklist__c> checklistMap, Map<Id,User> opportunityOwnerRoleMap){
         String scannedSTP = '';
-        String opportunityOwnerRoleName = null;
-        if ( opportunityOwnerRoleMap.containsKey( opp.OwnerId ) ) {
-            User opportunityOwner = opportunityOwnerRoleMap.get( opp.OwnerId );
-            if ( ( opportunityOwner != null ) && ( opportunityOwner.UserRole != null ) ) {
-                opportunityOwnerRoleName = opportunityOwner.UserRole.Name;
-            }
-        }
         if ( permittedCWOppOwnerUserMap.containsKey( opp.OwnerId )
                 && ( !hasAllowCWNCSUserPerm )
                 && ownerBasedCriteriaProducts.contains( opp.NSP_PrimaryProduct__c ) ){
