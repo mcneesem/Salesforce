@@ -11,7 +11,7 @@ Apex Class Name      :  NSP_ValidateOpportunityStage
  * Tejas                 12/24/2021            First Iteration
  */
 public with sharing class NSP_ValidateOpportunityStage {
-    // test w/ NSP_ValidateOpportunityStageTest (78%)
+    // test w/ NSP_ValidateOpportunityStageTest (81%)
 
     public static List<string> analysisStageCriteraTypes = System.Label.NSP_AnalysisStageCriteria.split(',');
     public static List<string> proposeStageCriteraTypes = System.Label.NSP_ProposeStageCriteria.split(',');
@@ -569,15 +569,7 @@ public with sharing class NSP_ValidateOpportunityStage {
                     opportunityOwnerRoleName = opportunityOwner.UserRole.Name;
                 }
             }
-            String currentUserRoleName = null;
-            if ( opportunityOwnerRoleMap.containsKey( UserInfo.getUserId() ) ) {
-                User currentUser = opportunityOwnerRoleMap.get( UserInfo.getUserId() );
-                if ( ( currentUser != null ) && ( currentUser.UserRole != null ) ) {
-                    currentUserRoleName = currentUser.UserRole.Name;
-                }
-            }
-            if ( ( currentUserRoleName != null )
-                && permittedCWOppOwnerUserMap.containsKey( opp.OwnerId )
+            if ( permittedCWOppOwnerUserMap.containsKey( opp.OwnerId )
                 && ( !hasAllowCWNCSUserPerm )
                 && ownerBasedCriteriaProducts.contains( opp.NSP_PrimaryProduct__c )
                 )
@@ -596,9 +588,8 @@ public with sharing class NSP_ValidateOpportunityStage {
                 )
             {
                 opp.addError( System.Label.NSP_CANNOT_MOVE_TO_CLOSEDWON );
-            } else if( ( currentUserRoleName != null )
-                && ( !hasAllowCWNCSUserPerm )
-                && ( ( opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WO )
+            } else if( !hasAllowCWNCSUserPerm
+                 && ( ( opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WO )
                     || ( opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WS )
                     )
                 )
@@ -628,15 +619,8 @@ public with sharing class NSP_ValidateOpportunityStage {
                 opportunityOwnerRoleName = opportunityOwner.UserRole.Name;
             }
         }
-        String currentUserRoleName = null;
-        if ( opportunityOwnerRoleMap.containsKey( UserInfo.getUserId() ) ) {
-            User currentUser = opportunityOwnerRoleMap.get( UserInfo.getUserId() );
-            if ( ( currentUser != null ) && ( currentUser.UserRole != null ) ) {
-                currentUserRoleName = currentUser.UserRole.Name;
-            }
-        }
 
-        if(currentUserRoleName !=null &&  permittedCWOppOwnerUserMap.containsKey( opp.OwnerId )
+        if(permittedCWOppOwnerUserMap.containsKey( opp.OwnerId )
         && !hasAllowCWNCSUserPerm && ownerBasedCriteriaProducts.contains(opp.NSP_PrimaryProduct__c) ){
             opp.AddError(System.Label.NSP_CANNOT_MOVE_TO_CLOSEDWON);
         }
@@ -647,8 +631,8 @@ public with sharing class NSP_ValidateOpportunityStage {
         && UserInfo.getUserId()!= opp.OwnerId && !hasAllowCWNCSUserPerm){
             opp.AddError(System.Label.NSP_CANNOT_MOVE_TO_CLOSEDWON);
         }
-        else if(currentUserRoleName !=null && !hasAllowCWNCSUserPerm &&
-        (opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WO || opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WS)){
+        else if( !hasAllowCWNCSUserPerm
+          && ( opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WO || opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WS ) ){
             opp.AddError(System.Label.NSP_CANNOT_MOVE_TO_CLOSEDWON);
         }
     }
@@ -716,13 +700,6 @@ public with sharing class NSP_ValidateOpportunityStage {
                 opportunitySalesOffMemb = opportunityOwner.NSP_Sales_Office_Membership__c;
             }
         }
-        String currentUserRoleName = null;
-        if ( opportunityOwnerRoleMap.containsKey( UserInfo.getUserId() ) ) {
-            User currentUser = opportunityOwnerRoleMap.get( UserInfo.getUserId() );
-            if ( ( currentUser != null ) && ( currentUser.UserRole != null ) ) {
-                currentUserRoleName = currentUser.UserRole.Name;
-            }
-        }
 
         List<String> salesOfficeMembership = new List<String>();
         if(String.isNotBlank(opportunitySalesOffMemb)){
@@ -768,7 +745,6 @@ public with sharing class NSP_ValidateOpportunityStage {
         }
         //Added for 579280
         else if(getSalesOfficeGroup(UserInfo.getUserId(),salesOfficeMembership) != '' && hasCLSOOppOwnerPermission ){
-            // else if(getSalesOfficeGroup(UserInfo.getUserId(),salesOfficeMembership) != '' && hasCLSOOppOwnerPermission closeLostRolesforsamesalesofficeonOppOwner.contains(currentUserRoleName)){
             canCloseLost++;
         }
         //Added for 579279
