@@ -1876,10 +1876,6 @@
         <visibility>Visible</visibility>
     </tabSettings>
     <tabSettings>
-        <tab>SBQQ__OrderItemConsumptionSchedule__c</tab>
-        <visibility>Visible</visibility>
-    </tabSettings>
-    <tabSettings>
         <tab>cwbtool__ErrorLog__c</tab>
         <visibility>Available</visibility>
     </tabSettings>
