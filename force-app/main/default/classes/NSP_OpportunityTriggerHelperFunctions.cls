@@ -100,10 +100,10 @@ public with sharing class NSP_OpportunityTriggerHelperFunctions {
             if ((opptyPrimaryProduct.equals(NSP_SalesConstants.WO) || opptyPrimaryProduct.equals(NSP_SalesConstants.WS))) {
                 opptyCfl = NSP_CPQConstants.CLIENT_WOWS;
             }
-            if (opptyCfl != NSP_CPQConstants.CLIENT_WOWS) {
-                if (opptyPrimaryProduct.equals(NSP_SalesConstants.WX)) {
+            if (opptyPrimaryProduct.equals(NSP_SalesConstants.WX)) {
                     opptyCfl = NSP_SalesConstants.WX;
-                }
+            }
+            if (opptyCfl != NSP_CPQConstants.CLIENT_WOWS) {
                 if (opptyPrimaryProduct.equals(NSP_SalesConstants.WA)) {
                     opptyCfl = NSP_SalesConstants.WA;
                 }
