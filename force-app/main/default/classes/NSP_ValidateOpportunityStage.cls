@@ -11,7 +11,7 @@ Apex Class Name      :  NSP_ValidateOpportunityStage
  * Tejas                 12/24/2021            First Iteration
  */
 public with sharing class NSP_ValidateOpportunityStage {
-    // test w/ NSP_ValidateOpportunityStageTest (81%)
+    // test w/ NSP_ValidateOpportunityStageTest (82%)
 
     public static List<string> analysisStageCriteraTypes = System.Label.NSP_AnalysisStageCriteria.split(',');
     public static List<string> proposeStageCriteraTypes = System.Label.NSP_ProposeStageCriteria.split(',');
