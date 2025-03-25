@@ -35,8 +35,7 @@ public with sharing class JobRunnerController {
 
     @AuraEnabled(cacheable=true)
     public static List<Map<String, String>> getRecentBatchClasses() {
-        DateTime thirtyDaysAgo = DateTime.now().addDays(-30);
-
+        
         AggregateResult[] results = [
             SELECT Id , Name
             FROM ApexClass
