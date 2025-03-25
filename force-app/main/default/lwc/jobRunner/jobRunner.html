@@ -1,0 +1,66 @@
+<template>
+    <lightning-card>
+        <h1 slot="title">Job Runner</h1>
+        <div class="slds-p-around_medium container">
+            <lightning-combobox
+                name="batchClass"
+                label="Select Batch Class"
+                value={selectedBatchClass}
+                options={batchClassOptions}
+                onchange={handleBatchClassChange}
+                required
+            ></lightning-combobox>
+            <div class="slds-m-top_medium button-section">
+                <lightning-button
+                    label="Execute"
+                    variant="brand"
+                    onclick={handleExecute}
+                    class="slds-m-right_small"
+                ></lightning-button>                
+                <lightning-button
+                    label="Status"
+                    variant="brand"
+                    onclick={handleStatus}
+                    disabled={isLoading}
+                    class="slds-m-right_small"
+                ></lightning-button>
+                <template if:true={showStatus}>
+                    <lightning-button-icon
+                        icon-name="utility:refresh"
+                        variant="border-filled"
+                        alternative-text="Refresh Status"
+                        onclick={handleStatus}
+                        disabled={isLoading}
+                    ></lightning-button-icon>
+                </template>
+                
+            </div>
+            <template if:true={showStatus}>
+                <lightning-datatable
+                    key-field="Id"
+                    data={paginatedData}
+                    columns={columns}
+                    hide-checkbox-column
+                    class="slds-m-top_large table-section"
+                ></lightning-datatable>
+                <div class="slds-m-top_medium pagination-section">
+                    <lightning-button
+                        label="Previous"
+                        variant="neutral"
+                        onclick={handlePrevious}
+                        disabled={isFirstPage}
+                    ></lightning-button>
+                    <span class="slds-m-horizontal_small">
+                        Page {currentPage} of {totalPages}
+                    </span>
+                    <lightning-button
+                        label="Next"
+                        variant="neutral"
+                        onclick={handleNext}
+                        disabled={isLastPage}
+                    ></lightning-button>
+                </div>
+            </template>
+        </div>
+    </lightning-card>
+</template>
