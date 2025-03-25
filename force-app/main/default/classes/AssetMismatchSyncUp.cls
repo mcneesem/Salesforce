@@ -12,7 +12,7 @@ public with sharing class AssetMismatchSyncUp {
 * @return void  
 */
     @InvocableMethod(label='Link Asset Mismatch' description='links all mismatched assets.' category='Asset')
-    public static void assetOrderProductLinkUp(List<String> orderId){  
+    public static void assetOrderProductLinkUp(List<String> orderId){
         
         List<OrderItem> orditems = [SELECT Id,Mismatch_AssetId__c 
                                   FROM OrderItem 
@@ -29,7 +29,7 @@ public with sharing class AssetMismatchSyncUp {
                 mapOpAst.put(oi.Mismatch_AssetId__c,oi.Id);
                 oi.Mismatch_AssetId__c = '';
                 ordItemsToBeUpdated.add(oi);
-            }           
+            }
         }
 
             
@@ -46,14 +46,14 @@ public with sharing class AssetMismatchSyncUp {
                 asst.Id = ast.Id;
                 asst.NSP_OrderProduct__c =  mapOpAst.get(asst.Id);
                 asstsUpdated.add(asst);
-            }            
+            }  
         }
        
         try{
             
            if(!asstsUpdated.isempty())
            {
-               database.update(asstsUpdated); 
+               Database.update(asstsUpdated);
            }
             
             List<Order> ords = [SELECT Id,Mismatch_Asset__c
@@ -66,13 +66,13 @@ public with sharing class AssetMismatchSyncUp {
                {
                    ord.Mismatch_Asset__c =false;
                    ordsTobeUpdated.add(ord);
-               }               
+               }
            }
 
            if(!ordItemsToBeUpdated.IsEmpty() && !ordsTobeUpdated.IsEmpty())
            {
-                database.update(ordItemsToBeUpdated);
-                database.update(ordsTobeUpdated);           		
+                Database.update(ordItemsToBeUpdated);
+                Database.update(ordsTobeUpdated);
            }
 
            

@@ -13,7 +13,7 @@
                             <value>Order.Link_Project_To_Order_Items</value>
                         </valueListItems>
                         <valueListItems>
-                            <value>Order.AssetOrderProductSync</value>
+                            <value>Order.Asset_Order_Product_Sync_Up</value>
                             <visibilityRule>
                                 <booleanFilter>1 AND 2</booleanFilter>
                                 <criteria>
