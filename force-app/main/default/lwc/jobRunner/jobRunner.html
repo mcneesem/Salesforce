@@ -24,18 +24,16 @@
                     disabled={isLoading}
                     class="slds-m-right_small"
                 ></lightning-button>
-                <template if:true={showStatus}>
-                    <lightning-button-icon
-                        icon-name="utility:refresh"
-                        variant="border-filled"
-                        alternative-text="Refresh Status"
-                        onclick={handleStatus}
-                        disabled={isLoading}
-                    ></lightning-button-icon>
-                </template>
-                
+                <lightning-button-icon
+                    lwc:if={showStatus}
+                    icon-name="utility:refresh"
+                    variant="border-filled"
+                    alternative-text="Refresh Status"
+                    onclick={handleStatus}
+                    disabled={isLoading}
+                ></lightning-button-icon>
             </div>
-            <template if:true={showStatus}>
+            <div lwc:if={showStatus}>
                 <lightning-datatable
                     key-field="Id"
                     data={paginatedData}
@@ -60,7 +58,7 @@
                         disabled={isLastPage}
                     ></lightning-button>
                 </div>
-            </template>
+            </div>
         </div>
     </lightning-card>
 </template>
