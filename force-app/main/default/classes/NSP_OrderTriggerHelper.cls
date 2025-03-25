@@ -46,12 +46,8 @@ public class NSP_OrderTriggerHelper {
         list<Id> ordlist  = new list<Id>();
         for(Order ord:newList)
         {
-            If ( ( ( orderOldMap.get( ord.Id ).Status == NSP_CPQConstants.ORDER_REVIEWED )
-            && ord.Status == NSP_CPQConstants.ORDER_ACTIVATED
-            )
-        || (
-            orderOldMap.get(ord.Id).Status == NSP_CPQConstants.ORDER_DRAFT
-            && ord.Status == NSP_CPQConstants.ORDER_ACTIVATED
+            If (((orderOldMap.get(ord.Id).Status == NSP_CPQConstants.ORDER_DRAFT
+            && ord.Status == NSP_CPQConstants.ORDER_ACTIVATED)
             || ( orderOldMap.get(ord.Id).Status == NSP_CPQConstants.ORDER_DRAFT
                 && ord.Status == NSP_CPQConstants.ORDER_REVIEWED
                 )
