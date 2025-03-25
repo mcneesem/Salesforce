@@ -106,6 +106,9 @@ public with sharing class NSP_OpportunityTriggerHelperFunctions {
             {
                 opptyCfl = NSP_SalesConstants.WA;
             }
+            if ( opptyPrimaryProduct.equals( NSP_SalesConstants.CONTINGENT_WORKFORCE ) ) {
+                opptyCfl = NSP_SalesConstants.STAND_ALONE;
+            }
         }
         return opptyCfl;
     }
