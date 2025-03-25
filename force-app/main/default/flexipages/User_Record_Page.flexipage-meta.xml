@@ -112,6 +112,19 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
+                <componentName>jobRunner</componentName>
+                <identifier>c_jobRunner</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!$Permission.CustomPermission.Use_Job_Runner}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
                 <componentInstanceProperties>
                     <name>tabs</name>
                     <value>chattertabs</value>
