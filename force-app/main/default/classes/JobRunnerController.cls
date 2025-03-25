@@ -47,6 +47,7 @@ public with sharing class JobRunnerController {
             WHERE JobType = 'BatchApex'
             AND CreatedDate >= :thirtyDaysAgo
             AND ApexClass.Name != null
+            AND CreatedById = :currentUserId
             GROUP BY ApexClass.Name
             ORDER BY ApexClass.Name
         ];
