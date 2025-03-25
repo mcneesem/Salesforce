@@ -522,7 +522,7 @@
             ord.Mismatch_Asset__c = true;
             OrderLst.add(ord);
         }
-        database.update(OrderLst);
+        Database.update(OrderLst);
         Test.startTest();
         NSP_OrderItemTriggerHelper.updateAsset(orderItemNewStringMap);
         AssetMismatchSyncUp.assetOrderProductLinkUp(lstordIds);
