@@ -6,9 +6,5 @@
     </customPermissions>
     <description>Permission to use the &quot;Job Runner&quot; LWC.</description>
     <hasActivationRequired>false</hasActivationRequired>
-    <label>Use Job Runner</label>
-    <tabSettings>
-        <tab>standard-SemanticModel</tab>
-        <visibility>Visible</visibility>
-    </tabSettings>
+    <label>Use Job Runner</label>    
 </PermissionSet>

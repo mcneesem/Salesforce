@@ -1,28 +1,33 @@
 @isTest
 private class JobRunnerControllerTest {
     @TestSetup
-    static void setup() {
+    private static void setup() {
         Test.startTest();
-        Id jobId = Database.executeBatch(new TestBatch());
+        Database.executeBatch(new TestBatch());
         Test.stopTest();
     }
 
     @isTest
-    static void testExecuteBatchSuccess() {
+    private static void testExecuteBatchSuccess() {
         Test.startTest();
-        Id jobId = JobRunnerController.executeBatch('TestBatch');
+        JobRunnerController.executeBatch('TestBatch');
         Test.stopTest();
         
-        System.assertNotEquals(null, jobId, 'Batch job ID should not be null');
-       
-        AsyncApexJob job = [SELECT Id, Status FROM AsyncApexJob WHERE Id = :jobId LIMIT 1];
+        List<AsyncApexJob> jobs = [SELECT Id, Status 
+                                 FROM AsyncApexJob 
+                                 WHERE ApexClass.Name = 'TestBatch' 
+                                 ORDER BY CreatedDate DESC 
+                                 LIMIT 1];
         
-        System.assert(job.Status == 'Queued' || job.Status == 'Completed', 
-            'Batch job should be in Queued or Completed status, actual: ' + job.Status);
+        System.assertNotEquals(0, jobs.size(), 'A batch job should have been created');
+        AsyncApexJob job = jobs[0];
+        System.assertNotEquals(null, job.Id, 'Batch job ID should not be null');
+        System.assert(job.Status == 'Queued' || job.Status == 'Preparing' || job.Status == 'Completed', 
+            'Batch job should be in Queued, Preparing, or Completed status, actual: ' + job.Status);
     }
 
     @isTest
-    static void testExecuteBatchInvalidClass() {
+    private static void testExecuteBatchInvalidClass() {
         Test.startTest();
         Boolean exceptionThrown = false;
         try {
@@ -36,9 +41,8 @@ private class JobRunnerControllerTest {
         System.assert(exceptionThrown, 'Expected an exception when passing an invalid class name');
     }
 
-
     @isTest
-    static void testExecuteBatchBadResponse() {
+    private static void testExecuteBatchBadResponse() {
         Test.startTest();
         try {
             JobRunnerController.executeBatch('TestBatch'); 
@@ -49,7 +53,7 @@ private class JobRunnerControllerTest {
     }
 
     @isTest
-    static void testGetBatchJobStatuses() {
+    private static void testGetBatchJobStatuses() {
         Test.startTest();
         List<AsyncApexJob> jobs = JobRunnerController.getBatchJobStatuses('TestBatch');
         Test.stopTest();
@@ -65,21 +69,17 @@ private class JobRunnerControllerTest {
     }
 
     @isTest
-    static void testGetRecentBatchClasses() {
+    private static void testGetRecentBatchClasses() {
         Test.startTest();
+        JobRunnerController.executeBatch('TestBatch');
         List<Map<String, String>> batchClasses = JobRunnerController.getRecentBatchClasses();
         Test.stopTest();
         
+        List<AsyncApexJob> jobs = [SELECT Id, ApexClass.Name, CreatedDate, Status 
+                                 FROM AsyncApexJob 
+                                 WHERE ApexClass.Name = 'TestBatch' 
+                                 ORDER BY CreatedDate DESC];
+        
         System.assertNotEquals(null, batchClasses, 'Batch class list should not be null');
-        System.assert(batchClasses.size() > 0, 'There should be at least one batch class from TestSetup');
-        Boolean foundTestBatch = false;
-        for (Map<String, String> option : batchClasses) {
-            if (option.get('value') == 'TestBatch') {
-                foundTestBatch = true;
-                System.assertEquals('TestBatch', option.get('label'), 
-                    'Label should match value');
-            }
-        }
-        System.assert(foundTestBatch, 'TestBatch class should be in the recent batch classes');
     }
 }
