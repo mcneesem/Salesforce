@@ -39,7 +39,6 @@ public with sharing class JobRunnerController {
     @AuraEnabled(cacheable=true)
     public static List<Map<String, String>> getRecentBatchClasses() {
         DateTime thirtyDaysAgo = DateTime.now().addDays(-30);
-        Id currentUserId = UserInfo.getUserId();
 
         AggregateResult[] results = [
             SELECT ApexClass.Name
@@ -47,7 +46,6 @@ public with sharing class JobRunnerController {
             WHERE JobType = 'BatchApex'
             AND CreatedDate >= :thirtyDaysAgo
             AND ApexClass.Name != null
-            AND CreatedById = :currentUserId
             GROUP BY ApexClass.Name
             ORDER BY ApexClass.Name
         ];
