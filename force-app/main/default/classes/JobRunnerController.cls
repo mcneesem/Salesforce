@@ -1,7 +1,11 @@
 public with sharing class JobRunnerController {
     // test w/ JobRunnerControllerTest (%96)
     @AuraEnabled
-    public static Id executeBatch(String batchClassName) {
+    public static void executeBatch(String batchClassName) {
+        if (String.isBlank(batchClassName)) {
+            throw new AuraHandledException('Batch class name cannot be empty');
+        }
+
         String jsonConfig = JSON.serialize(new Map<String, Object>{
             'batchName' => batchClassName
         });
@@ -11,13 +15,6 @@ public with sharing class JobRunnerController {
         if (response.statusCode != 200) {
             throw new AuraHandledException(response.responseBody);
         }
-
-        Type batchType = Type.forName(batchClassName);
-        if (batchType == null) {
-            throw new AuraHandledException('Invalid batch class name: ' + batchClassName);
-        }
-        Database.Batchable<SObject> batchInstance = (Database.Batchable<SObject>) batchType.newInstance();
-        return Database.executeBatch(batchInstance);
     }
 
     @AuraEnabled(cacheable=true)
@@ -41,13 +38,15 @@ public with sharing class JobRunnerController {
         DateTime thirtyDaysAgo = DateTime.now().addDays(-30);
 
         AggregateResult[] results = [
-            SELECT ApexClass.Name
-            FROM AsyncApexJob
-            WHERE JobType = 'BatchApex'
-            AND CreatedDate >= :thirtyDaysAgo
-            AND ApexClass.Name != null
-            GROUP BY ApexClass.Name
-            ORDER BY ApexClass.Name
+            SELECT Id , Name
+            FROM ApexClass
+            WHERE (
+                ( NamespacePrefix = null )
+                AND ( Name LIKE '%Batch%' )
+                AND ( NOT Name LIKE '%Test%' )
+                AND ( IsValid = true ) 
+            )
+            ORDER BY Name ASC
         ];
 
         List<Map<String, String>> options = new List<Map<String, String>>();
