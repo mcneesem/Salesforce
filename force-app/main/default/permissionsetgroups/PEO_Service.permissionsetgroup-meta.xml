@@ -3,8 +3,11 @@
     <description>Group of Permission Sets to be granted to PEO Service Users.</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>PEO Service</label>
+    <permissionSets>PEO_Service_Apex_Access</permissionSets>
     <permissionSets>PEO_Service_Assigned_Apps</permissionSets>
+    <permissionSets>PEO_Service_Flow_Access</permissionSets>
     <permissionSets>PEO_Service_Object_Permissions</permissionSets>
     <permissionSets>PEO_Service_System_Permissions</permissionSets>
+    <permissionSets>PEO_Service_Visualforce_Page_Access</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>
