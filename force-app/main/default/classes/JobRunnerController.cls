@@ -35,26 +35,23 @@ public with sharing class JobRunnerController {
 
     @AuraEnabled(cacheable=true)
     public static List<Map<String, String>> getRecentBatchClasses() {
-        
-        AggregateResult[] results = [
-            SELECT Id , Name
+        List<ApexClass> classes = [
+            SELECT Name
             FROM ApexClass
-            WHERE (
-                ( NamespacePrefix = null )
-                AND ( Name LIKE '%Batch%' )
-                AND ( NOT Name LIKE '%Test%' )
-                AND ( IsValid = true ) 
-            )
-            ORDER BY Name ASC
+            WHERE NamespacePrefix = null
+            AND Name LIKE '%Batch%'
+            AND IsValid = true
+            ORDER BY Name ASC 
         ];
-
+    
         List<Map<String, String>> options = new List<Map<String, String>>();
-        for (AggregateResult ar : results) {
-            String className = (String)ar.get('Name');
-            options.add(new Map<String, String>{
-                'label' => className,
-                'value' => className
-            });
+        for (ApexClass apexClass : classes) {
+            if (!apexClass.Name.contains('Test')) {
+                options.add(new Map<String, String>{
+                    'label' => apexClass.Name,
+                    'value' => apexClass.Name
+                });
+            }
         }
         return options;
     }
