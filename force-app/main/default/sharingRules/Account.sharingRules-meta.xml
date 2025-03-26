@@ -133,7 +133,7 @@
         </accountSettings>
         <label>Share All Accounts</label>
         <sharedTo>
-            <roleAndSubordinates>Sales_Leader</roleAndSubordinates>
+            <roleAndSubordinatesInternal>Sales_Leader</roleAndSubordinatesInternal>
         </sharedTo>
         <criteriaItems>
             <field>NSP_Account_Id__c</field>
@@ -153,7 +153,7 @@
         <description>As part of DF-01947, allowing BPS Admin and Sub ordinates to Edit Accounts.</description>
         <label>Account Access All BPS</label>
         <sharedTo>
-            <roleAndSubordinates>BPS_Administrator</roleAndSubordinates>
+            <roleAndSubordinatesInternal>BPS_Administrator</roleAndSubordinatesInternal>
         </sharedTo>
         <sharedFrom>
             <allInternalUsers></allInternalUsers>
@@ -170,7 +170,7 @@
         <description>As part of DF-01947, allowing SDR and Sub ordinates to Edit Accounts.</description>
         <label>Account Access All SDR</label>
         <sharedTo>
-            <roleAndSubordinates>Sales_Development_Rep</roleAndSubordinates>
+            <roleAndSubordinatesInternal>Sales_Development_Rep</roleAndSubordinatesInternal>
         </sharedTo>
         <sharedFrom>
             <allInternalUsers></allInternalUsers>
@@ -187,7 +187,7 @@
         <description>Account Access All Sales</description>
         <label>Account Access All Sales</label>
         <sharedTo>
-            <roleAndSubordinates>Sales_Leader</roleAndSubordinates>
+            <roleAndSubordinatesInternal>Sales_Leader</roleAndSubordinatesInternal>
         </sharedTo>
         <sharedFrom>
             <allInternalUsers></allInternalUsers>
@@ -204,7 +204,7 @@
         <description>Sharing rule to give edit access of accounts to Finance users</description>
         <label>Account Edit Access to Finance Hierarchy</label>
         <sharedTo>
-            <roleAndSubordinates>Finance_Leaders</roleAndSubordinates>
+            <roleAndSubordinatesInternal>Finance_Leaders</roleAndSubordinatesInternal>
         </sharedTo>
         <sharedFrom>
             <allInternalUsers></allInternalUsers>
