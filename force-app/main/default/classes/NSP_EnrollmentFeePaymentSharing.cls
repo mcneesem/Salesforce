@@ -16,7 +16,6 @@ public with sharing class NSP_EnrollmentFeePaymentSharing {
             }
             Map<Id, List<OpportunityTeamMember>> oppToOppTeamMembersMap = new Map<Id, List<OpportunityTeamMember>>();
             Map<Id, String> oppToSalesOfficeMap = new Map<Id, String>();
-            Map<String, List<User>> salesOfficeDADMMap = new Map<String, List<User>>();
             Set<String> salesOffices = new Set<String>();
 
             //Getting Opportunity team members related to the opportunity ids
@@ -35,19 +34,8 @@ public with sharing class NSP_EnrollmentFeePaymentSharing {
 
             //Getting the list of sales offices to the opportunity ids
             salesOffices.addAll( oppToSalesOfficeMap.values() );
-            //Getting DAs and DMs for the list of sales offices
-            List<User> dADMUsersList = NSP_EnrollmentFeePaymentSharing.selectPermittedSalesOfficeUsers( salesOffices );
             //Creating a map of sales office to DA and DMs
-            for ( User record : dADMUsersList ) {
-                if ( salesOfficeDADMMap.containsKey( record.NSP_Sales_Office_Membership__c ) ) {
-                    salesOfficeDADMMap.get( record.NSP_Sales_Office_Membership__c ).add( record );
-                } else {
-                    salesOfficeDADMMap.put(
-                        record.NSP_Sales_Office_Membership__c ,
-                        new List<User>{ record }
-                    );
-                }
-            }
+            Map<String, List<User>> salesOfficeDADMMap = NSP_EnrollmentFeePaymentSharing.selectPermittedSalesOfficeUsers( salesOffices );
 
             //Sharing the efp records with DA, DM related to sales office and Opportunity Team Members
             for(NSP_Enrollment_Fee_Payment__c feepayment : listOfEnrollmentFee){
@@ -86,11 +74,12 @@ public with sharing class NSP_EnrollmentFeePaymentSharing {
     }
 
     // select the permitted Users for the Sales Offices...
-    private static List<User> selectPermittedSalesOfficeUsers( Set<String> salesOffices ) {
-        List<User> response = new List<User>();
+    private static Map<String, List<User>> selectPermittedSalesOfficeUsers( Set<String> salesOffices ) {
+        List<User> dADMUsersList = new List<User>();
+        Map<String, List<User>> salesOfficeDADMMap = new Map<String, List<User>>();
         if ( ( NSP_EnrollmentFeePaymentSharing.efpSharingUserMap != null )
-            && !NSP_EnrollmentFeePaymentSharing.efpSharingUserMap.isEmpty()
-            )
+             && !NSP_EnrollmentFeePaymentSharing.efpSharingUserMap.isEmpty()
+           )
         {
             List<User> salesOfficeUsers = new List<User>();
             if ( ( salesOffices != null ) && !salesOffices.isEmpty() ) {
@@ -103,12 +92,22 @@ public with sharing class NSP_EnrollmentFeePaymentSharing {
             if ( ( salesOfficeUsers != null ) && !salesOfficeUsers.isEmpty() ) {
                 for ( User record : salesOfficeUsers ) {
                     if ( NSP_EnrollmentFeePaymentSharing.efpSharingUserMap.containsKey( record.Id ) ) {
-                        response.add( record );
+                        dADMUsersList.add( record );
                     }
                 }
             }
+            for ( User record : dADMUsersList ) {
+                if ( salesOfficeDADMMap.containsKey( record.NSP_Sales_Office_Membership__c ) ) {
+                    salesOfficeDADMMap.get( record.NSP_Sales_Office_Membership__c ).add( record );
+                } else {
+                    salesOfficeDADMMap.put(
+                        record.NSP_Sales_Office_Membership__c ,
+                        new List<User>{ record }
+                    );
+                }
+            }
         }
-        return response;
+        return salesOfficeDADMMap;
     }
 
     public static void onOppTeamMemberInsert( List<OpportunityTeamMember> newList ) {
