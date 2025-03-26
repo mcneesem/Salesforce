@@ -737,6 +737,7 @@
     </picklistValues>
     <picklistValues>
         <picklist>NSP_National_Account_Group__c</picklist>
+        <values>
             <fullName>22</fullName>
             <default>false</default>
         </values>
@@ -1020,7 +1021,6 @@
             <fullName>101</fullName>
             <default>false</default>
         </values>
-        <values>        
     </picklistValues>
     <picklistValues>
         <picklist>NSP_ORK_Plan_Vendor__c</picklist>
