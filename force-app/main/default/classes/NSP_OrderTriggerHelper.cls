@@ -81,8 +81,8 @@ public class NSP_OrderTriggerHelper {
     public static void setFlagAssetCheckerStatic(List<Id> ordlist)
     {
 
-        Map<Id,orderitem> mapAsstOI = new Map<Id,orderitem>();
-        Map<Id,order> mapOrdOPr = new Map<Id,order>();
+        Map<Id,OrderItem> mapAsstOI = new Map<Id,OrderItem>();
+        Map<Id,Order> mapOrdOPr = new Map<Id,Order>();
 
 
             for(Order ord:[SELECT Id,Mismatch_Asset__c,(SELECT Id,Mismatch_AssetId__c,NSP_ServiceAsset__c FROM orderitems) FROM Order WHERE Id IN:ordlist AND Mismatch_Asset__c = false])
