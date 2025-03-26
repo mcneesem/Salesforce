@@ -49,11 +49,17 @@ public with sharing class AssetMismatchSyncUp {
             }
         }
 
-        try{
+        try
+        {
 
            if(!asstsUpdated.isempty())
            {
-               Database.update(asstsUpdated);
+               List<Database.SaveResult> resultsasstsUpdated = Database.update(asstsUpdated);
+               NSP_ErrorLogHandler.logResults(
+                   NSP_OrderTriggerHelper.class.getName() ,
+                   'AssetMismatchSyncUp:update:Asset' ,
+                   resultsasstsUpdated
+               );
            }
 
             List<Order> ords = [SELECT Id,Mismatch_Asset__c
@@ -69,13 +75,20 @@ public with sharing class AssetMismatchSyncUp {
                }
            }
 
-           if(!ordItemsToBeUpdated.IsEmpty() && !ordsTobeUpdated.IsEmpty())
-           {
-                Database.update(ordItemsToBeUpdated);
-                Database.update(ordsTobeUpdated);
-           }
-
-
+            if ( !ordItemsToBeUpdated.isEmpty() && !ordsTobeUpdated.isEmpty() ) {
+                List<Database.SaveResult> resultsOrderItem = Database.update( ordItemsToBeUpdated );
+                NSP_ErrorLogHandler.logResults(
+                    NSP_OrderTriggerHelper.class.getName() ,
+                    'setFlagAssetCheckerStatic:update:OrderItem' ,
+                    resultsOrderItem
+                );
+                List<Database.SaveResult> resultsOrder = Database.update( ordsTobeUpdated );
+                NSP_ErrorLogHandler.logResults(
+                    NSP_OrderTriggerHelper.class.getName() ,
+                    'setFlagAssetCheckerStatic:update:Order' ,
+                    resultsOrder
+                );
+            }
         }
         catch(Exception ex)
         {

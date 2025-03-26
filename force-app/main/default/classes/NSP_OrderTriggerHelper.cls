@@ -43,17 +43,17 @@ public class NSP_OrderTriggerHelper {
 
     public static void setFlagAsset( List<Order> newList , Map<Id,Order> orderOldMap )
     {
-        list<Id> ordlist  = new list<Id>();
+        List<Id> ordlist  = new List<Id>();
         for(Order ord:newList)
         {
-            If (((orderOldMap.get(ord.Id).Status == NSP_CPQConstants.ORDER_DRAFT
-            && ord.Status == NSP_CPQConstants.ORDER_ACTIVATED)
-            || ( orderOldMap.get(ord.Id).Status == NSP_CPQConstants.ORDER_DRAFT
-                && ord.Status == NSP_CPQConstants.ORDER_REVIEWED
-                )
+            if ( ( ( ord.Status == NSP_CPQConstants.ORDER_ACTIVATED ) || ( ord.Status == NSP_CPQConstants.ORDER_REVIEWED ) )
+            && ( orderOldMap.get( ord.Id ).Status == NSP_CPQConstants.ORDER_DRAFT )
+            && ord.Mismatch_Asset__c == false
             )
-        && ord.Mismatch_Asset__c == false
-        )
+        {
+            ordlist.add( ord.Id );
+        }
+
     {
         ordlist.add( ord.Id );
     }
@@ -81,8 +81,8 @@ public class NSP_OrderTriggerHelper {
     public static void setFlagAssetCheckerStatic(List<Id> ordlist)
     {
 
-        Map<id,orderitem> mapAsstOI = new Map<id,orderitem>();
-        Map<id,order> mapOrdOPr = new Map<id,order>();
+        Map<Id,orderitem> mapAsstOI = new Map<Id,orderitem>();
+        Map<Id,order> mapOrdOPr = new Map<Id,order>();
 
 
             for(Order ord:[SELECT Id,Mismatch_Asset__c,(SELECT Id,Mismatch_AssetId__c,NSP_ServiceAsset__c FROM orderitems) FROM Order WHERE Id IN:ordlist AND Mismatch_Asset__c = false])
@@ -121,11 +121,28 @@ public class NSP_OrderTriggerHelper {
         }
 
 
-       if(!ordItemsToBeUpdated.IsEmpty() && !ordsTobeUpdated.IsEmpty())
-       {
-            Database.update(ordItemsToBeUpdated);
-            Database.update(ordsTobeUpdated);
-       }
+        try {
+            if ( !ordItemsToBeUpdated.isEmpty() && !ordsTobeUpdated.isEmpty() ) {
+                List<Database.SaveResult> resultsOrderItem = Database.update( ordItemsToBeUpdated );
+                NSP_ErrorLogHandler.logResults(
+                    NSP_OrderTriggerHelper.class.getName() ,
+                    'setFlagAssetCheckerStatic:update:OrderItem' ,
+                    resultsOrderItem
+                );
+                List<Database.SaveResult> resultsOrder = Database.update( ordsTobeUpdated );
+                NSP_ErrorLogHandler.logResults(
+                    NSP_OrderTriggerHelper.class.getName() ,
+                    'setFlagAssetCheckerStatic:update:Order' ,
+                    resultsOrder
+                );
+            }
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_OrderTriggerHelper.class.getName() ,
+                'setFlagAssetCheckerStatic' ,
+                e
+            );
+        }
 
     }
 
