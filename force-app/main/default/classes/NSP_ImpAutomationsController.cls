@@ -4,7 +4,7 @@
 // Author : Nischay Jindal
 // Name : NSP_ImpAutomationsController
 //
-public without sharing class NSP_ImpAutomationsController {
+public class NSP_ImpAutomationsController {
     // test w/ NSP_FSOImplementationControllerTest (100%)
 
     // MethodName: getIpRecord
