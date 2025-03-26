@@ -8,7 +8,7 @@
     NSP_Category__c = &quot;Compensation Services&quot;,
     NSP_SubCategory__c = &quot;Salary Survey&quot;,
     Required_Documentation_Attached__c = TRUE,
-    Requested_Jobs__c &lt;&gt; 0
+     Requested_Jobs__c != 0
   ),
   AND(
     NSP_Category__c = &quot;Compensation Services&quot;,
