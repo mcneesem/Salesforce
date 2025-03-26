@@ -23,7 +23,7 @@ public with sharing class NSP_FSOImplementationController {
         Map<String, Set<Id>> ipRecordsByAutomationTaskMap = new Map<String, Set<Id>> ();
         List<NSP_Implementation_Profile_Automation__c> ipAutomationRecordsList = new List<NSP_Implementation_Profile_Automation__c> ();
         try{
-            String impRecordTypeName = Schema.getGlobalDescribe().get(NSP_ServiceConstants.implProfile).getDescribe().getRecordTypeInfosById().get(recordTypeId).getName();
+            String impRecordTypeName = NSP_GenericRecordType.getRecordTypeMap( 'Implementation_Profile__c' )
             
             // Searching for all the automations in the metadata for the FSO IP  
             List<NSP_Implementation_Automations__mdt> automationTable = [SELECT Id, Sort_Order__c,NSP_Automation_Order__c,DeveloperName, MasterLabel, Label, NSP_Automation_Name__c, NSP_Type_of_Automation__c, 
