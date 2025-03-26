@@ -94,7 +94,7 @@ public class NSP_FSOImplementationControllerTest {
         
         //Insert the IP Automation List
         insert ipAutomationList;
-		Boolean isRunAutomation ;
+        Boolean isRunAutomation ;
         
         Test.startTest();
         // calling Class method
