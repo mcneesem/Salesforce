@@ -17,7 +17,7 @@ public class NSP_SalesConstants {
     public static final String CLOSED_LOST ='Closed Lost';
     //To set opportunity stage as closed won
     public static final String CLOSED_WON ='Closed Won';
-   
+
     public static final String ACTIVE ='Active';
     public static final String AVAILABLE ='Available';
     public static final String ASSIGNED ='Assigned';
@@ -32,6 +32,8 @@ public class NSP_SalesConstants {
     public static final String WX ='WX';
     public static final String WA ='WA';
     public static final String WOSS ='WOSS';
+    public static final String CONTINGENT_WORKFORCE ='Contingent Workforce';
+    public static final String STAND_ALONE ='Stand Alone';
     // To set opportunity type as CAMS
     public static final String OPPORTUNITY_TYPE_CAMS ='CAMS';
     // To set primary product as Retirement services
@@ -69,9 +71,9 @@ public class NSP_SalesConstants {
     //To set opportunity stage as closed lost
     public static final String CLOSED_LOST_STAGE = 'Closed Lost';
     public static final String LOCKED_OPPORTUNITY = 'Opportunity_Locked';
-    public static final String APPROVAL_STATUS_PENDING = 'Pending';   
-    public static final String APPROVAL_STATUS_APPROVED = 'Approved';  
-    public static final String APPROVAL_STATUS_REJECTED ='Rejected';    
+    public static final String APPROVAL_STATUS_PENDING = 'Pending';
+    public static final String APPROVAL_STATUS_APPROVED = 'Approved';
+    public static final String APPROVAL_STATUS_REJECTED ='Rejected';
     public static final String APPROVAL_STATUS_RECALLED ='Recalled';
     public static final String COMPLETED ='Completed';
     public static final String OPEN ='Open';
@@ -85,22 +87,22 @@ public class NSP_SalesConstants {
     public static final String NON_CPQ_PRICEBOOK = 'Non-CPQ Product Pricebook';
     public static final String RENEWAL_OPPORTUNITY = 'Renewal';
     public static final String CLIENT_REFERENCE_TASKTYPE = 'Client reference';
-    
+
     public static final String ONBOARDING = 'Onboarding';
     public static final String PARTNER_AGREEMENT = 'Partner Agreement';
     public static final String CHANNELS = 'Channels';
     public static final String PARTNER_CONTRACT_GENERATED = 'Partner Contract Generated';
-    
+
     public static final Integer MIDMARKET_NUMBEROFEMPS = 150;
     public static final Integer CORESALES_NUMBEROFEMPS = 50;
     public static final String CORE_SALES = 'Core';
     public static final String MIDMARKET_SALES = 'Midmarket';
     public static final String EMERGING_GROWTH = 'Emerging Growth';
-    
+
     public static final String NCS_SALES_GROUP = 'NSP_NCS_Group';
     public static final String NCS_SALES_TASK_SUBJECT = 'HSA Addendum Request';
     public static final String ADDENDUMREQUEST_TASKTYPE = 'Addendum Request';
-    
+
     public static final String CALL_BACK_TASK = 'Call Back';
     public static final String LeadQualifier = 'Lead Qualifier';
     public static final String LEAD_STATUS_QUALIFIED = 'Qualified';
@@ -109,13 +111,13 @@ public class NSP_SalesConstants {
     public static final String existsResponse = 'exists';
     public static final String BPA_User = 'Business Performance Advisor';
     public static final String DUMMY_USER_SIGNER = 'Dummy User Signer';
-    // Added to set Session Type in NSP_FinancialAnaylsisToolController 
+    // Added to set Session Type in NSP_FinancialAnaylsisToolController
     public static final String SessionType = 'AURA';
     public static final String TRANSACTION_TYPE_TERMINATION = 'Termination';
     public static final String OPPORTUNITY_TYPE_EXISTING_PRODUCT = 'Existing Product';
     public static final String OPPORTUNITY_TYPE_RENEWAL = 'Renewal';
     public static final String EVALUATION = 'Evaluation';
-    //Added for manual Sharing 
+    //Added for manual Sharing
     public static final String bPARole = 'Business Performance Advisor';
     public static final String aBPARole = 'Associate Business Performance Advisors';
     //Added user roles
@@ -150,7 +152,7 @@ public class NSP_SalesConstants {
     //Account related Constants
     public static final String CUSTOMER = 'Customer';
     //Account Team member constants
-    public static final String MANAGERHRSERVICE = 'Manager, HR Services'; 
+    public static final String MANAGERHRSERVICE = 'Manager, HR Services';
     public static final String ClientLiaison = 'Client Liaison';
     public static final String HRSpecialist = 'HR Specialist';
     public static final String BPSUser = 'BPS User';
@@ -194,7 +196,6 @@ public class NSP_SalesConstants {
     public static final String PROD_EXPENSEMANAGEMENT = 'Expense Management';
     public static final String PROD_INSURANCE = 'Insurance Services';
     public static final String ASSETRECTYPE_INSURANCE = 'Insurance Service';
-    public static final String ASSETRECTYPENAME_INSURANCE = 'Insurance_Service';
     public static final String ASSETRECTYPE_CERTIFY = 'Certify';
     public static final String BACKOUT_STATUS = 'Backout';
     public static final String TERMINATED_STATUS = 'Terminated';
