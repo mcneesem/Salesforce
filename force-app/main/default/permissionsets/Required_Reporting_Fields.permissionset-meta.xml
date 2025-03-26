@@ -1107,6 +1107,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>pse__Project_Task__c.Is_Completed__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>pse__Project_Task__c.NSP_Efforts_To_Retain__c</field>
         <readable>true</readable>
     </fieldPermissions>
