@@ -37,7 +37,7 @@ public with sharing class NSP_EnrollmentFeePaymentSharing {
             //Getting DAs and DMs for the list of sales offices
             List<User> dADMUsersList = NSP_EnrollmentFeePaymentSharing.selectPermittedSalesOfficeUsers( salesOffices );
             //Creating a map of sales office to DA and DMs
-            Map<String, List<User>> salesOfficeDADMMap = getsalesOfficeDADMMap( dADMUsersList );
+            Map<String,List<User>> salesOfficeDADMMap = getsalesOfficeDADMMap( dADMUsersList );
 
             //Sharing the efp records with DA, DM related to sales office and Opportunity Team Members
             for(NSP_Enrollment_Fee_Payment__c feepayment : listOfEnrollmentFee){
@@ -101,8 +101,8 @@ public with sharing class NSP_EnrollmentFeePaymentSharing {
         return response;
     }
 
-    private static Map<String, List<User>> getsalesOfficeDADMMap( List<User> dADMUsersList ) {
-        Map<String, List<User>> salesOfficeDADMMap = new Map<String, List<User>>();
+    private static Map<String,List<User>> getsalesOfficeDADMMap( List<User> dADMUsersList ) {
+        Map<String,List<User>> salesOfficeDADMMap = new Map<String,List<User>>();
         for ( User record : dADMUsersList ) {
             if ( salesOfficeDADMMap.containsKey( record.NSP_Sales_Office_Membership__c ) ) {
                 salesOfficeDADMMap.get( record.NSP_Sales_Office_Membership__c ).add( record );
