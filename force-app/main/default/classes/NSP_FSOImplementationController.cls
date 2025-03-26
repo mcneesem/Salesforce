@@ -5,7 +5,7 @@
 * Name : NSP_FSOImplementationController
 */
 public with sharing class NSP_FSOImplementationController {
-    // test w/ NSP_FSOImplementationControllerTest (??%)
+    // test w/ NSP_FSOImplementationControllerTest (86%)
 
     /***********************************************************************************************
     * MethodName: loadAutomationRecords
@@ -23,7 +23,7 @@ public with sharing class NSP_FSOImplementationController {
         Map<String, Set<Id>> ipRecordsByAutomationTaskMap = new Map<String, Set<Id>> ();
         List<NSP_Implementation_Profile_Automation__c> ipAutomationRecordsList = new List<NSP_Implementation_Profile_Automation__c> ();
         try{
-            String impRecordTypeName = NSP_GenericRecordType.getRecordTypeMap( 'Implementation_Profile__c' )
+            String impRecordTypeName = getImplementationRecordTypeName(recordTypeId);
             
             // Searching for all the automations in the metadata for the FSO IP  
             List<NSP_Implementation_Automations__mdt> automationTable = [SELECT Id, Sort_Order__c,NSP_Automation_Order__c,DeveloperName, MasterLabel, Label, NSP_Automation_Name__c, NSP_Type_of_Automation__c, 
@@ -70,6 +70,19 @@ public with sharing class NSP_FSOImplementationController {
         }
         // returning wrapper to UI 
         return ipWrapperList;
+    }
+    
+    private static String getImplementationRecordTypeName( String recordTypeId ) {
+        Map<String,Schema.RecordTypeInfo> recordTypeMap = NSP_GenericRecordType.getRecordTypeMap( 'Implementation_Profile__c' );
+        String recordTypeName = null;
+        if ( recordTypeMap != null ) {
+            for ( Schema.RecordTypeInfo info : recordTypeMap.values() ) {
+                if ( info.getRecordTypeId() == recordTypeId ) {
+                    recordTypeName = info.getName();
+                }
+            }
+        }
+        return recordTypeName;
     }
     
     /***********************************************************************************************
