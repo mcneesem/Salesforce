@@ -1,6 +1,6 @@
 public with sharing class NSP_EnrollmentFeePaymentSharing {
     // test w/ NSP_EnrollmentFeePaymentTriggerClassTest, NSP_OpportunityTeamMemberTriggerTest (80%)
-    // test w/ NSP_EnrollmentFeePaymentTriggerClassTest (66%)
+    // test w/ NSP_EnrollmentFeePaymentTriggerClassTest (67%)
     // test w/ NSP_OpportunityTeamMemberTriggerTest (28%)
 
     private static Map<Id,User> efpSharingUserMap = CustomPermissionController.getPermittedUsersMap( 'Enrollment_Fee_Payment_Edit_Sharing' );
@@ -35,8 +35,9 @@ public with sharing class NSP_EnrollmentFeePaymentSharing {
             //Getting the list of sales offices to the opportunity ids
             salesOffices.addAll( oppToSalesOfficeMap.values() );
             //Getting DAs and DMs for the list of sales offices
-            Map<String, List<User>> salesOfficeDADMMap = NSP_EnrollmentFeePaymentSharing.selectPermittedSalesOfficeUsers( salesOffices );
+            List<User> dADMUsersList = NSP_EnrollmentFeePaymentSharing.selectPermittedSalesOfficeUsers( salesOffices );
             //Creating a map of sales office to DA and DMs
+            Map<String, List<User>> salesOfficeDADMMap = getsalesOfficeDADMMap( dADMUsersList );
 
             //Sharing the efp records with DA, DM related to sales office and Opportunity Team Members
             for(NSP_Enrollment_Fee_Payment__c feepayment : listOfEnrollmentFee){
@@ -75,8 +76,8 @@ public with sharing class NSP_EnrollmentFeePaymentSharing {
     }
 
     // select the permitted Users for the Sales Offices...
-    private static Map<String, List<User>> selectPermittedSalesOfficeUsers( Set<String> salesOffices ) {
-        Map<String, List<User>> salesOfficeDADMMap = new Map<String, List<User>>();
+    private static List<User> selectPermittedSalesOfficeUsers( Set<String> salesOffices ) {
+        List<User> response = new List<User>();
         if ( ( NSP_EnrollmentFeePaymentSharing.efpSharingUserMap != null )
             && !NSP_EnrollmentFeePaymentSharing.efpSharingUserMap.isEmpty()
             )
@@ -92,16 +93,24 @@ public with sharing class NSP_EnrollmentFeePaymentSharing {
             if ( ( salesOfficeUsers != null ) && !salesOfficeUsers.isEmpty() ) {
                 for ( User record : salesOfficeUsers ) {
                     if ( NSP_EnrollmentFeePaymentSharing.efpSharingUserMap.containsKey( record.Id ) ) {
-                        if ( salesOfficeDADMMap.containsKey( record.NSP_Sales_Office_Membership__c ) ) {
-                            salesOfficeDADMMap.get( record.NSP_Sales_Office_Membership__c ).add( record );
-                        } else {
-                            salesOfficeDADMMap.put(
-                                record.NSP_Sales_Office_Membership__c ,
-                                new List<User>{ record }
-                            );
-                        }
+                        response.add( record );
                     }
                 }
+            }
+        }
+        return response;
+    }
+
+    private static Map<String, List<User>> getsalesOfficeDADMMap( List<User> dADMUsersList ) {
+        Map<String, List<User>> salesOfficeDADMMap = new Map<String, List<User>>();
+        for ( User record : dADMUsersList ) {
+            if ( salesOfficeDADMMap.containsKey( record.NSP_Sales_Office_Membership__c ) ) {
+                salesOfficeDADMMap.get( record.NSP_Sales_Office_Membership__c ).add( record );
+            } else {
+                salesOfficeDADMMap.put(
+                    record.NSP_Sales_Office_Membership__c ,
+                    new List<User>{ record }
+                );
             }
         }
         return salesOfficeDADMMap;
