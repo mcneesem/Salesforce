@@ -830,10 +830,10 @@ public class NSP_ProjectTasksTriggerHelper {
         }
 
         if(!setOfPrecedingTask.isEmpty()){
-            for(pse__Project_Task__c task : [SELECT pse__Completed__c FROM pse__Project_Task__c 
+            for(pse__Project_Task__c task : [SELECT Is_Completed__c FROM pse__Project_Task__c 
                                             WHERE ID IN : setOfPrecedingTask]){
                 if(!isMapOfPrecedingTaskAndCompleted.containsKey(task.id)){
-                    isMapOfPrecedingTaskAndCompleted.put(task.id, task.pse__Completed__c);
+                    isMapOfPrecedingTaskAndCompleted.put(task.id, task.Is_Completed__c);
                 }
             }
         }
