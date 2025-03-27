@@ -192,17 +192,16 @@ public class NSP_ServicePlanProjectTaskBatch implements Database.Batchable<sObje
             if(accountTeam != null && accountTeam.NSP_User__c != null)
             {
                 String role     = accountTeam.NSP_Role__c;
-                if (NSP_ServiceConstants.BUS_TEAM_HRSP_CL.equalsIgnoreCase(role)) {
-                    if(accountTeam.NSP_Primary__c)
-                    {
-                        ownerId =  accountTeam.NSP_User__c;
-                    }
-                    else
-                    {
-                        ownerId =  accountTeam.NSP_User__c;
-                    }
-                    ownerId = (accountTeam.NSP_Primary__c ? accountTeam.NSP_User__c : accountTeam.NSP_User__c);
-                } else if ( NSP_ServiceConstants.MANAGER_HRSERVICES.equalsIgnoreCase(role)) {
+                if (NSP_ServiceConstants.BUS_TEAM_HRSP_CL.equalsIgnoreCase(role) && accountTeam.NSP_Primary__c) 
+                {
+                    ownerId =  accountTeam.NSP_User__c;   
+                }
+                else if(NSP_ServiceConstants.BUS_TEAM_HRSP_CL.equalsIgnoreCase(role))
+                {
+                    ownerId =  accountTeam.NSP_User__c;
+                }
+                else if ( NSP_ServiceConstants.MANAGER_HRSERVICES.equalsIgnoreCase(role)) 
+                {
                     ownerId = accountTeam.NSP_User__c;
                 }
             }    
