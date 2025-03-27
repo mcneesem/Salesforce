@@ -54,7 +54,6 @@ public class NSP_MMImplProfile_ServHelpUpdate {
     private static final String TIMESTAR_TA_SYSTEM_MM = 'NSP_TimeStar_TA_System_Live';
     private static final String TIMESTAR_TA_PAYROLL_EXPERT_MM = 'NSP_TimeStar_TA_Payroll_Expert';
     private static final String GARNISHMENT_MM = 'NSP_EE_garnishments';
-    private static final String TAX_LEVIES_MM = 'NSP_Tax_levies';
     private static final String RETIRE_PLAN_MM='NSP_Retirement_Plan';
     private static final String HSA_MM='NSP_HSA';
     private static final String HSA_OPTUM_MM='HSA_Optum';
@@ -124,7 +123,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                 PTO_MM,EEO_FILING_MM,SEASONAL_EE_MM,EEO_ON_LEAVE_MM,
                 LOA_TYPES_MM,LOA_GREATER_THAN_MM,SALARY_CONT_MM,
                 SPECIFIC_LEAVE_MM,POST_TAX_MM,TIMESTAR_MM,TIMESTAR_TA_EMP_MM,
-                GARNISHMENT_MM,TAX_LEVIES_MM,PRE_TAX_MM,PRE_TAX_DEDUCT_MM,
+                GARNISHMENT_MM,PRE_TAX_MM,PRE_TAX_DEDUCT_MM,
                 POST_TAX_SPONSPOREDPLAN_MM,POST_TAX_EMPSETUP_MM,
                 ALLOWNCE_EXPENSE_MM,RETIRE_PLAN_MM,HSA_MM,HSA_OPTUM_MM,
                 HSA_OPTUM_NO_MM,COBRA_MM,DEDUCIBLE_CARRYOVER_MM,
@@ -237,9 +236,6 @@ public class NSP_MMImplProfile_ServHelpUpdate {
              }
              if(automationsToExecute.contains(GARNISHMENT_MM)){
                 checkforGarnishments(ipRec, existingRec);
-            }
-            if(ipSettings.Is_Enabled_Levies__c && automationsToExecute.contains(TAX_LEVIES_MM)){
-                checkforTaxLevies(ipRec, existingRec);
             }
             if(automationsToExecute.contains(PRE_TAX_MM)){
                 checkForPreTax(ipRec, existingRec);
@@ -393,9 +389,6 @@ public class NSP_MMImplProfile_ServHelpUpdate {
 
          if(ipRecordsByAutomation.containsKey(GARNISHMENT_MM)){
             createProjectTaskForEEGarnishment();
-         }
-         if(ipRecordsByAutomation.containsKey(TAX_LEVIES_MM)){
-            createProjectTaskForTaxLevies();
          }
          if(ipRecordsByAutomation.containsKey(PRE_TAX_MM)){
             createProjectTaskForPreTax();
@@ -1646,52 +1639,6 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                                                         projectTaskList.add(eachProjecttask);               
                                             
                     ipAutomationRecords.add(createIPAutomation(ipRec, ipa.NSP_Automation_Name__c, ipa.NSP_Method_Name__c,ipa.NSP_Section__c)); 
-         
-                }
-            }
-                //check for existing project task and store the new tasks
-                recToInsert.addAll(getnewTaskstoInsert(projectTaskList));
-                //check for existing Automation record and store the new Automation records
-                recToInsert.addAll(getnewAutomationListtoInsert(ipAutomationRecords));
-     }
-     
-     public void createProjectTaskForTaxLevies(){
-         //Do any EEs have tax levies?
-         List<pse__Project_Task__c> projectTaskList = new List<pse__Project_Task__c>();
-         List<NSP_Implementation_Profile_Automation__c> ipAutomationRecords = new List<NSP_Implementation_Profile_Automation__c>();
-         
-         NSP_ProjectTask_Automation__mdt pta =  NSP_ProjectTask_Automation__mdt.getInstance(TAX_LEVIES_MM);
-         NSP_Implementation_Automations__mdt ipa = NSP_Implementation_Automations__mdt.getInstance(TAX_LEVIES_MM);
- 
-         for(Id ipRecId : ipRecordsByAutomation.get(TAX_LEVIES_MM)){
-            Implementation_Profile__c ipRec = newIPs.get(ipRecId);
-            if(isRerun || ipRec.NSP_Form_Completed__c){
-                pse__Proj__c proj = (pse__Proj__c) data.get(PROJECT_IDENTIFIER).get(ipRec.NSP_Project__c);
-                Id milestoneId;
-                milestoneId=getMilestoneId(proj.pse__Milestones__r,pta.NSP_Milestone__c, proj);
-                String milestoneKey = proj.Id + '~' + pta.NSP_Milestone__c;
-
-                if(milestoneId == null && !mileStonesToInsert.containsKey(milestoneKey)){
-                    pse__Milestone__c eachMilestone = new pse__Milestone__c(Name=pta.NSP_Milestone__c, RecordTypeId=milestonePEORecordtypeId, pse__Project__c=proj.Id, pse__Target_Date__c=proj.pse__End_Date__c);
-                    mileStonesToInsert.put(milestoneKey, eachMilestone);
-                }
-                                            
-                pse__Project_Task__c eachProjecttask = createProjectTaskfromIP(proj, pta.NSP_Category__c, ipRecId,milestoneKey);
-                                                        eachProjecttask.NSP_Sub_Category__c=pta.NSP_Sub_Category__c;
-                                                        eachProjecttask.Name=pta.NSP_Task_Name__c;
-                                                        eachProjecttask.pse__Order__c=85;
-                                                        eachProjecttask.Task_Order__c=85;
-                                                        Implementation_Profile__c ipwithValue=(Implementation_Profile__c) data.get(IMPL_PROFILE_IDENTIFIER).get(ipRecId);
-                                                        if(ipwithValue.NSP_Payroll_Project_Manager__c!=null && ipwithValue.NSP_Payroll_Project_Manager__r.pse__Salesforce_User__c!=null){
-                                                            eachProjecttask.OwnerId=ipwithValue.NSP_Payroll_Project_Manager__r.pse__Salesforce_User__c;
-                                                        }
-                                                        
-                                                        eachProjecttask.pse__Milestone__c=milestoneId;
-    
-                                                        projectTaskList.add(eachProjecttask); 
-                    ipAutomationRecords.add(createIPAutomation(ipRec, ipa.NSP_Automation_Name__c, ipa.NSP_Method_Name__c,ipa.NSP_Section__c));              
-                                          
-          
                 }
             }
                 //check for existing project task and store the new tasks
@@ -3753,22 +3700,6 @@ public class NSP_MMImplProfile_ServHelpUpdate {
              if(existingRec == null || newRec.NSP_Form_Completed__c  ||
                 newRec.Do_any_EEs_have_garnishments__c != existingRec.Do_any_EEs_have_garnishments__c){
                   updateEligibleRecordsMap(ipRecordsByAutomation, newRec.Id, GARNISHMENT_MM);
-             }
-         }
-     }
-     
-     private  void checkforTaxLevies(Implementation_Profile__c newRec, Implementation_Profile__c existingRec){
-         if( newRec.RecordTypeId != ipMMRecordTypeId || newRec.NSP_Project__c == null 
-            || newRec.Do_any_EEs_have_tax_levies__c != NSP_ServiceConstants.YES  ) {
-            return;
-         }
- 
-   
-         if( newRec.RecordTypeId == ipMMRecordTypeId && 
-            newRec.Do_any_EEs_have_tax_levies__c==NSP_ServiceConstants.YES ){
-             if(existingRec == null || newRec.NSP_Form_Completed__c  ||
-                newRec.Do_any_EEs_have_tax_levies__c != existingRec.Do_any_EEs_have_tax_levies__c){
-                  updateEligibleRecordsMap(ipRecordsByAutomation, newRec.Id, TAX_LEVIES_MM);
              }
          }
      }
