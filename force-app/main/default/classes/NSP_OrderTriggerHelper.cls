@@ -38,7 +38,7 @@ public class NSP_OrderTriggerHelper {
         checkProjectGoLiveChanged( orderNewMap.values() , orderOldMap );
         activateHardwareAssets( orderNewMap.values() , orderOldMap );
         createInvoice( orderNewMap.values() , orderOldMap );
-        AssetMismatchSyncUp.setFlagAsset(OrderNewMap.values(),OrderOldMap);
+        AssetMismatchSyncUp.setFlagAsset(orderNewMap.values(),orderOldMap);
     }
     /**
 * Method added for STY-00397 to copy data from quote to Order

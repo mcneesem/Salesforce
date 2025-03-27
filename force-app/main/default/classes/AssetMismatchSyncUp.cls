@@ -56,8 +56,8 @@ public with sharing class AssetMismatchSyncUp {
            {
                List<Database.SaveResult> resultsasstsUpdated = Database.update(asstsUpdated);
                NSP_ErrorLogHandler.logResults(
-                   NSP_OrderTriggerHelper.class.getName() ,
-                   'AssetMismatchSyncUp:update:Asset' ,
+                AssetMismatchSyncUp.class.getName() ,
+                   'assetOrderProductLinkUp:update:Asset' ,
                    resultsasstsUpdated
                );
            }
@@ -78,14 +78,14 @@ public with sharing class AssetMismatchSyncUp {
             if ( !ordItemsToBeUpdated.isEmpty() && !ordsTobeUpdated.isEmpty() ) {
                 List<Database.SaveResult> resultsOrderItem = Database.update( ordItemsToBeUpdated );
                 NSP_ErrorLogHandler.logResults(
-                    NSP_OrderTriggerHelper.class.getName() ,
-                    'setFlagAssetCheckerStatic:update:OrderItem' ,
+                    AssetMismatchSyncUp.class.getName() ,
+                    'assetOrderProductLinkUp:update:Asset' ,
                     resultsOrderItem
                 );
                 List<Database.SaveResult> resultsOrder = Database.update( ordsTobeUpdated );
                 NSP_ErrorLogHandler.logResults(
-                    NSP_OrderTriggerHelper.class.getName() ,
-                    'setFlagAssetCheckerStatic:update:Order' ,
+                    AssetMismatchSyncUp.class.getName() ,
+                    'assetOrderProductLinkUp:update:Asset' ,
                     resultsOrder
                 );
             }
@@ -99,7 +99,7 @@ public with sharing class AssetMismatchSyncUp {
                 );
         }
     }
-    
+
     public static void setFlagAsset( List<Order> newList , Map<Id,Order> orderOldMap )
     {
         List<Id> ordlist  = new List<Id>();
@@ -127,7 +127,7 @@ public with sharing class AssetMismatchSyncUp {
         }
 
     }
-    
+
     @future
     private static void setFlagAssetCheckerAsync(List<Id> ordlist)
     {
@@ -180,21 +180,21 @@ public with sharing class AssetMismatchSyncUp {
             if ( !ordItemsToBeUpdated.isEmpty() && !ordsTobeUpdated.isEmpty() ) {
                 List<Database.SaveResult> resultsOrderItem = Database.update( ordItemsToBeUpdated );
                 NSP_ErrorLogHandler.logResults(
-                    NSP_OrderTriggerHelper.class.getName() ,
+                    AssetMismatchSyncUp.class.getName() ,
                     'setFlagAssetCheckerStatic:update:OrderItem' ,
                     resultsOrderItem
                 );
                 List<Database.SaveResult> resultsOrder = Database.update( ordsTobeUpdated );
                 NSP_ErrorLogHandler.logResults(
-                    NSP_OrderTriggerHelper.class.getName() ,
+                    AssetMismatchSyncUp.class.getName() ,
                     'setFlagAssetCheckerStatic:update:Order' ,
                     resultsOrder
                 );
             }
         } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
-                NSP_OrderTriggerHelper.class.getName() ,
-                'setFlagAssetCheckerStatic' ,
+                AssetMismatchSyncUp.class.getName() ,
+                'setFlagAssetCheckerStatic:update:Asset' ,
                 e
             );
         }
