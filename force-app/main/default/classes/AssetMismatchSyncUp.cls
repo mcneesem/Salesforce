@@ -79,13 +79,13 @@ public with sharing class AssetMismatchSyncUp {
                 List<Database.SaveResult> resultsOrderItem = Database.update( ordItemsToBeUpdated );
                 NSP_ErrorLogHandler.logResults(
                     AssetMismatchSyncUp.class.getName() ,
-                    'assetOrderProductLinkUp:update:Asset' ,
+                    'assetOrderProductLinkUp:update:OrderItem' ,
                     resultsOrderItem
                 );
                 List<Database.SaveResult> resultsOrder = Database.update( ordsTobeUpdated );
                 NSP_ErrorLogHandler.logResults(
                     AssetMismatchSyncUp.class.getName() ,
-                    'assetOrderProductLinkUp:update:Asset' ,
+                    'assetOrderProductLinkUp:update:Order' ,
                     resultsOrder
                 );
             }
