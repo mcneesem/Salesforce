@@ -105,9 +105,10 @@ public with sharing class AssetMismatchSyncUp {
         for(Order ord:newList)
         {
             if ( ( ( ord.Status == NSP_CPQConstants.ORDER_ACTIVATED ) || ( ord.Status == NSP_CPQConstants.ORDER_REVIEWED ) )
+            && ( ord.Id != null ) && ( orderOldMap != null ) && ( orderOldMap.containsKey( ord.Id ) )
             && ( orderOldMap.get( ord.Id ).Status == NSP_CPQConstants.ORDER_DRAFT )
             && ord.Mismatch_Asset__c == false
-            && ( ord.Id != null ) && ( orderOldMap != null ) && ( orderOldMap.containsKey( ord.Id ) ))
+            )
         {
             ordlist.add( ord.Id );
         }
