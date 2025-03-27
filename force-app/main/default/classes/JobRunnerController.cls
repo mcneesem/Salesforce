@@ -1,5 +1,6 @@
 public with sharing class JobRunnerController {
-    // test w/ JobRunnerControllerTest (%96)
+    // test w/ JobRunnerControllerTest (96%)
+
     @AuraEnabled
     public static void executeBatch(String batchClassName) {
         if (String.isBlank(batchClassName)) {
@@ -56,4 +57,5 @@ public with sharing class JobRunnerController {
         }
         return options;
     }
+
 }
