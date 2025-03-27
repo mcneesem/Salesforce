@@ -508,18 +508,21 @@ public with sharing class NSP_TerminationFormTriggerHelper {
 
     // Method to Send Bell Notifications when termination form is rejected/approved
     @future
-    public static void sendBellNotificationToSpecialist( Set<Id> terminationFormSet ) {         
-        List<NSP_Termination_Form__c> terminationFormBellNotificationList = [
-            SELECT
-            Id , Name , RecordTypeId , NSP_Status__c ,
-            CreatedById , CreatedBy.IsActive ,
-            OwnerId , Owner.IsActive ,
-            Credit_Specialist__c , Credit_Specialist__r.pse__Salesforce_User__c , Credit_Specialist__r.pse__Salesforce_User__r.IsActive ,
-            NSP_Supervisor__c , NSP_Supervisor__r.IsActive ,
-            NSP_Payroll_Specialist__c , NSP_Payroll_Specialist__r.IsActive , NSP_Approver__c, NSP_Approver__r.IsActive
-            FROM NSP_Termination_Form__c
-            WHERE ( Id IN :terminationFormSet )
-        ];
+    public static void sendBellNotificationToSpecialist( Set<Id> terminationFormSet ) {
+        List<NSP_Termination_Form__c> terminationFormBellNotificationList = null;
+        if(terminationFormSet != null && !terminationFormSet.isEmpty()) {
+            terminationFormBellNotificationList = [
+                SELECT
+                Id , Name , RecordTypeId , NSP_Status__c ,
+                CreatedById , CreatedBy.IsActive ,
+                OwnerId , Owner.IsActive ,
+                Credit_Specialist__c , Credit_Specialist__r.pse__Salesforce_User__c , Credit_Specialist__r.pse__Salesforce_User__r.IsActive ,
+                NSP_Supervisor__c , NSP_Supervisor__r.IsActive ,
+                NSP_Payroll_Specialist__c , NSP_Payroll_Specialist__r.IsActive , NSP_Approver__c, NSP_Approver__r.IsActive
+                FROM NSP_Termination_Form__c
+                WHERE ( Id IN :terminationFormSet )
+            ];
+        }
         Map<NSP_Termination_Form__c,Set<String>> termFormToSpecialistIdsMap = new Map<NSP_Termination_Form__c,Set<String>>();
         for ( NSP_Termination_Form__c term : terminationFormBellNotificationList ) {
             
