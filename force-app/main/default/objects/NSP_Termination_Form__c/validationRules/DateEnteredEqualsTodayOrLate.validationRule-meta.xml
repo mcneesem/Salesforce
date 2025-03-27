@@ -2,7 +2,24 @@
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>DateEnteredEqualsTodayOrLate</fullName>
     <active>true</active>
-    <errorConditionFormula>NSP_Benefit_Termination_Date__c   &lt;  TODAY()</errorConditionFormula>
+    <errorConditionFormula>AND( 
+    NOT(
+        OR( 
+            NSP_Approver__r.UserRole.DeveloperName = &apos;Termination_Team&apos;,  
+            NSP_Approver__c = &apos;Termination Team&apos;,
+            NSP_Approver_Formula__c = &apos;Termination Team&apos;,
+AND(
+ ISPICKVAL( NSP_Status__c , &apos;PR Supervisor Approved&apos;),
+OR(
+  $Profile.Name = &apos;System Administrator&apos;,
+  $Profile.Name = &apos;System Admin Lite&apos;,
+   $UserRole.DeveloperName = &apos;Termination_Team&apos;
+)
+)
+        )
+    ),
+    NSP_Benefit_Termination_Date__c &lt; TODAY()
+)</errorConditionFormula>
     <errorDisplayField>NSP_Benefit_Termination_Date__c</errorDisplayField>
     <errorMessage>Date entered must equal today’s date or later</errorMessage>
 </ValidationRule>
