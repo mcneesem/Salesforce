@@ -13,7 +13,8 @@ public with sharing class AssetMismatchSyncUp {
 */
     @InvocableMethod(label='Link Asset Mismatch' description='links all mismatched assets.' category='Asset')
     public static void assetOrderProductLinkUp(List<String> orderId){
-
+    try
+    {
         List<OrderItem> orditems = [SELECT Id,Mismatch_AssetId__c
                                   FROM OrderItem
                                   WHERE orderid IN:OrderId AND Mismatch_AssetId__c != null];
@@ -49,12 +50,10 @@ public with sharing class AssetMismatchSyncUp {
             }
         }
 
-        try
-        {
 
            if(!asstsUpdated.isempty())
            {
-               List<Database.SaveResult> resultsasstsUpdated = Database.update(asstsUpdated);
+               List<Database.SaveResult> resultsasstsUpdated = Database.update(asstsUpdated,false);
                NSP_ErrorLogHandler.logResults(
                 AssetMismatchSyncUp.class.getName() ,
                    'assetOrderProductLinkUp:update:Asset' ,
@@ -76,13 +75,13 @@ public with sharing class AssetMismatchSyncUp {
            }
 
             if ( !ordItemsToBeUpdated.isEmpty() && !ordsTobeUpdated.isEmpty() ) {
-                List<Database.SaveResult> resultsOrderItem = Database.update( ordItemsToBeUpdated );
+                List<Database.SaveResult> resultsOrderItem = Database.update( ordItemsToBeUpdated,false );
                 NSP_ErrorLogHandler.logResults(
                     AssetMismatchSyncUp.class.getName() ,
                     'assetOrderProductLinkUp:update:OrderItem' ,
                     resultsOrderItem
                 );
-                List<Database.SaveResult> resultsOrder = Database.update( ordsTobeUpdated );
+                List<Database.SaveResult> resultsOrder = Database.update( ordsTobeUpdated,false );
                 NSP_ErrorLogHandler.logResults(
                     AssetMismatchSyncUp.class.getName() ,
                     'assetOrderProductLinkUp:update:Order' ,
@@ -108,7 +107,7 @@ public with sharing class AssetMismatchSyncUp {
             if ( ( ( ord.Status == NSP_CPQConstants.ORDER_ACTIVATED ) || ( ord.Status == NSP_CPQConstants.ORDER_REVIEWED ) )
             && ( orderOldMap.get( ord.Id ).Status == NSP_CPQConstants.ORDER_DRAFT )
             && ord.Mismatch_Asset__c == false
-            )
+            && ( ord.Id != null ) && ( orderOldMap != null ) && ( orderOldMap.containsKey( ord.Id ) ))
         {
             ordlist.add( ord.Id );
         }
@@ -135,6 +134,8 @@ public with sharing class AssetMismatchSyncUp {
     }
     private static void setFlagAssetCheckerStatic(List<Id> ordlist)
     {
+        try
+        {
 
         Map<Id,OrderItem> mapAsstOI = new Map<Id,OrderItem>();
         Map<Id,Order> mapOrdOPr = new Map<Id,Order>();
@@ -176,15 +177,15 @@ public with sharing class AssetMismatchSyncUp {
         }
 
 
-        try {
+
             if ( !ordItemsToBeUpdated.isEmpty() && !ordsTobeUpdated.isEmpty() ) {
-                List<Database.SaveResult> resultsOrderItem = Database.update( ordItemsToBeUpdated );
+                List<Database.SaveResult> resultsOrderItem = Database.update( ordItemsToBeUpdated,false );
                 NSP_ErrorLogHandler.logResults(
                     AssetMismatchSyncUp.class.getName() ,
                     'setFlagAssetCheckerStatic:update:OrderItem' ,
                     resultsOrderItem
                 );
-                List<Database.SaveResult> resultsOrder = Database.update( ordsTobeUpdated );
+                List<Database.SaveResult> resultsOrder = Database.update( ordsTobeUpdated,false );
                 NSP_ErrorLogHandler.logResults(
                     AssetMismatchSyncUp.class.getName() ,
                     'setFlagAssetCheckerStatic:update:Order' ,
