@@ -119,6 +119,10 @@
                 <behavior>Readonly</behavior>
                 <field>NSP_Orientation_Address__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>NSP_Level_of_Effort__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>

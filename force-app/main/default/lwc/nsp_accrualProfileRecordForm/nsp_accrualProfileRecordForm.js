@@ -170,8 +170,7 @@ export default class Nsp_accrualProfileRecordForm extends NavigationMixin(
       this.isFirstTimeCopyAction = false;
 
       if (this.isClone) {
-        this.fieldValue.NSP_Status__c = 'Draft';
-        this.assignTemplateValues();
+        this.clonedAssignment();
       }
 
       this.doOneTimeActions(this.fieldValue);
@@ -179,6 +178,13 @@ export default class Nsp_accrualProfileRecordForm extends NavigationMixin(
     }
     if (error) {
       this.showErrorToast(error.body.message);
+    }
+  }
+
+  clonedAssignment(){
+    this.fieldValue.NSP_Status__c = 'Draft';
+    if ( this.fieldValue.Template__c ) {
+      this.assignTemplateValues();
     }
   }
 
@@ -215,7 +221,15 @@ export default class Nsp_accrualProfileRecordForm extends NavigationMixin(
 
   get apFieldPermission() {
     let hasEditPermission = false;
-    if((this.fieldValue != null && this.recordTypeIdITA === this.fieldValue.recordTypeId) && ((this.isClone!= null && this.isClone) || this.stringIsNotBlank(this.fieldValue.Cloned_from_AP_Template__c) ) &&  !this.checkAccrualProfileEditPermission){
+    if ( ( this.fieldValue != null )
+      && ( this.recordTypeIdITA === this.fieldValue.recordTypeId )
+      && (
+        ( ( this.isClone != null ) && this.isClone && this.stringIsNotBlank( this.fieldValue.Cloned_from_AP_Template__c ) )
+        || ( !this.isClone && this.stringIsNotBlank( this.fieldValue.Cloned_from_AP_Template__c ) )
+        )
+      && !this.checkAccrualProfileEditPermission
+      )
+    {
       hasEditPermission = true;
     }
     return hasEditPermission;

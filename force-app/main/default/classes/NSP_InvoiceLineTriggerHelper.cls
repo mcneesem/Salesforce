@@ -82,6 +82,11 @@ public static void prepareForRevRecGeneration(List<Id> elgibleLineForRevRec){
     }
 }
 
+    //
+    // MethodName: selectInvoiceLineOrderItems
+    // Description : This method is used to Create a Map of OrderItem Ids and OrderItem records
+    // Params: List<blng__InvoiceLine__c> records
+    //
     private static Map<Id,OrderItem> selectInvoiceLineOrderItems( List<blng__InvoiceLine__c> records ) {
         Set<Id> orderProductIds = new Set<Id>();
         if ( ( records != null ) && !records.isEmpty() ) {
@@ -107,6 +112,11 @@ public static void prepareForRevRecGeneration(List<Id> elgibleLineForRevRec){
         return response;
     }
 
+    //
+    // MethodName: getInvoiceLineOrderItem
+    // Description : This method is used to return OrderItem record for Invoice Line
+    // Params: Id recordId , Map<Id,OrderItem> orderItemMap
+    //
     private static OrderItem getInvoiceLineOrderItem( Id recordId , Map<Id,OrderItem> orderItemMap ) {
         OrderItem record = null;
         if ( ( recordId != null )
@@ -121,6 +131,52 @@ public static void prepareForRevRecGeneration(List<Id> elgibleLineForRevRec){
     }
 
     //
+    // MethodName: selectInvoiceLineUsageSummaries
+    // Description : This method is used to Create a Map of Usage Summary Ids and Usage Summary records
+    // Params: List<blng__InvoiceLine__c> newInvLines
+    //
+    private static Map<Id,blng__UsageSummary__c> selectInvoiceLineUsageSummaries( List<blng__InvoiceLine__c> records ) {
+        Set<Id> usageSummaryIds = new Set<Id>();
+        if ( ( records != null ) && !records.isEmpty() ) {
+            for ( blng__InvoiceLine__c record : records ) {
+                if ( record.blng__UsageSummary__c != null ) {
+                    usageSummaryIds.add( record.blng__UsageSummary__c );
+                }
+            }
+        }
+        Map<Id,blng__UsageSummary__c> response = new Map<Id,blng__UsageSummary__c>();
+        if ( ( usageSummaryIds != null ) && !usageSummaryIds.isEmpty() ) {
+            response = new Map<Id,blng__UsageSummary__c>(
+                [
+                    SELECT
+                        Id ,
+                        blng__UnitPrice__c 
+                    FROM blng__UsageSummary__c
+                    WHERE ( Id IN : usageSummaryIds )
+                ]
+            );
+        }
+        return response;
+    }
+
+    //
+    // MethodName: getInvoiceLineUsageSummary
+    // Description : This method is used to return usageSummary record for Invoice Line
+    // Params: Id recordId , Map<Id,blng__UsageSummary__c> usageSummaryMap
+    //
+    private static blng__UsageSummary__c getInvoiceLineUsageSummary( Id recordId , Map<Id,blng__UsageSummary__c> usageSummaryMap ) {
+        blng__UsageSummary__c record = null;
+        if ( ( recordId != null )
+            && ( usageSummaryMap != null )
+            && usageSummaryMap.containsKey( recordId )
+            && ( usageSummaryMap.get( recordId ) != null )
+            )
+        {
+            record = usageSummaryMap.get( recordId );
+        }
+        return record;
+    }
+    //
     // MethodName: updateAddProductDescription
     // Description : This method is used to update additional Product Description Field on before Insert. STY-03868
     // Params: List<blng__InvoiceLine__c> Boolean isInsert
@@ -128,10 +184,15 @@ public static void prepareForRevRecGeneration(List<Id> elgibleLineForRevRec){
     public static void updateAddProductDescription( List<blng__InvoiceLine__c> invLineNew ) {
         Map<String,NSP_AdditionalProductDescription_Setting__mdt>  additionalProductDesSetMap = NSP_AdditionalProductDescription_Setting__mdt.getAll();
         Map<Id,OrderItem> orderItemMap = NSP_InvoiceLineTriggerHelper.selectInvoiceLineOrderItems( invLineNew );
+        Map<Id,blng__UsageSummary__c> usageSummaryMap = NSP_InvoiceLineTriggerHelper.selectInvoiceLineUsageSummaries( invLineNew );
         for ( blng__InvoiceLine__c newInvoiceLine : invLineNew ) {
             OrderItem item = NSP_InvoiceLineTriggerHelper.getInvoiceLineOrderItem(
                 newInvoiceLine.blng__OrderProduct__c ,
                 orderItemMap
+            );
+            blng__UsageSummary__c usageSummary = NSP_InvoiceLineTriggerHelper.getInvoiceLineUsageSummary(
+                newInvoiceLine.blng__UsageSummary__c ,
+                usageSummaryMap
             );
             if ( ( item != null )
                 && item.Prevent_Product_Description_Update__c
@@ -144,6 +205,15 @@ public static void prepareForRevRecGeneration(List<Id> elgibleLineForRevRec){
                     string prodDescStr = descriptionSetting.NSP_Product_Description_Syntex__c;
                     Decimal perunitPrice = newInvoiceLine.NSP_Consumption_Rate_Per_Unit__c != null ? newInvoiceLine.NSP_Consumption_Rate_Per_Unit__c:newInvoiceLine.blng__UnitPrice__c;
                     
+                    String prodDescType = descriptionSetting.Type__c;
+                    if ( ( usageSummary != null )
+                        && ( usageSummary.blng__UnitPrice__c != null )
+                        && ( prodDescType == 'Dynamic' )
+                        )
+                    {
+                        perunitPrice = usageSummary.blng__UnitPrice__c;
+                    }
+                    
                     //DF-05546 -- updating prices with accounting format
                     List<String> args = new String[]{'0','number','###,###,##0.00'};
                     String pepm_Text = '$'+String.format(perunitPrice.setScale(2).format(), args);
@@ -151,7 +221,6 @@ public static void prepareForRevRecGeneration(List<Id> elgibleLineForRevRec){
                     String mm_Text = (newInvoiceLine.NSP_Consumption_Rate_Flat_Price__c!=null && newInvoiceLine.NSP_Consumption_Rate_Flat_Price__c!=0) ?
                                         '$'+String.format(newInvoiceLine.NSP_Consumption_Rate_Flat_Price__c.setScale(2).format(), args) :
                                         null;
-                    
                     prodDescStr = (prodDescStr.contains('{Unit Price}') && perunitPrice != null) ? prodDescStr.replace('{Unit Price}',pepm_Text):prodDescStr;
                 
                     prodDescStr = (prodDescStr.contains('{Upper Tier_Flat Price}') && mm_Text != null) ? prodDescStr.replace('{Upper Tier_Flat Price}',mm_Text)

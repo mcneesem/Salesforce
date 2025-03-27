@@ -18,7 +18,7 @@ Modification Log     :  11/09/2023-Suhas : Added RET Client Id for Sync WO Asset
 * Ramya Ravi                   01/16/2022          v6.0 - Create project from asset <STY-02234>
 */
 public class NSP_AssetServiceTriggerHelper {
-    // test w/ NSP_AssetServiceTriggerHelperTest (80%)
+    // test w/ NSP_AssetServiceTriggerHelperTest (78%)
 
     public final String PEORECORDTYPE = 'PEO';
     public final String HRSPECIALISTROLE = 'HR Specialist';
@@ -2008,11 +2008,14 @@ Implementation profile related to the account of the created asset
     // Story : DF-04328
     //
     public void throwErrorMessageForNonEditFields( List<Asset> assetList , Map<Id,Asset> oldMap , Boolean isBPSAssetFields , Boolean onCreate ) {
-        String profileName = [ SELECT Id, Name FROM Profile WHERE Id = :UserInfo.getProfileId() ].Name;
+        List<Profile> profiles = [ SELECT Id , Name FROM Profile WHERE Id = :UserInfo.getProfileId() LIMIT 1 ];
+        String profileName = null;
+        if ( ( profiles != null ) && !profiles.isEmpty() ) {
+            profileName = profiles[0].Name;
+        }
         Boolean isBPSUserFields = false ;
         //List of all fields which RET users cannot edit if BPS Create Asset perm set is not assigned
         List<String> nonEditableBPSAssetFields = System.Label.NSP_BPS_Non_Editable_Fields.split( ',' );
-        List<String> nonEditableHardwareLoanerBPSAssetFields = System.Label.NSP_BPS_Non_Hardware_Loaner_Fields.split( ',' );
         //List of all fields which RET users cannot edit if RET Create Asset perm set is not assigned
         List<String> nonEditableRETFields = System.Label.NSP_RET_Non_Editable_Fields.split( ',' );
         List<String> nonEditableAssetFields = ( isBPSAssetFields && profileName == NSP_ServiceConstants.BPSSERVICE ) ? nonEditableBPSAssetFields :

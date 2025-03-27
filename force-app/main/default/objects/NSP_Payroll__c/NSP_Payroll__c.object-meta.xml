@@ -162,12 +162,14 @@
     <label>Payroll Data Sheet</label>
     <nameField>
         <displayFormat>P-{00000}</displayFormat>
-         <label>PDS Number</label>
+        <label>PDS Number</label>
         <trackHistory>false</trackHistory>
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Payroll Data Sheets</pluralLabel>
-    <searchLayouts></searchLayouts>
+    <searchLayouts>
+        <excludedStandardButtons>New</excludedStandardButtons>
+    </searchLayouts>
     <sharingModel>Read</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>

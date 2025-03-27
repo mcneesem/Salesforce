@@ -457,9 +457,9 @@
                         <rightValue>Contact Center</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!$User.Profile.Name}</leftValue>
-                        <operator>CONTAINS</operator>
-                        <rightValue>System Admin</rightValue>
+                        <leftValue>{!$Permission.CustomPermission.Admin_Layout_Access}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -671,10 +671,34 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>none</value>
+                    <value>required</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Description</fieldItem>
                 <identifier>RecordDescriptionField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Category__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Compensation Services</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Description</fieldItem>
+                <identifier>RecordDescriptionField2</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Category__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Compensation Services</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <name>Facet-05ee4b2b-16c3-4aab-bf2e-ff80e272f144</name>
@@ -774,6 +798,13 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Required_Documentation_Attached__c</fieldItem>
                 <identifier>RecordRequired_Documentation_Attached_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Category__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Compensation Services</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1163,9 +1194,9 @@
                 <identifier>RecordNSP_Category_cField</identifier>
                 <visibilityRule>
                     <criteria>
-                        <leftValue>{!$User.Profile.Name}</leftValue>
+                        <leftValue>{!$Permission.CustomPermission.Admin_Layout_Access}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>System Administrator</rightValue>
+                        <rightValue>true</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -1180,9 +1211,9 @@
                 <identifier>RecordNSP_SubCategory_cField</identifier>
                 <visibilityRule>
                     <criteria>
-                        <leftValue>{!$User.Profile.Name}</leftValue>
+                        <leftValue>{!$Permission.CustomPermission.Admin_Layout_Access}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>System Administrator</rightValue>
+                        <rightValue>true</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -1197,9 +1228,9 @@
                 <identifier>RecordNSP_Detail_cField</identifier>
                 <visibilityRule>
                     <criteria>
-                        <leftValue>{!$User.Profile.Name}</leftValue>
+                        <leftValue>{!$Permission.CustomPermission.Admin_Layout_Access}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>System Administrator</rightValue>
+                        <rightValue>true</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>

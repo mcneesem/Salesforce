@@ -6,4 +6,8 @@
         <field>NSP_Product_Description_Syntex__c</field>
         <value xsi:type="xsd:string">{Upper Tier_Flat Price} monthly minimum; {Qty} active employees at {Unit Price}</value>
     </values>
+    <values>
+        <field>Type__c</field>
+        <value xsi:type="xsd:string">Static</value>
+    </values>
 </CustomMetadata>

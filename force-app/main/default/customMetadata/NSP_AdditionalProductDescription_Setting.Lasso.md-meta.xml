@@ -6,4 +6,8 @@
         <field>NSP_Product_Description_Syntex__c</field>
         <value xsi:type="xsd:string">Add Company Name from Order Product Account</value>
     </values>
+    <values>
+        <field>Type__c</field>
+        <value xsi:type="xsd:string">Static</value>
+    </values>
 </CustomMetadata>
