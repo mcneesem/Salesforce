@@ -8,6 +8,7 @@
                 value={selectedBatchClass}
                 options={batchClassOptions}
                 onchange={handleBatchClassChange}
+                placeholder="Choose a batch class"
                 required
             ></lightning-combobox>
             <div class="slds-m-top_medium button-section">
@@ -16,12 +17,13 @@
                     variant="brand"
                     onclick={handleExecute}
                     class="slds-m-right_small"
+                    disabled={isDisabled}
                 ></lightning-button>                
                 <lightning-button
                     label="Status"
                     variant="brand"
                     onclick={handleStatus}
-                    disabled={isLoading}
+                    disabled={isDisabled}
                     class="slds-m-right_small"
                 ></lightning-button>
                 <lightning-button-icon
@@ -30,7 +32,7 @@
                     variant="border-filled"
                     alternative-text="Refresh Status"
                     onclick={handleStatus}
-                    disabled={isLoading}
+                    disabled={isDisabled}
                 ></lightning-button-icon>
             </div>
             <div lwc:if={showStatus}>

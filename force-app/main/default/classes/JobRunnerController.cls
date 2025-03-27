@@ -17,7 +17,7 @@ public with sharing class JobRunnerController {
         }
     }
 
-    @AuraEnabled(cacheable=true)
+    @AuraEnabled 
     public static List<AsyncApexJob> getBatchJobStatuses(String batchClassName) {
         DateTime sevenDaysAgo = DateTime.now().addDays(-7);
         Id currentUserId = UserInfo.getUserId();
@@ -27,6 +27,7 @@ public with sharing class JobRunnerController {
                    NumberOfErrors, CreatedBy.Name, CompletedDate, ApexClass.Name, MethodName, JobItemsProcessed
             FROM AsyncApexJob
             WHERE ApexClass.Name = :batchClassName
+            AND JobType != 'BatchApexWorker'
             AND CreatedById = :currentUserId
             AND CreatedDate >= :sevenDaysAgo
             ORDER BY CreatedDate DESC
