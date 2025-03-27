@@ -143,13 +143,11 @@ public class NSP_ServicePlanProjectTaskBatch implements Database.Batchable<sObje
                 projectTask.NSP_Category__c = NSP_ServiceConstants.Client_Management;
                 projectTask.NSP_Sub_Category__c = NSP_ServiceConstants.Quality_Touch_Point;
                 projectTask.pse__External_Task_ID__c = prj.Id+'-'+NSP_ServiceConstants.QTP1+'-'+randomNumber;
-                if ( accountTeamMap.containskey( prj.pse__Account__c )
-                    && ( accountTeamMap.get( prj.pse__Account__c ) != null )
-                    && ( accountTeamMap.get( prj.pse__Account__c ).NSP_User__c != null )
-                    )
+                if(getOwnerIdForTask(prj, accountTeamMap) != null)
                 {
-                    projectTask.OwnerId = accountTeamMap.get( prj.pse__Account__c ).NSP_User__c;
+                    projectTask.OwnerId = getOwnerIdForTask(prj, accountTeamMap) ; 
                 }
+                 
                 lstOfRecords.add(projectTask);
                 lstOfRecords.add(projTaskAssigmt);
                 
@@ -163,13 +161,11 @@ public class NSP_ServicePlanProjectTaskBatch implements Database.Batchable<sObje
                 projectTask1.NSP_Category__c = NSP_ServiceConstants.Client_Management;
                 projectTask1.NSP_Sub_Category__c = NSP_ServiceConstants.Quality_Touch_Point;
                 projectTask1.pse__External_Task_ID__c = prj.Id+'-'+NSP_ServiceConstants.QTP2+'-'+randomNumber;
-                if ( accountTeamMap.containskey( prj.pse__Account__c )
-                    && ( accountTeamMap.get( prj.pse__Account__c ) != null )
-                    && ( accountTeamMap.get( prj.pse__Account__c ).NSP_User__c != null )
-                    )
+                if(getOwnerIdForTask(prj, accountTeamMap) != null)
                 {
-                    projectTask1.OwnerId = accountTeamMap.get( prj.pse__Account__c ).NSP_User__c;
+                    projectTask1.OwnerId = getOwnerIdForTask(prj, accountTeamMap);
                 }
+                
                 lstOfRecords.add(projectTask1);
                 lstOfRecords.add(projTaskAssigmt2);
             }
@@ -187,6 +183,27 @@ public class NSP_ServicePlanProjectTaskBatch implements Database.Batchable<sObje
         }
     }
     
+    //== Method to return the owner Id based on certain conditions
+    private static String getOwnerIdForTask(pse__Proj__c prj, Map<Id, NSP_Account_Team__c> accountTeamMap) {
+        String ownerId  = null;
+        if (accountTeamMap.containskey(prj.pse__Account__c)) 
+        {
+            NSP_Account_Team__c accountTeam = accountTeamMap.get(prj.pse__Account__c);
+            if(accountTeam != null && accountTeam.NSP_User__c != null)
+            {
+                String role     = accountTeam.NSP_Role__c;
+                if (NSP_ServiceConstants.BUS_TEAM_HRSP_CL.equalsIgnoreCase(role)) {
+                    ownerId = (accountTeam.NSP_Primary__c ? accountTeam.NSP_User__c : accountTeam.NSP_User__c);
+                } else if ( NSP_ServiceConstants.MANAGER_HRSERVICES.equalsIgnoreCase(role)) {
+                    ownerId = accountTeam.NSP_User__c;
+                }
+            }    
+        }
+        
+        return ownerId;
+    }
+    
+    
     public void finish(Database.BatchableContext BC){
     
     }
@@ -196,8 +213,10 @@ public class NSP_ServicePlanProjectTaskBatch implements Database.Batchable<sObje
     // @return void
     //
     public static String getAccountTeamQuery(Set<Id> accountIds){
+        List<String> roles = new List<String>{NSP_ServiceConstants.MANAGER_HRSERVICES, NSP_ServiceConstants.BUS_TEAM_HRSP_CL};
+
         String accTeamQuery = new NSP_QueryBuilder('NSP_Account_Team__c', new List<String>{'NSP_Account__c','NSP_Role__c','NSP_User__c','NSP_Primary__c','NSP_First_Name__c'})
-            .addFilter('NSP_Role__c', NSP_ServiceConstants.BUS_TEAM_HRSP_CL , NSP_QueryBuilder.Operator.EQUALS)
+            .addFilter('NSP_Role__c', roles , NSP_QueryBuilder.Operator.INCLUDES)
             .addFilter('NSP_Account__c', new List<Id>(accountIds) , NSP_QueryBuilder.Operator.INCLUDES)
             .build();
         return accTeamQuery;
