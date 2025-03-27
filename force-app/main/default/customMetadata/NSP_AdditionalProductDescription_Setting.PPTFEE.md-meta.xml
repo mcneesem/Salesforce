@@ -6,4 +6,8 @@
         <field>NSP_Product_Description_Syntex__c</field>
         <value xsi:type="xsd:string">{Qty} participants at {Unit Price}</value>
     </values>
+    <values>
+        <field>Type__c</field>
+        <value xsi:type="xsd:string">Dynamic</value>
+    </values>
 </CustomMetadata>

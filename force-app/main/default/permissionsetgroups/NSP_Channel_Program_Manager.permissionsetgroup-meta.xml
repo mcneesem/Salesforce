@@ -7,6 +7,7 @@
     <permissionSets>Bloomfire_Custom_User</permissionSets>
     <permissionSets>Bypass_Task_Event_Cancelled_Status</permissionSets>
     <permissionSets>Campaign_Influence</permissionSets>
+    <permissionSets>Campaign_Update_Sales_Office_Info_Campaign_Assigned</permissionSets>
     <permissionSets>Contact_Modify_All</permissionSets>
     <permissionSets>Contact_View_All</permissionSets>
     <permissionSets>Convert_Leads</permissionSets>

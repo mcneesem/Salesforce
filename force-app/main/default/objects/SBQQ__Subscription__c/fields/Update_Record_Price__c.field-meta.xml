@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Update_Record_Price__c</fullName>
+    <description>To check if current record needs to be updated</description>
+    <externalId>false</externalId>
+    <formula>INCLUDES(
+  SBQQ__OrderProduct__r.Price_Update_Records__c ,
+  &apos;SBQQ__Subscription__c&apos;
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <inlineHelpText>Update this record&apos;s price as part of update</inlineHelpText>
+    <label>Update Record Price</label>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

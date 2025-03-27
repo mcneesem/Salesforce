@@ -40,7 +40,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>NSP_Owner__c</field>
+                <field>Client_Communication_Contact__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>

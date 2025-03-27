@@ -1,6 +1,168 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>57.0</apiVersion>
+    <assignments>
+        <name>Set_Credit_Note_GL_Rules_and_GL_Treatments</name>
+        <label>Set Credit Note GL Rules and GL Treatments</label>
+        <locationX>50</locationX>
+        <locationY>816</locationY>
+        <assignmentItems>
+            <assignToReference>recordCreditNoteLine.Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>recordCreditNoteLine.blng__BillingGLRule__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Product.NSP_Product_Credit_GL_Rule__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>recordCreditNoteLine.blng__BillingGLTreatment__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Billing_GL_Treatment.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>recordCreditNoteLine.blng__TaxGLRule__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Product.NSP_Product_Credit_Tax_GL_Rule__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>recordCreditNoteLine.blng__TaxGLTreatment__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Tax_GL_Treatment.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Save_Credit_Note_Line</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Get_Billing_GL_Treatment</name>
+        <label>Set Fault Element: Get_Billing_GL_Treatment</label>
+        <locationX>842</locationX>
+        <locationY>708</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Billing_GL_Treatment</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Get_Product</name>
+        <label>Set Fault Element: Get_Product</label>
+        <locationX>1634</locationX>
+        <locationY>384</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Product</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Get_Tax_GL_Treatment</name>
+        <label>Set Fault Element: Get_Tax_GL_Treatment</label>
+        <locationX>1106</locationX>
+        <locationY>600</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Tax_GL_Treatment</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Save_Credit_Note_Line</name>
+        <label>Set Fault Element: Save_Credit_Note_Line</label>
+        <locationX>314</locationX>
+        <locationY>1032</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Save_Credit_Note_Line</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Fault_Handler</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>Check_Product</name>
+        <label>Check Product</label>
+        <locationX>842</locationX>
+        <locationY>384</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Found_Product</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Product</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Tax_GL_Treatment</targetReference>
+            </connector>
+            <label>Found Product</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Treatments</name>
+        <label>Check Treatments</label>
+        <locationX>314</locationX>
+        <locationY>708</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Found_Treatments</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Tax_GL_Treatment</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Billing_GL_Treatment</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Credit_Note_GL_Rules_and_GL_Treatments</targetReference>
+            </connector>
+            <label>Found Treatments</label>
+        </rules>
+    </decisions>
     <environments>Default</environments>
     <interviewLabel>Populate Credit GL Rules {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Populate Credit GL Rules</label>
@@ -23,41 +185,18 @@
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
-    <recordCreates>
-        <name>Create_Error_Log</name>
-        <label>Create Error Log</label>
-        <locationX>572</locationX>
-        <locationY>768</locationY>
-        <inputAssignments>
-            <field>NSP_Class__c</field>
-            <value>
-                <stringValue>Flow On Credit Note Lines</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>NSP_Description__c</field>
-            <value>
-                <elementReference>$Flow.FaultMessage</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>NSP_Method__c</field>
-            <value>
-                <stringValue>Populate Credit GL Rules</stringValue>
-            </value>
-        </inputAssignments>
-        <object>NSP_Error_Log__c</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordCreates>
     <recordLookups>
-        <name>Get_Credit_Billing_GL_Treatment</name>
-        <label>Get Credit Billing GL Treatment</label>
-        <locationX>308</locationX>
-        <locationY>528</locationY>
+        <name>Get_Billing_GL_Treatment</name>
+        <label>Get Billing GL Treatment</label>
+        <locationX>314</locationX>
+        <locationY>600</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Set_Credit_GL_Rules_Treament</targetReference>
+            <targetReference>Check_Treatments</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_Get_Billing_GL_Treatment</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>blng__GLRule__c</field>
@@ -73,12 +212,15 @@
     <recordLookups>
         <name>Get_Product</name>
         <label>Get Product</label>
-        <locationX>308</locationX>
-        <locationY>288</locationY>
+        <locationX>842</locationX>
+        <locationY>276</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Get_Tax_GL_Treatment</targetReference>
+            <targetReference>Check_Product</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_Get_Product</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -94,12 +236,15 @@
     <recordLookups>
         <name>Get_Tax_GL_Treatment</name>
         <label>Get Tax GL Treatment</label>
-        <locationX>308</locationX>
-        <locationY>408</locationY>
+        <locationX>314</locationX>
+        <locationY>492</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Get_Credit_Billing_GL_Treatment</targetReference>
+            <targetReference>Get_Billing_GL_Treatment</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_Get_Tax_GL_Treatment</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>blng__GLRule__c</field>
@@ -113,41 +258,17 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordUpdates>
-        <name>Set_Credit_GL_Rules_Treament</name>
-        <label>Set Credit GL Rules&amp;Treament</label>
-        <locationX>308</locationX>
-        <locationY>648</locationY>
+        <name>Save_Credit_Note_Line</name>
+        <label>Save Credit Note Line</label>
+        <locationX>50</locationX>
+        <locationY>924</locationY>
         <faultConnector>
-            <targetReference>Create_Error_Log</targetReference>
+            <targetReference>Set_Fault_Element_Save_Credit_Note_Line</targetReference>
         </faultConnector>
-        <inputAssignments>
-            <field>blng__BillingGLRule__c</field>
-            <value>
-                <elementReference>Get_Product.NSP_Product_Credit_GL_Rule__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>blng__BillingGLTreatment__c</field>
-            <value>
-                <elementReference>Get_Credit_Billing_GL_Treatment.Id</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>blng__TaxGLRule__c</field>
-            <value>
-                <elementReference>Get_Product.NSP_Product_Credit_Tax_GL_Rule__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>blng__TaxGLTreatment__c</field>
-            <value>
-                <elementReference>Get_Tax_GL_Treatment.Id</elementReference>
-            </value>
-        </inputAssignments>
-        <inputReference>$Record</inputReference>
+        <inputReference>recordCreditNoteLine</inputReference>
     </recordUpdates>
     <start>
-        <locationX>50</locationX>
+        <locationX>188</locationX>
         <locationY>0</locationY>
         <filterLogic>and</filterLogic>
         <filters>
@@ -171,13 +292,48 @@
         </scheduledPaths>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
+    <subflows>
+        <name>Fault_Handler</name>
+        <label>Fault Handler</label>
+        <locationX>314</locationX>
+        <locationY>1140</locationY>
+        <flowName>Insperity_Fault_Handler_Subflow</flowName>
+        <inputAssignments>
+            <name>faultElement</name>
+            <value>
+                <elementReference>varFaultElement</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultFlow</name>
+            <value>
+                <stringValue>Populate_Credit_GL_Rules</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultMessage</name>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
     <variables>
-        <name>Errorlog</name>
+        <name>recordCreditNoteLine</name>
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
-        <objectType>NSP_Error_Log__c</objectType>
+        <objectType>blng__CreditNoteLine__c</objectType>
+    </variables>
+    <variables>
+        <name>varFaultElement</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue></stringValue>
+        </value>
     </variables>
 </Flow>

@@ -96,7 +96,7 @@ public without sharing class NSP_ContactRollupController {
                 SELECT
                     AccountId , Account.Name ,
                     ContactId , Contact.FirstName , Contact.LastName , Contact.Name ,
-                    NSP_Owner__c , NSP_Service_Roles__c , NSP_Support_Role__c ,
+                    Client_Communication_Contact__c , NSP_Service_Roles__c , NSP_Support_Role__c ,
                     Contact.NSP_Preferred_First_Name__c , NSP_Job_Title__c ,
                     NSP_Employee_Status__c , NSP_Work_Phone__c, NSP_Work_email__c
                 FROM AccountContactRelation 
@@ -167,13 +167,13 @@ public without sharing class NSP_ContactRollupController {
     public static Map < Id, ResultWrapper > getACR(string recordId, Map < Id, ResultWrapper > resultsMap, Integer offSetCount, Integer offSetLimit, String acrFilter) {
 
         String query = 'SELECT AccountId, Account.Name, ContactId, Contact.FirstName, Contact.LastName, Contact.Name, ' +
-            'NSP_Owner__c, NSP_Service_Roles__c, NSP_Support_Role__c, Contact.NSP_Preferred_First_Name__c, NSP_Job_Title__c, '+
+            'Client_Communication_Contact__c, NSP_Service_Roles__c, NSP_Support_Role__c, Contact.NSP_Preferred_First_Name__c, NSP_Job_Title__c, '+
             'NSP_Employee_Status__c, NSP_Work_Phone__c, NSP_Work_email__c '+
             'FROM AccountContactRelation ' +
             'WHERE AccountId =:recordId AND ';
 
         if (String.isBlank(acrFilter)) {
-            query += '(NSP_Service_Roles__c != NULL OR NSP_Support_Role__c != NULL OR NSP_Owner__c = TRUE) ';
+            query += '(NSP_Service_Roles__c != NULL OR NSP_Support_Role__c != NULL OR Client_Communication_Contact__c = TRUE) ';
         } else {
             query += '(' + acrFilter + ')';
         }
@@ -193,8 +193,8 @@ public without sharing class NSP_ContactRollupController {
                 if (string.isNotBlank(accConRelation.NSP_Support_Role__c)) {
                     lstRoles.add(accConRelation.NSP_Support_Role__c?.replace(';', '; '));
                 }
-                if (accConRelation.NSP_Owner__c) {
-                    lstRoles.add(getfieldLabel('NSP_Owner__c', 'AccountContactRelation'));
+                if (accConRelation.Client_Communication_Contact__c) {
+                    lstRoles.add(getfieldLabel('Client_Communication_Contact__c', 'AccountContactRelation'));
                 }
                 resultsMap.put(accConRelation.ContactId, new ResultWrapper(
                     new Account(Id = accConRelation.AccountId, Name = accConRelation.Account.Name),

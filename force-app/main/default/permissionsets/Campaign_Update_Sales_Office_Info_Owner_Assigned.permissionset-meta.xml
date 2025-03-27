@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Campaign_Update_Sales_Office_Info_Owner_Assigned</name>
+    </customPermissions>
+    <description>Sales office info on the Campaign record is updated from the Owner assigned sales office.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Campaign - Update Sales Office Info - Owner Assigned</label>
+</PermissionSet>

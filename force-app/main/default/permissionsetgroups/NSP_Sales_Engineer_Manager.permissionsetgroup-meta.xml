@@ -15,6 +15,7 @@
     <permissionSets>NSP_Finance_Service_Objects_Permission</permissionSets>
     <permissionSets>NSP_Main_Service_Contacts</permissionSets>
     <permissionSets>NSP_Order_ViewAll</permissionSets>
+    <permissionSets>Opportunity_Team_Team_Check</permissionSets>
     <permissionSets>Report_export_and_print_access</permissionSets>
     <permissionSets>SBQQ__SalesforceCPQUserAccess</permissionSets>
     <permissionSets>SBQQ__SteelBrickCPQUser</permissionSets>

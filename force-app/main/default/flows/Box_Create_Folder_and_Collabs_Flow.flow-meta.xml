@@ -1,42 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
-    <actionCalls>
-        <name>Create_Opportunity_Folder_From_Template</name>
-        <label>Create Opportunity Folder From Template</label>
-        <locationX>666</locationX>
-        <locationY>458</locationY>
-        <actionName>BoxCreateFolderForRecordIdFromTemplate</actionName>
-        <actionType>apex</actionType>
-        <connector>
-            <targetReference>Get_Opportunity</targetReference>
-        </connector>
-        <faultConnector>
-            <targetReference>Set_Fault_Element_Create_Opportunity_Folder_From_Template</targetReference>
-        </faultConnector>
-        <flowTransactionModel>Automatic</flowTransactionModel>
-        <inputParameters>
-            <name>recordId</name>
-            <value>
-                <elementReference>recordId.Id</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>templateFolderId</name>
-            <value>
-                <stringValue>{!$Setup.BoxFileRequest__c.BoxTemplateFolderId__c}</stringValue>
-            </value>
-        </inputParameters>
-        <nameSegment>BoxCreateFolderForRecordIdFromTemplate</nameSegment>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-        <versionSegment>1</versionSegment>
-    </actionCalls>
     <apiVersion>60.0</apiVersion>
     <assignments>
         <description>Field: Opportunity &gt; Send File Request to Primary Contact (Opportunity.Create_Box_com_Folder_s__c)</description>
         <name>Enable_Send_File_Request_to_Primary_Contact</name>
         <label>Enable Send File Request to Primary Contact</label>
         <locationX>50</locationX>
-        <locationY>998</locationY>
+        <locationY>890</locationY>
         <assignmentItems>
             <assignToReference>Get_Opportunity.Create_Box_com_Folder_s__c</assignToReference>
             <operator>Assign</operator>
@@ -49,26 +19,9 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Set_Fault_Element_Create_Opportunity_Folder_From_Template</name>
-        <label>Set Fault Element: Create_Opportunity_Folder_From_Template</label>
-        <locationX>1458</locationX>
-        <locationY>566</locationY>
-        <assignmentItems>
-            <assignToReference>faultElement</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Create_Opportunity_Folder_From_Template</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Fault_Handler_Subflow</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>Set_Fault_Element_Get_Associated_FRUP</name>
         <label>Set Fault Element: Get_Associated_FRUP</label>
-        <locationX>1986</locationX>
+        <locationX>1722</locationX>
         <locationY>242</locationY>
         <assignmentItems>
             <assignToReference>faultElement</assignToReference>
@@ -85,7 +38,7 @@
         <name>Set_Fault_Element_Get_Opportunity</name>
         <label>Set Fault Element: Get_Opportunity</label>
         <locationX>1194</locationX>
-        <locationY>674</locationY>
+        <locationY>566</locationY>
         <assignmentItems>
             <assignToReference>faultElement</assignToReference>
             <operator>Assign</operator>
@@ -102,7 +55,7 @@
         <name>Set_Fault_Element_Get_User_Record_Access</name>
         <label>Set Fault Element: Get_User_Record_Access</label>
         <locationX>754</locationX>
-        <locationY>890</locationY>
+        <locationY>782</locationY>
         <assignmentItems>
             <assignToReference>faultElement</assignToReference>
             <operator>Assign</operator>
@@ -119,7 +72,7 @@
         <name>Set_Fault_Element_Update_Opportunity</name>
         <label>Set Fault Element: Update_Opportunity</label>
         <locationX>314</locationX>
-        <locationY>1214</locationY>
+        <locationY>1106</locationY>
         <assignmentItems>
             <assignToReference>faultElement</assignToReference>
             <operator>Assign</operator>
@@ -136,7 +89,7 @@
         <description>Conditional to check for an existing FRUP record associated with Opportunity.  If a FRUP is found the screen flow will not attempt to invoke the Create Folder flow.</description>
         <name>Check_for_existing_FRUP</name>
         <label>Check for existing FRUP</label>
-        <locationX>1194</locationX>
+        <locationX>1062</locationX>
         <locationY>242</locationY>
         <defaultConnector>
             <targetReference>Existing_Folder_Found_Screen</targetReference>
@@ -163,7 +116,7 @@
         <name>Check_Opportunity</name>
         <label>Check Opportunity</label>
         <locationX>666</locationX>
-        <locationY>674</locationY>
+        <locationY>566</locationY>
         <defaultConnector>
             <targetReference>Folder_Creation_Complete_Screen</targetReference>
         </defaultConnector>
@@ -188,7 +141,7 @@
         <name>Check_User_Record_Access</name>
         <label>Check User Record Access</label>
         <locationX>314</locationX>
-        <locationY>890</locationY>
+        <locationY>782</locationY>
         <defaultConnector>
             <targetReference>Folder_Creation_Complete_Screen</targetReference>
         </defaultConnector>
@@ -250,7 +203,7 @@
         <description>Get FRUP records for Opportunity Id</description>
         <name>Get_Associated_FRUP</name>
         <label>Get Associated FRUP</label>
-        <locationX>1194</locationX>
+        <locationX>1062</locationX>
         <locationY>134</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -283,7 +236,7 @@
         <name>Get_Opportunity</name>
         <label>Get Opportunity</label>
         <locationX>666</locationX>
-        <locationY>566</locationY>
+        <locationY>458</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_Opportunity</targetReference>
@@ -317,7 +270,7 @@
         <name>Get_User_Record_Access</name>
         <label>Get User Record Access</label>
         <locationX>314</locationX>
-        <locationY>782</locationY>
+        <locationY>674</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_User_Record_Access</targetReference>
@@ -357,7 +310,7 @@
         <name>Update_Opportunity</name>
         <label>Update Opportunity</label>
         <locationX>50</locationX>
-        <locationY>1106</locationY>
+        <locationY>998</locationY>
         <connector>
             <targetReference>Folder_Creation_Complete_Screen</targetReference>
         </connector>
@@ -375,7 +328,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Create_Opportunity_Folder_From_Template</targetReference>
+            <targetReference>Get_Opportunity</targetReference>
         </connector>
         <fields>
             <name>Create_Folders_Screen_Display_Text</name>
@@ -389,7 +342,7 @@
     <screens>
         <name>Existing_Folder_Found_Screen</name>
         <label>Existing Folder Found Screen</label>
-        <locationX>1722</locationX>
+        <locationX>1458</locationX>
         <locationY>350</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -406,7 +359,7 @@
     <screens>
         <name>Fault_Screen</name>
         <label>Fault Screen</label>
-        <locationX>1986</locationX>
+        <locationX>1722</locationX>
         <locationY>458</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -423,7 +376,7 @@
         <name>Folder_Creation_Complete_Screen</name>
         <label>Folder Creation Complete Screen</label>
         <locationX>666</locationX>
-        <locationY>1580</locationY>
+        <locationY>1472</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -437,7 +390,7 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>1068</locationX>
+        <locationX>936</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Associated_FRUP</targetReference>
@@ -447,7 +400,7 @@
     <subflows>
         <name>Fault_Handler_Subflow</name>
         <label>Fault Handler Subflow</label>
-        <locationX>1986</locationX>
+        <locationX>1722</locationX>
         <locationY>350</locationY>
         <connector>
             <targetReference>Fault_Screen</targetReference>

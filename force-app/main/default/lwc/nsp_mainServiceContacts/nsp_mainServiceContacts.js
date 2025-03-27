@@ -7,7 +7,7 @@ import { CurrentPageReference } from 'lightning/navigation';
 import ACR_OBJECT from '@salesforce/schema/AccountContactRelation';
 import SUPPORTROLE_FIELD from '@salesforce/schema/AccountContactRelation.NSP_Support_Role__c';
 import SERVICEROLE_FIELD from '@salesforce/schema/AccountContactRelation.NSP_Service_Roles__c';
-import OWNER_FIELD from '@salesforce/schema/AccountContactRelation.NSP_Owner__c';
+import Client_Communication_Contact_FIELD from '@salesforce/schema/AccountContactRelation.Client_Communication_Contact__c';
 
 import SITESUP_FIELD from '@salesforce/schema/NSP_Sub_Client_Contact__c.NSP_On_Site_Supervisor__c';
 import PAYROLLCON_FIELD from '@salesforce/schema/NSP_Sub_Client_Contact__c.NSP_Payroll_Contact__c';
@@ -72,7 +72,7 @@ export default class Nsp_mainServiceContacts extends NavigationMixin(LightningEl
     loadMoreStatus;
     targetDatatable; // capture the loadmore event to fetch data and stop infinite loading
     filterState = false;
-    isOwnerACRfilter;
+    isClientCommunicationContactACRfilter;
     value = [];
     serviceRoles = [];
     supportRoles = [];
@@ -108,7 +108,7 @@ export default class Nsp_mainServiceContacts extends NavigationMixin(LightningEl
                 this.subClientFilter = '';
                 this.acrFilter = '';
                 this.offSetCount = 0;
-                this.isOwnerACRfilter = false
+                this.isClientCommunicationContactACRfilter = false
                 this.data = [];
                 this.value = [];
                 this.serviceRoles = [];
@@ -277,7 +277,7 @@ export default class Nsp_mainServiceContacts extends NavigationMixin(LightningEl
         this.subClientFilter = null;
         this.acrFilter = null;
         this.offSetCount = 0;
-        this.isOwnerACRfilter = false
+        this.isClientCommunicationContactACRfilter = false
         this.data = [];
         this.value = [];
         this.serviceRoles = [];
@@ -312,11 +312,11 @@ export default class Nsp_mainServiceContacts extends NavigationMixin(LightningEl
 
     }
 
-    //handle isowner and Filter Condition Input
+    //handle isClientCommunicationContat and Filter Condition Input
     handleInput(event) {
         let name = event.target.dataset.name;
-        if (name === 'isOwner') {
-            this.isOwnerACRfilter = !this.isOwnerACRfilter;
+        if (name === 'isClientCommunicationContact') {
+            this.isClientCommunicationContactACRfilter = !this.isClientCommunicationContactACRfilter;
         }
     }
 
@@ -326,8 +326,8 @@ export default class Nsp_mainServiceContacts extends NavigationMixin(LightningEl
         //ACR filters
         let allFilters = [];
 
-        if (this.isOwnerACRfilter) {
-            allFilters.push('Owner');
+        if (this.isClientCommunicationContactACRfilter) {
+            allFilters.push('Client Communication Contact');
         }
 
         if (this.serviceRoles && this.serviceRoles.length > 0) {
@@ -354,8 +354,8 @@ export default class Nsp_mainServiceContacts extends NavigationMixin(LightningEl
         let aCRFilter = [];
         let serviceRoles = '(\'' + this.serviceRoles?.join('\',\'') + '\')';
         let supportRoles = '(\'' + this.supportRoles?.join('\',\'') + '\')';
-        if (this.isOwnerACRfilter)
-            aCRFilter.push(OWNER_FIELD.fieldApiName + ' = true')
+        if (this.isClientCommunicationContactACRfilter)
+            aCRFilter.push(Client_Communication_Contact_FIELD.fieldApiName + ' = true')
         if (this.serviceRoles && this.serviceRoles?.length)
             aCRFilter.push(SERVICEROLE_FIELD.fieldApiName + ' INCLUDES ' + serviceRoles)
         if (this.supportRoles && this.supportRoles?.length)

@@ -5,15 +5,8 @@ private class NSP_LeadTriggerHelperTest {
     private static final String INTEREST = 'Payroll & Human Capital Management(Workforce Acceleration)';
     private static final String TMP_EMAIL = 'tmp@tmp123.com';
 
-    /**
-     * Does test data setup
-     * @param N/A.
-     * @return void
-     */
-    
     @TestSetup
     private static void testData() {
-        
         Lead_Trigger_Settings__c settings1 = Lead_Trigger_Settings__c.getOrgDefaults();
         settings1.AllowStatusChangedToWorking__c = True;
         upsert settings1;
@@ -38,7 +31,7 @@ private class NSP_LeadTriggerHelperTest {
         officeObj.NSP_Last_Index_Used__c = 0;
         officeObj.Name = newyork;
         insert officeObj;
-        
+
         // select the oldest active User with a 'System Administrator' Profile...
         List<User> testSystemAdministrators = [
             SELECT Id
@@ -63,7 +56,7 @@ private class NSP_LeadTriggerHelperTest {
         officeAssignmentObj.NSP_Sales_Office__c = '301';
         //Inserting office assignment object
         Insert officeAssignmentObj;
-        
+
         //Account creation
         Account accoutObject = new Account();
         Id partnerRecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('NSP_Partner_Client').getRecordTypeId();
@@ -369,14 +362,31 @@ private class NSP_LeadTriggerHelperTest {
      *     */
     @IsTest
     private static void dunsCheckBeforeInsertTest() {
+        Map<Id,User> dunsPermittedUserMap = CustomPermissionController.getPermittedUsersMap('Lead_DUNS_Account_Owner_Routing');        
+        List<User> testUsers = [
+            SELECT Id
+            FROM User
+            WHERE (
+                ( Id IN :dunsPermittedUserMap.keySet() )
+                AND ( IsActive = true )
+            )
+            ORDER BY CreatedDate DESC
+            LIMIT 1
+        ];
+
+        Test.startTest();
         Account accoutObject = new Account();
         Id partnerRecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('NSP_Partner_Client').getRecordTypeId();
         accoutObject.Name = 'Test Account';
         accoutObject.recordTypeId=partnerRecordTypeId;
-        accoutObject.DNB_Connect_DUNS_Number__c = '876543987';
+        accoutObject.DNB_Connect_DUNS_Number__c = '876543988';
+        if (!testUsers.isEmpty()) {
+            accoutObject.OwnerId = testUsers[0].Id;   
+        }
+        accoutObject.NSP_Account_Status__c = NSP_SalesConstants.INACTIVE;
         //Inserting account object
         insert accoutObject;
-        
+
         Lead nLead = new Lead();
         nLead.firstname='HelloTest123';
         nLead.lastname='Employee123';
@@ -386,11 +396,14 @@ private class NSP_LeadTriggerHelperTest {
         nLead.PostalCode = '10001';
         nLead.NumberOfEmployees  =160;
         nLead.NSP_Lead_Routing__c = true;
-        nLead.DNB_connect_DUNS_Number__c  = '876543987';
-        Test.startTest();
+        nLead.DNB_Connect_DUNS_Number__c = '876543988';
         insert nLead;
         Test.stopTest();
         system.assertEquals(nLead.NumberOfEmployees, 160);
+        if (!testUsers.isEmpty()) {
+            List<Lead>  leadList = [SELECT Id , OwnerId FROM lead WHERE Id = :nLead.Id];
+            system.assertEquals(leadList[0].OwnerId, testUsers[0].Id);
+        }
     }
     
     @IsTest
@@ -724,5 +737,4 @@ private class NSP_LeadTriggerHelperTest {
  
          Test.stopTest();
     }
- 
 }

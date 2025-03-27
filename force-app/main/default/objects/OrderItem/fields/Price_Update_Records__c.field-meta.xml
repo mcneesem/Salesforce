@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Price_Update_Records__c</fullName>
+    <description>Related records on which the update should be applied</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Select the records to explicitly process Price Update.</inlineHelpText>
+    <label>Price Update Records</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>OrderItem</fullName>
+                <default>false</default>
+                <label>OrderItem</label>
+            </value>
+            <value>
+                <fullName>SBQQ__OrderItemConsumptionRate__c</fullName>
+                <default>false</default>
+                <label>SBQQ__OrderItemConsumptionRate__c</label>
+            </value>
+            <value>
+                <fullName>SBQQ__Subscription__c</fullName>
+                <default>false</default>
+                <label>SBQQ__Subscription__c</label>
+            </value>
+            <value>
+                <fullName>SBQQ__SubscriptionConsumptionRate__c</fullName>
+                <default>false</default>
+                <label>SBQQ__SubscriptionConsumptionRate__c</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

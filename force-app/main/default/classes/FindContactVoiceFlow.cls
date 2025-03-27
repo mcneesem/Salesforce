@@ -13,9 +13,19 @@ public class FindContactVoiceFlow {
             if ( input.length() > 1 ) {
                 Date limitDate = System.today().addDays( -1 * FindContactVoiceFlow.limitCreatedDate );
                 List<List<Contact>> searchResults = [
-                    FIND :input IN PHONE FIELDS
+                    FIND :input
+                    IN PHONE FIELDS
                     RETURNING Contact(
-                        Id , Name , Email , HomePhone , NSP_Work_Phone__c , MobilePhone
+                            Id ,
+                            Name ,
+                            Email ,
+                            HomePhone ,
+                            MailingAddress ,
+                            MobilePhone ,
+                            NSP_Date_Of_Birth_Unmasked__c ,
+                            NSP_Last_4Digit_Of_SSN__c ,
+                            NSP_Per_ID__c ,
+                            NSP_Work_Phone__c
                         WHERE ( CreatedDate >= :(limitDate) )
                         LIMIT :FindContactVoiceFlow.limitSearch
                     )
