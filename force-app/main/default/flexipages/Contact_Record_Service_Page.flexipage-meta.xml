@@ -336,7 +336,7 @@
                             <value>NSP_Support_Role__c</value>
                         </valueListItems>
                         <valueListItems>
-                            <value>NSP_Owner__c</value>
+                            <value>Client_Communication_Contact__c</value>
                         </valueListItems>
                         <valueListItems>
                             <value>NSP_Job_Title__c</value>
