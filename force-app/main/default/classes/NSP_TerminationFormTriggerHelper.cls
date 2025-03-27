@@ -597,7 +597,6 @@ public with sharing class NSP_TerminationFormTriggerHelper {
         } else if (isTermApproved) {
             addIfActive(specialistIds, term.NSP_Supervisor__r, term.NSP_Supervisor__c);
             addIfOwnerActive(specialistIds, term.OwnerId);
-            //addIfActive(specialistIds, term.CreatedBy, term.CreatedById);
             addIfActive(specialistIds, term.NSP_Payroll_Specialist__r, term.NSP_Payroll_Specialist__c);
             addIfACtive(specialistIds, term.NSP_Approver__r, term.NSP_Approver__c);
         }
