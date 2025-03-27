@@ -531,28 +531,15 @@ public class NSP_AccountTriggerHelper {
      */
     public void setDummyUsers( List<Account> accountList ) {
         try {
-            List<User> dummyUser = [SELECT Id FROM User WHERE Name = :NSP_SalesConstants.DUMMY_USER_SIGNER LIMIT 1];
-            for (Account accountObj: accountList) {
-                //if Opportunity owner is BPA
-                //set BPA as owner or set as dummy user
-                if (accountObj.NSP_BPA__c == null) {
-                    if ( templSelectUpdPermittedUserMap.keySet().contains( accountObj.OwnerId ) ) {
+            for( Account accountObj: accountList ){
+                // if Account owner is BPA
+                // set BPA as owner or set as dummy user -- UPDATE: Dummy User retired; just leave NSP_BPA__c unassigned
+                if ( ( accountObj.NSP_BPA__c == null )
+                   && ( templSelectUpdPermittedUserMap.keySet().contains( accountObj.OwnerId ) ) ){
                         accountObj.NSP_BPA__c = accountObj.OwnerId;
-                    } else {
-                        accountObj.NSP_BPA__c = dummyUser[0].Id;
-                    }
-                }
-                if (accountObj.Channel_Manager__c == null) {
-                    accountObj.Channel_Manager__c = dummyUser[0].Id;
-                }
-                if (accountObj.NSP_Channel_Partner_Manager__c == null) {
-                    accountObj.NSP_Channel_Partner_Manager__c = dummyUser[0].Id;
-                }
-                if (accountObj.NSP_Channel_Program_Manager__c == null) {
-                    accountObj.NSP_Channel_Program_Manager__c = dummyUser[0].Id;
                 }
             }
-        } catch ( Exception e ) {
+        } catch ( Exception e ){
             NSP_AccountTriggerHelper.handleException( e , 'setDummyUsers' );
         }
     }
@@ -682,9 +669,14 @@ public class NSP_AccountTriggerHelper {
     private Set<Id> selectAccountTeamMemberIds( Map<Id,Account> newMap ) {
         Set<Id> response = new Set<Id>();
         for ( NSP_Account_Team__c accTeam : [
-                    SELECT Id , NSP_User__c , NSP_Account__c
+                    SELECT
+                        Id ,
+                        NSP_User__c ,
+                        NSP_Account__c
                     FROM NSP_Account_Team__c
-                    WHERE ( NSP_Account__c = :newMap.keySet() )
+                    WHERE ( 
+                        ( NSP_Account__c = :newMap.keySet() )
+                    )
                 ]
             )
         {
