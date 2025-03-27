@@ -78,6 +78,7 @@
     &apos;98&apos; , &apos;Resilient Capital&apos; ,
     &apos;99&apos; , &apos;Housatonic Partners&apos; ,
     &apos;100&apos; , &apos;ExclusiveCFO Inc&apos; ,
+    &apos;101&apos; , &apos;Atlantic Ridge Capital&apos; ,
     TEXT( pse__Account__r.WO_Asset__r.NSP_National_Account_Group__c )
   )
 )</formula>
