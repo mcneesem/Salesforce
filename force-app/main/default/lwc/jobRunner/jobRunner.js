@@ -1,16 +1,16 @@
-import { LightningElement, track } from 'lwc';
+import { LightningElement } from 'lwc';
 import executeBatch from '@salesforce/apex/JobRunnerController.executeBatch';
 import getBatchJobStatuses from '@salesforce/apex/JobRunnerController.getBatchJobStatuses';
 import getRecentBatchClasses from '@salesforce/apex/JobRunnerController.getRecentBatchClasses';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 export default class JobRunner extends LightningElement {
-    @track selectedBatchClass = '';
-    @track showStatus = false;
-    @track jobStatuses = [];
-    @track isLoading = false;
-    @track currentPage = 1;
-    @track batchClassOptions = [];
+    selectedBatchClass = '';
+    showStatus = false;
+    jobStatuses = [];
+    isLoading = false;
+    currentPage = 1;
+    batchClassOptions = [];
     pageSize = 20;
 
     columns = [
@@ -54,12 +54,13 @@ export default class JobRunner extends LightningElement {
     async loadBatchClassOptions() {
         try {
             this.isLoading = true;
-            this.batchClassOptions = await getRecentBatchClasses();
-            if (this.batchClassOptions.length > 0) {
-                this.selectedBatchClass = this.batchClassOptions[0].value;
-            }
+            const options = await getRecentBatchClasses();
+            this.batchClassOptions = options.map(opt => ({
+                label: opt.label,
+                value: opt.value
+            }));
         } catch (error) {
-            this.showToast('Error', 'Failed to load batch classes: ' + error.body?.message, 'error');
+            this.showToast('Error', 'Failed to load batch classes: ' + (error.body?.message || error.message), 'error');
         } finally {
             this.isLoading = false;
         }
@@ -83,6 +84,10 @@ export default class JobRunner extends LightningElement {
         return this.currentPage === this.totalPages;
     }
 
+    get isDisabled() {
+        return !this.selectedBatchClass || this.selectedBatchClass.trim() === '' || this.isLoading;
+    }
+
     handleBatchClassChange(event) {
         this.selectedBatchClass = event.detail.value;
         this.showStatus = false;
@@ -96,10 +101,13 @@ export default class JobRunner extends LightningElement {
         }
 
         try {
-            const jobId = await executeBatch({ batchClassName: this.selectedBatchClass });
-            this.showToast('Success', `Batch job started with ID: ${jobId}`, 'success');
+            this.isLoading = true;
+            await executeBatch({ batchClassName: this.selectedBatchClass });
+            this.showToast('Success', 'Batch job has been successfully started.', 'success');
         } catch (error) {
             this.showToast('Error', error.body?.message || 'Failed to execute batch.', 'error');
+        } finally {
+            this.isLoading = false;
         }
     }
 
@@ -124,7 +132,7 @@ export default class JobRunner extends LightningElement {
             }));
             this.showStatus = true;
             this.currentPage = 1;
-            this.showToast('Success', 'Job statuses loaded!', 'success');
+            this.showToast('Success', 'Job statuses refreshed!', 'success');
         } catch (error) {
             console.error('Error fetching statuses:', error);
             this.showToast('Error', error.body?.message || 'Failed to fetch job statuses.', 'error');
