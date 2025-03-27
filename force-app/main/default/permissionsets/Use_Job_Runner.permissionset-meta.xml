@@ -6,5 +6,5 @@
     </customPermissions>
     <description>Permission to use the &quot;Job Runner&quot; LWC.</description>
     <hasActivationRequired>false</hasActivationRequired>
-    <label>Use Job Runner</label>    
+    <label>Use Job Runner</label>
 </PermissionSet>
