@@ -90,8 +90,6 @@ export default class JobRunner extends LightningElement {
 
     handleBatchClassChange(event) {
         this.selectedBatchClass = event.detail.value;
-        this.showStatus = false;
-        this.currentPage = 1;
     }
 
     async handleExecute() {
