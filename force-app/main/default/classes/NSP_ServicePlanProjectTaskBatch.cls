@@ -219,7 +219,8 @@ public class NSP_ServicePlanProjectTaskBatch implements Database.Batchable<sObje
         
         // check accountIDset not empty
         if(!accountIdSet.isEmpty()){
-            for(NSP_Account_Team__c team : Database.Query(getAccountTeamQuery(accountIdSet)))
+            List<NSP_Account_Team__c> accountTeamList = getAccountTeamQuery(accountIdSet);
+            for(NSP_Account_Team__c team : accountTeamList)
             {
                 if(team != null)
                 {
@@ -246,14 +247,16 @@ public class NSP_ServicePlanProjectTaskBatch implements Database.Batchable<sObje
     // @param accountIds Set of accountIds that is associated with project Account
     // @return void
     //
-    public static String getAccountTeamQuery(Set<Id> accountIds){
+    public static List<NSP_Account_Team__c> getAccountTeamQuery(Set<Id> accountIds){
         List<String> roles = new List<String>{NSP_ServiceConstants.MANAGER_HRSERVICES, NSP_ServiceConstants.BUS_TEAM_HRSP_CL};
 
-        String accTeamQuery = new NSP_QueryBuilder('NSP_Account_Team__c', new List<String>{'NSP_Account__c','NSP_Role__c','NSP_User__c','NSP_Primary__c','NSP_First_Name__c'})
-            .addFilter('NSP_Role__c', roles , NSP_QueryBuilder.Operator.INCLUDES)
-            .addFilter('NSP_Account__c', new List<Id>(accountIds) , NSP_QueryBuilder.Operator.INCLUDES)
-            .build();
-        return accTeamQuery;
+        List<NSP_Account_Team__c> accountTeamList = [SELECT ID, NSP_Account__c, NSP_Role__c, NSP_User__c, NSP_Primary__c, NSP_First_Name__c 
+        FROM NSP_Account_Team__c 
+        WHERE NSP_Role__c = :roles 
+        AND 
+        NSP_Account__c = :accountIds WITH SECURITY ENFORCED];
+
+        return accountTeamList;
     }
 
     //

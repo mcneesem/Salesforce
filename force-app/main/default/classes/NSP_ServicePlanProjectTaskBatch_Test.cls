@@ -12,55 +12,50 @@ public class NSP_ServicePlanProjectTaskBatch_Test
     @testSetup static void testData() 
     {
         //Creating Account record
-        Account accountRecord 								= (Account)NSP_TestExtendedDataFactory.createSObject(new Account());
-        accountRecord.NSP_Sales_Service_Account_Status__c 	= NSP_ServiceConstants.Account_Status;
-        accountRecord.NSP_First_Pay_Date__c 				= system.Today();
-        
+        Account accountRecord = (Account)NSP_TestExtendedDataFactory.createSObject(new Account());
+        accountRecord.NSP_Sales_Service_Account_Status__c = NSP_ServiceConstants.Account_Status;
+        accountRecord.NSP_First_Pay_Date__c = system.Today();
         INSERT accountRecord;
         
         //Creating Asset record
-        String woAssetRecordTypeId 					= NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.ASSET_SOBJECT_TYPE, 
-                                                                                            NSP_ServiceConstants.WO_ASSET_RECORDTYPE);
-        Asset assetRecord 							= (Asset)NSP_TestDataFactory.createSObject(new Asset());
-        assetRecord.AccountId 						= accountRecord.Id;
-        assetRecord.NSP_AIMS_First_Pay_Date__c 		= system.Today();
-        assetRecord.NSP_Account_Status__c 			= NSP_ServiceConstants.AIMS_STATUS;
-        assetRecord.NSP_Client_Segment_type__c 		= NSP_ServiceConstants.BTAssetSegment;
-        assetRecord.RecordTypeId 					= woAssetRecordTypeId;
-        assetRecord.NSP_Renewal_Date__c 			= system.Today();
-        
+        String woAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.ASSET_SOBJECT_TYPE, NSP_ServiceConstants.WO_ASSET_RECORDTYPE);
+        Asset assetRecord = (Asset)NSP_TestDataFactory.createSObject(new Asset());
+        assetRecord.AccountId = accountRecord.Id;
+        assetRecord.NSP_AIMS_First_Pay_Date__c = system.Today();
+        assetRecord.NSP_Account_Status__c = NSP_ServiceConstants.AIMS_STATUS;
+        assetRecord.NSP_Client_Segment_type__c = NSP_ServiceConstants.BTAssetSegment;
+        assetRecord.RecordTypeId = woAssetRecordTypeId;
+        assetRecord.NSP_Renewal_Date__c = system.Today();
         INSERT assetRecord;
         
         //Creating Sub Client record
-        NSP_Sub_Client__c subClientRecord 		= (NSP_Sub_Client__c)NSP_TestExtendedDataFactory.createSObject(new NSP_Sub_Client__c());
-        subClientRecord.NSP_Asset__c 			= assetRecord.Id;
-        subClientRecord.NSP_Account__c 			= accountRecord.Id;
-        subClientRecord.NSP_Renewal_Date__c 	= system.Today();
-        subClientRecord.NSP_Client__c 			= NSP_ServiceConstants.ZERO_ZERO_SUFFIX;
-        subClientRecord.NSP_Account_Status__c 	= NSP_ServiceConstants.AIMS_STATUS;
-        subClientRecord.NSP_Sub_Client__c 		= '120000';
-        
+        NSP_Sub_Client__c subClientRecord = (NSP_Sub_Client__c)NSP_TestExtendedDataFactory.createSObject(new NSP_Sub_Client__c());
+        subClientRecord.NSP_Asset__c = assetRecord.Id;
+        subClientRecord.NSP_Account__c = accountRecord.Id;
+        subClientRecord.NSP_Renewal_Date__c = system.Today();
+        subClientRecord.NSP_Client__c = NSP_ServiceConstants.ZERO_ZERO_SUFFIX;
+        subClientRecord.NSP_Account_Status__c = NSP_ServiceConstants.AIMS_STATUS;
+        subClientRecord.NSP_Sub_Client__c = '120000';
         INSERT subClientRecord;
         
         //Creating Project record
-        projectRecord 							= new pse__Proj__c();
-        projectRecord 							= (pse__Proj__c)NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c());
-        projectRecord.pse__Account__c 			= accountRecord.Id;
-        projectRecord.TemplateName__c 			= NSP_ServiceConstants.PROJECT_TEMPLATE_NAME;
-        projectRecord.pse__Is_Template__c 		= False;
-        projectRecord.pse__Project_Status__c 	= NSP_ServiceConstants.STATUS_ACTIVE;
-        projectRecord.pse__Start_Date__c 		= Date.Today();
-        projectRecord.pse__Project_Type__c 		= NSP_ServiceConstants.PROJECT_TYPE_SERVICE;
-        
+        projectRecord = new pse__Proj__c();
+        projectRecord = (pse__Proj__c)NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c());
+        projectRecord.pse__Account__c = accountRecord.Id;
+        projectRecord.TemplateName__c = NSP_ServiceConstants.PROJECT_TEMPLATE_NAME;
+        projectRecord.pse__Is_Template__c = False;
+        projectRecord.pse__Project_Status__c = NSP_ServiceConstants.STATUS_ACTIVE;
+        projectRecord.pse__Start_Date__c = Date.Today();
+        projectRecord.pse__Project_Type__c = NSP_ServiceConstants.PROJECT_TYPE_SERVICE;
         INSERT projectRecord;
-        
+       
         // Create Project Task
         pse__Project_Task__c projTaskRecord = new pse__Project_Task__c();
-        projTaskRecord.pse__Project__c 		= projectRecord.Id;
-        projTaskRecord.Name 				= NSP_ServiceConstants.QTP1;
-        
+        projTaskRecord.pse__Project__c = projectRecord.Id;
+        projTaskRecord.Name = NSP_ServiceConstants.QTP1;
+        //projTaskRecord.pse__Start_Date_Time__c = system.today();
         INSERT projTaskRecord;
-        
+
         // ASSERTS 
         Assert.isTrue(accountRecord != null);
         Assert.isTrue(woAssetRecordTypeId != null);
