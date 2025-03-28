@@ -3,29 +3,28 @@
     <fullName>Only_NCS_can_Edit_Forecast_Category</fullName>
     <active>true</active>
     <errorConditionFormula>AND(
-  OR(
-    ISNEW() ,
-    ISCHANGED( NSP_Forecast_Status__c )
-  ) ,
-  OR(
-    AND(
-      NOT( $UserRole.Name = &apos;New Client Sales&apos; ) ,
-      OR(
-        ISPICKVAL( NSP_Forecast_Status__c , &apos;Pending-Docs Submitted to NCS&apos; ) ,
-        ISPICKVAL( NSP_Forecast_Status__c , &apos;Sold-Booked&apos; )
-      )
-    ) ,
-    AND(
-      NOT(
-        OR(
-          $UserRole.Name = &apos;HCM Sales Consultant&apos; ,
-          $Profile.Name = &apos;Sales Manager&apos; ,
-          $UserRole.Name = &apos;New Client Sales&apos;
-        )
-      ) ,
-      ISPICKVAL( NSP_Forecast_Status__c , &apos;Verbal-Appt Set to Pickup Docs&apos; )
-    )
-  )
+OR(
+ISNEW() ,
+ISCHANGED( NSP_Forecast_Status__c )
+) ,
+OR(
+AND(
+NOT( $Permission.Opportunity_Closed_Won_NCS_User ) ,
+OR(
+ISPICKVAL( NSP_Forecast_Status__c , &apos;Pending-Docs Submitted to NCS&apos; ) ,
+ISPICKVAL( NSP_Forecast_Status__c , &apos;Sold-Booked&apos; )
+)
+) ,
+AND(
+NOT(
+OR(
+$Permission.Opportunity_Forecast_Category_Edit_Allowed ,
+$Profile.Name = &apos;Sales Manager&apos;
+)
+) ,
+ISPICKVAL( NSP_Forecast_Status__c , &apos;Verbal-Appt Set to Pickup Docs&apos; )
+)
+)
 )</errorConditionFormula>
     <errorDisplayField>NSP_Forecast_Status__c</errorDisplayField>
     <errorMessage>Only New Client Sales can set to &quot;Pending-Docs Submitted to NCS&quot; or &quot;Sold-Booked&quot;</errorMessage>
