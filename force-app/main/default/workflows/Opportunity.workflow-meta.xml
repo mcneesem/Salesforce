@@ -424,6 +424,10 @@
             <field>NSP_DM_User__c</field>
             <type>userLookup</type>
         </recipients>
+        <recipients>
+            <field>NSP_RM__c</field>
+            <type>userLookup</type>
+        </recipients>
         <senderType>CurrentUser</senderType>
         <template>Sales_Approval_Process/Outgoing_Approval_Request_Other_Account_Segments</template>
     </alerts>
