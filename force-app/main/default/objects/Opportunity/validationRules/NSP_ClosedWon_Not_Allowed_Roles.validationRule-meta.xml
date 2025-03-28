@@ -3,14 +3,14 @@
     <fullName>NSP_ClosedWon_Not_Allowed_Roles</fullName>
     <active>true</active>
     <errorConditionFormula>AND(
-$Permission.Opportunity_Closed_Won_Edit_Not_Allowed ,
-ISPICKVAL( StageName , &apos;Closed Won&apos; ) ,
-NOT(
-AND(
-$Permission.Edit_Closed_Won_Create_Box_Folder ,
-ISCHANGED(Create_Box_com_Folder_s__c)
-)
-)
+  $Permission.Opportunity_Closed_Won_Edit_Not_Allowed ,
+  ISPICKVAL( StageName , &apos;Closed Won&apos; ) ,
+  NOT(
+    AND(
+      $Permission.Edit_Closed_Won_Create_Box_Folder ,
+      ISCHANGED( Create_Box_com_Folder_s__c )
+    )
+  )
 )</errorConditionFormula>
     <errorMessage>You do not have access to edit an Opportunity that has been Closed/Won</errorMessage>
 </ValidationRule>
