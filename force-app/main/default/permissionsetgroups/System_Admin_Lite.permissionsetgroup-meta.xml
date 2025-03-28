@@ -10,7 +10,7 @@
     <permissionSets>Admin_Layout_Access</permissionSets>
     <permissionSets>Allow_Delete_Accounts</permissionSets>
     <permissionSets>Allow_Delete_Leads</permissionSets>
-    <permissionSets>Bundle_Template_Flag_fields_Permission</permissionSets>
+    <permissionSets>Bundle_Template_Flag_fields_Permission</permissionSets>    
     <permissionSets>Bypass_Benefit_Termination_Date_Rule</permissionSets> 
     <permissionSets>Bypass_Read_Only_Case_Owner</permissionSets>
     <permissionSets>Bypass_Restrict_Termination_Date_and_Status</permissionSets>
