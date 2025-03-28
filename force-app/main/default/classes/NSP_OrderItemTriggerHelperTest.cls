@@ -12,7 +12,7 @@
         orderSetting.EffectiveDateStartOfMonth__c = true;
         orderSetting.Bypass_Rule_PreventStatusChange__c = true;
         upsert orderSetting;
-
+        
         NSP_Trigger_Switch__c triggerSetting = new NSP_Trigger_Switch__c();
         triggerSetting.QuoteValidation__c = true;
         insert triggerSetting;
@@ -28,14 +28,14 @@
          LocaleSidKey='en_US', ProfileId = admProfile.Id,
          TimeZoneSidKey='America/Los_Angeles', UserName='newuser@testorg.com.insperity.sforg');
          System.runAs(u2) {
-
+        
          AVA_MAPPER__Entity_Use_code__c entityObj = new AVA_MAPPER__Entity_Use_code__c();
          entityObj.Name = 'ABC';
          entityObj.AVA_MAPPER__Description__c = 'FEDERAL GOV';
          insert entityObj;
 
         Pricebook2 priceBookRec = NSP_TestHelper.getStandardPriceBook2();
-
+        
         Id stdPriceBookId = Test.getStandardPricebookId();
         //   NSP_ProjectTasksTrigger.TriggerDisabled = true;
         Account objaccount = NSP_TestHelper.createAccount(false);
@@ -57,14 +57,14 @@
         hcmProject.TemplateName__c = NSP_ServiceConstants.HCM_PROJECT_NAME;
         hcmProject.Project_Implementer__c = UserInfo.getUserId();
         insert hcmProject;
-
-
+             
+        
         Opportunity objOpportunity = NSP_TestHelper.createOpenOpportunity(objaccount.Id, 'New Product', false);
         objOpportunity.NSP_Signed_CSA__c = true;
         objOpportunity.NSP_Signed_Delivery_Order__c = true;
         insert objOpportunity;
-
-
+             
+             
         blng__BillingRule__c brObj = new blng__BillingRule__c();
         brObj.blng__Active__c = true;
         brObj.Name = 'Test InsBR';
@@ -106,7 +106,7 @@
 
         blng__TaxTreatment__c texRuleRec = new blng__TaxTreatment__c(blng__TaxCode__c = 'SW052011', blng__TaxGLRule__c = taxTreatmentRec.Id, blng__TaxIntegration__c = taxIntegrationRec.Id, blng__TaxLegalEntity__c = legalEntityRec.Id, Name = 'TestTaxTreatment', blng__TaxRule__c = taxRuleObj.Id);
         insert texRuleRec;
-
+        
         blng__BillingTreatment__c blngTreatmentRecord = new blng__BillingTreatment__c();
         blngTreatmentRecord.blng__Active__c = true;
         blngTreatmentRecord.blng__BillingRule__c = brObj.Id;
@@ -134,8 +134,8 @@
 
         List<Product2> productList = new List<Product2>();
         Product2 objproduct = NSP_TestHelper.createProduct('Test Product', false);
-        objproduct.ProductCode = 'IWXBundleW2';
-        objproduct.SBQQ__ChargeType__c = NSP_CPQConstants.PRODUCT_CHARGETYPE_RECURRING;
+        objproduct.ProductCode = 'IWXBundleW2'; 
+        objproduct.SBQQ__ChargeType__c = NSP_CPQConstants.PRODUCT_CHARGETYPE_RECURRING;  
         objproduct.SBQQ__BillingType__c = 'Arrears';
         objproduct.NSP_Priority_Amendment__c = 11.0;
         objproduct.SBQQ__SubscriptionType__c = NSP_CPQConstants.SUBS_RENEWABLE;
@@ -197,7 +197,7 @@
         objproduct3.blng__TaxRule__c = taxRuleObj.Id;
         objproduct3.NSP_ApplicableProductAmendNew__c = NSP_CPQConstants.QUOTELINE_APPLICABLEPRODUCT;
         productList.add(objproduct3);
-
+             
         Product2 objproduct4 = NSP_TestHelper.createProduct('Test Product4', false);
         objproduct4.ProductCode = 'IWXBundle';
         objproduct4.SBQQ__ChargeType__c = NSP_CPQConstants.PRODUCT_CHARGETYPE_RECURRING;
@@ -216,11 +216,11 @@
         objproduct4.NSP_ApplicableProductAmendNew__c = NSP_CPQConstants.QUOTELINE_APPLICABLEPRODUCT;
         objproduct4.Has_Seasonal_Pricing__c = true;
         productList.add(objproduct4);
-
+        
         SBQQ.TriggerControl.disable();
         insert productList;
         SBQQ.TriggerControl.enable();
-
+             
         ProductConsumptionSchedule psch = NSP_TestHelper.linkProductToCs(objproduct3.id,csch.id );
         insert psch;
         ProductConsumptionSchedule psch2 = NSP_TestHelper.linkProductToCs(objproduct4.id,seasonalCSCH.id );
@@ -242,14 +242,14 @@
         NSP_Address__c nspAddress = NSP_TestHelper.createCustomAddress();
         nspAddress.NSP_Source__c = 'AIMS';
         nspAddress.NSP_Related_Site__c = objaccount.Id;
-        insert nspAddress;
+        insert nspAddress;     
 
         SBQQ__Quote__c objQuote = NSP_TestHelper.createCPQQuote(objaccount.Id, objOpportunity.Id, false);
         objQuote.SBQQ__primary__c = true;
         objQuote.NSP_Billing_Address__c = nspAddress.Id;
         objQuote.SBQQ__ShippingStreet__c = 'Alondra Boulevard';
-        objQuote.SBQQ__ShippingCity__c = 'San Francisco';
-        objQuote.SBQQ__StartDate__c = System.today().toStartOfMonth().addMonths(-3);
+        objQuote.SBQQ__ShippingCity__c = 'San Francisco';   
+        objQuote.SBQQ__StartDate__c = System.today().toStartOfMonth().addMonths(-3);    
         objQuote.SBQQ__ShippingState__c = 'California';
         objQuote.SBQQ__ShippingCountry__c = 'United States';
         objQuote.SBQQ__ShippingPostalCode__c = '94103';
@@ -264,7 +264,7 @@
         //objQuote.Seasonal_Pricing__c = 'Seasonal Consumption Schedule';
         //objQuote.NSP_Is_Partner_CS_Applicable__c = true;
         insert objQuote;
-
+        
         objOpportunity.StageName = 'Closed Won';
         update objOpportunity;
 
@@ -277,50 +277,50 @@
         objQuoteLine[2].NSP_Previous_Quantity__c = 500;
         objQuoteLine[0].NSP_Quoted_Quantity__c = 5;
         objQuoteLine[1].NSP_Quoted_Quantity__c = 5;
-        objQuoteLine[2].NSP_Quoted_Quantity__c = 5;
-        objQuoteLine[0].SBQQ__SubscriptionType__c = NSP_CPQConstants.SUBS_RENEWABLE;
-        objQuoteLine[1].SBQQ__SubscriptionType__c = NSP_CPQConstants.SUBS_RENEWABLE;
-        objQuoteLine[2].NSP_ServiceAssetCategory__c = NSP_CPQConstants.QUOTELINE_APPLICANTTRACKING;
-        objQuoteLine[3].NSP_ServiceAssetCategory__c = NSP_CPQConstants.QUOTELINE_APPLICANTTRACKING;
-        objQuoteLine[2].SBQQ__SubscriptionType__c = NSP_CPQConstants.SUBS_EVERGREEN;
-        objQuoteLine[3].SBQQ__SubscriptionType__c = NSP_CPQConstants.SUBS_EVERGREEN;
+        objQuoteLine[2].NSP_Quoted_Quantity__c = 5;     
+        objQuoteLine[0].SBQQ__SubscriptionType__c = NSP_CPQConstants.SUBS_RENEWABLE;  
+        objQuoteLine[1].SBQQ__SubscriptionType__c = NSP_CPQConstants.SUBS_RENEWABLE;    
+        objQuoteLine[2].NSP_ServiceAssetCategory__c = NSP_CPQConstants.QUOTELINE_APPLICANTTRACKING;  
+        objQuoteLine[3].NSP_ServiceAssetCategory__c = NSP_CPQConstants.QUOTELINE_APPLICANTTRACKING;  
+        objQuoteLine[2].SBQQ__SubscriptionType__c = NSP_CPQConstants.SUBS_EVERGREEN;  
+        objQuoteLine[3].SBQQ__SubscriptionType__c = NSP_CPQConstants.SUBS_EVERGREEN;  
         objQuoteLine[2].SBQQ__SubscriptionPricing__c = 'Fixed Price';
         objQuoteLine[0].NSP_Total_Free_Periods__c = 1 ;
         objQuoteLine[1].NSP_Total_Free_Periods__c = 1 ;
         objQuoteLine[2].NSP_Total_Free_Periods__c = 1 ;
         objQuoteLine[0].NSP_Scholarship_Price__c = true ;
-        objQuoteLine[1].NSP_Quoted_Quantity__c = 25;
-        objQuoteLine[1].NSP_Previous_Quantity__c = 22;
+        objQuoteLine[1].NSP_Quoted_Quantity__c = 25;  
+        objQuoteLine[1].NSP_Previous_Quantity__c = 22; 
         objQuoteLine[1].NSP_Scholarship_Price__c = true ;
         objQuoteLine[1].SBQQ__Source__c  = objQuoteLine[0].Id ;
         objQuoteLine[2].SBQQ__Source__c  = objQuoteLine[1].Id ;
         objQuoteLine[0].SBQQ__Source__c  = objQuoteLine[2].Id ;
-        objQuoteLine[1].NSP_Action_Type__c = NSP_CPQConstants.ACTION_UPSELL;
+        objQuoteLine[1].NSP_Action_Type__c = NSP_CPQConstants.ACTION_UPSELL;   
         objQuoteLine[2].NSP_Action_Type__c = NSP_CPQConstants.ACTION_DOWNGRADE;
         objQuoteLine[2].NSP_Scholarship_Price__c = true ;
         objQuoteLine[3].SBQQ__HasConsumptionSchedule__c = true;
         objQuoteLine[0].NSP_Number_Of_Boxes__c = 5;
         objQuoteLine[0].NSP_Number_of_Checks__c = 5;
         objQuoteLine[0].NSP_Number_Of_Users__c = 5;
-        objQuoteLine[0].NSP_TCFullUserLicenseQty__c = 5;
+        objQuoteLine[0].NSP_TCFullUserLicenseQty__c = 5;     
         objQuoteLine[1].NSP_Number_Of_Boxes__c = 5;
         objQuoteLine[1].NSP_Number_of_Checks__c = 5;
         objQuoteLine[1].NSP_Number_Of_Users__c = 5;
-        objQuoteLine[1].NSP_TCFullUserLicenseQty__c = 5;
+        objQuoteLine[1].NSP_TCFullUserLicenseQty__c = 5;     
         objQuoteLine[2].NSP_Number_Of_Boxes__c = 5;
         objQuoteLine[2].NSP_Number_of_Checks__c = 5;
         objQuoteLine[2].NSP_Number_Of_Users__c = 5;
-        objQuoteLine[2].NSP_TCFullUserLicenseQty__c = 5;
+        objQuoteLine[2].NSP_TCFullUserLicenseQty__c = 5;     
         objQuoteLine[3].NSP_Number_Of_Boxes__c = 5;
         objQuoteLine[3].NSP_Number_of_Checks__c = 5;
         objQuoteLine[3].NSP_Number_Of_Users__c = 5;
-        objQuoteLine[3].NSP_TCFullUserLicenseQty__c = 5;
+        objQuoteLine[3].NSP_TCFullUserLicenseQty__c = 5;     
         update objQuoteLine;
 
         objQuote.SBQQ__Ordered__c = true;
              test.startTest();
         update objQuote;
-
+             
         blng__PaymentMethod__c objPaymntMethod = new blng__PaymentMethod__c();
         objPaymntMethod.blng__Account__c = objaccount.Id;
         objPaymntMethod.blng__Active__c = true;
@@ -333,7 +333,7 @@
         objPaymntMethod.NSP_ACH_method__c = 'BoFA';
         objPaymntMethod.blng__PaymentType__c = 'ACH';
         objPaymntMethod.Payment_Method_Type__c = 'ACH';
-        insert objPaymntMethod;
+        insert objPaymntMethod;             
              test.stopTest();
          }
     }
@@ -343,7 +343,7 @@
     List<Order> orderList = [Select Id, SBQQ__Quote__c, NSP_First_usage_upload__c, Type, NSP_Project_Name__c, blng__InvoiceBatch__c, NSP_Billing_Address__c, NSP_Shipping_Address__c, NSP_Billing_Account__c
                             From Order WHERE Id!=null LIMIT 10];
 
-    List<OrderItem> orderItemList = [SELECT Id,NSP_AnniversaryBlngApplicable__c,NSP_ServiceAsset__c,SBQQ__TerminatedDate__c ,OrderItemNumber, NSP_TotalUsageQuantity__c, NSP_ServiceAssetCategory__c, ServiceDate, SBQQ__QuoteLine__c, SBQQ__QuoteLine__r.NSP_ActionType__c,SBQQ__QuoteLine__r.SBQQ__SubscriptionType__c, OrderId, Order.Status, NSP_Project_Completion_Date__c,NSP_ReCalculation_Status_Internal__c,SBQQ__Activated__c
+    List<OrderItem> orderItemList = [SELECT Id,NSP_AnniversaryBlngApplicable__c,NSP_ServiceAsset__c,SBQQ__TerminatedDate__c ,OrderItemNumber, NSP_TotalUsageQuantity__c, NSP_ServiceAssetCategory__c, ServiceDate, SBQQ__QuoteLine__c, SBQQ__QuoteLine__r.NSP_ActionType__c,SBQQ__QuoteLine__r.SBQQ__SubscriptionType__c, OrderId, Order.Status, NSP_Project_Completion_Date__c,NSP_ReCalculation_Status_Internal__c,SBQQ__Activated__c 
             FROM OrderItem
             WHERE OrderId IN:orderList];
     Test.startTest();
@@ -370,7 +370,7 @@
     update orderList;
     Test.stopTest();
     System.assert(orderList.size()==1,true);
-
+    
     }
 
     @isTest private static void beforeUpdateDirectorMethod() {
@@ -379,9 +379,9 @@
     List<Account> objAccount = [SELECT Id,Name FROM Account WHERE Id!=null LIMIT 1];
     List<blng__LegalEntity__c> objLegalEntity = [Select Id, blng__Active__c, NSP_Company_Name__c From blng__LegalEntity__c WHERE Id!=null LIMIT 10];
     List<blng__PaymentMethod__c> paymentMethod = [Select Id FROM blng__PaymentMethod__c WHERE Id!=null LIMIT 10];
-
+    
     List<Product2> objProduct = [SELECT Id,SBQQ__ChargeType__c, SBQQ__BillingType__c, SBQQ__BillingFrequency__c FROM Product2 WHERE Id!=null LIMIT 4];
-
+ 
     Test.startTest();
     pse__Proj__c bpsProject = (pse__Proj__c)NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c(), 'NSP_TestDataFactory.ProjectDefaults', false);
         bpsProject.Templates_Used__c = NSP_ServiceConstants.ITA_IMPLEMENTATION;
@@ -394,14 +394,14 @@
     List<Order> orderList = [SELECT Id, SBQQ__Quote__c, Status, NSP_First_usage_upload__c, Type, NSP_Project_Name__c, blng__InvoiceBatch__c, NSP_Billing_Address__c, NSP_Shipping_Address__c, NSP_Billing_Account__c
                              FROM Order WHERE Id!=null LIMIT 10];
 
-    List<OrderItem> orderItemList = [SELECT Id, OrderItemNumber, NSP_Scholarship_Price__c, SBQQ__BillingFrequency__c, EndDate, SBQQ__Status__c, blng__LegalEntity__c, blng__BillingTreatment__c, NSP_TotalUsageQuantity__c, NSP_ServiceAssetCategory__c, ServiceDate, SBQQ__QuoteLine__c, SBQQ__QuoteLine__r.NSP_ActionType__c,SBQQ__QuoteLine__r.SBQQ__SubscriptionType__c, OrderId, Order.Status, NSP_Project_Completion_Date__c,NSP_ReCalculation_Status_Internal__c,SBQQ__Activated__c
+    List<OrderItem> orderItemList = [SELECT Id, OrderItemNumber, NSP_Scholarship_Price__c, SBQQ__BillingFrequency__c, EndDate, SBQQ__Status__c, blng__LegalEntity__c, blng__BillingTreatment__c, NSP_TotalUsageQuantity__c, NSP_ServiceAssetCategory__c, ServiceDate, SBQQ__QuoteLine__c, SBQQ__QuoteLine__r.NSP_ActionType__c,SBQQ__QuoteLine__r.SBQQ__SubscriptionType__c, OrderId, Order.Status, NSP_Project_Completion_Date__c,NSP_ReCalculation_Status_Internal__c,SBQQ__Activated__c 
                                      FROM OrderItem
                                      WHERE OrderId IN:orderList LIMIT 4];
 
-    List<OrderItem> orderItemListUsage = [SELECT Id, OrderItemNumber, NSP_Scholarship_Price__c, SBQQ__BillingFrequency__c, EndDate, SBQQ__Status__c, blng__LegalEntity__c, blng__BillingTreatment__c, NSP_TotalUsageQuantity__c, NSP_ServiceAssetCategory__c, ServiceDate, SBQQ__QuoteLine__c, SBQQ__QuoteLine__r.NSP_ActionType__c,SBQQ__QuoteLine__r.SBQQ__SubscriptionType__c, OrderId, Order.Status, NSP_Project_Completion_Date__c,NSP_ReCalculation_Status_Internal__c,SBQQ__Activated__c
+    List<OrderItem> orderItemListUsage = [SELECT Id, OrderItemNumber, NSP_Scholarship_Price__c, SBQQ__BillingFrequency__c, EndDate, SBQQ__Status__c, blng__LegalEntity__c, blng__BillingTreatment__c, NSP_TotalUsageQuantity__c, NSP_ServiceAssetCategory__c, ServiceDate, SBQQ__QuoteLine__c, SBQQ__QuoteLine__r.NSP_ActionType__c,SBQQ__QuoteLine__r.SBQQ__SubscriptionType__c, OrderId, Order.Status, NSP_Project_Completion_Date__c,NSP_ReCalculation_Status_Internal__c,SBQQ__Activated__c 
                                      FROM OrderItem
                                      WHERE Product2.Name = 'Test Product3' LIMIT 1];
-
+   
     List<blng__UsageSummary__c> usageSumRecs = new List<blng__UsageSummary__c>();
     blng__UsageSummary__c usageSumRecs1 = new blng__UsageSummary__c();
     usageSumRecs1.blng__Account__c = objAccount[0].Id;
@@ -417,7 +417,7 @@
     usageSumRecs.add(usageSumRecs1);
     insert usageSumRecs;
 
-
+    
     orderItemList[0].NSP_Project_Completion_Date__c = System.today();
     orderItemList[1].NSP_Project_Completion_Date__c = System.today();
     orderItemList[2].NSP_Project_Completion_Date__c = System.today();
@@ -436,7 +436,7 @@
     orderItemList[0].NSP_ReCalculation_Status_Internal__c = NSP_CPQConstants.ORDERITEM_RECALCULATIONSTATUS_NA;
     orderItemList[1].NSP_ReCalculation_Status_Internal__c = NSP_CPQConstants.ORDERITEM_RECALCULATIONSTATUS_NA;
     orderItemList[2].NSP_ReCalculation_Status_Internal__c = NSP_CPQConstants.ORDERITEM_RECALCULATIONSTATUS_NA;
-    orderItemList[3].NSP_ReCalculation_Status_Internal__c = NSP_CPQConstants.ORDERITEM_RECALCULATIONSTATUS_NA;
+    orderItemList[3].NSP_ReCalculation_Status_Internal__c = NSP_CPQConstants.ORDERITEM_RECALCULATIONSTATUS_NA;    
     update orderItemList;
 
     orderList[0].Status = 'Reviewed';
@@ -460,7 +460,7 @@
         Account objaccount  = [Select Id, Name from Account WHERE Name =: NSP_TestHelper.DEFAULT_COMPANY_NAME LIMIT 1];
         Opportunity objOpp = [SELECT Id,Name FROM Opportunity LIMIT 1];
         Product2 objproduct  = [Select Id, Name from Product2 WHERE Name = 'Test Product' LIMIT 1];
-
+        
         Asset objAsset = new Asset();
         objAsset.Name = 'OrderHelper Test';
         objAsset.AccountId = objaccount.Id;
@@ -472,9 +472,9 @@
         insert objAsset;
         //SBQQ.TriggerControl.enable();
 
-        List<OrderItem> orderItemList = [SELECT Id,NSP_ServiceAsset__c,NSP_UsageUpperBound__c,NSP_TotalUsageQuantity__c, OrderItemNumber, ServiceDate, SBQQ__QuoteLine__c, SBQQ__QuoteLine__r.NSP_ActionType__c,SBQQ__QuoteLine__r.SBQQ__SubscriptionType__c, OrderId, Order.Status, NSP_Project_Completion_Date__c,NSP_ReCalculation_Status_Internal__c,SBQQ__Activated__c
+        List<OrderItem> orderItemList = [SELECT Id,NSP_ServiceAsset__c,NSP_UsageUpperBound__c,NSP_TotalUsageQuantity__c, OrderItemNumber, ServiceDate, SBQQ__QuoteLine__c, SBQQ__QuoteLine__r.NSP_ActionType__c,SBQQ__QuoteLine__r.SBQQ__SubscriptionType__c, OrderId, Order.Status, NSP_Project_Completion_Date__c,NSP_ReCalculation_Status_Internal__c,SBQQ__Activated__c 
                                          FROM OrderItem LIMIT 10];
-
+      
         orderItemList[0].NSP_ReCalculation_Status_Internal__c = NSP_CPQConstants.ORDERITEM_RECALCULATIONSTATUS_NA;
         orderItemList[1].NSP_ReCalculation_Status_Internal__c = NSP_CPQConstants.ORDERITEM_RECALCULATIONSTATUS_NA;
         orderItemList[0].NSP_ServiceAssetCategory__c = 'XML';
@@ -501,10 +501,10 @@
         orderItemList[3].NSP_UsageUpperBound__c = 4;
         orderItemList[4].NSP_UsageUpperBound__c = 9;
         update orderItemList;
-
+        
         Map<Id, OrderItem> orderItemNewMap = new Map<Id, OrderItem>();
         Map<Id, String> orderItemNewStringMap = new Map<Id, String>();
-
+        
         for(OrderItem oi : orderItemList){
             OrderItemNewMap.put(oi.Id,oi);
             orderItemNewStringMap.put(oi.Id,String.valueOf(oi));
