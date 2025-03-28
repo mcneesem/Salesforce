@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Legal_Entity_Should_Not_Be_Blank</fullName>
+    <fullName>Legal_Entity_Required</fullName>
     <active>true</active>
-    <errorConditionFormula>IF( ISPICKVAL(blng__CreditNoteSourceAction__c, &apos;Manual&apos;),  IF(  ISBLANK(NSP_Legal_Entity__c), true, false ), false)</errorConditionFormula>
+    <errorConditionFormula>AND(
+  NOT( $Permission.Bypass_Legal_Entity_Required ) ,
+  ISPICKVAL( blng__CreditNoteSourceAction__c , &apos;Manual&apos; ) ,
+  ISBLANK( NSP_Legal_Entity__c )
+)</errorConditionFormula>
     <errorDisplayField>NSP_Legal_Entity__c</errorDisplayField>
     <errorMessage>Legal Entity is required when creating a Credit Note manually</errorMessage>
 </ValidationRule>
