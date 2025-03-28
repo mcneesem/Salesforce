@@ -52,17 +52,10 @@
         <locationY>0</locationY>
         <filterLogic>and</filterLogic>
         <filters>
-            <field>NSP_PrimaryProduct__c</field>
+            <field>RecordTypeId</field>
             <operator>EqualTo</operator>
             <value>
-                <stringValue>Workday</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>NSP_Product_Interest__c</field>
-            <operator>Contains</operator>
-            <value>
-                <stringValue>Workday</stringValue>
+                <stringValue>012Pb000002Hr5CIAS</stringValue>
             </value>
         </filters>
         <filters>
