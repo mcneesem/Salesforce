@@ -35,8 +35,6 @@ public class NSP_ServicePlanProjectTaskBatch implements Database.Batchable<sObje
         set<pse__Proj__c> validProjectsSet = new set<pse__Proj__c>();
         String peoProjectTaskRecordTypeId = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.PROJECT_TASK_SOBJECT_TYPE, 
                                                                                     NSP_ServiceConstants.PROJECT_TASK_PEO_RECORDTYPE);
-        String woAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.ASSET_SOBJECT_TYPE, 
-                                                                            NSP_ServiceConstants.WO_ASSET_RECORDTYPE);
         // check relatedprojectlist not empty
         if(relatedProjectList.size() > 0){
             //iterating over project list
