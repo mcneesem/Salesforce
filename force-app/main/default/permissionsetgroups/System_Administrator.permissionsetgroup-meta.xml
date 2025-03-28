@@ -13,6 +13,7 @@
     <permissionSets>Asset_Hardware_Edit</permissionSets>
     <permissionSets>Billing_and_CPQ_Data_Load</permissionSets>
     <permissionSets>Bundle_Template_Flag_fields_Permission</permissionSets>
+    <permissionSets>Bypass_Benefit_Termination_Date_Rule</permissionSets>
     <permissionSets>Bypass_Read_Only_Case_Owner</permissionSets>
     <permissionSets>Bypass_Restrict_Termination_Date_and_Status</permissionSets>
     <permissionSets>Case_Compensation_Access</permissionSets>
@@ -34,7 +35,6 @@
     <permissionSets>Project_Template_Editor</permissionSets>
     <permissionSets>Resource_Absence_record_type_access</permissionSets>
     <permissionSets>Sales_Enablement</permissionSets>
-    <permissionSets>Bypass_Benefit_Termination_Date_Rule</permissionSets>
     <permissionSets>User_Management</permissionSets>
     <permissionSets>force__PipelineInspectionIncluded</permissionSets>
     <status>Updated</status>
