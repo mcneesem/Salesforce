@@ -485,10 +485,6 @@
         orderItemList[1].SBQQ__Asset__c = objAsset.Id;
         orderItemList[2].SBQQ__Asset__c = objAsset.Id;
         orderItemList[3].SBQQ__Asset__c = objAsset.Id;
-        orderItemList[0].Mismatch_AssetId__c = objAsset.Id;
-        orderItemList[1].Mismatch_AssetId__c = objAsset.Id;
-        orderItemList[2].Mismatch_AssetId__c = objAsset.Id;
-        orderItemList[3].Mismatch_AssetId__c = objAsset.Id;
         orderItemList[0].NSP_ServiceAsset__c = objAsset.id;
         orderItemList[1].NSP_ServiceAsset__c = objAsset.id;
         orderItemList[2].NSP_ServiceAsset__c = objAsset.id;
@@ -508,24 +504,13 @@
 
         Map<Id, OrderItem> orderItemNewMap = new Map<Id, OrderItem>();
         Map<Id, String> orderItemNewStringMap = new Map<Id, String>();
-        List<String> lstOrdIds = new List<String>();
 
         for(OrderItem oi : orderItemList){
             OrderItemNewMap.put(oi.Id,oi);
-            lstordIds.add(oi.OrderId);
             orderItemNewStringMap.put(oi.Id,String.valueOf(oi));
         }
-        List<Order> OrderLst = new List<Order>();
-
-        for(Order ord:[SELECT Id,Mismatch_Asset__c FROM Order WHERE Id IN:lstordIds])
-        {
-            ord.Mismatch_Asset__c = true;
-            OrderLst.add(ord);
-        }
-        Database.update(OrderLst);
         Test.startTest();
         NSP_OrderItemTriggerHelper.updateAsset(orderItemNewStringMap);
-        AssetMismatchSyncUp.assetOrderProductLinkUp(lstordIds);
         Test.stopTest();
         NSP_OrderItemTriggerHelper.testHandleException( null , null );
     }
