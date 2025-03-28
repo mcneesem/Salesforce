@@ -624,13 +624,13 @@ public with sharing class NSP_TerminationFormTriggerHelper {
     }
     
     private static void addIfActive(Set<String> specialistIds, User user, String userId) {
-        if (user != null && userId != null && user.IsActive) {
+        if (user != null && userId != null && user.IsActive && !specialistIds.isEmpty()) {
             specialistIds.add(userId);
         }
     }
     
     private static void addIfOwnerActive(Set<String> specialistIds, String ownerId) {
-        if (ownerId != null) {
+        if (ownerId != null && !specialistIds.isEmpty()) {
             specialistIds.add(ownerId);
         }
     }
