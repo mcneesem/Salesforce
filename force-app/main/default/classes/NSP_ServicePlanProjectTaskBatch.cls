@@ -254,7 +254,7 @@ public class NSP_ServicePlanProjectTaskBatch implements Database.Batchable<sObje
         FROM NSP_Account_Team__c 
         WHERE NSP_Role__c = :roles 
         AND 
-        NSP_Account__c = :accountIds WITH SECURITY ENFORCED];
+        NSP_Account__c = :accountIds WITH SECURITY_ENFORCED];
 
         return accountTeamList;
     }
