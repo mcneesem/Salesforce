@@ -7,7 +7,7 @@ import MULTIPLE_ACCOUNTS_LABEL from '@salesforce/label/c.NSP_MultipleAccountsAss
 export default class CaseAccountContactLookup extends LightningElement {
     @api selectedAccountId = null;
     @api selectedContactId = null;
-    @api contextAccountId;
+    @api contextAccountId; 
     @api contextContactId;
 
     @track showAccountWarning = false;
@@ -22,12 +22,12 @@ export default class CaseAccountContactLookup extends LightningElement {
     async initializeFromContext() {
         if (this.contextAccountId && this.contextAccountId !== 'null') {
             this.selectedAccountId = this.contextAccountId;
-            this.isAccountDisabled = true;
+            this.isAccountDisabled = true; 
             await this.setDefaultContact();
         } else if (this.contextContactId && this.contextContactId !== 'null') {
             this.selectedContactId = this.contextContactId;
-            this.isContactDisabled = true;
-            await this.setAccountFromContact();
+            this.isContactDisabled = false;
+            await this.setAccountFromContact(true);
             await this.handleMultipleACRs();
         }
     }
@@ -36,7 +36,9 @@ export default class CaseAccountContactLookup extends LightningElement {
         const newAccountId = event.detail.recId;
         if (newAccountId !== this.selectedAccountId) {
             this.selectedAccountId = newAccountId;
-            this.selectedContactId = null;
+            if (!this.contextContactId || !this.selectedContactId) {
+                this.selectedContactId = null;
+            }
             this.showAccountWarning = false;
             this.isAccountDisabled = false;
             this.dispatchFlowEvent('accountIdChange', this.selectedAccountId);
@@ -52,7 +54,9 @@ export default class CaseAccountContactLookup extends LightningElement {
             this.isContactDisabled = false;
             this.dispatchFlowEvent('contactIdChange', this.selectedContactId);
             await this.handleMultipleACRs();
-            await this.setAccountFromContact();
+            if (!this.selectedAccountId) {
+                await this.setAccountFromContact(false);
+            }
         }
     }
 
@@ -88,18 +92,18 @@ export default class CaseAccountContactLookup extends LightningElement {
         }
     }
 
-    async setAccountFromContact() {
-        if (!this.contextContactId || this.selectedAccountId) return;
+    async setAccountFromContact(isInitialSetup) {
+        if (!this.contextContactId || (this.selectedAccountId && !isInitialSetup)) return;
         try {
             const accounts = await getRelatedAccounts({ contactId: this.contextContactId });
             if (accounts?.length > 0) {
                 const primaryAccount = accounts.find(a => a.NSP_Is_Primary__c);
                 if (primaryAccount) {
                     this.selectedAccountId = primaryAccount.AccountId;
-                    this.isAccountDisabled = true;
+                    this.isAccountDisabled = isInitialSetup;
                 } else if (accounts.length === 1) {
                     this.selectedAccountId = accounts[0].AccountId;
-                    this.isAccountDisabled = true;
+                    this.isAccountDisabled = isInitialSetup;
                 }
                 if (this.selectedAccountId) {
                     this.dispatchFlowEvent('accountIdChange', this.selectedAccountId);
@@ -120,7 +124,7 @@ export default class CaseAccountContactLookup extends LightningElement {
     }
 
     @api
-    validate() {
+    validate() { 
         let response = {
             isValid: true,
             errorMessage: ''
