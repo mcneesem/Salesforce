@@ -3,7 +3,7 @@
     <actionCalls>
         <name>Email_Alert_Outgoing_Approval_Process_Notify_Owner_of_Rejection</name>
         <label>Email Alert - Outgoing Approval Process - Notify Owner of Rejection</label>
-        <locationX>1106</locationX>
+        <locationX>1282</locationX>
         <locationY>890</locationY>
         <actionName>Opportunity.Outgoing_Approval_Process_Notify_Owner_of_Rejection</actionName>
         <actionType>emailAlert</actionType>
@@ -21,13 +21,12 @@
             </value>
         </inputParameters>
         <nameSegment>Opportunity.Outgoing_Approval_Process_Notify_Owner_of_Rejection</nameSegment>
-        <offset>0</offset>
     </actionCalls>
     <actionCalls>
         <name>Email_Alert_Outgoing_Approval_Request_Notify_MidMarket_Admins</name>
         <label>Email Alert - Outgoing Approval Request - Notify MidMarket Admins</label>
         <locationX>50</locationX>
-        <locationY>998</locationY>
+        <locationY>1106</locationY>
         <actionName>Opportunity.Outgoing_Approval_Request_Notify_MidMarket_Admins</actionName>
         <actionType>emailAlert</actionType>
         <connector>
@@ -44,17 +43,16 @@
             </value>
         </inputParameters>
         <nameSegment>Opportunity.Outgoing_Approval_Request_Notify_MidMarket_Admins</nameSegment>
-        <offset>0</offset>
     </actionCalls>
     <actionCalls>
         <name>Email_Alert_Outgoing_Approval_Request_Notify_Owner_of_Approval</name>
         <label>Email Alert - Outgoing Approval Request - Notify Owner of Approval</label>
-        <locationX>50</locationX>
+        <locationX>314</locationX>
         <locationY>890</locationY>
         <actionName>Opportunity.Outgoing_Approval_Request_Notify_Owner_of_Approval</actionName>
         <actionType>emailAlert</actionType>
         <connector>
-            <targetReference>Email_Alert_Outgoing_Approval_Request_Notify_MidMarket_Admins</targetReference>
+            <targetReference>Is_MidMarket_Email_populated</targetReference>
         </connector>
         <faultConnector>
             <targetReference>Assign_varFaultElement_Email_Alert_Notify_Owner_of_Approval</targetReference>
@@ -67,14 +65,12 @@
             </value>
         </inputParameters>
         <nameSegment>Opportunity.Outgoing_Approval_Request_Notify_Owner_of_Approval</nameSegment>
-        <offset>0</offset>
     </actionCalls>
     <apiVersion>63.0</apiVersion>
-    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
         <name>Assign_Stage_Close_Lost_Outgoing</name>
         <label>Assign Stage = Close Lost - Outgoing</label>
-        <locationX>1106</locationX>
+        <locationX>1282</locationX>
         <locationY>674</locationY>
         <assignmentItems>
             <assignToReference>recordOutgoingOpty.StageName</assignToReference>
@@ -97,7 +93,7 @@
     <assignments>
         <name>Assign_Stage_Ready_to_Share</name>
         <label>Assign Stage = Ready to Share</label>
-        <locationX>50</locationX>
+        <locationX>314</locationX>
         <locationY>674</locationY>
         <assignmentItems>
             <assignToReference>recordOutgoingOpty.StageName</assignToReference>
@@ -114,7 +110,7 @@
         <name>Assign_varFaultElement_Email_Alert_Notify_MidMarket_Admins</name>
         <label>Assign varFaultElement - Email Alert Notify MidMarket Admins</label>
         <locationX>314</locationX>
-        <locationY>1106</locationY>
+        <locationY>1214</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -130,7 +126,7 @@
     <assignments>
         <name>Assign_varFaultElement_Email_Alert_Notify_Owner_of_Approval</name>
         <label>Assign varFaultElement - Email Alert Notify Owner of Approval</label>
-        <locationX>578</locationX>
+        <locationX>754</locationX>
         <locationY>998</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
@@ -147,7 +143,7 @@
     <assignments>
         <name>Assign_varFaultElement_Email_Alert_Notify_Owner_of_Rejection</name>
         <label>Assign varFaultElement - Email Alert Notify Owner of Rejection</label>
-        <locationX>1370</locationX>
+        <locationX>1546</locationX>
         <locationY>998</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
@@ -164,7 +160,7 @@
     <assignments>
         <name>Assign_varFaultElement_Get_and_validate_Outgoing_Opty</name>
         <label>Assign varFaultElement - Get and validate Outgoing Opty</label>
-        <locationX>2426</locationX>
+        <locationX>2602</locationX>
         <locationY>350</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
@@ -180,7 +176,7 @@
     <assignments>
         <name>Assign_varFaultElement_Update_Outgoing_Opty_Approved</name>
         <label>Assign varFaultElement - Update Outgoing Opty - Approved</label>
-        <locationX>842</locationX>
+        <locationX>1018</locationX>
         <locationY>890</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
@@ -197,7 +193,7 @@
     <assignments>
         <name>Assign_varFaultElement_Update_Outgoing_Opty_Rejected</name>
         <label>Assign varFaultElement - Update Outgoing Opty - Rejected</label>
-        <locationX>1634</locationX>
+        <locationX>1810</locationX>
         <locationY>890</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
@@ -221,16 +217,10 @@
         <choiceText>Reject</choiceText>
         <dataType>String</dataType>
     </choices>
-    <customProperties>
-        <name>ScreenProgressIndicator</name>
-        <value>
-            <stringValue>{&quot;location&quot;:&quot;top&quot;,&quot;type&quot;:&quot;simple&quot;}</stringValue>
-        </value>
-    </customProperties>
     <decisions>
         <name>Approved_or_Rejected_Opty_for_Workday</name>
         <label>Approved or Rejected Opty for Workday?</label>
-        <locationX>974</locationX>
+        <locationX>1194</locationX>
         <locationY>566</locationY>
         <defaultConnectorLabel>n/a</defaultConnectorLabel>
         <rules>
@@ -265,9 +255,41 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Is_MidMarket_Email_populated</name>
+        <label>Is MidMarket Email populated?</label>
+        <locationX>314</locationX>
+        <locationY>998</locationY>
+        <defaultConnector>
+            <targetReference>Approval_Rejection_Process_Complete_Screen</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>MidMarket email is blank</defaultConnectorLabel>
+        <rules>
+            <name>Yes_MidMarket_email_is_populated</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>recordOutgoingOpty.NSP_Mid_Market_Sales_Email__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>recordOutgoingOpty.NSP_Mid_Market_Sales_Email__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Email_Alert_Outgoing_Approval_Request_Notify_MidMarket_Admins</targetReference>
+            </connector>
+            <label>Yes - MidMarket email is populated</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Was_Opty_Id_passed_in</name>
         <label>Was Opty Id passed in?</label>
-        <locationX>2129</locationX>
+        <locationX>2316</locationX>
         <locationY>134</locationY>
         <defaultConnectorLabel>Opty Id not available</defaultConnectorLabel>
         <rules>
@@ -303,7 +325,7 @@
     <decisions>
         <name>Was_Outgoing_Opty_found</name>
         <label>Was Outgoing Opty found?</label>
-        <locationX>1568</locationX>
+        <locationX>1766</locationX>
         <locationY>350</locationY>
         <defaultConnectorLabel>Outgoing Opty not found</defaultConnectorLabel>
         <rules>
@@ -329,7 +351,7 @@
             <label>Yes - found Outgoing Opty</label>
         </rules>
     </decisions>
-    <description>Updated Email Alerts. Removed MM Admin. Required Approve or Reject</description>
+    <description>MidMarket email check added. Updated Email Alerts. Removed MM Admin. Required Approve or Reject</description>
     <environments>Default</environments>
     <interviewLabel>Opportunity - Outgoing - Approve or Reject {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Opportunity - Outgoing - Approve or Reject</label>
@@ -355,7 +377,7 @@
     <recordLookups>
         <name>Get_and_validate_Outgoing_Opty</name>
         <label>Get and validate Outgoing Opty</label>
-        <locationX>1568</locationX>
+        <locationX>1766</locationX>
         <locationY>242</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -401,7 +423,7 @@
     <recordUpdates>
         <name>Update_Outgoing_Opty_Approved</name>
         <label>Update Outgoing Opty - Approved</label>
-        <locationX>50</locationX>
+        <locationX>314</locationX>
         <locationY>782</locationY>
         <connector>
             <targetReference>Email_Alert_Outgoing_Approval_Request_Notify_Owner_of_Approval</targetReference>
@@ -414,7 +436,7 @@
     <recordUpdates>
         <name>Update_Outgoing_Opty_Rejected</name>
         <label>Update Outgoing Opty - Rejected</label>
-        <locationX>1106</locationX>
+        <locationX>1282</locationX>
         <locationY>782</locationY>
         <connector>
             <targetReference>Email_Alert_Outgoing_Approval_Process_Notify_Owner_of_Rejection</targetReference>
@@ -427,8 +449,8 @@
     <screens>
         <name>Approval_Rejection_Process_Complete_Screen</name>
         <label>Approval Rejection Process Complete Screen</label>
-        <locationX>974</locationX>
-        <locationY>1388</locationY>
+        <locationX>1194</locationX>
+        <locationY>1580</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -443,7 +465,7 @@
     <screens>
         <name>Approve_or_Reject_Screen</name>
         <label>Approve or Reject?</label>
-        <locationX>974</locationX>
+        <locationX>1194</locationX>
         <locationY>458</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -465,7 +487,7 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>2003</locationX>
+        <locationX>2190</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Was_Opty_Id_passed_in</targetReference>
@@ -475,7 +497,7 @@
     <subflows>
         <name>Fault_Handler_Subflow</name>
         <label>Fault Handler Subflow</label>
-        <locationX>2426</locationX>
+        <locationX>2602</locationX>
         <locationY>458</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
