@@ -7,8 +7,4 @@
     <description>Permission Set only termination team role</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Termination Form access for Termination team Role</label>
-    <tabSettings>
-        <tab>standard-SemanticModel</tab>
-        <visibility>Visible</visibility>
-    </tabSettings>
 </PermissionSet>
