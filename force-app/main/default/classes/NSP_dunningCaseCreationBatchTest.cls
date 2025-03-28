@@ -16,6 +16,12 @@ public class NSP_dunningCaseCreationBatchTest {
     // test setup method
    @testSetup
     static void setupTestData(){
+        
+        Order_Settings__c sett = new Order_Settings__c();
+        sett.Bypass_Rule_PreventStatusChange__c = true;
+        sett.EffectiveDateStartOfMonth__c = true;
+        insert sett;
+        
         // switch off the triggers
        NSP_TestHelper.switchOffTriggers();
        // create Accounts
