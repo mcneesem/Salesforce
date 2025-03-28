@@ -6,13 +6,13 @@ public class NSP_OrderTriggerHelper {
 
     static final string STRING_ACCOUNT = 'Account';
     static final string CLOSE_LOST = 'Close/Lost';
-    /**
-* Iterates throught the list of new Order and passes the required attributes to other methods.
-* @param newList List of New Order.
-* @return void
-*
-*/
-    public void beforeInsertDirector(List<Order> newList){
+
+    //
+    // Iterates throught the list of new Order and passes the required attributes to other methods.
+    // @param newList List of New Order.
+    // @return void
+    //
+    public void beforeInsertDirector( List<Order> newList ) {
         copyQuoteDateOnOrder(newList);
         updateBillingShippingAddress(newList,null);
     }
@@ -41,12 +41,12 @@ public class NSP_OrderTriggerHelper {
         AssetMismatchSyncUp.setFlagAsset( orderNewMap.values() , orderOldMap );
     }
 
-    /**
-* Method added for STY-00397 to copy data from quote to Order
-* @param newList List of New Order.
-* @return void
-*/
-    public static void copyQuoteDateOnOrder(List<Order> newList){
+    //
+    // Method added for STY-00397 to copy data from quote to Order
+    // @param newList List of New Order.
+    // @return void
+    //
+    public static void copyQuoteDateOnOrder( List<Order> newList ) {
         set<Id> quoteIdSet = new set<Id>();
         List<Group> orderProcessingQueue = [SELECT Id,DeveloperName,name FROM Group WHERE Type = 'Queue' AND DeveloperName = :System.label.NSP_ITA_Order_Queue_Name LIMIT 1];
         for(Order newOrder : newList){
@@ -96,10 +96,8 @@ public class NSP_OrderTriggerHelper {
         List<Order>newList = [Select Id,Type,NSP_TerminationDate__c,Status,EffectiveDate FROM Order WHERE Id In:orderIds];
         List<Order> ordersToUpdate = new List<Order>();
         for(Order newOrder : newList){
-
                 newOrder.EffectiveDate = newOrder.NSP_TerminationDate__c.addDays(1);
                 ordersToUpdate.add(newOrder);
-
         }
         if(ordersToUpdate.size()>0){
             Database.update(ordersToUpdate);
@@ -201,72 +199,67 @@ public class NSP_OrderTriggerHelper {
         }
     }
 
-    /**
-* Method Name : copyBillingAddress
-* Description : Method to update billing address fields on Order
-* Author : Sales Team       Date : 28/10/2021
-* @param Order New Order data.
-* @param Account Account data.
-* @param NSP_Address__c Custom Address data.
-* @param String Indicates the copy from which object
-* @return void
-*/
-    public static void copyBillingAddress(Order newOrder,Account objAccount,NSP_Address__c objAddress,string copyFrom){
-        if(copyFrom == STRING_ACCOUNT && objAccount != null){
-            newOrder.BillingStreet     = objAccount.BillingStreet;
-            newOrder.BillingState      = objAccount.BillingState;
-            newOrder.BillingCity       = objAccount.BillingCity;
+    //
+    // Method Name : copyBillingAddress
+    // Description : Method to update billing address fields on Order
+    // Author : Sales Team       Date : 28/10/2021
+    // @param Order New Order data.
+    // @param Account Account data.
+    // @param NSP_Address__c Custom Address data.
+    // @param String Indicates the copy from which object
+    // @return void
+    //
+    public static void copyBillingAddress( Order newOrder , Account objAccount , NSP_Address__c objAddress , String copyFrom ) {
+        if ( ( copyFrom == STRING_ACCOUNT ) && ( objAccount != null ) ) {
+            newOrder.BillingStreet = objAccount.BillingStreet;
+            newOrder.BillingState = objAccount.BillingState;
+            newOrder.BillingCity = objAccount.BillingCity;
             newOrder.BillingPostalCode = objAccount.BillingPostalCode;
-            newOrder.BillingCountry    = objAccount.BillingCountry;
-
-        }
-        else{
-            newOrder.BillingStreet     = objAddress.NSP_Street__c;
-            newOrder.BillingState      = objAddress.NSP_State__c;
-            newOrder.BillingCity       = objAddress.NSP_City__c;
+            newOrder.BillingCountry = objAccount.BillingCountry;
+        } else {
+            newOrder.BillingStreet = objAddress.NSP_Street__c;
+            newOrder.BillingState = objAddress.NSP_State__c;
+            newOrder.BillingCity = objAddress.NSP_City__c;
             newOrder.BillingPostalCode = objAddress.NSP_Postal_Code__c;
-            newOrder.BillingCountry    = objAddress.NSP_Country__c;
-
+            newOrder.BillingCountry = objAddress.NSP_Country__c;
         }
     }
-    /**
-* Method Name : copyShippingAddress
-* Description : Method to update Shipping address fields on Order
-* Author : Sales Team       Date : 28/10/2021
-* @param Order New Order data.
-* @param Account Account data.
-* @param NSP_Address__c Custom Address data.
-* @param String Indicates the copy from which object
-* @return void
-*/
-    public static void copyShippingAddress(Order newOrder,Account objAccount,NSP_Address__c objAddress,string copyFrom){
-        if(copyFrom ==STRING_ACCOUNT && objAccount != null){
-            newOrder.ShippingStreet     = objAccount.ShippingStreet;
-            newOrder.ShippingState      = objAccount.ShippingState;
-            newOrder.ShippingCity       = objAccount.ShippingCity;
+
+    //
+    // Method Name : copyShippingAddress
+    // Description : Method to update Shipping address fields on Order
+    // Author : Sales Team       Date : 28/10/2021
+    // @param Order New Order data.
+    // @param Account Account data.
+    // @param NSP_Address__c Custom Address data.
+    // @param String Indicates the copy from which object
+    // @return void
+    //
+    public static void copyShippingAddress( Order newOrder , Account objAccount , NSP_Address__c objAddress , String copyFrom ) {
+        if ( ( copyFrom ==STRING_ACCOUNT ) && ( objAccount != null ) ) {
+            newOrder.ShippingStreet = objAccount.ShippingStreet;
+            newOrder.ShippingState = objAccount.ShippingState;
+            newOrder.ShippingCity = objAccount.ShippingCity;
             newOrder.ShippingPostalCode = objAccount.ShippingPostalCode;
-            newOrder.ShippingCountry    = objAccount.ShippingCountry;
-
-        }
-        else{
-            newOrder.ShippingStreet     = objAddress.NSP_Street__c;
-            newOrder.ShippingState      = objAddress.NSP_State__c;
-            newOrder.ShippingCity       = objAddress.NSP_City__c;
+            newOrder.ShippingCountry = objAccount.ShippingCountry;
+        } else {
+            newOrder.ShippingStreet = objAddress.NSP_Street__c;
+            newOrder.ShippingState = objAddress.NSP_State__c;
+            newOrder.ShippingCity = objAddress.NSP_City__c;
             newOrder.ShippingPostalCode = objAddress.NSP_Postal_Code__c;
-            newOrder.ShippingCountry    = objAddress.NSP_Country__c;
-
+            newOrder.ShippingCountry = objAddress.NSP_Country__c;
         }
     }
 
-    /**
-* Method Name : createContract
-* Description : Method to create Contract on activated Order
-* Author : CPQ Team       Date : 07/20/2022
-* @param orderNewMap Map of New Order.
-* @param orderOldMap Map of Old Order.
-* @return void
-*/
-    public static void createContract(List<Order> newList,Map<Id, Order> orderOldMap){
+    //
+    // Method Name : createContract
+    // Description : Method to create Contract on activated Order
+    // Author : CPQ Team       Date : 07/20/2022
+    // @param orderNewMap Map of New Order.
+    // @param orderOldMap Map of Old Order.
+    // @return void
+    //
+    public static void createContract( List<Order> newList , Map<Id,Order> orderOldMap ) {
         Set<Id> orderIdNew = new Set<Id>();
         Set<Id> orderIdAmend = new Set<Id>();
         Set<Id> orderIdSuppl = new Set<Id>();
@@ -580,15 +573,15 @@ public class NSP_OrderTriggerHelper {
         }
     }
 
-    /**
-* Method Name : setProjNameAmend
-* Description : Method to update Project Template on Order for Amendment transaction
-* Author : CPQ Team       Date : 08/29/2022
-* @param orderNewMap Map of New Order.
-* @param orderOldMap Map of Old Order.
-* @return void
-*/
-    public static void setProjNameAmend(Set < ID > orderListAmend,List < Order > newList) {
+    //
+    // Method Name : setProjNameAmend
+    // Description : Method to update Project Template on Order for Amendment transaction
+    // Author : CPQ Team       Date : 08/29/2022
+    // @param orderNewMap Map of New Order.
+    // @param orderOldMap Map of Old Order.
+    // @return void
+    //
+    public static void setProjNameAmend( Set<Id> orderListAmend , List<Order> newList ) {
         String transactionType;
         String action;
         Map<Id,OrderItem> ordProdMap = new Map<Id,OrderItem> (); // this will hold Matching order line as value and order id as key;
@@ -775,14 +768,14 @@ public static void setProjNameSupplement(Set < ID > orderListSuppl,List < Order 
         Id jobID = System.enqueueJob( updateJob );
     }
 
-/**
- * Method Name : stampDunningEmailonContact
- * Description : Method to check and stamp contact acr record for dunning emails.
- * Author : Rakesh       Date : 09/20/2022
- * @param Set<Id> contact Ids
- * @param Set<Id> account Ids
- * @return void
- */
+    //
+    // Method Name : stampDunningEmailonContact
+    // Description : Method to check and stamp contact acr record for dunning emails.
+    // Author : Rakesh       Date : 09/20/2022
+    // @param Set<Id> contact Ids
+    // @param Set<Id> account Ids
+    // @return void
+    //
     public static void stampDunningEmailonContact( Set<Id> contactIds , Set<Id> accountIds , Set<String> uniqueACRIds ) {
     try{
     List<AccountContactRelation> acrRecsToUpdate = new List<AccountContactRelation>();
