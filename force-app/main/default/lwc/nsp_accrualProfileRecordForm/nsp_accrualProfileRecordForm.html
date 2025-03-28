@@ -521,6 +521,7 @@
                   data-visibility-name="NSP_Accrual_Period_Limit__c_ITA_ANNIVERSARY"
                   data-name="NSP_Accrual_Period_Limit__c"
                   value={fieldValue.NSP_Accrual_Period_Limit__c}
+                  disabled={apFieldPermission}
                   onchange={handleValueChange}>
                 </lightning-input-field>
 
@@ -649,6 +650,7 @@
                   data-name="NSP_Accrual_Period_Limit__c"
                   data-visibility-name="NSP_Accrual_Period_Limit__c_ITA_FISCAL"
                   value={fieldValue.NSP_Accrual_Period_Limit__c}
+                  disabled={apFieldPermission}
                   onchange={handleValueChange}>
                 </lightning-input-field>
 
