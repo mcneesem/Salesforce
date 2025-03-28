@@ -8,7 +8,7 @@
   TEXT( NSP_PrimaryProduct__c ) &lt;&gt; &quot;WX&quot;,
   ISNEW(),
   ISBLANK(NSP_Product_Interest__c) ,
-  $UserRole.DeveloperName = &quot;HCM_Sales_Consultant&quot;,
+  $Permission.Opportunity_WX_Product_Only,
   NOT(
     OR(
       CONTAINS( $Profile.Name , &apos;System Admin&apos; ) ,
