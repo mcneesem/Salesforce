@@ -1,5 +1,5 @@
 public with sharing class AssetMismatchSyncUp {
-    // test w/ NSP_OrderItemTriggerHelperTest (76%)
+    // test w/ AssetMismatchSyncUpTest (89%)
 
         // STY-341702
 
