@@ -2,9 +2,9 @@
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <customPermissions>
         <enabled>true</enabled>
-        <name>Bypass_Bene_term_date_Validation_Rule</name>
+        <name>Bypass_Benefit_Termination_Date_Rule</name>
     </customPermissions>
-    <description>Permission Set only termination team role</description>
+    <description>Grants the Custom Permission to Bypass Benefit Termination Date Rule.</description>
     <hasActivationRequired>false</hasActivationRequired>
-    <label>Termination Form access for Termination team Role</label>
+    <label>Bypass Benefit Termination Date Rule</label>
 </PermissionSet>
