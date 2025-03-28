@@ -797,15 +797,12 @@ public class NSP_ProjectTasksTriggerHelper {
         return '<a href="' + link + '">' + label + '</a>';
     }
 
-    /* Description : This method throws an error if Dependent Task is started
-                    without completing Preceding Task
-        Date        : 12/10/2021 */
-
-    public void showErrorIfPreceedingTaskNotCompleted(List<pse__Project_Task__c> lProjectTasks, map<Id, pse__Project_Task__c> oldMap){
+    // Description : This method throws an error if Dependent Task is started without completing Preceding Task
+    // Date : 12/10/2021
+    public void showErrorIfPreceedingTaskNotCompleted( List<pse__Project_Task__c> lProjectTasks, Map<Id,pse__Project_Task__c> oldMap ) {
         set<ID> setOfDependentTask                      = new set<ID>();
         set<ID> setOfPrecedingTask                      = new set<ID>();
         map<Id, Id> mapOfDependentTaskAndPrecedingtask  = new map<Id, Id>();
-        map<Id, Boolean> isMapOfPrecedingTaskAndCompleted = new map<Id, Boolean>();
 
         for(pse__Project_Task__c projectTask : lProjectTasks){
             if(projectTask.pse__Started__c 
@@ -829,15 +826,7 @@ public class NSP_ProjectTasksTriggerHelper {
             }
         }
 
-        if(!setOfPrecedingTask.isEmpty()){
-            for(pse__Project_Task__c task : [SELECT pse__Completed__c FROM pse__Project_Task__c 
-                                            WHERE ID IN : setOfPrecedingTask]){
-                if(!isMapOfPrecedingTaskAndCompleted.containsKey(task.id)){
-                    isMapOfPrecedingTaskAndCompleted.put(task.id, task.pse__Completed__c);
-                }
-            }
-        }
-
+        Map<Id,Boolean> isMapOfPrecedingTaskAndCompleted = this.buildMapOfPrecedingTaskAndCompleted( setOfPrecedingTask );
         if ( !isMapOfPrecedingTaskAndCompleted.isEmpty() ) {
             for ( pse__Project_Task__c projectTaskError : lProjectTasks ) {
                 // when the current task has started...
@@ -863,6 +852,24 @@ public class NSP_ProjectTasksTriggerHelper {
                 }
             }
         }
+    }
+
+    private Map<Id,Boolean> buildMapOfPrecedingTaskAndCompleted( Set<Id> setOfPrecedingTask ) {
+        Map<Id,Boolean> response = new Map<Id,Boolean>();
+        if ( ( setOfPrecedingTask != null ) && !setOfPrecedingTask.isEmpty() ) {
+            for ( pse__Project_Task__c record : [
+                        SELECT Is_Completed__c
+                        FROM pse__Project_Task__c 
+                        WHERE Id IN :setOfPrecedingTask
+                    ]
+                )
+            {
+                if ( !response.containsKey( record.Id ) ) {
+                    response.put( record.Id , record.Is_Completed__c );
+                }
+            }
+        }
+        return response;
     }
 
     /**
