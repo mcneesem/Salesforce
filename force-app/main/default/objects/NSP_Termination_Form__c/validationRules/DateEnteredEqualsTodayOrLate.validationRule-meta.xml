@@ -9,7 +9,7 @@
             NSP_Approver_Formula__c = &apos;Termination Team&apos;,
    AND(
        ISPICKVAL( NSP_Status__c , &apos;PR Supervisor Approved&apos;),
-       $Permission.Bypass_Bene_term_date_Validation_Rule 
+       $Permission.Bypass_Benefit_Termination_Date_Rule 
 )
         )
     ),
