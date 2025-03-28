@@ -177,6 +177,11 @@
                 <default>false</default>
                 <label>WO Competitor</label>
             </value>
+            <value>
+                <fullName>Not Approved</fullName>
+                <default>false</default>
+                <label>Not Approved</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
