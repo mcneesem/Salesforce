@@ -4,17 +4,12 @@
     <active>true</active>
     <errorConditionFormula>AND( 
     NOT(
-        OR( 
-            NSP_Approver__r.UserRole.DeveloperName = &apos;Termination_Team&apos;,  
+        OR(
             NSP_Approver__c = &apos;Termination Team&apos;,
             NSP_Approver_Formula__c = &apos;Termination Team&apos;,
-AND(
- ISPICKVAL( NSP_Status__c , &apos;PR Supervisor Approved&apos;),
-OR(
-  $Profile.Name = &apos;System Administrator&apos;,
-  $Profile.Name = &apos;System Admin Lite&apos;,
-   $UserRole.DeveloperName = &apos;Termination_Team&apos;
-)
+   AND(
+       ISPICKVAL( NSP_Status__c , &apos;PR Supervisor Approved&apos;),
+       $Permission.Bypass_Bene_term_date_Validation_Rule 
 )
         )
     ),
