@@ -49,7 +49,7 @@ public class NSP_SubPlanChangeHistoryBatchTest {
         subPlanHist.Allows_LT_Employer_Contributions__c= true;
         subPlanHist.LTPT_Effective_Date__c = Date.today() - 4;
         subPlanHist.LTPT_Term_Date__c = Date.today() - 3;
-        subPlanHist.Exemption_Type__c = 'Less than 11 EE\'s';
+        subPlanHist.Exemption_Type__c = 'Less than 11 Employees';
         subPlanHist.Exemption_Date__c = Date.Today() + 5;
         subPlanHist.NSP_Status__c = 'Active';
         insert subPlanHist ;
