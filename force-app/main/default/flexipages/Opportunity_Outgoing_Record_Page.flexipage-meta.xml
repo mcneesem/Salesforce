@@ -217,16 +217,6 @@
                 <identifier>RecordNSP_Total_EEs_All_Companies_cField4</identifier>
             </fieldInstance>
         </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.NSP_DM_User__c</fieldItem>
-                <identifier>RecordNSP_DM_User_cField2</identifier>
-            </fieldInstance>
-        </itemInstances>
         <name>Facet-900ee374-8aae-480c-b5b6-f9d850c48e82</name>
         <type>Facet</type>
     </flexiPageRegions>
