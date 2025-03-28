@@ -389,16 +389,6 @@
                 <identifier>RecordNSP_Total_EEs_All_Companies_cField</identifier>
             </fieldInstance>
         </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>readonly</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.NSP_DM_User__c</fieldItem>
-                <identifier>RecordNSP_DM_User_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
         <name>Facet-ba23xlbv6mj</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -424,6 +414,58 @@
             </componentInstance>
         </itemInstances>
         <name>Facet-mn4yli3d40d</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_DM_User__c</fieldItem>
+                <identifier>RecordNSP_DM_User_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <name>Facet-9112eb4a-c3e8-4ade-9a3b-286d9de599db</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_RM__c</fieldItem>
+                <identifier>RecordNSP_RM_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <name>Facet-8455940c-1cb7-48c8-ae17-146ddfaf300b</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-9112eb4a-c3e8-4ade-9a3b-286d9de599db</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column5</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-8455940c-1cb7-48c8-ae17-146ddfaf300b</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column6</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-10bb90b5-9e84-4cd1-b745-4a2fd1d0e323</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -2361,6 +2403,24 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>columns</name>
+                    <value>Facet-10bb90b5-9e84-4cd1-b745-4a2fd1d0e323</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>label</name>
+                    <value>Approvers</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:fieldSection</componentName>
+                <identifier>flexipage_fieldSection3</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>columns</name>
                     <value>Facet-aaefbefe-864f-41d9-96b2-54a509fe483a</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
@@ -2771,10 +2831,6 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
-                    <name>label</name>
-                    <value>Tabs</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
                     <name>tabs</name>
                     <value>tabs</value>
                 </componentInstanceProperties>
@@ -2887,10 +2943,6 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
-                <componentInstanceProperties>
-                    <name>label</name>
-                    <value>Tabs</value>
-                </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>tabs</name>
                     <value>Facet-dde378d0-41fd-4860-b600-64ae00e3f820</value>
