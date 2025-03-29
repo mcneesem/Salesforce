@@ -23,5 +23,4 @@
     </flowAccesses>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Case Creation Screen Flow</label>
-    <license>Salesforce</license>    
 </PermissionSet>

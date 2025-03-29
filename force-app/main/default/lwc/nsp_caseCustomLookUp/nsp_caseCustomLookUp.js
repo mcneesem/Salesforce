@@ -19,6 +19,7 @@ export default class nsp_contactCustomLookUp extends LightningElement {
     @api element = "8";
     @api isRequired = false;
     @api disabled = false;
+    @api disableRemove = false;
     @api error;
     userOrQueue = 'User';
 
@@ -121,19 +122,21 @@ export default class nsp_contactCustomLookUp extends LightningElement {
     }
 
     handleRemove(event) {
-        event.preventDefault();
-        this.searchKey = '';
-        this.selectedRecord = {};
-        this.selectedContactRecId = '';
-        const searchBoxWrapper = this.template.querySelector('.searchBoxWrapper');
-        const pillDiv = this.template.querySelector('.pillDiv');
-        if (searchBoxWrapper && pillDiv) {
-            searchBoxWrapper.classList.remove('slds-hide');
-            searchBoxWrapper.classList.add('slds-show');
-            pillDiv.classList.remove('slds-show');
-            pillDiv.classList.add('slds-hide');
+        if (!this.disableRemove) { 
+            event.preventDefault();
+            this.searchKey = '';
+            this.selectedRecord = {};
+            this.selectedContactRecId = '';
+            const searchBoxWrapper = this.template.querySelector('.searchBoxWrapper');
+            const pillDiv = this.template.querySelector('.pillDiv');
+            if (searchBoxWrapper && pillDiv) {
+                searchBoxWrapper.classList.remove('slds-hide');
+                searchBoxWrapper.classList.add('slds-show');
+                pillDiv.classList.remove('slds-show');
+                pillDiv.classList.add('slds-hide');
+            }
+            this.lookupUpdatehandler('', this.sObjectApiName);
         }
-        this.lookupUpdatehandler('', this.sObjectApiName);
     }
 
     handelSelectedRecord(event) {
