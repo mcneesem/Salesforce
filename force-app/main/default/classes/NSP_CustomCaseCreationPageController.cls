@@ -696,43 +696,50 @@ public static Boolean isMemberOfPrivateSection125Visibility(){
     
     @AuraEnabled(cacheable=true)
     public static List<Contact> getRelatedContacts(String accountId) {
+        List<Contact> contacts = new List<Contact>();
         try {
-            if (String.isBlank(accountId)) return new List<Contact>();
-            
-            List<AccountContactRelation> acrs = [
-                SELECT ContactId
-                FROM AccountContactRelation
-                WHERE AccountId = :accountId
-                WITH SECURITY_ENFORCED
-            ];
-            
-            if (acrs.isEmpty()) return new List<Contact>();
-            
-            Set<Id> contactIds = new Set<Id>();
-            for (AccountContactRelation acr : acrs) {
-                contactIds.add(acr.ContactId);
+            if (!String.isBlank(accountId)) {
+                List<AccountContactRelation> acrs = [
+                    SELECT ContactId
+                    FROM AccountContactRelation
+                    WHERE AccountId = :accountId
+                    WITH SECURITY_ENFORCED
+                ];
+                if (!acrs.isEmpty()) {
+                    Set<Id> contactIds = new Set<Id>();
+                    for (AccountContactRelation acr : acrs) {
+                        contactIds.add(acr.ContactId);
+                    }
+                    contacts = [
+                        SELECT Id, Name 
+                        FROM Contact 
+                        WHERE Id IN :contactIds 
+                        ORDER BY Name
+                    ];
+                }
             }
-            
-            return [SELECT Id, Name FROM Contact WHERE Id IN :contactIds ORDER BY Name];
         } catch (Exception excep) {
             throw new AuraHandledException(excep.getMessage());
         }
+        return contacts;
     }
 
     @AuraEnabled(cacheable=true)
     public static List<AccountContactRelation> getRelatedAccounts(String contactId) {
+        List<AccountContactRelation> acrs = new List<AccountContactRelation>();
         try {
-            if (String.isBlank(contactId)) return new List<AccountContactRelation>();
-            
-            return [
-                SELECT AccountId, NSP_Is_Primary__c, Account.Name
-                FROM AccountContactRelation
-                WHERE ContactId = :contactId
-                ORDER BY NSP_Is_Primary__c DESC, Account.Name
-            ];
+            if (!String.isBlank(contactId)) {
+                acrs = [
+                    SELECT AccountId, NSP_Is_Primary__c, Account.Name
+                    FROM AccountContactRelation
+                    WHERE ContactId = :contactId
+                    ORDER BY NSP_Is_Primary__c DESC, Account.Name
+                ];
+            }
         } catch (Exception excep) {
             throw new AuraHandledException(excep.getMessage());
         }
+        return acrs;
     }
 
 }

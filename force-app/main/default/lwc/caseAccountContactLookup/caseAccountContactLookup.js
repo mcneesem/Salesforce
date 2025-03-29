@@ -13,20 +13,31 @@ export default class CaseAccountContactLookup extends LightningElement {
     @track showAccountWarning = false;
     @track isAccountDisabled = false;
     @track isContactDisabled = false;
+    @track accountFilterId = '';
+    @track contactFilterId = '';
+    @track isContactPath = false;
     multipleAccountsLabel = MULTIPLE_ACCOUNTS_LABEL;
 
     connectedCallback() {
         this.initializeFromContext();
     }
 
+    get isAccountPath() {
+        return !this.isContactPath; 
+    }
+
     async initializeFromContext() {
         if (this.contextAccountId && this.contextAccountId !== 'null') {
             this.selectedAccountId = this.contextAccountId;
-            this.isAccountDisabled = true; 
+            this.contactFilterId = this.contextAccountId;
+            this.isAccountDisabled = false;
+            this.isContactPath = false;
             await this.setDefaultContact();
         } else if (this.contextContactId && this.contextContactId !== 'null') {
             this.selectedContactId = this.contextContactId;
+            this.accountFilterId = this.contextContactId;
             this.isContactDisabled = false;
+            this.isContactPath = true;
             await this.setAccountFromContact(true);
             await this.handleMultipleACRs();
         }
@@ -41,8 +52,15 @@ export default class CaseAccountContactLookup extends LightningElement {
             }
             this.showAccountWarning = false;
             this.isAccountDisabled = false;
+            this.contactFilterId = this.selectedAccountId;
+            this.accountFilterId = this.selectedContactId;
             this.dispatchFlowEvent('accountIdChange', this.selectedAccountId);
             await this.setDefaultContact();
+            const contactLookup = this.template.querySelector('c-nsp_contact-custom-look-up[s-object-api-name="Contact"]');
+            if (contactLookup) {
+                contactLookup.parentId = this.selectedAccountId;
+                contactLookup.caseAccRecId = this.selectedAccountId;
+            }
         }
     }
 
@@ -52,10 +70,16 @@ export default class CaseAccountContactLookup extends LightningElement {
             this.selectedContactId = newContactId;
             this.showAccountWarning = false;
             this.isContactDisabled = false;
+            this.accountFilterId = this.selectedContactId;
+            this.contactFilterId = this.selectedAccountId;
             this.dispatchFlowEvent('contactIdChange', this.selectedContactId);
             await this.handleMultipleACRs();
             if (!this.selectedAccountId) {
                 await this.setAccountFromContact(false);
+            }
+            const accountLookup = this.template.querySelector('c-nsp_contact-custom-look-up[s-object-api-name="Account"]');
+            if (accountLookup) {
+                accountLookup.caseAccRecId = this.selectedContactId;
             }
         }
     }
@@ -79,10 +103,11 @@ export default class CaseAccountContactLookup extends LightningElement {
             const contacts = await getRelatedContacts({ accountId: this.selectedAccountId });
             if (contacts?.length === 1) {
                 this.selectedContactId = contacts[0].Id;
-                this.isContactDisabled = true;
+                this.isContactDisabled = false;
+                this.accountFilterId = this.selectedContactId;
                 this.dispatchFlowEvent('contactIdChange', this.selectedContactId);
                 await this.handleMultipleACRs();
-                const contactLookup = this.template.querySelector('c-nsp_case-custom-look-up[s-object-api-name="Contact"]');
+                const contactLookup = this.template.querySelector('c-nsp_contact-custom-look-up[s-object-api-name="Contact"]');
                 if (contactLookup) {
                     contactLookup.getDefaultRecord(this.selectedContactId, 'Contact', this.selectedAccountId);
                 }
@@ -100,12 +125,13 @@ export default class CaseAccountContactLookup extends LightningElement {
                 const primaryAccount = accounts.find(a => a.NSP_Is_Primary__c);
                 if (primaryAccount) {
                     this.selectedAccountId = primaryAccount.AccountId;
-                    this.isAccountDisabled = isInitialSetup;
+                    this.isAccountDisabled = isInitialSetup && !this.isContactPath;
                 } else if (accounts.length === 1) {
                     this.selectedAccountId = accounts[0].AccountId;
-                    this.isAccountDisabled = isInitialSetup;
+                    this.isAccountDisabled = isInitialSetup && !this.isContactPath;
                 }
                 if (this.selectedAccountId) {
+                    this.contactFilterId = this.selectedAccountId;
                     this.dispatchFlowEvent('accountIdChange', this.selectedAccountId);
                 }
             }

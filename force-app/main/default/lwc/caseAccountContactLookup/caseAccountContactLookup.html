@@ -7,9 +7,12 @@
                     label="Account"
                     icon-name="standard:account"
                     default-record-id={selectedAccountId}
+                    case-acc-rec-id={accountFilterId}
+                    parent-id={selectedContactId}
                     onlookupupdate={handleAccountLookup}
                     placeholder="Search Accounts..."
                     disabled={isAccountDisabled}
+                    disable-remove={isAccountPath}
                     is-required="true">
                 </c-nsp_case-custom-look-up>
                 <div lwc:if={showAccountWarning} class="slds-text-color_error slds-text-body_small slds-m-top_x-small">
@@ -22,10 +25,12 @@
                     label="Contact"
                     icon-name="standard:contact"
                     default-record-id={selectedContactId}
-                    parent-id={selectedAccountId}
+                    parent-id={contactFilterId}
+                    case-acc-rec-id={selectedAccountId}
                     onlookupupdate={handleContactLookup}
                     placeholder="Search Contacts..."
-                    disabled={isContactDisabled}>
+                    disabled={isContactDisabled}
+                    disable-remove={isContactPath}>
                 </c-nsp_case-custom-look-up>
             </div>
         </div>
