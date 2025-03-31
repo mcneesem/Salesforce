@@ -3,23 +3,26 @@
     <fullName>SYNT_PreventEditing_ClosedRecord</fullName>
     <active>true</active>
     <description>This validation rule prevent the user editing on the Closed record</description>
-    <errorConditionFormula>AND
-( $Setup.NSP_Trigger_Switch__c.CaseValidations__c != true,
-  NOT(ISNEW()),
-OR(AND(ISCHANGED(NSP_Show_Confidential_PopUp__c), NSP_Show_Confidential_PopUp__c = false),
-AND(NOT(ISCHANGED(NSP_Show_Confidential_PopUp__c)), NSP_Show_Confidential_PopUp__c = true),
-AND(NSP_Confidential__c = true, NSP_Show_Confidential_PopUp__c = false),
-AND(NOT(ISCHANGED(NSP_Show_Confidential_PopUp__c)), PRIORVALUE(NSP_Show_Confidential_PopUp__c) = false)), 
-  NOT(ISPICKVAL(Status, &apos;ReOpened&apos;)),
-NOT($User.Id = $Label.NSP_CaseValidationBypassUser ),
-OR(AND(ISCHANGED(NSP_Response_After_Close__c), NSP_Response_After_Close__c = false),
-  AND(NOT(ISCHANGED(NSP_Response_After_Close__c)), NSP_Response_After_Close__c = true),
-  AND(NOT(ISCHANGED(NSP_Response_After_Close__c)), PRIORVALUE(NSP_Response_After_Close__c) = false)),
-  OR
-(
-NOT(ISCHANGED( NSP_Case_Sub_Status__c )),
- ISPICKVAL(Status, &apos;Open&apos;),
-ISPICKVAL(Status, &apos;Cancelled&apos;),
+    <errorConditionFormula>AND(
+$Setup.NSP_Trigger_Switch__c.CaseValidations__c!=true,
+NOT(ISNEW()),
+OR(
+AND(ISCHANGED(NSP_Show_Confidential_PopUp__c),NSP_Show_Confidential_PopUp__c=false),
+AND(NOT(ISCHANGED(NSP_Show_Confidential_PopUp__c)),NSP_Show_Confidential_PopUp__c=true),
+AND(NSP_Confidential__c=true,NSP_Show_Confidential_PopUp__c=false),
+AND(NOT(ISCHANGED(NSP_Show_Confidential_PopUp__c)),PRIORVALUE(NSP_Show_Confidential_PopUp__c)=false)
+),
+NOT(ISPICKVAL(Status,&apos;ReOpened&apos;)),
+NOT($User.Id=$Label.NSP_CaseValidationBypassUser),
+OR(
+AND(ISCHANGED(NSP_Response_After_Close__c),NSP_Response_After_Close__c=false),
+AND(NOT(ISCHANGED(NSP_Response_After_Close__c)),NSP_Response_After_Close__c=true),
+AND(NOT(ISCHANGED(NSP_Response_After_Close__c)),PRIORVALUE(NSP_Response_After_Close__c)=false)
+),
+OR(
+ISPICKVAL(Status,&apos;Open&apos;),
+
+ISPICKVAL(Status,&apos;Cancelled&apos;),
 ISCHANGED(AccountId),
 ISCHANGED(NSP_Actual_Minutes_Spent_To_Resolve_Case__c),
 ISCHANGED(NSP_AgencyCase__c),
@@ -29,6 +32,7 @@ ISCHANGED(NSP_AppealedBy__c),
 ISCHANGED(NSP_Area_Of_Assistance__c),
 ISCHANGED(Areas_of_Interest__c),
 ISCHANGED(AssetId),
+
 ISCHANGED(AssetWarrantyId),
 ISCHANGED(NSP_Assigned_Queue__c),
 ISCHANGED(NSP_AuditPayoutAmount__c),
@@ -39,6 +43,7 @@ ISCHANGED(BusinessHoursId),
 ISCHANGED(CurrencyIsoCode),
 ISCHANGED(NSP_Case_Issue__c),
 ISCHANGED(CaseNumber),
+
 ISCHANGED(Origin),
 ISCHANGED(OwnerId),
 ISCHANGED(RecordTypeId),
@@ -49,6 +54,7 @@ ISCHANGED(NSP_CCPA_email_Sent__c),
 ISCHANGED(NSP_ClaimState__c),
 ISCHANGED(NSP_ClientNumber__c),
 ISCHANGED(IsClosedOnCreate),
+
 ISCHANGED(NSP_Company__c),
 ISCHANGED(NSP_Company_SaaS_URL__c),
 ISCHANGED(NSP_ConferenceDate__c),
@@ -59,6 +65,7 @@ ISCHANGED(NSP_CorporateEmployeeEE__c),
 ISCHANGED(NSP_CorporateEmployeeEE_Formula__c),
 ISCHANGED(NSP_Covid_19__c),
 ISCHANGED(NSP_CQA_Task_Created__c),
+
 ISCHANGED(CreatedById),
 ISCHANGED(NSP_CSAContractDate__c),
 ISCHANGED(NSP_CSATermDate__c),
@@ -69,6 +76,7 @@ ISCHANGED(NSP_DateReceived__c),
 ISCHANGED(ClosedDate),
 ISCHANGED(CreatedDate),
 ISCHANGED(Description),
+
 ISCHANGED(NSP_Detail__c),
 ISCHANGED(NSP_DOLInvestigatorName__c),
 ISCHANGED(NSP_DOLOfficeName__c),
@@ -79,6 +87,7 @@ ISCHANGED(SlaStartDate),
 ISCHANGED(IsEscalated),
 ISCHANGED(NSP_Findings__c),
 ISCHANGED(NSP_First_Reply_Date__c),
+
 ISCHANGED(NSP_Group_Assign_Date__c),
 ISCHANGED(NSP_HRSpecialistName__c),
 ISCHANGED(NSP_HandledBy__c),
@@ -89,6 +98,7 @@ ISCHANGED(NSP_InvestigatorAddress__c),
 ISCHANGED(NSP_InvestigatorPhone__c),
 ISCHANGED(NSP_IsCaseCreatedNotificationEmailSent__c),
 ISCHANGED(NSP_IsJunkMail__c),
+
 ISCHANGED(NSP_JobTitle__c),
 ISCHANGED(NSP_L2__c),
 ISCHANGED(Language),
@@ -99,12 +109,14 @@ ISCHANGED(NSP_Level_2__c),
 ISCHANGED(NSP_Level_2_Date__c),
 ISCHANGED(NSP_Loaner_Repair_Serial__c),
 ISCHANGED(NSP_Location__c),
-ISCHANGED(NSP_Open_to_Assigned_Hours__c),
+
 ISCHANGED(NSP_Open_to_First_Reply_Hours__c),
 ISCHANGED(NSP_Opened_Date__c),
+
 ISCHANGED(NSP_Operating_System__c),
 ISCHANGED(NSP_OPRT_Directory_View_AIMS__c),
 ISCHANGED(NSP_Owner_Assign_Date__c),
+
 ISCHANGED(NSP_PaidByInsperity__c)
 ),
 ISPICKVAL(PRIORVALUE(Status),&apos;Closed&apos;),
