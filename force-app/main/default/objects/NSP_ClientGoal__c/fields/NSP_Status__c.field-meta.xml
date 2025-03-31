@@ -17,29 +17,31 @@
                 <label>Active</label>
             </value>
             <value>
-                <fullName>Accomplished</fullName>
+                <fullName>Complete</fullName>
                 <default>false</default>
-                <label>Accomplished</label>
+                <label>Complete</label>
             </value>
             <value>
-                <fullName>Inactive</fullName>
+                <fullName>On Hold</fullName>
                 <default>false</default>
-                <label>Inactive</label>
-            </value>
-            <value>
-                <fullName>Deferred</fullName>
-                <default>false</default>
-                <label>Deferred</label>
-            </value>
-            <value>
-                <fullName>Not Completed</fullName>
-                <default>false</default>
-                <label>Not Completed</label>
+                <label>On Hold</label>
             </value>
             <value>
                 <fullName>Cancelled</fullName>
                 <default>false</default>
                 <label>Cancelled</label>
+            </value>
+            <value>
+                <fullName>Inactive</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Inactive</label>
+            </value>
+            <value>
+                <fullName>Not Completed</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Not Completed</label>
             </value>
         </valueSetDefinition>
     </valueSet>
