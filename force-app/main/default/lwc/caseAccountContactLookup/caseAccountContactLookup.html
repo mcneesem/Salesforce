@@ -13,9 +13,12 @@
                     placeholder="Search Accounts..."
                     disabled={isAccountDisabled}
                     disable-remove={isAccountPath}
-                    is-required="true">
+                    is-required="true"
+                    >
                 </c-nsp_case-custom-look-up>
-                <div lwc:if={showAccountWarning} class="slds-text-color_error slds-text-body_small slds-m-top_x-small">
+                <div lwc:if={showAccountWarning}
+                    class="slds-text-color_error slds-text-body_small slds-m-top_x-small"
+                    >
                     <strong style="color: red;">{multipleAccountsLabel}</strong>
                 </div>
             </div>
@@ -30,7 +33,8 @@
                     onlookupupdate={handleContactLookup}
                     placeholder="Search Contacts..."
                     disabled={isContactDisabled}
-                    disable-remove={isContactPath}>
+                    disable-remove={isContactPath}
+                    >
                 </c-nsp_case-custom-look-up>
             </div>
         </div>
