@@ -3,8 +3,8 @@
     <actionCalls>
         <name>NCS_Notify</name>
         <label>NCS Notify</label>
-        <locationX>710</locationX>
-        <locationY>882</locationY>
+        <locationX>176</locationX>
+        <locationY>384</locationY>
         <actionName>Opportunity.NSP_Opportunity_requires_assignment_to_New_Client_Sales_Specialist</actionName>
         <actionType>emailAlert</actionType>
         <faultConnector>
@@ -23,8 +23,8 @@
     <assignments>
         <name>Assign_varFauleElement_NCS_Notify</name>
         <label>Assign varFauleElement - NCS_Notify</label>
-        <locationX>1634</locationX>
-        <locationY>990</locationY>
+        <locationX>440</locationX>
+        <locationY>492</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -33,40 +33,6 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Fault_Handler</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Assign_varFauleElement_Update_New_Client_Sales_Email_Salepprwk</name>
-        <label>Assign varFauleElement - Update_New_Client_Sales_Email_Salepprwk</label>
-        <locationX>1106</locationX>
-        <locationY>600</locationY>
-        <assignmentItems>
-            <assignToReference>varFaultElement</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Update_New_Client_Sales_Email_Salepprwk</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Fault_Handler</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Assign_varFauleElement_Update_Oppty_New_Client_Sales_Email</name>
-        <label>Assign varFauleElement - Update_Oppty_New_Client_Sales_Email</label>
-        <locationX>314</locationX>
-        <locationY>600</locationY>
-        <assignmentItems>
-            <assignToReference>varFaultElement</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Update_Oppty_New_Client_Sales_Email</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <isGoTo>true</isGoTo>
             <targetReference>Fault_Handler</targetReference>
         </connector>
     </assignments>
@@ -148,209 +114,9 @@
         </value>
     </constants>
     <decisions>
-        <name>Check_Owner_Role</name>
-        <label>Check Owner Role</label>
-        <locationX>710</locationX>
-        <locationY>384</locationY>
-        <defaultConnectorLabel>Default</defaultConnectorLabel>
-        <rules>
-            <name>Workforce_Product</name>
-            <conditionLogic>(1 OR 2 OR 3 OR 4) AND 5</conditionLogic>
-            <conditions>
-                <leftValueReference>$Record.NSP_PrimaryProduct__c</leftValueReference>
-                <operator>Contains</operator>
-                <rightValue>
-                    <stringValue>WX</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.NSP_PrimaryProduct__c</leftValueReference>
-                <operator>Contains</operator>
-                <rightValue>
-                    <stringValue>WA</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.NSP_PrimaryProduct__c</leftValueReference>
-                <operator>Contains</operator>
-                <rightValue>
-                    <stringValue>WO</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.NSP_PrimaryProduct__c</leftValueReference>
-                <operator>Contains</operator>
-                <rightValue>
-                    <stringValue>WS</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Permission.Opportunity_NCS_Email_Customer_Success</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Update_Oppty_New_Client_Sales_Email</targetReference>
-            </connector>
-            <label>Workforce_Product</label>
-        </rules>
-        <rules>
-            <name>Otherthan_Workforce_Products</name>
-            <conditionLogic>((1 AND 8 AND 9) OR 2 OR 3 OR (4 AND 7 AND 11 AND 12) OR (5 AND 10)) AND 6</conditionLogic>
-            <conditions>
-                <leftValueReference>$Record.NSP_PrimaryProduct__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Applicant Tracking</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.NSP_PrimaryProduct__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Organizational Planning</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.NSP_PrimaryProduct__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Performance Management</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.NSP_PrimaryProduct__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Retirement Services</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.NSP_PrimaryProduct__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Time &amp; Attendance</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Permission.Opportunity_NCS_Email_Customer_Success</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.Owner.Title</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <stringValue>Customer Success Specialist</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.Owner.Title</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <stringValue>Performance Consultant, Client Recruiting</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.Owner.Title</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <stringValue>Recruiting Analyst, Client Recruiting</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.Owner.Title</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <stringValue>Administrator, Office Services</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.Owner.Title</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <stringValue>Manager, Accounting</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.Owner.Title</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <stringValue>Plan Expense &amp; Billing Analyst</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <isGoTo>true</isGoTo>
-                <targetReference>Update_New_Client_Sales_Email_Salepprwk</targetReference>
-            </connector>
-            <label>Otherthan Workforce Products</label>
-        </rules>
-        <rules>
-            <name>Core_And_MidMarket_Hierarchy</name>
-            <conditionLogic>(1 OR 2 OR 3 OR 4 OR 5 OR 6) AND 7</conditionLogic>
-            <conditions>
-                <leftValueReference>$Record.NSP_PrimaryProduct__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Employment Screening</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.NSP_PrimaryProduct__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Expense Management</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.NSP_PrimaryProduct__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Insurance Services</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.NSP_PrimaryProduct__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Learning &amp; Development</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.NSP_PrimaryProduct__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Recruiting Services</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.NSP_PrimaryProduct__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>HR Consulting Services</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Permission.Opportunity_NCS_Email_Core_MidMarket</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Update_New_Client_Sales_Email_Salepprwk</targetReference>
-            </connector>
-            <label>CoreAndMidMarketHierarchy</label>
-        </rules>
-    </decisions>
-    <decisions>
         <name>OwnerIDNullCheck</name>
         <label>OwnerIDNullCheck</label>
-        <locationX>1304</locationX>
+        <locationX>440</locationX>
         <locationY>276</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -378,7 +144,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Check_Owner_Role</targetReference>
+                <targetReference>NCS_Notify</targetReference>
             </connector>
             <label>Notnull</label>
         </rules>
@@ -405,46 +171,8 @@
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
-    <recordUpdates>
-        <name>Update_New_Client_Sales_Email_Salepprwk</name>
-        <label>Update New Client Sales Email Salepprwk</label>
-        <locationX>842</locationX>
-        <locationY>492</locationY>
-        <connector>
-            <targetReference>NCS_Notify</targetReference>
-        </connector>
-        <faultConnector>
-            <targetReference>Assign_varFauleElement_Update_New_Client_Sales_Email_Salepprwk</targetReference>
-        </faultConnector>
-        <inputAssignments>
-            <field>NSP_New_Client_Sales_Email__c</field>
-            <value>
-                <elementReference>$Label.NSP_Salepprwk_Email</elementReference>
-            </value>
-        </inputAssignments>
-        <inputReference>$Record</inputReference>
-    </recordUpdates>
-    <recordUpdates>
-        <name>Update_Oppty_New_Client_Sales_Email</name>
-        <label>Update Oppty New Client Sales Email</label>
-        <locationX>50</locationX>
-        <locationY>492</locationY>
-        <connector>
-            <targetReference>NCS_Notify</targetReference>
-        </connector>
-        <faultConnector>
-            <targetReference>Assign_varFauleElement_Update_Oppty_New_Client_Sales_Email</targetReference>
-        </faultConnector>
-        <inputAssignments>
-            <field>NSP_New_Client_Sales_Email__c</field>
-            <value>
-                <elementReference>$Label.NSP_New_Client_Sales_Email</elementReference>
-            </value>
-        </inputAssignments>
-        <inputReference>$Record</inputReference>
-    </recordUpdates>
     <start>
-        <locationX>419</locationX>
+        <locationX>50</locationX>
         <locationY>0</locationY>
         <filterLogic>and</filterLogic>
         <filters>
@@ -468,6 +196,13 @@
                 <booleanValue>false</booleanValue>
             </value>
         </filters>
+        <filters>
+            <field>NSP_New_Client_Sales_Email__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
         <object>Opportunity</object>
         <recordTriggerType>Update</recordTriggerType>
         <scheduledPaths>
@@ -482,8 +217,8 @@
     <subflows>
         <name>Fault_Handler</name>
         <label>Fault Handler</label>
-        <locationX>1634</locationX>
-        <locationY>1098</locationY>
+        <locationX>440</locationX>
+        <locationY>600</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultElement</name>
