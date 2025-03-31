@@ -32,11 +32,8 @@ public class NSP_ServicePlanProjectTaskBatch implements Database.Batchable<sObje
         List<pse__Project_Task__c> projectTaskList = new List<pse__Project_Task__c>();
         Map<Id, Date> mapOfAccountIdAndRenewalDate = new Map<Id, Date> ();
         Set<Id> accountIdSet = new Set<Id>();
-        Map<Id, NSP_Account_Team__c> accountTeamMap = new Map<Id, NSP_Account_Team__c>();
         set<pse__Proj__c> validProjectsSet = new set<pse__Proj__c>();
-        
-        String peoProjectTaskRecordTypeId = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.PROJECT_TASK_SOBJECT_TYPE, NSP_ServiceConstants.PROJECT_TASK_PEO_RECORDTYPE);
-        String woAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.ASSET_SOBJECT_TYPE, NSP_ServiceConstants.WO_ASSET_RECORDTYPE);
+        String peoProjectTaskRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'pse__Project_Task__c ', 'PEO_Project_Task' );
         // check relatedprojectlist not empty
         if(relatedProjectList.size() > 0){
             //iterating over project list
@@ -45,12 +42,9 @@ public class NSP_ServicePlanProjectTaskBatch implements Database.Batchable<sObje
             }
         }
         
-        // check accountIDset not empty
-        if(!accountIdSet.isEmpty()){
-            for(NSP_Account_Team__c team : Database.Query(getAccountTeamQuery(accountIdSet))){
-                accountTeamMap.put(team.NSP_Account__c, team);                                    
-            }    
-        }        
+       // Get Account Team Map
+       Map<Id,List<NSP_Account_Team__c>> accountTeamMap = NSP_ServicePlanProjectTaskBatch.getAccountTeamMap( accountIdSet );
+
         // Get Sub Client
         for(pse__Proj__c project : [
                     SELECT
@@ -143,12 +137,9 @@ public class NSP_ServicePlanProjectTaskBatch implements Database.Batchable<sObje
                 projectTask.NSP_Category__c = NSP_ServiceConstants.Client_Management;
                 projectTask.NSP_Sub_Category__c = NSP_ServiceConstants.Quality_Touch_Point;
                 projectTask.pse__External_Task_ID__c = prj.Id+'-'+NSP_ServiceConstants.QTP1+'-'+randomNumber;
-                if ( accountTeamMap.containskey( prj.pse__Account__c )
-                    && ( accountTeamMap.get( prj.pse__Account__c ) != null )
-                    && ( accountTeamMap.get( prj.pse__Account__c ).NSP_User__c != null )
-                    )
-                {
-                    projectTask.OwnerId = accountTeamMap.get( prj.pse__Account__c ).NSP_User__c;
+                String ownerId = NSP_ServicePlanProjectTaskBatch.getOwnerIdFromAccountTeams( prj , accountTeamMap );
+                if ( ownerId != null ) {
+                    projectTask.OwnerId = ownerId; 
                 }
                 lstOfRecords.add(projectTask);
                 lstOfRecords.add(projTaskAssigmt);
@@ -163,13 +154,10 @@ public class NSP_ServicePlanProjectTaskBatch implements Database.Batchable<sObje
                 projectTask1.NSP_Category__c = NSP_ServiceConstants.Client_Management;
                 projectTask1.NSP_Sub_Category__c = NSP_ServiceConstants.Quality_Touch_Point;
                 projectTask1.pse__External_Task_ID__c = prj.Id+'-'+NSP_ServiceConstants.QTP2+'-'+randomNumber;
-                if ( accountTeamMap.containskey( prj.pse__Account__c )
-                    && ( accountTeamMap.get( prj.pse__Account__c ) != null )
-                    && ( accountTeamMap.get( prj.pse__Account__c ).NSP_User__c != null )
-                    )
-                {
-                    projectTask1.OwnerId = accountTeamMap.get( prj.pse__Account__c ).NSP_User__c;
+                if ( ownerId != null ) {
+                    projectTask1.OwnerId = ownerId;
                 }
+
                 lstOfRecords.add(projectTask1);
                 lstOfRecords.add(projTaskAssigmt2);
             }
@@ -186,21 +174,76 @@ public class NSP_ServicePlanProjectTaskBatch implements Database.Batchable<sObje
             );
         }
     }
-    
-    public void finish(Database.BatchableContext BC){
-    
+
+    //== Method to get the owner Id
+    private static String getOwnerIdFromAccountTeams( pse__Proj__c prj , Map<Id,List<NSP_Account_Team__c>> accountTeamMap ) {
+        String ownerId = null;
+        if ( accountTeamMap.containskey( prj.pse__Account__c ) ) {
+            List<NSP_Account_Team__c> accountTeams = accountTeamMap.get( prj.pse__Account__c );
+            if ( !accountTeams?.isEmpty() ) {
+                for ( NSP_Account_Team__c accountTeam : accountTeams ) {
+                    if ( NSP_ServiceConstants.BUS_TEAM_HRSP_CL.equalsIgnoreCase( accountTeam.NSP_Role__c )
+                        && accountTeam.NSP_Primary__c
+                        )
+                    {
+                        ownerId = accountTeam.NSP_User__c;
+                    } else if ( ( ownerId == null )
+                        && NSP_ServiceConstants.BUS_TEAM_HRSP_CL.equalsIgnoreCase( accountTeam.NSP_Role__c )
+                        )
+                    {
+                        ownerId = accountTeam.NSP_User__c;
+                    } else if ( ( ownerId == null )
+                        && NSP_ServiceConstants.MANAGER_HRSERVICES.equalsIgnoreCase( accountTeam.NSP_Role__c )
+                        )
+                    {
+                        ownerId = accountTeam.NSP_User__c;
+                    }
+                }
+            }
+        }
+         return ownerId;
     }
-    
+
+    //== Method to return the Account Team Map 
+    private static Map<Id,List<NSP_Account_Team__c>> getAccountTeamMap( Set<Id> accountIdSet ) {
+        Map<Id,List<NSP_Account_Team__c>> accountTeamMap = new Map<Id,List<NSP_Account_Team__c>>();
+        // check accountIDset not empty
+        if ( !accountIdSet.isEmpty() ) {
+            List<NSP_Account_Team__c> accountTeamList = NSP_ServicePlanProjectTaskBatch.getAccountTeamQuery( accountIdSet );
+            for ( NSP_Account_Team__c team : accountTeamList ) {
+                if ( team != null ) {
+                    if ( !accountTeamMap.containsKey( team.NSP_Account__c ) ) {
+                        accountTeamMap.put( team.NSP_Account__c , new List<NSP_Account_Team__c>() );
+                    }
+                    accountTeamMap.get( team.NSP_Account__c ).add( team );
+                }
+            }
+        }
+        return accountTeamMap;
+    }
+
+    public void finish( Database.BatchableContext bc ){
+    }
+
     //
     // @param accountIds Set of accountIds that is associated with project Account
     // @return void
     //
-    public static String getAccountTeamQuery(Set<Id> accountIds){
-        String accTeamQuery = new NSP_QueryBuilder('NSP_Account_Team__c', new List<String>{'NSP_Account__c','NSP_Role__c','NSP_User__c','NSP_Primary__c','NSP_First_Name__c'})
-            .addFilter('NSP_Role__c', NSP_ServiceConstants.BUS_TEAM_HRSP_CL , NSP_QueryBuilder.Operator.EQUALS)
-            .addFilter('NSP_Account__c', new List<Id>(accountIds) , NSP_QueryBuilder.Operator.INCLUDES)
-            .build();
-        return accTeamQuery;
+    public static List<NSP_Account_Team__c> getAccountTeamQuery( Set<Id> accountIds ) {
+        List<String> roles = new List<String>{
+            NSP_ServiceConstants.MANAGER_HRSERVICES ,
+            NSP_ServiceConstants.BUS_TEAM_HRSP_CL
+        };
+        List<NSP_Account_Team__c> accountTeamList = [
+            SELECT Id , NSP_Account__c , NSP_Role__c , NSP_User__c , NSP_Primary__c , NSP_First_Name__c
+            FROM NSP_Account_Team__c
+            WHERE (
+                ( NSP_Role__c = :roles )
+                AND ( NSP_Account__c = :accountIds )
+            )
+            WITH SECURITY_ENFORCED
+        ];
+        return accountTeamList;
     }
 
     //
