@@ -35,6 +35,10 @@
                 <behavior>Edit</behavior>
                 <field>ShipToContactId</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Mismatch_Asset__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
