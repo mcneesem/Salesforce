@@ -4,7 +4,7 @@
 * Author : Nischay Jindal
 * Name : NSP_userSalesOfficeRecordSharing
 */
-public with sharing class NSP_userSalesOfficeRecordSharing {
+public without sharing class NSP_userSalesOfficeRecordSharing {
     // test w/ NSP_UserTriggerHelper_Test (93%)
 
     private static Map<Id,User> permittedUserMap = CustomPermissionController.getPermittedUsersMap( 'User_Share_SO_Update' );
@@ -45,29 +45,27 @@ public with sharing class NSP_userSalesOfficeRecordSharing {
                     if( usr.NSP_Sales_Office_Membership__c != null ){
                         // creating a Set of new Sales Offices
                         newSalesOfficeMembershipSet.addAll( new List<String>( usr.NSP_Sales_Office_Membership__c.Split(';') ) );
-                        
                         // comparing new Sales Office MemberShip with old Sales Office MemberShip
-                        // Creating a map of Sales Office and Set of User Id
-
+                        // creating a map of Sales Office and Set of User Id
                         mapNewSalesOfficeSetUserId = getMapNewSalesOfficeSetUserId( newSalesOfficeMembershipSet , oldSalesOfficeMembershipSet , mapNewSalesOfficeSetUserId , usr );
+                        // remove duplicate Sales Offices from the Old Sales Office Membership 
                         oldSalesOfficeMembershipSet = cleanOldSalesOfficeMembershipSet( newSalesOfficeMembershipSet , oldSalesOfficeMembershipSet );
-
                     } 
                     // create map of User Id Set old Sales Office
                     if( !oldSalesOfficeMembershipSet.isEmpty() ){
-                        mapUserIdSetOldSalesOffice.put(usr.Id,oldSalesOfficeMembershipSet);
+                        mapUserIdSetOldSalesOffice.put( usr.Id , oldSalesOfficeMembershipSet );
 
                         // updating old Offices on User 
                         User user = new User ();
                         user.Id=usr.Id;
-                        user.NSP_Office_Processing__c= String.join(new List<String>(oldSalesOfficeMembershipSet),';');
+                        user.NSP_Office_Processing__c = String.join( new List<String>(oldSalesOfficeMembershipSet) , ';' );
                         updateUserList.add(user);
                     }
                 }
             }
             if( !newUserIdSet.isEmpty() ){
                 // calling Queueable Job for Account
-              System.enqueueJob( new NSP_userAccountSalesOfficeSharing( mapNewSalesOfficeSetUserId,mapUserIdSetOldSalesOffice,newUserIdSet ) ); 
+              System.enqueueJob( new NSP_userAccountSalesOfficeSharing( mapNewSalesOfficeSetUserId , mapUserIdSetOldSalesOffice , newUserIdSet ) ); 
              }
             if( !updateUserList.isEmpty() ){
                 Update updateUserList;
@@ -104,7 +102,6 @@ public with sharing class NSP_userSalesOfficeRecordSharing {
 
     private static Set<String> cleanOldSalesOfficeMembershipSet(Set<String> newSalesOfficeMembershipSet , Set<String> oldSalesOfficeMembershipSet ){
         for( String newSalesOffice: newSalesOfficeMembershipSet ){
-            // remove duplicate Sales Offices from the Old Sales Office Membership 
             if( !oldSalesOfficeMembershipSet.isEmpty() && oldSalesOfficeMembershipSet.contains(newSalesOffice) ){
                 oldSalesOfficeMembershipSet.remove(newSalesOffice);
             }   
