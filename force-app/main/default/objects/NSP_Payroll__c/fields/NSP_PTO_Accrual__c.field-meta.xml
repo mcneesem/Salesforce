@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_PTO_Accrual__c</fullName>
-    <externalId>false</externalId>
     <label>PTO Accrual</label>
     <required>false</required>
     <trackHistory>true</trackHistory>
@@ -35,6 +34,11 @@
                 <fullName>N/A</fullName>
                 <default>false</default>
                 <label>N/A</label>
+            </value>
+            <value>
+                <fullName>Workday Absence</fullName>
+                <default>false</default>
+                <label>Workday Absence</label>
             </value>
         </valueSetDefinition>
     </valueSet>
