@@ -2024,10 +2024,6 @@
         <apexClass>SBQQ__Versionable</apexClass>
         <enabled>true</enabled>
     </classAccesses>
-    <customPermissions>
-        <enabled>true</enabled>
-        <name>Asset_Order_Product_Sync_Up</name>
-    </customPermissions>
     <description>Permission Set for specific Finance users. Gives additional access to billing objects</description>
     <fieldPermissions>
         <editable>true</editable>
@@ -2860,9 +2856,9 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
-        <field>ConsumptionSchedule.NSP_Partner_Account__c</field>
-        <readable>true</readable>
+            <editable>true</editable>
+            <field>ConsumptionSchedule.NSP_Partner_Account__c</field>
+            <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -5526,11 +5522,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Order.Mismatch_Asset__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Order.NSP_AIMS_Billing_ID__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -5972,11 +5963,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>OrderItem.ListPrice</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>OrderItem.Mismatch_AssetId__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

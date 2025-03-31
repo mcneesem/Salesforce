@@ -44,10 +44,6 @@
                 <behavior>Edit</behavior>
                 <field>EndDate</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Mismatch_Asset__c</field>
-            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

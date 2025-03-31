@@ -39,10 +39,6 @@
                 <behavior>Readonly</behavior>
                 <field>NSP_Billing_Account_Name__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Mismatch_Asset__c</field>
-            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
