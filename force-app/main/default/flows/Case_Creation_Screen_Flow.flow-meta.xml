@@ -4,14 +4,14 @@
         <name>Case_Redirect</name>
         <label>Case Redirect</label>
         <locationX>380</locationX>
-        <locationY>1766</locationY>
+        <locationY>2174</locationY>
         <actionName>c:NSP_NavigateToRecord</actionName>
         <actionType>component</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>recordId</name>
             <value>
-                <elementReference>recordId</elementReference>
+                <elementReference>caseRecordId</elementReference>
             </value>
         </inputParameters>
         <nameSegment>c:NSP_NavigateToRecord</nameSegment>
@@ -44,6 +44,29 @@
     </actionCalls>
     <apiVersion>62.0</apiVersion>
     <assignments>
+        <name>Account_Path</name>
+        <label>Account Path</label>
+        <locationX>116</locationX>
+        <locationY>1058</locationY>
+        <assignmentItems>
+            <assignToReference>ContextAccountId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>ContextContactId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>null</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Category_Sub_Category</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Assign_Selected_Record_Type</name>
         <label>Assign Selected Record Type</label>
         <locationX>536</locationX>
@@ -63,7 +86,7 @@
         <name>ConfidentialNoAssignment</name>
         <label>ConfidentialNoAssignment</label>
         <locationX>314</locationX>
-        <locationY>1382</locationY>
+        <locationY>1790</locationY>
         <assignmentItems>
             <assignToReference>selectedConfidential</assignToReference>
             <operator>Assign</operator>
@@ -79,7 +102,7 @@
         <name>ConfidentialYesAssignment</name>
         <label>ConfidentialYesAssignment</label>
         <locationX>50</locationX>
-        <locationY>1382</locationY>
+        <locationY>1790</locationY>
         <assignmentItems>
             <assignToReference>selectedConfidential</assignToReference>
             <operator>Assign</operator>
@@ -89,6 +112,29 @@
         </assignmentItems>
         <connector>
             <targetReference>Create_Case</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Contact_Path</name>
+        <label>Contact Path</label>
+        <locationX>380</locationX>
+        <locationY>1058</locationY>
+        <assignmentItems>
+            <assignToReference>ContextContactId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>ContextAccountId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>null</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Category_Sub_Category</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -278,10 +324,51 @@
         </rules>
     </decisions>
     <decisions>
+        <description>Evaluate the sourceRecordId is Account or Contact</description>
+        <name>Check_Record_Type</name>
+        <label>Check Record Type</label>
+        <locationX>380</locationX>
+        <locationY>950</locationY>
+        <defaultConnector>
+            <targetReference>AccountContactError</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>From_Account</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>recordId</leftValueReference>
+                <operator>StartsWith</operator>
+                <rightValue>
+                    <stringValue>001</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Account_Path</targetReference>
+            </connector>
+            <label>From Account</label>
+        </rules>
+        <rules>
+            <name>From_Contact</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>recordId</leftValueReference>
+                <operator>StartsWith</operator>
+                <rightValue>
+                    <stringValue>003</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Contact_Path</targetReference>
+            </connector>
+            <label>From Contact</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Confidential_Decision</name>
         <label>Confidential Decision</label>
         <locationX>182</locationX>
-        <locationY>1274</locationY>
+        <locationY>1682</locationY>
         <defaultConnector>
             <targetReference>ConfidentialNoAssignment</targetReference>
         </defaultConnector>
@@ -306,7 +393,7 @@
         <name>ShowConfidentialDecision</name>
         <label>ShowConfidentialDecision</label>
         <locationX>380</locationX>
-        <locationY>1058</locationY>
+        <locationY>1466</locationY>
         <defaultConnector>
             <targetReference>Create_Case</targetReference>
         </defaultConnector>
@@ -336,7 +423,7 @@
     </decisions>
     <environments>Default</environments>
     <interviewLabel>Case Creation Screen Flow {!$Flow.CurrentDateTime}</interviewLabel>
-    <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>    
+    <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
     <label>Case Creation Screen Flow</label>
     <loops>
         <name>Iterate_Accessible_Record_Types</name>
@@ -349,7 +436,7 @@
             <targetReference>Assign_Selected_Record_Type</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
-            <targetReference>Category_Sub_Category</targetReference>
+            <targetReference>Check_Record_Type</targetReference>
         </noMoreValuesConnector>
     </loops>
     <processMetadataValues>
@@ -375,8 +462,8 @@
         <name>Create_Case</name>
         <label>Create Case</label>
         <locationX>380</locationX>
-        <locationY>1658</locationY>
-        <assignRecordIdToReference>recordId</assignRecordIdToReference>
+        <locationY>2066</locationY>
+        <assignRecordIdToReference>caseRecordId</assignRecordIdToReference>
         <connector>
             <targetReference>Case_Redirect</targetReference>
         </connector>
@@ -447,10 +534,26 @@
     </recordCreates>
     <runInMode>DefaultMode</runInMode>
     <screens>
+        <name>AccountContactError</name>
+        <label>AccountContactError</label>
+        <locationX>644</locationX>
+        <locationY>1058</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>AccountContactErrorDisplay</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(237, 69, 12);&quot;&gt;AccountId or ContactId is Expected.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
         <name>Category_Sub_Category</name>
         <label>Category Sub Category</label>
         <locationX>380</locationX>
-        <locationY>950</locationY>
+        <locationY>1358</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -555,15 +658,15 @@
                     <extensionName>c:caseAccountContactLookup</extensionName>
                     <fieldType>ComponentInstance</fieldType>
                     <inputParameters>
-                        <name>selectedAccountId</name>
+                        <name>contextAccountId</name>
                         <value>
-                            <elementReference>selectedAccountId</elementReference>
+                            <elementReference>ContextAccountId</elementReference>
                         </value>
                     </inputParameters>
                     <inputParameters>
-                        <name>selectedContactId</name>
+                        <name>contextContactId</name>
                         <value>
-                            <elementReference>selectedContactId</elementReference>
+                            <elementReference>ContextContactId</elementReference>
                         </value>
                     </inputParameters>
                     <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -575,6 +678,14 @@
                     <outputParameters>
                         <assignToReference>selectedContactId</assignToReference>
                         <name>selectedContactId</name>
+                    </outputParameters>
+                    <outputParameters>
+                        <assignToReference>ContextAccountId</assignToReference>
+                        <name>contextAccountId</name>
+                    </outputParameters>
+                    <outputParameters>
+                        <assignToReference>ContextContactId</assignToReference>
+                        <name>contextContactId</name>
                     </outputParameters>
                 </fields>
                 <inputParameters>
@@ -652,7 +763,7 @@
         <name>Confidential_Confirmation</name>
         <label>Confidential Confirmation</label>
         <locationX>182</locationX>
-        <locationY>1166</locationY>
+        <locationY>1574</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -716,7 +827,7 @@
         <name>Error_Display</name>
         <label>Error Display</label>
         <locationX>928</locationX>
-        <locationY>1874</locationY>
+        <locationY>2282</locationY>
         <allowBack>true</allowBack>
         <allowFinish>false</allowFinish>
         <allowPause>false</allowPause>
@@ -737,7 +848,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>Category_Sub_Category</targetReference>
+            <targetReference>Check_Record_Type</targetReference>
         </connector>
         <fields>
             <name>recordTypeSection</name>
@@ -794,7 +905,7 @@
         <name>Create_Case_Fault_Handler</name>
         <label>Create Case Fault Handler</label>
         <locationX>928</locationX>
-        <locationY>1766</locationY>
+        <locationY>2174</locationY>
         <connector>
             <targetReference>Error_Display</targetReference>
         </connector>
@@ -827,6 +938,27 @@
         <objectType>RecordType</objectType>
     </variables>
     <variables>
+        <name>caseRecordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>ContextAccountId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>ContextContactId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
         <name>countAccessibleRecordTypes</name>
         <dataType>Number</dataType>
         <isCollection>false</isCollection>
@@ -851,7 +983,7 @@
         <name>recordId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
-        <isInput>false</isInput>
+        <isInput>true</isInput>
         <isOutput>false</isOutput>
     </variables>
     <variables>

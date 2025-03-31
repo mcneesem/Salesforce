@@ -1,36 +1,145 @@
-import { LightningElement, api } from 'lwc';
+import { LightningElement, api, track } from 'lwc';
+import isContactHasMultipleACRs from '@salesforce/apex/NSP_CustomCaseCreationPageController.isContactHasMultipleACRs';
+import getRelatedContacts from '@salesforce/apex/NSP_CustomCaseCreationPageController.getRelatedContacts';
+import getRelatedAccounts from '@salesforce/apex/NSP_CustomCaseCreationPageController.getRelatedAccounts';
+import MULTIPLE_ACCOUNTS_LABEL from '@salesforce/label/c.NSP_MultipleAccountsAssociatedWithContact';
 
 export default class CaseAccountContactLookup extends LightningElement {
-    // Public properties for Flow to get/set Account and Contact IDs
-    @api selectedAccountId;
-    @api selectedContactId;
+    @api selectedAccountId = null;
+    @api selectedContactId = null;
+    @api contextAccountId; 
+    @api contextContactId;
 
-    // Fields to display in the lookup
-    accountFields = ['Name'];
-    contactFields = ['Name'];
+    @track showAccountWarning = false;
+    @track isAccountDisabled = false;
+    @track isContactDisabled = false;
+    @track accountFilterId = '';
+    @track contactFilterId = '';
+    @track isContactPath = false;
+    multipleAccountsLabel = MULTIPLE_ACCOUNTS_LABEL;
 
-    // Optional filters for lookups
-    accountFilters = [
-        { field: 'Name', operator: 'like', value: '' } 
-    ];
-
-    contactFilters = [
-        { field: 'Name', operator: 'like', value: '' } 
-    ];
-
-    // Handle Account selection
-    handleAccountChange(event) {
-        this.selectedAccountId = event.detail.recordId || null;
-        this.dispatchFlowEvent('accountIdChange', this.selectedAccountId);
+    connectedCallback() {
+        this.initializeFromContext();
     }
 
-    // Handle Contact selection
-    handleContactChange(event) {
-        this.selectedContactId = event.detail.recordId || null;
-        this.dispatchFlowEvent('contactIdChange', this.selectedContactId);
+    get isAccountPath() {
+        return !this.isContactPath; 
     }
 
-    // Dispatch event to Flow
+    async initializeFromContext() {
+        if (this.contextAccountId && this.contextAccountId !== 'null') {
+            this.selectedAccountId = this.contextAccountId;
+            this.contactFilterId = this.contextAccountId;
+            this.isAccountDisabled = false;
+            this.isContactPath = false;
+            await this.setDefaultContact();
+        } else if (this.contextContactId && this.contextContactId !== 'null') {
+            this.selectedContactId = this.contextContactId;
+            this.accountFilterId = this.contextContactId;
+            this.isContactDisabled = false;
+            this.isContactPath = true;
+            await this.setAccountFromContact(true);
+            await this.handleMultipleACRs();
+        }
+    }
+
+    async handleAccountLookup(event) {
+        const newAccountId = event.detail.recId;
+        if (newAccountId !== this.selectedAccountId) {
+            this.selectedAccountId = newAccountId;
+            if (!this.contextContactId || !this.selectedContactId) {
+                this.selectedContactId = null;
+            }
+            this.showAccountWarning = false;
+            this.isAccountDisabled = false;
+            this.contactFilterId = this.selectedAccountId;
+            this.accountFilterId = this.selectedContactId;
+            this.dispatchFlowEvent('accountIdChange', this.selectedAccountId);
+            await this.setDefaultContact();
+            const contactLookup = this.template.querySelector('c-nsp_contact-custom-look-up[s-object-api-name="Contact"]');
+            if (contactLookup) {
+                contactLookup.parentId = this.selectedAccountId;
+                contactLookup.caseAccRecId = this.selectedAccountId;
+            }
+        }
+    }
+
+    async handleContactLookup(event) {
+        const newContactId = event.detail.recId;
+        if (newContactId !== this.selectedContactId) {
+            this.selectedContactId = newContactId;
+            this.showAccountWarning = false;
+            this.isContactDisabled = false;
+            this.accountFilterId = this.selectedContactId;
+            this.contactFilterId = this.selectedAccountId;
+            this.dispatchFlowEvent('contactIdChange', this.selectedContactId);
+            await this.handleMultipleACRs();
+            if (!this.selectedAccountId) {
+                await this.setAccountFromContact(false);
+            }
+            const accountLookup = this.template.querySelector('c-nsp_contact-custom-look-up[s-object-api-name="Account"]');
+            if (accountLookup) {
+                accountLookup.caseAccRecId = this.selectedContactId;
+            }
+        }
+    }
+
+    async handleMultipleACRs() {
+        if (!this.selectedContactId) {
+            this.showAccountWarning = false;
+            return;
+        }
+        try {
+            const hasMultipleACRs = await isContactHasMultipleACRs({ contId: this.selectedContactId });
+            this.showAccountWarning = hasMultipleACRs;
+        } catch (error) {
+            this.dispatchFlowEvent('error', 'Error checking multiple ACRs: ' + (error.body?.message || error.message || 'Unknown error'));
+        }
+    }
+
+    async setDefaultContact() {
+        if (!this.selectedAccountId || this.selectedContactId) return;
+        try {
+            const contacts = await getRelatedContacts({ accountId: this.selectedAccountId });
+            if (contacts?.length === 1) {
+                this.selectedContactId = contacts[0].Id;
+                this.isContactDisabled = false;
+                this.accountFilterId = this.selectedContactId;
+                this.dispatchFlowEvent('contactIdChange', this.selectedContactId);
+                await this.handleMultipleACRs();
+                const contactLookup = this.template.querySelector('c-nsp_contact-custom-look-up[s-object-api-name="Contact"]');
+                if (contactLookup) {
+                    contactLookup.getDefaultRecord(this.selectedContactId, 'Contact', this.selectedAccountId);
+                }
+            }
+        } catch (error) {
+            this.dispatchFlowEvent('error', 'Error setting default Contact: ' + (error.body?.message || error.message || 'Unknown error'));
+        }
+    }
+
+    async setAccountFromContact(isInitialSetup) {
+        if (!this.contextContactId || (this.selectedAccountId && !isInitialSetup)) return;
+        try {
+            const accounts = await getRelatedAccounts({ contactId: this.contextContactId });
+            if (accounts?.length > 0) {
+                const primaryAccount = accounts.find(a => a.NSP_Is_Primary__c);
+                if (primaryAccount) {
+                    this.selectedAccountId = primaryAccount.AccountId;
+                    this.isAccountDisabled = isInitialSetup && !this.isContactPath;
+                } else if (accounts.length === 1) {
+                    this.selectedAccountId = accounts[0].AccountId;
+                    this.isAccountDisabled = isInitialSetup && !this.isContactPath;
+                }
+                if (this.selectedAccountId) {
+                    this.contactFilterId = this.selectedAccountId;
+                    this.dispatchFlowEvent('accountIdChange', this.selectedAccountId);
+                }
+            }
+        } catch (error) {
+            this.dispatchFlowEvent('error', 'Error setting Account from Contact: ' + (error.body?.message || error.message || 'Unknown error'));
+        }
+    }
+
     dispatchFlowEvent(eventName, value) {
         const flowEvent = new CustomEvent(eventName, {
             detail: value,
@@ -38,5 +147,18 @@ export default class CaseAccountContactLookup extends LightningElement {
             composed: true
         });
         this.dispatchEvent(flowEvent);
+    }
+
+    @api
+    validate() { 
+        let response = {
+            isValid: true,
+            errorMessage: ''
+        };
+        if (!this.selectedAccountId) {
+            response.isValid = false;
+            response.errorMessage = 'Please select an Account.';
+        }
+        return response;
     }
 }

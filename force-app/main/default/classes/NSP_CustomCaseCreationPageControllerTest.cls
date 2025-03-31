@@ -270,4 +270,19 @@ Id  groupId = NSP_sObjectSelector.selectGroupByTypeAndApiName(NSP_ServiceConstan
         Test.stopTest(); 
     }
 
+    @isTest
+    private static void testGetRelatedContacts() {
+        Account testAccount = [SELECT Id FROM Account WHERE Name =: System.Label.NSP_InternalAccountName LIMIT 1];
+        Test.startTest();
+        NSP_CustomCaseCreationPageController.getRelatedContacts(testAccount.Id);
+        Test.stopTest();
+    }
+
+    @isTest
+    private static void testGetRelatedAccounts() {
+        Contact testContact = [SELECT Id FROM Contact WHERE AccountId != '' LIMIT 1];
+        Test.startTest();
+        NSP_CustomCaseCreationPageController.getRelatedAccounts(testContact.Id);
+        Test.stopTest();
+    }
 }
