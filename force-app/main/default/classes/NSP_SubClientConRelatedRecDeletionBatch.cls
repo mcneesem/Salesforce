@@ -34,50 +34,58 @@ public class NSP_SubClientConRelatedRecDeletionBatch implements Schedulable , Da
     }
 
     public void execute( Database.BatchableContext bc , List<NSP_Sub_Client_Contact__c> existingSubClientContacts ) {
-        Map<Id,NSP_Sub_Client_Contact__c> subClientContactMap = new Map<Id,NSP_Sub_Client_Contact__c>();
-        for ( NSP_Sub_Client_Contact__c subClientContact : existingSubClientContacts ) {
-            subClientContactMap.put(
-                subClientContact.NSP_Contact__c ,
-                subClientContact
+        try {
+            Map<Id,NSP_Sub_Client_Contact__c> subClientContactMap = new Map<Id,NSP_Sub_Client_Contact__c>();
+            for ( NSP_Sub_Client_Contact__c subClientContact : existingSubClientContacts ) {
+                subClientContactMap.put(
+                    subClientContact.NSP_Contact__c ,
+                    subClientContact
+                );
+            }
+
+            // Filter the contact records if there is any associated case contact
+            Map<Id,NSP_Sub_Client_Contact__c> filteredSubClientContactMapFromCaseContacts = getFilteredSubClientContacts( subClientContactMap );
+
+            // Filter the contact record based on files, notes
+            Map<Id,NSP_Sub_Client_Contact__c> filteredSubClientContacts = getFilteredSubclientContact( filteredSubClientContactMapFromCaseContacts );
+            List<Database.DeleteResult> subClientDeleteList = Database.delete( filteredSubClientContacts.values() , false );
+            NSP_ErrorLogHandler.logResults(
+                NSP_SubClientConRelatedRecDeletionBatch.class.getName() ,
+                'execute:delete:NSP_Sub_Client_Contact__c' ,
+                subClientDeleteList
+            );
+
+            // Get Account contact relationship records based on contact ID and add them to delete list
+            List<AccountContactRelation> deleteACRList = getAcccountContactRelationshipRecords( filteredSubClientContacts.keySet() );
+            List<Database.DeleteResult> acrRcordsToDelete = Database.delete( deleteACRList , false );
+            NSP_ErrorLogHandler.logResults(
+                NSP_SubClientConRelatedRecDeletionBatch.class.getName() ,
+                'execute:delete:AccountContactRelation' ,
+                acrRcordsToDelete
+            );
+
+            // Get Sub client contact address records based on contact Ids and add them to delete list
+            List<NSP_Address__c> addressToDelete = getSubClientContactAddress( filteredSubClientContacts.keySet() );
+            List<Database.DeleteResult> addressRecordsToDelete = Database.delete( addressToDelete , false );
+            NSP_ErrorLogHandler.logResults(
+                NSP_SubClientConRelatedRecDeletionBatch.class.getName() ,
+                'execute:delete:NSP_Address__c' ,
+                addressRecordsToDelete
+            );
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_SubClientConRelatedRecDeletionBatch.class.getName() ,
+                'execute' ,
+                e
             );
         }
-
-        // Filter the contact records if there is any associated case contact
-        Map<Id,NSP_Sub_Client_Contact__c> filteredSubClientContactMapFromCaseContacts = getFilteredSubClientContacts( subClientContactMap );
-
-        // Filter the contact record based on files, notes
-        Map<Id,NSP_Sub_Client_Contact__c> filteredSubClientContacts = getFilteredSubclientContact( filteredSubClientContactMapFromCaseContacts );
-        List<Database.DeleteResult> subClientDeleteList = Database.delete( filteredSubClientContacts.values() , false );
-        NSP_ErrorLogHandler.logResults(
-            NSP_SubClientConRelatedRecDeletionBatch.class.getName() ,
-            'execute' ,
-            subClientDeleteList
-        );
-
-        // Get Account contact relationship records based on contact ID and add them to delete list
-        List<AccountContactRelation> deleteACRList = getAcccountContactRelationshipRecords( filteredSubClientContacts.keySet() );
-        List<Database.DeleteResult> acrRcordsToDelete = Database.delete( deleteACRList , false );
-        NSP_ErrorLogHandler.logResults(
-            NSP_SubClientConRelatedRecDeletionBatch.class.getName() ,
-            'execute' ,
-            acrRcordsToDelete
-        );
-
-        // Get Sub client contact address records based on contact Ids and add them to delete list
-        List<NSP_Address__c> addressToDelete = getSubClientContactAddress( filteredSubClientContacts.keySet() );
-        List<Database.DeleteResult> addressRecordsToDelete = Database.delete( addressToDelete , false );
-        NSP_ErrorLogHandler.logResults(
-            NSP_SubClientConRelatedRecDeletionBatch.class.getName() ,
-            'execute' ,
-            addressRecordsToDelete
-        );
     }
 
     public void finish( Database.BatchableContext bc ) {
     }
 
     //
-    //
+    // Helper Methods
     //
 
     //== Get Sub Client Contact Address related to contact Ids
