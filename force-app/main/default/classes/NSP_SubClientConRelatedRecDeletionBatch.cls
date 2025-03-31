@@ -1,28 +1,39 @@
-public class NSP_SubClientConRelatedRecDeletionBatch implements Database.Batchable<sObject>, Schedulable 
-{
+public class NSP_SubClientConRelatedRecDeletionBatch implements Schedulable , Database.Batchable<sObject> {
     // test w/ NSP_SCC_RelatedRecDeletionBatch_Test (100%)
-    //== START METHOD
-    public Database.QueryLocator start(Database.BatchableContext bc) 
-    { 
-        Date pastDay = Date.Today() - 121;
+
+    //
+    // Schedulable
+    //
+
+    public void execute( SchedulableContext sc ) {
+        Database.executeBatch( new NSP_SubClientConRelatedRecDeletionBatch() , 200 );
+    }
+
+    //
+    // Batchable
+    //
+
+    public Database.QueryLocator start( Database.BatchableContext bc ) {
+        Date pastDay = Date.today() - 121;
         return Database.getqueryLocator(
             [
-                SELECT Id, NSP_Status_Date__c, NSP_Employee_Status__c, NSP_Contact__c 
+                SELECT
+                    Id ,
+                    NSP_Status_Date__c ,
+                    NSP_Employee_Status__c ,
+                    NSP_Contact__c
                 FROM NSP_Sub_Client_Contact__c 
-                WHERE 
-                NSP_Employee_Status__c = 'PRIMED' 
-                AND 
-                NSP_Contact__c != null 
-                AND 
-                NSP_Status_Date__c >= :pastDay
-                ]
+                WHERE (
+                    ( NSP_Employee_Status__c = 'PRIMED' )
+                    AND ( NSP_Contact__c != null )
+                    AND NSP_Status_Date__c >= :pastDay
+                )
+            ]
         );
         
     }
-    
-    //== EXECUTE METHOD
-    public void execute(Database.BatchableContext bc,List<NSP_Sub_Client_Contact__c> existingSubClientContacts)
-    {        
+
+    public void execute( Database.BatchableContext bc , List<NSP_Sub_Client_Contact__c> existingSubClientContacts ) {
         Map<Id,  NSP_Sub_Client_Contact__c> subClientContactMap = new Map<Id,  NSP_Sub_Client_Contact__c>();
         for(NSP_Sub_Client_Contact__c subClientContact : existingSubClientContacts)
         {
@@ -117,17 +128,9 @@ public class NSP_SubClientConRelatedRecDeletionBatch implements Database.Batchab
 
         return subClientContactMap;
     }
-    
-    //== SCHEDULER METHOD
-    public void execute(SchedulableContext scon) 
-    {
-        //Executes Batch
-        Database.executeBatch(new NSP_SubClientConRelatedRecDeletionBatch(),200);
+
+    public void finish( Database.BatchableContext bc ) {
     }
-    
-    //== FINISH METHOD
-    public void finish(Database.BatchableContext bc)
-    {
-        // Finish method
-    }
+
 }
+//
