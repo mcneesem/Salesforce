@@ -22,6 +22,8 @@ public class NSP_AccountTriggerHelper {
     // Added as part of 194459
     public static List<string> MMRoles = System.Label.NSP_MidMarket_Roles.split(',');
     // Added as part of 215091
+    private static Boolean hasPartnerLoyaltyPermission = CustomPermissionController.checkUserPermission('Account_Partner_Update_Loyalty_from_SO', UserInfo.getUserId());
+    private static Boolean hasPartnerMMPermission = CustomPermissionController.checkUserPermission('Account_Partner_MidMarket_Seller', UserInfo.getUserId());
     private static Map<Id,User> ownerUpdatePermittedUserMap = CustomPermissionController.getPermittedUsersMap('Account_Owner_Restrict_Update');
     private static Map<Id,User> templSelectUpdPermittedUserMap = CustomPermissionController.getPermittedUsersMap('Template_Selection_Owner_Update');
     
@@ -41,47 +43,49 @@ public class NSP_AccountTriggerHelper {
             User userDetails = [SELECT Id, Name, UserRole.Name, ToLabel(NSP_Sales_Office__c) FROM User WHERE Id =: userinfo.getUserId()];
             /* Added as part of DF-01906 */
             List < Account > acctListToStampDocusignTemplateId = new List < Account > ();
-            for (Account accountObj: newList) {
+            for ( Account accountObj: newList ) {
                 // Added as part of DF-01906 to populate CPM and LA based on Sales office of loggedin BPA
-                if (accountObj.RecordTypeId == PARTNER_RECORDTYPE_ID) {
+                if ( accountObj.RecordTypeId == PARTNER_RECORDTYPE_ID ) {
                     accountObj.NSP_Partner_Lifecycle__c = NSP_SalesConstants.EVALUATION;
                 }
                 if ( ( accountObj.RecordTypeId==PARTNER_RECORDTYPE_ID )
-                     && ( CustomPermissionController.checkUserPermission( 'Account_Partner_Update_Loyalty_from_SO' , UserInfo.getUserId() ) )
+                     && ( hasPartnerLoyaltyPermission )
                      && ( String.isNotBlank(userDetails.NSP_Sales_Office__c) )
                    )
                 {
-                    // Added as part of DF-01154
                     bpaAccountList.add(accountObj);
                     salesOfficeSet.add(userDetails.NSP_Sales_Office__c);
                 }
-                if ( ( accountObj.RecordTypeId==PARTNER_RECORDTYPE_ID )
-                     && ( CustomPermissionController.checkUserPermission( 'Account_Partner_MidMarket_Seller' , UserInfo.getUserId() ) )
-                   )
-                {
-                    accountObj.NSP_Channel_Program_Manager__c = system.label.NSP_CPM_USER;
-                }
+                checkPartner( accountObj );
                 //create list to populate docusign template id for merge on demand templates
-                if (!String.isBlank(accountObj.NSP_Template_Selection__c)) {
+                if ( !String.isBlank(accountObj.NSP_Template_Selection__c) ) {
                     acctListToStampDocusignTemplateId.add(accountObj);
                 }
-                updateAccountSegment(accountObj);
+                updateAccountSegment( accountObj );
                 // update ready to sync to true whenever opportunity is cloned
-                // added as a part of DF-01145
-                if (accountObj.isClone()) {
+                if ( accountObj.isClone() ) {
                     accountObj.NSP_Ready_for_Integration_Sync__c = true;
                 }
             }
-            if (!bpaAccountList.isEmpty()) {
+            if ( !bpaAccountList.isEmpty() ) {
                 setChannelPartnerAndLoyaltyAdvisor(bpaAccountList, salesOfficeSet);
             }
             //call method to populate template id
-            if (acctListToStampDocusignTemplateId.size() > 0) {
+            if ( acctListToStampDocusignTemplateId.size() > 0 ) {
                 setDummyUsers(acctListToStampDocusignTemplateId);
             }
             setSalesOfficeDetails(newList, null);
         } catch ( Exception e ) {
             NSP_AccountTriggerHelper.handleException( e , 'beforeInsertDirector' );
+        }
+    }
+
+    private void checkPartner(Account accountObj){
+        if ( ( accountObj.RecordTypeId==PARTNER_RECORDTYPE_ID )
+             && ( hasPartnerMMPermission )
+           )
+        {
+            accountObj.NSP_Channel_Program_Manager__c = system.label.NSP_CPM_USER;
         }
     }
 
