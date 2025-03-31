@@ -92,30 +92,9 @@ public class NSP_FSOImplementationControllerTest {
         ipAutomation4.NSP_Last_Run__c = system.now();
         ipAutomationList.add(ipAutomation4) ;
         
-        NSP_Implementation_Profile_Automation__c ipAutomation5 = new NSP_Implementation_Profile_Automation__c();
-        ipAutomation5.Name='Levies' ;       
-        ipAutomation5.NSP_Method_Name__c = 'NSP_Tax_levies';
-        ipAutomation5.NSP_Class_Name__c = 'NSP_MMImplProfile_ServHelpUpdate';
-        ipAutomation5.NSP_Record_Type__c = 'Middle Market';
-        ipAutomation5.NSP_Implementation_Profile__c = ipList[1].Id;
-        ipAutomation5.NSP_Section__c = 'Payroll';
-        ipAutomation5.NSP_Last_Run__c = system.now();
-        ipAutomationList.add(ipAutomation5) ;
-        
         //Insert the IP Automation List
         insert ipAutomationList;
         Boolean isRunAutomation ;
-        
-        //Insert Premier Peformance Trigger Switch (custom setting)
-        NSP_Trigger_Switch__c triggerSwitch = new NSP_Trigger_Switch__c(  
-            Name = UserInfo.getUserId(),  
-            Premier_Performance_Automation__c = true  
-        );  
-        insert triggerSwitch;
-        //Insert Implementation_Profile_Settings__c (custom setting)
-        Implementation_Profile_Settings__c ipSettings = Implementation_Profile_Settings__c.getInstance( UserInfo.getUserId() );
-        ipSettings.Is_Enabled_Levies__c = false;
-        upsert ipSettings;
         
         Test.startTest();
         // calling Class method
