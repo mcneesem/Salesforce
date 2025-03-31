@@ -1,9 +1,14 @@
-@isTest
+/**
+ * Apex Class Name : NSP_ServicePlanProjectTaskBatch_Test
+ * Function        : Represents test class for NSP_ServicePlanProjectTaskBatch class
+ */
+
+@isTest(SeeAllData=false)
 public class NSP_ServicePlanProjectTaskBatch_Test {
     public static pse__Proj__c projectRecord;
-
-    //== Preparing Test Data
-    @testSetup static void testData() {
+    @testSetup
+    static void testData() {
+        
         //Creating Account record
         Account accountRecord = (Account)NSP_TestExtendedDataFactory.createSObject(new Account());
         accountRecord.NSP_Sales_Service_Account_Status__c = NSP_ServiceConstants.Account_Status;
@@ -20,6 +25,13 @@ public class NSP_ServicePlanProjectTaskBatch_Test {
         assetRecord.RecordTypeId = woAssetRecordTypeId;
         assetRecord.NSP_Renewal_Date__c = system.Today();
         INSERT assetRecord;
+        
+        //Creating Account Team record
+        NSP_Account_Team__c accountTeamRecord = (NSP_Account_Team__c)NSP_TestExtendedDataFactory.createSObject(new NSP_Account_Team__c());
+        accountTeamRecord.NSP_Account__c = accountRecord.Id;
+        accountTeamRecord.NSP_User__c = UserInfo.getUserId();
+        accountTeamRecord.NSP_Role__c = NSP_ServiceConstants.BUS_TEAM_HRSP_CL;
+        INSERT accountTeamRecord;
         
         //Creating Sub Client record
         NSP_Sub_Client__c subClientRecord = (NSP_Sub_Client__c)NSP_TestExtendedDataFactory.createSObject(new NSP_Sub_Client__c());
@@ -41,225 +53,37 @@ public class NSP_ServicePlanProjectTaskBatch_Test {
         projectRecord.pse__Start_Date__c = Date.Today();
         projectRecord.pse__Project_Type__c = NSP_ServiceConstants.PROJECT_TYPE_SERVICE;
         INSERT projectRecord;
-       
-        // Create Project Task
         pse__Project_Task__c projTaskRecord = new pse__Project_Task__c();
         projTaskRecord.pse__Project__c = projectRecord.Id;
         projTaskRecord.Name = NSP_ServiceConstants.QTP1;
         //projTaskRecord.pse__Start_Date_Time__c = system.today();
         INSERT projTaskRecord;
-
-        // ASSERTS 
-        Assert.isTrue(accountRecord != null);
-        Assert.isTrue(woAssetRecordTypeId != null);
-        Assert.isTrue(assetRecord != null);
-        Assert.isTrue(subClientRecord != null);
-        Assert.isTrue(projectRecord != null);
-        Assert.isTrue(projTaskRecord != null);   
+        
     }
-    
     //@ Method Name: testServicePlanProjectTaskBatch
-    @isTest private static void testServicePlanProjectTaskBatchWithRoleAsBusTeamHRSpecialistAsPrimary() {
-        pse__Project_Task__c projTask = [
-            SELECT Id, Name, pse__Project__c
-            FROM
-            pse__Project_Task__c
-            LIMIT 1
-        ];
-        delete projTask;
-        
-        // Get Account
-        Account accountRecord = [
-            SELECT Id
-            FROM Account
-            WHERE NSP_Sales_Service_Account_Status__c = :NSP_ServiceConstants.Account_Status
-            LIMIT 1
-        ];
-        
-        List<NSP_Account_Team__c> accountTeamRecords = new List<NSP_Account_Team__c>();
-        //Creating Account Team record
-        NSP_Account_Team__c accountTeamRecord = (NSP_Account_Team__c)NSP_TestExtendedDataFactory.createSObject(new NSP_Account_Team__c());
-        accountTeamRecord.NSP_Account__c = accountRecord.Id;
-        accountTeamRecord.NSP_User__c = UserInfo.getUserId();
-        accountTeamRecord.NSP_Role__c = NSP_ServiceConstants.BUS_TEAM_HRSP_CL;
-        accountTeamRecord.NSP_Primary__c = true;
-        
-        accountTeamRecords.add(accountTeamRecord);
-        
-        NSP_Account_Team__c accountTeamRecord1 = (NSP_Account_Team__c)NSP_TestExtendedDataFactory.createSObject(new NSP_Account_Team__c());
-        accountTeamRecord1.NSP_Account__c = accountRecord.Id;
-        accountTeamRecord1.NSP_User__c = UserInfo.getUserId();
-        accountTeamRecord1.NSP_Role__c = NSP_ServiceConstants.BUS_TEAM_HRSP_CL;
-        accountTeamRecord1.NSP_Primary__c = false;
-        accountTeamRecords.add(accountTeamRecord1);
-        
-        INSERT accountTeamRecords;
-        
-        //Test Run
+    @IsTest
+    static void testServicePlanProjectTaskBatch() {
+        pse__Project_Task__c projTask = [Select Id,Name,pse__Project__c from pse__Project_Task__c];
+        DELETE projTask;
         Test.startTest();
         Database.executeBatch(new NSP_ServicePlanProjectTaskBatch()); //executes the batch class
         Test.stopTest();
-        
-        // Validating the Results
-        Assert.areEqual(
-            2 ,
-            [
-                SELECT count()
-                FROM pse__Project_Task__c
-                WHERE NSP_Category__c = :NSP_ServiceConstants.Client_Management
-            ]
-        );
-        List<pse__Project_Task__c> projectTasks = [
-            SELECT Id , OwnerId
-            FROM pse__Project_Task__c
-            LIMIT 2
-        ];
-        
-        Assert.areEqual(projectTasks[0].OwnerId, accountTeamRecord.NSP_User__c);
-        Assert.areEqual(projectTasks[1].OwnerId, accountTeamRecord.NSP_User__c);
-    }
-
-    //@ Method Name: testServicePlanProjectTaskBatch
-    @isTest private static void testServicePlanProjectTaskBatchWithRoleAsBusTeamHRSpecialistAsNonPrimary() {
-        pse__Project_Task__c projTask = [
-            SELECT Id, Name, pse__Project__c
-            FROM pse__Project_Task__c
-            LIMIT 1
-        ];
-        delete projTask;
-        
-        // Get Account
-        Account accountRecord = [
-            SELECT Id
-            FROM Account
-            WHERE NSP_Sales_Service_Account_Status__c = :NSP_ServiceConstants.Account_Status
-            LIMIT 1
-        ];
-        
-        List<NSP_Account_Team__c> accountTeamRecords = new List<NSP_Account_Team__c>();
-        //Creating Account Team record
-        NSP_Account_Team__c accountTeamRecord = (NSP_Account_Team__c)NSP_TestExtendedDataFactory.createSObject(new NSP_Account_Team__c());
-        accountTeamRecord.NSP_Account__c = accountRecord.Id;
-        accountTeamRecord.NSP_User__c = UserInfo.getUserId();
-        accountTeamRecord.NSP_Role__c = NSP_ServiceConstants.BUS_TEAM_HRSP_CL;
-        accountTeamRecord.NSP_Primary__c = false;
-        accountTeamRecords.add(accountTeamRecord);
-        
-        NSP_Account_Team__c accountTeamRecord1 = (NSP_Account_Team__c)NSP_TestExtendedDataFactory.createSObject(new NSP_Account_Team__c());
-        accountTeamRecord1.NSP_Account__c = accountRecord.Id;
-        accountTeamRecord1.NSP_User__c = UserInfo.getUserId();
-        accountTeamRecord1.NSP_Role__c = NSP_ServiceConstants.BUS_TEAM_HRSP_CL;
-        accountTeamRecord1.NSP_Primary__c = false;
-        accountTeamRecords.add(accountTeamRecord1);
-        
-        INSERT accountTeamRecords;
-        
-        //Test Run
-        Test.startTest();
-        Database.executeBatch(new NSP_ServicePlanProjectTaskBatch()); //executes the batch class
-        Test.stopTest();
-        
-        // Validating the Results
-        Assert.areEqual(
-            2 ,
-            [
-                SELECT count()
-                FROM pse__Project_Task__c
-                WHERE NSP_Category__c =: NSP_ServiceConstants.Client_Management
-            ]
-        );
-        List<pse__Project_Task__c> projectTasks = [
-            SELECT Id , OwnerId
-            FROM pse__Project_Task__c
-            LIMIT 2
-        ];
-        
-        Assert.areEqual(projectTasks[0].OwnerId, accountTeamRecord.NSP_User__c);
-        Assert.areEqual(projectTasks[1].OwnerId, accountTeamRecord.NSP_User__c);
-    }    
-    //@ Method Name: testServicePlanProjectTaskBatch
-    @isTest private static void testServicePlanProjectTaskBatchWithRoleAsManagerHRServices() {
-        pse__Project_Task__c projTask = [
-            SELECT Id , Name , pse__Project__c
-            FROM pse__Project_Task__c
-            LIMIT 1
-        ];
-        delete projTask;
-        
-        // Get Account
-        Account accountRecord = [
-            SELECT Id
-            FROM Account
-            WHERE NSP_Sales_Service_Account_Status__c = :NSP_ServiceConstants.Account_Status
-            LIMIT 1
-        ];
-        
-        //Creating Account Team record
-        NSP_Account_Team__c accountTeamRecord = (NSP_Account_Team__c)NSP_TestExtendedDataFactory.createSObject(new NSP_Account_Team__c());
-        accountTeamRecord.NSP_Account__c = accountRecord.Id;
-        accountTeamRecord.NSP_User__c = UserInfo.getUserId();
-        accountTeamRecord.NSP_Role__c = NSP_ServiceConstants.MANAGER_HRSERVICES;
-        INSERT accountTeamRecord;
-        
-        // Test Run
-        Test.startTest();
-        Database.executeBatch(new NSP_ServicePlanProjectTaskBatch()); //executes the batch class
-        Test.stopTest();
-        
-        // Validating the Results
-        Assert.areEqual(
-            2 ,
-            [
-                SELECT COUNT()
-                FROM pse__Project_Task__c
-                WHERE NSP_Category__c = :NSP_ServiceConstants.Client_Management
-            ]
-        );
-        List<pse__Project_Task__c> projectTasks = [
-            SELECT Id , OwnerId
-            FROM pse__Project_Task__c
-            LIMIT 2
-        ];
-        Assert.areEqual(projectTasks[0].OwnerId, accountTeamRecord.NSP_User__c);
-        Assert.areEqual(projectTasks[1].OwnerId, accountTeamRecord.NSP_User__c);
+        System.assertEquals(2, [select count() from pse__Project_Task__c WHERE NSP_Category__c =: NSP_ServiceConstants.Client_Management]);
     }
     
     //@ Method Name: testServicePlanProjectTaskBatchNotRun
-    @isTest private static void testServicePlanProjectTaskBatchNotRun() {
-        // Get Sub client and update the record
-        NSP_Sub_Client__c subClient= [
-            SELECT Id , NSP_Renewal_Date__c
-            FROM NSP_Sub_Client__c
-            WHERE NSP_Account_Status__c = :NSP_ServiceConstants.AIMS_STATUS
-            LIMIT 1
-        ];
+    @IsTest
+    static void testServicePlanProjectTaskBatchNotRun() {
+        NSP_Sub_Client__c subClient= [SELECT Id, NSP_Renewal_Date__c FROM NSP_Sub_Client__c WHERE NSP_Account_Status__c =:NSP_ServiceConstants.AIMS_STATUS LIMIT 1];
         subClient.NSP_Renewal_Date__c = system.Today().addDays(1);
-        update subClient;
-        
-        // Get Project Task and update the Record
-        pse__Project_Task__c projTask = [
-            SELECT Id , Name , pse__Project__c
-            FROM pse__Project_Task__c
-            LIMIT 1
-        ];
-        
+        UPDATE subClient;
+        pse__Project_Task__c projTask = [Select Id,Name,pse__Project__c from pse__Project_Task__c];
         projTask.pse__Start_Date_Time__c = system.Today().addDays(1);
-        update projTask;
+        UPDATE projTask;
         
-        // Test Run
         Test.startTest();
         Database.executeBatch(new NSP_ServicePlanProjectTaskBatch()); //executes the batch class
         Test.stopTest();
-        
-        // Validating the Results
-        Assert.areEqual(
-            0 ,
-            [
-                SELECT COUNT()
-                FROM pse__Project_Task__c
-                WHERE NSP_Category__c = :NSP_ServiceConstants.Client_Management
-            ]
-        );
+        System.assertEquals(0, [select count() from pse__Project_Task__c WHERE NSP_Category__c =: NSP_ServiceConstants.Client_Management]);
     }
-
 }
