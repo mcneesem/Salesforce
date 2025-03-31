@@ -1,22 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Is_Owner_Editable__c</fullName>
+    <externalId>false</externalId>
     <formula>OR(
   ( NSP_Category__c != &quot;Compensation Services&quot; ) ,
-  OR(
-    AND(
-      ( NSP_SubCategory__c != &quot;Salary Survey&quot; ) ,
-      ( NSP_SubCategory__c != &quot;Client Consultation&quot; )
-    ) ,
-    AND(
-      ( NSP_SubCategory__c = &quot;Salary Survey&quot; ) ,
-      Required_Documentation_Attached__c ,
-      Requested_Jobs__c &gt; 0
-    ) ,
-    AND(
-      ( NSP_SubCategory__c = &quot;Client Consultation&quot; ) ,
-      Required_Documentation_Attached__c
-    )
+  AND(
+    ( NSP_Category__c = &quot;Compensation Services&quot; ) ,
+    ( NSP_SubCategory__c = &quot;Salary Survey&quot; ) ,
+    Required_Documentation_Attached__c ,
+    Requested_Jobs__c &gt; 0
+  ) ,
+  AND(
+    ( NSP_Category__c = &quot;Compensation Services&quot; ),
+    ( NSP_SubCategory__c != &quot;Salary Survey&quot; ),
+    Required_Documentation_Attached__c
   )
 )</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
