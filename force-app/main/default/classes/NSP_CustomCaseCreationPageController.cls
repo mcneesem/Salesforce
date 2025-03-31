@@ -702,7 +702,7 @@ public static Boolean isMemberOfPrivateSection125Visibility(){
                 List<AccountContactRelation> acrs = [
                     SELECT ContactId
                     FROM AccountContactRelation
-                    WHERE AccountId = :accountId
+                    WHERE ( AccountId = :accountId )
                     WITH SECURITY_ENFORCED
                 ];
                 if (!acrs.isEmpty()) {
@@ -711,15 +711,15 @@ public static Boolean isMemberOfPrivateSection125Visibility(){
                         contactIds.add(acr.ContactId);
                     }
                     contacts = [
-                        SELECT Id, Name 
-                        FROM Contact 
-                        WHERE Id IN :contactIds 
-                        ORDER BY Name
+                        SELECT Id , Name
+                        FROM Contact
+                        WHERE ( Id IN :contactIds )
+                        ORDER BY Name ASC
                     ];
                 }
             }
-        } catch (Exception excep) {
-            throw new AuraHandledException(excep.getMessage());
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
         }
         return contacts;
     }
@@ -730,14 +730,14 @@ public static Boolean isMemberOfPrivateSection125Visibility(){
         try {
             if (!String.isBlank(contactId)) {
                 acrs = [
-                    SELECT AccountId, NSP_Is_Primary__c, Account.Name
+                    SELECT AccountId , Account.Name , NSP_Is_Primary__c
                     FROM AccountContactRelation
-                    WHERE ContactId = :contactId
-                    ORDER BY NSP_Is_Primary__c DESC, Account.Name
+                    WHERE ( ContactId = :contactId )
+                    ORDER BY NSP_Is_Primary__c DESC , Account.Name ASC
                 ];
             }
-        } catch (Exception excep) {
-            throw new AuraHandledException(excep.getMessage());
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
         }
         return acrs;
     }
