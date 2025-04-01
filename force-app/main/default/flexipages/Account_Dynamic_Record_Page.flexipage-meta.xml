@@ -9398,6 +9398,19 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
+                <componentName>salesVisualIndicator</componentName>
+                <identifier>c_salesVisualIndicator</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Current_Provider__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Workday</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
                 <componentName>nsp_visualIndicator</componentName>
                 <identifier>c_nsp_visualIndicator</identifier>
             </componentInstance>
