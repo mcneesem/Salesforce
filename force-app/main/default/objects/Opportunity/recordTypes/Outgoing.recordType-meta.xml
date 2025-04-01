@@ -715,6 +715,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Not Approved</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Not Interested</fullName>
             <default>false</default>
         </values>
@@ -992,6 +996,10 @@
         </values>
         <values>
             <fullName>MidMarket</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Next Generation Manufacturing</fullName>
             <default>false</default>
         </values>
         <values>
