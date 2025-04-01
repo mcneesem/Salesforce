@@ -1,7 +1,8 @@
 @isTest(seeAllData=false)
 public class NSP_SCC_RelatedRecDeletionBatch_Test {
+
     @testSetup
-    public static void createTestData() {
+    private static void createTestData() {
         // Create Account 
         Account acc = new Account();
         acc.Name = 'Test Acc';
@@ -39,7 +40,7 @@ public class NSP_SCC_RelatedRecDeletionBatch_Test {
         NSP_Address__c address = new NSP_Address__c();
         address.Name = 'Test Add';
         address.NSP_Related_Site__c = acc.Id;
-        address.NSP_Label_Code__c = 'TesH';
+        address.NSP_Label_Code__c = 'PTesH';
         address.NSP_Legal_Name__c = 'Billing';
         address.NSP_Street__c = 'Test Address AZ';
         address.NSP_Country__c = 'United States';
@@ -49,77 +50,128 @@ public class NSP_SCC_RelatedRecDeletionBatch_Test {
         address.NSP_Address_Type__c = 'Worksite';
         insert address;
     }
-    
-    Public Static TestMethod Void testNSPSubClientConRelatedRecDeletionBatchCase1(){
-        //Account acc =[Select Id From Account WHERE NAME != NULL];
-        
-        Contact con =[Select Id, AccountId From Contact WHERE AccountId != NULL];
-        
-        Account acc1 = new Account ();
-        acc1.Name = 'Test2Account';
-        insert acc1;
-        
-        AccountContactRelation acr = new AccountContactRelation(AccountId = acc1.id, ContactId = con.id);
-        insert acr;
-        NSP_Sub_Client__c subClient = [Select Id, NSP_Account__c,NSP_Asset__c ,Name from NSP_Sub_Client__c WHERE NSP_Account__c !=null];
-        NSP_Sub_Client_Contact__c subClientContact = [SELECT Id, NSP_Status_Date__c, NSP_Employee_Status__c, NSP_Contact__c FROM NSP_Sub_Client_Contact__c 
-                                                      WHERE NSP_Contact__c != Null ];
-        
-        NSP_Sub_Client_Contact__c subClientCon2 = new NSP_Sub_Client_Contact__c();
-        subClientCon2.NSP_Contact__c = con.Id;
-        subClientCon2.NSP_Sub_Client__c = subClient.Id;
-        subClientCon2.NSP_Status_Date__c = system.today() - 121;
-        insert subClientCon2 ;
-        
-        
-        NSP_Address__c address = [Select Id ,NSP_Related_Site__c FROM NSP_Address__c WHERE NSP_Related_Site__c != Null ];
-        // Create Sub Client Contact Address
-        // 
-        NSP_Sub_Client_Contact_Address__c subClientConAdd = New NSP_Sub_Client_Contact_Address__c();
-        subClientConAdd.Name = 'Test'; 
-        subClientConAdd.NSP_Address__c = address.Id;
-        subClientConAdd.NSP_Sub_Client_Contact__c = subClientContact.Id;
-        insert subClientConAdd ;
-        
+
+    //== Test Method to test the delete scenario
+    @isTest
+    private static void testSubClientContactDelete() {
         Test.StartTest();
-        // here call the batch NSP_SubClientConRelatedRecDeletionBatch
-        NSP_SubClientConRelatedRecDeletionBatch subClientCont = new NSP_SubClientConRelatedRecDeletionBatch();
-        DataBase.executeBatch(subClientCont);
+
+        DataBase.executeBatch(new NSP_SubClientConRelatedRecDeletionBatch());
         
         Test.stopTest();
         
-        List<NSP_Sub_Client_Contact__c> subClientConList = [SELECT Id, NSP_Status_Date__c, NSP_Employee_Status__c, NSP_Contact__c, NSP_Sub_Client__c FROM NSP_Sub_Client_Contact__c WHERE NSP_Employee_Status__c = 'PRIMED'];
-        system.assert(subClientConList.size() == 0);
-        
+        List<NSP_Sub_Client_Contact__c> subClientConList = [
+            SELECT Id, NSP_Status_Date__c, NSP_Employee_Status__c, NSP_Contact__c, NSP_Sub_Client__c
+            FROM NSP_Sub_Client_Contact__c
+            WHERE NSP_Employee_Status__c = 'PRIMED'
+        ];
+        List<AccountContactRelation> acrList = [
+            SELECT ID FROM AccountContactRelation
+        ];
+        //Asserts
+        Assert.areEqual(subClientConList.size(), 0);
     }
-    
-    Public Static TestMethod Void testNSPSubClientConRelatedRecDeletionBatchCase2(){
-        //Account acc =[Select Id From Account WHERE NAME != NULL];
+
+    //== Test Method for No Delete
+    @isTest
+    private static void testNoDeleteOfSubClientContacts() {
+        Account account = [SELECT ID FROM Account LIMIT 1];
+        Contact contact = [SELECT ID FROM Contact WHERE AccountId = :account.Id LIMIT 1];
+
+        /** INSERT DOCUMENTS */
+
+        ContentVersion contentVersion = new ContentVersion(
+            Title = 'Penguins',
+            PathOnClient = 'Penguins.jpg',
+            VersionData = Blob.valueOf('Test Content'),
+            IsMajorVersion = true
+        );
         
+        insert contentVersion;    
+        List<ContentDocument> documents = [
+            SELECT Id, Title, LatestPublishedVersionId
+            FROM ContentDocument
+        ];
         
-        //Contact con =[Select Id, AccountId From Contact WHERE AccountId != NULL];
-        //NSP_Sub_Client__c subClient = [Select Id, NSP_Account__c,NSP_Asset__c ,Name from NSP_Sub_Client__c WHERE NSP_Account__c !=null];
-        NSP_Sub_Client_Contact__c subClientContact = [SELECT Id, NSP_Status_Date__c, NSP_Employee_Status__c, NSP_Contact__c FROM NSP_Sub_Client_Contact__c 
-                                                      WHERE NSP_Contact__c != Null ];
+        //create ContentDocumentLink  record 
+        ContentDocumentLink cdl = new ContentDocumentLink();
+        cdl.LinkedEntityId = contact.id;
+        cdl.ContentDocumentId = documents[0].Id;
+        cdl.ShareType = 'V';
         
-        NSP_Address__c address = [Select Id ,NSP_Related_Site__c FROM NSP_Address__c WHERE NSP_Related_Site__c != Null ];
-        // Create Sub Client Contact Address
-        // 
-        NSP_Sub_Client_Contact_Address__c subClientConAdd = New NSP_Sub_Client_Contact_Address__c();
-        subClientConAdd.Name = 'Test'; 
-        subClientConAdd.NSP_Address__c = address.Id;
-        subClientConAdd.NSP_Sub_Client_Contact__c = subClientContact.Id;
-        insert subClientConAdd ;
-        
+        insert cdl;
+
         Test.StartTest();
-        // here call the batch NSP_SubClientConRelatedRecDeletionBatch
-        NSP_SubClientConRelatedRecDeletionBatch subClientCont = new NSP_SubClientConRelatedRecDeletionBatch();
-        DataBase.executeBatch(subClientCont);
+
+        DataBase.executeBatch(new NSP_SubClientConRelatedRecDeletionBatch());
         
         Test.stopTest();
         
-        List<NSP_Sub_Client_Contact__c> subClientConList = [SELECT Id, NSP_Status_Date__c, NSP_Employee_Status__c, NSP_Contact__c, NSP_Sub_Client__c FROM NSP_Sub_Client_Contact__c WHERE Id != Null LIMIT 1];
-        system.assert(subClientConList.size() == 0);
+        List<NSP_Sub_Client_Contact__c> subClientConList = [
+            SELECT Id, NSP_Status_Date__c, NSP_Employee_Status__c, NSP_Contact__c, NSP_Sub_Client__c
+            FROM NSP_Sub_Client_Contact__c
+            WHERE NSP_Employee_Status__c = 'PRIMED'
+        ];
+        List<AccountContactRelation> acrList = [SELECT ID FROM AccountContactRelation];
+        //Asserts
+        Assert.areEqual(subClientConList.size(), 1);
+        Assert.areEqual(acrList.size(), 1);
     }
     
+    //== Test Method to test the delete with case contacts
+    @isTest
+    private static void testCaseContacts() {
+        Account account = [SELECT ID FROM Account LIMIT 1];
+        Contact contact = [SELECT ID FROM Contact WHERE AccountId = :account.Id LIMIT 1];
+        
+        // Create Case
+        Case nCorpCase = (Case) NSP_TestExtendedDataFactory.createSObject(
+            new Case(), 
+            'NSP_TestDataFactory.CaseDefaults', 
+            false
+        );
+        nCorpCase.contactId = contact.Id;
+        nCorpCase.AccountId = account.Id;
+        nCorpCase.NSP_CorporateEmployeeEE__c = true;
+        
+        insert nCorpCase;
+        
+        Test.StartTest();
+        
+        // Create Case Contact
+        NSP_Case_Contacts__c caseContact = (NSP_Case_Contacts__c)NSP_TestExtendedDataFactory.createSObject(
+            new NSP_Case_Contacts__c(), 
+            'NSP_TestDataFactory.caseContactDefaults', 
+            false
+        );
+        caseContact.NSP_Contact__c = contact.Id;
+        caseContact.NSP_Case__c = nCorpCase.Id;
+        caseContact.NSP_IsPrimary__c = true;
+        INSERT caseContact;
+        
+        
+        
+        DataBase.executeBatch(new NSP_SubClientConRelatedRecDeletionBatch());
+        
+        Test.stopTest();
+        
+        List<NSP_Sub_Client_Contact__c> subClientConList = [
+            SELECT Id, NSP_Status_Date__c, NSP_Employee_Status__c, NSP_Contact__c, NSP_Sub_Client__c
+            FROM NSP_Sub_Client_Contact__c
+            WHERE NSP_Employee_Status__c = 'PRIMED'
+        ];
+        //Asserts
+        Assert.areEqual(subClientConList.size(), 1);
+    }
+
+    //== Test method for scheduler
+    @isTest
+    private static void testScheduler() {
+        Test.startTest();
+        String cronExp = '0 0 12 * * ?';
+        System.schedule('Delete batch', cronExp, new NSP_SubClientConRelatedRecDeletionBatch());
+        Test.stopTest();
+    }
+
 }
+//
