@@ -362,6 +362,11 @@
                 <default>false</default>
                 <label>ExclusiveCFO Inc</label>
             </value>
+            <value>
+                <fullName>101</fullName>
+                <default>false</default>
+                <label>Atlantic Ridge Capital</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
