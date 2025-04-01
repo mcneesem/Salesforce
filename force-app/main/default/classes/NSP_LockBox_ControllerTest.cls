@@ -14,6 +14,11 @@ public class NSP_LockBox_ControllerTest{
      */
     @testSetup
     static void setupTestData(){
+        
+        Order_Settings__c sett = new Order_Settings__c();
+        sett.Bypass_Rule_PreventStatusChange__c = true;
+        sett.EffectiveDateStartOfMonth__c = true;
+        insert sett;
 
         Account objaccount = NSP_TestHelper.createAccount(true);
 
