@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Is_Contact_Center__c</fullName>
+    <description>Added for ADO-332103</description>
+    <externalId>false</externalId>
+    <formula>OR(
+  CONTAINS( RIGHT( FromPhoneNumber , 10 ) , &quot;6282080131&quot; ) ,
+  CONTAINS( RIGHT( FromPhoneNumber , 10 ) , &quot;6282080133&quot; ) ,
+  CONTAINS( RIGHT( FromPhoneNumber , 10 ) , &quot;6282080134&quot; ) ,
+  CONTAINS( RIGHT( FromPhoneNumber , 10 ) , &quot;1617915024&quot; ) ,
+  CONTAINS( RIGHT( FromPhoneNumber , 10 ) , &quot;6282080135&quot; ) ,
+  CONTAINS( RIGHT( FromPhoneNumber , 10 ) , &quot;6282080136&quot; ) ,
+  CONTAINS( RIGHT( FromPhoneNumber , 10 ) , &quot;6282080137&quot; ) ,
+  CONTAINS( RIGHT( FromPhoneNumber , 10 ) , &quot;1617915023&quot; ) ,
+  CONTAINS( RIGHT( FromPhoneNumber , 10 ) , &quot;8009191907&quot; ) ,
+  CONTAINS( RIGHT( FromPhoneNumber , 10 ) , &quot;2080049770&quot; ) ,
+  CONTAINS( RIGHT( FromPhoneNumber , 10 ) , &quot;5541704359&quot; ) ,
+  CONTAINS( RIGHT( FromPhoneNumber , 10 ) , &quot;7133441390&quot; ) ,
+  CONTAINS( RIGHT( ToPhoneNumber , 10 ) , &quot;6282080131&quot; ) ,
+  CONTAINS( RIGHT( ToPhoneNumber , 10 ) , &quot;6282080133&quot; ) ,
+  CONTAINS( RIGHT( ToPhoneNumber , 10 ) , &quot;6282080134&quot; ) ,
+  CONTAINS( RIGHT( ToPhoneNumber , 10 ) , &quot;1617915024&quot; ) ,
+  CONTAINS( RIGHT( ToPhoneNumber , 10 ) , &quot;6282080135&quot; ) ,
+  CONTAINS( RIGHT( ToPhoneNumber , 10 ) , &quot;6282080136&quot; ) ,
+  CONTAINS( RIGHT( ToPhoneNumber , 10 ) , &quot;6282080137&quot; ) ,
+  CONTAINS( RIGHT( ToPhoneNumber , 10 ) , &quot;1617915023&quot; ) ,
+  CONTAINS( RIGHT( ToPhoneNumber , 10 ) , &quot;8009191907&quot; ) ,
+  CONTAINS( RIGHT( ToPhoneNumber , 10 ) , &quot;2080049770&quot; ) ,
+  CONTAINS( RIGHT( ToPhoneNumber , 10 ) , &quot;5541704359&quot; ) ,
+  CONTAINS( RIGHT( ToPhoneNumber , 10 ) , &quot;7133441390&quot; )
+)</formula>
+    <label>Is Contact Center</label>
+    <type>Checkbox</type>
+</CustomField>
