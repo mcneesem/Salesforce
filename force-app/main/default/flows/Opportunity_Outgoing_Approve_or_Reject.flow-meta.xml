@@ -208,14 +208,36 @@
         </connector>
     </assignments>
     <choices>
+        <name>approve_choice</name>
+        <choiceText>Approve</choiceText>
+        <dataType>Boolean</dataType>
+        <value>
+            <booleanValue>true</booleanValue>
+        </value>
+    </choices>
+    <choices>
         <name>approveChoice</name>
         <choiceText>Approve</choiceText>
         <dataType>String</dataType>
+        <value>
+            <elementReference>approveChoice</elementReference>
+        </value>
+    </choices>
+    <choices>
+        <name>reject_choice</name>
+        <choiceText>Reject</choiceText>
+        <dataType>Boolean</dataType>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
     </choices>
     <choices>
         <name>rejectChoice</name>
         <choiceText>Reject</choiceText>
         <dataType>String</dataType>
+        <value>
+            <elementReference>rejectChoice</elementReference>
+        </value>
     </choices>
     <decisions>
         <name>Approved_or_Rejected_Opty_for_Workday</name>
@@ -227,10 +249,10 @@
             <name>Opty_Approved</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Would_you_like_to_Approve_or_Reject_this_Opportunity_for_Workday</leftValueReference>
+                <leftValueReference>approve_or_reject_choice</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <elementReference>approveChoice</elementReference>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -242,10 +264,10 @@
             <name>Opty_Rejected</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Would_you_like_to_Approve_or_Reject_this_Opportunity_for_Workday</leftValueReference>
+                <leftValueReference>approve_or_reject_choice</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <elementReference>rejectChoice</elementReference>
+                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -419,6 +441,8 @@
         <outputReference>recordOutgoingOpty</outputReference>
         <queriedFields>Id</queriedFields>
         <queriedFields>StageName</queriedFields>
+        <queriedFields>NSP_Mid_Market_Sales_Email__c</queriedFields>
+        <queriedFields>Loss_Reason__c</queriedFields>
     </recordLookups>
     <recordUpdates>
         <name>Update_Outgoing_Opty_Approved</name>
@@ -474,10 +498,10 @@
             <targetReference>Approved_or_Rejected_Opty_for_Workday</targetReference>
         </connector>
         <fields>
-            <name>Would_you_like_to_Approve_or_Reject_this_Opportunity_for_Workday</name>
-            <choiceReferences>approveChoice</choiceReferences>
-            <choiceReferences>rejectChoice</choiceReferences>
-            <dataType>String</dataType>
+            <name>approve_or_reject_choice</name>
+            <choiceReferences>approve_choice</choiceReferences>
+            <choiceReferences>reject_choice</choiceReferences>
+            <dataType>Boolean</dataType>
             <fieldText>Would you like to Approve or Reject this Opportunity for Workday?</fieldText>
             <fieldType>RadioButtons</fieldType>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -531,7 +555,7 @@
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
-        <isOutput>false</isOutput>
+        <isOutput>true</isOutput>
         <objectType>Opportunity</objectType>
     </variables>
     <variables>
