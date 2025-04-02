@@ -3,23 +3,25 @@
     <fullName>SYNT_PreventEditing_ClosedRecord</fullName>
     <active>true</active>
     <description>This validation rule prevent the user editing on the Closed record</description>
-    <errorConditionFormula>AND
-( $Setup.NSP_Trigger_Switch__c.CaseValidations__c != true,
-  NOT(ISNEW()),
-OR(AND(ISCHANGED(NSP_Show_Confidential_PopUp__c), NSP_Show_Confidential_PopUp__c = false),
-AND(NOT(ISCHANGED(NSP_Show_Confidential_PopUp__c)), NSP_Show_Confidential_PopUp__c = true),
-AND(NSP_Confidential__c = true, NSP_Show_Confidential_PopUp__c = false),
-AND(NOT(ISCHANGED(NSP_Show_Confidential_PopUp__c)), PRIORVALUE(NSP_Show_Confidential_PopUp__c) = false)), 
-  NOT(ISPICKVAL(Status, &apos;ReOpened&apos;)),
-NOT($User.Id = $Label.NSP_CaseValidationBypassUser ),
-OR(AND(ISCHANGED(NSP_Response_After_Close__c), NSP_Response_After_Close__c = false),
-  AND(NOT(ISCHANGED(NSP_Response_After_Close__c)), NSP_Response_After_Close__c = true),
-  AND(NOT(ISCHANGED(NSP_Response_After_Close__c)), PRIORVALUE(NSP_Response_After_Close__c) = false)),
-  OR
-(
-NOT(ISCHANGED( NSP_Case_Sub_Status__c )),
- ISPICKVAL(Status, &apos;Open&apos;),
-ISPICKVAL(Status, &apos;Cancelled&apos;),
+    <errorConditionFormula>AND(
+$Setup.NSP_Trigger_Switch__c.CaseValidations__c!=true,
+NOT(ISNEW()),
+OR(
+AND(ISCHANGED(NSP_Show_Confidential_PopUp__c),NSP_Show_Confidential_PopUp__c=false),
+AND(NOT(ISCHANGED(NSP_Show_Confidential_PopUp__c)),NSP_Show_Confidential_PopUp__c=true),
+AND(NSP_Confidential__c=true,NSP_Show_Confidential_PopUp__c=false),
+AND(NOT(ISCHANGED(NSP_Show_Confidential_PopUp__c)),PRIORVALUE(NSP_Show_Confidential_PopUp__c)=false)
+),
+NOT(ISPICKVAL(Status,&apos;ReOpened&apos;)),
+NOT($User.Id=$Label.NSP_CaseValidationBypassUser),
+OR(
+AND(ISCHANGED(NSP_Response_After_Close__c),NSP_Response_After_Close__c=false),
+AND(NOT(ISCHANGED(NSP_Response_After_Close__c)),NSP_Response_After_Close__c=true),
+AND(NOT(ISCHANGED(NSP_Response_After_Close__c)),PRIORVALUE(NSP_Response_After_Close__c)=false)
+),
+OR(
+ISPICKVAL(Status,&apos;Open&apos;),
+ISPICKVAL(Status,&apos;Cancelled&apos;),
 ISCHANGED(AccountId),
 ISCHANGED(NSP_Actual_Minutes_Spent_To_Resolve_Case__c),
 ISCHANGED(NSP_AgencyCase__c),
@@ -99,7 +101,6 @@ ISCHANGED(NSP_Level_2__c),
 ISCHANGED(NSP_Level_2_Date__c),
 ISCHANGED(NSP_Loaner_Repair_Serial__c),
 ISCHANGED(NSP_Location__c),
-ISCHANGED(NSP_Open_to_Assigned_Hours__c),
 ISCHANGED(NSP_Open_to_First_Reply_Hours__c),
 ISCHANGED(NSP_Opened_Date__c),
 ISCHANGED(NSP_Operating_System__c),
