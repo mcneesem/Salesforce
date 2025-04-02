@@ -111,7 +111,7 @@ export default class nsp_contactCustomLookUp extends LightningElement {
 
 
 handelSelectedRecord(event){   
-     var recId = event.target.getAttribute('data-recid'); 
+     let recId = event.target.getAttribute('data-recid'); 
    this.selectRecord(this.lstResult.find(data => data.Id === recId));
 }
 
@@ -135,7 +135,7 @@ handelSelectRecordHelper(){
 }
 
 lookupUpdatehandler(value, sObjectApiName){   
-    var detailObj = {recId: value, sObjectApiName: sObjectApiName};
+    let detailObj = {recId: value, sObjectApiName: sObjectApiName};
     const oEvent = new CustomEvent('lookupupdate',
      {
          'detail': detailObj
