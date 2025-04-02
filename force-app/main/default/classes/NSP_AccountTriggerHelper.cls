@@ -656,7 +656,7 @@ public class NSP_AccountTriggerHelper {
                         FROM Account
                         WHERE (
                             ( Id IN :oldMap.keySet() )
-                            AND ( Id IN :ownerUpdatePermittedUserMap.keySet() )
+                            AND ( OwnerId IN :ownerUpdatePermittedUserMap.keySet() )
                         )
                     ]
                 )
