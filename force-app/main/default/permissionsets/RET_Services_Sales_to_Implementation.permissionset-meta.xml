@@ -1261,6 +1261,11 @@
         <field>NSP_Sales_to_Implementation__c.Salesforce__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_Sales_to_Implementation__c.X401k_Plan_Consultant__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
     <label>RET_Services_Sales_to_Implementation</label>
     <objectPermissions>
