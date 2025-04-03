@@ -1468,7 +1468,7 @@
     <picklistValues>
         <picklist>NSP_Product_Interest__c</picklist>
         <values>
-            <fullName>Workday</fullName>
+            <fullName>HCM</fullName>
             <default>true</default>
         </values>
     </picklistValues>
