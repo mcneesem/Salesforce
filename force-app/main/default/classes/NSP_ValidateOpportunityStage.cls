@@ -11,7 +11,7 @@ Apex Class Name      :  NSP_ValidateOpportunityStage
  * Tejas                 12/24/2021            First Iteration
  */
 public with sharing class NSP_ValidateOpportunityStage {
-    // test w/ NSP_ValidateOpportunityStageTest (81%)
+    // test w/ NSP_ValidateOpportunityStageTest (82%)
 
     public static List<string> analysisStageCriteraTypes = System.Label.NSP_AnalysisStageCriteria.split(',');
     public static List<string> proposeStageCriteraTypes = System.Label.NSP_ProposeStageCriteria.split(',');
@@ -20,20 +20,20 @@ public with sharing class NSP_ValidateOpportunityStage {
     public static List<string> nonOwnerBasedCriteriaProducts = System.Label.NSP_NonOwnerBasedCriteriaProducts.split(',');
     public static List<string> closeLostRoleinOpportunityTeam = System.Label.Close_Lost_Role_in_Opportunity_Team.split(',');
     public static Map<String, String> opptyBidStatus = retrieveFieldPicklistValues(Opportunity.NSP_Bid_Status__c);
-    private static Boolean hasCLSOOppOwnerPermission = CustomPermissionController.checkUserPermission('Opportunity_Closed_Lost_SO_Opp_Owner', UserInfo.getUserId());
-    private static Boolean hasCLSOOppPermission = CustomPermissionController.checkUserPermission('Opportunity_Closed_Lost_SO_Opp', UserInfo.getUserId());
-    private static Boolean hasAllowCLMMPerm = CustomPermissionController.checkUserPermission('Opportunity_Allow_Closed_Lost_MM', UserInfo.getUserId());
-    private static Boolean hasAllowCLRETPerm = CustomPermissionController.checkUserPermission('Opportunity_Allow_Closed_Lost_RET', UserInfo.getUserId());
-    private static Boolean hasAllowCLInsurancePerm = CustomPermissionController.checkUserPermission('Opportunity_Allow_Closed_Lost_Insurance', UserInfo.getUserId());
-    private static Boolean hasAllowCLRecruitingPerm = CustomPermissionController.checkUserPermission('Opportunity_Allow_Closed_Lost_Recruiting', UserInfo.getUserId());
-    private static Boolean hasAllowCLTechnologyPerm = CustomPermissionController.checkUserPermission('Opportunity_Allow_Closed_Lost_Technology', UserInfo.getUserId());
-    private static Boolean hasAllowCWNCSUserPerm = CustomPermissionController.checkUserPermission('Opportunity_Closed_Won_Opp_Owner', UserInfo.getUserId());
+    private static Boolean hasCLSOOppOwnerPermission = CustomPermissionController.checkUserPermission( 'Opportunity_Closed_Lost_SO_Opp_Owner' , UserInfo.getUserId() );
+    private static Boolean hasCLSOOppPermission = CustomPermissionController.checkUserPermission( 'Opportunity_Closed_Lost_SO_Opp' , UserInfo.getUserId() );
+    private static Boolean hasAllowCLMMPerm = CustomPermissionController.checkUserPermission( 'Opportunity_Allow_Closed_Lost_MM' , UserInfo.getUserId() );
+    private static Boolean hasAllowCLRETPerm = CustomPermissionController.checkUserPermission( 'Opportunity_Allow_Closed_Lost_RET' , UserInfo.getUserId() );
+    private static Boolean hasAllowCLInsurancePerm = CustomPermissionController.checkUserPermission( 'Opportunity_Allow_Closed_Lost_Insurance' , UserInfo.getUserId() );
+    private static Boolean hasAllowCLRecruitingPerm = CustomPermissionController.checkUserPermission( 'Opportunity_Allow_Closed_Lost_Recruiting' , UserInfo.getUserId() );
+    private static Boolean hasAllowCLTechnologyPerm = CustomPermissionController.checkUserPermission( 'Opportunity_Allow_Closed_Lost_Technology' , UserInfo.getUserId() );
+    private static Boolean hasAllowCWNCSUserPerm = CustomPermissionController.checkUserPermission( 'Opportunity_Closed_Won_NCS_User' , UserInfo.getUserId() );
     private static Map<Id,User> permittedRETSCUserMap = CustomPermissionController.getPermittedUsersMap( 'Opportunity_Owner_RET_Sales_Consultant' );
     private static Map<Id,User> permittedInsSalesUserMap = CustomPermissionController.getPermittedUsersMap( 'Opportunity_Owner_Insurance_Sales' );
     private static Map<Id,User> permittedRecSalesUserMap = CustomPermissionController.getPermittedUsersMap( 'Opportunity_Owner_Recruiting_Sales' );
     private static Map<Id,User> permittedTechSalesUserMap = CustomPermissionController.getPermittedUsersMap( 'Opportunity_Owner_Technology_Sales' );
     private static Map<Id,User> permittedBPCUserMap = CustomPermissionController.getPermittedUsersMap( 'Opportunity_Owner_BPC' );
-    private static Map<Id,User> permittedCWOppOwnerUserMap = CustomPermissionController.getPermittedUsersMap( 'Opportunity_Closed_Won_NCS_User' );
+    private static Map<Id,User> permittedCWOppOwnerUserMap = CustomPermissionController.getPermittedUsersMap( 'Opportunity_Closed_Won_Opp_Owner' );
     public static final String HAS_DISCOVERY = ' has Discovery ';
     public static final String HAS_OPEN_EVENT = ' has Open Event ';
     public static final String HAS_OPEN_WO_PROP = ' has Open WO Proposal Event ';
@@ -345,7 +345,7 @@ public with sharing class NSP_ValidateOpportunityStage {
                 if(opp.StageName.equals(NSP_SalesConstants.CLOSED_WON)){//evaluate criteria to move to closed won stage
                     //first check if primary quote is created and approved on primary products it is applicable on then check user based criteria
                     evaluateQuoteCriteria(opp,quoteMap);
-                    evaluateClosedWonStageCriteriaOld(opp, opportunityOwnerRoleMap);
+                    evaluateClosedWonStageCriteriaOld(opp);
                 }
                 //closed-Lost criteria DF-1769
                 if(opp.StageName.equals(NSP_SalesConstants.CLOSED_LOST)){//evaluate criteria to move to closed lost stage
@@ -545,23 +545,13 @@ public with sharing class NSP_ValidateOpportunityStage {
         }
     }
 
-    /**
-     * Evaluate entry criteria for Closed Won stage
-     * @param opportunityList list of New Opportunity.
-     *
-     * @return void
-     *  *
-     *
-     */
+    //
+    // Evaluate entry criteria for Closed Won stage
+    // @param opportunityList list of New Opportunity
+    // @return void
+    // 
     private static void evaluateClosedWonStageCriteria(Opportunity opp, Map<Id,NSP_Checklist__c> checklistMap, Map<Id,User> opportunityOwnerRoleMap){
         String scannedSTP = '';
-        String opportunityOwnerRoleName = null;
-        if ( opportunityOwnerRoleMap.containsKey( opp.OwnerId ) ) {
-            User opportunityOwner = opportunityOwnerRoleMap.get( opp.OwnerId );
-            if ( ( opportunityOwner != null ) && ( opportunityOwner.UserRole != null ) ) {
-                opportunityOwnerRoleName = opportunityOwner.UserRole.Name;
-            }
-        }
         if ( permittedCWOppOwnerUserMap.containsKey( opp.OwnerId )
                 && ( !hasAllowCWNCSUserPerm )
                 && ownerBasedCriteriaProducts.contains( opp.NSP_PrimaryProduct__c ) ){
@@ -599,25 +589,30 @@ public with sharing class NSP_ValidateOpportunityStage {
         }
     }
 
-    private static void evaluateClosedWonStageCriteriaOld(Opportunity opp, Map<Id,User> opportunityOwnerRoleMap){
-        if(permittedCWOppOwnerUserMap.containsKey( opp.OwnerId )
-        && !hasAllowCWNCSUserPerm && ownerBasedCriteriaProducts.contains(opp.NSP_PrimaryProduct__c) ){
+    private static void evaluateClosedWonStageCriteriaOld(Opportunity opp){
+        if( ownerBasedCriteriaProducts.contains(opp.NSP_PrimaryProduct__c)
+             && !hasAllowCWNCSUserPerm
+             && permittedCWOppOwnerUserMap.containsKey( opp.OwnerId ) ){
             opp.AddError(System.Label.NSP_CANNOT_MOVE_TO_CLOSEDWON);
         }
-        else if(nonOwnerBasedCriteriaProducts.contains(opp.NSP_PrimaryProduct__c) && UserInfo.getUserId()!= opp.OwnerId && !hasAllowCWNCSUserPerm){
+        else if( nonOwnerBasedCriteriaProducts.contains(opp.NSP_PrimaryProduct__c)
+             && ( UserInfo.getUserId()!= opp.OwnerId )
+             && !hasAllowCWNCSUserPerm){
             opp.AddError(System.Label.NSP_CANNOT_MOVE_TO_CLOSEDWON);
         }
-        else if(ownerBasedCriteriaProducts.contains(opp.NSP_PrimaryProduct__c) && !permittedCWOppOwnerUserMap.containsKey( opp.OwnerId )
-        && UserInfo.getUserId()!= opp.OwnerId && !hasAllowCWNCSUserPerm){
+        else if( ownerBasedCriteriaProducts.contains(opp.NSP_PrimaryProduct__c)
+             && !hasAllowCWNCSUserPerm
+             && !permittedCWOppOwnerUserMap.containsKey( opp.OwnerId )
+             && ( UserInfo.getUserId() != opp.OwnerId ) ){
             opp.AddError(System.Label.NSP_CANNOT_MOVE_TO_CLOSEDWON);
         }
         else if( !hasAllowCWNCSUserPerm
-          && ( opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WO || opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WS ) ){
+             && ( ( opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WO )
+               || ( opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WS ) ) ){
             opp.AddError(System.Label.NSP_CANNOT_MOVE_TO_CLOSEDWON);
         }
     }
-    
-    
+
     /***********************************************************************************************
      * MethodName: getUserRole
      * Description : This method is used to get the role of the User
@@ -704,17 +699,20 @@ public with sharing class NSP_ValidateOpportunityStage {
     
     private static Integer checkAllowClosedLost(Opportunity opp, List<ID> teamMemberList, List<String> salesOfficeMembership, List<String> salesOfficeList) {
         Integer canCloseLost = checkProductAllowClosedLost(opp);
-        if(FeatureManagement.checkPermission('Allow_Closed_Lost_Opportunity')){
+        if( FeatureManagement.checkPermission('Allow_Closed_Lost_Opportunity') ){
             canCloseLost++;
         } else if( opp.ownerid == UserInfo.getUserId() ){
             canCloseLost++;
         } else if( teamMemberList.contains(UserInfo.getUserId()) ){
             canCloseLost++;
-        } else if( opp.NSP_Account_Segment__c == NSP_SalesConstants.MIDMARKET_SALES && hasAllowCLMMPerm ){
+        } else if( ( opp.NSP_Account_Segment__c == NSP_SalesConstants.MIDMARKET_SALES )
+             && hasAllowCLMMPerm ){
             canCloseLost++;
-        } else if(getSalesOfficeGroup(UserInfo.getUserId(),salesOfficeMembership) != '' && hasCLSOOppOwnerPermission ){
+        } else if( ( getSalesOfficeGroup(UserInfo.getUserId(),salesOfficeMembership) != '' )
+             && hasCLSOOppOwnerPermission ){
             canCloseLost++;
-        } else if(getSalesOfficeGroup(UserInfo.getUserId(),salesOfficeList) != '' && hasCLSOOppPermission){
+        } else if( ( getSalesOfficeGroup(UserInfo.getUserId(),salesOfficeList) != '' )
+             && hasCLSOOppPermission){
             canCloseLost++;
         }
 
@@ -723,15 +721,20 @@ public with sharing class NSP_ValidateOpportunityStage {
     
     private static Integer checkProductAllowClosedLost(Opportunity opp) {
         Integer canCloseLost = 0;
-        if( permittedBPCUserMap.containsKey( opp.OwnerId ) && hasAllowCLMMPerm ){
+        if( permittedBPCUserMap.containsKey( opp.OwnerId )
+             && hasAllowCLMMPerm ){
             canCloseLost++;
-        } else if( permittedRETSCUserMap.containsKey( opp.OwnerId ) && hasAllowCLRETPerm ){
+        } else if( permittedRETSCUserMap.containsKey( opp.OwnerId )
+             && hasAllowCLRETPerm ){
             canCloseLost++;
-        } else if( permittedInsSalesUserMap.containsKey( opp.OwnerId ) && hasAllowCLInsurancePerm ){
+        } else if( permittedInsSalesUserMap.containsKey( opp.OwnerId )
+             && hasAllowCLInsurancePerm ){
             canCloseLost++;
-        } else if( permittedRecSalesUserMap.containsKey( opp.OwnerId ) && hasAllowCLRecruitingPerm ){
+        } else if( permittedRecSalesUserMap.containsKey( opp.OwnerId )
+             && hasAllowCLRecruitingPerm ){
             canCloseLost++;
-        } else if( permittedTechSalesUserMap.containsKey( opp.OwnerId ) && hasAllowCLTechnologyPerm ){
+        } else if( permittedTechSalesUserMap.containsKey( opp.OwnerId )
+             && hasAllowCLTechnologyPerm ){
             canCloseLost++;
         }
 
