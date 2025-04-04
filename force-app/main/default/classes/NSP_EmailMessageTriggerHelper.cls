@@ -324,26 +324,12 @@ public with sharing class NSP_EmailMessageTriggerHelper {
                     EmailMessage record = caseToEmailMessageMap.get( getCase );
                     if ( record != null ) {
                         Case newCase = new Case();
-                        if ( getCase.RecordTypeId == NSP_EmailMessageTriggerHelper.PEO_RECORDTYPEID ) {
-                            newCase.OwnerId = contactCenterQueueId;
-                        } else if ( getCase.RecordTypeId == NSP_EmailMessageTriggerHelper.BPS_RECORDTYPEID ) {
-                            newCase.Description = SchemaController.safeText(
-                                record.TextBody ,
-                                sObjectType.Case.Fields.Description
-                            );
-                            String queueName = NSP_EmailMessageTriggerHelper.getQueueNameFromEmail(
-                                mapOfEmailAddressToQueueName ,
-                                record
-                            );
-                            if ( String.isNotBlank( queueName )
-                                && ( mapOfQueueNameToQueueId != null )
-                                && mapOfQueueNameToQueueId.containsKey( queueName )
-                                && String.isNotBlank( mapOfQueueNameToQueueId.get( queueName ) )
-                                )
-                            {
-                                newCase.OwnerId = mapOfQueueNameToQueueId.get( queueName );
-                            }
-                        }
+                        newCase.OwnerId = caseOwnerAssignment( getCase , record , contactCenterQueueId , mapOfEmailAddressToQueueName ,  mapOfQueueNameToQueueId);
+                        // Safely set the Case description
+                        newCase.Description = SchemaController.safeText(
+                            record.TextBody ,
+                            sObjectType.Case.Fields.Description
+                        );
                         newCase.ParentId = getCase.Id;
                         newCase.RecordTypeId = getCase.RecordTypeId;
                         newCase.Status = OPEN;
@@ -372,25 +358,63 @@ public with sharing class NSP_EmailMessageTriggerHelper {
         }
         return caseToInsert;
     }
-
-    //Method to get queue name from email address.
-    private static String getQueueNameFromEmail( Map<String,String> mapOfEmailAddressToQueueName , EmailMessage record ) {
-        String queueName = '';
-        if ( ( mapOfEmailAddressToQueueName != null ) && ( record != null ) ) {
-            if ( String.isNotBlank( record.ToAddress )
-                && mapOfEmailAddressToQueueName.containsKey( record.ToAddress )
-                && String.isNotBlank( mapOfEmailAddressToQueueName.get( record.ToAddress ) )
-                )
-            {
-                queueName = mapOfEmailAddressToQueueName.get( record.ToAddress );
-            } else if ( String.isNotBlank( record.CcAddress )
-                && mapOfEmailAddressToQueueName.containsKey( record.CcAddress )
-                && String.isNotBlank( mapOfEmailAddressToQueueName.get( record.CcAddress ) )
-                )
-            {
-                queueName = mapOfEmailAddressToQueueName.get( record.CcAddress );
+    private static Id caseOwnerAssignment(
+        Case getCase,
+        EmailMessage record,
+        Id contactCenterQueueId,
+        Map<String, String> mapOfEmailAddressToQueueName,
+        Map<String, String> mapOfQueueNameToQueueId
+    ) {
+        Id caseOwnerId = null;
+        
+        if (getCase != null && String.isNotBlank(getCase.RecordTypeId) && record != null) {
+            if (getCase.RecordTypeId == NSP_EmailMessageTriggerHelper.PEO_RECORDTYPEID) {
+                caseOwnerId = contactCenterQueueId;
+            } else if (
+                getCase.RecordTypeId == NSP_EmailMessageTriggerHelper.BPS_RECORDTYPEID &&
+                mapOfEmailAddressToQueueName != null
+            ) {
+                // Get queue name from email
+                String queueName = NSP_EmailMessageTriggerHelper.getQueueNameFromEmail(
+                    mapOfEmailAddressToQueueName,
+                    record
+                );
+                
+                if (String.isNotBlank(queueName) && mapOfQueueNameToQueueId != null && mapOfQueueNameToQueueId.containsKey(queueName)) {
+                    caseOwnerId = mapOfQueueNameToQueueId.get(queueName);
+                }
             }
         }
+        return caseOwnerId;
+    }
+
+    //Method to get queue name from email address.
+    private static String getQueueNameFromEmail(Map<String, String> mapOfEmailAddressToQueueName, EmailMessage record ) {
+        List<String> queueNames = new List<String>();
+        String queueName = null;
+        
+        if (record != null && mapOfEmailAddressToQueueName != null) {
+            // Split 'To' and 'Cc' addresses
+            List<String> toAddressList = String.isNotBlank(record.ToAddress) 
+                ? record.ToAddress.split(';\\s*') 
+                : new List<String>();
+            
+            List<String> ccAddressList = String.isNotBlank(record.CcAddress) 
+                ? record.CcAddress.split(';\\s*') 
+                : new List<String>();
+            
+            // Combine both address lists
+            toAddressList.addAll(ccAddressList);
+            
+            // Check and collect queue names from map
+            for (String emailAddress : toAddressList) {
+                queueName = mapOfEmailAddressToQueueName.get(emailAddress);
+                if (String.isNotBlank(queueName)) {
+                    queueNames.add(queueName);
+                }
+            }
+        }
+        queueName = (queueNames != null && !queueNames.isEmpty()) ? queueNames[0] : null;
         return queueName;
     }
 
@@ -836,7 +860,7 @@ public with sharing class NSP_EmailMessageTriggerHelper {
                     }
                 }
             }
-        }      
+        }
         return mapOfEmailAddressToQueueName;
     }
 
@@ -846,10 +870,10 @@ public with sharing class NSP_EmailMessageTriggerHelper {
         if ( ( records != null ) && !records.isEmpty() ){
             for ( EmailMessage record : records ) {
                 if ( String.isNotBlank( record.ToAddress ) ) {
-                    allReceiverAddress.add( record.ToAddress );
+                    allReceiverAddress.addAll( (record.ToAddress).split(';\\s*') );
                 }
                 if ( String.isNotBlank( record.CcAddress ) ) {
-                    allReceiverAddress.add( record.CcAddress );
+                    allReceiverAddress.addAll( (record.CcAddress).split(';\\s*') );
                 }
             }
         }
