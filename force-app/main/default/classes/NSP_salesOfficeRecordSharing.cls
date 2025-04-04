@@ -17,7 +17,7 @@ public class NSP_salesOfficeRecordSharing {
     * Description : Method for sharing records With BPA Sales Offices
     * Params:       Map<Id,Account> newAccountMap
     * 
-    * ********************************************************************************************/      
+    ************************************************************************************************/
     public static void accountRecordSharing(Map<Id,Account> newAccountMap){
         Map<String,Set<String>> mapSalesOfficeSetAccountId = new  Map<String,Set<String>>();
         List<AccountShare> accountShareList = new List<AccountShare>();
@@ -358,8 +358,8 @@ public class NSP_salesOfficeRecordSharing {
         try{ 
             for(Lead lead:newLeadMap.values()){
                 if(lead.OwnerId !=oldLeadMap.get(lead.Id).OwnerId && String.valueOf(lead.OwnerId).startsWith('005') ){
-                    mapnewOwnerIdSetLeadId = getNewOwnerIdSetLeadIdMap(mapnewOwnerIdSetLeadId, lead, oldLeadMap);
-                    mapoldOwnerIdSetLeadId = getOldOwnerIdSetLeadIdMap(mapnewOwnerIdSetLeadId, lead, oldLeadMap);
+                    mapnewOwnerIdSetLeadId = getNewOwnerIdSetLeadIdMap( mapnewOwnerIdSetLeadId , lead , oldLeadMap );
+                    mapoldOwnerIdSetLeadId = getOldOwnerIdSetLeadIdMap( mapnewOwnerIdSetLeadId , lead );
                 }
             }
             Map<Id,User> leadNewOwnerMap = new Map<Id,User>( [
@@ -520,7 +520,7 @@ public class NSP_salesOfficeRecordSharing {
         }
     }
 
-    private static Map<String,Set<String>> getNewOwnerIdSetLeadIdMap(Map<String,Set<String>> mapnewOwnerIdSetLeadId, Lead lead, Map < Id, Lead > oldLeadMap){
+    private static Map<String,Set<String>> getNewOwnerIdSetLeadIdMap(Map<String,Set<String>> mapnewOwnerIdSetLeadId, Lead lead){
         if(mapnewOwnerIdSetLeadId.get(lead.OwnerId)==null){
             mapnewOwnerIdSetLeadId.put(lead.OwnerId, new Set <String>());
         }
@@ -528,7 +528,7 @@ public class NSP_salesOfficeRecordSharing {
         return mapnewOwnerIdSetLeadId;
     }
 
-    private static Map<String,Set<String>> getOldOwnerIdSetLeadIdMap(Map<String,Set<String>> mapoldOwnerIdSetLeadId, Lead lead, Map <Id, Lead> oldLeadMap){
+    private static Map<String,Set<String>> getOldOwnerIdSetLeadIdMap( Map<String , Set<String>> mapoldOwnerIdSetLeadId , Lead lead, Map <Id , Lead> oldLeadMap ){
         if(String.valueOf(oldLeadMap.get(lead.Id).OwnerId).startsWith('005')){
             if(mapoldOwnerIdSetLeadId.get(oldLeadMap.get(lead.Id).OwnerId)==null){
                 mapoldOwnerIdSetLeadId.put(oldLeadMap.get(lead.Id).OwnerId, new Set <String>());
@@ -538,7 +538,7 @@ public class NSP_salesOfficeRecordSharing {
         return mapoldOwnerIdSetLeadId;
     }
 
-    private static Map<String,Set<String>> getSalesOfficeLeadMap(Map<String,Set<String>> mapSalesOfficeSetLeadId, Lead lead, Set<String> newLeadSalesOfficeList){
+    private static Map<String,Set<String>> getSalesOfficeLeadMap( Map<String , Set<String>> mapSalesOfficeSetLeadId , Lead lead , Set<String> newLeadSalesOfficeList ){
         if(!newLeadSalesOfficeList.isEmpty()){
             for(String newSalesOffice: newLeadSalesOfficeList){
                 // creating a Map of Sales Office and Set of Lead Ids
