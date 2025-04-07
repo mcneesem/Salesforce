@@ -848,7 +848,7 @@
                 <fieldItem>Record.NSP_Pay_Date__c</fieldItem>
                 <identifier>RecordNSP_Pay_Date__cField</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 OR 2 OR 3 OR 4 OR 5</booleanFilter>
+                    <booleanFilter>1 OR 2 OR 3 OR 4 OR 5 OR 6</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.NSP_Term_Code__c}</leftValue>
                         <operator>EQUAL</operator>
@@ -873,6 +873,11 @@
                         <leftValue>{!Record.NSP_Term_Reason__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>3100 Non-Compliance of Client</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Term_Reason__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>3200 Non-Renewal</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -890,7 +895,7 @@
                 <fieldItem>Record.NSP_Benefit_Termination_Date__c</fieldItem>
                 <identifier>RecordNSP_Benefit_Termination_Date__cField</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 OR 2 OR 3 OR 4 OR 5</booleanFilter>
+                    <booleanFilter>1 OR 2 OR 3 OR 4 OR 5 OR 6</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.NSP_Term_Code__c}</leftValue>
                         <operator>EQUAL</operator>
@@ -915,6 +920,11 @@
                         <leftValue>{!Record.NSP_Term_Reason__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>3100 Non-Compliance of Client</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Term_Reason__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>3200 Non-Renewal</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
