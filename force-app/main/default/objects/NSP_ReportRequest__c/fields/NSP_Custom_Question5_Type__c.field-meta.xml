@@ -32,11 +32,6 @@
                 <default>false</default>
                 <label>Matrix</label>
             </value>
-            <value>
-                <fullName>Dropdown</fullName>
-                <default>false</default>
-                <label>Dropdown</label>
-            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

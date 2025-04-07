@@ -212,10 +212,6 @@
     <picklistValues>
         <picklist>NSP_Custom_Question10_Type__c</picklist>
         <values>
-            <fullName>Dropdown</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Matrix</fullName>
             <default>false</default>
         </values>
@@ -234,10 +230,6 @@
     </picklistValues>
     <picklistValues>
         <picklist>NSP_Custom_Question1_Type__c</picklist>
-        <values>
-            <fullName>Dropdown</fullName>
-            <default>false</default>
-        </values>
         <values>
             <fullName>Matrix</fullName>
             <default>false</default>
@@ -258,10 +250,6 @@
     <picklistValues>
         <picklist>NSP_Custom_Question2_Type__c</picklist>
         <values>
-            <fullName>Dropdown</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Matrix</fullName>
             <default>false</default>
         </values>
@@ -280,10 +268,6 @@
     </picklistValues>
     <picklistValues>
         <picklist>NSP_Custom_Question3_Type__c</picklist>
-        <values>
-            <fullName>Dropdown</fullName>
-            <default>false</default>
-        </values>
         <values>
             <fullName>Matrix</fullName>
             <default>false</default>
@@ -304,10 +288,6 @@
     <picklistValues>
         <picklist>NSP_Custom_Question4_Type__c</picklist>
         <values>
-            <fullName>Dropdown</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Matrix</fullName>
             <default>false</default>
         </values>
@@ -326,10 +306,6 @@
     </picklistValues>
     <picklistValues>
         <picklist>NSP_Custom_Question5_Type__c</picklist>
-        <values>
-            <fullName>Dropdown</fullName>
-            <default>false</default>
-        </values>
         <values>
             <fullName>Matrix</fullName>
             <default>false</default>
@@ -350,10 +326,6 @@
     <picklistValues>
         <picklist>NSP_Custom_Question6_Type__c</picklist>
         <values>
-            <fullName>Dropdown</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Matrix</fullName>
             <default>false</default>
         </values>
@@ -372,10 +344,6 @@
     </picklistValues>
     <picklistValues>
         <picklist>NSP_Custom_Question7_Type__c</picklist>
-        <values>
-            <fullName>Dropdown</fullName>
-            <default>false</default>
-        </values>
         <values>
             <fullName>Matrix</fullName>
             <default>false</default>
@@ -396,10 +364,6 @@
     <picklistValues>
         <picklist>NSP_Custom_Question8_Type__c</picklist>
         <values>
-            <fullName>Dropdown</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Matrix</fullName>
             <default>false</default>
         </values>
@@ -418,10 +382,6 @@
     </picklistValues>
     <picklistValues>
         <picklist>NSP_Custom_Question9_Type__c</picklist>
-        <values>
-            <fullName>Dropdown</fullName>
-            <default>false</default>
-        </values>
         <values>
             <fullName>Matrix</fullName>
             <default>false</default>

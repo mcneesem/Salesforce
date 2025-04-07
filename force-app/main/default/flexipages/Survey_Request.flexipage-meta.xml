@@ -98,12 +98,8 @@
         </itemInstances>
         <itemInstances>
             <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Performance_Specialist__c</fieldItem>
-                <identifier>RecordPerformance_Specialist_cField</identifier>
+                <fieldItem>Record.NSP_HRSpecialistPhoneNumber__c</fieldItem>
+                <identifier>RecordNSP_HRSpecialistPhoneNumber__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-87072885-3992-48cf-a415-dddb2db21ed7</name>
@@ -1500,7 +1496,7 @@
                 <identifier>activityTab</identifier>
             </componentInstance>
         </itemInstances>
-        <itemInstances>
+                <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
                     <name>body</name>
