@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ListView xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>FLSA_National_Quality_Case</fullName>
+    <columns>CASES.STATUS</columns>
+    <columns>NSP_Case_Sub_Status__c</columns>
+    <columns>ACCOUNT.NAME</columns>
+    <columns>ASSET.NAME</columns>
+    <columns>CASES.SUBJECT</columns>
+    <columns>NSP_Category__c</columns>
+    <columns>NSP_SubCategory__c</columns>
+    <columns>CORE.USERS.ALIAS</columns>
+    <columns>CASES.CREATED_DATE_DATE_ONLY</columns>
+    <columns>CASES.CASE_NUMBER</columns>
     <filterScope>Queue</filterScope>
     <label>FLSA National Quality</label>
     <queue>FLSA_National_Quality</queue>
