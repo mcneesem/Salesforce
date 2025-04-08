@@ -110,6 +110,11 @@
         <default>false</default>
         <label>Zenefits</label>
     </customValue>
+    <customValue>
+        <fullName>Workday</fullName>
+        <default>false</default>
+        <label>Workday</label>
+    </customValue>
     <masterLabel>Current Provider</masterLabel>
     <sorted>false</sorted>
 </GlobalValueSet>
