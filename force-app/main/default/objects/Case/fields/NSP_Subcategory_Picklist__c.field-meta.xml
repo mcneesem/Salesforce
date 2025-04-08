@@ -519,11 +519,6 @@
                 <label>Best Practices</label>
             </value>
             <value>
-                <fullName>Compensation Support</fullName>
-                <default>false</default>
-                <label>Compensation Support</label>
-            </value>
-            <value>
                 <fullName>Compliance Review</fullName>
                 <default>false</default>
                 <label>Compliance Review</label>
@@ -1562,6 +1557,11 @@
                 <fullName>Employee</fullName>
                 <default>false</default>
                 <label>Employee</label>
+            </value>
+            <value>
+                <fullName>Compensation Guidance/Support</fullName>
+                <default>false</default>
+                <label>Compensation Guidance/Support</label>
             </value>
             <value>
                 <fullName>&quot;</fullName>
@@ -3763,6 +3763,10 @@
             <valueName>Workers Compensation</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>HR Client Support</controllingFieldValue>
+            <valueName>Compensation Guidance/Support</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Address/Email Change</controllingFieldValue>
             <valueName>Change of Mail Address Termed EE</valueName>
         </valueSettings>
@@ -3797,10 +3801,6 @@
         <valueSettings>
             <controllingFieldValue>HR Infrastructure</controllingFieldValue>
             <valueName>Best Practices</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>HR Infrastructure</controllingFieldValue>
-            <valueName>Compensation Support</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>HR Infrastructure</controllingFieldValue>
