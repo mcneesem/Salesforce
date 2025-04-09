@@ -121,7 +121,6 @@ public class NSP_SubClientConRelatedRecDeletionBatch implements Schedulable , Da
             FROM AccountContactRelation
             WHERE (
                 ContactId =:contactIds
-                AND IsDirect = false
             )
         ];
 
