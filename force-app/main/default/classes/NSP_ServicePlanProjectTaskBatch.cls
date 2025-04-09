@@ -14,7 +14,7 @@ Modification Log     :
 public class NSP_ServicePlanProjectTaskBatch implements Database.Batchable<sObject> {
     // test w/ NSP_ServicePlanProjectTaskBatch_Test (90%)
 
-    public Database.QueryLocator start(Database.BatchableContext bc){
+    public Database.QueryLocator start(Database.BatchableContext BC){
         //Using SOQL QUery to fetch Template Name, project status from Project Task object
         String query = 'SELECT Id, Name, TemplateName__c, pse__Project_Status__c, pse__Project_Type__c, pse__Account__c '+
             'FROM pse__Proj__c WHERE '+
@@ -27,7 +27,7 @@ public class NSP_ServicePlanProjectTaskBatch implements Database.Batchable<sObje
         return Database.getQueryLocator(query);   
     }
     
-    public void execute(Database.BatchableContext bc, List<pse__Proj__c> relatedProjectList){
+    public void execute(Database.BatchableContext BC, List<pse__Proj__c> relatedProjectList){
         List<sObject> lstOfRecords = new List<sObject>();
         Map<Id, Date> mapOfAccountIdAndRenewalDate = new Map<Id, Date> ();
         Set<Id> accountIdSet = new Set<Id>();
@@ -187,36 +187,24 @@ public class NSP_ServicePlanProjectTaskBatch implements Database.Batchable<sObje
             List<NSP_Account_Team__c> accountTeams = accountTeamMap.get( prj.pse__Account__c );
             if ( !accountTeams?.isEmpty() ) {
                 for ( NSP_Account_Team__c accountTeam : accountTeams ) {
-                    // Check if the Account Team is Primary
-                    if ( accountTeam.NSP_Primary__c ) {
-                        // If primary, assign the ownerId if the role is 'Business Team HRSP/CL'
-                        if ( NSP_ServiceConstants.BUS_TEAM_HRSP_CL.equalsIgnoreCase( accountTeam.NSP_Role__c ) ) {
+                    if( NSP_ServiceConstants.BUS_TEAM_HRSP_CL.equalsIgnoreCase( accountTeam.NSP_Role__c ) ){
+                        ownerId = accountTeam.NSP_User__c;
+                        if(accountTeam.NSP_Primary__c ){
                             ownerId = accountTeam.NSP_User__c;
                         }
-                    } else {
-                        // If not primary, assign ownerId if the role is 'Business Team HRSP/CL'
-                        if ( NSP_ServiceConstants.BUS_TEAM_HRSP_CL.equalsIgnoreCase( accountTeam.NSP_Role__c ) ) {
+                    }else if( NSP_ServiceConstants.MANAGER_HRSERVICES.equalsIgnoreCase( accountTeam.NSP_Role__c ) ){
+                        ownerId = accountTeam.NSP_User__c;
+                        if(accountTeam.NSP_Primary__c ){
                             ownerId = accountTeam.NSP_User__c;
-                        } else {
-                            // If not primary, assign ownerId if the role is 'Manager HRServices' and it is primary
-                            if ( NSP_ServiceConstants.MANAGER_HRSERVICES.equalsIgnoreCase( accountTeam.NSP_Role__c ) && accountTeam.NSP_Primary__c ) {
-                                ownerId = accountTeam.NSP_User__c;
-                            } else {
-                                // If not primary, assign ownerId if the role is 'Manager HRServices'
-                                if ( NSP_ServiceConstants.MANAGER_HRSERVICES.equalsIgnoreCase( accountTeam.NSP_Role__c ) ) {
-                                    ownerId = accountTeam.NSP_User__c;
-                                }
-                            }
                         }
                     }
                 }
-            }
+            }    
         }
+
         return ownerId;
     }
 
-
-    
     //== Method to return the User Role
     private static String getRoleBasedOnOwnerId(String ownerId , pse__Proj__c prj,  Map<Id,List<NSP_Account_Team__c>> accountTeamMap )
     {
