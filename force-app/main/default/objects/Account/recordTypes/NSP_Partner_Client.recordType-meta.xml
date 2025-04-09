@@ -514,6 +514,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Contingent Workforce</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CPQ Asset</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Employment Screening</fullName>
             <default>false</default>
         </values>
