@@ -14,7 +14,7 @@
         <inputParameters>
             <name>emailAddresses</name>
             <value>
-                <elementReference>$Record.Owner:User.Email</elementReference>
+                <elementReference>$Record.pse__Project__r.pse__Account__r.Owner.Email</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
