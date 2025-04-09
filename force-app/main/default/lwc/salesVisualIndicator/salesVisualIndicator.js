@@ -14,8 +14,8 @@ export default class SalesVisualIndicator extends LightningElement {
             .then((data) => {
                 this.showWorkDayLogo = data.isWorkday;
             })
-            .catch((error) => {
-                console.log('@@error: ' + error);
+            .catch((e) => {
+                console.error(e.body && e.body.message ?  e.body.message : "Server Error");
             });
     }
 
