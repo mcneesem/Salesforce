@@ -1763,12 +1763,6 @@
                 <label>Commission Only Prescreen</label>
             </value>
             <value>
-                <fullName>Compensation Support</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Compensation Support</label>
-            </value>
-            <value>
                 <fullName>Compliance Training Issue</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
