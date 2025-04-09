@@ -1464,24 +1464,9 @@
                 <label>Escalation</label>
             </value>
             <value>
-                <fullName>New Hire Escalation</fullName>
-                <default>false</default>
-                <label>New Hire Escalation</label>
-            </value>
-            <value>
-                <fullName>401k ORK</fullName>
-                <default>false</default>
-                <label>401k ORK</label>
-            </value>
-            <value>
                 <fullName>Docusign</fullName>
                 <default>false</default>
                 <label>Docusign</label>
-            </value>
-            <value>
-                <fullName>MEC / COS Change</fullName>
-                <default>false</default>
-                <label>MEC / COS Change</label>
             </value>
             <value>
                 <fullName>Redirect/Location Change</fullName>
@@ -1564,10 +1549,26 @@
                 <label>Compensation Guidance/Support</label>
             </value>
             <value>
+                <fullName>Employee Entry Status</fullName>
+                <default>false</default>
+                <label>Employee Entry Status</label>
+            </value>
+            <value>
+                <fullName>QC to Records</fullName>
+                <default>false</default>
+                <label>QC to Records</label>
+            </value>
+            <value>
                 <fullName>&quot;</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
                 <label>&quot;</label>
+            </value>
+            <value>
+                <fullName>401k ORK</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>401k ORK</label>
             </value>
             <value>
                 <fullName>ACA Eligibility</fullName>
@@ -2254,6 +2255,12 @@
                 <label>Liability Management Training</label>
             </value>
             <value>
+                <fullName>MEC / COS Change</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>MEC / COS Change</label>
+            </value>
+            <value>
                 <fullName>MM Client Transfers</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
@@ -2300,6 +2307,12 @@
                 <default>false</default>
                 <isActive>false</isActive>
                 <label>NQDC Deduction Requests</label>
+            </value>
+            <value>
+                <fullName>New Hire Escalation</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>New Hire Escalation</label>
             </value>
             <value>
                 <fullName>Non Renewal - Added EE</fullName>
@@ -3876,11 +3889,8 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Payroll Shared Services</controllingFieldValue>
-            <valueName>New Hire Escalation</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Payroll Shared Services</controllingFieldValue>
-            <valueName>401k ORK</valueName>
+            <controllingFieldValue>Payroll Services</controllingFieldValue>
+            <valueName>Address Update</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Payroll Shared Services</controllingFieldValue>
@@ -3888,7 +3898,11 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Payroll Shared Services</controllingFieldValue>
-            <valueName>MEC / COS Change</valueName>
+            <valueName>Employee Entry Status</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Payroll Shared Services</controllingFieldValue>
+            <valueName>QC to Records</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Payroll - Fulfillment</controllingFieldValue>
