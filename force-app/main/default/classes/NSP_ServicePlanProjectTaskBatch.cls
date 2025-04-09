@@ -187,23 +187,20 @@ public class NSP_ServicePlanProjectTaskBatch implements Database.Batchable<sObje
             List<NSP_Account_Team__c> accountTeams = accountTeamMap.get( prj.pse__Account__c );
             if ( !accountTeams?.isEmpty() ) {
                 for ( NSP_Account_Team__c accountTeam : accountTeams ) {
-                    if( NSP_ServiceConstants.BUS_TEAM_HRSP_CL.equalsIgnoreCase( accountTeam.NSP_Role__c ) ){
-                        ownerId = accountTeam.NSP_User__c;
-                        if(accountTeam.NSP_Primary__c ){
-                            ownerId = accountTeam.NSP_User__c;
-                        }
-                    }else if( NSP_ServiceConstants.MANAGER_HRSERVICES.equalsIgnoreCase( accountTeam.NSP_Role__c ) ){
-                        ownerId = accountTeam.NSP_User__c;
-                        if(accountTeam.NSP_Primary__c ){
-                            ownerId = accountTeam.NSP_User__c;
-                        }
+                    // Check if the Account Team role is 'Business Team HRSP/CL'
+                    if ( NSP_ServiceConstants.BUS_TEAM_HRSP_CL.equalsIgnoreCase( accountTeam.NSP_Role__c ) ) {
+                        ownerId = accountTeam.NSP_Primary__c ? accountTeam.NSP_User__c : accountTeam.NSP_User__c;
+                    } 
+                    // Check if the Account Team role is 'Manager HRServices'
+                    else if ( NSP_ServiceConstants.MANAGER_HRSERVICES.equalsIgnoreCase( accountTeam.NSP_Role__c ) ) {
+                        ownerId = accountTeam.NSP_Primary__c ? accountTeam.NSP_User__c : accountTeam.NSP_User__c;
                     }
                 }
-            }    
+            }
         }
-
         return ownerId;
     }
+
 
     //== Method to return the User Role
     private static String getRoleBasedOnOwnerId(String ownerId , pse__Proj__c prj,  Map<Id,List<NSP_Account_Team__c>> accountTeamMap )
