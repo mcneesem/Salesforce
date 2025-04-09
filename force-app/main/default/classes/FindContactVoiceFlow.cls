@@ -1,4 +1,4 @@
-public class without sharing FindContactVoiceFlow {
+public class FindContactVoiceFlow {
     // test w/ FindContactVoiceFlowTest (95%)
 
     @InvocableMethod(label='Get Contacts by Phone')
@@ -20,9 +20,9 @@ public class without sharing FindContactVoiceFlow {
                             Name ,
                             Email ,
                             HomePhone ,
-                            OtherAddress ,
+                            MailingAddress ,
                             MobilePhone ,
-                            NSP_Date_of_Birth__c ,
+                            NSP_Date_Of_Birth_Unmasked__c ,
                             NSP_Last_4Digit_Of_SSN__c ,
                             NSP_Per_ID__c ,
                             NSP_Work_Phone__c
