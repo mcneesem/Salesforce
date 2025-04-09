@@ -14,7 +14,7 @@ Modification Log     :
 public class NSP_ServicePlanProjectTaskBatch implements Database.Batchable<sObject> {
     // test w/ NSP_ServicePlanProjectTaskBatch_Test (90%)
 
-    public Database.QueryLocator start(Database.BatchableContext BC){
+    public Database.QueryLocator start(Database.BatchableContext bc){
         //Using SOQL QUery to fetch Template Name, project status from Project Task object
         String query = 'SELECT Id, Name, TemplateName__c, pse__Project_Status__c, pse__Project_Type__c, pse__Account__c '+
             'FROM pse__Proj__c WHERE '+
@@ -27,9 +27,8 @@ public class NSP_ServicePlanProjectTaskBatch implements Database.Batchable<sObje
         return Database.getQueryLocator(query);   
     }
     
-    public void execute(Database.BatchableContext BC, List<pse__Proj__c> relatedProjectList){
+    public void execute(Database.BatchableContext bc, List<pse__Proj__c> relatedProjectList){
         List<sObject> lstOfRecords = new List<sObject>();
-        List<pse__Project_Task__c> projectTaskList = new List<pse__Project_Task__c>();
         Map<Id, Date> mapOfAccountIdAndRenewalDate = new Map<Id, Date> ();
         Set<Id> accountIdSet = new Set<Id>();
         set<pse__Proj__c> validProjectsSet = new set<pse__Proj__c>();
@@ -120,11 +119,7 @@ public class NSP_ServicePlanProjectTaskBatch implements Database.Batchable<sObje
                 Integer randomNumber = Integer.valueof((Math.random() * 1847263450));
                 // Get Owner Id from Account Teams
                 String ownerId = NSP_ServicePlanProjectTaskBatch.getOwnerIdFromAccountTeams( prj , accountTeamMap );
-                String roleName = null;
-                if(ownerId != null)
-                {
-                    roleName = NSP_ServicePlanProjectTaskBatch.getRoleBasedOnOwnerId(ownerId, prj, accountTeamMap);
-                }
+                String roleName = NSP_ServicePlanProjectTaskBatch.getRoleBasedOnOwnerId(ownerId, prj, accountTeamMap);
 
                 pse__Project_Task_Assignment__c projTaskAssigmt = new pse__Project_Task_Assignment__c();
                 projTaskAssigmt.pse__Resource_Role__c =roleName;
@@ -184,48 +179,49 @@ public class NSP_ServicePlanProjectTaskBatch implements Database.Batchable<sObje
             );
         }
     }
-    
-    //== Method to get the owner Id
+
+    // Method to get the owner Id from Account Teams
     private static String getOwnerIdFromAccountTeams( pse__Proj__c prj , Map<Id,List<NSP_Account_Team__c>> accountTeamMap ) {
         String ownerId = null;
         if ( accountTeamMap.containskey( prj.pse__Account__c ) ) {
             List<NSP_Account_Team__c> accountTeams = accountTeamMap.get( prj.pse__Account__c );
             if ( !accountTeams?.isEmpty() ) {
                 for ( NSP_Account_Team__c accountTeam : accountTeams ) {
-                    if ( NSP_ServiceConstants.BUS_TEAM_HRSP_CL.equalsIgnoreCase( accountTeam.NSP_Role__c )
-                        && accountTeam.NSP_Primary__c
-                        )
-                    {
-                        ownerId = accountTeam.NSP_User__c;
-                    } else if ( ( ownerId == null )
-                        && NSP_ServiceConstants.BUS_TEAM_HRSP_CL.equalsIgnoreCase( accountTeam.NSP_Role__c )
-                        )
-                    {
-                        ownerId = accountTeam.NSP_User__c;
-                    } else if ( ( ownerId == null )
-                        && NSP_ServiceConstants.MANAGER_HRSERVICES.equalsIgnoreCase( accountTeam.NSP_Role__c ) 
-                               && accountTeam.NSP_Primary__c
-                        )
-                    {
-                        ownerId = accountTeam.NSP_User__c;
-                    } 
-                    else if ( ( ownerId == null )
-                        && NSP_ServiceConstants.MANAGER_HRSERVICES.equalsIgnoreCase( accountTeam.NSP_Role__c ) 
-                            )
-                    {
-                        ownerId = accountTeam.NSP_User__c;
-                    } 
+                    // Check if the Account Team is Primary
+                    if ( accountTeam.NSP_Primary__c ) {
+                        // If primary, assign the ownerId if the role is 'Business Team HRSP/CL'
+                        if ( NSP_ServiceConstants.BUS_TEAM_HRSP_CL.equalsIgnoreCase( accountTeam.NSP_Role__c ) ) {
+                            ownerId = accountTeam.NSP_User__c;
+                        }
+                    } else {
+                        // If not primary, assign ownerId if the role is 'Business Team HRSP/CL'
+                        if ( NSP_ServiceConstants.BUS_TEAM_HRSP_CL.equalsIgnoreCase( accountTeam.NSP_Role__c ) ) {
+                            ownerId = accountTeam.NSP_User__c;
+                        } else {
+                            // If not primary, assign ownerId if the role is 'Manager HRServices' and it is primary
+                            if ( NSP_ServiceConstants.MANAGER_HRSERVICES.equalsIgnoreCase( accountTeam.NSP_Role__c ) && accountTeam.NSP_Primary__c ) {
+                                ownerId = accountTeam.NSP_User__c;
+                            } else {
+                                // If not primary, assign ownerId if the role is 'Manager HRServices'
+                                if ( NSP_ServiceConstants.MANAGER_HRSERVICES.equalsIgnoreCase( accountTeam.NSP_Role__c ) ) {
+                                    ownerId = accountTeam.NSP_User__c;
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
-         return ownerId;
+        return ownerId;
     }
+
+
     
     //== Method to return the User Role
     private static String getRoleBasedOnOwnerId(String ownerId , pse__Proj__c prj,  Map<Id,List<NSP_Account_Team__c>> accountTeamMap )
     {
         String roleName = null;
-        if ( accountTeamMap.containskey( prj.pse__Account__c ) ) 
+        if ( ownerId != null && accountTeamMap.containskey( prj.pse__Account__c ) ) 
         {
             List<NSP_Account_Team__c> accountTeams = accountTeamMap.get( prj.pse__Account__c );
             if ( !accountTeams?.isEmpty() ) 
