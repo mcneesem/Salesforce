@@ -133,7 +133,7 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>none</value>
+                    <value>required</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Origin</fieldItem>
                 <identifier>RecordOriginField</identifier>
@@ -227,7 +227,7 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>none</value>
+                    <value>required</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Priority</fieldItem>
                 <identifier>RecordPriorityField</identifier>
@@ -237,7 +237,7 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>none</value>
+                    <value>required</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Rating__c</fieldItem>
                 <identifier>RecordNSP_Rating_cField</identifier>
