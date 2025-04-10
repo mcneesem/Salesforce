@@ -52,7 +52,7 @@ public class NSP_SCC_RelatedRecDeletionBatch_Test
     }
     
     //== Test Method to test the delete scenario
-   @isTest static void testSubClientContactDelete()
+    @isTest static void testSubClientContactDelete()
     {
         Test.StartTest();
 
@@ -65,13 +65,13 @@ public class NSP_SCC_RelatedRecDeletionBatch_Test
         //Asserts
         Assert.areEqual(subClientConList.size(), 0);
     }
-
+    
     //== Test Method for No Delete
-    @isTest static void testNoDeleteOfSubClientContacts()
+    @isTest static void testNoDeleteOfSubClientContactsBaseOnFiles()
     {
         Account account = [SELECT ID FROM Account LIMIT 1];
         Contact contact = [SELECT ID FROM Contact WHERE AccountId = :account.Id LIMIT 1];
-
+        
         /** INSERT DOCUMENTS */
 
         ContentVersion contentVersion = new ContentVersion(
@@ -92,6 +92,29 @@ public class NSP_SCC_RelatedRecDeletionBatch_Test
         
         insert cdl;
 
+        Test.StartTest();
+
+        DataBase.executeBatch(new NSP_SubClientConRelatedRecDeletionBatch());
+        
+        Test.stopTest();
+        
+        List<NSP_Sub_Client_Contact__c> subClientConList    = [SELECT Id, NSP_Status_Date__c, NSP_Employee_Status__c, NSP_Contact__c, NSP_Sub_Client__c FROM NSP_Sub_Client_Contact__c WHERE NSP_Employee_Status__c = 'PRIMED'];
+        List<AccountContactRelation> acrList                = [SELECT ID FROM AccountContactRelation];
+        //Asserts
+        Assert.areEqual(subClientConList.size(), 1);
+        Assert.areEqual(acrList.size(), 1);
+    }
+    
+    //== Test Method for No Delete
+    @isTest static void testNoDeleteOfSubClientContactsBasedOnNotes()
+    {
+        Account account = [SELECT ID FROM Account LIMIT 1];
+        Contact contact = [SELECT ID FROM Contact WHERE AccountId = :account.Id LIMIT 1];
+        
+        // Notes
+        NSP_Note__c note = new NSP_Note__c( NSP_Contact__c = contact.Id );
+        insert note;
+        
         Test.StartTest();
 
         DataBase.executeBatch(new NSP_SubClientConRelatedRecDeletionBatch());
