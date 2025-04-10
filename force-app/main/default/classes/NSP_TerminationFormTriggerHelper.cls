@@ -752,6 +752,7 @@ public with sharing class NSP_TerminationFormTriggerHelper {
     private static Map<Id,Id> mapOfProjectAndAccount = new Map<Id,Id>();
     private static Map<String,Id> primaryRolesMap = new Map<String,Id>();
     private static Map<String,Id> nonPrimaryRolesMap = new Map<String,Id>();
+    private static final string renewalCoordinator = 'Renewal Coordinator'
     
     /* Description : This method will fetch value of User Lookups from Account Team
         Date       : 13/10/2021 */
@@ -831,7 +832,7 @@ public with sharing class NSP_TerminationFormTriggerHelper {
                 NSP_ServiceConstants.MANAGER_HRSERVICES,
                 NSP_ServiceConstants.BUSINESS_PERFORMANCE_ADVISOR,
                 NSP_ServiceConstants.BUSINESS_PERFORMANCE_CONSULTANT,
-                'Renewal Coordinator'
+                renewalCoordinator
                 };
         if(mapOfProjectAndAccount != null){
             for ( NSP_Account_Team__c accountTeamPayroll : [
@@ -875,36 +876,22 @@ public with sharing class NSP_TerminationFormTriggerHelper {
     }
     
     //method for processing the Term forms before insert (called by method - updateUserLookups)
-    public static void processTermForms(List<NSP_Termination_Form__c> terminationFormList, Map<String,Id> mapOfAccountAndAccountTeam){//1
-        Map<String,String> termFormFieldMapping = new Map<String,String>{
-            	'NSP_Approver__c' => NSP_ServiceConstants.PAYROLL_SUPERVISOR,
-                'NSP_Supervisor__c' => NSP_ServiceConstants.PAYROLL_SUPERVISOR,
-                'NSP_Payroll_Specialist__c' => NSP_ServiceConstants.PAYROLL_SPECIALIST,
-                'NSP_Sales_Representative__c' => NSP_ServiceConstants.BUSINESS_PERFORMANCE_ADVISOR,
-                'NSP_Client_Liaison__c' => NSP_ServiceConstants.CLIENT_LIAISION,
-                'NSP_Account_Executive__c' => NSP_ServiceConstants.MID_MARKET_ACC_EX,
-                'NSP_Manager_HR_Services__c' => NSP_ServiceConstants.MANAGER_HRSERVICES,
-                'NSP_Insperity_Blended_Role__c' => NSP_ServiceConstants.BUS_TEAM_HRSP_CL,
-                'BPA__c' => NSP_ServiceConstants.BUSINESS_PERFORMANCE_ADVISOR,
-                'BPC__c' => NSP_ServiceConstants.BUSINESS_PERFORMANCE_CONSULTANT,
-                'Renewal_Coordinator__c' => 'Renewal Coordinator'
-        };
-
-        for ( NSP_Termination_Form__c termForm : terminationFormList ) {//1
+    public static void processTermForms(List<NSP_Termination_Form__c> terminationFormList, Map<String,Id> mapOfAccountAndAccountTeam){
+        for ( NSP_Termination_Form__c termForm : terminationFormList ) {
             if ( ( mapOfAccountAndAccountTeam != null )
                 && ( mapOfProjectAndAccount != null )
                 && ( mapOfProjectTaskAndProject != null )
                )
-            {//2
+            {
                 Id mappedProjectId = null;
-                if( mapOfProjectTaskAndProject.containsKey(termForm.NSP_Project_Task__c) ){//3
+                if( mapOfProjectTaskAndProject.containsKey(termForm.NSP_Project_Task__c) ){
                     mappedProjectId = mapOfProjectTaskAndProject.get( termForm.NSP_Project_Task__c );
                 }
                 
-                if( mappedProjectId != null ){//3
+                if( mappedProjectId != null ){
                     Id mappedAccountId = mapOfProjectAndAccount.get( mappedProjectId );
                 
-                    if(mappedAccountId != null){//4
+                    if(mappedAccountId != null){
                         //populate fields on term form
                         populateTermFormFields(termForm, mapOfAccountAndAccountTeam, mappedAccountId);
                     }
@@ -926,7 +913,7 @@ public with sharing class NSP_TerminationFormTriggerHelper {
                 'NSP_Insperity_Blended_Role__c' => NSP_ServiceConstants.BUS_TEAM_HRSP_CL,
                 'BPA__c' => NSP_ServiceConstants.BUSINESS_PERFORMANCE_ADVISOR,
                 'BPC__c' => NSP_ServiceConstants.BUSINESS_PERFORMANCE_CONSULTANT,
-                'Renewal_Coordinator__c' => 'Renewal Coordinator'
+                'Renewal_Coordinator__c' => renewalCoordinator
         };
         if(termForm != null){
             for(String fieldAPI :termFormFieldMapping.keyset()){
