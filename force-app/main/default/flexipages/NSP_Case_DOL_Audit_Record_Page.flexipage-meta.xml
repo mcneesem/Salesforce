@@ -273,6 +273,16 @@
                 <identifier>RecordNSP_Rating_cField</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Entries_Processed__c</fieldItem>
+                <identifier>RecordEntries_Processed_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-2af973ee-6ac3-4e33-8148-362a95265f31</name>
         <type>Facet</type>
     </flexiPageRegions>
