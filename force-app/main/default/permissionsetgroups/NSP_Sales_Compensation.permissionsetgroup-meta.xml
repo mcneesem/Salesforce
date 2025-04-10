@@ -19,6 +19,7 @@
     <permissionSets>Opportunity_Non_Docupay_field_edit_permission</permissionSets>
     <permissionSets>Opportunity_Team_Team_Check</permissionSets>
     <permissionSets>Report_export_and_print_access</permissionSets>
+    <permissionSets>Sales_Account_Indicator</permissionSets>
     <permissionSets>Sales_Compensation_Role_Permission_Set</permissionSets>
     <permissionSets>Sales_Service_Object_Permission</permissionSets>
     <permissionSets>Xactly_Permission_Set</permissionSets>

@@ -21,6 +21,7 @@
     <permissionSets>NSP_Order_ViewAll</permissionSets>
     <permissionSets>Opportunity_Credit_Bypass_Closed_Won_Lock</permissionSets>
     <permissionSets>Partner_Access</permissionSets>
+    <permissionSets>Sales_Account_Indicator</permissionSets>
     <permissionSets>Sales_Service_Object_Permission</permissionSets>
     <permissionSets>ZoomInfo_Insperity</permissionSets>
     <permissionSets>bloomfirex__Bloomfire_User</permissionSets>
