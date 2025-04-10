@@ -11,24 +11,29 @@ Apex Class Name      :  NSP_ValidateOpportunityStage
  * Tejas                 12/24/2021            First Iteration
  */
 public with sharing class NSP_ValidateOpportunityStage {
-    // test w/ NSP_ValidateOpportunityStageTest (80%)
+    // test w/ NSP_ValidateOpportunityStageTest (82%)
 
     public static List<string> analysisStageCriteraTypes = System.Label.NSP_AnalysisStageCriteria.split(',');
     public static List<string> proposeStageCriteraTypes = System.Label.NSP_ProposeStageCriteria.split(',');
     public static List<string> exitCriteriaProductException = System.Label.NSP_ExitCriteriaProductException.split(',');
     public static List<string> ownerBasedCriteriaProducts = System.Label.NSP_OwnerBasedCriteriaProducts.split(',');
     public static List<string> nonOwnerBasedCriteriaProducts = System.Label.NSP_NonOwnerBasedCriteriaProducts.split(',');
-    public static List<string> ownerBasedCriteriaRoles = System.Label.NSP_OwnerBasedCriteriaRoles.split(',');
-    public static List<string> closedLostCriteriaRoles = System.Label.NSP_Close_Lost_Criteria_Roles.split(',');
-    public static List<string> closeLostRolesforBusinessPerformanceConsultant = System.Label.Close_Lost_Roles_for_Business_Performance_Consultant.split(',');
-    public static List<string> closeLostRolesforRetirementSalesConsultant = System.Label.Close_Lost_Roles_for_Retirement_Sales_Consultant.split(',');
-    public static List<string> closeLostRolesforInsuranceSales = System.Label.Close_Lost_Roles_for_Insurance_Sales.split(',');
-    public static List<string> closeLostRolesforTechnologySales = System.Label.Close_Lost_Roles_for_Technology_Sales.split(',');
-    public static List<string> closeLostRolesforRecruitingSales = System.Label.Close_Lost_Roles_for_Recruiting_Sales.split(',');
     public static List<string> closeLostRoleinOpportunityTeam = System.Label.Close_Lost_Role_in_Opportunity_Team.split(',');
-    public static List<string> closeLostRolesforsamesalesofficeonOppOwner = System.Label.Close_Lost_Roles_for_same_sales_office_on_Opp_Owner.split(',');
-    public static List<string> closeLostRolesforsamesalesofficeonOpp = System.Label.Close_Lost_Roles_for_same_sales_office_on_Opp.split(',');
     public static Map<String, String> opptyBidStatus = retrieveFieldPicklistValues(Opportunity.NSP_Bid_Status__c);
+    private static Boolean hasCLSOOppOwnerPermission = CustomPermissionController.checkUserPermission( 'Opportunity_Closed_Lost_SO_Opp_Owner' , UserInfo.getUserId() );
+    private static Boolean hasCLSOOppPermission = CustomPermissionController.checkUserPermission( 'Opportunity_Closed_Lost_SO_Opp' , UserInfo.getUserId() );
+    private static Boolean hasAllowCLMMPerm = CustomPermissionController.checkUserPermission( 'Opportunity_Allow_Closed_Lost_MM' , UserInfo.getUserId() );
+    private static Boolean hasAllowCLRETPerm = CustomPermissionController.checkUserPermission( 'Opportunity_Allow_Closed_Lost_RET' , UserInfo.getUserId() );
+    private static Boolean hasAllowCLInsurancePerm = CustomPermissionController.checkUserPermission( 'Opportunity_Allow_Closed_Lost_Insurance' , UserInfo.getUserId() );
+    private static Boolean hasAllowCLRecruitingPerm = CustomPermissionController.checkUserPermission( 'Opportunity_Allow_Closed_Lost_Recruiting' , UserInfo.getUserId() );
+    private static Boolean hasAllowCLTechnologyPerm = CustomPermissionController.checkUserPermission( 'Opportunity_Allow_Closed_Lost_Technology' , UserInfo.getUserId() );
+    private static Boolean hasAllowCWNCSUserPerm = CustomPermissionController.checkUserPermission( 'Opportunity_Closed_Won_NCS_User' , UserInfo.getUserId() );
+    private static Map<Id,User> permittedRETSCUserMap = CustomPermissionController.getPermittedUsersMap( 'Opportunity_Owner_RET_Sales_Consultant' );
+    private static Map<Id,User> permittedInsSalesUserMap = CustomPermissionController.getPermittedUsersMap( 'Opportunity_Owner_Insurance_Sales' );
+    private static Map<Id,User> permittedRecSalesUserMap = CustomPermissionController.getPermittedUsersMap( 'Opportunity_Owner_Recruiting_Sales' );
+    private static Map<Id,User> permittedTechSalesUserMap = CustomPermissionController.getPermittedUsersMap( 'Opportunity_Owner_Technology_Sales' );
+    private static Map<Id,User> permittedBPCUserMap = CustomPermissionController.getPermittedUsersMap( 'Opportunity_Owner_BPC' );
+    private static Map<Id,User> permittedCWOppOwnerUserMap = CustomPermissionController.getPermittedUsersMap( 'Opportunity_Closed_Won_Opp_Owner' );
     public static final String HAS_DISCOVERY = ' has Discovery ';
     public static final String HAS_OPEN_EVENT = ' has Open Event ';
     public static final String HAS_OPEN_WO_PROP = ' has Open WO Proposal Event ';
@@ -340,7 +345,7 @@ public with sharing class NSP_ValidateOpportunityStage {
                 if(opp.StageName.equals(NSP_SalesConstants.CLOSED_WON)){//evaluate criteria to move to closed won stage
                     //first check if primary quote is created and approved on primary products it is applicable on then check user based criteria
                     evaluateQuoteCriteria(opp,quoteMap);
-                    evaluateClosedWonStageCriteriaOld(opp, opportunityOwnerRoleMap);
+                    evaluateClosedWonStageCriteriaOld(opp);
                 }
                 //closed-Lost criteria DF-1769
                 if(opp.StageName.equals(NSP_SalesConstants.CLOSED_LOST)){//evaluate criteria to move to closed lost stage
@@ -540,115 +545,74 @@ public with sharing class NSP_ValidateOpportunityStage {
         }
     }
 
-    /**
-     * Evaluate entry criteria for Closed Won stage
-     * @param opportunityList list of New Opportunity.
-     *
-     * @return void
-     *  *
-     *
-     */
+    //
+    // Evaluate entry criteria for Closed Won stage
+    // @param opportunityList list of New Opportunity
+    // @return void
+    // 
     private static void evaluateClosedWonStageCriteria(Opportunity opp, Map<Id,NSP_Checklist__c> checklistMap, Map<Id,User> opportunityOwnerRoleMap){
-        
-        //  Kill switch added on 6/10/2024
-        if (!OpportunityStageSettings__c.getInstance(UserInfo.getUserId()).Is_Enabled_WO_WS_Stage_Entry__c){
-            evaluateClosedWonStageCriteriaOld(opp, opportunityOwnerRoleMap);
-        }
-        else{
-
-            String scannedSTP = '';
-            String opportunityOwnerRoleName = null;
-            if ( opportunityOwnerRoleMap.containsKey( opp.OwnerId ) ) {
-                User opportunityOwner = opportunityOwnerRoleMap.get( opp.OwnerId );
-                if ( ( opportunityOwner != null ) && ( opportunityOwner.UserRole != null ) ) {
-                    opportunityOwnerRoleName = opportunityOwner.UserRole.Name;
-                }
-            }
-            String currentUserRoleName = null;
-            if ( opportunityOwnerRoleMap.containsKey( UserInfo.getUserId() ) ) {
-                User currentUser = opportunityOwnerRoleMap.get( UserInfo.getUserId() );
-                if ( ( currentUser != null ) && ( currentUser.UserRole != null ) ) {
-                    currentUserRoleName = currentUser.UserRole.Name;
-                }
-            }
-            if ( ( currentUserRoleName != null )
-                && ownerBasedCriteriaRoles.contains( opportunityOwnerRoleName )
-                && ( currentUserRoleName != NSP_SalesConstants.NEW_CLIENT_SALES )
-                && ownerBasedCriteriaProducts.contains( opp.NSP_PrimaryProduct__c )
-                )
-            {
-                opp.addError( System.Label.NSP_CANNOT_MOVE_TO_CLOSEDWON );
-            } else if ( nonOwnerBasedCriteriaProducts.contains( opp.NSP_PrimaryProduct__c )
+        String scannedSTP = '';
+        if ( permittedCWOppOwnerUserMap.containsKey( opp.OwnerId )
+                && ( !hasAllowCWNCSUserPerm )
+                && ownerBasedCriteriaProducts.contains( opp.NSP_PrimaryProduct__c ) ){
+            opp.addError( System.Label.NSP_CANNOT_MOVE_TO_CLOSEDWON );
+        } else if ( nonOwnerBasedCriteriaProducts.contains( opp.NSP_PrimaryProduct__c )
                 && ( UserInfo.getUserId() != opp.OwnerId )
-                && ( currentUserRoleName != NSP_SalesConstants.NEW_CLIENT_SALES )
-                )
-            {
-                opp.addError( System.Label.NSP_CANNOT_MOVE_TO_CLOSEDWON );
-            } else if ( ownerBasedCriteriaProducts.contains( opp.NSP_PrimaryProduct__c )
-                && !ownerBasedCriteriaRoles.contains( opportunityOwnerRoleName )
+                && ( !hasAllowCWNCSUserPerm ) ){
+            opp.addError( System.Label.NSP_CANNOT_MOVE_TO_CLOSEDWON );
+        } else if ( ownerBasedCriteriaProducts.contains( opp.NSP_PrimaryProduct__c )
+                && !permittedCWOppOwnerUserMap.containsKey( opp.OwnerId )
                 && ( UserInfo.getUserId() != opp.OwnerId )
-                && ( currentUserRoleName != NSP_SalesConstants.NEW_CLIENT_SALES )
-                )
-            {
-                opp.addError( System.Label.NSP_CANNOT_MOVE_TO_CLOSEDWON );
-            } else if( ( currentUserRoleName != null )
-                && ( currentUserRoleName != NSP_SalesConstants.NEW_CLIENT_SALES )
+                && ( !hasAllowCWNCSUserPerm ) ){
+            opp.addError( System.Label.NSP_CANNOT_MOVE_TO_CLOSEDWON );
+        } else if( !hasAllowCWNCSUserPerm
                 && ( ( opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WO )
-                    || ( opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WS )
-                    )
-                )
-            {
-                opp.addError( System.Label.NSP_CANNOT_MOVE_TO_CLOSEDWON );
-            }
-            if((opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WO || opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WS)){
-                
-                if(checklistMap.get(opp.Id) != null){
-                    scannedSTP = HAS_COMPLETED_STP;
-                }
-                if(!scannedSTP.contains(HAS_COMPLETED_STP)){
-                    opp.addError(System.Label.STPCompleted_ClosedWon);
-                }
-                if(opp.NSP_Forecast_Status__c != NSP_SalesConstants.FORECAST_STATUS_PENDING && opp.NSP_Forecast_Status__c != NSP_SalesConstants.FORECAST_STATUS_SOLDBOOKED){
-                    opp.addError(System.Label.ForecastStatus_ClosedWon);
-                }
-            }
+                || ( opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WS )
+                ) ){
+            opp.addError( System.Label.NSP_CANNOT_MOVE_TO_CLOSEDWON );
         }
+        evaluateClosedWonStageWOWS(opp, checklistMap, scannedSTP);
     }
-    
-    private static void evaluateClosedWonStageCriteriaOld(Opportunity opp, Map<Id,User> opportunityOwnerRoleMap){
-        String opportunityOwnerRoleName = null;
-        if ( opportunityOwnerRoleMap.containsKey( opp.OwnerId ) ) {
-            User opportunityOwner = opportunityOwnerRoleMap.get( opp.OwnerId );
-            if ( ( opportunityOwner != null ) && ( opportunityOwner.UserRole != null ) ) {
-                opportunityOwnerRoleName = opportunityOwner.UserRole.Name;
-            }
-        }
-        String currentUserRoleName = null;
-        if ( opportunityOwnerRoleMap.containsKey( UserInfo.getUserId() ) ) {
-            User currentUser = opportunityOwnerRoleMap.get( UserInfo.getUserId() );
-            if ( ( currentUser != null ) && ( currentUser.UserRole != null ) ) {
-                currentUserRoleName = currentUser.UserRole.Name;
-            }
-        }
 
-        if(currentUserRoleName !=null &&  ownerBasedCriteriaRoles.contains(opportunityOwnerRoleName)
-        && currentUserRoleName != NSP_SalesConstants.NEW_CLIENT_SALES && ownerBasedCriteriaProducts.contains(opp.NSP_PrimaryProduct__c) ){
+    private static void evaluateClosedWonStageWOWS(Opportunity opp, Map<Id,NSP_Checklist__c> checklistMap, String scannedSTP){
+        if((opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WO || opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WS)){
+            
+            if(checklistMap.get(opp.Id) != null){
+                scannedSTP = HAS_COMPLETED_STP;
+            }
+            if(!scannedSTP.contains(HAS_COMPLETED_STP)){
+                opp.addError(System.Label.STPCompleted_ClosedWon);
+            }
+            if(opp.NSP_Forecast_Status__c != NSP_SalesConstants.FORECAST_STATUS_PENDING && opp.NSP_Forecast_Status__c != NSP_SalesConstants.FORECAST_STATUS_SOLDBOOKED){
+                opp.addError(System.Label.ForecastStatus_ClosedWon);
+            }
+        }
+    }
+
+    private static void evaluateClosedWonStageCriteriaOld(Opportunity opp){
+        if( ownerBasedCriteriaProducts.contains(opp.NSP_PrimaryProduct__c)
+             && !hasAllowCWNCSUserPerm
+             && permittedCWOppOwnerUserMap.containsKey( opp.OwnerId ) ){
             opp.AddError(System.Label.NSP_CANNOT_MOVE_TO_CLOSEDWON);
         }
-        else if(nonOwnerBasedCriteriaProducts.contains(opp.NSP_PrimaryProduct__c) && UserInfo.getUserId()!= opp.OwnerId && currentUserRoleName != NSP_SalesConstants.NEW_CLIENT_SALES){
+        else if( nonOwnerBasedCriteriaProducts.contains(opp.NSP_PrimaryProduct__c)
+             && ( UserInfo.getUserId()!= opp.OwnerId )
+             && !hasAllowCWNCSUserPerm){
             opp.AddError(System.Label.NSP_CANNOT_MOVE_TO_CLOSEDWON);
         }
-        else if(ownerBasedCriteriaProducts.contains(opp.NSP_PrimaryProduct__c) && !ownerBasedCriteriaRoles.contains(opportunityOwnerRoleName)
-        && UserInfo.getUserId()!= opp.OwnerId && currentUserRoleName != NSP_SalesConstants.NEW_CLIENT_SALES){
+        else if( ownerBasedCriteriaProducts.contains(opp.NSP_PrimaryProduct__c)
+             && !hasAllowCWNCSUserPerm
+             && !permittedCWOppOwnerUserMap.containsKey( opp.OwnerId )
+             && ( UserInfo.getUserId() != opp.OwnerId ) ){
             opp.AddError(System.Label.NSP_CANNOT_MOVE_TO_CLOSEDWON);
         }
-        else if(currentUserRoleName !=null && currentUserRoleName != NSP_SalesConstants.NEW_CLIENT_SALES &&
-        (opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WO || opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WS)){
+        else if( !hasAllowCWNCSUserPerm
+             && ( ( opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WO )
+               || ( opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WS ) ) ){
             opp.AddError(System.Label.NSP_CANNOT_MOVE_TO_CLOSEDWON);
         }
     }
-    
-    
+
     /***********************************************************************************************
      * MethodName: getUserRole
      * Description : This method is used to get the role of the User
@@ -700,22 +664,11 @@ public with sharing class NSP_ValidateOpportunityStage {
         }
         
         //Added for 579280
-        String opportunityOwnerRoleName = null;
         String opportunitySalesOffMemb = null;
         if ( opportunityOwnerRoleMap.containsKey( opp.OwnerId ) ) {
             User opportunityOwner = opportunityOwnerRoleMap.get( opp.OwnerId );
             if ( opportunityOwner != null ) {
-                if ( opportunityOwner.UserRole != null ) {
-                    opportunityOwnerRoleName = opportunityOwner.UserRole.Name;
-                }
                 opportunitySalesOffMemb = opportunityOwner.NSP_Sales_Office_Membership__c;
-            }
-        }
-        String currentUserRoleName = null;
-        if ( opportunityOwnerRoleMap.containsKey( UserInfo.getUserId() ) ) {
-            User currentUser = opportunityOwnerRoleMap.get( UserInfo.getUserId() );
-            if ( ( currentUser != null ) && ( currentUser.UserRole != null ) ) {
-                currentUserRoleName = currentUser.UserRole.Name;
             }
         }
 
@@ -738,40 +691,54 @@ public with sharing class NSP_ValidateOpportunityStage {
             }
         }
         
-        Integer canCloseLost =0;
-        if(FeatureManagement.checkPermission('Allow_Closed_Lost_Opportunity')){
-            canCloseLost++;
-        }
-        else if(opportunityOwnerRoleName == NSP_SalesConstants.BUSINESS_PERFORMANCE_CONSULTANT && closeLostRolesforBusinessPerformanceConsultant.contains(currentUserRoleName)){
-            canCloseLost++;
-        }else if(opportunityOwnerRoleName == NSP_SalesConstants.RETIREMENT_SALES_CONSULTANT && closeLostRolesforRetirementSalesConsultant.contains(currentUserRoleName)){
-            canCloseLost++;
-        }else if(opportunityOwnerRoleName == NSP_SalesConstants.INSURANCE_SALES && closeLostRolesforInsuranceSales.contains(currentUserRoleName)){
-            canCloseLost++;
-        }else if(opportunityOwnerRoleName == NSP_SalesConstants.RECRUITING_SALES && closeLostRolesforRecruitingSales.contains(currentUserRoleName)){
-            canCloseLost++;
-        }else if(opportunityOwnerRoleName == NSP_SalesConstants.TECHNOLOGY_SALES && closeLostRolesforTechnologySales.contains(currentUserRoleName)){
-            canCloseLost++;
-        }else if(opp.ownerid == UserInfo.getUserId()){
-            canCloseLost++;
-        }else if(teamMemberList.contains(UserInfo.getUserId())){
-            canCloseLost++;
-        }
-        //Added for 578774
-        else if(opp.NSP_Account_Segment__c == NSP_SalesConstants.MIDMARKET_SALES && closeLostRolesforBusinessPerformanceConsultant.contains(currentUserRoleName)){
-            canCloseLost++;
-        }
-        //Added for 579280
-        else if(getSalesOfficeGroup(UserInfo.getUserId(),salesOfficeMembership) != '' && closeLostRolesforsamesalesofficeonOppOwner.contains(currentUserRoleName)){
-            canCloseLost++;
-        }
-        //Added for 579279
-        else if(getSalesOfficeGroup(UserInfo.getUserId(),salesOfficeList) != '' && closeLostRolesforsamesalesofficeonOpp.contains(currentUserRoleName)){
-            canCloseLost++;
-        }
+        Integer canCloseLost = checkAllowClosedLost(opp, teamMemberList, salesOfficeMembership, salesOfficeList);
         if(canCloseLost == 0){
             opp.AddError(System.Label.NSP_CANNOT_MOVE_TO_CLOSEDLOST);
         }
+    }
+    
+    private static Integer checkAllowClosedLost(Opportunity opp, List<ID> teamMemberList, List<String> salesOfficeMembership, List<String> salesOfficeList) {
+        Integer canCloseLost = checkProductAllowClosedLost(opp);
+        if( FeatureManagement.checkPermission('Allow_Closed_Lost_Opportunity') ){
+            canCloseLost++;
+        } else if( opp.ownerid == UserInfo.getUserId() ){
+            canCloseLost++;
+        } else if( teamMemberList.contains(UserInfo.getUserId()) ){
+            canCloseLost++;
+        } else if( ( opp.NSP_Account_Segment__c == NSP_SalesConstants.MIDMARKET_SALES )
+             && hasAllowCLMMPerm ){
+            canCloseLost++;
+        } else if( ( getSalesOfficeGroup(UserInfo.getUserId(),salesOfficeMembership) != '' )
+             && hasCLSOOppOwnerPermission ){
+            canCloseLost++;
+        } else if( ( getSalesOfficeGroup(UserInfo.getUserId(),salesOfficeList) != '' )
+             && hasCLSOOppPermission){
+            canCloseLost++;
+        }
+
+        return canCloseLost;
+    }
+    
+    private static Integer checkProductAllowClosedLost(Opportunity opp) {
+        Integer canCloseLost = 0;
+        if( permittedBPCUserMap.containsKey( opp.OwnerId )
+             && hasAllowCLMMPerm ){
+            canCloseLost++;
+        } else if( permittedRETSCUserMap.containsKey( opp.OwnerId )
+             && hasAllowCLRETPerm ){
+            canCloseLost++;
+        } else if( permittedInsSalesUserMap.containsKey( opp.OwnerId )
+             && hasAllowCLInsurancePerm ){
+            canCloseLost++;
+        } else if( permittedRecSalesUserMap.containsKey( opp.OwnerId )
+             && hasAllowCLRecruitingPerm ){
+            canCloseLost++;
+        } else if( permittedTechSalesUserMap.containsKey( opp.OwnerId )
+             && hasAllowCLTechnologyPerm ){
+            canCloseLost++;
+        }
+
+        return canCloseLost;
     }
     
     /**
