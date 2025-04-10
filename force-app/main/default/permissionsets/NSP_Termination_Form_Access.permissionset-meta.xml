@@ -7,6 +7,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>NSP_Termination_Form__c.BPA__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_Termination_Form__c.BPC__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>NSP_Termination_Form__c.NSP_2700_FEIN_Letter_of_Assignment__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -433,6 +443,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Termination_Form__c.Number_of_required_checkboxes__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_Termination_Form__c.Renewal_Coordinator__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
