@@ -18,6 +18,7 @@
     <permissionSets>NSP_Order_ViewAll</permissionSets>
     <permissionSets>SBQQ__SalesforceCPQUserAccess</permissionSets>
     <permissionSets>SBQQ__SteelBrickCPQUser</permissionSets>
+    <permissionSets>Sales_Account_Indicator</permissionSets>
     <permissionSets>Sales_Service_Object_Permission</permissionSets>
     <permissionSets>bloomfirex__Bloomfire_User</permissionSets>
     <permissionSets>force__NextBestActionRecUnlimitedPSL</permissionSets>
