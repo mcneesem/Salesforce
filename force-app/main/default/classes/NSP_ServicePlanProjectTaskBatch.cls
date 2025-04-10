@@ -189,22 +189,14 @@ public class NSP_ServicePlanProjectTaskBatch implements Database.Batchable<sObje
                 for ( NSP_Account_Team__c accountTeam : accountTeams ) {
                     
                      // Check if the Account Team role is 'Business Team HRSP/CL'
-                     if ( NSP_ServiceConstants.BUS_TEAM_HRSP_CL.equalsIgnoreCase( accountTeam.NSP_Role__c ) ) {
-                        if(accountTeam.NSP_Primary__c)
-                        {
-                            ownerId = accountTeam.NSP_User__c;
-                        }else if( ownerId == null ) {
-                            ownerId = accountTeam.NSP_User__c;
-                        }                       
+                     if ( NSP_ServiceConstants.BUS_TEAM_HRSP_CL.equalsIgnoreCase( accountTeam.NSP_Role__c ) && 
+                     ( accountTeam.NSP_Primary__c || ownerId == null )) {
+                        ownerId = accountTeam.NSP_User__c;
                     } 
                     // Check if the Account Team role is 'Manager HRServices'
-                    else if ( NSP_ServiceConstants.MANAGER_HRSERVICES.equalsIgnoreCase( accountTeam.NSP_Role__c ) ) {
-                        if(ownerId == null && accountTeam.NSP_Primary__c)
-                        {
+                    else if ( NSP_ServiceConstants.MANAGER_HRSERVICES.equalsIgnoreCase( accountTeam.NSP_Role__c ) && 
+                    ( ( accountTeam.NSP_Primary__c &&  ownerId == null ) || ownerId == null ) ) {
                             ownerId = accountTeam.NSP_User__c;
-                        }else if( ownerId == null ) {
-                            ownerId = accountTeam.NSP_User__c;
-                        } 
                     }
                 }
             }
