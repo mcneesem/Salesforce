@@ -46,9 +46,12 @@ public class NSP_SubClientConRelatedRecDeletionBatch implements Schedulable , Da
             // Filter the contact records if there is any associated case contact
             Map<Id,NSP_Sub_Client_Contact__c> filteredSubClientContactMapFromCaseContacts = getFilteredSubClientContacts( subClientContactMap );
 
-            // Filter the contact record based on files, notes
-            Map<Id,NSP_Sub_Client_Contact__c> filteredSubClientContacts = getFilteredSubclientContact( filteredSubClientContactMapFromCaseContacts );
-            List<Database.DeleteResult> subClientDeleteList = Database.delete( filteredSubClientContacts.values() , false );
+            // Filter the contact record based on files
+            Map<Id,NSP_Sub_Client_Contact__c> filteredSubclientContactBasedOnFiles = getFilteredSubclientContactBasedOnFiles( filteredSubClientContactMapFromCaseContacts );
+            // Filter the contact reccord based on Notes
+            Map<Id,NSP_Sub_Client_Contact__c> filteredSubclientContactBasedOnNotes = getFilteredSubClientContactsBasedOnNotes( filteredSubclientContactBasedOnFiles );
+
+            List<Database.DeleteResult> subClientDeleteList = Database.delete( filteredSubclientContactBasedOnNotes.values() , false );
             NSP_ErrorLogHandler.logResults(
                 NSP_SubClientConRelatedRecDeletionBatch.class.getName() ,
                 'execute:delete:NSP_Sub_Client_Contact__c' ,
@@ -56,7 +59,7 @@ public class NSP_SubClientConRelatedRecDeletionBatch implements Schedulable , Da
             );
             
             // Get Sub client contact address records based on contact Ids and add them to delete list
-            List<NSP_Address__c> addressToDelete = getSubClientContactAddress( filteredSubClientContacts.keySet() );
+            List<NSP_Address__c> addressToDelete = getSubClientContactAddress( filteredSubclientContactBasedOnNotes.keySet() );
             List<Database.DeleteResult> addressRecordsToDelete = Database.delete( addressToDelete , false );
             NSP_ErrorLogHandler.logResults(
                 NSP_SubClientConRelatedRecDeletionBatch.class.getName() ,
@@ -66,7 +69,7 @@ public class NSP_SubClientConRelatedRecDeletionBatch implements Schedulable , Da
             
             // Get Contact records for deletion
             List<Contact> deleteContactList = new List<Contact>();
-            for ( Id contactId : filteredSubClientContactMapFromCaseContacts.keySet() ) {
+            for ( Id contactId : filteredSubclientContactBasedOnNotes.keySet() ) {
                 deleteContactList.add( new Contact( Id = contactId ) );
             }
             List<Database.DeleteResult> contactDeleteList = Database.delete( deleteContactList , false );
@@ -77,7 +80,7 @@ public class NSP_SubClientConRelatedRecDeletionBatch implements Schedulable , Da
             );
 
             // Get Account contact relationship records based on contact ID and add them to delete list
-            List<AccountContactRelation> deleteACRList = getAcccountContactRelationshipRecords( filteredSubClientContacts.keySet() );
+            List<AccountContactRelation> deleteACRList = getAcccountContactRelationshipRecords( filteredSubclientContactBasedOnNotes.keySet() );
             List<Database.DeleteResult> acrRcordsToDelete = Database.delete( deleteACRList , false );
             NSP_ErrorLogHandler.logResults(
                 NSP_SubClientConRelatedRecDeletionBatch.class.getName() ,
@@ -127,8 +130,8 @@ public class NSP_SubClientConRelatedRecDeletionBatch implements Schedulable , Da
         return acrList;
     }
 
-    // Filter the contact record based on files, notes
-    private static Map<Id,NSP_Sub_Client_Contact__c> getFilteredSubclientContact( Map<Id,NSP_Sub_Client_Contact__c> filteredSubClientContactMapFromCaseContacts ) {
+    // Filter the contact record based on files
+    private static Map<Id,NSP_Sub_Client_Contact__c> getFilteredSubclientContactBasedOnFiles( Map<Id, NSP_Sub_Client_Contact__c> filteredSubClientContactMapFromCaseContacts ) {
         List<ContentDocumentLink> contentDocumentLinks = [
             SELECT Id , ContentDocumentId , LinkedEntityId
             FROM ContentDocumentLink
@@ -145,6 +148,34 @@ public class NSP_SubClientConRelatedRecDeletionBatch implements Schedulable , Da
                 }
             }
         }
+        return filteredSubClientContactMapFromCaseContacts;
+    }
+
+    //== Method to filter the note related contacts
+    private static  Map<Id,NSP_Sub_Client_Contact__c> getFilteredSubClientContactsBasedOnNotes( Map<Id,NSP_Sub_Client_Contact__c> filteredSubClientContactMapFromCaseContacts)
+    {
+        List<Note> notes = [ 
+            SELECT Id, Title, Body 
+            FROM Note 
+            WHERE
+            ( 
+                ParentId = :filteredSubClientContactMapFromCaseContacts.keySet()
+                 )
+        ];
+
+        if(!notes?.isEmpty())
+        {
+            for(Note note : notes)
+            {
+                if ( filteredSubClientContactMapFromCaseContacts.containsKey( note.ParentId)
+                    && note.ParentId != null
+                    )
+                {
+                    filteredSubClientContactMapFromCaseContacts.remove( note.ParentId );
+                }
+            }
+        }
+
         return filteredSubClientContactMapFromCaseContacts;
     }
 
