@@ -5,7 +5,7 @@ public class NSP_SubClientConRelatedRecDeletionBatch implements Schedulable , Da
     // Schedulable
     //
     
-    public void execute( SchedulableContext SC ) {
+    public void execute( SchedulableContext sc ) {
         Database.executeBatch( new NSP_SubClientConRelatedRecDeletionBatch() , 200 );
     }
     
@@ -13,7 +13,7 @@ public class NSP_SubClientConRelatedRecDeletionBatch implements Schedulable , Da
     // Batchable
     //
     
-    public Database.QueryLocator start( Database.BatchableContext BC ) {
+    public Database.QueryLocator start( Database.BatchableContext bc ) {
         Date pastDay = Date.today() - 121;
         return Database.getqueryLocator(
             [
@@ -33,7 +33,7 @@ public class NSP_SubClientConRelatedRecDeletionBatch implements Schedulable , Da
         
     }
     
-    public void execute( Database.BatchableContext BC , List<NSP_Sub_Client_Contact__c> existingSubClientContacts ) {
+    public void execute( Database.BatchableContext bc , List<NSP_Sub_Client_Contact__c> existingSubClientContacts ) {
         try {
             Map<Id, NSP_Sub_Client_Contact__c> subClientContactMap = new Map<Id, NSP_Sub_Client_Contact__c>();
             
@@ -102,7 +102,7 @@ public class NSP_SubClientConRelatedRecDeletionBatch implements Schedulable , Da
         }
     }
     
-    public void finish( Database.BatchableContext BC ) {
+    public void finish( Database.BatchableContext bc ) {
     }
     
     //
