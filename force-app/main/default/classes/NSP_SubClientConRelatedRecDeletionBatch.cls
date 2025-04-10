@@ -132,50 +132,46 @@ public class NSP_SubClientConRelatedRecDeletionBatch implements Schedulable , Da
 
     // Filter the contact record based on files
     private static Map<Id,NSP_Sub_Client_Contact__c> getFilteredSubclientContactBasedOnFiles( Map<Id, NSP_Sub_Client_Contact__c> filteredSubClientContactMapFromCaseContacts ) {
+        Set<Id> filteredSubClientContactIds = filteredSubClientContactMapFromCaseContacts.keySet();
+
+        // Fetch ContentDocumentLinks related to the filteredSubClientContactIds
         List<ContentDocumentLink> contentDocumentLinks = [
-            SELECT Id , ContentDocumentId , LinkedEntityId
+            SELECT ContentNoteId, LinkedEntityId
             FROM ContentDocumentLink
-            WHERE LinkedEntityId IN :filteredSubClientContactMapFromCaseContacts.keySet()
+            WHERE LinkedEntityId IN :filteredSubClientContactIds
         ];
-
-        if ( !contentDocumentLinks?.isEmpty() ) {
-            for ( ContentDocumentLink cdLink : contentDocumentLinks ) {
-                if ( filteredSubClientContactMapFromCaseContacts.containsKey( cdLink.LinkedEntityId )
-                    && cdLink.LinkedEntityId != null
-                    )
-                {
-                    filteredSubClientContactMapFromCaseContacts.remove( cdLink.LinkedEntityId );
-                }
+    
+        // Collect ContentNote Ids from the ContentDocumentLinks
+        Set<Id> contentNoteIds = new Set<Id>();
+        for (ContentDocumentLink documentLink : contentDocumentLinks) {
+            contentNoteIds.add(documentLink.ContentNoteId);
+        }
+    
+        // Fetch ContentNotes
+        List<ContentNote> contentNotes = [
+            SELECT Id, Title, Content, CreatedDate
+            FROM ContentNote
+            WHERE Id IN :contentNoteIds
+        ];
+    
+        // Create a map of ContentNote Ids and their corresponding ContentNote records
+        Map<Id, ContentNote> contentNoteMap = new Map<Id, ContentNote>();
+        for (ContentNote note : contentNotes) {
+            contentNoteMap.put(note.Id, note);
+        }
+    
+        // Iterate through the ContentDocumentLinks and filter the contacts having notes
+        for (ContentDocumentLink documentLink : contentDocumentLinks) {
+            Id parentId = documentLink.LinkedEntityId;
+            if ( filteredSubClientContactMapFromCaseContacts.containsKey(parentId) || ( 
+                filteredSubClientContactMapFromCaseContacts.containsKey(parentId) && 
+                contentNoteMap.containsKey(documentLink.ContentNoteId) 
+                )  
+                ){
+                filteredSubClientContactMapFromCaseContacts.remove(parentId);
             }
         }
-        return filteredSubClientContactMapFromCaseContacts;
-    }
-
-    //== Method to filter the note related contacts
-    private static  Map<Id,NSP_Sub_Client_Contact__c> getFilteredSubClientContactsBasedOnNotes( Map<Id,NSP_Sub_Client_Contact__c> filteredSubClientContactMapFromCaseContacts)
-    {
-        List<Note> notes = [ 
-            SELECT Id, Title, Body 
-            FROM Note 
-            WHERE
-            ( 
-                ParentId = :filteredSubClientContactMapFromCaseContacts.keySet()
-                 )
-        ];
-
-        if(!notes?.isEmpty())
-        {
-            for(Note note : notes)
-            {
-                if ( filteredSubClientContactMapFromCaseContacts.containsKey( note.ParentId)
-                    && note.ParentId != null
-                    )
-                {
-                    filteredSubClientContactMapFromCaseContacts.remove( note.ParentId );
-                }
-            }
-        }
-
+    
         return filteredSubClientContactMapFromCaseContacts;
     }
 
