@@ -9401,10 +9401,16 @@
                 <componentName>salesVisualIndicator</componentName>
                 <identifier>c_salesVisualIndicator</identifier>
                 <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.NSP_Current_Provider__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Workday</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!$Permission.CustomPermission.Sales_Account_Indicator}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
