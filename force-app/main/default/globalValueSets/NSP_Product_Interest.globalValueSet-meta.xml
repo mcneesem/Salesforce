@@ -9,7 +9,7 @@
         <fullName>Contingent Workforce</fullName>
         <default>false</default>
         <label>Contingent Workforce</label>
-    </customValue>    
+    </customValue>
     <customValue>
         <fullName>Employment Screening</fullName>
         <default>false</default>
@@ -24,6 +24,11 @@
         <fullName>Full Service HR (Workforce Optimization)</fullName>
         <default>false</default>
         <label>Full Service HR (Workforce Optimization)</label>
+    </customValue>
+    <customValue>
+        <fullName>HCM</fullName>
+        <default>false</default>
+        <label>HCM</label>
     </customValue>
     <customValue>
         <fullName>HR Consulting Services</fullName>
@@ -81,9 +86,22 @@
         <label>Time and Attendance</label>
     </customValue>
     <customValue>
+        <fullName>Insurance Services</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Insurance Services</label>
+    </customValue>
+    <customValue>
         <fullName>Workday</fullName>
         <default>false</default>
+        <isActive>false</isActive>
         <label>Workday</label>
+    </customValue>
+    <customValue>
+        <fullName>Payroll/Human Capital Management</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Payroll/Human Capital Management</label>
     </customValue>
     <customValue>
         <fullName>Bookkeeping Services</fullName>
@@ -102,18 +120,6 @@
         <default>false</default>
         <isActive>false</isActive>
         <label>Full Service HR</label>
-    </customValue>
-    <customValue>
-        <fullName>Insurance Services</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Insurance Services</label>
-    </customValue>
-    <customValue>
-        <fullName>Payroll/Human Capital Management</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Payroll/Human Capital Management</label>
     </customValue>
     <masterLabel>Product Interest</masterLabel>
     <sorted>false</sorted>

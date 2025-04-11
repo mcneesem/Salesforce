@@ -141,7 +141,6 @@ public class NSP_MMImplProfile_UpdateTest {
         ip.NSP_Sr_Onboarding_Benefit_Rep__c = cont.id;
         //Insert Implementation Profile Settings (custom setting)
         Implementation_Profile_Settings__c ipSettings = Implementation_Profile_Settings__c.getInstance( UserInfo.getUserId() );
-        ipSettings.Is_Enabled_Levies__c = true;
         upsert ipSettings;
         Test.startTest();
         //update ip record for the above fields

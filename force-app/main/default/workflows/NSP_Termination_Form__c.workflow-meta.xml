@@ -5,10 +5,19 @@
         <description>Send Email to Owner and Created By</description>
         <protected>false</protected>
         <recipients>
-            <type>creator</type>
+            <type>owner</type>
         </recipients>
         <recipients>
-            <type>owner</type>
+            <field>NSP_Approver__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <recipients>
+            <field>NSP_Payroll_Specialist__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <recipients>
+            <field>NSP_Supervisor__c</field>
+            <type>userLookup</type>
         </recipients>
         <senderType>CurrentUser</senderType>
         <template>Services_Emails/Termination_Form_Approved</template>

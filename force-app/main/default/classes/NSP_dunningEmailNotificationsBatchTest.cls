@@ -15,6 +15,12 @@ public class NSP_dunningEmailNotificationsBatchTest {
     // test setup method
    @testSetup
     static void setupTestData(){
+        
+        Order_Settings__c sett = new Order_Settings__c();
+        sett.Bypass_Rule_PreventStatusChange__c = true;
+        sett.EffectiveDateStartOfMonth__c = true;
+        insert sett;
+        
        NSP_TestHelper.switchOffTriggers();
         Account objaccount = NSP_TestHelper.createAccount(true);
         //Contact objcontact = NSP_TestHelper.createContact(objaccount.id, true);

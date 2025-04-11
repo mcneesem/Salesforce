@@ -7,6 +7,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Opportunity.NSP_DM_User__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Opportunity.NSP_RM__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Opportunity.Product_Purchased__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -16,4 +26,8 @@
         <recordType>Opportunity.Outgoing</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
+    <tabSettings>
+        <tab>standard-SemanticModel</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
 </PermissionSet>

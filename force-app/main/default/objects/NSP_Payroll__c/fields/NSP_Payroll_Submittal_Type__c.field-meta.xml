@@ -72,6 +72,11 @@
                 <label>Other</label>
             </value>
             <value>
+                <fullName>WD Time Tracking</fullName>
+                <default>false</default>
+                <label>WD Time Tracking</label>
+            </value>
+            <value>
                 <fullName>Web Payroll</fullName>
                 <default>false</default>
                 <isActive>false</isActive>

@@ -715,6 +715,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Not Approved</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Not Interested</fullName>
             <default>false</default>
         </values>
@@ -975,6 +979,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Institute for Nonprofit News %28INN%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>LG Electronics</fullName>
             <default>false</default>
         </values>
@@ -988,6 +996,10 @@
         </values>
         <values>
             <fullName>MidMarket</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Next Generation Manufacturing</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1456,7 +1468,7 @@
     <picklistValues>
         <picklist>NSP_Product_Interest__c</picklist>
         <values>
-            <fullName>Workday</fullName>
+            <fullName>HCM</fullName>
             <default>true</default>
         </values>
     </picklistValues>

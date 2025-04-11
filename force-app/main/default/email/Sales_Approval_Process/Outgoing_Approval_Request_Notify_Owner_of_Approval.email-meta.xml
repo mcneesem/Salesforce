@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Outgoing Approval Request - Notify Owner of Approval</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>Outgoing Approval Request - Notify Owner of Approval</name>
+    <style>none</style>
+    <subject>Approval Granted: {!Opportunity.Name}</subject>
+    <type>text</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

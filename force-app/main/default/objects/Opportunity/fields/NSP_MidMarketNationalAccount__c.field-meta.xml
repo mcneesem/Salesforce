@@ -122,6 +122,11 @@
                 <label>Independent Tire Dealers</label>
             </value>
             <value>
+                <fullName>Institute for Nonprofit News (INN)</fullName>
+                <default>false</default>
+                <label>Institute for Nonprofit News (INN)</label>
+            </value>
+            <value>
                 <fullName>LG Electronics</fullName>
                 <default>false</default>
                 <label>LG Electronics</label>

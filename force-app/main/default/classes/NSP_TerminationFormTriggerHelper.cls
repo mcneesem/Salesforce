@@ -7,6 +7,18 @@ public with sharing class NSP_TerminationFormTriggerHelper {
     public static final String NSP_Credit_Specialist_Form = 'NSP_Credit_Specialist_Form';
     public static final String NSP_Client_Reinstatement = 'NSP_Client_Reinstatement';
     public static final String Termination_Form_Approved = 'Termination_Form_Approved';
+    private static final Id payrollRecordTypeId = NSP_GenericRecordType.getRecordTypeId(
+            'NSP_Termination_Form__c' ,
+            'NSP_Payroll_Specialist_Form'
+        );
+    private static final Id creditRecordTypeId = NSP_GenericRecordType.getRecordTypeId(
+            'NSP_Termination_Form__c' ,
+            'NSP_Credit_Specialist_Form'
+        );
+    private static final Id reinstateRecordTypeId = NSP_GenericRecordType.getRecordTypeId(
+            'NSP_Termination_Form__c' ,
+            'NSP_Client_Reinstatement'
+        );
 
     // Description : This method will run before inserting Termination Form
     // Date        : 13/10/2021
@@ -390,19 +402,6 @@ public with sharing class NSP_TerminationFormTriggerHelper {
         Set<Id> processedTerm = new Set<Id>();
         Set<Id> termFormSet = new Set<Id>();
         Set<ID> terminationFormBellNotificationSet = new Set<ID>();
-        Id payrollRecordTypeId = NSP_GenericRecordType.getRecordTypeId(
-            'NSP_Termination_Form__c' ,
-            'NSP_Payroll_Specialist_Form'
-        );
-        Id creditRecordTypeId = NSP_GenericRecordType.getRecordTypeId(
-            'NSP_Termination_Form__c' ,
-            'NSP_Credit_Specialist_Form'
-        );
-        Id reinstateRecordTypeId = NSP_GenericRecordType.getRecordTypeId(
-            'NSP_Termination_Form__c' ,
-            'NSP_Client_Reinstatement'
-        );
-
         Set<Id> setOfProjectTaskId = new Set<Id>();
         for ( NSP_Termination_Form__c terminationForm : terminationFormList ) {
             if ( terminationForm.NSP_Project_Task__c != null
@@ -510,100 +509,31 @@ public with sharing class NSP_TerminationFormTriggerHelper {
     // Method to Send Bell Notifications when termination form is rejected/approved
     @future
     public static void sendBellNotificationToSpecialist( Set<Id> terminationFormSet ) {
-        Id payrollRecordTypeId = NSP_GenericRecordType.getRecordTypeId(
-            'NSP_Termination_Form__c' ,
-            'NSP_Payroll_Specialist_Form'
-        );
-        Id creditRecordTypeId = NSP_GenericRecordType.getRecordTypeId(
-            'NSP_Termination_Form__c' ,
-            'NSP_Credit_Specialist_Form'
-        );
-        Id reinstateRecordTypeId = NSP_GenericRecordType.getRecordTypeId(
-            'NSP_Termination_Form__c' ,
-            'NSP_Client_Reinstatement'
-        );
-        List<NSP_Termination_Form__c> terminationFormBellNotificationList = [
-            SELECT
+        List<NSP_Termination_Form__c> terminationFormBellNotificationList = null;
+        if(terminationFormSet != null && !terminationFormSet.isEmpty()) {
+            terminationFormBellNotificationList = [
+                SELECT
                 Id , Name , RecordTypeId , NSP_Status__c ,
                 CreatedById , CreatedBy.IsActive ,
                 OwnerId , Owner.IsActive ,
                 Credit_Specialist__c , Credit_Specialist__r.pse__Salesforce_User__c , Credit_Specialist__r.pse__Salesforce_User__r.IsActive ,
                 NSP_Supervisor__c , NSP_Supervisor__r.IsActive ,
-                NSP_Payroll_Specialist__c , NSP_Payroll_Specialist__r.IsActive
-            FROM NSP_Termination_Form__c
-            WHERE ( Id IN :terminationFormSet )
-        ];
+                NSP_Payroll_Specialist__c , NSP_Payroll_Specialist__r.IsActive , NSP_Approver__c, NSP_Approver__r.IsActive
+                FROM NSP_Termination_Form__c
+                WHERE ( Id IN :terminationFormSet )
+            ];
+        }
         Map<NSP_Termination_Form__c,Set<String>> termFormToSpecialistIdsMap = new Map<NSP_Termination_Form__c,Set<String>>();
         for ( NSP_Termination_Form__c term : terminationFormBellNotificationList ) {
-            Set<String> specialistIds = new Set<String>();
-            if ( ( term.RecordTypeId == payrollRecordTypeId )
-                && ( term.NSP_Status__c == SUPERVISOR_DENIED )
-                && ( term.NSP_Payroll_Specialist__c != null )
-                && term.NSP_Payroll_Specialist__r.IsActive
-                )
-            {
-                specialistIds.add( term.NSP_Payroll_Specialist__c );
-            } else if (
-                ( ( term.RecordTypeId == payrollRecordTypeId ) || ( term.RecordTypeId == reinstateRecordTypeId ) )
-                && ( term.NSP_Status__c == TERM_TEAM_DENIED )
-                )
-            {
-                if ( ( term.NSP_Payroll_Specialist__c != null )
-                    && term.NSP_Payroll_Specialist__r.IsActive
-                    )
-                {
-                    specialistIds.add( term.NSP_Payroll_Specialist__c );
-                }
-                if ( ( term.OwnerId != null )
-                    && term.Owner.IsActive
-                    )
-                {
-                    specialistIds.add( term.OwnerId );
-                }
-            } else if (
-                ( term.RecordTypeId == creditRecordTypeId )
-                && ( term.NSP_Status__c == TERM_TEAM_DENIED )
-                && ( term.Credit_Specialist__c != null )
-                && ( term.Credit_Specialist__r.pse__Salesforce_User__c != null )
-                && term.Credit_Specialist__r.pse__Salesforce_User__r.IsActive
-                )
-            {
-                specialistIds.add( term.Credit_Specialist__r.pse__Salesforce_User__c );
-            } else if ( ( term.RecordTypeId == reinstateRecordTypeId )
-                && ( term.NSP_Status__c == TERM_TEAM_DENIED )
-                && ( term.OwnerId != null )
-                && term.Owner.IsActive
-                )
-            {
-                specialistIds.add( term.OwnerId );
-            } else if ( ( ( term.RecordTypeId == creditRecordTypeId ) || ( term.RecordTypeId == reinstateRecordTypeId ) )
-                && ( term.NSP_Status__c == TERM_TEAM_APPROVED )
-                && ( term.OwnerId != null )
-                && term.Owner.IsActive
-                )
-            {
-                specialistIds.add(term.OwnerId);
-                if ( ( term.CreatedById != null ) && term.CreatedBy.IsActive ) {
-                    specialistIds.add( term.CreatedById );
-                }
-            } else if ( ( term.RecordTypeId == payrollRecordTypeId )
-                && ( term.NSP_Status__c == TERM_TEAM_APPROVED )
-                && ( term.NSP_Supervisor__c != null )
-                && term.NSP_Supervisor__r.IsActive
-                )
-            {
-                specialistIds.add( term.NSP_Supervisor__c );
-                if ( ( term.OwnerId != null ) && term.Owner.IsActive ) {
-                    specialistIds.add( term.OwnerId );
-                }
-                if ( ( term.CreatedById != null ) && term.CreatedBy.IsActive ) {
-                    specialistIds.add( term.CreatedById );
-                }
-            }
-            if ( !specialistIds.isEmpty() ) {
-                termFormToSpecialistIdsMap.put( term , specialistIds );
-            }
+            
+            termFormToSpecialistIdsMap = getTermFormToSpecialistIdsMap(term);
+            
         }
+        if ( !termFormToSpecialistIdsMap.isEmpty() ) {
+            sendCustomBellNotification(termFormToSpecialistIdsMap);
+        }
+    }
+    private static void sendCustomBellNotification (Map<NSP_Termination_Form__c,Set<String>> termFormToSpecialistIdsMap){
         if ( !termFormToSpecialistIdsMap.keySet().isEmpty() ) {
             List<CustomNotificationType> bellNotificationTermForms = [
                 SELECT Id , DeveloperName
@@ -630,6 +560,78 @@ public with sharing class NSP_TerminationFormTriggerHelper {
                     notification.send( termFormToSpecialistIdsMap.get( termForm ) );
                 }
             }
+        }
+    } 
+    private static Map<NSP_Termination_Form__c, Set<String>> getTermFormToSpecialistIdsMap(NSP_Termination_Form__c term) {
+        Map<NSP_Termination_Form__c, Set<String>> termFormToSpecialistIdsMap = new Map<NSP_Termination_Form__c, Set<String>>();
+        Set<String> specialistIds = new Set<String>();
+        
+        if (term == null) {
+            return termFormToSpecialistIdsMap;
+        }
+        
+        Boolean isPayroll = term.RecordTypeId == payrollRecordTypeId;
+        Boolean isCredit = term.RecordTypeId == creditRecordTypeId;
+        Boolean isReinstate = term.RecordTypeId == reinstateRecordTypeId;
+        Boolean isTermDenied = term.NSP_Status__c == TERM_TEAM_DENIED;
+        Boolean isTermApproved = term.NSP_Status__c == TERM_TEAM_APPROVED;
+        Boolean isSupervisorDenied = term.NSP_Status__c == SUPERVISOR_DENIED;
+        
+        if (isPayroll) {
+            handlePayrollCases(specialistIds, term, isTermApproved, isTermDenied, isSupervisorDenied);
+        } else if (isCredit) {
+            handleCreditCases(specialistIds, term, isTermApproved, isTermDenied);
+        } else if (isReinstate) {
+            handleReinstateCases(specialistIds, term, isTermApproved, isTermDenied);
+        }
+        
+        if (!specialistIds.isEmpty()) {
+            termFormToSpecialistIdsMap.put(term, specialistIds);
+        }
+        return termFormToSpecialistIdsMap;
+    }
+    
+    private static void handlePayrollCases(Set<String> specialistIds, NSP_Termination_Form__c term, Boolean isTermApproved, Boolean isTermDenied, Boolean isSupervisorDenied) {
+        if (isSupervisorDenied) {
+            addIfActive(specialistIds, term.NSP_Payroll_Specialist__r, term.NSP_Payroll_Specialist__c);
+        } else if (isTermDenied) {
+            addIfActive(specialistIds, term.NSP_Payroll_Specialist__r, term.NSP_Payroll_Specialist__c);
+            addIfOwnerActive(specialistIds, term.OwnerId);
+        } else if (isTermApproved) {
+            addIfActive(specialistIds, term.NSP_Supervisor__r, term.NSP_Supervisor__c);
+            addIfOwnerActive(specialistIds, term.OwnerId);
+            addIfActive(specialistIds, term.NSP_Payroll_Specialist__r, term.NSP_Payroll_Specialist__c);
+            addIfACtive(specialistIds, term.NSP_Approver__r, term.NSP_Approver__c);
+        }
+    }
+    
+    private static void handleCreditCases(Set<String> specialistIds, NSP_Termination_Form__c term, Boolean isTermApproved, Boolean isTermDenied) {
+        if (isTermDenied) {
+            addIfActive(specialistIds, term.Credit_Specialist__r != null ? term.Credit_Specialist__r.pse__Salesforce_User__r : null, term.Credit_Specialist__r != null ? term.Credit_Specialist__r.pse__Salesforce_User__c : null);
+        } else if (isTermApproved) {
+            addIfOwnerActive(specialistIds, term.OwnerId);
+            addIfActive(specialistIds, term.CreatedBy, term.CreatedById);
+        }
+    }
+    
+    private static void handleReinstateCases(Set<String> specialistIds, NSP_Termination_Form__c term, Boolean isTermApproved, Boolean isTermDenied) {
+        if (isTermDenied) {
+            addIfOwnerActive(specialistIds, term.OwnerId);
+        } else if (isTermApproved) {
+            addIfOwnerActive(specialistIds, term.OwnerId);
+            addIfActive(specialistIds, term.CreatedBy, term.CreatedById);
+        }
+    }
+    
+    private static void addIfActive(Set<String> specialistIds, User user, String userId) {
+        if (user != null && userId != null && user.IsActive) {
+            specialistIds.add(userId);
+        }
+    }
+    
+    private static void addIfOwnerActive(Set<String> specialistIds, String ownerId) {
+        if (ownerId != null) {
+            specialistIds.add(ownerId);
         }
     }
 

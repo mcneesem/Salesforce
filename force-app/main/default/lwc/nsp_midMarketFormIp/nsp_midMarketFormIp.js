@@ -83,6 +83,9 @@ export default class NSP_MidMarketFormIp extends NavigationMixin(
     this.disableFieldsIfIpInActive();
     window.addEventListener('resize', this.handleReSizeIpForm);
 
+    window.addEventListener('keydown', this.handleKeydown.bind(this));
+    window.addEventListener("popstate", () => {this.saveForm()});
+
     // Fetch Related objects records
     if (this.recordId) {
         this.fetchIpRelatedRecords();
@@ -92,11 +95,20 @@ export default class NSP_MidMarketFormIp extends NavigationMixin(
 
   disconnectedCallback() {
     window.removeEventListener('resize', this.handleReSizeIpForm);
+    window.removeEventListener('keydown', this.handleKeydown.bind(this));
+    window.removeEventListener("popstate", () => {this.saveForm()});
   }
 
   handleReSizeIpForm = debounce(() => {
     this.calculateAvailableHeight();
   }, SCROLL_DELAY_MS);
+
+  handleKeydown(event){
+    if(event.ctrlKey && event.key === 's'){
+      event.preventDefault();
+      this.saveForm();
+    }
+  }
 
   updateRelatedRecords(objectApiName, records) {
     this.relatedRecords[objectApiName] = records.map(({ id }) => id);

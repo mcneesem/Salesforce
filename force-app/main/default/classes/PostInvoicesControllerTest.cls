@@ -3,6 +3,12 @@ public class PostInvoicesControllerTest {
     
     @TestSetup
     public static void CreateTestData(){
+        
+        Order_Settings__c sett = new Order_Settings__c();
+        sett.Bypass_Rule_PreventStatusChange__c = true;
+        sett.EffectiveDateStartOfMonth__c = true;
+        insert sett;
+        
         NSP_ContactTriggerHandler.TriggerDisabled = true;
         blng__BillingRule__c objBillingRule = NSP_TestHelper.createBillingRule(); 
         blng__RevenueRecognitionRule__c objRevRecRule =  NSP_TestHelper.createRevrecRule('1');

@@ -162,6 +162,7 @@
     <pluralLabel>Client Goals</pluralLabel>
     <searchLayouts>
         <searchResultsAdditionalFields>NSP_Goal_Type__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>NSP_Status__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Client_Goal_Details__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>NSP_Goal_Date__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>NSP_Contact__c</searchResultsAdditionalFields>

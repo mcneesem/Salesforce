@@ -693,5 +693,53 @@ public static Boolean isMemberOfPrivateSection125Visibility(){
         }
         return userInQueue;
     }
+    
+    @AuraEnabled(cacheable=true)
+    public static List<Contact> getRelatedContacts(String accountId) {
+        List<Contact> contacts = new List<Contact>();
+        try {
+            if (!String.isBlank(accountId)) {
+                List<AccountContactRelation> acrs = [
+                    SELECT ContactId
+                    FROM AccountContactRelation
+                    WHERE ( AccountId = :accountId )
+                    WITH SECURITY_ENFORCED
+                ];
+                if (!acrs.isEmpty()) {
+                    Set<Id> contactIds = new Set<Id>();
+                    for (AccountContactRelation acr : acrs) {
+                        contactIds.add(acr.ContactId);
+                    }
+                    contacts = [
+                        SELECT Id , Name
+                        FROM Contact
+                        WHERE ( Id IN :contactIds )
+                        ORDER BY Name ASC
+                    ];
+                }
+            }
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
+        }
+        return contacts;
+    }
+
+    @AuraEnabled(cacheable=true)
+    public static List<AccountContactRelation> getRelatedAccounts(String contactId) {
+        List<AccountContactRelation> acrs = new List<AccountContactRelation>();
+        try {
+            if (!String.isBlank(contactId)) {
+                acrs = [
+                    SELECT AccountId , Account.Name , NSP_Is_Primary__c
+                    FROM AccountContactRelation
+                    WHERE ( ContactId = :contactId )
+                    ORDER BY NSP_Is_Primary__c DESC , Account.Name ASC
+                ];
+            }
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
+        }
+        return acrs;
+    }
 
 }
