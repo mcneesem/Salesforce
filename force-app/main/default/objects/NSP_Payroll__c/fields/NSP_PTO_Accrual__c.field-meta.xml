@@ -36,6 +36,11 @@
                 <default>false</default>
                 <label>N/A</label>
             </value>
+            <value>
+                <fullName>Workday Absence</fullName>
+                <default>false</default>
+                <label>Workday Absence</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

@@ -3,7 +3,6 @@
     <description>Mid Market Sales Leader</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Mid Market Sales Leader</label>
-    <permissionSets>Account_Allow_Assign_Available</permissionSets>
     <permissionSets>Allow_Update_MidMarket_Role</permissionSets>
     <permissionSets>MidMarket_Fields_Read_Access</permissionSets>
     <permissionSets>MidMarket_National_Account_edit_permissions</permissionSets>

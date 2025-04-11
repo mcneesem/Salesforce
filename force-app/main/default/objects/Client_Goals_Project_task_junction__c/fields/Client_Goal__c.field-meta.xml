@@ -5,10 +5,21 @@
     <label>Client Goal</label>
     <lookupFilter>
         <active>true</active>
+        <booleanFilter>1 AND (2 OR 3)</booleanFilter>
         <filterItems>
             <field>$Source.Account__c</field>
             <operation>equals</operation>
             <valueField>NSP_ClientGoal__c.NSP_Account__c</valueField>
+        </filterItems>
+        <filterItems>
+            <field>NSP_ClientGoal__c.NSP_Status__c</field>
+            <operation>equals</operation>
+            <value>Active</value>
+        </filterItems>
+        <filterItems>
+            <field>NSP_ClientGoal__c.NSP_Status__c</field>
+            <operation>equals</operation>
+            <value>On Hold</value>
         </filterItems>
         <isOptional>false</isOptional>
     </lookupFilter>

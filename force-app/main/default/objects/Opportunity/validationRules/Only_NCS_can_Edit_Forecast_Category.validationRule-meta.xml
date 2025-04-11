@@ -9,7 +9,7 @@
   ) ,
   OR(
     AND(
-      NOT( $UserRole.Name = &apos;New Client Sales&apos; ) ,
+      NOT( $Permission.Opportunity_Closed_Won_NCS_User ) ,
       OR(
         ISPICKVAL( NSP_Forecast_Status__c , &apos;Pending-Docs Submitted to NCS&apos; ) ,
         ISPICKVAL( NSP_Forecast_Status__c , &apos;Sold-Booked&apos; )
@@ -18,9 +18,8 @@
     AND(
       NOT(
         OR(
-          $UserRole.Name = &apos;HCM Sales Consultant&apos; ,
-          $Profile.Name = &apos;Sales Manager&apos; ,
-          $UserRole.Name = &apos;New Client Sales&apos;
+          $Permission.Opportunity_Forecast_Category_Edit_Allowed ,
+          $Profile.Name = &apos;Sales Manager&apos;
         )
       ) ,
       ISPICKVAL( NSP_Forecast_Status__c , &apos;Verbal-Appt Set to Pickup Docs&apos; )

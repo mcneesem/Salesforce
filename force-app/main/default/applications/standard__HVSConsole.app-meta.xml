@@ -3,11 +3,100 @@
     <formFactors>Large</formFactors>
     <isNavAutoTempTabsDisabled>false</isNavAutoTempTabsDisabled>
     <isNavPersonalizationDisabled>false</isNavPersonalizationDisabled>
-    <label>High Velocity Sales</label>
+    <isNavTabPersistenceDisabled>false</isNavTabPersistenceDisabled>
+    <label>Sales Engagement</label>
     <navType>Console</navType>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Opportunity_Outgoing_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Opportunity</pageOrSobjectType>
+        <recordType>Opportunity.Outgoing</recordType>
+        <type>Flexipage</type>
+        <profile>Marketing</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Opportunity_Outgoing_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Opportunity</pageOrSobjectType>
+        <recordType>Opportunity.Outgoing</recordType>
+        <type>Flexipage</type>
+        <profile>Marketing Channel</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Opportunity_Outgoing_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Opportunity</pageOrSobjectType>
+        <recordType>Opportunity.Outgoing</recordType>
+        <type>Flexipage</type>
+        <profile>Marketing Leads</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Opportunity_Outgoing_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Opportunity</pageOrSobjectType>
+        <recordType>Opportunity.Outgoing</recordType>
+        <type>Flexipage</type>
+        <profile>Sales Administrator</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Opportunity_Outgoing_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Opportunity</pageOrSobjectType>
+        <recordType>Opportunity.Outgoing</recordType>
+        <type>Flexipage</type>
+        <profile>Sales Manager</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Opportunity_Outgoing_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Opportunity</pageOrSobjectType>
+        <recordType>Opportunity.Outgoing</recordType>
+        <type>Flexipage</type>
+        <profile>Sales Member</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Opportunity_Outgoing_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Opportunity</pageOrSobjectType>
+        <recordType>Opportunity.Outgoing</recordType>
+        <type>Flexipage</type>
+        <profile>Sales Operations</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Opportunity_Outgoing_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Opportunity</pageOrSobjectType>
+        <recordType>Opportunity.Outgoing</recordType>
+        <type>Flexipage</type>
+        <profile>Sales Support</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Opportunity_Outgoing_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Opportunity</pageOrSobjectType>
+        <recordType>Opportunity.Outgoing</recordType>
+        <type>Flexipage</type>
+        <profile>System Admin Lite</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Opportunity_Outgoing_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Opportunity</pageOrSobjectType>
+        <recordType>Opportunity.Outgoing</recordType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
     <tabs>standard-home</tabs>
-    <tabs>standard-WorkQueue</tabs>
-    <tabs>standard-ActionCadence</tabs>
     <tabs>standard-Lead</tabs>
     <tabs>standard-Contact</tabs>
     <tabs>standard-Opportunity</tabs>
@@ -16,24 +105,24 @@
     <tabs>standard-Event</tabs>
     <tabs>standard-ContentNote</tabs>
     <tabs>standard-EmailTemplate</tabs>
-    <tabs>standard-CallTemplate</tabs>
     <tabs>standard-report</tabs>
     <tabs>standard-Dashboard</tabs>
     <tabs>standard-Feed</tabs>
     <tabs>standard-CollaborationGroup</tabs>
     <tabs>standard-File</tabs>
-    <tabs>standard-HvsWaveLightning</tabs>
+    <tabs>cwbtool__ErrorLog__c</tabs>
+    <tabs>NSP_Error_Log__c</tabs>
     <uiType>Lightning</uiType>
     <utilityBar>HVSConsole_UtilityBar</utilityBar>
     <workspaceConfig>
         <mappings>
+            <tab>NSP_Error_Log__c</tab>
+        </mappings>
+        <mappings>
+            <tab>cwbtool__ErrorLog__c</tab>
+        </mappings>
+        <mappings>
             <tab>standard-Account</tab>
-        </mappings>
-        <mappings>
-            <tab>standard-ActionCadence</tab>
-        </mappings>
-        <mappings>
-            <tab>standard-CallTemplate</tab>
         </mappings>
         <mappings>
             <tab>standard-CollaborationGroup</tab>
@@ -60,9 +149,6 @@
             <tab>standard-File</tab>
         </mappings>
         <mappings>
-            <tab>standard-HvsWaveLightning</tab>
-        </mappings>
-        <mappings>
             <tab>standard-Lead</tab>
         </mappings>
         <mappings>
@@ -70,9 +156,6 @@
         </mappings>
         <mappings>
             <tab>standard-Task</tab>
-        </mappings>
-        <mappings>
-            <tab>standard-WorkQueue</tab>
         </mappings>
         <mappings>
             <tab>standard-home</tab>

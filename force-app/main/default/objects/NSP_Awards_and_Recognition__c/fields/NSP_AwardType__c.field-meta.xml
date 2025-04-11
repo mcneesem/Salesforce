@@ -47,6 +47,11 @@
                 <label>Client Retention Award</label>
             </value>
             <value>
+                <fullName>CorporateCitizenshipDistrictOfficeoftheYear</fullName>
+                <default>false</default>
+                <label>Corporate Citizenship District Office of the Year</label>
+            </value>
+            <value>
                 <fullName>DaOfTheYear</fullName>
                 <default>false</default>
                 <label>DA Of The Year</label>
@@ -65,6 +70,11 @@
                 <fullName>FastStart</fullName>
                 <default>false</default>
                 <label>Fast Start</label>
+            </value>
+            <value>
+                <fullName>ImpactAward</fullName>
+                <default>false</default>
+                <label>Impact Award</label>
             </value>
             <value>
                 <fullName>MillionDollarClub</fullName>
@@ -112,9 +122,24 @@
                 <label>Most Volunteer Events</label>
             </value>
             <value>
+                <fullName>PinnacleSummit</fullName>
+                <default>false</default>
+                <label>Pinnacle Summit</label>
+            </value>
+            <value>
                 <fullName>PresidentsClub</fullName>
                 <default>false</default>
                 <label>President&apos;s Club</label>
+            </value>
+            <value>
+                <fullName>RelationshipMarketingChampionDistrict</fullName>
+                <default>false</default>
+                <label>Relationship Marketing Champion District</label>
+            </value>
+            <value>
+                <fullName>RelationshipMarketingChampionIndividual</fullName>
+                <default>false</default>
+                <label>Relationship Marketing Champion Individual</label>
             </value>
             <value>
                 <fullName>RmOfTheYear</fullName>
@@ -152,6 +177,11 @@
                 <label>Top Loyalty Program Individual</label>
             </value>
             <value>
+                <fullName>TopManagerVolunteerParticipation</fullName>
+                <default>false</default>
+                <label>Top Manager Volunteer Participation</label>
+            </value>
+            <value>
                 <fullName>TopMarginDistrict</fullName>
                 <default>false</default>
                 <label>Top Margin District</label>
@@ -160,6 +190,11 @@
                 <fullName>TopMarginIndividual</fullName>
                 <default>false</default>
                 <label>Top Margin Individual</label>
+            </value>
+            <value>
+                <fullName>TopMiddleMarketVolumeDistrict</fullName>
+                <default>false</default>
+                <label>Top Middle Market Volume District</label>
             </value>
             <value>
                 <fullName>TopMiddleMarketVolumeIndividual</fullName>
@@ -182,14 +217,14 @@
                 <label>Top Volume Individual</label>
             </value>
             <value>
+                <fullName>TopWorkforceOptimizationVolumeDistrict</fullName>
+                <default>false</default>
+                <label>Top Workforce Optimization Volume District</label>
+            </value>
+            <value>
                 <fullName>TopWoVolumeIndividual</fullName>
                 <default>false</default>
                 <label>Top WO Volume Individual</label>
-            </value>
-            <value>
-                <fullName>TripQualifier</fullName>
-                <default>false</default>
-                <label>Trip Qualifier</label>
             </value>
             <value>
                 <fullName>WesternRegionDaOfTheYear</fullName>
@@ -213,6 +248,12 @@
                 <default>false</default>
                 <isActive>false</isActive>
                 <label>Trip Qualifer</label>
+            </value>
+            <value>
+                <fullName>TripQualifier</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Trip Qualifier</label>
             </value>
         </valueSetDefinition>
     </valueSet>

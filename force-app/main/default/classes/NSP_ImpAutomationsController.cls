@@ -22,7 +22,7 @@ public class NSP_ImpAutomationsController {
                     Benefit_effective_date_carry_from_tab_4__c, Benefits_Package__c, Brief_description_of_client__c, Business_Inception_Date__c,
                     Can_client_show_EEO_filing_address__c, Carrier_notified_of_termination__c, Check_all_changes_that_apply__c, Check_all_sch_B_changes_that_apply__c,
                     Check_all_tht_apply_ministers_teachers__c, Chngs_for_cafeteria_plan_questionnaire__c, Client_Address__c, Client_Contact_Notes__c, Client_FEIN__c,
-                    Client_Implementing_Premier_Performance__c, NSP_Client_Liaison__c, Client_Name_del__c, Client_Number__c, Client_Profile_Information__c,
+                    NSP_Client_Liaison__c, Client_Name_del__c, Client_Number__c, Client_Profile_Information__c,
                     Client_does_business_in_MA_NY_or_VA__c, Client_entity_owned_or_a_non_profit__c, Client_expect_chnges_in_the_organization__c,
                     Client_has_Service_Contract_Act_SCA_EEs__c, Client_has_any_post_tax_deductions__c, Client_has_any_special_payroll_needs__c,
                     Client_has_existing_retirement_plan__c, Client_have_EEO_filing_under__c, Client_have_any_Commission_only_EEs__c, Client_have_any_EEs_on_F1_or_J1_Visa_s__c,

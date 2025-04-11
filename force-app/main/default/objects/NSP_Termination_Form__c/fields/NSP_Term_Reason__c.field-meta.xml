@@ -53,6 +53,11 @@
                 <label>3100 Non-Compliance of Client</label>
             </value>
             <value>
+                <fullName>3200 Non-Renewal</fullName>
+                <default>false</default>
+                <label>3200 Non-Renewal</label>
+            </value>
+            <value>
                 <fullName>5200 Health Benefits</fullName>
                 <default>false</default>
                 <label>5200 Health Benefits</label>
@@ -92,12 +97,6 @@
                 <default>false</default>
                 <label>2500 Reinstatement (client request)</label>
             </value>
-            <value>
-                <fullName>3200 Non-Renewal</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>3200 Non-Renewal</label>
-            </value>
         </valueSetDefinition>
         <valueSettings>
             <controllingFieldValue>Insperity Requested Termination Codes</controllingFieldValue>
@@ -130,6 +129,10 @@
         <valueSettings>
             <controllingFieldValue>Insperity Requested Termination Codes</controllingFieldValue>
             <valueName>3100 Non-Compliance of Client</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Insperity Requested Termination Codes</controllingFieldValue>
+            <valueName>3200 Non-Renewal</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Insperity Requested Termination Codes</controllingFieldValue>

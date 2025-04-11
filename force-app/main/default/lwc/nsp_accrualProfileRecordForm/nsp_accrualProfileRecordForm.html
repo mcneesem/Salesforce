@@ -430,6 +430,7 @@
                   data-visibility-name="NSP_Accrual_Period_Limit__c_ITA_CALENDAR"
                   data-name="NSP_Accrual_Period_Limit__c"
                   value={fieldValue.NSP_Accrual_Period_Limit__c}
+                  disabled={apFieldPermission}
                   onchange={handleValueChange}>
                 </lightning-input-field>
 
@@ -520,6 +521,7 @@
                   data-visibility-name="NSP_Accrual_Period_Limit__c_ITA_ANNIVERSARY"
                   data-name="NSP_Accrual_Period_Limit__c"
                   value={fieldValue.NSP_Accrual_Period_Limit__c}
+                  disabled={apFieldPermission}
                   onchange={handleValueChange}>
                 </lightning-input-field>
 
@@ -648,6 +650,7 @@
                   data-name="NSP_Accrual_Period_Limit__c"
                   data-visibility-name="NSP_Accrual_Period_Limit__c_ITA_FISCAL"
                   value={fieldValue.NSP_Accrual_Period_Limit__c}
+                  disabled={apFieldPermission}
                   onchange={handleValueChange}>
                 </lightning-input-field>
 
@@ -707,6 +710,7 @@
                 field-name="NSP_Carryover_in_Hours_or_percentage__c"
                 data-name="NSP_Carryover_in_Hours_or_percentage__c"
                 value={fieldValue.NSP_Carryover_in_Hours_or_percentage__c}
+                disabled={apFieldPermission}
                 onchange={handleValueChange}>
               </lightning-input-field>
 
@@ -724,6 +728,7 @@
                 field-name="NSP_Does_carryover_expire__c"
                 value={fieldValue.NSP_Does_carryover_expire__c}
                 data-name="NSP_Does_carryover_expire__c"
+                disabled={apFieldPermission}
                 onchange={handleValueChange}>
               </lightning-input-field>
 
@@ -740,6 +745,7 @@
                 value={fieldValue.NSP_Days_Date_after_carryover_balance_ex__c}
                 field-name="NSP_Days_Date_after_carryover_balance_ex__c"
                 data-name="NSP_Days_Date_after_carryover_balance_ex__c"
+                disabled={apFieldPermission}
                 onchange={handleValueChange}>
               </lightning-input-field>
 

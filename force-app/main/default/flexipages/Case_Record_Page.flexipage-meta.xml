@@ -512,10 +512,10 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>readonly</value>
+                    <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.OwnerId</fieldItem>
-                <identifier>RecordOwnerIdFieldReadOnly</identifier>
+                <fieldItem>Record.NSP_Owner__c</fieldItem>
+                <identifier>RecordNSP_Owner_cField</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.Is_Owner_Editable__c}</leftValue>
@@ -733,7 +733,7 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>none</value>
+                    <value>required</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Requested_Jobs__c</fieldItem>
                 <identifier>RecordRequested_Jobs__cField</identifier>

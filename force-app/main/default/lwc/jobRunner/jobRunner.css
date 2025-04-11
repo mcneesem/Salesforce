@@ -1,0 +1,21 @@
+.container {
+    padding: 1rem;
+}
+
+.button-section {
+    margin-bottom: 1.5rem;
+}
+
+.table-section {
+    max-width: 100%;
+}
+
+.pagination-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+:host {
+    --sds-c-data-table-cell-text-wrap: wrap;
+}

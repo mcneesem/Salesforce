@@ -86,6 +86,9 @@ export default class Nsp_fsoFormIp extends NavigationMixin(LightningElement) {
     this.disableFieldsIfIpInActive();
     window.addEventListener('resize', this.handleReSizeIpForm);
 
+    window.addEventListener('keydown', this.handleKeydown.bind(this));
+    window.addEventListener("popstate", () => {this.saveForm()});
+
     // Fetch Related objects records
     if (this.recordId) {
       this.fetchIpRelatedRecords();
@@ -95,6 +98,8 @@ export default class Nsp_fsoFormIp extends NavigationMixin(LightningElement) {
 
   disconnectedCallback() {
     window.removeEventListener('resize', this.handleReSizeIpForm);
+    window.removeEventListener('keydown', this.handleKeydown.bind(this));
+    window.removeEventListener("popstate", () => {this.saveForm()});
   }
 
   handleReSizeIpForm = debounce(() => {
@@ -109,6 +114,13 @@ export default class Nsp_fsoFormIp extends NavigationMixin(LightningElement) {
       Object.keys(this._objectInfo.fields).forEach((fieldName) => {
         this.disabledFields[fieldName] = true;
       });
+    }
+  }
+
+    handleKeydown(event){
+      if(event.ctrlKey && event.key === 's'){
+        event.preventDefault();
+        this.saveForm();
     }
   }
 

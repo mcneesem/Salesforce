@@ -117,7 +117,7 @@
     </alerts>
     <alerts>
         <fullName>NSP_Engage_Service_Team_Email_for_WX_Opportunities</fullName>
-        <ccEmails>wxservicenotification@insperity.com.invalid</ccEmails>
+        <ccEmails>marissa.perotto@insperity.com</ccEmails>
         <description>Engage Service Team Email for WX Opportunities</description>
         <protected>false</protected>
         <recipients>
@@ -231,7 +231,7 @@
             <type>owner</type>
         </recipients>
         <senderType>CurrentUser</senderType>
-        <template>unfiled$public/NSP_NotifyChildOptyWhenParentWon</template>
+        <template>All/NSP_NotifyChildOptyWhenParentWon</template>
     </alerts>
     <alerts>
         <fullName>NSP_Notify_Opportunity_Owner_of_Closed_Won</fullName>
@@ -321,7 +321,7 @@
             <type>email</type>
         </recipients>
         <senderType>CurrentUser</senderType>
-        <template>unfiled$public/NSP_OrderFailureNotification</template>
+        <template>All/NSP_OrderFailureNotification</template>
     </alerts>
     <alerts>
         <fullName>NSP_Parent_opportunity_Closed_Lost_Email_Alert</fullName>
@@ -353,6 +353,83 @@
         </recipients>
         <senderType>CurrentUser</senderType>
         <template>NSP_Sales/Notify_MidMarket_Team_of_WX_WA_Opty</template>
+    </alerts>
+    <alerts>
+        <fullName>Outgoing_Approval_Process_Notify_Owner_of_Rejection</fullName>
+        <description>Outgoing Approval Process - Notify Owner of Rejection</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>Moonwalkers_QE</recipient>
+            <type>group</type>
+        </recipients>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Sales_Approval_Process/Outgoing_Approval_Request_Notify_Owner_of_Rejection</template>
+    </alerts>
+    <alerts>
+        <fullName>Outgoing_Approval_Request_MidMarket_or_Enterprise</fullName>
+        <description>Outgoing Approval Request - MidMarket or Enterprise</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>Moonwalkers_QE</recipient>
+            <type>group</type>
+        </recipients>
+        <recipients>
+            <recipient>mike.iapalucci@insperity.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Sales_Approval_Process/Outgoing_Approval_Request_MidMarket_or_Enterprise</template>
+    </alerts>
+    <alerts>
+        <fullName>Outgoing_Approval_Request_Notify_MidMarket_Admins</fullName>
+        <description>Outgoing Approval Request - Notify MidMarket Admins</description>
+        <protected>false</protected>
+        <recipients>
+            <field>NSP_Mid_Market_Sales_Email__c</field>
+            <type>email</type>
+        </recipients>
+        <recipients>
+            <recipient>Moonwalkers_QE</recipient>
+            <type>group</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Sales_Approval_Process/Outgoing_Approval_Request_Notify_MidMarket_Admins</template>
+    </alerts>
+    <alerts>
+        <fullName>Outgoing_Approval_Request_Notify_Owner_of_Approval</fullName>
+        <description>Outgoing Approval Request - Notify Owner of Approval</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>Moonwalkers_QE</recipient>
+            <type>group</type>
+        </recipients>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Sales_Approval_Process/Outgoing_Approval_Request_Notify_Owner_of_Approval</template>
+    </alerts>
+    <alerts>
+        <fullName>Outgoing_Approval_Request_Other_Account_Segments</fullName>
+        <description>Outgoing Approval Request - Other Account Segments</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>Moonwalkers_QE</recipient>
+            <type>group</type>
+        </recipients>
+        <recipients>
+            <field>NSP_DM_User__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <recipients>
+            <field>NSP_RM__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Sales_Approval_Process/Outgoing_Approval_Request_Other_Account_Segments</template>
     </alerts>
     <alerts>
         <fullName>Signed_CSA_Email_to_Opportunity_Owner_Manager_s_Manager</fullName>
