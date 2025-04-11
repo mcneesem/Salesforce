@@ -20,7 +20,7 @@
     <assignments>
         <name>Assign_Opty_Team_Member_to_varOptyTeamMember</name>
         <label>Assign Opty Team Member to varOptyTeamMember</label>
-        <locationX>402</locationX>
+        <locationX>446</locationX>
         <locationY>998</locationY>
         <assignmentItems>
             <assignToReference>varOptyTeamMember</assignToReference>
@@ -52,7 +52,7 @@
     <assignments>
         <name>Assign_Outgoing_Opty_Id_to_varOptyTeamMember</name>
         <label>Assign Outgoing Opty Id to varOptyTeamMember</label>
-        <locationX>402</locationX>
+        <locationX>446</locationX>
         <locationY>1106</locationY>
         <assignmentItems>
             <assignToReference>varOptyTeamMember.OpportunityId</assignToReference>
@@ -85,7 +85,7 @@
     <assignments>
         <name>Assign_varFaultElement_Create_Outgoing_Opportunity_Team_Members</name>
         <label>Assign varFaultElement - Create Outgoing Opportunity Team Members</label>
-        <locationX>314</locationX>
+        <locationX>358</locationX>
         <locationY>1622</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
@@ -102,7 +102,7 @@
     <assignments>
         <name>Assign_varFaultElement_Get_Opportunity_Credits_from_Primary_Opty</name>
         <label>Assign varFaultElement - Get Opportunity Credits from Primary Opty</label>
-        <locationX>930</locationX>
+        <locationX>1106</locationX>
         <locationY>2096</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
@@ -119,7 +119,7 @@
     <assignments>
         <name>Assign_varFaultElement_Get_Opportunity_Team_Members_from_Primary_Opty</name>
         <label>Assign varFaultElement - Get Opportunity Team Members from Primary Opty</label>
-        <locationX>1194</locationX>
+        <locationX>1370</locationX>
         <locationY>782</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
@@ -136,7 +136,7 @@
     <assignments>
         <name>Assign_varFaultElement_Get_Primary_Opportunity</name>
         <label>Assign varFaultElement - Get Primary Opportunity</label>
-        <locationX>1986</locationX>
+        <locationX>2162</locationX>
         <locationY>350</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
@@ -152,7 +152,7 @@
     <assignments>
         <name>Assign_varFaultElement_Update_Outgoing_Opty</name>
         <label>Assign varFaultElement - Update Outgoing Opty</label>
-        <locationX>1458</locationX>
+        <locationX>1634</locationX>
         <locationY>674</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
@@ -185,7 +185,7 @@
     <assignments>
         <name>Assign_varOptyTeamMember_to_collectionCreateOptyTeamMembers</name>
         <label>Assign varOptyTeamMember to collectionCreateOptyTeamMembers</label>
-        <locationX>402</locationX>
+        <locationX>446</locationX>
         <locationY>1214</locationY>
         <assignmentItems>
             <assignToReference>collectionCreateOptyTeamMembers</assignToReference>
@@ -201,7 +201,7 @@
     <assignments>
         <name>Map_fields_from_varPrimaryOpty_to_varOutgoingOpty</name>
         <label>Map fields from varPrimaryOpty to varOutgoingOpty</label>
-        <locationX>534</locationX>
+        <locationX>578</locationX>
         <locationY>458</locationY>
         <assignmentItems>
             <assignToReference>varOutgoingOpty.AccountId</assignToReference>
@@ -273,7 +273,7 @@
     <decisions>
         <name>Are_there_existing_Opportunity_Credits</name>
         <label>Are there existing Opportunity Credits?</label>
-        <locationX>534</locationX>
+        <locationX>578</locationX>
         <locationY>2096</locationY>
         <defaultConnectorLabel>No Opportunity Credits found</defaultConnectorLabel>
         <rules>
@@ -302,7 +302,7 @@
     <decisions>
         <name>Are_there_existing_Opportunity_Team_Members</name>
         <label>Are there existing Opportunity Team Members?</label>
-        <locationX>534</locationX>
+        <locationX>578</locationX>
         <locationY>782</locationY>
         <defaultConnector>
             <targetReference>Get_Opportunity_Credits_from_Primary_Opty</targetReference>
@@ -356,7 +356,7 @@
     <decisions>
         <name>Are_there_Opty_Team_Members_to_create</name>
         <label>Are there Opty Team Members to create?</label>
-        <locationX>314</locationX>
+        <locationX>358</locationX>
         <locationY>1406</locationY>
         <defaultConnector>
             <targetReference>Get_Opportunity_Credits_from_Primary_Opty</targetReference>
@@ -381,7 +381,7 @@
     <decisions>
         <name>Verify_varOutgoingOpty_is_populated</name>
         <label>Verify varOutgoingOpty is populated</label>
-        <locationX>1689</locationX>
+        <locationX>1832</locationX>
         <locationY>134</locationY>
         <defaultConnectorLabel>varOutgoingOpty not populated</defaultConnectorLabel>
         <rules>
@@ -424,7 +424,7 @@
     <decisions>
         <name>Was_Primary_Opportunity_found</name>
         <label>Was Primary Opportunity found?</label>
-        <locationX>1128</locationX>
+        <locationX>1238</locationX>
         <locationY>350</locationY>
         <defaultConnectorLabel>Primary Opty not found</defaultConnectorLabel>
         <rules>
@@ -450,7 +450,7 @@
             <label>Yes - Primary Opty found</label>
         </rules>
     </decisions>
-    <description>Clones related records and fields from Primary Opportunity to the new Outgoing Opportunity.</description>
+    <description>System Context, without sharing, DM from feeder flow getting it from Primary Opty. Clones related records and fields from Primary Opportunity to the new Outgoing Opportunity.</description>
     <environments>Default</environments>
     <interviewLabel>Opportunity - Subflow - Outgoing Opportunity Fields and Related Records {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Opportunity - Subflow - Outgoing Opportunity Fields and Related Records</label>
@@ -471,7 +471,7 @@
     <loops>
         <name>Loop_over_Opportunity_Team_Members</name>
         <label>Loop over Opportunity Team Members</label>
-        <locationX>314</locationX>
+        <locationX>358</locationX>
         <locationY>890</locationY>
         <collectionReference>Get_Opportunity_Team_Members_from_Primary_Opty</collectionReference>
         <iterationOrder>Asc</iterationOrder>
@@ -514,7 +514,7 @@
     <recordCreates>
         <name>Create_Outgoing_Opportunity_Team_Members</name>
         <label>Create Outgoing Opportunity Team Members</label>
-        <locationX>50</locationX>
+        <locationX>94</locationX>
         <locationY>1514</locationY>
         <connector>
             <targetReference>Get_Opportunity_Credits_from_Primary_Opty</targetReference>
@@ -527,7 +527,7 @@
     <recordLookups>
         <name>Get_Opportunity_Credits_from_Primary_Opty</name>
         <label>Get Opportunity Credits from Primary Opty</label>
-        <locationX>534</locationX>
+        <locationX>578</locationX>
         <locationY>1988</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -551,7 +551,7 @@
     <recordLookups>
         <name>Get_Opportunity_Team_Members_from_Primary_Opty</name>
         <label>Get Opportunity Team Members from Primary Opty</label>
-        <locationX>534</locationX>
+        <locationX>578</locationX>
         <locationY>674</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -575,7 +575,7 @@
     <recordLookups>
         <name>Get_Primary_Opportunity</name>
         <label>Get Primary Opportunity</label>
-        <locationX>1128</locationX>
+        <locationX>1238</locationX>
         <locationY>242</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -604,11 +604,12 @@
         <queriedFields>NSP_Primary_Contact__c</queriedFields>
         <queriedFields>LeadSource</queriedFields>
         <queriedFields>AccountId</queriedFields>
+        <queriedFields>NSP_DM_User__c</queriedFields>
     </recordLookups>
     <recordUpdates>
         <name>Update_Outgoing_Opty</name>
         <label>Update Outgoing Opty</label>
-        <locationX>534</locationX>
+        <locationX>578</locationX>
         <locationY>566</locationY>
         <connector>
             <targetReference>Get_Opportunity_Team_Members_from_Primary_Opty</targetReference>
@@ -618,8 +619,9 @@
         </faultConnector>
         <inputReference>varOutgoingOpty</inputReference>
     </recordUpdates>
+    <runInMode>SystemModeWithoutSharing</runInMode>
     <start>
-        <locationX>1563</locationX>
+        <locationX>1706</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Verify_varOutgoingOpty_is_populated</targetReference>
@@ -629,7 +631,7 @@
     <subflows>
         <name>Fault_Handler_Subflow</name>
         <label>Fault Handler Subflow</label>
-        <locationX>1986</locationX>
+        <locationX>2162</locationX>
         <locationY>458</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>

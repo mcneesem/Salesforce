@@ -1,5 +1,5 @@
-Dear {!Opportunity.OwnerFirstName},
-
-Unfortunately, the Outgoing Referral <a href="{!Opportunity.Link}">{!Opportunity.Name}</a> request has been REJECTED.
-
-If you need clarification, feel free to contact me.
+Dear {!Opportunity.OwnerFirstName},</br>
+</br>
+Unfortunately, the Outgoing Referral <a href="{!Opportunity.Link}">{!Opportunity.Name}</a> request has been REJECTED.</br>
+</br>
+If you need clarification, feel free to contact me.</br>

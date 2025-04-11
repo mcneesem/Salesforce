@@ -6,6 +6,13 @@
     <name>Outgoing Approval Request - Other Account Segments</name>
     <style>none</style>
     <subject>Approval Required: {!Opportunity.Name}</subject>
-    <type>text</type>
+    <textOnly>Hello,  
+
+Your approval has been requested for the following Outgoing Referral: {!Opportunity.Name} 
+
+You can approve or reject the request directly in Salesforce by going to the Opportunity and clicking the &quot;Approve or Reject&quot; button.  
+
+If you have any questions, please reach out to {!Opportunity.OwnerFullName}.</textOnly>
+    <type>custom</type>
     <uiType>Aloha</uiType>
 </EmailTemplate>
