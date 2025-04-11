@@ -987,6 +987,16 @@
                 <identifier>RecordNSP_Approver__cField</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Approval_Date__c</fieldItem>
+                <identifier>RecordApproval_Date_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-ed685b08-fad3-4181-be33-0d117b44f243</name>
         <type>Facet</type>
     </flexiPageRegions>
