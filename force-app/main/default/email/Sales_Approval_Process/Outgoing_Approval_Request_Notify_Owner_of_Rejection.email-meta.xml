@@ -6,6 +6,11 @@
     <name>Outgoing Approval Request - Notify Owner of Rejection</name>
     <style>none</style>
     <subject>Approval Request Rejected: {!Opportunity.Name}</subject>
-    <type>text</type>
+    <textOnly>Dear {!Opportunity.OwnerFirstName},  
+
+Unfortunately, the Outgoing Referral {!Opportunity.Name} request has been REJECTED.  
+
+If you need clarification, feel free to contact me.</textOnly>
+    <type>custom</type>
     <uiType>Aloha</uiType>
 </EmailTemplate>

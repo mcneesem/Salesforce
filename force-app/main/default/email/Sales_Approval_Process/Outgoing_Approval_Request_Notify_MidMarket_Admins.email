@@ -1,5 +1,5 @@
-Dear MidMarket Administrators,
-
-The Outgoing Referral <a href="{!Opportunity.Link}">{!Opportunity.Name}</a> request has been APPROVED. 
-
-Please proceed with next steps.
+Dear MidMarket Administrators,</br>
+</br>
+The Outgoing Referral <a href="{!Opportunity.Link}">{!Opportunity.Name}</a> request has been APPROVED.</br>
+</br>
+Please proceed with next steps.</br>

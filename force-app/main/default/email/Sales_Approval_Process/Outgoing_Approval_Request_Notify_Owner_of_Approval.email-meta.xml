@@ -6,6 +6,9 @@
     <name>Outgoing Approval Request - Notify Owner of Approval</name>
     <style>none</style>
     <subject>Approval Granted: {!Opportunity.Name}</subject>
-    <type>text</type>
+    <textOnly>Dear {!Opportunity.OwnerFirstName},  
+
+Congrats, the Outgoing Referral {!Opportunity.Name} request has been APPROVED.</textOnly>
+    <type>custom</type>
     <uiType>Aloha</uiType>
 </EmailTemplate>
