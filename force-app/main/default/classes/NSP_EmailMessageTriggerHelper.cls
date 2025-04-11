@@ -244,7 +244,7 @@ public with sharing class NSP_EmailMessageTriggerHelper {
             }
             if ( !casesToUpdate.isEmpty() ) {
                 try {
-                    Database.update( casesToUpdate );
+                    Database.update(casesToUpdate, false);
                 } catch ( Exception e ) {
                     NSP_ErrorLogHandler.logException(
                         NSP_EmailMessageTriggerHelper.class.getName() ,
@@ -347,7 +347,7 @@ public with sharing class NSP_EmailMessageTriggerHelper {
                 }
             }
             if ( !caseToInsert.isEmpty() ) {
-                insert caseToInsert;
+                Database.insert(caseToInsert, false);
             }
         } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
@@ -358,6 +358,12 @@ public with sharing class NSP_EmailMessageTriggerHelper {
         }
         return caseToInsert;
     }
+    //
+    // MethodName    : caseOwnerAssignment
+    // Description   : method to Assigns the appropriate Case Owner (Queue) ID based on the Case's record type and email recipients.
+    // Story         : ADO-351648
+    // Params        : Case getCase,EmailMessage record,ID contactCenterQueueId
+    //
     private static Id caseOwnerAssignment(
         Case getCase,
         EmailMessage record,
