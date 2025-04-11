@@ -1632,10 +1632,16 @@
                 <fieldItem>Record.pse__Account__r.WO_Asset_Name__c</fieldItem>
                 <identifier>Recordpse_Account_rWO_Asset_Name_cField</identifier>
                 <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
                     <criteria>
                         <leftValue>{!$Permission.CustomPermission.Admin_Layout_Access}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>true</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>ITA Impl</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -1649,16 +1655,10 @@
                 <fieldItem>Record.Layout_BOB__c</fieldItem>
                 <identifier>RecordLayout_cField</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 AND 2</booleanFilter>
                     <criteria>
                         <leftValue>{!$Permission.CustomPermission.Admin_Layout_Access}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>true</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>ITA Impl</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
