@@ -1,4 +1,19 @@
-// This class is used to set the Ship To Contact on the order when the "Sync Ship To Contact" on the order is clicked
+
+/**************************************************************************************************   
+Version              :  1.0                                                                          
+Created Date         :  April 14, 2025                                                             
+Function             :  This class is used to set the Ship To Contact on the order when the "Sync Ship To Contact" button on the order is clicked
+Test class           :  ShipToContactHandlerTest
+Story                :  ADO-388073                                                                           
+Modification Log     :                                                                               
+*--------------------------------------------------------------------------------------------------  
+* Developer                   Date                   Description                                     
+* -------------------------------------------------------------------------------------------------  
+
+* Arun Dasari             April 14, 2025            First Iteration
+*
+***************************************************************************************************/
+
 public class ShipToContactHandler {
 
     @InvocableMethod(label='Create and Stamp Sales Tax Contact')
@@ -42,7 +57,11 @@ public class ShipToContactHandler {
                 }
 
             } catch (Exception e) {
-                System.debug('Error: ' + e.getMessage());
+                NSP_ErrorLogHandler.logException(
+                    ShipToContactHandler.class.getName() ,
+                    'createAndStampSalesTaxContactFromButton' ,
+                    e
+                );    
             }
         }
     }
