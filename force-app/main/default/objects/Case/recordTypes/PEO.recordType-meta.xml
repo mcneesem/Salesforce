@@ -2528,10 +2528,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>401k ORK</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>401k Upload</fullName>
             <default>false</default>
         </values>
@@ -2764,7 +2760,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Compensation Support</fullName>
+            <fullName>Compensation Guidance%2FSupport</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2929,6 +2925,10 @@
         </values>
         <values>
             <fullName>Employee Coaching</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Employee Entry Status</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3260,10 +3260,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>MEC %2F COS Change</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Management Consultation</fullName>
             <default>false</default>
         </values>
@@ -3329,10 +3325,6 @@
         </values>
         <values>
             <fullName>New Client SUI Set Up</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>New Hire Escalation</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3481,6 +3473,10 @@
         </values>
         <values>
             <fullName>Pushed OEE Packet</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>QC to Records</fullName>
             <default>false</default>
         </values>
         <values>
