@@ -16,6 +16,11 @@
                 <default>false</default>
                 <label>AIMS</label>
             </value>
+            <value>
+                <fullName>Workday</fullName>
+                <default>false</default>
+                <label>Workday</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
