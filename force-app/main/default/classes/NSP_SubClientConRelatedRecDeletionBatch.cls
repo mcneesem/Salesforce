@@ -71,11 +71,8 @@ public class NSP_SubClientConRelatedRecDeletionBatch implements Schedulable , Da
                 addressRecordsToDelete
             );
             
-            // Get Contact records for deletion
-            List<Contact> deleteContactList = new List<Contact>();
-            for ( Id contactId : filteredSubclientContactBasedOnNotes.keySet() ) {
-                deleteContactList.add( new Contact( Id = contactId ) );
-            }
+            // Get Contacts to be Deleted
+            List<Contact> deleteContactList = getContactsToBeDeleted( filteredSubclientContactBasedOnNotes.keySet() );
             
             // Delete Contact Records
             List<Database.DeleteResult> contactDeleteList = Database.delete( deleteContactList , false );
@@ -125,11 +122,14 @@ public class NSP_SubClientConRelatedRecDeletionBatch implements Schedulable , Da
     
     //== Get Account contact relationship records based on contact ID
     private static List<AccountContactRelation> getAcccountContactRelationshipRecords( Set<Id> contactIds ) {
+        Date pastDay = Date.today() - 121;
         List<AccountContactRelation> acrList = [
             SELECT Id , ContactId , IsDirect , NSP_AIMS_Client_PERID__c , NSP_Status_Date__c , NSP_Employee_Status__c
             FROM AccountContactRelation
             WHERE (
-                ContactId =:contactIds
+                ContactId =:contactIds 
+                AND NSP_Employee_Status__c = 'PRIMED' 
+                AND NSP_Status_Date__c <= :pastDay
             )
         ];
         
@@ -206,5 +206,48 @@ public class NSP_SubClientConRelatedRecDeletionBatch implements Schedulable , Da
         
         return subClientContactMap;
     }  
+    
+    private static List<Contact> getContactsToBeDeleted( set<Id> contactIdSet ){
+        
+        List<Contact> returnList 			= new List<Contact>();
+        Map<Id, Contact> deleteContactMap 	= new Map<Id, Contact>();
+        
+        // Iterate over the contacts Ids
+        for ( Id contactId :contactIdSet ) {
+            deleteContactMap.put( contactId, new Contact( Id = contactId ) );
+        }
+        
+        if(!deleteContactMap?.isEmpty())
+        {
+            
+            // Fetch the sub client contact records
+            List<NSP_Sub_Client_Contact__c> subClientContactRecords = [
+                SELECT
+                Id ,
+                NSP_Status_Date__c ,
+                NSP_Employee_Status__c ,
+                NSP_Contact__c
+                FROM NSP_Sub_Client_Contact__c 
+                WHERE (
+                    ( NSP_Employee_Status__c != 'PRIMED' )
+                    AND ( NSP_Contact__c = :contactIdSet )
+                )
+            ];
+            
+            if( !subClientContactRecords?.isEmpty() ){
+                // Iterate over the query results
+                for(NSP_Sub_Client_Contact__c subClientContact : subClientContactRecords){
+                    // Excluding the contacts from delete list
+                    if( deleteContactMap.containsKey(subClientContact.NSP_Contact__c) ) {
+                        deleteContactMap.remove(subClientContact.NSP_Contact__c);
+                    }
+                }
+            }
+            
+            returnList.addAll(deleteContactMap.values());
+        }
+        
+        return returnList;
+    }
 }
 //
