@@ -747,15 +747,64 @@ public with sharing class NSP_TerminationFormTriggerHelper {
             );
         }
     }
-
+  //variable maps used by 'updateUserLookups' method
+    private static Map<Id,Id> mapOfProjectTaskAndProject = new Map<Id,Id>();
+    private static Map<Id,Id> mapOfProjectAndAccount = new Map<Id,Id>();
+    private static Map<String,Id> primaryRolesMap = new Map<String,Id>();
+    private static Map<String,Id> nonPrimaryRolesMap = new Map<String,Id>();
+    private static final string renewalCoordinator = 'Renewal Coordinator'
+    
     /* Description : This method will fetch value of User Lookups from Account Team
         Date       : 13/10/2021 */
 
-    public static void updateUserLookups(set<Id> setOfProjectTaskId, List<NSP_Termination_Form__c> terminationFormList){
-        Map<Id,Id> mapOfProjectTaskAndProject = new Map<Id,Id>();
-        Map<Id,Id> mapOfProjectAndAccount = new Map<Id,Id>();
+    public static void updateUserLookups(set<Id> setOfProjectTaskId, List<NSP_Termination_Form__c> terminationFormList){      
         Map<String,Id> mapOfAccountAndAccountTeam = new Map<String,Id>();
         String termObj = 'NSP_Termination_Form__c';
+        
+        //populate project-account and project_task-project maps
+        mapProjectTasksToAccounts(setOfProjectTaskId);
+        
+        //proceed if map is populated
+        if(mapOfProjectAndAccount != null){
+            
+            //process the account teams using mapped accounts
+            processAccountTeams(new Set<Id>(mapOfProjectAndAccount.values()));
+            
+            Id payrollRecordTypeId = NSP_GenericRecordType.getRecordTypeId(
+                termObj ,
+                NSP_ServiceConstants.NSP_Payroll_Specialist_Form
+            );
+            Id creditRecordTypeId = NSP_GenericRecordType.getRecordTypeId(
+                termObj ,
+                NSP_Credit_Specialist_Form
+            );
+            Id reinstateRecordTypeId = NSP_GenericRecordType.getRecordTypeId(
+                termObj ,
+                NSP_Client_Reinstatement
+            );
+            
+            if ( ( terminationFormList != null ) && !terminationFormList.isEmpty() ) {
+                for ( NSP_Termination_Form__c termForm : terminationFormList ) {
+                    if ( ( termForm.RecordTypeId == payrollRecordTypeId )
+                        || ( termForm.RecordTypeId == creditRecordTypeId )
+                        || ( termForm.RecordTypeId == reinstateRecordTypeId )
+                       )
+                    {
+                        //Termination Form Payroll Specialist Record Type
+                        mapOfAccountAndAccountTeam = primaryRolesMap;
+                    } else {
+                        mapOfAccountAndAccountTeam = nonPrimaryRolesMap;
+                    }
+                }
+                //process the Temination form records before insert
+                processTermForms(terminationFormList, mapOfAccountAndAccountTeam);
+            }
+        }
+    }
+    
+    //method used for populating the project-account and project_task-project maps (called by method - updateUserLookups)
+    public static void mapProjectTasksToAccounts( Set<Id> setOfProjectTaskId) 
+    { 
         if(!setOfProjectTaskId.isEmpty()){
             for(pse__Project_Task__c projectTask : [SELECT pse__Project__c FROM pse__Project_Task__c WHERE ID IN : setOfProjectTaskId]){
                 if(!mapOfProjectTaskAndProject.containsKey(projectTask.id)){
@@ -763,7 +812,6 @@ public with sharing class NSP_TerminationFormTriggerHelper {
                 }
             }
         }
-
         if(mapOfProjectTaskAndProject != null){
             for(pse__Proj__c project : [SELECT pse__Account__c FROM pse__Proj__c WHERE ID IN : mapOfProjectTaskAndProject.values()]){
                 if(!mapOfProjectAndAccount.containsKey(project.id)){
@@ -771,110 +819,111 @@ public with sharing class NSP_TerminationFormTriggerHelper {
                 }
             }
         }
-
-        //Termination Form Payroll Specialist Record Type
-        Map<String,Id> primaryRolesMap = new Map<String,Id>();
-        Map<String,Id> nonPrimaryRolesMap = new Map<String,Id>();
-        if(mapOfProjectAndAccount.values().size() > 0){
+    }
+    
+    //method for processing Account teams using mapped accounts (called by method - updateUserLookups)
+    public static void processAccountTeams(Set<Id> mapOfProjectAndAccount){
+      List<String> roleList = new List<String>{
+            NSP_ServiceConstants.PayrollSpecialist,
+                NSP_ServiceConstants.BUS_TEAM_HRSP_CL,
+                NSP_ServiceConstants.CLIENT_LIAISION,
+                NSP_ServiceConstants.MID_MARKET_ACC_EX,
+                NSP_ServiceConstants.PAYROLL_SUPERVISOR,
+                NSP_ServiceConstants.MANAGER_HRSERVICES,
+                NSP_ServiceConstants.BUSINESS_PERFORMANCE_ADVISOR,
+                NSP_ServiceConstants.BUSINESS_PERFORMANCE_CONSULTANT,
+                renewalCoordinator
+                };
+        if(mapOfProjectAndAccount != null){
             for ( NSP_Account_Team__c accountTeamPayroll : [
                     SELECT NSP_Role__c , NSP_User__c , NSP_Primary__c , NSP_Last_Name__c, NSP_Account__c
                     FROM NSP_Account_Team__c
                     WHERE (
-                        ( NSP_Account__c IN : mapOfProjectAndAccount.values() )
+                        ( NSP_Account__c IN : mapOfProjectAndAccount)
                         AND ( NSP_User__c != null )
-                        AND (
-                            NSP_Role__c =: NSP_ServiceConstants.PayrollSpecialist
-                            OR NSP_Role__c =: NSP_ServiceConstants.BUS_TEAM_HRSP_CL
-                            OR NSP_Role__c =: NSP_ServiceConstants.CLIENT_LIAISION
-                            OR NSP_Role__c =: NSP_ServiceConstants.MID_MARKET_ACC_EX
-                            OR NSP_Role__c =: NSP_ServiceConstants.PAYROLL_SUPERVISOR
-                            OR NSP_Role__c =: NSP_ServiceConstants.MANAGER_HRSERVICES
-                            OR NSP_Role__c =: NSP_ServiceConstants.BUSINESS_PERFORMANCE_ADVISOR
-                        )
+                        AND (NSP_Role__c =: roleList)
                     )
                     ORDER BY NSP_Role__c ASC , NSP_Primary__c ASC , NSP_Last_Name__c ASC
                     ]
                 )
             {
-                if ( !primaryRolesMap.containsKey( accountTeamPayroll.NSP_Account__c ) ) {
-                    primaryRolesMap.put(
-                        accountTeamPayroll.NSP_Account__c + '-' + accountTeamPayroll.NSP_Role__c ,
-                        accountTeamPayroll.NSP_User__c
-                    );
-                }
-                if ( !accountTeamPayroll.NSP_Primary__c
-                    && !nonPrimaryRolesMap.containsKey( accountTeamPayroll.NSP_Account__c )
-                    )
-                {
-                    nonPrimaryRolesMap.put(
-                        accountTeamPayroll.NSP_Account__c + '-' + accountTeamPayroll.NSP_Role__c ,
-                        accountTeamPayroll.NSP_User__c
-                    );
-                }
+                //populate each account team into map
+               populateRoleMaps(accountTeamPayroll);
+            }
+        }  
+    }
+    
+    //method for populating Role Maps using Account Team (called by method - processAccountTeams)
+    public static void populateRoleMaps(NSP_Account_Team__c accountTeamPayroll){
+        if( accountTeamPayroll != null ){
+            if ( !primaryRolesMap.containsKey( accountTeamPayroll.NSP_Account__c ) ) {
+                primaryRolesMap.put(
+                    accountTeamPayroll.NSP_Account__c + '-' + accountTeamPayroll.NSP_Role__c ,
+                    accountTeamPayroll.NSP_User__c
+                );
+            }
+            if ( 
+                (!accountTeamPayroll.NSP_Primary__c )
+                &&( !nonPrimaryRolesMap.containsKey( accountTeamPayroll.NSP_Account__c ) )
+               )
+            {
+                nonPrimaryRolesMap.put(
+                    accountTeamPayroll.NSP_Account__c + '-' + accountTeamPayroll.NSP_Role__c ,
+                    accountTeamPayroll.NSP_User__c
+                );
             }
         }
-        Id payrollRecordTypeId = NSP_GenericRecordType.getRecordTypeId(
-            termObj ,
-            NSP_ServiceConstants.NSP_Payroll_Specialist_Form
-        );
-        Id creditRecordTypeId = NSP_GenericRecordType.getRecordTypeId(
-            termObj ,
-            NSP_Credit_Specialist_Form
-        );
-        Id reinstateRecordTypeId = NSP_GenericRecordType.getRecordTypeId(
-            termObj ,
-            NSP_Client_Reinstatement
-        );
-        if ( ( terminationFormList != null ) && !terminationFormList.isEmpty() ) {
-            for ( NSP_Termination_Form__c termForm : terminationFormList ) {
-                if ( ( termForm.RecordTypeId == payrollRecordTypeId )
-                    || ( termForm.RecordTypeId == creditRecordTypeId )
-                    || ( termForm.RecordTypeId == reinstateRecordTypeId )
-                    )
-                {
-                    //Termination Form Payroll Specialist Record Type
-                    mapOfAccountAndAccountTeam = primaryRolesMap;
-                } else {
-                    mapOfAccountAndAccountTeam = nonPrimaryRolesMap;
+    }
+    
+    //method for processing the Term forms before insert (called by method - updateUserLookups)
+    public static void processTermForms(List<NSP_Termination_Form__c> terminationFormList, Map<String,Id> mapOfAccountAndAccountTeam){
+        for ( NSP_Termination_Form__c termForm : terminationFormList ) {
+            if ( ( mapOfAccountAndAccountTeam != null )
+                && ( mapOfProjectAndAccount != null )
+                && ( mapOfProjectTaskAndProject != null )
+               )
+            {
+                Id mappedProjectId = null;
+                if( mapOfProjectTaskAndProject.containsKey(termForm.NSP_Project_Task__c) ){
+                    mappedProjectId = mapOfProjectTaskAndProject.get( termForm.NSP_Project_Task__c );
                 }
-            }
-            for ( NSP_Termination_Form__c termForm : terminationFormList ) {
-                if ( ( mapOfAccountAndAccountTeam != null )
-                    && ( mapOfProjectAndAccount != null )
-                    && ( mapOfProjectTaskAndProject != null )
-                    )
-                {
-                    Id mappedProjectId = mapOfProjectTaskAndProject.get( termForm.NSP_Project_Task__c );
+                
+                if( mappedProjectId != null ){
                     Id mappedAccountId = mapOfProjectAndAccount.get( mappedProjectId );
-                    termForm.NSP_Approver__c = mapOfAccountAndAccountTeam.get(
-                        mappedAccountId + '-' + NSP_ServiceConstants.PAYROLL_SUPERVISOR
-                    );
-                    termForm.NSP_Supervisor__c = mapOfAccountAndAccountTeam.get(
-                        mappedAccountId + '-' + NSP_ServiceConstants.PAYROLL_SUPERVISOR
-                    );
-                    termForm.NSP_Payroll_Specialist__c = mapOfAccountAndAccountTeam.get(
-                        mappedAccountId + '-' + NSP_ServiceConstants.PAYROLL_SPECIALIST
-                    );
-                    termForm.NSP_Sales_Representative__c = mapOfAccountAndAccountTeam.get(
-                        mappedAccountId + '-' + NSP_ServiceConstants.BUSINESS_PERFORMANCE_ADVISOR
-                    );
-                    termForm.NSP_Client_Liaison__c = mapOfAccountAndAccountTeam.get(
-                        mappedAccountId + '-' + NSP_ServiceConstants.CLIENT_LIAISION
-                    );
-                    termForm.NSP_Account_Executive__c = mapOfAccountAndAccountTeam.get(
-                        mappedAccountId + '-' + NSP_ServiceConstants.MID_MARKET_ACC_EX
-                    );
-                    termForm.NSP_Manager_HR_Services__c = mapOfAccountAndAccountTeam.get(
-                        mappedAccountId + '-' + NSP_ServiceConstants.MANAGER_HRSERVICES
-                    );
-                    termForm.NSP_Insperity_Blended_Role__c = mapOfAccountAndAccountTeam.get(
-                        mappedAccountId + '-' + NSP_ServiceConstants.BUS_TEAM_HRSP_CL
-                    );
+                
+                    if(mappedAccountId != null){
+                        //populate fields on term form
+                        populateTermFormFields(termForm, mapOfAccountAndAccountTeam, mappedAccountId);
+                    }
                 }
             }
         }
     }
-
+    
+    //method used to populate fields on term form (called by method - processTermForms)
+    public static void populateTermFormFields(NSP_Termination_Form__c termForm, Map<String,Id> mapOfAccountAndAccountTeam, Id mappedAccountId){
+        Map<String,String> termFormFieldMapping = new Map<String,String>{
+            	'NSP_Approver__c' => NSP_ServiceConstants.PAYROLL_SUPERVISOR,
+                'NSP_Supervisor__c' => NSP_ServiceConstants.PAYROLL_SUPERVISOR,
+                'NSP_Payroll_Specialist__c' => NSP_ServiceConstants.PAYROLL_SPECIALIST,
+                'NSP_Sales_Representative__c' => NSP_ServiceConstants.BUSINESS_PERFORMANCE_ADVISOR,
+                'NSP_Client_Liaison__c' => NSP_ServiceConstants.CLIENT_LIAISION,
+                'NSP_Account_Executive__c' => NSP_ServiceConstants.MID_MARKET_ACC_EX,
+                'NSP_Manager_HR_Services__c' => NSP_ServiceConstants.MANAGER_HRSERVICES,
+                'NSP_Insperity_Blended_Role__c' => NSP_ServiceConstants.BUS_TEAM_HRSP_CL,
+                'BPA__c' => NSP_ServiceConstants.BUSINESS_PERFORMANCE_ADVISOR,
+                'BPC__c' => NSP_ServiceConstants.BUSINESS_PERFORMANCE_CONSULTANT,
+                'Renewal_Coordinator__c' => renewalCoordinator
+        };
+        if(termForm != null){
+            for(String fieldAPI :termFormFieldMapping.keyset()){
+                String key = mappedAccountId + '-' + termFormFieldMapping.get(fieldAPI);
+                if(mapOfAccountAndAccountTeam.containskey(key)){
+                    termform.put(fieldAPI,mapOfAccountAndAccountTeam.get(key));
+                }
+             }
+         }
+    }
     public void updateClientTermDateOnProject( List<NSP_Termination_Form__c> lTerminationForms , Map<Id,NSP_Termination_Form__c> mTerminationForms ) {
         if ( ( mTerminationForms != null ) && !mTerminationForms.isEmpty() ) {
             Map<Id,Id> mapOfTerminationFormAndProjectId = new Map<Id,Id>();
