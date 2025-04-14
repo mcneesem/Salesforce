@@ -2866,6 +2866,10 @@
             <fullName>AIMS</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Workday</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>NSP_Is_client_using_Vets_link__c</picklist>
