@@ -1,4 +1,4 @@
-Dear {!Opportunity.OwnerFirstName},</br>
+Dear {!Opportunity.OwnerFirstName}, </br>
 </br>
 Unfortunately, the Outgoing Referral <a href="{!Opportunity.Link}">{!Opportunity.Name}</a> request has been REJECTED.</br>
 </br>

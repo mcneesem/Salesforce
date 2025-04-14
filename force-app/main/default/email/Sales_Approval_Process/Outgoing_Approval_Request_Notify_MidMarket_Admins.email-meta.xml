@@ -6,7 +6,7 @@
     <name>Outgoing Approval Request - Notify MidMarket Admins</name>
     <style>none</style>
     <subject>Approval Granted: {!Opportunity.Name}</subject>
-    <textOnly>Dear MidMarket Administrators,  
+    <textOnly>Dear MidMarket Administrators,
 
 The Outgoing Referral {!Opportunity.Name} request has been APPROVED.  
 
