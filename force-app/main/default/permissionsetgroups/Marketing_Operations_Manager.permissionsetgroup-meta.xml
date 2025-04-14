@@ -3,5 +3,6 @@
     <hasActivationRequired>false</hasActivationRequired>
     <label>Marketing Operations Manager</label>
     <permissionSets>Campaign_Update_Sales_Office_Info_Campaign_Assigned</permissionSets>
+    <permissionSets>Sales_Account_Indicator</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>
