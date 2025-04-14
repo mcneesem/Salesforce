@@ -181,7 +181,15 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>BPA__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>NSP_Sales_Office__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>BPC__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -208,6 +216,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>NSP_Credit_Specialist_Phone__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Renewal_Coordinator__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -399,7 +411,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h8G000000NTxu</masterLabel>
+        <masterLabel>00h4x000003Eh6k</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>
