@@ -1712,7 +1712,7 @@
                     <name>adminFilters</name>
                     <valueList>
                         <valueListItems>
-                            <value>ASSET.NAME|CONTAINS|- Hardware</value>
+                            <value>ASSET.RECORDTYPE|EQUALS|[&quot;Hardware_Asset&quot;]</value>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
