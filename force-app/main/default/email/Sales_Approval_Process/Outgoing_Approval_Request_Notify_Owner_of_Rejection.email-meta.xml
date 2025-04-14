@@ -6,7 +6,7 @@
     <name>Outgoing Approval Request - Notify Owner of Rejection</name>
     <style>none</style>
     <subject>Approval Request Rejected: {!Opportunity.Name}</subject>
-    <textOnly>Dear {!Opportunity.OwnerFirstName},  
+    <textOnly>Dear {!Opportunity.OwnerFirstName},
 
 Unfortunately, the Outgoing Referral {!Opportunity.Name} request has been REJECTED.  
 

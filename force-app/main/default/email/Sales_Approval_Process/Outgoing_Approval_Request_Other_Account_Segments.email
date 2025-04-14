@@ -1,4 +1,4 @@
-Hello,</br>
+Hello, </br>
 </br>
 Your approval has been requested for the following Outgoing Referral: <a href="{!Opportunity.Link}">{!Opportunity.Name}</a></br>
 </br>
