@@ -752,7 +752,7 @@ public with sharing class NSP_TerminationFormTriggerHelper {
     private static Map<Id,Id> mapOfProjectAndAccount = new Map<Id,Id>();
     private static Map<String,Id> primaryRolesMap = new Map<String,Id>();
     private static Map<String,Id> nonPrimaryRolesMap = new Map<String,Id>();
-    private static final string renewalCoordinator = 'Renewal Coordinator'
+    private static final string renewalCoordinator = 'Renewal Coordinator';
     
     /* Description : This method will fetch value of User Lookups from Account Team
         Date       : 13/10/2021 */
