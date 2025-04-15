@@ -22,6 +22,11 @@
                 <label>Certify</label>
             </value>
             <value>
+                <fullName>Contingent Workforce</fullName>
+                <default>false</default>
+                <label>Contingent Workforce</label>
+            </value>
+            <value>
                 <fullName>CPQ Asset</fullName>
                 <default>false</default>
                 <label>CPQ Asset</label>
