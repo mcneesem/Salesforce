@@ -4,7 +4,6 @@ public class NSP_MMImplProfile_ServHelpUpdate {
     private  Boolean isRerun =false;
     private Map<Id, Implementation_Profile__c> newIPs = null; 
     private Map<Id, Implementation_Profile__c> oldIPs = null;
-    private List<String> automationRan = new List<String>();
     private List<pse__Project_Task__c> projectTaskToInsertList = new List<pse__Project_Task__c>();
     private List<NSP_Implementation_Profile_Automation__c> ipAutomationRecords = new List<NSP_Implementation_Profile_Automation__c>();
     private List<pse__Project_Task__c> subTaskList = new List<pse__Project_Task__c>();
@@ -242,7 +241,6 @@ public class NSP_MMImplProfile_ServHelpUpdate {
             checkforInsuranceBPS(ipRec, existingRec);
             checkforRecruitingBPS(ipRec, existingRec);
             checkForCertifyBPS(ipRec, existingRec);
-            
         }
     }
  
@@ -276,7 +274,6 @@ public class NSP_MMImplProfile_ServHelpUpdate {
         if(!childRecToInsert.isEmpty() && !System.isFuture() && !System.isBatch()){
             String childRecordsList = Json.serialize(childRecToInsert);
             insertChildRecords(childRecordsList);
-            
         }
         
     }
@@ -295,6 +292,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                 }
             }
         }
+
          List<Database.SaveResult> insertProjectTaskResults = Database.Insert(recToInsert, false);
          NSP_ErrorLogHandler.logSaveResultsException('NSP_Implprofile_ServiceHelperUpdate', 'ProjectTask:insertProjectTaskResults', insertProjectTaskResults); 
      }
@@ -346,7 +344,6 @@ public class NSP_MMImplProfile_ServHelpUpdate {
  
        relevantRecords.add(recId);
        automationMap.put(fnName, relevantRecords);
-       automationRan.add(fnName);
      }
 
     
@@ -354,6 +351,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
     private pse__Project_Task__c createProjectTaskfromIP(pse__Proj__c project,  String category, Id ipRecId,String milestoneKey){
         
         Id projectTaskPEORecordTypeId = Schema.SObjectType.pse__Project_Task__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.PROJECT_TASK_PEO_RECORDTYPE).getRecordTypeId();
+        
         pse__Project_Task__c eachProjectTask = new pse__Project_Task__c();
         if(project != null 
            && category != null 
@@ -384,8 +382,6 @@ public class NSP_MMImplProfile_ServHelpUpdate {
         }
         return eachProjectTask;
     }
-     
-    //Roberto's generic IP code starts ------------------------------------------------------------------------------------------------------
     
     //Creates Project Task automations for MM IP
     private void createProjectTasks(String automation, Id workCalendarId) {
@@ -2299,10 +2295,6 @@ public class NSP_MMImplProfile_ServHelpUpdate {
         }
     }
     
-    
-    
-    //Roberto's generic IP code ends ------------------------------------------------------------------------------------------------------   
-    
     private List<pse__Project_Task__c> getnewTaskstoInsert(List<pse__Project_Task__c> projTaskList){
         List<pse__Project_Task__c> newProjectList=new List<pse__Project_Task__c>();
         List<String> existingProjecttasks=new List<String>();
@@ -3049,8 +3041,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
         List<Sobject> insertChildRecordsList = (List<Sobject>) JSON.deserialize(childRecordsList, List<Sobject>.class);
         if(!insertChildRecordsList.isEmpty()){
             List<Database.SaveResult> insertChildResults = Database.Insert(insertChildRecordsList, false);
-            NSP_ErrorLogHandler.logSaveResultsException('NSP_Implprofile_ServiceHelperUpdate', 
-                                                        'ProjectTask:insertProjectChildTaskResults', insertChildResults);
+            NSP_ErrorLogHandler.logSaveResultsException('NSP_Implprofile_ServiceHelperUpdate', 'ProjectTask:insertProjectChildTaskResults', insertChildResults);
         }
     }
  }
