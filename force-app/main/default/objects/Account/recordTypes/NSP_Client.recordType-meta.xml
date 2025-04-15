@@ -502,11 +502,15 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>CPQ Asset</fullName>
+            <fullName>Certify</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Certify</fullName>
+            <fullName>Contingent Workforce</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CPQ Asset</fullName>
             <default>false</default>
         </values>
         <values>
