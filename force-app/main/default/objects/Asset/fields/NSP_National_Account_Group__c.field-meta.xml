@@ -382,6 +382,11 @@
                 <default>false</default>
                 <label>King Operating</label>
             </value>
+            <value>
+                <fullName>105</fullName>
+                <default>false</default>
+                <label>WizeCamel</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
