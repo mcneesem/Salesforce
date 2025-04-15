@@ -5,5 +5,4 @@
     <mayForecastManagerShare>false</mayForecastManagerShare>
     <name>Customer Success Team</name>
     <opportunityAccessLevel>Edit</opportunityAccessLevel>
-    <parentRole>BPS_Sales_Manager</parentRole>
 </Role>
