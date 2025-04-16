@@ -3,6 +3,7 @@
     <fullName>Approval_Date__c</fullName>
     <encryptionScheme>None</encryptionScheme>
     <externalId>false</externalId>
+    <inlineHelpText>Date the Termination Team approved the form.</inlineHelpText>
     <label>Approval Date</label>
     <required>false</required>
     <trackHistory>true</trackHistory>

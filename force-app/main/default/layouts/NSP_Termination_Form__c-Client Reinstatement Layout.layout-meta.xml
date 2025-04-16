@@ -61,6 +61,10 @@
                 <field>NSP_Status__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Approval_Date__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>NSPClientDocumentRequestingReinstatement__c</field>
             </layoutItems>
