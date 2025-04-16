@@ -1,7 +1,7 @@
-Hello Mike,
-
-Your approval has been requested for the following Outgoing Referral: <a href="{!Opportunity.Link}">{!Opportunity.Name}</a>
-
-You can approve or reject the request directly in Salesforce by going to the Opportunity and clicking the "Approve or Reject" button.
-
+Hello Mike, </br>
+</br>
+Your approval has been requested for the following Outgoing Referral: <a href="{!Opportunity.Link}">{!Opportunity.Name}</a></br>
+</br>
+You can approve or reject the request directly in Salesforce by going to the Opportunity and clicking the "Approve or Reject" button.</br>
+</br>
 If you have any questions, please reach out to {!Opportunity.OwnerFullName}.

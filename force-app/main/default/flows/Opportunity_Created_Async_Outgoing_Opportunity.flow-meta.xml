@@ -20,11 +20,18 @@
                 <elementReference>$Record.NSP_Parent_Opportunity__c</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varOutgoingOpty.NSP_DM_User__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>varOutgoingOpty.NSP_Parent_Opportunity__r.Owner.NSP_District_Manager__c</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Outgoing_Opportunity_Fields_and_Related_Records_Subflow</targetReference>
         </connector>
     </assignments>
-    <description>Passes Outgoing Opty to subflow to map Primary Opty fields and related records</description>
+    <description>Walks through to Primary Opty Owner&apos;s District Manager. Passes Outgoing Opty to subflow to map Primary Opty fields and related records</description>
     <environments>Default</environments>
     <interviewLabel>Opportunity - Created - Async - Outgoing Opportunity {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Opportunity - Created - Async - Outgoing Opportunity</label>
