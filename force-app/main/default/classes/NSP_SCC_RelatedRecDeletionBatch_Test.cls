@@ -161,9 +161,41 @@ public class NSP_SCC_RelatedRecDeletionBatch_Test
         
         Test.stopTest();
         
-        List<NSP_Sub_Client_Contact__c> subClientConList    = [SELECT Id, NSP_Status_Date__c, NSP_Employee_Status__c, NSP_Contact__c, NSP_Sub_Client__c FROM NSP_Sub_Client_Contact__c WHERE NSP_Employee_Status__c = 'PRIMED'];
+        List<NSP_Sub_Client_Contact__c> subClientConList    = [SELECT Id, NSP_Status_Date__c, NSP_Employee_Status__c, NSP_Contact__c, NSP_Sub_Client__c 
+                                                               FROM NSP_Sub_Client_Contact__c 
+                                                               WHERE NSP_Employee_Status__c = 'PRIMED'];
         //Asserts
         Assert.areEqual(subClientConList.size(), 1);
+    }
+    
+    //== Method to delete only primed sub client contact records
+    @isTest static void testMultipleSubClientContacts()
+    {
+        Account account 			= [SELECT ID FROM Account LIMIT 1];
+        NSP_Sub_Client__c subClient = [SELECT ID FROM NSP_Sub_Client__c WHERE NSP_Account__c = :account.Id LIMIT 1];
+        Contact con 				= [SELECT ID FROM Contact WHERE AccountId = :account.Id LIMIT 1];
+        
+        NSP_Sub_Client_Contact__c subClientCon = new NSP_Sub_Client_Contact__c();
+        subClientCon.NSP_Contact__c         = con.Id;
+        subClientCon.NSP_Sub_Client__c      = subClient.Id;
+        subClientCon.NSP_Employee_Status__c = 'HIRED';
+        subClientCon.NSP_Status_Date__c     = system.today();
+        insert subClientCon ;
+        
+        Test.StartTest();
+        
+        DataBase.executeBatch(new NSP_SubClientConRelatedRecDeletionBatch());
+        
+        Test.stopTest();
+        
+        List<NSP_Sub_Client_Contact__c> subClientConList    = [SELECT Id, NSP_Status_Date__c, NSP_Employee_Status__c, NSP_Contact__c, NSP_Sub_Client__c 
+                                                               FROM 
+                                                               NSP_Sub_Client_Contact__c ];
+        List<Contact> contact = [SELECT ID FROM Contact];
+
+        //Asserts
+        Assert.areEqual(subClientConList.size(), 1);
+        Assert.areNotEqual(contact.size(), 0);
     }
 
     //== Test method for scheduler
