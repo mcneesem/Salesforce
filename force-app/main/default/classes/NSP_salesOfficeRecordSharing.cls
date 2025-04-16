@@ -358,8 +358,8 @@ public class NSP_salesOfficeRecordSharing {
         try{ 
             for(Lead lead:newLeadMap.values()){
                 if(lead.OwnerId !=oldLeadMap.get(lead.Id).OwnerId && String.valueOf(lead.OwnerId).startsWith('005') ){
-                    mapnewOwnerIdSetLeadId = getNewOwnerIdSetLeadIdMap( mapnewOwnerIdSetLeadId , lead , oldLeadMap );
-                    mapoldOwnerIdSetLeadId = getOldOwnerIdSetLeadIdMap( mapnewOwnerIdSetLeadId , lead );
+                    mapnewOwnerIdSetLeadId = getNewOwnerIdSetLeadIdMap( mapnewOwnerIdSetLeadId , lead);
+                    mapoldOwnerIdSetLeadId = getOldOwnerIdSetLeadIdMap( mapnewOwnerIdSetLeadId , lead , oldLeadMap);
                 }
             }
             Map<Id,User> leadNewOwnerMap = new Map<Id,User>( [
