@@ -1052,7 +1052,7 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>none</value>
+                    <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Approval_Date__c</fieldItem>
                 <identifier>RecordApproval_Date_cField</identifier>
