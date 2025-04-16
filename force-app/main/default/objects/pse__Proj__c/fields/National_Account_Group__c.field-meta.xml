@@ -82,6 +82,7 @@
     &apos;102&apos; , &apos;Kenny Jo&apos;,
     &apos;103&apos; , &apos;Hillside Asset Management&apos;,
     &apos;104&apos; , &apos;King Operating&apos;,
+    &apos;105&apos; , &apos;WizeCamel&apos;,
     TEXT( pse__Account__r.WO_Asset__r.NSP_National_Account_Group__c )
   )
 )</formula>
