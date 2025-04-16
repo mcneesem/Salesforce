@@ -8,6 +8,7 @@
     <permissionSets>List_View_Enhanced_Access</permissionSets>
     <permissionSets>NSPSteelBrickCPQUser</permissionSets>
     <permissionSets>NSP_Main_Service_Contacts</permissionSets>
+    <permissionSets>Opportunity_Owner_Recruiting_Sales</permissionSets>
     <permissionSets>Sales_Service_Object_Permission</permissionSets>
     <permissionSets>SBQQ__SalesforceCPQUserAccess</permissionSets>
     <permissionSets>SBQQ__SteelBrickCPQUser</permissionSets>

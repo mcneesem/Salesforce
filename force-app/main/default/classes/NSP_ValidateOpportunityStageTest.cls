@@ -524,7 +524,7 @@ private class NSP_ValidateOpportunityStageTest {
         Opportunity oppty = oppList[0];
 
         if(oppty!=null){
-            oppty.NSP_PrimaryProduct__c = 'WX';
+            oppty.NSP_PrimaryProduct__c = 'WS';
             oppty.StageName='Proposal';
             oppty.NSP_BidNumber__c = '';
             oppty.Type = 'New Product';
