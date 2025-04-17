@@ -5,6 +5,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
     static final string DOCUSIGN_BASE_URL = 'https://uatna11.springcm.com/atlas/doclauncher/OneClickDocGen';
 
     public String runManualResult{get;set;}
+
     global void runApexClass(SandboxContext context){
         try{
             doQueues();
@@ -64,6 +65,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
         return null;
     }
 
+    @AuraEnabled(cacheable=True)
     public static void runManualSteps() {
         String sandbox = System.DomainParser.parse(URL.getOrgDomainUrl()).getSandboxName();
         doCMetadata(sandbox);
@@ -79,11 +81,13 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
         setPostRefreshRunFlag(2);
     }
 
+    @AuraEnabled(cacheable=True)
     public static void runManualSteps2() {
         doCMetadataSvc(System.DomainParser.parse(URL.getOrgDomainUrl()).getSandboxName());
         setPostRefreshRunFlag(3);
     }
 
+    @AuraEnabled(cacheable=True)
     public static void runE2CAddresses() {
         doE2CAddresses(System.DomainParser.parse(URL.getOrgDomainUrl()).getSandboxName());
         setPostRefreshRunFlag(4);
