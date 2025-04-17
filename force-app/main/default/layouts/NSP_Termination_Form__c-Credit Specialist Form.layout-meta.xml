@@ -180,7 +180,7 @@
                 <field>NSP_Manager_HR_Services__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>BPA__c</field>
             </layoutItems>
             <layoutItems>
@@ -188,7 +188,7 @@
                 <field>NSP_Sales_Office__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>BPC__c</field>
             </layoutItems>
         </layoutColumns>
@@ -218,7 +218,7 @@
                 <field>NSP_Credit_Specialist_Phone__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>Renewal_Coordinator__c</field>
             </layoutItems>
         </layoutColumns>
