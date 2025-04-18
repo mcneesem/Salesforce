@@ -347,8 +347,7 @@ public void updateActivitySales(List<Task> newList,Map<Id,Task> OldTaskMap){
             NSP_ServiceConstants.INSURANCE_SERVICES,
             NSP_ServiceConstants.HR_CONSULTING,
             NSP_ServiceConstants.RETIREMENT_SERVICES,
-            NSP_ServiceConstants.CONTINGENT_WORKFORCE,
-            NSP_ServiceConstants.HRCORE_ONBOARDING_AMENDMENT
+            NSP_ServiceConstants.CONTINGENT_WORKFORCE
         };
         Map<String,String> mapQueueDeveloperNameQueueId = new Map<String,String>();
         for(Group ogroup : [SELECT Id, DeveloperName FROM GROUP WHERE DeveloperName IN: lstReferralQueues AND Type = 'Queue' WITH SECURITY_ENFORCED]){
@@ -376,8 +375,7 @@ public void updateActivitySales(List<Task> newList,Map<Id,Task> OldTaskMap){
                 NSP_ServiceConstants.ORGANIZATIONAL_PLANNING => NSP_ServiceConstants.SERVICE_REFERRAL,
                 NSP_ServiceConstants.PERFORMANCE_MANAGEMENT => NSP_ServiceConstants.SERVICE_REFERRAL,
                 NSP_ServiceConstants.TIME_AND_ATTENDANCE => NSP_ServiceConstants.SERVICE_REFERRAL,
-                NSP_ServiceConstants.PI_CONTINGENT_WORKFORCE => NSP_ServiceConstants.CONTINGENT_WORKFORCE,
-                NSP_ServiceConstants.PI_HRCORE_ONBOARDING_AMENDMENT => NSP_ServiceConstants.HRCORE_ONBOARDING_AMENDMENT
+                NSP_ServiceConstants.PI_CONTINGENT_WORKFORCE => NSP_ServiceConstants.CONTINGENT_WORKFORCE
             };
         }
     }
