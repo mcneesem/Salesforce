@@ -824,7 +824,6 @@ public class NSP_ServiceConstants {
     public static final String RETIREMENT_SERVICES ='NSP_Retirement_Services';
     public static final String WX_IMPL_SUPPORT = 'NSP_WX_IMPL_Support';
     public static final String NATIONAL_BUSINESS_TEAM = 'NSP_National_Business_Team';
-    public static final String HRCORE_ONBOARDING_AMENDMENT = 'HRCore_Onboarding_Amendment';
 
     //Products of Interest Tasks
     public static final String EMPLOYMENT_SCREENING = 'Employment Screening';
@@ -856,8 +855,6 @@ public class NSP_ServiceConstants {
     public static final String CLIENT_REINSTATE = 'NSP_Client_Reinstatement';
     public static final String TERM_TEAM_APPROVED = 'Term Team Approved';
     public static final String DEPLOYMENT_MANAGER = 'Deployment Manager';
-    public static final String PI_HRCORE_ONBOARDING_AMENDMENT = 'HRCore Onboarding Amendment';
-
     // community Constants
     public static final String peoCommunityAccess = 'PEO Projects';
     public static final String communityUserProfilePlus = 'Customer Community Plus User';
