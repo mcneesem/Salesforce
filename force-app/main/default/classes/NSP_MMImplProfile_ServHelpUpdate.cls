@@ -353,10 +353,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
         Id projectTaskPEORecordTypeId = Schema.SObjectType.pse__Project_Task__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.PROJECT_TASK_PEO_RECORDTYPE).getRecordTypeId();
         
         pse__Project_Task__c eachProjectTask = new pse__Project_Task__c();
-        if(project != null 
-           && category != null 
-           && ipRecId != null 
-           && milestoneKey != null){
+        if(project != null && String.isNotBlank(category) && ipRecId != null && String.isNotBlank(milestoneKey)){
             eachProjectTask.RecordTypeId=projectTaskPEORecordTypeId;
             eachProjectTask.NSP_Category__c=category;
             eachProjectTask.NSP_Visible_to_Client__c=TRUE;
@@ -495,25 +492,8 @@ public class NSP_MMImplProfile_ServHelpUpdate {
             }
     }
     
-    //T&A Business Rule Review - 2 Hours - Project Task
-    //T&A System Build and Integration - Project Task
-    //T&A Administrator/Payroll Contact Training - 2 hours - Project Task
-    //T&A Supervisor Training - 2 Hours - Project Task
-    //Employee Plan PTO Setup - Project Task
-    //T&A Parallel Testing - Project Task
-    //T&A System Live - Project Task
-    //T&A Payroll Export and Training - 2 Hour - Project Task
-    //T&A Configuration Notes Sign off/Project Completion - Project Task
-    //ORK 401K Plan set up in payroll system - Project Task
-    //ORK Client Deferral Authorization Agreement form Signed - Project Task
-    //401K YTD employee contributions - file uploaded - Project Task
-    //401K YTD employee contributions - file provided - Project Task
-    //Client Plan Review - Project Task
-    //Election Agreement - Project Task
-    //Client Match - Project Task
-    //Plan set up is complete - Project Task
-    //Collect YTD Balances for: EE Contributions, Amounts - Project Task
-    //401K Employee training - Project Task
+    //Create Project Tasks for Time and Attendance automation
+    //Create Project Tasks for ORK 401(k) set up automation
     private void subTask(pse__Proj__c proj,
                                                 NSP_ProjectTask_Automation__mdt pta,Id ipRecId,
                                                 Implementation_Profile__c ipwithValue, Id workCalendarId
