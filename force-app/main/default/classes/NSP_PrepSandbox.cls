@@ -65,7 +65,6 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
         return null;
     }
 
-    @AuraEnabled(cacheable=True)
     public static void runManualSteps() {
         String sandbox = System.DomainParser.parse(URL.getOrgDomainUrl()).getSandboxName();
         doCMetadata(sandbox);
@@ -81,13 +80,11 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
         setPostRefreshRunFlag(2);
     }
 
-    @AuraEnabled(cacheable=True)
     public static void runManualSteps2() {
         doCMetadataSvc(System.DomainParser.parse(URL.getOrgDomainUrl()).getSandboxName());
         setPostRefreshRunFlag(3);
     }
 
-    @AuraEnabled(cacheable=True)
     public static void runE2CAddresses() {
         doE2CAddresses(System.DomainParser.parse(URL.getOrgDomainUrl()).getSandboxName());
         setPostRefreshRunFlag(4);
@@ -115,7 +112,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
             for(integer i=1; i < rows.size() ; i++) { // skip header row
                 String[] column = rows[i].split(',');
                 String aliasEnd = (column[4].length() < 5) ? column[4].trim() : column[4].substring(0,5);
-                String orgNames = (column.size() > 6) ? 'none' : column[7].toLowercase();
+                String orgNames = column[7].toLowercase();
                 if (column[1].indexOf('integration') < 0 && column[2].indexOf('noreply') < 0 && column[2].indexOf('insperity') > -1){
                     userList.add(new User(
                         IsActive = true,
@@ -124,7 +121,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
                         LastName = column[4].trim(),
                         Username = column[2].substringBefore(STRING_INVALID).trim() + '.' + sandboxName,
                         ProfileId = getImportUserProfileId(adminProfileId, sandboxName.toLowercase(), profileNameMap, column[1], column[5], orgNames),
-                        //FederationIdentifier = column[2].substringBefore(STRING_INVALID).trim(),
+                        FederationIdentifier = column[2].substringBefore(STRING_INVALID).trim(),
                         Alias = column[3].substring(0,1).toLowercase() + aliasEnd.toLowercase(),
                         UserRoleId = (userRoleNameMap.containsKey(column[6])) ? userRoleNameMap.get(column[6])[0].Id : null,
                         TimeZoneSidKey = 'America/Chicago',
@@ -709,7 +706,12 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
             NSP_PrepSandbox.handleException( e , 'doQueues' );
         }
     }
-    
+
+    @AuraEnabled(cacheable=true)
+    public static OrgSettings__c getOrgSettings() {
+        return OrgSettings__c.getOrgDefaults();
+    }
+
     public static void setPostRefreshRunFlag(Integer iStep) {
         try {
             OrgSettings__c cS = OrgSettings__c.getOrgDefaults();
