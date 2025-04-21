@@ -41,6 +41,11 @@
                 <default>false</default>
                 <label>WX IMPL</label>
             </value>
+            <value>
+                <fullName>RET Time Tracking</fullName>
+                <default>false</default>
+                <label>RET Time Tracking</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

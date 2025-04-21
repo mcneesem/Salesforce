@@ -81,6 +81,11 @@
                 <default>false</default>
                 <label>XML</label>
             </value>
+            <value>
+                <fullName>RET WO</fullName>
+                <default>false</default>
+                <label>RET WO</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
