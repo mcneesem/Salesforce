@@ -1,34 +1,32 @@
 <template>
-    <div class="slds-m-around_medium">
-        <div class="slds-grid slds-gutters">
-            <div class="slds-col slds-size_1-of-2">
-                <c-nsp_case-custom-look-up
-                    s-object-api-name="Account"
-                    label="Account"
-                    icon-name="standard:account"
-                    default-record-id={selectedAccountId}
-                    case-acc-rec-id={accountFilterId}
-                    parent-id={selectedContactId}
-                    onlookupupdate={handleAccountLookup}
-                    placeholder="Search Accounts..."
-                    is-required="true">
-                </c-nsp_case-custom-look-up>
-                <div lwc:if={showAccountWarning} class="slds-text-color_error slds-text-body_small slds-m-top_x-small">
-                    <strong style="color: red;">{multipleAccountsLabel}</strong>
-                </div>
+    <div class="slds-grid slds-gutters">
+        <div class="slds-col slds-size_1-of-2">
+            <c-nsp_case-custom-look-up
+                s-object-api-name="Account"
+                label="Account"
+                icon-name="standard:account"
+                default-record-id={selectedAccountId}
+                case-acc-rec-id={accountFilterId}
+                parent-id={selectedContactId}
+                onlookupupdate={handleAccountLookup}
+                placeholder="Search Accounts..."
+                is-required="true">
+            </c-nsp_case-custom-look-up>
+            <div lwc:if={showAccountWarning} class="slds-text-color_error slds-text-body_small slds-m-top_x-small">
+                <strong style="color: red;">{multipleAccountsLabel}</strong>
             </div>
-            <div class="slds-col slds-size_1-of-2">
-                <c-nsp_case-custom-look-up
-                    s-object-api-name="Contact"
-                    label="Contact"
-                    icon-name="standard:contact"
-                    default-record-id={selectedContactId}
-                    parent-id={contactFilterId}
-                    case-acc-rec-id={selectedAccountId}
-                    onlookupupdate={handleContactLookup}
-                    placeholder="Search Contacts...">
-                </c-nsp_case-custom-look-up>
-            </div>
+        </div>
+        <div class="slds-col slds-size_1-of-2">
+            <c-nsp_case-custom-look-up
+                s-object-api-name="Contact"
+                label="Contact"
+                icon-name="standard:contact"
+                default-record-id={selectedContactId}
+                parent-id={contactFilterId}
+                case-acc-rec-id={selectedAccountId}
+                onlookupupdate={handleContactLookup}
+                placeholder="Search Contacts...">
+            </c-nsp_case-custom-look-up>
         </div>
     </div>
 </template>

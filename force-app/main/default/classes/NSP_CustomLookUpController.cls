@@ -26,7 +26,7 @@ public with sharing class NSP_CustomLookUpController {
     * @return void                          
     */
             @AuraEnabled(cacheable=true)
-            public static list<sObject> fetchLookupData(string searchKey , string sObjectApiName, String accId, String parentId) {    
+            public static list<sObject> fetchLookupData(string searchKey , string sObjectApiName, String accId, String parentId) { 
                 List < sObject > returnList = new List < sObject > ();
                 string sQuery;
                 string sWildCardText = String.isNotBlank(searchKey) ? '%' + String.escapeSingleQuotes(searchKey) + '%' : '%' + searchKey + '%';
@@ -90,7 +90,7 @@ public with sharing class NSP_CustomLookUpController {
             for(AccountContactRelation acr : [SELECT Id, AccountId, ContactId FROM AccountContactRelation WHERE AccountId =: parentAccountId]){
                 conIdSet.add(acr.ContactId); 
             }
-            conQuery = 'Select Id,Name From ' + sObjectApiName + ' Where Name Like : sWildCardText AND ID IN: conIdSet order by createdDate DESC LIMIT 1000';
+            conQuery = 'Select Id,Name From ' + sObjectApiName + ' Where ( Name Like : sWildCardText OR NSP_Per_ID__c LIKE : sWildCardText ) AND ID IN: conIdSet order by createdDate DESC LIMIT 1000';
         }else{
             conQuery = frameFetchLookUpDataQuery(sWildCardText, sObjectApiName, NSP_ServiceConstants.EMPTY_STRING);
         }
