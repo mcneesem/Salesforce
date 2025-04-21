@@ -3,7 +3,13 @@ public with sharing class SandboxManualStepsController {
     // Method to run post-refresh steps
     @AuraEnabled
     public static void runManualSteps() {
-        NSP_PrepSandbox.runManualSteps();
+        try {
+            System.debug('Running runManualSteps method');
+            NSP_PrepSandbox.runManualSteps();
+            System.debug('Finished running NSP_PrepSandbox.runManualSteps method');
+        } catch(Exception e) {
+            System.debug('runManualSteps ERROR : ' + e.getMessage() + ' : ' + e.getStackTraceString());
+        }
     }
 
     // Method to import org users

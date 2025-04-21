@@ -8,10 +8,9 @@
                     onclick={handlePostRefresh}
                     variant="brand">
                 </lightning-button>
-                <apex:outputPanel
+                <apex:outputPanel if:true={postRefreshRun}
                     class="slds-m-left_x-small postRefreshAlreadyRunClass"
                     id="postRefreshAlreadyRun"
-                    rendered={postRefreshRun}
                     style="font-family: 'Helvetica';font-size: 14px;color: black">
                     <i>Post-refresh steps have been run.</i>
                 </apex:outputPanel>
@@ -24,10 +23,9 @@
                     onclick={handleImportUsers}
                     variant="brand">
                 </lightning-button>
-                <apex:outputPanel
+                <apex:outputPanel if:true={postRefreshRun2}
                     class="slds-m-left_x-small"
                     id="importUsersAlreadyRun"
-                    rendered={postRefreshRun2}
                     style="font-family: 'Helvetica';font-size: 14px;color: black">
                     <i>Import Users step has been run.</i>
                 </apex:outputPanel>
@@ -40,10 +38,9 @@
                     onclick={handlePostImport}
                     variant="brand">
                 </lightning-button>
-                <apex:outputPanel
+                <apex:outputPanel if:true={postRefreshRun3}
                     class="slds-m-left_x-small"
                     id="postImportStepsAlreadyRun"
-                    rendered={postRefreshRun3}
                     style="font-family: 'Helvetica';font-size: 14px;color: black">
                     <i>Post-import steps have been run.</i>
                 </apex:outputPanel>
@@ -56,10 +53,9 @@
                     onclick={handleE2CAddresses}
                     variant="brand">
                 </lightning-button>
-                <apex:outputPanel
+                <apex:outputPanel if:true={postRefreshRun4}
                     class="slds-m-left_x-small e2cAddressAlreadyRunClass"
                     id="e2cAddressAlreadyRun"
-                    rendered={postRefreshRun4}
                     style="font-family: 'Helvetica';font-size: 14px;color: black">
                     <i>E2C Address updates have been run.</i>
                 </apex:outputPanel>

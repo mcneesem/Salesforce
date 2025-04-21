@@ -5,6 +5,7 @@ import runManualSteps from '@salesforce/apex/SandboxManualStepsController.runMan
 import runUserImport from '@salesforce/apex/SandboxManualStepsController.runUserImport';
 import runManualSteps2 from '@salesforce/apex/SandboxManualStepsController.runManualSteps2';
 import runE2CAddresses from '@salesforce/apex/SandboxManualStepsController.runE2CAddresses';
+import { refreshApex } from '@salesforce/apex';
 
 export default class PrepSandbox extends LightningElement {
     @track isLoading = false;
@@ -13,17 +14,23 @@ export default class PrepSandbox extends LightningElement {
     postRefreshRun2 = false;
     postRefreshRun3 = false;
     postRefreshRun4 = false;
+    wiredCustomSettingResult;
 
-    @wire(getOrgSettings)  
-    getCustomSettingValues({ error, data }) {
-        if (data) {
-            this.postRefreshRun = data.PostRefreshRun__c;
-            this.postRefreshRun2 = data.PostRefreshRun2__c;
-            this.postRefreshRun3 = data.PostRefreshRun3__c;
-            this.postRefreshRun4 = data.PostRefreshRun4__c;
-        }else if(error) {
-            this.showToast('Error', error.message, 'error');
+    @wire(getOrgSettings)
+    wiredCustomSetting(result) {
+        this.wiredCustomSettingResult = result;
+        if (result.data) {
+            this.postRefreshRun = result.data.PostRefreshRun__c;
+            this.postRefreshRun2 = result.data.PostRefreshRun2__c;
+            this.postRefreshRun3 = result.data.PostRefreshRun3__c;
+            this.postRefreshRun4 = result.data.PostRefreshRun4__c;
+        } else if (result.error) {
+            this.showToast('Error', result.error.message, 'error');
         }
+    }
+
+    refreshCustomSetting() {
+        refreshApex(this.wiredCustomSettingResult);
     }
 
     // Handler for Post-Refresh Steps button
@@ -34,6 +41,7 @@ export default class PrepSandbox extends LightningElement {
         try {
             await runManualSteps();
             this.showToast('Success', 'Post-refresh steps completed successfully.', 'success');
+            this.postRefreshRun = true;
         } catch (error) {
             this.message = 'Failed to complete post-refresh steps...';
             this.showToast('Error', 'Failed to complete post-refresh steps.', 'error');
@@ -43,13 +51,14 @@ export default class PrepSandbox extends LightningElement {
     }
 
     // Handler for Import Org Users button
-    async handleImportUsers() {
+    handleImportUsers() {
         this.isLoading = true;
         this.message = 'Importing users...';
 
         try {
-            await runUserImport();
+            runUserImport();
             this.showToast('Success', 'Users imported successfully.', 'success');
+            this.postRefreshRun2 = true;
         } catch (error) {
             this.message = 'Failed to import users...';
             this.showToast('Error', 'Failed to import users.', 'error');
@@ -66,6 +75,7 @@ export default class PrepSandbox extends LightningElement {
         try {
             await runManualSteps2();
             this.showToast('Success', 'Post-import steps completed successfully.', 'success');
+            this.postRefreshRun3 = true;
         } catch (error) {
             this.message = 'Failed to complete post-import steps...';
             this.showToast('Error', 'Failed to complete post-import steps.', 'error');
@@ -82,6 +92,7 @@ export default class PrepSandbox extends LightningElement {
         try {
             await runE2CAddresses();
             this.showToast('Success', 'E2C addresses updated successfully.', 'success');
+            this.postRefreshRun4 = true;
         } catch (error) {
             this.message = 'Failed to update E2C addresses...';
             this.showToast('Error', 'Failed to update E2C addresses.', 'error');
@@ -92,10 +103,12 @@ export default class PrepSandbox extends LightningElement {
 
     // Helper method to show * notifications
     showToast(title, message, variant) {
-        this.dispatchEvent(new ShowToastEvent({
-            title,
-            message,
-            variant,
-        }));
+        const toastEvent = new ShowToastEvent({
+            title: title,
+            message: message,
+            variant: variant,
+            mode: 'dismissable',
+        });
+        this.dispatchEvent(toastEvent);
     }
 }
