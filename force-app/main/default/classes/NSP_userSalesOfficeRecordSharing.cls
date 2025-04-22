@@ -7,7 +7,7 @@
 public without sharing class NSP_userSalesOfficeRecordSharing {
     // test w/ NSP_UserTriggerHelper_Test (93%)
 
-    private static Map<Id,User> permittedUserMap = CustomPermissionController.getPermittedUsersMap( 'User_Share_SO_Update' );
+    private static Map<Id,User> permittedUserMap;
 	private static Map<String , String> mapSalesOfficeLabels = salesOfficePicklistLabelsMap();
 
     /***********************************************************************************************
@@ -20,6 +20,9 @@ public without sharing class NSP_userSalesOfficeRecordSharing {
         Map<String , Set<String>> mapNewSalesOfficeSetUserId = new Map<String , Set<String>>();
         Map<String , Set<String>> mapUserIdSetOldSalesOffice = new Map<String , Set<String>>();
         List<User> updateUserList = new  List<User>();
+        if (permittedUserMap == null) {
+            permittedUserMap = CustomPermissionController.getPermittedUsersMap('User_Share_SO_Update');
+        }
         try{
             Map<Id,User> newUserMap = new Map<Id,User>( [
                 SELECT
