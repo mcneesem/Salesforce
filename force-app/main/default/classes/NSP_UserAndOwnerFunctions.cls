@@ -2,7 +2,7 @@ public with sharing class NSP_UserAndOwnerFunctions {
     // test w/ NSP_UserAndOwnerFunctionsTest (89%)
 
     public static final String SELECT_PRIMARY_CONTACT = System.Label.NSP_Select_Primary_Contact;
-    private static Map<Id,User> templSelectUpdPermittedUserMap = CustomPermissionController.getPermittedUsersMap('Template_Selection_Owner_Update');
+    private static Map<Id,User> templSelectUpdPermittedUserMap;
 
 /*
 * Description: This method sets signer to dummy user if they are blank, customer signer to accoun't primary contact
@@ -19,6 +19,9 @@ public with sharing class NSP_UserAndOwnerFunctions {
 */
     public void setDummyUsers( List<Opportunity> setOpptyTemplateIdList , Set<String> accountIdSet , Set<Id> ownerIdset ) {
         //get custom metadata for docusign template mapping
+        if (templSelectUpdPermittedUserMap == null) {
+            templSelectUpdPermittedUserMap = CustomPermissionController.getPermittedUsersMap('Template_Selection_Owner_Update');
+        }
         
         try{
             Map < Id, String > accountContactMap = new Map < Id, String > ();
