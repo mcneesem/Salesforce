@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Queue xmlns="http://soap.sforce.com/2006/04/metadata">
+    <doesSendEmailToMembers>false</doesSendEmailToMembers>
+    <name>IIS Changes Errors</name>
+    <queueMembers>
+        <users>
+            <user>david.vasseur@insperity.com.prod</user>
+            <user>diana.carbajal@insperity.com</user>
+            <user>georgina.rios@insperity.com</user>
+            <user>john.reid@insperity.com</user>
+            <user>laura.vote@insperity.com</user>
+            <user>natalia.gonzales@insperity.com</user>
+            <user>tamatha.arnold@insperity.com</user>
+        </users>
+    </queueMembers>
+    <queueSobject>
+        <sobjectType>Case</sobjectType>
+    </queueSobject>
+    <queueSobject>
+        <sobjectType>Task</sobjectType>
+    </queueSobject>
+    <queueSobject>
+        <sobjectType>pse__Proj__c</sobjectType>
+    </queueSobject>
+    <queueSobject>
+        <sobjectType>pse__Project_Task__c</sobjectType>
+    </queueSobject>
+</Queue>
