@@ -125,10 +125,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Purchased List</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>RM - Affiliates</fullName>
             <default>false</default>
         </values>
@@ -145,7 +141,23 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>RM - Event - Loyalty</fullName>
+            <fullName>RM - Event - Loyalty %28COI%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RM - Event - Loyalty %28Client Engagement%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RM - Event - Loyalty %28Generic%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RM - Event - Loyalty %28Local Sponsorship%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RM - Event - Loyalty %28Our Client%27s Clients%29</fullName>
             <default>false</default>
         </values>
         <values>
@@ -154,10 +166,6 @@
         </values>
         <values>
             <fullName>RM - Loyalty</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>RM - National Accounts</fullName>
             <default>false</default>
         </values>
         <values>
