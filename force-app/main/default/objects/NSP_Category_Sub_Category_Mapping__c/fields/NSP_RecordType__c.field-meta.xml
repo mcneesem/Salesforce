@@ -45,7 +45,7 @@
                 <fullName>WX IMPL</fullName>
                 <default>false</default>
                 <label>WX IMPL</label>
-            </value>    
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
