@@ -141,9 +141,9 @@
                 <label>Phone</label>
             </value>
             <value>
-                <fullName>Purchased List</fullName>
+                <fullName>Reset to OOB Statuses</fullName>
                 <default>false</default>
-                <label>Purchased List</label>
+                <label>Reset to OOB Statuses</label>
             </value>
             <value>
                 <fullName>RM - Affiliates</fullName>
@@ -166,9 +166,29 @@
                 <label>RM - Event - Alliances</label>
             </value>
             <value>
-                <fullName>RM - Event - Loyalty</fullName>
+                <fullName>RM - Event - Loyalty (Client Engagement)</fullName>
                 <default>false</default>
-                <label>RM - Event - Loyalty</label>
+                <label>RM - Event - Loyalty (Client Engagement)</label>
+            </value>
+            <value>
+                <fullName>RM - Event - Loyalty (COI)</fullName>
+                <default>false</default>
+                <label>RM - Event - Loyalty (COI)</label>
+            </value>
+            <value>
+                <fullName>RM - Event - Loyalty (Generic)</fullName>
+                <default>false</default>
+                <label>RM - Event - Loyalty (Generic)</label>
+            </value>
+            <value>
+                <fullName>RM - Event - Loyalty (Local Sponsorship)</fullName>
+                <default>false</default>
+                <label>RM - Event - Loyalty (Local Sponsorship)</label>
+            </value>
+            <value>
+                <fullName>RM - Event - Loyalty (Our Client&apos;s Clients)</fullName>
+                <default>false</default>
+                <label>RM - Event - Loyalty (Our Client&apos;s Clients)</label>
             </value>
             <value>
                 <fullName>RM - Event - PCM</fullName>
@@ -179,11 +199,6 @@
                 <fullName>RM - Loyalty</fullName>
                 <default>false</default>
                 <label>RM - Loyalty</label>
-            </value>
-            <value>
-                <fullName>RM - National Accounts</fullName>
-                <default>false</default>
-                <label>RM - National Accounts</label>
             </value>
             <value>
                 <fullName>RM - PCM</fullName>
@@ -296,9 +311,22 @@
                 <label>Z_Archive</label>
             </value>
             <value>
-                <fullName>Reset to OOB Statuses</fullName>
+                <fullName>Purchased List</fullName>
                 <default>false</default>
-                <label>Reset to OOB Statuses</label>
+                <isActive>false</isActive>
+                <label>Purchased List</label>
+            </value>
+            <value>
+                <fullName>RM - Event - Loyalty</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>RM - Event - Loyalty</label>
+            </value>
+            <value>
+                <fullName>RM - National Accounts</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>RM - National Accounts</label>
             </value>
         </valueSetDefinition>
     </valueSet>
