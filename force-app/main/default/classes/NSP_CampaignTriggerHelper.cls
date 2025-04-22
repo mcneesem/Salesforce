@@ -1,6 +1,9 @@
 public with sharing class NSP_CampaignTriggerHelper {
     // test w/ NSP_CampaignTriggerHelperTest (86%)
 
+    private static Map<Id,User> ownerBasedUserMap;
+    private static Map<Id,User> campaignBasedUserMap;
+
      public void beforeInsertDirector( List<Campaign> newList ) {
         try {
             updateCampaignField( newList , null );
@@ -16,8 +19,12 @@ public with sharing class NSP_CampaignTriggerHelper {
     private void updateCampaignField( List<Campaign> newList , Map<Id,Campaign> oldCampaignMap ) {
         Set<Id> ownerIdSet = new set<Id>();
         Set<String> officeSet = new set<String>();
-        Map<Id,User> ownerBasedUserMap = CustomPermissionController.getPermittedUsersMap('Campaign_Update_Sales_Office_Info_Owner_Assigned');
-        Map<Id,User> campaignBasedUserMap = CustomPermissionController.getPermittedUsersMap('Campaign_Update_Sales_Office_Info_Campaign_Assigned');
+        if (ownerBasedUserMap == null) {
+            ownerBasedUserMap = CustomPermissionController.getPermittedUsersMap('Campaign_Update_Sales_Office_Info_Owner_Assigned');
+        }
+        if (campaignBasedUserMap == null) {
+            campaignBasedUserMap = CustomPermissionController.getPermittedUsersMap('Campaign_Update_Sales_Office_Info_Campaign_Assigned');
+        }
         for ( Campaign newCampaign : newList ) {
             Campaign oldCampaign = ( oldCampaignMap != null ) ? oldCampaignMap.get(newCampaign.Id) : null;
             if ( Trigger.isInsert || ( newCampaign.OwnerId != oldCampaign.OwnerId ) ) {
