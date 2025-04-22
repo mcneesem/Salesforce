@@ -1,5 +1,5 @@
 public class NSP_MMImplProfile_ServHelpUpdate {
-    // test w/ NSP_MMImplProfile_UpdateTest (92%)
+    // test w/ NSP_MMImplProfile_UpdateTest (93%)
 
     private  Boolean isRerun =false;
     private Map<Id, Implementation_Profile__c> newIPs = null; 
@@ -252,22 +252,22 @@ public class NSP_MMImplProfile_ServHelpUpdate {
         
         if(!projectTaskToInsertList.isEmpty()){
             //check for existing Project Tasks to avoid duplications
-            recToInsert.addAll(getnewTaskstoInsert(projectTaskToInsertList));
+            recToInsert.addAll(getNewTasksToInsert(projectTaskToInsertList));
         }
         if(!projectTaskToInsertList.isEmpty()){
             //check for existing Automation record and store the new Automation records
-            recToInsert.addAll(getnewAutomationListtoInsert(ipAutomationRecords));
+            recToInsert.addAll(getNewAutomationListToInsert(ipAutomationRecords));
         }
         
         //Child Project Tasks
         if(!subTaskList.isEmpty()){
             //check for existing Project Tasks to avoid duplications
-            childRecToInsert.addAll(getnewTaskstoInsert(subTaskList));
+            childRecToInsert.addAll(getNewTasksToInsert(subTaskList));
         }
         //Child Project Tasks             
         if(!subTaskAutomationList.isEmpty()){
             //check for existing Automation record and store the new Automation records
-            childRecToInsert.addAll(getnewAutomationListtoInsert(subTaskAutomationList)); 
+            childRecToInsert.addAll(getNewAutomationListToInsert(subTaskAutomationList)); 
         }
         finish();
         getProjectDBRecords();
@@ -409,7 +409,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
             if(milestoneId == null && !mileStonesToInsert.containsKey(milestoneKey)){
                 pse__Milestone__c eachMilestone = new pse__Milestone__c(
                     Name=pta.NSP_Milestone__c,
-                    RecordTypeId=milestonePEORecordtypeId,
+                    RecordTypeId=NSP_MMImplProfile_ServHelpUpdate.milestonePEORecordtypeId,
                     pse__Project__c=proj.Id,
                     pse__Target_Date__c=proj.pse__End_Date__c
                 );
@@ -421,7 +421,13 @@ public class NSP_MMImplProfile_ServHelpUpdate {
     
     //All Project Task Automations
     private void projectTasks(String automation,pse__Proj__c proj, NSP_ProjectTask_Automation__mdt pta,Id ipRecId,Id workCalendarId) {
-        if(automation != null && proj != null && pta != null && ipRecId != null && workCalendarId != null){
+        if ( ( data != null )
+            && data.containsKey( IMPL_PROFILE_IDENTIFIER )
+            && ( data.get( IMPL_PROFILE_IDENTIFIER ) != null )
+            && data.get( IMPL_PROFILE_IDENTIFIER ).containsKey( ipRecId )
+            && ( data.get( IMPL_PROFILE_IDENTIFIER ).get( ipRecId ) != null )
+            )
+        {
             Implementation_Profile__c ipwithValue=(Implementation_Profile__c) data.get(IMPL_PROFILE_IDENTIFIER).get(ipRecId);
             createProjectTaskForSectionQuestionnaire(automation,proj,pta,ipRecId,ipwithValue,workCalendarId);
             createProjectTaskForReceivedCertificate(automation,proj,pta,ipRecId,ipwithValue,workCalendarId);
@@ -2275,19 +2281,22 @@ public class NSP_MMImplProfile_ServHelpUpdate {
         }
     }
     
-    private List<pse__Project_Task__c> getnewTaskstoInsert(List<pse__Project_Task__c> projTaskList){
+    private List<pse__Project_Task__c> getNewTasksToInsert(List<pse__Project_Task__c> projTaskList){
         List<pse__Project_Task__c> newProjectList=new List<pse__Project_Task__c>();
         List<String> existingProjecttasks=new List<String>();
         
         Map<Id, sObject> dbRec=data.get(PROJECT_IDENTIFIER);
         
-        for(Id projId:dbRec.keySet()){
-            
-            pse__Proj__c project=(pse__Proj__c)dbRec.get(projId);
-            
-            for(pse__Project_Task__c projTask:project.pse__Project_Tasks__r){          
-                existingProjecttasks.add(projTask.NSP_Implementation_Account_Id__c+'_'+projTask.Name+'_'+
-                                         projTask.NSP_Category__c+'_'+projTask.NSP_Sub_Category__c); 
+        if( ( dbRec != null ) && !dbRec.isEmpty() ) {
+            for(Id projId:dbRec.keySet()){
+                if( dbRec.get( projId ) != null ) {
+                    pse__Proj__c project=(pse__Proj__c)dbRec.get(projId);
+                    
+                    for(pse__Project_Task__c projTask:project.pse__Project_Tasks__r){
+                        existingProjecttasks.add(projTask.NSP_Implementation_Account_Id__c+'_'+projTask.Name+'_'+
+                                                 projTask.NSP_Category__c+'_'+projTask.NSP_Sub_Category__c);
+                    }
+                }
             }
         }
         
@@ -2303,15 +2312,18 @@ public class NSP_MMImplProfile_ServHelpUpdate {
         return newProjectList;
     } 
     
-    private List<NSP_Implementation_Profile_Automation__c> getnewAutomationListtoInsert(List<NSP_Implementation_Profile_Automation__c> ipAutomationList){
+    private List<NSP_Implementation_Profile_Automation__c> getNewAutomationListToInsert(List<NSP_Implementation_Profile_Automation__c> ipAutomationList){
         
         Map<Id, sObject> dbRec=data.get(IP_AUTOMATION_IDENTIFIER);
         List<String> existingIpAutomations=new List<String>();
-        for(Id ipaId:dbRec.keySet()){
-            NSP_Implementation_Profile_Automation__c ipa=(NSP_Implementation_Profile_Automation__c)dbRec.get(ipaId);
-            existingIpAutomations.add(ipa.NSP_Implementation_Profile__c+'_'+ipa.Name+'_'+ipa.NSP_Record_Type__c);
-            
-        }   
+        if( ( dbRec != null ) && !dbRec.isEmpty() ) {
+            for(Id ipaId:dbRec.keySet()){
+                if(( dbRec.get( ipaId ) != null )) {
+                    NSP_Implementation_Profile_Automation__c ipa=(NSP_Implementation_Profile_Automation__c)dbRec.get(ipaId);
+                    existingIpAutomations.add(ipa.NSP_Implementation_Profile__c+'_'+ipa.Name+'_'+ipa.NSP_Record_Type__c);
+                }
+            }
+        }
         
         List<NSP_Implementation_Profile_Automation__c> newipAutomationList=new List<NSP_Implementation_Profile_Automation__c>();
         
@@ -2331,31 +2343,32 @@ public class NSP_MMImplProfile_ServHelpUpdate {
         ipAautomation.Name = automationName;
         ipAautomation.NSP_Method_Name__c = fnName;
         ipAautomation.NSP_Section__c = section;
-        ipAautomation.NSP_Implementation_Profile__c = ipRec.Id;
         ipAautomation.NSP_Class_Name__c=NSP_ServiceConstants.IP_PROJECTTASKMM_AUTOMATIONCLASS;
         ipAautomation.NSP_Last_Run__c = System.now();
-        if(ipRec.RecordTypeId==ipFSORecordTypeId){
-            ipAautomation.NSP_Record_Type__c=NSP_ServiceConstants.FSOProfile;
-        }
-        if(ipRec.RecordTypeId==ipMMRecordTypeId){
-            ipAautomation.NSP_Record_Type__c=NSP_ServiceConstants.MIDDLEMARKET;
+        if( ipRec != null ) {
+            ipAautomation.NSP_Implementation_Profile__c = ipRec.Id;
+            if(ipRec.RecordTypeId==ipFSORecordTypeId){
+                ipAautomation.NSP_Record_Type__c=NSP_ServiceConstants.FSOProfile;
+            }
+            if(ipRec.RecordTypeId==ipMMRecordTypeId){
+                ipAautomation.NSP_Record_Type__c=NSP_ServiceConstants.MIDDLEMARKET;
+            }
         }
         
         return ipAautomation;
     }
     
-    private Id getMilestoneId(List<pse__Milestone__c> listOfMilestone, String milestoneName, pse__Proj__c proj){
-        if(listOfMilestone !=null && !listOfMilestone.isEmpty() ){
-            
-            for(pse__Milestone__c milestone:listOfMilestone){
-                if(milestone.Name==milestoneName){
-                    return milestone.Id;
+    private Id getMilestoneId( List<pse__Milestone__c> listOfMilestones , String milestoneName , pse__Proj__c proj ) {
+        Id response = null;
+        if ( ( listOfMilestones != null ) && !listOfMilestones.isEmpty() ) {
+            for ( pse__Milestone__c milestone : listOfMilestones ) {
+                if ( milestone.Name == milestoneName ) {
+                    response = milestone.Id;
+                    break;
                 }
-                
             }             
         }
-        return null;
-        
+        return response;
     }
 
     private  void checkforPayrollRegister(Implementation_Profile__c newRec, Implementation_Profile__c existingRec){
