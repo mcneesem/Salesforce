@@ -693,6 +693,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>NSP_ReportRequest__c.Performance_Specialist__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>NSP_Revenue_Distribution_Scenario__c.NSP_External_Id__c</field>
         <readable>true</readable>
     </fieldPermissions>
