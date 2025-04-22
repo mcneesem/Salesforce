@@ -83,13 +83,13 @@ public with sharing class NSP_TerminationFormTemplateController {
                             NSP_Email__c ,
                             NSP_First_Name__c ,
                             NSP_Last_Name__c ,
-                            NSP_Primary__c,
+                            NSP_Primary__c ,
                             NSP_PER_ID__c
                         FROM NSP_Account_Team__c
                         WHERE (
                             ( NSP_Account__c IN :accountWithTerminationMap.keySet() )
                             AND ( NSP_Role__c != null )
-                            AND (NSP_PER_ID__c != '0')
+                            AND ( NSP_PER_ID__c != '0' )
                         )
                     ]
                 )
