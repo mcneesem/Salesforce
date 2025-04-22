@@ -57,6 +57,11 @@
                 <label>HR Resource Center</label>
             </value>
             <value>
+                <fullName>ibs COBRA Sync</fullName>
+                <default>false</default>
+                <label>ibs COBRA Sync</label>
+            </value>
+            <value>
                 <fullName>Integra - Implementation</fullName>
                 <default>false</default>
                 <label>Integra - Implementation</label>
@@ -232,9 +237,19 @@
                 <label>TES 360 Performance Management</label>
             </value>
             <value>
+                <fullName>TES Billable Carrier Connection</fullName>
+                <default>false</default>
+                <label>TES Billable Carrier Connection</label>
+            </value>
+            <value>
                 <fullName>TES Climate Survey</fullName>
                 <default>false</default>
                 <label>TES Climate Survey</label>
+            </value>
+            <value>
+                <fullName>TES DiSC</fullName>
+                <default>false</default>
+                <label>TES DiSC</label>
             </value>
             <value>
                 <fullName>TES HR Compliance</fullName>
@@ -245,6 +260,11 @@
                 <fullName>TES HR Compliance Review</fullName>
                 <default>false</default>
                 <label>TES HR Compliance Review</label>
+            </value>
+            <value>
+                <fullName>TES Integra Implementation</fullName>
+                <default>false</default>
+                <label>TES Integra Implementation</label>
             </value>
             <value>
                 <fullName>TES Termination</fullName>
