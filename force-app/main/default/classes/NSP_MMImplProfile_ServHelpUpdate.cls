@@ -2358,7 +2358,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
         return ipAautomation;
     }
     
-    private Id getMilestoneId( List<pse__Milestone__c> listOfMilestones , String milestoneName , pse__Proj__c proj ) {
+    private Id getMilestoneId( List<pse__Milestone__c> listOfMilestones , String milestoneName ) {
         Id response = null;
         if ( ( listOfMilestones != null ) && !listOfMilestones.isEmpty() ) {
             for ( pse__Milestone__c milestone : listOfMilestones ) {
