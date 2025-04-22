@@ -24,8 +24,8 @@ public class NSP_AccountTriggerHelper {
     // Added as part of 215091
     private static Boolean hasPartnerLoyaltyPermission = CustomPermissionController.checkUserPermission('Account_Partner_Update_Loyalty_from_SO', UserInfo.getUserId());
     private static Boolean hasPartnerMMPermission = CustomPermissionController.checkUserPermission('Account_Partner_MidMarket_Seller', UserInfo.getUserId());
-    private static Map<Id,User> ownerUpdatePermittedUserMap = CustomPermissionController.getPermittedUsersMap('Account_Owner_Restrict_Update');
-    private static Map<Id,User> templSelectUpdPermittedUserMap = CustomPermissionController.getPermittedUsersMap('Template_Selection_Owner_Update');
+    private static Map<Id,User> ownerUpdatePermittedUserMap;
+    private static Map<Id,User> templSelectUpdPermittedUserMap;
     
     /**
      * Iterates throught the list of new Account and passes the required attributes to other methods.
@@ -535,6 +535,9 @@ public class NSP_AccountTriggerHelper {
      */
     public void setDummyUsers( List<Account> accountList ) {
         try {
+            if (templSelectUpdPermittedUserMap == null) {
+                templSelectUpdPermittedUserMap = CustomPermissionController.getPermittedUsersMap('Template_Selection_Owner_Update');
+            }
             for( Account accountObj: accountList ){
                 // if Account owner is BPA
                 // set BPA as owner or set as dummy user -- UPDATE: Dummy User retired; just leave NSP_BPA__c unassigned
@@ -644,6 +647,9 @@ public class NSP_AccountTriggerHelper {
 
     private Map<String,String> selectAccountOwnerSalesOfficeMap( Map<Id,Account> oldMap ) {
         Map<String,String> response = new Map<String,String>();
+        if (ownerUpdatePermittedUserMap == null) {
+            ownerUpdatePermittedUserMap = CustomPermissionController.getPermittedUsersMap('Account_Owner_Restrict_Update');
+        }
         if ( ( oldMap != null ) && !oldMap.isEmpty() ) {
             for ( Account acc : [
                         SELECT
