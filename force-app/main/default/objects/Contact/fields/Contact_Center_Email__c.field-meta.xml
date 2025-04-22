@@ -3,13 +3,13 @@
     <fullName>Contact_Center_Email__c</fullName>
     <externalId>false</externalId>
     <formula>IF(
-    NOT(ISBLANK(NSP_Personal_Email__c)),
-    NSP_Personal_Email__c,
-    IF(
-        NOT(ISBLANK(NSP_Work_email__c)),
-        NSP_Work_email__c,
-        NSP_Alt_Email__c
-    )
+  NOT( ISBLANK( NSP_Personal_Email__c ) ) ,
+  NSP_Personal_Email__c ,
+  IF(
+    NOT( ISBLANK( NSP_Work_email__c ) ) ,
+    NSP_Work_email__c ,
+    NSP_Alt_Email__c
+  )
 )</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Contact Center Email</label>
