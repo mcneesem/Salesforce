@@ -3,7 +3,7 @@ public with sharing class NSP_EnrollmentFeePaymentSharing {
     // test w/ NSP_EnrollmentFeePaymentTriggerClassTest (67%)
     // test w/ NSP_OpportunityTeamMemberTriggerTest (28%)
 
-    private static Map<Id,User> efpSharingUserMap = CustomPermissionController.getPermittedUsersMap( 'Enrollment_Fee_Payment_Edit_Sharing' );
+    private static Map<Id,User> efpSharingUserMap;
 
     public static void onEfpRecordInsert( List<NSP_Enrollment_Fee_Payment__c> listOfEnrollmentFee ) {
         Set<id> opportunityIds=new Set<id>();
@@ -78,6 +78,9 @@ public with sharing class NSP_EnrollmentFeePaymentSharing {
     // select the permitted Users for the Sales Offices...
     private static List<User> selectPermittedSalesOfficeUsers( Set<String> salesOffices ) {
         List<User> response = new List<User>();
+        if (NSP_EnrollmentFeePaymentSharing.efpSharingUserMap == null) {
+            NSP_EnrollmentFeePaymentSharing.efpSharingUserMap = CustomPermissionController.getPermittedUsersMap('Enrollment_Fee_Payment_Edit_Sharing');
+        }
         if ( ( NSP_EnrollmentFeePaymentSharing.efpSharingUserMap != null )
             && !NSP_EnrollmentFeePaymentSharing.efpSharingUserMap.isEmpty()
             )
