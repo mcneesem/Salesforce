@@ -10,7 +10,7 @@ public class NSP_salesOfficeRecordSharing {
     //constants - custom labels
     public static List<string> BusinessPerformanceRoles = System.Label.NSP_Business_Performance_Roles.split(',');
     private static Map<String,String> salesOfficeGroupMap = new Map<String,String>();
-    private static Map<Id,User> permittedShareSOUserMap = CustomPermissionController.getPermittedUsersMap('Lead_Owner_Update_Share_SO');
+    private static Map<Id,User> permittedShareSOUserMap;
 
     /***********************************************************************************************
     * MethodName: accountRecordSharing 
@@ -355,6 +355,9 @@ public class NSP_salesOfficeRecordSharing {
         Map<String,Set<String>> mapoldOwnerIdSetLeadId = new Map<String,Set<String>>();
         List<LeadShare> deleteLeadShareList = new List<LeadShare>();
         List<LeadShare> newLeadShareList = new List<LeadShare>();
+        if (permittedShareSOUserMap == null) {
+            permittedShareSOUserMap = CustomPermissionController.getPermittedUsersMap('Lead_Owner_Update_Share_SO');
+        }
         try{ 
             for(Lead lead:newLeadMap.values()){
                 if(lead.OwnerId !=oldLeadMap.get(lead.Id).OwnerId && String.valueOf(lead.OwnerId).startsWith('005') ){
