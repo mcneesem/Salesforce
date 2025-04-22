@@ -134,6 +134,7 @@ public class NSP_CaseTriggerHelper {
             }
             if(eachCase.RecordTypeId==bpsRecordTypeId && eachCase.NSP_Level_2__c && eachCase.NSP_Level_2_Assigned_Date__c==NULL){
                 eachCase.NSP_Level_2_Assigned_Date__c = System.now();
+                eachCase.NSP_First_Level2_Assigned_Duration__c = 0;
             }
         }
         
@@ -447,25 +448,23 @@ Date        : 30/09/2021
             }
             Id oldOwnerId = caseOldMap.get(eachCase.Id).OwnerId;
             Id newOwnerId = eachCase.OwnerId;
+            
+            //ADO-338835
+            eachCase = NSP_CaseTriggerHelper.level2AssignedDate( eachCase , bpsRecordTypeId );
+            eachCase = NSP_CaseTriggerHelper.firstLevel2Owner( eachCase , bpsRecordTypeId , oldOwnerId , newOwnerId );
+
             if(eachCase.RecordTypeId==bpsRecordTypeId && eachCase.NSP_Level_2__c){
-                if ( ( newOwnerId.getSobjectType() != Schema.User.SObjectType )
-                    && ( eachCase.NSP_Level_2_Assigned_Date__c == null )
-                    )
-                {
-                    eachCase.NSP_Level_2_Assigned_Date__c = System.now();
-                } else if ( ( newOwnerId != oldOwnerId )
+                if ( ( newOwnerId != oldOwnerId )
                     && ( oldOwnerId.getSobjectType() != Schema.User.SObjectType )
                     && ( newOwnerId.getSobjectType() == Schema.User.SObjectType )
-                    && ( eachCase.NSP_First_Level2_Assigned_Duration__c == null )
                     && ( eachCase.NSP_Level_2_Assigned_Date__c != null )
                     )
                 {
                     eachCase.NSP_First_Level2_Assigned_Duration__c = calculateTimeDifferenceInMin(
                         defaultBusinessHours.Id ,
                         eachCase.NSP_Level_2_Assigned_Date__c ,
-                        System.Now()
+                        eachCase.First_Level_2_Owner_Assigned_Date__c
                     );
-                    eachCase.NSP_Level_2_Assigned_Date__c = System.now();
                 }
                 if ( ( caseOldMap.get(eachCase.Id).NSP_First_Level2_Reply_Date__c == null )
                     && ( eachCase.NSP_First_Level2_Reply_Date__c != null )
@@ -474,7 +473,7 @@ Date        : 30/09/2021
                 {
                     eachCase.NSP_First_Level2_Reply_Duration__c = calculateTimeDifferenceInMin(
                         defaultBusinessHours.Id ,
-                        eachCase.NSP_Level_2_Assigned_Date__c ,
+                        eachCase.First_Level_2_Owner_Assigned_Date__c,
                         eachCase.NSP_First_Level2_Reply_Date__c
                     );
                 }
@@ -536,7 +535,29 @@ Date        : 30/09/2021
             updateInProgressTime(caseOldMap,inProgressCaseList);
         }
     }     
+    
+    //Level 2 Date and First Level2 Assigned Duration logic
+    private static Case level2AssignedDate(Case eachCase, Id recordType){
+        if (eachCase != null && eachCase.RecordTypeId == recordType && eachCase.NSP_Level_2__c && eachCase.NSP_Level_2_Assigned_Date__c==NULL) {
+            eachCase.NSP_Level_2_Assigned_Date__c = System.now();
+            eachCase.NSP_First_Level2_Assigned_Duration__c = 0;
+        }
+        return eachCase;
+    }
 
+    //First Level2 Owner Assigned Date logic
+    private static Case firstLevel2Owner(Case eachCase, Id recordTypeId, Id oldUserId, Id newUserId){
+        if (eachCase != null 
+            && oldUserId != null 
+            && newUserId != null 
+            && eachCase.RecordTypeId == recordTypeId 
+            && eachCase.NSP_Level_2__c
+            && ( oldUserId.getSobjectType() != Schema.User.SObjectType )
+            && ( newUserId.getSobjectType() == Schema.User.SObjectType )) {
+            eachCase.First_Level_2_Owner_Assigned_Date__c = System.now();
+        }
+        return eachCase;
+    }
     /**
 * @MethodName: isCorpEE
 * @Description:  This method determines wheather a contact qualifies for Corporate EE or not
