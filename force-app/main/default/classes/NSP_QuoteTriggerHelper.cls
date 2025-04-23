@@ -916,18 +916,23 @@ public void initializeDefaultFieldValuesOnInsert(List<SBQQ__Quote__c> newQuotesL
     // @param newQuotesList List of New Quote.
     // @return void
     //
-    public void stampQuoteOwnerGrouponInsert(List<SBQQ__Quote__c> newQuotesList) {
+    public void stampQuoteOwnerGrouponInsert( List<SBQQ__Quote__c> newQuotesList ) {
         List<Id> ownerIds = new List<Id>();
-        Map<Id, String> ownerIdToGroupMap = new Map<Id,String>();
-        Map<Id, String> ownerIdToL2Map = new Map<Id,String>();
-        set<string> groupname = new set<string>(system.label.NSP_ApprovalSubmitterGroups.split(','));
-        set<string> seApprovalChain = new set<string>{'NSP_SE_Group_1','NSP_SE_Group_2','NSP_SE_MidMarket','NSP_SE_Group_3'};
-        for(SBQQ__Quote__c newQuote : newQuotesList) {
-            if(newQuote.OwnerId!=null){
-                ownerIds.add(newQuote.OwnerId);
+        Map<Id,String> ownerIdToGroupMap = new Map<Id,String>();
+        Map<Id,String> ownerIdToL2Map = new Map<Id,String>();
+        Set<string> groupname = new set<string>( System.label.NSP_ApprovalSubmitterGroups.split( ',' ) );
+        Set<string> seApprovalChain = new set<string>{
+            'NSP_SE_Group_1' ,
+            'NSP_SE_Group_2' ,
+            'NSP_SE_MidMarket' ,
+            'NSP_SE_Group_3'
+        };
+        for ( SBQQ__Quote__c newQuote : newQuotesList ) {
+            if ( newQuote.OwnerId != null ) {
+                ownerIds.add( newQuote.OwnerId );
             }
             //Added as part of DF-01372 to nullify the approval related fields on clone.
-            if (newQuote.isClone()) {
+            if ( newQuote.isClone() ) {
                 newQuote.NSP_Submitter_Comment__c = null;
                 newQuote.ApprovalStatus__c = null;
                 newQuote.SubmittedUser__c = null;
@@ -935,27 +940,46 @@ public void initializeDefaultFieldValuesOnInsert(List<SBQQ__Quote__c> newQuotesL
                 newQuote.SBQQ__Status__c = NSP_CPQConstants.QUOTE_STATUS_RECALLED;
             }
         }
-        if(ownerIds.size()>0) {
-            for(groupMember  objmember : [select id,UserOrGroupId,GroupId,Group.DeveloperName,Group.Name from groupMember
-                                    WHERE UserOrGroupId IN: ownerIds AND Group.DeveloperName IN : groupname
+        if ( !ownerIds.isEmpty() ) {
+            for ( GroupMember  objmember : [
+                        SELECT Id , UserOrGroupId , GroupId , Group.DeveloperName , Group.Name
+                        FROM GroupMember
+                        WHERE (
+                            ( UserOrGroupId IN :ownerIds )
+                            AND ( Group.DeveloperName IN :groupname )
+                        )
                     ]
                 )
             {
-                if(seApprovalChain.contains(objmember.Group.DeveloperName))  {
-                    ownerIdToGroupMap.put(objmember.UserOrGroupId, NSP_CPQConstants.SE_APPROVAL_Chain);
-                    ownerIdToL2Map.put(objmember.UserOrGroupId,objmember.Group.Name);
+                if ( seApprovalChain.contains( objmember.Group.DeveloperName ) ) {
+                    ownerIdToGroupMap.put( objmember.UserOrGroupId , NSP_CPQConstants.SE_APPROVAL_Chain );
+                    ownerIdToL2Map.put( objmember.UserOrGroupId , objmember.Group.Name );
                 } else {
-                    ownerIdToGroupMap.put(objmember.UserOrGroupId, objmember.Group.Name);
-                    ownerIdToL2Map.put(objmember.UserOrGroupId,objmember.Group.Name);
+                    ownerIdToGroupMap.put( objmember.UserOrGroupId , objmember.Group.Name );
+                    ownerIdToL2Map.put( objmember.UserOrGroupId , objmember.Group.Name );
                 }
             }
             // Assigning Owner Group Name to respective quote fields
-            for(SBQQ__Quote__c newQuote : newQuotesList)  {
-                if( ownerIdToGroupMap.containskey(newQuote.OwnerId)) {
-                    newQuote.NSP_Submitted_User_Role__c = ownerIdToGroupMap.get(newQuote.OwnerId);
-                    newQuote.NSP_Submitted_User_Role_L2__c = ownerIdToL2Map.get(newQuote.OwnerId);
-                }
+            this.populateSubmittedUserRoleFields( newQuotesList , ownerIdToGroupMap , ownerIdToL2Map );
+        }
+    }
 
+    // helper method to defeat sonar cognitive complexity...
+    private void populateSubmittedUserRoleFields( List<SBQQ__Quote__c> newQuotesList , Map<Id,String> ownerIdToGroupMap , Map<Id,String> ownerIdToL2Map ) {
+        if ( ( newQuotesList != null ) && !newQuotesList.isEmpty() ) {
+            for ( SBQQ__Quote__c newQuote : newQuotesList )  {
+                if ( ( ownerIdToGroupMap != null )
+                    && ownerIdToGroupMap.containskey( newQuote.OwnerId )
+                    )
+                {
+                    newQuote.NSP_Submitted_User_Role__c = ownerIdToGroupMap.get( newQuote.OwnerId );
+                }
+                if ( ( ownerIdToL2Map != null )
+                    && ownerIdToL2Map.containskey( newQuote.OwnerId )
+                    )
+                {
+                    newQuote.NSP_Submitted_User_Role_L2__c = ownerIdToL2Map.get( newQuote.OwnerId );
+                }
             }
         }
     }
