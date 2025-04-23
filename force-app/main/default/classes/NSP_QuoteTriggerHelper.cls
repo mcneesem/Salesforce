@@ -13,37 +13,36 @@ public class NSP_QuoteTriggerHelper {
 
     public static Boolean STOP_ACCOUNT_QUERY = false;
     static final String CLASS_NAME = 'NSP_QuoteTriggerHelper';
-    static final String PRICING_MODEL_INCORRECT_ERR_MESSAGE=System.Label.NSP_Incorrect_Pricing_Model;
-    static final String WO_APP_PRICEBOOK_ERR_MESSAGE=System.Label.NSP_WO_Applicable_PriceBooks_Error;
-    static final String BYPASS_SIGNATURE_NOT_ALLOWED=System.Label.NSP_Bypass_Signature_Not_Allowed;
-    static final String SUPPLEMENTAL_TYPE_CHANGE_ERROR=System.Label.NSP_Cannot_Change_Supplemental_Error;
-    static final String AMENDMENT_TYPE_CHANGE_ERROR=System.Label.NSP_Cannot_Change_Amendment_Error;
-    static final String WX_WA_QUOTE_VALIDATION_ERROR=System.Label.NSP_WX_WA_Quote_Validation_Message;
+    static final String PRICING_MODEL_INCORRECT_ERR_MESSAGE = System.Label.NSP_Incorrect_Pricing_Model;
+    static final String WO_APP_PRICEBOOK_ERR_MESSAGE = System.Label.NSP_WO_Applicable_PriceBooks_Error;
+    static final String BYPASS_SIGNATURE_NOT_ALLOWED = System.Label.NSP_Bypass_Signature_Not_Allowed;
+    static final String SUPPLEMENTAL_TYPE_CHANGE_ERROR = System.Label.NSP_Cannot_Change_Supplemental_Error;
+    static final String AMENDMENT_TYPE_CHANGE_ERROR = System.Label.NSP_Cannot_Change_Amendment_Error;
+    static final String WX_WA_QUOTE_VALIDATION_ERROR = System.Label.NSP_WX_WA_Quote_Validation_Message;
     static final String STRING_WO_WS = 'WO/WS';
-    static final String LASSO_PARTNERNAME=System.Label.NSP_Lasso_PartnerName;
+    static final String LASSO_PARTNERNAME = System.Label.NSP_Lasso_PartnerName;
 
     public void beforeInsertDirector( List<SBQQ__Quote__c> newList ) {
         List<SBQQ__Quote__c> primaryQuotes= new List<SBQQ__Quote__c>();
-        validateQuote(newList);
-        stampQuoteOwnerGrouponInsert(newList);
-        initializeDefaultFieldValuesOnInsert(newList);
-        setQuoteDetailsOnInsert(newList);
-        updateBillingAccountOnQuote(newList,null);
-        updateBillingAndShippringAddressOnQuote(newList,null);
-        updateScholarshipEligibility(newList);
-        for(SBQQ__Quote__c quote:newList){
-            if(quote.SBQQ__Primary__c==true){
+        validateQuote( newList );
+        stampQuoteOwnerGrouponInsert( newList );
+        initializeDefaultFieldValuesOnInsert( newList );
+        setQuoteDetailsOnInsert( newList );
+        updateBillingAccountOnQuote( newList , null );
+        updateBillingAndShippringAddressOnQuote( newList , null );
+        updateScholarshipEligibility( newList );
+        for ( SBQQ__Quote__c quote:newList ) {
+            if ( quote.SBQQ__Primary__c == true ) {
                 //Update primary quote's bypass Docusign Field to true for termination opportunities - (DF-03498)
-                if(quote.NSP_TransactionType__c == NSP_CPQConstants.QUOTE_TYPE_TERMINATION){
+                if ( quote.NSP_TransactionType__c == NSP_CPQConstants.QUOTE_TYPE_TERMINATION ) {
                     quote.NSP_Bypass_DocuSign_Signature__c = true;
                 }
-                primaryQuotes.add(quote);
+                primaryQuotes.add( quote );
             }
         }
-        if(primaryQuotes.size()>0){
-            unCheckPrimaryQuotesIfExist(newList);
+        if ( !primaryQuotes.isEmpty() ) {
+            unCheckPrimaryQuotesIfExist( newList );
         }
-
     }
 
     //
@@ -54,29 +53,32 @@ public class NSP_QuoteTriggerHelper {
     //
     public void beforeUpdateDirector( Map<Id,SBQQ__Quote__c> quoteNewMap , Map<Id,SBQQ__Quote__c> quoteOldMap ) {
         List<SBQQ__Quote__c> quoteUpdatedToPrimary= new List<SBQQ__Quote__c>();
-        copyApprovalStatusToQuoteStatus(quoteNewMap,quoteOldMap);
-        setImplementationDateForTalentConnect(quoteNewMap,quoteOldMap);
-        stampQuoteOwnerGroup(quoteNewMap,quoteOldMap);
-        initializeDefaultFieldValues(quoteNewMap,quoteOldMap);
-        updateBillingAccountOnQuote(quoteNewMap.Values(),quoteOldMap);
-        updateBillingAndShippringAddressOnQuote(quoteNewMap.Values(),quoteOldMap);
-        updateScholarshipEligibility(quoteNewMap.Values());
-        for(SBQQ__Quote__c quote:quoteNewMap.values()){
-            if(quote.SBQQ__Primary__c==true && quote.SBQQ__Primary__c!=quoteOldMap.get(quote.Id).SBQQ__Primary__c){
-                quoteUpdatedToPrimary.add(quote);
-            }
-            //Updating Termination quote's start date to Termination Date - DF-03158
-            if ( quote.SBQQ__Primary__c == true
-                && quote.NSP_TransactionType__c == NSP_CPQConstants.QUOTE_TYPE_TERMINATION
-                && quote.NSP_TerminationDate__c != null
-                && quoteOldMap.get(quote.Id).NSP_TerminationDate__c != quote.NSP_TerminationDate__c
+        copyApprovalStatusToQuoteStatus( quoteNewMap , quoteOldMap );
+        setImplementationDateForTalentConnect( quoteNewMap , quoteOldMap );
+        stampQuoteOwnerGroup( quoteNewMap , quoteOldMap );
+        initializeDefaultFieldValues( quoteNewMap , quoteOldMap );
+        updateBillingAccountOnQuote( quoteNewMap.values() , quoteOldMap );
+        updateBillingAndShippringAddressOnQuote( quoteNewMap.values() , quoteOldMap );
+        updateScholarshipEligibility( quoteNewMap.values() );
+        for ( SBQQ__Quote__c quote : quoteNewMap.values() ) {
+            if ( ( quote.SBQQ__Primary__c == true )
+                && ( quote.SBQQ__Primary__c != quoteOldMap.get( quote.Id ).SBQQ__Primary__c )
                 )
             {
-                quote.SBQQ__StartDate__c = quote.NSP_TerminationDate__c.addDays(1);
+                quoteUpdatedToPrimary.add( quote );
+            }
+            //Updating Termination quote's start date to Termination Date - DF-03158
+            if ( ( quote.SBQQ__Primary__c == true )
+                && ( quote.NSP_TransactionType__c == NSP_CPQConstants.QUOTE_TYPE_TERMINATION )
+                && ( quote.NSP_TerminationDate__c != null )
+                && ( quoteOldMap.get( quote.Id ).NSP_TerminationDate__c != quote.NSP_TerminationDate__c )
+                )
+            {
+                quote.SBQQ__StartDate__c = quote.NSP_TerminationDate__c.addDays( 1 );
             }
         }
-        if(quoteUpdatedToPrimary.size()>0){
-            unCheckPrimaryQuotesIfExist(quoteUpdatedToPrimary);
+        if ( !quoteUpdatedToPrimary.isEmpty() ) {
+            unCheckPrimaryQuotesIfExist( quoteUpdatedToPrimary );
         }
     }
 
@@ -103,16 +105,19 @@ public class NSP_QuoteTriggerHelper {
     //
     public void afterUpdateDirector( Map<Id,SBQQ__Quote__c> quoteNewMap , Map<Id,SBQQ__Quote__c> quoteOldMap ) {
         List<SBQQ__Quote__c> primaryQuotes= new List<SBQQ__Quote__c>();
-        populateInsperitySigner(quoteNewMap,quoteOldMap);
-        createEnrollmentFee(quoteNewMap,quoteOldMap);
-        calcTaxOnOpportunity(quoteNewMap,quoteOldMap);
-        for(SBQQ__Quote__c quote:quoteNewMap.values()){
-            if(quote.SBQQ__Primary__c==true && quote.SBQQ__Primary__c!=quoteOldMap.get(quote.Id).SBQQ__Primary__c){
-                primaryQuotes.add(quote);
+        populateInsperitySigner( quoteNewMap , quoteOldMap );
+        createEnrollmentFee( quoteNewMap , quoteOldMap );
+        calcTaxOnOpportunity( quoteNewMap , quoteOldMap );
+        for ( SBQQ__Quote__c quote : quoteNewMap.values() ) {
+            if ( ( quote.SBQQ__Primary__c == true )
+                && ( quote.SBQQ__Primary__c != quoteOldMap.get( quote.Id ).SBQQ__Primary__c )
+                )
+            {
+                primaryQuotes.add( quote );
             }
         }
-        if(primaryQuotes.size()>0){
-            syncQuoteAndOptyPriceBookIfNotSame(primaryQuotes);
+        if ( !primaryQuotes.isEmpty() ) {
+            syncQuoteAndOptyPriceBookIfNotSame( primaryQuotes );
         }
     }
 
