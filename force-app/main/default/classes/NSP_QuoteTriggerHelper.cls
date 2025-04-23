@@ -1296,88 +1296,108 @@ public void initializeDefaultFieldValuesOnInsert(List<SBQQ__Quote__c> newQuotesL
 
     }
 
-    public static void copyBillingAddress( SBQQ__Quote__c newQuote , Account objAccount , NSP_Address__c objAddress , String copyFrom ) {
-        if(copyFrom ==NSP_CPQConstants.ACCOUNT && objAccount != null){
-            newQuote.SBQQ__BillingStreet__c     = objAccount.BillingStreet;
-            newQuote.SBQQ__BillingState__c      = objAccount.BillingState;
-            newQuote.SBQQ__BillingCity__c       = objAccount.BillingCity;
+    public static void copyBillingAddress(
+        SBQQ__Quote__c newQuote ,
+        Account objAccount ,
+        NSP_Address__c objAddress ,
+        String copyFrom
+        )
+    {
+        if ( ( copyFrom == NSP_CPQConstants.ACCOUNT ) && ( objAccount != null ) ) {
+            newQuote.SBQQ__BillingStreet__c = objAccount.BillingStreet;
+            newQuote.SBQQ__BillingState__c = objAccount.BillingState;
+            newQuote.SBQQ__BillingCity__c = objAccount.BillingCity;
             newQuote.SBQQ__BillingPostalCode__c = objAccount.BillingPostalCode;
-            newQuote.SBQQ__BillingCountry__c    = objAccount.BillingCountry;
-            newQuote.SBQQ__BillingName__c       = objAccount.Name;
-            newQuote.NSP_Bill_To_Street_2__c    = null;
-        }
-        else{
-            newQuote.SBQQ__BillingStreet__c     = objAddress.NSP_Street__c;
-            newQuote.NSP_Bill_To_Street_2__c    = objAddress.NSP_Street_Address_2__c;
-            newQuote.SBQQ__BillingState__c      = objAddress.NSP_State__c;
-            newQuote.SBQQ__BillingCity__c       = objAddress.NSP_City__c;
+            newQuote.SBQQ__BillingCountry__c = objAccount.BillingCountry;
+            newQuote.SBQQ__BillingName__c = objAccount.Name;
+            newQuote.NSP_Bill_To_Street_2__c = null;
+        } else{
+            newQuote.SBQQ__BillingStreet__c = objAddress.NSP_Street__c;
+            newQuote.NSP_Bill_To_Street_2__c = objAddress.NSP_Street_Address_2__c;
+            newQuote.SBQQ__BillingState__c = objAddress.NSP_State__c;
+            newQuote.SBQQ__BillingCity__c = objAddress.NSP_City__c;
             newQuote.SBQQ__BillingPostalCode__c = objAddress.NSP_Postal_Code__c;
-            newQuote.SBQQ__BillingCountry__c    = objAddress.NSP_Country__c;
-            newQuote.SBQQ__BillingName__c       = objAddress.Name;
+            newQuote.SBQQ__BillingCountry__c = objAddress.NSP_Country__c;
+            newQuote.SBQQ__BillingName__c = objAddress.Name;
         }
     }
 
-    public static void copyShippingAddress( SBQQ__Quote__c newQuote , Account objAccount , NSP_Address__c objAddress , String copyFrom ) {
-        if(copyFrom ==NSP_CPQConstants.ACCOUNT && objAccount != null){
-            newQuote.SBQQ__ShippingStreet__c     = objAccount.ShippingStreet;
-            newQuote.SBQQ__ShippingState__c      = objAccount.ShippingState;
-            newQuote.SBQQ__ShippingCity__c       = objAccount.ShippingCity;
+    public static void copyShippingAddress(
+        SBQQ__Quote__c newQuote ,
+        Account objAccount ,
+        NSP_Address__c objAddress ,
+        String copyFrom
+        )
+    {
+        if ( ( copyFrom == NSP_CPQConstants.ACCOUNT ) && ( objAccount != null ) ) {
+            newQuote.SBQQ__ShippingStreet__c = objAccount.ShippingStreet;
+            newQuote.SBQQ__ShippingState__c = objAccount.ShippingState;
+            newQuote.SBQQ__ShippingCity__c = objAccount.ShippingCity;
             newQuote.SBQQ__ShippingPostalCode__c = objAccount.ShippingPostalCode;
-            newQuote.SBQQ__ShippingCountry__c    = objAccount.ShippingCountry;
-            newQuote.SBQQ__ShippingName__c       = objAccount.Name;
-            newQuote.NSP_Ship_To_Street_2__c     = null;
-        }
-        else{
-            newQuote.SBQQ__ShippingStreet__c     = objAddress.NSP_Street__c;
-            newQuote.NSP_Ship_To_Street_2__c     = objAddress.NSP_Street_Address_2__c;
-            newQuote.SBQQ__ShippingState__c      = objAddress.NSP_State__c;
-            newQuote.SBQQ__ShippingCity__c       = objAddress.NSP_City__c;
+            newQuote.SBQQ__ShippingCountry__c = objAccount.ShippingCountry;
+            newQuote.SBQQ__ShippingName__c = objAccount.Name;
+            newQuote.NSP_Ship_To_Street_2__c = null;
+        } else{
+            newQuote.SBQQ__ShippingStreet__c = objAddress.NSP_Street__c;
+            newQuote.NSP_Ship_To_Street_2__c = objAddress.NSP_Street_Address_2__c;
+            newQuote.SBQQ__ShippingState__c = objAddress.NSP_State__c;
+            newQuote.SBQQ__ShippingCity__c = objAddress.NSP_City__c;
             newQuote.SBQQ__ShippingPostalCode__c = objAddress.NSP_Postal_Code__c;
-            newQuote.SBQQ__ShippingCountry__c    = objAddress.NSP_Country__c;
-            newQuote.SBQQ__ShippingName__c       = objAddress.Name;
+            newQuote.SBQQ__ShippingCountry__c = objAddress.NSP_Country__c;
+            newQuote.SBQQ__ShippingName__c = objAddress.Name;
         }
     }
 
-    public static void copyCustomerBillingAddress( SBQQ__Quote__c newQuote , Account objAccount , NSP_Address__c objAddress , String copyFrom ) {
-        if(copyFrom == NSP_CPQConstants.ACCOUNT && objAccount != null){
-            newQuote.NSP_Bill_To_Street__c     = objAccount.BillingStreet;
-            newQuote.NSP_Bill_To_State__c      = objAccount.BillingState;
-            newQuote.NSP_Bill_To_City__c       = objAccount.BillingCity;
+    public static void copyCustomerBillingAddress(
+        SBQQ__Quote__c newQuote ,
+        Account objAccount ,
+        NSP_Address__c objAddress ,
+        String copyFrom
+        )
+    {
+        if ( ( copyFrom == NSP_CPQConstants.ACCOUNT ) && ( objAccount != null ) ) {
+            newQuote.NSP_Bill_To_Street__c = objAccount.BillingStreet;
+            newQuote.NSP_Bill_To_State__c = objAccount.BillingState;
+            newQuote.NSP_Bill_To_City__c = objAccount.BillingCity;
             newQuote.NSP_Bill_To_Postal_Code__c = objAccount.BillingPostalCode;
-            newQuote.NSP_Bill_To_Country__c    = objAccount.BillingCountry;
-            newQuote.NSP_Bill_To_Name__c       = objAccount.Name;
-            newQuote.NSP_Customer_Bill_To_Street_2__c     = null;
+            newQuote.NSP_Bill_To_Country__c = objAccount.BillingCountry;
+            newQuote.NSP_Bill_To_Name__c = objAccount.Name;
+            newQuote.NSP_Customer_Bill_To_Street_2__c = null;
 
-        }
-        else{
-            newQuote.NSP_Bill_To_Street__c     = objAddress.NSP_Street__c;
-            newQuote.NSP_Customer_Bill_To_Street_2__c     = objAddress.NSP_Street_Address_2__c;
-            newQuote.NSP_Bill_To_State__c      = objAddress.NSP_State__c;
-            newQuote.NSP_Bill_To_City__c       = objAddress.NSP_City__c;
+        } else{
+            newQuote.NSP_Bill_To_Street__c = objAddress.NSP_Street__c;
+            newQuote.NSP_Customer_Bill_To_Street_2__c = objAddress.NSP_Street_Address_2__c;
+            newQuote.NSP_Bill_To_State__c = objAddress.NSP_State__c;
+            newQuote.NSP_Bill_To_City__c = objAddress.NSP_City__c;
             newQuote.NSP_Bill_To_Postal_Code__c = objAddress.NSP_Postal_Code__c;
-            newQuote.NSP_Bill_To_Country__c    = objAddress.NSP_Country__c;
-            newQuote.NSP_Bill_To_Name__c       = objAddress.Name;
+            newQuote.NSP_Bill_To_Country__c = objAddress.NSP_Country__c;
+            newQuote.NSP_Bill_To_Name__c = objAddress.Name;
         }
     }
 
-    public static void copyCustomerShippingAddress( SBQQ__Quote__c newQuote , Account objAccount , NSP_Address__c objAddress , String copyFrom ) {
-        if(copyFrom == NSP_CPQConstants.ACCOUNT && objAccount != null){
-            newQuote.NSP_Ship_To_Street__c     = objAccount.ShippingStreet;
-            newQuote.NSP_Ship_To_State__c      = objAccount.ShippingState;
-            newQuote.NSP_Ship_To_City__c       = objAccount.ShippingCity;
+    public static void copyCustomerShippingAddress(
+        SBQQ__Quote__c newQuote ,
+        Account objAccount ,
+        NSP_Address__c objAddress ,
+        String copyFrom
+        )
+    {
+        if ( ( copyFrom == NSP_CPQConstants.ACCOUNT ) && ( objAccount != null ) ) {
+            newQuote.NSP_Ship_To_Street__c = objAccount.ShippingStreet;
+            newQuote.NSP_Ship_To_State__c = objAccount.ShippingState;
+            newQuote.NSP_Ship_To_City__c = objAccount.ShippingCity;
             newQuote.NSP_Ship_To_Postal_Code__c = objAccount.ShippingPostalCode;
-            newQuote.NSP_Ship_To_Country__c    = objAccount.ShippingCountry;
-            newQuote.NSP_Ship_To_Name__c       = objAccount.Name;
-            newQuote.NSP_Customer_Ship_To_Street_2__c     = null;
-        }
-        else{
-            newQuote.NSP_Ship_To_Street__c     = objAddress.NSP_Street__c;
-            newQuote.NSP_Customer_Ship_To_Street_2__c     = objAddress.NSP_Street_Address_2__c;
-            newQuote.NSP_Ship_To_State__c      = objAddress.NSP_State__c;
-            newQuote.NSP_Ship_To_City__c       = objAddress.NSP_City__c;
+            newQuote.NSP_Ship_To_Country__c = objAccount.ShippingCountry;
+            newQuote.NSP_Ship_To_Name__c = objAccount.Name;
+            newQuote.NSP_Customer_Ship_To_Street_2__c = null;
+        } else{
+            newQuote.NSP_Ship_To_Street__c = objAddress.NSP_Street__c;
+            newQuote.NSP_Customer_Ship_To_Street_2__c = objAddress.NSP_Street_Address_2__c;
+            newQuote.NSP_Ship_To_State__c = objAddress.NSP_State__c;
+            newQuote.NSP_Ship_To_City__c = objAddress.NSP_City__c;
             newQuote.NSP_Ship_To_Postal_Code__c = objAddress.NSP_Postal_Code__c;
-            newQuote.NSP_Ship_To_Country__c    = objAddress.NSP_Country__c;
-            newQuote.NSP_Ship_To_Name__c       = objAddress.Name;
+            newQuote.NSP_Ship_To_Country__c = objAddress.NSP_Country__c;
+            newQuote.NSP_Ship_To_Name__c = objAddress.Name;
         }
     }
 
@@ -1491,15 +1511,25 @@ public void initializeDefaultFieldValuesOnInsert(List<SBQQ__Quote__c> newQuotesL
     // @return void
     //
     public Map<Id,NSP_Enrollment_Fee_Payment__c> getExistingEnrollments( Map<Id,SBQQ__Quote__c> quoteNewMap ) {
-        Set<Id> optyIds= new Set<Id>();
-        Map<Id,NSP_Enrollment_Fee_Payment__c> enrollmentFeeMap= new Map<Id,NSP_Enrollment_Fee_Payment__c>(); //key as Opportunity and values are Enrollment Fee associated to it
-        for(SBQQ__Quote__c quote :quoteNewMap.values()){
-            if(quote.SBQQ__Opportunity2__c!=null){
-                optyIds.add(quote.SBQQ__Opportunity2__c);
+        Set<Id> optyIds = new Set<Id>();
+        Map<Id,NSP_Enrollment_Fee_Payment__c> enrollmentFeeMap = new Map<Id,NSP_Enrollment_Fee_Payment__c>(); //key as Opportunity and values are Enrollment Fee associated to it
+        for ( SBQQ__Quote__c quote : quoteNewMap.values() ) {
+            if ( quote.SBQQ__Opportunity2__c != null ) {
+                optyIds.add( quote.SBQQ__Opportunity2__c );
             }
         }
-        for(NSP_Enrollment_Fee_Payment__c fee:[Select Id,NSP_Opportunity__c,NSP_WX_WA_Enrollment_Fee__c,NSP_Docupay_Upfront_fee__c FROM NSP_Enrollment_Fee_Payment__c WHERE NSP_Opportunity__c IN :optyIds]){
-            enrollmentFeeMap.put(fee.NSP_Opportunity__c,fee);
+        for ( NSP_Enrollment_Fee_Payment__c fee : [
+                    SELECT
+                        Id ,
+                        NSP_Opportunity__c ,
+                        NSP_WX_WA_Enrollment_Fee__c ,
+                        NSP_Docupay_Upfront_fee__c
+                    FROM NSP_Enrollment_Fee_Payment__c
+                    WHERE ( NSP_Opportunity__c IN :optyIds )
+                ]
+            )
+        {
+            enrollmentFeeMap.put( fee.NSP_Opportunity__c , fee );
         }
         return enrollmentFeeMap;
     }
@@ -1512,22 +1542,24 @@ public void initializeDefaultFieldValuesOnInsert(List<SBQQ__Quote__c> newQuotesL
     // @param QuoteOldMap Map of Old Quote.
     // @return void
     //
-    public void calcTaxOnOpportunity(Map<Id, SBQQ__Quote__c> quoteNewMap,Map<Id, SBQQ__Quote__c> quoteOldMap)  {
+    public void calcTaxOnOpportunity( Map<Id,SBQQ__Quote__c> quoteNewMap , Map<Id,SBQQ__Quote__c> quoteOldMap )  {
         List<Opportunity> opportunitiesToUpdate = new List<Opportunity>();
-
-        for(SBQQ__Quote__c newQuote : quoteNewMap.values()) {
-            if(newQuote.SBQQ__Primary__c==true && newQuote.NSP_Budgetary_Quote__c==true &&  newQuote.SBQQ__Status__c == NSP_CPQConstants.QUOTE_STATUS_APPROVED && newQuote.SBQQ__Status__c!=quoteOldMap.get(newQuote.Id).SBQQ__Status__c) {
+        for ( SBQQ__Quote__c newQuote : quoteNewMap.values() ) {
+            if ( ( newQuote.SBQQ__Primary__c == true )
+                && ( newQuote.NSP_Budgetary_Quote__c == true )
+                && ( newQuote.SBQQ__Status__c == NSP_CPQConstants.QUOTE_STATUS_APPROVED )
+                && ( newQuote.SBQQ__Status__c != quoteOldMap.get( newQuote.Id ).SBQQ__Status__c )
+                )
+            {
                 Opportunity op = new Opportunity();
                 op.Id = newQuote.SBQQ__Opportunity2__c;
                 op.AVA_SFCLOUD__Calculate_Tax__c = true;
-                opportunitiesToUpdate.add(op);
+                opportunitiesToUpdate.add( op );
             }
         }
-
-        if(opportunitiesToUpdate.size()>0) {
+        if ( !opportunitiesToUpdate.isEmpty() ) {
             update opportunitiesToUpdate;
         }
-
     }
 
     //
@@ -1537,23 +1569,37 @@ public void initializeDefaultFieldValuesOnInsert(List<SBQQ__Quote__c> newQuotesL
     // @param quotes list;
     // @return void
     //
-    public void syncQuoteAndOptyPriceBookIfNotSame(List<SBQQ__Quote__c> quotes){
-        Set<Id> optyId= new Set<Id>();
+    public void syncQuoteAndOptyPriceBookIfNotSame( List<SBQQ__Quote__c> quotes ) {
+        Set<Id> optyId = new Set<Id>();
         List<Opportunity> optysToUpdate = new List<Opportunity>();
         try {
-            for(SBQQ__Quote__c objQuote:quotes){
-                if(String.isNotBlank(objQuote.SBQQ__Opportunity2__c)){
-                    optyId.add(objQuote.SBQQ__Opportunity2__c);
+            for ( SBQQ__Quote__c objQuote : quotes ) {
+                if ( String.isNotBlank( objQuote.SBQQ__Opportunity2__c ) ) {
+                    optyId.add( objQuote.SBQQ__Opportunity2__c );
                 }
             }
-            Map<Id,Opportunity> optyMap= new Map<Id,Opportunity>([SELECT Id,Pricebook2Id FROM Opportunity WHERE Id IN :optyId]);
-            for(SBQQ__Quote__c objQuote:quotes){
+            Map<Id,Opportunity> optyMap = new Map<Id,Opportunity>(
+                [
+                    SELECT Id , Pricebook2Id
+                    FROM Opportunity
+                    WHERE ( Id IN :optyId )
+                ]
+            );
+            for ( SBQQ__Quote__c objQuote : quotes ) {
                 //set Quote Price book on Opty, if both Price books not same
-                if(optyMap.containsKey(objQuote.SBQQ__Opportunity2__c) && optyMap.get(objQuote.SBQQ__Opportunity2__c).Pricebook2Id!=objQuote.SBQQ__PriceBook__c){
-                    optysToUpdate.add(new Opportunity(Id=objQuote.SBQQ__Opportunity2__c,Pricebook2Id=objQuote.SBQQ__PriceBook__c));
+                if ( optyMap.containsKey( objQuote.SBQQ__Opportunity2__c )
+                    && ( optyMap.get( objQuote.SBQQ__Opportunity2__c ).Pricebook2Id != objQuote.SBQQ__PriceBook__c )
+                    )
+                {
+                    optysToUpdate.add(
+                        new Opportunity(
+                            Id=objQuote.SBQQ__Opportunity2__c ,
+                            Pricebook2Id=objQuote.SBQQ__PriceBook__c
+                        )
+                    );
                 }
             }
-            if ( optysToUpdate.size() > 0 ) {
+            if ( !optysToUpdate.isEmpty() ) {
                 List<Database.SaveResult> results = Database.update( optysToUpdate , false );
                 NSP_ErrorLogHandler.logResults(
                     NSP_QuoteTriggerHelper.class.getName() ,
@@ -1578,18 +1624,28 @@ public void initializeDefaultFieldValuesOnInsert(List<SBQQ__Quote__c> newQuotesL
     // @return void
     //
     private void unCheckPrimaryQuotesIfExist( List<SBQQ__Quote__c> quotes ) {
-        Set<Id> optyIds= new Set<Id>();
-        for(SBQQ__Quote__c objQuote:quotes){
-            if(String.isNotBlank(objQuote.SBQQ__Opportunity2__c) && objQuote.SBQQ__Primary__c==true){
-                optyIds.add(objQuote.SBQQ__Opportunity2__c);
+        Set<Id> optyIds = new Set<Id>();
+        for ( SBQQ__Quote__c objQuote : quotes ) {
+            if ( String.isNotBlank( objQuote.SBQQ__Opportunity2__c )
+                && ( objQuote.SBQQ__Primary__c == true )
+                )
+            {
+                optyIds.add( objQuote.SBQQ__Opportunity2__c );
             }
         }
-        List<SBQQ__Quote__c> primaryQuotes=[SELECT Id,Name,SBQQ__Primary__c from SBQQ__Quote__c WHERE SBQQ__Opportunity2__c IN:optyIds AND SBQQ__Primary__c=TRUE];
-        for(SBQQ__Quote__c quote:primaryQuotes){
-            quote.SBQQ__Primary__c=false;
+        List<SBQQ__Quote__c> primaryQuotes = [
+            SELECT Id , Name , SBQQ__Primary__c
+            FROM SBQQ__Quote__c
+            WHERE (
+                ( SBQQ__Opportunity2__c IN :optyIds )
+                AND ( SBQQ__Primary__c = true )
+            )
+        ];
+        for ( SBQQ__Quote__c quote : primaryQuotes ) {
+            quote.SBQQ__Primary__c = false;
         }
-        if(primaryQuotes.size()>0){
-            List<Database.SaveResult> results = Database.update(primaryQuotes,false);
+        if ( !primaryQuotes.isEmpty() ) {
+            List<Database.SaveResult> results = Database.update( primaryQuotes , false );
             NSP_ErrorLogHandler.logResults(
                 NSP_QuoteTriggerHelper.class.getName() ,
                 'unCheckPrimaryQuotesIfExist' ,
@@ -1605,23 +1661,44 @@ public void initializeDefaultFieldValuesOnInsert(List<SBQQ__Quote__c> newQuotesL
     // @param quotes list;
     // @return void
     //
-    private void validateQuote(List<SBQQ__Quote__c> quotes){
-        List<Id> accountIds= new List<Id>();
-        Map<Id,Asset> accountAssetMap= new Map<Id,Asset>();
-        for(SBQQ__Quote__c newQuote:quotes){
-            if(newQuote.SBQQ__Type__c.equals(NSP_CPQConstants.QUOTE_TYPE_NEW) && (newQuote.NSP_Opportunity_Primary_Product__c == 'WX' || newQuote.NSP_Opportunity_Primary_Product__c == 'WA')){
-                accountIds.add(newQuote.SBQQ__Account__c);
+    private void validateQuote( List<SBQQ__Quote__c> quotes ) {
+        List<Id> accountIds = new List<Id>();
+        Map<Id,Asset> accountAssetMap = new Map<Id,Asset>();
+        for ( SBQQ__Quote__c newQuote : quotes ) {
+            if ( newQuote.SBQQ__Type__c.equals( NSP_CPQConstants.QUOTE_TYPE_NEW )
+                && ( ( newQuote.NSP_Opportunity_Primary_Product__c == 'WX' )
+                    || ( newQuote.NSP_Opportunity_Primary_Product__c == 'WA' )
+                    )
+                )
+            {
+                accountIds.add( newQuote.SBQQ__Account__c );
             }
         }
-        if(accountIds.size()>0){
-            for(Asset rec:[SELECT Id,AccountId,NSP_ProductBundle__c FROM Asset WHERE AccountId IN :accountIds AND RecordType.Name='WX_WA' AND Status IN ('Onboarding','Active')]){
-                accountAssetMap.put(rec.AccountId,rec);
+        if ( !accountIds.isEmpty() ) {
+            for ( Asset rec : [
+                        SELECT Id , AccountId , NSP_ProductBundle__c
+                        FROM Asset
+                        WHERE (
+                            ( AccountId IN :accountIds )
+                            AND ( RecordType.Name = 'WX_WA' )
+                            AND ( Status IN ( 'Onboarding' , 'Active' ) )
+                        )
+                    ]
+                )
+            {
+                accountAssetMap.put( rec.AccountId , rec );
             }
         }
-        for(SBQQ__Quote__c newQuote:quotes){
-            if(newQuote.SBQQ__Type__c.equals(NSP_CPQConstants.QUOTE_TYPE_NEW) && (newQuote.NSP_Opportunity_Primary_Product__c == 'WX' || newQuote.NSP_Opportunity_Primary_Product__c == 'WA') && accountAssetMap.get(newQuote.SBQQ__Account__c)!=null &&
-            !((newQuote.NSP_Opportunity_Primary_Bundle__c == STRING_WO_WS &&accountAssetMap.get(newQuote.SBQQ__Account__c)?.NSP_ProductBundle__c!=STRING_WO_WS)||(newQuote.NSP_Opportunity_Primary_Bundle__c !=STRING_WO_WS &&accountAssetMap.get(newQuote.SBQQ__Account__c)?.NSP_ProductBundle__c==STRING_WO_WS ))){
-                newQuote.addError(WX_WA_QUOTE_VALIDATION_ERROR);
+        for ( SBQQ__Quote__c newQuote : quotes ) {
+            if ( newQuote.SBQQ__Type__c.equals( NSP_CPQConstants.QUOTE_TYPE_NEW )
+                && ( ( newQuote.NSP_Opportunity_Primary_Product__c == 'WX' ) || ( newQuote.NSP_Opportunity_Primary_Product__c == 'WA' ) )
+                && ( accountAssetMap.get(newQuote.SBQQ__Account__c) != null )
+                && !( ( ( newQuote.NSP_Opportunity_Primary_Bundle__c == STRING_WO_WS ) && ( accountAssetMap.get( newQuote.SBQQ__Account__c )?.NSP_ProductBundle__c != STRING_WO_WS ) )
+                    || ( ( newQuote.NSP_Opportunity_Primary_Bundle__c != STRING_WO_WS ) && ( accountAssetMap.get( newQuote.SBQQ__Account__c )?.NSP_ProductBundle__c == STRING_WO_WS ) )
+                    )
+                )
+            {
+                newQuote.addError( WX_WA_QUOTE_VALIDATION_ERROR );
             }
         }
     }
@@ -1639,19 +1716,25 @@ public void initializeDefaultFieldValuesOnInsert(List<SBQQ__Quote__c> newQuotesL
     //
     public void updatePrimaryQuote( List<SBQQ__Quote__c> newList , Map<Id, SBQQ__Quote__c> quoteOldMap ) {
         List<Opportunity> opportunitiesWithPrimaryQuote = new List<Opportunity>();
-        set<Id> oppIdSet = new set<Id>();
-        for(SBQQ__Quote__c newQuote : newList){
-            SBQQ__Quote__c oldQuote = quoteOldMap != null ? quoteOldMap.get(newQuote.Id):null;
-
-            if((newQuote.SBQQ__Primary__c == True && Trigger.isInsert) ||(Trigger.isUpdate && newQuote.SBQQ__Primary__c != oldQuote.SBQQ__Primary__c && newQuote.SBQQ__Primary__c == True) ){
-                oppIdSet.add(newQuote.SBQQ__Opportunity2__c);
+        Set<Id> oppIdSet = new Set<Id>();
+        for ( SBQQ__Quote__c newQuote : newList ) {
+            SBQQ__Quote__c oldQuote = ( ( quoteOldMap != null ) ? quoteOldMap.get( newQuote.Id ) : null );
+            if ( ( ( newQuote.SBQQ__Primary__c == true ) && Trigger.isInsert )
+                || ( Trigger.isUpdate && ( newQuote.SBQQ__Primary__c != oldQuote.SBQQ__Primary__c ) && ( newQuote.SBQQ__Primary__c == true ) )
+                )
+            {
+                oppIdSet.add( newQuote.SBQQ__Opportunity2__c );
             }
         }
-        if (oppIdSet.size() > 0) {
-            opportunitiesWithPrimaryQuote = [Select Id ,OwnerId ,NSP_PrimaryProduct__c, NSP_Client_For_Life__c,CloseDate FROM Opportunity WHERE Id IN :oppIdSet];
+        if ( !oppIdSet.isEmpty() ) {
+            opportunitiesWithPrimaryQuote = [
+                SELECT Id , OwnerId , NSP_PrimaryProduct__c , NSP_Client_For_Life__c , CloseDate
+                FROM Opportunity
+                WHERE ( Id IN :oppIdSet )
+            ];
         }
-        if (opportunitiesWithPrimaryQuote.size() > 0) {
-             NSP_EventAndTaskHelperFunctions.createTaskForPrimaryQuote(opportunitiesWithPrimaryQuote);
+        if ( !opportunitiesWithPrimaryQuote.isEmpty() ) {
+             NSP_EventAndTaskHelperFunctions.createTaskForPrimaryQuote( opportunitiesWithPrimaryQuote );
         }
     }
 
