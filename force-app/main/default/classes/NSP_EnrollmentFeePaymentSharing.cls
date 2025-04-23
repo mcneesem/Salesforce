@@ -78,7 +78,7 @@ public with sharing class NSP_EnrollmentFeePaymentSharing {
         List<User> response = new List<User>();
         if ( ( NSP_EnrollmentFeePaymentSharing.efpSharingUserMap != null )
             && !NSP_EnrollmentFeePaymentSharing.efpSharingUserMap.isEmpty()
-           )
+            )
         {
             List<User> salesOfficeUsers = new List<User>();
             if ( ( salesOffices != null ) && !salesOffices.isEmpty() ) {
