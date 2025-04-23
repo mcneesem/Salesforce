@@ -6,9 +6,9 @@
     <name>Outgoing Approval Request - Notify Owner of Approval</name>
     <style>none</style>
     <subject>Approval Granted: {!Opportunity.Name}</subject>
-    <textOnly>Dear {!Opportunity.OwnerFirstName},  
+    <textOnly>Dear {!Opportunity.OwnerFirstName},
 
-Congrats, your Outgoing Referral {!Opportunity.Name} request has been APPROVED.  
+Congrats, your Outgoing Referral {!Opportunity.Name} request has been APPROVED.
 
 Your referral will be handed off to Workday within the next 1 – 2 business days. To check the status of your referral, please view the &quot;Outgoing Opportunity – Open and Shared&quot; opportunity list in Salesforce. Your referral will appear in this list once it has been sent to Workday.</textOnly>
     <type>custom</type>
