@@ -874,39 +874,55 @@ public void initializeDefaultFieldValuesOnInsert(List<SBQQ__Quote__c> newQuotesL
     // @return void
     //
     public void updateScholarshipEligibility( List<SBQQ__Quote__c> newQuoteList ) {
-        List<String> userList = new List<String>();
-        List<String> partnerList = new List<String>();
-
-        List<Group> groupM = [SELECT (SELECT UserOrGroupId FROM GroupMembers) FROM Group WHERE Name = :NSP_CPQConstants.SCHOLARSHIP_PUBLIC_GROUP];
-        if(groupM.size()>0) {
-            for (GroupMember groupMember : groupM[0].GroupMembers) {
-                userList.add(groupMember.UserOrGroupId);
-            }
-        }
-
-        //Fetch Custom metadata which holds the eligible partner accounts
-        List<NSP_Scholarship_Eligibility__mdt> eligiblePartner = NSP_Scholarship_Eligibility__mdt.getAll().values();
-        for(NSP_Scholarship_Eligibility__mdt partner:eligiblePartner) {
-            if(partner.NSP_Partner__c != null){
-                partnerList.add(partner.NSP_Partner__c.toUpperCase());
-            }
-        }
-
-        for (SBQQ__Quote__c quote: newQuoteList) {
-            if(quote.NSP_Pricing_Model__c == NSP_CPQConstants.WX_PRICE_MODEL) {
-                if(userList.contains(quote.NSP_Opportunity_BPA__c)) {
+        List<String> userList = this.buildUserList();
+        List<String> partnerList = this.buildPartnerList();
+        for ( SBQQ__Quote__c quote: newQuoteList ) {
+            if ( quote.NSP_Pricing_Model__c == NSP_CPQConstants.WX_PRICE_MODEL ) {
+                if ( userList.contains( quote.NSP_Opportunity_BPA__c ) ) {
                     quote.NSP_IsScholarshipEligibleBPA__c = true;
                 } else {
                     quote.NSP_IsScholarshipEligibleBPA__c = false;
                 }
-                if(quote.NSP_Opportunity_Partner_Name__c != null && partnerList.contains(quote.NSP_Opportunity_Partner_Name__c.toUpperCase())){
+                if ( quote.NSP_Opportunity_Partner_Name__c != null
+                    && partnerList.contains( quote.NSP_Opportunity_Partner_Name__c.toUpperCase() )
+                    )
+                {
                     quote.NSP_IsScholarshipEligiblePartner__c = true;
                     quote.NSP_Is_Partner_CS_Applicable__c = false;
-                } else{
+                } else {
                     quote.NSP_IsScholarshipEligiblePartner__c = false;
                 }
             }
         }
+    }
+
+    // helper method to defeat sonar cognitive complexity...
+    private List<String> buildUserList() {
+        List<String> userList = new List<String>();
+        List<Group> groupM = [
+            SELECT ( SELECT UserOrGroupId FROM GroupMembers )
+            FROM Group
+            WHERE ( Name = :NSP_CPQConstants.SCHOLARSHIP_PUBLIC_GROUP )
+        ];
+        if ( !groupM.isEmpty() ) {
+            for ( GroupMember member : groupM[0].GroupMembers ) {
+                userList.add( member.UserOrGroupId );
+            }
+        }
+        return userList;
+    }
+
+    // helper method to defeat sonar cognitive complexity...
+    private List<String> buildPartnerList() {
+        List<String> partnerList = new List<String>();
+        //Fetch Custom metadata which holds the eligible partner accounts
+        List<NSP_Scholarship_Eligibility__mdt> eligiblePartner = NSP_Scholarship_Eligibility__mdt.getAll().values();
+        for ( NSP_Scholarship_Eligibility__mdt partner : eligiblePartner ) {
+            if ( partner.NSP_Partner__c != null ) {
+                partnerList.add( partner.NSP_Partner__c.toUpperCase() );
+            }
+        }
+        return partnerList;
     }
 
     //
