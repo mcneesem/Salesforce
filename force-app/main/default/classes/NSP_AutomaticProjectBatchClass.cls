@@ -4,9 +4,7 @@
 // @date 05/12/2022
 //
 public class NSP_AutomaticProjectBatchClass implements Database.Batchable<sObject> , Database.Stateful {
-    // test w/ NSP_AutomaticProjectBatchTest (82%)
-
-    private Map<String, pse__Proj__c> templateNameProjectMap = new Map<String,pse__Proj__c>();
+    // test w/ NSP_AutomaticProjectBatchTest (83%)
 
     @TestVisible
     private NSP_OpportunityTriggerServiceHelper opp = new NSP_OpportunityTriggerServiceHelper();
@@ -121,9 +119,9 @@ public class NSP_AutomaticProjectBatchClass implements Database.Batchable<sObjec
         Set<Id> accountFilter = new Set<Id>();
         List<Id> finalAccountId = new List<Id>();
         //getting all the accountId with existing project
-        for ( pse__proj__c oproject : [
+        for ( pse__Proj__c oproject : [
                     SELECT Id , pse__Account__c
-                    FROM pse__proj__c
+                    FROM pse__Proj__c
                     WHERE (
                         pse__Account__c IN :assetAccIdSet
                         AND pse__Is_Active__c = true
@@ -173,11 +171,11 @@ public class NSP_AutomaticProjectBatchClass implements Database.Batchable<sObjec
     // @param: asset record, account record, map<TemplateName, ProjectTemplateRecord>, peo recordType id
     // @return: project record
     //
-    private static pse__proj__c checkingClientType( Asset oasset , Account oaccount , NSP_OpportunityTriggerServiceHelper opp ) {
-        pse__proj__c oproject;
+    private static pse__Proj__c checkingClientType( Asset oasset , Account oaccount , NSP_OpportunityTriggerServiceHelper opp ) {
+        pse__Proj__c oproject;
         if ( oasset.NSP_Client_Segment_type__c == NSP_ServiceConstants.BTAssetSegment ) {
             //getting BT Engagement plan project from the method
-            List<Template_Key_and_Id_Mapping__mdt> templateKeyList = getProjectTemplates( NSP_ServiceConstants.PROJECT_TEMPLATE_NAME );
+            List<Template_Key_and_Id_Mapping__mdt> templateKeyList = NSP_AutomaticProjectBatchClass.getProjectTemplates( NSP_ServiceConstants.PROJECT_TEMPLATE_NAME );
             oproject = createEngagementProject(
                 oAccount ,
                 templateKeyList ,
@@ -190,7 +188,7 @@ public class NSP_AutomaticProjectBatchClass implements Database.Batchable<sObjec
             )
         {
             //getting core Engagement plan project from the method
-            List<Template_Key_and_Id_Mapping__mdt> templateKeyList = getProjectTemplates( NSP_ServiceConstants.PROJECT_CORE_TEMPLATE );
+            List<Template_Key_and_Id_Mapping__mdt> templateKeyList = NSP_AutomaticProjectBatchClass.getProjectTemplates( NSP_ServiceConstants.PROJECT_CORE_TEMPLATE );
             oproject = createEngagementProject(
                 oAccount ,
                 templateKeyList ,
@@ -199,7 +197,7 @@ public class NSP_AutomaticProjectBatchClass implements Database.Batchable<sObjec
             );
         }else if ( oasset.NSP_Client_Segment_type__c == NSP_ServiceConstants.MMAssetSegment ) {
             //getting Middle Market Engagement plan project from the method
-            List<Template_Key_and_Id_Mapping__mdt> templateKeyList = getProjectTemplates( NSP_ServiceConstants.PROJECT_MM_90_DAY_EP_TEMPLATE );
+            List<Template_Key_and_Id_Mapping__mdt> templateKeyList = NSP_AutomaticProjectBatchClass.getProjectTemplates( NSP_ServiceConstants.PROJECT_MM_90_DAY_EP_TEMPLATE );
             oproject = createEngagementProject(
                 oAccount ,
                 templateKeyList ,
@@ -208,7 +206,7 @@ public class NSP_AutomaticProjectBatchClass implements Database.Batchable<sObjec
             );
         }else if ( oasset.NSP_Client_Segment_type__c == NSP_ServiceConstants.MMEAssetSegment ) {
             //getting Middle Market Engagement plan project from the method
-            List<Template_Key_and_Id_Mapping__mdt> templateKeyList = getProjectTemplates( NSP_ServiceConstants.PROJECT_MM_ENTERPRISE_EP_TEMPLATE );
+            List<Template_Key_and_Id_Mapping__mdt> templateKeyList = NSP_AutomaticProjectBatchClass.getProjectTemplates( NSP_ServiceConstants.PROJECT_MM_ENTERPRISE_EP_TEMPLATE );
             oproject = createEngagementProject(
                 oAccount ,
                 templateKeyList ,
@@ -267,25 +265,17 @@ public class NSP_AutomaticProjectBatchClass implements Database.Batchable<sObjec
     // @param: account Id and asset client segment type
     // @return: project record
     //
-    private static pse__proj__c createEngagementProject(
+    private static pse__Proj__c createEngagementProject(
         Account oaccount ,
         List<Template_Key_and_Id_Mapping__mdt> templateKeyList ,
         String clientType ,
         NSP_OpportunityTriggerServiceHelper opp
         )
     {
-
-        //getting the project template based on name of project
-        List<pse__proj__c> oproject;
-        pse__proj__c updateProject = null;
-        Set<Id> newProjectId = new Set<Id> ();
-        List<Id> newProjectIdList = new List<Id> ();
-        pse.CreateProjectFromTemplateService.CreateProjectFromTemplateAndAccountRequest projectrequest;
-        List<pse.CreateProjectFromTemplateService.CreateProjectFromTemplateAndAccountRequest> lProjRequests = new List<pse.CreateProjectFromTemplateService.CreateProjectFromTemplateAndAccountRequest>();
-         //getting account team record of the particular role
-        Id userId = getAccountTeam( oAccount.Id , clientType );
+        //getting account team record of the particular role
+        Id userId = NSP_AutomaticProjectBatchClass.getAccountTeam( oAccount.Id , clientType );
         //calling NSP_CreateProjectUsingKey to create the project and it returns project
-        projectrequest = new pse.CreateProjectFromTemplateService.CreateProjectFromTemplateAndAccountRequest(
+        pse.CreateProjectFromTemplateService.CreateProjectFromTemplateAndAccountRequest projectrequest = new pse.CreateProjectFromTemplateService.CreateProjectFromTemplateAndAccountRequest(
             oaccount.Id ,
             templateKeyList[0].Template_ID__c ,
             System.today()
@@ -303,12 +293,15 @@ public class NSP_AutomaticProjectBatchClass implements Database.Batchable<sObjec
         projectrequest.Mappers = new List<pse.SObjectCloneMapper>{ mapp };
         projectrequest.ProjectOwnerId = userId;
         projectrequest.IsActive = true;
+        List<pse.CreateProjectFromTemplateService.CreateProjectFromTemplateAndAccountRequest> lProjRequests = new List<pse.CreateProjectFromTemplateService.CreateProjectFromTemplateAndAccountRequest>();
         lProjRequests.add( projectrequest );
         //checking whether the account request is empty
+        pse__Proj__c response = null;
         if ( lProjRequests != null ) {
             //create a project and deleting Budget
-            newProjectId = opp.createProjectAndDeleteBudget( lProjRequests );
+            Set<Id> newProjectId = opp.createProjectAndDeleteBudget( lProjRequests );
             if ( ( newProjectId != null ) && !newProjectId.isEmpty() ) {
+                List<Id> newProjectIdList = new List<Id>();
                 newProjectIdList.addAll( newProjectId );
                 if ( !newProjectIdList.isEmpty() ) { // prevent System.ListException: List index out of bounds: 0
                     //querying related project created by the NSP_OpportunityTriggerServiceHelper method
@@ -318,32 +311,39 @@ public class NSP_AutomaticProjectBatchClass implements Database.Batchable<sObjec
                         'pse__Is_Billable__c' , 'pse__Account__c' ,
                         'pse__End_Date__c' , 'pse__Start_Date__c'
                     };
-                    String query = new NSP_QueryBuilder( NSP_ServiceConstants.PROJECT_SOBJECT_NAME , projField )
+                    String query = new NSP_QueryBuilder( 'pse__Proj__c' , projField )
                         .addFilter( 'pse__Is_Template__c' , false )
                         .addFilter( 'pse__Is_Active__c' , true )
                         .addFilter( 'pse__Account__c' , String.valueOf( oaccount.Id ) )
                         .addFilter( 'Id' , newProjectIdList[0] , NSP_QueryBuilder.Operator.INCLUDES )
                         .addFilter( 'OwnerId' , userId )
                         .build();
-                    oproject = (List<pse__proj__c>)Database.query( query ); // throws System.QueryException: invalid ID field: null
-                    if ( !oproject.isEmpty() ) {
-                        //updating the values
-                        if ( oproject[0].pse__Start_Date__c != null && oproject[0].pse__End_Date__c != null ) {
-                            Integer numberDays = oproject[0].pse__Start_Date__c.daysBetween( oproject[0].pse__End_Date__c );
-                            oproject[0].pse__Start_Date__c = System.today();
-                            oproject[0].pse__End_Date__c = System.today() + numberDays;
-                            oproject[0].pse__Is_Billable__c = False;
-                        } else {
-                            oproject[0].pse__Start_Date__c = System.today();
-                            oproject[0].pse__End_Date__c = null;
-                            oproject[0].pse__Is_Billable__c = False;
-                        }
-                        updateProject = oproject[0];
-                    }
+                    List<pse__Proj__c> records = (List<pse__Proj__c>)Database.query( query ); // throws System.QueryException: invalid ID field: null
+                    response = NSP_AutomaticProjectBatchClass.populateFields( records );
                 }
             }
         }
-        return updateProject;
+        return response;
+    }
+
+    // helper method to defeat sonar cognitive complexity...
+    private static pse__Proj__c populateFields( List<pse__Proj__c> records ) {
+        pse__Proj__c response = null;
+        if ( ( records != null ) && !records.isEmpty() ) {
+            response = records[0];
+            if ( ( response.pse__Start_Date__c != null )
+                && ( response.pse__End_Date__c != null )
+                )
+            {
+                Integer numberDays = response.pse__Start_Date__c.daysBetween( response.pse__End_Date__c );
+                response.pse__End_Date__c = System.today() + numberDays;
+            } else {
+                response.pse__End_Date__c = null;
+            }
+            response.pse__Start_Date__c = System.today();
+            response.pse__Is_Billable__c = false;
+        }
+        return response;
     }
 
 }
