@@ -6,6 +6,7 @@
     <permissionSets>Account_Profile_Access</permissionSets>
     <permissionSets>Accrual_Profile_access</permissionSets>
     <permissionSets>Case_Record_Type_WX_IMPL</permissionSets>
+    <permissionSets>Case_fields_for_Screen_flow</permissionSets>
     <permissionSets>Client_goal_project_task_junction_access</permissionSets>
     <permissionSets>Enforce_Rule_Member_Account</permissionSets>
     <permissionSets>NSP_Main_Service_Contacts</permissionSets>
