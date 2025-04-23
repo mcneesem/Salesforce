@@ -20,7 +20,6 @@ public with sharing class NSP_LeadTriggerHelper {
     private static final Id LEAD_RT_ID = NSP_GenericRecordType.getRecordTypeId( 'Lead' , 'Lead' );
     private static final Id REFERRAL_RECORDTYPE_ID = NSP_GenericRecordType.getRecordTypeId( 'Lead' , 'Referral' );
     public static final Id SERVICE_REFERRAL_RECORDTYPE_ID = NSP_GenericRecordType.getRecordTypeId( 'Lead' , 'Service_Referral_Lead' );
-    private static Map<Id,User> permittedUserMap;
 
     //
     // Iterates throught the list of new leads and passes the required attributes to other methods.
@@ -1143,9 +1142,6 @@ public with sharing class NSP_LeadTriggerHelper {
     //
     public Boolean dunsCheck( Lead leadObject ) {
         Boolean isOwnerUpdated = false;
-        if (permittedUserMap == null) {
-            permittedUserMap = CustomPermissionController.getPermittedUsersMap('Lead_DUNS_Account_Owner_Routing');
-        }
         if (leadObject.DNB_Connect_DUNS_Number__c != null && leadObject.NSP_Lead_Routing__c == true) {
             List < Account > accResult = [
                 SELECT
@@ -1164,8 +1160,8 @@ public with sharing class NSP_LeadTriggerHelper {
                 for (Account dunsAcc: accResult) {
                     if ( ( dunsAcc.OwnerId != NSP_LeadTriggerHelper.availableUserId )
                         && ( dunsAcc.NSP_Account_Status__c == NSP_SalesConstants.INACTIVE )
-                        && ( permittedUserMap != null )
-                        && permittedUserMap.containsKey( dunsAcc.OwnerId )
+                        && ( NSP_LeadTriggerHelper.permittedDUNSRoutingUserMap != null )
+                        && NSP_LeadTriggerHelper.permittedDUNSRoutingUserMap.containsKey( dunsAcc.OwnerId )
                         )
                     {
                         leadObject.OwnerId = dunsAcc.OwnerId;
@@ -1495,6 +1491,16 @@ public with sharing class NSP_LeadTriggerHelper {
                 e
             );
         }
+    }
+    
+    private static Map<Id,User> permittedDUNSRoutingUserMap {
+        private get {
+            if ( permittedDUNSRoutingUserMap == null ) {
+                permittedDUNSRoutingUserMap = CustomPermissionController.getPermittedUsersMap( 'Lead_DUNS_Account_Owner_Routing' );
+            }
+            return permittedDUNSRoutingUserMap;
+        }
+        private set;
     }
 }
 //
