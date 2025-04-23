@@ -64,16 +64,16 @@ public with sharing class CustomPermissionController {
     // ~ includes all grants, both via Profile and Permission Set...
     // ~ Map( User.Id ==> User )
     public static Map<Id,User> getPermittedUsersMap( String customPermissionName ) {
-        Map<Id,User> response = new Map<Id,User>();
         String methodName = 'getPermittedUsersMap';
         String debugPrefix = CLASS_NAME + '.' + methodName;
+        Map<Id,User> permittedUsersMap = new Map<Id,User>();
         if ( String.isNotBlank( customPermissionName ) ) {
             if ( ( CustomPermissionController.customPermissionsPermittedUsersMap != null )
                 && CustomPermissionController.customPermissionsPermittedUsersMap.containsKey( customPermissionName )
                 )
             {
-                // used cached response to prevent System.LimitException: Apex CPU time limit exceeded
-                response = CustomPermissionController.customPermissionsPermittedUsersMap.get( customPermissionName );
+                // used cached response to prevent System.LimitException: Too many SOQL queries: 101
+                permittedUsersMap = CustomPermissionController.customPermissionsPermittedUsersMap.get( customPermissionName );
             } else {
                 // grab the relationships (SetupEntityAccess) between the CustomPermission:PermissionSet and the CustomPermission:Profile
                 // ~ SetupEntityAccess.Parent is always a PermissionSet...
@@ -114,12 +114,25 @@ public with sharing class CustomPermissionController {
                     )
                 ];
                 // convert List into the complete Map of permitted User's...
-                response = new Map<Id,User>( permittedUsers );
-                CustomPermissionController.customPermissionsPermittedUsersMap.put( customPermissionName , response );
+                permittedUsersMap = new Map<Id,User>( permittedUsers );
+                // cache the response to prevent recalculation...
+                CustomPermissionController.customPermissionsPermittedUsersMap.put( customPermissionName , permittedUsersMap );
             }
         }
-        System.debug( debugPrefix + ' ~ permittedUsersMap( ' + customPermissionName + ' )=' + response );
-        return response;
+        System.debug( debugPrefix + ' ~ permittedUsersMap( ' + customPermissionName + ' )=' + permittedUsersMap );
+        return permittedUsersMap;
+    }
+
+    // map from CustomPermission.Name to map from User.Id to permitted User...
+    // ~ Map( CustomPermission.Name ==> Map( User.Id ==> User ) )
+    private static Map<String,Map<Id,User>> customPermissionsPermittedUsersMap {
+        private get {
+            if ( customPermissionsPermittedUsersMap == null ) {
+                customPermissionsPermittedUsersMap = new Map<String,Map<Id,User>>();
+            }
+            return customPermissionsPermittedUsersMap;
+        }
+        private set;
     }
 
     // build error message for missing custom permission...
@@ -164,23 +177,15 @@ public with sharing class CustomPermissionController {
         System.debug( debugPrefix + ' ~ CustomPermission( ' + developerName + ' )=' + record );
         return record;
     }
-    
+
+    // map from CustomPermission.Name to CustomPermission...
+    // ~ Map( CustomPermission.Name ==> CustomPermission )
     private static Map<String,CustomPermission> customPermissionsMap {
         private get {
             if ( customPermissionsMap == null ) {
                 customPermissionsMap = new Map<String,CustomPermission>();
             }
             return customPermissionsMap;
-        }
-        private set;
-    }
-    
-    private static Map<String,Map<Id,User>> customPermissionsPermittedUsersMap {
-        private get {
-            if ( customPermissionsPermittedUsersMap == null ) {
-                customPermissionsPermittedUsersMap = new Map<String, Map<Id, User>>();
-            }
-            return customPermissionsPermittedUsersMap;
         }
         private set;
     }
