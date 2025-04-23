@@ -83,10 +83,10 @@ public with sharing class CustomPermissionController {
                     SELECT
                     ParentId , // PermissionSet relationships only have Parent values...
                     Parent.ProfileId // Profile relationships also have Parent.ProfileId values...
-                    FROM SetupEntityAccess 
+                    FROM SetupEntityAccess
                     WHERE SetupEntityId IN (
-                        SELECT Id 
-                        FROM CustomPermission 
+                        SELECT Id
+                        FROM CustomPermission
                         WHERE ( DeveloperName = :customPermissionName )
                     )
                 ];
