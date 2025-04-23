@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>63.0</apiVersion>
+    <assignments>
+        <description>Update the value on fault element variable</description>
+        <name>Get_Record_Fault_Element</name>
+        <label>Get Record Fault Element</label>
+        <locationX>1012</locationX>
+        <locationY>384</locationY>
+        <assignmentItems>
+            <assignToReference>FaultElementNameVariable</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Record_Fault_Element</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>This element constructs and assigns the Invoice Group Id on order product</description>
+        <name>Populate_Invoice_Group_Id</name>
+        <label>Populate Invoice Group Id</label>
+        <locationX>308</locationX>
+        <locationY>600</locationY>
+        <assignmentItems>
+            <assignToReference>AccountIdVariable</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.AccountId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>BillingAccountVariable</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.NSP_Billing_Account__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>ShippingPostalCodeVariable</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.ShippingPostalCode</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>PaymentMethodVariable</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Iterate_Through_Order_Products.NSP_Payment_Method__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Iterate_Through_Order_Products.blng__InvoiceGroupId__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>InvoiceGroupIdFormula</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>OrderProductRecordsCollection</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>Iterate_Through_Order_Products</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Iterate_Through_Order_Products</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Update the value on fault element variable</description>
+        <name>Update_Fault_Element</name>
+        <label>Update Fault Element</label>
+        <locationX>484</locationX>
+        <locationY>900</locationY>
+        <assignmentItems>
+            <assignToReference>FaultElementNameVariable</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Update_Order_Products</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Fault_Handler</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <description>This element checks if Order Products are returned</description>
+        <name>Order_Products_Found</name>
+        <label>Order Products Found</label>
+        <locationX>484</locationX>
+        <locationY>384</locationY>
+        <defaultConnectorLabel>Not Found</defaultConnectorLabel>
+        <rules>
+            <name>Found</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Order_Products</leftValueReference>
+                <operator>IsEmpty</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Iterate_Through_Order_Products</targetReference>
+            </connector>
+            <label>Found</label>
+        </rules>
+    </decisions>
+    <description>This flow asynchronously updates the Order products with the latest Invoice Group Id whenever the Shipping Postal Code is changed on the Order.</description>
+    <environments>Default</environments>
+    <formulas>
+        <description>This formula is used to create desired Invoice Group Id. Any blanks or missing fields are replaced by a string &quot;null&quot;</description>
+        <name>InvoiceGroupIdFormula</name>
+        <dataType>String</dataType>
+        <expression>IF(OR(ISBLANK({!AccountIdVariable}),ISNULL({!AccountIdVariable})), &apos;null&apos;, {!AccountIdVariable}) + 
+IF(OR(ISBLANK({!BillingAccountVariable}),ISNULL({!BillingAccountVariable})), &apos;null&apos;, {!BillingAccountVariable}) + 
+IF(OR(ISBLANK({!ShippingPostalCodeVariable}),ISNULL({!ShippingPostalCodeVariable})), &apos;null&apos;, {!ShippingPostalCodeVariable}) + 
+IF(OR(ISBLANK({!PaymentMethodVariable}),ISNULL({!PaymentMethodVariable})), &apos;null&apos;, {!PaymentMethodVariable})</expression>
+    </formulas>
+    <interviewLabel>Order - Updated Async - Update Invoice Grouping Id on Order Product {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Order - Updated - Async - Update Invoice Grouping Id On Order Product</label>
+    <loops>
+        <description>This loop element goes through all order products to update the Invoice Group Id field</description>
+        <name>Iterate_Through_Order_Products</name>
+        <label>Iterate Through Order Products</label>
+        <locationX>220</locationX>
+        <locationY>492</locationY>
+        <collectionReference>Get_Order_Products</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Populate_Invoice_Group_Id</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Update_Order_Products</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <description>This element fetches all the Order Products that need to be updated.</description>
+        <name>Get_Order_Products</name>
+        <label>Get Order Products</label>
+        <locationX>484</locationX>
+        <locationY>276</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Order_Products_Found</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Get_Record_Fault_Element</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>OrderId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Preserve_Invoice_Group_ID__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>OrderItem</object>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>NSP_Payment_Method__c</queriedFields>
+        <queriedFields>blng__InvoiceGroupId__c</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <description>This element Updates all the Order Product Records that have been processed</description>
+        <name>Update_Order_Products</name>
+        <label>Update Order Products</label>
+        <locationX>220</locationX>
+        <locationY>792</locationY>
+        <faultConnector>
+            <targetReference>Update_Fault_Element</targetReference>
+        </faultConnector>
+        <inputReference>OrderProductRecordsCollection</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>ShippingPostalCode</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>ShippingPostalCode</field>
+            <operator>IsChanged</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <object>Order</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <scheduledPaths>
+            <connector>
+                <targetReference>Get_Order_Products</targetReference>
+            </connector>
+            <pathType>AsyncAfterCommit</pathType>
+        </scheduledPaths>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Draft</status>
+    <subflows>
+        <description>To capture errors during dml</description>
+        <name>Fault_Handler</name>
+        <label>Fault Handler</label>
+        <locationX>484</locationX>
+        <locationY>1008</locationY>
+        <flowName>Insperity_Fault_Handler_Subflow</flowName>
+        <inputAssignments>
+            <name>faultElement</name>
+            <value>
+                <elementReference>FaultElementNameVariable</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultFlow</name>
+            <value>
+                <stringValue>Order_Updated_Async_Update_Invoice_Grouping_Id_on_Order_Product</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultMessage</name>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <variables>
+        <description>Variable to store AccountId field from Order</description>
+        <name>AccountIdVariable</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue></stringValue>
+        </value>
+    </variables>
+    <variables>
+        <description>Field to store NSP_Billing_Account__c field from order</description>
+        <name>BillingAccountVariable</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue></stringValue>
+        </value>
+    </variables>
+    <variables>
+        <name>FaultElementNameVariable</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue></stringValue>
+        </value>
+    </variables>
+    <variables>
+        <description>This variable stores all the records that will be updated for the transaction</description>
+        <name>OrderProductRecordsCollection</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>OrderItem</objectType>
+    </variables>
+    <variables>
+        <description>This variable stores the Payment Method from order product</description>
+        <name>PaymentMethodVariable</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue></stringValue>
+        </value>
+    </variables>
+    <variables>
+        <description>Variable to store ShippingPostalCode from order</description>
+        <name>ShippingPostalCodeVariable</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue></stringValue>
+        </value>
+    </variables>
+</Flow>
