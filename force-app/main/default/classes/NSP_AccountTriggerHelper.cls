@@ -537,7 +537,7 @@ public class NSP_AccountTriggerHelper {
                 // if Account owner is BPA
                 // set BPA as owner or set as dummy user -- UPDATE: Dummy User retired; just leave NSP_BPA__c unassigned
                 if ( ( accountObj.NSP_BPA__c == null )
-                   && ( templSelectUpdPermittedUserMap.keySet().contains( accountObj.OwnerId ) ) ){
+                   && ( NSP_AccountTriggerHelper.templSelectUpdPermittedUserMap.keySet().contains( accountObj.OwnerId ) ) ){
                         accountObj.NSP_BPA__c = accountObj.OwnerId;
                 }
             }
@@ -654,7 +654,7 @@ public class NSP_AccountTriggerHelper {
                         FROM Account
                         WHERE (
                             ( Id IN :oldMap.keySet() )
-                            AND ( OwnerId IN :ownerUpdatePermittedUserMap.keySet() )
+                            AND ( OwnerId IN :NSP_AccountTriggerHelper.ownerUpdatePermittedUserMap.keySet() )
                         )
                     ]
                 )
