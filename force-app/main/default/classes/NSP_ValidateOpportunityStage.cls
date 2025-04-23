@@ -28,12 +28,6 @@ public with sharing class NSP_ValidateOpportunityStage {
     private static Boolean hasAllowCLRecruitingPerm = CustomPermissionController.checkUserPermission( 'Opportunity_Allow_Closed_Lost_Recruiting' , UserInfo.getUserId() );
     private static Boolean hasAllowCLTechnologyPerm = CustomPermissionController.checkUserPermission( 'Opportunity_Allow_Closed_Lost_Technology' , UserInfo.getUserId() );
     private static Boolean hasAllowCWNCSUserPerm = CustomPermissionController.checkUserPermission( 'Opportunity_Closed_Won_NCS_User' , UserInfo.getUserId() );
-    private static Map<Id,User> permittedRETSCUserMap = CustomPermissionController.getPermittedUsersMap( 'Opportunity_Owner_RET_Sales_Consultant' );
-    private static Map<Id,User> permittedInsSalesUserMap = CustomPermissionController.getPermittedUsersMap( 'Opportunity_Owner_Insurance_Sales' );
-    private static Map<Id,User> permittedRecSalesUserMap = CustomPermissionController.getPermittedUsersMap( 'Opportunity_Owner_Recruiting_Sales' );
-    private static Map<Id,User> permittedTechSalesUserMap = CustomPermissionController.getPermittedUsersMap( 'Opportunity_Owner_Technology_Sales' );
-    private static Map<Id,User> permittedBPCUserMap = CustomPermissionController.getPermittedUsersMap( 'Opportunity_Owner_BPC' );
-    private static Map<Id,User> permittedCWOppOwnerUserMap = CustomPermissionController.getPermittedUsersMap( 'Opportunity_Closed_Won_Opp_Owner' );
     public static final String HAS_DISCOVERY = ' has Discovery ';
     public static final String HAS_OPEN_EVENT = ' has Open Event ';
     public static final String HAS_OPEN_WO_PROP = ' has Open WO Proposal Event ';
@@ -44,7 +38,7 @@ public with sharing class NSP_ValidateOpportunityStage {
     public static final String HAS_BID_GENERATED_IN_AIMS_TASK_COMPLETED = ' Bid Generated In AIMS task completed ';
     public static final String HAS_BID_SENT_FROM_PRICING_REVIEW_TASK_COMPLETED = ' Sent From Pricing Review Task completed ';
     public static final String HAS_COMPLETED_STP = ' Sold to Paid Checklist completed ';
-    
+
     public static void validateOpportunityStage(List<Opportunity> newList){
         List<Id> oppIdList= new List<Id>();
         List<Id> oppOwnerIdList= new List<Id>();
@@ -552,7 +546,7 @@ public with sharing class NSP_ValidateOpportunityStage {
     // 
     private static void evaluateClosedWonStageCriteria(Opportunity opp, Map<Id,NSP_Checklist__c> checklistMap, Map<Id,User> opportunityOwnerRoleMap){
         String scannedSTP = '';
-        if ( permittedCWOppOwnerUserMap.containsKey( opp.OwnerId )
+        if ( NSP_ValidateOpportunityStage.permittedCWOppOwnerUserMap.containsKey( opp.OwnerId )
                 && ( !hasAllowCWNCSUserPerm )
                 && ownerBasedCriteriaProducts.contains( opp.NSP_PrimaryProduct__c ) ){
             opp.addError( System.Label.NSP_CANNOT_MOVE_TO_CLOSEDWON );
@@ -561,7 +555,7 @@ public with sharing class NSP_ValidateOpportunityStage {
                 && ( !hasAllowCWNCSUserPerm ) ){
             opp.addError( System.Label.NSP_CANNOT_MOVE_TO_CLOSEDWON );
         } else if ( ownerBasedCriteriaProducts.contains( opp.NSP_PrimaryProduct__c )
-                && !permittedCWOppOwnerUserMap.containsKey( opp.OwnerId )
+                && !NSP_ValidateOpportunityStage.permittedCWOppOwnerUserMap.containsKey( opp.OwnerId )
                 && ( UserInfo.getUserId() != opp.OwnerId )
                 && ( !hasAllowCWNCSUserPerm ) ){
             opp.addError( System.Label.NSP_CANNOT_MOVE_TO_CLOSEDWON );
@@ -592,7 +586,7 @@ public with sharing class NSP_ValidateOpportunityStage {
     private static void evaluateClosedWonStageCriteriaOld(Opportunity opp){
         if( ownerBasedCriteriaProducts.contains(opp.NSP_PrimaryProduct__c)
              && !hasAllowCWNCSUserPerm
-             && permittedCWOppOwnerUserMap.containsKey( opp.OwnerId ) ){
+             && NSP_ValidateOpportunityStage.permittedCWOppOwnerUserMap.containsKey( opp.OwnerId ) ){
             opp.AddError(System.Label.NSP_CANNOT_MOVE_TO_CLOSEDWON);
         }
         else if( nonOwnerBasedCriteriaProducts.contains(opp.NSP_PrimaryProduct__c)
@@ -602,7 +596,7 @@ public with sharing class NSP_ValidateOpportunityStage {
         }
         else if( ownerBasedCriteriaProducts.contains(opp.NSP_PrimaryProduct__c)
              && !hasAllowCWNCSUserPerm
-             && !permittedCWOppOwnerUserMap.containsKey( opp.OwnerId )
+             && !NSP_ValidateOpportunityStage.permittedCWOppOwnerUserMap.containsKey( opp.OwnerId )
              && ( UserInfo.getUserId() != opp.OwnerId ) ){
             opp.AddError(System.Label.NSP_CANNOT_MOVE_TO_CLOSEDWON);
         }
@@ -721,19 +715,20 @@ public with sharing class NSP_ValidateOpportunityStage {
     
     private static Integer checkProductAllowClosedLost(Opportunity opp) {
         Integer canCloseLost = 0;
-        if( permittedBPCUserMap.containsKey( opp.OwnerId )
+
+        if( NSP_ValidateOpportunityStage.permittedBPCUserMap.containsKey( opp.OwnerId )
              && hasAllowCLMMPerm ){
             canCloseLost++;
-        } else if( permittedRETSCUserMap.containsKey( opp.OwnerId )
+        } else if( NSP_ValidateOpportunityStage.permittedRETSCUserMap.containsKey( opp.OwnerId )
              && hasAllowCLRETPerm ){
             canCloseLost++;
-        } else if( permittedInsSalesUserMap.containsKey( opp.OwnerId )
+        } else if( NSP_ValidateOpportunityStage.permittedInsSalesUserMap.containsKey( opp.OwnerId )
              && hasAllowCLInsurancePerm ){
             canCloseLost++;
-        } else if( permittedRecSalesUserMap.containsKey( opp.OwnerId )
+        } else if( NSP_ValidateOpportunityStage.permittedRecSalesUserMap.containsKey( opp.OwnerId )
              && hasAllowCLRecruitingPerm ){
             canCloseLost++;
-        } else if( permittedTechSalesUserMap.containsKey( opp.OwnerId )
+        } else if( NSP_ValidateOpportunityStage.permittedTechSalesUserMap.containsKey( opp.OwnerId )
              && hasAllowCLTechnologyPerm ){
             canCloseLost++;
         }
@@ -773,6 +768,66 @@ public with sharing class NSP_ValidateOpportunityStage {
             }
         }
         return fieldPicklistValues;
+    }
+    
+    private static Map<Id,User> permittedRETSCUserMap {
+        private get {
+            if ( permittedRETSCUserMap == null ) {
+                permittedRETSCUserMap = CustomPermissionController.getPermittedUsersMap( 'Opportunity_Owner_RET_Sales_Consultant' );
+            }
+            return permittedRETSCUserMap;
+        }
+        private set;
+    }
+    
+    private static Map<Id,User> permittedInsSalesUserMap {
+        private get {
+            if ( permittedInsSalesUserMap == null ) {
+                permittedInsSalesUserMap = CustomPermissionController.getPermittedUsersMap( 'Opportunity_Owner_Insurance_Sales' );
+            }
+            return permittedInsSalesUserMap;
+        }
+        private set;
+    }
+    
+    private static Map<Id,User> permittedRecSalesUserMap {
+        private get {
+            if ( permittedRecSalesUserMap == null ) {
+                permittedRecSalesUserMap = CustomPermissionController.getPermittedUsersMap( 'Opportunity_Owner_Recruiting_Sales' );
+            }
+            return permittedRecSalesUserMap;
+        }
+        private set;
+    }
+    
+    private static Map<Id,User> permittedTechSalesUserMap {
+        private get {
+            if ( permittedTechSalesUserMap == null ) {
+                permittedTechSalesUserMap = CustomPermissionController.getPermittedUsersMap( 'Opportunity_Owner_Technology_Sales' );
+            }
+            return permittedTechSalesUserMap;
+        }
+        private set;
+    }
+    
+    private static Map<Id,User> permittedBPCUserMap {
+        private get {
+            if ( permittedBPCUserMap == null ) {
+                permittedBPCUserMap = CustomPermissionController.getPermittedUsersMap( 'Opportunity_Owner_BPC' );
+            }
+            return permittedBPCUserMap;
+        }
+        private set;
+    }
+
+    private static Map<Id,User> permittedCWOppOwnerUserMap {
+        private get {
+            if ( permittedCWOppOwnerUserMap == null ) {
+                permittedCWOppOwnerUserMap = CustomPermissionController.getPermittedUsersMap( 'Opportunity_Closed_Won_Opp_Owner' );
+            }
+            return permittedCWOppOwnerUserMap;
+        }
+        private set;
     }
 }
 //
