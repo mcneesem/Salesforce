@@ -634,139 +634,143 @@ public class NSP_QuoteTriggerHelper {
     // @param newQuotesList List of New Quote.
     // @return void
     //
-    public void initializeDefaultFieldValuesOnInsert( List<SBQQ__Quote__c> newQuotesList ) {
-        Set<Id> opportunityIds = new set<Id> ();
-        List<SBQQ__Quote__c> renewAmendQuotes = new List<SBQQ__Quote__c>();
-        NSP_Partner_Configurations__mdt partnerConfigRec = NSP_Partner_Configurations__mdt.getInstance('Altula');
-
-        for(SBQQ__Quote__c newQuote : newQuotesList) {
-            if(String.isNotEmpty(newQuote.NSP_Product_Type__c)){
-                if((newQuote.NSP_Product_Type__c.contains(NSP_CPQConstants.QUOTE_PRODUCT_TYPE_TC) && newQuote.SBQQ__LineItemCount__c == 0 ) || newQuote.NSP_Product_Type__c.contains(NSP_CPQConstants.QUOTE_PRODUCT_TYPE_LEARNDEV)){
-                    newQuote.NSP_BPS_Billing_Frequency__c = NSP_CPQConstants.MONTHLY;
-                }
+public void initializeDefaultFieldValuesOnInsert(List<SBQQ__Quote__c> newQuotesList) { 
+    Set<Id> opportunityIds = new set<Id> ();
+    List<SBQQ__Quote__c> renewAmendQuotes = new List<SBQQ__Quote__c>();
+    NSP_Partner_Configurations__mdt partnerConfigRec = NSP_Partner_Configurations__mdt.getInstance('Altula');
+   
+    for(SBQQ__Quote__c newQuote : newQuotesList) {
+        if(String.isNotEmpty(newQuote.NSP_Product_Type__c)){
+        if((newQuote.NSP_Product_Type__c.contains(NSP_CPQConstants.QUOTE_PRODUCT_TYPE_TC) && newQuote.SBQQ__LineItemCount__c == 0 ) || newQuote.NSP_Product_Type__c.contains(NSP_CPQConstants.QUOTE_PRODUCT_TYPE_LEARNDEV)){
+        newQuote.NSP_BPS_Billing_Frequency__c = NSP_CPQConstants.MONTHLY;
+        }
+        }
+        if(String.isNotEmpty(newQuote.NSP_Opportunity_Partner_Name__c) && newQuote.NSP_Opportunity_Partner_Name__c.equals(partnerConfigRec.NSP_Partner_Unique_Code__c)) {
+            if(newQuote.SBQQ__Type__c.equals(NSP_CPQConstants.QUOTE_TYPE_NEW) ||  newQuote.SBQQ__Type__c.equals(NSP_CPQConstants.QUOTE_TYPE_AMENDMENT)) {
+                newQuote.SBQQ__PartnerDiscount__c = partnerConfigRec.NSP_New_Sale_Discount__c;
             }
-            if(String.isNotEmpty(newQuote.NSP_Opportunity_Partner_Name__c) && newQuote.NSP_Opportunity_Partner_Name__c.equals(partnerConfigRec.NSP_Partner_Unique_Code__c)) {
-                if(newQuote.SBQQ__Type__c.equals(NSP_CPQConstants.QUOTE_TYPE_NEW) ||  newQuote.SBQQ__Type__c.equals(NSP_CPQConstants.QUOTE_TYPE_AMENDMENT)) {
-                    newQuote.SBQQ__PartnerDiscount__c = partnerConfigRec.NSP_New_Sale_Discount__c;
-                }
-                if(newQuote.SBQQ__Type__c.equals(NSP_CPQConstants.QUOTE_TYPE_RENEWAL) ) {
-                    newQuote.SBQQ__PartnerDiscount__c = partnerConfigRec.NSP_Renewal_Discount__c;
-                }
-            }
-            if(newQuote.SBQQ__Type__c==NSP_CPQConstants.SUPPLEMENTAL) {
-                newQuote.NSP_Product_Type__c = NSP_CPQConstants.SUPPLEMENTAL;
-            }
-            if(newQuote.SBQQ__Opportunity2__c!=null) {
-                opportunityIds.add(newQuote.SBQQ__Opportunity2__c);
-                renewAmendQuotes.add(newQuote);
+            if(newQuote.SBQQ__Type__c.equals(NSP_CPQConstants.QUOTE_TYPE_RENEWAL) ) {
+                newQuote.SBQQ__PartnerDiscount__c = partnerConfigRec.NSP_Renewal_Discount__c;
             }
         }
-        if(opportunityIds.size()>0) {
-            Map<Id,Opportunity> renewAmendOpptys = new Map<Id,Opportunity>();
-            for ( Opportunity opp : [
-                        SELECT Id, SBQQ__AmendedContract__c, SBQQ__RenewedContract__c,
-                        SBQQ__AmendedContract__r.NSP_Number_of_Employees__c, SBQQ__AmendedContract__r.NSP_Pricing_Model__c, SBQQ__AmendedContract__r.NSP_Product_Type__c, SBQQ__AmendedContract__r.SBQQ__Quote__r.NSP_Billing_Account__c,  SBQQ__AmendedContract__r.SBQQ__Quote__r.NSP_Billing_Address__c , SBQQ__AmendedContract__r.SBQQ__Quote__r.NSP_Shipping_Address__c, SBQQ__AmendedContract__r.SBQQ__Quote__r.NSP_Customer_Billing_Address__c, SBQQ__AmendedContract__r.SBQQ__Quote__r.NSP_Customer_Shipping_Address__c,SBQQ__AmendedContract__r.SBQQ__Quote__r.NSP_Opportunity_Type__c,
-                        SBQQ__AmendedContract__r.SBQQ__Quote__r.NSP_Client_For_Life__c, SBQQ__AmendedContract__r.SBQQ__Quote__r.SBQQ__Partner__c, SBQQ__AmendedContract__r.SBQQ__Quote__r.NSP_Opportunity_Primary_Product__c, SBQQ__AmendedContract__r.SBQQ__Quote__r.SBQQ__PrimaryContact__c,SBQQ__AmendedContract__r.SBQQ__Quote__r.NSP_Invoice_To_Email__c, SBQQ__AmendedContract__r.SBQQ__Quote__r.NSP_Product_Type__c,
-                        SBQQ__RenewedContract__r.NSP_Number_of_Employees__c, SBQQ__RenewedContract__r.NSP_Pricing_Model__c, SBQQ__RenewedContract__r.NSP_Product_Type__c, SBQQ__RenewedContract__r.SBQQ__Quote__r.NSP_Billing_Account__c,  SBQQ__RenewedContract__r.SBQQ__Quote__r.NSP_Billing_Address__c, SBQQ__RenewedContract__r.SBQQ__Quote__r.NSP_Shipping_Address__c, SBQQ__RenewedContract__r.SBQQ__Quote__r.NSP_Customer_Billing_Address__c, SBQQ__RenewedContract__r.SBQQ__Quote__r.NSP_Customer_Shipping_Address__c,SBQQ__RenewedContract__r.SBQQ__Quote__r.NSP_Opportunity_Type__c,
-                        SBQQ__RenewedContract__r.SBQQ__Quote__r.NSP_Client_For_Life__c, SBQQ__RenewedContract__r.SBQQ__Quote__r.SBQQ__Partner__c, SBQQ__RenewedContract__r.SBQQ__Quote__r.NSP_Opportunity_Primary_Product__c, SBQQ__RenewedContract__r.SBQQ__Quote__r.SBQQ__PrimaryContact__c,SBQQ__RenewedContract__r.SBQQ__Quote__r.NSP_Invoice_To_Email__c, SBQQ__AmendedContract__r.SBQQ__Quote__r.NSP_BPS_Billing_Frequency__c,
-                        SBQQ__RenewedContract__r.SBQQ__Quote__c, SBQQ__RenewedContract__r.SBQQ__Order__c ,SBQQ__RenewedContract__r.NSP_PrimaryProduct__c, SBQQ__RenewedContract__r.NSP_Client_For_Life__c,SBQQ__RenewedContract__r.NSP_Partner__c, SBQQ__RenewedContract__r.NSP_Invoice_To_Email__c, SBQQ__RenewedContract__r.SBQQ__Order__r.blng__BillingAccount__c, SBQQ__RenewedContract__r.SBQQ__Order__r.NSP_Billing_Address__c, SBQQ__RenewedContract__r.SBQQ__Order__r.NSP_Shipping_Address__c,
-                        SBQQ__AmendedContract__r.SBQQ__Quote__c, SBQQ__AmendedContract__r.SBQQ__Order__c, SBQQ__AmendedContract__r.NSP_PrimaryProduct__c, SBQQ__AmendedContract__r.NSP_Client_For_Life__c,SBQQ__AmendedContract__r.NSP_Partner__c, SBQQ__AmendedContract__r.NSP_Invoice_To_Email__c, SBQQ__AmendedContract__r.SBQQ__Order__r.blng__BillingAccount__c, SBQQ__AmendedContract__r.SBQQ__Order__r.NSP_Billing_Address__c, SBQQ__AmendedContract__r.SBQQ__Order__r.NSP_Shipping_Address__c
-                        FROM Opportunity
-                        WHERE Id IN:opportunityIds AND (SBQQ__AmendedContract__c!=null OR SBQQ__RenewedContract__c!=null)
-                    ]
-                )
-            {
 
-                renewAmendOpptys.put(opp.Id,opp);
-            }
-            if(renewAmendOpptys.size()>0) {
-                for(SBQQ__Quote__c raquote : renewAmendQuotes) {
-                    if(raquote.SBQQ__Type__c==NSP_CPQConstants.QUOTE_TYPE_RENEWAL) {
-                        if(renewAmendOpptys.containskey(raquote.SBQQ__Opportunity2__c)){
-                            Opportunity raOppty = renewAmendOpptys.get(raquote.SBQQ__Opportunity2__c);
-                            raquote.NSP_Quantity_of_Estimated_Employees__c = raOppty.SBQQ__RenewedContract__r.NSP_Number_of_Employees__c;
-                            raquote.NSP_Pricing_Model__c = raOppty.SBQQ__RenewedContract__r.NSP_Pricing_Model__c;
-                            raquote.NSP_Product_Type__c = raOppty.SBQQ__RenewedContract__r.NSP_Product_Type__c;
-                            raquote.NSP_Opportunity_Type__c = NSP_CPQConstants.QUOTE_TYPE_RENEWAL;
-
-                            if(raOppty.SBQQ__RenewedContract__r.SBQQ__Quote__c != null) {
-                                raquote.NSP_Opportunity_Primary_Product__c = raOppty.SBQQ__RenewedContract__r.SBQQ__Quote__r.NSP_Opportunity_Primary_Product__c;
-                                raquote.NSP_Client_For_Life__c = raOppty.SBQQ__RenewedContract__r.SBQQ__Quote__r.NSP_Client_For_Life__c;
-                                raquote.SBQQ__Partner__c = raOppty.SBQQ__RenewedContract__r.SBQQ__Quote__r.SBQQ__Partner__c;
-                                raquote.SBQQ__PrimaryContact__c = raOppty.SBQQ__RenewedContract__r.SBQQ__Quote__r.SBQQ__PrimaryContact__c;
-                                raquote.NSP_Invoice_To_Email__c = raOppty.SBQQ__RenewedContract__r.SBQQ__Quote__r.NSP_Invoice_To_Email__c;
-                                raquote.NSP_Billing_Account__c = raOppty.SBQQ__RenewedContract__r.SBQQ__Quote__r.NSP_Billing_Account__c;
-                                raquote.NSP_Billing_Address__c = raOppty.SBQQ__RenewedContract__r.SBQQ__Quote__r.NSP_Billing_Address__c;
-                                raquote.NSP_Shipping_Address__c = raOppty.SBQQ__RenewedContract__r.SBQQ__Quote__r.NSP_Shipping_Address__c;
-                                raquote.NSP_Customer_Billing_Address__c = raOppty.SBQQ__RenewedContract__r.SBQQ__Quote__r.NSP_Customer_Billing_Address__c;
-                                raquote.NSP_Customer_Shipping_Address__c = raOppty.SBQQ__RenewedContract__r.SBQQ__Quote__r.NSP_Customer_Shipping_Address__c;
-                            } else {
-                                raquote.NSP_Opportunity_Primary_Product__c = raOppty.SBQQ__RenewedContract__r.NSP_PrimaryProduct__c;
-                                raquote.NSP_Client_For_Life__c = raOppty.SBQQ__RenewedContract__r.NSP_Client_For_Life__c;
-                                raquote.SBQQ__Partner__c = raOppty.SBQQ__RenewedContract__r.NSP_Partner__c;
-                                raquote.SBQQ__PrimaryContact__c = raOppty.SBQQ__RenewedContract__r.NSP_Invoice_To_Email__c;
-                                raquote.NSP_Invoice_To_Email__c = raOppty.SBQQ__RenewedContract__r.NSP_Invoice_To_Email__c;
-                                raquote.NSP_Billing_Account__c = raOppty.SBQQ__RenewedContract__r.SBQQ__Order__r.blng__BillingAccount__c;
-                                raquote.NSP_Billing_Address__c = raOppty.SBQQ__RenewedContract__r.SBQQ__Order__r.NSP_Billing_Address__c;
-                                raquote.NSP_Shipping_Address__c = raOppty.SBQQ__RenewedContract__r.SBQQ__Order__r.NSP_Shipping_Address__c;
-                                raquote.NSP_Customer_Billing_Address__c = raOppty.SBQQ__RenewedContract__r.SBQQ__Order__r.NSP_Billing_Address__c;
-                                raquote.NSP_Customer_Shipping_Address__c = raOppty.SBQQ__RenewedContract__r.SBQQ__Order__r.NSP_Shipping_Address__c;
-                            }
-                            if(raquote.NSP_Opportunity_Primary_Product__c == 'Time & Attendance') {
-                                raquote.NSP_Budgetary_Quote__c = true;
-                            }
-                        }
-                    }
-                    if(raquote.SBQQ__Type__c!=NSP_CPQConstants.QUOTE_TYPE_RENEWAL && raquote.SBQQ__Type__c!=NSP_CPQConstants.QUOTE_TYPE_NEW) {
-                        if(renewAmendOpptys.containskey(raquote.SBQQ__Opportunity2__c)){
-                            Opportunity raOppty = renewAmendOpptys.get(raquote.SBQQ__Opportunity2__c);
-                            raquote.NSP_Quantity_of_Estimated_Employees__c = raOppty.SBQQ__AmendedContract__r.NSP_Number_of_Employees__c;
-                            raquote.NSP_Pricing_Model__c = raOppty.SBQQ__AmendedContract__r.NSP_Pricing_Model__c;
-                            raquote.NSP_Opportunity_Type__c = NSP_CPQConstants.OPPORTUNITY_TYPE_EXISTING_BUSINESS;
-                            raquote.NSP_Product_Type__c = raOppty.SBQQ__AmendedContract__r.NSP_Product_Type__c;
-                            if(raOppty.SBQQ__AmendedContract__r.SBQQ__Quote__c != null) {
-                                raquote.NSP_Opportunity_Primary_Product__c = raOppty.SBQQ__AmendedContract__r.SBQQ__Quote__r.NSP_Opportunity_Primary_Product__c;
-                                raquote.NSP_Client_For_Life__c = raOppty.SBQQ__AmendedContract__r.SBQQ__Quote__r.NSP_Client_For_Life__c;
-                                raquote.NSP_Product_Type__c = raOppty.SBQQ__AmendedContract__r.SBQQ__Quote__r.NSP_Product_Type__c;
-                                raquote.SBQQ__Partner__c = raOppty.SBQQ__AmendedContract__r.SBQQ__Quote__r.SBQQ__Partner__c;
-                                raquote.SBQQ__PrimaryContact__c = raOppty.SBQQ__AmendedContract__r.SBQQ__Quote__r.SBQQ__PrimaryContact__c;
-                                raquote.NSP_Invoice_To_Email__c = raOppty.SBQQ__AmendedContract__r.SBQQ__Quote__r.NSP_Invoice_To_Email__c;
-                                raquote.NSP_Billing_Account__c = raOppty.SBQQ__AmendedContract__r.SBQQ__Quote__r.NSP_Billing_Account__c;
-                                raquote.NSP_Billing_Address__c = raOppty.SBQQ__AmendedContract__r.SBQQ__Quote__r.NSP_Billing_Address__c;
-                                raquote.NSP_Shipping_Address__c = raOppty.SBQQ__AmendedContract__r.SBQQ__Quote__r.NSP_Shipping_Address__c;
-                                raquote.NSP_Customer_Billing_Address__c = raOppty.SBQQ__AmendedContract__r.SBQQ__Quote__r.NSP_Customer_Billing_Address__c;
-                                raquote.NSP_Customer_Shipping_Address__c = raOppty.SBQQ__AmendedContract__r.SBQQ__Quote__r.NSP_Customer_Shipping_Address__c;
-                                raquote.NSP_BPS_Billing_Frequency__c = raOppty.SBQQ__AmendedContract__r.SBQQ__Quote__r.NSP_BPS_Billing_Frequency__c;
-                            } else {
-                                raquote.NSP_Opportunity_Primary_Product__c = raOppty.SBQQ__AmendedContract__r.NSP_PrimaryProduct__c;
-                                raquote.NSP_Client_For_Life__c = raOppty.SBQQ__AmendedContract__r.NSP_Client_For_Life__c;
-                                raquote.SBQQ__Partner__c = raOppty.SBQQ__AmendedContract__r.NSP_Partner__c;
-                                raquote.SBQQ__PrimaryContact__c = raOppty.SBQQ__AmendedContract__r.NSP_Invoice_To_Email__c;
-                                raquote.NSP_Invoice_To_Email__c = raOppty.SBQQ__AmendedContract__r.NSP_Invoice_To_Email__c;
-                                raquote.NSP_Billing_Account__c = raOppty.SBQQ__AmendedContract__r.SBQQ__Order__r.blng__BillingAccount__c;
-                                raquote.NSP_Billing_Address__c = raOppty.SBQQ__AmendedContract__r.SBQQ__Order__r.NSP_Billing_Address__c;
-                                raquote.NSP_Shipping_Address__c = raOppty.SBQQ__AmendedContract__r.SBQQ__Order__r.NSP_Shipping_Address__c;
-                                raquote.NSP_Customer_Billing_Address__c = raOppty.SBQQ__AmendedContract__r.SBQQ__Order__r.NSP_Billing_Address__c;
-                                raquote.NSP_Customer_Shipping_Address__c = raOppty.SBQQ__AmendedContract__r.SBQQ__Order__r.NSP_Shipping_Address__c;
-                                List<SBQQ__Subscription__c> subBillingFreq = [Select id, SBQQ__BillingFrequency__c FROM SBQQ__Subscription__c WHERE SBQQ__Contract__c =:raOppty.SBQQ__AmendedContract__c LIMIT 1];
-                                if(subBillingFreq.size()>0){
-                                    raquote.NSP_BPS_Billing_Frequency__c = subBillingFreq[0].SBQQ__BillingFrequency__c != null ? subBillingFreq[0].SBQQ__BillingFrequency__c : NSP_CPQConstants.MONTHLY;
-                                }
-                            }
-                            if(String.isNotEmpty(raquote.NSP_Product_Type__c) && raquote.NSP_TransactionType__c==NSP_CPQConstants.SUPPLEMENTAL_ONLY_TRANSACTION_TYPE
-                                && (raquote.NSP_Product_Type__c.contains(NSP_CPQConstants.QUOTE_PRODUCT_TYPE_WX) || raquote.NSP_Product_Type__c.contains(NSP_CPQConstants.QUOTE_PRODUCT_TYPE_WA))
-                                )
-                            {
-                                String[] ptypelist = raquote.NSP_Product_Type__c.split(';');
-                                ptypelist.add(NSP_CPQConstants.QUOTE_PRODUCT_TYPE_HRCS);
-                                raquote.NSP_Product_Type__c=String.join(ptypelist,';');
-                            }
-                        }
-                    }
-                }
-            }
+        if(newQuote.SBQQ__Type__c==NSP_CPQConstants.SUPPLEMENTAL) {
+            newQuote.NSP_Product_Type__c = NSP_CPQConstants.SUPPLEMENTAL;
+        }
+        if(newQuote.SBQQ__Opportunity2__c!=null) {
+            opportunityIds.add(newQuote.SBQQ__Opportunity2__c);
+            renewAmendQuotes.add(newQuote);
         }
     }
+
+    if(opportunityIds.size()>0) {
+        Map<Id,Opportunity> renewAmendOpptys = new Map<Id,Opportunity>();
+        for ( Opportunity opp : [Select Id, SBQQ__AmendedContract__c, SBQQ__RenewedContract__c, 
+                                            SBQQ__AmendedContract__r.NSP_Number_of_Employees__c, SBQQ__AmendedContract__r.NSP_Pricing_Model__c, SBQQ__AmendedContract__r.NSP_Product_Type__c, SBQQ__AmendedContract__r.SBQQ__Quote__r.NSP_Billing_Account__c,  SBQQ__AmendedContract__r.SBQQ__Quote__r.NSP_Billing_Address__c , SBQQ__AmendedContract__r.SBQQ__Quote__r.NSP_Shipping_Address__c, SBQQ__AmendedContract__r.SBQQ__Quote__r.NSP_Customer_Billing_Address__c, SBQQ__AmendedContract__r.SBQQ__Quote__r.NSP_Customer_Shipping_Address__c,SBQQ__AmendedContract__r.SBQQ__Quote__r.NSP_Opportunity_Type__c,
+                                            SBQQ__AmendedContract__r.SBQQ__Quote__r.NSP_Client_For_Life__c, SBQQ__AmendedContract__r.SBQQ__Quote__r.SBQQ__Partner__c, SBQQ__AmendedContract__r.SBQQ__Quote__r.NSP_Opportunity_Primary_Product__c, SBQQ__AmendedContract__r.SBQQ__Quote__r.SBQQ__PrimaryContact__c,SBQQ__AmendedContract__r.SBQQ__Quote__r.NSP_Invoice_To_Email__c, SBQQ__AmendedContract__r.SBQQ__Quote__r.NSP_Product_Type__c,
+                                            SBQQ__RenewedContract__r.NSP_Number_of_Employees__c, SBQQ__RenewedContract__r.NSP_Pricing_Model__c, SBQQ__RenewedContract__r.NSP_Product_Type__c, SBQQ__RenewedContract__r.SBQQ__Quote__r.NSP_Billing_Account__c,  SBQQ__RenewedContract__r.SBQQ__Quote__r.NSP_Billing_Address__c, SBQQ__RenewedContract__r.SBQQ__Quote__r.NSP_Shipping_Address__c, SBQQ__RenewedContract__r.SBQQ__Quote__r.NSP_Customer_Billing_Address__c, SBQQ__RenewedContract__r.SBQQ__Quote__r.NSP_Customer_Shipping_Address__c,SBQQ__RenewedContract__r.SBQQ__Quote__r.NSP_Opportunity_Type__c,
+                                            SBQQ__RenewedContract__r.SBQQ__Quote__r.NSP_Client_For_Life__c, SBQQ__RenewedContract__r.SBQQ__Quote__r.SBQQ__Partner__c, SBQQ__RenewedContract__r.SBQQ__Quote__r.NSP_Opportunity_Primary_Product__c, SBQQ__RenewedContract__r.SBQQ__Quote__r.SBQQ__PrimaryContact__c,SBQQ__RenewedContract__r.SBQQ__Quote__r.NSP_Invoice_To_Email__c, SBQQ__AmendedContract__r.SBQQ__Quote__r.NSP_BPS_Billing_Frequency__c, 
+                                            SBQQ__RenewedContract__r.SBQQ__Quote__c, SBQQ__RenewedContract__r.SBQQ__Order__c ,SBQQ__RenewedContract__r.NSP_PrimaryProduct__c, SBQQ__RenewedContract__r.NSP_Client_For_Life__c,SBQQ__RenewedContract__r.NSP_Partner__c, SBQQ__RenewedContract__r.NSP_Invoice_To_Email__c, SBQQ__RenewedContract__r.SBQQ__Order__r.blng__BillingAccount__c, SBQQ__RenewedContract__r.SBQQ__Order__r.NSP_Billing_Address__c, SBQQ__RenewedContract__r.SBQQ__Order__r.NSP_Shipping_Address__c,
+                                            SBQQ__AmendedContract__r.SBQQ__Quote__c, SBQQ__AmendedContract__r.SBQQ__Order__c, SBQQ__AmendedContract__r.NSP_PrimaryProduct__c, SBQQ__AmendedContract__r.NSP_Client_For_Life__c,SBQQ__AmendedContract__r.NSP_Partner__c, SBQQ__AmendedContract__r.NSP_Invoice_To_Email__c, SBQQ__AmendedContract__r.SBQQ__Order__r.blng__BillingAccount__c, SBQQ__AmendedContract__r.SBQQ__Order__r.NSP_Billing_Address__c, SBQQ__AmendedContract__r.SBQQ__Order__r.NSP_Shipping_Address__c
+                                            
+                                            FROM Opportunity WHERE Id IN:opportunityIds AND (SBQQ__AmendedContract__c!=null OR SBQQ__RenewedContract__c!=null) ] ){ //AND (SBQQ__AmendedContract__c!=null AND SBQQ__AmendedContract__r.SBQQ__Quote__c!=null) OR (SBQQ__RenewedContract__c!=null AND SBQQ__RenewedContract__r.SBQQ__Quote__c!=null) ] {
+
+            renewAmendOpptys.put(opp.Id,opp);                               
+}
+
+        if(renewAmendOpptys.size()>0) {
+            for(SBQQ__Quote__c raquote : renewAmendQuotes) {
+                if(raquote.SBQQ__Type__c==NSP_CPQConstants.QUOTE_TYPE_RENEWAL) {
+                    if(renewAmendOpptys.containskey(raquote.SBQQ__Opportunity2__c)){
+                        Opportunity raOppty = renewAmendOpptys.get(raquote.SBQQ__Opportunity2__c);
+                        raquote.NSP_Quantity_of_Estimated_Employees__c = raOppty.SBQQ__RenewedContract__r.NSP_Number_of_Employees__c;
+                        raquote.NSP_Pricing_Model__c = raOppty.SBQQ__RenewedContract__r.NSP_Pricing_Model__c;
+                        raquote.NSP_Product_Type__c = raOppty.SBQQ__RenewedContract__r.NSP_Product_Type__c;
+                        raquote.NSP_Opportunity_Type__c = NSP_CPQConstants.QUOTE_TYPE_RENEWAL;
+                        
+                        if(raOppty.SBQQ__RenewedContract__r.SBQQ__Quote__c != null) {
+                        raquote.NSP_Opportunity_Primary_Product__c = raOppty.SBQQ__RenewedContract__r.SBQQ__Quote__r.NSP_Opportunity_Primary_Product__c;
+                        raquote.NSP_Client_For_Life__c = raOppty.SBQQ__RenewedContract__r.SBQQ__Quote__r.NSP_Client_For_Life__c;
+                        raquote.SBQQ__Partner__c = raOppty.SBQQ__RenewedContract__r.SBQQ__Quote__r.SBQQ__Partner__c;
+                        raquote.SBQQ__PrimaryContact__c = raOppty.SBQQ__RenewedContract__r.SBQQ__Quote__r.SBQQ__PrimaryContact__c;
+                        raquote.NSP_Invoice_To_Email__c = raOppty.SBQQ__RenewedContract__r.SBQQ__Quote__r.NSP_Invoice_To_Email__c;
+                        raquote.NSP_Billing_Account__c = raOppty.SBQQ__RenewedContract__r.SBQQ__Quote__r.NSP_Billing_Account__c;
+                        raquote.NSP_Billing_Address__c = raOppty.SBQQ__RenewedContract__r.SBQQ__Quote__r.NSP_Billing_Address__c;
+                        raquote.NSP_Shipping_Address__c = raOppty.SBQQ__RenewedContract__r.SBQQ__Quote__r.NSP_Shipping_Address__c;
+                        raquote.NSP_Customer_Billing_Address__c = raOppty.SBQQ__RenewedContract__r.SBQQ__Quote__r.NSP_Customer_Billing_Address__c;
+                        raquote.NSP_Customer_Shipping_Address__c = raOppty.SBQQ__RenewedContract__r.SBQQ__Quote__r.NSP_Customer_Shipping_Address__c;
+                        }
+                        else {
+                        raquote.NSP_Opportunity_Primary_Product__c = raOppty.SBQQ__RenewedContract__r.NSP_PrimaryProduct__c;
+                        raquote.NSP_Client_For_Life__c = raOppty.SBQQ__RenewedContract__r.NSP_Client_For_Life__c;
+                        raquote.SBQQ__Partner__c = raOppty.SBQQ__RenewedContract__r.NSP_Partner__c;
+                        raquote.SBQQ__PrimaryContact__c = raOppty.SBQQ__RenewedContract__r.NSP_Invoice_To_Email__c;
+                        raquote.NSP_Invoice_To_Email__c = raOppty.SBQQ__RenewedContract__r.NSP_Invoice_To_Email__c;
+                        raquote.NSP_Billing_Account__c = raOppty.SBQQ__RenewedContract__r.SBQQ__Order__r.blng__BillingAccount__c;
+                        raquote.NSP_Billing_Address__c = raOppty.SBQQ__RenewedContract__r.SBQQ__Order__r.NSP_Billing_Address__c;
+                        raquote.NSP_Shipping_Address__c = raOppty.SBQQ__RenewedContract__r.SBQQ__Order__r.NSP_Shipping_Address__c;
+                        raquote.NSP_Customer_Billing_Address__c = raOppty.SBQQ__RenewedContract__r.SBQQ__Order__r.NSP_Billing_Address__c;
+                        raquote.NSP_Customer_Shipping_Address__c = raOppty.SBQQ__RenewedContract__r.SBQQ__Order__r.NSP_Shipping_Address__c;
+                       
+                        }
+                        if(raquote.NSP_Opportunity_Primary_Product__c == 'Time & Attendance') {
+                            raquote.NSP_Budgetary_Quote__c = true;
+                        }
+                    }
+                }
+                if(raquote.SBQQ__Type__c!=NSP_CPQConstants.QUOTE_TYPE_RENEWAL && raquote.SBQQ__Type__c!=NSP_CPQConstants.QUOTE_TYPE_NEW) {
+                    if(renewAmendOpptys.containskey(raquote.SBQQ__Opportunity2__c)){
+                        Opportunity raOppty = renewAmendOpptys.get(raquote.SBQQ__Opportunity2__c);
+                       
+                        raquote.NSP_Quantity_of_Estimated_Employees__c = raOppty.SBQQ__AmendedContract__r.NSP_Number_of_Employees__c;
+                        raquote.NSP_Pricing_Model__c = raOppty.SBQQ__AmendedContract__r.NSP_Pricing_Model__c;
+                        raquote.NSP_Opportunity_Type__c = NSP_CPQConstants.OPPORTUNITY_TYPE_EXISTING_BUSINESS;
+                        raquote.NSP_Product_Type__c = raOppty.SBQQ__AmendedContract__r.NSP_Product_Type__c;
+                        
+                        if(raOppty.SBQQ__AmendedContract__r.SBQQ__Quote__c != null) {
+                        raquote.NSP_Opportunity_Primary_Product__c = raOppty.SBQQ__AmendedContract__r.SBQQ__Quote__r.NSP_Opportunity_Primary_Product__c;
+                        raquote.NSP_Client_For_Life__c = raOppty.SBQQ__AmendedContract__r.SBQQ__Quote__r.NSP_Client_For_Life__c;
+                        raquote.NSP_Product_Type__c = raOppty.SBQQ__AmendedContract__r.SBQQ__Quote__r.NSP_Product_Type__c;
+                        raquote.SBQQ__Partner__c = raOppty.SBQQ__AmendedContract__r.SBQQ__Quote__r.SBQQ__Partner__c;
+                        raquote.SBQQ__PrimaryContact__c = raOppty.SBQQ__AmendedContract__r.SBQQ__Quote__r.SBQQ__PrimaryContact__c;
+                        raquote.NSP_Invoice_To_Email__c = raOppty.SBQQ__AmendedContract__r.SBQQ__Quote__r.NSP_Invoice_To_Email__c;
+                        raquote.NSP_Billing_Account__c = raOppty.SBQQ__AmendedContract__r.SBQQ__Quote__r.NSP_Billing_Account__c;
+                        raquote.NSP_Billing_Address__c = raOppty.SBQQ__AmendedContract__r.SBQQ__Quote__r.NSP_Billing_Address__c;
+                        raquote.NSP_Shipping_Address__c = raOppty.SBQQ__AmendedContract__r.SBQQ__Quote__r.NSP_Shipping_Address__c;
+                        raquote.NSP_Customer_Billing_Address__c = raOppty.SBQQ__AmendedContract__r.SBQQ__Quote__r.NSP_Customer_Billing_Address__c;
+                        raquote.NSP_Customer_Shipping_Address__c = raOppty.SBQQ__AmendedContract__r.SBQQ__Quote__r.NSP_Customer_Shipping_Address__c;
+                        raquote.NSP_BPS_Billing_Frequency__c = raOppty.SBQQ__AmendedContract__r.SBQQ__Quote__r.NSP_BPS_Billing_Frequency__c;
+                        }
+                        else {
+                        raquote.NSP_Opportunity_Primary_Product__c = raOppty.SBQQ__AmendedContract__r.NSP_PrimaryProduct__c;
+                        raquote.NSP_Client_For_Life__c = raOppty.SBQQ__AmendedContract__r.NSP_Client_For_Life__c;
+                        raquote.SBQQ__Partner__c = raOppty.SBQQ__AmendedContract__r.NSP_Partner__c;
+                        raquote.SBQQ__PrimaryContact__c = raOppty.SBQQ__AmendedContract__r.NSP_Invoice_To_Email__c;
+                        raquote.NSP_Invoice_To_Email__c = raOppty.SBQQ__AmendedContract__r.NSP_Invoice_To_Email__c;
+                        raquote.NSP_Billing_Account__c = raOppty.SBQQ__AmendedContract__r.SBQQ__Order__r.blng__BillingAccount__c;
+                        raquote.NSP_Billing_Address__c = raOppty.SBQQ__AmendedContract__r.SBQQ__Order__r.NSP_Billing_Address__c;
+                        raquote.NSP_Shipping_Address__c = raOppty.SBQQ__AmendedContract__r.SBQQ__Order__r.NSP_Shipping_Address__c;
+                        raquote.NSP_Customer_Billing_Address__c = raOppty.SBQQ__AmendedContract__r.SBQQ__Order__r.NSP_Billing_Address__c;
+                        raquote.NSP_Customer_Shipping_Address__c = raOppty.SBQQ__AmendedContract__r.SBQQ__Order__r.NSP_Shipping_Address__c;
+                        List<SBQQ__Subscription__c> subBillingFreq = [Select id, SBQQ__BillingFrequency__c FROM SBQQ__Subscription__c WHERE SBQQ__Contract__c =:raOppty.SBQQ__AmendedContract__c LIMIT 1];
+                            if(subBillingFreq.size()>0){
+                                raquote.NSP_BPS_Billing_Frequency__c = subBillingFreq[0].SBQQ__BillingFrequency__c != null ? subBillingFreq[0].SBQQ__BillingFrequency__c : NSP_CPQConstants.MONTHLY;
+                            }
+                        }
+                   
+                        
+                        if(String.isNotEmpty(raquote.NSP_Product_Type__c) && raquote.NSP_TransactionType__c==NSP_CPQConstants.SUPPLEMENTAL_ONLY_TRANSACTION_TYPE 
+                        && (raquote.NSP_Product_Type__c.contains(NSP_CPQConstants.QUOTE_PRODUCT_TYPE_WX) || raquote.NSP_Product_Type__c.contains(NSP_CPQConstants.QUOTE_PRODUCT_TYPE_WA))) {
+                            String[] ptypelist = raquote.NSP_Product_Type__c.split(';');
+                            ptypelist.add(NSP_CPQConstants.QUOTE_PRODUCT_TYPE_HRCS);
+                            raquote.NSP_Product_Type__c=String.join(ptypelist,';');
+                        }
+                    }
+                }
+            }
+        }                                      
+    }
+}
 
     //
     // Method Name : stampQuoteOwnerGroup
@@ -776,81 +780,90 @@ public class NSP_QuoteTriggerHelper {
     // @param QuoteOldMap Map of Old Quote.
     // @return void
     //
-    public void stampQuoteOwnerGroup( Map<Id,SBQQ__Quote__c> quoteNewMap , Map<Id,SBQQ__Quote__c> quoteOldMap ) {
+    public void stampQuoteOwnerGroup(Map<Id, SBQQ__Quote__c> quoteNewMap,Map<Id, SBQQ__Quote__c> quoteOldMap) {
         List<Id> ownerIds = new List<Id>();
-        Map<Id, String> ownerIdToGroupMap = new Map<Id,String>();
-        Map<Id, String> ownerIdToL2Map = new Map<Id,String>();
+        Map<Id, String> OwnerIdToGroupMap = new Map<Id,String>();
+        Map<Id, String> OwnerIdToL2Map = new Map<Id,String>();
         Map<Id, Boolean> isQuoteIdToValidOwnerChangeMap = new Map<Id,Boolean>();
         Map<Id, Boolean> isQuoteIdToStampNeededMap = new Map<Id,Boolean>();
+        
         set<string> groupname = new set<string>(system.label.NSP_ApprovalSubmitterGroups.split(','));
-        set<string> seApprovalChain = new set<string>{'NSP_SE_Group_1','NSP_SE_Group_2','NSP_SE_MidMarket','NSP_SE_Group_3'};
+        set<string> SE_Approval_Chain = new set<string>{'NSP_SE_Group_1','NSP_SE_Group_2','NSP_SE_MidMarket','NSP_SE_Group_3'};
         //Current User Id to check for same group
         String currUserId = UserInfo.getUserId();
         String currUserGroupName;
-        //Filter logic to check if quote owner is changed
+        //Filter logic to check if quote owner is changed       
         for(SBQQ__Quote__c newQuote : quoteNewMap.values()) {
+
             isQuoteIdToValidOwnerChangeMap.put(newQuote.Id,false);
             isQuoteIdToStampNeededMap.put(newQuote.Id,false);
-            if(newQuote.OwnerId!=null){
-                if(String.isEmpty(newQuote.NSP_Submitted_User_Role__c)){
-                    isQuoteIdToStampNeededMap.put(newQuote.Id,true);
-                    ownerIds.add(newQuote.OwnerId);
-
-                }
-                if(newQuote.OwnerId != quoteOldMap.get(newQuote.Id).OwnerId){
-                    isQuoteIdToValidOwnerChangeMap.put(newQuote.Id,true);
-                    isQuoteIdToStampNeededMap.put(newQuote.Id,true);
-                    ownerIds.add(newQuote.OwnerId);
-                }
-                if(newQuote.OwnerId == quoteOldMap.get(newQuote.Id).OwnerId){
-                    ownerIds.add(currUserId);
-                    ownerIds.add(newQuote.OwnerId);
-                }
+            
+        if(newQuote.OwnerId!=null){
+            
+            if(String.isEmpty(newQuote.NSP_Submitted_User_Role__c)){
+                isQuoteIdToStampNeededMap.put(newQuote.Id,true);
+                ownerIds.add(newQuote.OwnerId);
+                
+            }
+            if(newQuote.OwnerId != quoteOldMap.get(newQuote.Id).OwnerId){
+                isQuoteIdToValidOwnerChangeMap.put(newQuote.Id,true);
+                isQuoteIdToStampNeededMap.put(newQuote.Id,true);
+                ownerIds.add(newQuote.OwnerId);
+            }
+            if(newQuote.OwnerId == quoteOldMap.get(newQuote.Id).OwnerId){
+                ownerIds.add(currUserId);
+                ownerIds.add(newQuote.OwnerId);
             }
         }
-        if(ownerIds.size()>0){
-            // Querying Owner Group Name and storing in Maps to put into quote fields below
-            for ( GroupMember  objmember : [
-                        SELECT id,UserOrGroupId,GroupId,Group.DeveloperName,Group.Name
-                        FROM GroupMember
-                        WHERE UserOrGroupId IN: ownerIds AND Group.DeveloperName IN : groupname
-                    ]
-                )
-            {
-                if(objmember.UserOrGroupId == currUserId) {
-                    currUserGroupName = objmember.Group.Name;
-                }
-                if(seApprovalChain.contains(objmember.Group.DeveloperName)) {
-                    ownerIdToGroupMap.put(objmember.UserOrGroupId, NSP_CPQConstants.SE_APPROVAL_Chain);  //objQuote.NSP_Submitted_User_Role__c = NSP_CPQConstants.SE_APPROVAL_Chain ;
-                    ownerIdToL2Map.put(objmember.UserOrGroupId,objmember.Group.Name); //objQuote.NSP_Submitted_User_Role_L2__c = objmember.Group.Name ;
-                } else {
-                    // objQuote.NSP_Submitted_User_Role__c = objmember.Group.Name ;
-                    ownerIdToGroupMap.put(objmember.UserOrGroupId, objmember.Group.Name);
-                    ownerIdToL2Map.put(objmember.UserOrGroupId,objmember.Group.Name);
+        
+        }
 
-                }
+
+        
+        if(ownerIds.size()>0){
+        // Querying Owner Group Name and storing in Maps to put into quote fields below
+         for(groupMember  objmember : [select id,UserOrGroupId,GroupId,Group.DeveloperName,Group.Name from groupMember 
+                                      WHERE UserOrGroupId IN: ownerIds AND Group.DeveloperName IN : groupname  ]){
+            if(objmember.UserOrGroupId == currUserId) {
+                currUserGroupName = objmember.Group.Name;
             }
-            // Assigning Owner Group Name to respective quote fields
-            for(SBQQ__Quote__c newQuote : quoteNewMap.values()) {
-                Boolean isValidOwnerUpdate = isQuoteIdToValidOwnerChangeMap.get(newQuote.Id);
-                Boolean isStampingreqd = isQuoteIdToStampNeededMap.get(newQuote.Id);
-                Boolean isOwnerchanged = false; // Added is as part of code fix
-                if(ownerIdToL2Map.containskey(newQuote.OwnerId) && newQuote.OwnerId!=currUserId) {
-                    if(ownerIdToL2Map.get(newQuote.OwnerId) == currUserGroupName && !isValidOwnerUpdate) {
-                        newQuote.OwnerId = currUserId;
-                        isOwnerchanged = true;
-                    }
-                }
-                // Added as part of default setting for search filter issue fix
-                if(!ownerIdToGroupMap.containskey(newQuote.OwnerId)) {
-                    newQuote.NSP_Submitted_User_Role__c = NSP_CPQConstants.NOT_ASSIGNED;
-                    newQuote.NSP_Submitted_User_Role_L2__c = NSP_CPQConstants.NOT_ASSIGNED;
-                }
-                if( ownerIdToGroupMap.containskey(newQuote.OwnerId) && (isValidOwnerUpdate || isStampingreqd || isOwnerchanged)) {
-                    newQuote.NSP_Submitted_User_Role__c = ownerIdToGroupMap.get(newQuote.OwnerId);
-                    newQuote.NSP_Submitted_User_Role_L2__c = ownerIdToL2Map.get(newQuote.OwnerId);
-                }
+
+            if(SE_Approval_Chain.contains(objmember.Group.DeveloperName)) {
+                OwnerIdToGroupMap.put(objmember.UserOrGroupId, NSP_CPQConstants.SE_APPROVAL_Chain);  //objQuote.NSP_Submitted_User_Role__c = NSP_CPQConstants.SE_APPROVAL_Chain ;
+                OwnerIdToL2Map.put(objmember.UserOrGroupId,objmember.Group.Name); //objQuote.NSP_Submitted_User_Role_L2__c = objmember.Group.Name ;
             }
+            else {
+                // objQuote.NSP_Submitted_User_Role__c = objmember.Group.Name ;
+                OwnerIdToGroupMap.put(objmember.UserOrGroupId, objmember.Group.Name);  
+                OwnerIdToL2Map.put(objmember.UserOrGroupId,objmember.Group.Name); 
+          
+            }
+                
+        }
+        // Assigning Owner Group Name to respective quote fields
+         for(SBQQ__Quote__c newQuote : quoteNewMap.values()) {
+             Boolean isValidOwnerUpdate = isQuoteIdToValidOwnerChangeMap.get(newQuote.Id);
+             Boolean isStampingreqd = isQuoteIdToStampNeededMap.get(newQuote.Id);
+            Boolean isOwnerchanged = false; // Added is as part of code fix
+             if(OwnerIdToL2Map.containskey(newQuote.OwnerId) && newQuote.OwnerId!=currUserId) {
+                if(OwnerIdToL2Map.get(newQuote.OwnerId) == currUserGroupName && !isValidOwnerUpdate) {
+                    newQuote.OwnerId = currUserId;
+                    isOwnerchanged = true;
+                }
+             }
+           // Added as part of default setting for search filter issue fix
+           if(!OwnerIdToGroupMap.containskey(newQuote.OwnerId)) {
+             newQuote.NSP_Submitted_User_Role__c = NSP_CPQConstants.NOT_ASSIGNED;
+             newQuote.NSP_Submitted_User_Role_L2__c = NSP_CPQConstants.NOT_ASSIGNED; 
+           }
+           if( OwnerIdToGroupMap.containskey(newQuote.OwnerId) && (isValidOwnerUpdate || isStampingreqd || isOwnerchanged)) {
+           newQuote.NSP_Submitted_User_Role__c = OwnerIdToGroupMap.get(newQuote.OwnerId);
+           newQuote.NSP_Submitted_User_Role_L2__c = OwnerIdToL2Map.get(newQuote.OwnerId);
+           }
+
+            
+          }
+         
         }
     }
 
