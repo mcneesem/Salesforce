@@ -453,6 +453,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Lead.Interest_Product_Offering__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Lead.Marketing_Priority__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -474,6 +479,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Lead.NSP_Lead_ID_18__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Lead.Product_Offering__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -628,16 +638,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>NSP_ClientGoal__c.AMR_Status_Current_Year__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>NSP_ClientGoal__c.AMR_Status_Date__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>NSP_Engagement_Path__c.Action__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -729,11 +729,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Sales_to_Implementation__c.Opportunity_Stage_Name__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>NSP_Sales_to_Implementation__c.X401k_Plan_Consultant__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1189,11 +1184,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>pse__Project_Task__c.Associated_RSAP__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>pse__Project_Task__c.Is_Completed__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

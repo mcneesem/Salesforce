@@ -334,6 +334,17 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Interest_Product_Offering__c</picklist>
+        <values>
+            <fullName>HR360</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HRCore</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>LeadSource</picklist>
         <values>
             <fullName>Advertisement</fullName>
@@ -418,11 +429,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>MidMarket</fullName>
+            <fullName>Enterprise</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Enterprise</fullName>
+            <fullName>MidMarket</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -2861,10 +2872,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>FSI- Barnum</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>FSI- Bellpointe Asset Management</fullName>
             <default>false</default>
         </values>
@@ -4094,6 +4101,17 @@
         </values>
         <values>
             <fullName>Prof%2E</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Product_Offering__c</picklist>
+        <values>
+            <fullName>HR360</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HRCore</fullName>
             <default>false</default>
         </values>
     </picklistValues>
