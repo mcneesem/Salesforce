@@ -1031,22 +1031,18 @@ public class NSP_MMImplProfile_ServHelpUpdate {
             NSP_Implementation_Automations__mdt ipa = NSP_Implementation_Automations__mdt.getInstance(automation);
             Implementation_Profile__c ipRec = newIPs.get(ipRecId);
             genericProjectTask(proj,eachProjecttask, pta, workCalendarId);
-            for(pse__Project_Task__c pt: proj.pse__Project_Tasks__r){
-                if(pt.Name==NSP_ServiceConstants.EMP_ON_LOA){
-                    eachProjecttask.pse__Parent_Task__c=pt.Id;
-                    eachProjecttask.pse__Hierarchy_Depth__c=3;
-                    if(ipwithValue.NSP_Project_Manager__c!=null && ipwithValue.NSP_Project_Manager__r.pse__Salesforce_User__c!=null){
-                        eachProjecttask.OwnerId=ipwithValue.NSP_Project_Manager__r.pse__Salesforce_User__c;
-                    }
-                    subTaskAutomationList.add(
-                            createIPAutomation(
-                                ipRec,
-                                ipa.NSP_Automation_Name__c,
-                                ipa.NSP_Method_Name__c,ipa.NSP_Section__c
-                            )
-                        );
-                    subTaskList.add(eachProjecttask);
-                }
+            if(ipwithValue.NSP_Payroll_Project_Manager__r!=null && ipwithValue.NSP_Payroll_Project_Manager__r.pse__Salesforce_User__c!=null){
+                eachProjecttask.OwnerId=ipwithValue.NSP_Payroll_Project_Manager__r.pse__Salesforce_User__c;
+            }
+            ipAutomationRecords.add(
+                createIPAutomation(
+                    ipRec,
+                    ipa.NSP_Automation_Name__c,
+                    ipa.NSP_Method_Name__c,ipa.NSP_Section__c
+                )
+            );
+            if(eachProjecttask != null){
+                projectTaskToInsertList.add(eachProjecttask);
             }
         }
     }
@@ -3115,12 +3111,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
             && newRec != null
             && newRec.RecordTypeId == ipMMRecordTypeId
             && newRec.Allowances__c!=null
-            && ( newRec.Allowances__c.contains(NSP_ServiceConstants.CAR)
-                || newRec.Allowances__c.contains(NSP_ServiceConstants.PHONE)
-                || newRec.Allowances__c.contains(NSP_ServiceConstants.PER_DIEM)
-                || newRec.Allowances__c.contains(NSP_ServiceConstants.HOUSE
-                )
-            )
+            && newRec.Allowances__c.contains(NSP_ServiceConstants.PHONE)
             && ( existingRec == null
                 || newRec.NSP_Form_Completed__c
                 || newRec.Allowances__c != existingRec.Allowances__c
