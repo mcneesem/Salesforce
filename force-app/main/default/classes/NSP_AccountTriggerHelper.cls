@@ -24,8 +24,6 @@ public class NSP_AccountTriggerHelper {
     // Added as part of 215091
     private static Boolean hasPartnerLoyaltyPermission = CustomPermissionController.checkUserPermission('Account_Partner_Update_Loyalty_from_SO', UserInfo.getUserId());
     private static Boolean hasPartnerMMPermission = CustomPermissionController.checkUserPermission('Account_Partner_MidMarket_Seller', UserInfo.getUserId());
-    private static Map<Id,User> ownerUpdatePermittedUserMap = CustomPermissionController.getPermittedUsersMap('Account_Owner_Restrict_Update');
-    private static Map<Id,User> templSelectUpdPermittedUserMap = CustomPermissionController.getPermittedUsersMap('Template_Selection_Owner_Update');
     
     /**
      * Iterates throught the list of new Account and passes the required attributes to other methods.
@@ -539,7 +537,7 @@ public class NSP_AccountTriggerHelper {
                 // if Account owner is BPA
                 // set BPA as owner or set as dummy user -- UPDATE: Dummy User retired; just leave NSP_BPA__c unassigned
                 if ( ( accountObj.NSP_BPA__c == null )
-                   && ( templSelectUpdPermittedUserMap.keySet().contains( accountObj.OwnerId ) ) ){
+                   && ( NSP_AccountTriggerHelper.templSelectUpdPermittedUserMap.keySet().contains( accountObj.OwnerId ) ) ){
                         accountObj.NSP_BPA__c = accountObj.OwnerId;
                 }
             }
@@ -656,7 +654,7 @@ public class NSP_AccountTriggerHelper {
                         FROM Account
                         WHERE (
                             ( Id IN :oldMap.keySet() )
-                            AND ( OwnerId IN :ownerUpdatePermittedUserMap.keySet() )
+                            AND ( OwnerId IN :NSP_AccountTriggerHelper.ownerUpdatePermittedUserMap.keySet() )
                         )
                     ]
                 )
@@ -936,5 +934,25 @@ public class NSP_AccountTriggerHelper {
             e
         );
     }
+    
+    private static Map<Id,User> ownerUpdatePermittedUserMap {
+        private get {
+            if ( ownerUpdatePermittedUserMap == null ) {
+                ownerUpdatePermittedUserMap = CustomPermissionController.getPermittedUsersMap( 'Account_Owner_Restrict_Update' );
+            }
+            return ownerUpdatePermittedUserMap;
+        }
+        private set;
+    }
+    
+    private static Map<Id,User> templSelectUpdPermittedUserMap {
+        private get {
+            if ( templSelectUpdPermittedUserMap == null ) {
+                templSelectUpdPermittedUserMap = CustomPermissionController.getPermittedUsersMap( 'Template_Selection_Owner_Update' );
+            }
+            return templSelectUpdPermittedUserMap;
+        }
+        private set;
+    }    
 }
 //
