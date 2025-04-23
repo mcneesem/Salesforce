@@ -7,7 +7,6 @@
 public without sharing class NSP_userSalesOfficeRecordSharing {
     // test w/ NSP_UserTriggerHelper_Test (93%)
 
-    private static Map<Id,User> permittedUserMap;
 	private static Map<String , String> mapSalesOfficeLabels = salesOfficePicklistLabelsMap();
 
     /***********************************************************************************************
@@ -20,9 +19,6 @@ public without sharing class NSP_userSalesOfficeRecordSharing {
         Map<String , Set<String>> mapNewSalesOfficeSetUserId = new Map<String , Set<String>>();
         Map<String , Set<String>> mapUserIdSetOldSalesOffice = new Map<String , Set<String>>();
         List<User> updateUserList = new  List<User>();
-        if (permittedUserMap == null) {
-            permittedUserMap = CustomPermissionController.getPermittedUsersMap('User_Share_SO_Update');
-        }
         try{
             Map<Id,User> newUserMap = new Map<Id,User>( [
                 SELECT
@@ -33,7 +29,7 @@ public without sharing class NSP_userSalesOfficeRecordSharing {
                 WHERE (
                     ( Id IN :userNewMap.keySet() )
                     AND ( IsActive = true )
-                    AND ( Id IN :permittedUserMap.keySet() )
+                    AND ( Id IN :NSP_userSalesOfficeRecordSharing.permittedShareSOUserMap.keySet() )
                     AND ( NSP_Office_Processing__c = null OR NSP_Office_Processing__c = :NSP_SalesConstants.officeProcessing ) )
                 ]
             );
@@ -128,5 +124,15 @@ public without sharing class NSP_userSalesOfficeRecordSharing {
             salesOfficePicklistMap.put(pickListVal.getValue(), pickListVal.getLabel());
         }
         return salesOfficePicklistMap;
+    }
+
+    private static Map<Id,User> permittedShareSOUserMap {
+        private get {
+            if ( permittedShareSOUserMap == null ) {
+                permittedShareSOUserMap = CustomPermissionController.getPermittedUsersMap( 'User_Share_SO_Update' );
+            }
+            return permittedShareSOUserMap;
+        }
+        private set;
     }
 }
