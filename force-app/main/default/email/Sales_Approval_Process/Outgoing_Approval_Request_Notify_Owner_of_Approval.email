@@ -1,3 +1,5 @@
 Dear {!Opportunity.OwnerFirstName},</br>
 </br>
-Congrats, the Outgoing Referral <a href="{!Opportunity.Link}">{!Opportunity.Name}</a> request has been APPROVED.
+Congrats, your Outgoing Referral <a href="{!Opportunity.Link}">{!Opportunity.Name}</a> request has been APPROVED.</br>
+</br>
+Your referral will be handed off to Workday within the next 1 – 2 business days. To check the status of your referral, please view the "Outgoing Opportunity – Open and Shared" opportunity list in Salesforce. Your referral will appear in this list once it has been sent to Workday.
