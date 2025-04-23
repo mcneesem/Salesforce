@@ -390,8 +390,10 @@ public class NSP_salesOfficeRecordSharing {
                 Set<String> newLeadSalesOfficeList = new Set<String>();
                 // creating List of New Owner Sales Office
                 if ( ( leadNewOwnerMap.containsKey(lead.OwnerId) )
-                  && ( leadNewOwnerMap.get(lead.OwnerId).NSP_Sales_Office_Membership__c != null )
-                  && ( NSP_salesOfficeRecordSharing.permittedShareSOUserMap.containsKey(lead.OwnerId) ) ){
+                    && ( leadNewOwnerMap.get(lead.OwnerId).NSP_Sales_Office_Membership__c != null )
+                    && ( NSP_salesOfficeRecordSharing.permittedShareSOUserMap.containsKey(lead.OwnerId) )
+                    )
+                {
                     newLeadSalesOfficeList.addAll( new List<String>( leadNewOwnerMap.get( lead.OwnerId ).NSP_Sales_Office_Membership__c.Split(';') ) );
                 }
                 // creating list of old owner sales office
