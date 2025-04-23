@@ -490,7 +490,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
     private String createMilestoneForProjectTask( pse__Proj__c proj , NSP_ProjectTask_Automation__mdt pta ) {
         String milestoneKey;
         if(proj != null && pta != null){
-            Id milestoneId = getMilestoneId(proj.pse__Milestones__r,pta.NSP_Milestone__c, proj);
+            Id milestoneId = getMilestoneId( proj.pse__Milestones__r , pta.NSP_Milestone__c );
             milestoneKey = proj.Id + '~' + pta.NSP_Milestone__c;
             if(milestoneId == null && !mileStonesToInsert.containsKey(milestoneKey)){
                 pse__Milestone__c eachMilestone = new pse__Milestone__c(
@@ -584,7 +584,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
         Id workCalendarId
         )
     {
-        Id milestoneId = getMilestoneId( proj.pse__Milestones__r , pta.NSP_Milestone__c , proj );
+        Id milestoneId = getMilestoneId( proj.pse__Milestones__r , pta.NSP_Milestone__c );
         eachProjecttask.NSP_Sub_Category__c = pta.NSP_Sub_Category__c;
         eachProjecttask.Name = pta.NSP_Task_Name__c;
         eachProjecttask.pse__Order__c = pta.Order__c;
