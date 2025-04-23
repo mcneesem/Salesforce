@@ -1661,44 +1661,23 @@ public void initializeDefaultFieldValuesOnInsert(List<SBQQ__Quote__c> newQuotesL
     // @param quotes list;
     // @return void
     //
-    private void validateQuote( List<SBQQ__Quote__c> quotes ) {
-        List<Id> accountIds = new List<Id>();
-        Map<Id,Asset> accountAssetMap = new Map<Id,Asset>();
-        for ( SBQQ__Quote__c newQuote : quotes ) {
-            if ( newQuote.SBQQ__Type__c.equals( NSP_CPQConstants.QUOTE_TYPE_NEW )
-                && ( ( newQuote.NSP_Opportunity_Primary_Product__c == 'WX' )
-                    || ( newQuote.NSP_Opportunity_Primary_Product__c == 'WA' )
-                    )
-                )
-            {
-                accountIds.add( newQuote.SBQQ__Account__c );
+    private void validateQuote(List<SBQQ__Quote__c> quotes){
+        List<Id> accountIds= new List<Id>();
+        Map<Id,Asset> accountAssetMap= new Map<Id,Asset>();
+        for(SBQQ__Quote__c newQuote:quotes){
+            if(newQuote.SBQQ__Type__c.equals(NSP_CPQConstants.QUOTE_TYPE_NEW) && (newQuote.NSP_Opportunity_Primary_Product__c == 'WX' || newQuote.NSP_Opportunity_Primary_Product__c == 'WA')){
+                accountIds.add(newQuote.SBQQ__Account__c);
             }
         }
-        if ( !accountIds.isEmpty() ) {
-            for ( Asset rec : [
-                        SELECT Id , AccountId , NSP_ProductBundle__c
-                        FROM Asset
-                        WHERE (
-                            ( AccountId IN :accountIds )
-                            AND ( RecordType.Name = 'WX_WA' )
-                            AND ( Status IN ( 'Onboarding' , 'Active' ) )
-                        )
-                    ]
-                )
-            {
-                accountAssetMap.put( rec.AccountId , rec );
+        if(accountIds.size()>0){
+            for(Asset rec:[SELECT Id,AccountId,NSP_ProductBundle__c FROM Asset WHERE AccountId IN :accountIds AND RecordType.Name='WX_WA' AND Status IN ('Onboarding','Active')]){
+                accountAssetMap.put(rec.AccountId,rec);
             }
         }
-        for ( SBQQ__Quote__c newQuote : quotes ) {
-            if ( newQuote.SBQQ__Type__c.equals( NSP_CPQConstants.QUOTE_TYPE_NEW )
-                && ( ( newQuote.NSP_Opportunity_Primary_Product__c == 'WX' ) || ( newQuote.NSP_Opportunity_Primary_Product__c == 'WA' ) )
-                && ( accountAssetMap.get(newQuote.SBQQ__Account__c) != null )
-                && !( ( ( newQuote.NSP_Opportunity_Primary_Bundle__c == STRING_WO_WS ) && ( accountAssetMap.get( newQuote.SBQQ__Account__c )?.NSP_ProductBundle__c != STRING_WO_WS ) )
-                    || ( ( newQuote.NSP_Opportunity_Primary_Bundle__c != STRING_WO_WS ) && ( accountAssetMap.get( newQuote.SBQQ__Account__c )?.NSP_ProductBundle__c == STRING_WO_WS ) )
-                    )
-                )
-            {
-                newQuote.addError( WX_WA_QUOTE_VALIDATION_ERROR );
+        for(SBQQ__Quote__c newQuote:quotes){
+            if(newQuote.SBQQ__Type__c.equals(NSP_CPQConstants.QUOTE_TYPE_NEW) && (newQuote.NSP_Opportunity_Primary_Product__c == 'WX' || newQuote.NSP_Opportunity_Primary_Product__c == 'WA') && accountAssetMap.get(newQuote.SBQQ__Account__c)!=null && 
+            !((newQuote.NSP_Opportunity_Primary_Bundle__c == STRING_WO_WS &&accountAssetMap.get(newQuote.SBQQ__Account__c)?.NSP_ProductBundle__c!=STRING_WO_WS)||(newQuote.NSP_Opportunity_Primary_Bundle__c !=STRING_WO_WS &&accountAssetMap.get(newQuote.SBQQ__Account__c)?.NSP_ProductBundle__c==STRING_WO_WS ))){
+                newQuote.addError(WX_WA_QUOTE_VALIDATION_ERROR);
             }
         }
     }
