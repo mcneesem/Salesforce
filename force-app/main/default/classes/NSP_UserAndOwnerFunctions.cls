@@ -2,7 +2,6 @@ public with sharing class NSP_UserAndOwnerFunctions {
     // test w/ NSP_UserAndOwnerFunctionsTest (89%)
 
     public static final String SELECT_PRIMARY_CONTACT = System.Label.NSP_Select_Primary_Contact;
-    private static Map<Id,User> templSelectUpdPermittedUserMap;
 
 /*
 * Description: This method sets signer to dummy user if they are blank, customer signer to accoun't primary contact
@@ -19,10 +18,6 @@ public with sharing class NSP_UserAndOwnerFunctions {
 */
     public void setDummyUsers( List<Opportunity> setOpptyTemplateIdList , Set<String> accountIdSet , Set<Id> ownerIdset ) {
         //get custom metadata for docusign template mapping
-        if (templSelectUpdPermittedUserMap == null) {
-            templSelectUpdPermittedUserMap = CustomPermissionController.getPermittedUsersMap('Template_Selection_Owner_Update');
-        }
-        
         try{
             Map < Id, String > accountContactMap = new Map < Id, String > ();
         	for ( AccountContactRelation accountObj : [
@@ -48,7 +43,7 @@ public with sharing class NSP_UserAndOwnerFunctions {
                 // if Opportunity owner is BPA
                 // set BPA as owner or set as dummy user -- UPDATE: Dummy User retired; just leave NSP_BPA__c unassigned
                 if( ( opportuntityObj.NSP_BPA__c == null )
-                   && ( templSelectUpdPermittedUserMap.keySet().contains( opportuntityObj.OwnerId ) ) ){
+                   && ( NSP_UserAndOwnerFunctions.templSelectUpdPermittedUserMap.keySet().contains( opportuntityObj.OwnerId ) ) ){
                         opportuntityObj.NSP_BPA__c = opportuntityObj.OwnerId;
                         opportuntityObj.NSP_DM_User__c = mapUserObject.get(opportuntityObj.OwnerId).ManagerID;
                         opportuntityObj.NSP_DA_User__c = mapUserObject.get(opportuntityObj.OwnerId).Manager.ManagerID;
@@ -99,8 +94,14 @@ public with sharing class NSP_UserAndOwnerFunctions {
         }
     }
     
-
-	
-    
+    private static Map<Id,User> templSelectUpdPermittedUserMap {
+        private get {
+            if ( templSelectUpdPermittedUserMap == null ) {
+                templSelectUpdPermittedUserMap = CustomPermissionController.getPermittedUsersMap( 'Template_Selection_Owner_Update' );
+            }
+            return templSelectUpdPermittedUserMap;
+        }
+        private set;
+    }
 }
 //
