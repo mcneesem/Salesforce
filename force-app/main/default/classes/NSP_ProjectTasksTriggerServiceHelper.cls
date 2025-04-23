@@ -58,8 +58,7 @@ public with sharing class NSP_ProjectTasksTriggerServiceHelper {
             }
 
 
-            /*STY-02085  checking for checkBox(Create Work Order) on projectTask Object is checked
-            and Disptach region field is not null*/
+            // STY-02085  checking for checkBox(Create Work Order) on projectTask Object is checked and Disptach region field is not null
             if(pTask.NSP_Create_Work_Order__c == true &&
                pTask.NSP_Create_Work_Order__c != projectTaskOldMap.get(pTask.id).NSP_Create_Work_Order__c &&
                String.isNotBlank(pTask.NSP_Dispatch_Region__c)){
@@ -566,8 +565,7 @@ public with sharing class NSP_ProjectTasksTriggerServiceHelper {
         for(WorkOrder oWorkOrder : listWorkOrders){
             mapWorkOrderProjectTask.put(oWorkOrder.Id, mapProjectTasks.get(oWorkOrder.NSP_Project_Task__c));
         }
-        /*When we create WorkOrder record it automatically create Service Appointment (because
-            Auto_create_Service_Appointment checkbox is checked on WorkType) with auto-populated values*/
+        // When we create WorkOrder record it automatically create Service Appointment (because Auto_create_Service_Appointment checkbox is checked on WorkType) with auto-populated values
         for(ServiceAppointment oService : [SELECT Id,FSL__GanttLabel__c, Duration,
                                            NSP_Orientation_Address__c, Description, Status, EarliestStartTime,NSP_Meeting_Type__c,
                                            ParentRecordId
