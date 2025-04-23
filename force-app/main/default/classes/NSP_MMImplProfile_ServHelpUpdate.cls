@@ -1016,10 +1016,14 @@ public class NSP_MMImplProfile_ServHelpUpdate {
     }
 
     //Expenses/Allowances - automation
-    private void createProjectTaskForExpenseAllowance(String automation,pse__Proj__c proj,
-                                                NSP_ProjectTask_Automation__mdt pta,Id ipRecId,
-                                                Implementation_Profile__c ipwithValue, Id workCalendarId
-                                               ) 
+    private void createProjectTaskForExpenseAllowance(
+        String automation ,
+        pse__Proj__c proj ,
+        NSP_ProjectTask_Automation__mdt pta ,
+        Id ipRecId ,
+        Implementation_Profile__c ipwithValue ,
+        Id workCalendarId
+        )
     {
         if(automation ==ALLOWNCE_EXPENSE_MM){
             String milestoneKey = createMilestoneForProjectTask(proj, pta);
@@ -1027,11 +1031,9 @@ public class NSP_MMImplProfile_ServHelpUpdate {
             NSP_Implementation_Automations__mdt ipa = NSP_Implementation_Automations__mdt.getInstance(automation);
             Implementation_Profile__c ipRec = newIPs.get(ipRecId);
             genericProjectTask(proj,eachProjecttask, pta, workCalendarId);
-            
             if(ipwithValue.NSP_Payroll_Project_Manager__r!=null && ipwithValue.NSP_Payroll_Project_Manager__r.pse__Salesforce_User__c!=null){
                 eachProjecttask.OwnerId=ipwithValue.NSP_Payroll_Project_Manager__r.pse__Salesforce_User__c;
             }
-            
             ipAutomationRecords.add(
                 createIPAutomation(
                     ipRec,
@@ -3105,14 +3107,16 @@ public class NSP_MMImplProfile_ServHelpUpdate {
     }
 
     private void checkForExpenseAllowance(Implementation_Profile__c newRec, Implementation_Profile__c existingRec){
-        if(automationsToExecute.contains(ALLOWNCE_EXPENSE_MM) 
-           && newRec != null 
-           && newRec.RecordTypeId == ipMMRecordTypeId 
-           && newRec.Allowances__c!=null
-           && newRec.Allowances__c.contains(NSP_ServiceConstants.PHONE)
-           && (existingRec == null 
-               || newRec.NSP_Form_Completed__c 
-               || newRec.Allowances__c != existingRec.Allowances__c))
+        if ( automationsToExecute.contains(ALLOWNCE_EXPENSE_MM)
+            && newRec != null
+            && newRec.RecordTypeId == ipMMRecordTypeId
+            && newRec.Allowances__c!=null
+            && newRec.Allowances__c.contains(NSP_ServiceConstants.PHONE)
+            && ( existingRec == null
+                || newRec.NSP_Form_Completed__c
+                || newRec.Allowances__c != existingRec.Allowances__c
+                )
+            )
         {
             updateEligibleRecordsMap(ipRecordsByAutomation, newRec.Id, ALLOWNCE_EXPENSE_MM);
         }
