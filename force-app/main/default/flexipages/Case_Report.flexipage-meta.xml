@@ -9,7 +9,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>flowName</name>
-                    <value>Display_cases_based_on_Account_Team</value>
+                    <value>Case_Report_Account_Team_Cases</value>
                 </componentInstanceProperties>
                 <componentName>flowruntime:interview</componentName>
                 <identifier>flowruntime_interview</identifier>
