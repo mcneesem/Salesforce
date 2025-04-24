@@ -16,7 +16,7 @@ public with sharing class NSP_CustomLookUpController {
     private static Set<Id> quedIdSet;
     private static List<String> ID_NAME_FIELDS = new List<String>{'Id','Name'};
     private static List<String> ID_ACCOUNTID_FIELDS = new List<String>{'Id','AccountId'};
-
+    private static String baseQueryString = 'SELECT Id,Name FROM ';
     /**
     * @MethodName: fetchLookupData
     * @Description: This method describes to fetch the data when it is placed on Flow and Case Form based on Search and Parent Account or Contact Id.
@@ -68,7 +68,7 @@ public with sharing class NSP_CustomLookUpController {
             for(AccountContactRelation acr : [SELECT Id, AccountId, ContactId FROM AccountContactRelation WHERE ContactId =: parentId]){
                 accIdSet.add(acr.AccountId); 
             }
-            accQuery = 'Select Id,Name From ' + sObjectApiName + ' Where Name Like : sWildCardText AND ID IN: accIdSet order by createdDate DESC LIMIT 1000';
+            accQuery = baseQueryString + sObjectApiName + ' Where Name Like : sWildCardText AND ID IN: accIdSet order by createdDate DESC LIMIT 1000';
         }else{
             accQuery = frameFetchLookUpDataQuery(sWildCardText, sObjectApiName, NSP_ServiceConstants.EMPTY_STRING);
         }
@@ -90,7 +90,7 @@ public with sharing class NSP_CustomLookUpController {
             for(AccountContactRelation acr : [SELECT Id, AccountId, ContactId FROM AccountContactRelation WHERE AccountId =: parentAccountId]){
                 conIdSet.add(acr.ContactId); 
             }
-            conQuery = 'Select Id,Name From ' + sObjectApiName + ' Where ( Name Like : sWildCardText OR NSP_Per_ID__c LIKE : sWildCardText ) AND ID IN: conIdSet order by createdDate DESC LIMIT 1000';
+            conQuery = baseQueryString + sObjectApiName + ' Where ( Name Like : sWildCardText OR NSP_Per_ID__c LIKE : sWildCardText ) AND ID IN: conIdSet order by createdDate DESC LIMIT 1000';
         }else{
             conQuery = frameFetchLookUpDataQuery(sWildCardText, sObjectApiName, NSP_ServiceConstants.EMPTY_STRING);
         }
@@ -110,13 +110,13 @@ public with sharing class NSP_CustomLookUpController {
         if(sObjectApiName == NSP_ServiceConstants.USER_OBJECT){
             serviceProfile = system.label.NSP_Service_Profiles.split(',');
             serviceProfile.add(NSP_ServiceConstants.SYSTEM_ADMINISTRATOR);
-            userOrGrpQuery = 'Select Id,Name From ' + sObjectApiName + ' Where Name Like : sWildCardText AND Profile.Name IN: serviceProfile  AND IsActive = true order by createdDate DESC LIMIT 1000';
+            userOrGrpQuery = baseQueryString + sObjectApiName + ' Where Name Like : sWildCardText AND Profile.Name IN: serviceProfile  AND IsActive = true order by createdDate DESC LIMIT 1000';
         }else if(sObjectApiName == NSP_ServiceConstants.TYPE_GROUP){
              quedIdSet = new Set<Id>();
             for(QueueSobject qObj : [ SELECT QueueId, Queue.Name FROM QueueSobject WHERE SobjectType = 'Case']){
                 quedIdSet.add(qObj.QueueId);
             }
-            userOrGrpQuery = 'Select Id,Name From ' + sObjectApiName + ' Where Name Like : sWildCardText AND Type = \'Queue\' AND Id IN: quedIdSet order by createdDate DESC LIMIT 1000';
+            userOrGrpQuery = baseQueryString + sObjectApiName + ' Where Name Like : sWildCardText AND Type = \'Queue\' AND Id IN: quedIdSet order by createdDate DESC LIMIT 1000';
         }
         return userOrGrpQuery;
     }    
