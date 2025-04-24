@@ -174,7 +174,7 @@
                             </visibilityRule>
                         </valueListItems>
                         <valueListItems>
-                            <value>CustomButton.Case.Create_Project_From_Template</value>
+                            <value>Case.nsp_Create_Project_From_Template</value>
                             <visibilityRule>
                                 <booleanFilter>1 AND 2 AND 3</booleanFilter>
                                 <criteria>
@@ -183,7 +183,7 @@
                                     <rightValue>OrgPlus M&amp;A</rightValue>
                                 </criteria>
                                 <criteria>
-                                    <leftValue>{!$User.Profile.Name}</leftValue>
+                                    <leftValue>{!$User.NSP_Profile_Name__c}</leftValue>
                                     <operator>NE</operator>
                                     <rightValue>PEO Service</rightValue>
                                 </criteria>
@@ -206,7 +206,7 @@
                                 <criteria>
                                     <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
                                     <operator>EQUAL</operator>
-                                    <rightValue>NSP_OrgPluSM_A</rightValue>
+                                    <rightValue>NSP_OrgPlusM_A</rightValue>
                                 </criteria>
                                 <criteria>
                                     <leftValue>{!Record.NSP_Category__c}</leftValue>
@@ -244,7 +244,7 @@
                             <value>Case.New_Task_LWC</value>
                         </valueListItems>
                         <valueListItems>
-                            <value>Case.nsp_Create_Project_From_Template</value>
+                            <value>CustomButton.Case.Create_Project_From_Template</value>
                             <visibilityRule>
                                 <booleanFilter>1 AND 2 AND 3</booleanFilter>
                                 <criteria>
@@ -529,7 +529,7 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>none</value>
+                    <value>required</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Origin</fieldItem>
                 <identifier>RecordOriginField</identifier>
@@ -683,7 +683,7 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>none</value>
+                    <value>required</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Priority</fieldItem>
                 <identifier>RecordPriorityField</identifier>
@@ -693,7 +693,7 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>none</value>
+                    <value>required</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Rating__c</fieldItem>
                 <identifier>RecordNSP_Rating_cField</identifier>
