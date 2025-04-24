@@ -3,7 +3,7 @@
     <fullName>NSP_Shipping_Postal_Code__c</fullName>
     <description>Captures Postal Code</description>
     <externalId>false</externalId>
-    <formula>Order.NSP_Shipping_Address__r.NSP_Postal_Code__c</formula>
+    <formula>Order.ShippingPostalCode</formula>
     <label>Shipping Postal Code</label>
     <required>false</required>
     <trackHistory>false</trackHistory>
