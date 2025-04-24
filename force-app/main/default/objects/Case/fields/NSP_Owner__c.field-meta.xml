@@ -3,8 +3,8 @@
     <fullName>NSP_Owner__c</fullName>
     <externalId>false</externalId>
     <formula>IF(
-  ISBLANK(Owner:User.FirstName),
-  Owner:Queue.Name,
+  ISBLANK( Owner:User.FirstName ) ,
+  Owner:Queue.Name ,
   Owner:User.FirstName &amp; &quot; &quot; &amp; Owner:User.LastName
 )</formula>
     <label>Owner</label>
