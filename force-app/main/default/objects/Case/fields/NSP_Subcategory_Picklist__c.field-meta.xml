@@ -3889,6 +3889,7 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Payroll Shared Services</controllingFieldValue>
+            <controllingFieldValue>Payroll Services</controllingFieldValue>
             <valueName>Address Update</valueName>
         </valueSettings>
         <valueSettings>
@@ -4020,10 +4021,6 @@
         <valueSettings>
             <controllingFieldValue>Subpoena Request</controllingFieldValue>
             <valueName>Subpoena</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Payroll Services</controllingFieldValue>
-            <valueName>Address Update</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Payroll Services</controllingFieldValue>
