@@ -1,10 +1,10 @@
 import { LightningElement, track, wire } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
-import getOrgSettings from '@salesforce/apex/SandboxManualStepsController.getOrgSettings';
-import runManualSteps from '@salesforce/apex/SandboxManualStepsController.runManualSteps';
-import runUserImport from '@salesforce/apex/SandboxManualStepsController.runUserImport';
-import runManualSteps2 from '@salesforce/apex/SandboxManualStepsController.runManualSteps2';
-import runE2CAddresses from '@salesforce/apex/SandboxManualStepsController.runE2CAddresses';
+import getOrgSettings from '@salesforce/apex/NSP_PrepSandbox.getOrgSettings';
+import runManualSteps from '@salesforce/apex/NSP_PrepSandbox.runManualSteps';
+import runUserImport from '@salesforce/apex/NSP_PrepSandbox.runUserImport';
+import runManualSteps2 from '@salesforce/apex/NSP_PrepSandbox.runManualSteps2';
+import runE2CAddresses from '@salesforce/apex/NSP_PrepSandbox.runE2CAddresses';
 import { refreshApex } from '@salesforce/apex';
 
 export default class PrepSandbox extends LightningElement {
@@ -43,7 +43,6 @@ export default class PrepSandbox extends LightningElement {
             this.showToast('Success', 'Post-refresh steps completed successfully.', 'success');
             this.postRefreshRun = true;
         } catch (error) {
-            this.message = 'Failed to complete post-refresh steps...';
             this.showToast('Error', 'Failed to complete post-refresh steps.', 'error');
         } finally {
             this.isLoading = false;
@@ -51,16 +50,15 @@ export default class PrepSandbox extends LightningElement {
     }
 
     // Handler for Import Org Users button
-    handleImportUsers() {
+    async handleImportUsers() {
         this.isLoading = true;
         this.message = 'Importing users...';
 
         try {
-            runUserImport();
+            await runUserImport();
             this.showToast('Success', 'Users imported successfully.', 'success');
             this.postRefreshRun2 = true;
         } catch (error) {
-            this.message = 'Failed to import users...';
             this.showToast('Error', 'Failed to import users.', 'error');
         } finally {
             this.isLoading = false;
@@ -77,7 +75,6 @@ export default class PrepSandbox extends LightningElement {
             this.showToast('Success', 'Post-import steps completed successfully.', 'success');
             this.postRefreshRun3 = true;
         } catch (error) {
-            this.message = 'Failed to complete post-import steps...';
             this.showToast('Error', 'Failed to complete post-import steps.', 'error');
         } finally {
             this.isLoading = false;
@@ -94,7 +91,6 @@ export default class PrepSandbox extends LightningElement {
             this.showToast('Success', 'E2C addresses updated successfully.', 'success');
             this.postRefreshRun4 = true;
         } catch (error) {
-            this.message = 'Failed to update E2C addresses...';
             this.showToast('Error', 'Failed to update E2C addresses.', 'error');
         } finally {
             this.isLoading = false;
