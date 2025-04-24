@@ -4,7 +4,7 @@
     <assignments>
         <name>Set_Fault_Element_For_Get_Projects</name>
         <label>Set Fault Element For Get Projects</label>
-        <locationX>1012</locationX>
+        <locationX>1397</locationX>
         <locationY>384</locationY>
         <assignmentItems>
             <assignToReference>Fault_Element</assignToReference>
@@ -21,8 +21,8 @@
     <assignments>
         <name>Set_Fault_Element_For_Update_Projects</name>
         <label>Set Fault Element For Update Projects</label>
-        <locationX>484</locationX>
-        <locationY>900</locationY>
+        <locationX>869</locationX>
+        <locationY>1542</locationY>
         <assignmentItems>
             <assignToReference>Fault_Element</assignToReference>
             <operator>Assign</operator>
@@ -37,8 +37,8 @@
     <assignments>
         <name>Set_Project_Fields</name>
         <label>Set Project Fields</label>
-        <locationX>308</locationX>
-        <locationY>600</locationY>
+        <locationX>1078</locationX>
+        <locationY>1242</locationY>
         <assignmentItems>
             <assignToReference>Iterate_Over_Project_Records.Client_Segment__c</assignToReference>
             <operator>Assign</operator>
@@ -58,9 +58,88 @@
         </connector>
     </assignments>
     <decisions>
+        <description>Prevent DmlExceptions: FIELD_CUSTOM_VALIDATION_EXCEPTION: Please enter the value for End Date</description>
+        <name>Check_End_Date</name>
+        <label>Check End Date</label>
+        <locationX>1001</locationX>
+        <locationY>816</locationY>
+        <defaultConnector>
+            <targetReference>Set_Project_Fields</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Blank_End_Date</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Iterate_Over_Project_Records.pse__End_Date__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <isGoTo>true</isGoTo>
+                <targetReference>Iterate_Over_Project_Records</targetReference>
+            </connector>
+            <label>Blank End Date</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Prevent DmlExceptions: FIELD_CUSTOM_VALIDATION_EXCEPTION: Please enter the value for End Date</description>
+        <name>Check_Project_Implementer</name>
+        <label>Check Project Implementer</label>
+        <locationX>847</locationX>
+        <locationY>708</locationY>
+        <defaultConnector>
+            <targetReference>Check_End_Date</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Blank_Project_Implementer</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Iterate_Over_Project_Records.Project_Implementer__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Project_Fields</targetReference>
+            </connector>
+            <label>Blank Project Implementer</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Prevent DmlExceptions: FIELD_CUSTOM_VALIDATION_EXCEPTION: Please enter the value for End Date</description>
+        <name>Check_Template_Name</name>
+        <label>Check Template Name</label>
+        <locationX>1078</locationX>
+        <locationY>600</locationY>
+        <defaultConnector>
+            <targetReference>Set_Project_Fields</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Is_ITA_Implementation</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Iterate_Over_Project_Records.TemplateName__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>ITA-Implementation</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Check_Project_Implementer</targetReference>
+            </connector>
+            <label>Is ITA-Implementation</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Validate_Project_Records</name>
         <label>Validate Project Records</label>
-        <locationX>484</locationX>
+        <locationX>869</locationX>
         <locationY>384</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -85,12 +164,12 @@
     <loops>
         <name>Iterate_Over_Project_Records</name>
         <label>Iterate Over Project Records</label>
-        <locationX>220</locationX>
+        <locationX>605</locationX>
         <locationY>492</locationY>
         <collectionReference>Project_Records</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
-            <targetReference>Set_Project_Fields</targetReference>
+            <targetReference>Check_Template_Name</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
             <targetReference>Update_Project_Records</targetReference>
@@ -119,7 +198,7 @@
         <description>Prevent DmlExceptions.  Projects queued for deletion can not be modified.</description>
         <name>Get_Related_Project_Records</name>
         <label>Get Related Project Records</label>
-        <locationX>484</locationX>
+        <locationX>869</locationX>
         <locationY>276</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -163,12 +242,15 @@
         <queriedFields>Client_Segment_Formula__c</queriedFields>
         <queriedFields>Client_Segment__c</queriedFields>
         <queriedFields>pse__Project_Status__c</queriedFields>
+        <queriedFields>TemplateName__c</queriedFields>
+        <queriedFields>Project_Implementer__c</queriedFields>
+        <queriedFields>pse__End_Date__c</queriedFields>
     </recordLookups>
     <recordUpdates>
         <name>Update_Project_Records</name>
         <label>Update Project Records</label>
-        <locationX>220</locationX>
-        <locationY>792</locationY>
+        <locationX>605</locationX>
+        <locationY>1434</locationY>
         <faultConnector>
             <targetReference>Set_Fault_Element_For_Update_Projects</targetReference>
         </faultConnector>
@@ -213,8 +295,8 @@
     <subflows>
         <name>Unable_To_Update_Project_Records</name>
         <label>Unable To Update Project Records</label>
-        <locationX>484</locationX>
-        <locationY>1008</locationY>
+        <locationX>869</locationX>
+        <locationY>1650</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultElement</name>
