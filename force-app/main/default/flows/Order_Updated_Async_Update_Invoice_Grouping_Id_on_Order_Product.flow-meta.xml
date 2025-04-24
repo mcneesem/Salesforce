@@ -11,7 +11,7 @@
             <assignToReference>FaultElementNameVariable</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Get_Record_Fault_Element</stringValue>
+                <stringValue>Get_Order_Products</stringValue>
             </value>
         </assignmentItems>
         <connector>
