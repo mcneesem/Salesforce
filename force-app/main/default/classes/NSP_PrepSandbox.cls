@@ -116,8 +116,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
             for(integer i=1; i < rows.size() ; i++) { // skip header row
                 String[] column = rows[i].split(',');
                 String aliasEnd = (column[4].length() < 5) ? column[4].trim() : column[4].substring(0,5);
-                String orgNames = column[7] ?? 'none';
-					   orgNames = (orgNames.length() > 1) ? orgNames : 'none'; 
+                String orgNames = (column[7].length() > 1) ? column[7] : 'none';
                 if (column[1].indexOf('integration') < 0 && column[2].indexOf('noreply') < 0 && column[2].indexOf('insperity') > -1){
                     userList.add(new User(
                         IsActive = true,
