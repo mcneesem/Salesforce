@@ -15,7 +15,7 @@
         <flow>Case_Report_Account_Team_Cases</flow>
     </flowAccesses>
     <hasActivationRequired>false</hasActivationRequired>
-    <label>Case Report Account Team Cases</label>
+    <label>Case Report - Account Team Cases</label>
     <tabSettings>
         <tab>Case_Report</tab>
         <visibility>Visible</visibility>
