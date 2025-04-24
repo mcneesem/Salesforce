@@ -111,8 +111,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
             for(integer i=1; i < rows.size() ; i++) { // skip header row
                 String[] column = rows[i].split(',');
                 String aliasEnd = (column[4].length() < 5) ? column[4].trim() : column[4].substring(0,5);
-                String orgNames = column[7] ?? 'none';
-					   orgNames = (orgNames.length() > 1) ? orgNames : 'none';
+                String orgNames = (column[7].length() > 1) ? column[7] : 'none';
                 if (column[1].indexOf('integration') < 0 && column[2].indexOf('noreply') < 0 && column[2].indexOf('insperity') > -1){
                     userList.add(new User(
                         IsActive = true,
@@ -121,7 +120,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
                         LastName = column[4].trim(),
                         Username = column[2].substringBefore(STRING_INVALID).trim() + '.' + sandboxName,
                         ProfileId = getImportUserProfileId(adminProfileId, sandboxName.toLowercase(), profileNameMap, column[1], column[5], orgNames.toLowercase()),
-                        //FederationIdentifier = column[2].substringBefore(STRING_INVALID).trim(),
+                        FederationIdentifier = column[2].substringBefore(STRING_INVALID).trim(),
                         Alias = column[3].substring(0,1).toLowercase() + aliasEnd.toLowercase(),
                         UserRoleId = (userRoleNameMap.containsKey(column[6])) ? userRoleNameMap.get(column[6])[0].Id : null,
                         TimeZoneSidKey = 'America/Chicago',
