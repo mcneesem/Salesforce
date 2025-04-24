@@ -120,7 +120,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
                         LastName = column[4].trim(),
                         Username = column[2].substringBefore(STRING_INVALID).trim() + '.' + sandboxName,
                         ProfileId = getImportUserProfileId(adminProfileId, sandboxName.toLowercase(), profileNameMap, column[1], column[5], orgNames.toLowercase()),
-                        FederationIdentifier = column[2].substringBefore(STRING_INVALID).trim(),
+                        // FederationIdentifier = column[2].substringBefore(STRING_INVALID).trim(),
                         Alias = column[3].substring(0,1).toLowercase() + aliasEnd.toLowercase(),
                         UserRoleId = (userRoleNameMap.containsKey(column[6])) ? userRoleNameMap.get(column[6])[0].Id : null,
                         TimeZoneSidKey = 'America/Chicago',
