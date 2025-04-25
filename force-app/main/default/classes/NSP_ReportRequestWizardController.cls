@@ -320,6 +320,31 @@ public with sharing class NSP_ReportRequestWizardController {
           throw new AuraHandledException(excep.getMessage());
       }
     }
+    
+    @AuraEnabled
+    public static string getPerformanceSpecialist(String accountID)
+    {
+        
+        String userId = '';
+        NSP_Account_Team__c[] accountTeam =[SELECT Id, NSP_User__r.Name, 
+                                            NSP_User__c, 
+                                            NSP_Role__c,NSP_Account__c 
+                                            FROM 
+                                            NSP_Account_Team__c 
+                                            WHERE 
+                                            NSP_Role__c ='Performance Specialist' 
+                                            AND 
+                                            NSP_Account__c =:accountID 
+                                            AND 
+                                            NSP_User__c !=null  
+                                            ORDER BY 
+                                            LastModifiedDate ASC LIMIT 1
+                                           ];
+        if(!accountTeam?.isEmpty()){
+            userId= accountTeam[0].NSP_User__c;
+        }
+        return userId;
+    }
 
     @AuraEnabled
     public static String getAIMSfromPEOasset(String accountID){

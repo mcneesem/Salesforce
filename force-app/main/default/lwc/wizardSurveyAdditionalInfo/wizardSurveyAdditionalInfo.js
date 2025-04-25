@@ -2,6 +2,7 @@ import { LightningElement, wire, api, track } from 'lwc';
 import SurveyRevisionRequestForm from '@salesforce/label/c.NSP_SurveyRevisionRequestFormPageNexus';
 import surveyRevisionHyperLink from '@salesforce/label/c.NSP_SurveyRevisionRequestFileHyperLinks';
 import getHRspecialist from '@salesforce/apex/NSP_ReportRequestWizardController.getHRspecialist';
+import getPerformanceSpecialist from '@salesforce/apex/NSP_ReportRequestWizardController.getPerformanceSpecialist';
 export default class wizardSurveyAdditionalInfo extends LightningElement {
 
    customLabel ={
@@ -21,6 +22,7 @@ export default class wizardSurveyAdditionalInfo extends LightningElement {
     isOnloaded = true;
     isSaveClick=false;
     userID;
+    psUserId;
 
     handleAccountLookup(recordId) {
     if(recordId != null && recordId.length > 14  ){
@@ -34,6 +36,17 @@ export default class wizardSurveyAdditionalInfo extends LightningElement {
         .catch((error) => {
             this.error = error;
         });
+
+        getPerformanceSpecialist({ accountID : recordId })
+        .then(( result ) => {
+            if(result != null && result != ''){
+                this.psUserId = result;
+            }
+            this.error = undefined;
+        })
+        .catch((error) => {
+            this.error = error;
+        })
       }
     }
 
@@ -176,6 +189,9 @@ export default class wizardSurveyAdditionalInfo extends LightningElement {
                 
                 if (this.userID !=null && this.userID != ''){
                     fields.NSP_HRSpeciallist__c = this.userID;
+                }
+                if(this.psUserId != null && this.psUserId != ''){
+                    fields.Performance_Specialist__c = this.psUserId;
                 }
                         
             }
