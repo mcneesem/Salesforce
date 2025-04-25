@@ -149,7 +149,7 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>none</value>
+                    <value>required</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Priority</fieldItem>
                 <identifier>RecordPriorityField</identifier>
@@ -179,10 +179,20 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>none</value>
+                    <value>required</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Rating__c</fieldItem>
                 <identifier>RecordNSP_Rating_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Entries_Processed__c</fieldItem>
+                <identifier>RecordEntries_Processed_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1712,7 +1722,7 @@
                     <name>adminFilters</name>
                     <valueList>
                         <valueListItems>
-                            <value>ASSET.NAME|CONTAINS|- Hardware</value>
+                            <value>ASSET.RECORDTYPE|EQUALS|[&quot;Hardware_Asset&quot;]</value>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>

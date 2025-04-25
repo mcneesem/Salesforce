@@ -39,6 +39,124 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assign_varFault_Element_GetOppty</name>
+        <label>Assign varFault Element - GetOppty</label>
+        <locationX>1370</locationX>
+        <locationY>566</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>GetOppty</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Fault_Handler_subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement</name>
+        <label>Assign varFaultElement</label>
+        <locationX>930</locationX>
+        <locationY>890</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Group</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Create_OpptyMember</name>
+        <label>Assign varFaultElement - Create_OpptyMember</label>
+        <locationX>2382</locationX>
+        <locationY>1922</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Create_OpptyMember</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_GetGroupmember</name>
+        <label>Assign varFaultElement - GetGroupmember</label>
+        <locationX>490</locationX>
+        <locationY>1106</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>GetGroupmember</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_GetMembers</name>
+        <label>Assign varFaultElement - GetMembers</label>
+        <locationX>3526</locationX>
+        <locationY>674</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>GetMembers</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_GetNCSGroupInfo</name>
+        <label>Assign varFaultElement - GetNCSGroupInfo</label>
+        <locationX>3790</locationX>
+        <locationY>566</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>GetNCSGroupInfo</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_GetOpptyteamMembers</name>
+        <label>Assign varFaultElement - GetOpptyteamMembers</label>
+        <locationX>2646</locationX>
+        <locationY>782</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>GetOpptyteamMembers</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>AssigntoSo</name>
         <label>AssigntoSo</label>
         <locationX>1986</locationX>
@@ -137,7 +255,7 @@
     <assignments>
         <name>RecordIdAssignment</name>
         <label>RecordIdAssignment</label>
-        <locationX>3336</locationX>
+        <locationX>3039</locationX>
         <locationY>134</locationY>
         <assignmentItems>
             <assignToReference>varOpptyId</assignToReference>
@@ -254,7 +372,7 @@
     <decisions>
         <name>Check_User_Role_Not_Null</name>
         <label>Check User Role Not Null</label>
-        <locationX>3336</locationX>
+        <locationX>3039</locationX>
         <locationY>242</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -326,41 +444,20 @@
     <decisions>
         <name>checkRoleDecision</name>
         <label>checkRoleDecision</label>
-        <locationX>2442</locationX>
+        <locationX>2024</locationX>
         <locationY>350</locationY>
         <defaultConnector>
-            <targetReference>NoAccess</targetReference>
+            <targetReference>GetNCSGroupInfo</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <defaultConnectorLabel>Default Outcome - NCS</defaultConnectorLabel>
         <rules>
             <name>DA_DM_RA_SSS_Role</name>
             <conditionLogic>or</conditionLogic>
             <conditions>
-                <leftValueReference>$UserRole.DeveloperName</leftValueReference>
+                <leftValueReference>$Permission.Opportunity_Team_Group_Check</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>District_Administrator</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$UserRole.DeveloperName</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>District_Manager</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$UserRole.DeveloperName</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Regional_Administrator</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$UserRole.DeveloperName</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Sales_Support_Specialist</stringValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -372,101 +469,16 @@
             <name>BPA_BPS_SEM_MM_Admin_Role</name>
             <conditionLogic>or</conditionLogic>
             <conditions>
-                <leftValueReference>$UserRole.DeveloperName</leftValueReference>
+                <leftValueReference>$Permission.Opportunity_Team_Team_Check</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>Sales_Engineer_Manager</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$UserRole.DeveloperName</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>BPS_Administrator</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$UserRole.DeveloperName</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>BPS_Sales_Manager</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$UserRole.DeveloperName</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Sales_Compensation</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$UserRole.DeveloperName</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>MidMarket_Administrator</stringValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
                 <targetReference>BPABPSSEMorMMAdmin_Assignment</targetReference>
             </connector>
             <label>BPA/BPS/SEM/MM Admin Role</label>
-        </rules>
-        <rules>
-            <name>NCS</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>$UserRole.DeveloperName</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <stringValue>District_Administrator</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$UserRole.DeveloperName</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <stringValue>District_Manager</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$UserRole.DeveloperName</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <stringValue>Sales_Engineer_Manager</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$UserRole.DeveloperName</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <stringValue>BPS_Administrator</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$UserRole.DeveloperName</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <stringValue>BPS_Sales_Manager</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$UserRole.DeveloperName</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <stringValue>Regional_Administrator</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$UserRole.DeveloperName</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <stringValue>Sales_Support_Specialist</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>GetNCSGroupInfo</targetReference>
-            </connector>
-            <label>NCS</label>
         </rules>
     </decisions>
     <decisions>
@@ -642,8 +654,7 @@
         <locationX>2118</locationX>
         <locationY>1814</locationY>
         <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Fault_Handler_subflow</targetReference>
+            <targetReference>Assign_varFaultElement_Create_OpptyMember</targetReference>
         </faultConnector>
         <inputReference>varOpptyMemberSO</inputReference>
     </recordCreates>
@@ -657,8 +668,7 @@
             <targetReference>checkGroup</targetReference>
         </connector>
         <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Fault_Handler_subflow</targetReference>
+            <targetReference>Assign_varFaultElement</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -682,8 +692,7 @@
             <targetReference>Groupmember_Id</targetReference>
         </connector>
         <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Fault_Handler_subflow</targetReference>
+            <targetReference>Assign_varFaultElement_GetGroupmember</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -714,8 +723,7 @@
             <targetReference>User_Existing_NCSGroup</targetReference>
         </connector>
         <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Fault_Handler_subflow</targetReference>
+            <targetReference>Assign_varFaultElement_GetMembers</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -746,8 +754,7 @@
             <targetReference>GetMembers</targetReference>
         </connector>
         <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Fault_Handler_subflow</targetReference>
+            <targetReference>Assign_varFaultElement_GetNCSGroupInfo</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -771,7 +778,7 @@
             <targetReference>checkOwnerSalesoffice</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Fault_Handler_subflow</targetReference>
+            <targetReference>Assign_varFault_Element_GetOppty</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -795,8 +802,7 @@
             <targetReference>Opportunity_Team_Addition</targetReference>
         </connector>
         <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Fault_Handler_subflow</targetReference>
+            <targetReference>Assign_varFaultElement_GetOpptyteamMembers</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -814,8 +820,8 @@
     <screens>
         <name>NoAccess</name>
         <label>NoAccess</label>
-        <locationX>2442</locationX>
-        <locationY>2282</locationY>
+        <locationX>2024</locationX>
+        <locationY>2372</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -850,6 +856,7 @@
                     <dataType>String</dataType>
                     <fieldText>Role</fieldText>
                     <fieldType>DropdownBox</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <inputParameters>
@@ -914,6 +921,7 @@
                     <defaultSelectedChoiceReference>readChoice</defaultSelectedChoiceReference>
                     <fieldText>Opportunity Access Level</fieldText>
                     <fieldType>DropdownBox</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <inputParameters>
@@ -941,6 +949,7 @@
                     <defaultSelectedChoiceReference>NoChoice</defaultSelectedChoiceReference>
                     <fieldText>Add Additional User?</fieldText>
                     <fieldType>DropdownBox</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <inputParameters>
@@ -995,29 +1004,35 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>3210</locationX>
+        <locationX>2913</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>RecordIdAssignment</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <subflows>
         <name>Fault_Handler_subflow</name>
         <label>Fault Handler subflow</label>
         <locationX>1370</locationX>
-        <locationY>566</locationY>
+        <locationY>674</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
+        <inputAssignments>
+            <name>faultElement</name>
+            <value>
+                <elementReference>varFaultElement</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultFlow</name>
+            <value>
+                <stringValue>NSP_Opportunity_Team_Member_Creation</stringValue>
+            </value>
+        </inputAssignments>
         <inputAssignments>
             <name>faultMessage</name>
             <value>
                 <elementReference>$Flow.FaultMessage</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>triggeringFlow</name>
-            <value>
-                <stringValue>Opportunity Team Member Creation</stringValue>
             </value>
         </inputAssignments>
     </subflows>
@@ -1034,6 +1049,13 @@
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>varFaultElement</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
     </variables>
     <variables>
         <name>varGroupmember</name>

@@ -359,10 +359,6 @@
         <description>Outgoing Approval Process - Notify Owner of Rejection</description>
         <protected>false</protected>
         <recipients>
-            <recipient>Moonwalkers_QE</recipient>
-            <type>group</type>
-        </recipients>
-        <recipients>
             <type>owner</type>
         </recipients>
         <senderType>CurrentUser</senderType>
@@ -372,10 +368,6 @@
         <fullName>Outgoing_Approval_Request_MidMarket_or_Enterprise</fullName>
         <description>Outgoing Approval Request - MidMarket or Enterprise</description>
         <protected>false</protected>
-        <recipients>
-            <recipient>Moonwalkers_QE</recipient>
-            <type>group</type>
-        </recipients>
         <recipients>
             <recipient>mike.iapalucci@insperity.com</recipient>
             <type>user</type>
@@ -391,10 +383,6 @@
             <field>NSP_Mid_Market_Sales_Email__c</field>
             <type>email</type>
         </recipients>
-        <recipients>
-            <recipient>Moonwalkers_QE</recipient>
-            <type>group</type>
-        </recipients>
         <senderType>CurrentUser</senderType>
         <template>Sales_Approval_Process/Outgoing_Approval_Request_Notify_MidMarket_Admins</template>
     </alerts>
@@ -402,10 +390,6 @@
         <fullName>Outgoing_Approval_Request_Notify_Owner_of_Approval</fullName>
         <description>Outgoing Approval Request - Notify Owner of Approval</description>
         <protected>false</protected>
-        <recipients>
-            <recipient>Moonwalkers_QE</recipient>
-            <type>group</type>
-        </recipients>
         <recipients>
             <type>owner</type>
         </recipients>
@@ -416,10 +400,6 @@
         <fullName>Outgoing_Approval_Request_Other_Account_Segments</fullName>
         <description>Outgoing Approval Request - Other Account Segments</description>
         <protected>false</protected>
-        <recipients>
-            <recipient>Moonwalkers_QE</recipient>
-            <type>group</type>
-        </recipients>
         <recipients>
             <field>NSP_DM_User__c</field>
             <type>userLookup</type>

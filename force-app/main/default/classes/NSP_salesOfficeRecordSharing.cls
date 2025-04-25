@@ -5,18 +5,19 @@
 * Name : NSP_salesOfficeRecordSharing
 */
 public class NSP_salesOfficeRecordSharing {
-    // test w/ NSP_salesOfficeRecordSharingTest (92%)
+    // test w/ NSP_salesOfficeRecordSharingTest (89%)
 
     //constants - custom labels
     public static List<string> BusinessPerformanceRoles = System.Label.NSP_Business_Performance_Roles.split(',');
     private static Map<String,String> salesOfficeGroupMap = new Map<String,String>();
+    private static Map<Id,User> permittedShareSOUserMap = CustomPermissionController.getPermittedUsersMap('Lead_Owner_Update_Share_SO');
 
     /***********************************************************************************************
     * MethodName: accountRecordSharing 
     * Description : Method for sharing records With BPA Sales Offices
     * Params:       Map<Id,Account> newAccountMap
     * 
-    * ********************************************************************************************/      
+    ************************************************************************************************/
     public static void accountRecordSharing(Map<Id,Account> newAccountMap){
         Map<String,Set<String>> mapSalesOfficeSetAccountId = new  Map<String,Set<String>>();
         List<AccountShare> accountShareList = new List<AccountShare>();
@@ -341,7 +342,7 @@ public class NSP_salesOfficeRecordSharing {
             NSP_ErrorLogHandler.logSaveException('NSP_salesOfficerecordSharing', 'leadRecordSharing', ex.getMessage());
         }
     }
-    
+
     /***********************************************************************************************
     * MethodName: shareLeadsonUpdate
     * Description : update Sharing access  of Lead on Lead Owner Change
@@ -354,97 +355,76 @@ public class NSP_salesOfficeRecordSharing {
         Map<String,Set<String>> mapoldOwnerIdSetLeadId = new Map<String,Set<String>>();
         List<LeadShare> deleteLeadShareList = new List<LeadShare>();
         List<LeadShare> newLeadShareList = new List<LeadShare>();
-        try{    
+        try{ 
             for(Lead lead:newLeadMap.values()){
                 if(lead.OwnerId !=oldLeadMap.get(lead.Id).OwnerId && String.valueOf(lead.OwnerId).startsWith('005') ){
-                    if(mapnewOwnerIdSetLeadId.get(lead.OwnerId)==null){
-                        mapnewOwnerIdSetLeadId.put(lead.OwnerId, new Set <String>());
-                    }
-                    mapnewOwnerIdSetLeadId.get(lead.OwnerId).add(lead.Id);
-                    if(String.valueOf(oldLeadMap.get(lead.Id).OwnerId).startsWith('005')){
-                        if(mapoldOwnerIdSetLeadId.get(oldLeadMap.get(lead.Id).OwnerId)==null){
-                            mapoldOwnerIdSetLeadId.put(oldLeadMap.get(lead.Id).OwnerId, new Set <String>());
-                        }
-                        mapoldOwnerIdSetLeadId.get(oldLeadMap.get(lead.Id).OwnerId).add(lead.Id);  
-                    }
-                }      
+                    mapnewOwnerIdSetLeadId = getNewOwnerIdSetLeadIdMap( mapnewOwnerIdSetLeadId , lead);
+                    mapoldOwnerIdSetLeadId = getOldOwnerIdSetLeadIdMap( mapnewOwnerIdSetLeadId , lead , oldLeadMap);
+                }
             }
-            /*Map<Id,User> leadNewOwnerMap = new Map<Id,User>([SELECT Id,ToLabel(NSP_Sales_Office_Membership__c) FROM User WHERE Id IN:mapnewOwnerIdSetLeadId.KeySet() AND
-                                                             UserRole.Name =:NSP_SalesConstants.BPARole ]);*/
-            Map<Id,User> leadNewOwnerMap = new Map<Id,User>([SELECT Id,ToLabel(NSP_Sales_Office_Membership__c) FROM User WHERE Id IN:mapnewOwnerIdSetLeadId.KeySet() AND
-                                                             UserRole.Name =:NSP_SalesConstants.BPARole ]);                                              
-            /*Map<Id,User> leadOldOwnerMap = new Map<Id,User>([SELECT Id,UserRole.Name,ToLabel(NSP_Sales_Office_Membership__c) FROM User WHERE Id IN:mapoldOwnerIdSetLeadId.KeySet() 
-                                                             AND NSP_Sales_Office_Membership__c != null AND UserRole.Name =:NSP_SalesConstants.BPARole ]);*/
-            
-            Map<Id,User> leadOldOwnerMap = new Map<Id,User>([SELECT Id,UserRole.Name,ToLabel(NSP_Sales_Office_Membership__c) FROM User WHERE Id IN:mapoldOwnerIdSetLeadId.KeySet() 
-                                                             AND NSP_Sales_Office_Membership__c != null ]);
-            for(Lead lead :newLeadMap.values()){
+            Map<Id,User> leadNewOwnerMap = new Map<Id,User>( [
+                SELECT
+                    Id ,
+                    ToLabel(NSP_Sales_Office_Membership__c)
+                FROM User
+                WHERE (
+                        Id IN:mapnewOwnerIdSetLeadId.KeySet() 
+                    )
+                ]
+            );                                              
+
+            Map<Id,User> leadOldOwnerMap = new Map<Id,User>( [
+                SELECT
+                    Id ,
+                    UserRole.Name ,
+                    ToLabel(NSP_Sales_Office_Membership__c)
+                FROM User
+                WHERE (
+                        ( Id IN : mapoldOwnerIdSetLeadId.KeySet() )
+                        AND ( NSP_Sales_Office_Membership__c != null )
+                    )
+                ]
+            );
+
+            for( Lead lead :newLeadMap.values() ){
                 Set<String> oldLeadSalesOfficeList = new Set<String>();
                 Set<String> newLeadSalesOfficeList = new Set<String>();
                 // creating List of New Owner Sales Office
-                if(leadNewOwnerMap.containsKey(lead.OwnerId) && leadNewOwnerMap.get(lead.OwnerId).NSP_Sales_Office_Membership__c != null){
-                    newLeadSalesOfficeList.addAll(new List<String>(leadNewOwnerMap.get(lead.OwnerId).NSP_Sales_Office_Membership__c.Split(';')));
+                if ( ( leadNewOwnerMap.containsKey(lead.OwnerId) )
+                  && ( leadNewOwnerMap.get(lead.OwnerId).NSP_Sales_Office_Membership__c != null )
+                  && ( permittedShareSOUserMap.containsKey(lead.OwnerId) ) ){
+                    newLeadSalesOfficeList.addAll( new List<String>( leadNewOwnerMap.get( lead.OwnerId ).NSP_Sales_Office_Membership__c.Split(';') ) );
                 }
                 // creating list of old owner sales office
-                if(leadOldOwnerMap.containsKey(oldLeadMap.get(lead.Id).OwnerId)){
-                    oldLeadSalesOfficeList.addAll(new List<String>(leadOldOwnerMap.get(oldLeadMap.get(lead.Id).OwnerId).NSP_Sales_Office_Membership__c.Split(';')));
+                if( leadOldOwnerMap.containsKey( oldLeadMap.get( lead.Id ).OwnerId ) ){
+                    oldLeadSalesOfficeList.addAll( new List<String>( leadOldOwnerMap.get( oldLeadMap.get(lead.Id).OwnerId ).NSP_Sales_Office_Membership__c.Split(';') ) );
                 }
-                // compairing new user sales Offices with Old User Sales Office
-                if(!newLeadSalesOfficeList.isEmpty()){
-                    for(String newSalesOffice: newLeadSalesOfficeList){
-                        // creating a Map of Sales Office and Set of Lead Ids
-                        if(mapSalesOfficeSetLeadId.get(newSalesOffice)==null){
-                            mapSalesOfficeSetLeadId.put(newSalesOffice , new Set<String>());
-                        }
-                        mapSalesOfficeSetLeadId.get(newSalesOffice).add(lead.Id);
-                        
-                        // updating the list of Sales Office that will not have the lead access 
-                        if(!oldLeadSalesOfficeList.isEmpty() && oldLeadSalesOfficeList.contains(newSalesOffice) ){
-                            oldLeadSalesOfficeList.remove(newSalesOffice);
-                        }
-                    }  
-                }
-                // creating a map of  Lead Id and set of Old Sales office
-                if(!oldLeadSalesOfficeList.isEmpty()){
-                    if(mapLeadIdSetOldSalesOffice.get(lead.Id)==null){
-                        mapLeadIdSetOldSalesOffice.put(lead.Id, new Set<String>());
-                    } 
-                    mapLeadIdSetOldSalesOffice.get(lead.Id).addAll(oldLeadSalesOfficeList);
-                } 
+                // comparing new user sales Offices with Old User Sales Office
+                mapSalesOfficeSetLeadId = getSalesOfficeLeadMap( mapSalesOfficeSetLeadId , lead , newLeadSalesOfficeList );
+                oldLeadSalesOfficeList = cleanOldLeadSalesOfficeList( oldLeadSalesOfficeList , newLeadSalesOfficeList );
+                
+                // creating a map of  Lead Id and set of Old Sales office                
+                mapLeadIdSetOldSalesOffice = getOldSalesOfficeLeadMap( mapLeadIdSetOldSalesOffice , lead , oldLeadSalesOfficeList );
             }
-            // creating map of Sales Office Group name and Group Id
-            salesOfficeGroupMap = mapSalesOfficePublicGroup(mapSalesOfficeSetLeadId.KeySet());
-            //Seacrhing for existing Lead Share Records 
-            if(mapLeadIdSetOldSalesOffice!=null){
-                List<LeadShare> oldLeadShareList =[Select Id, LeadId ,Lead.OwnerId, UserorGroup.Name , UserorGroupId from LeadShare WHERE 
-                                                   LeadId IN: mapLeadIdSetOldSalesOffice.KeySet() AND Rowcause =:NSP_SalesConstants.manualRowCause];
-                // creating a List of Lead Share List Needs to be deleted 
-                for(LeadShare ldShare:oldLeadShareList){
-                    if(mapLeadIdSetOldSalesOffice.containsKey(ldShare.LeadId) && mapLeadIdSetOldSalesOffice.get(ldShare.LeadId).contains(ldShare.UserorGroup.Name)){
-                        deleteLeadShareList.add(ldShare);
-                    }  
-                }
-                // Deleting old  Lead Shares Records
-                if(!deleteLeadShareList.isEmpty()){
-                    Delete deleteLeadShareList;   
-                } 
-            }  
+            // creating map of Sales Office Group Name and Group Id
+            salesOfficeGroupMap = mapSalesOfficePublicGroup( mapSalesOfficeSetLeadId.KeySet() );
+            // searching for existing Lead Share records
+            deleteLeadShareList = getDeleteLeadShareList( deleteLeadShareList , mapLeadIdSetOldSalesOffice );
+            // deleting old Lead Shares records
+            if( !deleteLeadShareList.isEmpty() ){
+                Delete deleteLeadShareList;   
+            }
+            
             // Sharing Lead Records with Sales Office Public Group
-            for(String salesOffice:mapSalesOfficeSetLeadId.keySet() ){
-                for(String leadId:mapSalesOfficeSetLeadId.get(salesOffice)){
-                    if(salesOfficeGroupMap.containsKey(salesOffice)){
-                        LeadShare leadShare= createLeadShare(salesOfficeGroupMap.get(salesOffice),leadId,NSP_SalesConstants.editSharingAccess);
-                        newLeadShareList.add(leadShare);
-                    }
-                }
-            }
+            newLeadShareList = getNewLeadShareList( newLeadShareList , mapSalesOfficeSetLeadId );
+
             // Inserting new  Lead Shares Records
             if(!newLeadShareList.isEmpty()){
-                Database.insert(newLeadShareList,false);   
+                Database.insert( newLeadShareList , false );   
             }   
             
         } catch (Exception ex) {
-            NSP_ErrorLogHandler.logSaveException('NSP_salesOfficerecordSharing', 'shareLeadsonUpdate', ex.getMessage());
+            NSP_ErrorLogHandler.logSaveException( 'NSP_salesOfficerecordSharing' , 'shareLeadsonUpdate' , ex.getMessage() );
         }
     } 
     
@@ -538,6 +518,85 @@ public class NSP_salesOfficeRecordSharing {
         } catch (Exception ex) {
             NSP_ErrorLogHandler.logSaveException('NSP_salesOfficerecordSharing', 'shareOpportunityonUpdate', ex.getMessage());
         }
+    }
+
+    private static Map<String,Set<String>> getNewOwnerIdSetLeadIdMap(Map<String,Set<String>> mapnewOwnerIdSetLeadId, Lead lead){
+        if(mapnewOwnerIdSetLeadId.get(lead.OwnerId)==null){
+            mapnewOwnerIdSetLeadId.put(lead.OwnerId, new Set <String>());
+        }
+        mapnewOwnerIdSetLeadId.get(lead.OwnerId).add(lead.Id);
+        return mapnewOwnerIdSetLeadId;
+    }
+
+    private static Map<String,Set<String>> getOldOwnerIdSetLeadIdMap( Map<String , Set<String>> mapoldOwnerIdSetLeadId , Lead lead, Map <Id , Lead> oldLeadMap ){
+        if(String.valueOf(oldLeadMap.get(lead.Id).OwnerId).startsWith('005')){
+            if(mapoldOwnerIdSetLeadId.get(oldLeadMap.get(lead.Id).OwnerId)==null){
+                mapoldOwnerIdSetLeadId.put(oldLeadMap.get(lead.Id).OwnerId, new Set <String>());
+            }
+            mapoldOwnerIdSetLeadId.get(oldLeadMap.get(lead.Id).OwnerId).add(lead.Id);  
+        }
+        return mapoldOwnerIdSetLeadId;
+    }
+
+    private static Map<String,Set<String>> getSalesOfficeLeadMap( Map<String , Set<String>> mapSalesOfficeSetLeadId , Lead lead , Set<String> newLeadSalesOfficeList ){
+        if(!newLeadSalesOfficeList.isEmpty()){
+            for(String newSalesOffice: newLeadSalesOfficeList){
+                // creating a Map of Sales Office and Set of Lead Ids
+                if(mapSalesOfficeSetLeadId.get(newSalesOffice)==null){
+                    mapSalesOfficeSetLeadId.put(newSalesOffice , new Set<String>());
+                }
+                mapSalesOfficeSetLeadId.get(newSalesOffice).add(lead.Id);
+            }  
+        }
+        return mapSalesOfficeSetLeadId;
+    }
+
+    private static Set<String> cleanOldLeadSalesOfficeList(Set<String> oldLeadSalesOfficeList, Set<String> newLeadSalesOfficeList){
+        if(!newLeadSalesOfficeList.isEmpty()){
+            for(String newSalesOffice: newLeadSalesOfficeList){
+                // updating the list of Sales Office that will not have the lead access 
+                if(!oldLeadSalesOfficeList.isEmpty() && oldLeadSalesOfficeList.contains(newSalesOffice) ){
+                    oldLeadSalesOfficeList.remove(newSalesOffice);
+                }
+            }
+        }
+        return oldLeadSalesOfficeList;
+    }
+
+    private static Map<String,Set<String>> getOldSalesOfficeLeadMap(Map<String,Set<String>> mapLeadIdSetOldSalesOffice, Lead lead, Set<String> oldLeadSalesOfficeList){
+        if(!oldLeadSalesOfficeList.isEmpty()){
+            if(mapLeadIdSetOldSalesOffice.get(lead.Id)==null){
+                mapLeadIdSetOldSalesOffice.put(lead.Id, new Set<String>());
+            } 
+            mapLeadIdSetOldSalesOffice.get(lead.Id).addAll(oldLeadSalesOfficeList);
+        }
+        return mapLeadIdSetOldSalesOffice;
+    }
+
+    private static List<LeadShare> getNewLeadShareList(List<LeadShare> newLeadShareList, Map<String,Set<String>> mapSalesOfficeSetLeadId){
+        for(String salesOffice:mapSalesOfficeSetLeadId.keySet() ){
+            for(String leadId:mapSalesOfficeSetLeadId.get(salesOffice)){
+                if(salesOfficeGroupMap.containsKey(salesOffice)){
+                    LeadShare leadShare= createLeadShare(salesOfficeGroupMap.get(salesOffice),leadId,NSP_SalesConstants.editSharingAccess);
+                    newLeadShareList.add(leadShare);
+                }
+            }
+        }
+        return newLeadShareList;
+    }
+
+    private static List<LeadShare> getDeleteLeadShareList(List<LeadShare> deleteLeadShareList, Map<String,Set<String>> mapLeadIdSetOldSalesOffice){
+        if(mapLeadIdSetOldSalesOffice!=null){
+            List<LeadShare> oldLeadShareList =[Select Id, LeadId ,Lead.OwnerId, UserorGroup.Name , UserorGroupId from LeadShare WHERE 
+                                                LeadId IN: mapLeadIdSetOldSalesOffice.KeySet() AND Rowcause =:NSP_SalesConstants.manualRowCause];
+            // creating a List of Lead Share List Needs to be deleted 
+            for(LeadShare ldShare:oldLeadShareList){
+                if(mapLeadIdSetOldSalesOffice.containsKey(ldShare.LeadId) && mapLeadIdSetOldSalesOffice.get(ldShare.LeadId).contains(ldShare.UserorGroup.Name)){
+                    deleteLeadShareList.add(ldShare);
+                }  
+            } 
+        }
+        return deleteLeadShareList;
     }
     
     /***********************************************************************************************

@@ -1,3 +1,3 @@
-Dear {!Opportunity.OwnerFirstName},
-
+Dear {!Opportunity.OwnerFirstName},</br>
+</br>
 Congrats, the Outgoing Referral <a href="{!Opportunity.Link}">{!Opportunity.Name}</a> request has been APPROVED.

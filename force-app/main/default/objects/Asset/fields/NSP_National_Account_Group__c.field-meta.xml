@@ -367,6 +367,26 @@
                 <default>false</default>
                 <label>Atlantic Ridge Capital</label>
             </value>
+            <value>
+                <fullName>102</fullName>
+                <default>false</default>
+                <label>Kenny Jo</label>
+            </value>
+            <value>
+                <fullName>103</fullName>
+                <default>false</default>
+                <label>Hillside Asset Management</label>
+            </value>
+            <value>
+                <fullName>104</fullName>
+                <default>false</default>
+                <label>King Operating</label>
+            </value>
+            <value>
+                <fullName>105</fullName>
+                <default>false</default>
+                <label>WizeCamel</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

@@ -224,6 +224,16 @@
                 <identifier>RecordBooked_Date__cField</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.X401k_Plan_Consultant__c</fieldItem>
+                <identifier>RecordX401k_Plan_Consultant_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-a6a65078-81e8-43a7-a928-a9dc5b499f39</name>
         <type>Facet</type>
     </flexiPageRegions>

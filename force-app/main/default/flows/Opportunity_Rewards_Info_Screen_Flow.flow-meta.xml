@@ -6,7 +6,7 @@
         <name>Does_the_user_have_permission_to_run_this_flow</name>
         <label>Does the user have permission to run this flow?</label>
         <locationX>314</locationX>
-        <locationY>158</locationY>
+        <locationY>134</locationY>
         <defaultConnector>
             <targetReference>No_Permission_Screen</targetReference>
         </defaultConnector>
@@ -15,24 +15,10 @@
             <name>Yes_User_has_permission_to_enter_NonProfit_Rewards_Info</name>
             <conditionLogic>or</conditionLogic>
             <conditions>
-                <leftValueReference>$UserRole.DeveloperName</leftValueReference>
+                <leftValueReference>$Permission.Opportunity_Create_Rewards</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>NSP_L1_Support</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$UserRole.DeveloperName</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>NSP_L2_Support_Admin</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$UserRole.DeveloperName</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>New_Client_Sales</stringValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -78,7 +64,7 @@
         <name>Update_opportunity_record</name>
         <label>Update opportunity record</label>
         <locationX>50</locationX>
-        <locationY>398</locationY>
+        <locationY>350</locationY>
         <faultConnector>
             <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
         </faultConnector>
@@ -115,7 +101,7 @@
         <name>errorMessageDisplayScreen</name>
         <label>errorMessageDisplayScreen</label>
         <locationX>314</locationX>
-        <locationY>638</locationY>
+        <locationY>566</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -131,7 +117,7 @@
         <name>No_Permission_Screen</name>
         <label>No Permission Screen</label>
         <locationX>578</locationX>
-        <locationY>278</locationY>
+        <locationY>242</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -148,7 +134,7 @@
         <name>Rewards_Information</name>
         <label>Rewards Information</label>
         <locationX>50</locationX>
-        <locationY>278</locationY>
+        <locationY>242</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -161,12 +147,14 @@
             <dataType>String</dataType>
             <fieldText>Referral benefits a nonprofit org?</fieldText>
             <fieldType>DropdownBox</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
         </fields>
         <fields>
             <name>Nonprofit_Name_Address</name>
             <fieldText>Nonprofit Name &amp; Address</fieldText>
             <fieldType>LargeTextArea</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
         </fields>
         <fields>
@@ -174,6 +162,7 @@
             <dataType>String</dataType>
             <fieldText>Nonprofit Organization Name</fieldText>
             <fieldType>InputField</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
         </fields>
         <showFooter>true</showFooter>
@@ -186,12 +175,12 @@
             <targetReference>Does_the_user_have_permission_to_run_this_flow</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <subflows>
         <name>Insperity_Fault_Handler_Subflow</name>
         <label>Insperity Fault Handler Subflow</label>
         <locationX>314</locationX>
-        <locationY>518</locationY>
+        <locationY>458</locationY>
         <connector>
             <targetReference>errorMessageDisplayScreen</targetReference>
         </connector>

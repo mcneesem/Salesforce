@@ -2427,7 +2427,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Compensation Support</fullName>
+            <fullName>Compensation Guidance%2FSupport</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2576,6 +2576,10 @@
         </values>
         <values>
             <fullName>Employee Coaching</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Employee Entry Status</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3092,6 +3096,10 @@
         </values>
         <values>
             <fullName>Pushed OEE Packet</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>QC to Records</fullName>
             <default>false</default>
         </values>
         <values>

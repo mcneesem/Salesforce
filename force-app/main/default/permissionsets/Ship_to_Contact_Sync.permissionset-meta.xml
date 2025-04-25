@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Ship_to_Contact_Sync</name>
+    </customPermissions>
+    <description>This Permission Set will allow the users to view and execute the &quot;Ship to Contact Sync&quot; button on the order</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Ship to Contact Sync</label>
+</PermissionSet>

@@ -74,6 +74,13 @@
                 <stringValue>012Pb000002Hr5CIAS</stringValue>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varOutgoingOpty.OwnerId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>varPrimaryOpty.OwnerId</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Create_Outgoing_Opportunity</targetReference>
         </connector>
@@ -136,7 +143,7 @@
             <label>Yes - Primary Opty found</label>
         </rules>
     </decisions>
-    <description>Populated with PROD Outgoing RTID</description>
+    <description>Populates the OwnerId on create from Primary Opty. Populated with PROD Outgoing RTID</description>
     <environments>Default</environments>
     <interviewLabel>Opportunity - Subflow - Create Outgoing Opportunity {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Opportunity - Subflow - Create Outgoing Opportunity</label>
@@ -222,6 +229,7 @@
         <queriedFields>Id</queriedFields>
         <queriedFields>AccountId</queriedFields>
         <queriedFields>CloseDate</queriedFields>
+        <queriedFields>OwnerId</queriedFields>
     </recordLookups>
     <start>
         <locationX>584</locationX>

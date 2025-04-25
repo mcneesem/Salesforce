@@ -326,6 +326,26 @@
                 <identifier>RecordNSP_Client_Liaison__cField</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.BPA__c</fieldItem>
+                <identifier>RecordBPA__cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.BPC__c</fieldItem>
+                <identifier>RecordBPC__cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-9ed144dd-a01b-40ff-8037-90002a8e33f6</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -368,6 +388,16 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Manager_HR_Services__c</fieldItem>
                 <identifier>RecordNSP_Manager_HR_Services__cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Renewal_Coordinator__c</fieldItem>
+                <identifier>RecordRenewal_Coordinator__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-e5e2a180-35df-46a3-a30a-75ba9bf041b9</name>
@@ -848,7 +878,7 @@
                 <fieldItem>Record.NSP_Pay_Date__c</fieldItem>
                 <identifier>RecordNSP_Pay_Date__cField</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 OR 2 OR 3 OR 4 OR 5</booleanFilter>
+                    <booleanFilter>1 OR 2 OR 3 OR 4 OR 5 OR 6</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.NSP_Term_Code__c}</leftValue>
                         <operator>EQUAL</operator>
@@ -873,6 +903,11 @@
                         <leftValue>{!Record.NSP_Term_Reason__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>3100 Non-Compliance of Client</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Term_Reason__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>3200 Non-Renewal</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -890,7 +925,7 @@
                 <fieldItem>Record.NSP_Benefit_Termination_Date__c</fieldItem>
                 <identifier>RecordNSP_Benefit_Termination_Date__cField</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 OR 2 OR 3 OR 4 OR 5</booleanFilter>
+                    <booleanFilter>1 OR 2 OR 3 OR 4 OR 5 OR 6</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.NSP_Term_Code__c}</leftValue>
                         <operator>EQUAL</operator>
@@ -915,6 +950,11 @@
                         <leftValue>{!Record.NSP_Term_Reason__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>3100 Non-Compliance of Client</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Term_Reason__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>3200 Non-Renewal</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -975,6 +1015,16 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Approver__c</fieldItem>
                 <identifier>RecordNSP_Approver__cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Approval_Date__c</fieldItem>
+                <identifier>RecordApproval_Date_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-ed685b08-fad3-4181-be33-0d117b44f243</name>
