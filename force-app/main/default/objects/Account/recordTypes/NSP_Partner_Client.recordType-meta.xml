@@ -502,15 +502,15 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>CPQ Asset</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Certify</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Contingent Workforce</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CPQ Asset</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1752,6 +1752,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Workday</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Zenefits</fullName>
             <default>false</default>
         </values>
@@ -2860,6 +2864,10 @@
         <picklist>NSP_Integrated_With__c</picklist>
         <values>
             <fullName>AIMS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Workday</fullName>
             <default>false</default>
         </values>
     </picklistValues>

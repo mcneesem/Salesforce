@@ -79,6 +79,10 @@
     &apos;99&apos; , &apos;Housatonic Partners&apos; ,
     &apos;100&apos; , &apos;ExclusiveCFO Inc&apos; ,
     &apos;101&apos; , &apos;Atlantic Ridge Capital&apos; ,
+    &apos;102&apos; , &apos;Kenny Jo&apos;,
+    &apos;103&apos; , &apos;Hillside Asset Management&apos;,
+    &apos;104&apos; , &apos;King Operating&apos;,
+    &apos;105&apos; , &apos;WizeCamel&apos;,
     TEXT( Account.WO_Asset__r.NSP_National_Account_Group__c )
   )
 )</formula>

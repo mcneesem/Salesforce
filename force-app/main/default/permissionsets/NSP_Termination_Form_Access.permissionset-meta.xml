@@ -1,8 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <fieldPermissions>
+        <editable>false</editable>
+        <field>NSP_Termination_Form__c.Approval_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>NSP_Termination_Form__c.NSP_1900_Merger_CSA__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_Termination_Form__c.BPA__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_Termination_Form__c.BPC__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -433,6 +448,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Termination_Form__c.Number_of_required_checkboxes__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_Termination_Form__c.Renewal_Coordinator__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

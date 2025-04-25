@@ -23,6 +23,13 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Account__c</fieldItem>
                 <identifier>RecordNSP_Account_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>ITA Impl</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -33,6 +40,13 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.pse__Project_Status__c</fieldItem>
                 <identifier>Recordpse_Project_Status_cField2</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>ITA Impl</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -43,6 +57,13 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.pse__Start_Date__c</fieldItem>
                 <identifier>Recordpse_Start_Date_cField2</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>ITA Impl</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -53,6 +74,13 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.pse__End_Date__c</fieldItem>
                 <identifier>Recordpse_End_Date_cField2</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>ITA Impl</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -63,6 +91,64 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Project_Complete__c</fieldItem>
                 <identifier>RecordNSP_Project_Complete_cField2</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>ITA Impl</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_RET_Client_ID__c</fieldItem>
+                <identifier>RecordNSP_RET_Client_ID_cField2</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>ITA Impl</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.pse__Project_ID__c</fieldItem>
+                <identifier>Recordpse_Project_ID_cField2</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>ITA Impl</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Project_Implementer__c</fieldItem>
+                <identifier>RecordProject_Implementer_cField2</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>ITA Impl</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -96,6 +182,13 @@
                         </valueListItems>
                         <valueListItems>
                             <value>pse__Proj__c.Assign_Task</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>ITA Impl</rightValue>
+                                </criteria>
+                            </visibilityRule>
                         </valueListItems>
                         <valueListItems>
                             <value>pse__Proj__c.NSP_Delete</value>
@@ -105,6 +198,13 @@
                         </valueListItems>
                         <valueListItems>
                             <value>PrintableView</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>ITA Impl</rightValue>
+                                </criteria>
+                            </visibilityRule>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
@@ -259,6 +359,13 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Case__c</fieldItem>
                 <identifier>RecordCase_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>ITA Impl</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <name>Facet-2446a1e1-f270-492c-b590-900341648079</name>
@@ -317,6 +424,13 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.pse__Project_Status_Notes__c</fieldItem>
                 <identifier>Recordpse_Project_Status_Notes_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>ITA Impl</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -377,6 +491,13 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Level_of_Effort__c</fieldItem>
                 <identifier>RecordLevel_of_Effort_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>ITA Impl</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -407,6 +528,13 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Project_Extension__c</fieldItem>
                 <identifier>RecordProject_Extension_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>ITA Impl</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <name>Facet-18078e2f-59c0-42b0-bd7c-376ccf29bf6c</name>
@@ -465,6 +593,13 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Project_Coordinator__c</fieldItem>
                 <identifier>RecordProject_Coordinator_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>ITA Impl</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <name>Facet-e4b7a321-d581-4d8b-8605-52989108f774</name>
@@ -679,6 +814,13 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Status_Change_Date__c</fieldItem>
                 <identifier>RecordStatus_Change_Date_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>ITA Impl</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -703,6 +845,13 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Processing_Date__c</fieldItem>
                 <identifier>RecordProcessing_Date_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>ITA Impl</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -713,6 +862,13 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Benefit_Effective_date__c</fieldItem>
                 <identifier>RecordBenefit_Effective_date_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>ITA Impl</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -723,6 +879,13 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Next_Open_Enrollment__c</fieldItem>
                 <identifier>RecordNext_Open_Enrollment_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>ITA Impl</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -733,6 +896,13 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Time_and_Labor_Effective_date__c</fieldItem>
                 <identifier>RecordTime_and_Labor_Effective_date_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>ITA Impl</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -811,16 +981,13 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Employees_at_Signature__c</fieldItem>
                 <identifier>RecordEmployees_at_Signature_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Client_Size__c</fieldItem>
-                <identifier>RecordNSP_Client_Size_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>ITA Impl</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -831,6 +998,13 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.FEIN__c</fieldItem>
                 <identifier>RecordFEIN_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>ITA Impl</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -841,6 +1015,13 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.OFAC_Review__c</fieldItem>
                 <identifier>RecordOFAC_Review_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>ITA Impl</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -851,6 +1032,13 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.TES_HCM_Implementation_Support_Tasks__c</fieldItem>
                 <identifier>RecordTES_HCM_Implementation_Support_Tasks_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>ITA Impl</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -861,6 +1049,13 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.WX_Carrier_Sync_Status__c</fieldItem>
                 <identifier>RecordWX_Carrier_Sync_Status_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>ITA Impl</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -871,6 +1066,13 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Change_Order_Classification__c</fieldItem>
                 <identifier>RecordNSP_Change_Order_Classification_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>ITA Impl</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <name>Facet-234a1028-adf1-48f9-b8b5-0af57d94b7e9</name>
@@ -885,6 +1087,13 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.pse__Project_Type__c</fieldItem>
                 <identifier>Recordpse_Project_Type_cField2</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>ITA Impl</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -895,6 +1104,13 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Product_Line__c</fieldItem>
                 <identifier>RecordProduct_Line_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>ITA Impl</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -925,6 +1141,13 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Primary_Product__c</fieldItem>
                 <identifier>RecordPrimary_Product_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>ITA Impl</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -935,6 +1158,13 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.iSolved_Demo_Provided__c</fieldItem>
                 <identifier>RecordiSolved_Demo_Provided_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>ITA Impl</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1117,6 +1347,13 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.pse__Is_Billable__c</fieldItem>
                 <identifier>Recordpse_Is_Billable_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>ITA Impl</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1147,6 +1384,13 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Fee_Inclusive__c</fieldItem>
                 <identifier>RecordFee_Inclusive_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>ITA Impl</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <name>Facet-370f05fb-4a69-4cac-8a73-137f834e6571</name>
@@ -1161,6 +1405,13 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Project_Down_Payment_Received__c</fieldItem>
                 <identifier>RecordProject_Down_Payment_Received_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>ITA Impl</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1171,6 +1422,13 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Project_Down_Payment_Not_Required__c</fieldItem>
                 <identifier>RecordProject_Down_Payment_Not_Required_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>ITA Impl</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1181,6 +1439,13 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Project_Exception_Granted__c</fieldItem>
                 <identifier>RecordProject_Exception_Granted_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>ITA Impl</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <name>Facet-4dbc6033-e215-4af2-9f6a-c3a375e38025</name>
@@ -1311,6 +1576,23 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.pse__Project_Type__c</fieldItem>
+                <identifier>Recordpse_Project_Type_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>ITA Impl</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.NSP_BPS_Project_Template__c</fieldItem>
                 <identifier>RecordNSP_BPS_Project_Template_cField</identifier>
             </fieldInstance>
@@ -1350,10 +1632,16 @@
                 <fieldItem>Record.pse__Account__r.WO_Asset_Name__c</fieldItem>
                 <identifier>Recordpse_Account_rWO_Asset_Name_cField</identifier>
                 <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
                     <criteria>
                         <leftValue>{!$Permission.CustomPermission.Admin_Layout_Access}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>true</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>ITA Impl</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -1366,6 +1654,13 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Layout_BOB__c</fieldItem>
                 <identifier>RecordLayout_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!$Permission.CustomPermission.Admin_Layout_Access}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <name>Facet-d2ef4e63-5db4-4610-b6c0-227e95a58351</name>
@@ -1448,6 +1743,13 @@
                 </componentInstanceProperties>
                 <componentName>flexipage:fieldSection</componentName>
                 <identifier>flexipage_fieldSection5</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>ITA Impl</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -1502,6 +1804,13 @@
                 </componentInstanceProperties>
                 <componentName>flexipage:fieldSection</componentName>
                 <identifier>flexipage_fieldSection8</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>ITA Impl</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -1520,6 +1829,13 @@
                 </componentInstanceProperties>
                 <componentName>flexipage:fieldSection</componentName>
                 <identifier>flexipage_fieldSection9</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>ITA Impl</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -1577,6 +1893,13 @@
                 </componentInstanceProperties>
                 <componentName>lst:dynamicRelatedList</componentName>
                 <identifier>lst_dynamicRelatedList</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>ITA Impl</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -1691,6 +2014,13 @@
                 </componentInstanceProperties>
                 <componentName>lst:dynamicRelatedList</componentName>
                 <identifier>lst_dynamicRelatedList2</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>ITA Impl</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
@@ -1784,6 +2114,12 @@
                         <valueListItems>
                             <value>pse__Milestone__c</value>
                         </valueListItems>
+                        <valueListItems>
+                            <value>Task_Order__c</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>pse__Order__c</value>
+                        </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
@@ -1849,9 +2185,6 @@
                         </valueListItems>
                         <valueListItems>
                             <value>pse__Target_Date__c</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>pse__Actual_Date__c</value>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
@@ -2174,6 +2507,13 @@
                 </componentInstanceProperties>
                 <componentName>lst:dynamicRelatedList</componentName>
                 <identifier>lst_dynamicRelatedList9</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>ITA Impl</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -2783,6 +3123,89 @@
                     <name>actionNames</name>
                     <valueList>
                         <valueListItems>
+                            <value>MassChangeOwner</value>
+                        </valueListItems>
+                    </valueList>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>maxRecordsToDisplay</name>
+                    <value>3</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>parentFieldApiName</name>
+                    <value>pse__Proj__c.Id</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListApiName</name>
+                    <value>pse__Assignments__r</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListDisplayType</name>
+                    <value>ADVGRID</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListFieldAliases</name>
+                    <valueList>
+                        <valueListItems>
+                            <value>pse__Resource__c</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>pse__Role__c</value>
+                        </valueListItems>
+                    </valueList>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListLabel</name>
+                    <value>Assignments</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>showActionBar</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>sortFieldAlias</name>
+                    <value>__DEFAULT__</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>sortFieldOrder</name>
+                    <value>Default</value>
+                </componentInstanceProperties>
+                <componentName>lst:dynamicRelatedList</componentName>
+                <identifier>lst_dynamicRelatedList17</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-70ae4afc-0fec-40b8-ac4d-c168e494786d</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>active</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-70ae4afc-0fec-40b8-ac4d-c168e494786d</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>Standard.Tab.assignmentTab</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tab</componentName>
+                <identifier>flexipage_tab7</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-38aa8923-c34d-49aa-8706-adef47de389a</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>actionNames</name>
+                    <valueList>
+                        <valueListItems>
                             <value>New</value>
                         </valueListItems>
                         <valueListItems>
@@ -2862,103 +3285,6 @@
             </componentInstance>
         </itemInstances>
         <name>Facet-8beb920c-1d4e-479d-a7cb-6915694fe70e</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>actionNames</name>
-                    <valueList>
-                        <valueListItems>
-                            <value>MassChangeOwner</value>
-                        </valueListItems>
-                    </valueList>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>maxRecordsToDisplay</name>
-                    <value>3</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>parentFieldApiName</name>
-                    <value>pse__Proj__c.Id</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>relatedListApiName</name>
-                    <value>pse__Assignments__r</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>relatedListDisplayType</name>
-                    <value>ADVGRID</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>relatedListFieldAliases</name>
-                    <valueList>
-                        <valueListItems>
-                            <value>pse__Resource__c</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>pse__Role__c</value>
-                        </valueListItems>
-                    </valueList>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>relatedListLabel</name>
-                    <value>Assignments</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>showActionBar</name>
-                    <value>false</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>sortFieldAlias</name>
-                    <value>__DEFAULT__</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>sortFieldOrder</name>
-                    <value>Default</value>
-                </componentInstanceProperties>
-                <componentName>lst:dynamicRelatedList</componentName>
-                <identifier>lst_dynamicRelatedList17</identifier>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>label</name>
-                    <value>Tabs</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>tabs</name>
-                    <value>Facet-8beb920c-1d4e-479d-a7cb-6915694fe70e</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:tabset</componentName>
-                <identifier>flexipage_tabset4</identifier>
-            </componentInstance>
-        </itemInstances>
-        <name>Facet-70ae4afc-0fec-40b8-ac4d-c168e494786d</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>active</name>
-                    <value>true</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>body</name>
-                    <value>Facet-70ae4afc-0fec-40b8-ac4d-c168e494786d</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>title</name>
-                    <value>Standard.Tab.assignmentTab</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:tab</componentName>
-                <identifier>flexipage_tab7</identifier>
-            </componentInstance>
-        </itemInstances>
-        <name>Facet-38aa8923-c34d-49aa-8706-adef47de389a</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -3090,7 +3416,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>label</name>
-                    <value>Planning Tools</value>
+                    <value>Project Task</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>name</name>
@@ -3265,6 +3591,27 @@
                 </componentInstanceProperties>
                 <componentName>flexipage:tabset</componentName>
                 <identifier>flexipage_tabset3</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>ITA Impl</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>label</name>
+                    <value>Tabs</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>tabs</name>
+                    <value>Facet-8beb920c-1d4e-479d-a7cb-6915694fe70e</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tabset</componentName>
+                <identifier>flexipage_tabset4</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>

@@ -3,5 +3,6 @@
     <hasActivationRequired>false</hasActivationRequired>
     <label>Technology Sales</label>
     <permissionSets>Opportunity_Closed_Won_Opp_Owner</permissionSets>
+    <permissionSets>Opportunity_Owner_Technology_Sales</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>
