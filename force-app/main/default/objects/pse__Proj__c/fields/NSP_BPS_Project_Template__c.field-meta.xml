@@ -237,6 +237,11 @@
                 <label>TES 360 Performance Management</label>
             </value>
             <value>
+                <fullName>TES 360 Retirement Integration</fullName>
+                <default>false</default>
+                <label>TES 360 Retirement Integration</label>
+            </value>
+            <value>
                 <fullName>TES Billable Carrier Connection</fullName>
                 <default>false</default>
                 <label>TES Billable Carrier Connection</label>
