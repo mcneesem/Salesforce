@@ -3040,10 +3040,16 @@
                 <componentName>lst:dynamicRelatedList</componentName>
                 <identifier>lst_dynamicRelatedList11</identifier>
                 <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.Layout_BOB__c}</leftValue>
                         <operator>NE</operator>
                         <rightValue>TES</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>TalentConnect</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
@@ -3196,7 +3202,7 @@
                 <componentName>lst:dynamicRelatedList</componentName>
                 <identifier>lst_dynamicRelatedList9</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 AND 2 AND 3</booleanFilter>
+                    <booleanFilter>1 AND 2 AND 3 AND 4</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.Layout_BOB__c}</leftValue>
                         <operator>NE</operator>
@@ -3211,6 +3217,11 @@
                         <leftValue>{!Record.Layout_BOB__c}</leftValue>
                         <operator>NE</operator>
                         <rightValue>TES</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>TalentConnect</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
