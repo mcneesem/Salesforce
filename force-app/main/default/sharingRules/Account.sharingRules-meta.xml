@@ -211,7 +211,7 @@
         </sharedFrom>
     </sharingOwnerRules>
     <sharingOwnerRules>
-        <fullName>BPA_owner_Account_to_NCS_group</fullName>
+        <fullName>BPA_Owner_Group_Account_to_NCS_Group</fullName>
         <accessLevel>Edit</accessLevel>
         <accountSettings>
             <caseAccessLevel>None</caseAccessLevel>
@@ -219,12 +219,46 @@
             <opportunityAccessLevel>None</opportunityAccessLevel>
         </accountSettings>
         <description>This Sharing Rule will share BPA owner Account with NCS Group Users</description>
-        <label>BPA owner Account to NCS group</label>
+        <label>BPA Owner Group Account to NCS Group</label>
         <sharedTo>
             <group>NSP_New_Client_Sales</group>
         </sharedTo>
         <sharedFrom>
-            <role>Business_Performance_Advisor</role>
+            <group>Business_Performance_Advisor</group>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>BPA_owner_Account_to_Channel_Operation_Group_Users</fullName>
+        <accessLevel>Edit</accessLevel>
+        <accountSettings>
+            <caseAccessLevel>None</caseAccessLevel>
+            <contactAccessLevel>Edit</contactAccessLevel>
+            <opportunityAccessLevel>None</opportunityAccessLevel>
+        </accountSettings>
+        <description>This rule will share BPA owner Account to Channel Operation Group Users</description>
+        <label>BPA owner Account to Channel Operation Group Users</label>
+        <sharedTo>
+            <group>Channel_Operations</group>
+        </sharedTo>
+        <sharedFrom>
+            <group>Business_Performance_Advisor</group>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>BPA_owner_Account_to_Data_Science_group</fullName>
+        <accessLevel>Edit</accessLevel>
+        <accountSettings>
+            <caseAccessLevel>None</caseAccessLevel>
+            <contactAccessLevel>Edit</contactAccessLevel>
+            <opportunityAccessLevel>None</opportunityAccessLevel>
+        </accountSettings>
+        <description>This Sharing Rule will share BPA owner Account with Data Science Group Users</description>
+        <label>BPA owner Account to Data Science group</label>
+        <sharedTo>
+            <group>NSP_Data_Science</group>
+        </sharedTo>
+        <sharedFrom>
+            <group>Business_Performance_Advisor</group>
         </sharedFrom>
     </sharingOwnerRules>
     <sharingOwnerRules>
@@ -244,54 +278,37 @@
         </sharedFrom>
     </sharingOwnerRules>
     <sharingOwnerRules>
-        <fullName>NSP_BPA_owner_Account_to_Channel_Operation_Role_Users</fullName>
-        <accessLevel>Edit</accessLevel>
-        <accountSettings>
-            <caseAccessLevel>None</caseAccessLevel>
-            <contactAccessLevel>Edit</contactAccessLevel>
-            <opportunityAccessLevel>None</opportunityAccessLevel>
-        </accountSettings>
-        <description>This rule will share BPA owner Account to Channel Operation Role Users</description>
-        <label>BPA owner Account to Channel Operation Role Users</label>
-        <sharedTo>
-            <role>Channel_Operations</role>
-        </sharedTo>
-        <sharedFrom>
-            <role>Business_Performance_Advisor</role>
-        </sharedFrom>
-    </sharingOwnerRules>
-    <sharingOwnerRules>
-        <fullName>NSP_BPA_owner_Account_to_Data_Science_group</fullName>
-        <accessLevel>Edit</accessLevel>
-        <accountSettings>
-            <caseAccessLevel>None</caseAccessLevel>
-            <contactAccessLevel>Edit</contactAccessLevel>
-            <opportunityAccessLevel>None</opportunityAccessLevel>
-        </accountSettings>
-        <description>This Sharing Rule will share BPA owner Account with Data Science Group Users</description>
-        <label>BPA owner Account to Data Science group</label>
-        <sharedTo>
-            <group>NSP_Data_Science</group>
-        </sharedTo>
-        <sharedFrom>
-            <role>Business_Performance_Advisor</role>
-        </sharedFrom>
-    </sharingOwnerRules>
-    <sharingOwnerRules>
-        <fullName>Owner_is_BPC_so_share_with_MidMarket_Admins</fullName>
+        <fullName>Owner_MidMarket_Admin_Group_share_with_MidMarket_Admin</fullName>
         <accessLevel>Edit</accessLevel>
         <accountSettings>
             <caseAccessLevel>None</caseAccessLevel>
             <contactAccessLevel>Edit</contactAccessLevel>
             <opportunityAccessLevel>Edit</opportunityAccessLevel>
         </accountSettings>
-        <description>If the owner is a Business Performance Consultant, share Account and Optys with MidMarket Admins</description>
-        <label>Owner is BPC so share with MidMarket Admins</label>
+        <description>If owner is MidMarket Administrator Group member, share with MidMarket Admins Group</description>
+        <label>Owner MidMarket Admin Group share with MidMarket Admin</label>
         <sharedTo>
-            <role>MidMarket_Administrator</role>
+            <group>MidMarket_Administrator</group>
         </sharedTo>
         <sharedFrom>
-            <role>Business_Performance_Consultant</role>
+            <group>MidMarket_Administrator</group>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>Owner_is_BPC_Group_share_with_MidMarket_Admin</fullName>
+        <accessLevel>Edit</accessLevel>
+        <accountSettings>
+            <caseAccessLevel>None</caseAccessLevel>
+            <contactAccessLevel>Edit</contactAccessLevel>
+            <opportunityAccessLevel>Edit</opportunityAccessLevel>
+        </accountSettings>
+        <description>If the owner is a Business Performance Consultant Group member, share Account and Optys with MidMarket Admins</description>
+        <label>Owner is BPC Group share with MidMarket Admin</label>
+        <sharedTo>
+            <group>MidMarket_Administrator</group>
+        </sharedTo>
+        <sharedFrom>
+            <group>Business_Performance_Consultant</group>
         </sharedFrom>
     </sharingOwnerRules>
     <sharingOwnerRules>
