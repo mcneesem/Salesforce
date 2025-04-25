@@ -28,6 +28,17 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Interest_Product_Offering__c</picklist>
+        <values>
+            <fullName>HR360</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HRCore</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>LeadSource</picklist>
         <values>
             <fullName>Advertisement</fullName>
@@ -618,10 +629,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Better Fit for Workday</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Business Profile Expired</fullName>
             <default>false</default>
         </values>
@@ -939,10 +946,6 @@
         </values>
         <values>
             <fullName>Independent Tire Dealers</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Institute for Nonprofit News %28INN%29</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1425,10 +1428,6 @@
         <picklist>NSP_PrimaryProduct__c</picklist>
         <values>
             <fullName>Applicant Tracking</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Contingent Workforce</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3216,10 +3215,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>FSI- Barnum</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>FSI- Bellpointe Asset Management</fullName>
             <default>false</default>
         </values>
@@ -4554,10 +4549,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Contingent Workforce</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Insurance Services %28Health %26 Wellness%29</fullName>
             <default>false</default>
         </values>
@@ -4637,6 +4628,24 @@
         </values>
         <values>
             <fullName>Workforce Optimization</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Product_Offering__c</picklist>
+        <values>
+            <fullName>HR360</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HRCore</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Product_Purchased__c</picklist>
+        <values>
+            <fullName>HCM</fullName>
             <default>false</default>
         </values>
     </picklistValues>
