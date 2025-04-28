@@ -69,7 +69,7 @@ public with sharing class NSP_ReportRequestWizardController {
         try {
             
             Map<String,String> jSONmap =new Map<String,String>();
-            String financeLevel,segment,region;
+            String financeLevel,segment,region = NOT_FOUND;
             List <String> assetFields = new List <String> {
                 'Id', 'AccountId','NSP_Service_Region__c', 'NSP_Account_Status__c',
                 'toLabel(NSP_Financial_Guidelines__c)','NSP_Client_Segment_type__c'
@@ -90,7 +90,7 @@ public with sharing class NSP_ReportRequestWizardController {
             Asset[] asset = Database.query(assetQuery);
             if(asset.size()>0){
                 financeLevel= asset[0].NSP_Financial_Guidelines__c;
-                 if (ASSET_ACTIVE_STATUS.equalsIgnoreCase( asset[0]?.NSP_Account_Status__c.NSP_ServiceConstants )
+                 if (NSP_ServiceConstants.ASSET_ACTIVE_STATUS.equalsIgnoreCase( asset[0]?.NSP_Account_Status__c )
                         ||  NSP_ServiceConstants.TERMINATED.equalsIgnoreCase( asset[0]?.NSP_Account_Status__c )
                         )
                         {
@@ -100,9 +100,9 @@ public with sharing class NSP_ReportRequestWizardController {
                 region = asset[0].NSP_Service_Region__c;
             } 
             //map finance level, region and segment of wizard output to credit level and segment type of wo asset respecitvely
-            jSONmap.put('FinanceLevel', ( financeLevel!= null? financeLevel:NOT_FOUND) );
-            jSONmap.put('segment', ( segment!= null? segment: NOT_FOUND) );
-            jSONmap.put('region', ( region!= null? region: NOT_FOUND) );
+            jSONmap.put('FinanceLevel', financeLevel);
+            jSONmap.put('segment', segment);
+            jSONmap.put('region', region);
             return jSONmap;
         } catch (Exception excep) {
               throw new AuraHandledException(excep.getMessage());
@@ -113,7 +113,7 @@ public with sharing class NSP_ReportRequestWizardController {
     private static Map<String, String> getAccountTeamUsers(String accountID)
     {
         Map<String, String> jSONmap =new Map<String, String>();
-        String userId, psUserId;
+        String userId, psUserId = NOT_FOUND;
         Set<string> roles = new Set<String>{'HR Specialist', 'Bus. Team-HRSp/CL', 'Performance Specialist'};
             //fetch Primary HR specialist from Account team associated with the accountid
             List<NSP_Account_Team__c> accountTeam = [
@@ -132,31 +132,41 @@ public with sharing class NSP_ReportRequestWizardController {
             ];
             
             //Map HR specialist of wizard output to Account team HR Specialist
-            if (!accountTeam.isEmpty()) {
+            if (!accountTeam?.isEmpty()) {
                 for (NSP_Account_Team__c accTeam : accountTeam) {
-                    boolean isPrimary = accTeam.NSP_Primary__c;
-                    boolean isPerformanceSpecialist = NSP_ServiceConstants.PERFOMANCE_SPECIALIST.equalsIgnoreCase(accTeam.NSP_Role__c);
-                    
-                    if (isPrimary) {
-                        if (isPerformanceSpecialist) {
-                            psUserId = accTeam.NSP_User__c;
-                        } else {
-                            userId = accTeam.NSP_User__c;
-                        }
-                    } else {
-                        if (!isPerformanceSpecialist && userId == null) {
-                            userId = accTeam.NSP_User__c;
-                        } else if (isPerformanceSpecialist && psUserId == null) {
-                            psUserId = accTeam.NSP_User__c;
-                        }
-                    }
+                    psUserId = setAndGetPerformanceSpecialistUserId(accTeam.NSP_Role__c, psUserId, accTeam.NSP_User__c, accTeam.NSP_Primary__c);
+                    userId =  setAndGetHRSpecialistUserId(userId, accTeam.NSP_User__c, accTeam.NSP_Primary__c);
                 }
             }
             
-            jSONmap.put('UserId', (userId != null?userId:NOT_FOUND) );
-            jSONmap.put('psUserId', (psUserId != null?psUserId:NOT_FOUND) );
+            jSONmap.put('UserId', userId );
+            jSONmap.put('psUserId', psUserId );
 
             return jSONmap;
+    }
+
+    //== Method to set and get the Performance Specialist User Id
+    private static string setAndGetPerformanceSpecialistUserId(string role, string userID, string accountTeamUser, boolean isPrimary)
+    {
+        string returnValue = userId;
+        if((isPrimary && NSP_ServiceConstants.PERFOMANCE_SPECIALIST.equalsIgnoreCase(role)) || NOT_FOUND.equalsIgnoreCase(userID))
+        {
+            returnValue = accountTeamUser;
+        }
+
+        return returnValue;
+    }
+
+    //== Method to set and get HR Specialist User Id
+    private static string setAndGetHRSpecialistUserId(string userID, string accountTeamUser, boolean isPrimary)
+    {
+        string returnValue = userId;
+        if(isPrimary || NOT_FOUND.equalsIgnoreCase(userID))
+        {
+            returnValue = accountTeamUser;
+        }
+
+        return returnValue;
     }
 
     @AuraEnabled(cacheable=true)
@@ -217,7 +227,7 @@ public with sharing class NSP_ReportRequestWizardController {
                     Contact contact = conList[0];
                     
 					//Map the  date of birth of wizard output from WSEE details
-                    wizOtWrapper = setAndGetSubClinetContactFields(contact, wizOtWrapper);
+                    wizOtWrapper = setAndGetContactFields(contact, wizOtWrapper);
                 }
 
                 
@@ -289,7 +299,7 @@ public with sharing class NSP_ReportRequestWizardController {
     }
 
     //== Set and Get Contact field mapping
-    private static WizardOutputWrapper setAndGetSubClinetContactFields(Contact contact, WizardOutputWrapper wizOtWrapper)
+    private static WizardOutputWrapper setAndGetContactFields(Contact contact, WizardOutputWrapper wizOtWrapper)
     {
         // Default values
         wizOtWrapper.contactName = null;
