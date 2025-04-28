@@ -1,60 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
     <sharingOwnerRules>
-        <fullName>Oppty_Credits_Edit_access_to_NCS_Team</fullName>
+        <fullName>Oppty_Credits_Edit_access_to_BPA_Group</fullName>
         <accessLevel>Edit</accessLevel>
-        <description>Sharing rule to give Edit access to all the Opportunity Credit Records to New Client Sales Role Users</description>
-        <label>Oppty Credits Edit access to NCS Team</label>
+        <label>Oppty Credits - Edit access to BPA Group</label>
         <sharedTo>
-            <role>New_Client_Sales</role>
+            <group>Business_Performance_Advisor</group>
         </sharedTo>
         <sharedFrom>
             <allInternalUsers></allInternalUsers>
         </sharedFrom>
     </sharingOwnerRules>
     <sharingOwnerRules>
-        <fullName>Oppty_Credits_Edit_access_to_Sales_Compensation_Role</fullName>
+        <fullName>Oppty_Credits_Edit_access_to_District_Administrator_Group</fullName>
         <accessLevel>Edit</accessLevel>
-        <description>Sharing rule to give Edit access to all the Opportunity Credit Records to Sales Compensation Role Users</description>
-        <label>Oppty Credits Edit access to Sales Compensation Role</label>
+        <label>Oppty Credits - Edit access to District Administrator Group</label>
         <sharedTo>
-            <role>Sales_Compensation</role>
+            <group>District_Administrator</group>
         </sharedTo>
         <sharedFrom>
             <allInternalUsers></allInternalUsers>
         </sharedFrom>
     </sharingOwnerRules>
     <sharingOwnerRules>
-        <fullName>Oppty_Credits_Edit_access_to_BPA_Role</fullName>
+        <fullName>Oppty_Credits_Edit_access_to_NCS_Group</fullName>
         <accessLevel>Edit</accessLevel>
-        <description>Sharing rule to give Edit access to all the Opportunity Credit Records to Business_Performance_Advisor Role Users</description>
-        <label>Oppty Credits Edit access to BPA Role</label>
+        <label>Oppty Credits - Edit access to NCS Group</label>
         <sharedTo>
-            <role>Business_Performance_Advisor</role>
+            <group>NSP_New_Client_Sales</group>
         </sharedTo>
         <sharedFrom>
             <allInternalUsers></allInternalUsers>
         </sharedFrom>
     </sharingOwnerRules>
     <sharingOwnerRules>
-        <fullName>Oppty_Credits_Edit_access_to_District_Administrator_Role</fullName>
+        <fullName>Oppty_Credits_Edit_access_to_Sales_Compensation_Group</fullName>
         <accessLevel>Edit</accessLevel>
-        <description>Sharing rule to give Edit access to all the Opportunity Credit Records to District Administrator Role Users</description>
-        <label>Oppty Credits Edit access to District Administrator Role</label>
+        <label>Oppty Credits - Edit access to Sales Compensation Group</label>
         <sharedTo>
-            <role>District_Administrator</role>
-        </sharedTo>
-        <sharedFrom>
-            <allInternalUsers></allInternalUsers>
-        </sharedFrom>
-    </sharingOwnerRules>
-    <sharingOwnerRules>
-        <fullName>Oppty_Credits_Edit_access_to_Sales_Administrator_Role</fullName>
-        <accessLevel>Edit</accessLevel>
-        <description>Sharing rule to give Edit access to all the Opportunity Credit Records to Sales Administrator  Role Users</description>
-        <label>Oppty Credits Edit access to Sales Administrator  Role</label>
-        <sharedTo>
-            <role>Sales_Administrator</role>
+            <group>NSP_Sales_Compensation</group>
         </sharedTo>
         <sharedFrom>
             <allInternalUsers></allInternalUsers>
