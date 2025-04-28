@@ -888,11 +888,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Opportunity.NSP_Opportunity_Owner_Role__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Opportunity.NSP_OrientationDate__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1184,6 +1179,10 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>pse__Project_Task__c.Associated_RSAP__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <field>pse__Project_Task__c.Is_Completed__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
