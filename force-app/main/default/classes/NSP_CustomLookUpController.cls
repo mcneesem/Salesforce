@@ -163,9 +163,10 @@ public with sharing class NSP_CustomLookUpController {
         if(String.isNotBlank(parentId)){ 
             String getAccountId = parentId.substring(0, 3) == '003' ?  fetchDefaultAccountForContact(NSP_ServiceConstants.CONTACT_OBJECT, parentId) :
             parentId.substring(0, 3) == '02i' ? fetchDefaultAccountForAsset(NSP_ServiceConstants.ASSET_SOBJECT_TYPE, parentId) : '';
-            accQuery = (String.isBlank(getAccountId) && sObjectApiName == NSP_ServiceConstants.ACCOUNT_OBJECT) ? 
-                			frameDefaultQuery(sObjectApiName, parentId, ID_NAME_FIELDS) : 
-            				frameDefaultQuery(sObjectApiName, getaccountId, ID_NAME_FIELDS);                   
+            accQuery = (String.isBlank(getAccountId) && sObjectApiName == NSP_ServiceConstants.ACCOUNT_OBJECT)
+                ? frameDefaultQuery(sObjectApiName, parentId, ID_NAME_FIELDS)
+                : frameDefaultQuery(sObjectApiName, getaccountId, ID_NAME_FIELDS)
+                ;
         }else{
             accQuery = frameDefaultQuery(sObjectApiName, getParentId, ID_NAME_FIELDS);  
         }
