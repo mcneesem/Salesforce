@@ -4,7 +4,7 @@
 * Author : Nischay Jindal
 * Name : NSP_userSalesOfficeRecordSharing
 */
-public without sharing class NSP_userSalesOfficeRecordSharing {
+public with sharing class NSP_userSalesOfficeRecordSharing {
     // test w/ NSP_UserTriggerHelper_Test (93%)
 
 	private static Map<String , String> mapSalesOfficeLabels = salesOfficePicklistLabelsMap();
