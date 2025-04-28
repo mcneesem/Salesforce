@@ -630,6 +630,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Better Fit for Workday</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Business Profile Expired</fullName>
             <default>false</default>
         </values>
@@ -947,6 +951,10 @@
         </values>
         <values>
             <fullName>Independent Tire Dealers</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Institute for Nonprofit News %28INN%29</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3217,6 +3225,10 @@
         </values>
         <values>
             <fullName>FSI- Avantax Wealth Management</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FSI- Barnum</fullName>
             <default>false</default>
         </values>
         <values>
