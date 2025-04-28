@@ -132,28 +132,27 @@ public with sharing class NSP_ReportRequestWizardController {
             ];
             
             //Map HR specialist of wizard output to Account team HR Specialist
-            if(accountTeam.size()>0){
-                for(NSP_Account_Team__c accTeam : accountTeam){
-                    if(accTeam.NSP_Primary__c==TRUE){
-                        if(NSP_ServiceConstants.PERFOMANCE_SPECIALIST.equalsIgnoreCase(accTeam.NSP_Role__c))
-                        {
+            if (!accountTeam.isEmpty()) {
+                for (NSP_Account_Team__c accTeam : accountTeam) {
+                    boolean isPrimary = accTeam.NSP_Primary__c;
+                    boolean isPerformanceSpecialist = NSP_ServiceConstants.PERFOMANCE_SPECIALIST.equalsIgnoreCase(accTeam.NSP_Role__c);
+                    
+                    if (isPrimary) {
+                        if (isPerformanceSpecialist) {
+                            psUserId = accTeam.NSP_User__c;
+                        } else {
+                            userId = accTeam.NSP_User__c;
+                        }
+                    } else {
+                        if (!isPerformanceSpecialist && userId == null) {
+                            userId = accTeam.NSP_User__c;
+                        } else if (isPerformanceSpecialist && psUserId == null) {
                             psUserId = accTeam.NSP_User__c;
                         }
-                        else 
-                        {
-                            userId= accTeam.NSP_User__c;
-                        }
-                    }
-                    else if( !NSP_ServiceConstants.PERFOMANCE_SPECIALIST.equalsIgnoreCase(accTeam.NSP_Role__c) && userId == null )
-                    {
-                        userId= accTeam.NSP_User__c;
-                    }
-                    else if( NSP_ServiceConstants.PERFOMANCE_SPECIALIST.equalsIgnoreCase(accTeam.NSP_Role__c) && psUserId == null )
-                    {
-                        psUserId= accTeam.NSP_User__c;
                     }
                 }
             }
+            
             jSONmap.put('UserId', (userId != null?userId:NOT_FOUND) );
             jSONmap.put('psUserId', (psUserId != null?psUserId:NOT_FOUND) );
 
