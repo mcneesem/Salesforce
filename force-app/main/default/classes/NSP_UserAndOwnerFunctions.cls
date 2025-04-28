@@ -43,7 +43,7 @@ public with sharing class NSP_UserAndOwnerFunctions {
                 // if Opportunity owner is BPA
                 // set BPA as owner or set as dummy user -- UPDATE: Dummy User retired; just leave NSP_BPA__c unassigned
                 if( ( opportuntityObj.NSP_BPA__c == null )
-                   && ( NSP_UserAndOwnerFunctions.templSelectUpdPermittedUserMap.keySet().contains( opportuntityObj.OwnerId ) ) ){
+                   && ( NSP_UserAndOwnerFunctions.templSelectUpdPermittedUserMap.containsKey( opportuntityObj.OwnerId ) ) ){
                         opportuntityObj.NSP_BPA__c = opportuntityObj.OwnerId;
                         opportuntityObj.NSP_DM_User__c = mapUserObject.get(opportuntityObj.OwnerId).ManagerID;
                         opportuntityObj.NSP_DA_User__c = mapUserObject.get(opportuntityObj.OwnerId).Manager.ManagerID;
