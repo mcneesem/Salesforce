@@ -3,6 +3,7 @@
     <description>This permission set group is created as part of STY-02427.</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>DA</label>
+    <permissionSets>Account_Allow_Assign_Available</permissionSets> 
     <permissionSets>Account_Assignment_Method_Edit_Access</permissionSets>
     <permissionSets>Account_Create</permissionSets>
     <permissionSets>Account_Edit_Other_Current_Provider</permissionSets>
