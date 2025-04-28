@@ -135,7 +135,7 @@ public with sharing class NSP_ReportRequestWizardController {
             if (!accountTeam?.isEmpty()) {
                 for (NSP_Account_Team__c accTeam : accountTeam) {
                     psUserId = setAndGetPerformanceSpecialistUserId(accTeam.NSP_Role__c, psUserId, accTeam.NSP_User__c, accTeam.NSP_Primary__c);
-                    userId =  setAndGetHRSpecialistUserId(userId, accTeam.NSP_User__c, accTeam.NSP_Primary__c);
+                    userId =  setAndGetHRSpecialistUserId(accTeam.NSP_Role__c, userId, accTeam.NSP_User__c, accTeam.NSP_Primary__c);
                 }
             }
             
@@ -158,10 +158,10 @@ public with sharing class NSP_ReportRequestWizardController {
     }
 
     //== Method to set and get HR Specialist User Id
-    private static string setAndGetHRSpecialistUserId(string userID, string accountTeamUser, boolean isPrimary)
+    private static string setAndGetHRSpecialistUserId(string role, string userID, string accountTeamUser, boolean isPrimary)
     {
         string returnValue = userId;
-        if(isPrimary || NOT_FOUND.equalsIgnoreCase(userID))
+        if(!NSP_ServiceConstants.PERFOMANCE_SPECIALIST.equalsIgnoreCase(role) && (isPrimary || NOT_FOUND.equalsIgnoreCase(userID)))
         {
             returnValue = accountTeamUser;
         }
