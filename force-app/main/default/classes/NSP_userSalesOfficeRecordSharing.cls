@@ -92,7 +92,7 @@ public with sharing class NSP_userSalesOfficeRecordSharing {
     private static Map<String,Set<String>> getMapNewSalesOfficeSetUserId( Set<String> newSalesOfficeMembershipSet , Set<String> oldSalesOfficeMembershipSet , Map<String,Set<String>> mapNewSalesOfficeSetUserId , User usr ){
         for( String newSalesOffice: newSalesOfficeMembershipSet ){
             // if new Sales office not matches Old sales Office or Old sales Office is Empty
-            if(( oldSalesOfficeMembershipSet.isEmpty() || !oldSalesOfficeMembershipSet.contains(newSalesOffice) ) {
+            if( oldSalesOfficeMembershipSet.isEmpty() || !oldSalesOfficeMembershipSet.contains(newSalesOffice) ) {
                 if( mapNewSalesOfficeSetUserId.get(newSalesOffice) == null ){
                     mapNewSalesOfficeSetUserId.put(newSalesOffice, new Set<String>());
                 }
