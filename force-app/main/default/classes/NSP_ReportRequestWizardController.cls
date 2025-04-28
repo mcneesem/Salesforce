@@ -1,5 +1,5 @@
 public with sharing class NSP_ReportRequestWizardController {
-    // test w/ NSP_ReportRequestWizardControllerTest (87%)
+    // test w/ NSP_ReportRequestWizardControllerTest (89%)
 
     public static final Id WO_ASSET = NSP_GenericRecordType.getRecordTypeId('Asset',NSP_ServiceConstants.WO_ASSET_RECORDTYPE );
     private static final String NOT_FOUND = 'Not Found';
@@ -67,46 +67,15 @@ public with sharing class NSP_ReportRequestWizardController {
     @AuraEnabled
     public static Map<String,String> getHRspecialistAndFinanceLevel(String accountID){
         try {
+            
             Map<String,String> jSONmap =new Map<String,String>();
-            String userId,financeLevel,segment,region;
-            List <String> accountTeamFields = new List <String> {
-                'Id', 'NSP_Primary__c', 'NSP_User__r.Name',
-                'NSP_User__c', 'NSP_Role__c','NSP_Account__c'
-            };
+            String financeLevel,segment,region;
             List <String> assetFields = new List <String> {
                 'Id', 'AccountId','NSP_Service_Region__c', 'NSP_Account_Status__c',
                 'toLabel(NSP_Financial_Guidelines__c)','NSP_Client_Segment_type__c'
             };
-            //fetch Primary HR specialist from Account team associated with the accountid
-            List<NSP_Account_Team__c> accountTeam = [
-                SELECT
-                    Id , NSP_Primary__c ,
-                    NSP_User__r.Name , NSP_User__c ,
-                    NSP_Role__c , NSP_Account__c
-                FROM NSP_Account_Team__c
-                WHERE (
-                    NSP_Account__c = :accountID 
-                    AND (
-                        NSP_Role__c = :NSP_ServiceConstants.HRSpecialist
-                        OR NSP_Role__c = :NSP_ServiceConstants.BUS_TEAM_HRSP_CL
-                    )
-                    AND NSP_User__c != null
-                )
-            ];
-            
-            //Map HR specialist of wizard output to Account team HR Specialist
-            if(accountTeam.size()>0){
-                for(NSP_Account_Team__c accTeam : accountTeam){
-                    if(accTeam.NSP_Primary__c==TRUE){
-                        userId= accTeam.NSP_User__c;
-                        break;
-                    }
-                    else{
-                        userId= accTeam.NSP_User__c; 
-                    }
-                }
-            }
-            jSONmap.put('UserId', (userId != null?userId:NOT_FOUND) );
+
+            jSONmap = getAccountTeamUsers(accountID);
             // fetch credit level, service region and client segment type from wo asset associated with client name selected
             String assetQuery = new NSP_QueryBuilder(
                     'Asset',
@@ -121,14 +90,13 @@ public with sharing class NSP_ReportRequestWizardController {
             Asset[] asset = Database.query(assetQuery);
             if(asset.size()>0){
                 financeLevel= asset[0].NSP_Financial_Guidelines__c;
-                if ( String.isNotBlank( asset[0]?.NSP_Account_Status__c ) ) {
-                    if ( asset[0]?.NSP_Account_Status__c.equalsIgnoreCase( NSP_ServiceConstants.ASSET_ACTIVE_STATUS )
+                 if ( asset[0]?.NSP_Account_Status__c.equalsIgnoreCase( NSP_ServiceConstants.ASSET_ACTIVE_STATUS )
                         || asset[0]?.NSP_Account_Status__c.equalsIgnoreCase( NSP_ServiceConstants.TERMINATED )
                         )
-                    {
-                        segment=asset[0].NSP_Client_Segment_type__c;
-                    }
-                }
+                        {
+                            segment=asset[0].NSP_Client_Segment_type__c;
+                     }
+                
                 region = asset[0].NSP_Service_Region__c;
             } 
             //map finance level, region and segment of wizard output to credit level and segment type of wo asset respecitvely
@@ -139,6 +107,58 @@ public with sharing class NSP_ReportRequestWizardController {
         } catch (Exception excep) {
               throw new AuraHandledException(excep.getMessage());
         }
+    }
+
+    //== Method to get the User Id from Account Teams using the account Id
+    private static Map<String, String> getAccountTeamUsers(String accountID)
+    {
+        Map<String, String> jSONmap =new Map<String, String>();
+        String userId, psUserId;
+        Set<string> roles = new Set<String>{'HR Specialist', 'Bus. Team-HRSp/CL', 'Performance Specialist'};
+            //fetch Primary HR specialist from Account team associated with the accountid
+            List<NSP_Account_Team__c> accountTeam = [
+                SELECT
+                    Id , NSP_Primary__c ,
+                    NSP_User__r.Name , NSP_User__c ,
+                    NSP_Role__c , NSP_Account__c
+                FROM NSP_Account_Team__c
+                WHERE (
+                    NSP_Account__c = :accountID 
+                    AND 
+                        NSP_Role__c = :roles
+                    AND 
+                        NSP_User__c != null
+                )
+            ];
+            
+            //Map HR specialist of wizard output to Account team HR Specialist
+            if(accountTeam.size()>0){
+                for(NSP_Account_Team__c accTeam : accountTeam){
+                    System.debug(LoggingLevel.WARN, 'Account Team : '+accTeam);
+                    if(accTeam.NSP_Primary__c==TRUE){
+                        if(NSP_ServiceConstants.PERFOMANCE_SPECIALIST.equalsIgnoreCase(accTeam.NSP_Role__c))
+                        {
+                            psUserId = accTeam.NSP_User__c;
+                        }
+                        else 
+                        {
+                            userId= accTeam.NSP_User__c;
+                        }
+                    }
+                    else if( !NSP_ServiceConstants.PERFOMANCE_SPECIALIST.equalsIgnoreCase(accTeam.NSP_Role__c) && userId == null )
+                    {
+                        userId= accTeam.NSP_User__c;
+                    }
+                    else if( NSP_ServiceConstants.PERFOMANCE_SPECIALIST.equalsIgnoreCase(accTeam.NSP_Role__c) && psUserId == null )
+                    {
+                        psUserId= accTeam.NSP_User__c;
+                    }
+                }
+            }
+            jSONmap.put('UserId', (userId != null?userId:NOT_FOUND) );
+            jSONmap.put('psUserId', (psUserId != null?psUserId:NOT_FOUND) );
+
+            return jSONmap;
     }
 
     @AuraEnabled(cacheable=true)
@@ -167,7 +187,7 @@ public with sharing class NSP_ReportRequestWizardController {
 
     
     @AuraEnabled
-    public static List<wizardOutputWrapper> getWSEEDetails (String contactID, String accountId){
+    public static List<WizardOutputWrapper> getWSEEDetails (String contactID, String accountId){
        
         try {
              List<String> sccAddressFields = new List <String> {'NSP_State__c', 'NSP_Sub_Client_Contact__c'};
@@ -176,10 +196,13 @@ public with sharing class NSP_ReportRequestWizardController {
                                                               'NSP_Status_Date__c','NSP_AIMS_Sub_Client__c', 
                                                               'NSP_Sub_Client__c', 'NSP_Sub_Client__r.NSP_Account__c'};
                                                                   
-             List<wizardOutputWrapper> wizardOutputWrapperList = new List<wizardOutputWrapper>();
-             wizardOutputWrapper wizOtWrapper = new wizardOutputWrapper();
-            
-            
+             List<WizardOutputWrapper> wizardOutputWrapperList  = new List<WizardOutputWrapper>();
+             WizardOutputWrapper wizOtWrapper                   = new WizardOutputWrapper();
+             // Set default values to false
+            wizOtWrapper.empStatus         = null;
+            wizOtWrapper.terminationDate   = null;
+            wizOtWrapper.subClientNum      = null;
+
             if(String.isNotBlank(contactID)){
                 //fetch mailing state and date of birth from contactId (WSEE selected)
                 
@@ -192,11 +215,13 @@ public with sharing class NSP_ReportRequestWizardController {
                                   .build();
                 Contact[] conList = Database.query(conQuery);
                 
-                if(conList.size()>0 && conList[0].NSP_Date_of_Birth__c!=null){
+                if(!conList?.isEmpty()){
+                    Contact contact = conList[0];
+                    
 					//Map the  date of birth of wizard output from WSEE details
-                    wizOtWrapper.contactName =  conList[0].Name;
-                    wizOtWrapper.dateOfBirth = conList[0].NSP_Date_of_Birth__c != null  ?conList[0].NSP_Date_of_Birth__c : null ;
+                    wizOtWrapper = setAndGetSubClinetContactFields(contact, wizOtWrapper);
                 }
+
                 
                 if(String.isNotBlank(accountId)){
                     //fetch the sub client associated with account passed and fetch related primary sub client contact where WSEE is selected
@@ -215,13 +240,8 @@ public with sharing class NSP_ReportRequestWizardController {
                         
                         	//Map the employee status, trmination date, sub client number of wizard output from WSEE associated subclient contact
                             NSP_Sub_Client_Contact__c subClientContact = accSubClientContList[0];
-                            wizOtWrapper.empStatus		 =  String.isNotBlank(subClientContact.NSP_Employee_Status__c) ? 
-                                                     		subClientContact.NSP_Employee_Status__c : null;
-                            wizOtWrapper.terminationDate =  subClientContact.NSP_Employee_Status__c == NSP_ServiceConstants.TERMINATED_STATUS ? 
-                                                            subClientContact.NSP_Status_Date__c : null;
-                            wizOtWrapper.subClientNum 	 =  subClientContact.NSP_AIMS_Sub_Client__c !=null ?
-                                                        	subClientContact.NSP_AIMS_Sub_Client__c : null;
-                            
+                            wizOtWrapper= setAndGetSubClinetContactFields(subClientContact, wizOtWrapper);
+
                             String scaQuery = new NSP_QueryBuilder(
                                                                 'NSP_Sub_Client_Contact_Address__c',
                                                                  sccAddressFields)
@@ -237,17 +257,7 @@ public with sharing class NSP_ReportRequestWizardController {
                                                               //Map the  work state of wizard output from WSEE details
                                                               wizOtWrapper.mailingState= sccList[0].NSP_State__c;
                             }                                
-
-                    }else{
-                            //if no values present for sub client contact pass null values for the below fields
-                            wizOtWrapper.empStatus = null;
-                            wizOtWrapper.terminationDate = null;
-                            wizOtWrapper.subClientNum = null;   
-                    }    
-                }else{
-                        wizOtWrapper.empStatus = null;
-                        wizOtWrapper.terminationDate = null;
-                        wizOtWrapper.subClientNum = null;
+                    }   
                 }
                 wizardOutputWrapperList.add(wizOtWrapper);
                 
@@ -256,6 +266,43 @@ public with sharing class NSP_ReportRequestWizardController {
         }catch (Exception excep) {
             throw new AuraHandledException(excep.getMessage());
         }
+    }
+
+    //== Set and get Sub Clinet Contact Fields
+    private static WizardOutputWrapper setAndGetSubClinetContactFields(NSP_Sub_Client_Contact__c subClientContact, WizardOutputWrapper wizOtWrapper)
+    {
+
+        if(String.isNotBlank(subClientContact.NSP_Employee_Status__c))
+        {
+            wizOtWrapper.empStatus = subClientContact.NSP_Employee_Status__c;
+        }
+
+        if(NSP_ServiceConstants.TERMINATED_STATUS.equalsIgnoreCase( subClientContact.NSP_Employee_Status__c))
+        {
+            wizOtWrapper.terminationDate = subClientContact.NSP_Status_Date__c;
+        }
+
+        if(subClientContact.NSP_AIMS_Sub_Client__c !=null)
+        {
+            wizOtWrapper.subClientNum = subClientContact.NSP_AIMS_Sub_Client__c;
+        }
+
+        return wizOtWrapper;
+    }
+
+    //== Set and Get Contact field mapping
+    private static WizardOutputWrapper setAndGetSubClinetContactFields(Contact contact, WizardOutputWrapper wizOtWrapper)
+    {
+        // Default values
+        wizOtWrapper.contactName = null;
+        wizOtWrapper.dateOfBirth = null;
+
+        if(contact.NSP_Date_of_Birth__c !=null)
+        {
+            wizOtWrapper.contactName =  contact.Name;
+            wizOtWrapper.dateOfBirth =  contact.NSP_Date_of_Birth__c;
+        }
+        return wizOtWrapper;
     }
 
     /**
@@ -290,7 +337,7 @@ public with sharing class NSP_ReportRequestWizardController {
         }
     }
     
-    public class wizardOutputWrapper{
+    public class WizardOutputWrapper{
         @AuraEnabled
         public String mailingState{get;set;}
         @AuraEnabled
@@ -321,31 +368,6 @@ public with sharing class NSP_ReportRequestWizardController {
       }
     }
     
-    @AuraEnabled
-    public static string getPerformanceSpecialist(String accountID)
-    {
-        
-        String userId = '';
-        NSP_Account_Team__c[] accountTeam =[SELECT Id, NSP_User__r.Name, 
-                                            NSP_User__c, 
-                                            NSP_Role__c,NSP_Account__c 
-                                            FROM 
-                                            NSP_Account_Team__c 
-                                            WHERE 
-                                            NSP_Role__c ='Performance Specialist' 
-                                            AND 
-                                            NSP_Account__c =:accountID 
-                                            AND 
-                                            NSP_User__c !=null  
-                                            ORDER BY 
-                                            LastModifiedDate ASC LIMIT 1
-                                           ];
-        if(!accountTeam?.isEmpty()){
-            userId= accountTeam[0].NSP_User__c;
-        }
-        return userId;
-    }
-
     @AuraEnabled
     public static String getAIMSfromPEOasset(String accountID){
     try {
