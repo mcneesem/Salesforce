@@ -10,6 +10,8 @@ Modification Log     :
 * -------------------------------------------------------------------------------------------------  
 ***************************************************************************************************/
 public with sharing class NSP_CustomLookUpController {
+    // test w/ NSP_CustomLookUpControllerTest (??%)
+
     private static Set<Id> accIdSet;
     private static Set<Id> conIdSet; // DF-02822
     private static List<String> serviceProfile;
