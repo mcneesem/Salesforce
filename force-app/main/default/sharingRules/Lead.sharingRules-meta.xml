@@ -1,6 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
     <sharingCriteriaRules>
+        <fullName>Google_Ads_Integration</fullName>
+        <accessLevel>Read</accessLevel>
+        <description>Lead Sharing Rule required by Google Ads Integration.</description>
+        <label>Google Ads Integration</label>
+        <sharedTo>
+            <group>Google_Ads_Integration</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>ConvertedDate</field>
+            <operation>notEqual</operation>
+            <value></value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>GCLID__c</field>
+            <operation>notEqual</operation>
+            <value></value>
+        </criteriaItems>
+        <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
         <fullName>NSP_Referral_Lead_Sharing</fullName>
         <accessLevel>Read</accessLevel>
         <description>This sharing rule is created as part of DF-01721. 
@@ -22,15 +42,25 @@ When the referral lead is assigned to Inbound solutions queue, granting access t
         <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
     </sharingCriteriaRules>
     <sharingOwnerRules>
-        <fullName>NSP_BPA_owner_Lead_to_Channel_Operation_role_users</fullName>
+        <fullName>Lead_BPA_group_Owner_to_Data_Science_group</fullName>
         <accessLevel>Edit</accessLevel>
-        <description>Share BPA owner Lead to Channel Operation role users</description>
-        <label>BPA owner Lead to Channel Operation role users</label>
+        <label>Lead - BPA group Owner to Data Science group</label>
         <sharedTo>
-            <role>Channel_Operations</role>
+            <group>NSP_Data_Science</group>
         </sharedTo>
         <sharedFrom>
-            <role>Business_Performance_Advisor</role>
+            <group>Business_Performance_Advisor</group>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>Lead_BPA_group_Owner_to_NCS_group</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>Lead - BPA group Owner to NCS group</label>
+        <sharedTo>
+            <group>NSP_New_Client_Sales</group>
+        </sharedTo>
+        <sharedFrom>
+            <group>Business_Performance_Advisor</group>
         </sharedFrom>
     </sharingOwnerRules>
     <sharingOwnerRules>
@@ -55,42 +85,6 @@ When the referral lead is assigned to Inbound solutions queue, granting access t
         </sharedTo>
         <sharedFrom>
             <role>Business_Performance_Advisor</role>
-        </sharedFrom>
-    </sharingOwnerRules>
-    <sharingOwnerRules>
-        <fullName>NSP_BPC_users_can_access_other_BPC_leads</fullName>
-        <accessLevel>Edit</accessLevel>
-        <description>This rule allows the BPC Leads to other BPC Users</description>
-        <label>BPC users can access other BPC leads</label>
-        <sharedTo>
-            <role>Business_Performance_Consultant</role>
-        </sharedTo>
-        <sharedFrom>
-            <role>Business_Performance_Consultant</role>
-        </sharedFrom>
-    </sharingOwnerRules>
-    <sharingOwnerRules>
-        <fullName>NSP_Share_MM_Leads_with_MM_roles</fullName>
-        <accessLevel>Edit</accessLevel>
-        <description>This Rule will allow the Mid Markets admins to other Mid Market Admin Leads</description>
-        <label>Share MM Leads with MM roles</label>
-        <sharedTo>
-            <role>MidMarket_Administrator</role>
-        </sharedTo>
-        <sharedFrom>
-            <role>MidMarket_Administrator</role>
-        </sharedFrom>
-    </sharingOwnerRules>
-    <sharingOwnerRules>
-        <fullName>View_All_Leads_Owned_by_Sales_Leader_and_subordinates</fullName>
-        <accessLevel>Read</accessLevel>
-        <description>This sharing rule grants read access to all the leads owned by Sales Leader and below roles with all users with Sales Leader and below roles</description>
-        <label>View All Leads Owned by Sales Leader and subordinates</label>
-        <sharedTo>
-            <roleAndSubordinatesInternal>Sales_Leader</roleAndSubordinatesInternal>
-        </sharedTo>
-        <sharedFrom>
-            <roleAndSubordinatesInternal>Sales_Leader</roleAndSubordinatesInternal>
         </sharedFrom>
     </sharingOwnerRules>
 </SharingRules>
