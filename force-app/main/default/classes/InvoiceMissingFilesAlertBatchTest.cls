@@ -9,7 +9,7 @@ private class InvoiceMissingFilesAlertBatchTest {
         orderSetting.EffectiveDateStartOfMonth__c = true;
         orderSetting.Bypass_Rule_PreventStatusChange__c = true;
         upsert orderSetting;
-        
+
         InvoiceMissingFilesBatchSettings__c invSettings = InvoiceMissingFilesBatchSettings__c.getOrgDefaults();
         invSettings.BatchSize__c = 1;
         invSettings.IsEnabled__c = True;
@@ -27,13 +27,13 @@ private class InvoiceMissingFilesAlertBatchTest {
         NSP_OrderItemTriggerHandler.TriggerDisabled = true;
         NSP_OrderTriggerHandler.TriggerDisabled = true;
         NSP_AccountTriggerHandler.TriggerDisabled = true;
-        NSP_OpportunityTriggerHandler.TriggerDisabled = true; 
+        NSP_OpportunityTriggerHandler.TriggerDisabled = true;
         NSP_QuoteTriggerHandler.TriggerDisabled = true;
         NSP_ContactTriggerHandler.TriggerDisabled = true;
         NSP_QuoteLineTriggerHandler.TriggerDisabled = true;
         NSP_SubscriptionTriggerHandler.TriggerDisabled = true;
         NSP_ContractTriggerHandler.TriggerDisabled = true;
-        
+
         // Create necessary test data
         Account objaccount = NSP_TestHelper.createAccount(true);
         NSP_TestHelper.createContact(objaccount.id, true);
@@ -47,7 +47,7 @@ private class InvoiceMissingFilesAlertBatchTest {
         recTreatment.blng__RevenueDistributionMethod__c = dis.Id;
         recTreatment.blng__RevenueRecognitionRule__c = rRule.Id;
         insert recTreatment;
-        
+
         // Create products and associate billing rules
         Product2 objproduct = NSP_TestHelper.createProduct('Test Product', false);
         objproduct.SBQQ__ChargeType__c = 'Recurring';
@@ -76,7 +76,7 @@ private class InvoiceMissingFilesAlertBatchTest {
         PriceBookEntry objPbe = NSP_TestHelper.createPriceBookEntry(objproduct.Id, 200.0, true);
         SBQQ__Quote__c objQuote = NSP_TestHelper.createCPQQuote(objaccount.Id, objOpprtunity.Id, true);
         NSP_TestHelper.createCPQQuotelines(objQuote, new List<Product2>{objproduct}, new List<PriceBookEntry> {objPbe}, true);
-        
+
         // Create an order from Quote
         objQuote.SBQQ__Primary__c = true;
         objQuote.SBQQ__Ordered__c = true;
@@ -100,7 +100,7 @@ private class InvoiceMissingFilesAlertBatchTest {
     }
 
 
-    @IsTest static void testBatchWithInvIds() {
+    @IsTest private static void testBatchWithInvIds() {
 
         //fetch activated orders
         List<Order> orderList = [SELECT Id, OrderNumber, blng__BillingDayOfMonth__c
@@ -117,35 +117,35 @@ private class InvoiceMissingFilesAlertBatchTest {
         inv[0].blng__InvoiceRunCreatedBy__c = invRuns[0].Id;
         update inv;
 
-        
+
         List<Id> recIds = new List<Id>();
         for(blng__InvoiceRun__c r : invRuns){
             recIds.add(r.Id);
         }
-        
+
         List<blng__Invoice__c> invRecs =[SELECT Id,blng__InvoiceStatus__c FROM blng__Invoice__c WHERE blng__Order__c=:orderList[0].Id  limit 1];
         List<Id> invIds = new List<Id>();
         for(blng__Invoice__c i : invRecs){
             invIds.add(i.Id);
         }
-        
+
         Test.startTest();
         InvoiceMissingFilesAlertBatch batch = new InvoiceMissingFilesAlertBatch(invIds);
         Database.executeBatch(batch);
         Test.stopTest();
         System.assert(true, 'Batch executed with Invoice Ids.');
     }
-    
-    @IsTest static void testBatchWithoutInvIds() {
+
+    @IsTest private static void testBatchWithoutInvIds() {
         Test.startTest();
         InvoiceMissingFilesAlertBatch batch = new InvoiceMissingFilesAlertBatch();
         Database.executeBatch(batch);
         Test.stopTest();
         System.assert(true, 'Batch executed without Invoice Ids.');
     }
-    
+
     @isTest
-    static void testScheduledExecution() {
+    private static void testScheduledExecution() {
         Test.startTest();
         String cronExp = '0 0 0 * * ?';
         System.schedule('Test Scheduled Batch', cronExp, new InvoiceMissingFilesAlertBatch());

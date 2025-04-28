@@ -1,25 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
-        <name>Run_InvoiceMissingFilesController_Class</name>
-        <label>Run InvoiceMissingFilesController Class</label>
+        <name>Run_InvoiceMissingFilesAlert_Batch_Job</name>
+        <label>Run InvoiceMissingFilesAlert Batch Job</label>
         <locationX>176</locationX>
         <locationY>134</locationY>
         <actionName>InvoiceMissingFilesController</actionName>
         <actionType>apex</actionType>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <connector>
+            <targetReference>Job_Successful</targetReference>
+        </connector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
             <name>recIds</name>
             <value>
-                <elementReference>RecordId</elementReference>
+                <elementReference>recordId</elementReference>
             </value>
         </inputParameters>
         <nameSegment>InvoiceMissingFilesController</nameSegment>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
+        <offset>0</offset>
     </actionCalls>
     <apiVersion>63.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <customProperties>
+        <name>ScreenProgressIndicator</name>
+        <value>
+            <stringValue>{&quot;location&quot;:&quot;top&quot;,&quot;type&quot;:&quot;simple&quot;}</stringValue>
+        </value>
+    </customProperties>
     <environments>Default</environments>
-    <interviewLabel>Inov {!$Flow.CurrentDateTime}</interviewLabel>
+    <interviewLabel>Invoice Missing Files Notification {!$Flow.CurrentDateTime}</interviewLabel>
+    <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
     <label>Invoice Missing Files Notification</label>
     <processMetadataValues>
         <name>BuilderType</name>
@@ -39,17 +50,33 @@
             <stringValue>LightningFlowBuilder</stringValue>
         </value>
     </processMetadataValues>
-    <processType>AutoLaunchedFlow</processType>
+    <processType>Flow</processType>
+    <screens>
+        <name>Job_Successful</name>
+        <label>Job Successful</label>
+        <locationX>176</locationX>
+        <locationY>242</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>Success</name>
+            <fieldText>&lt;p&gt;Job Enqueued Successfully&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
     <start>
         <locationX>50</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Run_InvoiceMissingFilesController_Class</targetReference>
+            <targetReference>Run_InvoiceMissingFilesAlert_Batch_Job</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <variables>
-        <name>RecordId</name>
+        <name>recordId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>

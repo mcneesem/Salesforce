@@ -31,7 +31,7 @@ public class InvoiceMissingFilesAlertBatch implements Schedulable , Database.Bat
     }
 
     public InvoiceMissingFilesAlertBatch( List<String> sfInvIds) {
-        this.invcIdList = sfInvIds;                                   
+        this.invcIdList = sfInvIds;
     }
 
     public Database.QueryLocator start( Database.BatchableContext bc ) {
@@ -42,7 +42,7 @@ public class InvoiceMissingFilesAlertBatch implements Schedulable , Database.Bat
                 'The batch for sending notification job started.'
             );
         }
-        Database.QueryLocator locator; 
+        Database.QueryLocator locator;
         if ( this.invcIdList != null ) {
             locator = Database.getQueryLocator(
                 [
@@ -57,7 +57,7 @@ public class InvoiceMissingFilesAlertBatch implements Schedulable , Database.Bat
                         AND blng__InvoiceStatus__c = 'Posted'
                         AND NSP_Invoice_External_ID__c = null
                     )
-                    LIMIT 10000
+                    LIMIT: InvoiceMissingFilesAlertBatch.soqlInvoiceLimit
                 ]
             );
         }else{
@@ -74,7 +74,7 @@ public class InvoiceMissingFilesAlertBatch implements Schedulable , Database.Bat
                         AND NSP_Invoice_Email_Sent__c = false
                         AND NSP_Invoice_External_ID__c = null
                     )
-                    LIMIT 10000
+                    LIMIT: InvoiceMissingFilesAlertBatch.soqlInvoiceLimit
                 ]
         	);
         }
@@ -85,7 +85,6 @@ public class InvoiceMissingFilesAlertBatch implements Schedulable , Database.Bat
         if ( InvoiceMissingFilesAlertBatch.isEnabled ) {
             try {
                 for ( blng__Invoice__c inv : scope ) {
-                    System.debug('Inv_Num:'  + inv.id);
                     this.processedInvoicesMap.put( inv.id, inv.Name );
                 }
             } catch( Exception e ) {
@@ -101,7 +100,7 @@ public class InvoiceMissingFilesAlertBatch implements Schedulable , Database.Bat
     public void finish( Database.BatchableContext bc ) {
         Set<Id> invWithoutAttachments = new Set<Id>();
         List<String> invNumberWithoutAttachments = new List<String>();
-        
+
         if(processedInvoicesMap != null && !processedInvoicesMap.isEmpty()){
             invWithoutAttachments = getInvoicesMissingAttachments();
             if(invWithoutAttachments != null && !invWithoutAttachments.isEmpty()){
@@ -122,7 +121,7 @@ public class InvoiceMissingFilesAlertBatch implements Schedulable , Database.Bat
             if(invNumberWithoutAttachments.size() > 0){
                 emailBody += String.join(invNumberWithoutAttachments, ',');
             }
-            
+
             this.sendEmailNotification(job , emailBody);
         }
     }
@@ -130,7 +129,7 @@ public class InvoiceMissingFilesAlertBatch implements Schedulable , Database.Bat
     Private Set<Id> getInvoicesMissingAttachments(){
         Set<Id> invWithAttachments = new Set<Id>();
         Set<Id> invWithoutAttachments = new Set<Id>();
-        
+
         if( processedInvoicesMap.keySet() != null && !processedInvoicesMap.keySet().isEmpty() ){
             invWithoutAttachments = processedInvoicesMap.keySet();
             for(ContentDocumentLink link: [SELECT LinkedEntityId FROM ContentDocumentLink WHERE LinkedEntityId IN :processedInvoicesMap.keySet()]){
@@ -138,10 +137,10 @@ public class InvoiceMissingFilesAlertBatch implements Schedulable , Database.Bat
             }
         }
         invWithoutAttachments.removeAll(invWithAttachments);
-        
+
         return invWithoutAttachments;
     }
-    
+
     private AsyncApexJob selectAsyncApexJob( String jobId ) {
         List<AsyncApexJob> jobs = null;
         if ( String.isNotBlank( jobId ) ) {
@@ -189,7 +188,7 @@ public class InvoiceMissingFilesAlertBatch implements Schedulable , Database.Bat
             );
         }
     }
-    
+
     private static InvoiceMissingFilesBatchSettings__c settings {
         private get {
             if (settings == null) {
@@ -201,7 +200,7 @@ public class InvoiceMissingFilesAlertBatch implements Schedulable , Database.Bat
     }
 
     public static Integer batchSize {
-        private get {
+        public get {
             if (batchSize == null) {
                 Integer local = 200;
                 if (settings != null && settings.BatchSize__c != null) {
@@ -215,7 +214,7 @@ public class InvoiceMissingFilesAlertBatch implements Schedulable , Database.Bat
         }
         private set;
     }
-    
+
  	private static Boolean isEnabled {
         private get {
             if ( isEnabled == null ) {
@@ -229,7 +228,7 @@ public class InvoiceMissingFilesAlertBatch implements Schedulable , Database.Bat
         }
         private set;
     }
-    
+
  	private static List<String> bccAddresses  {
         private get {
             if ( bccAddresses == null ) {
@@ -246,6 +245,27 @@ public class InvoiceMissingFilesAlertBatch implements Schedulable , Database.Bat
                 bccAddresses = local;
             }
             return bccAddresses;
+        }
+        private set;
+    }
+
+    public static Integer soqlInvoiceLimit{
+        public get {
+            if ( soqlInvoiceLimit== null ) {
+                Integer local = 10000;
+                if ( ( settings != null )
+                    && ( settings.SoqlInvoiceLimit__c != null )
+                    )
+                {
+                    local = settings.SoqlInvoiceLimit__c.intValue();
+                }
+                // limit must be non-negative...
+                if ( local < 0 ) {
+                    local = 0;
+                }
+                soqlInvoiceLimit = local;
+            }
+            return soqlInvoiceLimit;
         }
         private set;
     }

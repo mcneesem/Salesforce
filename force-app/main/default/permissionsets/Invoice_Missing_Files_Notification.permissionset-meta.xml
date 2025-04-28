@@ -4,6 +4,10 @@
         <enabled>true</enabled>
         <name>Invoice_Missing_Files</name>
     </customPermissions>
+    <flowAccesses>
+        <enabled>true</enabled>
+        <flow>Invoice_Missing_Files_Notification</flow>
+    </flowAccesses>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Invoice Missing Files Notification</label>
 </PermissionSet>

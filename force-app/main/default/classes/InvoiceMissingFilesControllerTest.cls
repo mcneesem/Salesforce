@@ -5,7 +5,7 @@ private class InvoiceMissingFilesControllerTest {
 
     @testSetup
     private static void setupTestData() {
-        
+
         InvoiceMissingFilesBatchSettings__c invSettings = InvoiceMissingFilesBatchSettings__c.getOrgDefaults();
         invSettings.BatchSize__c = 1;
         upsert invSettings;
@@ -17,10 +17,10 @@ private class InvoiceMissingFilesControllerTest {
 
     }
 
-    @IsTest static void testInvoiceBatch() {
+    @IsTest private static void testInvoiceBatch() {
 
         List<blng__InvoiceRun__c> invRuns = [SELECT Id FROM blng__InvoiceRun__c LIMIT 1];
-       
+
         List<Id> recIds = new List<Id>();
         for(blng__InvoiceRun__c r : invRuns){
             recIds.add(r.Id);
