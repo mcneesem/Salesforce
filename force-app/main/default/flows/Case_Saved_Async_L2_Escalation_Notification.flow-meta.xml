@@ -143,7 +143,7 @@
             <label>Yes : Valid</label>
         </rules>
     </decisions>
-    <description>added email thread logging</description>
+    <description>04/28/2025 added email thread logging</description>
     <environments>Default</environments>
     <interviewLabel>Case - Saved - Async - L2 Escalation Notification {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Case - Saved - Async - L2 Escalation Notification</label>
