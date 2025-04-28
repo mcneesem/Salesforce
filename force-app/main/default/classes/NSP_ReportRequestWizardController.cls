@@ -134,7 +134,6 @@ public with sharing class NSP_ReportRequestWizardController {
             //Map HR specialist of wizard output to Account team HR Specialist
             if(accountTeam.size()>0){
                 for(NSP_Account_Team__c accTeam : accountTeam){
-                    System.debug(LoggingLevel.WARN, 'Account Team : '+accTeam);
                     if(accTeam.NSP_Primary__c==TRUE){
                         if(NSP_ServiceConstants.PERFOMANCE_SPECIALIST.equalsIgnoreCase(accTeam.NSP_Role__c))
                         {

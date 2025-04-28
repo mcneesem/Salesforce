@@ -373,7 +373,7 @@ private class NSP_ReportRequestWizardControllerTest {
     }
     
     //== Testing the Non primary user assignment for Wizard Output
-    @isTest static void testNonPrimaryAccountTeamRelatedToAccount()
+    @isTest private static void testNonPrimaryAccountTeamRelatedToAccount()
     {
         Account account = [SELECT ID, NSP_Account_Segment__c FROM Account LIMIT 1];
         List<NSP_Account_Team__c> accountTeams = [SELECT ID, NSP_Primary__c FROM NSP_Account_Team__c WHERE NSP_Account__c = : account.Id];
