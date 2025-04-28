@@ -70,9 +70,13 @@ public with sharing class NSP_userSalesOfficeRecordSharing {
                 Update updateUserList;
             }
             
-        } catch ( Exception ex ) {
-            NSP_ErrorLogHandler.logSaveException('NSP_userSalesOfficeRecordSharing', 'ownerSalesofficeSharing', ex.getMessage());
-        } 
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_userSalesOfficeRecordSharing.class.getName() ,
+                'ownerSalesofficeSharing' ,
+                e
+            );
+        }
     }
 
     private static Set<String> getOldSalesOfficeMembershipSet( Map<Id,User> userOldMap , User usr ){
@@ -88,8 +92,7 @@ public with sharing class NSP_userSalesOfficeRecordSharing {
     private static Map<String,Set<String>> getMapNewSalesOfficeSetUserId( Set<String> newSalesOfficeMembershipSet , Set<String> oldSalesOfficeMembershipSet , Map<String,Set<String>> mapNewSalesOfficeSetUserId , User usr ){
         for( String newSalesOffice: newSalesOfficeMembershipSet ){
             // if new Sales office not matches Old sales Office or Old sales Office is Empty
-            if(( !oldSalesOfficeMembershipSet.isEmpty() && !oldSalesOfficeMembershipSet.contains(newSalesOffice) )
-                 || oldSalesOfficeMembershipSet.isEmpty() ) {
+            if(( oldSalesOfficeMembershipSet.isEmpty() || !oldSalesOfficeMembershipSet.contains(newSalesOffice) ) {
                 if( mapNewSalesOfficeSetUserId.get(newSalesOffice) == null ){
                     mapNewSalesOfficeSetUserId.put(newSalesOffice, new Set<String>());
                 }
