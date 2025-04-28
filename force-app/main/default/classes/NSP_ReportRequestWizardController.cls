@@ -90,8 +90,8 @@ public with sharing class NSP_ReportRequestWizardController {
             Asset[] asset = Database.query(assetQuery);
             if(asset.size()>0){
                 financeLevel= asset[0].NSP_Financial_Guidelines__c;
-                 if ( asset[0]?.NSP_Account_Status__c.equalsIgnoreCase( NSP_ServiceConstants.ASSET_ACTIVE_STATUS )
-                        || asset[0]?.NSP_Account_Status__c.equalsIgnoreCase( NSP_ServiceConstants.TERMINATED )
+                 if (ASSET_ACTIVE_STATUS.equalsIgnoreCase( asset[0]?.NSP_Account_Status__c.NSP_ServiceConstants )
+                        ||  NSP_ServiceConstants.TERMINATED.equalsIgnoreCase( asset[0]?.NSP_Account_Status__c )
                         )
                         {
                             segment=asset[0].NSP_Client_Segment_type__c;
