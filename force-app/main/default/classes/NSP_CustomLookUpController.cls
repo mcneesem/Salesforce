@@ -16,43 +16,46 @@ public with sharing class NSP_CustomLookUpController {
     private static Set<Id> quedIdSet;
     private static List<String> ID_NAME_FIELDS = new List<String>{'Id','Name'};
     private static List<String> ID_ACCOUNTID_FIELDS = new List<String>{'Id','AccountId'};
-    private static String baseQueryString = 'SELECT Id,Name FROM ';
-    /**
-    * @MethodName: fetchLookupData
-    * @Description: This method describes to fetch the data when it is placed on Flow and Case Form based on Search and Parent Account or Contact Id.
-    * @param : string searchKey , string sObjectApiName, String accId, String parentId
-    * @createdDate : 11/14/2022
-    * @Story : STY-02660
-    * @return void                          
-    */
-            @AuraEnabled(cacheable=true)
-            public static list<sObject> fetchLookupData(string searchKey , string sObjectApiName, String accId, String parentId) { 
-                List < sObject > returnList = new List < sObject > ();
-                string sQuery;
-                string sWildCardText = String.isNotBlank(searchKey) ? '%' + String.escapeSingleQuotes(searchKey) + '%' : '%' + searchKey + '%';
-                String parentAccountId = parentId != NSP_ServiceConstants.EMPTY_STRING ? parentId : accId; 
-                try{
-                sQuery =  sObjectApiName == NSP_ServiceConstants.ACCOUNT_OBJECT ?
-                    queryForAccountLookup(parentId, sObjectApiName, sWildCardText)
-                    : sObjectApiName == NSP_ServiceConstants.CONTACT_OBJECT ? 
-                        queryForContactLookup(parentId, sObjectApiName, sWildCardText, accId, parentAccountId)
-                        : sObjectApiName == NSP_ServiceConstants.ASSET_SOBJECT_TYPE ?
-                            frameFetchLookUpDataQuery(searchKey, sObjectApiName, parentAccountId)
-                                : sObjectApiName == NSP_ServiceConstants.PSE_MILESTONE ?
-                                    frameFetchLookUpDataQuery(searchKey, sObjectApiName, parentAccountId)
-                                         : queryForUserOrGroupLookup(sObjectApiName, sWildCardText);
-                
-                if(String.isNotBlank(sQuery)){
-                    for (sObject obj: database.query(sQuery)) {
-                        returnList.add(obj);
-                    }
+    private static String baseQueryString = 'SELECT Id , Name FROM ';
+
+    //
+    // @MethodName: fetchLookupData
+    // @Description: This method describes to fetch the data when it is placed on Flow and Case Form based on Search and Parent Account or Contact Id.
+    // @param : string searchKey , string sObjectApiName, String accId, String parentId
+    // @createdDate : 11/14/2022
+    // @Story : STY-02660
+    // @return void
+    //
+    @AuraEnabled(cacheable=true)
+    public static list<sObject> fetchLookupData( String searchKey , String sObjectApiName , String accId , String parentId ) {
+        List<sObject> returnList = new List<sObject>();
+        try {
+            String sWildCardText = String.isNotBlank( searchKey )
+                ? ( '%' + String.escapeSingleQuotes( searchKey ) + '%' )
+                : ( '%' + searchKey + '%' )
+                ;
+            String parentAccountId = ( parentId != NSP_ServiceConstants.EMPTY_STRING ) ? parentId : accId; 
+            String sQuery = ( sObjectApiName == NSP_ServiceConstants.ACCOUNT_OBJECT )
+                ? queryForAccountLookup( parentId , sObjectApiName , sWildCardText )
+                : ( sObjectApiName == NSP_ServiceConstants.CONTACT_OBJECT )
+                    ? queryForContactLookup( parentId , sObjectApiName , sWildCardText , accId , parentAccountId )
+                    : ( sObjectApiName == NSP_ServiceConstants.ASSET_SOBJECT_TYPE )
+                        ? frameFetchLookUpDataQuery( searchKey , sObjectApiName , parentAccountId )
+                        : ( sObjectApiName == NSP_ServiceConstants.PSE_MILESTONE )
+                            ? frameFetchLookUpDataQuery( searchKey , sObjectApiName , parentAccountId )
+                            : queryForUserOrGroupLookup( sObjectApiName , sWildCardText )
+                ;
+            if ( String.isNotBlank( sQuery ) ) {
+                for ( sObject obj : database.query( sQuery ) ) {
+                    returnList.add( obj );
                 }
-                return returnList;
-                }catch (Exception ex) {
-            throw NSP_Utilities.getAuraException(ex);
-        }
             }
-    
+        } catch ( Exception e ) {
+            throw NSP_Utilities.getAuraException( e );
+        }
+        return returnList;
+    }
+
     /**
     * @MethodName: queryForAccountLookup
     * @Description: This method describes to fetch the Records of Account.
