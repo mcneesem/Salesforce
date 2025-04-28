@@ -1,25 +1,25 @@
-/**
-* @description  :  class for set up manual sharing rules after User Update.
-* @date 05/24/2022
-* Author : Nischay Jindal
-* Name : NSP_userSalesOfficeRecordSharing
-*/
+//
+// @description  :  class for set up manual sharing rules after User Update.
+// @date 05/24/2022
+// Author : Nischay Jindal
+// Name : NSP_userSalesOfficeRecordSharing
+//
 public with sharing class NSP_userSalesOfficeRecordSharing {
     // test w/ NSP_UserTriggerHelper_Test (93%)
 
-	private static Map<String , String> mapSalesOfficeLabels = salesOfficePicklistLabelsMap();
+    private static Map<String,String> mapSalesOfficeLabels = salesOfficePicklistLabelsMap();
 
-    /***********************************************************************************************
-    * MethodName: ownerSalesofficeSharing
-    * Description : Method to share records with related Objects on User Sales Office Membership Update
-    * Params: Map<Id,User> userNewMap ,Map<Id,User> userOldMap
-    * ********************************************************************************************/
-    public static void ownerSalesofficeSharing(Map<Id,User> userNewMap , Map<Id,User> userOldMap  ){
+    //
+    // MethodName: ownerSalesofficeSharing
+    // Description : Method to share records with related Objects on User Sales Office Membership Update
+    // Params: Map<Id,User> userNewMap ,Map<Id,User> userOldMap
+    //
+    public static void ownerSalesofficeSharing( Map<Id,User> userNewMap , Map<Id,User> userOldMap ){
         Set<Id> newUserIdSet = new Set<Id>();
-        Map<String , Set<String>> mapNewSalesOfficeSetUserId = new Map<String , Set<String>>();
-        Map<String , Set<String>> mapUserIdSetOldSalesOffice = new Map<String , Set<String>>();
+        Map<String,Set<String>> mapNewSalesOfficeSetUserId = new Map<String,Set<String>>();
+        Map<String,Set<String>> mapUserIdSetOldSalesOffice = new Map<String,Set<String>>();
         List<User> updateUserList = new  List<User>();
-        try{
+        try {
             Map<Id,User> newUserMap = new Map<Id,User>( [
                 SELECT
                     Id ,
@@ -34,7 +34,7 @@ public with sharing class NSP_userSalesOfficeRecordSharing {
                 ]
             );
 
-            for( User usr: newUserMap.Values() ){
+            for( User usr: newUserMap.values() ){
                 if( userNewMap.get(usr.Id).NSP_Sales_Office_Membership__c != userOldMap.get(usr.Id).NSP_Sales_Office_Membership__c ){
                     Set<String> newSalesOfficeMembershipSet = new Set<String>();
                     // update Account , Account Team , Opportunity and Lead Sharing when there is a change in User Sales Office
@@ -53,7 +53,6 @@ public with sharing class NSP_userSalesOfficeRecordSharing {
                     // create map of User Id Set old Sales Office
                     if( !oldSalesOfficeMembershipSet.isEmpty() ){
                         mapUserIdSetOldSalesOffice.put( usr.Id , oldSalesOfficeMembershipSet );
-
                         // updating old Offices on User 
                         User user = new User ();
                         user.Id=usr.Id;
@@ -62,14 +61,13 @@ public with sharing class NSP_userSalesOfficeRecordSharing {
                     }
                 }
             }
-            if( !newUserIdSet.isEmpty() ){
+            if ( !newUserIdSet.isEmpty() ) {
                 // calling Queueable Job for Account
-              System.enqueueJob( new NSP_userAccountSalesOfficeSharing( mapNewSalesOfficeSetUserId , mapUserIdSetOldSalesOffice , newUserIdSet ) ); 
-             }
-            if( !updateUserList.isEmpty() ){
+                System.enqueueJob( new NSP_userAccountSalesOfficeSharing( mapNewSalesOfficeSetUserId , mapUserIdSetOldSalesOffice , newUserIdSet ) ); 
+            }
+            if ( !updateUserList.isEmpty() ) {
                 Update updateUserList;
             }
-            
         } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
                 NSP_userSalesOfficeRecordSharing.class.getName() ,
@@ -84,7 +82,7 @@ public with sharing class NSP_userSalesOfficeRecordSharing {
         if( userOldMap.get(usr.Id).NSP_Sales_Office_Membership__c != null ){
             for( String oldSalesOffice: userOldMap.get(usr.Id).NSP_Sales_Office_Membership__c.Split(';') ){
                 oldSalesOfficeMembershipSet.add(mapSalesOfficeLabels.get(oldSalesOffice));  
-            }  
+            }
         }
         return oldSalesOfficeMembershipSet;
     }
@@ -106,16 +104,15 @@ public with sharing class NSP_userSalesOfficeRecordSharing {
         for( String newSalesOffice: newSalesOfficeMembershipSet ){
             if( !oldSalesOfficeMembershipSet.isEmpty() && oldSalesOfficeMembershipSet.contains(newSalesOffice) ){
                 oldSalesOfficeMembershipSet.remove(newSalesOffice);
-            }   
+            }
         }
         return oldSalesOfficeMembershipSet;
     }
     
-    /***********************************************************************************************
-    * MethodName: salesOfficePicklistLabelsMap
-    * Description : Method to retrieve the selected Sales Office 
-    *
-    * ********************************************************************************************/
+    //
+    // MethodName: salesOfficePicklistLabelsMap
+    // Description : Method to retrieve the selected Sales Office 
+    //
     public static Map < String, String > salesOfficePicklistLabelsMap() {
         Map < String, String > salesOfficePicklistMap = new Map < String, String > ();
         Schema.SObjectType getObject = Schema.getGlobalDescribe().get(NSP_SalesConstants.SalesOfficeObject);
@@ -138,4 +135,5 @@ public with sharing class NSP_userSalesOfficeRecordSharing {
         }
         private set;
     }
+
 }
