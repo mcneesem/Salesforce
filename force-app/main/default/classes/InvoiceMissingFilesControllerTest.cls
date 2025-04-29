@@ -17,7 +17,8 @@ private class InvoiceMissingFilesControllerTest {
 
     }
 
-    @IsTest private static void testInvoiceBatch() {
+    @isTest
+    private static void testInvoiceBatch() {
 
         List<blng__InvoiceRun__c> invRuns = [SELECT Id FROM blng__InvoiceRun__c LIMIT 1];
 
@@ -30,4 +31,6 @@ private class InvoiceMissingFilesControllerTest {
         InvoiceMissingFilesController.executeBatch(recIds);
         Test.stopTest();
     }
+
 }
+//
