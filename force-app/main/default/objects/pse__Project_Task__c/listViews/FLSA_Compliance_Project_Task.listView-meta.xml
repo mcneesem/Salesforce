@@ -3,7 +3,7 @@
     <fullName>FLSA_Compliance_Project_Task</fullName>
     <columns>NAME</columns>
     <columns>pse__Status__c</columns>
-    <columns>NSP_AccountId__c</columns>
+    <columns>NSP_Account_Id__c</columns>
     <columns>NSP_Sub_Category__c</columns>
     <columns>NSP_Owner__c</columns>
     <filterScope>Queue</filterScope>
