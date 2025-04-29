@@ -149,9 +149,9 @@
         </sharedFrom>
     </sharingOwnerRules>
     <sharingOwnerRules>
-        <fullName>Owner_is_BPC_share_with_MidMarket_Admins</fullName>
+        <fullName>Owner_is_BPC_share_with_MidMarket_Admins_Group</fullName>
         <accessLevel>Edit</accessLevel>
-        <label>Owner is BPC share with MidMarket Admins</label>
+        <label>Owner is BPC share with MidMarket Admins Group</label>
         <sharedTo>
             <group>MidMarket_Administrator</group>
         </sharedTo>
@@ -160,9 +160,9 @@
         </sharedFrom>
     </sharingOwnerRules>
     <sharingOwnerRules>
-        <fullName>Owner_is_MidMarket_Admin_share_with_MM_Admins</fullName>
+        <fullName>Owner_is_MidMarket_Admin_share_with_MM_Admins_Group</fullName>
         <accessLevel>Edit</accessLevel>
-        <label>Owner is MidMarket Admin share with MM Admins</label>
+        <label>Owner is MidMarket Admin share with MM Admins Group</label>
         <sharedTo>
             <group>MidMarket_Administrator</group>
         </sharedTo>
