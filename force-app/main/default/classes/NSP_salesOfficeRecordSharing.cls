@@ -10,7 +10,6 @@ public class NSP_salesOfficeRecordSharing {
     //constants - custom labels
     public static List<string> BusinessPerformanceRoles = System.Label.NSP_Business_Performance_Roles.split(',');
     private static Map<String,String> salesOfficeGroupMap = new Map<String,String>();
-    private static Map<Id,User> permittedShareSOUserMap = CustomPermissionController.getPermittedUsersMap('Lead_Owner_Update_Share_SO');
 
     /***********************************************************************************************
     * MethodName: accountRecordSharing 
@@ -391,8 +390,10 @@ public class NSP_salesOfficeRecordSharing {
                 Set<String> newLeadSalesOfficeList = new Set<String>();
                 // creating List of New Owner Sales Office
                 if ( ( leadNewOwnerMap.containsKey(lead.OwnerId) )
-                  && ( leadNewOwnerMap.get(lead.OwnerId).NSP_Sales_Office_Membership__c != null )
-                  && ( permittedShareSOUserMap.containsKey(lead.OwnerId) ) ){
+                    && ( leadNewOwnerMap.get(lead.OwnerId).NSP_Sales_Office_Membership__c != null )
+                    && ( NSP_salesOfficeRecordSharing.permittedShareSOUserMap.containsKey(lead.OwnerId) )
+                    )
+                {
                     newLeadSalesOfficeList.addAll( new List<String>( leadNewOwnerMap.get( lead.OwnerId ).NSP_Sales_Office_Membership__c.Split(';') ) );
                 }
                 // creating list of old owner sales office
@@ -796,6 +797,15 @@ public class NSP_salesOfficeRecordSharing {
         }
         return salesOfficeGroupMap;
     }
-
+    
+    private static Map<Id,User> permittedShareSOUserMap {
+        private get {
+            if ( permittedShareSOUserMap == null ) {
+                permittedShareSOUserMap = CustomPermissionController.getPermittedUsersMap( 'Lead_Owner_Update_Share_SO' );
+            }
+            return permittedShareSOUserMap;
+        }
+        private set;
+    }
 }
 //
