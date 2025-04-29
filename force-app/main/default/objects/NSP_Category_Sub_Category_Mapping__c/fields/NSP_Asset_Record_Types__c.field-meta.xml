@@ -62,6 +62,11 @@
                 <label>Recruiting Services</label>
             </value>
             <value>
+                <fullName>RET WO</fullName>
+                <default>false</default>
+                <label>RET WO</label>
+            </value>
+            <value>
                 <fullName>Time &amp; Attendance</fullName>
                 <default>false</default>
                 <label>Time &amp; Attendance</label>
