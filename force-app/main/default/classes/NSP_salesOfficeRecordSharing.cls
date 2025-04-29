@@ -5,7 +5,7 @@
 * Name : NSP_salesOfficeRecordSharing
 */
 public class NSP_salesOfficeRecordSharing {
-    // test w/ NSP_salesOfficeRecordSharingTest (89%)
+    // test w/ NSP_salesOfficeRecordSharingTest (87%)
 
     //constants - custom labels
     public static List<string> BusinessPerformanceRoles = System.Label.NSP_Business_Performance_Roles.split(',');
@@ -615,11 +615,13 @@ public class NSP_salesOfficeRecordSharing {
             Map<Id,Opportunity> opportunityMap = new Map<Id,Opportunity>([SELECT Id,ToLabel(Owner.NSP_Sales_Office_Membership__c) FROM Opportunity WHERE Id IN:newopportunityMap.keySet() AND (StageName !=: NSP_SalesConstants.CLOSED_WON OR StageName !=: NSP_SalesConstants.CLOSED_LOST)]);                                                            
             
             // Share Opportunities with Channel Operation Role Users and NCS , Data Science Public Groups 
+            /* 419991 - Remove Role name sharing
             Set<Id> channelOperationsGroupShareIdSet = rolesPublicGroupShare();
             if(!channelOperationsGroupShareIdSet.isEmpty()){
                 channelOperationsGroupShareList =shareOpportunityWithUsers(channelOperationsGroupShareIdSet,opportunityMap.KeySet());
             }
             OpportunityShareList.addAll(channelOperationsGroupShareList);
+			*/
             
             for(Opportunity opp: opportunityMap.Values()){
                 if(opp.Owner.NSP_Sales_Office_Membership__c!=null){
@@ -660,7 +662,8 @@ public class NSP_salesOfficeRecordSharing {
     * Description : Share Opportunity with Channel Operation role and NCS,Data public group Users
     * Params:       String userorGroupId , String opportunityId
     * 
-    * ********************************************************************************************/    
+    * ********************************************************************************************/ 
+    /*
     public static Set<Id> rolesPublicGroupShare(){
         Set<Id> userOrGroupIdSet = new Set<Id>();
         List<Id> channelPublicGroupUsers = new List<Id>();
@@ -679,13 +682,15 @@ public class NSP_salesOfficeRecordSharing {
         
         return userOrGroupIdSet;
     }  
+	*/
     
     /***********************************************************************************************
     * MethodName: shareOpportunityWithUsers 
     * Description : 
     * Params:      
     * 
-    * ********************************************************************************************/    
+    * ********************************************************************************************/  
+    /*
     public static List<OpportunityShare> shareOpportunityWithUsers(Set<Id> userOrGroupIdSet, Set<Id> recordIdSet){
         List<OpportunityShare> oppShareList = new List<OpportunityShare>();          
         // Sharing Opportunity with Channel Operation Role Users and NCS and Data Science Group
@@ -697,6 +702,7 @@ public class NSP_salesOfficeRecordSharing {
         }
         return oppShareList;
     }
+	*/
     
     /***********************************************************************************************
     * MethodName: createOpportunitySharing 
