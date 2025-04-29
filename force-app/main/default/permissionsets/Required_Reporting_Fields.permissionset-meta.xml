@@ -628,6 +628,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>NSP_ClientGoal__c.AMR_Status_Current_Year__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NSP_ClientGoal__c.AMR_Status_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>NSP_Engagement_Path__c.Action__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -719,6 +729,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Sales_to_Implementation__c.Opportunity_Stage_Name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NSP_Sales_to_Implementation__c.X401k_Plan_Consultant__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1182,6 +1197,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
         <field>pse__Project_Task__c.Is_Completed__c</field>
         <readable>true</readable>
     </fieldPermissions>
