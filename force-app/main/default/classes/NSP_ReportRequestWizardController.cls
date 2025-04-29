@@ -149,7 +149,9 @@ public with sharing class NSP_ReportRequestWizardController {
     private static string setAndGetPerformanceSpecialistUserId(string role, string userID, string accountTeamUser, boolean isPrimary)
     {
         string returnValue = userId;
-        if((isPrimary && NSP_ServiceConstants.PERFOMANCE_SPECIALIST.equalsIgnoreCase(role)) || NOT_FOUND.equalsIgnoreCase(userID))
+        if( NSP_ServiceConstants.PERFOMANCE_SPECIALIST.equalsIgnoreCase(role) && 
+            ( isPrimary || NOT_FOUND.equalsIgnoreCase(userID) )
+        )
         {
             returnValue = accountTeamUser;
         }
@@ -161,9 +163,14 @@ public with sharing class NSP_ReportRequestWizardController {
     private static string setAndGetHRSpecialistUserId(string role, string userID, string accountTeamUser, boolean isPrimary)
     {
         string returnValue = userId;
-        if(!NSP_ServiceConstants.PERFOMANCE_SPECIALIST.equalsIgnoreCase(role) && (isPrimary || NOT_FOUND.equalsIgnoreCase(userID)))
-        {
-            returnValue = accountTeamUser;
+        if(
+            (NSP_ServiceConstants.HRSpecialist.equalsIgnoreCase(role) || 
+            NSP_ServiceConstants.BUS_TEAM_HRSP_CL.equalsIgnoreCase(role)
+            ) && 
+                (isPrimary || NOT_FOUND.equalsIgnoreCase(userID))
+            )
+            {
+                returnValue = accountTeamUser;
         }
 
         return returnValue;
