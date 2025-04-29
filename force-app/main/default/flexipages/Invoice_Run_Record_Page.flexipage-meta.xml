@@ -50,7 +50,7 @@
                             </visibilityRule>
                         </valueListItems>
                         <valueListItems>
-                            <value>CustomButton.blng__InvoiceRun__c.Notify_Missing_Invoice_Files</value>
+                            <value>blng__InvoiceRun__c.Notify_Missing_Invoice_Files</value>
                             <visibilityRule>
                                 <criteria>
                                     <leftValue>{!$Permission.CustomPermission.Invoice_Missing_Files}</leftValue>
