@@ -387,6 +387,16 @@
                 <default>false</default>
                 <label>WizeCamel</label>
             </value>
+            <value>
+                <fullName>106</fullName>
+                <default>false</default>
+                <label>Quibus Holding</label>
+            </value>
+            <value>
+                <fullName>107</fullName>
+                <default>false</default>
+                <label>Acadia Mineral Investment</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
