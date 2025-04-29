@@ -99,8 +99,8 @@ private class InvoiceMissingFilesAlertBatchTest {
         Test.stopTest();
     }
 
-
-    @IsTest private static void testBatchWithInvIds() {
+    @IsTest
+    private static void testBatchWithInvIds() {
 
         //fetch activated orders
         List<Order> orderList = [SELECT Id, OrderNumber, blng__BillingDayOfMonth__c
@@ -136,7 +136,8 @@ private class InvoiceMissingFilesAlertBatchTest {
         System.assert(true, 'Batch executed with Invoice Ids.');
     }
 
-    @IsTest private static void testBatchWithoutInvIds() {
+    @isTest
+    private static void testBatchWithoutInvIds() {
         Test.startTest();
         InvoiceMissingFilesAlertBatch batch = new InvoiceMissingFilesAlertBatch();
         Database.executeBatch(batch);
