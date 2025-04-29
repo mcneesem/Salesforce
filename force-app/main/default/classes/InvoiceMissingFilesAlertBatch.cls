@@ -25,12 +25,12 @@ public class InvoiceMissingFilesAlertBatch implements Schedulable , Database.Bat
     //
 
     private List<String> invcIdList = null;
-    private Map<Id,String> processedInvoicesMap  = new Map<Id,String>();
+    private Map<Id,String> processedInvoicesMap = new Map<Id,String>();
 
     public InvoiceMissingFilesAlertBatch() {
     }
 
-    public InvoiceMissingFilesAlertBatch( List<String> sfInvIds) {
+    public InvoiceMissingFilesAlertBatch( List<String> sfInvIds ) {
         this.invcIdList = sfInvIds;
     }
 
@@ -57,7 +57,7 @@ public class InvoiceMissingFilesAlertBatch implements Schedulable , Database.Bat
                         AND blng__InvoiceStatus__c = 'Posted'
                         AND NSP_Invoice_External_ID__c = null
                     )
-                    LIMIT: InvoiceMissingFilesAlertBatch.soqlInvoiceLimit
+                    LIMIT :InvoiceMissingFilesAlertBatch.soqlInvoiceLimit
                 ]
             );
         }else{
@@ -74,9 +74,9 @@ public class InvoiceMissingFilesAlertBatch implements Schedulable , Database.Bat
                         AND NSP_Invoice_Email_Sent__c = false
                         AND NSP_Invoice_External_ID__c = null
                     )
-                    LIMIT: InvoiceMissingFilesAlertBatch.soqlInvoiceLimit
+                    LIMIT :InvoiceMissingFilesAlertBatch.soqlInvoiceLimit
                 ]
-        	);
+            );
         }
         return locator;
     }
@@ -100,13 +100,12 @@ public class InvoiceMissingFilesAlertBatch implements Schedulable , Database.Bat
     public void finish( Database.BatchableContext bc ) {
         Set<Id> invWithoutAttachments = new Set<Id>();
         List<String> invNumberWithoutAttachments = new List<String>();
-
-        if(processedInvoicesMap != null && !processedInvoicesMap.isEmpty()){
+        if ( ( processedInvoicesMap != null ) && !processedInvoicesMap.isEmpty()){
             invWithoutAttachments = getInvoicesMissingAttachments();
-            if(invWithoutAttachments != null && !invWithoutAttachments.isEmpty()){
-                for(Id invoiceId: invWithoutAttachments){
-                    if(processedInvoicesMap.containsKey(invoiceId)){
-                        invNumberWithoutAttachments.add(processedInvoicesMap.get(invoiceId));
+            if ( ( invWithoutAttachments != null ) && !invWithoutAttachments.isEmpty() ) {
+                for ( Id invoiceId : invWithoutAttachments ) {
+                    if ( processedInvoicesMap.containsKey( invoiceId ) ) {
+                        invNumberWithoutAttachments.add( processedInvoicesMap.get( invoiceId ) );
                     }
                 }
             }
@@ -121,23 +120,30 @@ public class InvoiceMissingFilesAlertBatch implements Schedulable , Database.Bat
             if(invNumberWithoutAttachments.size() > 0){
                 emailBody += String.join(invNumberWithoutAttachments, ',');
             }
-
             this.sendEmailNotification(job , emailBody);
         }
     }
 
-    Private Set<Id> getInvoicesMissingAttachments(){
+    private Set<Id> getInvoicesMissingAttachments() {
         Set<Id> invWithAttachments = new Set<Id>();
         Set<Id> invWithoutAttachments = new Set<Id>();
-
-        if( processedInvoicesMap.keySet() != null && !processedInvoicesMap.keySet().isEmpty() ){
+        if ( ( processedInvoicesMap != null )
+            && ( processedInvoicesMap.keySet() != null )
+            && !processedInvoicesMap.keySet().isEmpty()
+            )
+        {
             invWithoutAttachments = processedInvoicesMap.keySet();
-            for(ContentDocumentLink link: [SELECT LinkedEntityId FROM ContentDocumentLink WHERE LinkedEntityId IN :processedInvoicesMap.keySet()]){
+            for ( ContentDocumentLink link : [
+                        SELECT LinkedEntityId
+                        FROM ContentDocumentLink
+                        WHERE ( LinkedEntityId IN :processedInvoicesMap.keySet() )
+                    ]
+                )
+            {
                 invWithAttachments.add(link.LinkedEntityId);
             }
         }
         invWithoutAttachments.removeAll(invWithAttachments);
-
         return invWithoutAttachments;
     }
 
@@ -191,8 +197,8 @@ public class InvoiceMissingFilesAlertBatch implements Schedulable , Database.Bat
 
     private static InvoiceMissingFilesBatchSettings__c settings {
         private get {
-            if (settings == null) {
-                settings = InvoiceMissingFilesBatchSettings__c.getInstance(UserInfo.getUserId());
+            if ( settings == null ) {
+                settings = InvoiceMissingFilesBatchSettings__c.getInstance( UserInfo.getUserId() );
             }
             return settings;
         }
@@ -201,13 +207,17 @@ public class InvoiceMissingFilesAlertBatch implements Schedulable , Database.Bat
 
     public static Integer batchSize {
         public get {
-            if (batchSize == null) {
+            if ( batchSize == null ) {
                 Integer local = 200;
-                if (settings != null && settings.BatchSize__c != null) {
+                if ( ( settings != null ) && ( settings.BatchSize__c != null ) ) {
                     local = settings.BatchSize__c.intValue();
                 }
-                if (local < 1) local = 1;
-                if (local > 2000) local = 2000;
+                if ( local < 1 ) {
+                    local = 1;
+                }
+                if ( local > 2000 ) {
+                    local = 2000;
+                }
                 batchSize = local;
             }
             return batchSize;
@@ -215,7 +225,7 @@ public class InvoiceMissingFilesAlertBatch implements Schedulable , Database.Bat
         private set;
     }
 
- 	private static Boolean isEnabled {
+    private static Boolean isEnabled {
         private get {
             if ( isEnabled == null ) {
                 Boolean local = False;
@@ -229,7 +239,7 @@ public class InvoiceMissingFilesAlertBatch implements Schedulable , Database.Bat
         private set;
     }
 
- 	private static List<String> bccAddresses  {
+    private static List<String> bccAddresses  {
         private get {
             if ( bccAddresses == null ) {
                 List<String> local = new List<String>();
@@ -269,4 +279,6 @@ public class InvoiceMissingFilesAlertBatch implements Schedulable , Database.Bat
         }
         private set;
     }
+
 }
+//
