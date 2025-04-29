@@ -3,8 +3,8 @@
     <apiVersion>63.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <environments>Default</environments>
-    <interviewLabel>Async Create Ret Sales To Implementation On Opp Save {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Async Create Ret Sales To Implementation On Opp Save</label>
+    <interviewLabel>Opportunity - After Create - Async - Create RET-Sales-to-Implementation {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Opportunity - After Create - Async - Create RET-Sales-to-Implementation</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -96,7 +96,7 @@
         <inputAssignments>
             <name>faultFlow</name>
             <value>
-                <stringValue>Async_Create_Ret_Sales_To_Implementation_On_Opp_Save</stringValue>
+                <stringValue>Opportunity_After_Create_Async_Create_RET_Sales_To_Implementation</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
