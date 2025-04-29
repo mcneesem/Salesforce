@@ -179,7 +179,7 @@
         <name>flowName</name>
         <dataType>String</dataType>
         <value>
-            <stringValue>Event - Updated</stringValue>
+            <stringValue>Task_Created</stringValue>
         </value>
     </constants>
     <decisions>
