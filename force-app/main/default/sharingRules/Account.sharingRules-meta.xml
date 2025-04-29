@@ -311,38 +311,4 @@
             <group>Business_Performance_Consultant</group>
         </sharedFrom>
     </sharingOwnerRules>
-    <sharingOwnerRules>
-        <fullName>Owner_is_MidMarket_Admin_so_share_with_MidMarket_Admins</fullName>
-        <accessLevel>Edit</accessLevel>
-        <accountSettings>
-            <caseAccessLevel>None</caseAccessLevel>
-            <contactAccessLevel>Edit</contactAccessLevel>
-            <opportunityAccessLevel>Edit</opportunityAccessLevel>
-        </accountSettings>
-        <description>If owner is MidMarket Administrator, share with MidMarket Admins</description>
-        <label>Owner is MidMarket Admin so share with MidMarket Admins</label>
-        <sharedTo>
-            <role>MidMarket_Administrator</role>
-        </sharedTo>
-        <sharedFrom>
-            <role>MidMarket_Administrator</role>
-        </sharedFrom>
-    </sharingOwnerRules>
-    <sharingOwnerRules>
-        <fullName>Owner_is_MidMarket_Sales_Leader_so_share_with_MM_Admins</fullName>
-        <accessLevel>Edit</accessLevel>
-        <accountSettings>
-            <caseAccessLevel>None</caseAccessLevel>
-            <contactAccessLevel>Edit</contactAccessLevel>
-            <opportunityAccessLevel>Edit</opportunityAccessLevel>
-        </accountSettings>
-        <description>If the owner is MidMarket Sales Leader, share Account and Optys with MidMarket Admins</description>
-        <label>Owner is MidMarket Sales Leader so share with MM Admins</label>
-        <sharedTo>
-            <role>MidMarket_Administrator</role>
-        </sharedTo>
-        <sharedFrom>
-            <role>MidMarket_Sales_Leader</role>
-        </sharedFrom>
-    </sharingOwnerRules>
 </SharingRules>
