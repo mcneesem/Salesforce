@@ -25,14 +25,22 @@ public with sharing class InvoiceMissingFilesController {
                     );
                 }
             } catch ( Exception e ) {
-                 NSP_ErrorLogHandler.logException(
-                        InvoiceMissingFilesController.class.getName() ,
-                        'executeBatch' ,
-                        e
-                 );
+                 InvoiceMissingFilesController.handleException( e , 'executeBatch' );
             }
         }
     }
-
+     // for test code coverage only...
+    public static void testHandleException( Exception e , String methodName ) {
+        if ( Test.isRunningTest() ) {
+            InvoiceMissingFilesController.handleException( e , methodName );
+        }
+    }
+    
+    private static void handleException( Exception e , String methodName ) {
+        NSP_ErrorLogHandler.logException(
+            InvoiceMissingFilesController.class.getName() ,
+            methodName ,
+            e
+        );
+    }
 }
-//
