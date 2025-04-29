@@ -498,7 +498,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>TES 360 Retirement Integration</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>TES Billable Carrier Connection</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>TES Climate Survey</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>TES DiSC</fullName>
             <default>false</default>
         </values>
         <values>
@@ -507,6 +519,10 @@
         </values>
         <values>
             <fullName>TES HR Compliance Review</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>TES Integra Implementation</fullName>
             <default>false</default>
         </values>
         <values>
@@ -575,6 +591,10 @@
         </values>
         <values>
             <fullName>iSolved Time</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ibs COBRA Sync</fullName>
             <default>false</default>
         </values>
     </picklistValues>
