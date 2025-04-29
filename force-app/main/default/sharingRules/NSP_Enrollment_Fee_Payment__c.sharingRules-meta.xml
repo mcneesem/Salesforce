@@ -16,9 +16,9 @@
         <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
     </sharingCriteriaRules>
     <sharingCriteriaRules>
-        <fullName>Share_Enrollment_Fee_When_Doucpay_is_greater_than_0</fullName>
+        <fullName>Share_Enrollment_Fee_When_Docupay_is_greater_than_0</fullName>
         <accessLevel>Edit</accessLevel>
-        <description>This rule will share the Enrollment Fee records with all the internal users when Docu Pay Up Front Fee is greater than 0</description>
+        <description>This rule will share the Enrollment Fee records with all the internal users when Docupay Up Front Fee is greater than 0</description>
         <label>Share Enrollment Fee When Doucpay is greater than 0</label>
         <sharedTo>
             <allInternalUsers></allInternalUsers>
