@@ -1655,6 +1655,9 @@
                             <value>NSP_ClientGoal__c.NSP_Goal_Type__c</value>
                         </valueListItems>
                         <valueListItems>
+                            <value>NSP_ClientGoal__c.NSP_Status__c</value>
+                        </valueListItems>
+                        <valueListItems>
                             <value>NSP_ClientGoal__c.NSP_Goal_Details__c</value>
                         </valueListItems>
                         <valueListItems>
