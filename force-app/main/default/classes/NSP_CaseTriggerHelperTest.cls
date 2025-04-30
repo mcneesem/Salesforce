@@ -327,6 +327,16 @@ private class NSP_CaseTriggerHelperTest {
         newBPSCase1.NSP_Level_2_Assigned_Date__c = (system.now()).addDays(-3);
         newBPSCase1.NSP_First_Level2_Assigned_Duration__c = null;
         Update newBPSCase1;
+        
+        Case newBPSCase2 = (Case)NSP_TestExtendedDataFactory.createSObject(new Case(), CASEDEFAULTS, false);
+        newBPSCase2.RecordTypeId = recordTypeBPSID;
+        newBPSCase2.Type = 'Mobile - WO';
+        newBPSCase2.NSP_Level_2__c = true;
+        insert newBPSCase2;
+        
+        newBPSCase2.NSP_Level_2_Assigned_Date__c = null;
+        newBPSCase2.NSP_First_Level2_Assigned_Duration__c = null;
+        Update newBPSCase2;
         //new NSP_CaseTriggerHelper().autoPopulateAsset(newBPSCase); // correcting deployment errors ~ Method does not exist or incorrect signature: void autoPopulateAsset(Case) from the type NSP_CaseTriggerHelper (312:37)
         test.stopTest();
     }
