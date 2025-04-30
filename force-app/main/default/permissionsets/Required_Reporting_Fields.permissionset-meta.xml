@@ -883,6 +883,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Opportunity.Interest_Product_Offering__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Opportunity.Max_Orientation_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -964,6 +969,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Opportunity.Number_of_STP_Checklists__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Opportunity.Product_Offering__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

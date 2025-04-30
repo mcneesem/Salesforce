@@ -28,6 +28,17 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Interest_Product_Offering__c</picklist>
+        <values>
+            <fullName>HR360</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HRCore</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>LeadSource</picklist>
         <values>
             <fullName>Advertisement</fullName>
@@ -4637,6 +4648,17 @@
         </values>
         <values>
             <fullName>Workforce Optimization</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Product_Offering__c</picklist>
+        <values>
+            <fullName>HR360</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HRCore</fullName>
             <default>false</default>
         </values>
     </picklistValues>
