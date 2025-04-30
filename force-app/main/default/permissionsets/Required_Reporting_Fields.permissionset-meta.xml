@@ -453,6 +453,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Lead.Interest_Product_Offering__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Lead.Marketing_Priority__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -474,6 +479,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Lead.NSP_Lead_ID_18__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Lead.Product_Offering__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
