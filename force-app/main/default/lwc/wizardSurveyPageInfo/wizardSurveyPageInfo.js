@@ -156,6 +156,7 @@ export default class WizardSurveyPageInfo extends LightningElement {
             if (result) {
                 this.region = result.region != 'Not Found' ? result.region :'';
                 this.userID =  result.UserId != 'Not Found'? result.UserId :'';
+                this.psUserId = result.psUserId != 'Not Found' ? result.psUserId : '';
                 this.segmentType = result.segment != 'Not Found' ? result.segment :'';
                 this.error = undefined;
             }
