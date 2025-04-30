@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>57.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
         <name>Assign_AccountId</name>
         <label>Assign AccountId</label>
@@ -15,6 +16,124 @@
         </assignmentItems>
         <connector>
             <targetReference>Check_Account_Last_Updated</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_Fault_Element_Get_Account_Info</name>
+        <label>Assign Fault Element</label>
+        <locationX>1942</locationX>
+        <locationY>647</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Account_Info</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_Fault_Element_Get_Lead_Info</name>
+        <label>Assign Fault Element</label>
+        <locationX>2998</locationX>
+        <locationY>647</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Lead_Info</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_Fault_Element_Get_Opportunity_Info</name>
+        <label>Assign Fault Element</label>
+        <locationX>974</locationX>
+        <locationY>647</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Opportunity_Info</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_Fault_Element_Update_Account_Record</name>
+        <label>Assign Fault Element</label>
+        <locationX>1502</locationX>
+        <locationY>971</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Update_Account_Record</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_Fault_Element_Update_Lead_Record</name>
+        <label>Assign Fault Element</label>
+        <locationX>2470</locationX>
+        <locationY>971</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Update_Lead_Record</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_Fault_Element_Update_Opportunity_Record</name>
+        <label>Assign Fault Element</label>
+        <locationX>534</locationX>
+        <locationY>1187</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Update_Opportunity_Record</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_Fault_Element_Update_Task_Record_if_Status_not_Cancelled</name>
+        <label>Assign Fault Element</label>
+        <locationX>1843</locationX>
+        <locationY>1937</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Update_Task_Record_if_Status_not_Cancelled</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Fault_Handler_subflow</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -212,7 +331,7 @@
         <name>Check_Task</name>
         <label>Check Task</label>
         <locationX>1843</locationX>
-        <locationY>1571</locationY>
+        <locationY>1721</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Update_Required_Task</name>
@@ -359,8 +478,7 @@
             <targetReference>Assign_AccountId</targetReference>
         </connector>
         <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Fault_Handler_subflow</targetReference>
+            <targetReference>Assign_Fault_Element_Get_Account_Info</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -384,8 +502,7 @@
             <targetReference>Assign_LeadId</targetReference>
         </connector>
         <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Fault_Handler_subflow</targetReference>
+            <targetReference>Assign_Fault_Element_Get_Lead_Info</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -409,8 +526,7 @@
             <targetReference>Assign_OpportunityId_and_AccountId</targetReference>
         </connector>
         <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Fault_Handler_subflow</targetReference>
+            <targetReference>Assign_Fault_Element_Get_Opportunity_Info</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -433,8 +549,7 @@
             <targetReference>Check_Task</targetReference>
         </connector>
         <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Fault_Handler_subflow</targetReference>
+            <targetReference>Assign_Fault_Element_Update_Account_Record</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -458,8 +573,7 @@
         <locationX>2206</locationX>
         <locationY>863</locationY>
         <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Fault_Handler_subflow</targetReference>
+            <targetReference>Assign_Fault_Element_Update_Lead_Record</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -486,8 +600,7 @@
             <targetReference>Check_Task</targetReference>
         </connector>
         <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Fault_Handler_subflow</targetReference>
+            <targetReference>Assign_Fault_Element_Update_Opportunity_Record</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -509,9 +622,9 @@
         <name>Update_Task_Record_if_Status_not_Cancelled</name>
         <label>Update Task Record if Status not Cancelled</label>
         <locationX>1579</locationX>
-        <locationY>1679</locationY>
+        <locationY>1829</locationY>
         <faultConnector>
-            <targetReference>Fault_Handler_subflow</targetReference>
+            <targetReference>Assign_Fault_Element_Update_Task_Record_if_Status_not_Cancelled</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -579,8 +692,14 @@
         <name>Fault_Handler_subflow</name>
         <label>Fault Handler subflow</label>
         <locationX>1843</locationX>
-        <locationY>1787</locationY>
+        <locationY>2045</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
+        <inputAssignments>
+            <name>faultElement</name>
+            <value>
+                <elementReference>varFaultElement</elementReference>
+            </value>
+        </inputAssignments>
         <inputAssignments>
             <name>faultFlow</name>
             <value>
@@ -610,6 +729,13 @@
     </variables>
     <variables>
         <name>opportunityId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>varFaultElement</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
