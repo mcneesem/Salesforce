@@ -715,16 +715,11 @@ export default class Nsp_accrualProfileRecordForm extends NavigationMixin(
       NSP_Accrual_Profile_Account_Relationship__c: aparRecords,
       NSP_Accrual_Profile_Subclient_Relation__c: apsrRecords,
     };
-    let recordsToDeleteMap = new Map();
-    if(_apgDataToDeleteRecords) {
-      recordsToDeleteMap.set('NSP_Accrual_Profile_Grid__c', _apgDataToDeleteRecords);
-    }
-    if(_apgDataToDeleteRecords) {
-      recordsToDeleteMap.set('NSP_Accrual_Profile_Account_Relationship__c', aparDataToDeleteRecords);
-    }
-    if(_apgDataToDeleteRecords) {
-      recordsToDeleteMap.set('NSP_Accrual_Profile_Subclient_Relation__c', apscrDataToDeleteRecords);
-    }
+    const recordsToDeleteMap = {
+      NSP_Accrual_Profile_Grid__c: _apgDataToDeleteRecords,
+      NSP_Accrual_Profile_Account_Relationship__c : aparDataToDeleteRecords,
+      NSP_Accrual_Profile_Subclient_Relation__c : apscrDataToDeleteRecords
+    };
 
     upsertAndDeleteRecords({ recordsToUpsertMap, recordsToDeleteMap })
       .then(() => this.navigateToRecord())
