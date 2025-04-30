@@ -18,4 +18,16 @@
         <field>NSP_Task_Name__c</field>
         <value xsi:type="xsd:string">T&amp;A Payroll Export and Training - 2 Hour</value>
     </values>
+    <values>
+        <field>Order__c</field>
+        <value xsi:type="xsd:double">158.0</value>
+    </values>
+    <values>
+        <field>Task_Order__c</field>
+        <value xsi:type="xsd:double">158.0</value>
+    </values>
+    <values>
+        <field>Visible_to_Client__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
 </CustomMetadata>
