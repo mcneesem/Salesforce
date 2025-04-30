@@ -10,49 +10,54 @@ Modification Log     :
 * -------------------------------------------------------------------------------------------------  
 ***************************************************************************************************/
 public with sharing class NSP_CustomLookUpController {
+    // test w/ NSP_CustomLookUpControllerTest (??%)
+
     private static Set<Id> accIdSet;
     private static Set<Id> conIdSet; // DF-02822
     private static List<String> serviceProfile;
     private static Set<Id> quedIdSet;
     private static List<String> ID_NAME_FIELDS = new List<String>{'Id','Name'};
     private static List<String> ID_ACCOUNTID_FIELDS = new List<String>{'Id','AccountId'};
+    private static String baseQueryString = 'SELECT Id , Name FROM ';
 
-    /**
-    * @MethodName: fetchLookupData
-    * @Description: This method describes to fetch the data when it is placed on Flow and Case Form based on Search and Parent Account or Contact Id.
-    * @param : string searchKey , string sObjectApiName, String accId, String parentId
-    * @createdDate : 11/14/2022
-    * @Story : STY-02660
-    * @return void                          
-    */
-            @AuraEnabled(cacheable=true)
-            public static list<sObject> fetchLookupData(string searchKey , string sObjectApiName, String accId, String parentId) {    
-                List < sObject > returnList = new List < sObject > ();
-                string sQuery;
-                string sWildCardText = String.isNotBlank(searchKey) ? '%' + String.escapeSingleQuotes(searchKey) + '%' : '%' + searchKey + '%';
-                String parentAccountId = parentId != NSP_ServiceConstants.EMPTY_STRING ? parentId : accId; 
-                try{
-                sQuery =  sObjectApiName == NSP_ServiceConstants.ACCOUNT_OBJECT ?
-                    queryForAccountLookup(parentId, sObjectApiName, sWildCardText)
-                    : sObjectApiName == NSP_ServiceConstants.CONTACT_OBJECT ? 
-                        queryForContactLookup(parentId, sObjectApiName, sWildCardText, accId, parentAccountId)
-                        : sObjectApiName == NSP_ServiceConstants.ASSET_SOBJECT_TYPE ?
-                            frameFetchLookUpDataQuery(searchKey, sObjectApiName, parentAccountId)
-                                : sObjectApiName == NSP_ServiceConstants.PSE_MILESTONE ?
-                                    frameFetchLookUpDataQuery(searchKey, sObjectApiName, parentAccountId)
-                                         : queryForUserOrGroupLookup(sObjectApiName, sWildCardText);
-                
-                if(String.isNotBlank(sQuery)){
-                    for (sObject obj: database.query(sQuery)) {
-                        returnList.add(obj);
-                    }
+    //
+    // @MethodName: fetchLookupData
+    // @Description: This method describes to fetch the data when it is placed on Flow and Case Form based on Search and Parent Account or Contact Id.
+    // @param : string searchKey , string sObjectApiName, String accId, String parentId
+    // @createdDate : 11/14/2022
+    // @Story : STY-02660
+    // @return void
+    //
+    @AuraEnabled(cacheable=true)
+    public static list<sObject> fetchLookupData( String searchKey , String sObjectApiName , String accId , String parentId ) {
+        List<sObject> returnList = new List<sObject>();
+        try {
+            String sWildCardText = String.isNotBlank( searchKey )
+                ? ( '%' + String.escapeSingleQuotes( searchKey ) + '%' )
+                : ( '%' + searchKey + '%' )
+                ;
+            String parentAccountId = ( parentId != NSP_ServiceConstants.EMPTY_STRING ) ? parentId : accId; 
+            String sQuery = ( sObjectApiName == NSP_ServiceConstants.ACCOUNT_OBJECT )
+                ? queryForAccountLookup( parentId , sObjectApiName , sWildCardText )
+                : ( sObjectApiName == NSP_ServiceConstants.CONTACT_OBJECT )
+                    ? queryForContactLookup( parentId , sObjectApiName , sWildCardText , accId , parentAccountId )
+                    : ( sObjectApiName == NSP_ServiceConstants.ASSET_SOBJECT_TYPE )
+                        ? frameFetchLookUpDataQuery( searchKey , sObjectApiName , parentAccountId )
+                        : ( sObjectApiName == NSP_ServiceConstants.PSE_MILESTONE )
+                            ? frameFetchLookUpDataQuery( searchKey , sObjectApiName , parentAccountId )
+                            : queryForUserOrGroupLookup( sObjectApiName , sWildCardText )
+                ;
+            if ( String.isNotBlank( sQuery ) ) {
+                for ( sObject obj : database.query( sQuery ) ) {
+                    returnList.add( obj );
                 }
-                return returnList;
-                }catch (Exception ex) {
-            throw NSP_Utilities.getAuraException(ex);
-        }
             }
-    
+        } catch ( Exception e ) {
+            throw NSP_Utilities.getAuraException( e );
+        }
+        return returnList;
+    }
+
     /**
     * @MethodName: queryForAccountLookup
     * @Description: This method describes to fetch the Records of Account.
@@ -68,7 +73,7 @@ public with sharing class NSP_CustomLookUpController {
             for(AccountContactRelation acr : [SELECT Id, AccountId, ContactId FROM AccountContactRelation WHERE ContactId =: parentId]){
                 accIdSet.add(acr.AccountId); 
             }
-            accQuery = 'Select Id,Name From ' + sObjectApiName + ' Where Name Like : sWildCardText AND ID IN: accIdSet order by createdDate DESC LIMIT 1000';
+            accQuery = baseQueryString + sObjectApiName + ' Where Name Like : sWildCardText AND ID IN: accIdSet order by createdDate DESC LIMIT 1000';
         }else{
             accQuery = frameFetchLookUpDataQuery(sWildCardText, sObjectApiName, NSP_ServiceConstants.EMPTY_STRING);
         }
@@ -90,7 +95,7 @@ public with sharing class NSP_CustomLookUpController {
             for(AccountContactRelation acr : [SELECT Id, AccountId, ContactId FROM AccountContactRelation WHERE AccountId =: parentAccountId]){
                 conIdSet.add(acr.ContactId); 
             }
-            conQuery = 'Select Id,Name From ' + sObjectApiName + ' Where Name Like : sWildCardText AND ID IN: conIdSet order by createdDate DESC LIMIT 1000';
+            conQuery = baseQueryString + sObjectApiName + ' Where ( Name Like : sWildCardText OR NSP_Per_ID__c LIKE : sWildCardText ) AND ID IN: conIdSet order by createdDate DESC LIMIT 1000';
         }else{
             conQuery = frameFetchLookUpDataQuery(sWildCardText, sObjectApiName, NSP_ServiceConstants.EMPTY_STRING);
         }
@@ -110,13 +115,13 @@ public with sharing class NSP_CustomLookUpController {
         if(sObjectApiName == NSP_ServiceConstants.USER_OBJECT){
             serviceProfile = system.label.NSP_Service_Profiles.split(',');
             serviceProfile.add(NSP_ServiceConstants.SYSTEM_ADMINISTRATOR);
-            userOrGrpQuery = 'Select Id,Name From ' + sObjectApiName + ' Where Name Like : sWildCardText AND Profile.Name IN: serviceProfile  AND IsActive = true order by createdDate DESC LIMIT 1000';
+            userOrGrpQuery = baseQueryString + sObjectApiName + ' Where Name Like : sWildCardText AND Profile.Name IN: serviceProfile  AND IsActive = true order by createdDate DESC LIMIT 1000';
         }else if(sObjectApiName == NSP_ServiceConstants.TYPE_GROUP){
              quedIdSet = new Set<Id>();
             for(QueueSobject qObj : [ SELECT QueueId, Queue.Name FROM QueueSobject WHERE SobjectType = 'Case']){
                 quedIdSet.add(qObj.QueueId);
             }
-            userOrGrpQuery = 'Select Id,Name From ' + sObjectApiName + ' Where Name Like : sWildCardText AND Type = \'Queue\' AND Id IN: quedIdSet order by createdDate DESC LIMIT 1000';
+            userOrGrpQuery = baseQueryString + sObjectApiName + ' Where Name Like : sWildCardText AND Type = \'Queue\' AND Id IN: quedIdSet order by createdDate DESC LIMIT 1000';
         }
         return userOrGrpQuery;
     }    
@@ -160,9 +165,10 @@ public with sharing class NSP_CustomLookUpController {
         if(String.isNotBlank(parentId)){ 
             String getAccountId = parentId.substring(0, 3) == '003' ?  fetchDefaultAccountForContact(NSP_ServiceConstants.CONTACT_OBJECT, parentId) :
             parentId.substring(0, 3) == '02i' ? fetchDefaultAccountForAsset(NSP_ServiceConstants.ASSET_SOBJECT_TYPE, parentId) : '';
-            accQuery = (String.isBlank(getAccountId) && sObjectApiName == NSP_ServiceConstants.ACCOUNT_OBJECT) ? 
-                			frameDefaultQuery(sObjectApiName, parentId, ID_NAME_FIELDS) : 
-            				frameDefaultQuery(sObjectApiName, getaccountId, ID_NAME_FIELDS);                   
+            accQuery = (String.isBlank(getAccountId) && sObjectApiName == NSP_ServiceConstants.ACCOUNT_OBJECT)
+                ? frameDefaultQuery(sObjectApiName, parentId, ID_NAME_FIELDS)
+                : frameDefaultQuery(sObjectApiName, getaccountId, ID_NAME_FIELDS)
+                ;
         }else{
             accQuery = frameDefaultQuery(sObjectApiName, getParentId, ID_NAME_FIELDS);  
         }
