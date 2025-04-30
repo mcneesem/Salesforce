@@ -26,7 +26,6 @@
             <assignToReference>SelectedOfficesText</assignToReference>
             <name>output</name>
         </outputParameters>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <name>ParseMulti_0</name>
@@ -54,7 +53,6 @@
             <assignToReference>SelectedOfficesText</assignToReference>
             <name>output</name>
         </outputParameters>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <name>ParseMulti_0_0</name>
@@ -82,7 +80,6 @@
             <assignToReference>SelectedOfficesText</assignToReference>
             <name>output</name>
         </outputParameters>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <name>ParseMultiSelect</name>
@@ -110,7 +107,6 @@
             <assignToReference>MultiParseOutput</assignToReference>
             <name>output</name>
         </outputParameters>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <apiVersion>54.0</apiVersion>
     <assignments>
@@ -1215,6 +1211,7 @@
             <label>Yes</label>
         </rules>
     </decisions>
+    <description>Added &quot;Type = Regular&quot; in GroupDynamicChoice variable to fix bug caused in Release-Rose</description>
     <dynamicChoiceSets>
         <name>GroupDynamicChoice</name>
         <dataType>String</dataType>
@@ -1225,6 +1222,13 @@
             <operator>StartsWith</operator>
             <value>
                 <stringValue>X</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Type</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Regular</stringValue>
             </value>
         </filters>
         <object>Group</object>
