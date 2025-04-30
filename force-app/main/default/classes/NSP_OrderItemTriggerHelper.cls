@@ -59,6 +59,7 @@ public class NSP_OrderItemTriggerHelper {
                     && ( billingActPaymentMap != null )
                     && billingActPaymentMap.containsKey( oi.blng__BillingAccount__c )
                     && ( billingActPaymentMap.get( oi.blng__BillingAccount__c ) != null )
+                    && ( oi.NSP_Preferred_Payment_Method__c != null )
                     && ( oi.NSP_Preferred_Payment_Method__c == billingActPaymentMap.get( oi.blng__BillingAccount__c ).Payment_Method_Type__c )
                    )
                 {
