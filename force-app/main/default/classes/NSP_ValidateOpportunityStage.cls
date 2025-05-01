@@ -229,7 +229,7 @@ public with sharing class NSP_ValidateOpportunityStage {
                         if(opp.StageName.equals(NSP_SalesConstants.CLOSED_WON)){//evaluate criteria to move to closed won stage
                             //first check if primary quote is created and approved on primary products it is applicable on then check user based criteria
                             evaluateQuoteCriteria(opp,quoteMap);
-                            evaluateClosedWonStageCriteria(opp, checklistMap, opportunityOwnerRoleMap);
+                            evaluateClosedWonStageCriteria(opp, checklistMap);
                         }
                         //closed-Lost criteria DF-1769
                         if(opp.StageName.equals(NSP_SalesConstants.CLOSED_LOST)){//evaluate criteria to move to closed lost stage
@@ -544,7 +544,7 @@ public with sharing class NSP_ValidateOpportunityStage {
     // @param opportunityList list of New Opportunity
     // @return void
     // 
-    private static void evaluateClosedWonStageCriteria( Opportunity opp , Map<Id,NSP_Checklist__c> checklistMap , Map<Id,User> opportunityOwnerRoleMap ) {
+    private static void evaluateClosedWonStageCriteria( Opportunity opp , Map<Id,NSP_Checklist__c> checklistMap ) {
         String scannedSTP = '';
         if ( NSP_ValidateOpportunityStage.permittedCWOppOwnerUserMap.containsKey( opp.OwnerId )
             && ( !hasAllowCWNCSUserPerm )
