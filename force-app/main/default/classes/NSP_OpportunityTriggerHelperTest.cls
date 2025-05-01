@@ -1048,4 +1048,38 @@ static void createAssetTest3(){
             Test.stopTest();
         }
     }
+    
+    @isTest
+    static void testGetLabelValuesAsSet() {
+        Test.startTest();
+
+        // Test 1: Valid comma-separated input
+        String validInput = 'Workforce, Workforce Plus, WF';
+        Set<String> result = NSP_OpportunityTriggerHelperFunctions.getLabelValuesAsSet(validInput);
+        Set<String> expected = new Set<String>{'workforce', 'workforce plus', 'wf'};
+        System.assertEquals(expected, result, 'The method should return a set of lowercase, trimmed values');
+
+        // Test 2: Empty string input
+        String emptyInput = '';
+        result = NSP_OpportunityTriggerHelperFunctions.getLabelValuesAsSet(emptyInput);
+        System.assertEquals(new Set<String>(), result, 'The method should return an empty set for an empty string');
+
+        // Test 3: Null input
+        result = NSP_OpportunityTriggerHelperFunctions.getLabelValuesAsSet(null);
+        System.assertEquals(new Set<String>(), result, 'The method should return an empty set for a null input');
+
+        // Test 4: Input with extra whitespace
+        String whitespaceInput = 'Workforce, Workforce Plus , WF';
+        result = NSP_OpportunityTriggerHelperFunctions.getLabelValuesAsSet(whitespaceInput);
+        expected = new Set<String>{'workforce', 'workforce plus', 'wf'};
+        System.assertEquals(expected, result, 'The method should trim whitespace from values');
+
+        // Test 5: Single value (no commas)
+        String singleValueInput = 'Workforce';
+        result = NSP_OpportunityTriggerHelperFunctions.getLabelValuesAsSet(singleValueInput);
+        expected = new Set<String>{'workforce'};
+        System.assertEquals(expected, result, 'The method should handle a single value without commas');
+
+        Test.stopTest();
+    }
 }
