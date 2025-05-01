@@ -491,12 +491,12 @@
         <platformActionListItems>
             <actionName>Order.NSP_CreateProject</actionName>
             <actionType>QuickAction</actionType>
-            <sortOrder>25</sortOrder>
+            <sortOrder>0</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
             <actionName>Order.Link_Project_To_Order_Items</actionName>
             <actionType>QuickAction</actionType>
-            <sortOrder>26</sortOrder>
+            <sortOrder>1</sortOrder>
         </platformActionListItems>
     </platformActionList>
     <relatedLists>
