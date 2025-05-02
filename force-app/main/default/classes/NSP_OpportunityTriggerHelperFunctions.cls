@@ -105,7 +105,7 @@ public with sharing class NSP_OpportunityTriggerHelperFunctions {
     }
 
     private void setOpportunityName(Opportunity opp) {
-        if (opp.NSP_Account_Name__c != null && Trigger.isBefore && !Trigger.isInsert) {
+        if (opp.NSP_Account_Name__c != null && Trigger.isBefore && Trigger.isInsert) {
             String accountName = opp.NSP_Account_Name__c;
             Integer accountNameLength = accountName.length();
             String trimmedAccountName = (accountNameLength > 97)
