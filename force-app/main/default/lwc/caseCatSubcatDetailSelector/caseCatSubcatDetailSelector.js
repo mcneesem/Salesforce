@@ -37,6 +37,7 @@ export default class CaseCatSubcatDetailSelector extends LightningElement {
         if (!this.selectedCategory || !this.selectedSubCategory) {
             response.isValid = false;
             response.errorMessage = "Category and Subcategory are mandatory.";
+            this.showAllSubCategory = true;
         }
         return response;
     }
