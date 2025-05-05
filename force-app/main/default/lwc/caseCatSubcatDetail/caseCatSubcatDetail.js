@@ -394,7 +394,9 @@ export default class CaseCatSubcatDetail extends LightningElement {
     getCatDependenciesMap(){
         getCategoryDependenciesMap({recordTypeId: this.recTypeId, isCatViewAll : this.showAllCategory}).then((response) => {
             let result = JSON.parse(response);
-            this.categoryOptions = this.createOptions(Object.keys(result.mCatToSubCatogories).sort());
+            if(this.categoryOptions.length == 0 ){
+                this.categoryOptions = this.createOptions(Object.keys(result.mCatToSubCatogories).sort());
+            }
             let isSystemAdmin = ( this.profileName && this.profileName.startsWith( 'System Admin' ) );
             if ( !isSystemAdmin && ( result.mCatToSubCatogories["HR Employee Relations"] != null ) ) {
                 result.mCatToSubCatogories["HR Employee Relations"] = result.mCatToSubCatogories["HR Employee Relations"].filter(value => value !== "Separation Agreement Request");
@@ -412,6 +414,7 @@ export default class CaseCatSubcatDetail extends LightningElement {
                 this.versionOptions = this.createOptions(result.mCatSubDetailToVersions[this.oCase.NSP_Category__c + '-' + this.oCase.NSP_SubCategory__c + '-' + this.oCase.NSP_Detail__c]);
             }
             this.categoryWrapper = result;
+            
         }).catch((error) => {
         })
     }
