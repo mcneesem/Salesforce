@@ -39,7 +39,7 @@
       ( TEXT( CallType ) = &apos;Callback&apos; )
     ) ,
     CASE(
-      PreviousCall.Contact_Center_Queue__c,
+      PreviousCall.Contact_Center_Queue__c ,
       &apos;401K&apos; , &apos;Contact Center 401K&apos; ,
       &apos;1 Benefit Option&apos; , &apos;Contact Center Benefits&apos; ,
       &apos;Benefits&apos; , &apos;Contact Center Benefits&apos; ,
