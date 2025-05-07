@@ -32,7 +32,7 @@ public class NSP_SalesConstants {
     public static final String WX ='WX';
     public static final String WA ='WA';
     public static final String WOSS ='WOSS';
-    public static final String CONTINGENT_WORKFORCE ='Contingent Workforce';
+    public static final String CONTRACTOR_MANAGEMENT ='CONTRACTOR MANAGEMENT';
     public static final String STAND_ALONE ='Stand Alone';
     // To set opportunity type as CAMS
     public static final String OPPORTUNITY_TYPE_CAMS ='CAMS';
