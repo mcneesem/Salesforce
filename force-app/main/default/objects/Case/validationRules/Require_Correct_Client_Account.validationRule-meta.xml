@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Require_Correct_Client_Account</fullName>
+    <active>true</active>
+    <description>Validation Rule to update correct client account before closing case when the associated account is INSPERITY SERVICES, L.P.</description>
+    <errorConditionFormula>AND(
+  NOT( $Permission.Bypass_Require_Correct_Client_Account ) ,
+  ISPICKVAL( Status , &quot;Closed&quot; ) ,
+  ( NSP_Category__c = &quot;WX/WA&quot; ) ,
+  ( Account.Name = &quot;INSPERITY SERVICES, L.P.&quot; )
+)</errorConditionFormula>
+    <errorMessage>Account cannot be Insperity Services.</errorMessage>
+</ValidationRule>
