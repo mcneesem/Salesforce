@@ -16,7 +16,7 @@
     <relationshipLabel>RET-Sales-to-Implementations</relationshipLabel>
     <relationshipName>RET_Sales_to_Implementations</relationshipName>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Lookup</type>
 </CustomField>
