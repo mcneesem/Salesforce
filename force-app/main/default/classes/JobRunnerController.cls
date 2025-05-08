@@ -3,6 +3,7 @@ public with sharing class JobRunnerController {
     // test w/ JobRunnerEmailHandlerTest (15%)
     private static String CLASS_NAME = ' ~ JobRunnerController';
     private static String USE_JOB_RUNNER = 'Use_Job_Runner';
+    private static String HORIZONTAL_RULE = '~~~~~~~~~~ ~~~~~~~~~~ ~~~~~~~~~~';
 
     private static Boolean hasPermission {
         private get {
@@ -170,13 +171,13 @@ public with sharing class JobRunnerController {
                     String newLine = '\n';
                     String plainTextBody = '';
                     plainTextBody += 'Job Runner Requested Execution' + newLine;
-                    plainTextBody += '~~~~~~~~~~ ~~~~~~~~~~ ~~~~~~~~~~' + newLine;
+                    plainTextBody += JobRunnerController.HORIZONTAL_RULE + newLine;
                     plainTextBody += 'ApexClass.Name:: ' + batchClassName + newLine;
                     plainTextBody += 'User:: ' + UserInfo.getName() + newLine;
                     plainTextBody += 'User.Id:: ' + UserInfo.getUserId() + newLine;
                     plainTextBody += 'User.Username:: ' + UserInfo.getUserName() + newLine;
                     mail.setPlainTextBody( plainTextBody );
-                    List<Messaging.SendEmailResult> results = Messaging.sendEmail( new Messaging.SingleEmailMessage[]{ mail } );
+                    Messaging.sendEmail( new Messaging.SingleEmailMessage[]{ mail } );
                     // log results...
                     NSP_ErrorLogHandler.logInfo(
                         JobRunnerController.class.getName() ,
@@ -223,7 +224,7 @@ public with sharing class JobRunnerController {
         {
             try {
                 // prepare a log for all attempts to execute a job via the service address...
-                String requestDescription = JobRunnerController.describeJobRequest( email , envelope );
+                String requestDescription = JobRunnerController.describeJobRequest( email );
                 // extract the Batch Apex Class name from the subject of the job request email...
                 String requestedClassName = JobRunnerController.parseRequestedClassName( email );
                 // confirm that the requested class exist in the Org...
@@ -268,7 +269,7 @@ public with sharing class JobRunnerController {
         return requestedClassName;
     }
 
-    private static String describeJobRequest( Messaging.InboundEmail email , Messaging.InboundEnvelope envelope ) {
+    private static String describeJobRequest( Messaging.InboundEmail email ) {
         String description = '';
         if ( email != null ) {
             String newLine = '\n';
@@ -278,11 +279,11 @@ public with sharing class JobRunnerController {
             description += 'To Addresses: ' + email.toAddresses + newLine;
             description += 'CC Addresses: ' + email.ccAddresses + newLine;
             description += 'Subject: ' + email.subject + newLine;
-            description += '~~~~~~~~~~ ~~~~~~~~~~ ~~~~~~~~~~' + newLine;
+            description += JobRunnerController.HORIZONTAL_RULE + newLine;
             description += 'Plain Text Body: ' + newLine + email.plainTextBody + newLine;
-            description += '~~~~~~~~~~ ~~~~~~~~~~ ~~~~~~~~~~' + newLine;
+            description += JobRunnerController.HORIZONTAL_RULE + newLine;
             description += 'HTML Body: ' + newLine + email.htmlBody + newLine;
-            description += '~~~~~~~~~~ ~~~~~~~~~~ ~~~~~~~~~~' + newLine;
+            description += JobRunnerController.HORIZONTAL_RULE + newLine;
         }
         return description;
     }
