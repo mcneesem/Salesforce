@@ -1,66 +1,72 @@
 <template>
-    <lightning-card>
-        <h1 slot="title">Job Runner</h1>
-        <div class="slds-p-around_medium container">
-            <lightning-combobox
-                name="batchClass"
-                label="Select Batch Class"
-                value={selectedBatchClass}
-                options={batchClassOptions}
-                onchange={handleBatchClassChange}
-                placeholder="Choose a batch class"
-                required
-            ></lightning-combobox>
-            <div class="slds-m-top_medium button-section">
-                <lightning-button
-                    label="Execute"
-                    variant="brand"
-                    onclick={handleExecute}
-                    class="slds-m-right_small"
-                    disabled={isDisabled}
-                ></lightning-button>                
-                <lightning-button
-                    label="Status"
-                    variant="brand"
-                    onclick={handleStatus}
-                    disabled={isDisabled}
-                    class="slds-m-right_small"
-                ></lightning-button>
-                <lightning-button-icon
-                    lwc:if={showStatus}
-                    icon-name="utility:refresh"
-                    variant="border-filled"
-                    alternative-text="Refresh Status"
-                    onclick={handleStatus}
-                    disabled={isDisabled}
-                ></lightning-button-icon>
-            </div>
-            <div lwc:if={showStatus}>
-                <lightning-datatable
-                    key-field="Id"
-                    data={paginatedData}
-                    columns={columns}
-                    hide-checkbox-column
-                    class="slds-m-top_large table-section"
-                ></lightning-datatable>
-                <div class="slds-m-top_medium pagination-section">
+    <template lwc:if={isAccessible}>
+        <lightning-card title="Job Runner" icon-name="custom:custom63">
+            <lightning-spinner alternative-text="Loading" size="medium" class={spinnerClass}></lightning-spinner>
+            <div class="slds-p-around_medium">
+                <lightning-combobox
+                    name="batchClass"
+                    label="Select Batch Class"
+                    value={selectedBatchClass}
+                    options={batchClassOptions}
+                    onchange={handleBatchClassChange}
+                    placeholder="Choose a batch class"
+                    required
+                    >
+                </lightning-combobox>
+                <div class="slds-m-top_medium">
                     <lightning-button
-                        label="Previous"
-                        variant="neutral"
-                        onclick={handlePrevious}
-                        disabled={isFirstPage}
-                    ></lightning-button>
-                    <span class="slds-m-horizontal_small">
-                        Page {currentPage} of {totalPages}
-                    </span>
+                        label="Status"
+                        variant="brand"
+                        onclick={handleStatus}
+                        disabled={isDisabled}
+                        class="slds-m-right_small"
+                        >
+                    </lightning-button>
                     <lightning-button
-                        label="Next"
-                        variant="neutral"
-                        onclick={handleNext}
-                        disabled={isLastPage}
-                    ></lightning-button>
+                        label="Execute"
+                        variant="brand"
+                        onclick={handleExecute}
+                        class="slds-m-right_small"
+                        disabled={isDisabledExecute}
+                        >
+                    </lightning-button>
+                    <div lwc:if={isWaiting} class="slds-show_inline">
+                        Pending job execution...
+                    </div>
+                </div>
+                <div lwc:if={showStatus} class="slds-m-top_medium">
+                    <lightning-datatable
+                        key-field="Id"
+                        data={paginatedData}
+                        columns={columns}
+                        hide-checkbox-column
+                        class="table-section"
+                        >
+                    </lightning-datatable>
+                    <div class="slds-m-top_medium slds-align_absolute-center">
+                        <lightning-button
+                            label="Previous"
+                            variant="neutral"
+                            onclick={handlePrevious}
+                            disabled={isFirstPage}
+                            >
+                        </lightning-button>
+                        <span class="slds-m-horizontal_small">
+                            Page {currentPage} of {totalPages}
+                        </span>
+                        <lightning-button
+                            label="Next"
+                            variant="neutral"
+                            onclick={handleNext}
+                            disabled={isLastPage}
+                            >
+                        </lightning-button>
+                    </div>
                 </div>
             </div>
-        </div>
-    </lightning-card>
+        </lightning-card>
+    </template>
+    <template lwc:else>
+        <div style="margin-top: -0.75rem"></div>
+    </template>
 </template>
