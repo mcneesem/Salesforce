@@ -154,30 +154,11 @@ public with sharing class JobRunnerController {
             if ( !hasWaitingJobs ) {
                 try {
                     // send email to service address that handles all job requests...
-                    Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-                    if ( JobRunnerController.orgWideEmailAddressId != null ) {
-                        mail.setOrgWideEmailAddressId( JobRunnerController.orgWideEmailAddressId );
-                    }
-                    if ( String.isNotBlank( JobRunnerController.serviceAddress ) ) {
-                        mail.setToAddresses( new List<String>{ JobRunnerController.serviceAddress } );
-                    }
-                    if ( ( JobRunnerController.bccAddresses != null )
-                        && !JobRunnerController.bccAddresses.isEmpty()
-                        )
-                    {
-                        mail.setBccAddresses( JobRunnerController.bccAddresses );
-                    }
-                    mail.setSubject( 'Job Runner: ' + batchClassName );
-                    String newLine = '\n';
-                    String plainTextBody = '';
-                    plainTextBody += 'Job Runner Requested Execution' + newLine;
-                    plainTextBody += JobRunnerController.HORIZONTAL_RULE + newLine;
-                    plainTextBody += 'ApexClass.Name:: ' + batchClassName + newLine;
-                    plainTextBody += 'User:: ' + UserInfo.getName() + newLine;
-                    plainTextBody += 'User.Id:: ' + UserInfo.getUserId() + newLine;
-                    plainTextBody += 'User.Username:: ' + UserInfo.getUserName() + newLine;
-                    mail.setPlainTextBody( plainTextBody );
-                    Messaging.sendEmail( new Messaging.SingleEmailMessage[]{ mail } );
+                    Messaging.sendEmail(
+                        new Messaging.SingleEmailMessage[]{
+                            JobRunnerController.prepareEmailMessage( batchClassName )
+                        }
+                    );
                     // log results...
                     NSP_ErrorLogHandler.logInfo(
                         JobRunnerController.class.getName() ,
@@ -198,6 +179,33 @@ public with sharing class JobRunnerController {
         if ( String.isNotBlank( message ) ) {
             throw new AuraHandledException( message );
         }
+    }
+
+    private static Messaging.SingleEmailMessage prepareEmailMessage( String requestedClassName ) {
+        Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+        if ( JobRunnerController.orgWideEmailAddressId != null ) {
+            mail.setOrgWideEmailAddressId( JobRunnerController.orgWideEmailAddressId );
+        }
+        if ( String.isNotBlank( JobRunnerController.serviceAddress ) ) {
+            mail.setToAddresses( new List<String>{ JobRunnerController.serviceAddress } );
+        }
+        if ( ( JobRunnerController.bccAddresses != null )
+            && !JobRunnerController.bccAddresses.isEmpty()
+            )
+        {
+            mail.setBccAddresses( JobRunnerController.bccAddresses );
+        }
+        mail.setSubject( 'Job Runner: ' + requestedClassName );
+        String newLine = '\n';
+        String plainTextBody = '';
+        plainTextBody += 'Job Runner Requested Execution' + newLine;
+        plainTextBody += JobRunnerController.HORIZONTAL_RULE + newLine;
+        plainTextBody += 'ApexClass.Name:: ' + requestedClassName + newLine;
+        plainTextBody += 'User:: ' + UserInfo.getName() + newLine;
+        plainTextBody += 'User.Id:: ' + UserInfo.getUserId() + newLine;
+        plainTextBody += 'User.Username:: ' + UserInfo.getUserName() + newLine;
+        mail.setPlainTextBody( plainTextBody );
+        return mail;
     }
 
     private static Boolean checkWaitingJobs( String requestedClassName ) {
