@@ -3,9 +3,6 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <name>FLSA National Quality</name>
     <queueSobject>
-        <sobjectType>Case</sobjectType>
-    </queueSobject>
-    <queueSobject>
-        <sobjectType>Task</sobjectType>
+        <sobjectType>WorkBadgeDefinition</sobjectType>
     </queueSobject>
 </Queue>
