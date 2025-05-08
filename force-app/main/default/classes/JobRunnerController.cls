@@ -154,11 +154,8 @@ public with sharing class JobRunnerController {
             if ( !hasWaitingJobs ) {
                 try {
                     // send email to service address that handles all job requests...
-                    Messaging.sendEmail(
-                        new Messaging.SingleEmailMessage[]{
-                            JobRunnerController.prepareEmailMessage( batchClassName )
-                        }
-                    );
+                    Messaging.SingleEmailMessage mail = JobRunnerController.prepareEmailMessage( batchClassName );
+                    Messaging.sendEmail( new Messaging.SingleEmailMessage[]{ mail } );
                     // log results...
                     NSP_ErrorLogHandler.logInfo(
                         JobRunnerController.class.getName() ,
