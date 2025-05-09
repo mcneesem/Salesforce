@@ -3,7 +3,7 @@
     <fullName>Outgoing</fullName>
     <active>true</active>
     <businessProcess>Outgoing</businessProcess>
-    <description>The RT used to track Opportunities that have been handed off to Vendor Partners (ie - Workday)</description>
+    <description>Referral Opportunity for a Vendor/Partner (i.e.  Workday)</description>
     <label>Outgoing</label>
     <picklistValues>
         <picklist>ForecastCategoryName</picklist>
@@ -25,6 +25,17 @@
         </values>
         <values>
             <fullName>Pipeline</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Interest_Product_Offering__c</picklist>
+        <values>
+            <fullName>HR360</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HRCore</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -652,6 +663,10 @@
         </values>
         <values>
             <fullName>Backout</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Better Fit for Workday</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3145,6 +3160,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>FSI- Barnum</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>FSI- Bellpointe Asset Management</fullName>
             <default>false</default>
         </values>
@@ -4598,6 +4617,17 @@
         </values>
         <values>
             <fullName>Workforce Optimization</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Product_Offering__c</picklist>
+        <values>
+            <fullName>HR360</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HRCore</fullName>
             <default>false</default>
         </values>
     </picklistValues>

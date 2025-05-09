@@ -1,6 +1,6 @@
 public with sharing class NSP_ProjectTasksTriggerServiceHelper {
     // test w/ NSP_ProjectTasksTriggerServiceHelperTest, NSP_ServiceAppointmentTrigger_Test (85%)
-    // test w/ NSP_ProjectTasksTriggerServiceHelperTest (71%)
+    // test w/ NSP_ProjectTasksTriggerServiceHelperTest (68%)
     // test w/ NSP_ServiceAppointmentTrigger_Test (65%)
 
     private Set<Id> allProjectIds = new Set<Id>();
@@ -38,7 +38,7 @@ public with sharing class NSP_ProjectTasksTriggerServiceHelper {
     public void afterUpdateProjectTask( List<pse__Project_Task__c> projectTaskList , Map<Id, pse__Project_Task__c> projectTaskOldMap ) {
         Map<Id,pse__Project_Task__c> mapOfProjectTaskIdAndProjecTask = new Map<Id,pse__Project_Task__c>();
         Map<Id,pse__Project_Task__c> mapOfProjectTaskIdAndProjecTask1 = new Map<Id,pse__Project_Task__c>();
-        Map<String,Id> mapDispatchRegionToServiceTerritory = new Map<String,Id>(); 
+        Map<String,Id> mapDispatchRegionToServiceTerritory = new Map<String,Id>();
         List<String> dispatchRegionList = new List<String>();
         Set<Id> projectIdSet = new Set<Id>();
         Map<Id,Id> accountIdProjectIdMap = new Map<Id,Id>();
@@ -49,36 +49,35 @@ public with sharing class NSP_ProjectTasksTriggerServiceHelper {
         Set<Id> deleteProjTaskIdSet = new Set<Id>();
         Id peoRecordTypeId = Schema.SObjectType.pse__Project_Task__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.PROJECT_TASK_PEO_RECORDTYPE).getRecordTypeId();
         Id bpsRecordTypeId = Schema.SObjectType.pse__Project_Task__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.PROJECT_TASK_BPS_RECORDTYPE).getRecordTypeId();
-        
+
         for(pse__Project_Task__c pTask : projectTaskList){
             if(pTask.OwnerId != projectTaskOldMap.get(pTask.id).OwnerId && (pTask.RecordTypeId == peoRecordTypeId || pTask.RecordTypeId == bpsRecordTypeId)){
-           	    pTaskOwnerIdSet.add(pTask.OwnerId);
+                pTaskOwnerIdSet.add(pTask.OwnerId);
                 setProjectId.add(pTask.pse__Project__c);
                 setProjectTaskId.add(pTask.Id);
             }
-            
-            
-            /*STY-02085  checking for checkBox(Create Work Order) on projectTask Object is checked 
-            and Disptach region field is not null*/
+
+
+            // STY-02085  checking for checkBox(Create Work Order) on projectTask Object is checked and Disptach region field is not null
             if(pTask.NSP_Create_Work_Order__c == true &&
                pTask.NSP_Create_Work_Order__c != projectTaskOldMap.get(pTask.id).NSP_Create_Work_Order__c &&
                String.isNotBlank(pTask.NSP_Dispatch_Region__c)){
                    mapOfProjectTaskIdAndProjecTask.put(pTask.Id, pTask);
                }
-            else if(pTask.NSP_Create_Work_Order__c 
-                    && pTask.NSP_Dispatch_Region__c != null 
+            else if(pTask.NSP_Create_Work_Order__c
+                    && pTask.NSP_Dispatch_Region__c != null
                     && isFieldUpdatedOnPt(projectTaskOldMap.get(pTask.id), pTask) ){
                         dispatchRegionList.add(pTask.NSP_Dispatch_Region__c);
                         mapOfProjectTaskIdAndProjecTask1.put(pTask.Id, pTask);
                     }
             // added as a part of STY-02138
-            if(pTask.pse__Project__c != null && pTask.NSP_Account_Id__c != null && 
+            if(pTask.pse__Project__c != null && pTask.NSP_Account_Id__c != null &&
                projectTaskOldMap.get(pTask.Id).NSP_Account_Id__c != pTask.NSP_Account_Id__c ){
                    projectIdSet.add(pTask.pse__Project__c);
                    accountIdProjectIdMap.put(pTask.NSP_Account_Id__c,pTask.pse__Project__c);
-            } 
+            }
                //added as a part of STY-03785
-            if(pTask.pse__Project__c != null && 
+            if(pTask.pse__Project__c != null &&
                 pTask.NSP_Visible_to_Client__c == true &&  !projectTaskOldMap.get(pTask.Id).NSP_Visible_to_Client__c){
                 updateProjectTaskIdSet.add(pTask.id);
             }
@@ -109,7 +108,7 @@ public with sharing class NSP_ProjectTasksTriggerServiceHelper {
                 results
             );
         }
-        
+
         //creating WorkOrder Record
         if(mapOfProjectTaskIdAndProjecTask.keySet().size() > 0 ){
             createWorkOrderTask(mapOfProjectTaskIdAndProjecTask);
@@ -183,8 +182,8 @@ public with sharing class NSP_ProjectTasksTriggerServiceHelper {
                         SELECT
                             Id , FSL__GanttLabel__c , Duration , SchedStartTime , SchedEndTime ,
                             NSP_Orientation_Address__c , Description , Status , EarliestStartTime ,
-                            ServiceTerritoryId , NSP_Meeting_Type__c , ParentRecordId 
-                        FROM ServiceAppointment 
+                            ServiceTerritoryId , NSP_Meeting_Type__c , ParentRecordId
+                        FROM ServiceAppointment
                         WHERE ( ParentRecordId = :mapWorkOrderProjectTask.keySet() )
                     ]
                 )
@@ -194,6 +193,7 @@ public with sharing class NSP_ProjectTasksTriggerServiceHelper {
                 if ( workOrderProjectTask != null ) {
                     ServiceAppointment record = updateServiceAppointmentRecord(
                         oService.Id ,
+                        oService.Status ,
                         workOrderProjectTask
                     );
                     if ( record != null ) {
@@ -231,56 +231,61 @@ public with sharing class NSP_ProjectTasksTriggerServiceHelper {
         }
     }
 
-    /***********************************************************************************************
-    * MethodName: updateWorkOrderRecord
-    * Description : Update the respective workorder record and return it
-    * Params: Id workOrderId, pse__Project_Task__c mapProjectTask
-    * ********************************************************************************************/  
-    public static WorkOrder updateWorkOrderRecord( Id workOrderId, pse__Project_Task__c mapProjectTask ){
-        
+    //
+    // MethodName: updateWorkOrderRecord
+    // Description : Update the respective workorder record and return it
+    // Params: Id workOrderId, pse__Project_Task__c mapProjectTask
+    //
+    public static WorkOrder updateWorkOrderRecord( Id workOrderId , pse__Project_Task__c mapProjectTask ) {
         //Update the respective workorder based on the project task record entries
-                WorkOrder woOrderRecToUpdate = new WorkOrder();
-
-                woOrderRecToUpdate.Id = workOrderId;
-                woOrderRecToUpdate.NSP_Orientation_Address__c = mapProjectTask.NSP_Orientation_Address__c;
-				woOrderRecToUpdate.NSP_Meeting_Type__c =  mapProjectTask.NSP_Meeting_Type__c;     	
-                woOrderRecToUpdate.Subject = mapProjectTask.Name;
-                woOrderRecToUpdate.OwnerId = mapProjectTask.OwnerId;
-                woOrderRecToUpdate.Description = mapProjectTask.pse__Long_Description__c;
-                woOrderRecToUpdate.Status = mapProjectTask.pse__Status__c;
-               	woOrderRecToUpdate.Duration = ((mapProjectTask.pse__End_Date_Time__c != null && mapProjectTask.pse__Start_Date_Time__c!= null)? (Integer.valueOf((mapProjectTask.pse__End_Date_Time__c.getTime() - mapProjectTask.pse__Start_Date_Time__c.getTime())/(1000*60))):null);
-                woOrderRecToUpdate.DurationType = 'Minutes';
-                woOrderRecToUpdate.StartDate = mapProjectTask.pse__Start_Date_Time__c;
-                woOrderRecToUpdate.EndDate = mapProjectTask.pse__End_Date_Time__c;
-
-        		return woOrderRecToUpdate;
+        WorkOrder woOrderRecToUpdate = new WorkOrder();
+        woOrderRecToUpdate.Id = workOrderId;
+        woOrderRecToUpdate.NSP_Orientation_Address__c = mapProjectTask.NSP_Orientation_Address__c;
+        woOrderRecToUpdate.NSP_Meeting_Type__c =  mapProjectTask.NSP_Meeting_Type__c;
+        woOrderRecToUpdate.Subject = mapProjectTask.Name;
+        woOrderRecToUpdate.OwnerId = mapProjectTask.OwnerId;
+        woOrderRecToUpdate.Description = mapProjectTask.pse__Long_Description__c;
+        woOrderRecToUpdate.Status = mapProjectTask.pse__Status__c;
+        woOrderRecToUpdate.Duration = (
+            ( ( mapProjectTask.pse__End_Date_Time__c != null ) && ( mapProjectTask.pse__Start_Date_Time__c != null ) )
+            ? ( Integer.valueOf( ( mapProjectTask.pse__End_Date_Time__c.getTime() - mapProjectTask.pse__Start_Date_Time__c.getTime() ) / ( 1000 * 60 ) ) )
+            : null
+        );
+        woOrderRecToUpdate.DurationType = 'Minutes';
+        woOrderRecToUpdate.StartDate = mapProjectTask.pse__Start_Date_Time__c;
+        woOrderRecToUpdate.EndDate = mapProjectTask.pse__End_Date_Time__c;
+        return woOrderRecToUpdate;
     }
 
-    /***********************************************************************************************
-    * MethodName: updateServiceAppointmentRecord
-    * Description : Update the respective service appointment and return it
-    * Params: Id serviceAppointmentId
-    * Params: pse__Project_Task__c mapWorkOrderProjectTask
-    * ********************************************************************************************/  
-    public static ServiceAppointment updateServiceAppointmentRecord( Id serviceAppointmentId, pse__Project_Task__c mapWorkOrderProjectTask ){
-        
+    //
+    // MethodName: updateServiceAppointmentRecord
+    // Description : Update the respective service appointment and return it
+    // Params: Id serviceAppointmentId
+    // Params: pse__Project_Task__c mapWorkOrderProjectTask
+    //
+    private static ServiceAppointment updateServiceAppointmentRecord( Id serviceAppointmentId , String serviceAppointmentStatus , pse__Project_Task__c mapWorkOrderProjectTask ) {
         //Update the respective service appointment based on the project task record entries
-                ServiceAppointment serviceAppointmentRecToUpdate = new ServiceAppointment();
-
-                serviceAppointmentRecToUpdate.Id = serviceAppointmentId;
-                serviceAppointmentRecToUpdate.NSP_Orientation_Address__c = mapWorkOrderProjectTask.NSP_Orientation_Address__c;
-        		serviceAppointmentRecToUpdate.NSP_Meeting_Type__c =  mapWorkOrderProjectTask.NSP_Meeting_Type__c;
-                serviceAppointmentRecToUpdate.OwnerId = mapWorkOrderProjectTask.OwnerId;  
-                serviceAppointmentRecToUpdate.Description = mapWorkOrderProjectTask.pse__Long_Description__c;  
-                serviceAppointmentRecToUpdate.Subject = mapWorkOrderProjectTask.Name;  
-                serviceAppointmentRecToUpdate.NSP_Project_Attendance__c = mapWorkOrderProjectTask.NSP_Project_Attendance__c;  
-                serviceAppointmentRecToUpdate.Status = mapWorkOrderProjectTask.pse__Status__c;  
-                serviceAppointmentRecToUpdate.Duration = ((mapWorkOrderProjectTask.pse__End_Date_Time__c != null && mapWorkOrderProjectTask.pse__Start_Date_Time__c != null) ?Integer.valueOf((mapWorkOrderProjectTask.pse__End_Date_Time__c.getTime() - mapWorkOrderProjectTask.pse__Start_Date_Time__c.getTime())/(1000*60)):null);
-                serviceAppointmentRecToUpdate.DurationType = 'Minutes';
-                serviceAppointmentRecToUpdate.SchedStartTime = mapWorkOrderProjectTask.pse__Start_Date_Time__c;
-                serviceAppointmentRecToUpdate.SchedEndTime = mapWorkOrderProjectTask.pse__End_Date_Time__c;
-        		
-        		return serviceAppointmentRecToUpdate;
+        ServiceAppointment serviceAppointmentRecToUpdate = new ServiceAppointment();
+        serviceAppointmentRecToUpdate.Id = serviceAppointmentId;
+        serviceAppointmentRecToUpdate.NSP_Orientation_Address__c = mapWorkOrderProjectTask.NSP_Orientation_Address__c;
+        serviceAppointmentRecToUpdate.NSP_Meeting_Type__c =  mapWorkOrderProjectTask.NSP_Meeting_Type__c;
+        serviceAppointmentRecToUpdate.OwnerId = mapWorkOrderProjectTask.OwnerId;
+        serviceAppointmentRecToUpdate.Description = mapWorkOrderProjectTask.pse__Long_Description__c;
+        serviceAppointmentRecToUpdate.Subject = mapWorkOrderProjectTask.Name;
+        serviceAppointmentRecToUpdate.NSP_Project_Attendance__c = mapWorkOrderProjectTask.NSP_Project_Attendance__c;
+        // prevent DmlException ~ FIELD_CUSTOM_VALIDATION_EXCEPTION, Cannot change status from Dispatched to null: [Status]
+        if ( ( serviceAppointmentStatus != 'Dispatched' ) || String.isNotBlank( mapWorkOrderProjectTask.pse__Status__c ) ) {
+            serviceAppointmentRecToUpdate.Status = mapWorkOrderProjectTask.pse__Status__c;
+        }
+        serviceAppointmentRecToUpdate.Duration = (
+            ( ( mapWorkOrderProjectTask.pse__End_Date_Time__c != null ) && ( mapWorkOrderProjectTask.pse__Start_Date_Time__c != null ) )
+            ? Integer.valueOf( ( mapWorkOrderProjectTask.pse__End_Date_Time__c.getTime() - mapWorkOrderProjectTask.pse__Start_Date_Time__c.getTime() ) / ( 1000 * 60 ) )
+            : null
+        );
+        serviceAppointmentRecToUpdate.DurationType = 'Minutes';
+        serviceAppointmentRecToUpdate.SchedStartTime = mapWorkOrderProjectTask.pse__Start_Date_Time__c;
+        serviceAppointmentRecToUpdate.SchedEndTime = mapWorkOrderProjectTask.pse__End_Date_Time__c;
+        return serviceAppointmentRecToUpdate;
     }
 
     //
@@ -289,14 +294,14 @@ public with sharing class NSP_ProjectTasksTriggerServiceHelper {
     // @param listOfProjectTask List of updated Project Task.
     //
     public static void createPTAOnProject( Set<Id> pTaskOwnerIdSet , Set<Id> setProjectId , Set<Id> setProjectTaskId ) {
-        
+
         Map<Id, Id> mapOfContactIdvsUserId = new Map<Id, Id> ();
         Map<Id, Id> mapOfUserIdvsContactId = new Map<Id, Id> ();
         Set<Id> projectIdSet = new Set<Id> ();
         Map<Id,pse__Proj__c> projMap = new  Map<Id,pse__Proj__c>();
         List<pse__Project_Task_Assignment__c> listOfPTA = new List<pse__Project_Task_Assignment__c> ();
         // PEO project Task
-      
+
         // Creating map of Project Id and checking if Auto Resource checkbox is true/false. If false adding in map.
         if(!setProjectTaskId.isEmpty()){
             for(pse__Proj__c proj : [SELECT Id,NSP_Auto_Resource_Project__c FROM pse__Proj__c WHERE ID IN : setProjectId AND NSP_Auto_Resource_Project__c =: NSP_ServiceConstants.VALUE_TRUE]){
@@ -336,8 +341,8 @@ public with sharing class NSP_ProjectTasksTriggerServiceHelper {
                         ptanew.pse__Resource__c = contactId;
                         ptanew.NSP_Is_Account_Team__c = true;
                         listOfPTA.add(ptanew);
-                    }  
-                } 
+                    }
+                }
             }
         }
         if ( !listofPTA.isEmpty() ) {
@@ -347,64 +352,76 @@ public with sharing class NSP_ProjectTasksTriggerServiceHelper {
                 'createPTAOnProject' ,
                 results
             );
-        } 
-    }   
+        }
+    }
 
-    /**
-* Iterates throught the list of new pse__Project_Task__c and passes the required attributes to other methods.
-* @param listOfProjectTask Map of New Project Tasks
-* Description: This method update assign the recordType to Project Task based on Project RecordType
-* @return void             
-*                
-*/
-    public void updateRecordType(List<pse__Project_Task__c> listOfProjectTask) {
+    //
+    // Iterates throught the list of new pse__Project_Task__c and passes the required attributes to other methods.
+    // @param listOfProjectTask Map of New Project Tasks
+    // Description: This method update assign the recordType to Project Task based on Project RecordType
+    // @return void
+    //
+    //
+    public void updateRecordType( List<pse__Project_Task__c> listOfProjectTask ) {
         Set<Id> projectIds = new Set<Id>();
         List<pse__Project_Task__c> projectTasksList = new List<pse__Project_Task__c>();
         //Iterating through the new list of project tasks records which are being inserted and collect the parent Project Ids in a set.
-        for(pse__Project_Task__c eachTask : listOfProjectTask){
-            if(eachTask.pse__Project__c !=null){
-                projectIds.add(eachTask.pse__Project__c);
-                projectTasksList.add(eachTask);
+        for ( pse__Project_Task__c eachTask : listOfProjectTask ) {
+            if ( eachTask.pse__Project__c != null ) {
+                projectIds.add( eachTask.pse__Project__c );
+                projectTasksList.add( eachTask );
             }
         }
         //Collect the parent projects record type name to match with the newly created tasks record type.
-        if(projectIds.size() >0)  {
+        if ( !projectIds.isEmpty() ) {
             Map<Id,String> recordTypeMap = new Map<Id,String>();
-            for (pse__Proj__c eachProject : [SELECT Id,RecordType.Name 
-                                             FROM pse__Proj__c 
-                                             WHERE Id IN :projectIds 
-                                             AND RecordType.Name != null]){
-                                                 recordTypeMap.put(eachProject.Id,eachProject.RecordType.Name);
-                                             }
+            for ( pse__Proj__c eachProject : [
+                        SELECT Id , RecordType.Name
+                        FROM pse__Proj__c
+                        WHERE (
+                            ( Id IN :projectIds )
+                            AND ( RecordType.Name != null )
+                        )
+                    ]
+                )
+            {
+                recordTypeMap.put(eachProject.Id,eachProject.RecordType.Name);
+            }
             //Calling the method to assign the parent project record type to project tasks.
-            assignRecordTypeId(recordTypeMap,projectTasksList);  
+            assignRecordTypeId( recordTypeMap , projectTasksList );
         }
     }
-    
-    /**
-* Description: This method update assign the recordType to Project Task based on Project RecordType
-* @param  recordTypeMap Map of <Id,String> Project recordId & project RecordType Name
-* @param projectTasksList List of new pse__Project_Task__c record
-* @return void             
-*                
-*/
-    
-    public void assignRecordTypeId( Map<Id,String> recordTypeMap, List<pse__Project_Task__c> projectTasksList){
-        if(recordTypeMap.size() >0){
+
+    //
+    // Description: This method update assign the recordType to Project Task based on Project RecordType
+    // @param  recordTypeMap Map of <Id,String> Project recordId & project RecordType Name
+    // @param projectTasksList List of new pse__Project_Task__c record
+    // @return void
+    //
+    //
+    public void assignRecordTypeId( Map<Id,String> recordTypeMap , List<pse__Project_Task__c> projectTasksList ) {
+        if ( !recordTypeMap.isEmpty() ) {
             //Collect the project tasks record type Id for assignment.
-            Id recordTypeIdBPS = SObjectType.pse__Project_Task__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.PROJECT_TASK_BPS_RECORDTYPE)?.getRecordTypeId();
-            Id recordTypeIdPEO = SObjectType.pse__Project_Task__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.PROJECT_TASK_PEO_RECORDTYPE)?.getRecordTypeId();
-            Id recordTypeIdRET = SObjectType.pse__Project_Task__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.PROJECT_TASK_RET_RECORDTYPE)?.getRecordTypeId();
+            Id recordTypeIdBPS = NSP_GenericRecordType.getRecordTypeId( 'pse__Project_Task__c' , 'BPS_Project_Task' );
+            Id recordTypeIdPEO = NSP_GenericRecordType.getRecordTypeId( 'pse__Project_Task__c'  , 'PEO_Project_Task' );
+            Id recordTypeIdRET = NSP_GenericRecordType.getRecordTypeId( 'pse__Project_Task__c'  , 'RET_Project_Task' );
             //Iterate through the newly inserted project tasks and assign the parent record type to tasks.
-            for(pse__Project_Task__c eachTask : projectTasksList){
+            for ( pse__Project_Task__c eachTask : projectTasksList ) {
                 //Record type assignment from project to tasks.
-                if(recordTypeMap.get(eachTask.pse__Project__c)?.indexOfIgnoreCase((NSP_ServiceConstants.PROJECT_TASK_PEO_RECORDTYPE).substring(0,3)) != -1 &&  recordTypeIdPEO !=null){
+                if ( recordTypeMap.get(eachTask.pse__Project__c)?.indexOfIgnoreCase((NSP_ServiceConstants.PROJECT_TASK_PEO_RECORDTYPE).substring(0,3)) != -1
+                    && recordTypeIdPEO != null
+                    )
+                {
                     eachTask.RecordTypeId = recordTypeIdPEO;
-                } 
-                else if(recordTypeMap.get(eachTask.pse__Project__c)?.indexOfIgnoreCase((NSP_ServiceConstants.PROJECT_TASK_BPS_RECORDTYPE).substring(0,3)) != -1 &&  recordTypeIdBPS !=null){
+                } else if ( recordTypeMap.get(eachTask.pse__Project__c)?.indexOfIgnoreCase((NSP_ServiceConstants.PROJECT_TASK_BPS_RECORDTYPE).substring(0,3)) != -1
+                    && recordTypeIdBPS != null
+                    )
+                {
                     eachTask.RecordTypeId = recordTypeIdBPS;
-                }
-                else if(recordTypeMap.get(eachTask.pse__Project__c)?.indexOfIgnoreCase((NSP_ServiceConstants.PROJECT_TASK_RET_RECORDTYPE).substring(0,3)) != -1 &&  recordTypeIdRET !=null){
+                } else if ( recordTypeMap.get(eachTask.pse__Project__c)?.indexOfIgnoreCase((NSP_ServiceConstants.PROJECT_TASK_RET_RECORDTYPE).substring(0,3)) != -1
+                    && recordTypeIdRET != null
+                    )
+                {
                     eachTask.RecordTypeId = recordTypeIdRET;
                 }
             }
@@ -416,16 +433,15 @@ public with sharing class NSP_ProjectTasksTriggerServiceHelper {
     // @return void
     //
     public void afterInsertFilter( List<pse__Project_Task__c> listProjectTasks , Map<Id,pse__Project_Task__c> mapProjectTasks ) {
-        
-        /*STY-02085  checking for checkBox(Create Work Order) on projectTask Object is checked 
-		and Disptach region field is set */
+
+        // STY-02085  checking for checkBox(Create Work Order) on projectTask Object is checked and Disptach region field is set
         Set<Id> projectTasksWithNoAssignments = new Set<Id>();
         Map<Id,pse__Project_Task__c> mapOfProjectTaskIdAndProjecTask = new Map<Id,pse__Project_Task__c>();
         Set<Id> newprojTaskIdSet = new Set<Id>();
         Set<Id> setProjectTasksForAutoResource = new Set<Id>();
         Set<Id> projectIdSet = new Set<Id>();
         Map<Id,Id> accountIdProjectIdMap = new Map<Id,Id>();
-        
+
         for(pse__Project_Task__c pTask : listProjectTasks){
             if(pTask.NSP_Create_Work_Order__c == true && String.isNotBlank(pTask.NSP_Dispatch_Region__c)){
                 mapOfProjectTaskIdAndProjecTask.put(pTask.Id, pTask);
@@ -436,7 +452,7 @@ public with sharing class NSP_ProjectTasksTriggerServiceHelper {
             }
              if(pTask.pse__Project__c != null && pTask.NSP_Visible_to_Client__c == true ){
              newprojTaskIdSet.add(pTask.Id);
-        	}
+            }
             if(pTask.OwnerId.getsobjectType() == User.sobjectType && String.isBlank(pTask.NSP_Implementation_Account_Id__c)
                 && pTask.Name != NSP_ServiceConstants.STAY_STRONG_TP_BASED_ON_UNFAVOURABLE_RATING && !pTask.NSP_isClonedFromAutomation__c){
                 setProjectTasksForAutoResource.add(pTask.Id);
@@ -464,7 +480,7 @@ public with sharing class NSP_ProjectTasksTriggerServiceHelper {
         }
         //Added as part of STY-04100
         if(!newprojTaskIdSet.isEmpty()){
-        	NSP_ProjectTaskSharing.projectTaskRecordSharing(newprojTaskIdSet, null);
+            NSP_ProjectTaskSharing.projectTaskRecordSharing(newprojTaskIdSet, null);
         }
         if ( !setProjectTasksForAutoResource.isEmpty() && NSP_ProjectTasksTriggerServiceHelper.runOwnerAssignmentLogic ) {
             Map<String, Object> mapInputParams = new Map<String, Object>{'projectTaskIds' => setProjectTasksForAutoResource};
@@ -494,28 +510,30 @@ public with sharing class NSP_ProjectTasksTriggerServiceHelper {
     Map<Id, ServiceAppointment> mapProjectTaskIdSA = new Map<Id, ServiceAppointment>();
     Map<Id, pse__Project_Task__c> mapWorkOrderProjectTask = new Map<Id, pse__Project_Task__c>();
     List<ServiceAppointment> listServiceAppointments = new List<ServiceAppointment>();
-    Map<String,Id> mapDispatchRegionToServiceTerritory = new Map<String,Id>(); 
+    Map<String,Id> mapDispatchRegionToServiceTerritory = new Map<String,Id>();
     List<String> dispatchRegionList = new List<String>();
-    //getting WorkType record with Name as 'Generic' 
+
+    //getting WorkType record with Name as 'Generic'
     List<WorkType> listWorkTypes = [SELECT Id, ShouldAutoCreateSvcAppt FROM WorkType WHERE Name=:'Generic' LIMIT 1];
     if(listWorkTypes.size() == 0){
         return;
     }
-    //Checking whether Automatic create Service appointment checkbox is checked in WorkType 
+    //Checking whether Automatic create Service appointment checkbox is checked in WorkType
     if(listWorkTypes[0].ShouldAutoCreateSvcAppt != true){
         listWorkTypes[0].ShouldAutoCreateSvcAppt = true;
         UPDATE listWorkTypes[0];
-    } 
+    }
+
     //assigning all the values from ProjectTask to WorkOrder ---STY-02085
     List<WorkOrder> listWorkOrders = new List<WorkOrder>();
-    for(pse__Project_Task__c oProjectTask : 
+    for(pse__Project_Task__c oProjectTask :
         [SELECT Id, Name, pse__Long_Description__c,NSP_Orientation_Address__c, NSP_AccountId__c ,pse__End_Date_Time__c,pse__Start_Date_Time__c,NSP_Dispatch_Region__c,NSP_Meeting_Type__c
          FROM pse__Project_Task__c WHERE Id =: mapProjectTasks.keySet()]){
              listWorkOrders.add( new WorkOrder(
-                 WorkTypeId = listWorkTypes[0].Id, 
+                 WorkTypeId = listWorkTypes[0].Id,
                  Subject = oProjectTask.Name,
                  Description = oProjectTask.pse__Long_Description__c,
-                 NSP_Project_Task__c = oProjectTask.Id,  
+                 NSP_Project_Task__c = oProjectTask.Id,
                  AccountId = oProjectTask.NSP_AccountId__c,
                  StartDate = oProjectTask.pse__Start_Date_Time__c,
                  EndDate = oProjectTask.pse__End_Date_Time__c,
@@ -525,8 +543,8 @@ public with sharing class NSP_ProjectTasksTriggerServiceHelper {
                  NSP_Orientation_Address__c = oProjectTask.NSP_Orientation_Address__c,
                  Status = 'Unscheduled'
              ));
-             
-             //STY-03817 
+
+             //STY-03817
              //Storing list of dispactch regioon
              if( oProjectTask.NSP_Dispatch_Region__c != null){
                  dispatchRegionList.add(oProjectTask.NSP_Dispatch_Region__c);
@@ -539,7 +557,7 @@ public with sharing class NSP_ProjectTasksTriggerServiceHelper {
         mapDispatchRegionToServiceTerritory.put(eachServiceTerritory.Name, eachServiceTerritory.Id);
     }
     }
-    
+
         try {
     if(!listWorkOrders.isEmpty()){
         //Inserting list of WorkOrder record
@@ -547,19 +565,18 @@ public with sharing class NSP_ProjectTasksTriggerServiceHelper {
         for(WorkOrder oWorkOrder : listWorkOrders){
             mapWorkOrderProjectTask.put(oWorkOrder.Id, mapProjectTasks.get(oWorkOrder.NSP_Project_Task__c));
         }
-        /*When we create WorkOrder record it automatically create Service Appointment (because
-            Auto_create_Service_Appointment checkbox is checked on WorkType) with auto-populated values*/
+        // When we create WorkOrder record it automatically create Service Appointment (because Auto_create_Service_Appointment checkbox is checked on WorkType) with auto-populated values
         for(ServiceAppointment oService : [SELECT Id,FSL__GanttLabel__c, Duration,
                                            NSP_Orientation_Address__c, Description, Status, EarliestStartTime,NSP_Meeting_Type__c,
-                                           ParentRecordId 
-                                           FROM ServiceAppointment 
+                                           ParentRecordId
+                                           FROM ServiceAppointment
                                            WHERE ParentRecordId =: mapWorkOrderProjectTask.keySet()]){
-                                               mapProjectTaskIdSA.put(oService.ParentRecordId, oService); 
+                                               mapProjectTaskIdSA.put(oService.ParentRecordId, oService);
                                            }
         //Assigning the field values of Service Appointment as ProjectTask-- STY-02085
         for(ServiceAppointment oService: [SELECT Id,FSL__GanttLabel__c, Duration,
                                           NSP_Orientation_Address__c, Description, Status, EarliestStartTime,SchedEndTime,SchedStartTime,ParentRecordId ,ActualEndTime,ActualStartTime,NSP_Project_Attendance__c
-                                          FROM ServiceAppointment 
+                                          FROM ServiceAppointment
                                           WHERE ParentRecordId =: mapProjectTaskIdSA.keySet()]){
                                               oMapProjectTask = mapWorkOrderProjectTask.get(oService.ParentRecordId);
                                               oService.FSL__GanttLabel__c = oMapProjectTask.Name;
@@ -572,12 +589,12 @@ public with sharing class NSP_ProjectTasksTriggerServiceHelper {
                                               oService.NSP_Orientation_Address__c = oMapProjectTask.NSP_Orientation_Address__c;
                                               oService.NSP_Project_Attendance__c = oMapProjectTask.NSP_Project_Attendance__c;
                                               oService.DurationType = 'Minutes';
-                                              //STY-03817 
+                                              //STY-03817
                                               //Assigning Service Territory on SA
                                               if( oMapProjectTask.NSP_Dispatch_Region__c != null){
-                                                  oService.ServiceTerritoryId = mapDispatchRegionToServiceTerritory.get(oMapProjectTask.NSP_Dispatch_Region__c);  
+                                                  oService.ServiceTerritoryId = mapDispatchRegionToServiceTerritory.get(oMapProjectTask.NSP_Dispatch_Region__c);
                                               }
-                                              
+
                                               listServiceAppointments.add(oService);
                                           }
         //updating service appointment
@@ -598,7 +615,7 @@ public with sharing class NSP_ProjectTasksTriggerServiceHelper {
     // MethodName:  emailAlertProjectTaskCompleted
     // Description :RET project template's tasks completion email alert
     // Story : STY-02214
-    // Author :Abhishek Kumar 
+    // Author :Abhishek Kumar
     // Params: Map<Id,pse__Project_Task__c> newMapProjecttasks
     // Params: Map<Id,pse__Project_Task__c> oldMapProjecttasks
     //
@@ -611,14 +628,14 @@ public with sharing class NSP_ProjectTasksTriggerServiceHelper {
         List<pse__Project_Task__c> submitEaPackageTasks = new List<pse__Project_Task__c>();
         List<pse__Project_Task__c> validationOfPpttInstallTasks = new List<pse__Project_Task__c>();
         List<pse__Project_Task__c> validationOfPpttStartupTasks = new List<pse__Project_Task__c>();
-        
+
         try {
             //iterate over each project task updated
             for(pse__Project_Task__c projectTask : newMapProjecttasks.values()){
                 //check if project task status is updated to complete
-                if(oldMapProjecttasks.get(projectTask.Id).pse__Status__c!=NSP_ServiceConstants.TASKCOMPLETE 
+                if(oldMapProjecttasks.get(projectTask.Id).pse__Status__c!=NSP_ServiceConstants.TASKCOMPLETE
                    && projectTask.pse__Status__c==NSP_ServiceConstants.TASKCOMPLETE){
-                       
+
                        //check project task and template name
                        //check if project task is on 'RET Plan Amendment 2020 Form'
                        if(projectTask.Name == NSP_ServiceConstants.PREPARE_AMENDMENT && projectTask.Template_Name__c == NSP_ServiceConstants.PLAN_AMENDMENT_TEMPLATE){
@@ -790,15 +807,15 @@ public with sharing class NSP_ProjectTasksTriggerServiceHelper {
                     }
                     prjIdSetAccountIdMap.get(prjAccount.Project__c).add(prjAccount.Account__c);
                 }
-                
+
                 for(pse__Proj__c prj :[SELECT Id , pse__Account__c From pse__Proj__c WHERE Id IN:projectIdSet AND pse__Account__c!=null]){
-                    projectIdAccountIdMap.put(prj.Id,prj.pse__Account__c);  
-                }   
+                    projectIdAccountIdMap.put(prj.Id,prj.pse__Account__c);
+                }
                 // insert project tasks
                 for(pse__Project_Task__c prjTsk:prjTaskList){
-                    if(projectIdAccountIdMap.containsKey(prjTsk.pse__Project__c) && 
-                       projectIdAccountIdMap.get(prjTsk.pse__Project__c) != prjTsk.NSP_Account_Id__c 
-                       && (!prjIdSetAccountIdMap.containsKey(prjTsk.pse__Project__c) || 
+                    if(projectIdAccountIdMap.containsKey(prjTsk.pse__Project__c) &&
+                       projectIdAccountIdMap.get(prjTsk.pse__Project__c) != prjTsk.NSP_Account_Id__c
+                       && (!prjIdSetAccountIdMap.containsKey(prjTsk.pse__Project__c) ||
                            !prjIdSetAccountIdMap.get(prjTsk.pse__Project__c).contains(prjTsk.NSP_Account_Id__c) ) ){
                                Project_Account__c prjAccount = new Project_Account__c();
                                prjAccount.Project__c = prjTsk.pse__Project__c;
@@ -824,23 +841,24 @@ public with sharing class NSP_ProjectTasksTriggerServiceHelper {
         }
     }
 
-    /***********************************************************************************************
-    * MethodName: syncProjectTask
-    * Description : Populate the Account on Project Task on creation
-    * Params: List<pse__Project_Task__c> prjTaskList
-    * ********************************************************************************************/     
-    public Boolean isFieldUpdatedOnPt(pse__Project_Task__c  newPT, pse__Project_Task__c oldPT){
-        return ( newPT.Name != oldPT.Name 
-                || newPT.pse__Long_Description__c != oldPT.pse__Long_Description__c  
-                || newPT.NSP_Orientation_Address__c != oldPT.NSP_Orientation_Address__c 
-                || newPT.NSP_Project_Attendance__c != oldPT.NSP_Project_Attendance__c
-                || newPT.NSP_Dispatch_Region__c != oldPT.NSP_Dispatch_Region__c
-                || newPT.OwnerId != oldPT.OwnerId
-                || ( newPT.pse__Status__c != oldPT.pse__Status__c)
-                || newPT.NSP_Meeting_Type__c != oldPT.NSP_Meeting_Type__c
-                || newPT.pse__End_Date_Time__c != oldPT.pse__End_Date_Time__c
-                || newPT.pse__Start_Date_Time__c != oldPT.pse__Start_Date_Time__c 
-               );
+    //
+    // MethodName: syncProjectTask
+    // Description : Populate the Account on Project Task on creation
+    // Params: List<pse__Project_Task__c> prjTaskList
+    //
+    public Boolean isFieldUpdatedOnPt( pse__Project_Task__c newPT , pse__Project_Task__c oldPT ) {
+        return (
+            ( newPT.Name != oldPT.Name )
+            || ( newPT.pse__Long_Description__c != oldPT.pse__Long_Description__c )
+            || ( newPT.NSP_Orientation_Address__c != oldPT.NSP_Orientation_Address__c )
+            || ( newPT.NSP_Project_Attendance__c != oldPT.NSP_Project_Attendance__c )
+            || ( newPT.NSP_Dispatch_Region__c != oldPT.NSP_Dispatch_Region__c )
+            || ( newPT.OwnerId != oldPT.OwnerId )
+            || ( newPT.pse__Status__c != oldPT.pse__Status__c )
+            || ( newPT.NSP_Meeting_Type__c != oldPT.NSP_Meeting_Type__c )
+            || ( newPT.pse__End_Date_Time__c != oldPT.pse__End_Date_Time__c )
+            || ( newPT.pse__Start_Date_Time__c != oldPT.pse__Start_Date_Time__c )
+        );
     }
 
     //

@@ -20,7 +20,6 @@ public with sharing class NSP_LeadTriggerHelper {
     private static final Id LEAD_RT_ID = NSP_GenericRecordType.getRecordTypeId( 'Lead' , 'Lead' );
     private static final Id REFERRAL_RECORDTYPE_ID = NSP_GenericRecordType.getRecordTypeId( 'Lead' , 'Referral' );
     public static final Id SERVICE_REFERRAL_RECORDTYPE_ID = NSP_GenericRecordType.getRecordTypeId( 'Lead' , 'Service_Referral_Lead' );
-    private static Map<Id,User> permittedUserMap = CustomPermissionController.getPermittedUsersMap( 'Lead_DUNS_Account_Owner_Routing' );
 
     //
     // Iterates throught the list of new leads and passes the required attributes to other methods.
@@ -1161,8 +1160,8 @@ public with sharing class NSP_LeadTriggerHelper {
                 for (Account dunsAcc: accResult) {
                     if ( ( dunsAcc.OwnerId != NSP_LeadTriggerHelper.availableUserId )
                         && ( dunsAcc.NSP_Account_Status__c == NSP_SalesConstants.INACTIVE )
-                        && ( NSP_LeadTriggerHelper.permittedUserMap != null )
-                        && NSP_LeadTriggerHelper.permittedUserMap.containsKey( dunsAcc.OwnerId )
+                        && ( NSP_LeadTriggerHelper.permittedDUNSRoutingUserMap != null )
+                        && NSP_LeadTriggerHelper.permittedDUNSRoutingUserMap.containsKey( dunsAcc.OwnerId )
                         )
                     {
                         leadObject.OwnerId = dunsAcc.OwnerId;
@@ -1492,6 +1491,16 @@ public with sharing class NSP_LeadTriggerHelper {
                 e
             );
         }
+    }
+    
+    private static Map<Id,User> permittedDUNSRoutingUserMap {
+        private get {
+            if ( permittedDUNSRoutingUserMap == null ) {
+                permittedDUNSRoutingUserMap = CustomPermissionController.getPermittedUsersMap( 'Lead_DUNS_Account_Owner_Routing' );
+            }
+            return permittedDUNSRoutingUserMap;
+        }
+        private set;
     }
 }
 //

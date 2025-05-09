@@ -52,6 +52,10 @@
                 <behavior>Readonly</behavior>
                 <field>EmployeeNumber</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Workday_Employee_ID__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>

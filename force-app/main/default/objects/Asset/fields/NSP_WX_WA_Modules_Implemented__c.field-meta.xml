@@ -152,6 +152,11 @@
                 <label>WC - Insurelinx</label>
             </value>
             <value>
+                <fullName>401k-360 Retirement Integration</fullName>
+                <default>false</default>
+                <label>401k-360 Retirement Integration</label>
+            </value>
+            <value>
                 <fullName>HSA</fullName>
                 <default>false</default>
                 <isActive>false</isActive>

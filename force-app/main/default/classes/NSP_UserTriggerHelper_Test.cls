@@ -57,9 +57,6 @@ public with sharing class NSP_UserTriggerHelper_Test {
         accTeam.NSP_User__c = tUser.Id;
         accTeam.NSP_Role__c = 'Manager, HR Services';
         Insert accTeam;
-        
-        
-        
     } 
     /**
 * @Description: This test method is used to cover updatePhoneNumber method
@@ -124,6 +121,7 @@ public with sharing class NSP_UserTriggerHelper_Test {
         tUser.Email = 'Test1239@insperity.com';
         tUser.Phone = '(313)6475261 ext415';
         tUser.NSP_Sales_Office__c = '301';
+        tUser.NSP_Sales_Office_Membership__c = '301';
         insert tUser;
         
         Account accoutObject = new Account();
@@ -134,8 +132,18 @@ public with sharing class NSP_UserTriggerHelper_Test {
             accoutObject.OwnerId = tUser.Id;
             insert accoutObject;
             
-        tUser.NSP_Sales_Office__c = '1081';
-        Update tUser;
+        System.runAs (tUser) {
+            List<PermissionSet> pSets = [Select Id FROM PermissionSet WHERE Name = 'User_Share_SO_Update' Limit 1];
+            if( pSets != null && !pSets.isEmpty() ){
+                PermissionSetAssignment assignment = new PermissionSetAssignment(
+                    PermissionSetId = pSets[0].Id,
+                    AssigneeId = tUser.Id);
+                insert assignment;
+            }
+            tUser.NSP_Sales_Office__c = '1081';
+            tUser.NSP_Sales_Office_Membership__c = '1081';
+            Update tUser;
+        }
         System.assert(tUser.NSP_Sales_Office__c == '1081');
         Test.stopTest();
    }

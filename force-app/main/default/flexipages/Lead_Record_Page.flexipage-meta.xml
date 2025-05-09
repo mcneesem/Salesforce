@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FlexiPage xmlns="http://soap.sforce.com/2006/04/metadata">
-    <description>Fully dynamic page primarily used by Sales</description>
+    <description>Fully dynamic page for Leads.</description>
     <flexiPageRegions>
         <itemInstances>
             <fieldInstance>
@@ -874,6 +874,16 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Product_Offering__c</fieldItem>
+                <identifier>RecordProduct_Offering_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.DNB_Connect_DUNS_Number__c</fieldItem>
@@ -998,6 +1008,16 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Product_Interest__c</fieldItem>
                 <identifier>RecordNSP_Product_Interest_cField2</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Interest_Product_Offering__c</fieldItem>
+                <identifier>RecordInterest_Product_Offering_cField2</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1298,6 +1318,16 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Regen_Date__c</fieldItem>
                 <identifier>RecordNSP_Regen_Date_cField2</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Product_Offering__c</fieldItem>
+                <identifier>RecordProduct_Offering_cField3</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1660,6 +1690,16 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_UTM_Source__c</fieldItem>
                 <identifier>RecordNSP_UTM_Source_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Interest_Product_Offering__c</fieldItem>
+                <identifier>RecordInterest_Product_Offering_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-a510c052-db09-44d1-b0e3-2e3fa93d0cba</name>

@@ -18,6 +18,7 @@
     <permissionSets>Contact_View_All</permissionSets>
     <permissionSets>Core_Sales</permissionSets>
     <permissionSets>Enrollment_Fee_Edit</permissionSets>
+    <permissionSets>Homepage_Access_Sales_User</permissionSets>
     <permissionSets>List_View_Enhanced_Access</permissionSets>
     <permissionSets>NSP_Asset_Pending_Comment_Access</permissionSets>
     <permissionSets>NSP_Billing_View_All</permissionSets>
@@ -26,6 +27,7 @@
     <permissionSets>NSP_Order_ViewAll</permissionSets>
     <permissionSets>NSP_Template_Field_permission</permissionSets>
     <permissionSets>Opportunity_Closed_Lost_Fields_Edit_Access</permissionSets>
+    <permissionSets>Opportunity_Outgoing_Create_and_Edit</permissionSets>
     <permissionSets>Opportunity_Splits_Elevated_Create_Read_Edit</permissionSets>
     <permissionSets>Opportunity_Team_Group_Check</permissionSets>
     <permissionSets>Partner_Access</permissionSets>

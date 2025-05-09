@@ -1,71 +1,86 @@
 public with sharing class NSP_EnrollmentFeePaymentSharing {
-    // test w/ NSP_EnrollmentFeePaymentTriggerClassTest, NSP_OpportunityTeamMemberTriggerTest (80%)
-    // test w/ NSP_EnrollmentFeePaymentTriggerClassTest (67%)
+    // test w/ NSP_EnrollmentFeePaymentTriggerClassTest, NSP_OpportunityTeamMemberTriggerTest (82%)
+    // test w/ NSP_EnrollmentFeePaymentTriggerClassTest (70%)
     // test w/ NSP_OpportunityTeamMemberTriggerTest (28%)
 
-    private static Map<Id,User> efpSharingUserMap = CustomPermissionController.getPermittedUsersMap( 'Enrollment_Fee_Payment_Edit_Sharing' );
-
     public static void onEfpRecordInsert( List<NSP_Enrollment_Fee_Payment__c> listOfEnrollmentFee ) {
-        Set<id> opportunityIds=new Set<id>();
-        List<NSP_Enrollment_Fee_Payment__Share> efpShareList = new List<NSP_Enrollment_Fee_Payment__Share>();
-
-        try{
+        try {
+            Set<Id> opportunityIds = new Set<Id>();
             //Getting all the opportunity Ids for the efp records
-            for(NSP_Enrollment_Fee_Payment__c feepayment : listOfEnrollmentFee){
-                opportunityIds.add(feepayment.NSP_Opportunity__c);
+            for ( NSP_Enrollment_Fee_Payment__c feepayment : listOfEnrollmentFee ) {
+                opportunityIds.add( feepayment.NSP_Opportunity__c );
             }
-            Map<Id, List<OpportunityTeamMember>> oppToOppTeamMembersMap = new Map<Id, List<OpportunityTeamMember>>();
-            Map<Id, String> oppToSalesOfficeMap = new Map<Id, String>();
+            Map<Id,List<OpportunityTeamMember>> oppToOppTeamMembersMap = new Map<Id,List<OpportunityTeamMember>>();
+            Map<Id,String> oppToSalesOfficeMap = new Map<Id,String>();
             Set<String> salesOffices = new Set<String>();
-
             //Getting Opportunity team members related to the opportunity ids
-            List<OpportunityTeamMember> oppTeamMembers = [SELECT OpportunityId, OpportunityTeamMember.Opportunity.StageName, OpportunityTeamMember.Opportunity.NSP_Sales_Office__c, UserId, TeamMemberRole FROM OpportunityTeamMember WHERE OpportunityId IN:opportunityIds];
-            
-            //Creating a map of opportunity to opportunityTeamMembers
-            for(OpportunityTeamMember oppTeamMember : oppTeamMembers)
-            {
-                if(oppToOppTeamMembersMap.containsKey(oppTeamMember.OpportunityId)){
-                    oppToOppTeamMembersMap.get(oppTeamMember.OpportunityId).add(oppTeamMember);
-                } else {
-                    oppToOppTeamMembersMap.put(oppTeamMember.OpportunityId, new List<OpportunityTeamMember> {oppTeamMember});
-                }
-                oppToSalesOfficeMap.put(oppTeamMember.opportunityId, oppTeamMember.Opportunity.NSP_Sales_Office__c);
-            }
+            List<OpportunityTeamMember> oppTeamMembers = [
+                SELECT
+                    OpportunityId ,
+                    OpportunityTeamMember.Opportunity.StageName ,
+                    OpportunityTeamMember.Opportunity.NSP_Sales_Office__c ,
+                    UserId ,
+                    TeamMemberRole
+                FROM OpportunityTeamMember
+                WHERE ( OpportunityId IN :opportunityIds )
+            ];
 
+            //Creating a map of opportunity to opportunityTeamMembers
+            for ( OpportunityTeamMember oppTeamMember : oppTeamMembers ) {
+                if ( oppToOppTeamMembersMap.containsKey( oppTeamMember.OpportunityId ) ) {
+                    oppToOppTeamMembersMap.get( oppTeamMember.OpportunityId ).add( oppTeamMember );
+                } else {
+                    oppToOppTeamMembersMap.put( oppTeamMember.OpportunityId , new List<OpportunityTeamMember>{ oppTeamMember } );
+                }
+                oppToSalesOfficeMap.put( oppTeamMember.opportunityId , oppTeamMember.Opportunity.NSP_Sales_Office__c );
+            }
             //Getting the list of sales offices to the opportunity ids
             salesOffices.addAll( oppToSalesOfficeMap.values() );
             //Getting DAs and DMs for the list of sales offices
             List<User> dADMUsersList = NSP_EnrollmentFeePaymentSharing.selectPermittedSalesOfficeUsers( salesOffices );
             //Creating a map of sales office to DA and DMs
             Map<String,List<User>> salesOfficeDADMMap = getsalesOfficeDADMMap( dADMUsersList );
-
             //Sharing the efp records with DA, DM related to sales office and Opportunity Team Members
-            for(NSP_Enrollment_Fee_Payment__c feepayment : listOfEnrollmentFee){
+            List<NSP_Enrollment_Fee_Payment__Share> efpShareList = new List<NSP_Enrollment_Fee_Payment__Share>();
+            for ( NSP_Enrollment_Fee_Payment__c feepayment : listOfEnrollmentFee ) {
                 String opportunityId = feepayment.NSP_Opportunity__c;
-                List<OpportunityTeamMember> teamMembersByOppId = oppToOppTeamMembersMap.get(opportunityId);
+                List<OpportunityTeamMember> teamMembersByOppId = oppToOppTeamMembersMap.get( opportunityId );
                 String opportunityStageName = '';
-                
-                for(OpportunityTeamMember oppTeamMember : teamMembersByOppId)
-                {
+
+                for ( OpportunityTeamMember oppTeamMember : teamMembersByOppId ) {
                     opportunityStageName = oppTeamMember.Opportunity.StageName;
-                    NSP_Enrollment_Fee_Payment__Share efpshare = createEFPSharing(feePayment.Id, oppTeamMember.UserId, opportunityStageName, oppTeamMember.teamMemberRole, false);
-                    efpShareList.add(efpshare);
+                    NSP_Enrollment_Fee_Payment__Share efpshare = createEFPSharing(
+                        feePayment.Id ,
+                        oppTeamMember.UserId ,
+                        opportunityStageName ,
+                        oppTeamMember.teamMemberRole ,
+                        false
+                    );
+                    efpShareList.add( efpshare );
                 }
-
-                String salesOffice = oppToSalesOfficeMap.get(opportunityId);
-                List<User> salesOfficeDADMUsers = salesOfficeDADMMap.get(salesOffice);
-
-                for(User user : salesOfficeDADMUsers)
-                {
-                    NSP_Enrollment_Fee_Payment__Share efpshare = createEFPSharing(feePayment.Id, user.Id, opportunityStageName, '', true);
-                    efpShareList.add(efpshare);
+                String salesOffice = oppToSalesOfficeMap.get( opportunityId );
+                List<User> salesOfficeDADMUsers = salesOfficeDADMMap.get( salesOffice );
+                if ( ( salesOfficeDADMUsers != null ) && !salesOfficeDADMUsers.isEmpty() ) {
+                    for ( User record : salesOfficeDADMUsers ) {
+                        NSP_Enrollment_Fee_Payment__Share efpshare = createEFPSharing(
+                            feePayment.Id ,
+                            record.Id ,
+                            opportunityStageName ,
+                            '' ,
+                            true
+                        );
+                        efpShareList.add( efpshare );
+                    }
                 }
             }
-    
-            if(!efpShareList.isEmpty()){                
-                Database.insert(efpShareList,false);
+            if ( !efpShareList.isEmpty() ) {
+                List<Database.SaveResult> results = Database.insert( efpShareList , false );
+                NSP_ErrorLogHandler.logResults(
+                    NSP_EnrollmentFeePaymentSharing.class.getName() ,
+                    'onEfpRecordInsert:insert' ,
+                    results
+                );
             }
-            
         } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
                 NSP_EnrollmentFeePaymentSharing.class.getName() ,
@@ -170,7 +185,7 @@ public with sharing class NSP_EnrollmentFeePaymentSharing {
         Map<Id, List<NSP_Enrollment_Fee_Payment__Share>> oppIdEfpShareRecordsMap = efpSharedRecordsToProcess(opportunityIds);
 
         List<NSP_Enrollment_Fee_Payment__Share> efpDeleteList = new List<NSP_Enrollment_Fee_Payment__Share>();
-        
+
         for(OpportunityTeamMember oppTeamMember : oldList) {
             List<NSP_Enrollment_Fee_Payment__Share> relatedEfpShareRecords = oppIdEfpShareRecordsMap.get(oppTeamMember.OpportunityId);
 
@@ -178,12 +193,12 @@ public with sharing class NSP_EnrollmentFeePaymentSharing {
             {
                 if(oppTeamMember.UserId == efpShare.UserOrGroupId)
                 {
-                    efpDeleteList.add(efpShare);  
+                    efpDeleteList.add(efpShare);
                 }
             }
         }
-        
-        if(!efpDeleteList.isEmpty()){                
+
+        if(!efpDeleteList.isEmpty()){
             Database.delete(efpDeleteList,false);
         }
     }
@@ -201,14 +216,14 @@ public with sharing class NSP_EnrollmentFeePaymentSharing {
         }
 
 
-        //SOQL Fix 
+        //SOQL Fix
         Map<Id, List<NSP_Enrollment_Fee_Payment__Share>> oppIdEfpShareRecordsMap = new Map<Id, List<NSP_Enrollment_Fee_Payment__Share>>();
         if(closedOpps.size() > 0){
             oppIdEfpShareRecordsMap = efpSharedRecordsToProcess(closedOpps);
         }
 
         List<NSP_Enrollment_Fee_Payment__Share> efpUpdateList = new List<NSP_Enrollment_Fee_Payment__Share>();
-        //SOQL Fix 
+        //SOQL Fix
         if(oppIdEfpShareRecordsMap.size() > 0){
         for(List<NSP_Enrollment_Fee_Payment__Share> efpShareRecords : oppIdEfpShareRecordsMap.values()) {
             for(NSP_Enrollment_Fee_Payment__Share efpShareRecord : efpShareRecords)
@@ -221,13 +236,13 @@ public with sharing class NSP_EnrollmentFeePaymentSharing {
             }
         }
         }
-        if(!efpUpdateList.isEmpty()){                
+        if(!efpUpdateList.isEmpty()){
             Database.update(efpUpdateList,false);
         }
     }
-    
+
     public static NSP_Enrollment_Fee_Payment__Share createEFPSharing(String efpId, String userorGroupId, String stageName, String teamMemberRole, Boolean isSalesOfficeDAOrDM){
-        
+
         NSP_Enrollment_Fee_Payment__Share efpshare= new NSP_Enrollment_Fee_Payment__Share();
 
         if((stageName != 'Closed Won' && stageName != 'Closed Lost') && (isSalesOfficeDAOrDM || (teamMemberRole == 'District Administrator' || teamMemberRole == 'District Manager' || teamMemberRole == 'Sales Support Specialist')))
@@ -238,7 +253,7 @@ public with sharing class NSP_EnrollmentFeePaymentSharing {
         {
             efpshare.AccessLevel = NSP_SalesConstants.readSharingAccess;
         }
-        
+
         efpshare.ParentId = efpId;
         efpshare.RowCause = NSP_SalesConstants.manualRowCause;
         efpshare.UserOrGroupId = userorGroupId;
@@ -249,10 +264,10 @@ public with sharing class NSP_EnrollmentFeePaymentSharing {
     {
         List<NSP_Enrollment_Fee_Payment__c> efpRecordsByOppIds = [SELECT Id, NSP_Opportunity__c FROM NSP_Enrollment_Fee_Payment__c WHERE NSP_Opportunity__c IN:opportunityIds];
         List<NSP_Enrollment_Fee_Payment__Share> efpShareRecordsByEfpIds = [SELECT Id, ParentId, UserOrGroupId, RowCause FROM NSP_Enrollment_Fee_Payment__Share WHERE ParentId IN:efpRecordsByOppIds];
-        
+
         Map<Id, List<NSP_Enrollment_Fee_Payment__Share>> oppIdEfpShareRecordsMap = new Map<Id, List<NSP_Enrollment_Fee_Payment__Share>>();
         Map<Id, List<NSP_Enrollment_Fee_Payment__Share>> recordIdShareRecordsMap = new Map<Id, List<NSP_Enrollment_Fee_Payment__Share>>();
-        
+
         for(NSP_Enrollment_Fee_Payment__Share feePaymentShare : efpShareRecordsByEfpIds)
         {
             if(recordIdShareRecordsMap.containsKey(feePaymentShare.ParentId)){
@@ -261,7 +276,7 @@ public with sharing class NSP_EnrollmentFeePaymentSharing {
                 recordIdShareRecordsMap.put(feePaymentShare.ParentId, new List<NSP_Enrollment_Fee_Payment__Share> {feePaymentShare});
             }
         }
-        
+
         for(NSP_Enrollment_Fee_Payment__c feePayment : efpRecordsByOppIds)
         {
             if(oppIdEfpShareRecordsMap.containsKey(feePayment.NSP_Opportunity__c)){
@@ -273,5 +288,16 @@ public with sharing class NSP_EnrollmentFeePaymentSharing {
 
         return oppIdEfpShareRecordsMap;
     }
+
+    private static Map<Id,User> efpSharingUserMap {
+        private get {
+            if ( efpSharingUserMap == null ) {
+                efpSharingUserMap = CustomPermissionController.getPermittedUsersMap( 'Enrollment_Fee_Payment_Edit_Sharing' );
+            }
+            return efpSharingUserMap;
+        }
+        private set;
+    }
+
 }
 //

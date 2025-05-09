@@ -305,9 +305,40 @@
     <isNavAutoTempTabsDisabled>false</isNavAutoTempTabsDisabled>
     <isNavPersonalizationDisabled>false</isNavPersonalizationDisabled>
     <isNavTabPersistenceDisabled>false</isNavTabPersistenceDisabled>
-    <isOmniPinnedViewEnabled>false</isOmniPinnedViewEnabled>
     <label>Service Operations</label>
     <navType>Standard</navType>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Payroll_Record_Dynamic_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>NSP_Payroll__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>PEO Service</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Payroll_Record_Dynamic_Page</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>NSP_Payroll__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>PEO Service</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Payroll_Record_Dynamic_Page</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>NSP_Payroll__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Payroll_Record_Dynamic_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>NSP_Payroll__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
         <content>Project_Record_Page11</content>
@@ -7167,11 +7198,30 @@
         <type>Flexipage</type>
         <profile>System Admin Lite</profile>
     </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Asset_Record_Page_Non_RET_WO</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Asset</pageOrSobjectType>
+        <recordType>Asset.Time_Attendance</recordType>
+        <type>Flexipage</type>
+        <profile>System Admin Lite</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Asset_Record_Page_Non_RET_WO</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Asset</pageOrSobjectType>
+        <recordType>Asset.Time_Attendance</recordType>
+        <type>Flexipage</type>
+        <profile>System Admin Lite</profile>
+    </profileActionOverrides>
     <tabs>standard-home</tabs>
     <tabs>standard-Account</tabs>
     <tabs>standard-Asset</tabs>
     <tabs>standard-Contact</tabs>
     <tabs>standard-Case</tabs>
+    <tabs>Case_Report</tabs>
     <tabs>NSP_Account_Team__c</tabs>
     <tabs>standard-Task</tabs>
     <tabs>pse__Proj__c</tabs>

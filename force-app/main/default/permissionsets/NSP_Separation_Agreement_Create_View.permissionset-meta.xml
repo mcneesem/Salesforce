@@ -1027,6 +1027,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>NSP_ReportRequest__c.Performance_Specialist__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>NSP_ReportRequest__c.SR__c</field>
         <readable>true</readable>
     </fieldPermissions>

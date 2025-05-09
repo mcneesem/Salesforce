@@ -32,6 +32,11 @@
                 <label>PEO</label>
             </value>
             <value>
+                <fullName>RET Time Tracking</fullName>
+                <default>false</default>
+                <label>RET Time Tracking</label>
+            </value>
+            <value>
                 <fullName>Wage Claims</fullName>
                 <default>false</default>
                 <label>Wage Claims</label>

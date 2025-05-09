@@ -68,49 +68,71 @@ public with sharing class CustomPermissionController {
         String debugPrefix = CLASS_NAME + '.' + methodName;
         Map<Id,User> permittedUsersMap = new Map<Id,User>();
         if ( String.isNotBlank( customPermissionName ) ) {
-            // grab the relationships (SetupEntityAccess) between the CustomPermission:PermissionSet and the CustomPermission:Profile
-            // ~ SetupEntityAccess.Parent is always a PermissionSet...
-            // ~ a PermissionSet sometimes has a Profile...
-            // SOQL_LIMIT++
-            List<SetupEntityAccess> setupEntityAccessList = [
-                SELECT
-                ParentId , // PermissionSet relationships only have Parent values...
-                Parent.ProfileId // Profile relationships also have Parent.ProfileId values...
-                FROM SetupEntityAccess 
-                WHERE SetupEntityId IN (
-                    SELECT Id 
-                    FROM CustomPermission 
-                    WHERE ( DeveloperName = :customPermissionName )
+            if ( ( CustomPermissionController.customPermissionsPermittedUsersMap != null )
+                && CustomPermissionController.customPermissionsPermittedUsersMap.containsKey( customPermissionName )
                 )
-            ];
-            // determine the complete Set of PermissionSets that have access granted...
-            // ~ some PermissionSets are really Profile PermissionSets...
-            Set<Id> permissionSetIds = new Set<Id>();
-            for ( SetupEntityAccess setupEntityAccess : setupEntityAccessList ) {
-                permissionSetIds.add( setupEntityAccess.ParentId );
-            }
-            // the complete Set of User with access granted via PermissionSetAssignment...
-            // ~ this includes grants via Profile PermissionSetAssignments...
-            // SOQL_LIMIT++
-            List<User> permittedUsers = [
-                SELECT Id , UserName
-                FROM User
-                WHERE (
-                    ( IsActive = True )
-                    AND (
-                        Id IN (
-                            SELECT AssigneeId
-                            FROM PermissionSetAssignment
-                            WHERE ( PermissionSetId IN :permissionSetIds )
+            {
+                // used cached response to prevent System.LimitException: Too many SOQL queries: 101
+                permittedUsersMap = CustomPermissionController.customPermissionsPermittedUsersMap.get( customPermissionName );
+            } else {
+                // grab the relationships (SetupEntityAccess) between the CustomPermission:PermissionSet and the CustomPermission:Profile
+                // ~ SetupEntityAccess.Parent is always a PermissionSet...
+                // ~ a PermissionSet sometimes has a Profile...
+                // SOQL_LIMIT++
+                List<SetupEntityAccess> setupEntityAccessList = [
+                    SELECT
+                    ParentId , // PermissionSet relationships only have Parent values...
+                    Parent.ProfileId // Profile relationships also have Parent.ProfileId values...
+                    FROM SetupEntityAccess
+                    WHERE SetupEntityId IN (
+                        SELECT Id
+                        FROM CustomPermission
+                        WHERE ( DeveloperName = :customPermissionName )
+                    )
+                ];
+                // determine the complete Set of PermissionSets that have access granted...
+                // ~ some PermissionSets are really Profile PermissionSets...
+                Set<Id> permissionSetIds = new Set<Id>();
+                for ( SetupEntityAccess setupEntityAccess : setupEntityAccessList ) {
+                    permissionSetIds.add( setupEntityAccess.ParentId );
+                }
+                // the complete Set of User with access granted via PermissionSetAssignment...
+                // ~ this includes grants via Profile PermissionSetAssignments...
+                // SOQL_LIMIT++
+                List<User> permittedUsers = [
+                    SELECT Id , UserName
+                    FROM User
+                    WHERE (
+                        ( IsActive = True )
+                        AND (
+                            Id IN (
+                                SELECT AssigneeId
+                                FROM PermissionSetAssignment
+                                WHERE ( PermissionSetId IN :permissionSetIds )
+                            )
                         )
                     )
-                )
-            ];
-            // convert List into the complete Map of permitted User's...
-            permittedUsersMap = new Map<Id,User>( permittedUsers );
+                ];
+                // convert List into the complete Map of permitted User's...
+                permittedUsersMap = new Map<Id,User>( permittedUsers );
+                // cache the response to prevent recalculation...
+                CustomPermissionController.customPermissionsPermittedUsersMap.put( customPermissionName , permittedUsersMap );
+            }
         }
         System.debug( debugPrefix + ' ~ permittedUsersMap( ' + customPermissionName + ' )=' + permittedUsersMap );
         return permittedUsersMap;
+    }
+
+    // map from CustomPermission.Name to map from User.Id to permitted User...
+    // ~ Map( CustomPermission.Name ==> Map( User.Id ==> User ) )
+    private static Map<String,Map<Id,User>> customPermissionsPermittedUsersMap {
+        private get {
+            if ( customPermissionsPermittedUsersMap == null ) {
+                customPermissionsPermittedUsersMap = new Map<String,Map<Id,User>>();
+            }
+            return customPermissionsPermittedUsersMap;
+        }
+        private set;
     }
 
     // build error message for missing custom permission...
@@ -155,7 +177,9 @@ public with sharing class CustomPermissionController {
         System.debug( debugPrefix + ' ~ CustomPermission( ' + developerName + ' )=' + record );
         return record;
     }
-    
+
+    // map from CustomPermission.Name to CustomPermission...
+    // ~ Map( CustomPermission.Name ==> CustomPermission )
     private static Map<String,CustomPermission> customPermissionsMap {
         private get {
             if ( customPermissionsMap == null ) {
