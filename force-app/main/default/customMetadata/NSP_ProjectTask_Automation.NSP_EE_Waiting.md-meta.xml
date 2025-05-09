@@ -17,6 +17,17 @@
     <values>
         <field>NSP_Task_Name__c</field>
         <value xsi:type="xsd:string">Client&apos;s previous wait period is less than NSPs-follow up on WSEEs in waitperiod</value>
-
+    </values>
+    <values>
+        <field>Order__c</field>
+        <value xsi:type="xsd:double">142.0</value>
+    </values>
+    <values>
+        <field>Task_Order__c</field>
+        <value xsi:type="xsd:double">142.0</value>
+    </values>
+    <values>
+        <field>Visible_to_Client__c</field>
+        <value xsi:type="xsd:boolean">false</value>
     </values>
 </CustomMetadata>

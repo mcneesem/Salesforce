@@ -1509,7 +1509,7 @@ public class NSP_ProjectTasksTriggerHelper {
                     {
                         pse__Project_Task__c optionalTask = optionalTaskMap.get(pTask.pse__Project__c);
                         if (optionalTask != null) {
-                            optionalTask.pse__Status__c = NSP_ServiceConstants.PROJECTSTATUSCANCELLED;
+                            optionalTask.pse__Status__c = NSP_ServiceConstants.PROJECT_TASK_CANCELLED;
                             optionalTask.pse__Long_Description__c = 'No active BPS Assets';
                             optionalProjectTask.add(optionalTask);
                         }

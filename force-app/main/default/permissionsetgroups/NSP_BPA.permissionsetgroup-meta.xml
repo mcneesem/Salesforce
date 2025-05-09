@@ -19,6 +19,7 @@
     <permissionSets>Core_Sales</permissionSets>
     <permissionSets>DOZISF__ZoomInfo_User</permissionSets>
     <permissionSets>Edit_Closed_Won_Create_Box_Folder</permissionSets>
+    <permissionSets>Homepage_Access_Seller</permissionSets>
     <permissionSets>LID_Sales_Navigator</permissionSets>
     <permissionSets>Lead_DUNS_Account_Owner_Routing</permissionSets>
     <permissionSets>Lead_Owner_Update_Share_SO</permissionSets>
@@ -32,6 +33,8 @@
     <permissionSets>Opportunity_Closed_Won_Opp_Owner</permissionSets>
     <permissionSets>Opportunity_Credit_Restrict_Edit_Sales_Fields</permissionSets>
     <permissionSets>Opportunity_NCS_Email_Core_MidMarket</permissionSets>
+    <permissionSets>Opportunity_Outgoing_Create_and_Edit</permissionSets>
+    <permissionSets>Opportunity_Product_Offering_Fields_Edit_Access</permissionSets>
     <permissionSets>Opportunity_Spits_Elevated_Read_Edit</permissionSets>
     <permissionSets>Opportunity_Splits_Elevated_Create_Read_Edit</permissionSets>
     <permissionSets>Rules_Of_Engagement_Enabled</permissionSets>

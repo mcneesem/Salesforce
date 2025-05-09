@@ -16,14 +16,12 @@ public with sharing class NSP_CampaignTriggerHelper {
     private void updateCampaignField( List<Campaign> newList , Map<Id,Campaign> oldCampaignMap ) {
         Set<Id> ownerIdSet = new set<Id>();
         Set<String> officeSet = new set<String>();
-        Map<Id,User> ownerBasedUserMap = CustomPermissionController.getPermittedUsersMap('Campaign_Update_Sales_Office_Info_Owner_Assigned');
-        Map<Id,User> campaignBasedUserMap = CustomPermissionController.getPermittedUsersMap('Campaign_Update_Sales_Office_Info_Campaign_Assigned');
         for ( Campaign newCampaign : newList ) {
             Campaign oldCampaign = ( oldCampaignMap != null ) ? oldCampaignMap.get(newCampaign.Id) : null;
             if ( Trigger.isInsert || ( newCampaign.OwnerId != oldCampaign.OwnerId ) ) {
-                if ( ownerBasedUserMap.keySet().contains( newCampaign.OwnerId ) ) {
+                if ( NSP_CampaignTriggerHelper.ownerBasedUserMap.keySet().contains( newCampaign.OwnerId ) ) {
                     ownerIdSet.add( newCampaign.OwnerId );
-                } else if ( campaignBasedUserMap.keySet().contains( newCampaign.OwnerId )
+                } else if ( NSP_CampaignTriggerHelper.campaignBasedUserMap.keySet().contains( newCampaign.OwnerId )
                     && ( newCampaign.NSP_Sales_Office__c != null )
                     )
                 {
@@ -101,6 +99,26 @@ public with sharing class NSP_CampaignTriggerHelper {
                 }
             }
         }
+    }
+    
+    private static Map<Id,User> ownerBasedUserMap {
+        private get {
+            if ( ownerBasedUserMap == null ) {
+                ownerBasedUserMap = CustomPermissionController.getPermittedUsersMap( 'Campaign_Update_Sales_Office_Info_Owner_Assigned' );
+            }
+            return ownerBasedUserMap;
+        }
+        private set;
+    }
+    
+    private static Map<Id,User> campaignBasedUserMap {
+        private get {
+            if ( campaignBasedUserMap == null ) {
+                campaignBasedUserMap = CustomPermissionController.getPermittedUsersMap( 'Campaign_Update_Sales_Office_Info_Campaign_Assigned' );
+            }
+            return campaignBasedUserMap;
+        }
+        private set;
     }
 }
 //

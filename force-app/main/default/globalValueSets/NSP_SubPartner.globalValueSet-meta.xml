@@ -1056,6 +1056,11 @@
         <label>FSI- Avantax Wealth Management</label>
     </customValue>
     <customValue>
+        <fullName>FSI- Barnum</fullName>
+        <default>false</default>
+        <label>FSI- Barnum</label>
+    </customValue>
+    <customValue>
         <fullName>FSI- Bellpointe Asset Management</fullName>
         <default>false</default>
         <label>FSI- Bellpointe Asset Management</label>
@@ -2496,22 +2501,22 @@
         <label>Vistage Worldwide</label>
     </customValue>
     <customValue>
-        <fullName>FSI-  JW Cole</fullName>
+        <fullName>FSI- Not Registered with FSI</fullName>
         <default>false</default>
         <isActive>false</isActive>
-        <label>FSI-  JW Cole</label>
+        <label>FSI- Not Registered with FSI</label>
     </customValue>
     <customValue>
-        <fullName>Acisure</fullName>
+        <fullName>FSI- Atlas Brown, Inc.</fullName>
         <default>false</default>
         <isActive>false</isActive>
-        <label>Acisure</label>
+        <label>FSI- Atlas Brown, Inc.</label>
     </customValue>
     <customValue>
-        <fullName>FSI- Grove Point Invesmtents</fullName>
+        <fullName>FSI- CADARET, GRANT &amp; CO., INC.</fullName>
         <default>false</default>
         <isActive>false</isActive>
-        <label>FSI- Grove Point Invesmtents</label>
+        <label>FSI- CADARET, GRANT &amp; CO., INC.</label>
     </customValue>
     <customValue>
         <fullName>Alera Group – TRISURE</fullName>
@@ -2526,22 +2531,22 @@
         <label>Alera Group – Forum</label>
     </customValue>
     <customValue>
-        <fullName>FSI- Atlas Brown, Inc.</fullName>
+        <fullName>FSI- Grove Point Invesmtents</fullName>
         <default>false</default>
         <isActive>false</isActive>
-        <label>FSI- Atlas Brown, Inc.</label>
+        <label>FSI- Grove Point Invesmtents</label>
     </customValue>
     <customValue>
-        <fullName>FSI- Not Registered with FSI</fullName>
+        <fullName>FSI-  JW Cole</fullName>
         <default>false</default>
         <isActive>false</isActive>
-        <label>FSI- Not Registered with FSI</label>
+        <label>FSI-  JW Cole</label>
     </customValue>
     <customValue>
-        <fullName>FSI- CADARET, GRANT &amp; CO., INC.</fullName>
+        <fullName>Acisure</fullName>
         <default>false</default>
         <isActive>false</isActive>
-        <label>FSI- CADARET, GRANT &amp; CO., INC.</label>
+        <label>Acisure</label>
     </customValue>
     <masterLabel>Sub Partner</masterLabel>
     <sorted>false</sorted>
