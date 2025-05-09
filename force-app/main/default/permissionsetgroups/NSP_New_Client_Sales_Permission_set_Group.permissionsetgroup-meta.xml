@@ -16,7 +16,7 @@
     <permissionSets>NSP_Main_Service_Contacts</permissionSets>
     <permissionSets>NSP_Order_ViewAll</permissionSets>
     <permissionSets>New_Client_Sales</permissionSets>
-    <permissionSets>Opportunity_Allow_Reopen_Closed_Lost</permissionSets>
+    <permissionSets>Bypass_Opportunity_Allow_Reopen_Closed_Lost</permissionSets>
     <permissionSets>Opportunity_Closed_Won_NCS_User</permissionSets>
     <permissionSets>Opportunity_Create_Rewards</permissionSets>
     <permissionSets>Opportunity_Credit_Bypass_Closed_Won_Lock</permissionSets>

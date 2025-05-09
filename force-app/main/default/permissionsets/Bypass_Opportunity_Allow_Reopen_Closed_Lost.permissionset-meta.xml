@@ -2,8 +2,8 @@
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <customPermissions>
         <enabled>true</enabled>
-        <name>Opportunity_Allow_Reopen_Closed_Lost</name>
+        <name>Bypass_Opportunity_Allow_Reopen_Closed_Lost</name>
     </customPermissions>
     <hasActivationRequired>false</hasActivationRequired>
-    <label>Opportunity - Allow Reopen Closed Lost</label>
+    <label>Bypass Opportunity - Allow Reopen Closed Lost</label>
 </PermissionSet>
