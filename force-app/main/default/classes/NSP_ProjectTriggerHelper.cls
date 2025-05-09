@@ -196,16 +196,23 @@ public with sharing class NSP_ProjectTriggerHelper {
                 accIdSet.add(oproject.pse__Account__c);
             }
         }
-        if(!accountIdSet.isEmpty()){
-            List<String> assetFields = new List<String>{'Id','NSP_Client_Segment_type__c'};
-            String queryAsset = new NSP_QueryBuilder('Asset', assetFields)
-                                .addFilter('AccountId', new List<Id>(accountIdSet), NSP_QueryBuilder.Operator.INCLUDES)
-                                .addFilter('RecordTypeId', woAssetRecordtypeId)
-                                .addFilter('NSP_Client_Segment_type__c', 'Business Team')
-                				.addFilter('NSP_Account_Status__c', 'Active').build();
-            assetList = (List<Asset>)Database.query(queryAsset);
+        if ( !accountIdSet.isEmpty() ) {
+            List<String> assetFields = new List<String>{
+                'Id' ,
+                'NSP_Client_Segment_type__c'
+            };
+            String queryAsset = new NSP_QueryBuilder( 'Asset' , assetFields )
+                .addFilter(
+                    'AccountId' ,
+                    new List<Id>( accountIdSet ) ,
+                    NSP_QueryBuilder.Operator.INCLUDES
+                )
+                .addFilter( 'RecordTypeId' , woAssetRecordtypeId )
+                .addFilter( 'NSP_Client_Segment_type__c' , 'Business Team' )
+                .addFilter( 'NSP_Account_Status__c' , 'Active' )
+                .build();
+            assetList = (List<Asset>)Database.query( queryAsset );
         }
-       
         projAccIdNameMap = getProjectRelatedAccounts(accIdSet);
         
         // ADO - 329309
