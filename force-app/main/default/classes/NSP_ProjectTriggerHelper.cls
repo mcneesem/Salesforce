@@ -201,7 +201,8 @@ public with sharing class NSP_ProjectTriggerHelper {
             String queryAsset = new NSP_QueryBuilder('Asset', assetFields)
                                 .addFilter('AccountId', new List<Id>(accountIdSet), NSP_QueryBuilder.Operator.INCLUDES)
                                 .addFilter('RecordTypeId', woAssetRecordtypeId)
-                                .addFilter('NSP_Client_Segment_type__c', 'Business Team').build();
+                                .addFilter('NSP_Client_Segment_type__c', 'Business Team')
+                				.addFilter('NSP_Account_Status__c', 'Active').build();
             assetList = (List<Asset>)Database.query(queryAsset);
         }
        

@@ -101,6 +101,14 @@ private class NSP_ProjectTriggerHelperTest {
         projectObj.Name = 'Test Delete 1';
         projectObj.pse__Is_Active__c = true;
         
+        pse__Proj__c projectObj2 = new pse__Proj__c();
+        projectObj2.RecordTypeId=peoProjectRecordType;
+        projectObj2.pse__Project_Type__c = 'Service Plan';
+        projectObj2.pse__Project_Status__c = 'Active';
+        projectObj2.Name = 'Test PEO';
+        projectObj2.NSP_Rating__c = 'Unfavorable';
+        projectObj2.pse__Is_Active__c = true;
+        
         pse__Proj__c bpsProject = (pse__Proj__c)NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c(), 'NSP_TestDataFactory.ProjectDefaults', false);
         bpsProject.RecordTypeId = bpsProjectRecordTypeId;
         bpsProject.Templates_Used__c = NSP_ServiceConstants.ITA_IMPLEMENTATION;
@@ -126,6 +134,7 @@ private class NSP_ProjectTriggerHelperTest {
         listProject.add(oProject);
         listProject.add(oProject2);
         listProject.add(projectObj);
+        listProject.add(projectObj2);
         listProject.add(bpsProject);
         listProject.add(projTemplate);
         listProject.add(oProject1);
@@ -363,6 +372,15 @@ private class NSP_ProjectTriggerHelperTest {
 
        System.assertEquals('Test Template' + ' - ' +Date.today().month()+'.'+Date.today().day()+'.'+Date.today().year() + ' - '+oAccount.Name, updatedProj.Name, 'project name updated with start date');
 
+    }
+    
+    @isTest
+    private static void completeProjectTest(){
+        Test.startTest();
+        pse__Proj__c proj = [SELECT Id,pse__Project_Status__c FROM pse__Proj__c WHERE Name='Test PEO' LIMIT 1];
+        proj.pse__Project_Status__c = 'Complete';
+        update proj;
+        Test.stopTest();
     }
     
     /***********************************************************************************************
