@@ -582,7 +582,7 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>readonly</value>
+                    <value>none</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.pse__Opportunity__c</fieldItem>
                 <identifier>Recordpse_Opportunity_cField</identifier>
@@ -877,10 +877,16 @@
                 <fieldItem>Record.Project_Coordinator__c</fieldItem>
                 <identifier>RecordProject_Coordinator_cField</identifier>
                 <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.Layout_BOB__c}</leftValue>
                         <operator>NE</operator>
                         <rightValue>RET</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>ITA Impl</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
