@@ -855,10 +855,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>GLALInsuranceCertificateRequest</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>IRRAddendum</fullName>
             <default>false</default>
         </values>
