@@ -110,6 +110,16 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.Controlled_Group__c</fieldItem>
+                <identifier>RecordControlled_Group_cField2</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Origination__c</fieldItem>
                 <identifier>RecordNSP_Origination_cField</identifier>
             </fieldInstance>
