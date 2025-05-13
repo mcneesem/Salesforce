@@ -105,8 +105,6 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-    </fieldPermissions>
-    <fieldPermissions>
         <editable>true</editable>
         <field>NSP_Sub_Client__c.Pay_Group_Number__c</field>
         <readable>true</readable>
