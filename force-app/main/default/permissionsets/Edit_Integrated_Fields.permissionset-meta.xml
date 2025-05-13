@@ -36,12 +36,12 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Contact.Workday_Employee_ID__c</field>
+        <field>Contact.Middleware_Id__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Contact.Middleware_Id__c</field>
+        <field>Contact.Workday_Employee_ID__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -81,11 +81,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>NSP_Sub_Client__c.ABCP_Effective_Date__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>NSP_Sub_Client_Contact__c.Per_ID__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -96,13 +91,20 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-         <field>NSP_Sub_Client__c.Middleware_Id__c</field>
+        <field>NSP_Sub_Client__c.ABCP_Effective_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>NSP_Sub_Client__c.ABCP_Period__c</field>
         <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_Sub_Client__c.Middleware_Id__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
