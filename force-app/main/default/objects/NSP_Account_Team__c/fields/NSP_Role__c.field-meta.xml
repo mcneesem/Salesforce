@@ -336,6 +336,11 @@
                 <default>false</default>
                 <label>WX Business Team</label>
             </value>
+            <value>
+                <fullName>WX Open Enrollment Specialist</fullName>
+                <default>false</default>
+                <label>WX Open Enrollment Specialist</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

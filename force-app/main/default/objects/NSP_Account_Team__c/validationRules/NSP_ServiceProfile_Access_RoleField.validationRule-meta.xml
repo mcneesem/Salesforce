@@ -19,6 +19,7 @@
       (ISPICKVAL(NSP_Role__c , &apos;WX/WA Manager&apos;)) ||
       (ISPICKVAL(NSP_Role__c , &apos;WX/WA Supervisor&apos;)) ||
       (ISPICKVAL(NSP_Role__c , &apos;WX/WA Customer Success Specialist&apos;)) ||
+      (ISPICKVAL(NSP_Role__c , &apos;WX Open Enrollment Specialist&apos;)) ||
       (ISPICKVAL(NSP_Role__c , &apos;WX Time Specialist&apos;)) ||
       (ISPICKVAL(NSP_Role__c , &apos;WX Business Team&apos;)) ||
       (ISPICKVAL( NSP_Role__c , &apos;Customer Success Specialist&apos;)) ||
@@ -35,6 +36,7 @@
       (ISPICKVAL(PRIORVALUE(NSP_Role__c),&apos;WX/WA Supervisor&apos;)) ||
       (ISPICKVAL(PRIORVALUE(NSP_Role__c),&apos;WX/WA Customer Success Specialist&apos;)) ||
       (ISPICKVAL(PRIORVALUE(NSP_Role__c),&apos;WX Time Specialist&apos;)) ||
+      (ISPICKVAL(PRIORVALUE(NSP_Role__c),&apos;WX Open Enrollment Specialist&apos;)) ||
       (ISPICKVAL(PRIORVALUE(NSP_Role__c),&apos;WX Business Team&apos;) ||
       (ISPICKVAL(PRIORVALUE(NSP_Role__c),&apos;Customer Success Specialist&apos;)) ||
       (ISPICKVAL(PRIORVALUE(NSP_Role__c),&apos;ITA Analyst&apos;)) ||
