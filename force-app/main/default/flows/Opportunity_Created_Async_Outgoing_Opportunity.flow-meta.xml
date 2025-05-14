@@ -212,7 +212,7 @@
     <start>
         <locationX>50</locationX>
         <locationY>0</locationY>
-        <filterLogic>1 AND (2 AND 3) OR (4 AND 5)</filterLogic>
+        <filterLogic>(1 AND (( 2 AND 3 ) OR ( 4 AND 5 )))</filterLogic>
         <filters>
             <field>RecordTypeId</field>
             <operator>EqualTo</operator>
