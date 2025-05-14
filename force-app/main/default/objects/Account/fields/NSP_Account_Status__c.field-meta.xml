@@ -18,6 +18,11 @@
                 <label>Inactive</label>
             </value>
             <value>
+                <fullName>Outgoing Referral</fullName>
+                <default>false</default>
+                <label>Outgoing Referral</label>
+            </value>
+            <value>
                 <fullName>Out of Business</fullName>
                 <default>false</default>
                 <label>Out of Business</label>

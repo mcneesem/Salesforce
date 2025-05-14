@@ -460,6 +460,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Outgoing Referral</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Sales Disqualified</fullName>
             <default>false</default>
         </values>
