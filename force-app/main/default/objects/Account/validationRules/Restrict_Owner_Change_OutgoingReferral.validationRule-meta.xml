@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Restrict_Owner_Change_OutgoingReferral</fullName>
+    <active>true</active>
+    <description>If the Sales Account Status = Outgoing Referral, then only select users with the bypass custom permission can change the owner.</description>
+    <errorConditionFormula>AND(
+NOT($Permission.Bypass_Account_Outgoing_Owner_Reassignment),
+ISCHANGED(OwnerId),
+ISPICKVAL(NSP_Account_Status__c , &quot;Outgoing Referral&quot;)
+)</errorConditionFormula>
+    <errorMessage>Owner cannot be changed while the Sales Account Status is &quot;Outgoing Referral&quot;</errorMessage>
+</ValidationRule>
