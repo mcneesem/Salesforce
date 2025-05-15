@@ -118,6 +118,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>ContractorManagement</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Estimate</fullName>
             <default>false</default>
         </values>
@@ -245,6 +249,10 @@
         </values>
         <values>
             <fullName>Contingent Workforce</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Contractor Management</fullName>
             <default>false</default>
         </values>
         <values>
@@ -380,6 +388,10 @@
         </values>
         <values>
             <fullName>Contingent Workforce</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Contractor Management</fullName>
             <default>false</default>
         </values>
         <values>
@@ -525,6 +537,10 @@
         </values>
         <values>
             <fullName>Combination</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ContractorManagement</fullName>
             <default>false</default>
         </values>
         <values>
