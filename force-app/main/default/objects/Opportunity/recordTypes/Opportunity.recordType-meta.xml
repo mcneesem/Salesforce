@@ -1439,6 +1439,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Contractor Management</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Employment Screening</fullName>
             <default>false</default>
         </values>
@@ -4558,6 +4562,10 @@
         <picklist>NSP_Upsell_Product_add_ons__c</picklist>
         <values>
             <fullName>BPS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Contractor Management</fullName>
             <default>false</default>
         </values>
         <values>
