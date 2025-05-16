@@ -67,9 +67,9 @@ public class NSP_ProcessOrderCancellationBatch implements Database.Batchable<sOb
          }
          
      }
-
-    public void finish( Database.BatchableContext bc ) {
+    
+     public void finish(Database.BatchableContext bc)
+    {
+        
     }
-
 }
-//
