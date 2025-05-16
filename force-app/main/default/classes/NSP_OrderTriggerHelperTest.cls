@@ -104,8 +104,11 @@
         taxRuleObj.blng__TaxableYesNo__c = 'No';
         insert taxRuleObj;
 
-        blng__GLRule__c taxGLRule = new blng__GLRule__c(blng__Active__c = true, blng__Notes__c = 'Created to record: Sales Tax Allocation', Name = 'Test GLRule');
-        insert taxGLRule;
+        blng__GLRule__c taxTreatmentRec = new blng__GLRule__c(blng__Active__c = true, blng__Notes__c = 'Created to record: Sales Tax Allocation', Name = 'Test GLRule');
+        insert taxTreatmentRec;
+
+        blng__TaxIntegration__c taxIntegrationRec = new blng__TaxIntegration__c(AVA_BLNG__AvaTaxAccountNumber__c = '1100126607', AVA_BLNG__AvaTaxLicenseKey__c = '0FE211624F764D08', AVA_BLNG__DocCode__c = 'Id', AVA_BLNG__CustomerCode__c = 'Id', blng__Active__c = true, AVA_BLNG__Validate_Address__c = true, AVA_BLNG__TestMode__c = true, AVA_BLNG__Save_transactions_to_AvaTax__c = true, Name = 'Test TaxIntegration', blng__TaxEngine__c = 'Standard');
+        insert taxIntegrationRec;
 
         //blng__LegalEntity__c legalEntityRec = new blng__LegalEntity__c(blng__Active__c = true, NSP_Company_Name__c = 'Insperity Business Services', blng__City__c = 'KINGWOOD', blng__State__c = 'TX', blng__County__c = 'US', blng__Street1__c = '19001 CRESCENT SPRINGS DR', blng__ZipPostalCode__c = '77339-3802', Name = 'Test Legal Entity');
         //insert legalEntityRec;
