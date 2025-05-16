@@ -394,6 +394,7 @@ public class NSP_ProcessOrderCancellationBatchTest {
         objPaymntMethod.NSP_Active_Custom__c = true;
         objPaymntMethod.NSP_ACH_method__c = 'BoFA';
         objPaymntMethod.blng__PaymentType__c = 'ACH';
+        objPaymntMethod.Payment_Method_Type__c = 'ACH';
         insert objPaymntMethod;
         
         stdPriceBookId = Test.getStandardPricebookId();
