@@ -66,7 +66,6 @@ public class NSP_SalesToImplementationHelper {
     //
     public void createRETEd( Set<Id> setOfS2IIds , Map<Id,NSP_Sales_to_Implementation__c> mapS2I , Set<Id> planSubplanIDs ) {
             Map < Id, Id > mapS2IToRETEducation = new Map < Id, Id > ();
-            List<NSP_RET_Education__c> ListRETEdToInsert = new List<NSP_RET_Education__c>();
             List<Messaging.SingleEmailMessage> lstEmailMessages = new List<Messaging.SingleEmailMessage>();
             List<Id> insertedIds = new List<Id>();
             Map< Id, String > plansubplanMap = new Map< Id, String >();
@@ -83,25 +82,13 @@ public class NSP_SalesToImplementationHelper {
                 plansubplanMap.put(mappingPlanSubplan.Id, mappingPlanSubplan.NSP_Subplan_ID__c);
             }
             // create new RET education record and associate it to S2I
-            for(NSP_Sales_to_Implementation__c S2I: mapS2I.values()){
-                if(!(mapS2IToRETEducation.containsKey(S2I.Id))){
-                    NSP_RET_Education__c RETed = new NSP_RET_Education__c();
-                    if(plansubplanMap.containskey(S2I.NSP_Subplan_Plan_Details_Record__c)){
-                       RETed.Name = plansubplanMap.get(S2I.NSP_Subplan_Plan_Details_Record__c) + ': ';
-                    }
-                    if(RETed.Name!= null){
-                       RETed.Name += 'RET Education Record';
-                    }else{
-                         RETed.Name = 'RET Education Record';
-                    }
-                    RETed.Name = 'RET Education Record';
-                    RETed.Sales_to_Implementation__c = S2I.Id;
-                    ListRETEdToInsert.add(RETed)   ;
-                }
-            }
+            List<NSP_RET_Education__c> listRETEdToInsert = NSP_SalesToImplementationHelper.populateInsertList(
+                mapS2I.values() ,
+                mapS2IToRETEducation
+            );
             //insert RET education records
-            if(ListRETEdToInsert.size()>0){
-                Database.SaveResult[] srList = Database.insert(ListRETEdToInsert, false);
+            if ( !listRETEdToInsert.isEmpty() ) {
+                Database.SaveResult[] srList = Database.insert( listRETEdToInsert , false );
                 for (Database.SaveResult sr : srList){
                     insertedIds.add(sr.getId());
                 }
@@ -131,5 +118,30 @@ public class NSP_SalesToImplementationHelper {
             }
         }
     }
+
+    // helper method to defeat sonar cognitive complexity...
+    private static List<NSP_RET_Education__c> populateInsertList(
+        List<NSP_Sales_to_Implementation__c> records ,
+        Map<Id,Id> mapS2IToRETEducation
+        )
+    {
+        List<NSP_RET_Education__c> response = new List<NSP_RET_Education__c>();
+        if ( ( records != null )
+            && !records.isEmpty()
+            && ( mapS2IToRETEducation != null )
+            )
+        {
+            for ( NSP_Sales_to_Implementation__c record : records ) {
+                if ( !mapS2IToRETEducation.containsKey( record.Id ) ) {
+                    NSP_RET_Education__c newRecord = new NSP_RET_Education__c();
+                    newRecord.Name = 'RET Education Record';
+                    newRecord.Sales_to_Implementation__c = record.Id;
+                    response.add( newRecord );
+                }
+            }
+        }
+        return response;
+    }
+
 }
 //
