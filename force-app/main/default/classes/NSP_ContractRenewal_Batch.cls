@@ -6,6 +6,8 @@
 */
 
 public class NSP_ContractRenewal_Batch implements Database.Batchable<SObject>, Database.Stateful {
+   // test w/ NSP_ContractRenewal_Batch_Test (96%)
+
 	public Integer recordsProcessed = 0; // stores number of records processed.
    public String query;
    public Map<String,NSP_Contract_Renewal_Configurations__mdt> productTypeToConfigMap = new Map<String,NSP_Contract_Renewal_Configurations__mdt>();
