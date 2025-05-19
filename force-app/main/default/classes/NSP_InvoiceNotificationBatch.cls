@@ -1,9 +1,8 @@
-//***Class for NSP_InvoiceNotificationBatch***
-/**
-* @description  : Class for sending notification for invoice
-* @date 12 July 2023
-* Name : NSP_InvoiceNotificationBatch
-*/
+//
+// @description  : Class for sending notification for invoice
+// @date 12 July 2023
+// Name : NSP_InvoiceNotificationBatch
+//
 public class NSP_InvoiceNotificationBatch implements Database.Batchable<SObject>, Database.Stateful, Schedulable {
     // test w/ NSP_InvoiceNotificationBatch_Test (82%)
 
