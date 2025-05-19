@@ -274,6 +274,9 @@
             <conditions>
                 <leftValueReference>$Permission.Opportunity_WX_Product_Only</leftValueReference>
                 <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
             </conditions>
             <conditions>
                 <leftValueReference>Get_Opportunity_Info.NSP_PrimaryProduct__c</leftValueReference>
