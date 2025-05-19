@@ -3,7 +3,7 @@ public class NSP_AssetCreationBpsProjectBatch implements ISelfSchedulable , Sche
 
     private static final Map<Id,Project_Account__c> accIdWithProject = new Map<Id,Project_Account__c>();
     private static final Map<Id,Set<String>> mapAcctIdwithProjTemp = new Map<Id,Set<String>>();
-  	private static final Map<Id,Set<String>> mapAcctIdwithAssetRecType = new Map<Id,Set<String>>();
+    private static final Map<Id,Set<String>> mapAcctIdwithAssetRecType = new Map<Id,Set<String>>();
 
     //
     // Schedulable
@@ -30,8 +30,8 @@ public class NSP_AssetCreationBpsProjectBatch implements ISelfSchedulable , Sche
     //
 
     public Database.QueryLocator start( Database.BatchableContext bc ) {
-        List<String> PR0J_ACNT_FIELDS = new List<String>{
-        	'Id' ,
+        List<String> projectFields = new List<String>{
+            'Id' ,
             'Account__c' ,
             'Account__r.Name' ,
             'Account__r.NSP_AIMS_Client__c' ,
@@ -47,7 +47,7 @@ public class NSP_AssetCreationBpsProjectBatch implements ISelfSchedulable , Sche
             NSP_ServiceConstants.XML_IMPLEMENTATION
         };
 
-        String query = new NSP_QueryBuilder( 'Project_Account__c' , PR0J_ACNT_FIELDS )
+        String query = new NSP_QueryBuilder( 'Project_Account__c' , projectFields )
             .addFilter( 'Project__r.recordTypeId', NSP_GenericRecordType.getRecordTypeId( 'pse__Proj__c' , 'TES_BPS' ) )
             .addFilter( 'Account__r.NSP_Sales_Service_Account_Status__c' , 'Active' )
             .addFilter( 'Project__r.TemplateName__c' , templateNames , NSP_QueryBuilder.Operator.INCLUDES )
