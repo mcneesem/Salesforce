@@ -9,7 +9,7 @@ public class NSP_InvoiceNotificationBatch implements Database.Batchable<SObject>
 
     public String stringQuery;
     public Integer processedRecords = 0;
-    
+
     //default constructor
     public NSP_InvoiceNotificationBatch(){
         stringQuery = 'SELECT Id FROM blng__Invoice__c WHERE NSP_CLM_Document_Received__c = TRUE AND NSP_Invoice_Email_Sent__c= FALSE AND NSP_InvBatch_Processed_Internal__c= FALSE AND blng__InvoiceStatus__c = \'Posted\'';
@@ -22,7 +22,7 @@ public class NSP_InvoiceNotificationBatch implements Database.Batchable<SObject>
     }
     //Constructor where List of invoices as param
     public NSP_InvoiceNotificationBatch(List<blng__Invoice__c> invoices){
-        if(invoices!=null){ 
+        if(invoices!=null){
             Set<Id> invIds = new Set<Id> (new Map<Id,SObject>(invoices).keySet());
             String invoicesString = String.format( '(\'\'{0}\'\')', new List<String> { String.join( invIds , '\',\'') });
             stringQuery = 'SELECT Id FROM blng__Invoice__c WHERE Id IN'+invoicesString +' AND NSP_CLM_Document_Received__c = TRUE AND NSP_Invoice_Email_Sent__c= FALSE AND NSP_InvBatch_Processed_Internal__c= FALSE AND blng__InvoiceStatus__c = \'Posted\'';
@@ -32,7 +32,7 @@ public class NSP_InvoiceNotificationBatch implements Database.Batchable<SObject>
     public Database.QueryLocator start(Database.BatchableContext BC) {
         return Database.getQueryLocator(stringQuery);
     }
-    
+
     public void execute(Database.BatchableContext bc, List<blng__Invoice__c> scope){
          List<String> invoiceIds = new List<String>();
 
@@ -44,7 +44,7 @@ public class NSP_InvoiceNotificationBatch implements Database.Batchable<SObject>
              processedRecords += invoiceIds.size();
          }
     }
-    
+
     public void finish (Database.BatchableContext bc){
          AsyncApexJob async = [SELECT Id, Status, NumberOfErrors, JobItemsProcessed,
                       TotalJobItems, CreatedBy.Email
@@ -57,12 +57,16 @@ public class NSP_InvoiceNotificationBatch implements Database.Batchable<SObject>
         ('The batch Apex job processed ' + async.TotalJobItems +
         ' batches with '+ async.NumberOfErrors + ' failures.' +
         'Total Records :'+processedRecords);
-        Messaging.sendEmail(new Messaging.SingleEmailMessage[] { mail });
+        try {
+            Messaging.sendEmail( new Messaging.SingleEmailMessage[]{ mail } );
+        } catch ( Exception e ) {
+            System.debug( ' ~ CATCH ~ e=' + e );
+        }
     }
-    
+
     public void execute(SchedulableContext ctx) {
       NSP_InvoiceNotificationBatch batchObject = new NSP_InvoiceNotificationBatch();
-        Database.executeBatch(batchObject, Integer.valueOf(Label.NSP_BATCH_SIZE) );   
+        Database.executeBatch(batchObject, Integer.valueOf(Label.NSP_BATCH_SIZE) );
     }
-    
+
 }

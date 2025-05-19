@@ -17,7 +17,7 @@ public class NSP_ContractRenewal_Batch implements Database.Batchable<SObject>, D
       List<String> ownerUsernames = new List<String>();
       Map<String, NSP_Contract_Renewal_Configurations__mdt> renewalConfigs = NSP_Contract_Renewal_Configurations__mdt.getAll();
       if(renewalConfigs.size()>0) {
-         //looping through renewal configuration map to put in respective lists by date range 
+         //looping through renewal configuration map to put in respective lists by date range
          for(NSP_Contract_Renewal_Configurations__mdt configrec : renewalConfigs.values()){
             productTypeToConfigMap.put(configrec.NSP_Linked_ProductType__c, configrec);
             ownerUsernames.add(configrec.NSP_Default_Opportunity_Owner__c);
@@ -33,11 +33,11 @@ public class NSP_ContractRenewal_Batch implements Database.Batchable<SObject>, D
       //query formation
       query='SELECT Id, SBQQ__RenewalForecast__c, SBQQ__RenewalQuoted__c, ContractTerm,NSP_Product_Type__c,SBQQ__ActiveContract__c FROM Contract WHERE SBQQ__RenewalForecast__c = FALSE AND SBQQ__RenewalQuoted__c = FALSE AND ContractTerm>=1 AND SBQQ__ActiveContract__c=1 AND';
       query+=' Id =:contractId';
-	
+
          }
-        
+
     // Code for QA testing only. Not added to GIT. Must be deleted in higher sandboxes
-    
+
     //Constructor declaration
    public NSP_ContractRenewal_Batch(){
       //List to store products with renewal date ranges
@@ -47,14 +47,14 @@ public class NSP_ContractRenewal_Batch implements Database.Batchable<SObject>, D
      // Map<Integer,List<String>> DaysWithProductsListMap = new Map<Integer,List<String>>();
       Map<String, NSP_Contract_Renewal_Configurations__mdt> renewalConfigs = NSP_Contract_Renewal_Configurations__mdt.getAll();
       if(renewalConfigs.size()>0) {
-         //looping through renewal configuration map to put in respective lists by date range 
+         //looping through renewal configuration map to put in respective lists by date range
          for(NSP_Contract_Renewal_Configurations__mdt configrec : renewalConfigs.values()){
              if(configrec.NSP_Days_Before_Expiry__c == 30){
-               ProductsWith30DaysList.add(configrec.NSP_Linked_ProductType__c);  
-             }    
+               ProductsWith30DaysList.add(configrec.NSP_Linked_ProductType__c);
+             }
              if(configrec.NSP_Days_Before_Expiry__c == 60 ||configrec.DeveloperName == 'Sage' ) {     // This static string is intentional. It might be removed in future.
-                ProductsWith60DaysList.add(configrec.NSP_Linked_ProductType__c); 
-             } 
+                ProductsWith60DaysList.add(configrec.NSP_Linked_ProductType__c);
+             }
             productTypeToConfigMap.put(configrec.NSP_Linked_ProductType__c, configrec);
             ownerUsernames.add(configrec.NSP_Default_Opportunity_Owner__c);
             // Below code is commented out. This is INTENTIONAL. DO NOT DELETE
@@ -81,12 +81,12 @@ public class NSP_ContractRenewal_Batch implements Database.Batchable<SObject>, D
       //query formation
       query='SELECT Id, SBQQ__RenewalForecast__c, SBQQ__RenewalQuoted__c, ContractTerm,NSP_Product_Type__c,SBQQ__ActiveContract__c FROM Contract WHERE SBQQ__RenewalForecast__c = FALSE AND SBQQ__RenewalQuoted__c = FALSE AND ContractTerm>=1 AND SBQQ__ActiveContract__c=1 AND';
       query+=' ((NSP_Product_Type__c INCLUDES'+ Days30ListasString +' AND EndDate>=TODAY AND EndDate <= NEXT_N_DAYS:30 AND ContractTerm=1) OR (NSP_Product_Type__c INCLUDES '+ Days60ListasString +' AND EndDate>=TODAY AND EndDate <= NEXT_N_DAYS:62))';
-		
+
    }
 
 	public Database.QueryLocator start(Database.BatchableContext bc){
-		
-     
+
+
       //returns QueryLocator to execute method.
       return Database.getQueryLocator(query);
 	}
@@ -131,7 +131,12 @@ public class NSP_ContractRenewal_Batch implements Database.Batchable<SObject>, D
        ('The batch Apex job processed ' + apexJob.TotalJobItems +
        ' batches with '+ apexJob.NumberOfErrors + ' failures.' +
        'Total Records :'+recordsProcessed);
-       Messaging.sendEmail(new Messaging.SingleEmailMessage[] { mail });
-       
+        try {
+            Messaging.sendEmail( new Messaging.SingleEmailMessage[]{ mail } );
+        } catch ( Exception e ) {
+            System.debug( ' ~ CATCH ~ e=' + e );
+        }
 	}
+
 }
+//
