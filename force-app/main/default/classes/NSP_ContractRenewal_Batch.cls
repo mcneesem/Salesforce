@@ -1,10 +1,9 @@
-/**
-* @description  : Batch Class to create renewal opportunity and quote based on renewal term and product type
-* @author Rakesh Das
-* @date 08/04/2021
-* Name : NSP_ContractRenewal_Batch
-*/
-
+//
+// @description  : Batch Class to create renewal opportunity and quote based on renewal term and product type
+// @author Rakesh Das
+// @date 08/04/2021
+// Name : NSP_ContractRenewal_Batch
+//
 public class NSP_ContractRenewal_Batch implements Database.Batchable<SObject>, Database.Stateful {
     // test w/ NSP_ContractRenewal_Batch_Test (96%)
 
