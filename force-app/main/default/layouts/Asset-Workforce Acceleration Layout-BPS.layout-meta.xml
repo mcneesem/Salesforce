@@ -187,6 +187,18 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Medical_Benefits_Renewal_Date__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Ancillary_Benefits_Renewal_Date__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Fringe_Benefits_Renewal_Date__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>NSP_ACA_eligible__c</field>
             </layoutItems>
             <layoutItems>
@@ -519,6 +531,9 @@
         <fields>NSP_Term_Date__c</fields>
         <fields>Comments__c</fields>
         <relatedList>NSP_Modules_Implemented__c.NSP_Asset__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <relatedList>RelatedEntityHistoryList</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
