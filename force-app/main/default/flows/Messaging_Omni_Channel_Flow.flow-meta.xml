@@ -79,7 +79,7 @@
             <name>botLabel</name>
         </inputParameters>
         <nameSegment>routeWork</nameSegment>
-        <versionSegment>1</versionSegment>
+        <offset>0</offset>
     </actionCalls>
     <actionCalls>
         <name>Route_to_Benefits_Queue</name>
@@ -160,7 +160,7 @@
             <name>botLabel</name>
         </inputParameters>
         <nameSegment>routeWork</nameSegment>
-        <versionSegment>1</versionSegment>
+        <offset>0</offset>
     </actionCalls>
     <actionCalls>
         <name>Route_to_Queue</name>
@@ -241,9 +241,9 @@
             <name>botLabel</name>
         </inputParameters>
         <nameSegment>routeWork</nameSegment>
-        <versionSegment>1</versionSegment>
+        <offset>0</offset>
     </actionCalls>
-    <apiVersion>59.0</apiVersion>
+    <apiVersion>63.0</apiVersion>
     <assignments>
         <name>Populate_Case_On_Messaging_Session_Record</name>
         <label>Populate Case On Messaging Session Record</label>
@@ -744,6 +744,7 @@
             <label>ContactExists</label>
         </rules>
     </decisions>
+    <description>5/21/2025 - Updated for Is_Contact_Center Field</description>
     <environments>Default</environments>
     <formulas>
         <description>Translates the &quot;First Name&quot; input into a non-blank schema-safe value.</description>
@@ -828,6 +829,12 @@
             <field>Description</field>
             <value>
                 <elementReference>input_Description</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Is_Contact_Center__c</field>
+            <value>
+                <elementReference>messagingSessionRecord.Is_Contact_Center__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
