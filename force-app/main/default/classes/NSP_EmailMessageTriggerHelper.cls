@@ -146,10 +146,10 @@ public with sharing class NSP_EmailMessageTriggerHelper {
             }
             //
             List<Case> casesToUpdate = new List<Case>();
-            Map<Case, EmailMessage> caseToEmailMessageMap = new Map<Case, EmailMessage>();
+            Map<Case,EmailMessage> caseToEmailMessageMap = new Map<Case,EmailMessage>();
             Map<String,String> mapOfEmailAddressToQueueName = new Map<String,String>();
             Map<String,String> mapOfQueueNameToQueueId = new Map<String,String>();
-            if( ( listOfEmailMessage != null ) && !listOfEmailMessage.isEmpty() ) {
+            if ( ( listOfEmailMessage != null ) && !listOfEmailMessage.isEmpty() ) {
                 mapOfEmailAddressToQueueName = getMapOfEmailAddressToQueueName( listOfEmailMessage );
                 mapOfQueueNameToQueueId = getMapOfQueueNameToQueueId( mapOfEmailAddressToQueueName );
                 for ( EmailMessage eMessage : listOfEmailMessage ) {
@@ -160,7 +160,15 @@ public with sharing class NSP_EmailMessageTriggerHelper {
                             && ( eMessage.MessageDate != null )
                             )
                         {
-                            if ( currentCase.RecordTypeId == BPS_RECORDTYPEID ) {
+                            List<String> toAddressList = NSP_EmailMessageTriggerHelper.getAddressList( eMessage );
+                            Boolean isContactCenterToAddress = NSP_EmailMessageTriggerHelper.isContactCenterCase( toAddressList );
+                            if ( ( currentCase.RecordTypeId == BPS_RECORDTYPEID )
+                                || (
+                                    ( currentCase.RecordTypeId == NSP_EmailMessageTriggerHelper.PEO_RECORDTYPEID )
+                                    && !isContactCenterToAddress 
+                                    )
+                                )
+                            {
                                 Integer daysBetween = (currentCase.ClosedDate.date()).daysBetween( eMessage.MessageDate.date() );
                                 if ( ( bpsCaseTier1Categories.contains( currentCase.NSP_Category__c ) && ( daysBetween <= tier1Days ) )
                                     || ( bpsCaseTier2Categories.contains( currentCase.NSP_Category__c ) && ( daysBetween <= tier2Days ) )
@@ -194,20 +202,17 @@ public with sharing class NSP_EmailMessageTriggerHelper {
                                     casesToUpdate.add( currentCase );
                                     caseToEmailMessageMap.put( currentCase , eMessage );
                                 }
-                            }
-                            else if ( currentCase.RecordTypeId == NSP_EmailMessageTriggerHelper.PEO_RECORDTYPEID ) {
-                                List<String> toAddressList = new List<String>();
-                                if ( String.isNotBlank( eMessage.ToAddress ) ) {
-                                    toAddressList = eMessage.ToAddress.split( ';' );
-                                }
-                                
-                                if (!isContactCenterCase( toAddressList )) {
+                            } else if (
+                                ( currentCase.RecordTypeId == NSP_EmailMessageTriggerHelper.PEO_RECORDTYPEID )
+                                && isContactCenterToAddress
+                                )
+                            {
+                                if ( !isContactCenterToAddress ) {
                                     currentCase.NSP_Response_After_Close__c = true;
                                     casesToUpdate.add( currentCase );
-                                }
-                                else if ( ( currentCase.Status == CLOSED ) 
-                                         && isContactCenterCase( toAddressList )
-                                        )
+                                } else if ( ( currentCase.Status == CLOSED ) 
+                                    && isContactCenterToAddress
+                                    )
                                 {
                                     Integer businessDaysBetween = getNoOfBusinessDaysBetweenDates(
                                         currentCase.ClosedDate.date() ,
@@ -358,6 +363,7 @@ public with sharing class NSP_EmailMessageTriggerHelper {
         }
         return caseToInsert;
     }
+
     //
     // MethodName    : caseOwnerAssignment
     // Description   : method to Assigns the appropriate Case Owner (Queue) ID based on the Case's record type and email recipients.
@@ -365,33 +371,47 @@ public with sharing class NSP_EmailMessageTriggerHelper {
     // Params        : Case getCase,EmailMessage record,ID contactCenterQueueId
     //
     private static Id caseOwnerAssignment(
-        Case getCase,
-        EmailMessage record,
-        Id contactCenterQueueId,
-        Map<String, String> mapOfEmailAddressToQueueName,
-        Map<String, String> mapOfQueueNameToQueueId
-    ) {
-        Id caseOwnerId = null;
-        
-        if (getCase != null && String.isNotBlank(getCase.RecordTypeId) && record != null) {
-            if (getCase.RecordTypeId == NSP_EmailMessageTriggerHelper.PEO_RECORDTYPEID) {
-                caseOwnerId = contactCenterQueueId;
-            } else if (
-                getCase.RecordTypeId == NSP_EmailMessageTriggerHelper.BPS_RECORDTYPEID &&
-                mapOfEmailAddressToQueueName != null
-            ) {
-                // Get queue name from email
-                String queueName = NSP_EmailMessageTriggerHelper.getQueueNameFromEmail(
-                    mapOfEmailAddressToQueueName,
-                    record
-                );
-                
-                if (String.isNotBlank(queueName) && mapOfQueueNameToQueueId != null && mapOfQueueNameToQueueId.containsKey(queueName)) {
-                    caseOwnerId = mapOfQueueNameToQueueId.get(queueName);
-                }
+        Case getCase ,
+        EmailMessage record ,
+        Id contactCenterQueueId ,
+        Map<String,String> mapOfEmailAddressToQueueName ,
+        Map<String,String> mapOfQueueNameToQueueId
+        )
+    {
+        Id caseOwnerId = ( getCase != null ) ? getCase.OwnerId : null;
+        List<String> toAddressList = NSP_EmailMessageTriggerHelper.getAddressList(record);
+        Boolean isContactCenter = (
+            NSP_EmailMessageTriggerHelper.isContactCenterCase( toAddressList )
+            && ( getCase.RecordTypeId == NSP_EmailMessageTriggerHelper.PEO_RECORDTYPEID )
+        );
+        if ( isContactCenter ) {
+            caseOwnerId = contactCenterQueueId;
+        } else if ( ( getCase.RecordTypeId == NSP_EmailMessageTriggerHelper.BPS_RECORDTYPEID )
+            || ( getCase.RecordTypeId == NSP_EmailMessageTriggerHelper.PEO_RECORDTYPEID )
+            )
+        {
+            String queueName = NSP_EmailMessageTriggerHelper.getQueueNameFromEmail(
+                mapOfEmailAddressToQueueName ,
+                record
+            );
+            if ( String.isNotBlank( queueName )
+                && ( mapOfQueueNameToQueueId != null )
+                && mapOfQueueNameToQueueId.containsKey( queueName )
+                && ( mapOfQueueNameToQueueId.get( queueName ) != null )
+                )
+            {
+                caseOwnerId = mapOfQueueNameToQueueId.get( queueName );
             }
         }
         return caseOwnerId;
+    }
+
+    private static List<String> getAddressList( EmailMessage record ) {
+        List<String> toAddressList = new List<String>();
+        if ( String.isNotBlank( record.ToAddress ) ) {
+            toAddressList = record.ToAddress.split( ';' );
+        }
+        return toAddressList;
     }
 
     //Method to get queue name from email address.
