@@ -1,0 +1,31 @@
+<messaging:emailTemplate subject="Approval Request: Approval for {!relatedTo.Quote__r.SBQQ__Opportunity2__r.Name} have been requested "  relatedToType="sbaa__Approval__c">
+    <messaging:HtmlEmailBody >
+        <html>
+            <body>
+                <p>
+                    {!relatedTo.Owner.Name} has submitted quote {!relatedTo.Quote__r.Name} for your review.<br/>
+                    Please respond to this email with the word <b><apex:outputText style="color: #009600;" value="Approve"/></b> or <b><apex:outputText style="color: #FF0000;" value="Reject"/></b> in the first line.<br/> 
+                    Add any comments you may have on the second line.<br/>  
+                </p>
+                <b>Opportunity Owner:</b>&nbsp;{!relatedTo.Quote__r.SBQQ__Opportunity2__r.Owner.Name}<br/>
+                <b>Sales Office:</b>&nbsp; &nbsp;<apex:outputField value="{!relatedTo.Quote__r.SBQQ__Opportunity2__r.NSP_Sales_Office__c}"/><br/>
+                <b>SE:</b>&nbsp;&nbsp;<apex:outputField value=" {!relatedTo.Quote__r.Owner.Name}"/> <br/>
+                <p>
+                    <b>Requestor's Comment:</b> <br/>
+                    <apex:outputField value=" {!relatedTo.Quote__r.NSP_Submitter_Comment__c}" />
+                </p>
+                <p>
+                    <apex:outputPanel rendered="{!relatedTo.Quote__r.NSP_Talent_Connect_Notes__c != '' }">
+                        <b>Talent Connect Notes:</b> <br/>
+                        <apex:outputField value=" {!relatedTo.Quote__r.NSP_Talent_Connect_Notes__c}" />
+                    </apex:outputPanel>
+                </p>
+                <p>
+                    <c:NSP_DisplayQli quoteId="{!relatedTo.Quote__r.Id}" />
+                </p>
+                <p style="color:white"><apex:outputText value="{!relatedTo.Id}"/></p>
+                <p>Alternatively you can use this link to review the transaction: <apex:outputText value=" {!LEFT($Api.Partner_Server_URL_140, FIND(".com/",$Api.Partner_Server_URL_140)+3)}/{!relatedTo.Id}"/></p>
+            </body>
+        </html>
+    </messaging:HtmlEmailBody>
+</messaging:emailTemplate>

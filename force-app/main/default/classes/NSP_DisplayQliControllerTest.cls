@@ -67,9 +67,11 @@ public without sharing class NSP_DisplayQliControllerTest {
             if(math.mod(quoteItem, 2) == 0){
                 quoteLine[quoteItem].SBQQ__Discount__c = 12.5;
                 quoteLine[quoteItem].NSP_Is_Bundle__c = true;
+                quoteLine[quoteItem].NSP_Quoted_Quantity__c = 5;
             }else{
                 quoteLine[quoteItem].NSP_Max_Quantity__c = 12;
-                quoteLine[quoteItem].NSP_Quoted_Quantity__c = 2;            
+                quoteLine[quoteItem].NSP_Quoted_Quantity__c = 2;
+                quoteLine[quoteItem].NSP_Quoted_Quantity__c = 5;
             }
         }
        insert quoteLine;
