@@ -72,6 +72,26 @@
                 <default>false</default>
                 <label>NSP_WX_Scholarship__c</label>
             </value>
+            <value>
+                <fullName>Sales_Manager_Approver_Group__c</fullName>
+                <default>false</default>
+                <label>Sales_Manager_Approver_Group__c</label>
+            </value>
+            <value>
+                <fullName>SBQQ__Type__c</fullName>
+                <default>false</default>
+                <label>SBQQ__Type__c</label>
+            </value>
+            <value>
+                <fullName>Contract_Term__c</fullName>
+                <default>false</default>
+                <label>Contract_Term__c</label>
+            </value>
+            <value>
+                <fullName>NSP_Talent_Connect_Notes__c</fullName>
+                <default>false</default>
+                <label>NSP_Talent_Connect_Notes__c</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

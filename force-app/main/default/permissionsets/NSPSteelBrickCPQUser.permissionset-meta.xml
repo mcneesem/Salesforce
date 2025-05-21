@@ -7785,6 +7785,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>SBQQ__Quote__c.Sales_Manager_Approver_Group__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>SBQQ__Quote__c.Seasonal_Pricing_Enabled__c</field>
         <readable>true</readable>
     </fieldPermissions>
