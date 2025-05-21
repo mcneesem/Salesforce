@@ -1118,6 +1118,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>IPM Custom</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>IPM Essential</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Mid-market %28150-999%29</fullName>
             <default>false</default>
         </values>

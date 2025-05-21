@@ -87,6 +87,16 @@
                 <label>Emerging Growth (100+  EE&apos;s)</label>
             </value>
             <value>
+                <fullName>IPM Essential</fullName>
+                <default>false</default>
+                <label>IPM Essential</label>
+            </value>
+            <value>
+                <fullName>IPM Custom</fullName>
+                <default>false</default>
+                <label>IPM Custom</label>
+            </value>
+            <value>
                 <fullName>Quickstart</fullName>
                 <default>false</default>
                 <label>Quickstart</label>
