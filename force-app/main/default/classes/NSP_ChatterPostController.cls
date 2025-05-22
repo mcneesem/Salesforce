@@ -1,5 +1,5 @@
 public without sharing class NSP_ChatterPostController {
-    // test w/ NSP_ChatterPostController (100%)
+    // test w/ NSP_ChatterPostController_Test (100%)
 
     //
     // execute - When the Owner of the Record is changed this action is invoked.
