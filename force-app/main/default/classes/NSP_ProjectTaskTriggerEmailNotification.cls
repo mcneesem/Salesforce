@@ -10,7 +10,6 @@ public class NSP_ProjectTaskTriggerEmailNotification {
     private static Map<String, EmailTemplate> mapOfEmailTempaltes = new Map<String, EmailTemplate>();
 
     private static final String FEINDOCUMENTTOEMAIL='FEIN_Documentation_Email';
-    private static final String FORMDISCUSSEDEMAIL='NSP_FormDiscussed';
     private static final String Funding_Document_Email='Funding_Document_Email';
     private static final String INTERNAL_DISCOVERY_FN ='NSP_Internal_Discovery';
     private static final String ONSITE_DISCOVERY_FN ='NSP_Onsite_Discovery'; 
@@ -147,72 +146,6 @@ public class NSP_ProjectTaskTriggerEmailNotification {
             }
         }catch(Exception ex ){
             NSP_ErrorLogHandler.logSaveException('NSP_ProjectTaskTriggerEmailNotification', 'emailNotifyforFundingDocuments', ex.getMessage());
-        }
-    }
-
-    /***********************************************************************************************
-    * MethodName: emailNotifyforFormCollected
-    * Description : This Method send email notification when Form Collected project task completed
-    * Params:       Map <Id, pse__Project_Task__c >newMapProjecttasks, Map <Id, pse__Project_Task__c >oldMapProjecttasks
-    * Author :      Bindushree R
-    * ********************************************************************************************/
-    
-    public static void emailNotifyforFormCollected (Map<Id,Id> mapofProjecttasks ){
-        
-        //as part of STY-02170
-        Id peoProjectRecordTypeId = SObjectType.pse__Proj__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.PEOProject).getRecordTypeId();
-        
-        Map<Id, Project_Asset__c> mapofprojectIdAssets= new Map<Id,Project_Asset__c>();
-        NSP_PEO_Implementations__mdt pf = NSP_PEO_Implementations__mdt.getInstance(FORMDISCUSSEDEMAIL);
-        
-        List<Implementation_Profile__c> updateIplist = new List<Implementation_Profile__c>();
-        List<Messaging.EmailFileAttachment> emailAttachmentList = new List<Messaging.EmailFileAttachment>();
-        
-        try{
-            if(!mapofProjecttasks.isEmpty()){
-                // get map of project id and List of attachments 
-            
-                for(pse__Proj__c proj: [SELECT Id, recordTypeId, TemplateName__c, pse__Project_Type__c,pse__Project_Status__c, pse__Account__c,pse__Account__r.Name,
-                (SELECT Id,NSP_Role__c,NSP_Assignee__c, NSP_Assignee__r.Name,NSP_Assignee__r.NSP_Job_Title__c,
-                     NSP_Assignee__r.NSP_Work_email__c FROM Project_Teams__r WHERE NSP_Role__c =: NSP_ServiceConstants.ProjectManager AND NSP_Assignee__c!=null LIMIT 1 ) 
-                FROM pse__Proj__c where Id in:mapofProjecttasks.keyset() AND
-                pse__Project_Type__c=:NSP_ServiceConstants.ImplementationProjectType AND recordTypeId=:peoProjectRecordTypeId AND
-                TemplateName__c=:label.Middle_Market_Implementation_Project AND pse__Project_Status__c NOT IN :listOfProjectStatus]){
-                                    
-                                            String projectTaskRecordId=mapofProjecttasks.get(proj.Id);
-                                            String projectManager='';
-                                            String projectManagerRole ='';
-                                            String projectManagerEmail ='' ;
-                                            emailAttachmentList=NSP_EmailServiceAttachment.getProjectTaskAttachments(projectTaskRecordId);
-                                            if(proj.Project_Teams__r.size()>0){
-                                                if(proj.Project_Teams__r[0].NSP_Assignee__r.NSP_Job_Title__c!=null){
-                                                    projectManagerRole = proj.Project_Teams__r[0].NSP_Assignee__r.NSP_Job_Title__c;
-                                                }
-                                                if(proj.Project_Teams__r[0].NSP_Assignee__r.Name!=null){
-                                                    projectManager = proj.Project_Teams__r[0].NSP_Assignee__r.Name;
-                                                } 
-                                                if(proj.Project_Teams__r[0].NSP_Assignee__r.NSP_Work_email__c!=null){
-                                                    projectManagerEmail = proj.Project_Teams__r[0].NSP_Assignee__r.NSP_Work_email__c;
-                                                } 
-                                            }
-                                            if(String.isNotBlank(pf.NSP_Email_Address__c)){
-                                            sendFormCollectedMail(proj.pse__Account__r.Name,
-                                            projectManagerRole,new List<String>{pf.NSP_Email_Address__c},
-                                            projectManager,emailAttachmentList, projectManagerEmail,mapofProjecttasks.get(proj.Id));
-                                            }
-                }
-                //update IP field form discussed to yes when the form discussed project task is complete
-                if(mapofProjecttasks.size()>0){
-                    for(Implementation_Profile__c ip: [SELECT Id,Has_form_8973_been_discussed__c, NSP_Project__c from Implementation_Profile__c WHERE NSP_Project__c IN : mapofProjecttasks.keyset() AND RecordTypeId=:ipMMRecordTypeId AND Has_form_8973_been_discussed__c != :NSP_ServiceConstants.YES ]){
-                        ip.Has_form_8973_been_discussed__c=NSP_ServiceConstants.YES;
-                        
-                        updateIplist.add(ip);
-                    }
-                }
-                database.update(updateIplist, false);
-            }
-        }catch(Exception ex ){
-                NSP_ErrorLogHandler.logSaveException('NSP_ProjectTaskTriggerEmailNotification', 'emailNotifyforFormCollected', ex.getMessage());
         }
     }
 
