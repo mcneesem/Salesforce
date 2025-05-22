@@ -5,6 +5,7 @@
     <label>Team L1</label>
     <permissionSets>Assign_App_Sales</permissionSets>
     <permissionSets>Assign_App_Service_Operation</permissionSets>
+    <permissionSets>Bypass_Opportunity_Allow_Reopen_Closed_Lost</permissionSets>
     <permissionSets>Freeze_Users</permissionSets>
     <permissionSets>Manage_Internal_Users</permissionSets>
     <permissionSets>Monitor_Login_History</permissionSets>
