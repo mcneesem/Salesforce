@@ -194,7 +194,7 @@
         </scheduledPaths>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Draft</status>
+    <status>Inactive</status>
     <subflows>
         <name>Handle_Fault</name>
         <label>Handle Fault</label>
