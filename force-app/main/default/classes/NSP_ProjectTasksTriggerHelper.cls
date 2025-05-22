@@ -1377,39 +1377,45 @@ public class NSP_ProjectTasksTriggerHelper {
             NSP_ProjectTaskTriggerEmailNotification.emailNotifyClientTransition(mapofClientProjectTask, mapOfProjectTaskOwner);
         }
     }
-    
+
     public static void ipYesFormCollected(Map<Id, Id> mapOfProjectTasks) {
         List<Implementation_Profile__c> updateIpList = new List<Implementation_Profile__c>();
         Id ipMMRecordTypeId = NSP_GenericRecordType.getRecordTypeId(
-            'Implementation_Profile__c',
+            'Implementation_Profile__c' ,
             NSP_ServiceConstants.MMProfile
         );
-        
         try {
-            if (mapOfProjectTasks != null && !mapOfProjectTasks.isEmpty() && ipMMRecordTypeId != null) {
+            if ( mapOfProjectTasks != null
+                && !mapOfProjectTasks.isEmpty()
+                && ipMMRecordTypeId != null
+                )
+            {
                 // Update IP field form discussed to yes when the form discussed project task is complete
-                for (Implementation_Profile__c ip : [
-                    SELECT Id, Has_form_8973_been_discussed__c, NSP_Project__c
-                    FROM Implementation_Profile__c
-                    WHERE NSP_Project__c IN :mapOfProjectTasks.keySet()
-                    AND RecordTypeId = :ipMMRecordTypeId
-                    AND Has_form_8973_been_discussed__c != :NSP_ServiceConstants.YES
-                ]) {
+                for ( Implementation_Profile__c ip : [
+                            SELECT Id , Has_form_8973_been_discussed__c , NSP_Project__c
+                            FROM Implementation_Profile__c
+                            WHERE (
+                                NSP_Project__c IN :mapOfProjectTasks.keySet()
+                                AND RecordTypeId = :ipMMRecordTypeId
+                                AND Has_form_8973_been_discussed__c != :NSP_ServiceConstants.YES
+                            )
+                        ]
+                    )
+                {
                     ip.Has_form_8973_been_discussed__c = NSP_ServiceConstants.YES;
                     updateIpList.add(ip);
                 }
-                
-                if (!updateIpList.isEmpty()) {
+                if ( !updateIpList.isEmpty() ) {
                     // Perform the update and log results
-                    Database.SaveResult[] results = Database.update(updateIpList, false);
+                    Database.SaveResult[] results = Database.update( updateIpList , false );
                     NSP_ErrorLogHandler.logResults(
-                        NSP_ProjectTasksTriggerHelper.class.getName(),
-                        'ipYesFormCollected:update',
+                        NSP_ProjectTasksTriggerHelper.class.getName() ,
+                        'ipYesFormCollected:update' ,
                         results
                     );
                 }
             }
-        } catch (Exception e) {
+        } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
                 NSP_ProjectTasksTriggerHelper.class.getName(),
                 'ipYesFormCollected',
