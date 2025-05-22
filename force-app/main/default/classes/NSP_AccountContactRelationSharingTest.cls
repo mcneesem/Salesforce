@@ -72,7 +72,7 @@ private class NSP_AccountContactRelationSharingTest {
         region.Name = NSP_ServiceConstants.UnitedStatesRegion;
         insert region;
 
-
+        NSP_AccountContactRelationSharing.testHandleException( null , 'test' );
     }
 
     @isTest
