@@ -29,7 +29,12 @@
         <fullName>Contingent Workforce</fullName>
         <default>false</default>
         <label>Contingent Workforce</label>
-    </customValue>    
+    </customValue>
+    <customValue>
+        <fullName>Contractor Management</fullName>
+        <default>false</default>
+        <label>Contractor Management</label>
+    </customValue>
     <customValue>
         <fullName>Employment Screening</fullName>
         <default>false</default>

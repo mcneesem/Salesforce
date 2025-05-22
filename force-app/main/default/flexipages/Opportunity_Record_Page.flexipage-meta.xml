@@ -2,6 +2,74 @@
 <FlexiPage xmlns="http://soap.sforce.com/2006/04/metadata">
     <flexiPageRegions>
         <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>required</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Name</fieldItem>
+                <identifier>RecordNameField4</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <name>Facet-555aab76-70ac-4352-a7e9-7365212a2c90</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.AccountId</fieldItem>
+                <identifier>RecordAccountIdField4</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>required</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.CloseDate</fieldItem>
+                <identifier>RecordCloseDateField4</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Amount</fieldItem>
+                <identifier>RecordAmountField3</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.OwnerId</fieldItem>
+                <identifier>RecordOwnerIdField3</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_Number_of_Employees__c</fieldItem>
+                <identifier>RecordNSP_Number_of_Employees_cField5</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <name>Facet-847af5d7-0410-4787-9360-330b3d169243</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
                     <name>actionNames</name>
@@ -202,23 +270,19 @@
                     </valueList>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>collapsed</name>
-                    <value>false</value>
+                    <name>numVisibleActions</name>
+                    <value>3</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>enableActionsConfiguration</name>
-                    <value>true</value>
+                    <name>primaryField</name>
+                    <value>Facet-555aab76-70ac-4352-a7e9-7365212a2c90</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>enableActionsInNative</name>
-                    <value>false</value>
+                    <name>secondaryFields</name>
+                    <value>Facet-847af5d7-0410-4787-9360-330b3d169243</value>
                 </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>hideChatterActions</name>
-                    <value>true</value>
-                </componentInstanceProperties>
-                <componentName>force:highlightsPanel</componentName>
-                <identifier>force_highlightsPanel</identifier>
+                <componentName>record_flexipage:dynamicHighlights</componentName>
+                <identifier>record_flexipage_dynamicHighlights</identifier>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
@@ -657,6 +721,16 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Number_of_Employees__c</fieldItem>
                 <identifier>RecordNSP_Number_of_Employees_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_Account_Segment__c</fieldItem>
+                <identifier>RecordNSP_Account_Segment_cField3</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1198,6 +1272,16 @@
                         <rightValue>New_Client_Sales</rightValue>
                     </criteria>
                 </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_Account_Segment__c</fieldItem>
+                <identifier>RecordNSP_Account_Segment_cField4</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -5038,16 +5122,6 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Account_Name__c</fieldItem>
                 <identifier>RecordNSP_Account_Name_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Account_Segment__c</fieldItem>
-                <identifier>RecordNSP_Account_Segment_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>

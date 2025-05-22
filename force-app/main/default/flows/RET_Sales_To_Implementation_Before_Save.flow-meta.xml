@@ -1,10 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>60.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Set_Controlled_Group</name>
+        <label>Set Controlled Group</label>
+        <locationX>50</locationX>
+        <locationY>611</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Controlled_Group__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Account_Group_Member_Records_Based_on_Account_Id.NSP_Group__c</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Set_Controlled_Group_To_Blank</name>
+        <label>Set Controlled Group To Blank</label>
+        <locationX>314</locationX>
+        <locationY>611</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Controlled_Group__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
     <assignments>
         <name>Update_Fields_on_Before_Save</name>
         <label>Update Fields on Before Save</label>
-        <locationX>176</locationX>
+        <locationX>182</locationX>
         <locationY>287</locationY>
         <assignmentItems>
             <assignToReference>$Record.AIMS_Client__c</assignToReference>
@@ -13,7 +40,42 @@
                 <elementReference>$Record.NSP_Client__r.NSP_AIMS_Client__c</elementReference>
             </value>
         </assignmentItems>
+        <connector>
+            <targetReference>Get_Account_Group_Member_Records_Based_on_Account_Id</targetReference>
+        </connector>
     </assignments>
+    <decisions>
+        <name>Validate_Account_Group_Member_Records</name>
+        <label>Validate Account Group Member Records</label>
+        <locationX>182</locationX>
+        <locationY>503</locationY>
+        <defaultConnector>
+            <targetReference>Set_Controlled_Group_To_Blank</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Valid_Account_Group_Member_Records</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Account_Group_Member_Records_Based_on_Account_Id</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Account_Group_Member_Records_Based_on_Account_Id</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Controlled_Group</targetReference>
+            </connector>
+            <label>Valid Account Group Member Records</label>
+        </rules>
+    </decisions>
     <environments>Default</environments>
     <interviewLabel>RET Sales To Implementation Before Save {!$Flow.CurrentDateTime}</interviewLabel>
     <label>RET Sales To Implementation Before Save</label>
@@ -36,8 +98,38 @@
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>Get_Account_Group_Member_Records_Based_on_Account_Id</name>
+        <label>Get Account Group Member Records Based on Account Id</label>
+        <locationX>182</locationX>
+        <locationY>395</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Validate_Account_Group_Member_Records</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>NSP_Member_Account__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.NSP_Client__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>NSP_Type__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Controlled Group</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>NSP_Account_Group_Member__c</object>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>NSP_Group__c</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <start>
-        <locationX>50</locationX>
+        <locationX>56</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Update_Fields_on_Before_Save</targetReference>

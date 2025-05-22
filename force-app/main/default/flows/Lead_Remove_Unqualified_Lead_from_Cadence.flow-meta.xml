@@ -4,10 +4,13 @@
         <description>Calls an action that removes the unqualified lead from all cadences, sets the completion reason to ManuallyRemoved, and sets the Completion Disposition to Disqualified.</description>
         <name>Remove_OneTrust_Opt_Out_Lead</name>
         <label>Remove OneTrust Opt Out Lead</label>
-        <locationX>314</locationX>
-        <locationY>648</locationY>
+        <locationX>578</locationX>
+        <locationY>600</locationY>
         <actionName>removeTargetFromSalesCadence</actionName>
         <actionType>removeTargetFromSalesCadence</actionType>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Remove_OneTrust_Opt_Out_Lead</targetReference>
+        </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>completionDisposition</name>
@@ -27,6 +30,7 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>removeTargetFromSalesCadence</nameSegment>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <actionCalls>
@@ -34,9 +38,12 @@
         <name>RemoveUnqualifiedLead</name>
         <label>Remove Unqualified Lead</label>
         <locationX>50</locationX>
-        <locationY>648</locationY>
+        <locationY>600</locationY>
         <actionName>removeTargetFromSalesCadence</actionName>
         <actionType>removeTargetFromSalesCadence</actionType>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Remove_Unqualified_Lead</targetReference>
+        </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>completionDisposition</name>
@@ -56,15 +63,66 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>removeTargetFromSalesCadence</nameSegment>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <apiVersion>57.0</apiVersion>
+    <assignments>
+        <name>Assign_varFaultElement_Get_Active_Cadence_Tracker_Record</name>
+        <label>Assign varFaultElement - Get Active Cadence Tracker Record</label>
+        <locationX>1634</locationX>
+        <locationY>384</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>GetActiveCadenceTrackerRecord</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Remove_OneTrust_Opt_Out_Lead</name>
+        <label>Assign varFaultElement - Remove OneTrust Opt Out Lead</label>
+        <locationX>842</locationX>
+        <locationY>708</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Remove_OneTrust_Opt_Out_Lead</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Remove_Unqualified_Lead</name>
+        <label>Assign varFaultElement - Remove Unqualified Lead</label>
+        <locationX>314</locationX>
+        <locationY>708</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>RemoveUnqualifiedLead</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
     <decisions>
         <description>Determines whether the ID of the GetActiveCadenceTrackerRecord exists.</description>
         <name>HasCadenceTrackerId</name>
         <label>Has Cadence Tracker ID?</label>
-        <locationX>578</locationX>
-        <locationY>408</locationY>
+        <locationX>974</locationX>
+        <locationY>384</locationY>
         <defaultConnectorLabel>No (Default)</defaultConnectorLabel>
         <rules>
             <name>CadenceTrackerIdExists</name>
@@ -72,6 +130,13 @@
             <conditions>
                 <leftValueReference>GetActiveCadenceTrackerRecord.Id</leftValueReference>
                 <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetActiveCadenceTrackerRecord.Id</leftValueReference>
+                <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
@@ -85,8 +150,8 @@
     <decisions>
         <name>Was_Lead_Disqualified_or_OneTrust_Opt_Out</name>
         <label>Was Lead Disqualified or OneTrust Opt Out?</label>
-        <locationX>314</locationX>
-        <locationY>528</locationY>
+        <locationX>578</locationX>
+        <locationY>492</locationY>
         <defaultConnectorLabel>n/a</defaultConnectorLabel>
         <rules>
             <name>Lead_was_Disqualified</name>
@@ -126,7 +191,7 @@
             <label>Lead is OneTrust Opt Out</label>
         </rules>
     </decisions>
-    <description>Split Unqualified from OneTrust Opt Out for disposition reason</description>
+    <description>Adds in &quot;isBlank&quot; check with null check of Cadence Tracker ID. Split Unqualified from OneTrust Opt Out for disposition reason</description>
     <environments>Default</environments>
     <interviewLabel>Lead - Remove Unqualified Lead from Cadence {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Lead - Remove Unqualified Lead from Cadence</label>
@@ -153,12 +218,15 @@
         <description>Gets a cadence tracker record with a Target ID matching the Lead ID of the triggering record and with a State not equal to Complete or Error. Stores the ID of the returned record in the GetActiveCadenceTrackerRecord record variable.</description>
         <name>GetActiveCadenceTrackerRecord</name>
         <label>Get Active Cadence Tracker Record</label>
-        <locationX>578</locationX>
-        <locationY>288</locationY>
+        <locationX>974</locationX>
+        <locationY>276</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>HasCadenceTrackerId</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Get_Active_Cadence_Tracker_Record</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>TargetId</field>
@@ -188,7 +256,7 @@
     </recordLookups>
     <sourceTemplate>se_included_flow__RemoveUQLead</sourceTemplate>
     <start>
-        <locationX>56</locationX>
+        <locationX>254</locationX>
         <locationY>0</locationY>
         <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
         <filterLogic>or</filterLogic>
@@ -221,5 +289,37 @@
         </scheduledPaths>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
+    <subflows>
+        <name>Fault_Handler_Subflow</name>
+        <label>Fault Handler Subflow</label>
+        <locationX>1634</locationX>
+        <locationY>492</locationY>
+        <flowName>Insperity_Fault_Handler_Subflow</flowName>
+        <inputAssignments>
+            <name>faultElement</name>
+            <value>
+                <elementReference>varFaultElement</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultFlow</name>
+            <value>
+                <stringValue>Lead_Remove_Unqualified_Lead_from_Cadence</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultMessage</name>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <variables>
+        <name>varFaultElement</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
 </Flow>

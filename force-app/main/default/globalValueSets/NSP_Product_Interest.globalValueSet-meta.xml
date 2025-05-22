@@ -86,6 +86,11 @@
         <label>Time and Attendance</label>
     </customValue>
     <customValue>
+        <fullName>Contractor Management</fullName>
+        <default>false</default>
+        <label>Contractor Management</label>
+    </customValue>
+    <customValue>
         <fullName>Insurance Services</fullName>
         <default>false</default>
         <isActive>false</isActive>

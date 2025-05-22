@@ -397,6 +397,21 @@
                 <default>false</default>
                 <label>Acadia Mineral Investment</label>
             </value>
+            <value>
+                <fullName>108</fullName>
+                <default>false</default>
+                <label>Halo Investment Partners</label>
+            </value>
+            <value>
+                <fullName>109</fullName>
+                <default>false</default>
+                <label>Dudani Enterprises</label>
+            </value>
+            <value>
+                <fullName>110</fullName>
+                <default>false</default>
+                <label>Institute for NonProfit News</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

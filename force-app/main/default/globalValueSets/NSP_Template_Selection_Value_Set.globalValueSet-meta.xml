@@ -160,6 +160,11 @@
         <default>false</default>
         <label>Estimate</label>
     </customValue>
+    <customValue>
+        <fullName>ContractorManagement</fullName>
+        <default>false</default>
+        <label>ContractorManagement</label>
+    </customValue>
     <description>Used in Docusign template selection process.</description>
     <masterLabel>Template Selection Value Set</masterLabel>
     <sorted>false</sorted>

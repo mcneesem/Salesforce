@@ -85,6 +85,9 @@
     &apos;105&apos; , &apos;WizeCamel&apos; ,
     &apos;106&apos; , &apos;Quibus Holding&apos; ,
     &apos;107&apos; , &apos;Acadia Mineral Investment&apos; ,
+    &apos;108&apos; , &apos;Halo Investment Partners&apos; ,
+    &apos;109&apos; , &apos;Dudani Enterprises&apos; ,
+    &apos;110&apos; , &apos;Institute for NonProfit News&apos; ,
     TEXT( pse__Account__r.WO_Asset__r.NSP_National_Account_Group__c )
   )
 )</formula>

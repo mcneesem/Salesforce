@@ -2,7 +2,6 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_Preferred_Payment_Method__c</fullName>
     <description>Captures the Preferred Payment Method</description>
-    <externalId>false</externalId>
     <label>Preferred Payment Method</label>
     <required>false</required>
     <trackHistory>false</trackHistory>
@@ -20,6 +19,11 @@
                 <fullName>Contingent Workforce</fullName>
                 <default>false</default>
                 <label>Contingent Workforce</label>
+            </value>
+            <value>
+                <fullName>Contractor Management</fullName>
+                <default>false</default>
+                <label>Contractor Management</label>
             </value>
         </valueSetDefinition>
     </valueSet>
