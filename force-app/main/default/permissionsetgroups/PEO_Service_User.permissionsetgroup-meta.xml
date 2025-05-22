@@ -4,7 +4,6 @@
     <label>PEO Service User</label>
     <permissionSets>Account_Profile_Access</permissionSets>
     <permissionSets>Accrual_Profile_access</permissionSets>
-    <permissionSets>Case_Report_Account_Team_Cases</permissionSets>
     <permissionSets>Checklist_View_All</permissionSets>
     <permissionSets>Client_goal_project_task_junction_access</permissionSets>
     <permissionSets>Docusign_Account_Management_Report</permissionSets>
