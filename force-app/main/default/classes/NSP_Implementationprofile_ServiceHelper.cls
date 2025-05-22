@@ -1,5 +1,5 @@
 public class NSP_Implementationprofile_ServiceHelper {
-    // test w/ NSP_FSOImplementationControllerTest, NSP_ImpprofileServiceHelper_Test, NSP_MMImplProfile_UpdateTest (83%)
+    // test w/ NSP_FSOImplementationControllerTest, NSP_ImpprofileServiceHelper_Test, NSP_MMImplProfile_UpdateTest (80%)
 
     private String impRecordId;
     private String  impAutomationName;
@@ -57,7 +57,6 @@ public class NSP_Implementationprofile_ServiceHelper {
     private static final String EMPLOYEE_DIRECTORY_FN = 'NSP_EmployeeDirectory';
     private static final String SERVICE_CONTRACT_FN ='NSP_Contractact';
     private static final String EMPLOYEE_MINISTER_FN ='NSP_EmployeeMinister';
-    private static final String FORM_DISCUSSED_FN ='NSP_FormDiscussed';
     private static final String SUBACCOUNT_NEED_FN ='NSP_SubaccountNeed';
     private static final String TIME_ENTRY_FN ='NSP_TimeEntry';
     private static final String SPECIAL_PAYROLLNEED_FN ='NSP_SpecialPayrollNeeds';
@@ -99,7 +98,7 @@ public class NSP_Implementationprofile_ServiceHelper {
             NSP_ServiceConstants.SRP_NOTIFY_401,
             NSP_ServiceConstants.SRP_RET_SALES,
             WC_NOTIFICATION_FN,EPLI_POLICY_FN, LOGO_COLLECTED_FN,PAYROLL_SUMMARY_FN, FEIN_NOTIFY_FN,
-            SUB_ACCOUNT_FN,EMPLOYEE_DIRECTORY_FN, SERVICE_CONTRACT_FN, EMPLOYEE_MINISTER_FN, FORM_DISCUSSED_FN,
+            SUB_ACCOUNT_FN,EMPLOYEE_DIRECTORY_FN, SERVICE_CONTRACT_FN, EMPLOYEE_MINISTER_FN,
             SUBACCOUNT_NEED_FN,TIME_ENTRY_FN, SPECIAL_PAYROLLNEED_FN, STOCK_PURCHASEPLAN_FN, STOCK_OPTION_FN,
             IRR_FN,CLIENT_SUMMARY_FN, PAYROLL_SPECIALIST_SUMMARY_FN,PRIOR_WAGES_FN,EE_COMMISSION_FN,CAFETERIAL_PLAN_FN,TECH_PACKET_FN,NSP_Existing_Retirement_Plan_Move_FSO,
             AdditionalBPSes_FSO,NSP_New_401_k_FSO
@@ -139,7 +138,6 @@ public class NSP_Implementationprofile_ServiceHelper {
             EMPLOYEE_DIRECTORY_FN ,
             SERVICE_CONTRACT_FN ,
             EMPLOYEE_MINISTER_FN ,
-            FORM_DISCUSSED_FN ,
             SUBACCOUNT_NEED_FN ,
             TIME_ENTRY_FN ,
             SPECIAL_PAYROLLNEED_FN ,
@@ -313,9 +311,6 @@ public class NSP_Implementationprofile_ServiceHelper {
         }
         if(ipRecordsByAutomation.containsKey(EMPLOYEE_MINISTER_FN)){
             emailNotifyforEmployeeMinister();
-        }
-        if(ipRecordsByAutomation.containsKey(FORM_DISCUSSED_FN)){
-            emailNotifyforFormDiscussed();
         }
         if(ipRecordsByAutomation.containsKey(SUBACCOUNT_NEED_FN)){
             emailNotifyforSubaccountNeed();
@@ -493,9 +488,6 @@ public class NSP_Implementationprofile_ServiceHelper {
             }
             if(automationsToExecute.contains(EMPLOYEE_MINISTER_FN)){
                 checkforEmployeeMinister(ipRec, existingRec);
-            }
-            if(automationsToExecute.contains(FORM_DISCUSSED_FN)){
-                checkforFormDiscussed(ipRec, existingRec);
             }
             if(automationsToExecute.contains(SUBACCOUNT_NEED_FN)){
                 checkforSubaccountNeed(ipRec, existingRec);
@@ -2212,51 +2204,6 @@ public class NSP_Implementationprofile_ServiceHelper {
      Automation icon: envelope
     */
 
-    private void checkforFormDiscussed(Implementation_Profile__c newIp, Implementation_Profile__c existingRec){
-        
-        if(newIp.RecordTypeId == ipFSORecordTypeId  && 
-           newIp.Has_form_8973_been_discussed__c==NSP_ServiceConstants.YES
-           && newIp.Form_8973_Contact__c!=null && newIp.Contact_Information__c!=null ){
-               updateEligibleRecordsMap(ipRecordsByAutomation, newIp.Id, FORM_DISCUSSED_FN);
-               
-           }
-    }
-    
-    private  void emailNotifyforFormDiscussed(){
-        List<NSP_Implementation_Profile_Automation__c> ipAutomationRecords = new List<NSP_Implementation_Profile_Automation__c>();
-        NSP_Implementation_Automations__mdt ipa = NSP_Implementation_Automations__mdt.getInstance(FORM_DISCUSSED_FN);
-        NSP_PEO_Implementations__mdt pf = NSP_PEO_Implementations__mdt.getInstance(FORM_DISCUSSED_FN);
-        
-        for(Id ipRecId : ipRecordsByAutomation.get(FORM_DISCUSSED_FN)){
-            Implementation_Profile__c ipRec = newIPs.get(ipRecId);
-            if((isRerun || ipRec.NSP_Form_Completed__c) && !isSaveForm ){
-                if(!isRerun && !ipAutomationdata?.get(IP_AUTOMATION_IDENTIFIER).contains(ipRec.Id+'_'+FORM_DISCUSSED_FN+'_'+NSP_ServiceConstants.FSOProfile)){
-                    
-                    lstEmailMessages.add(NSP_IP_MM_EmailAutomationsController.getMailObject(ipRec,new List<String>{pf.NSP_Email_Address__c},null,null,mapOfEmailTempaltes.get(FORM_DISCUSSED_FN).Id,isRerun));
-                    ipAutomationRecords.add(ipAutomationHelper.createIPAutomation(ipRec, ipa.NSP_Automation_Name__c, ipa.NSP_Method_Name__c,ipa.NSP_Section__c));
-                }
-                else if(isRerun){
-                    lstEmailMessages.add(NSP_IP_MM_EmailAutomationsController.getMailObject(ipRec,new List<String>{pf.NSP_Email_Address__c},null,null,mapOfEmailTempaltes.get(FORM_DISCUSSED_FN).Id,isRerun));
-                    impRecordId = ipRec.Id;
-                    impAutomationName = ipa.NSP_Automation_Name__c;
-                    impMethodName = ipa.NSP_Method_Name__c;
-                    impAutomationSection = ipa.NSP_Section__c;
-                    if(ipRec.RecordTypeId==ipFSORecordTypeId){
-                        impAutomationRecordType=NSP_ServiceConstants.FSOProfile;
-                    }
-                    if(ipRec.RecordTypeId==ipMMRecordTypeId){
-                        impAutomationRecordType=NSP_ServiceConstants.MIDDLEMARKET;
-                    }
-                    
-                }
-            }
-            
-        }
-        recToInsert.addAll(ipAutomationRecords);
-        if(impRecordId!=null && impAutomationName !=null){
-            NSP_Implprofile_ServiceHelperUpdate.automationRecordUpdate(impRecordId,impAutomationName,impMethodName,impAutomationRecordType,impAutomationSection );
-       }
-    }
     
     /**
      Automation Section: Payroll 
