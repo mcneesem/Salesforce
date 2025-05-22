@@ -6,6 +6,7 @@
     <permissionSets>Account_Assignment_Method_Edit_Access</permissionSets>
     <permissionSets>Account_Create</permissionSets>
     <permissionSets>Advanced_Salesforce_Administrator</permissionSets>
+    <permissionSets>Bypass_Account_Outgoing_Owner_Reassignment</permissionSets>
     <permissionSets>Bypass_Campaign_Dates</permissionSets>
     <permissionSets>Bypass_Task_Event_Cancelled_Status</permissionSets>
     <permissionSets>Contact_Modify_All</permissionSets>

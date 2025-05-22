@@ -28,11 +28,6 @@
                 <label>Enrollment Fee Multi Payment Non Refundable</label>
             </value>
             <value>
-                <fullName>GLALInsuranceCertificateRequest</fullName>
-                <default>false</default>
-                <label>GLALInsuranceCertificateRequest</label>
-            </value>
-            <value>
                 <fullName>NDA</fullName>
                 <default>false</default>
                 <label>NDA</label>
@@ -180,6 +175,12 @@
                 <default>false</default>
                 <isActive>false</isActive>
                 <label>FundingPacket</label>
+            </value>
+            <value>
+                <fullName>GLALInsuranceCertificateRequest</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>GLALInsuranceCertificateRequest</label>
             </value>
             <value>
                 <fullName>GLALInsuranceCertificateRequestwithSample</fullName>

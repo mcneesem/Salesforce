@@ -3925,27 +3925,7 @@
     <picklistValues>
         <picklist>Type</picklist>
         <values>
-            <fullName>CASPSL</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CASPSL New PT EE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Congruex</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Holiday Admin Relief</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Internal Request - WX</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Internal Request WO</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3982,18 +3962,6 @@
         </values>
         <values>
             <fullName>TimeStar Termination</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Trigild %E2%80%93 New Property</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>WO Termination</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>WO%2FWA Transition</fullName>
             <default>false</default>
         </values>
     </picklistValues>

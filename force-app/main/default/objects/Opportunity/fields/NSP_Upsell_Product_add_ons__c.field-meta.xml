@@ -58,6 +58,11 @@
                 <label>Contingent Workforce</label>
             </value>
             <value>
+                <fullName>Contractor Management</fullName>
+                <default>false</default>
+                <label>Contractor Management</label>
+            </value>
+            <value>
                 <fullName>Insurance Services</fullName>
                 <default>false</default>
                 <isActive>false</isActive>

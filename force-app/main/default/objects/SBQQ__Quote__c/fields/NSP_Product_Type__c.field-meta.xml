@@ -118,6 +118,11 @@
                 <default>false</default>
                 <label>Contingent Workforce</label>
             </value>
+            <value>
+                <fullName>Contractor Management</fullName>
+                <default>false</default>
+                <label>Contractor Management</label>
+            </value>
         </valueSetDefinition>
         <valueSettings>
             <controllingFieldValue>RET- White Label FBT Fee Schedule</controllingFieldValue>
@@ -254,6 +259,10 @@
         <valueSettings>
             <controllingFieldValue>List Price</controllingFieldValue>
             <valueName>Contingent Workforce</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>List Price</controllingFieldValue>
+            <valueName>Contractor Management</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>WX</controllingFieldValue>
