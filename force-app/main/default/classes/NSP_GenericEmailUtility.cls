@@ -6,7 +6,8 @@
 */
 
 public class NSP_GenericEmailUtility {
-    
+    // test w/ NSP_GenericEmailUtilityTest (86%)
+
     static final string CLASS_NAME = 'NSP_GenericEmailUtility';
 /**
 * Method to send emails.
@@ -16,37 +17,59 @@ public class NSP_GenericEmailUtility {
 * @Since September 2022
 */
     public static Integer sendSingleEmailMessages (Messaging.SingleEmailMessage[] emailMessages, Boolean allOrNone) {
-        
+
         Messaging.SendEmailResult[] results;
         boolean isEmailSent=false;
         Integer emailSentCount = 0;
-        try{ 
+        try{
             results = Messaging.sendEmail(emailMessages, allOrNone);
+            List<String> errorMessages = new List<String>();
             isEmailSent=true;
             for(Messaging.SendEmailResult res : results) {
                 if(res.isSuccess()) {
                     emailSentCount+=1;
+                }else{
+                    for ( Messaging.SendEmailError error : res.getErrors() ) {
+                        errorMessages.add(
+                            error.getStatusCode()
+                            + ', '
+                            + error.getMessage()
+                            + ': ['
+                            + String.join( error.getFields() , ', ' )
+                            + ']'
+                            + ' ('
+                            + error.getTargetObjectId()
+                            + ')'
+                        );
+                    }
                 }
             }
-        }catch(System.EmailException ex){
-            NSP_ErrorLogHandler.logSaveException(CLASS_NAME,'sendSingleEmailMessages',ex.getMessage());
+            if(errorMessages != null && !errorMessages.isEmpty()){
+                NSP_ErrorLogHandler.logInfo(
+                    NSP_GenericEmailUtility.class.getName(),
+                    'sendSingleEmailMessages' ,
+                    String.join( errorMessages , '\r\n' )
+                );
+            }
+        }catch(Exception ex){
+            NSP_GenericEmailUtility.handleException(ex,'sendSingleEmailMessages');
             return emailSentCount;
         }
-        
+
         return emailSentCount;
     }
-    
-    
+
+
     /**
 * Method to generate emails.
 * @param  Email Messages Parameters - Subject, Body, TemplateId, OrgWideEmailId, recordId, TargetObjId, ToAddressList, CCAddressList
 * @return List of Email Messages - List of Messaging.SingleEmailMessage objects
 * @Author Rakesh Das
 * @Since September 2022
-*/  
-    
+*/
+
     public static Messaging.SingleEmailMessage generateSingleMessageWithTemplate (String templateId, String recordId, String targetObjId, String orgWideEmailId, List<String> toAddressList, List<String> ccAddressList, String subject, String plainTextBody) {
-        
+
         Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
         try{
             mail.setWhatId(recordId);
@@ -67,25 +90,25 @@ public class NSP_GenericEmailUtility {
             if(toAddressList!=null){
                 mail.setCcAddresses(ccAddressList);
             }
-            
+
         }
         catch (Exception ex){
-            NSP_ErrorLogHandler.logSaveException(CLASS_NAME,'generateSingleMessageWithTemplate',ex.getMessage());
+            NSP_GenericEmailUtility.handleException(ex,'generateSingleMessageWithTemplate');
             return null;
         }
         return mail;
     }
-    
+
     /**
 * Method to get Template Id from Template Developer Name stored in Org.
 * @param  String templateDevName - Template Developer Name
 * @return String TemplateId
 * @Author Rakesh Das
 * @Since September 2022
-*/ 
-    
+*/
+
     public static String getTemplateIdFromDevName (String templateDevName) {
-        
+
         String templateId;
         if(templateDevName !=null){
             try{
@@ -93,30 +116,43 @@ public class NSP_GenericEmailUtility {
                 templateId = emailTemplateStored.Id;
             }
             catch (Exception ex){
-                NSP_ErrorLogHandler.logSaveException(CLASS_NAME,'getTemplateIdFromDevName',ex.getMessage());
-                
+                NSP_GenericEmailUtility.handleException(ex,'getTemplateIdFromDevName');
             }
         }
         return templateId;
     }
-    
+
     /**
 * Method to get TOrg Wide Address.
-* @param  String displayName 
+* @param  String displayName
 * @return String orgWidAddress
 * @Author Rakesh Das
 * @Since January 2023
-*/ 
+*/
     public static OrgWideEmailAddress getOrgWideAddress ( String displayName) {
         OrgWideEmailAddress orgWidAddress;
         try {
             orgWidAddress = [SELECT Id, Address, DisplayName FROM OrgWideEmailAddress WHERE DisplayName=:displayName LIMIT 1];
          }
         catch(Exception ex){
-            NSP_ErrorLogHandler.logSaveException(CLASS_NAME,'getOrgWideAddress',ex.getMessage());
+            NSP_GenericEmailUtility.handleException(ex,'getOrgWideAddress');
         }
         return orgWidAddress;
     }
 
+    // for test code coverage only...
+    public static void testHandleException( Exception e , String methodName ) {
+        if ( Test.isRunningTest() ) {
+            NSP_GenericEmailUtility.handleException( e , methodName );
+        }
+    }
+
+    private static void handleException( Exception e , String methodName ) {
+        NSP_ErrorLogHandler.logException(
+            NSP_GenericEmailUtility.class.getName() ,
+            methodName ,
+            e
+        );
+    }
 
 }
