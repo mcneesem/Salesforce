@@ -12,6 +12,8 @@ Modification Log     :
 * Anil                      12/01/22                First Iteration
 */
 public without sharing class NSP_NotificatonIESAlertsBatch implements Database.Batchable<sObject>, Schedulable  {
+    // test w/ NSP_NotificatonIESAlertsBatch_Test (96%)
+
     private static final List<String> SUB_CLIENT_CONTACT_FIELDS = new List<String>{
         'Id',
         'NSP_Background_Contact__c',
