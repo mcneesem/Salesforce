@@ -3,6 +3,8 @@
     <description>Group of Permission Sets to be granted to Team Product Users.</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Team Product</label>
+    <permissionSets>Assign_Connected_App_Data_Loader</permissionSets>
+    <permissionSets>Assign_Connected_App_Workbench</permissionSets>
     <permissionSets>Run_Flows</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>
