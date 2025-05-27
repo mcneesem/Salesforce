@@ -4,7 +4,7 @@
         <name>Route_to_401k_Queue</name>
         <label>Route to 401k Queue</label>
         <locationX>402</locationX>
-        <locationY>2378</locationY>
+        <locationY>2678</locationY>
         <actionName>routeWork</actionName>
         <actionType>routeWork</actionType>
         <faultConnector>
@@ -79,13 +79,13 @@
             <name>botLabel</name>
         </inputParameters>
         <nameSegment>routeWork</nameSegment>
-        <versionSegment>1</versionSegment>
+        <offset>0</offset>
     </actionCalls>
     <actionCalls>
         <name>Route_to_Benefits_Queue</name>
         <label>Route to Benefits Queue</label>
         <locationX>930</locationX>
-        <locationY>2378</locationY>
+        <locationY>2678</locationY>
         <actionName>routeWork</actionName>
         <actionType>routeWork</actionType>
         <faultConnector>
@@ -160,13 +160,13 @@
             <name>botLabel</name>
         </inputParameters>
         <nameSegment>routeWork</nameSegment>
-        <versionSegment>1</versionSegment>
+        <offset>0</offset>
     </actionCalls>
     <actionCalls>
         <name>Route_to_Queue</name>
         <label>Route to Queue</label>
         <locationX>666</locationX>
-        <locationY>2846</locationY>
+        <locationY>3146</locationY>
         <actionName>routeWork</actionName>
         <actionType>routeWork</actionType>
         <faultConnector>
@@ -241,14 +241,14 @@
             <name>botLabel</name>
         </inputParameters>
         <nameSegment>routeWork</nameSegment>
-        <versionSegment>1</versionSegment>
+        <offset>0</offset>
     </actionCalls>
     <apiVersion>59.0</apiVersion>
     <assignments>
         <name>Populate_Case_On_Messaging_Session_Record</name>
         <label>Populate Case On Messaging Session Record</label>
         <locationX>1282</locationX>
-        <locationY>1490</locationY>
+        <locationY>1790</locationY>
         <assignmentItems>
             <assignToReference>messagingSessionRecord.CaseId</assignToReference>
             <operator>Assign</operator>
@@ -319,6 +319,22 @@
             </value>
         </assignmentItems>
         <connector>
+            <targetReference>Check_Sub_Topic</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Translate_Rollover</name>
+        <label>Translate: Rollover</label>
+        <locationX>1150</locationX>
+        <locationY>1490</locationY>
+        <assignmentItems>
+            <assignToReference>input_Topic</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Rollover</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
             <targetReference>Create_Case</targetReference>
         </connector>
     </assignments>
@@ -386,7 +402,7 @@
         <name>Check_Messaging_Session</name>
         <label>Check Messaging Session</label>
         <locationX>1282</locationX>
-        <locationY>1598</locationY>
+        <locationY>1898</locationY>
         <defaultConnector>
             <targetReference>updateMessagingEndUser</targetReference>
         </defaultConnector>
@@ -411,7 +427,7 @@
         <name>Check_Record_Id</name>
         <label>Check Record Id</label>
         <locationX>1282</locationX>
-        <locationY>2162</locationY>
+        <locationY>2462</locationY>
         <defaultConnector>
             <isGoTo>true</isGoTo>
             <targetReference>Missing_Record_Id_Fault_Handler</targetReference>
@@ -473,10 +489,35 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Check_Sub_Topic</name>
+        <label>Check Sub-Topic</label>
+        <locationX>1282</locationX>
+        <locationY>1382</locationY>
+        <defaultConnector>
+            <targetReference>Create_Case</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Dese_la_vuelta</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>input_Topic</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Dese la vuelta</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Translate_Rollover</targetReference>
+            </connector>
+            <label>Dese la vuelta</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Check_subtopic_for_Case</name>
         <label>Check subtopic for Case</label>
         <locationX>930</locationX>
-        <locationY>2270</locationY>
+        <locationY>2570</locationY>
         <defaultConnector>
             <targetReference>Route_to_Queue</targetReference>
         </defaultConnector>
@@ -700,7 +741,7 @@
         <locationX>1282</locationX>
         <locationY>1082</locationY>
         <defaultConnector>
-            <targetReference>Create_Case</targetReference>
+            <targetReference>Check_Sub_Topic</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -798,7 +839,7 @@
         <name>Create_Case</name>
         <label>Create Case</label>
         <locationX>1282</locationX>
-        <locationY>1382</locationY>
+        <locationY>1682</locationY>
         <connector>
             <targetReference>Populate_Case_On_Messaging_Session_Record</targetReference>
         </connector>
@@ -1006,7 +1047,7 @@
         <name>populateContactOnMessagingSession</name>
         <label>populateContactOnMessagingSession</label>
         <locationX>1018</locationX>
-        <locationY>1706</locationY>
+        <locationY>2006</locationY>
         <connector>
             <targetReference>updateMessagingEndUser</targetReference>
         </connector>
@@ -1020,7 +1061,7 @@
         <name>updateMessagingEndUser</name>
         <label>updateMessagingEndUser</label>
         <locationX>1282</locationX>
-        <locationY>1946</locationY>
+        <locationY>2246</locationY>
         <connector>
             <targetReference>UpdateMessagingSessionWithPreChatInfo</targetReference>
         </connector>
@@ -1054,7 +1095,7 @@
         <name>UpdateMessagingSessionWithPreChatInfo</name>
         <label>UpdateMessagingSessionWithPreChatInfo</label>
         <locationX>1282</locationX>
-        <locationY>2054</locationY>
+        <locationY>2354</locationY>
         <connector>
             <targetReference>Check_Record_Id</targetReference>
         </connector>
@@ -1137,7 +1178,7 @@
         <name>Insperity_Fault_Handler_Subflow</name>
         <label>Insperity Fault Handler Subflow</label>
         <locationX>1942</locationX>
-        <locationY>2162</locationY>
+        <locationY>2462</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultMessage</name>
