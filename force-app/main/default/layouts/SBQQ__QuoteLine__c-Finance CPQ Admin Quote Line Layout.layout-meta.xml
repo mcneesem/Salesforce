@@ -108,6 +108,10 @@
                 <behavior>Readonly</behavior>
                 <field>NSP_Template_Section__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Flat_Fee_Reference_Price__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
