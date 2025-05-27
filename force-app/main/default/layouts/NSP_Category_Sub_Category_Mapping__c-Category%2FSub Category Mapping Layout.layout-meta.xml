@@ -61,6 +61,10 @@
                 <behavior>Edit</behavior>
                 <field>NSP_Public_Groups_To_Share__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Case_Guidance__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
