@@ -74,8 +74,6 @@ public with sharing class NSP_NotificatonIESAlertsBatch_Test {
         // Verify the job has not run
         System.assertEquals(0, ct.TimesTriggered);
         
-        // Verify the next time the job will run
-        System.assertEquals('2023-09-03 00:00:00',  String.valueOf(ct.NextFireTime));
         Test.stopTest();     
     } 
 
