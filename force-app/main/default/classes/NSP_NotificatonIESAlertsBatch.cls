@@ -179,10 +179,10 @@ public without sharing class NSP_NotificatonIESAlertsBatch implements Database.B
      */
     private without sharing class BuildEmailTemplates{
 
-        /**
-         * @description a.If the “Employee Status” for the Sub Client Contact (SCC) 
-         * where the contact is identified as a Background Contact is updated from <>TERMINATED to TERMINATED and the WO AIMS status = Active
-         */
+        //
+        // @description a.If the "Employee Status" for the Sub Client Contact (SCC) 
+        // where the contact is identified as a Background Contact is updated from <>TERMINATED to TERMINATED and the WO AIMS status = Active
+        //
         public void isTerminatedSubCientWoActiveEmail(Map<String, List<String>> contIdWithSubCC) {
             for(Id contactId :  contIdWithSubCC.keySet()) {
                 String body = contactIdWithName.get(contactId)+' has been terminated from '+ String.join(contIdWithSubCC.get(contactId), ', ')
@@ -196,10 +196,10 @@ public without sharing class NSP_NotificatonIESAlertsBatch implements Database.B
             }
         }
 
-        /**
-         * @description b.If the “Employee Status” for the SCC where the contact is identified 
-         * as a Background Contact is updated from <>TERMINATED to TERMINATED and the WO AIMS status = TERMINATED
-         */
+        //
+        // @description b.If the "Employee Status" for the SCC where the contact is identified 
+        // as a Background Contact is updated from <>TERMINATED to TERMINATED and the WO AIMS status = TERMINATED
+        //
         public void isTerminatedSubCientWoTerminatedEmail(Map<String, List<String>> contIdWithSubCC) {
             Map<String, Set<String>> accountWithScc = new Map<String, Set<String>>();
             Map<String,String> contactWithName = new Map<String,String>();
@@ -242,10 +242,10 @@ public without sharing class NSP_NotificatonIESAlertsBatch implements Database.B
             }
         }
 
-        /**
-         * @description c. If the  “Employee Status” for the SCC where the contact is 
-         * identified as a Background Contact is updated from <>(TERMINATED or FMLA or FMLA – WORKERS COMP) to L.O.A., L.O.A. – EDUCATION, OR L.O.A. - MILITARY and the WO AIMS status = Active
-         */
+        //
+        // @description c. If the "Employee Status" for the SCC where the contact is 
+        // identified as a Background Contact is updated from <>(TERMINATED or FMLA or FMLA – WORKERS COMP) to L.O.A., L.O.A. – EDUCATION, OR L.O.A. - MILITARY and the WO AIMS status = Active
+        //
         public void isSubCientLOAEmail(Map<String, List<String>> contIdWithSubCC) {
             for(Id contactId :  contIdWithSubCC.keySet()) {
                 String body = contactIdWithName.get(contactId)+' has been placed on L.O.A. from '+ String.join(contIdWithSubCC.get(contactId), ', ')
@@ -259,10 +259,10 @@ public without sharing class NSP_NotificatonIESAlertsBatch implements Database.B
             }
         }
 
-        /**
-         * @description d. If the  “Employee Status” for the SCC where the contact is identified as a Background Contact is updated from 
-         * L.O.A., L.O.A. – EDUCATION, OR L.O.A. - MILITARY  to <>TERMINATED excluding FMLA or FMLA – WORKERS COMP and the WO AIMS status = Active
-         */
+        //
+        // @description d. If the "Employee Status" for the SCC where the contact is identified as a Background Contact is updated from 
+        // L.O.A., L.O.A. – EDUCATION, OR L.O.A. - MILITARY  to <>TERMINATED excluding FMLA or FMLA – WORKERS COMP and the WO AIMS status = Active
+        //
         public void isSubCientReturnedLOAEmail(Map<String, List<String>> contIdWithSubCC) {
             for(Id contactId :  contIdWithSubCC.keySet()) {
                 String body = contactIdWithName.get(contactId)+' has returned from L.O.A. from '+ String.join(contIdWithSubCC.get(contactId), ', ')
@@ -276,10 +276,10 @@ public without sharing class NSP_NotificatonIESAlertsBatch implements Database.B
             }
         }
 
-        /**
-         * @description e.	If the “Employee Status” for the SCC where the contact is identified 
-         * as a Background Contact is updated from <>(TERMINATED or L.O.A., L.O.A. – EDUCATION, OR L.O.A. – MILITARY)  to FMLA or FMLA – WORKERS COMP and the WO AIMS status = Active
-         */
+        //
+        // @description e. If the "Employee Status" for the SCC where the contact is identified 
+        // as a Background Contact is updated from <>(TERMINATED or L.O.A., L.O.A. – EDUCATION, OR L.O.A. – MILITARY)  to FMLA or FMLA – WORKERS COMP and the WO AIMS status = Active
+        //
         public void isSubCientFLMAEmail(Map<String, List<String>> contIdWithSubCC) {
             for(Id contactId :  contIdWithSubCC.keySet()) {
                 String body = contactIdWithName.get(contactId)+' is on FMLA leave from '+ String.join(contIdWithSubCC.get(contactId), ', ')
@@ -293,10 +293,10 @@ public without sharing class NSP_NotificatonIESAlertsBatch implements Database.B
             }
         }
 
-        /**
-         * @description f.If the “Employee Status” for the SCC where the contact is identified as a 
-         * Background Contact is updated from FMLA or FMLA – WORKERS COMP to <>TERMINATED excluding L.O.A., L.O.A. – EDUCATION, OR L.O.A. - MILITARY  and the WO AIMS status = Active
-         */
+        //
+        // @description f.If the "Employee Status" for the SCC where the contact is identified as a 
+        // Background Contact is updated from FMLA or FMLA – WORKERS COMP to <>TERMINATED excluding L.O.A., L.O.A. – EDUCATION, OR L.O.A. - MILITARY  and the WO AIMS status = Active
+        //
         public void isSubCientReturnedFLMAEmail(Map<String, List<String>> contIdWithSubCC) {
             for(Id contactId :  contIdWithSubCC.keySet()) {
                 String body = contactIdWithName.get(contactId)+' has returned from FMLA leave at '+ String.join(contIdWithSubCC.get(contactId), ', ')
@@ -310,9 +310,7 @@ public without sharing class NSP_NotificatonIESAlertsBatch implements Database.B
             }
         }
 
-        /**
-         * @description g.If the “Employee Status” for the SCC where the contact is identified as a Background contact is updated from TERMINATED to <>TERMINATED
-         */
+        // @description g.If the "Employee Status" for the SCC where the contact is identified as a Background contact is updated from TERMINATED to <>TERMINATED
         public void isSubCientRehiredEmail(Map<String, List<String>> contIdWithSubCC) {
             for(Id contactId :  contIdWithSubCC.keySet()) {
                 String body = contactIdWithName.get(contactId)+' has been rehired to '+String.join(contIdWithSubCC.get(contactId), ', ')+ '.'
@@ -376,10 +374,10 @@ public without sharing class NSP_NotificatonIESAlertsBatch implements Database.B
             NSP_ServiceConstants.LOA_MILITARY_STATUS
         };
 
-        /**
-         * @description a.If the “Employee Status” for the Sub Client Contact (SCC) where the contact is identified as a Background Contact is updated from <>TERMINATED to TERMINATED and the WO AIMS status = Active
-         * @return  Boolean if criteria is matched
-         */
+        //
+        // @description a.If the "Employee Status" for the Sub Client Contact (SCC) where the contact is identified as a Background Contact is updated from <>TERMINATED to TERMINATED and the WO AIMS status = Active
+        // @return  Boolean if criteria is matched
+        //
         public Boolean isTerminatedSubCientWoActive(NSP_Sub_Client_Contact__c subClientContact) {
             return (subClientContact.NSP_Employee_Status__c != subClientContact.NSP_Old_Employee_Status__c &&
                 subClientContact.NSP_Old_Employee_Status__c != NSP_ServiceConstants.TERMINATED_STATUS &&
@@ -387,10 +385,10 @@ public without sharing class NSP_NotificatonIESAlertsBatch implements Database.B
                 subClientContact.NSP_Sub_Client__r.NSP_Asset__r.NSP_Account_Status__c == NSP_ServiceConstants.AIMS_STATUS);
         }
 
-        /**
-         * @description b.	If the “Employee Status” for the SCC where the contact is identified as a Background Contact is updated from <>TERMINATED to TERMINATED and the WO AIMS status = TERMINATED
-         * @return  Boolean if criteria is matched
-         */
+        //
+        // @description b. If the "Employee Status" for the SCC where the contact is identified as a Background Contact is updated from <>TERMINATED to TERMINATED and the WO AIMS status = TERMINATED
+        // @return  Boolean if criteria is matched
+        //
         public Boolean isTerminatedSubCientWoTerminated(NSP_Sub_Client_Contact__c subClientContact) {
             return (subClientContact.NSP_Employee_Status__c != subClientContact.NSP_Old_Employee_Status__c &&
                 subClientContact.NSP_Old_Employee_Status__c != NSP_ServiceConstants.TERMINATED_STATUS &&
@@ -398,10 +396,10 @@ public without sharing class NSP_NotificatonIESAlertsBatch implements Database.B
                 subClientContact.NSP_Sub_Client__r.NSP_Asset__r.NSP_Account_Status__c == NSP_ServiceConstants.TERMINATED_STATUS);
         }
 
-        /**
-         * @description c.	If the  “Employee Status” for the SCC where the contact is identified as a Background Contact is updated from <>(TERMINATED or FMLA or FMLA – WORKERS COMP) to L.O.A., L.O.A. – EDUCATION, OR L.O.A. - MILITARY and the WO AIMS status = Active
-         * @return  Boolean if criteria is matched
-         */
+        //
+        // @description c. If the "Employee Status" for the SCC where the contact is identified as a Background Contact is updated from <>(TERMINATED or FMLA or FMLA – WORKERS COMP) to L.O.A., L.O.A. – EDUCATION, OR L.O.A. - MILITARY and the WO AIMS status = Active
+        // @return  Boolean if criteria is matched
+        //
         public Boolean isSubCientLOA(NSP_Sub_Client_Contact__c subClientContact) {
             return (subClientContact.NSP_Employee_Status__c != subClientContact.NSP_Old_Employee_Status__c &&
                 subClientContact.NSP_Sub_Client__r.NSP_Asset__r.NSP_Account_Status__c == NSP_ServiceConstants.AIMS_STATUS &&
@@ -409,10 +407,10 @@ public without sharing class NSP_NotificatonIESAlertsBatch implements Database.B
                 lstLOA.contains(subClientContact.NSP_Employee_Status__c));
         }
 
-        /**
-         * @description d.	If the  “Employee Status” for the SCC where the contact is identified as a Background Contact is updated from L.O.A., L.O.A. – EDUCATION, OR L.O.A. - MILITARY  to <>TERMINATED excluding FMLA or FMLA – WORKERS COMP and the WO AIMS status = Active
-         * @return  Boolean if criteria is matched
-         */
+        //
+        // @description d. If the "Employee Status" for the SCC where the contact is identified as a Background Contact is updated from L.O.A., L.O.A. – EDUCATION, OR L.O.A. - MILITARY  to <>TERMINATED excluding FMLA or FMLA – WORKERS COMP and the WO AIMS status = Active
+        // @return  Boolean if criteria is matched
+        //
         public Boolean isSubCientReturnedLOA(NSP_Sub_Client_Contact__c subClientContact) {
             return (subClientContact.NSP_Employee_Status__c != subClientContact.NSP_Old_Employee_Status__c &&
                 subClientContact.NSP_Sub_Client__r.NSP_Asset__r.NSP_Account_Status__c == NSP_ServiceConstants.AIMS_STATUS &&
@@ -420,10 +418,10 @@ public without sharing class NSP_NotificatonIESAlertsBatch implements Database.B
                 !lstFMLA.contains(subClientContact.NSP_Employee_Status__c));
         }
 
-        /**
-         * @description e.	If the “Employee Status” for the SCC where the contact is identified as a Background Contact is updated from <>(TERMINATED or L.O.A., L.O.A. – EDUCATION, OR L.O.A. – MILITARY)  to FMLA or FMLA – WORKERS COMP and the WO AIMS status = Active
-         * @return  Boolean if criteria is matched
-         */
+        //
+        // @description e. If the "Employee Status" for the SCC where the contact is identified as a Background Contact is updated from <>(TERMINATED or L.O.A., L.O.A. – EDUCATION, OR L.O.A. – MILITARY)  to FMLA or FMLA – WORKERS COMP and the WO AIMS status = Active
+        // @return  Boolean if criteria is matched
+        //
         public Boolean isSubCientFLMA(NSP_Sub_Client_Contact__c subClientContact) {
             return (subClientContact.NSP_Employee_Status__c != subClientContact.NSP_Old_Employee_Status__c &&
                 subClientContact.NSP_Sub_Client__r.NSP_Asset__r.NSP_Account_Status__c == NSP_ServiceConstants.AIMS_STATUS &&
@@ -431,10 +429,10 @@ public without sharing class NSP_NotificatonIESAlertsBatch implements Database.B
                 newLstFLMA.contains(subClientContact.NSP_Employee_Status__c));
         }
 
-        /**
-         * @description f.	If the “Employee Status” for the SCC where the contact is identified as a Background Contact is updated from FMLA or FMLA – WORKERS COMP to <>TERMINATED excluding L.O.A., L.O.A. – EDUCATION, OR L.O.A. - MILITARY  and the WO AIMS status = Active
-         * @return  Boolean if criteria is matched
-         */
+        //
+        // @description f. If the "Employee Status" for the SCC where the contact is identified as a Background Contact is updated from FMLA or FMLA – WORKERS COMP to <>TERMINATED excluding L.O.A., L.O.A. – EDUCATION, OR L.O.A. - MILITARY  and the WO AIMS status = Active
+        // @return  Boolean if criteria is matched
+        //
         public Boolean isSubCientReturnedFLMA(NSP_Sub_Client_Contact__c subClientContact) {
             return (subClientContact.NSP_Employee_Status__c != subClientContact.NSP_Old_Employee_Status__c &&
                 subClientContact.NSP_Sub_Client__r.NSP_Asset__r.NSP_Account_Status__c == NSP_ServiceConstants.AIMS_STATUS &&
@@ -442,10 +440,10 @@ public without sharing class NSP_NotificatonIESAlertsBatch implements Database.B
                 !newReturnedFLMA.contains(subClientContact.NSP_Employee_Status__c));
         }
 
-        /**
-         * @description g.	If the “Employee Status” for the SCC where the contact is identified as a Background contact is updated from TERMINATED to <>TERMINATED
-         * @return  Boolean if criteria is matched
-         */
+        //
+        // @description g. If the "Employee Status" for the SCC where the contact is identified as a Background contact is updated from TERMINATED to <>TERMINATED
+        // @return  Boolean if criteria is matched
+        //
         public Boolean isSubCientRehired(NSP_Sub_Client_Contact__c subClientContact) {
             return (subClientContact.NSP_Employee_Status__c != subClientContact.NSP_Old_Employee_Status__c &&
                 subClientContact.NSP_Old_Employee_Status__c == NSP_ServiceConstants.TERMINATED_STATUS &&
