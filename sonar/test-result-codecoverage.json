@@ -41332,7 +41332,7 @@
   {
     "id": "01p4x00000VMCRjAAP",
     "name": "NSP_ChatterPostFromProcessBuilder",
-    "totalLines": 29,
+    "totalLines": 24,
     "lines": {
       "10": 1,
       "12": 1,
@@ -41357,14 +41357,9 @@
       "48": 1,
       "50": 1,
       "51": 1,
-      "54": 1,
-      "56": 1,
-      "57": 1,
-      "58": 1,
-      "59": 1,
-      "60": 1
+      "54": 1
     },
-    "totalCovered": 29,
+    "totalCovered": 24,
     "coveredPercent": 100
   },
   {
