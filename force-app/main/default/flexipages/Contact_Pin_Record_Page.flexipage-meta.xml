@@ -271,9 +271,6 @@
                         <valueListItems>
                             <value>MassChangeOwner</value>
                         </valueListItems>
-                        <valueListItems>
-                            <value>New</value>
-                        </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
                 <componentInstanceProperties>

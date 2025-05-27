@@ -375,6 +375,7 @@
         <relatedList>RelatedContentNoteList</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>New</excludeButtons>
         <fields>Case.CASE_STATUS</fields>
         <fields>Case.NSP_Case_Sub_Status__c</fields>
         <fields>Account.ACC_NAME</fields>
