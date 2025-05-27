@@ -123,6 +123,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Asset.Ancillary_Benefits_Renewal_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Asset.AMR_IES_e_Verify_Client__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -149,6 +154,16 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Asset.Equity_Processing_Approved__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Asset.Fringe_Benefits_Renewal_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Asset.Medical_Benefits_Renewal_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
