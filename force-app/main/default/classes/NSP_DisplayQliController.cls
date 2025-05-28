@@ -1,16 +1,16 @@
-/* **************************************************************************************************   
-Component Name :  NSP_DisplayQliController class
-Version              :  1.0                                                                          
-Created Date         :  28/06/2021                                                           
-Function             :  This class is for DisplayQli visualforce component to display quote line date
-Story                :  STY-00450                                                                           
-Modification Log     :                                                                               
-*	Raksha          28/06/2021          First Iteration
-*
-***************************************************************************************************
-*/
+//
+// Component Name : NSP_DisplayQliController class
+// Version :  1.0
+// Created Date :  28/06/2021
+// Function :  This class is for DisplayQli visualforce component to display quote line date
+// Story :  STY-00450
+// Modification Log :
+// Raksha 28/06/2021 First Iteration
+//
+// intentionally `without sharing` to ensure VF approval Email template custom controller display all records to be sent to approver's hierarchy. Approvals run in system context.
+public without sharing class NSP_DisplayQliController {
+    // test w/ NSP_DisplayQliControllerTest (??%)
 
-public class NSP_DisplayQliController{
     public String quoteId;
     public String quoteIdstr{get;set;}
     
@@ -19,6 +19,7 @@ public class NSP_DisplayQliController{
     public Boolean quoteList{get;set;}
     public Boolean pepmList{get;set;}
     public Boolean recruitingServiceList{get;set;}
+    public Boolean recruitingQuote{get;set;}
     public Boolean approverCommentsList{get;set;}
     public String twoDecimal = '.00';
     public String appendDecimal = '0.00';
@@ -33,235 +34,370 @@ public class NSP_DisplayQliController{
         pepmList = true;
         recruitingServiceList = true;
         approverCommentsList = true;
+        recruitingQuote = False;
     }
-    
- /**
-* Method Name : getQliList 
-* Description : Method to get list of product and it's pricing on the approval email.
-* Author : Raksha       Date : 28/06/2021
-* @return List  
-*/ 
-  public list<QuotLinewrap> getQliList(){
-        
-        decimal sumUnitPrice = 0;
-        decimal sumfinalprice = 0;
-        decimal sumdiscountamout = 0;
-        
-        list<QuotLinewrap> quotelinelist =  new list<QuotLinewrap>();
-        
-        for(SBQQ__QuoteLine__c eachLine : [select Id,SBQQ__ListPrice__c,SBQQ__ProductName__c,SBQQ__Description__c,NSP_Total_12_Month_ListPrice__c,NSP_Total_12_Month_NetTotal__c,
-                                           SBQQ__NetPrice__c,SBQQ__TotalDiscountRate__c,NSP_Net_Total_QQ__c,NSP_List_Total_QQ__c,SBQQ__Discount__c,NSP_Net_Total__c,
-                                           SBQQ__TotalDiscountAmount__c,NSP_Quoted_Quantity__c,NSP_Max_Quantity__c,NSP_List_Minimum_Fee__c,NSP_Final_Minimum_Fee__c,NSP_Minimum_Fee_Discount__c 
-                                           from SBQQ__QuoteLine__c WHERE SBQQ__Quote__c =:quoteIdstr AND SBQQ__Product__r.NSP_Show_On_Approval_Email__c = true order by NSP_Sort_Order_QLI__c]) {
-                                            
-                                            QuotLinewrap qliWarp = new QuotLinewrap();
-                                               if(eachLine.NSP_Max_Quantity__c == null || eachLine.NSP_Quoted_Quantity__c  > eachLine.NSP_Max_Quantity__c){
-                                                   qliWarp.description    = eachLine.SBQQ__Description__c;
-                                                   qliWarp.unitprice      = (eachLine.SBQQ__ListPrice__c).setScale(2);
-                                                   qliWarp.finalprice     = eachLine.SBQQ__NetPrice__c.setScale(2);
-                                                   if(eachLine.SBQQ__Discount__c != null) {
-                                                       qliWarp.discount = eachLine.SBQQ__Discount__c.setScale(2);
-                                                   }
-                                                   else if(eachLine.SBQQ__Discount__c == null){
-                                                       qliWarp.discount = 0.00;
-                                                   }
-                                                   qliWarp.discountamout  = (eachLine.SBQQ__TotalDiscountAmount__c).setScale(2);
-                                               }
-                                               else {
-                                                qliWarp.description    = eachLine.SBQQ__Description__c + ''+ ' (Minimum Fee)';
-                                                qliWarp.unitprice      = eachLine.NSP_List_Minimum_Fee__c != null ? eachLine.NSP_List_Minimum_Fee__c.setScale(2):formatString;
-                                                qliWarp.finalprice     = eachLine.NSP_Final_Minimum_Fee__c != null ? eachLine.NSP_Final_Minimum_Fee__c.setScale(2) : formatString;
-                                                qliWarp.discount       = eachLine.NSP_Minimum_Fee_Discount__c.setScale(2);
-                                                qliWarp.discountamout  = (qliWarp.unitprice - qliWarp.finalprice).setScale(2);
-                                            }
-                                            qliWarp.formattedUnitPrice = qliWarp.unitprice > 0 ? (qliWarp.unitprice.format().contains('.')?qliWarp.unitprice.format():(qliWarp.unitprice.format()+twoDecimal)) : appendDecimal;
-                                            qliWarp.formattedFinalPrice = qliWarp.unitprice > 0 ? (qliWarp.finalprice.format().contains('.')?qliWarp.finalprice.format():(qliWarp.finalprice.format()+twoDecimal)) : appendDecimal;
-                                            qliWarp.formattedDiscPrice = qliWarp.unitprice > 0 ? (qliWarp.discountamout.format().contains('.')?qliWarp.discountamout.format():(qliWarp.discountamout.format()+twoDecimal)) : appendDecimal;
-                                              //Update the Total 12 month price
-                                               sumUnitPrice          += eachLine.NSP_Total_12_Month_ListPrice__c;
-                                               sumfinalprice         += (eachLine.NSP_Total_12_Month_NetTotal__c);
-                                               sumdiscountamout      += (eachLine.NSP_Total_12_Month_ListPrice__c - eachLine.NSP_Total_12_Month_NetTotal__c );
-                                               quotelinelist.add(qliWarp );
-                                               
-                                           }
-         if(quotelinelist.size() < 1) {
+
+    //method for checking if the quote is for recruiting services product
+    private boolean checkRecruitingQuote( String quoteId ) {
+        Boolean isRecruiting = False;
+        if ( String.isNotBlank( quoteId ) ) {
+            List<SBQQ__Quote__c> quotes = [
+                SELECT Id , SBQQ__Opportunity2__r.NSP_PrimaryProduct__c
+                FROM SBQQ__Quote__c
+                WHERE ( Id = :quoteId )
+                LIMIT 1
+            ];
+            SBQQ__Quote__c quote = null;
+            if ( ( quotes != null ) && !quotes.isEmpty() ) {
+                quote = quotes[0];
+            }
+            if ( ( quote != null )
+                && ( quote.SBQQ__Opportunity2__r != null )
+                && ( quote.SBQQ__Opportunity2__r.NSP_PrimaryProduct__c != null )
+                && ( quote.SBQQ__Opportunity2__r.NSP_PrimaryProduct__c == NSP_SalesConstants.PROD_RECRUITING )
+                )
+            {
+                isRecruiting = True;
+            }
+        }
+        return isRecruiting;
+    }
+
+    //
+    // Method Name : getQliList 
+    // Description : Method to get list of product and it's pricing on the approval email.
+    // Author : Raksha
+    // Date : 28/06/2021
+    // @return List
+    //
+    public List<QuotLinewrap> getQliList() {
+        List<QuotLinewrap> quotelinelist =  new List<QuotLinewrap>();
+        for ( SBQQ__QuoteLine__c eachLine : [
+                    SELECT
+                        Id , SBQQ__ListPrice__c , SBQQ__Description__c , NSP_Total_12_Month_ListPrice__c ,
+                        NSP_Total_12_Month_NetTotal__c , SBQQ__NetPrice__c , SBQQ__Discount__c ,
+                        SBQQ__TotalDiscountAmount__c , Upfront_Fee_Payment_Percentage__c ,
+                        Salary_Bracket_Percentage__c , Annual_Base_Salary__c
+                    FROM SBQQ__QuoteLine__c
+                    WHERE
+                    (
+                        ( SBQQ__Quote__c =:quoteIdstr ) 
+                        AND ( SBQQ__Product__r.NSP_Show_On_Approval_Email__c = true )
+                        AND ( NSP_Quoted_Quantity__c > 0 )
+                        AND ( NSP_ActionType__c != '')
+                    )
+                    ORDER BY NSP_Sort_Order_QLI__c
+                ]
+            )
+        {
+            QuotLinewrap qliWarp = populateFields(eachLine,true);
+            qliWarp.discountamout  = (eachLine.SBQQ__TotalDiscountAmount__c).setScale(2);
+            qliWarp.formattedDiscPrice = qliWarp.unitprice > 0 ? formatDecimalField(qliWarp.discountamout) : appendDecimal;
+            quotelinelist.add(qliWarp );
+        }
+        if ( quotelinelist.size() < 1 ) {
             quoteList = false;
-        }      
-        
+        }
+        recruitingQuote = checkRecruitingQuote( quoteIdstr );
         return quotelinelist;
-        
+    }
+
+    //method to  populate Quote Line Wrapper Fields
+    private QuotLinewrap populateFields( SBQQ__QuoteLine__c eachLine , Boolean useRecruitingFields ) {
+        QuotLinewrap qliWarp = new QuotLinewrap();
+        if ( eachLine != null ) {
+            qliWarp.description = eachLine.SBQQ__Description__c;
+            qliWarp.unitprice = extractValue(eachLine,'SBQQ__ListPrice__c');
+            qliWarp.finalprice = extractValue(eachLine,'SBQQ__NetPrice__c');
+            qliWarp.discount = extractValue(eachLine,'SBQQ__Discount__c');
+            qliWarp.formattedUnitPrice = qliWarp.unitprice > 0 ? formatDecimalField(qliWarp.unitprice) : appendDecimal;
+            qliWarp.formattedFinalPrice = qliWarp.unitprice > 0 ? formatDecimalField(qliWarp.finalprice) : appendDecimal;
+            qliWarp = populateRecruitingFields(eachLine,useRecruitingFields,qliWarp);
+            qliWarp = formatRecruitingFields(eachLine,useRecruitingFields,qliWarp);
+        }
+        return qliWarp;
     }
     
-  /**
-* Method Name : getLastLine 
-* Description : Method to query quoteline records which should be visible on approval request email template
-* Author : Raksha       Date : 28/06/2021
-* @return List  
-*/     
-    public list<QuotLinewrap> getLastLine(){
-        
-        decimal sumUnitPrice = 0;
-        decimal sumfinalprice = 0;
-        decimal sumdiscountamout = 0;
-        string sumDescription = 'Total 12 Month Amounts';
-        
-        list<QuotLinewrap> lastLineList =  new list<QuotLinewrap>();
-        
-        for(SBQQ__QuoteLine__c eachLine : [select Id,SBQQ__ListPrice__c,SBQQ__ProductName__c,SBQQ__Description__c,NSP_Total_12_Month_ListPrice__c,NSP_Total_12_Month_NetTotal__c,
-                                           SBQQ__NetPrice__c,SBQQ__TotalDiscountRate__c,NSP_Net_Total_QQ__c,NSP_List_Total_QQ__c,SBQQ__Discount__c,NSP_Net_Total__c,
-                                           SBQQ__TotalDiscountAmount__c,NSP_Quoted_Quantity__c,NSP_Max_Quantity__c,NSP_List_Minimum_Fee__c,NSP_Final_Minimum_Fee__c,NSP_Minimum_Fee_Discount__c 
-                                           from SBQQ__QuoteLine__c WHERE SBQQ__Quote__c =:quoteIdstr AND SBQQ__Product__r.NSP_Show_On_Approval_Email__c = true order by NSP_Sort_Order_QLI__c]) {
-                                            //Update the Total 12 month price
-                                               sumUnitPrice          += eachLine.NSP_Total_12_Month_ListPrice__c;
-                                               sumfinalprice         += (eachLine.NSP_Total_12_Month_NetTotal__c);
-                                               sumdiscountamout      += (eachLine.NSP_Total_12_Month_ListPrice__c - eachLine.NSP_Total_12_Month_NetTotal__c );
-                                               
-                                               
-                                           }
+    //method to extract Decimal value from Fields
+    private Decimal extractValue( SBQQ__QuoteLine__c eachLine , String fieldAPI ) {
+        Decimal value = 0;
+        if ( ( eachLine != null )
+            && ( fieldAPI != null )
+            && ( eachLine.get( fieldAPI ) != null )
+            )
+        {
+            value = (Decimal)eachLine.get( fieldAPI );
+        }
+        value.setScale( 2 );
+        return value;
+    }
+
+    //method to populate Recruiting Fields on Quote Line Wrapper
+    private QuotLinewrap populateRecruitingFields( SBQQ__QuoteLine__c eachLine , Boolean useRecruitingFields , QuotLinewrap qliWarp ) {
+        if ( ( eachLine != null ) && ( qliWarp != null ) ) {
+            qliWarp.annualBaseSalary = (
+                ( eachline.Annual_Base_Salary__c != null && useRecruitingFields )
+                ? eachline.Annual_Base_Salary__c.setScale( 2 )
+                : 0
+            );
+            qliWarp.salaryBracketPercent = (
+                ( eachline.Salary_Bracket_Percentage__c != null && useRecruitingFields )
+                ? eachline.Salary_Bracket_Percentage__c.setScale( 2 )
+                : 0
+            );
+            qliWarp.upfrontPaymentPercent = (
+                ( eachline.Upfront_Fee_Payment_Percentage__c != null && useRecruitingFields )
+                ? eachline.Upfront_Fee_Payment_Percentage__c.setScale( 2 )
+                : 0
+            );
+        }
+        return qliWarp;
+    }
+
+    //method to format Recruiting Fields on Quote Line Wrapper
+    private QuotLinewrap formatRecruitingFields( SBQQ__QuoteLine__c eachLine , Boolean useRecruitingFields , QuotLinewrap qliWarp ) {
+        if ( ( eachLine != null ) && ( qliWarp != null ) ) {
+            qliwarp.formattedUFP = (
+                ( qliWarp.unitprice > 0 && useRecruitingFields )
+                ? formatDecimalField( qliWarp.upfrontPaymentPercent )
+                : appendDecimal
+            );
+            qliwarp.formattedABS = (
+                ( qliWarp.unitprice > 0 && useRecruitingFields )
+                ? formatDecimalField( qliWarp.annualBaseSalary )
+                : appendDecimal
+            );
+            qliwarp.formattedSBP = (
+                ( qliWarp.unitprice > 0 && useRecruitingFields )
+                ? formatDecimalField( qliWarp.salaryBracketPercent )
+                : appendDecimal
+            );
+        }
+        return qliWarp;
+    }
+
+    //method to format decimal into string
+    private String formatDecimalField( Decimal fieldValue ) {
+        String retString ='';
+        if ( fieldValue != null ) {
+            retString = (
+                fieldValue.format().contains( '.' )
+                ? fieldValue.format()
+                : ( fieldValue.format() + twoDecimal )
+            );
+        }
+        return retString;
+    }
+
+    //
+    // Method Name : getLastLine 
+    // Description : Method to query quoteline records which should be visible on approval request email template
+    // Author : Raksha
+    // Date : 28/06/2021
+    // @return List
+    //
+    public List<QuotLinewrap> getLastLine() {
+        Decimal sumUnitPrice = 0;
+        Decimal sumfinalprice = 0;
+        Decimal sumdiscountamout = 0;
+        String sumDescription = 'Total 12 Month Amounts';
+        List<QuotLinewrap> lastLineList = new List<QuotLinewrap>();
+        for ( SBQQ__QuoteLine__c eachLine : [
+                    SELECT
+                        Id , SBQQ__ListPrice__c , SBQQ__ProductName__c ,
+                        SBQQ__Description__c , NSP_Total_12_Month_ListPrice__c ,
+                        NSP_Total_12_Month_NetTotal__c , SBQQ__NetPrice__c ,
+                        SBQQ__TotalDiscountRate__c , NSP_Net_Total_QQ__c ,
+                        NSP_List_Total_QQ__c , SBQQ__Discount__c ,
+                        NSP_Net_Total__c , SBQQ__TotalDiscountAmount__c ,
+                        NSP_Quoted_Quantity__c , NSP_Max_Quantity__c ,
+                        NSP_List_Minimum_Fee__c , NSP_Final_Minimum_Fee__c ,
+                        NSP_Minimum_Fee_Discount__c
+                    FROM SBQQ__QuoteLine__c
+                    WHERE (
+                        SBQQ__Quote__c = :quoteIdstr
+                        AND SBQQ__Product__r.NSP_Show_On_Approval_Email__c = true
+                    )
+                    ORDER BY NSP_Sort_Order_QLI__c
+                ]
+            )
+        {
+            //Update the Total 12 month price
+            Decimal listPrice = extractValue(eachLine,'NSP_Total_12_Month_ListPrice__c');
+            Decimal netPrice = extractValue(eachLine,'NSP_Total_12_Month_NetTotal__c');
+            sumUnitPrice += listPrice;
+            sumfinalprice += netPrice;
+            sumdiscountamout += (listPrice - netPrice);
+        }
         QuotLinewrap qliWarptotal = new QuotLinewrap();
-        qliWarptotal.unitprice   = sumUnitPrice.setScale(2);
-        qliWarptotal.finalprice  = sumfinalprice.setScale(2);
-        qliWarptotal.discountamout   = sumdiscountamout.setScale(2) ;
-        qliWarptotal.discount   = null;
-        qliWarptotal.description  = sumDescription ;
+        qliWarptotal.unitprice = sumUnitPrice.setScale(2);
+        qliWarptotal.finalprice = sumfinalprice.setScale(2);
+        qliWarptotal.discountamout = sumdiscountamout.setScale(2);
+        qliWarptotal.discount = null;
+        qliWarptotal.description = sumDescription ;
+        qliWarptotal.annualBaseSalary = 0;
+        qliWarptotal.salaryBracketPercent = 0;
+        qliWarptotal.upfrontPaymentPercent = 0;
+        qliWarptotal.formattedUFP = appendDecimal;
+        qliWarptotal.formattedABS = appendDecimal;
+        qliWarptotal.formattedSBP = appendDecimal;
         //Update the formatted Unit Price, Final Price after discount and the discounted price
-        qliWarptotal.formattedUnitPrice = qliWarptotal.unitprice > 0 ? (qliWarptotal.unitprice.format().contains('.')?qliWarptotal.unitprice.format():(qliWarptotal.unitprice.format()+twoDecimal)) : appendDecimal;
-        qliWarptotal.formattedFinalPrice = qliWarptotal.unitprice > 0 ? (qliWarptotal.finalprice.format().contains('.')?qliWarptotal.finalprice.format():(qliWarptotal.finalprice.format()+twoDecimal)) : appendDecimal;
-        qliWarptotal.formattedDiscPrice = qliWarptotal.unitprice > 0 ? (qliWarptotal.discountamout.format().contains('.')?qliWarptotal.discountamout.format():(qliWarptotal.discountamout.format()+twoDecimal)) : appendDecimal;
-        
-        lastLineList.add(qliWarptotal );
-        if(lastLineList.size() < 1) {
+        qliWarptotal.formattedUnitPrice = qliWarptotal.unitprice > 0 ? formatDecimalField(qliWarptotal.unitprice) : appendDecimal;
+        qliWarptotal.formattedFinalPrice = qliWarptotal.unitprice > 0 ? formatDecimalField(qliWarptotal.finalprice) : appendDecimal;
+        qliWarptotal.formattedDiscPrice = qliWarptotal.unitprice > 0 ? formatDecimalField(qliWarptotal.discountamout) : appendDecimal;
+        lastLineList.add( qliWarptotal );
+        if ( lastLineList.size() < 1 ) {
             quoteList = false;
-        }      
-        
+        }
         return lastLineList;
-        
     }
-    
-    /**
-* Method Name : getQliPEPMList 
-* Description : Method to query quoteline records which has PEPM products and to be visible on approval request email template
-* Author : Raksha       Date : 28/06/2021
-* @return List  
-*/  
-    public list<QuotLinewrap> getQliPEPMList(){
-        list<QuotLinewrap> quotelinelist =  new list<QuotLinewrap>();
-        for(SBQQ__QuoteLine__c eachLine : [select Id,SBQQ__ListPrice__c,SBQQ__ProductName__c,SBQQ__Description__c,NSP_Positions__c,
-                                           SBQQ__NetPrice__c,SBQQ__TotalDiscountRate__c,SBQQ__Discount__c,SBQQ__NetTotal__c,SBQQ__ListTotal__c,NSP_Quoted_Quantity__c,
-                                           SBQQ__TotalDiscountAmount__c,SBQQ__Quantity__c,NSP_Max_Quantity__c,NSP_List_Minimum_Fee__c,NSP_Final_Minimum_Fee__c,NSP_Minimum_Fee_Discount__c 
-                                           from SBQQ__QuoteLine__c WHERE SBQQ__Quote__c =:quoteIdstr AND SBQQ__Product__r.NSP_Include_In_PEPM__c= true order by NSP_Sort_Order_QLI__c]) {
-                                               
-                                               QuotLinewrap qliWarp = new QuotLinewrap();
-                                               
-                                               qliWarp.description    = eachLine.SBQQ__Description__c;
-                                               qliWarp.unitprice      = eachLine.SBQQ__ListPrice__c.setScale(2);
-                                               qliWarp.finalprice     = eachLine.SBQQ__NetPrice__c.setScale(2);
-                                               if(eachLine.SBQQ__Discount__c != null) {
-                                                   qliWarp.discount = eachLine.SBQQ__Discount__c.setScale(2);
-                                               }
-                                               else if(eachLine.SBQQ__Discount__c == null){
-                                                   qliWarp.discount = 0.00;
-                                               }
-                                               qliWarp.discountamout  = eachLine.SBQQ__ListPrice__c - eachLine.SBQQ__NetPrice__c.setScale(2);
-                                               qliWarp.position       = Integer.valueOf(eachLine.NSP_Positions__c);
-                                               qliWarp.numberOfEmployees = Integer.valueOf(eachLine.NSP_Quoted_Quantity__c);
-                                                //Update the formatted Unit Price, Final Price after discount and the discounted price
-                                               qliWarp.formattedUnitPrice = qliWarp.unitprice > 0 ? (qliWarp.unitprice.format().contains('.')?qliWarp.unitprice.format():(qliWarp.unitprice.format()+twoDecimal)) : appendDecimal;
-                                               qliWarp.formattedFinalPrice = qliWarp.unitprice > 0 ? (qliWarp.finalprice.format().contains('.')?qliWarp.finalprice.format():(qliWarp.finalprice.format()+twoDecimal)) : appendDecimal;
-                                               qliWarp.formattedDiscPrice = qliWarp.unitprice > 0 ? (qliWarp.discountamout.format().contains('.')?qliWarp.discountamout.format():(qliWarp.discountamout.format()+twoDecimal)) : appendDecimal;
-                                               quotelinelist.add(qliWarp);
-                                           }
-        
-        if(quotelinelist.size() < 1) {
+
+    //
+    // Method Name : getQliPEPMList 
+    // Description : Method to query quoteline records which has PEPM products and to be visible on approval request email template
+    // Author : Raksha
+    // Date : 28/06/2021
+    // @return List
+    //
+    public List<QuotLinewrap> getQliPEPMList() {
+        List<QuotLinewrap> quotelinelist = new List<QuotLinewrap>();
+        for ( SBQQ__QuoteLine__c eachLine : [
+                    SELECT
+                        Id , SBQQ__ListPrice__c , SBQQ__ProductName__c ,
+                        SBQQ__Description__c , NSP_Positions__c ,
+                        SBQQ__NetPrice__c , SBQQ__TotalDiscountRate__c ,
+                        SBQQ__Discount__c , SBQQ__NetTotal__c ,
+                        SBQQ__ListTotal__c , NSP_Quoted_Quantity__c ,
+                        SBQQ__TotalDiscountAmount__c , SBQQ__Quantity__c ,
+                        NSP_Max_Quantity__c , NSP_List_Minimum_Fee__c ,
+                        NSP_Final_Minimum_Fee__c , NSP_Minimum_Fee_Discount__c ,
+                        Annual_Base_Salary__c , Salary_Bracket_Percentage__c ,
+                        Upfront_Fee_Payment_Percentage__c
+                    FROM SBQQ__QuoteLine__c
+                    WHERE (
+                        SBQQ__Quote__c = :quoteIdstr
+                        AND SBQQ__Product__r.NSP_Include_In_PEPM__c = true
+                    )
+                    ORDER BY NSP_Sort_Order_QLI__c
+                ]
+            )
+        {
+            QuotLinewrap qliWarp = new QuotLinewrap();
+            
+            qliWarp = populateFields(eachLine, false);
+            qliWarp.discountamout  = (eachLine.SBQQ__ListPrice__c - eachLine.SBQQ__NetPrice__c).setScale(2);
+            qliWarp.formattedDiscPrice = qliWarp.unitprice > 0 ? formatDecimalField(qliWarp.discountamout) : appendDecimal;
+            qliWarp.position = ( eachLine.NSP_Positions__c != null ) ? Integer.valueOf(eachLine.NSP_Positions__c) : 0;
+            qliWarp.numberOfEmployees = ( eachLine.NSP_Quoted_Quantity__c != null ) ? Integer.valueOf(eachLine.NSP_Quoted_Quantity__c) : 0;
+            //Update the formatted Unit Price, Final Price after discount and the discounted price
+            quotelinelist.add(qliWarp);
+        }
+        if ( quotelinelist.size() < 1 ) {
             pepmList = false;
-        }       
+        }
         return quotelinelist;
     }
-    
-    /**
-* Method Name : getQliRecruitingList 
-* Description : Method to query quoteline records which has Recruiting products and to be visible on approval request email template
-* Author : Raksha       Date : 28/06/2021
-* @return List  
-*/ 
-    
-    public list<QuotLinewrap> getQliRecruitingList()
-    {
-        list<QuotLinewrap> quotelinelist =  new list<QuotLinewrap>();
-        for(SBQQ__QuoteLine__c eachLine : [select Id,SBQQ__ListPrice__c,SBQQ__ProductName__c,SBQQ__Description__c,NSP_Positions__c,
-                                           SBQQ__NetPrice__c,SBQQ__TotalDiscountRate__c,SBQQ__Discount__c,SBQQ__NetTotal__c,SBQQ__ListTotal__c,
-                                           SBQQ__TotalDiscountAmount__c,SBQQ__Quantity__c,NSP_Max_Quantity__c,NSP_List_Minimum_Fee__c,NSP_Final_Minimum_Fee__c,NSP_Minimum_Fee_Discount__c 
-                                           from SBQQ__QuoteLine__c WHERE SBQQ__Quote__c =:quoteIdstr AND SBQQ__Product__r.NSP_Show_On_Recruitment_Template__c= true order by NSP_Sort_Order_QLI__c]) {
-                                               QuotLinewrap qliWarp = new QuotLinewrap();
-                                               if(eachLine.SBQQ__Discount__c > 0 || eachLine.NSP_Positions__c > 0) {
-                                                   qliWarp.description    = eachLine.SBQQ__Description__c;
-                                                   qliWarp.unitprice      = eachLine.SBQQ__ListPrice__c.setScale(2);
-                                                   qliWarp.finalprice     = eachLine.SBQQ__NetPrice__c.setScale(2);
-                                                   if(eachLine.SBQQ__Discount__c != null) {
-                                                       qliWarp.discount = eachLine.SBQQ__Discount__c.setScale(2);
-                                                   }
-                                                   else if(eachLine.SBQQ__Discount__c == null){
-                                                       qliWarp.discount = 0.00;
-                                                   }
-                                                    //Update the formatted Unit Price, Final Price after discount and the discounted price
-                                                   qliWarp.discountamout  = (eachLine.SBQQ__ListPrice__c - eachLine.SBQQ__NetPrice__c).setScale(2);
-                                                   qliWarp.position       =Integer.valueOf(eachLine.NSP_Positions__c);
-                                                   qliWarp.formattedUnitPrice = qliWarp.unitprice > 0 ? (qliWarp.unitprice.format().contains('.')?qliWarp.unitprice.format():(qliWarp.unitprice.format()+twoDecimal)) : appendDecimal;
-                                                   qliWarp.formattedFinalPrice = qliWarp.unitprice > 0 ? (qliWarp.finalprice.format().contains('.')?qliWarp.finalprice.format():(qliWarp.finalprice.format()+twoDecimal)) : appendDecimal;
-                                                   qliWarp.formattedDiscPrice = qliWarp.unitprice > 0 ? (qliWarp.discountamout.format().contains('.')?qliWarp.discountamout.format():(qliWarp.discountamout.format()+twoDecimal)) : appendDecimal;
-                                                   
-                                                   quotelinelist.add(qliWarp);
-                                               } 
-                                           } 
-        if(quotelinelist.size() < 1) {
+
+    //
+    // Method Name : getQliRecruitingList 
+    // Description : Method to query quoteline records which has Recruiting products and to be visible on approval request email template
+    // Author : Raksha
+    // Date : 28/06/2021
+    // @return List
+    //
+    public List<QuotLinewrap> getQliRecruitingList() {
+        List<QuotLinewrap> quotelinelist = new List<QuotLinewrap>();
+        for ( SBQQ__QuoteLine__c eachLine : [
+                    SELECT
+                        Id , SBQQ__ListPrice__c , SBQQ__ProductName__c ,
+                        SBQQ__Description__c , NSP_Positions__c ,
+                        SBQQ__NetPrice__c , SBQQ__TotalDiscountRate__c ,
+                        SBQQ__Discount__c , SBQQ__NetTotal__c ,
+                        SBQQ__ListTotal__c , SBQQ__TotalDiscountAmount__c ,
+                        SBQQ__Quantity__c , NSP_Max_Quantity__c ,
+                        NSP_List_Minimum_Fee__c , NSP_Final_Minimum_Fee__c ,
+                        NSP_Minimum_Fee_Discount__c , Annual_Base_Salary__c ,
+                        Salary_Bracket_Percentage__c , Upfront_Fee_Payment_Percentage__c
+                    FROM SBQQ__QuoteLine__c
+                    WHERE (
+                        SBQQ__Quote__c = :quoteIdstr
+                        AND SBQQ__Product__r.NSP_Show_On_Recruitment_Template__c = true
+                    )
+                    ORDER BY NSP_Sort_Order_QLI__c
+                ]
+            )
+        {
+            QuotLinewrap qliWarp = new QuotLinewrap();
+            if ( ( eachLine.SBQQ__Discount__c > 0 )
+                || ( ( eachLine.NSP_Positions__c != null ) && ( eachLine.NSP_Positions__c > 0 ) )
+                )
+            {
+                qliWarp = populateFields( eachLine , false );
+                qliWarp.discountamout = ( eachLine.SBQQ__ListPrice__c - eachLine.SBQQ__NetPrice__c ).setScale( 2 );
+                qliWarp.position = ( eachLine.NSP_Positions__c != null ) ? Integer.valueOf( eachLine.NSP_Positions__c ) : 0;
+                quotelinelist.add( qliWarp );
+            }
+        }
+        if ( quotelinelist.size() < 1 ) {
             recruitingServiceList = false;
-        }   
+        }
         return quotelinelist;
     }
-    
-    /**
-* Method Name : getApproversComment 
-* Description : Method to query approver's comment and return the list to the approval request email template
-* Author : Raksha       Date : 28/06/2021
-* @return List  
-*/ 
+
+    //
+    // Method Name : getApproversComment 
+    // Description : Method to query approver's comment and return the list to the approval request email template
+    // Author : Raksha Date : 28/06/2021
+    // @return List
+    //
     public List<QuotLinewrap> getApproversComment() {
         List<QuotLinewrap> approvalList = new List<QuotLinewrap>();
-        for(sbaa__Approval__c approvalRec : [SELECT sbaa__CommentsLong__c 
-                                             FROM sbaa__Approval__c WHERE Quote__c =:quoteIdstr]){
-                                                 QuotLinewrap qliWarp = new QuotLinewrap();
-                                                 if(approvalRec != null && approvalRec.sbaa__CommentsLong__c != null){
-                                                     qliWarp.approverComment = approvalRec.sbaa__CommentsLong__c;
-                                                     approvalList.add(qliWarp);
-                                                 }
-                                             }
-        
-        if(approvalList.size() < 1){
+        for ( sbaa__Approval__c approvalRec : [
+                SELECT sbaa__CommentsLong__c 
+                FROM sbaa__Approval__c
+                WHERE Quote__c = :quoteIdstr
+                ]
+            )
+        {
+            QuotLinewrap qliWarp = new QuotLinewrap();
+            if ( approvalRec != null && approvalRec.sbaa__CommentsLong__c != null ) {
+                qliWarp.approverComment = approvalRec.sbaa__CommentsLong__c;
+                approvalList.add( qliWarp );
+            }
+        }
+        if ( approvalList.size() < 1 ) {
             approverCommentsList = false;
-        } 
+        }
         return approvalList;
     }
-    
-    /**
-* Method Name : getProductBundleList 
-* Description : Method to query the bundle product from the quoteline which is used to display the product bundles
-* on Order creation notification email template.
-* Author : Raksha       Date : 28/06/2021
-* @return List  
-*/ 
+
+    //
+    // Method Name : getProductBundleList 
+    // Description : Method to query the bundle product from the quoteline which is used to display the product bundles
+    // on Order creation notification email template.
+    // Author : Raksha Date : 28/06/2021
+    // @return List
+    //
     public List<QuotLinewrap> getProductBundleList() {
         list<QuotLinewrap> quotelinelist =  new list<QuotLinewrap>();
-        for(SBQQ__QuoteLine__c eachLine : [Select Id,SBQQ__ProductName__c,SBQQ__Product__r.description
-                                           from SBQQ__QuoteLine__c WHERE SBQQ__Quote__c =:quoteIdstr AND NSP_Is_Bundle__c = true ]) {
-                                               QuotLinewrap qliWarp = new QuotLinewrap();
-                                               qliWarp.description    = eachLine.SBQQ__ProductName__c;
-                                               quotelinelist.add(qliWarp);
-                                           } 
-        
+        for ( SBQQ__QuoteLine__c eachLine : [
+                    SELECT Id , SBQQ__ProductName__c , SBQQ__Product__r.Description
+                    FROM SBQQ__QuoteLine__c
+                    WHERE (
+                        SBQQ__Quote__c = :quoteIdstr
+                        AND NSP_Is_Bundle__c = true
+                    )
+                ]
+            )
+        {
+            QuotLinewrap qliWarp = new QuotLinewrap();
+            qliWarp.description = eachLine.SBQQ__ProductName__c;
+            quotelinelist.add( qliWarp );
+        }
         return quotelinelist;
     }
-    
-    public class QuotLinewrap{    
+
+    public class QuotLinewrap{
         public decimal unitprice {get;set;}
         public decimal discountamout {get;set;}
         public decimal finalprice {get;set;}
@@ -273,6 +409,13 @@ public class NSP_DisplayQliController{
         public String formattedUnitPrice{get;set;}
         public String formattedFinalPrice{get;set;}
         public String formattedDiscPrice{get;set;}
+        public Decimal annualBaseSalary {get;set;}
+        public Decimal salaryBracketPercent {get;set;}
+        public Decimal upfrontPaymentPercent {get;set;}
+        public String formattedABS {get;set;}
+        public String formattedSBP {get;set;}
+        public String formattedUFP {get;set;}
     }
-    
+
 }
+//
