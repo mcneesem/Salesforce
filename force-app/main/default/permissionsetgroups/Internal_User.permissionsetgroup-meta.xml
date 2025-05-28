@@ -15,6 +15,7 @@
     <permissionSets>Assign_Connected_App_Wave_Web</permissionSets>
     <permissionSets>Assign_Connected_App_ZoomInfo</permissionSets>
     <permissionSets>Assign_Connected_App_tbid_digital_salesforce_com</permissionSets>
+    <permissionSets>Case_Creation_Screen_Flow</permissionSets>
     <permissionSets>DNB_Connect_Components_access_Insperity</permissionSets>
     <permissionSets>DNB_Connect_Fields_Edit_Access</permissionSets>
     <permissionSets>Implementation_Profile_Read_Only</permissionSets>

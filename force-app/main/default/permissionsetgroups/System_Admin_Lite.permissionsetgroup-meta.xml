@@ -28,10 +28,12 @@
     <permissionSets>NVMStatsSF__View_NVM_Stats</permissionSets>
     <permissionSets>Onboarding_Profile_Edit</permissionSets>
     <permissionSets>OpportunityTeamMember_Elevated_Access</permissionSets>
+    <permissionSets>Organization_Wide_Email_Address_Compensation_Services</permissionSets>
     <permissionSets>Project_Task_Access</permissionSets>
     <permissionSets>Project_Template_Editor</permissionSets>
     <permissionSets>Resource_Absence_record_type_access</permissionSets>
     <permissionSets>Sales_Enablement</permissionSets>
+    <permissionSets>Task_Record_Type_Time_Entry_DO_NOT_USE</permissionSets>
     <permissionSets>force__PipelineInspectionIncluded</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>
