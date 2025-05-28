@@ -97,7 +97,7 @@ private class NSP_TerminationFormTempController_Test {
                 NSP_Client_Term_Date__c ,
                 Previous_Term_Reason__c ,
                 Previous_Sub_Term_Reason__c ,
-                Previous_Client_Term_Date__c,
+                Previous_Client_Term_Date__c ,
                 NSP_Client_Sub_Account_Numbers__c
             FROM NSP_Termination_Form__c
             WHERE Approval_Date__c = Today
