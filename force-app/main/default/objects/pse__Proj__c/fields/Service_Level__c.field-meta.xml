@@ -87,9 +87,53 @@
                 <label>Emerging Growth (100+  EE&apos;s)</label>
             </value>
             <value>
+                <fullName>IPM Essential</fullName>
+                <default>false</default>
+                <label>IPM Essential</label>
+            </value>
+            <value>
+                <fullName>IPM Custom</fullName>
+                <default>false</default>
+                <label>IPM Custom</label>
+            </value>
+            <value>
                 <fullName>Quickstart</fullName>
                 <default>false</default>
                 <label>Quickstart</label>
+            </value>
+            <value>
+                <fullName>FEIN/Name Change</fullName>
+                <default>false</default>
+                <label>FEIN/Name Change</label>
+            </value>
+            <value>
+                <fullName>FEIN Addition</fullName>
+                <default>false</default>
+                <label>FEIN Addition</label>
+            </value>
+            <value>
+                <fullName>Day 1 Start</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Day 1 Start</label>
+            </value>
+            <value>
+                <fullName>Gold</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Gold</label>
+            </value>
+            <value>
+                <fullName>P3/100</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>P3/100</label>
+            </value>
+            <value>
+                <fullName>Rush</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Rush</label>
             </value>
         </valueSetDefinition>
     </valueSet>
