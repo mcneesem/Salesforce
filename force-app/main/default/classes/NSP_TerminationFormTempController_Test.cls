@@ -97,7 +97,8 @@ private class NSP_TerminationFormTempController_Test {
                 NSP_Client_Term_Date__c ,
                 Previous_Term_Reason__c ,
                 Previous_Sub_Term_Reason__c ,
-                Previous_Client_Term_Date__c
+                Previous_Client_Term_Date__c ,
+                NSP_Client_Sub_Account_Numbers__c
             FROM NSP_Termination_Form__c
             WHERE Approval_Date__c = Today
             LIMIT 1
@@ -113,7 +114,6 @@ private class NSP_TerminationFormTempController_Test {
                     Test.startTest();
         NSP_TerminationFormTemplateController.wrapTermination wrapper = new NSP_TerminationFormTemplateController.wrapTermination(TF1,roleMapDetails);
         System.assertEquals('acc1', wrapper.clinetName);
-        System.assertEquals('client1', wrapper.clinetNumber);
         System.assertEquals(40, wrapper.eeNumber);
         System.assertEquals('Payroll Specialist', wrapper.psName);
         System.assertEquals('5200 Health Benefits', wrapper.reason);

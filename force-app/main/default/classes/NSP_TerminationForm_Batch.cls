@@ -71,6 +71,7 @@ global class NSP_TerminationForm_Batch implements ISelfSchedulable , Schedulable
                 }
             }
             ccEmailAddressList.addAll( emailIdSet );
+            ccEmailAddressList.addAll( NSP_TerminationForm_Batch.ccAddressList);
         } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
                 NSP_TerminationForm_Batch.class.getName() ,
@@ -82,19 +83,22 @@ global class NSP_TerminationForm_Batch implements ISelfSchedulable , Schedulable
 
     public void finish( Database.BatchableContext bc ) {
         if ( String.isNotBlank( System.Label.NSP_TerminationFormBatchGenericToAddress ) ) {
-            EmailTemplate emailTemplate = [
-                SELECT Id , Body
-                FROM EmailTemplate
-                WHERE ( DeveloperName = 'NSP_Termination_Form_Email_Template' )
-            ];
-            List<String> toEmailAddressList = System.Label.NSP_TerminationFormBatchGenericToAddress.split( ',' );
-            Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
-            email.setToAddresses( toEmailAddressList );
-            email.setSaveAsActivity( false );
-            email.setTemplateId( emailTemplate.Id );
-            email.setTargetObjectId( userinfo.getUserId() );
-            email.setCcAddresses( ccEmailAddressList );
             try {
+                EmailTemplate emailTemplate = [
+                    SELECT Id , Body
+                    FROM EmailTemplate
+                    WHERE ( DeveloperName = 'NSP_Termination_Form_Email_Template' )
+                ];
+                List<String> toEmailAddressList = System.Label.NSP_TerminationFormBatchGenericToAddress.split( ',' );
+                Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
+                email.setToAddresses( toEmailAddressList );
+                email.setSaveAsActivity( false );
+                email.setTemplateId( emailTemplate.Id );
+                email.setTargetObjectId( userinfo.getUserId() );
+                email.setCcAddresses( ccEmailAddressList );
+                if ( NSP_TerminationForm_Batch.orgWideEmailAddressId != null) {
+                    email.setOrgWideEmailAddressId( NSP_TerminationForm_Batch.orgWideEmailAddressId );
+                }
                 if ( !Test.isRunningTest() ) {
                     Messaging.sendEmail( new Messaging.SingleEmailMessage[]{ email } );
                 }
@@ -221,6 +225,43 @@ global class NSP_TerminationForm_Batch implements ISelfSchedulable , Schedulable
                 accountTeamRoles = local;
             }
             return accountTeamRoles;
+        }
+        private set;
+    }
+
+    private static List<String> ccAddressList {
+        private get {
+            if ( ccAddressList == null ) {
+                List<String> local = new List<String>();
+                if ( NSP_TerminationForm_Batch.settings != null ) {
+                    String rawCcAddresses =  NSP_TerminationForm_Batch.settings.CcAddresses__c;
+                    if ( String.isNotBlank( rawCcAddresses ) ) {
+                        List<String> splitCcAddresses = rawCcAddresses.split( '\r\n' );
+                        if ( ( splitCcAddresses != null ) && ( splitCcAddresses.size() > 0 ) ) {
+                            local = splitCcAddresses;
+                        }
+                    }
+                }
+                ccAddressList = local;
+            }
+            return ccAddressList;
+        }
+        private set;
+    }
+
+    private static Id orgWideEmailAddressId {
+        private get {
+            if ( orgWideEmailAddressId == null ) {
+                Id local = null;
+                if ( ( NSP_TerminationForm_Batch.settings != null )
+                    && String.isNotBlank( NSP_TerminationForm_Batch.settings.OrgWideEmailAddressId__c )
+                )
+                {
+                    local = NSP_TerminationForm_Batch.settings.OrgWideEmailAddressId__c;
+                }
+                orgWideEmailAddressId = local;
+            }
+            return orgWideEmailAddressId;
         }
         private set;
     }
