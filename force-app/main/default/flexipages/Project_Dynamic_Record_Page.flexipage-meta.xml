@@ -2424,6 +2424,16 @@
                 </visibilityRule>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Go_Live_Project_Duration__c</fieldItem>
+                <identifier>RecordGo_Live_Project_Duration_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-d2ef4e63-5db4-4610-b6c0-227e95a58351</name>
         <type>Facet</type>
     </flexiPageRegions>
