@@ -3054,11 +3054,6 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
-        <field>Product2.Flat_Fee_Reference_Price__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
         <editable>true</editable>
         <field>Product2.Has_Seasonal_Price_Table__c</field>
         <readable>true</readable>
@@ -5861,11 +5856,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>SBQQ__QuoteLine__c.CWU_Summary_Variable__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>SBQQ__QuoteLine__c.Flat_Fee_Reference_Price__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
