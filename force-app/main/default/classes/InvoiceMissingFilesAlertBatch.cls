@@ -49,8 +49,7 @@ public class InvoiceMissingFilesAlertBatch implements Schedulable , Database.Bat
                     SELECT
                         Id ,
                         Name ,
-                        blng__InvoiceStatus__c ,
-                        NSP_CLM_Document_Received__c
+                        blng__InvoiceStatus__c
                     FROM blng__Invoice__c
                     WHERE (
                         Id IN :this.invcIdList
@@ -66,8 +65,7 @@ public class InvoiceMissingFilesAlertBatch implements Schedulable , Database.Bat
                     SELECT
                         Id ,
                         Name ,
-                        blng__InvoiceStatus__c ,
-                        NSP_CLM_Document_Received__c
+                        blng__InvoiceStatus__c
                     FROM blng__Invoice__c
                     WHERE (
                         blng__InvoiceStatus__c = 'Posted'

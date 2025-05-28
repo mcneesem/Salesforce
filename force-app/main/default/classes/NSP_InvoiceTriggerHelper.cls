@@ -1,13 +1,13 @@
-/**************************************************************************************************   
-Version              :  1.0                                                                          
-Created Date         :  September 05, 2022                                                             
+/**************************************************************************************************
+Version              :  1.0
+Created Date         :  September 05, 2022
 Function             :   Represents the Invoive trigger helper which handles all the logic.
 Test class           :  NSP_InvoiceTriggerHelperTest
-Story                :                                                                             
-Modification Log     :                                                                               
-*--------------------------------------------------------------------------------------------------  
-* Developer                   Date                   Description                                     
-* -------------------------------------------------------------------------------------------------  
+Story                :
+Modification Log     :
+*--------------------------------------------------------------------------------------------------
+* Developer                   Date                   Description
+* -------------------------------------------------------------------------------------------------
 
 *   Rakesh           September 05, 2022          First Iteration
 *
@@ -19,13 +19,13 @@ public class NSP_InvoiceTriggerHelper {
 
     static final string DunningCase_RT = 'Dunning';
     static final Id DUNNING_CASE_RT_ID = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get(DunningCase_RT).getRecordTypeId();
-  
+
 /**
 * Iterates throught the lead map and identifies the records that needs to worked based on various criterias.
-* @param invoiceNewMap Map of New Invoices. 
-* @param invoiceOldMap Map of Old Invoices. 
-* @return void             
-*                
+* @param invoiceNewMap Map of New Invoices.
+* @param invoiceOldMap Map of Old Invoices.
+* @return void
+*
 */
 public void beforeUpdateDirector(Map < Id, blng__Invoice__c > invoiceNewMap, Map < Id, blng__Invoice__c > invoiceOldMap) {
 
@@ -38,7 +38,7 @@ public void beforeUpdateDirector(Map < Id, blng__Invoice__c > invoiceNewMap, Map
     Set<String> budgetraryProductCodes = new Set<String>(System.Label.NSP_ApplicableProductCodesForBudgetaryQuotes.split(','));
 
     for (blng__Invoice__c inv : invoiceNewMap.values() ){
-        
+
         if(inv.blng__InvoiceStatus__c == 'Posted' && inv.blng__InvoiceStatus__c != invoiceOldMap.get(inv.Id).blng__InvoiceStatus__c)     {
             invIdsForDocGenFieldsUpdate.add(inv.id);
         }
@@ -49,10 +49,10 @@ public void beforeUpdateDirector(Map < Id, blng__Invoice__c > invoiceNewMap, Map
                                             blng__OrderProduct__r.Order.blng__BillingAccount__r.Name,blng__OrderProduct__r.Order.BillingCity,blng__OrderProduct__r.Order.BillingCountry,blng__OrderProduct__r.Order.BillingPostalCode,blng__OrderProduct__r.Order.BillingState,blng__OrderProduct__r.Order.BillingStreet,blng__OrderProduct__r.Order.BillToContactId,
                                             blng__OrderProduct__r.Order.NSP_Ship_To_Name__c,blng__OrderProduct__r.Order.NSP_Ship_To_Postal_Code__c,blng__OrderProduct__r.Order.NSP_Ship_To_State__c,blng__OrderProduct__r.Order.NSP_Ship_To_Street__c,blng__OrderProduct__r.Order.NSP_Ship_To_City__c,blng__OrderProduct__r.Order.NSP_Ship_To_Country__c
                                             FROM blng__InvoiceLine__c WHERE blng__Invoice__c IN : invIdsForDocGenFieldsUpdate ]) {
-        
+
         if(!invIdToFirstLineMap.containsKey(invLine.blng__Invoice__c)) {
             invIdToFirstLineMap.put(invLine.blng__Invoice__c,invLine);
-        }                                  
+        }
         if(invLine.blng__OrderProduct__r.SBQQ__QuoteLine__r.SBQQ__Quote__r.NSP_Budgetary_Quote__c) {
             budgetaryQuoteIds.add(invLine.blng__OrderProduct__r.SBQQ__QuoteLine__r.SBQQ__Quote__c);
         }
@@ -62,28 +62,28 @@ public void beforeUpdateDirector(Map < Id, blng__Invoice__c > invoiceNewMap, Map
     if(budgetaryQuoteIds.size()>0) {
         for ( blng__InvoiceLine__c invLine : [SELECT Id, blng__Invoice__c, blng__LegalEntity__c, blng__LegalEntity__r.NSP_Company_Name__c,blng__OrderProduct__c, NSP_Product_Code__c,
                                             blng__OrderProduct__r.SBQQ__Subscription__r.SBQQ__Contract__r.StartDate, blng__OrderProduct__r.SBQQ__Subscription__r.SBQQ__Contract__r.EndDate,
-                                            blng__OrderProduct__r.SBQQ__QuoteLine__r.SBQQ__Quote__r.SBQQ__Type__c,  blng__OrderProduct__r.SBQQ__QuoteLine__r.SBQQ__Quote__r.NSP_Budgetary_Quote__c, 
-                                            blng__OrderProduct__r.SBQQ__QuoteLine__r.SBQQ__Quote__c FROM blng__InvoiceLine__c 
-                                                                                                    WHERE blng__OrderProduct__r.SBQQ__QuoteLine__r.SBQQ__Quote__c IN : budgetaryQuoteIds 
-                                                                                                    AND blng__Invoice__r.blng__InvoiceStatus__c != 'Cancelled' AND blng__Invoice__r.blng__InvoiceStatus__c != 'Rebilled'  
+                                            blng__OrderProduct__r.SBQQ__QuoteLine__r.SBQQ__Quote__r.SBQQ__Type__c,  blng__OrderProduct__r.SBQQ__QuoteLine__r.SBQQ__Quote__r.NSP_Budgetary_Quote__c,
+                                            blng__OrderProduct__r.SBQQ__QuoteLine__r.SBQQ__Quote__c FROM blng__InvoiceLine__c
+                                                                                                    WHERE blng__OrderProduct__r.SBQQ__QuoteLine__r.SBQQ__Quote__c IN : budgetaryQuoteIds
+                                                                                                    AND blng__Invoice__r.blng__InvoiceStatus__c != 'Cancelled' AND blng__Invoice__r.blng__InvoiceStatus__c != 'Rebilled'
                                                                                                     AND NSP_Product_Code__c IN : budgetraryProductCodes ]) {
-            
+
             if(!invIdToQuoteIdMap.containsKey(invLine.blng__Invoice__c)) {
                 invIdToQuoteIdMap.put(invLine.blng__Invoice__c,invLine.blng__OrderProduct__r.SBQQ__QuoteLine__r.SBQQ__Quote__c);
             }
             if(quoteIdtoInvoiceIdMap.containskey(invLine.blng__OrderProduct__r.SBQQ__QuoteLine__r.SBQQ__Quote__c)) {
-                Set<String> quoteToinvIdSet = quoteIdtoInvoiceIdMap.get(invLine.blng__OrderProduct__r.SBQQ__QuoteLine__r.SBQQ__Quote__c);     
+                Set<String> quoteToinvIdSet = quoteIdtoInvoiceIdMap.get(invLine.blng__OrderProduct__r.SBQQ__QuoteLine__r.SBQQ__Quote__c);
                 quoteToinvIdSet.add(invLine.blng__Invoice__c);
                 quoteIdtoInvoiceIdMap.put(invLine.blng__OrderProduct__r.SBQQ__QuoteLine__r.SBQQ__Quote__c,quoteToinvIdSet);
             }
             else{
                 quoteIdtoInvoiceIdMap.put(invLine.blng__OrderProduct__r.SBQQ__QuoteLine__r.SBQQ__Quote__c,new Set<String>{invLine.blng__Invoice__c});
             }
-                   
+
         }
 
     }
-    
+
     for (NSP_Enrollment_Fee_Payment__c enrollFee : [SELECT Id, Name, NSP_Opportunity__c, NSP_WX_WA_Enrollment_Fee_Received__c, NSP_Opportunity__r.SBQQ__PrimaryQuote__c FROM NSP_Enrollment_Fee_Payment__c WHERE NSP_Opportunity__r.SBQQ__PrimaryQuote__c IN : budgetaryQuoteIds AND NSP_WX_WA_Enrollment_Fee_Received__c!=null AND NSP_WX_WA_Enrollment_Fee_Received__c > 0]) {
         if(!quoteIdToEnrollmentFeeMap.containsKey(enrollFee.NSP_Opportunity__r.SBQQ__PrimaryQuote__c)) {
             quoteIdToEnrollmentFeeMap.put(enrollFee.NSP_Opportunity__r.SBQQ__PrimaryQuote__c,true);
@@ -140,10 +140,10 @@ public void beforeUpdateDirector(Map < Id, blng__Invoice__c > invoiceNewMap, Map
 
 /**
 * Iterates throught the lead map and identifies the records that needs to worked based on various criterias.
-* @param invoiceNewMap Map of New Invoices. 
-* @param invoiceOldMap Map of Old Invoices. 
-* @return void             
-*                
+* @param invoiceNewMap Map of New Invoices.
+* @param invoiceOldMap Map of Old Invoices.
+* @return void
+*
 */
 public void afterUpdateDirector(Map < Id, blng__Invoice__c > invoiceNewMap, Map < Id, blng__Invoice__c > invoiceOldMap) {
     Date cutoffDate = Date.today() - 30;
@@ -162,13 +162,9 @@ public void afterUpdateDirector(Map < Id, blng__Invoice__c > invoiceNewMap, Map 
         } */
         // added for STY-02870
         if(inv.blng__PaymentStatus__c != invoiceOldMap.get(inv.Id).blng__PaymentStatus__c &&  inv.blng__PaymentStatus__c=='Paid') {
-            orderInvoiceIdSet.add(inv.Id); 
+            orderInvoiceIdSet.add(inv.Id);
         }
-        
-        if(inv.blng__InvoiceStatus__c == 'Posted' && inv.NSP_CLM_Document_Received__c == FALSE && inv.NSP_Invoice_External_ID__c == null)  {
-            invIdsforDocusignGeneration.add(inv.id);
-        }
-        
+
     }
 
     if(accountIdsToCheck.size()>0) {
@@ -181,19 +177,13 @@ public void afterUpdateDirector(Map < Id, blng__Invoice__c > invoiceNewMap, Map 
     if(orderInvoiceIdSet.size()>0) {
         setDownPaymentDetailsOnProject(orderInvoiceIdSet);
     }
-    if(invIdsforDocusignGeneration.size() > 0 ){
-        NSP_AutomationSetting__mdt calloutsEnabled = NSP_AutomationSetting__mdt.getInstance('NSP_DocuSign_Invoice_Callouts');
-        if(!calloutsEnabled.NSP_Disable__c) {
-        NSP_DocuSignRESTUtility.evaluateInvoiceWorkflow(invIdsforDocusignGeneration);
-        }
-    }
 }
 
 
 //@future
 public static void checkAndCloseDunningCase (Set<Id> accountIds ) {
     //System.debug('accountIds :'+accountIds);
-    Date cutoffDate = Date.today() - 30;  
+    Date cutoffDate = Date.today() - 30;
     Map<String,Case> AccountWithDunningCase = new Map<String,Case>();
     Set<String> AccountIdsWithOpenInv = new Set<String>();
     List<Case> dunningCaseToClose = new List<Case>();
@@ -213,10 +203,10 @@ public static void checkAndCloseDunningCase (Set<Id> accountIds ) {
                 dunningCaseToClose.add(cs);
             }
         }
-    } 
+    }
     if(dunningCaseToClose.size()>0){
         update dunningCaseToClose;
-    } 
+    }
 }
 
     // Method Name : setDownPaymentDetailsOnProject
@@ -231,7 +221,7 @@ public static void checkAndCloseDunningCase (Set<Id> accountIds ) {
                     SELECT
                         Id , blng__OrderProduct__r.Order.NSP_Down_Payment_Required__c ,
                         blng__OrderProduct__r.NSP_Project__c , blng__OrderProduct__r.NSP_Project__r.pse__Project_Status__c
-                    FROM blng__InvoiceLine__c 
+                    FROM blng__InvoiceLine__c
                     WHERE (
                         blng__OrderProduct__r.NSP_Project__c != null
                         AND blng__Invoice__c IN :invoiceIdSet

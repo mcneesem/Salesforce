@@ -9,6 +9,11 @@ public class NSP_BatchProgressIndicatorControllerTest {
     
     @TestSetup
     public static void createTestData(){
+        Order_Settings__c orderSetting = Order_Settings__c.getOrgDefaults();
+        orderSetting.EffectiveDateStartOfMonth__c = true;
+        orderSetting.Bypass_Rule_PreventStatusChange__c = true;
+        upsert orderSetting;
+
         NSP_ContactTriggerHandler.TriggerDisabled = true;
         blng__BillingRule__c objBillingRule = NSP_TestHelper.createBillingRule(); 
         blng__RevenueRecognitionRule__c objRevRecRule =  NSP_TestHelper.createRevrecRule('1');
