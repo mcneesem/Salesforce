@@ -73,14 +73,14 @@ public class NSP_GenericEmailUtility {
         Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
         try {
             mail.setWhatId( recordId );
-            if ( String.isNotBlank( templateDevName ) ) {
+            if ( String.isNotBlank( templateId ) ) {
                 mail.setTemplateId( templateId );
                 mail.setTargetObjectId( targetObjId );
             } else {
                 mail.setSubject( subject );
                 mail.setPlainTextBody( plainTextBody );
             }
-            if ( orgWideEmailId != null ) {
+            if ( String.isNotBlank( orgWideEmailId ) ) {
                 mail.setOrgWideEmailAddressId( orgWideEmailId );
             }
             if ( toAddressList != null ) {
