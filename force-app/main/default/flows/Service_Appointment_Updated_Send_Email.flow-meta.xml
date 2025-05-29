@@ -14,7 +14,7 @@
         <inputParameters>
             <name>emailTemplateId</name>
             <value>
-                <elementReference>$Setup.Service_Appointment_Email_Template__c.Scheduled_Email_Template__c</elementReference>
+                <elementReference>$Setup.Service_Appointment_Settings__c.Scheduled_Email_Template__c</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
