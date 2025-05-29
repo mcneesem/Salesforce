@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Is_Cloned__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Field to identify if Email Message has been cloned</description>
+    <externalId>false</externalId>
+    <label>Is Cloned</label>
+    <type>Checkbox</type>
+</CustomField>
