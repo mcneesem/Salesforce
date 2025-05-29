@@ -138,47 +138,41 @@ public void beforeUpdateDirector(Map < Id, blng__Invoice__c > invoiceNewMap, Map
 
 }
 
-/**
-* Iterates throught the lead map and identifies the records that needs to worked based on various criterias.
-* @param invoiceNewMap Map of New Invoices.
-* @param invoiceOldMap Map of Old Invoices.
-* @return void
-*
-*/
-public void afterUpdateDirector(Map < Id, blng__Invoice__c > invoiceNewMap, Map < Id, blng__Invoice__c > invoiceOldMap) {
-    Date cutoffDate = Date.today() - 30;
-    Set<Id> accountIdsToCheck = new Set<Id>();
-    //Set<String> invoiceIdSet = new Set<String>();
-    Set<String> orderInvoiceIdSet = new Set<String>();
-    List<String> invIdsforDocusignGeneration = new List<String>();
-
-    for (blng__Invoice__c inv : invoiceNewMap.values() ){
-         if(inv.blng__Balance__c <= 0 && inv.blng__PaymentStatus__c=='Paid' && inv.blng__DueDate__c < cutoffDate &&
-        inv.blng__PaymentStatus__c != invoiceOldMap.get(inv.Id).blng__PaymentStatus__c ) {
-            accountIdsToCheck.add(inv.blng__Account__c);
+    //
+    // Iterates throught the lead map and identifies the records that needs to worked based on various criterias.
+    // @param invoiceNewMap Map of New Invoices.
+    // @param invoiceOldMap Map of Old Invoices.
+    // @return void
+    //
+    public void afterUpdateDirector( Map<Id,blng__Invoice__c> invoiceNewMap , Map<Id,blng__Invoice__c> invoiceOldMap ) {
+        Date cutoffDate = ( Date.today() - 30 );
+        Set<Id> accountIdsToCheck = new Set<Id>();
+        Set<String> orderInvoiceIdSet = new Set<String>();
+        for ( blng__Invoice__c inv : invoiceNewMap.values() ) {
+            if ( ( inv.blng__Balance__c <= 0 )
+                && ( inv.blng__PaymentStatus__c == 'Paid' )
+                && ( inv.blng__DueDate__c < cutoffDate )
+                && ( inv.blng__PaymentStatus__c != invoiceOldMap.get( inv.Id ).blng__PaymentStatus__c )
+                )
+            {
+                accountIdsToCheck.add( inv.blng__Account__c );
+            }
+            // added for STY-02870
+            if ( ( inv.blng__PaymentStatus__c != invoiceOldMap.get( inv.Id ).blng__PaymentStatus__c )
+                && ( inv.blng__PaymentStatus__c == 'Paid' )
+                )
+            {
+                orderInvoiceIdSet.add( inv.Id );
+            }
         }
-      /*  if(inv.blng__BillToContact__c == null){
-            invoiceIdSet.add(inv.Id);
-        } */
+        if ( !accountIdsToCheck.isEmpty() ) {
+            checkAndCloseDunningCase( accountIdsToCheck );
+        }
         // added for STY-02870
-        if(inv.blng__PaymentStatus__c != invoiceOldMap.get(inv.Id).blng__PaymentStatus__c &&  inv.blng__PaymentStatus__c=='Paid') {
-            orderInvoiceIdSet.add(inv.Id);
+        if ( !orderInvoiceIdSet.isEmpty() ) {
+            setDownPaymentDetailsOnProject( orderInvoiceIdSet );
         }
-
     }
-
-    if(accountIdsToCheck.size()>0) {
-        checkAndCloseDunningCase(accountIdsToCheck);
-    }
-  /*  if(invoiceIdSet.size()>0) {
-        setInvoiceToEmail(invoiceIdSet);
-    } */
-    // added for STY-02870
-    if(orderInvoiceIdSet.size()>0) {
-        setDownPaymentDetailsOnProject(orderInvoiceIdSet);
-    }
-}
-
 
 //@future
 public static void checkAndCloseDunningCase (Set<Id> accountIds ) {
