@@ -31189,7 +31189,7 @@
   {
     "id": "01p4x00000VMCTlAAP",
     "name": "NSP_InvoiceTriggerHelper",
-    "totalLines": 108,
+    "totalLines": 104,
     "lines": {
       "21": 1,
       "30": 1,
@@ -31295,13 +31295,9 @@
       "228": 1,
       "229": 1,
       "230": 1,
-      "237": 1,
-      "242": 1,
-      "243": 1,
-      "244": 1,
-      "246": 1
+      "237": 1
     },
-    "totalCovered": 85,
+    "totalCovered": 81,
     "coveredPercent": 79
   },
   {
