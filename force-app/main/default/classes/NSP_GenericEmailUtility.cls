@@ -86,7 +86,7 @@ public class NSP_GenericEmailUtility {
             if ( toAddressList != null ) {
                 mail.setToAddresses( toAddressList );
             }
-            if ( toAddressList != null ) {
+            if ( ccAddressList != null ) {
                 mail.setCcAddresses( ccAddressList );
             }
         } catch ( Exception e ) {
