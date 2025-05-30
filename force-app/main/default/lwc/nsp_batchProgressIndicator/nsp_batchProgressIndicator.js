@@ -13,11 +13,9 @@ export default class NSP_BatchProgressIndicator extends LightningElement {
     disableExecuteBatch = false;
     disableBatchSize = false;
     enableBatchUI = false;
-
-    invBatchSize;
-    docuSignBatchSize;
     @wire(getInvBatchSize) invBatchSize;
     @wire(getDocuSignBatchSize) docuSignBatchSize;
+
     get batchOptions() {
         return [
             { label: 'Invoice Post Batch', value: 'NSP_InvoiceBatch' },
