@@ -1,6 +1,5 @@
 import { LightningElement, api ,wire} from 'lwc';
 //importing the apex methods
-import getJobDetails from '@salesforce/apex/NSP_BatchProgressIndicatorController.getJobDetails';
 import executeBatch from '@salesforce/apex/NSP_BatchProgressIndicatorController.executeBatch';
 import getUserAccess from '@salesforce/apex/NSP_BatchProgressIndicatorController.getUserAccess';
 import getDocuSignBatchSize from '@salesforce/apex/NSP_DocuSignInvoiceDocumentBatch.getBatchSize';
