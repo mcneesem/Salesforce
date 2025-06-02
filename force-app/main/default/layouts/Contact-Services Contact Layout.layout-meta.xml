@@ -384,6 +384,7 @@
         </relatedContentItems>
     </relatedContent>
     <relatedLists>
+        <excludeButtons>New</excludeButtons>
         <fields>Case.NAME</fields>
         <fields>Case.CASE_SUBJECT</fields>
         <fields>Case.NSP_Category__c</fields>
@@ -491,7 +492,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h8G000000NT33</masterLabel>
+        <masterLabel>00h4x000003Eh6J</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>
