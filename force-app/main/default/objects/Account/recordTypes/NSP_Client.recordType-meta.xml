@@ -255,6 +255,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Academy of General Dentistry</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Allstate</fullName>
             <default>false</default>
         </values>
