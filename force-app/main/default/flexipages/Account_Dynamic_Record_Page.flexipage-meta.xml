@@ -23,6 +23,13 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_AIMS_Client__c</fieldItem>
                 <identifier>RecordNSP_AIMS_Client_cField3</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>NSP_Client</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -33,6 +40,13 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Account_Status__c</fieldItem>
                 <identifier>RecordNSP_Account_Status_cField4</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>NSP_Client</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -43,6 +57,13 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Sales_Service_Account_Status__c</fieldItem>
                 <identifier>RecordNSP_Sales_Service_Account_Status_cField4</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>NSP_Client</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -53,6 +74,13 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Service_Segment__c</fieldItem>
                 <identifier>RecordNSP_Service_Segment_cField2</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>NSP_Client</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -63,6 +91,23 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Phone</fieldItem>
                 <identifier>RecordPhoneField4</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_Partner_Lifecycle__c</fieldItem>
+                <identifier>RecordNSP_Partner_Lifecycle_cField4</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>NSP_Partner_Client</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
