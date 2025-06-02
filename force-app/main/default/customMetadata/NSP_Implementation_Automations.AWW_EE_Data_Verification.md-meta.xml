@@ -24,7 +24,7 @@
     </values>
     <values>
         <field>NSP_Method_Name__c</field>
-        <value xsi:type="xsd:string">dataVerification</value>
+        <value xsi:type="xsd:string">AWW_EE_Data_Verification</value>
     </values>
     <values>
         <field>NSP_Section__c</field>

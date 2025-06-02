@@ -24,7 +24,7 @@ private class NSP_Implprofile_ServiceHelperUpdate_Test {
        oProject.pse__Start_Date__c = Date.Today();
        oProject.pse__End_Date__c = System.Today().addDays(100);
        oProject.RecordTypeId = projectPEORecordTypeId;
-       oProject.TemplateName__c=label.FSOImplementationProject;
+       oProject.TemplateName__c=label.FSOImplementationProject;       
         projList.add(oProject);
         
        pse__Proj__c oProject2 = (pse__Proj__c)NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c(), 'NSP_TestDataFactory.ProjectDefaults', false);
@@ -84,9 +84,7 @@ private class NSP_Implprofile_ServiceHelperUpdate_Test {
         pt1.Name = NSP_ServiceConstants.FIRSTPAYROLL;
         pt1.pse__Project__c = oProject.Id;
         projTaskList.add(pt1);
-
-        
-
+ 
         pse__Project_Task__c pt2 = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c(), 'NSP_TestDataFactory.ProjectTaskDefaults', false);
         pt2.pse__Status__c = NSP_ServiceConstants.TASKCOMPLETE;
         pt2.RecordTypeId = PEOProjectTaskRecordTypeId;
@@ -96,7 +94,10 @@ private class NSP_Implprofile_ServiceHelperUpdate_Test {
         /*Test.startTest();
         database.insert(projTaskList);
         Test.stopTest();*/
-       
+        
+        pse__Work_Calendar__c workRec = new pse__Work_Calendar__c();
+        workRec.name = 'US 40';
+        insert workRec;
        
     }
     
@@ -123,9 +124,8 @@ private class NSP_Implprofile_ServiceHelperUpdate_Test {
     }
     
     @isTest private static void checkForClientSposoredPlansTest() {
-        
         Contact cc =[SELECT Id from Contact WHERE Name != null limit 1];
-        pse__Proj__c project = [SELECT Id, Name FROM pse__Proj__c WHERE TemplateName__c=:label.FSOImplementationProject LIMIT 1];
+        pse__Proj__c project = [SELECT Id, Name FROM pse__Proj__c WHERE TemplateName__c=:label.FSOImplementationProject LIMIT 1];    
        Implementation_Profile__c ip = [SELECT Id, NSP_Project__c, NSP_Project__r.Name FROM Implementation_Profile__c WHERE NSP_Project__c =:project.Id LIMIT 1];
        ip.Spnsrd_pln_when_Insperity_hndles_payroll__c='Yes';
        ip.Sponsored_plan_contribution_type__c='Pre-Tax';
@@ -149,8 +149,6 @@ private class NSP_Implprofile_ServiceHelperUpdate_Test {
        ip.NSP_Form_Completed__c = true;
        ip.Do_you_have_the_LOA_information__c= NSP_ServiceConstants.NO;
        ip.NSP_Project_Manager__c = cc.Id ;
-        
-       
         Test.startTest();
         update  ip;
         List<pse__Project_Task__c> projTaskList = [Select Id from pse__Project_Task__c WHERE pse__Project__c=: project.id];
