@@ -79,7 +79,6 @@
             <name>botLabel</name>
         </inputParameters>
         <nameSegment>routeWork</nameSegment>
-        <offset>0</offset>
     </actionCalls>
     <actionCalls>
         <name>Route_to_Benefits_Queue</name>
@@ -160,7 +159,6 @@
             <name>botLabel</name>
         </inputParameters>
         <nameSegment>routeWork</nameSegment>
-        <offset>0</offset>
     </actionCalls>
     <actionCalls>
         <name>Route_to_Queue</name>
@@ -241,7 +239,6 @@
             <name>botLabel</name>
         </inputParameters>
         <nameSegment>routeWork</nameSegment>
-        <offset>0</offset>
     </actionCalls>
     <apiVersion>63.0</apiVersion>
     <assignments>
@@ -875,7 +872,7 @@
         <inputAssignments>
             <field>Is_Contact_Center__c</field>
             <value>
-                <elementReference>messagingSessionRecord.Is_Contact_Center__c</elementReference>
+                <elementReference>getMessagingSessionRecord.Is_Contact_Center__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
