@@ -1,6 +1,19 @@
 public class NSP_BatchProgressIndicatorController {
     // test w/ NSP_BatchProgressIndicatorControllerTest (88%)
 
+    @AuraEnabled
+    public static List<AsyncApexJob> getJobDetails(){
+        try {
+            List<String> applicableStatus = new List<String>{'Queued','Processing'};
+            List<String> applicableClasses = new List<String>{'NSP_InvoiceBatch','NSP_DocuSignInvoiceDocumentBatch'};
+            List<AsyncApexJob> asyncJobList = [SELECT Id, Status, JobItemsProcessed, TotalJobItems,
+                                                NumberOfErrors, ApexClass.Name FROM AsyncApexJob WHERE Status IN :applicableStatus AND ApexClass.Name IN:applicableClasses AND JobType!='ScheduledApex' LIMIT 2 ]; //where Status IN :applicableStatus AND ApexClass.Name IN:applicableClasses
+            return asyncJobList;
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
+        }
+   }
+
    @AuraEnabled
    public static string executeBatch(String className, Integer chunkSize, String recId){
         //if(recId!=null){
