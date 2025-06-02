@@ -507,25 +507,6 @@ public class NSP_ProjectTaskTriggerEmailNotification {
         sendMail(subjectString,mailBody,listOfTOAddresses,emailAttachments,listOfCCAddresses,null, prjcTaskId, null);    
     }
     
-    public static void sendFormCollectedMail(String aimsClientName,String jobTitle, list<String> listOfTOAddresses, String projectManager, List<Messaging.EmailFileAttachment> emailAttachments, String emailAddress, String projtaskId){
-        
-        //email template for form collected document
-        String subjectString = aimsClientName+' / Completed Form 8973 ';
-        String headerUrl = new NSP_EmailImageController().getHeaderLogoUrl();
-        String footerUrl = new NSP_EmailImageController().getFooterLogoUrl();
-        String mailBody ='<html><body>';
-        mailBody += '<header><img src= "'+headerUrl+'" style="height:100px; width:700px;"/></header>';
-        mailBody +='<br/><br/>'+'Please find the completed form 8973 for ' +aimsClientName;
-        mailBody += ' attached.'+'<br/><br/>';
-        mailBody += 'Regards,'+'<br/>';
-        mailBody += projectManager+'<br/>';
-        mailBody += jobTitle+'<br/>';
-        mailBody += emailAddress +'<br/><br/>';
-        mailBody += '<footer><img src= "'+footerUrl+'" style="height:100px; width:700px;"/></footer>';
-        mailBody += '</html></body>';
-        sendMail(subjectString,mailBody,listOfTOAddresses,emailAttachments,null, null,projtaskId, null);
-    
-    }
     
     
     
