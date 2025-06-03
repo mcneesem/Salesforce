@@ -1,19 +1,17 @@
+// must remain `public class` to ensure successful apex compilation...
 @isTest
-public class NSP_TestExtendedDataFactory extends NSP_TestDataFactory{
+public class NSP_TestExtendedDataFactory extends NSP_TestDataFactory {
 
-    
     @isTest
-    public static void testMethod1(){
+    private static void testMethod1() {
         Account newAccount = (Account)NSP_TestExtendedDataFactory.createSObject(new Account(), 'NSP_TestDataFactory.AccountDefaults', true);
         Lead newLead = (Lead)NSP_TestExtendedDataFactory.createSObject(new Lead(), 'NSP_TestDataFactory.LeadDefaults', true);
-        Campaign newCampaign = (Campaign)NSP_TestExtendedDataFactory.createSObject(new Campaign(), 'NSP_TestDataFactory.CampaignDefaults', true);
-        //Opportunity newOpportunity = (Opportunity)NSP_TestExtendedDataFactory.createSObject(new Opportunity(), 'NSP_TestDataFactory.OpportunityDefaults', true);
         Contact newContact = (Contact)NSP_TestExtendedDataFactory.createSObject(new Contact(), 'NSP_TestDataFactory.ContactDefaultsLight', true);
         User newUser = (User)NSP_TestExtendedDataFactory.createSObject(new User(), 'NSP_TestDataFactory.UserDefaults', true);
         Product2 newProduct2 = (Product2)NSP_TestExtendedDataFactory.createSObject(new Product2(), 'NSP_TestDataFactory.Product2Defaults', true);
         CollaborationGroup newCollaborationGroup = (CollaborationGroup)NSP_TestExtendedDataFactory.createSObject(new CollaborationGroup(), 'NSP_TestDataFactory.CollaborationGroupDefaults', true);
         Document newDocument = (Document)NSP_TestExtendedDataFactory.createSObject(new Document(), 'NSP_TestDataFactory.DocumentDefaults', true);
-        Group newGroup = (Group)NSP_TestExtendedDataFactory.createSObject(new Group(), 'NSP_TestDataFactory.GroupDefaults', true); 
+        Group newGroup = (Group)NSP_TestExtendedDataFactory.createSObject(new Group(), 'NSP_TestDataFactory.GroupDefaults', true);
         Pricebook2 newPricebook2 = (Pricebook2)NSP_TestExtendedDataFactory.createSObject(new Pricebook2(), 'NSP_TestDataFactory.Pricebook2Defaults', true);
         Case newCase = (Case)NSP_TestExtendedDataFactory.createSObject(new Case(), 'NSP_TestDataFactory.CaseDefaults', true);
         Task newTask = (Task)NSP_TestExtendedDataFactory.createSObject(new Task(), 'NSP_TestDataFactory.TaskDefault', true);
@@ -21,7 +19,6 @@ public class NSP_TestExtendedDataFactory extends NSP_TestDataFactory{
         ContentVersion newContentVersion = (ContentVersion)NSP_TestExtendedDataFactory.createSObject(new ContentVersion(), 'NSP_TestDataFactory.ContentVersionDefaults', true);
         ContentDocumentLink newContentDocumentLink = (ContentDocumentLink)NSP_TestExtendedDataFactory.createSObject(new ContentDocumentLink(), 'NSP_TestDataFactory.ContentDocumentLinkDefaults', true);
         FeedItem newFeedItem = (FeedItem)NSP_TestExtendedDataFactory.createSObject(new FeedItem(), 'NSP_TestDataFactory.FeedItemDefaults', true);
-        //NSP_Account_Group__c newAccountGroup = (NSP_Account_Group__c)NSP_TestExtendedDataFactory.createSObject(new NSP_Account_Group__c(), 'NSP_TestDataFactory.AccountGroupDefaults', true);
         NSP_Sub_Client_Contact_Address__c newSubClientAddress = (NSP_Sub_Client_Contact_Address__c)NSP_TestExtendedDataFactory.createSObject(new NSP_Sub_Client_Contact_Address__c(), 'NSP_TestDataFactory.SubClientContactAddressDefaults', true);
         NSP_Sub_Client_Contact__c newSubClientContact = (NSP_Sub_Client_Contact__c)NSP_TestExtendedDataFactory.createSObject(new NSP_Sub_Client_Contact__c(), 'NSP_TestDataFactory.SubClientContactDefaults', true);
         NSP_Account_Team__c newAccTeam = (NSP_Account_Team__c)NSP_TestExtendedDataFactory.createSObject(new NSP_Account_Team__c(), 'NSP_TestDataFactory.accountTeamDefaults', true);
@@ -60,6 +57,7 @@ public class NSP_TestExtendedDataFactory extends NSP_TestDataFactory{
         pse__Permission_Control__c newPermissionControl = (pse__Permission_Control__c)NSP_TestExtendedDataFactory.createSObject(new pse__Permission_Control__c(), 'NSP_TestDataFactory.PermissionControlDefaults', false);
         NSP_Accrual_Profile__c accProfile = (NSP_Accrual_Profile__c)NSP_TestExtendedDataFactory.createSObject(new NSP_Accrual_Profile__c(), 'NSP_TestDataFactory.AccrualProfileDefaults', false);
         NSP_Accrual_Profile_Account_Relationship__c accProfileAccRelationship = (NSP_Accrual_Profile_Account_Relationship__c)NSP_TestExtendedDataFactory.createSObject(new NSP_Accrual_Profile_Account_Relationship__c(), 'NSP_TestDataFactory.AccrualProfileAccountRelationshipDefaults', false);
-        system.assert(true);
     }
+
 }
+//

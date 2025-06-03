@@ -1,5 +1,5 @@
 public class CancelCoreSalesEventsTasksBatch implements Database.Batchable<sObject>  {
-    // test w/ CancelCoreSalesEventsTasksBatchTest (89%)
+    // test w/ CancelCoreSalesEventsTasksBatchTest (90%)
 
     private static Id evtRecTypeId = NSP_GenericRecordType.getRecordTypeId( 'Event' , 'Core_Sales_Event_RT' );
     private static Id evtMMRecTypeId = NSP_GenericRecordType.getRecordTypeId( 'Event' , 'Mid_Market_Event_RT' );
@@ -8,18 +8,25 @@ public class CancelCoreSalesEventsTasksBatch implements Database.Batchable<sObje
 
     List<Id> parentIds = new List<Id>();
 
-    public CancelCoreSalesEventsTasksBatch(List<Id> parentIds){
+    public CancelCoreSalesEventsTasksBatch( List<Id> parentIds ) {
         this.parentIds = parentIds;
     }
 
-    public List<sObject> start(Database.BatchableContext bc) {
+    public List<sObject> start( Database.BatchableContext bc ) {
         sObject[] scope = new sObject[0];
-        // cancels Core Sales Activities related to optional specified parent sObjects Ids (Account, Opportunity), 
+        // cancels Core Sales Activities related to optional specified parent sObjects Ids (Account, Opportunity),
         // otherwise cancels Core Sales Activities that have been inactive more than 30 (Event) or 45 (Task) days
-        if(parentIds != null && !parentIds.isEmpty()) {
+        if ( ( parentIds != null ) && !parentIds.isEmpty() ) {
             scope.addAll(
                 [
-                    SELECT Id, WhatId, RecordTypeId, Status, ActivityDate, CreatedDate, NSP_Status__c
+                    SELECT
+                        Id ,
+                        WhatId ,
+                        RecordTypeId ,
+                        Status ,
+                        ActivityDate ,
+                        CreatedDate ,
+                        NSP_Status__c
                     FROM Task
                     WHERE (
                         (RecordTypeId = :taskRecTypeId
@@ -34,7 +41,12 @@ public class CancelCoreSalesEventsTasksBatch implements Database.Batchable<sObje
             );
             scope.addAll(
                 [
-                    SELECT Id, RecordTypeId, EndDateTime, CreatedDate, NSP_Status__c
+                    SELECT
+                        Id ,
+                        RecordTypeId ,
+                        EndDateTime ,
+                        CreatedDate ,
+                        NSP_Status__c
                     FROM Event
                     WHERE (
                         (RecordTypeId = :evtRecTypeId
@@ -52,7 +64,13 @@ public class CancelCoreSalesEventsTasksBatch implements Database.Batchable<sObje
         } else {
             scope.addAll(
                 [
-                    SELECT Id, RecordTypeId, Status, ActivityDate, CreatedDate, NSP_Status__c
+                    SELECT
+                        Id ,
+                        RecordTypeId ,
+                        Status ,
+                        ActivityDate ,
+                        CreatedDate ,
+                        NSP_Status__c
                     FROM Task
                     WHERE (
                         RecordTypeId = :taskRecTypeId
@@ -72,7 +90,12 @@ public class CancelCoreSalesEventsTasksBatch implements Database.Batchable<sObje
             );
             scope.addAll(
                 [
-                    SELECT Id, RecordTypeId, EndDateTime, CreatedDate, NSP_Status__c
+                    SELECT
+                        Id ,
+                        RecordTypeId ,
+                        EndDateTime ,
+                        CreatedDate ,
+                        NSP_Status__c
                     FROM Event
                     WHERE (
                         RecordTypeId = :evtRecTypeId
@@ -99,7 +122,7 @@ public class CancelCoreSalesEventsTasksBatch implements Database.Batchable<sObje
     public void execute( Database.BatchableContext bc , List<sObject> scope ) {
         try {
             List<sObject> recordsToUpdate = new List<sObject>();
-            for(sObject record : scope) {
+            for ( sObject record : scope ) {
                 switch on record {
                     when Task tsk {
                         tsk.Status = 'Cancelled';
@@ -128,7 +151,7 @@ public class CancelCoreSalesEventsTasksBatch implements Database.Batchable<sObje
         }
     }
 
-    public void finish(Database.BatchableContext bc){
+    public void finish( Database.BatchableContext bc ) {
     }
 
 }
