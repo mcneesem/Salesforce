@@ -87,23 +87,40 @@ public class NSP_Implementationprofile_ServiceHelper {
     private static final String LicensedContractorEmail = 'Licensed_Contractor_Email';
     private static final String MMOPTUM='Optum Bank case';
     private static final List<String> EMAIL_TEMPLATES = new List<String>{
-        NSP_ServiceConstants.EEO_INFORMATION,
-            NSP_ServiceConstants.EPLI_NOTIFICATION,
-            NSP_ServiceConstants.ER_PLAN_KEEP,
-            NSP_ServiceConstants.ER_PLAN_MOVE,
-            NSP_ServiceConstants.NEW_401,
-            NSP_ServiceConstants.REMOVE_EMP_DIR,
-            NSP_ServiceConstants.PURCHASE_PLAN,
-            NSP_ServiceConstants.SRP_NOTIFY,
-            NSP_ServiceConstants.SRP_NOTIFY_401,
-            NSP_ServiceConstants.SRP_RET_SALES,
-            WC_NOTIFICATION_FN,EPLI_POLICY_FN, LOGO_COLLECTED_FN,PAYROLL_SUMMARY_FN, FEIN_NOTIFY_FN,
-            SUB_ACCOUNT_FN,EMPLOYEE_DIRECTORY_FN, SERVICE_CONTRACT_FN, EMPLOYEE_MINISTER_FN,
-            SUBACCOUNT_NEED_FN,TIME_ENTRY_FN, SPECIAL_PAYROLLNEED_FN, STOCK_PURCHASEPLAN_FN, STOCK_OPTION_FN,
-            IRR_FN,CLIENT_SUMMARY_FN, PAYROLL_SPECIALIST_SUMMARY_FN,PRIOR_WAGES_FN,EE_COMMISSION_FN,CAFETERIAL_PLAN_FN,TECH_PACKET_FN,NSP_Existing_Retirement_Plan_Move_FSO,
-            AdditionalBPSes_FSO,NSP_New_401_k_FSO
-            };
-                
+        NSP_ServiceConstants.EEO_INFORMATION ,
+        NSP_ServiceConstants.EPLI_NOTIFICATION ,
+        NSP_ServiceConstants.ER_PLAN_KEEP ,
+        NSP_ServiceConstants.ER_PLAN_MOVE ,
+        NSP_ServiceConstants.NEW_401 ,
+        NSP_ServiceConstants.REMOVE_EMP_DIR ,
+        NSP_ServiceConstants.PURCHASE_PLAN ,
+        NSP_ServiceConstants.SRP_NOTIFY ,
+        NSP_ServiceConstants.SRP_NOTIFY_401 ,
+        NSP_ServiceConstants.SRP_RET_SALES ,
+        WC_NOTIFICATION_FN,EPLI_POLICY_FN ,
+        LOGO_COLLECTED_FN,PAYROLL_SUMMARY_FN ,
+        FEIN_NOTIFY_FN ,
+        SUB_ACCOUNT_FN ,
+        EMPLOYEE_DIRECTORY_FN ,
+        SERVICE_CONTRACT_FN ,
+        EMPLOYEE_MINISTER_FN ,
+        SUBACCOUNT_NEED_FN ,
+        TIME_ENTRY_FN ,
+        SPECIAL_PAYROLLNEED_FN ,
+        STOCK_PURCHASEPLAN_FN ,
+        STOCK_OPTION_FN ,
+        IRR_FN ,
+        CLIENT_SUMMARY_FN ,
+        PAYROLL_SPECIALIST_SUMMARY_FN ,
+        PRIOR_WAGES_FN ,
+        EE_COMMISSION_FN ,
+        CAFETERIAL_PLAN_FN ,
+        TECH_PACKET_FN ,
+        NSP_Existing_Retirement_Plan_Move_FSO ,
+        AdditionalBPSes_FSO ,
+        NSP_New_401_k_FSO
+    };
+
    NSP_IP_Automation_Helper ipAutomationHelper = new NSP_IP_Automation_Helper();
    
    
@@ -2709,11 +2726,11 @@ public class NSP_Implementationprofile_ServiceHelper {
                 NSP_Project_Manager__r.NSP_Work_email__c ,
                 NSP_Project_Manager__r.Name ,
                 NSP_Project_Manager__r.pse__Salesforce_User__c ,
-            	NSP_Project_Manager__r.NSP_Job_Title__c,
+                NSP_Project_Manager__r.NSP_Job_Title__c,
                 RecordTypeId ,
                 Account__r.NSP_Service_Segment__c,
                 NSP_Sr_Onboarding_Benefit_Rep__c,
-            	NSP_Sr_Onboarding_Benefit_Rep__r.pse__Salesforce_User__c,
+                NSP_Sr_Onboarding_Benefit_Rep__r.pse__Salesforce_User__c,
                 NSP_Project_Manager__r.pse__Salesforce_User__r.Email ,
                 NSP_OT_Representative__c ,
                 NSP_OT_Representative__r.NSP_Work_email__c ,
