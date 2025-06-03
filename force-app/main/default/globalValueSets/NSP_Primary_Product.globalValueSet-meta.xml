@@ -3,22 +3,22 @@
     <customValue>
         <fullName>WX</fullName>
         <default>false</default>
-        <label>Workforce Acceleration</label>
+        <label>HRCore Solution</label>
     </customValue>
     <customValue>
         <fullName>WA</fullName>
         <default>false</default>
-        <label>Workforce Administration</label>
+        <label>HRCore - Select Edition</label>
     </customValue>
     <customValue>
         <fullName>WO</fullName>
         <default>false</default>
-        <label>Workforce Optimization</label>
+        <label>HR360 Solution</label>
     </customValue>
     <customValue>
         <fullName>WS</fullName>
         <default>false</default>
-        <label>Workforce Synchronization</label>
+        <label>HR360 - Select Edition</label>
     </customValue>
     <customValue>
         <fullName>Applicant Tracking</fullName>

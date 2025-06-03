@@ -73,17 +73,17 @@
     <customValue>
         <fullName>Workforce Acceleration</fullName>
         <default>false</default>
-        <label>Workforce Acceleration</label>
+        <label>HRCore Solution</label>
     </customValue>
     <customValue>
         <fullName>Workforce Administration</fullName>
         <default>false</default>
-        <label>Workforce Administration</label>
+        <label>HRCore - Select Edition</label>
     </customValue>
     <customValue>
         <fullName>Workforce Optimization</fullName>
         <default>false</default>
-        <label>Workforce Optimization</label>
+        <label>HR360 Solution</label>
     </customValue>
     <masterLabel>Referral Product</masterLabel>
     <sorted>false</sorted>
