@@ -5,5 +5,5 @@
         <name>Bypass_Legal_Entity_Required</name>
     </customPermissions>
     <hasActivationRequired>false</hasActivationRequired>
-    <label>Bypass_Legal_Entity_Required</label>
+    <label>Bypass Legal Entity Required</label>
 </PermissionSet>
