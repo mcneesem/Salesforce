@@ -1,7 +1,3 @@
-/*
- * test class for NSP_ProjectTaskTriggerEmailNotification
- * // test w/ NSP_ProjectTaskTriggerEmailTest (91%)
- */
 @isTest
 public class NSP_ProjectTaskTriggerEmailTest {
     
@@ -11,10 +7,6 @@ public class NSP_ProjectTaskTriggerEmailTest {
     private static Id ipMMRecordTypeId = SObjectType.Implementation_Profile__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.MMProfile).getRecordTypeId();
 
 
-    /***********************************************************************************************
-	* MethodName: testData
-	* Description : Test Data Method
-	* ********************************************************************************************/
     @testSetup
     public static void setUpData(){
         
@@ -75,7 +67,7 @@ public class NSP_ProjectTaskTriggerEmailTest {
         projTask5.RecordTypeId = PEOProjectTaskRecordTypeId;
         projTask5.Name = NSP_ServiceConstants.ONSITEDISCOVERY;
         projTask5.pse__Project__c = oProject2.Id;
-		parentTaskList.add(projTask5);
+        parentTaskList.add(projTask5);
         
         if(!parentTaskList.isEmpty()){
               database.insert(parentTaskList);  
@@ -150,7 +142,7 @@ public class NSP_ProjectTaskTriggerEmailTest {
               database.insert(projTaskList);  
         }
         
-		//insert sub client
+        //insert sub client
         NSP_Sub_Client__c subClient = (NSP_Sub_Client__c)NSP_TestExtendedDataFactory.createSObject(new NSP_Sub_Client__c(), 'NSP_TestDataFactory.SubClientDefaults', false);
         subClient.Name = 'Test SC';
         subClient.NSP_Account__c =   newAccount.Id;
@@ -190,11 +182,7 @@ public class NSP_ProjectTaskTriggerEmailTest {
         
        
     }
-    
-    /***********************************************************************************************
-	* MethodName: emailNotifyforFsoProjectTasks
-	* Description : unit test for FSO project tasks
-	* ********************************************************************************************/    
+
     @isTest
     public static void emailNotifyforFsoProjectTasks(){ 
         List<pse__Project_Task__c> updateTaskList = new List<pse__Project_Task__c>();
@@ -215,7 +203,7 @@ public class NSP_ProjectTaskTriggerEmailTest {
         sc.NSP_Account_Status__c = NSP_ServiceConstants.AIMS_STATUS;
         NSP_Sub_Client_Contact__c scc = [SELECT Id, NSP_Contact__c, NSP_Sub_Client__c,NSP_Sub_Client__r.NSP_Account__c, NSP_Contact__r.NSP_Work_email__c, NSP_Contact__r.Name, NSP_Contact__r.NSP_Work_Phone__c, NSP_Payroll_Contact__c, NSP_On_Site_Supervisor__c, NSP_Job_Title__c
                                         FROM NSP_Sub_Client_Contact__c WHERE Id != null AND NSP_Job_Title__c = 'Test SCC' LIMIT 1];
-		scc.NSP_Paid_Non_Paid__c = NSP_ServiceConstants.PAID_NON_PAID_WSEE;
+        scc.NSP_Paid_Non_Paid__c = NSP_ServiceConstants.PAID_NON_PAID_WSEE;
         scc.NSP_Employee_Status__c = NSP_ServiceConstants.FMLA_STATUS;
         scc.NSP_Work_Email__c = 'test@pwc.com';
         scc.NSP_Payroll_Contact__c = TRUE;
@@ -270,12 +258,7 @@ public class NSP_ProjectTaskTriggerEmailTest {
         System.assertEquals( 'Yes',ip1.Has_FEIN_documentation_been_collected__c);
         Test.stopTest();
     }
-    
-    /***********************************************************************************************
-	* MethodName: emailNotifyforMMProjectTasks
-	* Description : unit test for MM Project tasks
-	* ********************************************************************************************/    
-    
+
     @isTest
     public static void emailNotifyforMMProjectTasks(){ 
         Set<Id> projectFsoIdset = new Set<Id>();
@@ -343,11 +326,7 @@ public class NSP_ProjectTaskTriggerEmailTest {
         
         
     }
-    
-    /***********************************************************************************************
-* MethodName: createEmailMessageRec
-* Description : unit test for createEmailMessageRec
-* ********************************************************************************************/
+
     @isTest
     public static void createEmailMessageRecTest(){
         Map<Messaging.SingleEmailMessage,Id> emailMessageToProjectTaskMap = new Map<Messaging.SingleEmailMessage,Id>();
@@ -369,10 +348,6 @@ public class NSP_ProjectTaskTriggerEmailTest {
         System.assertEquals(projectTaskRec.pse__Status__c, NSP_ServiceConstants.PROJECT_TASK_IN_PROGRESS);
     }
 
-    /***********************************************************************************************
-* MethodName: emailNotifyforCobraFollowUp
-* Description : unit test for emailNotifyforCobraFollowUp
-* ********************************************************************************************/
     @isTest
     public static void emailNotifyforCobraFollowUpTest(){
         List<String> projTaskFields = new List<String>{'Id','Name', 'pse__Project__c','NSP_Duration_in_minutes__c','pse__Start_Date_Time__c','pse__End_Date_Time__c'};
