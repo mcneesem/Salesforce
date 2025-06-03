@@ -1,20 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
     <sharingCriteriaRules>
-        <fullName>Channel_Operations_Opportunity_Access</fullName>
-        <accessLevel>Edit</accessLevel>
-        <label>Channel Operations Opportunity Access</label>
-        <sharedTo>
-            <role>Channel_Operations</role>
-        </sharedTo>
-        <criteriaItems>
-            <field>StageName</field>
-            <operation>equals</operation>
-            <value>Closed Lost,Closed Won</value>
-        </criteriaItems>
-        <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
-    </sharingCriteriaRules>
-    <sharingCriteriaRules>
         <fullName>Deals_Oppty_Edit</fullName>
         <accessLevel>Edit</accessLevel>
         <label>Deals - Oppty Edit</label>
@@ -35,20 +21,6 @@
         <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
     </sharingCriteriaRules>
     <sharingCriteriaRules>
-        <fullName>NCS_Manager_Opportunity_Access</fullName>
-        <accessLevel>Edit</accessLevel>
-        <label>NCS Manager Opportunity Access</label>
-        <sharedTo>
-            <group>NSP_New_Client_Sales</group>
-        </sharedTo>
-        <criteriaItems>
-            <field>StageName</field>
-            <operation>equals</operation>
-            <value>Closing,Closed Lost,Closed Won</value>
-        </criteriaItems>
-        <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
-    </sharingCriteriaRules>
-    <sharingCriteriaRules>
         <fullName>NCS_Sales_Compensation_Opportunity_Access</fullName>
         <accessLevel>Edit</accessLevel>
         <label>NCS Sales Compensation Opportunity Access</label>
@@ -63,31 +35,16 @@
         <includeRecordsOwnedByAll>false</includeRecordsOwnedByAll>
     </sharingCriteriaRules>
     <sharingCriteriaRules>
-        <fullName>Primary_Product_is_WS_or_WA</fullName>
+        <fullName>Sales_Enablement_Analyst</fullName>
         <accessLevel>Edit</accessLevel>
-        <description>If Primary Product is WS or WA, share with MidMarket Admins</description>
-        <label>Primary Product is WS or WA</label>
+        <label>Sales Enablement Analyst</label>
         <sharedTo>
-            <role>MidMarket_Administrator</role>
+            <group>Sales_Enablement_Analyst</group>
         </sharedTo>
         <criteriaItems>
-            <field>NSP_PrimaryProduct__c</field>
-            <operation>equals</operation>
-            <value>,Workforce Synchronization,Workforce Administration</value>
-        </criteriaItems>
-        <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
-    </sharingCriteriaRules>
-    <sharingCriteriaRules>
-        <fullName>Read_Edit_Access_on_MidMarket_Opportunities_to_MM_Admin</fullName>
-        <accessLevel>Edit</accessLevel>
-        <label>Read Edit Access on MidMarket Opportunities to MM Admin</label>
-        <sharedTo>
-            <role>MidMarket_Administrator</role>
-        </sharedTo>
-        <criteriaItems>
-            <field>NSP_Number_of_Employees__c</field>
-            <operation>greaterOrEqual</operation>
-            <value>150</value>
+            <field>StageName</field>
+            <operation>notEqual</operation>
+            <value></value>
         </criteriaItems>
         <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
     </sharingCriteriaRules>
@@ -107,22 +64,36 @@
         <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
     </sharingCriteriaRules>
     <sharingCriteriaRules>
-        <fullName>Sales_Enablement_Analyst</fullName>
+        <fullName>Share_MidMarket_Opportunities_to_MM_Admin</fullName>
         <accessLevel>Edit</accessLevel>
-        <label>Sales Enablement Analyst</label>
+        <label>Share MidMarket Opportunities to MM Admin</label>
         <sharedTo>
-            <group>Sales_Enablement_Analyst</group>
+            <group>MidMarket_Administrator</group>
         </sharedTo>
         <criteriaItems>
-            <field>StageName</field>
-            <operation>notEqual</operation>
-            <value></value>
+            <field>NSP_Number_of_Employees__c</field>
+            <operation>greaterOrEqual</operation>
+            <value>150</value>
+        </criteriaItems>
+        <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>Share_WS_or_WA_to_MM_Admins</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>Share WS or WA to MM Admins</label>
+        <sharedTo>
+            <group>MidMarket_Administrator</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>NSP_PrimaryProduct__c</field>
+            <operation>equals</operation>
+            <value>Workforce Synchronization,Workforce Acceleration</value>
         </criteriaItems>
         <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
     </sharingCriteriaRules>
     <sharingOwnerRules>
         <fullName>All_Opportunities_Edit_access_to_Finance_Users</fullName>
-        <accessLevel>Read</accessLevel>
+        <accessLevel>Edit</accessLevel>
         <description>Sharing rule to give edit access of opportunities to Finance Users</description>
         <label>All Opportunities Edit access to Finance Users</label>
         <sharedTo>
@@ -145,39 +116,58 @@
         </sharedFrom>
     </sharingOwnerRules>
     <sharingOwnerRules>
-        <fullName>Owner_is_BPC_share_with_MidMarket_Admins</fullName>
+        <fullName>Data_Science_Opportunity_Access</fullName>
         <accessLevel>Edit</accessLevel>
-        <description>If owner is Business Performance Consultant, share with MidMarket Admins</description>
-        <label>Owner is BPC share with MidMarket Admins</label>
+        <label>Data Science Opportunity Access</label>
         <sharedTo>
-            <role>MidMarket_Administrator</role>
+            <group>NSP_Data_Science</group>
         </sharedTo>
         <sharedFrom>
-            <role>Business_Performance_Consultant</role>
+            <allInternalUsers></allInternalUsers>
         </sharedFrom>
     </sharingOwnerRules>
     <sharingOwnerRules>
-        <fullName>Owner_is_MidMarket_Admin_share_with_MM_Admins</fullName>
+        <fullName>NCS_Opportunity_Access</fullName>
         <accessLevel>Edit</accessLevel>
-        <description>If owner is MidMarket Administrator, share with MidMarket Admins</description>
-        <label>Owner is MidMarket Admin share with MM Admins</label>
+        <label>NCS Opportunity Access</label>
         <sharedTo>
-            <role>MidMarket_Administrator</role>
+            <group>NSP_New_Client_Sales</group>
         </sharedTo>
         <sharedFrom>
-            <role>MidMarket_Administrator</role>
+            <allInternalUsers></allInternalUsers>
         </sharedFrom>
     </sharingOwnerRules>
     <sharingOwnerRules>
-        <fullName>Owner_is_MidMarket_Sales_Leader_share_with_MM_Admins</fullName>
+        <fullName>Opportunity_share_all_with_Channel_Operations</fullName>
         <accessLevel>Edit</accessLevel>
-        <description>If owner is MidMarket Sales Leader, share with MidMarket Admins</description>
-        <label>Owner is MidMarket Sales Leader share with MM Admins</label>
+        <label>Opportunity - share all with Channel Operations</label>
         <sharedTo>
-            <role>MidMarket_Administrator</role>
+            <group>Channel_Operations</group>
         </sharedTo>
         <sharedFrom>
-            <role>MidMarket_Sales_Leader</role>
+            <allInternalUsers></allInternalUsers>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>Owner_is_BPC_share_with_MidMarket_Admins_Group</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>Owner is BPC share with MidMarket Admins Group</label>
+        <sharedTo>
+            <group>MidMarket_Administrator</group>
+        </sharedTo>
+        <sharedFrom>
+            <group>Business_Performance_Consultant</group>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>Owner_is_MidMarket_Admin_share_with_MM_Admins_Group</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>Owner is MidMarket Admin share with MM Admins Group</label>
+        <sharedTo>
+            <group>MidMarket_Administrator</group>
+        </sharedTo>
+        <sharedFrom>
+            <group>MidMarket_Administrator</group>
         </sharedFrom>
     </sharingOwnerRules>
 </SharingRules>
