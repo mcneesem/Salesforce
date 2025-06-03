@@ -32,7 +32,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
     private static final String IP_AUTOMATION_IDENTIFIER = 'NSP_Implementation_Profile_Automation__c';
     private static final String CT_SPONSORED_PLAN_FN = 'CSP_doc_s_not_received';
     private static final String GENERAL_LIABILITY_FN = 'generalLiability';
-    private static final String EEO_FILING_FN = 'EEOFiling';
+    private static final String EEO_FILING_FN = 'EEO_FILING_FN';
     private static final String CLIENT_HANDBOOK_FN = 'Client_policies' ;
     private static final String EDC_FN = 'EDC' ;
     private static final String PAYROLL_LOCATIONS_FN = 'Special_Payroll_Needs_Locations';
@@ -73,7 +73,6 @@ public class NSP_Implprofile_ServiceHelperUpdate {
     private static Id ipMMRecordTypeId = SObjectType.Implementation_Profile__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.MMProfile).getRecordTypeId();
     private static Id milestonePEORecordtypeId = SObjectType.pse__Milestone__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.PEOMILSTONE).getRecordTypeId();
     private static Id projectTaskPEORecordTypeId = Schema.SObjectType.pse__Project_Task__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.PROJECT_TASK_PEO_RECORDTYPE).getRecordTypeId();
-    
     private static final List<String> MILESTONE_NAMES = new List<String>{
         NSP_ServiceConstants.MILESTONE,
         NSP_ServiceConstants.EMPLOYEEPRIMING,
@@ -82,7 +81,8 @@ public class NSP_Implprofile_ServiceHelperUpdate {
         NSP_ServiceConstants.PAYSETUP,
         NSP_ServiceConstants.BENEFITS,
         NSP_ServiceConstants.AM
-        };
+    };
+
     public NSP_Implprofile_ServiceHelperUpdate(Map<Id, Implementation_Profile__c> newIPs, Map<Id, Implementation_Profile__c> oldIPs){
         this.newIPs = newIPs;
         this.oldIPs = oldIPs;
@@ -116,7 +116,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
     public Map<String, Set<Id>>  executeAutomation() {
         Map<String, Set<Id>> ipRecordsByAutomationMap = new  Map<String, Set<Id>> ();
         try{
-            start();            
+            start();
             execute();
             finish();
             ipRecordsByAutomationMap= ipRecordsByAutomation;
@@ -1730,7 +1730,6 @@ public class NSP_Implprofile_ServiceHelperUpdate {
         if(automation == COBRA_FORM_COLLECTED_FN || automation == COBRA_FORM_NOT_COLLECTED_FN ){
             String yesOrNoConstant;
             String formCollectedTemplate;
-            //pse__Project_Task__c eachProjecttask = genericPMTask(proj,pta,ipRecId,ipwithValue,workCalendarId);
             pse__Project_Task__c eachProjecttask = null;
             NSP_Implementation_Automations__mdt ipa = NSP_Implementation_Automations__mdt.getInstance(automation);
             Implementation_Profile__c ipRec = newIPs.get(ipRecId);
@@ -1741,14 +1740,14 @@ public class NSP_Implprofile_ServiceHelperUpdate {
                 lstNamesEmployees = ipRec.NSP_COBRA_Takeover_Emp_Details__c.split(',');
                 if(lstNamesEmployees != null && lstNamesEmployees.size() > 0){
                     for(String empName : lstNamesEmployees){
-                        List<String> empDetails = empName?.split('~');                        
+                        List<String> empDetails = empName?.split('~');
                         if(empDetails.size() > 1 && empDetails[1] == yesOrNoConstant){
                             eachProjecttask = genericPMTask(proj,pta,ipRecId,ipwithValue,workCalendarId);
                             if(eachProjecttask != null)	{
-                            	eachProjectTask.Name = formCollectedTemplate.replace('<WSEE Name>', empDetails[0]);
-                            	projectTaskToInsertList.add(eachProjecttask);
+                                eachProjectTask.Name = formCollectedTemplate.replace('<WSEE Name>', empDetails[0]);
+                                projectTaskToInsertList.add(eachProjecttask);
                             }
-                        }                        
+                        }
                     }
                 }
                 ipAutomationRecords.add(
@@ -1773,12 +1772,11 @@ public class NSP_Implprofile_ServiceHelperUpdate {
         Id workCalendarId
         )
     {
-         if(automation == LOA_INFO_FN ){
-           // pse__Project_Task__c eachProjecttask = genericPMTask(proj,pta,ipRecId,ipwithValue,workCalendarId);
-             pse__Project_Task__c eachProjecttask = null;
+        if(automation == LOA_INFO_FN ){
+            pse__Project_Task__c eachProjecttask = null;
             NSP_Implementation_Automations__mdt ipa = NSP_Implementation_Automations__mdt.getInstance(automation);
             Implementation_Profile__c ipRec = newIPs.get(ipRecId);
-			List<String> lstNamesEmployees = new List<String>();
+            List<String> lstNamesEmployees = new List<String>();
             if(ipa != null && ipRec != null && !String.isBlank(ipRec.NSP_Employee_Details_On_LOA__c)) {
                 lstNamesEmployees = ipRec.NSP_Employee_Details_On_LOA__c.split(',');
                 for(String emplyName : lstNamesEmployees){
@@ -1786,12 +1784,12 @@ public class NSP_Implprofile_ServiceHelperUpdate {
                     if(lstNamesEmployees[2] == NSP_ServiceConstants.NO){
                         eachProjecttask = genericPMTask(proj,pta,ipRecId,ipwithValue,workCalendarId);
                         if(eachProjecttask != null){
-                        	eachProjecttask.Name = NSP_ServiceConstants.EMPLOYEE_LOA_INFO_YES.replace('<WSEE Name>',lstNamesEmployees[0]);
-                        	eachProjecttask.NSP_Detail__c=NSP_ServiceConstants.LOADETAILS;
-                        	projectTaskToInsertList.add(eachProjecttask);
+                            eachProjecttask.Name = NSP_ServiceConstants.EMPLOYEE_LOA_INFO_YES.replace('<WSEE Name>',lstNamesEmployees[0]);
+                            eachProjecttask.NSP_Detail__c=NSP_ServiceConstants.LOADETAILS;
+                            projectTaskToInsertList.add(eachProjecttask);
                         }
-                    }                     
-                }               
+                    }
+                }
                 ipAutomationRecords.add(
                     createIPAutomation(
                         ipRecId,
