@@ -342,6 +342,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_Account_Team__c.NSP_Primary__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Account_Team__c.NSP_Product_Type__c</field>
         <readable>true</readable>
@@ -369,11 +374,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Account_Team__c.NSP_Work_Phone__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>NSP_Account_Team__c.NSP_Primary__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
