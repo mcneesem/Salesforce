@@ -3,49 +3,44 @@ public class NSP_EmailImageController {
 
     // referenced by InsperityEmailHeader.component...
     public String getHeaderLogoUrl() {
-        return getDocumentUrl( 'Insperity_HR' );
+        return getStaticResourceUrl( 'Insperity_HR' );
     }
 
     // referenced by InsperityEmailHeader.component...
     public String getFooterLogoUrl() {
-        return getDocumentUrl( 'Insperity_Footer_Logo' );
+        return getStaticResourceUrl( 'Insperity_Footer_Logo' );
     }
 
     // referenced by NSP_TerminationFormTemplate.component...
     public String getServiceOperationsLogoUrl() {
-        return getDocumentUrl( 'Insperity_Service_Operations' );
+        return getStaticResourceUrl( 'Insperity_Service_Operations' );
     }
 
     // referenced by NSP_TerminationFormTemplate.component...
     public String getCopyWriteLogoUrl() {
-        return getDocumentUrl( 'Insperity_Copy_write_logo' );
+        return getStaticResourceUrl( 'Insperity_Copyright_Logo' );
     }
 
     // referenced by NSP_TerminationFormTemplate.component...
     public String getHRLogoLogoUrl() {
-        return getDocumentUrl( 'Insperity_HR_Logo' );
+        return getStaticResourceUrl( 'Insperity_HR_Logo' );
     }
 
-    // build the Document Url....
-    private String getDocumentUrl( String documentName ) {
-        return System.URL.getSalesforceBaseUrl().toExternalForm()
-            + '/servlet/servlet.ImageServer?id=' + getDocumentId( documentName )
-            + '&oid=' + UserInfo.getOrganizationId();
+    // build the Static Resource Url....
+    private String getStaticResourceUrl(String resourceName) {
+        return System.URL.getOrgDomainUrl().toExternalForm()
+            + '/resource/' + getResourceId(resourceName);
     }
 
-    // query the Document Id...
-    private Id getDocumentId( String documentName ) {
-        List<Document> records = [
+    // query the Static Resource Id...
+    private Id getResourceId(String resourceName) {
+        List<StaticResource> records = [
             SELECT Id
-            FROM Document
-            WHERE ( DeveloperName = :documentName )
+            FROM StaticResource
+            WHERE Name = :resourceName
+            LIMIT 1
         ];
-        Id documentId = null;
-        if ( ( records != null ) && !records.isEmpty() ) {
-            documentId = records[0].Id;
-        }
-        return documentId;
+        return !records.isEmpty() ? records[0].Id : null;
     }
-
 }
 //
