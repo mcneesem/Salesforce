@@ -16,7 +16,7 @@
         <criteriaItems>
             <field>NSP_PrimaryProduct__c</field>
             <operation>equals</operation>
-            <value>Workforce Acceleration,Workforce Administration,Workforce Optimization,Workforce Synchronization</value>
+            <value>HRCore Solution,HRCore - Select Edition,HR360 Solution,HR360 - Select Edition</value>
         </criteriaItems>
         <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
     </sharingCriteriaRules>
@@ -87,7 +87,7 @@
         <criteriaItems>
             <field>NSP_PrimaryProduct__c</field>
             <operation>equals</operation>
-            <value>Workforce Synchronization,Workforce Acceleration</value>
+            <value>HR360 - Select Edition,HRCore Solution</value>
         </criteriaItems>
         <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
     </sharingCriteriaRules>
