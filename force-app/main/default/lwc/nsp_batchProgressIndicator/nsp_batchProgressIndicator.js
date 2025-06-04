@@ -1,8 +1,9 @@
-import { LightningElement, api } from 'lwc';
+import { LightningElement, api ,wire} from 'lwc';
 //importing the apex methods
 import getJobDetails from '@salesforce/apex/NSP_BatchProgressIndicatorController.getJobDetails';
 import executeBatch from '@salesforce/apex/NSP_BatchProgressIndicatorController.executeBatch';
 import getUserAccess from '@salesforce/apex/NSP_BatchProgressIndicatorController.getUserAccess';
+import getBatchOptions from '@salesforce/apex/NSP_BatchProgressIndicatorController.getBatchOptions';
 
 export default class NSP_BatchProgressIndicator extends LightningElement {
     @api recordId;
@@ -15,12 +16,18 @@ export default class NSP_BatchProgressIndicator extends LightningElement {
     showList = false;
     jobsList = [];
 
-    get batchOptions() {
-        return [
-            { label: 'Invoice Post Batch', value: 'NSP_InvoiceBatch' },
-            { label: 'DocuSign Document Generation Batch', value: 'NSP_DocuSignInvoiceDocumentBatch' }
-           // { label: 'Invoice Email Batch', value: 'TBD' }
-        ];
+    batchOptions = [];
+    @wire(getBatchOptions)
+        wireGetBatchOptions({ error , data }) {
+            if ( error ) {
+                this.batchOptions = [];
+                this.showToast('Error', 'Failed to load batchable classes: ' + (error.body?.message || error.message), 'error');
+            } else if ( data ) {
+                this.batchOptions = data.map(option => ({
+                    label: option.label,
+                    value: option.value
+                }));
+            }
     }
 
     handleBatchChange(event) {

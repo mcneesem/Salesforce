@@ -66,31 +66,14 @@ public class NSP_BatchProgressIndicatorControllerTest {
         orderList[0].blng__BillNow__c=true;
         update orderList;
         
-        /*
-        NSP_OrderTriggerHandler.TriggerDisabled = true;
-        NSP_InvoiceTriggerHandler.TriggerDisabled = true;
-        List<Order> ords =[SELECT Id, OrderNumber, blng__BillingDayOfMonth__c FROM Order WHERE SBQQ__Quote__c=:objQuote.Id ];
-        ords[0].blng__BillingDayOfMonth__c = '1';
-        ords[0].Status = 'Reviewed';
-        update ords;
-
-        ords[0].Status = 'Activated';
-        update ords;
-        ords[0].blng__BillNow__c = TRUE;
-        update ords;
-        */
         List<blng__Invoice__c> inv =[Select Id,blng__InvoiceStatus__c,blng__Balance__c from blng__Invoice__c WHERE Id!=null];
-        //System.debug('FROM TEST CLASS-- '+inv);
-        
-        //NSP_InvoiceBatch invBatch= new NSP_InvoiceBatch();
-        //Database.executeBatch(invBatch,1);
 		blng__InvoiceRun__c invRunObj = new blng__InvoiceRun__c (Name='TestInvRun',blng__TargetDate__c=System.today());
         insert invRunObj;
         inv[0].blng__InvoiceRunCreatedBy__c = invRunObj.Id;
         NSP_InvoiceTriggerHandler.TriggerDisabled = true;
         update inv;
 		NSP_BatchProgressIndicatorController.getUserAccess();
-		NSP_BatchProgressIndicatorController.getJobDetails();
+        NSP_BatchProgressIndicatorController.getBatchOptions();
 		NSP_BatchProgressIndicatorController.executeBatch('NSP_InvoiceBatch', 1, invRunObj.Id);
         NSP_BatchProgressIndicatorController.executeBatch('NSP_DocuSignInvoiceDocumentBatch', 20, invRunObj.Id);
         Test.stopTest();
