@@ -10,5 +10,6 @@
     <permissionSets>Manage_Posted_Invoices</permissionSets>
     <permissionSets>dfsle__CLM_Administrator</permissionSets>
     <permissionSets>dfsle__DocuSign_Administrator</permissionSets>
+    <permissionSets>Use_Invoice_Post_Batch</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>

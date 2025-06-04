@@ -67,7 +67,7 @@ public class NSP_BatchProgressIndicatorController {
        List<Map<String,String>> options = new List<Map<String,String>>();
 
        Boolean hasPermission = CustomPermissionController.checkUserPermission(
-           'Can_Use_Invoice_Post_Batch' ,
+           'Use_Invoice_Post_Batch' ,
            UserInfo.getUserId()
        );
        if (hasPermission)
