@@ -62,37 +62,29 @@ public class NSP_BatchProgressIndicatorController {
         }
    }
 
-   @AuraEnabled(cacheable=true)
-   public static List<Map<String,String>> getBatchOptions() {
-       List<Map<String,String>> options = new List<Map<String,String>>();
-
-       Boolean hasPermission = CustomPermissionController.checkUserPermission(
-           'Use_Invoice_Post_Batch' ,
-           UserInfo.getUserId()
-       );
-       if (hasPermission)
-       {
-           // prepare a simple Map that can be converted to picklist options by the LWC...
-               options.add(
+    @AuraEnabled(cacheable=true)
+    public static List<Map<String,String>> getBatchOptions() {
+        Boolean hasPermission = CustomPermissionController.checkUserPermission(
+            'Use_Invoice_Post_Batch' ,
+            UserInfo.getUserId()
+        );
+        // prepare a simple Map that can be converted to picklist options by the LWC...
+        List<Map<String,String>> options = new List<Map<String,String>>();
+        if ( hasPermission ) {
+            options.add(
                 new Map<String,String>{
                     'label' => 'Invoice Post Batch' ,
                     'value' => 'NSP_InvoiceBatch'
-                });
-               options.add(
-                   new Map<String,String>{
-                       'label' => 'DocuSign Document Generation Batch' ,
-                       'value' => 'NSP_DocuSignInvoiceDocumentBatch'
-                   }
-               );
-           
-       }
-       else{
+                }
+            );
+        }
         options.add(
             new Map<String,String>{
                 'label' => 'DocuSign Document Generation Batch' ,
                 'value' => 'NSP_DocuSignInvoiceDocumentBatch'
-            });      
-       }
-       return options;
-   }  
+            }
+        );
+        return options;
+    }
+
 }
