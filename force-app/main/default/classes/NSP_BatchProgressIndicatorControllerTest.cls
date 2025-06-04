@@ -1,14 +1,8 @@
-//***Test Class for NSP_BatchProgressIndicatorController***
-/**
-* @description  : Test Class for NSP_BatchProgressIndicatorController Class
-* @date June 2023
-* Name : NSP_InvoiceBatch_Test
-*/
 @isTest
-public class NSP_BatchProgressIndicatorControllerTest {
+private class NSP_BatchProgressIndicatorControllerTest {
 
     @TestSetup
-    public static void createTestData(){
+    private static void createTestData() {
         Order_Settings__c orderSetting = Order_Settings__c.getOrgDefaults();
         orderSetting.EffectiveDateStartOfMonth__c = true;
         orderSetting.Bypass_Rule_PreventStatusChange__c = true;
@@ -34,11 +28,11 @@ public class NSP_BatchProgressIndicatorControllerTest {
     }
 
     @isTest
-    private static void generateBatchDetails(){
-         // Query account and product
+    private static void generateBatchDetails() {
+        // Query account and product
         Account objaccount  = [Select Id, Name from Account WHERE Name =: NSP_TestHelper.DEFAULT_COMPANY_NAME LIMIT 1];
         Product2 objproduct  = [Select Id, Name from Product2 WHERE Name = 'Test Product' LIMIT 1];
-         // create opportunity
+        // create opportunity
         Opportunity objOpprtunity = NSP_TestHelper.createOpenOpportunity(objaccount.Id,'New Business',true);
         PriceBookEntry objPbe     = NSP_TestHelper.createPriceBookEntry(objproduct.Id,200.0,true);
         //create quote
@@ -48,7 +42,7 @@ public class NSP_BatchProgressIndicatorControllerTest {
 
 
         Test.startTest();
-      // create order from quote
+        // create order from quote
         objQuote.SBQQ__Primary__c = true;
         objQuote.SBQQ__Ordered__c = true;
         update objQuote;
@@ -66,31 +60,15 @@ public class NSP_BatchProgressIndicatorControllerTest {
         orderList[0].blng__BillNow__c=true;
         update orderList;
 
-        /*
-        NSP_OrderTriggerHandler.TriggerDisabled = true;
-        NSP_InvoiceTriggerHandler.TriggerDisabled = true;
-        List<Order> ords =[SELECT Id, OrderNumber, blng__BillingDayOfMonth__c FROM Order WHERE SBQQ__Quote__c=:objQuote.Id ];
-        ords[0].blng__BillingDayOfMonth__c = '1';
-        ords[0].Status = 'Reviewed';
-        update ords;
-
-        ords[0].Status = 'Activated';
-        update ords;
-        ords[0].blng__BillNow__c = TRUE;
-        update ords;
-        */
         List<blng__Invoice__c> inv =[Select Id,blng__InvoiceStatus__c,blng__Balance__c from blng__Invoice__c WHERE Id!=null];
-        //System.debug('FROM TEST CLASS-- '+inv);
 
-        //NSP_InvoiceBatch invBatch= new NSP_InvoiceBatch();
-        //Database.executeBatch(invBatch,1);
-		blng__InvoiceRun__c invRunObj = new blng__InvoiceRun__c (Name='TestInvRun',blng__TargetDate__c=System.today());
+        blng__InvoiceRun__c invRunObj = new blng__InvoiceRun__c (Name='TestInvRun',blng__TargetDate__c=System.today());
         insert invRunObj;
         inv[0].blng__InvoiceRunCreatedBy__c = invRunObj.Id;
         NSP_InvoiceTriggerHandler.TriggerDisabled = true;
         update inv;
-		NSP_BatchProgressIndicatorController.getUserAccess();
-		NSP_BatchProgressIndicatorController.executeBatch('NSP_InvoiceBatch', 1, invRunObj.Id);
+        NSP_BatchProgressIndicatorController.getUserAccess();
+        NSP_BatchProgressIndicatorController.executeBatch('NSP_InvoiceBatch', 1, invRunObj.Id);
         NSP_BatchProgressIndicatorController.executeBatch('NSP_DocuSignInvoiceDocumentBatch', 20, invRunObj.Id);
         Test.stopTest();
         System.assert(orderList.size()==1,true);
