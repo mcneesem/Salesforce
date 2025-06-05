@@ -11,6 +11,11 @@
         <label>Contingent Workforce</label>
     </customValue>
     <customValue>
+        <fullName>Contractor Management</fullName>
+        <default>false</default>
+        <label>Contractor Management</label>
+    </customValue>
+    <customValue>
         <fullName>Employment Screening</fullName>
         <default>false</default>
         <label>Employment Screening</label>
@@ -91,9 +96,22 @@
         <label>Time and Attendance</label>
     </customValue>
     <customValue>
-        <fullName>Contractor Management</fullName>
+        <fullName>Bookkeeping Services</fullName>
         <default>false</default>
-        <label>Contractor Management</label>
+        <isActive>false</isActive>
+        <label>Bookkeeping Services</label>
+    </customValue>
+    <customValue>
+        <fullName>WO</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>WO</label>
+    </customValue>
+    <customValue>
+        <fullName>Full Service HR</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Full Service HR</label>
     </customValue>
     <customValue>
         <fullName>Insurance Services</fullName>
@@ -112,24 +130,6 @@
         <default>false</default>
         <isActive>false</isActive>
         <label>Payroll/Human Capital Management</label>
-    </customValue>
-    <customValue>
-        <fullName>Bookkeeping Services</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Bookkeeping Services</label>
-    </customValue>
-    <customValue>
-        <fullName>WO</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>WO</label>
-    </customValue>
-    <customValue>
-        <fullName>Full Service HR</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Full Service HR</label>
     </customValue>
     <masterLabel>Product Interest</masterLabel>
     <sorted>false</sorted>
