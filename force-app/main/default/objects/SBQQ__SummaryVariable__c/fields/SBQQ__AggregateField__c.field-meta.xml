@@ -157,6 +157,11 @@
                 <default>false</default>
                 <label>Active_1099_Employees_CW__c</label>
             </value>
+            <value>
+                <fullName>NSP_Minimum_Fee_Discount_Amt__c</fullName>
+                <default>false</default>
+                <label>NSP_Minimum_Fee_Discount_Amt__c</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

@@ -3,7 +3,26 @@
     <fullName>NSP_Net_Total_QQ__c</fullName>
     <description>Net total wrt quoted quantity</description>
     <externalId>false</externalId>
-    <formula>IF(OR(SBQQ__Bundled__c ,AND(SBQQ__Renewal__c, !SBQQ__Existing__c, ISBLANK(SBQQ__PriorQuantity__c))), 0,  IF(NSP_Quoted_Quantity__c &lt;= NSP_Max_Quantity__c,NSP_Final_Minimum_Fee__c, SBQQ__NetPrice__c * NSP_Quoted_Quantity__c))</formula>
+    <formula>IF(
+  OR(
+    SBQQ__Bundled__c ,
+    AND(
+      SBQQ__Renewal__c ,
+      !SBQQ__Existing__c ,
+      ISBLANK( SBQQ__PriorQuantity__c )
+    )
+  ) ,
+  0 ,
+  IF(
+    ISPICKVAL( SBQQ__PricingMethod__c , &apos;Block&apos; ) ,
+    SBQQ__NetPrice__c ,
+    IF(
+      NSP_Quoted_Quantity__c &lt; NSP_Max_Quantity__c ,
+      NSP_Final_Minimum_Fee__c ,
+      ( SBQQ__NetPrice__c * NSP_Quoted_Quantity__c )
+    )
+  )
+)</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Net Total QQ</label>
     <precision>18</precision>

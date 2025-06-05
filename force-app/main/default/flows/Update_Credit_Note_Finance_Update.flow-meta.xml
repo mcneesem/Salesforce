@@ -55,7 +55,14 @@
     <start>
         <locationX>50</locationX>
         <locationY>0</locationY>
-        <filterLogic>or</filterLogic>
+        <filterLogic>( 1 AND ( 2 OR 3 OR 4 ) )</filterLogic>
+        <filters>
+            <field>blng__Status__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>Posted</stringValue>
+            </value>
+        </filters>
         <filters>
             <field>blng__CreditNoteDate__c</field>
             <operator>IsChanged</operator>

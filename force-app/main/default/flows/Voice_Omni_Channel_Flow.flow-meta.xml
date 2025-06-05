@@ -22,7 +22,6 @@
         </inputParameters>
         <nameSegment>addScreenPop</nameSegment>
         <storeOutputAutomatically>true</storeOutputAutomatically>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <description>Route all the Voice Calls to Salesforce SCV Basic Queue</description>
@@ -118,9 +117,8 @@
             </value>
         </inputParameters>
         <nameSegment>routeWork</nameSegment>
-        <versionSegment>1</versionSegment>
     </actionCalls>
-    <apiVersion>60.0</apiVersion>
+    <apiVersion>63.0</apiVersion>
     <assignments>
         <name>Set_Fault_Element_Create_Case</name>
         <label>Set Fault Element: Create Case</label>
@@ -386,7 +384,8 @@
             <label>Check Vonage Queue Enabled</label>
         </rules>
     </decisions>
-    <description>8/22/2024 - Added Check for - Exclude Voice Calls for Cases for option 4, 5 or 0
+    <description>5/21/2025 - Updated for Is_Contact_Center field
+8/22/2024 - Added Check for - Exclude Voice Calls for Cases for option 4, 5 or 0
 8/27/2024 - Add Check for - Exclude Case for Callback Voice Call Records
 Routes each call to the default queue (Basic Queue) and, if the agent accepts, screen pops the new case for this call and identifies the caller.</description>
     <environments>Default</environments>
@@ -424,6 +423,12 @@ Routes each call to the default queue (Basic Queue) and, if the agent accepts, s
         <faultConnector>
             <targetReference>Set_Fault_Element_Create_Case</targetReference>
         </faultConnector>
+        <inputAssignments>
+            <field>Is_Contact_Center__c</field>
+            <value>
+                <elementReference>input_record.Is_Contact_Center__c</elementReference>
+            </value>
+        </inputAssignments>
         <inputAssignments>
             <field>Origin</field>
             <value>

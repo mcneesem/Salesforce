@@ -42,13 +42,13 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Save_Credit_Note_Line</targetReference>
+            <targetReference>Compare_Start_End_Dates</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Set_Fault_Element_Get_Billing_GL_Treatment</name>
         <label>Set Fault Element: Get_Billing_GL_Treatment</label>
-        <locationX>842</locationX>
+        <locationX>974</locationX>
         <locationY>708</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
@@ -65,7 +65,7 @@
     <assignments>
         <name>Set_Fault_Element_Get_Product</name>
         <label>Set Fault Element: Get_Product</label>
-        <locationX>1634</locationX>
+        <locationX>1766</locationX>
         <locationY>384</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
@@ -82,7 +82,7 @@
     <assignments>
         <name>Set_Fault_Element_Get_Tax_GL_Treatment</name>
         <label>Set Fault Element: Get_Tax_GL_Treatment</label>
-        <locationX>1106</locationX>
+        <locationX>1238</locationX>
         <locationY>600</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
@@ -99,8 +99,8 @@
     <assignments>
         <name>Set_Fault_Element_Save_Credit_Note_Line</name>
         <label>Set Fault Element: Save_Credit_Note_Line</label>
-        <locationX>314</locationX>
-        <locationY>1032</locationY>
+        <locationX>446</locationX>
+        <locationY>1140</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -115,7 +115,7 @@
     <decisions>
         <name>Check_Product</name>
         <label>Check Product</label>
-        <locationX>842</locationX>
+        <locationX>941</locationX>
         <locationY>384</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -137,7 +137,7 @@
     <decisions>
         <name>Check_Treatments</name>
         <label>Check Treatments</label>
-        <locationX>314</locationX>
+        <locationX>380</locationX>
         <locationY>708</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -161,6 +161,43 @@
                 <targetReference>Set_Credit_Note_GL_Rules_and_GL_Treatments</targetReference>
             </connector>
             <label>Found Treatments</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Prevent DmlExceptions: FIELD_CUSTOM_VALIDATION_EXCEPTION: End Date cannot be less than Start Date.</description>
+        <name>Compare_Start_End_Dates</name>
+        <label>Compare Start/End Dates</label>
+        <locationX>50</locationX>
+        <locationY>924</locationY>
+        <defaultConnector>
+            <targetReference>Save_Credit_Note_Line</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>End_Date_Is_Less_Than_Start_Date</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.blng__StartDate__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.blng__EndDate__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.blng__EndDate__c</leftValueReference>
+                <operator>LessThan</operator>
+                <rightValue>
+                    <elementReference>$Record.blng__StartDate__c</elementReference>
+                </rightValue>
+            </conditions>
+            <label>End Date Is Less Than Start Date</label>
         </rules>
     </decisions>
     <environments>Default</environments>
@@ -188,7 +225,7 @@
     <recordLookups>
         <name>Get_Billing_GL_Treatment</name>
         <label>Get Billing GL Treatment</label>
-        <locationX>314</locationX>
+        <locationX>380</locationX>
         <locationY>600</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -212,7 +249,7 @@
     <recordLookups>
         <name>Get_Product</name>
         <label>Get Product</label>
-        <locationX>842</locationX>
+        <locationX>941</locationX>
         <locationY>276</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -236,7 +273,7 @@
     <recordLookups>
         <name>Get_Tax_GL_Treatment</name>
         <label>Get Tax GL Treatment</label>
-        <locationX>314</locationX>
+        <locationX>380</locationX>
         <locationY>492</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -260,15 +297,15 @@
     <recordUpdates>
         <name>Save_Credit_Note_Line</name>
         <label>Save Credit Note Line</label>
-        <locationX>50</locationX>
-        <locationY>924</locationY>
+        <locationX>182</locationX>
+        <locationY>1032</locationY>
         <faultConnector>
             <targetReference>Set_Fault_Element_Save_Credit_Note_Line</targetReference>
         </faultConnector>
         <inputReference>recordCreditNoteLine</inputReference>
     </recordUpdates>
     <start>
-        <locationX>188</locationX>
+        <locationX>171</locationX>
         <locationY>0</locationY>
         <filterLogic>and</filterLogic>
         <filters>
@@ -296,8 +333,8 @@
     <subflows>
         <name>Fault_Handler</name>
         <label>Fault Handler</label>
-        <locationX>314</locationX>
-        <locationY>1140</locationY>
+        <locationX>446</locationX>
+        <locationY>1248</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultElement</name>

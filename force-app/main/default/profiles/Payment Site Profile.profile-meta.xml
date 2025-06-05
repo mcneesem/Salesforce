@@ -4256,6 +4256,21 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>blng__FinancePeriod__c.NSP_External_Id__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>blng__FinancePeriod__c.NSP_Finance_Period_External_Id__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>blng__FinancePeriod__c.Finance_Period_Identifier__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>blng__InvoiceLine__c.NSP_TemplateUnitPrice__c</field>
         <readable>true</readable>

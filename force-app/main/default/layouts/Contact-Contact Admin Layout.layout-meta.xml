@@ -595,6 +595,7 @@
         </relatedContentItems>
     </relatedContent>
     <relatedLists>
+        <excludeButtons>New</excludeButtons>
         <fields>Case.NAME</fields>
         <fields>Case.CASE_SUBJECT</fields>
         <fields>NSP_Case_Account_Name__c</fields>

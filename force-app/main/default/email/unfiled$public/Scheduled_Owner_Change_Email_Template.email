@@ -1,0 +1,12 @@
+<messaging:emailTemplate subject="Onboarding Meeting Information" recipientType="User" relatedToType="ServiceAppointment">
+<messaging:htmlEmailBody >
+<html>
+<body>
+The following meeting has been reassigned to another resource: <br/>
+Account : {!relatedTo.Account.Name} <br/>
+Meeting : {!relatedTo.Subject} <br/>
+<c:NSP_SAEmail_DateTime currentRecordId="{!relatedTo.Id}" date_time_value="{!relatedTo.SchedStartTime}" date_time_format="MM-dd-yyyy" end_date="{!relatedTo.SchedEndTime}"/><br/>
+</body>
+</html>
+</messaging:htmlEmailBody>
+</messaging:emailTemplate>

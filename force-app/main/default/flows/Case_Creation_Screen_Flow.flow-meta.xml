@@ -734,7 +734,6 @@
                     <choiceReferences>Non_SLA</choiceReferences>
                     <choiceReferences>MAIL</choiceReferences>
                     <choiceReferences>Follow_up</choiceReferences>
-                    <choiceReferences>Inbox_Email</choiceReferences>
                     <choiceReferences>Client_Meeting_In_Person</choiceReferences>
                     <choiceReferences>Client_Meeting_Virtual</choiceReferences>
                     <dataType>String</dataType>

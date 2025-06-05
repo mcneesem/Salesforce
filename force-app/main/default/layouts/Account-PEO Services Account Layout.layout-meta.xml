@@ -343,6 +343,7 @@
         </quickActionListItems>
     </quickActionList>
     <relatedLists>
+        <excludeButtons>NewCase</excludeButtons>
         <fields>CASES.CASE_NUMBER</fields>
         <fields>CASES.SUBJECT</fields>
         <fields>NAME</fields>

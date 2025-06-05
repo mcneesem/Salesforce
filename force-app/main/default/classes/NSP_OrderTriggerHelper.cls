@@ -1,8 +1,6 @@
-/**
-* Represents the Order trigger helper which handles all the logic.
-*/
+// Represents the Order trigger helper which handles all the logic.
 public class NSP_OrderTriggerHelper {
-    // test w/ NSP_OrderTriggerHelperTest, NSP_OrderItemTriggerHelperTest, NSP_QuoteTriggerHelper_Test, NSP_ProjBlngTriggerHelperTest (79%%)
+    // test w/ NSP_OrderTriggerHelperTest, NSP_OrderItemTriggerHelperTest, NSP_QuoteTriggerHelper_Test, NSP_ProjBlngTriggerHelperTest (79%)
 
     static final string STRING_ACCOUNT = 'Account';
     static final string CLOSE_LOST = 'Close/Lost';
@@ -1390,5 +1388,6 @@ public static void createAndStampSalesTaxContact(Set<Id> accountIdSet, List<Orde
             );
         }
     }
+
 }
 //
