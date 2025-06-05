@@ -29,7 +29,7 @@ public class NSP_EmailImageController {
     // build the Static Resource Url....
     private String getStaticResourceUrl(String resourceName) {
         return System.URL.getOrgDomainUrl().toExternalForm()
-            + '/resource/' + getResourceId(resourceName);
+        + '/resource/' + getResourceId(resourceName) + '/' + resourceName;
     }
 
     // query the Static Resource Id...
