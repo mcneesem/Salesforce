@@ -32,7 +32,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
     private static final String IP_AUTOMATION_IDENTIFIER = 'NSP_Implementation_Profile_Automation__c';
     private static final String CT_SPONSORED_PLAN_FN = 'CSP_doc_s_not_received';
     private static final String GENERAL_LIABILITY_FN = 'generalLiability';
-    private static final String EEO_FILING_FN = 'EEO_FILING_FN';
+    private static final String EEO_FILING_FN = 'EEOFiling';
     private static final String CLIENT_HANDBOOK_FN = 'Client_policies' ;
     private static final String EDC_FN = 'EDC' ;
     private static final String PAYROLL_LOCATIONS_FN = 'Special_Payroll_Needs_Locations';
