@@ -1,13 +1,12 @@
-/**
-* Represents the Opportunity trigger helper created By Service which handles all the logic.
-*/
 public class NSP_OpportunityTriggerServiceHelper {
     // test w/ NSP_OpportunityTriggerServiceHelperTest, NSP_AutomaticProjectBatchTest (85%)
+    // test w/ NSP_OpportunityTriggerServiceHelperTest (78%)
+    // test w/ NSP_AutomaticProjectBatchTest (9%)
 
-    /*****************************************************************
-    * Creating Constructor to call FF API's
-    * Creating Mock records of FF Api's Using interfaces 
-    */
+    //
+    // Creating Constructor to call FF API's
+    // Creating Mock records of FF Api's Using interfaces
+    //
     private static final Id PERFORM_SMART_ASSET = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.ASSET_SOBJECT_TYPE,NSP_ServiceConstants.PERFORMANCE_ASSET );
     private static final Id TIME_ATTENDANCE_ASSET = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.ASSET_SOBJECT_TYPE,NSP_ServiceConstants.ASSET_TT_RECORDTYPE );
     public NSP_FF_APIs implInstance = new NSP_FF_APIImpl();
@@ -20,18 +19,16 @@ public class NSP_OpportunityTriggerServiceHelper {
     public NSP_OpportunityTriggerServiceHelper(Set<Id> projectIdSet){
        this.implInstance = new Nsp_FFApiMock(projectIdSet);
     }
-    
-    /**
-    * Iterates throught the Opportunity map and identifies the records that needs to worked based on various criterias.
-    * @param opportunityNewMap Map of New Opportunity. 
-    * @param opportunityOldMap Map of Old Opportunity. 
-    * @return void             
-    *                
-    */
-    
+
+    //
+    // Iterates throught the Opportunity map and identifies the records that needs to worked based on various criterias.
+    // @param opportunityNewMap Map of New Opportunity.
+    // @param opportunityOldMap Map of Old Opportunity.
+    // @return void
+    //
     public void beforeUpdateDirector(Map<Id, Opportunity> opportunityNewMap, Map<Id, Opportunity> opportunityOldMap){
     	List<Opportunity> docusignedOpportunityList = new List<Opportunity>();
-        
+
         //Iterating over the new opportunity map
         for(Id opportunityId : opportunityNewMap.keySet()){
             //Added as part of STY-STY-01602
@@ -40,22 +37,20 @@ public class NSP_OpportunityTriggerServiceHelper {
                 docusignedOpportunityList.add(opportunityNewMap.get(opportunityId));
             }
         }
-        
+
         //Added as part of STY-STY-01602
         if(!docusignedOpportunityList.isEmpty()){
             updateCSAsignedDateOnOpportunity(docusignedOpportunityList);
         }
     }
-    
-    /**
-* Iterates throught the list of new leads and passes the required attributes to other methods.
-* @param opportunityNewMap Map of New Opportunity. 
-* @param opportunityOldMap Map of Old Opportunity.   
-* @return void             
-*                
-*/
-    
-    public void afterUpdateDirector(Map<Id, Opportunity> opportunityNewMap,Map<Id, Opportunity> opportunityOldMap){              
+
+    //
+    // Iterates throught the list of new leads and passes the required attributes to other methods.
+    // @param opportunityNewMap Map of New Opportunity.
+    // @param opportunityOldMap Map of Old Opportunity.
+    // @return void
+    //
+    public void afterUpdateDirector(Map<Id, Opportunity> opportunityNewMap,Map<Id, Opportunity> opportunityOldMap){
         List<Opportunity> docusignedOpportunityList = new List<Opportunity>();
         Map<Id,Opportunity> timeAttAssetMap = new Map<Id,Opportunity>();
         Map<Id,Opportunity> perAssetMap = new Map<Id,Opportunity>();
@@ -63,7 +58,7 @@ public class NSP_OpportunityTriggerServiceHelper {
         Set<Id>accountIdSet = new Set<Id>();
         Set<Id>  performSmartSet = new Set<Id>();
         Set<Id>  timeAttendenceSet = new Set<Id>();
-        
+
         if (opportunityNewMap != null){
             for(Opportunity opportunityRecord : opportunityNewMap.values()){
                 Opportunity oldOpportunity = opportunityOldMap != null ? opportunityOldMap.get(opportunityRecord.id):null;
@@ -94,7 +89,7 @@ public class NSP_OpportunityTriggerServiceHelper {
                         } else if( assetList.RecordTypeId == TIME_ATTENDANCE_ASSET ) {
                             timeAttendenceSet.add( assetList.AccountId );
                         }
-                    } 
+                    }
                 }
             }
         }
@@ -124,7 +119,7 @@ public class NSP_OpportunityTriggerServiceHelper {
                         {
                             timeAttAssetMap.put(opp.Id,opp);
                         }
-                        
+
                     }
                     if (!performSmartSet.contains(opp.AccountId)) {
                         if ( isValidWoWsPrimaryProduct
@@ -133,7 +128,7 @@ public class NSP_OpportunityTriggerServiceHelper {
                         {
                             perAssetMap.put(opp.Id,opp);
                         }
-                        if ( opp.NSP_PrimaryProduct__c == NSP_ServiceConstants.PERFORMANCE_MANAGEMENT 
+                        if ( opp.NSP_PrimaryProduct__c == NSP_ServiceConstants.PERFORMANCE_MANAGEMENT
                             && opp.NSP_IPMRecommendation__c == NSP_SalesConstants.Yes
                             )
                         {
@@ -159,12 +154,12 @@ public class NSP_OpportunityTriggerServiceHelper {
                 }
             }
         }
-        
+
         //Added as part of STY-STY-01602
         if(!docusignedOpportunityList.isEmpty()){
             updateCSAsignedDateOnAsset(docusignedOpportunityList);
         }
-        
+
         // added as a part of STY-03649
         if((!timeAttAssetMap.isEmpty() || !perAssetMap.isEmpty())  ){
             createAssetwithProject(timeAttAssetMap,perAssetMap,oppIdAccIdMap);
@@ -173,7 +168,7 @@ public class NSP_OpportunityTriggerServiceHelper {
         if(!accountIdSet.isEmpty() && !system.isfuture() && !system.isBatch()){
             updateImplementationProfile(accountIdSet);
         }
-        
+
     }
 
     //
@@ -193,7 +188,7 @@ public class NSP_OpportunityTriggerServiceHelper {
             else {
                 lProjRequests[0].Mappers = new List<pse.SObjectCloneMapper> { NSP_CreateProjFromFlow.getDefaultMappers()};
             }
-            //Call the service and create project      
+            //Call the service and create project
             List<pse.CreateProjectFromTemplateService.CreateProjectResponse> projResponse = this.implInstance.createProjectFromTemplate(new List<pse.CreateProjectFromTemplateService.CreateProjectFromTemplateAndAccountRequest>{lProjRequests[0]});
             newProjectId = this.implInstance.getProjectIdSet(projResponse);
             // Deleting all Budgets Created with Projects
@@ -209,43 +204,43 @@ public class NSP_OpportunityTriggerServiceHelper {
         return newProjectId;
     }
 
-    /***********************************************************************************************
-* MethodName: updateImplementationProfile
-* Description : This Method will update Opportunity related account ProjectId on the Implementation Profile for the Closed Opportunities 
-* Params:     Set<Id> accountIdSet
-* ********************************************************************************************/     
+    //
+    // MethodName: updateImplementationProfile
+    // Description : This Method will update Opportunity related account ProjectId on the Implementation Profile for the Closed Opportunities
+    // Params:     Set<Id> accountIdSet
+    //
     @future
-    public static void updateImplementationProfile( Set<Id> accountIdSet){  
+    public static void updateImplementationProfile( Set<Id> accountIdSet){
         Map<Id,Id> mapAccountIdProjectId = new Map<Id,Id>();
         List<Implementation_Profile__c> updateImProfileList = new List<Implementation_Profile__c>();
         try{
             Id projectRecordType = SObjectType.pse__Proj__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.PEOProject).getRecordTypeId();
             // fetching Implementation Project for Closed Opportunity related Account
-            List<pse__Proj__c> projectList = [Select Id, pse__Account__c from pse__Proj__c  WHERE pse__Account__c IN:accountIdSet  
-                               AND RecordTypeId=:projectRecordType AND pse__Project_Type__c =:NSP_ServiceConstants.ImplementationProjectType 
+            List<pse__Proj__c> projectList = [Select Id, pse__Account__c from pse__Proj__c  WHERE pse__Account__c IN:accountIdSet
+                               AND RecordTypeId=:projectRecordType AND pse__Project_Type__c =:NSP_ServiceConstants.ImplementationProjectType
                                AND (TemplateName__c = :label.Middle_Market_Implementation_Project OR TemplateName__c = :label.FSOImplementationProject)
                                Order By CreatedDate DESC limit 1];
-            // Creating map of opp account Id and Project Id 
+            // Creating map of opp account Id and Project Id
             for(pse__Proj__c project:projectList){
                 mapAccountIdProjectId.put(project.pse__Account__c,project.Id);
             }
-            // fetching and Updating Project Id on  Implementation Profiles 
-            List<Implementation_Profile__c> impProfileList =[Select Id ,Account__c,NSP_Project__c from Implementation_Profile__c 
-                                                             WHERE Account__c IN: mapAccountIdProjectId.KeySet()  ]; 
+            // fetching and Updating Project Id on  Implementation Profiles
+            List<Implementation_Profile__c> impProfileList =[Select Id ,Account__c,NSP_Project__c from Implementation_Profile__c
+                                                             WHERE Account__c IN: mapAccountIdProjectId.KeySet()  ];
             for(Implementation_Profile__c iProfile:impProfileList){
-                // checking if Implementaion Profile has valid account and Project 
+                // checking if Implementaion Profile has valid account and Project
                 if(mapAccountIdProjectId.ContainsKey(iProfile.Account__c)){
                     Implementation_Profile__c impProfile = new Implementation_Profile__c();
                     impProfile.Id= iProfile.Id;
                     // updating Project Id on Implementation Profile
                     impProfile.NSP_Project__c= mapAccountIdProjectId.get(iProfile.Account__c);
-                    updateImProfileList.add(impProfile);   
+                    updateImProfileList.add(impProfile);
                 }
             }
-            // Updating Implementation Profiles List 
+            // Updating Implementation Profiles List
             if(!updateImProfileList.isEmpty()){
                 update updateImProfileList;
-            } 
+            }
         } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
                 NSP_OpportunityTriggerServiceHelper.class.getName() ,
@@ -255,11 +250,11 @@ public class NSP_OpportunityTriggerServiceHelper {
         }
     }
 
-    /***********************************************************************************************
-    * MethodName: createAssetwithProject
-    * Description : This Method will update Opportunity related account ProjectId on the Implementation Profile for the Closed Opportunities 
-    * Params:     Map<Id,String> timeAttAssetMap,Map<Id,String> perAssetMap , Map<Id,Id> oppAccMap
-    * ********************************************************************************************/     
+    //
+    // MethodName: createAssetwithProject
+    // Description : This Method will update Opportunity related account ProjectId on the Implementation Profile for the Closed Opportunities
+    // Params:     Map<Id,String> timeAttAssetMap,Map<Id,String> perAssetMap , Map<Id,Id> oppAccMap
+    //
     private static void createAssetwithProject( Map<Id,Opportunity> timeAttAssetMap , Map<Id,Opportunity> perAssetMap , Map<Id,Id> oppAccMap ) {
         List<Asset> assetList = new List<Asset>();
         try{
@@ -267,7 +262,7 @@ public class NSP_OpportunityTriggerServiceHelper {
         Id PermformanceAssetRecordType = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.ASSET_SOBJECT_TYPE,NSP_ServiceConstants.PERFORMANCE_MANAGEMENT_ASSET);
         Id TESBPSProjectRecordType = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.PROJECT,NSP_ServiceConstants.PROJECT_BPS_RECORDTYPE);
         Template_Key_and_Id_Mapping__mdt templateMapping =[SELECT Key__c, Template_ID__c, Template_Name__c FROM Template_Key_and_Id_Mapping__mdt WHERE Key__c =: NSP_ServiceConstants.ITA_Prj_Temp  AND NSP_From_Object__c = : NSP_ServiceConstants.FROM_OBJECT_ASSET];
-        
+
         if(!timeAttAssetMap.isEmpty()){
             for(Id oppId:timeAttAssetMap.keyset() ){
                 Opportunity record = timeAttAssetMap.get(oppId);
@@ -327,16 +322,13 @@ public class NSP_OpportunityTriggerServiceHelper {
         }
     }
 
-    /***********************************************************************************************
-    * MethodName: createAssetObject
-    * ********************************************************************************************/    
     private static Asset createAssetObject(String assetName , Id oppId, Id accountId , Id assetRecordTypeId , String status , String productLine , String bundle, String primaryProduct){
         Asset ast = new Asset();
         ast.Name = assetName;
         ast.RecordTypeId = assetRecordTypeId;
         ast.Status = status;
         ast.NSP_Signature_Date__c = System.today();
-        ast.NSP_Product_Line__c = productLine;   
+        ast.NSP_Product_Line__c = productLine;
         ast.NSP_ProductBundle__c = bundle;
         ast.Opportunity__c = OppId;
         ast.AccountId = accountId;
@@ -345,14 +337,15 @@ public class NSP_OpportunityTriggerServiceHelper {
         }
         return ast;
     }
-    /***********************************************************************
-    * @MethodName : updateCSAsignedDateOnOpportunity
-    * @Description: This method will update CSA Signed Date on opportunity
-    *               record when Signed CSA is checked.
-    * @param      : List<Opportunity> opportunityList
-    * @Story      : STY-01602
-    * @return     : void                          
-    **************************************************************************/
+
+    //
+    // @MethodName : updateCSAsignedDateOnOpportunity
+    // @Description: This method will update CSA Signed Date on opportunity
+    //               record when Signed CSA is checked.
+    // @param      : List<Opportunity> opportunityList
+    // @Story      : STY-01602
+    // @return     : void
+    //
     public void updateCSAsignedDateOnOpportunity(List<Opportunity> opportunityList){
         try{
             for(Opportunity oppoRec : opportunityList){
@@ -367,14 +360,14 @@ public class NSP_OpportunityTriggerServiceHelper {
         }
     }
 
-    /***********************************************************************
-    * @MethodName : updateCSAsignedDateOnAsset
-    * @Description: This method will update the CSA Signed Date field
-    *               on opportunity related Asset record.
-    * @param      : List<Opportunity> opportunityList
-    * @Story      : STY-01602
-    * @return     : void                          
-    **************************************************************************/
+    //
+    // @MethodName : updateCSAsignedDateOnAsset
+    // @Description: This method will update the CSA Signed Date field
+    //               on opportunity related Asset record.
+    // @param      : List<Opportunity> opportunityList
+    // @Story      : STY-01602
+    // @return     : void
+    //
     public void updateCSAsignedDateOnAsset(List<Opportunity> opportunityList){
         try{
             List<Asset> relatedAssetList = new List<Asset>();
@@ -416,4 +409,6 @@ public class NSP_OpportunityTriggerServiceHelper {
             );
         }
     }
+
 }
+//
