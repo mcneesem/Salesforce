@@ -305,7 +305,6 @@
     <isNavAutoTempTabsDisabled>false</isNavAutoTempTabsDisabled>
     <isNavPersonalizationDisabled>false</isNavPersonalizationDisabled>
     <isNavTabPersistenceDisabled>false</isNavTabPersistenceDisabled>
-    <isOmniPinnedViewEnabled>true</isOmniPinnedViewEnabled>
     <label>Service Operations</label>
     <navType>Standard</navType>
     <profileActionOverrides>
