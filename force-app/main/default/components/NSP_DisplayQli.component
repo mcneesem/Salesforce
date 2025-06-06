@@ -42,109 +42,95 @@
     </p>
     <p>
         <apex:outputPanel rendered="{!quoteList}">
-            <table style="width: 100%;">
+            <table style="width: 100%; table-layout: auto;">
                 <tr style="text-align: center;">
-                    <th style="height: 30px; padding-right: 1%; padding-left: 1%;width: 4%; text-decoration: underline;">Unit <br /> Price</th>
-                    <th style="height: 30px; padding-right: 1%; padding-left: 3%;text-decoration: underline; width: 5%;">Discount <br /> Amt</th>
-                    <th style="height: 30px; padding-right: 1%; padding-left: 3%;text-decoration: underline; width: 5%;">Final <br /> Price</th>
-                    <th style="height: 30px; padding-right: 1%; padding-left: 0%;text-decoration: underline; width: 9%;">Discount %</th>
-                    <th style="height: 30px; text-align: left; padding-right: 1%; padding-left: 0%; text-decoration: underline;">Description</th>
+                    <th style="height: 30px; padding: 1%;text-decoration: underline;font-size: 12px;word-wrap: normal;white-space: normal;">Unit Price</th>
+                    <th style="height: 30px; padding: 1%;text-decoration: underline;font-size: 12px;word-wrap: normal;white-space: normal;">Discount Amt</th>
+                    <th style="height: 30px; padding: 1%;text-decoration: underline;font-size: 12px;word-wrap: normal;white-space: normal;">Final Price</th>
+                    <th style="height: 30px; padding: 1%;text-decoration: underline;font-size: 12px;word-wrap: normal;white-space: normal;">Discount %</th>
+                    <apex:outputPanel layout="none" rendered="{!recruitingQuote}">
+                        <th style="height: 30px; padding: 1%;text-decoration: underline;font-size: 12px;word-wrap: normal;white-space: normal;">Annual Base Salary</th>
+                    </apex:outputPanel>
+                    <apex:outputPanel layout="none" rendered="{!recruitingQuote}">
+                        <th style="height: 30px; padding: 1%;text-decoration: underline;font-size: 12px;word-wrap: normal;white-space: normal;">Salary Bracket %</th>
+                    </apex:outputPanel>
+                    <apex:outputPanel layout="none" rendered="{!recruitingQuote}">
+                        <th style="height: 30px; padding: 1%;text-decoration: underline;font-size: 12px;word-wrap: normal;white-space: normal;">Upfront Payment %</th>
+                    </apex:outputPanel>
+                    <th style="height: 30px; text-align: left;padding: 1%;font-size: 12px; text-decoration: underline; word-wrap: normal;white-space: normal; min-width: 30%; max-width: 60%;">Description</th>
                 </tr>
                 <apex:repeat var="qli" value="{!QliList}">
-                    <tr style="height: 30px; font-size: 14px;">
-                        <td style="height: 30px; text-align: right; padding-right: 1%; padding-left: 0%; width: 3%;">
-                            ${!qli.formattedUnitPrice}
-                        </td>
-                        <td style="height: 30px; text-align: right; padding-right: 2%; padding-left: 3%; width: 5%;">${!qli.formattedDiscPrice}</td>
-                        <td style="height: 30px; text-align: right; padding-right: 1%; padding-left: 2%; width: 5%;">${!qli.formattedFinalPrice}</td>
-                        <td style="height: 30px; text-align: center; padding-right: 3%; width: 9%;">
+                    <tr style="height: 30px;text-align: center;">
+                        <td style="height: 30px; padding: 1%;font-size: 11px;white-space: nowrap;">${!qli.formattedUnitPrice}</td>
+                        <td style="height: 30px; padding: 1%;font-size: 11px;white-space: nowrap;">${!qli.formattedDiscPrice}</td>
+                        <td style="height: 30px; padding: 1%;font-size: 11px;white-space: nowrap;">${!qli.formattedFinalPrice}</td>
+                        <td style="height: 30px; padding: 1%;font-size: 11px;white-space: nowrap;">
                             <apex:outputText rendered="{!qli.discount != null}"> {!qli.discount} %</apex:outputText>
                             <apex:outputText rendered="{!qli.discount = null}"></apex:outputText>
                         </td>
-                        <td style="height: 30px; padding-right: 3%; padding-left: 0%;">
+                        <apex:outputPanel layout="none" rendered="{!recruitingQuote}">
+                            <td style="height: 30px; padding: 1%;font-size: 11px;white-space: nowrap;">${!qli.formattedABS}</td>
+                        </apex:outputPanel>
+                        <apex:outputPanel layout="none" rendered="{!recruitingQuote}">
+                            <td style="height: 30px; padding: 1%;font-size: 11px;white-space: nowrap;">{!qli.formattedSBP}%</td>
+                        </apex:outputPanel>
+                        <apex:outputPanel layout="none" rendered="{!recruitingQuote}">
+                            <td style="height: 30px; padding: 1%;font-size: 11px;white-space: nowrap;">{!qli.formattedUFP}%</td>
+                        </apex:outputPanel>
+                        <td style="height: 30px;padding: 1%;font-size: 11px;text-align: left; word-wrap: normal;white-space: normal;">
                             <apex:outputText value="{!IF(contains(qli.description,'Minimum Fee'),LEFT(qli.description, LEN(qli.description)-14),qli.description)}"> </apex:outputText>
                             <apex:outputText value="{!IF(contains(qli.description,'Minimum Fee'),' '+$Label.MinimumFeeItalic,'')}" escape="false" />
                         </td>
                     </tr>
                 </apex:repeat>
-            </table>
-            <hr />
-            <table style="width: 100%;">
                 <apex:repeat var="qli" value="{!LastLine}">
-                    <tr style="height: 30px; font-size: 14px; font-weight: bold;">
-                        <td style="height: 30px; text-align: right; padding-right: 3%; padding-left: 0%; width: 2%;">
-                            ${!qli.formattedUnitPrice}
-                        </td>
-                        <td style="height: 30px; text-align: right; padding-right: 2%; width: 2%;">${!qli.formattedDiscPrice}</td>
-                        <td style="height: 30px; text-align: right; padding-right: 1%; width: 2%;">${!qli.formattedFinalPrice}</td>
-                        <td style="height: 30px; text-align: right; padding-right: 1%; width: 5%;">
+                    <tr style="height: 30px;text-align: center;font-weight: bold; border-top: 1px solid black;border-bottom: 1px solid black;">
+                        <td style="height: 30px; padding: 2px;font-size: 11px;white-space: nowrap;"><span style="white-space: nowrap;">${!qli.formattedUnitPrice}</span></td>
+                        <td style="height: 30px; padding: 2px;font-size: 11px;white-space: nowrap;"><span style="white-space: nowrap;">${!qli.formattedDiscPrice}</span></td>
+                        <td style="height: 30px; padding: 2px;font-size: 11px;white-space: nowrap;"><span style="white-space: nowrap;">${!qli.formattedFinalPrice}</span></td>
+                        <td style="height: 30px; padding: 1%;font-size: 11px;white-space: nowrap;">
                             <apex:outputText rendered="{!qli.discount != null}"> {!qli.discount} %</apex:outputText>
                             <apex:outputText rendered="{!qli.discount = null}"></apex:outputText>
                         </td>
-                        <td style="height: 30px; padding-right: 1%; padding-left: 3%;">
+                        <apex:outputPanel layout="none" rendered="{!recruitingQuote}">
+                            <td style="height: 30px; padding: 1%;font-size: 11px;white-space: nowrap;"></td>
+                        </apex:outputPanel>
+                        <apex:outputPanel layout="none" rendered="{!recruitingQuote}">
+                            <td style="height: 30px; padding: 1%;font-size: 11px;white-space: nowrap;"></td>
+                        </apex:outputPanel>
+                        <apex:outputPanel layout="none" rendered="{!recruitingQuote}">
+                            <td style="height: 30px; padding: 1%;font-size: 11px;white-space: nowrap;"></td>
+                        </apex:outputPanel>
+                        <td style="height: 30px;padding: 1%;font-size: 11px;text-align: left; word-wrap: normal;white-space: normal;">
                             <apex:outputText value="{!IF(contains(qli.description,'Minimum Fee'),LEFT(qli.description, LEN(qli.description)-14),qli.description)}"> </apex:outputText>
                             <apex:outputText value="{!IF(contains(qli.description,'Minimum Fee'),' '+$Label.MinimumFeeItalic,'')}" escape="false" />
                         </td>
                     </tr>
                 </apex:repeat>
             </table>
-            <hr />
         </apex:outputPanel>
     </p>
     <br />
     <p>
         <apex:outputPanel rendered="{!pepmList}">
-            <table style="width: 100%;">
-                <tr style="text-align: left;">
-                    <th style="height: 30px; padding-right: 1%; text-decoration: underline; width: 3%;">Employees</th>
-                    <th style="height: 30px; padding-right: 1%; padding-left: 2%; text-decoration: underline; width: 5%;">Base PEPM</th>
-                    <th style="height: 30px; padding-right: 1%; padding-left: 3%; text-decoration: underline; width: 5%;">Final PEPM</th>
-                    <th style="height: 30px; padding-right: 1%; padding-left: 3%; text-decoration: underline; width:8%;">Discount %</th>
-                    <th style="height: 30px; text-align: left; padding-right: 0%; padding-left: 0%; text-decoration: underline;">Description</th>
+            <table style="width: 100%;table-layout: auto; border-bottom: 2px double black">
+                <tr style="text-align: center;">
+                    <th style="height: 30px; padding: 1%;text-decoration: underline;font-size: 12px;word-wrap: normal;white-space: normal;">Employees</th>
+                    <th style="height: 30px; padding: 1%;text-decoration: underline;font-size: 12px;word-wrap: normal;white-space: normal;">Base PEPM</th>
+                    <th style="height: 30px; padding: 1%;text-decoration: underline;font-size: 12px;word-wrap: normal;white-space: normal;">Final PEPM</th>
+                    <th style="height: 30px; padding: 1%;text-decoration: underline;font-size: 12px;word-wrap: normal;white-space: normal;">Discount %</th>
+                    <th style="height: 30px; text-align: left;padding: 1%;font-size: 12px; text-decoration: underline; word-wrap: normal;white-space: normal; min-width: 30%; max-width: 60%;">Description</th>
                 </tr>
                 <apex:repeat var="qli" value="{!QliPEPMList}">
-                    <tr style="height: 30px; font-size: 14px;">
-                        <td style="height: 30px; text-align: center; padding-right: 3%; padding-left: 0%;">{!qli.numberOfEmployees}</td>
-                        <td style="height: 30px; text-align: right; padding-right: 1%; width: 3%;padding-left: 2%;">
-                            ${!qli.formattedUnitPrice}
-                        </td>
-                        <td style="height: 30px; text-align: right; padding-right: 1%; padding-left: 3%; width: 3%;">${!qli.formattedFinalPrice}</td>
-                        <td style="height: 30px; text-align: right; padding-right: 3%; padding-left: 3%; width: 8%;">
+                    <tr style="height: 30px; text-align: center">
+                        <td style="height: 30px; padding: 1%;font-size: 11px;white-space: nowrap;"><span style="white-space: nowrap;">{!qli.numberOfEmployees}</span></td>
+                        <td style="height: 30px; padding: 1%;font-size: 11px;white-space: nowrap;"><span style="white-space: nowrap;">${!qli.formattedUnitPrice}</span></td>
+                        <td style="height: 30px; padding: 1%;font-size: 11px;white-space: nowrap;"><span style="white-space: nowrap;">${!qli.formattedFinalPrice}</span></td>
+                        <td style="height: 30px; padding: 1%;font-size: 11px;white-space: nowrap;">
                             <apex:outputText rendered="{!qli.discount != null}"> {!qli.discount} %</apex:outputText>
                             <apex:outputText rendered="{!qli.discount = null}"></apex:outputText>
                         </td>
-                        <td style="height: 30px; padding-right: 4%; padding-left: 0%;">{!qli.description}</td>
-                    </tr>
-                </apex:repeat>
-            </table>
-        </apex:outputPanel>
-    </p>
-    <p>
-        <apex:outputPanel rendered="{!recruitingServiceList}">
-            <table style="width: 100%;">
-                <tr style="text-align: left;">
-                    <th style="height: 30px; padding-right: 1%; width: 3%; text-decoration: underline;">Unit <br /> Price</th>
-                    <th style="height: 30px; padding-right: 1%; text-decoration: underline; width: 3%;">Discount <br /> Amt</th>
-                    <th style="height: 30px; padding-right: 2%; text-decoration: underline; width: 3%;">Final <br /> Price</th>
-                    <th style="height: 30px; padding-right: 1%; text-decoration: underline; width: 3%;">Nr of <br /> Positions</th>
-                    <th style="height: 30px; padding-right: 1%; text-decoration: underline; width: 6%;">Discount %</th>
-                    <th style="height: 30px; text-align: left; padding-right: 2%; padding-left: 0%; text-decoration: underline;">Description</th>
-                </tr>
-                <apex:repeat var="qli" value="{!QliRecruitingList}">
-                    <tr style="height: 30px; font-size: 14px;">
-                        <td style="height: 30px; text-align: right; padding-right: 1%; padding-left: 0%; width: 3%;">
-                            ${!qli.formattedUnitPrice}
-                        </td>
-                        <td style="height: 30px; text-align: right; padding-right: 3%; width: 3%;">${!qli.formattedDiscPrice}</td>
-                        <td style="height: 30px; text-align: right; padding-right: 3%; width: 3%;">${!qli.formattedFinalPrice}</td>
-                        <td style="height: 30px; text-align: center; padding-right: 3%; width: 3%;">{!qli.position}</td>
-                        <td style="height: 30px; text-align: right; padding-right: 3%; width: 5%;">
-                            <apex:outputText rendered="{!qli.discount != null}"> {!qli.discount} %</apex:outputText>
-                            <apex:outputText rendered="{!qli.discount = null}"></apex:outputText>
-                        </td>
-                        <td style="height: 30px; padding-right: 4%; padding-left: 0%;">
-                            {!qli.description}
-                        </td>
+                        <td style="height: 30px;padding: 1%;font-size: 11px;text-align: left; word-wrap: normal;white-space: normal;">{!qli.description}</td>
                     </tr>
                 </apex:repeat>
             </table>

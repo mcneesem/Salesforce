@@ -26,12 +26,13 @@ public class NSP_DocuSignInvoiceDocumentBatch implements Schedulable , Database.
 
     private List<String> invcIdList = null;
     private List<String> processedInvcNumbers = new List<String>();
+    private Map<Id,String> processedInvMap = new Map<Id,String>();
 
     public NSP_DocuSignInvoiceDocumentBatch() {
     }
 
     public NSP_DocuSignInvoiceDocumentBatch( List<String> sfInvIds ) {
-        this.invcIdList = sfInvIds; 
+        this.invcIdList = sfInvIds;
     }
 
     public Database.QueryLocator start( Database.BatchableContext bc ) {
@@ -47,12 +48,10 @@ public class NSP_DocuSignInvoiceDocumentBatch implements Schedulable , Database.
                 SELECT
                     Id ,
                     Name ,
-                    blng__InvoiceStatus__c ,
-                    NSP_CLM_Document_Received__c
+                    blng__InvoiceStatus__c
                 FROM blng__Invoice__c
                 WHERE (
                     blng__InvoiceStatus__c = 'Posted'
-                    AND NSP_CLM_Document_Received__c = false
                     AND NSP_Invoice_Email_Sent__c = false
                     AND NSP_Invoice_External_ID__c = null
                 )
@@ -65,13 +64,11 @@ public class NSP_DocuSignInvoiceDocumentBatch implements Schedulable , Database.
                     SELECT
                         Id ,
                         Name ,
-                        blng__InvoiceStatus__c ,
-                        NSP_CLM_Document_Received__c
+                        blng__InvoiceStatus__c
                     FROM blng__Invoice__c
                     WHERE (
                         Id IN :this.invcIdList
                         AND blng__InvoiceStatus__c = 'Posted'
-                        AND NSP_CLM_Document_Received__c = false
                         AND NSP_Invoice_External_ID__c = null
                     )
                     LIMIT 10000
@@ -87,18 +84,23 @@ public class NSP_DocuSignInvoiceDocumentBatch implements Schedulable , Database.
                 List<String> invIdsToGenerateDocs = new List<String> ();
                 for ( blng__Invoice__c inv : scope ) {
                     invIdsToGenerateDocs.add( inv.id );
-                    this.processedInvcNumbers.add( inv.Name );
+                    this.processedInvMap.put( inv.Id, inv.Name );
                 }
-                // method to call DocuSign CLM API to invoke workflowss
-                if ( invIdsToGenerateDocs.size() > 0 ) {
-                    NSP_DocuSignRESTUtility.startInvoiceWorkflow( invIdsToGenerateDocs );
+                //Only Generate Docs when the Docs on the invoice is missing
+                List<String> finalInvIdsToGenerateDocs =  getInvoicesMissingAttachments(invIdsToGenerateDocs).get('withoutAttachments');
+
+                if ( finalInvIdsToGenerateDocs != null && !finalInvIdsToGenerateDocs.isEmpty() ) {
+                     //Get the InvoiceNumbers for the finalInvIdsToGenerateDocs to send in email
+                    for(String invoiceId: finalInvIdsToGenerateDocs){
+                        if(processedInvMap.containsKey(invoiceId)){
+                            this.processedInvcNumbers.add(processedInvMap.get(invoiceId));
+                        }
+                    }
+                    // method to call DocuSign CLM API to invoke workflows
+                    NSP_DocuSignRESTUtility.startInvoiceWorkflow( finalInvIdsToGenerateDocs );
                 }
             } catch( Exception e ) {
-                NSP_ErrorLogHandler.logException(
-                    NSP_DocuSignInvoiceDocumentBatch.class.getName() ,
-                    'execute' ,
-                    e
-                );
+                NSP_DocuSignInvoiceDocumentBatch.handleException(e,'execute');
             }
         }
     }
@@ -110,12 +112,38 @@ public class NSP_DocuSignInvoiceDocumentBatch implements Schedulable , Database.
                 job ,
                 'The batch apex job processed ' + job.TotalJobItems
                 + ' batches with ' + job.NumberOfErrors + ' failures.'
-                + ' Total Records :' + this.processedInvcNumbers.size()
+                + ' Total Records :' + this.processedInvcNumbers.size() + '\n'
                 + '\n'
                 + 'Invoice Numbers : \n'+ String.join( this.processedInvcNumbers , ',' )
             );
         }
     }
+
+    public static Map<String, List<String>> getInvoicesMissingAttachments(List<String> invIdsToGenerateDocsStr) {
+        Map<String, List<String>> resultMap = new Map<String, List<String>>();
+        List<String> invWithAttachments = new List<String>();
+        List<String> invWithoutAttachments = new List<String>();
+
+        if (invIdsToGenerateDocsStr != null || !invIdsToGenerateDocsStr.isEmpty()) {
+
+            for (ContentDocumentLink link : [
+                SELECT LinkedEntityId
+                FROM ContentDocumentLink
+                WHERE LinkedEntityId IN :invIdsToGenerateDocsStr
+            ]) {
+                invWithAttachments.add(link.LinkedEntityId);
+            }
+
+            for (String idStr : invIdsToGenerateDocsStr) {
+                if (!invWithAttachments.contains(idStr)) {
+                    invWithoutAttachments.add(idStr);
+                }
+            }
+        }
+        resultMap.put('withAttachments', invWithAttachments);
+        resultMap.put('withoutAttachments', invWithoutAttachments);
+        return resultMap;
+	}
 
     private AsyncApexJob selectAsyncApexJob( String jobId ) {
         List<AsyncApexJob> jobs = null;
@@ -157,11 +185,7 @@ public class NSP_DocuSignInvoiceDocumentBatch implements Schedulable , Database.
             mail.setPlainTextBody( plainTextBody );
             Messaging.sendEmail( new Messaging.SingleEmailMessage[]{ mail } );
         } catch ( Exception e ) {
-            NSP_ErrorLogHandler.logException(
-                NSP_DocuSignInvoiceDocumentBatch.class.getName() ,
-                'sendEmailNotification' ,
-                e
-            );
+            NSP_DocuSignInvoiceDocumentBatch.handleException(e,'sendEmailNotification');
         }
     }
 
@@ -239,5 +263,19 @@ public class NSP_DocuSignInvoiceDocumentBatch implements Schedulable , Database.
         private set;
     }
 
+      // for test code coverage only...
+    public static void testHandleException( Exception e , String methodName ) {
+        if ( Test.isRunningTest() ) {
+            NSP_DocuSignInvoiceDocumentBatch.handleException( e , methodName );
+        }
+    }
+
+    private static void handleException( Exception e , String methodName ) {
+        NSP_ErrorLogHandler.logException(
+            NSP_DocuSignInvoiceDocumentBatch.class.getName() ,
+            methodName ,
+            e
+        );
+    }
 }
 //

@@ -18,21 +18,21 @@ public class NSP_BatchProgressIndicatorController {
    public static string executeBatch(String className, Integer chunkSize, String recId){
         //if(recId!=null){
         try {
-            Id batchJobId; 
+            Id batchJobId;
             if(className == 'NSP_InvoiceBatch') {
             List<blng__Invoice__c> allinvs = [SELECT Id FROM blng__Invoice__c WHERE blng__InvoiceStatus__c='Draft' AND blng__InvoiceRunCreatedBy__c =:recId ];
             List<id> invoicesList = new List<Id>();
             for (blng__Invoice__c inv : allinvs) {
-                invoicesList.add(inv.Id) ; 
+                invoicesList.add(inv.Id) ;
             }
             batchJobId = Database.executeBatch(new NSP_InvoiceBatch(invoicesList),chunkSize);
             }
 
             if(className == 'NSP_DocuSignInvoiceDocumentBatch') {
-            List<blng__Invoice__c> allinvs = [SELECT Id FROM blng__Invoice__c WHERE blng__InvoiceStatus__c = 'Posted' AND NSP_CLM_Document_Received__c = FALSE AND blng__InvoiceRunCreatedBy__c =:recId  LIMIT 1000 ];
+            List<blng__Invoice__c> allinvs = [SELECT Id FROM blng__Invoice__c WHERE blng__InvoiceStatus__c = 'Posted' AND blng__InvoiceRunCreatedBy__c =:recId  LIMIT 10000 ];
             List<String> invsID = new List<String>();
             for (blng__Invoice__c inv : allinvs) {
-                invsID.add(inv.Id) ; 
+                invsID.add(inv.Id) ;
             }
             batchJobId = Database.executeBatch(new NSP_DocuSignInvoiceDocumentBatch(invsID),chunkSize);
             }
@@ -54,7 +54,7 @@ public class NSP_BatchProgressIndicatorController {
             String userId = UserInfo.getUserId();
             Set<String> financeRolesAllowed = new Set<String>(System.Label.NSP_Finance_Batch_Access.split(','));
             List<User> userDetails =[SELECT Id, Name, Email, Profile.Name, UserRole.Name FROM User where Id=:userId AND UserRole.Name IN:financeRolesAllowed ];
-            List<GroupMember> memberList = [SELECT Id, UserOrGroupId, GroupId, Group.DeveloperName FROM GroupMember WHERE Group.DeveloperName = 'NSP_Invoice_Posting_Group' AND UserOrGroupId=:userId ]; 
+            List<GroupMember> memberList = [SELECT Id, UserOrGroupId, GroupId, Group.DeveloperName FROM GroupMember WHERE Group.DeveloperName = 'NSP_Invoice_Posting_Group' AND UserOrGroupId=:userId ];
             if(memberList.size()>0 || userDetails.size()>0){ result = true; }
             return result;
         } catch (Exception e) {

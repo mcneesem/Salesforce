@@ -141,6 +141,11 @@
                 <default>false</default>
                 <label>TalentConnectAmendment</label>
             </value>
+            <value>
+                <fullName>ContractorManagement</fullName>
+                <default>false</default>
+                <label>ContractorManagement</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

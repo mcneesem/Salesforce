@@ -2104,6 +2104,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Asset.NSP_Status__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Asset.NSP_Termination_Date__c</field>
         <readable>true</readable>
@@ -2384,6 +2389,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Asset.Status</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>ConsumptionSchedule.NSP_Partner_Account__c</field>
         <readable>true</readable>
@@ -2631,6 +2641,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Opportunity.NSP_Budgetary_Quote__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Opportunity.NSP_CAM_Type__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -3036,6 +3051,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Product2.Description</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Product2.Flat_Fee_Reference_Price__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -5845,6 +5865,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>SBQQ__QuoteLine__c.Flat_Fee_Reference_Price__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>SBQQ__QuoteLine__c.Get_Seasonal_Price_Table__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -7785,6 +7810,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>SBQQ__Quote__c.Sales_Manager_Approver_Group__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>SBQQ__Quote__c.Seasonal_Pricing_Enabled__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -7801,6 +7831,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>SBQQ__Quote__c.Timestar_Total_Annual_Fees__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__Quote__c.WX_WA_Minimum_Fee_Discount__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

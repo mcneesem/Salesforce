@@ -486,6 +486,7 @@
         <relatedList>NSP_Address__c.NSP_Related_Site__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>NewCase</excludeButtons>
         <fields>CASES.CASE_NUMBER</fields>
         <fields>CASES.SUBJECT</fields>
         <fields>NSP_Category__c</fields>

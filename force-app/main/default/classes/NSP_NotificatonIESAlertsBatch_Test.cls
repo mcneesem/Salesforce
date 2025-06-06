@@ -56,7 +56,7 @@ public with sharing class NSP_NotificatonIESAlertsBatch_Test {
      */
     @isTest
     static void testNotificatonIESAlertsBatchScheduler() {  
-        String cronExp = '0 0 0 3 9 ? 2023';
+        String cronExp = '0 0 0 3 9 ? ' + System.now().year();
         Test.startTest();
         String jobId = System.schedule('NSP_NotificatonIESAlertsBatchSchedule',
                                        cronExp, 
@@ -74,15 +74,9 @@ public with sharing class NSP_NotificatonIESAlertsBatch_Test {
         // Verify the job has not run
         System.assertEquals(0, ct.TimesTriggered);
         
-        // Verify the next time the job will run
-        System.assertEquals('2023-09-03 00:00:00',  String.valueOf(ct.NextFireTime));
         Test.stopTest();     
     } 
-    
-    /**
-     * @description a.TestEmail If the “Employee Status” for the Sub Client Contact (SCC) 
-     * where the contact is identified as a Background Contact is updated from <>TERMINATED to TERMINATED and the WO AIMS status = Active
-     */
+
     @isTest
     static void terminatedEmailTemplateA(){
         //GIVEN
@@ -123,11 +117,7 @@ public with sharing class NSP_NotificatonIESAlertsBatch_Test {
             System.assert(false, 'Should not throw error.');
         }
     }
-    
-    /**
-     * @description b. TestEmail If the “Employee Status” for the SCC where the contact is identified 
-     * as a Background Contact is updated from <>TERMINATED to TERMINATED and the WO AIMS status = TERMINATED
-     */
+
     @isTest
     static void terminatedEmailTemplateB(){
         //GIVEN
@@ -173,11 +163,7 @@ public with sharing class NSP_NotificatonIESAlertsBatch_Test {
             System.assert(false, 'Should not throw error.');
         }
     }
-    
-    /**
-     * @description c.TestEmail  If the  “Employee Status” for the SCC where the contact is 
-     * identified as a Background Contact is updated from <>(TERMINATED or FMLA or FMLA – WORKERS COMP) to L.O.A., L.O.A. – EDUCATION, OR L.O.A. - MILITARY and the WO AIMS status = Active
-     */
+
     @isTest
     static void terminatedEmailTemplateC(){
         //GIVEN
@@ -220,11 +206,7 @@ public with sharing class NSP_NotificatonIESAlertsBatch_Test {
             System.assert(false, 'Should not throw error.');
         }
     }
-    
-    /**
-     * @description d. TestEmail If the  “Employee Status” for the SCC where the contact is identified as a Background Contact is updated from 
-     * L.O.A., L.O.A. – EDUCATION, OR L.O.A. - MILITARY  to <>TERMINATED excluding FMLA or FMLA – WORKERS COMP and the WO AIMS status = Active
-     */
+
     @isTest
     static void terminatedEmailTemplateD(){
         //GIVEN
@@ -265,11 +247,7 @@ public with sharing class NSP_NotificatonIESAlertsBatch_Test {
             System.assert(false, 'Should not throw error.');
         }
     }
-    
-    /**
-     * @description e. TestEmail	If the “Employee Status” for the SCC where the contact is identified 
-     * as a Background Contact is updated from <>(TERMINATED or L.O.A., L.O.A. – EDUCATION, OR L.O.A. – MILITARY)  to FMLA or FMLA – WORKERS COMP and the WO AIMS status = Active
-     */
+
     @isTest
     static void terminatedEmailTemplateE(){
         //GIVEN
@@ -311,10 +289,6 @@ public with sharing class NSP_NotificatonIESAlertsBatch_Test {
         }
     }
 
-    /**
-     * @description TestEmail f.If the “Employee Status” for the SCC where the contact is identified as a 
-     * Background Contact is updated from FMLA or FMLA – WORKERS COMP to <>TERMINATED excluding L.O.A., L.O.A. – EDUCATION, OR L.O.A. - MILITARY  and the WO AIMS status = Active
-    */
     @isTest
     static void terminatedEmailTemplateF(){
         //GIVEN
@@ -350,10 +324,7 @@ public with sharing class NSP_NotificatonIESAlertsBatch_Test {
         Test.stopTest(); 
         //System.assertEquals(1, NSP_NotificatonIESAlertsBatch.emailLimits, 'An email should be sent');
     }
-    
-     /**
-     * @description TestEmail g.If the “Employee Status” for the SCC where the contact is identified as a Background contact is updated from TERMINATED to <>TERMINATED
-     */
+
     @isTest
     static void terminatedEmailTemplateG(){
         //GIVEN

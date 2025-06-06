@@ -130,7 +130,8 @@ public with sharing class NSP_TerminationFormTemplateController {
                 Previous_Bene_Date__c ,
                 Previous_Term_Reason__c ,
                 Previous_Sub_Term_Reason__c ,
-                Previous_Client_Term_Date__c
+                Previous_Client_Term_Date__c ,
+                NSP_Client_Sub_Account_Numbers__c
             FROM NSP_Termination_Form__c
             WHERE (
                 ( Approval_Date__c > :NSP_TerminationForm_Batch.dateBefore )
@@ -169,7 +170,8 @@ public with sharing class NSP_TerminationFormTemplateController {
                 Previous_Bene_Date__c ,
                 Previous_Term_Reason__c ,
                 Previous_Sub_Term_Reason__c ,
-                Previous_Client_Term_Date__c
+                Previous_Client_Term_Date__c ,
+                NSP_Client_Sub_Account_Numbers__c
             FROM NSP_Termination_Form__c
             WHERE (
                 ( Approval_Date__c > :NSP_TerminationForm_Batch.dateBefore )
@@ -258,7 +260,7 @@ public with sharing class NSP_TerminationFormTemplateController {
         //This is the contructor method. When we create a new wrapAccount object we pass a Account that is set to the acc property. We also set the selected value to false
         public wrapTermination( NSP_Termination_Form__c termination , Map<String,String> roleMapDetails ) {
             clinetName = termination.NSP_Project_Task__r.pse__Project__r.pse__Account__r.Name;
-            clinetNumber = termination.NSP_Project_Task__r.pse__Project__r.pse__Account__r.NSP_AIMS_Client__c;
+            clinetNumber = termination.NSP_Client_Sub_Account_Numbers__c;
             eeNumber = termination.NSP_Number_of_Active_Employees__c;
             if ( ( termination.NSP_Term_Reason__c =='1900 Merger with Insperity Client' )
                 || ( termination.NSP_Term_Reason__c =='2700 Change in FEIN' )

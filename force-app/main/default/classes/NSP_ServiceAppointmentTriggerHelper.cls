@@ -158,24 +158,21 @@ public with sharing class NSP_ServiceAppointmentTriggerHelper {
     * Description : Updating the Work Order Record 
     * Params:  Id workOrderId, ServiceAppointment saRecord
     * ********************************************************************************************/  
-    public static WorkOrder updateWorkOrderRec( Id workOrderId, ServiceAppointment saRecord ){
-        
+    public static WorkOrder updateWorkOrderRec( Id workOrderId , ServiceAppointment saRecord ){
         //Updating the Work Order Record when Service Appointment is updated
-                WorkOrder woOrderRecToUpdate = new WorkOrder();
-
-                woOrderRecToUpdate.Id = workOrderId;
-                woOrderRecToUpdate.Status = saRecord.Status;
-                woOrderRecToUpdate.Description = saRecord.Description;
-                woOrderRecToUpdate.Subject = saRecord.Subject;
-        		woOrderRecToUpdate.NSP_Meeting_Type__c = saRecord.NSP_Meeting_Type__c;
-                woOrderRecToUpdate.NSP_Orientation_Address__c = saRecord.NSP_Orientation_Address__c;
-                woOrderRecToUpdate.ServiceTerritoryId = saRecord.ServiceTerritoryId;
-                woOrderRecToUpdate.Duration = saRecord.Duration;
-                woOrderRecToUpdate.DurationType = 'Minutes';
-                woOrderRecToUpdate.StartDate = saRecord.SchedStartTime;
-                woOrderRecToUpdate.EndDate = saRecord.SchedEndTime;
-        		
-        		return woOrderRecToUpdate;
+        WorkOrder woOrderRecToUpdate = new WorkOrder();
+        woOrderRecToUpdate.Id = workOrderId;
+        woOrderRecToUpdate.Status = saRecord.Status;
+        woOrderRecToUpdate.Description = saRecord.Description;
+        woOrderRecToUpdate.Subject = saRecord.Subject;
+        woOrderRecToUpdate.NSP_Meeting_Type__c = saRecord.NSP_Meeting_Type__c;
+        woOrderRecToUpdate.NSP_Orientation_Address__c = saRecord.NSP_Orientation_Address__c;
+        woOrderRecToUpdate.ServiceTerritoryId = saRecord.ServiceTerritoryId;
+        woOrderRecToUpdate.Duration = saRecord.Duration;
+        woOrderRecToUpdate.DurationType = 'Minutes';
+        woOrderRecToUpdate.StartDate = saRecord.SchedStartTime;
+        woOrderRecToUpdate.EndDate = saRecord.SchedEndTime;
+        return woOrderRecToUpdate;
     }
 
     /***********************************************************************************************
@@ -183,22 +180,19 @@ public with sharing class NSP_ServiceAppointmentTriggerHelper {
     * Description : Updating the Project Task Record
     * Params: Id projectTaskId, ServiceAppointment saRecord,  Map<Id,String> mapOfServiceTerritoryIdToName 
     * ********************************************************************************************/  
-    public static pse__Project_Task__c updateProjectTaskRec( Id projectTaskId, ServiceAppointment saRecord,  Map<Id,String> mapOfServiceTerritoryIdToName ){
-        
+    public static pse__Project_Task__c updateProjectTaskRec( Id projectTaskId , ServiceAppointment saRecord ,  Map<Id,String> mapOfServiceTerritoryIdToName ) {
         //Updating the Project Task Record when Service Appointment is updated
-                pse__Project_Task__c projTaskRecToUpdate = new pse__Project_Task__c();
-
-                projTaskRecToUpdate.Id = projectTaskId;
-                projTaskRecToUpdate.pse__Status__c = saRecord.Status;
-                projTaskRecToUpdate.pse__Long_Description__c = saRecord.Description;
-                projTaskRecToUpdate.Name = saRecord.Subject;
-        		projTaskRecToUpdate.NSP_Meeting_Type__c = saRecord.NSP_Meeting_Type__c;
-                projTaskRecToUpdate.NSP_Orientation_Address__c = saRecord.NSP_Orientation_Address__c;
-                projTaskRecToUpdate.NSP_Dispatch_Region__c = mapOfServiceTerritoryIdToName.get(saRecord.ServiceTerritoryId);
-                projTaskRecToUpdate.pse__Start_Date_Time__c = saRecord.SchedStartTime;
-                projTaskRecToUpdate.pse__End_Date_Time__c = saRecord.SchedEndTime;
-
-        		return projTaskRecToUpdate;
+        pse__Project_Task__c projTaskRecToUpdate = new pse__Project_Task__c();
+        projTaskRecToUpdate.Id = projectTaskId;
+        projTaskRecToUpdate.pse__Status__c = saRecord.Status;
+        projTaskRecToUpdate.pse__Long_Description__c = saRecord.Description;
+        projTaskRecToUpdate.Name = saRecord.Subject;
+        projTaskRecToUpdate.NSP_Meeting_Type__c = saRecord.NSP_Meeting_Type__c;
+        projTaskRecToUpdate.NSP_Orientation_Address__c = saRecord.NSP_Orientation_Address__c;
+        projTaskRecToUpdate.NSP_Dispatch_Region__c = mapOfServiceTerritoryIdToName.get(saRecord.ServiceTerritoryId);
+        projTaskRecToUpdate.pse__Start_Date_Time__c = saRecord.SchedStartTime;
+        projTaskRecToUpdate.pse__End_Date_Time__c = saRecord.SchedEndTime;
+        return projTaskRecToUpdate;
     }
 
     
@@ -209,19 +203,19 @@ public with sharing class NSP_ServiceAppointmentTriggerHelper {
     * @param oldServiceApp of Service Appointment from Trigger
     * @return Boolean             
     */
-    public static Boolean isfieldsUpdatedToSyncBackProjectTask(ServiceAppointment oServiceApp, ServiceAppointment oldServiceApp){
+    public static Boolean isfieldsUpdatedToSyncBackProjectTask( ServiceAppointment oServiceApp , ServiceAppointment oldServiceApp ) {
         return (
-                   oServiceApp.Description != oldServiceApp.Description 
-                || oServiceApp.Status != oldServiceApp.Status 
-                || oServiceApp.OwnerId != oldServiceApp.OwnerId
-                || oServiceApp.Subject != oldServiceApp.Subject
-                || oServiceApp.NSP_Orientation_Address__c != oldServiceApp.NSP_Orientation_Address__c
-            	|| oServiceApp.NSP_Meeting_Type__c != oldServiceApp.NSP_Meeting_Type__c
-                || oServiceApp.ServiceTerritoryId != oldServiceApp.ServiceTerritoryId
-                || oServiceApp.Duration != oldServiceApp.Duration
-                || oServiceApp.SchedStartTime != oldServiceApp.SchedStartTime
-                || oServiceApp.SchedEndTime != oldServiceApp.SchedEndTime
-            	);
+            oServiceApp.Description != oldServiceApp.Description 
+            || oServiceApp.Status != oldServiceApp.Status 
+            || oServiceApp.OwnerId != oldServiceApp.OwnerId
+            || oServiceApp.Subject != oldServiceApp.Subject
+            || oServiceApp.NSP_Orientation_Address__c != oldServiceApp.NSP_Orientation_Address__c
+            || oServiceApp.NSP_Meeting_Type__c != oldServiceApp.NSP_Meeting_Type__c
+            || oServiceApp.ServiceTerritoryId != oldServiceApp.ServiceTerritoryId
+            || oServiceApp.Duration != oldServiceApp.Duration
+            || oServiceApp.SchedStartTime != oldServiceApp.SchedStartTime
+            || oServiceApp.SchedEndTime != oldServiceApp.SchedEndTime
+        );
     }
 
     //
@@ -270,54 +264,44 @@ public with sharing class NSP_ServiceAppointmentTriggerHelper {
                     Id myRecordId = servApp.ParentRecordId;
                     String sObjName = myRecordId.getSObjectType().getDescribe().getName();
                     serAppIdSet.add( servApp.Id );
-                    if ( sObjName == NSP_ServiceConstants.workOrder ) { 
+                    if ( sObjName == NSP_ServiceConstants.workOrder ) {
                         workOrderIdSet.add( servApp.ParentRecordId );
                     }
                 }
             }
-          if(!serAppIdSet.isEmpty() && !workOrderIdSet.isEmpty()){
-            mapSerIdListResources = getAssignedResources(serAppIdSet);
-            workOrderMap = getWorkOrders(workOrderIdSet);
-            for(WorkOrder wrkOrd: workOrderMap.values()){
-                if(wrkOrd.NSP_Project_Task__c!=null){
-                    taskIdSet.add(wrkOrd.NSP_Project_Task__c);
-                    mapwrkOrderTaskId.put(wrkOrd.Id,wrkOrd.NSP_Project_Task__c );
+            if ( !serAppIdSet.isEmpty() && !workOrderIdSet.isEmpty() ) {
+                mapSerIdListResources = getAssignedResources( serAppIdSet );
+                workOrderMap = getWorkOrders( workOrderIdSet );
+                for ( WorkOrder wrkOrd : workOrderMap.values() ) {
+                    if ( wrkOrd.NSP_Project_Task__c != null ) {
+                        taskIdSet.add( wrkOrd.NSP_Project_Task__c );
+                        mapwrkOrderTaskId.put( wrkOrd.Id , wrkOrd.NSP_Project_Task__c );
+                    }
                 }
-            }
-            maptaskIdListEmails = getPrjTaskAssignments(taskIdSet);
-            emailTemplateMap = getEmailTemplates();
-           for(ServiceAppointment servApp:newMap.values()){
-            if(workOrderMap.containsKey(servApp.ParentRecordId) &&  maptaskIdListEmails.containsKey(workOrderMap.get(servApp.ParentRecordId).NSP_Project_Task__c) ){
-                listOfTOAddresses.addAll( maptaskIdListEmails.get(workOrderMap.get(servApp.ParentRecordId).NSP_Project_Task__c));
-                
-            }
-            if(mapSerIdListResources.containsKey(servApp.Id)){                   
-                listOfTOAddresses.addAll(mapSerIdListResources.get(servApp.Id));
-            } 
-               // send email to users 
-               if(!listOfTOAddresses.isEmpty() ){
-                   // send emails when status Updates
-                   if( servApp.Status != oldmap.get(servApp.Id).Status ){
-                       
-                       if(servApp.NSP_IsDispatched__c && !oldMap.get(servApp.Id).NSP_IsDispatched__c){
-                            EmailTemplate emp = emailTemplateMap.get(NSP_ServiceConstants.SerAppDispatchedEmailTemplate);
-                            sendMail(listOfTOAddresses,servApp.Id,emp.Id);
-                        }
-                        else if(servApp.Status == NSP_ServiceConstants.dispatchStatus){
-                           EmailTemplate emp = emailTemplateMap.get(NSP_ServiceConstants.SerAppReScheduleEmailTemplate);
-                           sendMail(listOfTOAddresses,servApp.Id,emp.Id);  
-                        }
-                        else if(oldmap.get(servApp.Id).Status == NSP_ServiceConstants.dispatchStatus && servApp.Status == NSP_ServiceConstants.PROJECT_TASK_CANCELLED){
-                           EmailTemplate emp = emailTemplateMap.get(NSP_ServiceConstants.SerAppNoneEmailTemplate);
-                           sendMail(listOfTOAddresses,servApp.Id,emp.Id);
-                        }
+                maptaskIdListEmails = getPrjTaskAssignments( taskIdSet );
+                emailTemplateMap = getEmailTemplates();
+                Set<Id> ownerIdSet = getOldOwnerSet( oldMap );
+                Map<Id,String> ownerIdToEmailMap = getOwnerEmailMap( ownerIdSet );
+                for ( ServiceAppointment servApp : newMap.values() ) {
+                    if ( workOrderMap.containsKey( servApp.ParentRecordId )
+                        && maptaskIdListEmails.containsKey( workOrderMap.get( servApp.ParentRecordId ).NSP_Project_Task__c )
+                        )
+                    {
+                        listOfTOAddresses.addAll(
+                            maptaskIdListEmails.get( workOrderMap.get( servApp.ParentRecordId ).NSP_Project_Task__c )
+                        );
                     }
-                    else if( oldMap.get(servApp.Id).ServiceTerritoryId != null  &&  isRecordChanged(servApp,oldMap.get(ServApp.Id) )   ){
-                        EmailTemplate emp = emailTemplateMap.get(NSP_ServiceConstants.SerAppRecordChangeEmailTemplate);
-                        sendMail(listOfTOAddresses,servApp.Id,emp.Id);
+                    if ( mapSerIdListResources.containsKey( servApp.Id ) ) {
+                        listOfTOAddresses.addAll( mapSerIdListResources.get( servApp.Id ) );
                     }
-               }
-            }
+                    callSendEmail(
+                        listOfTOAddresses ,
+                        servApp ,
+                        oldMap ,
+                        ownerIdToEmailMap ,
+                        emailTemplateMap
+                    );
+                }
             }
         } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
@@ -326,6 +310,75 @@ public with sharing class NSP_ServiceAppointmentTriggerHelper {
                 e
             );
         }
+    }
+    private static Set<Id> getOldOwnerSet(Map<Id,ServiceAppointment> oldMap){
+        Set<Id> ownerIdSet = new Set<Id>();
+        if(oldMap != null && oldMap.values() != null){
+            for(ServiceAppointment oldSA : oldMap.values()){
+                if(oldSA != null){
+                    ownerIdSet.add(oldSA.ownerId);
+                }
+            }
+        }
+        return ownerIdSet;
+    }
+
+    private static void callSendEmail(List<String> listOfTOAddresses, ServiceAppointment servApp, Map<Id,ServiceAppointment> oldMap, Map<Id,String> ownerIdToEmailMap, Map<String,EmailTemplate> emailTemplateMap ) {
+        if(listOfTOAddresses != null && !listOfTOAddresses.isEmpty() && servApp != null && oldMap != null && oldMap.containsKey(servApp.Id)){
+            ServiceAppointment oldSA = oldMap.get(servApp.Id);
+            if(oldSA != null && oldSA.ServiceTerritoryId != null  &&  isOwnerChanged (servApp,oldSA ) ){
+                Id oldOwnerId = oldSA.ownerId;
+                if(ownerIdToEmailMap != null && ownerIdToEmailMap.containskey(oldOwnerId)){
+                    listOfTOAddresses.add(ownerIdToEmailMap.get(oldOwnerId));
+                }
+            }
+            Id empTemplateId = getEmailTemplateId(servApp,oldSA,emailTemplateMap);
+            if(empTemplateId != null && listOfTOAddresses != null){
+                sendMail(listOfTOAddresses,servApp.Id,empTemplateId);
+            }
+        }
+    }
+
+    private static Id getEmailTemplateId(ServiceAppointment servApp, ServiceAppointment oldSA,Map<String,EmailTemplate> emailTemplateMap){
+        EmailTemplate empTemplate = new EmailTemplate();
+        if(servApp != null && oldSA != null && emailTemplateMap != null){
+            if( servApp.Status != oldSA.Status ){
+                if(servApp.NSP_IsDispatched__c && !oldSA.NSP_IsDispatched__c && emailTemplateMap.containsKey(NSP_ServiceConstants.SerAppDispatchedEmailTemplate)){
+                    empTemplate = emailTemplateMap.get(NSP_ServiceConstants.SerAppDispatchedEmailTemplate);
+                }
+                else if(servApp.Status == NSP_ServiceConstants.dispatchStatus && emailTemplateMap.containsKey(NSP_ServiceConstants.SerAppReScheduleEmailTemplate)){
+                    empTemplate = emailTemplateMap.get(NSP_ServiceConstants.SerAppReScheduleEmailTemplate);
+                }
+                else if(oldSA.Status == NSP_ServiceConstants.dispatchStatus && servApp.Status == NSP_ServiceConstants.PROJECT_TASK_CANCELLED && emailTemplateMap.containsKey(NSP_ServiceConstants.SerAppNoneEmailTemplate)){
+                    empTemplate = emailTemplateMap.get(NSP_ServiceConstants.SerAppNoneEmailTemplate);
+                }
+            }
+            else if( oldSA.ServiceTerritoryId != null  &&  isRecordChanged(servApp,oldSA) && emailTemplateMap.containsKey(NSP_ServiceConstants.SerAppRecordChangeEmailTemplate) ){
+                empTemplate = emailTemplateMap.get(NSP_ServiceConstants.SerAppRecordChangeEmailTemplate);
+            }
+        }
+        return ( ( empTemplate != null ) ? empTemplate.Id : null );
+    }
+
+    private static Map<Id,String> getOwnerEmailMap(Set<Id> ownerIdSet){
+        Map<Id,String> ownerMap = new Map<Id,String>();
+        if(ownerIdSet != null){
+            List<User> userList = [SELECT id, Email FROM User WHERE ID = :ownerIdSet];
+            for(User eachUser : userList) {
+                if(eachUser != null && eachUser.Email != null){
+                    ownerMap.put(eachUser.Id, eachUser.Email);
+                }
+            }
+        }
+        return ownerMap;
+    }
+
+    private static Boolean isOwnerChanged(ServiceAppointment servApp, ServiceAppointment oldSa){
+        Boolean isRecordOwnerChanged = false;
+        if(oldSa != null && servApp != null && oldSa.OwnerId != servApp.OwnerId){
+            isRecordOwnerChanged = true;
+        }
+        return isRecordOwnerChanged;
     }
 
     //
@@ -488,10 +541,10 @@ public with sharing class NSP_ServiceAppointmentTriggerHelper {
     * Description : Helper method to retrieve Email Templates  
     * Author :      Nischay Jindal
     * ********************************************************************************************/    
-     private static Map<String,EmailTemplate> getEmailTemplates(){	
+     private static Map<String,EmailTemplate> getEmailTemplates(){    
      Map<String,EmailTemplate> emailTempMap = new Map<String,EmailTemplate>();
          List<String>templateNameList = new List<String>{NSP_ServiceConstants.SerAppReScheduleEmailTemplate,NSP_ServiceConstants.SerAppNoneEmailTemplate,
-             											NSP_ServiceConstants.SerAppRecordChangeEmailTemplate,NSP_ServiceConstants.SerAppDispatchedEmailTemplate};
+                                                         NSP_ServiceConstants.SerAppRecordChangeEmailTemplate,NSP_ServiceConstants.SerAppDispatchedEmailTemplate};
      List<EmailTemplate> emailTempList =[SELECT Id,Name, DeveloperName, HtmlValue, Subject, Body FROM EmailTemplate 
                                          WHERE DeveloperName IN:templateNameList ];
         for(EmailTemplate emp:emailTempList ){
@@ -537,7 +590,7 @@ public with sharing class NSP_ServiceAppointmentTriggerHelper {
     private static Id getAssignedResUser(Id serviceResId){
         List<String> serviceResApp_Fields = new List<String>{'Id', 'RelatedRecordId'};
         String query = new NSP_QueryBuilder(NSP_ServiceConstants.SERVICERES_SOBJECT_NAME, serviceResApp_Fields)
-            					.addFilter('Id', serviceResId).build();
+                                .addFilter('Id', serviceResId).build();
         List<ServiceResource> oserviceRes = (List<ServiceResource>) Database.query(query);
         return oserviceRes[0].RelatedRecordId;
     }
@@ -762,11 +815,11 @@ public with sharing class NSP_ServiceAppointmentTriggerHelper {
                 if(isfieldsUpdatedToSyncBackProjectTask(serApp, oldMap.get(serApp.Id))){
                     serviceAppintmentUpdatedIds.add(serApp.Id);
                 }
-				
+                
                 if( serApp.Status != oldMap.get(serApp.Id).Status ){ 
                     if( serApp.Status == NSP_ServiceConstants.scheduleStatus){
                     //check if SA status is updated to Scheduled
-                    	createOrDeletSaList.add( serApp );
+                        createOrDeletSaList.add( serApp );
                         mapOfSaIdToServAppRec.put(serApp.Id, serApp);
                     }
                     //check if SA status is updated to Dispatched

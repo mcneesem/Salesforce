@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>WX_WA_Minimum_Fee_Discount__c</fullName>
+    <description>Field for capturing the minimum fee discount given on quote line. This field is referenced in Price Rule - Stamp WX/WA Minimum Fee Discount on Quote</description>
+    <externalId>false</externalId>
+    <label>WX/WA Minimum Fee Discount</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

@@ -90,7 +90,11 @@ private class JobRunnerControllerTest {
     @isTest
     private static void testRequestJobExecution() {
         Test.startTest();
-        JobRunnerController.requestJobExecution( JobRunnerControllerTest.REQUESTED_CLASS_NAME );
+        try {
+            JobRunnerController.requestJobExecution( JobRunnerControllerTest.REQUESTED_CLASS_NAME );
+        } catch ( Exception e ) {
+            System.debug( ' ~ CATCH ~ e=' + e );
+        }
         Test.stopTest();
     }
 

@@ -394,6 +394,7 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
+        <description>Prevent DmlExceptions: INSUFFICIENT_ACCESS_OR_READONLY: Only event organizers can update this field. (IsChild Equals False)</description>
         <name>Get_Events_with_Status_of_Open</name>
         <label>Get Events with Status of Open</label>
         <locationX>314</locationX>
@@ -406,7 +407,7 @@
             <isGoTo>true</isGoTo>
             <targetReference>Fault_Handler_Subflow</targetReference>
         </faultConnector>
-        <filterLogic>1 AND (2 OR 3) AND 4</filterLogic>
+        <filterLogic>( 1 AND ( 2 OR 3 ) AND 4 AND 5 )</filterLogic>
         <filters>
             <field>WhoId</field>
             <operator>EqualTo</operator>
@@ -433,6 +434,13 @@
             <operator>In</operator>
             <value>
                 <elementReference>SalesEventRecord</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>IsChild</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>false</booleanValue>
             </value>
         </filters>
         <getFirstRecordOnly>false</getFirstRecordOnly>
@@ -703,9 +711,9 @@
         <connector>
             <targetReference>Has_OneTrust_Opt_Out_been_checked</targetReference>
         </connector>
-        <filterFormula>OR( 
-(ISNEW() &amp;&amp; ( {!$Record.OneTrust_Opt_Out__c} ) ), 
-ISCHANGED( {!$Record.OneTrust_Opt_Out__c} )
+        <filterFormula>OR(
+  (ISNEW() &amp;&amp; ( {!$Record.OneTrust_Opt_Out__c} ) ) ,
+  ISCHANGED( {!$Record.OneTrust_Opt_Out__c} )
 )</filterFormula>
         <object>Contact</object>
         <recordTriggerType>CreateAndUpdate</recordTriggerType>

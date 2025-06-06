@@ -113,7 +113,7 @@ export default class NSP_BatchProgressIndicator extends LightningElement {
             } else {
                 this.getBatchStatus();
             }
-        }, 10000); //refresh view every time
+        }, 60000); //refresh view every time
     }
 
     validateUserAccess() {
