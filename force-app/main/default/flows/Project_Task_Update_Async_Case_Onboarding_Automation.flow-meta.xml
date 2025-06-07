@@ -130,7 +130,7 @@
     <assignments>
         <name>Assign_Fault_Element_Get_Account</name>
         <label>Assign Fault Element : Get_Account</label>
-        <locationX>2690</locationX>
+        <locationX>2954</locationX>
         <locationY>708</locationY>
         <assignmentItems>
             <assignToReference>FaultElement</assignToReference>
@@ -179,9 +179,26 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assign_Fault_Element_Get_Project</name>
+        <label>Assign Fault Element : Get_Project</label>
+        <locationX>2426</locationX>
+        <locationY>924</locationY>
+        <assignmentItems>
+            <assignToReference>FaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Project</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Assign_Fault_Element_Get_Queue_WX_HR_Services</name>
         <label>Assign Fault Element : Get_Queue_WX_HR_Services</label>
-        <locationX>3218</locationX>
+        <locationX>3482</locationX>
         <locationY>492</locationY>
         <assignmentItems>
             <assignToReference>FaultElement</assignToReference>
@@ -365,7 +382,7 @@
         <description>Verify Parent Project and Account linked to a Project for an Project Task</description>
         <name>Parent_Project_Exists</name>
         <label>Parent Project Exists?</label>
-        <locationX>2938</locationX>
+        <locationX>3169</locationX>
         <locationY>276</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -373,14 +390,14 @@
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.pse__Project__c</leftValueReference>
-                <operator>IsNull</operator>
+                <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
                 <leftValueReference>$Record.pse__Project__r.pse__Account__c</leftValueReference>
-                <operator>IsNull</operator>
+                <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
@@ -394,7 +411,7 @@
     <decisions>
         <name>Valid_Account</name>
         <label>Valid Account?</label>
-        <locationX>1837</locationX>
+        <locationX>1969</locationX>
         <locationY>708</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -438,7 +455,7 @@
             </conditions>
             <conditions>
                 <leftValueReference>Get_ACRs</leftValueReference>
-                <operator>IsNull</operator>
+                <operator>IsEmpty</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
@@ -477,7 +494,7 @@
     <decisions>
         <name>Valid_Queue</name>
         <label>Valid Queue?</label>
-        <locationX>2395</locationX>
+        <locationX>2593</locationX>
         <locationY>492</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -635,7 +652,7 @@ Business Use Case - BPS Service</description>
         <description>Get the Account Record linked to Parent Project</description>
         <name>Get_Account</name>
         <label>Get Account</label>
-        <locationX>1837</locationX>
+        <locationX>1969</locationX>
         <locationY>600</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -744,6 +761,9 @@ Business Use Case - BPS Service</description>
         <connector>
             <targetReference>Validate_Parent_Project</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Assign_Fault_Element_Get_Project</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -761,7 +781,7 @@ Business Use Case - BPS Service</description>
     <recordLookups>
         <name>Get_Queue_WX_HR_Services</name>
         <label>Get Queue : WX HR Services</label>
-        <locationX>2395</locationX>
+        <locationX>2593</locationX>
         <locationY>384</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -783,7 +803,7 @@ Business Use Case - BPS Service</description>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <start>
-        <locationX>1060</locationX>
+        <locationX>1175</locationX>
         <locationY>0</locationY>
         <filterLogic>and</filterLogic>
         <filters>
