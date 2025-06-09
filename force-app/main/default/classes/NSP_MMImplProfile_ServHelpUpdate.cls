@@ -627,7 +627,10 @@ public class NSP_MMImplProfile_ServHelpUpdate {
         )
     {
         String milestoneKey = createMilestoneForProjectTask(proj, pta);
-        pse__Project_Task__c eachProjecttask = createProjectTaskfromIP(proj,  pta.NSP_Category__c,ipRecId,milestoneKey);
+        pse__Project_Task__c eachProjecttask = null;
+        if( pta != null ) {
+            eachProjecttask = createProjectTaskfromIP(proj,  pta.NSP_Category__c,ipRecId,milestoneKey);
+        }
         genericProjectTask(proj,eachProjecttask, pta, workCalendarId);
         
         if(ipwithValue != null
@@ -649,7 +652,10 @@ public class NSP_MMImplProfile_ServHelpUpdate {
         )
     {
         String milestoneKey = createMilestoneForProjectTask(proj, pta);
-        pse__Project_Task__c eachProjecttask = createProjectTaskfromIP(proj,  pta.NSP_Category__c,ipRecId,milestoneKey);
+        pse__Project_Task__c eachProjecttask = null;
+        if( pta != null ) {
+            eachProjecttask = createProjectTaskfromIP(proj,  pta.NSP_Category__c,ipRecId,milestoneKey);
+        }
         genericProjectTask(proj,eachProjecttask, pta, workCalendarId);
         
         if(ipwithValue != null
@@ -671,7 +677,10 @@ public class NSP_MMImplProfile_ServHelpUpdate {
         )
     {
         String milestoneKey = createMilestoneForProjectTask(proj, pta);
-        pse__Project_Task__c eachProjecttask = createProjectTaskfromIP(proj,  pta.NSP_Category__c,ipRecId,milestoneKey);
+        pse__Project_Task__c eachProjecttask = null;
+        if( pta != null ) {
+            eachProjecttask = createProjectTaskfromIP(proj,  pta.NSP_Category__c,ipRecId,milestoneKey);
+        }
         genericProjectTask(proj,eachProjecttask, pta, workCalendarId);
         
         if(ipwithValue != null
