@@ -41,17 +41,30 @@ public class NSP_WXBenefitsRenewalProjectCreation implements ISelfSchedulable, S
     
     //== Execute Method
     public void execute(SchedulableContext scon) 
-    {           
-        //Executes Batch for Medical Benefits Renewal Date
-        Database.executeBatch(new NSP_WXBenefitsRenewalProjectCreation(batchClassWrapper), 1);
-        
-        // Execute Batch for Ancillary Benefits Renewal Date
-        batchClassWrapper.fieldName        									= 'Ancillary_Benefits_Renewal_Date__c';
-        Database.executeBatch(new NSP_WXBenefitsRenewalProjectCreation(batchClassWrapper), 1);
-        
-        // Execute Batch for Fringe Benefits Renewal Date
-        batchClassWrapper.fieldName        									= 'Fringe_Benefits_Renewal_Date__c';
-        Database.executeBatch(new NSP_WXBenefitsRenewalProjectCreation(batchClassWrapper), 1);
+    {  
+        if(Benefits_Renewal_Batch_Settings__c.getInstance(UserInfo.getUserId()) != null)
+        {
+            if(Benefits_Renewal_Batch_Settings__c.getInstance(UserInfo.getUserId()).IsEnabledDefault__c == true)
+            {
+                //Executes Batch for Medical Benefits Renewal Date
+                Database.executeBatch(new NSP_WXBenefitsRenewalProjectCreation(batchClassWrapper), 1);
+            }
+            
+            if(Benefits_Renewal_Batch_Settings__c.getInstance(UserInfo.getUserId()).IsEnabledAncillary_c__c == true)
+            {
+                // Execute Batch for Ancillary Benefits Renewal Date
+                batchClassWrapper.fieldName        									= 'Ancillary_Benefits_Renewal_Date__c';
+                Database.executeBatch(new NSP_WXBenefitsRenewalProjectCreation(batchClassWrapper), 1);
+                
+            }
+            
+            if(Benefits_Renewal_Batch_Settings__c.getInstance(UserInfo.getUserId()).IsEnabledFringe__c == true)
+            {
+                // Execute Batch for Fringe Benefits Renewal Date
+                batchClassWrapper.fieldName        									= 'Fringe_Benefits_Renewal_Date__c';
+                Database.executeBatch(new NSP_WXBenefitsRenewalProjectCreation(batchClassWrapper), 1);
+            }
+        }
     }
 
     public static string schedule()
