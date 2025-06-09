@@ -26,7 +26,6 @@ public class NSP_dunningInvoicesListController {
 
     // Getting the Document Id and creating a Document Url.
     public String getLogoUrl() {
-        String resourceName = 'Insperity_HR_Logo';
         NSP_EmailImageController imageCtrlr = new NSP_EmailImageController();
         String logoUrl = imageCtrlr.getHRLogoLogoUrl();
         return logoUrl;
