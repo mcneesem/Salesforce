@@ -68,6 +68,15 @@ public class NSP_WXBenefitsRenewalProjCreat_Test
             assetObj.RecordTypeId 						= WX_RECORDTYPE_ID;
             
             insert assetObj;
+            
+            // Create Custom Setting
+            Benefits_Renewal_Batch_Settings__c customObject = new Benefits_Renewal_Batch_Settings__c();
+            customObject.Name 						= 'Test';
+            customObject.IsEnabledAncillary_c__c 	= true;
+            customObject.IsEnabledDefault__c 		= true;
+            customObject.IsEnabledFringe__c 		= true;
+            
+            insert customObject;
         }
     }
     /** Test Project specific logic related to batch class */
