@@ -96,6 +96,11 @@
         <label>WO Customized MM</label>
     </customValue>
     <customValue>
+        <fullName>Compensation Services</fullName>
+        <default>false</default>
+        <label>Compensation Services</label>
+    </customValue>
+    <customValue>
         <fullName>TimeStar Mgd Hosted</fullName>
         <default>false</default>
         <isActive>false</isActive>
