@@ -628,12 +628,11 @@ public class NSP_MMImplProfile_ServHelpUpdate {
     {
         String milestoneKey = createMilestoneForProjectTask(proj, pta);
         pse__Project_Task__c eachProjecttask = null;
-        if( pta != null ) {
-            eachProjecttask = createProjectTaskfromIP(proj,  pta.NSP_Category__c,ipRecId,milestoneKey);
+        if ( pta != null ) {
+            eachProjecttask = createProjectTaskfromIP(proj, pta.NSP_Category__c, ipRecId,milestoneKey);
         }
         genericProjectTask(proj,eachProjecttask, pta, workCalendarId);
-        
-        if(ipwithValue != null
+        if ( ipwithValue != null
             && ipwithValue.NSP_Project_Manager__c!=null
             && ipwithValue.NSP_Project_Manager__r.pse__Salesforce_User__c!=null
             )
@@ -642,7 +641,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
         }
         return eachProjectTask;
     }
-    
+
     private pse__Project_Task__c payrollProjectManagerOwner(
         pse__Proj__c proj ,
         NSP_ProjectTask_Automation__mdt pta ,
@@ -653,12 +652,11 @@ public class NSP_MMImplProfile_ServHelpUpdate {
     {
         String milestoneKey = createMilestoneForProjectTask(proj, pta);
         pse__Project_Task__c eachProjecttask = null;
-        if( pta != null ) {
-            eachProjecttask = createProjectTaskfromIP(proj,  pta.NSP_Category__c,ipRecId,milestoneKey);
+        if ( pta != null ) {
+            eachProjecttask = createProjectTaskfromIP(proj, pta.NSP_Category__c, ipRecId,milestoneKey);
         }
         genericProjectTask(proj,eachProjecttask, pta, workCalendarId);
-        
-        if(ipwithValue != null
+        if ( ipwithValue != null
             && ipwithValue.NSP_Payroll_Project_Manager__c!=null
             && ipwithValue.NSP_Payroll_Project_Manager__r.pse__Salesforce_User__c!=null
             )
@@ -667,7 +665,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
         }
         return eachProjectTask;
     }
-    
+
     private pse__Project_Task__c hrSpecialistOwner(
         pse__Proj__c proj ,
         NSP_ProjectTask_Automation__mdt pta ,
@@ -678,12 +676,11 @@ public class NSP_MMImplProfile_ServHelpUpdate {
     {
         String milestoneKey = createMilestoneForProjectTask(proj, pta);
         pse__Project_Task__c eachProjecttask = null;
-        if( pta != null ) {
-            eachProjecttask = createProjectTaskfromIP(proj,  pta.NSP_Category__c,ipRecId,milestoneKey);
+        if ( pta != null ) {
+            eachProjecttask = createProjectTaskfromIP(proj, pta.NSP_Category__c, ipRecId,milestoneKey);
         }
         genericProjectTask(proj,eachProjecttask, pta, workCalendarId);
-        
-        if(ipwithValue != null
+        if ( ipwithValue != null
             && ipwithValue.NSP_HR_Specialist__c!=null
             && ipwithValue.NSP_HR_Specialist__r.pse__Salesforce_User__c!=null
             )
@@ -692,6 +689,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
         }
         return eachProjectTask;
     }
+
     //Pre-Discover - Section
     //Section 125 - automation
     private void createProjectTaskForSectionQuestionnaire(
@@ -1891,7 +1889,6 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                     ipa.NSP_Method_Name__c,ipa.NSP_Section__c
                 )
             );
-            
             //Create Project Tasks for ORK 401(k) set up automation
             NSP_ProjectTask_Automation__mdt pta1 =  NSP_ProjectTask_Automation__mdt.getInstance(RETIRE_PLAN_ORK_CLIENT_MM);
             NSP_ProjectTask_Automation__mdt pta2 =  NSP_ProjectTask_Automation__mdt.getInstance(RETIRE_PLAN_ORK_401K_MM);
