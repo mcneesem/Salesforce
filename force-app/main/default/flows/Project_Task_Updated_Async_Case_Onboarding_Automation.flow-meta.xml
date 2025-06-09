@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>63.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
         <name>Assign_Case_Record</name>
         <label>Assign Case Record</label>
@@ -580,7 +581,7 @@
             <label>Yes : Valid Project</label>
         </rules>
     </decisions>
-    <description>Create Case when Transition to Support task is Complete. 
+    <description>Create Case when Transition to Support task is Complete.
 Business Use Case - BPS Service</description>
     <environments>Default</environments>
     <formulas>
@@ -588,8 +589,8 @@ Business Use Case - BPS Service</description>
         <dataType>Boolean</dataType>
         <expression>OR(INCLUDES({!Loop_ACRs.NSP_Service_Roles__c}, &apos;Key Decision Maker&apos;),INCLUDES({!Loop_ACRs.NSP_Service_Roles__c}, &apos;Survey contact&apos;))</expression>
     </formulas>
-    <interviewLabel>Project Task Update Async Case Onboarding Automation {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Project Task Update Async Case Onboarding Automation</label>
+    <interviewLabel>Project Task Updated Async Case Onboarding Automation {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Project Task Updated Async Case Onboarding Automation</label>
     <loops>
         <name>Loop_ACRs</name>
         <label>Loop : ACRs</label>
@@ -860,7 +861,7 @@ Business Use Case - BPS Service</description>
         <inputAssignments>
             <name>faultFlow</name>
             <value>
-                <stringValue>Project_Task_Update_Async_Case_Onboarding_Automation</stringValue>
+                <stringValue>Project_Task_Updated_Async_Case_Onboarding_Automation</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
