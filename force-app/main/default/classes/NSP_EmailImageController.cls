@@ -31,16 +31,5 @@ public class NSP_EmailImageController {
         return System.URL.getOrgDomainUrl().toExternalForm()
         + '/resource/' + resourceName;
     }
-
-    // query the Static Resource Id...
-    private Id getResourceId(String resourceName) {
-        List<StaticResource> records = [
-            SELECT Id
-            FROM StaticResource
-            WHERE Name = :resourceName
-            LIMIT 1
-        ];
-        return !records.isEmpty() ? records[0].Id : null;
-    }
 }
 //
