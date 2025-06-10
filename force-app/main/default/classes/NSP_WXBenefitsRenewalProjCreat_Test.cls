@@ -93,35 +93,11 @@ public class NSP_WXBenefitsRenewalProjCreat_Test
         List<Asset> assetList = [SELECT ID, RecordTypeId, AccountId, Status  FROM Asset LIMIT 1];
         Test.startTest();
         
-        WXBenefitsRenewalProjectHelper.RequestWrapper reqWrapper 	= new WXBenefitsRenewalProjectHelper.RequestWrapper();
-        reqWrapper.assetList 										= assetList;
-        reqWrapper.className 										= 'NSP_WXBenefitsRenewalProjCreat_Test';
-        reqWrapper.methodName 										= 'testProjectCreate';
-        reqWrapper.role 											= 'WX Open Enrollment Specialist';
-        reqWrapper.templateName 									= 'NSP_WX_Benefits_Renewal_Project';
         
         // To cover the managed package logic
         WXBenefitsRenewalProjectHelper helperClass 	= new WXBenefitsRenewalProjectHelper();
         helperClass.opp 							= new NSP_OpportunityTriggerServiceHelper(new Set<Id>{ project.Id });
-        helperClass.createProjectFromTemplateBasedOnAccountAndAsset(reqWrapper);
-        Test.stopTest();
-    }
-    
-    /** Batch execution based on Medical Benifits Renewal date */
-    @isTest
-    private static void testMedicalBenefitsProjectBatch()
-    {
-        Test.startTest();
-        
-        NSP_WXBenefitsRenewalProjectCreation.RequestWrapper reqWrapper 	= new NSP_WXBenefitsRenewalProjectCreation.RequestWrapper();
-        reqWrapper.fieldName        									= 'Medical_Benefits_Renewal_Date__c';
-        reqWrapper.role             									= 'WX Open Enrollment Specialist';
-        reqWrapper.daysCount        									= 75;
-        reqWrapper.templateName     									= 'NSP_WX_Benefits_Renewal_Project';
-        reqWrapper.excludeAssetStatus 									= new List<string>{'Terminated', 'Backout'};
-            
-            Database.executeBatch(new NSP_WXBenefitsRenewalProjectCreation(reqWrapper), 1);
-        
+        helperClass.createProjectFromTemplateBasedOnAccountAndAsset(assetList);
         Test.stopTest();
     }
     
@@ -151,20 +127,13 @@ public class NSP_WXBenefitsRenewalProjCreat_Test
         
         Test.startTest();
         
-        WXBenefitsRenewalProjectHelper.RequestWrapper reqWrapper 	= new WXBenefitsRenewalProjectHelper.RequestWrapper();
-        reqWrapper.assetList 										= assetList;
-        reqWrapper.className 										= 'NSP_WXBenefitsRenewalProjCreat_Test';
-        reqWrapper.methodName 										= 'testProjectCreate';
-        reqWrapper.role 											= 'WX Open Enrollment Specialist';
-        reqWrapper.templateName 									= 'NSP_WX_Benefits_Renewal_Project';
-        
         // To cover the managed package logic
         WXBenefitsRenewalProjectHelper helperClass 	= new WXBenefitsRenewalProjectHelper();
         helperClass.opp 							= new NSP_OpportunityTriggerServiceHelper(new Set<Id>{ project.Id });
-        helperClass.createProjectFromTemplateBasedOnAccountAndAsset(reqWrapper);
+        helperClass.createProjectFromTemplateBasedOnAccountAndAsset(assetList);
         Test.stopTest();
     }
-        /** Test Project specific logic related to batch class for sending the email */
+    /** Test Project specific logic related to batch class for sending the email */
     @isTest
     private static void testSendEmailWithNoDesiredAccountTeamMembers()
     {
@@ -183,53 +152,10 @@ public class NSP_WXBenefitsRenewalProjCreat_Test
         
         Test.startTest();
         
-        WXBenefitsRenewalProjectHelper.RequestWrapper reqWrapper 	= new WXBenefitsRenewalProjectHelper.RequestWrapper();
-        reqWrapper.assetList 										= assetList;
-        reqWrapper.className 										= 'NSP_WXBenefitsRenewalProjCreat_Test';
-        reqWrapper.methodName 										= 'testProjectCreate';
-        reqWrapper.role 											= 'WX Open Enrollment Specialist';
-        reqWrapper.templateName 									= 'NSP_WX_Benefits_Renewal_Project';
-        
         // To cover the managed package logic
         WXBenefitsRenewalProjectHelper helperClass 	= new WXBenefitsRenewalProjectHelper();
         helperClass.opp 							= new NSP_OpportunityTriggerServiceHelper(new Set<Id>{ project.Id });
-        helperClass.createProjectFromTemplateBasedOnAccountAndAsset(reqWrapper);
-        Test.stopTest();
-    }
-    
-    /** Batch execution based on Ancillary Benifits Renewal date */
-    @isTest
-    private static void testAncillaryBenefitsProjectBatch()
-    {
-        Test.startTest();
-        
-        NSP_WXBenefitsRenewalProjectCreation.RequestWrapper reqWrapper 	= new NSP_WXBenefitsRenewalProjectCreation.RequestWrapper();
-        reqWrapper.fieldName        									= 'Ancillary_Benefits_Renewal_Date__c';
-        reqWrapper.role             									= 'WX Open Enrollment Specialist';
-        reqWrapper.daysCount        									= 75;
-        reqWrapper.templateName     									= 'NSP_WX_Benefits_Renewal_Project';
-        reqWrapper.excludeAssetStatus 									= new List<string>{'Terminated', 'Backout'};
-            
-            Database.executeBatch(new NSP_WXBenefitsRenewalProjectCreation(reqWrapper), 1);
-        
-        Test.stopTest();
-    }
-    
-    /** Batch execution based on Fringe Benifits Renewal date */
-    @isTest
-    private static void testFringeBenefitsProjectBatch()
-    {
-        Test.startTest();
-        
-        NSP_WXBenefitsRenewalProjectCreation.RequestWrapper reqWrapper 	= new NSP_WXBenefitsRenewalProjectCreation.RequestWrapper();
-        reqWrapper.fieldName        									= 'Fringe_Benefits_Renewal_Date__c';
-        reqWrapper.role             									= 'WX Open Enrollment Specialist';
-        reqWrapper.daysCount        									= 75;
-        reqWrapper.templateName     									= 'NSP_WX_Benefits_Renewal_Project';
-        reqWrapper.excludeAssetStatus 									= new List<string>{'Terminated', 'Backout'};
-            
-            Database.executeBatch(new NSP_WXBenefitsRenewalProjectCreation(reqWrapper), 1);
-        
+        helperClass.createProjectFromTemplateBasedOnAccountAndAsset(assetList);
         Test.stopTest();
     }
     

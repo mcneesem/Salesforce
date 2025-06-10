@@ -6,81 +6,58 @@ Function             :  Creates Project with WX Rebewal Template
 Story                :  As part of STY-02160
 */
 
-/********************************** SAMPLE EXECUTION ************************************/
-// NSP_WXBenefitsRenewalProjectCreation.RequestWrapper reqWrapper = new NSP_WXBenefitsRenewalProjectCreation.RequestWrapper();
-// reqWrapper.fieldName        									= 'Medical_Benefits_Renewal_Date__c';
-// reqWrapper.role             									= 'WX Open Enrollment Specialist';
-// reqWrapper.daysCount        									= 75;
-// reqWrapper.templateName     									= 'NSP_WX_Benefits_Renewal_Project';
-//  reqWrapper.excludeAssetStatus 									= new List<string>{'Terminated', 'Backout'};
-// 
-// Database.executeBatch(new NSP_WXBenefitsRenewalProjectCreation(reqWrapper), 1);
-
-
-
 public class NSP_WXBenefitsRenewalProjectCreation implements ISelfSchedulable, Schedulable,Database.Batchable<sObject> 
 {
+    
     // test w/ NSP_WXBenefitsRenewalProjCreat_Test (96%)
     
-    /************************* GLOBAL VARIABLES *****************************/
-    public RequestWrapper batchClassWrapper;
+    private schema.SObjectField fieldApiName = null;
     
     /************************ CONSTRUCTORS *********************************/
     //== Constructor Method
-    public NSP_WXBenefitsRenewalProjectCreation(RequestWrapper requestWrapper)
+    public NSP_WXBenefitsRenewalProjectCreation(string fieldName)
     {
         Map<String, schema.SObjectField> fieldMap 	= Asset.SObjectType.getDescribe().fields.getMap();
-        this.batchClassWrapper 							= requestWrapper;
         
         // property setting
-        if(fieldMap.containsKey(requestWrapper.fieldName))
+        if(fieldMap.containsKey(fieldName))
         {
-            this.batchClassWrapper.fieldAPIName = fieldMap.get(requestWrapper.fieldName);
+            this.fieldAPIName = fieldMap.get(fieldName);
         }
     }
-
+    
     //== Default Constructor
     public NSP_WXBenefitsRenewalProjectCreation()
     {
-
+        
     }
     
     //== Execute Method
     public void execute(SchedulableContext scon) 
     {  
         if(Benefits_Renewal_Batch_Settings__c.getInstance(UserInfo.getUserId()) != null)
-        {
-            NSP_WXBenefitsRenewalProjectCreation.RequestWrapper reqWrapper 	= new NSP_WXBenefitsRenewalProjectCreation.RequestWrapper();
-            reqWrapper.fieldName        									= 'Medical_Benefits_Renewal_Date__c';
-            reqWrapper.role             									= 'WX Open Enrollment Specialist';
-            reqWrapper.daysCount        									= 75;
-            reqWrapper.templateName     									= 'NSP_WX_Benefits_Renewal_Project';
-            reqWrapper.excludeAssetStatus 									= new List<string>{'Terminated', 'Backout'};
-
+        {       
             if(Benefits_Renewal_Batch_Settings__c.getInstance(UserInfo.getUserId()).IsEnabledDefault__c == true)
             {
-                reqWrapper.fieldName        									= 'Medical_Benefits_Renewal_Date__c';
                 //Executes Batch for Medical Benefits Renewal Date
-                Database.executeBatch(new NSP_WXBenefitsRenewalProjectCreation(reqWrapper), 1);
+                Database.executeBatch(new NSP_WXBenefitsRenewalProjectCreation('Medical_Benefits_Renewal_Date__c'), 1);
             }
             
             if(Benefits_Renewal_Batch_Settings__c.getInstance(UserInfo.getUserId()).IsEnabledAncillary_c__c == true)
             {
                 // Execute Batch for Ancillary Benefits Renewal Date
-                reqWrapper.fieldName        									= 'Ancillary_Benefits_Renewal_Date__c';
-                Database.executeBatch(new NSP_WXBenefitsRenewalProjectCreation(reqWrapper), 1);
+                Database.executeBatch(new NSP_WXBenefitsRenewalProjectCreation('Ancillary_Benefits_Renewal_Date__c'), 1);
                 
             }
             
             if(Benefits_Renewal_Batch_Settings__c.getInstance(UserInfo.getUserId()).IsEnabledFringe__c == true)
             {
                 // Execute Batch for Fringe Benefits Renewal Date
-                reqWrapper.fieldName        									= 'Fringe_Benefits_Renewal_Date__c';
-                Database.executeBatch(new NSP_WXBenefitsRenewalProjectCreation(reqWrapper), 1);
+                Database.executeBatch(new NSP_WXBenefitsRenewalProjectCreation('Fringe_Benefits_Renewal_Date__c'), 1);
             }
         }
     }
-
+    
     public static string schedule()
     {
         String suffix = '';
@@ -88,7 +65,7 @@ public class NSP_WXBenefitsRenewalProjectCreation implements ISelfSchedulable, S
         {
             suffix = ' ~ TEST';
         }
-
+        
         return System.schedule(
             'NSP_WXBenefitsRenewalProjectCreation ~ When a WX asset has a Benefits Renewal Date field populated = Today + 65 Days, then the system creates WX Benefits Renewal project & related task linked to the WX asset record ~ Everyday 1 am' + suffix,
             '0 0 1 * * ?',
@@ -100,15 +77,16 @@ public class NSP_WXBenefitsRenewalProjectCreation implements ISelfSchedulable, S
     public Database.QueryLocator start(Database.BatchableContext bc)
     {
         // Helper variables
-        Date comparingDate 				= Date.today().addDays(batchClassWrapper.daysCount);
+        Date comparingDate 				= Date.today().addDays(75);
         Id WX_RECORDTYPE_ID 			= NSP_GenericRecordType.getRecordTypeId('Asset', 'NSP_Asset_Product');
-        String formattedStatusValues 	= '\'' + String.join(batchClassWrapper.excludeAssetStatus, '\',\'') + '\'';
+        List<String> excludeAssetStatus = new List<string>{'Terminated', 'Backout'};
+            String formattedStatusValues 	= '\'' + String.join(excludeAssetStatus, '\',\'') + '\'';
         
         string query = ('SELECT ID, RecordTypeId, AccountId, Status,  ' + 
-                        batchClassWrapper.fieldAPIName + 
+                        fieldAPIName + 
                         ' FROM Asset ' + 
                         ' WHERE ' + 
-                        batchClassWrapper.fieldAPIName + 
+                        fieldAPIName + 
                         ' = ' + 
                         String.ValueOf(comparingDate) + 
                         ' AND ' +
@@ -131,16 +109,9 @@ public class NSP_WXBenefitsRenewalProjectCreation implements ISelfSchedulable, S
         try
         {
             System.debug(LoggingLevel.WARN, ' Asset List : ' + listOfAssets);
-            // Preparing the request for Helper class
-            WXBenefitsRenewalProjectHelper.RequestWrapper helperReqWrapper = new WXBenefitsRenewalProjectHelper.RequestWrapper();
-            helperReqWrapper.assetList		= listOfAssets;
-            helperReqWrapper.className 		= 'NSP_WXBenefitsRenewalProjectCreation';
-            helperReqWrapper.methodName 	= 'execute';
-            helperReqWrapper.role 			= batchClassWrapper.role;
-            helperReqWrapper.templateName 	= batchClassWrapper.templateName;
             
             WXBenefitsRenewalProjectHelper helpClass = new WXBenefitsRenewalProjectHelper();
-            helpClass.createProjectFromTemplateBasedOnAccountAndAsset(helperReqWrapper);
+            helpClass.createProjectFromTemplateBasedOnAccountAndAsset(listOfAssets);
         }
         catch(Exception ex)
         {
@@ -153,16 +124,5 @@ public class NSP_WXBenefitsRenewalProjectCreation implements ISelfSchedulable, S
     public void finish(Database.BatchableContext bc)
     {
         
-    }
-    
-    //== REQUEST WRAPPER CLASS
-    public class RequestWrapper
-    {
-        public schema.SObjectField fieldAPIName { get; set; }
-        public string role { get; set; }
-        public integer daysCount { get; set; }
-        public string fieldName { get; set; }
-        public string templateName { get; set; }
-        public List<string> excludeAssetStatus { get; set; }
     }
 }

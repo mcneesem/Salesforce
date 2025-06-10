@@ -13,40 +13,36 @@ public with sharing class WXBenefitsRenewalProjectHelper
     private NSP_OpportunityTriggerServiceHelper opp = new NSP_OpportunityTriggerServiceHelper();
     
     //== Method to create Project based on asset, account and template
-    public void createProjectFromTemplateBasedOnAccountAndAsset(RequestWrapper request)
+    public void createProjectFromTemplateBasedOnAccountAndAsset(List<Asset> assetList)
     {
-        // Validating the request
-        if(request != null && request.assetList != null && request.className != null && 
-        request.methodName != null && String.isNotBlank(request.role ) && string.isNotBlank(request.templateName))
-        {
-            List<pse.CreateProjectFromTemplateService.CreateProjectFromTemplateAndAccountRequest> projectList = getListOfProjects(request.assetList, request.templateName);
-            System.debug(LoggingLevel.WARN, 'List of Projects : ' + projectList);
-            
-            try {
-                if(!projectList?.isEmpty())
+        List<pse.CreateProjectFromTemplateService.CreateProjectFromTemplateAndAccountRequest> projectList = getListOfProjects(assetList);
+        System.debug(LoggingLevel.WARN, 'List of Projects : ' + projectList);
+        
+        try {
+            if(!projectList?.isEmpty())
+            {
+                // Receives one Project Id for Asset.
+                Set<Id> projectResponseId 				= opp.createProjectAndDeleteBudget(projectList);
+                System.debug(LoggingLevel.WARN, ' Project Id after creating the Project : ' + projectResponseId);
+                
+                List<Id> projectResponseList = new List<Id>(projectResponseId);
+                if(!projectResponseList?.isEmpty() && projectResponseList?.size() == 1 && projectResponseList[0] != null)
                 {
-                    // Receives one Project Id for Asset.
-                    Set<Id> projectResponseId 				= opp.createProjectAndDeleteBudget(projectList);
-					System.debug(LoggingLevel.WARN, ' Project Id after creating the Project : ' + projectResponseId);
-                    
-                    List<Id> projectResponseList = new List<Id>(projectResponseId);
-                    if(!projectResponseList?.isEmpty() && projectResponseList?.size() == 1 && projectResponseList[0] != null)
-                    {
-                        string projectId = projectResponseList[0];
-                        updateProjectFields(projectId, request);
-                    }
-                    
+                    string projectId = projectResponseList[0];
+                    updateProjectFields(projectId, assetList);
                 }
-            } catch (Exception ex) {
-                 NSP_ErrorLogHandler.logException(request.className, request.methodName, ex);
+                
             }
+        } catch (Exception ex) 
+        {
+            NSP_ErrorLogHandler.logException('WXBenefitsRenewalProjectHelper', 'createProjectFromTemplateBasedOnAccountAndAsset', ex);
         }
     }
 
     //== Update the Project based on Account teams Information or send email based on project Id
-    public static void updateProjectFields(string projectId,  RequestWrapper request)
+    private static void updateProjectFields(string projectId, List<Asset> assetList)
     {
-        Set<String> accountIdSet 				= getAccountIdSet(request.assetList);
+        Set<String> accountIdSet 				= getAccountIdSet(assetList);
         List<NSP_Account_Team__c> accountTeams 	=  getAccountTeams(accountIdSet);
         
         // Get Project Details
@@ -55,7 +51,7 @@ public with sharing class WXBenefitsRenewalProjectHelper
         
         if(!accountTeams?.isEmpty())
         {
-            benefitsAccountTeamMap = getAccountTeamsMap(accountTeams, request.role);
+            benefitsAccountTeamMap = getAccountTeamsMap(accountTeams);
             System.debug(LoggingLevel.WARN, ' Benefits Account Team Map : ' + benefitsAccountTeamMap);
         }
         
@@ -89,12 +85,12 @@ public with sharing class WXBenefitsRenewalProjectHelper
     }
 
     //== Get Account Team Member that are matching to the role
-    private static Map<String, NSP_Account_Team__c> getAccountTeamsMap(List<NSP_Account_Team__c> accountTeams, string implementorRole)
+    private static Map<String, NSP_Account_Team__c> getAccountTeamsMap(List<NSP_Account_Team__c> accountTeams)
     {
         Map<String, NSP_Account_Team__c> benefitsAccountTeamMap = new Map<String, NSP_Account_Team__c>();
         for(NSP_Account_Team__c team : accountTeams)
         {
-            if (team.NSP_Role__c == implementorRole && (!benefitsAccountTeamMap.containsKey(team.NSP_Account__c) || 
+            if ('WX Open Enrollment Specialist'.equalsIgnoreCase(team.NSP_Role__c) && (!benefitsAccountTeamMap.containsKey(team.NSP_Account__c) || 
                 (team.NSP_Primary__c && !benefitsAccountTeamMap.get(team.NSP_Account__c).NSP_Primary__c)) ) 
             {
                 benefitsAccountTeamMap.put(team.NSP_Account__c, team);
@@ -105,13 +101,13 @@ public with sharing class WXBenefitsRenewalProjectHelper
     }
 
     //== Get Projects List based on Asset Records
-    private static List<pse.CreateProjectFromTemplateService.CreateProjectFromTemplateAndAccountRequest> getListOfProjects(List<Asset> assets, string templateName)
+    private static List<pse.CreateProjectFromTemplateService.CreateProjectFromTemplateAndAccountRequest> getListOfProjects(List<Asset> assets)
     {
         List<pse.CreateProjectFromTemplateService.CreateProjectFromTemplateAndAccountRequest> returnProjectList = 
             new List<pse.CreateProjectFromTemplateService.CreateProjectFromTemplateAndAccountRequest>();
 
             // Getting metadata record based on the fully qualified name
-            Template_Key_and_Id_Mapping__mdt metadata = Template_Key_and_Id_Mapping__mdt.getInstance(templateName);
+            Template_Key_and_Id_Mapping__mdt metadata = Template_Key_and_Id_Mapping__mdt.getInstance('NSP_WX_Benefits_Renewal_Project');
         // Iterating over the assets
         for(Asset asset : assets)
         {
@@ -207,15 +203,5 @@ public with sharing class WXBenefitsRenewalProjectHelper
             NSP_GenericEmailUtility.sendSingleEmailMessages(lstEmailMessages, false); //method to send emails
         }
             
-    }
-
-    /************ WRAPPER CLASS**************************/
-    public class RequestWrapper
-    {
-        public List<Asset> assetList { get; set; }
-        public string className { get; set; }
-        public string methodName { get; set; }
-        public string role { get; set; }
-        public string templateName { get; set; }
     }
 }
