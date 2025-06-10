@@ -20,6 +20,7 @@ private class OpportunityCloseWonTest {
         objproduct.SBQQ__BillingFrequency__c = 'Monthly';
         objproduct.NSP_Convert_to_Asset__c = true;
         objproduct.NSP_ServiceAssetCategory__c = 'WX_WA';
+        objproduct.NSP_AssetProductLine__c = 'Workforce Acceleration';
         insert objproduct;        
         
         Opportunity objOpprtunity = NSP_TestHelper.createOpenOpportunity(objaccount.Id,'New Business',false);
@@ -63,6 +64,7 @@ private class OpportunityCloseWonTest {
         NSP_OrderItemTriggerHandler.TriggerDisabled = true;
         
         objOpprtunity.StageName = 'Closed Won';
+        objOpprtunity.HRCore_Contract_Changes__c = 'Contract Term';
         update objOpprtunity;
         Test.stopTest();
         

@@ -15,7 +15,7 @@ Modification Log     :
 * Rahul Singh           02/02/2023            user story - 192368
 */
 public with sharing class NSP_OpportunityTriggerHelper {
-    // test w/ NSP_OpportunityTriggerHelperTest, OpportunityCloseWonTest (79%)
+    // test w/ NSP_OpportunityTriggerHelperTest, OpportunityCloseWonTest (80%)
     // test w/ NSP_OpportunityTriggerHelperTest (78%)
     // test w/ NSP_AccountTriggerHelperTest (40%)
 
@@ -995,6 +995,10 @@ public with sharing class NSP_OpportunityTriggerHelper {
             }
             if(prodLine== NSP_SalesConstants.PROD_WX || prodLine== NSP_SalesConstants.PROD_WA){
                 assetMap.get(draftAsset).Name = assetMap.get(draftAsset).NSP_AccountName__c + ' '+ '-' + ' ' +assetMap.get(draftAsset).NSP_ProductBundle__c;
+                populateHRContractChanges(
+                    assetMap.get( draftAsset ) ,
+                    new Map<Id,Opportunity>( closedWonOpptyList )
+                );
             } 
             if(prodLine ==  NSP_SalesConstants.RETIREMENT_SERVICE){
                 assetMap.get(draftAsset).NSP_Client_is_Lead_Parent__c = true;
@@ -1018,6 +1022,19 @@ public with sharing class NSP_OpportunityTriggerHelper {
             }
         } catch ( Exception e ) {
             NSP_OpportunityTriggerHelper.handleException( e , 'createAssetForCloseWonOpportunity' );
+        }
+    }
+
+    //populates HRContract changes on the Asset from Opp
+    private static void populateHRContractChanges( Asset draftAsset , Map<Id,Opportunity> oppMap ) {
+        if ( ( oppMap != null ) 
+            && ( draftAsset != null )
+            && ( draftAsset.Opportunity__c != null )
+            && ( oppMap.containsKey(draftAsset.Opportunity__c) )
+            && ( oppMap.get(draftAsset.Opportunity__c).HRCore_Contract_Changes__c != null )
+            )
+        {
+            draftAsset.HRCore_Contract_Changes__c = oppMap.get( draftAsset.Opportunity__c ).HRCore_Contract_Changes__c;
         }
     }
 
@@ -1336,6 +1353,10 @@ public with sharing class NSP_OpportunityTriggerHelper {
             }
             if(prodLine== NSP_SalesConstants.PROD_WX || prodLine== NSP_SalesConstants.PROD_WA){
                 assetMap.get(draftAsset).Name = assetMap.get(draftAsset).NSP_AccountName__c + ' '+ '-' + ' ' +assetMap.get(draftAsset).NSP_ProductBundle__c;
+                populateHRContractChanges(
+                    assetMap.get( draftAsset ) ,
+                    new Map<Id,Opportunity>( closedWonOpptyList )
+                );
             } else {
                 assetMap.get(draftAsset).Name = assetMap.get(draftAsset).NSP_AccountName__c + ' '+ '-' + ' ' +prodLine;
             }
