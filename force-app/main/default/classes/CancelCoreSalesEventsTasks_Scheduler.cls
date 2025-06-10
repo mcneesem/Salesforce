@@ -1,8 +1,11 @@
 public without sharing class CancelCoreSalesEventsTasks_Scheduler implements ISelfSchedulable , Schedulable {
-    // test w/ CancelCoreSalesEventsTasks_SchedulerTest (95%)
+    // test w/ CancelCoreSalesEventsTasks_SchedulerTest (100%)
 
     public void execute( SchedulableContext context ) {
-        Database.executeBatch( new CancelCoreSalesEventsTasksBatch( null ) , 200 );
+        Database.executeBatch(
+            new CancelCoreSalesEventsTasksBatch( null ) ,
+            200
+        );
     }
 
     public static String schedule() {

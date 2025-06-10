@@ -1,8 +1,9 @@
 @isTest
 private class RulesOfEngagement_SchedulerTest {
     private static final String sch = '0 0 3 * * ? *';
-    
-    @isTest private static void runRules() {
+
+    @isTest
+    private static void runRules() {
 
         User userDeployerManager = [
             SELECT Id, Name
@@ -10,26 +11,26 @@ private class RulesOfEngagement_SchedulerTest {
             WHERE UserName LIKE 'deployment.manager@insperity.com%'
             LIMIT 1
         ];
-        
+
         // Custom settings
         Rules_Of_Engagement__c roeSettings = new Rules_Of_Engagement__c();
         roeSettings.Available_User_Id__c = '0054x000008PgqNAAS';
-        insert roeSettings;        
+        insert roeSettings;
 
         Test.startTest();
 
         System.runAs(userDeployerManager){
-            
-            // Run as Deployer Manager 
+
+            // Run as Deployer Manager
             // Important: permisison set - > Set audit field on record creation
-            
+
             List<SObject> contactList = new List<SObject>();
             List<AccountContactRelation> acrList = new List<AccountContactRelation>();
-            
+
             Id userAvailable = Rules_Of_Engagement__c.getInstance(UserInfo.getUserId()).Available_User_Id__c;
-            
+
             Account account = NSP_TestHelper.createAccount(true);
-            
+
             Contact contact1 = new Contact();
             contact1.firstName = 'Is Primary and not COI';
             contact1.lastName = 'Test 1';
@@ -44,7 +45,7 @@ private class RulesOfEngagement_SchedulerTest {
             contact2.AccountId = account.id;
             contactList.add(contact2);
             insert contactList;
-            
+
             AccountContactRelation acr1  = [
                 SELECT Id
                 FROM AccountContactRelation
@@ -63,7 +64,7 @@ private class RulesOfEngagement_SchedulerTest {
             acr2.Roles = 'COI';
             acrList.add(acr2);
             update acrList;
-            
+
             Opportunity opp = new Opportunity();
             opp.Name = 'Test Oppty';
             opp.AccountId = account.Id;
@@ -74,7 +75,6 @@ private class RulesOfEngagement_SchedulerTest {
             opp.NSP_MidMarketNationalAccount__c = 'MidMarket';
             opp.type = 'New Product';
             opp.Discovery_Call_Completed_Date__c =  Date.newInstance(2023, 01, 09);
-            opp.CreatedDate = Date.newInstance(2023, 01, 09);
             insert opp;
 
             // Create a task in the past -> 200 days ago
@@ -83,7 +83,6 @@ private class RulesOfEngagement_SchedulerTest {
             task.Status = 'Completed';
             task.WhatId = opp.id;
             task.ActivityDate = Date.newInstance(2023, 01, 09);
-            task.CreatedDate = Date.newInstance(2023, 01, 09);
             insert task;
 
             RulesOfEngagement_Scheduler.runRulesOfEngagement();
@@ -96,7 +95,7 @@ private class RulesOfEngagement_SchedulerTest {
                 WHERE id =: opp.id
                 LIMIT 1
             ];
-            
+
             System.assertEquals(opp1.StageName, 'Closed Lost');
             System.assertEquals(opp1.NSP_Lost_Reason__c, 'Abandoned');
             System.assertEquals(opp1.NSP_Forecast__c, 'No');
@@ -117,7 +116,8 @@ private class RulesOfEngagement_SchedulerTest {
     }
 
     //Static Test Method to Call the Scheduler Class
-    @isTest private static void testRulesOfEngagement_Scheduler_schedule() {
+    @isTest
+    private static void testRulesOfEngagement_Scheduler_schedule() {
         Test.startTest();
         String jobId = RulesOfEngagement_Scheduler.schedule();
         CronTrigger ct = [

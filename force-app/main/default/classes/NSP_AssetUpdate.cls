@@ -5,7 +5,7 @@
 * Author           | Date              | Description
 * -------------------------------------------------------------------------------------
 * Raksha         05-30-2023            Modified this class for user story STY-03598
-* 
+*
 */
 
 public class NSP_AssetUpdate {
@@ -120,7 +120,7 @@ public class NSP_AssetUpdate {
             SELECT Id , Status , NSP_Termination_Date__c , NSP_OrderProduct__c
             FROM Asset
             WHERE (
-                NSP_OrderProduct__c IN :opTermMap.keySet() 
+                NSP_OrderProduct__c IN :opTermMap.keySet()
                 AND NSP_Termination_Date__c = NULL
                 AND NSP_Process_Order_Change__c = false
             )
@@ -130,7 +130,7 @@ public class NSP_AssetUpdate {
                 assetObj.Status = NSP_SalesConstants.TERMINATED_STATUS;
                 assetObj.NSP_Termination_Date__c = opTermMap.get(assetObj.NSP_OrderProduct__c);
                 updateList.add(assetObj);
-            } 
+            }
         }
         try {
             if ( updateList != null && !updateList.isEmpty() ){
@@ -215,7 +215,7 @@ public class NSP_AssetUpdate {
             NSP_AssetUpdate.handleException( e , 'setActiveUsers' );
         }
     }
-    
+
     // for test code coverage only...
     public static void testHandleException( Exception e , String methodName ) {
         if ( Test.isRunningTest() ) {
@@ -230,5 +230,6 @@ public class NSP_AssetUpdate {
             e
         );
     }
+
 }
-///
+//

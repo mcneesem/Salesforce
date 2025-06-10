@@ -40,7 +40,11 @@ public with sharing class SetupAuditTrailSchedulable implements Schedulable {
 
     public static void ScheduleJob( Integer hour ) {
         // build the cron name...
-        String cronJobDetailName = SetupAuditTrailSchedulable.jobNamePrefix + DEFAULT_CRON_NAME;
+        String suffix = '';
+        if ( Test.isRunningTest() ) {
+            suffix = ' ~ TEST';
+        }
+        String cronJobDetailName = SetupAuditTrailSchedulable.jobNamePrefix + DEFAULT_CRON_NAME + suffix;
         // build the cron expression...
         String cronExpression = DEFAULT_CRON_EXPRESSION;
         if ( ( hour != null ) && ( hour >= 0 ) && ( hour < 24 ) ) {
