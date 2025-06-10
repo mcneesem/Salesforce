@@ -4,7 +4,7 @@
     <fields>Subject</fields>
     <fields>AccountId</fields>
     <fields>Status</fields>
-    <fields>OwnerId</fields>
+    <fields>NSP_Owner__c</fields>
     <fields>NSP_Opened_Date__c</fields>
     <fields>NSP_Due_Date__c</fields>
     <fields>NSP_Rating_Color__c</fields>
