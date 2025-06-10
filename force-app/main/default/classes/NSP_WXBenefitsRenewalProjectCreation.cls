@@ -82,7 +82,10 @@ public class NSP_WXBenefitsRenewalProjectCreation implements ISelfSchedulable, S
         List<String> excludeAssetStatus = new List<string>{'Terminated', 'Backout'};
             String formattedStatusValues 	= '\'' + String.join(excludeAssetStatus, '\',\'') + '\'';
         
-        string query = ('SELECT ID, RecordTypeId, AccountId, Status,  ' + 
+        string query = '';
+        if(fieldAPIName != null)
+        {
+            query = ('SELECT ID, RecordTypeId, AccountId, Status,  ' + 
                         fieldAPIName + 
                         ' FROM Asset ' + 
                         ' WHERE ' + 
@@ -96,10 +99,9 @@ public class NSP_WXBenefitsRenewalProjectCreation implements ISelfSchedulable, S
                         formattedStatusValues + 
                         ' ) '  + 
                         ' WITH SECURITY_ENFORCED'
-                       );
-        
-        System.debug(LoggingLevel.WARN, ' Query string : ' + query);
-        
+                    );
+        }
+                
         return Database.getQueryLocator(query);
     }
     
@@ -107,9 +109,7 @@ public class NSP_WXBenefitsRenewalProjectCreation implements ISelfSchedulable, S
     public void execute(Database.BatchableContext bc, List<Asset> listOfAssets)
     {
         try
-        {
-            System.debug(LoggingLevel.WARN, ' Asset List : ' + listOfAssets);
-            
+        {            
             WXBenefitsRenewalProjectHelper helpClass = new WXBenefitsRenewalProjectHelper();
             helpClass.createProjectFromTemplateBasedOnAccountAndAsset(listOfAssets);
         }

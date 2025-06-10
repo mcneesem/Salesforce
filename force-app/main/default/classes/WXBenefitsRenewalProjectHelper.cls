@@ -16,14 +16,12 @@ public with sharing class WXBenefitsRenewalProjectHelper
     public void createProjectFromTemplateBasedOnAccountAndAsset(List<Asset> assetList)
     {
         List<pse.CreateProjectFromTemplateService.CreateProjectFromTemplateAndAccountRequest> projectList = getListOfProjects(assetList);
-        System.debug(LoggingLevel.WARN, 'List of Projects : ' + projectList);
         
         try {
             if(!projectList?.isEmpty())
             {
                 // Receives one Project Id for Asset.
                 Set<Id> projectResponseId 				= opp.createProjectAndDeleteBudget(projectList);
-                System.debug(LoggingLevel.WARN, ' Project Id after creating the Project : ' + projectResponseId);
                 
                 List<Id> projectResponseList = new List<Id>(projectResponseId);
                 if(!projectResponseList?.isEmpty() && projectResponseList?.size() == 1 && projectResponseList[0] != null)
@@ -35,7 +33,11 @@ public with sharing class WXBenefitsRenewalProjectHelper
             }
         } catch (Exception ex) 
         {
-            NSP_ErrorLogHandler.logException('WXBenefitsRenewalProjectHelper', 'createProjectFromTemplateBasedOnAccountAndAsset', ex);
+            NSP_ErrorLogHandler.logException(
+                NSP_WXBenefitsRenewalProjectCreation.class.getName() ,
+                'execute' ,
+                ex
+                );
         }
     }
 
@@ -52,7 +54,6 @@ public with sharing class WXBenefitsRenewalProjectHelper
         if(!accountTeams?.isEmpty())
         {
             benefitsAccountTeamMap = getAccountTeamsMap(accountTeams);
-            System.debug(LoggingLevel.WARN, ' Benefits Account Team Map : ' + benefitsAccountTeamMap);
         }
         
         if(project != null && benefitsAccountTeamMap != null && !benefitsAccountTeamMap?.isEmpty() 
@@ -188,7 +189,6 @@ public with sharing class WXBenefitsRenewalProjectHelper
         List<String> toEmailAddressList                     = new List<String>();  
 
         toEmailAddressList.add(System.label.NSP_WXCarrierEmail);
-		System.debug(LoggingLevel.WARN, ' Email list : ' + toEmailAddressList);
         Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
         email= Messaging.renderStoredEmailTemplate(emailTemplate.Id, null , projectId);
         email.setTemplateId(emailTemplate.Id); 
