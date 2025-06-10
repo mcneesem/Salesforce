@@ -84,6 +84,11 @@
                 <label>Lost to Competitor</label>
             </value>
             <value>
+                <fullName>Need Alternative to UHC</fullName>
+                <default>false</default>
+                <label>Need Alternative to UHC</label>
+            </value>
+            <value>
                 <fullName>No Budget / Lost Funding</fullName>
                 <default>false</default>
                 <label>No Budget / Lost Funding</label>
@@ -177,6 +182,11 @@
                 <fullName>Transferred to MidMarket</fullName>
                 <default>false</default>
                 <label>Transferred to MidMarket</label>
+            </value>
+            <value>
+                <fullName>UHC Media Coverage Concern</fullName>
+                <default>false</default>
+                <label>UHC Media Coverage Concern</label>
             </value>
             <value>
                 <fullName>Unresponsive</fullName>
@@ -361,6 +371,14 @@
         <valueSettings>
             <controllingFieldValue>Closed Lost</controllingFieldValue>
             <valueName>Better Fit for Workday</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed Lost</controllingFieldValue>
+            <valueName>Need Alternative to UHC</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed Lost</controllingFieldValue>
+            <valueName>UHC Media Coverage Concern</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>
