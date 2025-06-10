@@ -18,14 +18,14 @@ private class CampaignMemberTriggerHelperTest {
         update campaignMember;
         Test.stopTest();
         CampaignMember campaignMemberTest = [SELECT Status FROM CampaignMember WHERE Id =: campaignMember.Id];
-         //	Call the rest of methods to reach the required coverage
-        CampaignMemberTriggerHandler campaignMemberTriggerHandler = new CampaignMemberTriggerHandler();
-        campaignMemberTriggerHandler.isDisabled();
-        campaignMemberTriggerHandler.beforeInsert(new List<sObject>());
-        campaignMemberTriggerHandler.afterInsert(new List<sObject>(), new Map<Id, sObject>());
-        campaignMemberTriggerHandler.beforeUpdate(new Map<Id, sObject>(), new Map<Id, sObject>());
-        campaignMemberTriggerHandler.beforeDelete(new List<sObject>(), new Map<Id, sObject>());
-        campaignMemberTriggerHandler.afterDelete(new List<sObject>(), new Map<Id, sObject>());
+        // Call the rest of methods to reach the required coverage
+        CampaignMemberTriggerHandler handler = new CampaignMemberTriggerHandler();
+        handler.isDisabled();
+        handler.beforeInsert(new List<sObject>());
+        handler.afterInsert(new List<sObject>(), new Map<Id, sObject>());
+        handler.beforeUpdate(new Map<Id, sObject>(), new Map<Id, sObject>());
+        handler.beforeDelete(new List<sObject>(), new Map<Id, sObject>());
+        handler.afterDelete(new List<sObject>(), new Map<Id, sObject>());
         System.assertEquals('Responded', campaignMemberTest.Status, 'CampaignMember history tracking record has been created');
     }
 
