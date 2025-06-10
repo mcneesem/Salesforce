@@ -37,6 +37,10 @@
             <fullName>HRCore</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>HRScale</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>LeadSource</picklist>
@@ -4667,6 +4671,10 @@
         </values>
         <values>
             <fullName>HRCore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HRScale</fullName>
             <default>false</default>
         </values>
     </picklistValues>
