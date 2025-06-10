@@ -120,6 +120,30 @@ public class NSP_ProjectTasksTriggerHelperTest {
         test.startTest();
         insert nProjectList;
         
+        Id ipMMRecordTypeId = NSP_GenericRecordType.getRecordTypeId(
+            'Implementation_Profile__c',
+            NSP_ServiceConstants.MMProfile
+        );
+        Id projectPEORecordTypeId = NSP_GenericRecordType.getRecordTypeId(
+            'pse__Proj__c',
+            'PEO_Project'
+        );
+        pse__Proj__c oProject2 = (pse__Proj__c)NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c(), 'NSP_TestDataFactory.ProjectDefaults', false);
+       oProject2.Name='test project';
+       oProject2.pse__Start_Date__c = Date.Today();
+       oProject2.pse__Project_Type__c = NSP_ServiceConstants.ImplementationProjectType;
+       oProject2.pse__End_Date__c = System.Today().addDays(100);
+       oProject2.RecordTypeId = projectPEORecordTypeId;
+       oProject2.TemplateName__c=label.Middle_Market_Implementation_Project;
+       insert oProject2;
+        
+        Implementation_Profile__c impProfile1 = new Implementation_Profile__c();
+        impProfile1.NSP_Project__c = oProject2.Id;
+        impProfile1.NSP_Form_Completed__c = true;
+        impProfile1.RecordTypeId=ipMMRecordTypeId;
+        impProfile1.Has_form_8973_been_discussed__c = 'No';
+        insert impProfile1;
+        
         List<pse__Project_Task__c> nProjectTaskList = new List<pse__Project_Task__c>();
         pse__Project_Task__c discoveryProjectTask = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c());
         discoveryProjectTask.Name = NSP_ServiceConstants.PROJECT_TASK_DISCOVERY;
@@ -215,7 +239,7 @@ public class NSP_ProjectTasksTriggerHelperTest {
         
         pse__Project_Task__c formCollectedProjTask = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c());
         formCollectedProjTask.Name = NSP_ServiceConstants.FORMCOLLECTED;
-        formCollectedProjTask.pse__Project__c = hcmProject.Id;
+        formCollectedProjTask.pse__Project__c = oProject2.Id;
         formCollectedProjTask.pse__Status__c = NSP_ServiceConstants.PROJECTSTATUSNOTSTARTED;
         formCollectedProjTask.NSP_Template_Generated__c = true;
         formCollectedProjTask.RecordTypeId = bPS_ProjectTaskRecordTypeId;
@@ -1058,7 +1082,11 @@ public class NSP_ProjectTasksTriggerHelperTest {
         List<pse__Project_Task__c> ptToUpdateList = new List<pse__Project_Task__c>();
         List<String> projTaskFields = new List<String>{'Id', 'pse__Status__c'};
         Test.startTest();
+            Implementation_Profile__c ip=[SELECT Id,Has_form_8973_been_discussed__c,NSP_Project_Manager__c,
+                                      NSP_Payroll_Project_Manager__c, NSP_Account_Executive__c,NSP_HR_Specialist__c
+                                      FROM Implementation_Profile__c LIMIT 1];
         
+
         String feinPTquery = new NSP_QueryBuilder('pse__Project_Task__c', projTaskFields)
             .addFilter('Name', NSP_ServiceConstants.FEIN).addLimit(1).build();
         pse__Project_Task__c feinProjectTask = Database.query(feinPTquery);
@@ -1074,7 +1102,7 @@ public class NSP_ProjectTasksTriggerHelperTest {
         String formCollectedPTquery = new NSP_QueryBuilder('pse__Project_Task__c', projTaskFields)
             .addFilter('Name', NSP_ServiceConstants.FORMCOLLECTED).addLimit(1).build();
         pse__Project_Task__c formCollectedProjectTask = Database.query(formCollectedPTquery);
-        fundingDocProjectTask.pse__Status__c = NSP_ServiceConstants.TASKCOMPLETE;
+        formCollectedProjectTask.pse__Status__c = NSP_ServiceConstants.TASKCOMPLETE;
         ptToUpdateList.add(formCollectedProjectTask);
         
         String clientTransPTquery = new NSP_QueryBuilder('pse__Project_Task__c', projTaskFields)
