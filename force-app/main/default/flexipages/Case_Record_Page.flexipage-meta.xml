@@ -289,6 +289,16 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.NSP_Segment__c</fieldItem>
+                <identifier>RecordNSP_Segment_cField2</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.National_Account_Type__c</fieldItem>
                 <identifier>RecordNational_Account_Type__cField</identifier>
                 <visibilityRule>
@@ -365,16 +375,6 @@
                         <rightValue>BPS</rightValue>
                     </criteria>
                 </visibilityRule>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Segment__c</fieldItem>
-                <identifier>RecordNSP_Segment_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
