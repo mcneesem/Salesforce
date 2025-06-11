@@ -34,10 +34,10 @@ public with sharing class WXBenefitsRenewalProjectHelper
         } catch (Exception ex) 
         {
             NSP_ErrorLogHandler.logException(
-                NSP_WXBenefitsRenewalProjectCreation.class.getName() ,
-                'execute' ,
-                ex
-                );
+                WXBenefitsRenewalProjectHelper.class.getName() ,
+                'createProjectFromTemplateBasedOnAccountAndAsset' ,
+                 ex
+                 );
         }
     }
 
@@ -132,9 +132,12 @@ public with sharing class WXBenefitsRenewalProjectHelper
         project.Project_Implementer__c = benefitsAccountTeamMap.get(project.pse__Account__c).NSP_User__c;
 
         // DML Operation
-        Database.saveResult result = Database.update(project, false);
-         NSP_ErrorLogHandler.logResults( WXBenefitsRenewalProjectHelper.class.getName(), 'updateProjectFieldsAndDMLProcess', new List< Database.saveResult>{result} );
-
+        Database.SaveResult result = Database.update( project , false );
+        NSP_ErrorLogHandler.logResults(
+            WXBenefitsRenewalProjectHelper.class.getName() ,
+            'updateProjectFieldsAndDMLProcess' ,
+            new List<Database.SaveResult>{ result }
+            );
     }
 
     /*************************************** QUERIES  **************************** */

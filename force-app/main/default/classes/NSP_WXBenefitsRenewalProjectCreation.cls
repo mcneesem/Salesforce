@@ -35,22 +35,23 @@ public class NSP_WXBenefitsRenewalProjectCreation implements ISelfSchedulable, S
     //== Execute Method
     public void execute(SchedulableContext scon) 
     {  
-        if(Benefits_Renewal_Batch_Settings__c.getInstance(UserInfo.getUserId()) != null)
+        Benefits_Renewal_Batch_Settings__c settingsLocal = Benefits_Renewal_Batch_Settings__c.getInstance(UserInfo.getUserId());
+        if(settingsLocal != null)
         {       
-            if(Benefits_Renewal_Batch_Settings__c.getInstance(UserInfo.getUserId()).IsEnabledDefault__c == true)
+            if(settingsLocal.IsEnabledDefault__c == true)
             {
                 //Executes Batch for Medical Benefits Renewal Date
                 Database.executeBatch(new NSP_WXBenefitsRenewalProjectCreation('Medical_Benefits_Renewal_Date__c'), 1);
             }
             
-            if(Benefits_Renewal_Batch_Settings__c.getInstance(UserInfo.getUserId()).IsEnabledAncillary_c__c == true)
+            if(settingsLocal.IsEnabledAncillary_c__c == true)
             {
                 // Execute Batch for Ancillary Benefits Renewal Date
                 Database.executeBatch(new NSP_WXBenefitsRenewalProjectCreation('Ancillary_Benefits_Renewal_Date__c'), 1);
                 
             }
             
-            if(Benefits_Renewal_Batch_Settings__c.getInstance(UserInfo.getUserId()).IsEnabledFringe__c == true)
+            if(settingsLocal.IsEnabledFringe__c == true)
             {
                 // Execute Batch for Fringe Benefits Renewal Date
                 Database.executeBatch(new NSP_WXBenefitsRenewalProjectCreation('Fringe_Benefits_Renewal_Date__c'), 1);
