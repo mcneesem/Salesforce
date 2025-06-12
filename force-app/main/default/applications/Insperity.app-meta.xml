@@ -309,6 +309,24 @@
     <navType>Standard</navType>
     <profileActionOverrides>
         <actionName>View</actionName>
+        <content>Project_Dynamic_Record_Page</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>pse__Proj__c</pageOrSobjectType>
+        <recordType>pse__Proj__c.PEO_Project_Billable</recordType>
+        <type>Flexipage</type>
+        <profile>System Admin Lite</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Project_Dynamic_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>pse__Proj__c</pageOrSobjectType>
+        <recordType>pse__Proj__c.PEO_Project_Billable</recordType>
+        <type>Flexipage</type>
+        <profile>System Admin Lite</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
         <content>Payroll_Record_Dynamic_Page</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>NSP_Payroll__c</pageOrSobjectType>
@@ -341,7 +359,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Project_Record_Page11</content>
+        <content>Project_Dynamic_Record_Page</content>
         <formFactor>Small</formFactor>
         <pageOrSobjectType>pse__Proj__c</pageOrSobjectType>
         <recordType>pse__Proj__c.RET_Deconversion_2020_Form</recordType>
@@ -350,7 +368,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Project_Record_Page11</content>
+        <content>Project_Dynamic_Record_Page</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>pse__Proj__c</pageOrSobjectType>
         <recordType>pse__Proj__c.RET_Deconversion_2020_Form</recordType>
@@ -667,7 +685,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>PEO_Project_Record_Page</content>
+        <content>Project_Dynamic_Record_Page</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>pse__Proj__c</pageOrSobjectType>
         <recordType>pse__Proj__c.PEO_Project</recordType>
@@ -676,7 +694,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>PEO_Project_Record_Page</content>
+        <content>Project_Dynamic_Record_Page</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>pse__Proj__c</pageOrSobjectType>
         <recordType>pse__Proj__c.PEO_Project</recordType>
@@ -685,7 +703,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>PEO_Project_Record_Page</content>
+        <content>Project_Dynamic_Record_Page</content>
         <formFactor>Small</formFactor>
         <pageOrSobjectType>pse__Proj__c</pageOrSobjectType>
         <recordType>pse__Proj__c.PEO_Project</recordType>
@@ -694,7 +712,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Project_Record_Page11</content>
+        <content>Project_Dynamic_Record_Page</content>
         <formFactor>Small</formFactor>
         <pageOrSobjectType>pse__Proj__c</pageOrSobjectType>
         <recordType>pse__Proj__c.RET_Deconversion_2020_Form</recordType>
@@ -703,7 +721,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>PEO_Billable_Project_Record_Page</content>
+        <content>Project_Dynamic_Record_Page</content>
         <formFactor>Small</formFactor>
         <pageOrSobjectType>pse__Proj__c</pageOrSobjectType>
         <recordType>pse__Proj__c.PEO_Project_Billable</recordType>
@@ -712,7 +730,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>PEO_Billable_Project_Record_Page</content>
+        <content>Project_Dynamic_Record_Page</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>pse__Proj__c</pageOrSobjectType>
         <recordType>pse__Proj__c.PEO_Project_Billable</recordType>
@@ -858,7 +876,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Project_Record_Page11</content>
+        <content>Project_Dynamic_Record_Page</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>pse__Proj__c</pageOrSobjectType>
         <recordType>pse__Proj__c.RET_Deconversion_2020_Form</recordType>
@@ -867,7 +885,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Project_Record_Page11</content>
+        <content>Project_Dynamic_Record_Page</content>
         <formFactor>Small</formFactor>
         <pageOrSobjectType>pse__Proj__c</pageOrSobjectType>
         <recordType>pse__Proj__c.RET_Deconversion_2020_Form</recordType>
@@ -1516,7 +1534,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>PEO_Project_Record_Page</content>
+        <content>Project_Dynamic_Record_Page</content>
         <formFactor>Small</formFactor>
         <pageOrSobjectType>pse__Proj__c</pageOrSobjectType>
         <recordType>pse__Proj__c.PEO_Project</recordType>
@@ -1786,7 +1804,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>PEO_Billable_Project_Record_Page</content>
+        <content>Project_Dynamic_Record_Page</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>pse__Proj__c</pageOrSobjectType>
         <recordType>pse__Proj__c.PEO_Project_Billable</recordType>
@@ -1795,7 +1813,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>PEO_Billable_Project_Record_Page</content>
+        <content>Project_Dynamic_Record_Page</content>
         <formFactor>Small</formFactor>
         <pageOrSobjectType>pse__Proj__c</pageOrSobjectType>
         <recordType>pse__Proj__c.PEO_Project_Billable</recordType>
@@ -1804,7 +1822,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>PEO_Project_Record_Page</content>
+        <content>Project_Dynamic_Record_Page</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>pse__Proj__c</pageOrSobjectType>
         <recordType>pse__Proj__c.PEO_Project</recordType>
@@ -1897,7 +1915,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>PEO_Billable_Project_Record_Page</content>
+        <content>Project_Dynamic_Record_Page</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>pse__Proj__c</pageOrSobjectType>
         <recordType>pse__Proj__c.PEO_Project_Billable</recordType>
@@ -1906,7 +1924,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>PEO_Billable_Project_Record_Page</content>
+        <content>Project_Dynamic_Record_Page</content>
         <formFactor>Small</formFactor>
         <pageOrSobjectType>pse__Proj__c</pageOrSobjectType>
         <recordType>pse__Proj__c.PEO_Project_Billable</recordType>
@@ -1915,7 +1933,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>PEO_Billable_Project_Record_Page</content>
+        <content>Project_Dynamic_Record_Page</content>
         <formFactor>Small</formFactor>
         <pageOrSobjectType>pse__Proj__c</pageOrSobjectType>
         <recordType>pse__Proj__c.PEO_Project_Billable</recordType>
@@ -1924,7 +1942,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>PEO_Billable_Project_Record_Page</content>
+        <content>Project_Dynamic_Record_Page</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>pse__Proj__c</pageOrSobjectType>
         <recordType>pse__Proj__c.PEO_Project_Billable</recordType>
@@ -2293,7 +2311,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>PEO_Project_Record_Page</content>
+        <content>Project_Dynamic_Record_Page</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>pse__Proj__c</pageOrSobjectType>
         <recordType>pse__Proj__c.PEO_Project</recordType>
@@ -2320,7 +2338,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>PEO_Project_Record_Page</content>
+        <content>Project_Dynamic_Record_Page</content>
         <formFactor>Small</formFactor>
         <pageOrSobjectType>pse__Proj__c</pageOrSobjectType>
         <recordType>pse__Proj__c.PEO_Project</recordType>
@@ -2635,7 +2653,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>PEO_Project_Record_Page</content>
+        <content>Project_Dynamic_Record_Page</content>
         <formFactor>Small</formFactor>
         <pageOrSobjectType>pse__Proj__c</pageOrSobjectType>
         <recordType>pse__Proj__c.PEO_Project</recordType>
@@ -2671,7 +2689,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>PEO_Project_Record_Page</content>
+        <content>Project_Dynamic_Record_Page</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>pse__Proj__c</pageOrSobjectType>
         <recordType>pse__Proj__c.PEO_Project</recordType>
@@ -2969,7 +2987,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>PEO_Project_Record_Page</content>
+        <content>Project_Dynamic_Record_Page</content>
         <formFactor>Small</formFactor>
         <pageOrSobjectType>pse__Proj__c</pageOrSobjectType>
         <recordType>pse__Proj__c.PEO_Project</recordType>
@@ -2995,7 +3013,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Project_Record_Page11</content>
+        <content>Project_Dynamic_Record_Page</content>
         <formFactor>Small</formFactor>
         <pageOrSobjectType>pse__Proj__c</pageOrSobjectType>
         <recordType>pse__Proj__c.RET_Deconversion_2020_Form</recordType>
@@ -3004,7 +3022,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Project_Record_Page11</content>
+        <content>Project_Dynamic_Record_Page</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>pse__Proj__c</pageOrSobjectType>
         <recordType>pse__Proj__c.RET_Deconversion_2020_Form</recordType>
@@ -3031,7 +3049,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Project_Record_Page11</content>
+        <content>Project_Dynamic_Record_Page</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>pse__Proj__c</pageOrSobjectType>
         <recordType>pse__Proj__c.RET_Deconversion_2020_Form</recordType>
@@ -5858,7 +5876,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Project_Record_Page1</content>
+        <content>Project_Dynamic_Record_Page</content>
         <formFactor>Small</formFactor>
         <pageOrSobjectType>pse__Proj__c</pageOrSobjectType>
         <recordType>pse__Proj__c.RET_Deconversion_2020_Form</recordType>
@@ -5867,7 +5885,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Project_Record_Page11</content>
+        <content>Project_Dynamic_Record_Page</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>pse__Proj__c</pageOrSobjectType>
         <recordType>pse__Proj__c.RET_Deconversion_2020_Form</recordType>

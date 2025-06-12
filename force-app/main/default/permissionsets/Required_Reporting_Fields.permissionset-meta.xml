@@ -1268,12 +1268,12 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>pse__Proj__c.First_Use_Date__c</field>
+        <field>pse__Proj__c.Fee_Inclusive__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>pse__Proj__c.Go_Live_Project_Duration__c</field>
+        <field>pse__Proj__c.First_Use_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1313,6 +1313,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>pse__Proj__c.NSP_Account__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>pse__Proj__c.NSP_Config_Call_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1329,6 +1334,16 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>pse__Proj__c.Next_Open_Enrollment__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>pse__Proj__c.OFAC_Review__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>pse__Proj__c.Onboarding_Profile__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1373,6 +1388,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>pse__Proj__c.TES_HCM_Implementation_Support_Tasks__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>pse__Proj__c.Templates_Used__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1384,6 +1404,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>pse__Proj__c.Total_Days_on_Hold__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>pse__Proj__c.WX_Carrier_Sync_Status__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
