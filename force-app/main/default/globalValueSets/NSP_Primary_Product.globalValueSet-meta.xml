@@ -26,11 +26,6 @@
         <label>Applicant Tracking</label>
     </customValue>
     <customValue>
-        <fullName>Contingent Workforce</fullName>
-        <default>false</default>
-        <label>Contingent Workforce</label>
-    </customValue>
-    <customValue>
         <fullName>Contractor Management</fullName>
         <default>false</default>
         <label>Contractor Management</label>
@@ -89,6 +84,12 @@
         <fullName>Workday</fullName>
         <default>false</default>
         <label>Workday</label>
+    </customValue>
+    <customValue>
+        <fullName>Contingent Workforce</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Contingent Workforce</label>
     </customValue>
     <customValue>
         <fullName>Consulting Services</fullName>
