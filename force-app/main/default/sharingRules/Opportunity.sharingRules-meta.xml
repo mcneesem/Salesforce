@@ -87,7 +87,7 @@
         <criteriaItems>
             <field>NSP_PrimaryProduct__c</field>
             <operation>equals</operation>
-            <value>HR360 - Select Edition,HRCore Solution</value>
+            <value>HR360 - Select Edition,HRCore - Select Edition</value>
         </criteriaItems>
         <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
     </sharingCriteriaRules>
