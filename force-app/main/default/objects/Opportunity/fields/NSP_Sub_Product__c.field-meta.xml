@@ -105,6 +105,10 @@
             <valueName>Tier 6</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>HR Consulting Services</controllingFieldValue>
+            <valueName>Compensation Services</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Insurance Services</controllingFieldValue>
             <valueName>Health &amp; Welfare</valueName>
         </valueSettings>
