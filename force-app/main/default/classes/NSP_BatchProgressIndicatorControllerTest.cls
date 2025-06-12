@@ -68,6 +68,7 @@ private class NSP_BatchProgressIndicatorControllerTest {
         NSP_InvoiceTriggerHandler.TriggerDisabled = true;
         update inv;
         NSP_BatchProgressIndicatorController.getUserAccess();
+        NSP_BatchProgressIndicatorController.getBatchOptions();
         NSP_BatchProgressIndicatorController.executeBatch('NSP_InvoiceBatch', 1, invRunObj.Id);
         NSP_BatchProgressIndicatorController.executeBatch('NSP_DocuSignInvoiceDocumentBatch', 20, invRunObj.Id);
         Test.stopTest();
