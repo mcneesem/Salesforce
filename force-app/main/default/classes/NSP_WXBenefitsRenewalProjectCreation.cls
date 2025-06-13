@@ -83,7 +83,7 @@ public class NSP_WXBenefitsRenewalProjectCreation implements ISelfSchedulable, S
         List<String> excludeAssetStatus = new List<string>{'Terminated', 'Backout'};
             String formattedStatusValues 	= '\'' + String.join(excludeAssetStatus, '\',\'') + '\'';
         
-        string query = '';
+        string query = 'SELECT ID FROM Asset WHERE ID = NULL';
         if(fieldAPIName != null)
         {
             query = ('SELECT ID, RecordTypeId, AccountId, Status,  ' + 
