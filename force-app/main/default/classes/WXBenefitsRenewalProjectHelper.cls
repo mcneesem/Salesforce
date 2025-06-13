@@ -36,8 +36,8 @@ public with sharing class WXBenefitsRenewalProjectHelper
             NSP_ErrorLogHandler.logException(
                 WXBenefitsRenewalProjectHelper.class.getName() ,
                 'createProjectFromTemplateBasedOnAccountAndAsset' ,
-                 ex
-                 );
+                ex
+                );
         }
     }
 
@@ -132,17 +132,17 @@ public with sharing class WXBenefitsRenewalProjectHelper
         project.Project_Implementer__c = benefitsAccountTeamMap.get(project.pse__Account__c).NSP_User__c;
 
         // DML Operation
-        Database.SaveResult result = Database.update( project , false );
+        List<Database.SaveResult> results = Database.update(new List<pse__Proj__c>{ project } , false );
         NSP_ErrorLogHandler.logResults(
             WXBenefitsRenewalProjectHelper.class.getName() ,
             'updateProjectFieldsAndDMLProcess' ,
-            new List<Database.SaveResult>{ result }
+             results
             );
     }
 
     /*************************************** QUERIES  **************************** */
     //== Fetch account team members based on account Ids
-    public static List<NSP_Account_Team__c> getAccountTeams(Set<String> accountIdSet)
+    private static List<NSP_Account_Team__c> getAccountTeams(Set<String> accountIdSet)
     {
         List<NSP_Account_Team__c> accountTeams = ([SELECT Id, NSP_User__c, NSP_Role__c, NSP_Account__c, NSP_Primary__c 
         FROM NSP_Account_Team__c 
@@ -157,7 +157,7 @@ public with sharing class WXBenefitsRenewalProjectHelper
     }
 
     //== Get project details based on project Id
-    public static pse__Proj__c getProjectDetailsBasedOnProjectId(Id projectId)
+    private static pse__Proj__c getProjectDetailsBasedOnProjectId(Id projectId)
     {
         pse__Proj__c project = [SELECT Id, Name, TemplateName__c, pse__Account__c, pse__Start_Date__c , recordTypeId, Project_Implementer__c 
         FROM pse__Proj__c 
@@ -171,7 +171,7 @@ public with sharing class WXBenefitsRenewalProjectHelper
     }
 
     //== Get Template Information based on template Name
-    public static EmailTemplate getEmailTemplate()
+    private static EmailTemplate getEmailTemplate()
     {
         EmailTemplate emailTemplate = [SELECT ID, DeveloperName 
         FROM 
