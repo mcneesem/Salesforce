@@ -116,7 +116,11 @@ public class NSP_WXBenefitsRenewalProjectCreation implements ISelfSchedulable, S
         }
         catch(Exception ex)
         {
-            NSP_ErrorLogHandler.logException('NSP_WXBenefitsRenewalProjectCreation', 'execute', ex);
+            NSP_ErrorLogHandler.logException(
+                NSP_WXBenefitsRenewalProjectCreation.class.getName() ,
+                'execute' ,
+                ex
+                );
         }
         
     }
