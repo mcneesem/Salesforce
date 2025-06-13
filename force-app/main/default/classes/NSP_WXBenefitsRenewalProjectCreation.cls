@@ -20,7 +20,7 @@ public class NSP_WXBenefitsRenewalProjectCreation implements ISelfSchedulable, S
         Map<String, schema.SObjectField> fieldMap 	= Asset.SObjectType.getDescribe().fields.getMap();
         
         // property setting
-        if(fieldMap.containsKey(fieldName))
+        if(string.isNotBlank(fieldName) && fieldMap.containsKey(fieldName))
         {
             this.fieldAPIName = fieldMap.get(fieldName);
         }
