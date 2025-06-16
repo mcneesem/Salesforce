@@ -3347,6 +3347,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>HRScale</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Organizational Planning</fullName>
             <default>false</default>
         </values>
