@@ -170,6 +170,13 @@
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>$Setup.Lead_Trigger_Settings__c.IsEnabledRemoveUnqualifiedFromCadence__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>RemoveUnqualifiedLead</targetReference>
             </connector>
@@ -191,7 +198,7 @@
             <label>Lead is OneTrust Opt Out</label>
         </rules>
     </decisions>
-    <description>Adds in &quot;isBlank&quot; check with null check of Cadence Tracker ID. Split Unqualified from OneTrust Opt Out for disposition reason</description>
+    <description>Adds in custom setting kill switch for &quot;Lead was Disqualified&quot; path. Adds in &quot;isBlank&quot; check with null check of Cadence Tracker ID. Split Unqualified from OneTrust Opt Out for disposition reason</description>
     <environments>Default</environments>
     <interviewLabel>Lead - Remove Unqualified Lead from Cadence {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Lead - Remove Unqualified Lead from Cadence</label>
