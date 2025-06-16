@@ -28,6 +28,10 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Parent: Program</controllingFieldValue>
+            <valueName>HRScale</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Parent: Program</controllingFieldValue>
             <valueName>Applicant Tracking</valueName>
         </valueSettings>
         <valueSettings>
