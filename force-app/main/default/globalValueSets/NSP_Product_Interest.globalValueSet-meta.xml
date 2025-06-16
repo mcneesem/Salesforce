@@ -46,6 +46,11 @@
         <label>HRCore Onboarding Amendment</label>
     </customValue>
     <customValue>
+        <fullName>HRScale</fullName>
+        <default>false</default>
+        <label>HRScale</label>
+    </customValue>
+    <customValue>
         <fullName>Insurance Services (Health &amp; Wellness)</fullName>
         <default>false</default>
         <label>Insurance Services (Health &amp; Wellness)</label>
