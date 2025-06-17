@@ -8,17 +8,13 @@
 
 public with sharing class CaseGuidanceController {
     // Test W/ CaseGuidanceControllerTest (100%)
-    //== Default Constructor
-    public CaseGuidanceController() {
-        
-    }
 
     @AuraEnabled(cacheable = true)
     //== Get Custom Setting values
     public static Case_Guidance_Setting__c getCaseGuidanceSetting()
     {
         Case_Guidance_Setting__c caseGuidanceSetting = Case_Guidance_Setting__c.getOrgDefaults();
-        System.debug(LoggingLevel.WARN, ' Case Guidance Setting : ' + caseGuidanceSetting);
+
         return caseGuidanceSetting;
     }
     
@@ -30,7 +26,7 @@ public with sharing class CaseGuidanceController {
         string guidance = '';
         Case caseRecord = getCaseRecord(caseId);
 
-        if(caseRecord.NSP_Category__c != null && caseRecord.NSP_SubCategory__c != null)
+        if(caseRecord?.NSP_Category__c != null && caseRecord?.NSP_SubCategory__c != null)
         {
             NSP_Category_Sub_Category_Mapping__c categorySubCategoryRecord = getCategorySubCategoryRecord(caseRecord);
 
@@ -47,12 +43,15 @@ public with sharing class CaseGuidanceController {
     //== Method to return the case record based on case record Id
     private static Case getCaseRecord(Id caseId)
     {
-        Case caseRecord = [SELECT ID, NSP_Category__c, NSP_SubCategory__c, NSP_Detail__c 
+        Case caseRecord = new Case();
+        List<Case> caseRecords = [SELECT ID, NSP_Category__c, NSP_SubCategory__c, NSP_Detail__c 
         FROM 
         Case 
          WHERE 
          ID = : caseId
          ];
+
+         caseRecord = caseRecords?.get(0);
 
          return caseRecord;
     }
@@ -60,7 +59,8 @@ public with sharing class CaseGuidanceController {
     //== Method to return the Category Sub Categroy Mapping based on Case Record Values
     private static NSP_Category_Sub_Category_Mapping__c getCategorySubCategoryRecord( Case caseRecord)
     {
-        NSP_Category_Sub_Category_Mapping__c categorySubCategoryRecord = [SELECT Id, Case_Guidance__c 
+        NSP_Category_Sub_Category_Mapping__c categorySubCategoryRecord = new NSP_Category_Sub_Category_Mapping__c();
+        List<NSP_Category_Sub_Category_Mapping__c> categorySubCategoryRecords = [SELECT Id, Case_Guidance__c 
         FROM 
         NSP_Category_Sub_Category_Mapping__c 
         WHERE 
@@ -71,6 +71,8 @@ public with sharing class CaseGuidanceController {
         NSP_Detail__c = : caseRecord.NSP_Detail__c 
          LIMIT 1
          ];
+
+          categorySubCategoryRecord = categorySubCategoryRecords?.get(0);
 
          return categorySubCategoryRecord;
     }
