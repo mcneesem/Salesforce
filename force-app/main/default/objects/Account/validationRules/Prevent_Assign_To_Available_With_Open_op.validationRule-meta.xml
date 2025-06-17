@@ -6,8 +6,8 @@
     <errorConditionFormula>AND(
   NOT( $Permission.Bypass_Prevent_Assign_To_Available_With_Open_Opportunities ) ,
   ISCHANGED( OwnerId ) ,
-  Owner.LastName  = &apos;Available&apos; ,
-  Count_of_Pending_Oppty__c &gt; 0
+  ( Owner.LastName = &apos;Available&apos; ) ,
+  ( Count_of_Pending_Oppty__c &gt; 0 )
 )</errorConditionFormula>
     <errorMessage>Open Opportunities Exist, please move any opportunities to Closed/Lost with the appropriate Close/Lost Reason.</errorMessage>
 </ValidationRule>
