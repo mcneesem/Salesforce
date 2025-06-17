@@ -1,0 +1,4 @@
+/* Apply light grey color to section heading */
+lightning-accordion-section {
+    --slds-c-accordion-summary-color-background: #f3f3f3;
+}
