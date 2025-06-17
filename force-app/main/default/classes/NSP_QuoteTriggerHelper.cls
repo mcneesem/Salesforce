@@ -697,7 +697,6 @@ public void initializeDefaultFieldValuesOnInsert(List<SBQQ__Quote__c> newQuotesL
                         raquote.NSP_Opportunity_Primary_Product__c = raOppty.SBQQ__RenewedContract__r.SBQQ__Quote__r.NSP_Opportunity_Primary_Product__c;
                         raquote.NSP_Client_For_Life__c = raOppty.SBQQ__RenewedContract__r.SBQQ__Quote__r.NSP_Client_For_Life__c;
                         raquote.SBQQ__Partner__c = raOppty.SBQQ__RenewedContract__r.SBQQ__Quote__r.SBQQ__Partner__c;
-                        raquote.SBQQ__PrimaryContact__c = raOppty.SBQQ__RenewedContract__r.SBQQ__Quote__r.SBQQ__PrimaryContact__c;
                         raquote.NSP_Invoice_To_Email__c = raOppty.SBQQ__RenewedContract__r.SBQQ__Quote__r.NSP_Invoice_To_Email__c;
                         raquote.NSP_Billing_Account__c = raOppty.SBQQ__RenewedContract__r.SBQQ__Quote__r.NSP_Billing_Account__c;
                         raquote.NSP_Billing_Address__c = raOppty.SBQQ__RenewedContract__r.SBQQ__Quote__r.NSP_Billing_Address__c;
@@ -709,7 +708,6 @@ public void initializeDefaultFieldValuesOnInsert(List<SBQQ__Quote__c> newQuotesL
                         raquote.NSP_Opportunity_Primary_Product__c = raOppty.SBQQ__RenewedContract__r.NSP_PrimaryProduct__c;
                         raquote.NSP_Client_For_Life__c = raOppty.SBQQ__RenewedContract__r.NSP_Client_For_Life__c;
                         raquote.SBQQ__Partner__c = raOppty.SBQQ__RenewedContract__r.NSP_Partner__c;
-                        raquote.SBQQ__PrimaryContact__c = raOppty.SBQQ__RenewedContract__r.NSP_Invoice_To_Email__c;
                         raquote.NSP_Invoice_To_Email__c = raOppty.SBQQ__RenewedContract__r.NSP_Invoice_To_Email__c;
                         raquote.NSP_Billing_Account__c = raOppty.SBQQ__RenewedContract__r.SBQQ__Order__r.blng__BillingAccount__c;
                         raquote.NSP_Billing_Address__c = raOppty.SBQQ__RenewedContract__r.SBQQ__Order__r.NSP_Billing_Address__c;
@@ -737,7 +735,6 @@ public void initializeDefaultFieldValuesOnInsert(List<SBQQ__Quote__c> newQuotesL
                         raquote.NSP_Client_For_Life__c = raOppty.SBQQ__AmendedContract__r.SBQQ__Quote__r.NSP_Client_For_Life__c;
                         raquote.NSP_Product_Type__c = raOppty.SBQQ__AmendedContract__r.SBQQ__Quote__r.NSP_Product_Type__c;
                         raquote.SBQQ__Partner__c = raOppty.SBQQ__AmendedContract__r.SBQQ__Quote__r.SBQQ__Partner__c;
-                        raquote.SBQQ__PrimaryContact__c = raOppty.SBQQ__AmendedContract__r.SBQQ__Quote__r.SBQQ__PrimaryContact__c;
                         raquote.NSP_Invoice_To_Email__c = raOppty.SBQQ__AmendedContract__r.SBQQ__Quote__r.NSP_Invoice_To_Email__c;
                         raquote.NSP_Billing_Account__c = raOppty.SBQQ__AmendedContract__r.SBQQ__Quote__r.NSP_Billing_Account__c;
                         raquote.NSP_Billing_Address__c = raOppty.SBQQ__AmendedContract__r.SBQQ__Quote__r.NSP_Billing_Address__c;
@@ -750,7 +747,6 @@ public void initializeDefaultFieldValuesOnInsert(List<SBQQ__Quote__c> newQuotesL
                         raquote.NSP_Opportunity_Primary_Product__c = raOppty.SBQQ__AmendedContract__r.NSP_PrimaryProduct__c;
                         raquote.NSP_Client_For_Life__c = raOppty.SBQQ__AmendedContract__r.NSP_Client_For_Life__c;
                         raquote.SBQQ__Partner__c = raOppty.SBQQ__AmendedContract__r.NSP_Partner__c;
-                        raquote.SBQQ__PrimaryContact__c = raOppty.SBQQ__AmendedContract__r.NSP_Invoice_To_Email__c;
                         raquote.NSP_Invoice_To_Email__c = raOppty.SBQQ__AmendedContract__r.NSP_Invoice_To_Email__c;
                         raquote.NSP_Billing_Account__c = raOppty.SBQQ__AmendedContract__r.SBQQ__Order__r.blng__BillingAccount__c;
                         raquote.NSP_Billing_Address__c = raOppty.SBQQ__AmendedContract__r.SBQQ__Order__r.NSP_Billing_Address__c;
