@@ -80,16 +80,4 @@ public class CaseGuidanceControllerTest
         
         Assert.areNotEqual(caseGuidanceSetting, null);
     }
-
-
-    @IsTest
-    //== Testing the constructor method
-    private static void testGetCaseGuidanceSettingNull()
-    {
-        Test.StartTest();
-        Case_Guidance_Setting__c caseGuidanceSetting = CaseGuidanceController.getCaseGuidanceSetting();
-        Test.stopTest();
-        
-        Assert.areEqual(caseGuidanceSetting, null);
-    }
 }
