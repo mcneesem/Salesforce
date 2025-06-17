@@ -24,7 +24,7 @@ export default class CaseGuidance extends LightningElement {
     }
 
     handleSectionToggle(event) {
-        if(this.caseGuidanceCustomSettingData.Is_Enabled__c == true){
+        if(this.caseGuidanceCustomSettingData.Is_Enabled__c){
             
             const openSections = event.detail.openSections;
             console.log(openSections);
