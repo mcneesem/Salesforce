@@ -1,5 +1,5 @@
 <template>
-    <template if:true={showCaseGuidance}>
+    <template lwc:if={showCaseGuidance}>
     <lightning-accordion allow-multiple-sections-open onsectiontoggle={handleSectionToggle} active-section-name={activeSections}>
         <lightning-accordion-section name="caseGuidance" label="Case Guidance">
             <lightning-formatted-rich-text value={guidance}></lightning-formatted-rich-text>
