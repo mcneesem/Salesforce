@@ -82,7 +82,7 @@ public class NSP_WXBenefitsRenewalProjectCreation implements ISelfSchedulable , 
                 + ' FROM Asset'
                 + ' WHERE'
                 + ' ( ' + this.fieldApiName + ' = ' + String.ValueOf( comparingDate ) + ')'
-                + ' AND ( RecordTypeId = :wxRecordTypeId )'
+                + ' AND ( RecordTypeId = \'' + wxRecordTypeId + '\' )'
                 + ' AND ( Status NOT IN ( ' + formattedStatusValues + ' ) )'
                 + ' WITH SECURITY_ENFORCED'
                 ;
