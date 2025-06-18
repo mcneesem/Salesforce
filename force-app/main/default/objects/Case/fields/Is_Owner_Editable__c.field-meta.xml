@@ -7,13 +7,13 @@
   AND(
     ( NSP_Category__c = &quot;Compensation Services&quot; ) ,
     ( NSP_SubCategory__c = &quot;Salary Survey&quot; ) ,
-    ( ISPICKVAL( Required_Documentation_Attached__c , &quot;Yes&quot; ) ) ,
-    ( Requested_Jobs__c &gt; 0 )
+    Required_Documentation_Attached__c ,
+    Requested_Jobs__c &gt; 0
   ) ,
   AND(
-    ( NSP_Category__c = &quot;Compensation Services&quot; ) ,
-    ( NSP_SubCategory__c != &quot;Salary Survey&quot; ) ,
-    ( ISPICKVAL( Required_Documentation_Attached__c , &quot;Yes&quot; ) )
+    ( NSP_Category__c = &quot;Compensation Services&quot; ),
+    ( NSP_SubCategory__c != &quot;Salary Survey&quot; ),
+    Required_Documentation_Attached__c
   )
 )</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
