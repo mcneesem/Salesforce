@@ -70,6 +70,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
         doCLabels(sandbox);
         doEmailCLabels();
         doEmailAlerts();
+        doImageDocs();
         doCSettings(sandbox);
         setPostRefreshRunFlag(1);
     }
@@ -704,6 +705,49 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
         } catch(Exception e) {
             NSP_PrepSandbox.handleException( e , 'doQueues' );
         }
+    }
+    
+    public static void doImageDocs() {
+        MetadataService.MetadataPort service = createService();
+        List<MetadataService.Metadata> allMetadataList = new List<MetadataService.Metadata>();
+        try {
+            // map of static resource names to document names
+            Map<String, String> resourceMap = new Map<String, String>();
+            resourceMap.put('Insperity_Footer_Logo', 'Insperity_Footer_Logo');
+            resourceMap.put('Insperity_HR', 'Insperity_HR');
+            resourceMap.put('Insperity_HR_Logo', 'Insperity_HR_Logo');
+            resourceMap.put('Insperity_Copyright_Logo', 'Insperity_Copy_write_logo');
+            resourceMap.put('Insperity_Service_Operations', 'Insperity_Service_Operations');
+            resourceMap.put('InsperityEmailSignatureLogo', 'InsperityEmailSignatureLogo');
+
+            for (String resName: resourceMap.keySet()) {
+                StaticResource sr = [SELECT Id, Body, Name FROM StaticResource WHERE Name = :resName LIMIT 1];
+                if (sr == null || sr.Body == null) {
+                    continue; // skip if the static resource is not found or has no body
+                }
+                MetadataService.Document doc = new MetadataService.Document();
+                doc.fullName = 'Services/' + resourceMap.get(resName) + '.png';
+                doc.name = replaceUnderscoresWithSpaces(resourceMap.get(resName));
+                doc.content = EncodingUtil.base64Encode(sr.Body);
+                doc.public_x = true;
+                doc.internalUseOnly = false;
+                allMetadataList.add(doc);
+            }
+
+            if (allMetadataList.size() > 0 && !Test.isRunningTest()) {
+                service.upsertMetadata(allMetadataList);
+            }
+        } catch(Exception e) {
+
+            NSP_PrepSandbox.handleException( e , 'doImageDocs' );
+        }
+    }
+
+    public static String replaceUnderscoresWithSpaces(String input) {
+        if (input != null) {
+            return input.replace('_', ' ');
+        }
+        return null;
     }
     
     public static void setPostRefreshRunFlag(Integer iStep) {
