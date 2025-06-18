@@ -3,18 +3,18 @@
     <fullName>Is_Owner_Editable__c</fullName>
     <externalId>false</externalId>
     <formula>OR(
-( NSP_Category__c != &quot;Compensation Services&quot; ),
-AND(
-( NSP_Category__c = &quot;Compensation Services&quot; ),
-( NSP_SubCategory__c = &quot;Salary Survey&quot; ),
-( ISPICKVAL(Required_Documentation_Attached__c, &quot;Yes&quot;)),
-Requested_Jobs__c &gt; 0
-),
-AND(
-( NSP_Category__c = &quot;Compensation Services&quot; ),
-( NSP_SubCategory__c != &quot;Salary Survey&quot; ),
-( ISPICKVAL(Required_Documentation_Attached__c, &quot;Yes&quot;))
-)
+  ( NSP_Category__c != &quot;Compensation Services&quot; ) ,
+  AND(
+    ( NSP_Category__c = &quot;Compensation Services&quot; ) ,
+    ( NSP_SubCategory__c = &quot;Salary Survey&quot; ) ,
+    ( ISPICKVAL( Required_Documentation_Attached__c , &quot;Yes&quot; ) ) ,
+    ( Requested_Jobs__c &gt; 0 )
+  ) ,
+  AND(
+    ( NSP_Category__c = &quot;Compensation Services&quot; ) ,
+    ( NSP_SubCategory__c != &quot;Salary Survey&quot; ) ,
+    ( ISPICKVAL( Required_Documentation_Attached__c , &quot;Yes&quot; ) )
+  )
 )</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Is Owner Editable</label>
