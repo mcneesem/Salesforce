@@ -2683,7 +2683,7 @@
             <label>Booking - WO</label>
         </rules>
     </decisions>
-    <description>Additional in-flow validations and changed &quot;Update Opty&quot; to only update &quot;Number of ___ Checklist&quot; fields. MidMarket Closing added. &quot;Additional Notes&quot; long text and &quot;Gov&apos;t Contract Approval Email&quot; added to SEQ - WX</description>
+    <description>In-flow validation for &quot;Existing Payroll Provider&quot;. Additional in-flow validations and changed &quot;Update Opty&quot; to only update &quot;Number of ___ Checklist&quot; fields. MidMarket Closing added. &quot;Additional Notes&quot; long text and &quot;Gov&apos;t Contract Approval Email&quot; added to SEQ - WX</description>
     <dynamicChoiceSets>
         <name>activeBenefitContinuationPeriodPicklist</name>
         <dataType>Picklist</dataType>
@@ -6347,6 +6347,10 @@
                     <fieldType>InputField</fieldType>
                     <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
+                    <validationRule>
+                        <errorMessage>&lt;p&gt;&lt;span style=&quot;color: rgb(250, 7, 7);&quot;&gt;Existing Payroll Provider response must be 40 characters or less&lt;/span&gt;&lt;/p&gt;</errorMessage>
+                        <formulaExpression>LEN({!ExistingPayrollProvider_STP_WX})&lt;=40</formulaExpression>
+                    </validationRule>
                 </fields>
                 <fields>
                     <name>InitialCoveredPayStart_STP_WX</name>
