@@ -19,9 +19,7 @@ private class NSP_WXBenefitsRenewalProjCreat_Test {
         System.runAs(sysAdminUser)
         {
             // Create Account    
-            Account account = (Account)NSP_TestExtendedDataFactory.createSObject(new Account(), 
-                                                                                                                 'NSP_TestDataFactory.AccountDefaults', 
-                                                                                                                 false);
+            Account account = (Account)NSP_TestExtendedDataFactory.createSObject(new Account(), 'NSP_TestDataFactory.AccountDefaults', false);
             account.NSP_Sales_Service_Account_Status__c = NSP_ServiceConstants.Account_Status; 
             insert account;
             
