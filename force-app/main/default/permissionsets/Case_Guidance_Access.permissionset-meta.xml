@@ -8,10 +8,6 @@
         <enabled>true</enabled>
         <name>Case_Guidance_Access</name>
     </customPermissions>
-    <customSettingAccesses>
-        <enabled>true</enabled>
-        <name>Case_Guidance_Setting__c</name>
-    </customSettingAccesses>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Case Guidance Access</label>
 </PermissionSet>
