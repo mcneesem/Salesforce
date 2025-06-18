@@ -12,7 +12,7 @@ Modification Log     :
 */
 
 public class NSP_QuoteApprovalPreValidation {
-    // test w/ QuoteExtControllerTests (80%)
+    // test w/ QuoteExtControllerTests (81%)
 
     //constructor
     private NSP_QuoteApprovalPreValidation(){}
@@ -316,16 +316,7 @@ public class NSP_QuoteApprovalPreValidation {
                 errorMessageList.add(QuoteExtController.TERMINATION_DATE_ERROR);
             }
             //validate seasonal calculation
-            Seasonal_Pricing_Setting__c seasonalSettings = Seasonal_Pricing_Setting__c.getOrgDefaults();
-            Boolean seasonalEnabled = seasonalSettings.Enabled__c;
-            if ( quoteRec.Seasonal_Pricing__c != 'Not Applicable'
-                && quoteRec.Seasonal_Pricing__c != ''
-                && seasonalEnabled
-                && quoteRec.Ready_for_Approval__c == False
-                )
-            {
-                errorMessageList.add(QuoteExtController.SEASONAL_ERR);
-            }
+            validateSeasonalCalculation(quoteRec,errorMessageList);
         }
         descriptionOfService = validateDescriptionOfServices(QuoteId);
         serialIds=validateSerialIds(QuoteId);
@@ -337,6 +328,23 @@ public class NSP_QuoteApprovalPreValidation {
         }
         return errorMessageList;
         
+    }
+    
+    //method to validate Seasonal Calculations
+    private static void validateSeasonalCalculation(SBQQ__Quote__c quoteRec, List<String> errorMessageList){
+        Seasonal_Pricing_Setting__c seasonalSettings = Seasonal_Pricing_Setting__c.getOrgDefaults();
+        Boolean seasonalEnabled = seasonalSettings.Enabled__c;
+        if ( 
+            ( quoteRec != null )
+            && ( quoteRec.Seasonal_Pricing__c != null )
+            && ( quoteRec.Seasonal_Pricing__c != 'Not Applicable' )
+            && ( quoteRec.Seasonal_Pricing__c != '' )
+            && ( seasonalEnabled )
+            && ( quoteRec.Ready_for_Approval__c == False )
+        )
+        {
+            errorMessageList.add(QuoteExtController.SEASONAL_ERR);
+        }
     }
     
     /**
