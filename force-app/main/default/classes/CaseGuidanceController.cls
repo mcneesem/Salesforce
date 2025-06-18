@@ -13,8 +13,7 @@ public with sharing class CaseGuidanceController {
     //== Get Custom Setting values
     public static Case_Guidance_Setting__c getCaseGuidanceSetting()
     {
-        Case_Guidance_Setting__c caseGuidanceSetting = Case_Guidance_Setting__c.getOrgDefaults();
-
+        Case_Guidance_Setting__c caseGuidanceSetting = Case_Guidance_Setting__c.getInstance(UserInfo.getUserId());
         return caseGuidanceSetting;
     }
     
@@ -44,14 +43,17 @@ public with sharing class CaseGuidanceController {
     private static Case getCaseRecord(Id caseId)
     {
         Case caseRecord = new Case();
-        List<Case> caseRecords = [SELECT ID, NSP_Category__c, NSP_SubCategory__c, NSP_Detail__c 
-        FROM 
-        Case 
-         WHERE 
-         ID = : caseId
-         ];
+        if(caseId != null)
+        {
+            List<Case> caseRecords = [SELECT ID, NSP_Category__c, NSP_SubCategory__c, NSP_Detail__c 
+            FROM 
+            Case 
+            WHERE 
+            ID = : caseId
+            ];
 
-         caseRecord = caseRecords?.get(0);
+            caseRecord = caseRecords?.get(0);
+        }
 
          return caseRecord;
     }
@@ -60,19 +62,22 @@ public with sharing class CaseGuidanceController {
     private static NSP_Category_Sub_Category_Mapping__c getCategorySubCategoryRecord( Case caseRecord)
     {
         NSP_Category_Sub_Category_Mapping__c categorySubCategoryRecord = new NSP_Category_Sub_Category_Mapping__c();
-        List<NSP_Category_Sub_Category_Mapping__c> categorySubCategoryRecords = [SELECT Id, Case_Guidance__c 
-        FROM 
-        NSP_Category_Sub_Category_Mapping__c 
-        WHERE 
-        NSP_Category__c = : caseRecord.NSP_Category__c 
-        AND 
-        NSP_Subcategory__c = : caseRecord.NSP_SubCategory__c 
-        AND 
-        NSP_Detail__c = : caseRecord.NSP_Detail__c 
-         LIMIT 1
-         ];
-
-          categorySubCategoryRecord = categorySubCategoryRecords?.get(0);
+        if(caseRecord != null)
+        {            
+            List<NSP_Category_Sub_Category_Mapping__c> categorySubCategoryRecords = [SELECT Id, Case_Guidance__c 
+            FROM 
+            NSP_Category_Sub_Category_Mapping__c 
+            WHERE 
+            NSP_Category__c = : caseRecord.NSP_Category__c 
+            AND 
+            NSP_Subcategory__c = : caseRecord.NSP_SubCategory__c 
+            AND 
+            NSP_Detail__c = : caseRecord.NSP_Detail__c 
+            LIMIT 1
+            ];
+            
+            categorySubCategoryRecord = categorySubCategoryRecords?.get(0);
+        }
 
          return categorySubCategoryRecord;
     }
