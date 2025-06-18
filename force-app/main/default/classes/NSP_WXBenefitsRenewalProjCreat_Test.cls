@@ -72,7 +72,7 @@ public class NSP_WXBenefitsRenewalProjCreat_Test
             // Create Custom Setting
             Benefits_Renewal_Batch_Settings__c customObject = new Benefits_Renewal_Batch_Settings__c();
             customObject.Name 						= 'Test';
-            customObject.IsEnabledAncillary_c__c 	= true;
+            customObject.IsEnabledAncillary__c 	    = true;
             customObject.IsEnabledDefault__c 		= true;
             customObject.IsEnabledFringe__c 		= true;
             

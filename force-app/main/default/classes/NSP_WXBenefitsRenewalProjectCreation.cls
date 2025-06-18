@@ -44,7 +44,7 @@ public class NSP_WXBenefitsRenewalProjectCreation implements ISelfSchedulable, S
                 Database.executeBatch(new NSP_WXBenefitsRenewalProjectCreation('Medical_Benefits_Renewal_Date__c'), 1);
             }
             
-            if(settingsLocal.IsEnabledAncillary_c__c == true)
+            if(settingsLocal.IsEnabledAncillary__c == true)
             {
                 // Execute Batch for Ancillary Benefits Renewal Date
                 Database.executeBatch(new NSP_WXBenefitsRenewalProjectCreation('Ancillary_Benefits_Renewal_Date__c'), 1);
