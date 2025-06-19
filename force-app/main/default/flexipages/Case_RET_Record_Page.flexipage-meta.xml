@@ -1185,6 +1185,7 @@
                     <name>columns</name>
                     <value>Facet-26b179a6-41a2-45d7-a257-ed1ff573c6a2</value>
                 </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>label</name>
                     <value>Timestamps</value>
                 </componentInstanceProperties>
