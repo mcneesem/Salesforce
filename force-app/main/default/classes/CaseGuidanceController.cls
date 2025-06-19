@@ -52,7 +52,10 @@ public with sharing class CaseGuidanceController {
             ID = : caseId
             ];
 
-            caseRecord = caseRecords?.get(0);
+            if(!caseRecords?.isEmpty() && caseRecords?.get(0) != null)
+            {
+                caseRecord = caseRecords?.get(0);
+            }
         }
 
          return caseRecord;
@@ -76,7 +79,10 @@ public with sharing class CaseGuidanceController {
             LIMIT 1
             ];
             
-            categorySubCategoryRecord = categorySubCategoryRecords?.get(0);
+            if(!categorySubCategoryRecords?.isEmpty() && categorySubCategoryRecords?.get(0) != null)
+            {
+                categorySubCategoryRecord = categorySubCategoryRecords?.get(0);
+            }
         }
 
          return categorySubCategoryRecord;
