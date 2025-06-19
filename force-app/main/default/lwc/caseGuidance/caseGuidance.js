@@ -45,20 +45,20 @@ export default class CaseGuidance extends LightningElement {
 
     @wire(getCaseGuidance, { caseId: '$recordId' })
     doGetGuidance(value) {
-      if (value != this.wiredCaseGuidance) {
-        this.wiredCaseGuidance = value;
-        if(this.wiredCaseGuidance.data && this.wiredCaseGuidance.data.length > 0) {
-          this.showCaseGuidance = true;
-          this.guidance = this.wiredCaseGuidance.data;
-        } else if(this.wiredCaseGuidance.error) {
-          this.error = this.wiredCaseGuidance.error;
+        if (value != this.wiredCaseGuidance) {
+            this.wiredCaseGuidance = value;
+            if(this.wiredCaseGuidance.data && this.wiredCaseGuidance.data.length > 0) {
+                this.showCaseGuidance = true;
+                this.guidance = this.wiredCaseGuidance.data;
+            } else if(this.wiredCaseGuidance.error) {
+                this.error = this.wiredCaseGuidance.error;
+            } else {
+                this.showCaseGuidance = false;
+                this.guidance = "";
+            }
         } else {
-          this.showCaseGuidance = false;
-          this.guidance = "";
-        }
-      } else {
-        this.showCaseGuidance = false;
-        this.guidance = "";
+            this.showCaseGuidance = false;
+            this.guidance = "";
         }
     }
 }
