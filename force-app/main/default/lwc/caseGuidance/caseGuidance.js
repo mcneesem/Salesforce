@@ -6,8 +6,8 @@ import getCaseGuidance from "@salesforce/apex/CaseGuidanceController.getCaseGuid
 import getCaseGuidanceSetting from "@salesforce/apex/CaseGuidanceController.getCaseGuidanceSetting";
 
 const FIELDS = [
-  "Case.NSP_Category__c", 
-  "Case.NSP_SubCategory__c", 
+  "Case.NSP_Category__c",
+  "Case.NSP_SubCategory__c",
   "Case.NSP_Detail__c"
 ];
 
@@ -18,7 +18,7 @@ export default class CaseGuidance extends LightningElement {
   showCaseGuidance  = false;
   activeSections    = "caseGuidance";
   error             = "";
-  
+
   wiredCaseGuidance;
   caseGuidanceCustomSettingData;
 
@@ -62,7 +62,7 @@ export default class CaseGuidance extends LightningElement {
       else if (this.wiredCaseGuidance.error) {
         this.error = this.wiredCaseGuidance.error;
       }
-      else{
+      else {
         this.showCaseGuidance = false;
         this.guidance = "";
       }
