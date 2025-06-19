@@ -34,8 +34,6 @@
                 <behavior>Edit</behavior>
                 <field>Client_Owner_Phone__c</field>
             </layoutItems>
-        </layoutColumns>
-        <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>OwnerId</field>
