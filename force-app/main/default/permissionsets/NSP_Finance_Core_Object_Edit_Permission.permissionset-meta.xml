@@ -116,6 +116,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Asset.HRCore_Contract_Changes__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Case.AccountId</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1742,6 +1747,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>NSP_Note__c.Note__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Opportunity.HRCore_Contract_Changes__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

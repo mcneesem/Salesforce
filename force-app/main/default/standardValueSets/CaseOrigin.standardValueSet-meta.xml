@@ -96,4 +96,19 @@
         <default>false</default>
         <label>Inbox Email</label>
     </standardValue>
+    <standardValue>
+        <fullName>Client Meeting – In Person</fullName>
+        <default>false</default>
+        <label>Client Meeting – In Person</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Client Meeting – Virtual</fullName>
+        <default>false</default>
+        <label>Client Meeting – Virtual</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Onboarding Automation</fullName>
+        <default>false</default>
+        <label>Onboarding Automation</label>
+    </standardValue>
 </StandardValueSet>

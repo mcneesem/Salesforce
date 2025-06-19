@@ -8,6 +8,7 @@
     <permissionSets>Assign_Connected_App_Workbench</permissionSets>
     <permissionSets>Invoice_Missing_Files_Notification</permissionSets>
     <permissionSets>Manage_Posted_Invoices</permissionSets>
+    <permissionSets>Use_Invoice_Post_Batch</permissionSets>
     <permissionSets>dfsle__CLM_Administrator</permissionSets>
     <permissionSets>dfsle__DocuSign_Administrator</permissionSets>
     <status>Updated</status>

@@ -91,6 +91,11 @@
                 <default>false</default>
                 <label>iSolved Service</label>
             </value>
+            <value>
+                <fullName>CPQ Compensation Services</fullName>
+                <default>false</default>
+                <label>CPQ Compensation Services</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
     <visibleLines>4</visibleLines>

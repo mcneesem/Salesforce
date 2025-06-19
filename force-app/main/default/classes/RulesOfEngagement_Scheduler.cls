@@ -82,7 +82,11 @@ public with sharing class RulesOfEngagement_Scheduler implements ISelfSchedulabl
         }
 
         for ( AccountContactRelation accountRelation : [
-                    SELECT Contact.ownerId, ContactId, Account.ownerId, AccountId 
+                    SELECT
+                        Contact.OwnerId ,
+                        ContactId ,
+                        Account.OwnerId ,
+                        AccountId
                     FROM AccountContactRelation
                     WHERE (
                         NSP_Is_Primary__c = true

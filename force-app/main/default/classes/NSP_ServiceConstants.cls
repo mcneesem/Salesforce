@@ -449,7 +449,7 @@ public class NSP_ServiceConstants {
     public final static String FUNDINGDOCUMENTS='Verify Funding Documents Received';
     public final static String TESTPAYROLL='Test Payroll';
     public final static String FIRSTPAYROLL='First Payroll';
-    public final static String FORMCOLLECTED='Form 8973 Collected';
+    public final static String FORMCOLLECTED='Generate Form 8973';
     public final static String PAYROLLAPPROVED='First Payroll Approved';
     public final static String GARNISHDOC=' garnishment documentation';
     public final static String LEVYDOC=' levy documentation';

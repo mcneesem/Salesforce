@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>HRCore_Contract_Changes__c</fullName>
+    <description>This field is used to track contractual modifications.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Contractual modifications.</inlineHelpText>
+    <label>HRCore Contract Changes</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Contract Term</fullName>
+                <default>false</default>
+                <label>Contract Term</label>
+            </value>
+            <value>
+                <fullName>Contract Value</fullName>
+                <default>false</default>
+                <label>Contract Value</label>
+            </value>
+            <value>
+                <fullName>Termination Clause</fullName>
+                <default>false</default>
+                <label>Termination Clause</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

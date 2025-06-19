@@ -38,6 +38,10 @@
             <fullName>HRCore</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>HRScale</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>LeadSource</picklist>
@@ -678,6 +682,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Need Alternative to UHC</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>No Budget %2F Lost Funding</fullName>
             <default>false</default>
         </values>
@@ -747,6 +755,10 @@
         </values>
         <values>
             <fullName>Transferred to MidMarket</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>UHC Media Coverage Concern</fullName>
             <default>false</default>
         </values>
         <values>
@@ -879,6 +891,10 @@
         <picklist>NSP_MidMarketNationalAccount__c</picklist>
         <values>
             <fullName>AAA - The Auto Group</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Academy of General Dentistry</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1433,10 +1449,6 @@
         <picklist>NSP_PrimaryProduct__c</picklist>
         <values>
             <fullName>Applicant Tracking</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Contingent Workforce</fullName>
             <default>false</default>
         </values>
         <values>
@@ -4522,10 +4534,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Contingent Workforce</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Contractor Management</fullName>
             <default>false</default>
         </values>
@@ -4620,6 +4628,10 @@
         </values>
         <values>
             <fullName>HRCore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HRScale</fullName>
             <default>false</default>
         </values>
     </picklistValues>

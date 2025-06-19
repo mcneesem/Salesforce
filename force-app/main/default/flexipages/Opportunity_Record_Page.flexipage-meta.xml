@@ -118,17 +118,17 @@
                                     <rightValue>Sales Support</rightValue>
                                 </criteria>
                                 <criteria>
-                                    <leftValue>{!$User.UserRole.DeveloperName}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>New_Client_Sales</rightValue>
-                                </criteria>
-                                <criteria>
                                     <leftValue>{!$User.Profile.Name}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>BPS Service</rightValue>
                                 </criteria>
                                 <criteria>
                                     <leftValue>{!$Permission.CustomPermission.Admin_Layout_Access}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>true</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!$Permission.CustomPermission.Opportunity_Closed_Won_NCS_User}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>true</rightValue>
                                 </criteria>
@@ -458,9 +458,9 @@
                 <identifier>RecordNSP_TransitionType_cField3</identifier>
                 <visibilityRule>
                     <criteria>
-                        <leftValue>{!$User.UserRole.DeveloperName}</leftValue>
+                        <leftValue>{!$Permission.CustomPermission.Opportunity_Closed_Won_NCS_User}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>New_Client_Sales</rightValue>
+                        <rightValue>true</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -1156,9 +1156,9 @@
                 <identifier>RecordTypeField3</identifier>
                 <visibilityRule>
                     <criteria>
-                        <leftValue>{!$User.UserRole.DeveloperName}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>New_Client_Sales</rightValue>
+                        <leftValue>{!$Permission.CustomPermission.Opportunity_Closed_Won_NCS_User}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>false</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -1173,9 +1173,9 @@
                 <identifier>RecordTypeField4</identifier>
                 <visibilityRule>
                     <criteria>
-                        <leftValue>{!$User.UserRole.DeveloperName}</leftValue>
+                        <leftValue>{!$Permission.CustomPermission.Opportunity_Closed_Won_NCS_User}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>New_Client_Sales</rightValue>
+                        <rightValue>true</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -1250,9 +1250,9 @@
                 <identifier>RecordNSP_Number_of_Employees_cField3</identifier>
                 <visibilityRule>
                     <criteria>
-                        <leftValue>{!$User.UserRole.DeveloperName}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>New_Client_Sales</rightValue>
+                        <leftValue>{!$Permission.CustomPermission.Opportunity_Closed_Won_NCS_User}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>false</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -1267,9 +1267,9 @@
                 <identifier>RecordNSP_Number_of_Employees_cField4</identifier>
                 <visibilityRule>
                     <criteria>
-                        <leftValue>{!$User.UserRole.DeveloperName}</leftValue>
+                        <leftValue>{!$Permission.CustomPermission.Opportunity_Closed_Won_NCS_User}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>New_Client_Sales</rightValue>
+                        <rightValue>true</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -1388,9 +1388,9 @@
                 <identifier>RecordNSP_TransitionType_cField4</identifier>
                 <visibilityRule>
                     <criteria>
-                        <leftValue>{!$User.UserRole.DeveloperName}</leftValue>
+                        <leftValue>{!$Permission.CustomPermission.Opportunity_Closed_Won_NCS_User}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>New_Client_Sales</rightValue>
+                        <rightValue>true</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -4033,9 +4033,9 @@
                 <identifier>RecordNSP_AddonType_cField3</identifier>
                 <visibilityRule>
                     <criteria>
-                        <leftValue>{!$User.UserRole.DeveloperName}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>New_Client_Sales</rightValue>
+                        <leftValue>{!$Permission.CustomPermission.Opportunity_Closed_Won_NCS_User}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>false</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -4050,9 +4050,9 @@
                 <identifier>RecordNSP_AddonType_cField4</identifier>
                 <visibilityRule>
                     <criteria>
-                        <leftValue>{!$User.UserRole.DeveloperName}</leftValue>
+                        <leftValue>{!$Permission.CustomPermission.Opportunity_Closed_Won_NCS_User}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>New_Client_Sales</rightValue>
+                        <rightValue>true</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -4077,9 +4077,9 @@
                 <identifier>RecordNSP_CAM_Type_cField3</identifier>
                 <visibilityRule>
                     <criteria>
-                        <leftValue>{!$User.UserRole.DeveloperName}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>New_Client_Sales</rightValue>
+                        <leftValue>{!$Permission.CustomPermission.Opportunity_Closed_Won_NCS_User}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>false</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -4094,9 +4094,9 @@
                 <identifier>RecordNSP_CAM_Type_cField4</identifier>
                 <visibilityRule>
                     <criteria>
-                        <leftValue>{!$User.UserRole.DeveloperName}</leftValue>
+                        <leftValue>{!$Permission.CustomPermission.Opportunity_Closed_Won_NCS_User}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>New_Client_Sales</rightValue>
+                        <rightValue>true</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -4111,9 +4111,9 @@
                 <identifier>RecordCAM_New_EEs_Added_cField3</identifier>
                 <visibilityRule>
                     <criteria>
-                        <leftValue>{!$User.UserRole.DeveloperName}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>New_Client_Sales</rightValue>
+                        <leftValue>{!$Permission.CustomPermission.Opportunity_Closed_Won_NCS_User}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>false</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -4128,9 +4128,9 @@
                 <identifier>RecordCAM_New_EEs_Added_cField4</identifier>
                 <visibilityRule>
                     <criteria>
-                        <leftValue>{!$User.UserRole.DeveloperName}</leftValue>
+                        <leftValue>{!$Permission.CustomPermission.Opportunity_Closed_Won_NCS_User}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>New_Client_Sales</rightValue>
+                        <rightValue>true</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>

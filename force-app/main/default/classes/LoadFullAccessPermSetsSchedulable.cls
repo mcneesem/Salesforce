@@ -7,10 +7,12 @@ public without sharing class LoadFullAccessPermSetsSchedulable implements Schedu
     private static String EDIT_PS_NLO = 'All_objects_All_fields_Edit_access_Non_Licensed';
     private static List<String> filterNamespaces = new List<String>();
 
-    public void execute(SchedulableContext ctx) {
-        if (!Test.isRunningTest()) filterNamespaces.addAll(OrgSettings__c.getInstance().NLO_Namespaces__c.Split(','));
-        LoadFullAccessPermSets.runLoadFullAccessPermSets(READ_PS, EDIT_PS, null, null);
-        LoadFullAccessPermSets.runLoadFullAccessPermSets(READ_PS_NLO, EDIT_PS_NLO, null, filterNamespaces);
+    public void execute( SchedulableContext ctx ) {
+        if ( !Test.isRunningTest() ) {
+            filterNamespaces.addAll( OrgSettings__c.getInstance().NLO_Namespaces__c.Split( ',' ) );
+        }
+        LoadFullAccessPermSets.runLoadFullAccessPermSets( READ_PS , EDIT_PS , null , null );
+        LoadFullAccessPermSets.runLoadFullAccessPermSets( READ_PS_NLO , EDIT_PS_NLO , null , filterNamespaces );
     }
 
     public static String schedule() {
@@ -25,4 +27,6 @@ public without sharing class LoadFullAccessPermSetsSchedulable implements Schedu
             new LoadFullAccessPermSetsSchedulable()
         );
     }
+
 }
+//

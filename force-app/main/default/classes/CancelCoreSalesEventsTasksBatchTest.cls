@@ -1,11 +1,10 @@
-@isTest(SeeAllData=false)
-
+@isTest
 private class CancelCoreSalesEventsTasksBatchTest {
-
     private static Id taskRecTypeId = NSP_GenericRecordType.getRecordTypeId( 'Task' , 'Core_Sales_Task_RT' );
     private static Id evtRecTypeId = NSP_GenericRecordType.getRecordTypeId( 'Event' , 'Core_Sales_Event_RT' );
 
-    @testSetup private static void setupData() {
+    @testSetup
+    private static void setupData() {
 
         List<Task> taskList = new List<Task>();
         List<Event> eventList = new List<Event>();
@@ -56,7 +55,8 @@ private class CancelCoreSalesEventsTasksBatchTest {
         }
     }
 
-    @isTest private static void testCancelCoreSalesEventsTasks1() {
+    @isTest
+    private static void testCancelCoreSalesEventsTasks1() {
         Test.startTest();
         Database.executeBatch(new CancelCoreSalesEventsTasksBatch(null));
         Test.stopTest();
@@ -84,7 +84,7 @@ private class CancelCoreSalesEventsTasksBatchTest {
         System.assertEquals(0, eventList.size());
    }
 
-    @isTest 
+    @isTest
     private static void testCancelCoreSalesEventsTasks2() {
         Test.startTest();
         List<Id> parentIds = new List<Id>{[SELECT Id FROM Account WHERE Name = :NSP_TestHelper.DEFAULT_COMPANY_NAME LIMIT 1].Id};
