@@ -6,20 +6,20 @@ import getCaseGuidance from "@salesforce/apex/CaseGuidanceController.getCaseGuid
 import getCaseGuidanceSetting from "@salesforce/apex/CaseGuidanceController.getCaseGuidanceSetting";
 
 const FIELDS = [
-  "Case.NSP_Category__c",
-  "Case.NSP_SubCategory__c",
+  "Case.NSP_Category__c", 
+  "Case.NSP_SubCategory__c", 
   "Case.NSP_Detail__c"
 ];
 
 export default class CaseGuidance extends LightningElement {
   @api recordId;
 
-  guidance = "";
+  guidance          = "";
+  showCaseGuidance  = false;
+  activeSections    = "caseGuidance";
+  error             = "";
+  
   wiredCaseGuidance;
-  showCaseGuidance = false;
-  activeSections = "caseGuidance";
-  error = "";
-
   caseGuidanceCustomSettingData;
 
   @wire(getRecord, { recordId: "$recordId", fields: FIELDS })
