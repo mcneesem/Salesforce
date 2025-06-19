@@ -88,15 +88,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>NSP_Payroll_Specialist_Phone__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
                 <field>NSP_Supervisor__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>NSP_Supervisor_Phone__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
