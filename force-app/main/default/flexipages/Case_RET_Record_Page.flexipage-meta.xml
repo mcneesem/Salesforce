@@ -234,16 +234,6 @@
                 <identifier>RecordNSP_Internal_Comments_cField</identifier>
             </fieldInstance>
         </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Pay_Date__c</fieldItem>
-                <identifier>RecordPay_Date__cField</identifier>
-            </fieldInstance>
-        </itemInstances>
         <name>Facet-098a2950-020e-47c3-bca5-8641a8a400b7</name>
         <type>Facet</type>
     </flexiPageRegions>
