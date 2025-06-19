@@ -19,8 +19,7 @@ export default class CaseGuidance extends LightningElement {
     wiredRecord({ error, data }) {
       if (data) {
             refreshApex(this.wiredCaseGuidance);
-        }
-        else if (error) {
+        } else if (error) {
             this.error = error;
             this.clearGuidance();
         }
@@ -28,39 +27,38 @@ export default class CaseGuidance extends LightningElement {
 
     @wire(getCaseGuidanceSetting, {})
     getCaseGuidanceSetting({ data, error }) {
-        if(data) {
+        if (data) {
            this.caseGuidanceCustomSettingData = data;  
-        }
-        else if(error) {
+        } else if (error) {
           this.error = error;
         }
     }
 
     handleSectionToggle(event) {
-        if(this.caseGuidanceCustomSettingData.Is_Enabled__c){
+        if (this.caseGuidanceCustomSettingData.Is_Enabled__c) {
             const openSections = event.detail.openSections;
             this.activeSections = openSections.length > 0 ? openSections : '';
-        }else{
+        } else {
             this.activeSections = '';
         }    
     }
 
     @wire(getCaseGuidance, { caseId: '$recordId' })
     doGetGuidance(value) {
-      if(value != this.wiredCaseGuidance) {
+      if (value != this.wiredCaseGuidance) {
         this.wiredCaseGuidance = value;
         if(this.wiredCaseGuidance.data && this.wiredCaseGuidance.data.length > 0) {
           this.showCaseGuidance = true;
           this.guidance = this.wiredCaseGuidance.data;
-        }else if(this.wiredCaseGuidance.error) {
+        } else if(this.wiredCaseGuidance.error) {
           this.error = this.wiredCaseGuidance.error;
-        }else {
+        } else {
           this.showCaseGuidance = false;
           this.guidance = "";
         }
       } else {
         this.showCaseGuidance = false;
         this.guidance = "";
-      }
+        }
     }
 }
