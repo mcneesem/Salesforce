@@ -193,6 +193,11 @@ public class NSP_InvoiceBatch implements Database.Batchable<SObject> , Database.
         private set;
     }
 
+    @AuraEnabled(cacheable=true)
+    public static Integer getBatchSize() {
+        return NSP_InvoiceBatch.batchSize;
+    }
+
     private static List<String> bccAddresses  {
         private get {
             if ( bccAddresses == null ) {

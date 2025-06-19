@@ -243,6 +243,11 @@ public class NSP_DocuSignInvoiceDocumentBatch implements Schedulable , Database.
         private set;
     }
 
+    @AuraEnabled(cacheable=true)
+    public static Integer getBatchSize() {
+        return NSP_DocuSignInvoiceDocumentBatch.batchSize;
+    }
+
     private static List<String> bccAddresses  {
         private get {
             if ( bccAddresses == null ) {

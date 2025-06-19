@@ -24,7 +24,7 @@
     </values>
     <values>
         <field>NSP_Method_Name__c</field>
-        <value xsi:type="xsd:string">taxLevies</value>
+        <value xsi:type="xsd:string">Levies</value>
     </values>
     <values>
         <field>NSP_Section__c</field>

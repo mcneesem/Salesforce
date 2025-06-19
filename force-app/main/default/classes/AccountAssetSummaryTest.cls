@@ -1,11 +1,12 @@
-@isTest(SeeAllData=false)
+@isTest
 private class AccountAssetSummaryTest {
     private static final Id woAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Asset' , 'WO' );
     private static final Id wxAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Asset' , 'NSP_Asset_Product' );
     private static final String accountName = 'Test Account';
     private static final String woAssetName = 'WO Asset';
 
-    @testSetup private static void testData() {
+    @testSetup
+    private static void testData() {
         Test.startTest();
         AssetTriggerSettings__c settings =  AssetTriggerSettings__c.getInstance( UserInfo.getUserId());
         settings.IsEnabledAccountAssetSummary__c = True;
@@ -24,7 +25,8 @@ private class AccountAssetSummaryTest {
         Test.stopTest();
     }
 
-    @isTest private static void insertWXActiveAsset() {
+    @isTest
+    private static void insertWXActiveAsset() {
         Test.startTest();
         String assetWO = 'Asset Wo';
         String assetWx = 'Asset Wx';
@@ -48,3 +50,4 @@ private class AccountAssetSummaryTest {
     }
 
 }
+//

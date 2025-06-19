@@ -49,6 +49,44 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.pse__Project_Status__c</fieldItem>
+                <identifier>Recordpse_Project_Status_cField2</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 OR 2 OR 3 OR 4 OR 5</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>PEO Billable</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>PEO FSO Impl</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>PEO Generic</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>PEO MM Impl</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>PEO SCS LDS</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.pse__Start_Date__c</fieldItem>
                 <identifier>Recordpse_Start_Date_cField2</identifier>
                 <visibilityRule>
@@ -127,44 +165,6 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Project_Complete__c</fieldItem>
                 <identifier>RecordNSP_Project_Complete_cField2</identifier>
-                <visibilityRule>
-                    <booleanFilter>1 OR 2 OR 3 OR 4 OR 5</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>PEO Billable</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>PEO FSO Impl</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>PEO Generic</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>PEO MM Impl</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>PEO SCS LDS</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.pse__Project_Status__c</fieldItem>
-                <identifier>Recordpse_Project_Status_cField2</identifier>
                 <visibilityRule>
                     <booleanFilter>1 OR 2 OR 3 OR 4 OR 5</booleanFilter>
                     <criteria>
@@ -377,89 +377,68 @@
                         <valueListItems>
                             <value>pse__Proj__c.NSP_Self_Assignment</value>
                             <visibilityRule>
-                                <booleanFilter>1 AND 2 AND 3</booleanFilter>
+                                <booleanFilter>1 OR 2</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                                    <operator>NE</operator>
-                                    <rightValue>TES</rightValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>BPS Generic</rightValue>
                                 </criteria>
                                 <criteria>
                                     <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                                    <operator>NE</operator>
-                                    <rightValue>TalentConnect</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                                    <operator>NE</operator>
-                                    <rightValue>RET</rightValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>ITA Impl</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
                         <valueListItems>
                             <value>pse__Proj__c.Assign_Task</value>
                             <visibilityRule>
-                                <booleanFilter>1 AND 2 AND 3 AND 4 AND 5</booleanFilter>
+                                <booleanFilter>1 OR 2</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                                    <operator>NE</operator>
-                                    <rightValue>ITA Impl</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                                    <operator>NE</operator>
-                                    <rightValue>BPS Generic</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                                    <operator>NE</operator>
-                                    <rightValue>TES</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                                    <operator>NE</operator>
-                                    <rightValue>TalentConnect</rightValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>PEO MM Impl</rightValue>
                                 </criteria>
                                 <criteria>
                                     <leftValue>{!Record.Layout_BOB__c}</leftValue>
                                     <operator>EQUAL</operator>
-                                    <rightValue>RET</rightValue>
+                                    <rightValue>PEO FSO Impl</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
                         <valueListItems>
                             <value>pse__Proj__c.NSP_Delete</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>PEO Billable</rightValue>
+                                </criteria>
+                            </visibilityRule>
                         </valueListItems>
                         <valueListItems>
                             <value>pse__Proj__c.NSP_Project_Merge</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>PrintableView</value>
                             <visibilityRule>
-                                <booleanFilter>1 AND 2 AND 3 AND 4 AND 5</booleanFilter>
+                                <booleanFilter>1 AND 2 AND 3 AND 4</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.Layout_BOB__c}</leftValue>
                                     <operator>NE</operator>
-                                    <rightValue>ITA Impl</rightValue>
+                                    <rightValue>PEO Generic</rightValue>
                                 </criteria>
                                 <criteria>
                                     <leftValue>{!Record.Layout_BOB__c}</leftValue>
                                     <operator>NE</operator>
-                                    <rightValue>BPS Generic</rightValue>
+                                    <rightValue>PEO SCS LDS</rightValue>
                                 </criteria>
                                 <criteria>
                                     <leftValue>{!Record.Layout_BOB__c}</leftValue>
                                     <operator>NE</operator>
-                                    <rightValue>TES</rightValue>
+                                    <rightValue>PEO MM Impl</rightValue>
                                 </criteria>
                                 <criteria>
                                     <leftValue>{!Record.Layout_BOB__c}</leftValue>
                                     <operator>NE</operator>
-                                    <rightValue>TalentConnect</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                                    <operator>NE</operator>
-                                    <rightValue>RET</rightValue>
+                                    <rightValue>PEO FSO Impl</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
@@ -617,10 +596,16 @@
                 <fieldItem>Record.Case__c</fieldItem>
                 <identifier>RecordCase_cField</identifier>
                 <visibilityRule>
+                    <booleanFilter>1 OR 2</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>ITA Impl</rightValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>PEO Billable</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>RET</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -734,6 +719,13 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Project_Lost_Reason__c</fieldItem>
                 <identifier>RecordProject_Lost_Reason_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>RET</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -744,6 +736,29 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Lost_Detail__c</fieldItem>
                 <identifier>RecordLost_Detail_cField</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 OR 2 OR 3 OR 4</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>RET</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>TalentConnect</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>BPS Generic</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>ITA Impl</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -792,12 +807,12 @@
                     <criteria>
                         <leftValue>{!Record.Layout_BOB__c}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>BPS Generic</rightValue>
+                        <rightValue>TalentConnect</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.Layout_BOB__c}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>TalentConnect</rightValue>
+                        <rightValue>BPS Generic</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.Layout_BOB__c}</leftValue>
@@ -820,17 +835,17 @@
                     <criteria>
                         <leftValue>{!Record.Layout_BOB__c}</leftValue>
                         <operator>EQUAL</operator>
+                        <rightValue>RET</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>EQUAL</operator>
                         <rightValue>BPS Generic</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.Layout_BOB__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>TalentConnect</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>RET</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -882,10 +897,21 @@
                 <fieldItem>Record.Project_Implementer__c</fieldItem>
                 <identifier>RecordProject_Implementer_cField</identifier>
                 <visibilityRule>
+                    <booleanFilter>1 OR 2 OR 3</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>RET</rightValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>TalentConnect</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>BPS Generic</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>ITA Impl</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -899,21 +925,16 @@
                 <fieldItem>Record.Project_Coordinator__c</fieldItem>
                 <identifier>RecordProject_Coordinator_cField</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 AND 2 AND 3</booleanFilter>
+                    <booleanFilter>1 OR 2</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>RET</rightValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>BPS Generic</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>ITA Impl</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>RET</rightValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>TalentConnect</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -931,21 +952,16 @@
                 <fieldItem>Record.pse__Project_Manager__c</fieldItem>
                 <identifier>Recordpse_Project_Manager_cField</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 AND 2 AND 3</booleanFilter>
+                    <booleanFilter>1 OR 2</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>TES</rightValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>ITA Impl</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>TalentConnect</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>RET</rightValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>BPS Generic</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -959,21 +975,16 @@
                 <fieldItem>Record.ITA_Manager__c</fieldItem>
                 <identifier>RecordITA_Manager_cField</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 AND 2 AND 3</booleanFilter>
+                    <booleanFilter>1 OR 2</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>TES</rightValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>BPS Generic</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>TalentConnect</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>RET</rightValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>ITA Impl</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -986,6 +997,29 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Sales_Rep__c</fieldItem>
                 <identifier>RecordNSP_Sales_Rep_cField</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 OR 2 OR 3 OR 4</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>BPS Generic</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>TalentConnect</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>RET</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>ITA Impl</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <name>Facet-2991c9c0-ce28-4f44-9542-3ccfe3e91b06</name>
@@ -1022,75 +1056,6 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Complexity_Score__c</fieldItem>
-                <identifier>RecordComplexity_Score_cField</identifier>
-                <visibilityRule>
-                    <booleanFilter>1 AND 2</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>TalentConnect</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>RET</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Implementation_Team__c</fieldItem>
-                <identifier>RecordImplementation_Team_cField</identifier>
-                <visibilityRule>
-                    <booleanFilter>1 AND 2</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>TalentConnect</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>RET</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Support_Team__c</fieldItem>
-                <identifier>RecordSupport_Team_cField</identifier>
-                <visibilityRule>
-                    <booleanFilter>1 AND 2</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>TalentConnect</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>RET</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
                 <fieldItem>Record.At_Risk_Flag__c</fieldItem>
                 <identifier>RecordAt_Risk_Flag_cField</identifier>
             </fieldInstance>
@@ -1099,75 +1064,6 @@
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Pay_Frequency__c</fieldItem>
-                <identifier>RecordPay_Frequency_cField</identifier>
-                <visibilityRule>
-                    <booleanFilter>1 AND 2</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>TalentConnect</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>RET</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Roles_To_Cancel_Project_Tasks__c</fieldItem>
-                <identifier>RecordRoles_To_Cancel_Project_Tasks_cField</identifier>
-                <visibilityRule>
-                    <booleanFilter>1 AND 2</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>TalentConnect</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>RET</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Onboarding_Profile__c</fieldItem>
-                <identifier>RecordOnboarding_Profile_cField</identifier>
-                <visibilityRule>
-                    <booleanFilter>1 AND 2</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>TalentConnect</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>RET</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </fieldInstance>
-        </itemInstances>
         <name>Facet-7869a745-44fb-46d0-af08-305c6fb1b615</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -1293,118 +1189,6 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Processing_Date__c</fieldItem>
-                <identifier>RecordProcessing_Date_cField</identifier>
-                <visibilityRule>
-                    <booleanFilter>1 AND 2 AND 3</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>ITA Impl</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>BPS Generic</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>TalentConnect</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Benefit_Effective_date__c</fieldItem>
-                <identifier>RecordBenefit_Effective_date_cField</identifier>
-                <visibilityRule>
-                    <booleanFilter>1 AND 2 AND 3</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>ITA Impl</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>BPS Generic</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>TalentConnect</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Next_Open_Enrollment__c</fieldItem>
-                <identifier>RecordNext_Open_Enrollment_cField</identifier>
-                <visibilityRule>
-                    <booleanFilter>1 AND 2 AND 3</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>ITA Impl</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>BPS Generic</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>TalentConnect</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Time_and_Labor_Effective_date__c</fieldItem>
-                <identifier>RecordTime_and_Labor_Effective_date_cField</identifier>
-                <visibilityRule>
-                    <booleanFilter>1 AND 2 AND 3</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>ITA Impl</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>BPS Generic</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>TalentConnect</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
                 <fieldItem>Record.Hold_Start_Date__c</fieldItem>
                 <identifier>RecordHold_Start_Date_cField</identifier>
             </fieldInstance>
@@ -1476,148 +1260,10 @@
                 <fieldItem>Record.Employees_at_Signature__c</fieldItem>
                 <identifier>RecordEmployees_at_Signature_cField</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 AND 2 AND 3</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>ITA Impl</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>BPS Generic</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>RET</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.FEIN__c</fieldItem>
-                <identifier>RecordFEIN_cField</identifier>
-                <visibilityRule>
-                    <booleanFilter>1 AND 2 AND 3</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>ITA Impl</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>BPS Generic</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>RET</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.OFAC_Review__c</fieldItem>
-                <identifier>RecordOFAC_Review_cField</identifier>
-                <visibilityRule>
-                    <booleanFilter>1 AND 2 AND 3 AND 4</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>ITA Impl</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>BPS Generic</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>NE</operator>
+                        <operator>EQUAL</operator>
                         <rightValue>TalentConnect</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>RET</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.TES_HCM_Implementation_Support_Tasks__c</fieldItem>
-                <identifier>RecordTES_HCM_Implementation_Support_Tasks_cField</identifier>
-                <visibilityRule>
-                    <booleanFilter>1 AND 2 AND 3 AND 4</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>ITA Impl</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>BPS Generic</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>TalentConnect</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>RET</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.WX_Carrier_Sync_Status__c</fieldItem>
-                <identifier>RecordWX_Carrier_Sync_Status_cField</identifier>
-                <visibilityRule>
-                    <booleanFilter>1 AND 2 AND 3 AND 4</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>ITA Impl</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>BPS Generic</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>TalentConnect</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>RET</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -1631,26 +1277,27 @@
                 <fieldItem>Record.NSP_Client_Size__c</fieldItem>
                 <identifier>RecordNSP_Client_Size_cField</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 AND 2 AND 3 AND 4</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>ITA Impl</rightValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>TalentConnect</rightValue>
                     </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.FEIN__c</fieldItem>
+                <identifier>RecordFEIN_cField</identifier>
+                <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>RET</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>BPS Generic</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>RET</rightValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>TalentConnect</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -1664,21 +1311,10 @@
                 <fieldItem>Record.NSP_Change_Order_Classification__c</fieldItem>
                 <identifier>RecordNSP_Change_Order_Classification_cField</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 AND 2 AND 3</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>ITA Impl</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>TalentConnect</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>RET</rightValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>BPS Generic</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -1719,16 +1355,16 @@
                 <fieldItem>Record.Product_Line__c</fieldItem>
                 <identifier>RecordProduct_Line_cField</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 AND 2</booleanFilter>
+                    <booleanFilter>1 OR 2</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>ITA Impl</rightValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>BPS Generic</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>RET</rightValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>TalentConnect</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -1759,82 +1395,16 @@
                 <fieldItem>Record.Implemented_Type__c</fieldItem>
                 <identifier>RecordImplemented_Type_cField</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 AND 2</booleanFilter>
+                    <booleanFilter>1 OR 2</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>TalentConnect</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>RET</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Primary_Product__c</fieldItem>
-                <identifier>RecordPrimary_Product_cField</identifier>
-                <visibilityRule>
-                    <booleanFilter>1 AND 2 AND 3 AND 4</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>ITA Impl</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>NE</operator>
+                        <operator>EQUAL</operator>
                         <rightValue>BPS Generic</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>TalentConnect</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>RET</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.iSolved_Demo_Provided__c</fieldItem>
-                <identifier>RecordiSolved_Demo_Provided_cField</identifier>
-                <visibilityRule>
-                    <booleanFilter>1 AND 2 AND 3 AND 4</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>NE</operator>
+                        <operator>EQUAL</operator>
                         <rightValue>ITA Impl</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>BPS Generic</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>TalentConnect</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>RET</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -2020,16 +1590,16 @@
                 <fieldItem>Record.pse__Is_Billable__c</fieldItem>
                 <identifier>Recordpse_Is_Billable_cField</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 AND 2</booleanFilter>
+                    <booleanFilter>1 OR 2</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>ITA Impl</rightValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>TalentConnect</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>BPS Generic</rightValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>RET</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -2063,16 +1633,16 @@
                 <fieldItem>Record.Fee_Inclusive__c</fieldItem>
                 <identifier>RecordFee_Inclusive_cField</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 AND 2</booleanFilter>
+                    <booleanFilter>1 OR 2</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>ITA Impl</rightValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>TalentConnect</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>BPS Generic</rightValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>RET</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -2127,13 +1697,13 @@
                     <booleanFilter>1 AND 2</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>ITA Impl</rightValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>RET</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>BPS Generic</rightValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>TalentConnect</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -2295,10 +1865,16 @@
                 <fieldItem>Record.pse__Project_Type__c</fieldItem>
                 <identifier>Recordpse_Project_Type_cField</identifier>
                 <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>ITA Impl</rightValue>
+                        <operator>NE</operator>
+                        <rightValue>BPS Generic</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>RET</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -2424,16 +2000,6 @@
                 </visibilityRule>
             </fieldInstance>
         </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Go_Live_Project_Duration__c</fieldItem>
-                <identifier>RecordGo_Live_Project_Duration_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
         <name>Facet-d2ef4e63-5db4-4610-b6c0-227e95a58351</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -2518,13 +2084,13 @@
                     <booleanFilter>1 AND 2</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>ITA Impl</rightValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>RET</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>BPS Generic</rightValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>TalentConnect</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
@@ -2546,10 +2112,21 @@
                 <componentName>flexipage:fieldSection</componentName>
                 <identifier>flexipage_fieldSection6</identifier>
                 <visibilityRule>
+                    <booleanFilter>1 OR 2 OR 3</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>RET</rightValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>TalentConnect</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>BPS Generic</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>ITA Impl</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
@@ -2675,10 +2252,13 @@
                     <name>relatedListFieldAliases</name>
                     <valueList>
                         <valueListItems>
-                            <value>NSP_Assignee__c</value>
+                            <value>NAME</value>
                         </valueListItems>
                         <valueListItems>
                             <value>NSP_Role__c</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>NSP_Assignee__c</value>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
@@ -2731,6 +2311,29 @@
                 </componentInstanceProperties>
                 <componentName>flexipage:fieldSection</componentName>
                 <identifier>flexipage_fieldSection4</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 OR 2 OR 3 OR 4</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>BPS Generic</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>RET</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>TalentConnect</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>ITA Impl</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -2888,8 +2491,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Account__c</fieldItem>
-                <identifier>RecordNSP_Account_cField</identifier>
+                <fieldItem>Record.pse__Account__c</fieldItem>
+                <identifier>Recordpse_Account_cField3</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -3748,6 +3351,40 @@
                 <identifier>Recordpse_Is_Active_cField2</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_Auto_Resource_Project__c</fieldItem>
+                <identifier>RecordNSP_Auto_Resource_Project_cField2</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>PEO Billable</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.pse__Copy_Child_Records_from_Template_Async__c</fieldItem>
+                <identifier>Recordpse_Copy_Child_Records_from_Template_Async_cField2</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>PEO Billable</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-87a9cd45-81ce-478c-8717-ad487fea146a</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -3768,8 +3405,61 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.pse__Project_Type__c</fieldItem>
+                <identifier>Recordpse_Project_Type_cField3</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>PEO Billable</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.NSP_BPS_Project_Template__c</fieldItem>
                 <identifier>RecordNSP_BPS_Project_Template_cField2</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 OR 2</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>PEO Billable</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>BPS Generic</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_Queued_for_Delete__c</fieldItem>
+                <identifier>RecordNSP_Queued_for_Delete_cField2</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 OR 2</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>BPS Generic</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>PEO Billable</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -3800,6 +3490,13 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Layout_BOB__c</fieldItem>
                 <identifier>RecordLayout_BOB_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!$Permission.CustomPermission.Admin_Layout_Access}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <name>Facet-3483c097-0312-4784-b023-b2c384279796</name>
@@ -4291,16 +3988,11 @@
                 <componentName>lst:dynamicRelatedList</componentName>
                 <identifier>lst_dynamicRelatedList11</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 AND 2 AND 3</booleanFilter>
+                    <booleanFilter>1 AND 2</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.Layout_BOB__c}</leftValue>
                         <operator>NE</operator>
                         <rightValue>TES</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>TalentConnect</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.Layout_BOB__c}</leftValue>
@@ -4458,31 +4150,16 @@
                 <componentName>lst:dynamicRelatedList</componentName>
                 <identifier>lst_dynamicRelatedList9</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 AND 2 AND 3 AND 4 AND 5</booleanFilter>
+                    <booleanFilter>1 OR 2</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>ITA Impl</rightValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>PEO MM Impl</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>BPS Generic</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>TES</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>TalentConnect</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>RET</rightValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>PEO FSO Impl</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
@@ -5275,6 +4952,9 @@
                         <valueListItems>
                             <value>CREATEDBY_USER</value>
                         </valueListItems>
+                        <valueListItems>
+                            <value>CREATED_DATE</value>
+                        </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
@@ -5496,6 +5176,120 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
+                    <name>projectPlanningToolActions_showAddRecordsFromTemplate</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>projectPlanningToolActions_showCopyToProjectFromTemplate</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>projectPlanningToolActions_showCreateSubProjectFromTemplate</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>projectPlanningToolActions_showOpenGantt</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>projectPlanningToolActions_showOpenProjectPlanner</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>projectPlanningToolActions_showShareProject</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentName>pse:projectPlanningToolActions</componentName>
+                <identifier>pse_projectPlanningToolActions2</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-5d9ec304-0d01-441a-901b-0159eb58ed14</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>projectTaskActions_showAddProjectTask</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>projectTaskActions_showAddTasksFromTemplate</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>projectTaskActions_showCompleteMultiProjectTasks</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>projectTaskActions_showStartMultiProjectTasks</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentName>pse:projectTaskActions</componentName>
+                <identifier>pse_projectTaskActions2</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-6be7fef5-0f04-4054-b82b-da2e870851df</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-5d9ec304-0d01-441a-901b-0159eb58ed14</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>label</name>
+                    <value>Project Planning Tools</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>name</name>
+                    <value>accordionSection1</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:accordionSection</componentName>
+                <identifier>flexipage_accordionSection4</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-6be7fef5-0f04-4054-b82b-da2e870851df</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>label</name>
+                    <value>Project Task</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>name</name>
+                    <value>accordionSection2</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:accordionSection</componentName>
+                <identifier>flexipage_accordionSection5</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-6b3f94e0-4e85-4ad4-a364-9e263939e7ee</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>accordionSections</name>
+                    <value>Facet-6b3f94e0-4e85-4ad4-a364-9e263939e7ee</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:accordion</componentName>
+                <identifier>flexipage_accordion2</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-e420da51-02ab-4083-891a-b92a47319e94</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
                     <name>allowAssignments</name>
                     <value>true</value>
                 </componentInstanceProperties>
@@ -5557,6 +5351,71 @@
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
                 <identifier>flexipage_tab5</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 OR 2 OR 3 OR 4</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>BPS Generic</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>TalentConnect</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>ITA Impl</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>RET</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-e420da51-02ab-4083-891a-b92a47319e94</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>Actions</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tab</componentName>
+                <identifier>flexipage_tab10</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 OR 2 OR 3 OR 4 OR 5</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>PEO Billable</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>PEO FSO Impl</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>PEO Generic</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>PEO MM Impl</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>PEO SCS LDS</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -5571,6 +5430,34 @@
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
                 <identifier>flexipage_tab6</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 AND 2 AND 3 AND 4 AND 5</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>PEO Billable</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>PEO FSO Impl</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>PEO Generic</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>PEO MM Impl</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>PEO SCS LDS</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -5655,16 +5542,16 @@
                 <componentName>flexipage:tabset</componentName>
                 <identifier>flexipage_tabset4</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 AND 2</booleanFilter>
+                    <booleanFilter>1 OR 2</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>TalentConnect</rightValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>ITA Impl</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>RET</rightValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>BPS Generic</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>

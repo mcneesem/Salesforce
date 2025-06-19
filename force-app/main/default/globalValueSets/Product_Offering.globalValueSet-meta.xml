@@ -13,7 +13,6 @@
     <customValue>
         <fullName>HRScale</fullName>
         <default>false</default>
-        <isActive>false</isActive>
         <label>HRScale</label>
     </customValue>
     <masterLabel>Product Offering</masterLabel>

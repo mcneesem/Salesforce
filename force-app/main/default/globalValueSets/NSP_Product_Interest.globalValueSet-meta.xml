@@ -11,6 +11,11 @@
         <label>Contingent Workforce</label>
     </customValue>
     <customValue>
+        <fullName>Contractor Management</fullName>
+        <default>false</default>
+        <label>Contractor Management</label>
+    </customValue>
+    <customValue>
         <fullName>Employment Screening</fullName>
         <default>false</default>
         <label>Employment Screening</label>
@@ -23,7 +28,7 @@
     <customValue>
         <fullName>Full Service HR (Workforce Optimization)</fullName>
         <default>false</default>
-        <label>Full Service HR (Workforce Optimization)</label>
+        <label>Full Service HR (HR360 Solution)</label>
     </customValue>
     <customValue>
         <fullName>HCM</fullName>
@@ -34,6 +39,11 @@
         <fullName>HR Consulting Services</fullName>
         <default>false</default>
         <label>HR Consulting Services</label>
+    </customValue>
+    <customValue>
+        <fullName>HRCore Onboarding Amendment</fullName>
+        <default>false</default>
+        <label>HRCore Onboarding Amendment</label>
     </customValue>
     <customValue>
         <fullName>Insurance Services (Health &amp; Wellness)</fullName>
@@ -63,7 +73,7 @@
     <customValue>
         <fullName>Payroll &amp; Human Capital Management(Workforce Acceleration)</fullName>
         <default>false</default>
-        <label>Payroll &amp; Human Capital Management(Workforce Acceleration)</label>
+        <label>Payroll &amp; Human Capital Management(HRCore Solution)</label>
     </customValue>
     <customValue>
         <fullName>Performance Management</fullName>
@@ -86,29 +96,6 @@
         <label>Time and Attendance</label>
     </customValue>
     <customValue>
-        <fullName>Contractor Management</fullName>
-        <default>false</default>
-        <label>Contractor Management</label>
-    </customValue>
-    <customValue>
-        <fullName>Insurance Services</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Insurance Services</label>
-    </customValue>
-    <customValue>
-        <fullName>Workday</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Workday</label>
-    </customValue>
-    <customValue>
-        <fullName>Payroll/Human Capital Management</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Payroll/Human Capital Management</label>
-    </customValue>
-    <customValue>
         <fullName>Bookkeeping Services</fullName>
         <default>false</default>
         <isActive>false</isActive>
@@ -127,9 +114,22 @@
         <label>Full Service HR</label>
     </customValue>
     <customValue>
-        <fullName>HRCore Onboarding Amendment</fullName>
+        <fullName>Insurance Services</fullName>
         <default>false</default>
-        <label>HRCore Onboarding Amendment</label>
+        <isActive>false</isActive>
+        <label>Insurance Services</label>
+    </customValue>
+    <customValue>
+        <fullName>Workday</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Workday</label>
+    </customValue>
+    <customValue>
+        <fullName>Payroll/Human Capital Management</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Payroll/Human Capital Management</label>
     </customValue>
     <masterLabel>Product Interest</masterLabel>
     <sorted>false</sorted>

@@ -247,10 +247,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Contingent Workforce</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Contractor Management</fullName>
             <default>false</default>
         </values>
@@ -471,10 +467,6 @@
         </values>
         <values>
             <fullName>Choice Retirement Services</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Contingent Workforce</fullName>
             <default>false</default>
         </values>
         <values>

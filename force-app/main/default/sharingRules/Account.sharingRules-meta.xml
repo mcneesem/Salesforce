@@ -1,6 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
     <sharingCriteriaRules>
+        <fullName>Account_Segment_MidMarket_or_MMNA_populated</fullName>
+        <accessLevel>Edit</accessLevel>
+        <accountSettings>
+            <caseAccessLevel>None</caseAccessLevel>
+            <contactAccessLevel>Edit</contactAccessLevel>
+            <opportunityAccessLevel>Edit</opportunityAccessLevel>
+        </accountSettings>
+        <description>If Account Segment = MidMarket or MidMarket National Account field is populated, share with MidMarket Admins</description>
+        <label>Account Segment MidMarket or MMNA populated</label>
+        <sharedTo>
+            <role>MidMarket_Administrator</role>
+        </sharedTo>
+        <booleanFilter>1 OR 2</booleanFilter>
+        <criteriaItems>
+            <field>NSP_Account_Segment__c</field>
+            <operation>equals</operation>
+            <value>MidMarket</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>MidMarket_National_Account__c</field>
+            <operation>notEqual</operation>
+            <value></value>
+        </criteriaItems>
+        <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
         <fullName>Account_Segment_MidMarket_or_MMNA_populated_w_MMA_Group</fullName>
         <accessLevel>Edit</accessLevel>
         <accountSettings>
@@ -42,6 +68,26 @@
             <field>Name</field>
             <operation>notEqual</operation>
             <value></value>
+        </criteriaItems>
+        <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>Employees_greater_or_equal_150</fullName>
+        <accessLevel>Edit</accessLevel>
+        <accountSettings>
+            <caseAccessLevel>None</caseAccessLevel>
+            <contactAccessLevel>Edit</contactAccessLevel>
+            <opportunityAccessLevel>Edit</opportunityAccessLevel>
+        </accountSettings>
+        <description>If NumberOfEmployees is greater or equal to 150, share with MidMarket Admins</description>
+        <label>Employees greater or equal 150</label>
+        <sharedTo>
+            <role>MidMarket_Administrator</role>
+        </sharedTo>
+        <criteriaItems>
+            <field>NumberOfEmployees</field>
+            <operation>greaterOrEqual</operation>
+            <value>150</value>
         </criteriaItems>
         <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
     </sharingCriteriaRules>
@@ -123,25 +169,6 @@
         </criteriaItems>
         <includeRecordsOwnedByAll>false</includeRecordsOwnedByAll>
     </sharingCriteriaRules>
-    <sharingCriteriaRules>
-        <fullName>Share_All_Accounts</fullName>
-        <accessLevel>Read</accessLevel>
-        <accountSettings>
-            <caseAccessLevel>None</caseAccessLevel>
-            <contactAccessLevel>Read</contactAccessLevel>
-            <opportunityAccessLevel>Read</opportunityAccessLevel>
-        </accountSettings>
-        <label>Share All Accounts</label>
-        <sharedTo>
-            <roleAndSubordinatesInternal>Sales_Leader</roleAndSubordinatesInternal>
-        </sharedTo>
-        <criteriaItems>
-            <field>NSP_Account_Id__c</field>
-            <operation>notEqual</operation>
-            <value></value>
-        </criteriaItems>
-        <includeRecordsOwnedByAll>false</includeRecordsOwnedByAll>
-    </sharingCriteriaRules>
     <sharingOwnerRules>
         <fullName>Account_Access_All_BPS</fullName>
         <accessLevel>Edit</accessLevel>
@@ -171,23 +198,6 @@
         <label>Account Access All SDR</label>
         <sharedTo>
             <roleAndSubordinatesInternal>Sales_Development_Rep</roleAndSubordinatesInternal>
-        </sharedTo>
-        <sharedFrom>
-            <allInternalUsers></allInternalUsers>
-        </sharedFrom>
-    </sharingOwnerRules>
-    <sharingOwnerRules>
-        <fullName>Account_Access_All_Sales</fullName>
-        <accessLevel>Read</accessLevel>
-        <accountSettings>
-            <caseAccessLevel>None</caseAccessLevel>
-            <contactAccessLevel>Read</contactAccessLevel>
-            <opportunityAccessLevel>Read</opportunityAccessLevel>
-        </accountSettings>
-        <description>Account Access All Sales</description>
-        <label>Account Access All Sales</label>
-        <sharedTo>
-            <roleAndSubordinatesInternal>Sales_Leader</roleAndSubordinatesInternal>
         </sharedTo>
         <sharedFrom>
             <allInternalUsers></allInternalUsers>
@@ -262,6 +272,23 @@
         </sharedFrom>
     </sharingOwnerRules>
     <sharingOwnerRules>
+        <fullName>BPA_owner_Account_to_NCS_group</fullName>
+        <accessLevel>Edit</accessLevel>
+        <accountSettings>
+            <caseAccessLevel>None</caseAccessLevel>
+            <contactAccessLevel>Edit</contactAccessLevel>
+            <opportunityAccessLevel>None</opportunityAccessLevel>
+        </accountSettings>
+        <description>This Sharing Rule will share BPA owner Account with NCS Group Users</description>
+        <label>BPA owner Account to NCS group</label>
+        <sharedTo>
+            <group>NSP_New_Client_Sales</group>
+        </sharedTo>
+        <sharedFrom>
+            <role>Business_Performance_Advisor</role>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
         <fullName>NSP_Account_Access_All_Finance_Leader_Node</fullName>
         <accessLevel>Edit</accessLevel>
         <accountSettings>
@@ -275,6 +302,40 @@
         </sharedTo>
         <sharedFrom>
             <allInternalUsers></allInternalUsers>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>NSP_BPA_owner_Account_to_Channel_Operation_Role_Users</fullName>
+        <accessLevel>Edit</accessLevel>
+        <accountSettings>
+            <caseAccessLevel>None</caseAccessLevel>
+            <contactAccessLevel>Edit</contactAccessLevel>
+            <opportunityAccessLevel>None</opportunityAccessLevel>
+        </accountSettings>
+        <description>This rule will share BPA owner Account to Channel Operation Role Users</description>
+        <label>BPA owner Account to Channel Operation Role Users</label>
+        <sharedTo>
+            <role>Channel_Operations</role>
+        </sharedTo>
+        <sharedFrom>
+            <role>Business_Performance_Advisor</role>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>NSP_BPA_owner_Account_to_Data_Science_group</fullName>
+        <accessLevel>Edit</accessLevel>
+        <accountSettings>
+            <caseAccessLevel>None</caseAccessLevel>
+            <contactAccessLevel>Edit</contactAccessLevel>
+            <opportunityAccessLevel>None</opportunityAccessLevel>
+        </accountSettings>
+        <description>This Sharing Rule will share BPA owner Account with Data Science Group Users</description>
+        <label>BPA owner Account to Data Science group</label>
+        <sharedTo>
+            <group>NSP_Data_Science</group>
+        </sharedTo>
+        <sharedFrom>
+            <role>Business_Performance_Advisor</role>
         </sharedFrom>
     </sharingOwnerRules>
     <sharingOwnerRules>
@@ -309,6 +370,73 @@
         </sharedTo>
         <sharedFrom>
             <group>Business_Performance_Consultant</group>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>Owner_is_BPC_so_share_with_MidMarket_Admins</fullName>
+        <accessLevel>Edit</accessLevel>
+        <accountSettings>
+            <caseAccessLevel>None</caseAccessLevel>
+            <contactAccessLevel>Edit</contactAccessLevel>
+            <opportunityAccessLevel>Edit</opportunityAccessLevel>
+        </accountSettings>
+        <description>If the owner is a Business Performance Consultant, share Account and Optys with MidMarket Admins</description>
+        <label>Owner is BPC so share with MidMarket Admins</label>
+        <sharedTo>
+            <role>MidMarket_Administrator</role>
+        </sharedTo>
+        <sharedFrom>
+            <role>Business_Performance_Consultant</role>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>Owner_is_MidMarket_Admin_so_share_with_MidMarket_Admins</fullName>
+        <accessLevel>Edit</accessLevel>
+        <accountSettings>
+            <caseAccessLevel>None</caseAccessLevel>
+            <contactAccessLevel>Edit</contactAccessLevel>
+            <opportunityAccessLevel>Edit</opportunityAccessLevel>
+        </accountSettings>
+        <description>If owner is MidMarket Administrator, share with MidMarket Admins</description>
+        <label>Owner is MidMarket Admin so share with MidMarket Admins</label>
+        <sharedTo>
+            <role>MidMarket_Administrator</role>
+        </sharedTo>
+        <sharedFrom>
+            <role>MidMarket_Administrator</role>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>Owner_is_MidMarket_Sales_Leader_so_share_with_MM_Admins</fullName>
+        <accessLevel>Edit</accessLevel>
+        <accountSettings>
+            <caseAccessLevel>None</caseAccessLevel>
+            <contactAccessLevel>Edit</contactAccessLevel>
+            <opportunityAccessLevel>Edit</opportunityAccessLevel>
+        </accountSettings>
+        <description>If the owner is MidMarket Sales Leader, share Account and Optys with MidMarket Admins</description>
+        <label>Owner is MidMarket Sales Leader so share with MM Admins</label>
+        <sharedTo>
+            <role>MidMarket_Administrator</role>
+        </sharedTo>
+        <sharedFrom>
+            <role>MidMarket_Sales_Leader</role>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>Share_All_Accounts_Sales</fullName>
+        <accessLevel>Read</accessLevel>
+        <accountSettings>
+            <caseAccessLevel>None</caseAccessLevel>
+            <contactAccessLevel>Read</contactAccessLevel>
+            <opportunityAccessLevel>Read</opportunityAccessLevel>
+        </accountSettings>
+        <label>Share All Accounts Sales</label>
+        <sharedTo>
+            <roleAndSubordinatesInternal>CEO</roleAndSubordinatesInternal>
+        </sharedTo>
+        <sharedFrom>
+            <allInternalUsers></allInternalUsers>
         </sharedFrom>
     </sharingOwnerRules>
 </SharingRules>

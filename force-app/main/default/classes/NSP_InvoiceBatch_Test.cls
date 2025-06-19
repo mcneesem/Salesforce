@@ -15,10 +15,10 @@
         blng__BillingRule__c objBillingRule = NSP_TestHelper.createBillingRule();
         blng__RevenueRecognitionRule__c objRevRecRule = NSP_TestHelper.createRevrecRule('1');
         blng__TaxRule__c objTaxRule = NSP_TestHelper.createRevTaxRule();
-        
+
         Account objaccount = NSP_TestHelper.createAccount(true);
         NSP_TestHelper.createContact(objaccount.id, true);
-        
+
         Product2 objproduct = NSP_TestHelper.createProduct('Test Product',false);
         objproduct.blng__BillingRule__c = objBillingRule.Id;
         objproduct.blng__RevenueRecognitionRule__c = objRevRecRule.Id;
@@ -61,6 +61,7 @@
         update orderList;
 
         Database.executeBatch(new NSP_InvoiceBatch(),1);
+
         Test.stopTest();
         System.assert(orderList.size()==1,true);
     }
@@ -101,8 +102,9 @@
         List<Id>invoices = new List<Id>{inv[0].Id};
 
         Database.executeBatch(new NSP_InvoiceBatch(invoices),1);
-
+        Integer batchSize = NSP_InvoiceBatch.getBatchSize();
         Test.stopTest();
+        System.assertNotEquals(null,batchSize);
         System.assert(orderList.size()==1,true);
     }
 
