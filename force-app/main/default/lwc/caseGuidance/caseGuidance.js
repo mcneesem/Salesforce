@@ -1,29 +1,31 @@
 import { LightningElement, api, wire } from "lwc";
 
+import { refreshApex } from "@salesforce/apex";
 import { getRecord } from "lightning/uiRecordApi";
 import getCaseGuidance from "@salesforce/apex/CaseGuidanceController.getCaseGuidance";
 import getCaseGuidanceSetting from "@salesforce/apex/CaseGuidanceController.getCaseGuidanceSetting";
 
 const FIELDS = [
-  "Case.NSP_Category__c", 
-  "Case.NSP_SubCategory__c", 
+  "Case.NSP_Category__c",
+  "Case.NSP_SubCategory__c",
   "Case.NSP_Detail__c"
 ];
 
 export default class CaseGuidance extends LightningElement {
   @api recordId;
 
-  guidance          = "";
-  showCaseGuidance  = false;
-  activeSections    = "caseGuidance";
-  error             = "";
+  guidance = "";
+  wiredCaseGuidance;
+  showCaseGuidance = false;
+  activeSections = "caseGuidance";
+  error = "";
 
   caseGuidanceCustomSettingData;
 
   @wire(getRecord, { recordId: "$recordId", fields: FIELDS })
   wiredRecord({ error, data }) {
     if (data) {
-      this.refreshGuidance();
+      refreshApex(this.wiredCaseGuidance);
     } else if (error) {
       this.error = error;
       this.clearGuidance();
@@ -49,24 +51,24 @@ export default class CaseGuidance extends LightningElement {
     }
   }
 
-  async refreshGuidance() {
-    try {
-      const result = await getCaseGuidance({ caseId: this.recordId });
-
-      if (result && result !== this.guidance) {
-        this.guidance = result;
+  @wire(getCaseGuidance, { caseId: '$recordId' })
+  doGetGuidance(value) {
+    if (value != this.wiredCaseGuidance) {
+      this.wiredCaseGuidance = value;
+      if (this.wiredCaseGuidance.data && this.wiredCaseGuidance.data.length > 0) {
         this.showCaseGuidance = true;
-      } else {
-        this.clearGuidance();
+        this.guidance = this.wiredCaseGuidance.data;
       }
-    } catch (error) {
-      this.error = error;
-      this.clearGuidance();
+      else if (this.wiredCaseGuidance.error) {
+        this.error = this.wiredCaseGuidance.error;
+      }
+      else{
+        this.showCaseGuidance = false;
+        this.guidance = "";
+      }
+    } else {
+      this.showCaseGuidance = false;
+      this.guidance = "";
     }
-  }
-
-  clearGuidance() {
-    this.guidance = "";
-    this.showCaseGuidance = false;
   }
 }
