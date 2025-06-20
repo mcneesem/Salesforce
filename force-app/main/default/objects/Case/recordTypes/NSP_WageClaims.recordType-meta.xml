@@ -119,6 +119,29 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Method_of_Shipment__c</picklist>
+        <values>
+            <fullName>Deliver-It</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fed Ex</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hotshot</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>UPS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>US Postal Service</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>NSP_AppealedBy__c</picklist>
         <values>
             <fullName>Claimant</fullName>
