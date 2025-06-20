@@ -120,25 +120,17 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>Method_of_Shipment__c</picklist>
+        <picklist>Complexity__c</picklist>
         <values>
-            <fullName>Deliver-It</fullName>
+            <fullName>High</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Fed Ex</fullName>
+            <fullName>Low</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Hotshot</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>UPS</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>US Postal Service</fullName>
+            <fullName>Medium</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -3983,6 +3975,17 @@
         </values>
         <values>
             <fullName>Wages Raised</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Required_Documentation_Attached__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
             <default>false</default>
         </values>
     </picklistValues>
