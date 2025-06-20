@@ -801,9 +801,9 @@
                         <rightValue>Sales Admin</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!$User.UserRole.DeveloperName}</leftValue>
+                        <leftValue>{!$Permission.CustomPermission.Opportunity_Closed_Won_NCS_User}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>New_Client_Sales</rightValue>
+                        <rightValue>true</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
