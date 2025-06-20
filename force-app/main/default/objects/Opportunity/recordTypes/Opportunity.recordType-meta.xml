@@ -757,10 +757,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>UHC Media Coverage Concern</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Unresponsive</fullName>
             <default>false</default>
         </values>
