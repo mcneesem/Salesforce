@@ -21,8 +21,10 @@ class NSP_PrepSandboxTest {
         // Query the test user
         User testUser = [SELECT Id FROM User WHERE Username = 'testuser@example.com.sandbox'];
         UserLogin ulogin = [SELECT Id, IsFrozen, UserId From UserLogin Where UserId = :testUser.Id LIMIT 1];
-        ulogin.IsFrozen = true;
-        update ulogin;
+        if (ulogin != null) {
+            ulogin.IsFrozen = true;
+            update ulogin;
+        }
 
         // Mock the Database.UpsertResult for the test user
         Database.UpsertResult userResult = (Database.UpsertResult) JSON.deserialize(
