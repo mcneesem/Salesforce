@@ -118,6 +118,17 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Does_the_client_have_KDM_internationally__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Industry</picklist>
         <values>
             <fullName>Agriculture</fullName>
@@ -245,6 +256,17 @@
         </values>
         <values>
             <fullName>Utilities</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Is_client_HQ_located_internationallly__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -441,11 +463,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>MidMarket</fullName>
+            <fullName>Enterprise</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Enterprise</fullName>
+            <fullName>MidMarket</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -510,6 +532,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>CPQ Asset</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Certify</fullName>
             <default>false</default>
         </values>
@@ -519,10 +545,6 @@
         </values>
         <values>
             <fullName>Contractor Management</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CPQ Asset</fullName>
             <default>false</default>
         </values>
         <values>
@@ -7868,6 +7890,25 @@
         </values>
         <values>
             <fullName>Time %26 Attendance</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>What_is_the_client_business_maturity__c</picklist>
+        <values>
+            <fullName>Decline</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Growth</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mature</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Startup</fullName>
             <default>false</default>
         </values>
     </picklistValues>
