@@ -1,10 +1,14 @@
 <template>
     <template lwc:if={showCaseGuidance}>
-    <lightning-accordion allow-multiple-sections-open onsectiontoggle={handleSectionToggle} active-section-name={activeSections}>
-        <lightning-accordion-section name="caseGuidance" label="Case Guidance">
-            <lightning-formatted-rich-text value={guidance}></lightning-formatted-rich-text>
-        </lightning-accordion-section>
-    </lightning-accordion>
-</template>
-<c-error-panel error={error} parent="c-case-guidance"></c-error-panel>
+        <lightning-accordion
+            allow-multiple-sections-open
+            onsectiontoggle={handleSectionToggle}
+            active-section-name={activeSections}
+            >
+            <lightning-accordion-section name="caseGuidance" label="Case Guidance">
+                <lightning-formatted-rich-text value={guidance}></lightning-formatted-rich-text>
+            </lightning-accordion-section>
+        </lightning-accordion>
+    </template>
+    <c-error-panel error={error} parent="c-case-guidance"></c-error-panel>
 </template>
