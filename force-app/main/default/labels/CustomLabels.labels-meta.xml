@@ -283,6 +283,13 @@
         <value>MidMarket Sales Leader,MidMarket Administrator,District Administrator,District Manager,Regional Administrator,Regional Manager</value>
     </labels>
     <labels>
+        <fullName>Contractor_Management_Envelope_Configuration</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Contractor Management Envelope Configuration</shortDescription>
+        <value>a8NOx0000003wttMAA</value>
+    </labels>
+    <labels>
         <fullName>DA_and_DM_Userrole</fullName>
         <language>en_US</language>
         <protected>false</protected>
