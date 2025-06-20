@@ -6,6 +6,21 @@
     <description>Lock Opportunity Record from Edits once its closed Won/Lost</description>
     <label>Opportunity Locked</label>
     <picklistValues>
+        <picklist>DB_Competitor__c</picklist>
+        <values>
+            <fullName>Competitor A</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Competitor B</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Competitor C</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>ForecastCategoryName</picklist>
         <values>
             <fullName>Best Case</fullName>
@@ -25,6 +40,21 @@
         </values>
         <values>
             <fullName>Pipeline</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>HRCore_Contract_Changes__c</picklist>
+        <values>
+            <fullName>Contract Term</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Contract Value</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Termination Clause</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -4392,6 +4422,10 @@
         </values>
         <values>
             <fullName>Choice Startup</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Compensation Services</fullName>
             <default>false</default>
         </values>
         <values>
