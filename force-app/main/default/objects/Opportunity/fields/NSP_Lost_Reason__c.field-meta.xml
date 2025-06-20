@@ -184,11 +184,6 @@
                 <label>Transferred to MidMarket</label>
             </value>
             <value>
-                <fullName>UHC Media Coverage Concern</fullName>
-                <default>false</default>
-                <label>UHC Media Coverage Concern</label>
-            </value>
-            <value>
                 <fullName>Unresponsive</fullName>
                 <default>false</default>
                 <label>Unresponsive</label>
@@ -197,6 +192,12 @@
                 <fullName>WO Competitor</fullName>
                 <default>false</default>
                 <label>WO Competitor</label>
+            </value>
+            <value>
+                <fullName>UHC Media Coverage Concern</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>UHC Media Coverage Concern</label>
             </value>
         </valueSetDefinition>
         <valueSettings>
@@ -375,10 +376,6 @@
         <valueSettings>
             <controllingFieldValue>Closed Lost</controllingFieldValue>
             <valueName>Need Alternative to UHC</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Closed Lost</controllingFieldValue>
-            <valueName>UHC Media Coverage Concern</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>
