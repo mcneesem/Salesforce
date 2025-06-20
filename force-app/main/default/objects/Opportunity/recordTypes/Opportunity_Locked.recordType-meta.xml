@@ -4674,6 +4674,13 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Product_Purchased__c</picklist>
+        <values>
+            <fullName>HCM</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Promotion_Code__c</picklist>
         <values>
             <fullName>2024 2-year Admin Cap</fullName>
