@@ -25,6 +25,8 @@ $Label.NSP_Talent_Connect_Envelope_Configuration,
 
 IF( NSP_Selected_Template__c == &apos;ALTULA&apos;, $Label.NSP_Altula_Envelope_Configuration,
 
+IF( NSP_Selected_Template__c = &apos;ContractorManagement&apos;, $Label.Contractor_Management_Envelope_Configuration,
+
 IF( NSP_Selected_Template__c == null , &apos;&apos; ,
 
 IF(
@@ -33,7 +35,7 @@ NSP_Selected_Template__c == &apos;StandardClimateSurveySOW&apos;,
 NSP_Selected_Template__c == &apos;SalarySurveySOW&apos;,
 NSP_Selected_Template__c == &apos;HRComplianceReviewSOW&apos;), $Label.NSP_HR_Services_Envelope_Configuration,
 
-$Label.NSP_WX_Envelope_Configuration) ) ) ) ) ) ), NSP_Wet_Envelope_Selector__c )</formula>
+$Label.NSP_WX_Envelope_Configuration) ) ) ) ) ) ) ), NSP_Wet_Envelope_Selector__c )</formula>
     <label>Envelope Selector</label>
     <required>false</required>
     <trackHistory>false</trackHistory>
