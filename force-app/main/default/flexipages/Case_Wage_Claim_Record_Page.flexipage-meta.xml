@@ -1253,6 +1253,19 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
+                <componentName>caseGuidance</componentName>
+                <identifier>c_caseGuidance</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!$Permission.CustomPermission.Case_Guidance_Access}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
                 <componentInstanceProperties>
                     <name>columns</name>
                     <value>Facet-78d35f01-d2a6-432c-be9b-272202e62a2c</value>
