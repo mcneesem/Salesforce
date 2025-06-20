@@ -2792,7 +2792,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Asset.NSP_Signature_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
