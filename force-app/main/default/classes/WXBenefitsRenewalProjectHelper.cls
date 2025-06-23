@@ -53,9 +53,8 @@ public with sharing class WXBenefitsRenewalProjectHelper {
                 project.Project_Implementer__c = team.NSP_User__c;
             }
             WXBenefitsRenewalProjectHelper.updateProjectFieldsAndDmlProcess( project );
-        } else {
-            WXBenefitsRenewalProjectHelper.sendSingleEmailMessage( project.Id );
-        }
+        } 
+        WXBenefitsRenewalProjectHelper.sendSingleEmailMessage( project.Id );
     }
 
     //== Get Account Ids from Assets list
