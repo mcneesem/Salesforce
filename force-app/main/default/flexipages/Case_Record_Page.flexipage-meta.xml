@@ -898,16 +898,6 @@
                 <identifier>RecordComplexity__cField</identifier>
             </fieldInstance>
         </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Client_Type__c</fieldItem>
-                <identifier>RecordClient_Type_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
         <name>Facet-5d03447d-d53e-455d-859b-f1e6012efbe6</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -980,16 +970,6 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Billable__c</fieldItem>
                 <identifier>RecordBillable_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Opportunity__c</fieldItem>
-                <identifier>RecordOpportunity_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-7401babd-5001-4f20-a2e7-f1a28e89acf9</name>
