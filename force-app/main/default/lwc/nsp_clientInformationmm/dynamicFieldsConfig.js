@@ -57,6 +57,12 @@ const DYNAMIC_FIELDS = {
           dependentFields: ["Show_Related_Clients"],
         },
       ],
+      'Client_Segment__c': [
+        {
+          expValue: ["National Account"],
+          dependentFields: ["National_Account_Type__c"],
+        },
+      ],
     
 };
 
