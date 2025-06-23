@@ -53,7 +53,7 @@ public with sharing class WXBenefitsRenewalProjectHelper {
                 project.Project_Implementer__c = team.NSP_User__c;
             }
             WXBenefitsRenewalProjectHelper.updateProjectFieldsAndDmlProcess( project );
-        } 
+        }
         WXBenefitsRenewalProjectHelper.sendSingleEmailMessage( project.Id );
     }
 
