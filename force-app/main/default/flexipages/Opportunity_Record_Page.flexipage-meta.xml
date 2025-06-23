@@ -7637,13 +7637,6 @@
                 </componentInstanceProperties>
                 <componentName>lst:dynamicRelatedList</componentName>
                 <identifier>lst_dynamicRelatedList4</identifier>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>Opportunity</rightValue>
-                    </criteria>
-                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <itemInstances>
