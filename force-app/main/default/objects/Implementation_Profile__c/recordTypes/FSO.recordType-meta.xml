@@ -589,6 +589,21 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Client_Segment__c</picklist>
+        <values>
+            <fullName>Business Team</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Core</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Emerging Growth</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Client_business_in_MA_NY_or_VA__c</picklist>
         <values>
             <fullName>MA</fullName>
@@ -1996,6 +2011,21 @@
         </values>
         <values>
             <fullName>Uniforms</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Federal_Labor_Law_poster__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pending</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -4594,6 +4624,21 @@
         </values>
         <values>
             <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>National_Account_Type__c</picklist>
+        <values>
+            <fullName>Brokerage</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Franchise</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PCM</fullName>
             <default>false</default>
         </values>
     </picklistValues>
