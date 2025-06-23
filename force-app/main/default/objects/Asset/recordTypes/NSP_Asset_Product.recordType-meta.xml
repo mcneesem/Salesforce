@@ -71,6 +71,21 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>HRCore_Contract_Changes__c</picklist>
+        <values>
+            <fullName>Contract Term</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Contract Value</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Termination Clause</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>NSP_Account_Status__c</picklist>
         <values>
             <fullName>Active</fullName>
@@ -1266,31 +1281,47 @@
     <picklistValues>
         <picklist>NSP_Product_Term_Reason__c</picklist>
         <values>
-            <fullName>Client Did Not Disclose</fullName>
+            <fullName>Cancelled During Implementation</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Cost Related</fullName>
+            <fullName>Client termed in Implementation</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Customer Support</fullName>
+            <fullName>Cost</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Do Not Need</fullName>
+            <fullName>Covid-19</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>FEIN Change</fullName>
+            <fullName>ERP has module</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Financial Issues</fullName>
+            <fullName>Financial - Bankruptcy</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>HR360 Support Ended</fullName>
+            <fullName>Financial - Delinquency</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Financial - NSF</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Financial - Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Financial Trouble</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Functionality</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1298,11 +1329,35 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Moved to HR360</fullName>
+            <fullName>Never Onboarded</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Never Onboarded</fullName>
+            <fullName>Other - Do not need</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other - FEIN Change</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other - Loss to Competitor</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other - Moved to WO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other - Never Used</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other - No Response</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other - Other</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1310,15 +1365,43 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Product Offering Gap</fullName>
+            <fullName>Product Issues</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Sold Business%2FMerger</fullName>
+            <fullName>Service Issues</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Technology</fullName>
+            <fullName>Sold Business</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Technology - OrgPlus</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Technology - Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Technology - PerformSmart</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Technology - TimeStar</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Technology - iSovled</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Termed WO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WO Support Ended</fullName>
             <default>false</default>
         </values>
     </picklistValues>
