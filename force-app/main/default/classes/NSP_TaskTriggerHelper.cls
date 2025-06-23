@@ -7,7 +7,7 @@ public with sharing class NSP_TaskTriggerHelper {
     public static Id referralRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Task' , 'Referral_Task' );
     public static Id peoTaskRecordType = NSP_GenericRecordType.getRecordTypeId( 'Task' , 'PEO_Service_Task' );
     private static Boolean Is_Enabled_WO_WS_Stage_Entry = OpportunityStageSettings__c.getInstance(UserInfo.getUserId()).Is_Enabled_WO_WS_Stage_Entry__c;
-    private static final String EXPENSE_MANAGEMENT ='Expense_Management';
+    private static final String EXPENSE_MANAGEMENT = 'Expense_Management';
 
     /**
     * Iterates throught the list of new tasks/ activity and passes the required attributes to other methods.
@@ -341,15 +341,15 @@ public void updateActivitySales(List<Task> newList,Map<Id,Task> OldTaskMap){
     //
     private static Map<String,String> getQueueMapping() {
         Set<String> lstReferralQueues = new Set<String>{
-            NSP_ServiceConstants.INTEGRA_QUEUE,
-            NSP_TaskTriggerHelper.EXPENSE_MANAGEMENT,
-            NSP_ServiceConstants.SERVICE_REFERRAL,
-            NSP_ServiceConstants.RECRUITING_SERVICES,
-            NSP_ServiceConstants.INSURANCE_SERVICES,
-            NSP_ServiceConstants.HR_CONSULTING,
-            NSP_ServiceConstants.RETIREMENT_SERVICES,
-            NSP_ServiceConstants.CONTINGENT_WORKFORCE,
-            NSP_ServiceConstants.CONTRACTOR_MANAGEMENT,
+            NSP_ServiceConstants.INTEGRA_QUEUE ,
+            NSP_TaskTriggerHelper.EXPENSE_MANAGEMENT ,
+            NSP_ServiceConstants.SERVICE_REFERRAL ,
+            NSP_ServiceConstants.RECRUITING_SERVICES ,
+            NSP_ServiceConstants.INSURANCE_SERVICES ,
+            NSP_ServiceConstants.HR_CONSULTING ,
+            NSP_ServiceConstants.RETIREMENT_SERVICES ,
+            NSP_ServiceConstants.CONTINGENT_WORKFORCE ,
+            NSP_ServiceConstants.CONTRACTOR_MANAGEMENT ,
             NSP_ServiceConstants.HRCORE_ONBOARDING_AMENDMENT
         };
         Map<String,String> mapQueueDeveloperNameQueueId = new Map<String,String>();
@@ -367,19 +367,19 @@ public void updateActivitySales(List<Task> newList,Map<Id,Task> OldTaskMap){
     private static Map<String,String> pIMappingQueue{
         get {
             return new Map<String,String>{
-                NSP_ServiceConstants.INTEGRA => NSP_ServiceConstants.INTEGRA,
-                NSP_ServiceConstants.INSPERITY_INTEGRA => NSP_ServiceConstants.INTEGRA_QUEUE,
-                NSP_ServiceConstants.EXPENSE_MANAGEMENT => NSP_TaskTriggerHelper.EXPENSE_MANAGEMENT,
-                NSP_ServiceConstants.HR_CONSULTING_SERVICES => NSP_ServiceConstants.HR_CONSULTING,
-                NSP_ServiceConstants.PI_INSURANCE_SERVICES => NSP_ServiceConstants.INSURANCE_SERVICES,
-                NSP_ServiceConstants.PI_RECRUITING_SERVICES => NSP_ServiceConstants.RECRUITING_SERVICES,
-                NSP_ServiceConstants.PI_RETIREMENT_SERVICES => NSP_ServiceConstants.RETIREMENT_SERVICES,
-                NSP_ServiceConstants.APPLICANT_TRACKING => NSP_ServiceConstants.SERVICE_REFERRAL,
-                NSP_ServiceConstants.ORGANIZATIONAL_PLANNING => NSP_ServiceConstants.SERVICE_REFERRAL,
-                NSP_ServiceConstants.PERFORMANCE_MANAGEMENT => NSP_ServiceConstants.SERVICE_REFERRAL,
-                NSP_ServiceConstants.TIME_AND_ATTENDANCE => NSP_ServiceConstants.SERVICE_REFERRAL,
-                NSP_ServiceConstants.PI_CONTINGENT_WORKFORCE => NSP_ServiceConstants.CONTINGENT_WORKFORCE,
-                NSP_ServiceConstants.PI_CONTRACTOR_MANAGEMENT => NSP_ServiceConstants.CONTRACTOR_MANAGEMENT,
+                NSP_ServiceConstants.INTEGRA => NSP_ServiceConstants.INTEGRA ,
+                NSP_ServiceConstants.INSPERITY_INTEGRA => NSP_ServiceConstants.INTEGRA_QUEUE ,
+                NSP_ServiceConstants.EXPENSE_MANAGEMENT => NSP_TaskTriggerHelper.EXPENSE_MANAGEMENT ,
+                NSP_ServiceConstants.HR_CONSULTING_SERVICES => NSP_ServiceConstants.HR_CONSULTING ,
+                NSP_ServiceConstants.PI_INSURANCE_SERVICES => NSP_ServiceConstants.INSURANCE_SERVICES ,
+                NSP_ServiceConstants.PI_RECRUITING_SERVICES => NSP_ServiceConstants.RECRUITING_SERVICES ,
+                NSP_ServiceConstants.PI_RETIREMENT_SERVICES => NSP_ServiceConstants.RETIREMENT_SERVICES ,
+                NSP_ServiceConstants.APPLICANT_TRACKING => NSP_ServiceConstants.SERVICE_REFERRAL ,
+                NSP_ServiceConstants.ORGANIZATIONAL_PLANNING => NSP_ServiceConstants.SERVICE_REFERRAL ,
+                NSP_ServiceConstants.PERFORMANCE_MANAGEMENT => NSP_ServiceConstants.SERVICE_REFERRAL ,
+                NSP_ServiceConstants.TIME_AND_ATTENDANCE => NSP_ServiceConstants.SERVICE_REFERRAL ,
+                NSP_ServiceConstants.PI_CONTINGENT_WORKFORCE => NSP_ServiceConstants.CONTINGENT_WORKFORCE ,
+                NSP_ServiceConstants.PI_CONTRACTOR_MANAGEMENT => NSP_ServiceConstants.CONTRACTOR_MANAGEMENT ,
                 NSP_ServiceConstants.PI_HRCORE_ONBOARDING_AMENDMENT => NSP_ServiceConstants.HRCORE_ONBOARDING_AMENDMENT
             };
         }
