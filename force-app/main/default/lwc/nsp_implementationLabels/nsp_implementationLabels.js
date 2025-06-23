@@ -49,6 +49,8 @@ import premierPerformanceImplementationTimeline from '@salesforce/label/c.Premie
 import organizationalPlanningImpTimeline from '@salesforce/label/c.Organizational_Planning_Imp_Timeline';
 import integraImplementationTimeline from '@salesforce/label/c.Integra_Implementation_Timeline';
 import timeEntryMethod from '@salesforce/label/c.NSP_Time_Entry_Method';
+import clientSegment from '@salesforce/label/c.Client_Segment';
+import nationalAccountType from '@salesforce/label/c.National_Account_Type';
 import clientProfileInformation from '@salesforce/label/c.NSP_Client_Profile_Information';
 import hushProtocol from '@salesforce/label/c.NSP_Hush_Protocol';
 import willBPABeAttendingSKO from '@salesforce/label/c.NSP_Will_BPA_attending_SKO';
@@ -66,6 +68,7 @@ import clientNotWithNSP from '@salesforce/label/c.NSP_Client_Not_With_NSP';
 import allEEsPaidToSameFEIN from '@salesforce/label/c.NSP_All_EEs_paid_under_same_FEIN_currently';
 import certCoverForGeneralLiability from '@salesforce/label/c.NSP_received_cert_cover_for_general_liability';
 import clientPartOfEntityWOEEO from '@salesforce/label/c.NSP_Client_Part_Of_Entity_W_O_EEO';
+import federalLaborLawPoster from '@salesforce/label/c.Federal_Labor_Law_poster';
 import whenWhereQuantityNeeded from '@salesforce/label/c.NSP_When_Where_Quantity_Needed';
 
 import payFrequency from '@salesforce/label/c.NSP_Pay_Frequency';
@@ -606,6 +609,8 @@ export {
     organizationalPlanningImpTimeline,
     integraImplementationTimeline,
     timeEntryMethod,
+    clientSegment,
+    nationalAccountType,
     clientProfileInformation,
     nationalClient,
     hushProtocol,
@@ -719,6 +724,7 @@ export {
     immediateNeedForWorkers,
     clientHaveUrgentHRNeeds,
     clientPartOfEntityWOEEO,
+    federalLaborLawPoster,
     anticipatedGrowthPlans,
     packageLabel,
     medicalLevel,
