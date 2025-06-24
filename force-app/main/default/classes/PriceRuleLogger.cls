@@ -119,16 +119,18 @@ public with sharing class PriceRuleLogger {
         //insert list
         List<SBQQ__PriceAction__c> insertList = new List<SBQQ__PriceAction__c>();
         
-        //create actions for each rule
-        for(SBQQ__PriceRule__c rule: priceRules){
-            Integer num = (Integer)rule.Price_Rule_Number__c;
-            SBQQ__PriceAction__c action = new SBQQ__PriceAction__c();
-            action.SBQQ__TargetObject__c = 'Quote Line';
-            action.SBQQ__Field__c = 'Price_Rule_Log__c';
-            //insert PR num between template Strings to construct formula
-            action.SBQQ__Formula__c = String.join(formulaTemplate,String.valueOf(num));
-            action.SBQQ__Rule__c = rule.id;
-            insertList.add(action);
+        if( priceRules!= null && !priceRules.isEmpty()){
+            //create actions for each rule
+            for(SBQQ__PriceRule__c rule: priceRules){
+                Integer num = (Integer)rule.Price_Rule_Number__c;
+                SBQQ__PriceAction__c action = new SBQQ__PriceAction__c();
+                action.SBQQ__TargetObject__c = 'Quote Line';
+                action.SBQQ__Field__c = 'Price_Rule_Log__c';
+                //insert PR num between template Strings to construct formula
+                action.SBQQ__Formula__c = String.join(formulaTemplate,String.valueOf(num));
+                action.SBQQ__Rule__c = rule.id;
+                insertList.add(action);
+            }
         }
         
         //insert actions
@@ -147,10 +149,15 @@ public with sharing class PriceRuleLogger {
     
     //method to log exceptions in two dml operations
     private static void logException(Exception e, String methodName){
-        NSP_ErrorLogHandler.logException(
-            PriceRuleLogger.class.getName() ,
-            methodName ,
-            e
-        );
+        if(
+            ( e!=null ) 
+            && !String.isBlank(methodName)
+        ){
+            NSP_ErrorLogHandler.logException(
+                PriceRuleLogger.class.getName() ,
+                methodName ,
+                e
+            );
+        }
     }
 }
