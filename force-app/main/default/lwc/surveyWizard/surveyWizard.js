@@ -1,5 +1,6 @@
 import { LightningElement, api, wire } from 'lwc';
 import SurveyRevisionRequestForm from '@salesforce/label/c.NSP_SurveyRevisionRequestFormPageNexus';
+import SurveyInterviewForm from '@salesforce/label/c.Survey_Interview_Form';
 export default class SurveyWizard extends LightningElement {
     steps = [{ label: "Survey Information", value: "1" }, { label: "Survey Filters", value: "2" }, { label: "Custom Questions", value: "3" }, { label: "Additional Information", value: "4" }];
     @api currentStep;
@@ -12,7 +13,8 @@ export default class SurveyWizard extends LightningElement {
         return null;
     }
     customLabel ={
-        SurveyRevisionRequestForm
+        SurveyRevisionRequestForm,
+        SurveyInterviewForm
         };
 
     get step1() {
