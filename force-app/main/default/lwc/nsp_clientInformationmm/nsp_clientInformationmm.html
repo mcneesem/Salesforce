@@ -341,29 +341,29 @@
         onchange={handleValueChange}
         ondblclick={handleDoubleClick}>
       </c-nsp_selection-box>
-    <c-nsp_selection-box
-      disabled={disabledFields.Client_Segment__c}
-      label={label.clientSegment}
-      data-name="Client_Segment__c"
-      field-api-name="Implementation_Profile__c.Client_Segment__c"
-      record-type-id={recordTypeId}
-      value={field.Client_Segment__c}
-      onchange={handleValueChange}
-      ondblclick={handleDoubleClick}>
-    </c-nsp_selection-box>
-    <template lwc:if={visibility.National_Account_Type__c}>
       <c-nsp_selection-box
-          disabled={disabledFields.National_Account_Type__c}
-          lwc:if={visibility.National_Account_Type__c}
-          field-api-name="Implementation_Profile__c.National_Account_Type__c"
-          record-type-id={recordTypeId}
-          value={field.National_Account_Type__c}
-          data-name="National_Account_Type__c"
-          class={styles.National_Account_Type__c}
-          onchange={handleValueChange}
-          ondblclick={handleDoubleClick}>
+        disabled={disabledFields.Client_Segment__c}
+        label={label.clientSegment}
+        data-name="Client_Segment__c"
+        field-api-name="Implementation_Profile__c.Client_Segment__c"
+        record-type-id={recordTypeId}
+        value={field.Client_Segment__c}
+        onchange={handleValueChange}
+        ondblclick={handleDoubleClick}>
       </c-nsp_selection-box>
-    </template>
+      <template lwc:if={visibility.National_Account_Type__c}>
+        <c-nsp_selection-box
+            disabled={disabledFields.National_Account_Type__c}
+            lwc:if={visibility.National_Account_Type__c}
+            field-api-name="Implementation_Profile__c.National_Account_Type__c"
+            record-type-id={recordTypeId}
+            value={field.National_Account_Type__c}
+            data-name="National_Account_Type__c"
+            class={styles.National_Account_Type__c}
+            onchange={handleValueChange}
+            ondblclick={handleDoubleClick}>
+        </c-nsp_selection-box>
+      </template>
       <c-nsp_selection-box
         disabled={disabledFields.Client_Profile_Information__c}
         label={objFields.Client_Profile_Information__c.label}
