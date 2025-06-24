@@ -1,5 +1,6 @@
 import { LightningElement, track, wire } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import isCurrentUserAllowedE2C from '@salesforce/apex/NSP_PrepSandbox.isCurrentUserAllowedE2C';
 import getOrgSettings from '@salesforce/apex/NSP_PrepSandbox.getOrgSettings';
 import runManualSteps from '@salesforce/apex/NSP_PrepSandbox.runManualSteps';
 import runUserImport from '@salesforce/apex/NSP_PrepSandbox.runUserImport';
@@ -15,6 +16,20 @@ export default class PrepSandbox extends LightningElement {
     postRefreshRun3 = false;
     postRefreshRun4 = false;
     wiredCustomSettingResult;
+    isUserAllowedE2C = false;
+
+    connectedCallback() {
+        this.checkUserAccessE2C();
+    }
+
+    async checkUserAccessE2C() {
+        try {
+            this.isUserAllowedE2C = await isCurrentUserAllowedE2C();
+        } catch (error) {
+            console.error('Error checking user access:', error);
+            this.isUserAllowedE2C = false;
+        }
+    }
 
     @wire(getOrgSettings)
     wiredCustomSetting(result) {

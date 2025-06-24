@@ -47,19 +47,21 @@
             </div>
 
             <!-- E2C Addresses Button -->
-            <div class="slds-form-element_stacked">
-                <lightning-button
-                    label="E2C Addresses"
-                    onclick={handleE2CAddresses}
-                    variant="brand">
-                </lightning-button>
-                <apex:outputPanel if:true={postRefreshRun4}
-                    class="slds-m-left_x-small e2cAddressAlreadyRunClass"
-                    id="e2cAddressAlreadyRun"
-                    style="font-family: 'Helvetica';font-size: 14px;color: black">
-                    <i>E2C Address updates have been run.</i>
-                </apex:outputPanel>
-            </div>
+            <template if:true={isUserAllowedE2C}>
+                <div class="slds-form-element_stacked">
+                    <lightning-button
+                        label="E2C Addresses"
+                        onclick={handleE2CAddresses}
+                        variant="brand">
+                    </lightning-button>
+                    <apex:outputPanel if:true={postRefreshRun4}
+                        class="slds-m-left_x-small e2cAddressAlreadyRunClass"
+                        id="e2cAddressAlreadyRun"
+                        style="font-family: 'Helvetica';font-size: 14px;color: black">
+                        <i>E2C Address updates have been run.</i>
+                    </apex:outputPanel>
+                </div>
+            </template>
         </div>
         <template if:true={isLoading}>
             <div class="slds-p-around_medium">
