@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>54.0</apiVersion>
-    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <decisions>
         <description>Checks whether status is completed or not.</description>
         <name>Is_Completed</name>
         <label>Is Completed?</label>
         <locationX>522</locationX>
-        <locationY>593</locationY>
+        <locationY>594</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>isStatusCompleted</name>
@@ -29,7 +28,6 @@
             <connector>
                 <targetReference>Update_Complete_Date</targetReference>
             </connector>
-            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
             <label>isStatusCompleted</label>
         </rules>
         <rules>
@@ -78,7 +76,6 @@
         </rules>
     </decisions>
     <description>This flow describes about the updation of Completed Date on Task based on Status.</description>
-    <environments>Default</environments>
     <formulas>
         <description>This Formula is used to store today&apos;s date.</description>
         <name>TodayDate</name>
