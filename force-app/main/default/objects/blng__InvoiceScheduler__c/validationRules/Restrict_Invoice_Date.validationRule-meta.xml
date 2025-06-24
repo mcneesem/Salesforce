@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Restrict_Invoice_Date</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+  NOT( $Permission.Bypass_Restrict_Invoice_Date_Rule ) ,
+  ( ABS( blng__InvoiceDate__c - DATEVALUE( CreatedDate ) ) &gt; 10 )
+)</errorConditionFormula>
+    <errorMessage>Invoice Date must be within 10 days of the Invoice Scheduler Creation Date.</errorMessage>
+</ValidationRule>
