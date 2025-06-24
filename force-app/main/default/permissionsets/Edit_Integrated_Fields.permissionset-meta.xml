@@ -121,6 +121,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>NSP_Sub_Client__c.Primary_Contract__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>NSP_Sub_Client__c.Source__c</field>
         <readable>true</readable>
     </fieldPermissions>
