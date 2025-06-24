@@ -5,6 +5,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
     static final string DOCUSIGN_BASE_URL = 'https://uatna11.springcm.com/atlas/doclauncher/OneClickDocGen';
 
     public String runManualResult{get;set;}
+
     global void runApexClass(SandboxContext context){
         try{
             doQueues();
@@ -64,6 +65,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
         return null;
     }
 
+    @AuraEnabled
     public static void runManualSteps() {
         String sandbox = System.DomainParser.parse(URL.getOrgDomainUrl()).getSandboxName();
         doCMetadata(sandbox);
@@ -75,16 +77,19 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
         setPostRefreshRunFlag(1);
     }
 
+    @AuraEnabled
     public static void runUserImport() {
         doUserImport(System.DomainParser.parse(URL.getOrgDomainUrl()).getSandboxName());
         setPostRefreshRunFlag(2);
     }
 
+    @AuraEnabled
     public static void runManualSteps2() {
         doCMetadataSvc(System.DomainParser.parse(URL.getOrgDomainUrl()).getSandboxName());
         setPostRefreshRunFlag(3);
     }
 
+    @AuraEnabled
     public static void runE2CAddresses() {
         doE2CAddresses(System.DomainParser.parse(URL.getOrgDomainUrl()).getSandboxName());
         setPostRefreshRunFlag(4);
@@ -214,22 +219,22 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
         resourceMap.put('RequestAuthDomain', 'account-d.docusign.com');
         resourceMap.put('RequestAuthEndpoint', 'https://account-d.docusign.com/oauth/token');
 
+        Map<String, DocuSign_Settings__c> docusignSettingsMap = DocuSign_Settings__c.getAll();
+        for (String key : docusignSettingsMap.keySet()) {
+            DocuSign_Settings__c docusignSettings = DocuSign_Settings__c.getValues(key);
+            if (sandboxName.startsWith(key.toLowerCase().left(3))) { // retrieve org-specific values from DocuSign_Settings__c
+                resourceMap.put('CLMv2ApiEndpoint', docusignSettings.CLMv2ApiEndpoint__c);
+                resourceMap.put('DSAccountID', docusignSettings.AccountId__c);
+                resourceMap.put('DSUserName', docusignSettings.DSUserName__c);
+                resourceMap.put('NSP_Docusign_Callback_Username', docusignSettings.Docusign_Callback_Username__c);
+                resourceMap.put('RequestAuthDomain', docusignSettings.BaseUrl__c);
+                resourceMap.put('RequestAuthEndpoint', docusignSettings.RequestAuthEndpoint__c);
+            }
+        }
+
         for (DocuSignRESTSettings__mdt cMdRecord : cMdDocuSignREST) {
             String name = cMdRecord.DeveloperName;
             String fullName = 'DocuSignRESTSettings.' + name; //custom metadata full name
-
-            Map<String, DocuSign_Settings__c> docusignSettingsMap = DocuSign_Settings__c.getAll();
-            for (String key : docusignSettingsMap.keySet()) {
-                DocuSign_Settings__c docusignSettings = DocuSign_Settings__c.getValues(key);
-                if (sandboxName.startsWith(key.toLowerCase().left(3))) {
-                    resourceMap.put('CLMv2ApiEndpoint', docusignSettings.CLMv2ApiEndpoint__c);
-                    resourceMap.put('DSAccountID', docusignSettings.AccountId__c);
-                    resourceMap.put('DSUserName', docusignSettings.DSUserName__c);
-                    resourceMap.put('NSP_Docusign_Callback_Username', docusignSettings.Docusign_Callback_Username__c);
-                    resourceMap.put('RequestAuthDomain', docusignSettings.BaseUrl__c);
-                    resourceMap.put('RequestAuthEndpoint', docusignSettings.RequestAuthEndpoint__c);
-                }
-            }
 
             MetadataService.CustomMetadata cMdUpd = buildCustomMetadataRow( fullName , name , 'Value__c' , resourceMap.get(name) );
             allMetadataList = addCustomMetadataRow(allMetadataList, cMdUpd);
@@ -739,7 +744,12 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
         }
         return null;
     }
-    
+
+    @AuraEnabled(cacheable=true)
+    public static OrgSettings__c getOrgSettings() {
+        return OrgSettings__c.getOrgDefaults();
+    }
+
     public static void setPostRefreshRunFlag(Integer iStep) {
         try {
             OrgSettings__c cS = OrgSettings__c.getOrgDefaults();
@@ -752,14 +762,24 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
             NSP_PrepSandbox.handleException( e , 'setPostRefreshRunFlag' );
         }
     }
-    
-    public static MetadataService.MetadataPort createService() {
+
+    private static MetadataService.MetadataPort createService() {
         MetadataService.MetadataPort service = new MetadataService.MetadataPort();
         service.SessionHeader = new MetadataService.SessionHeader_element();
-        service.SessionHeader.sessionId = UserInfo.getSessionId();
+        // service.SessionHeader.sessionId = UserInfo.getSessionId();
+        service.SessionHeader.sessionId = apiEnabledSessionId();
         return service;
     }
-    
+
+    private static String apiEnabledSessionId(){
+        PageReference sessionPage = Page.SessionId;
+        String vfContent = sessionPage.getContent().toString();
+        Integer startIndex = vfContent.indexOf('Start_Of_Session_Id') + 'Start_Of_Session_Id'.length();
+        Integer endIndex = vfContent.indexOf('End_Of_Session_Id');
+
+        return vfContent.substring(startIndex, endIndex);
+    }
+
     private static string invalidateEmailArray(List<String> origEmails) {
         string newES = '';
         for(integer i=0; i<origEmails.size() ; i++) {
@@ -767,7 +787,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
         }
         return newES.substringAfter(',');
     }
-    
+
     private static string invalidateEmailString(String origES) {
         string[] origEmails = origES.split(',');
         string newES = '';
@@ -776,7 +796,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
         }
         return newES.substringAfter(',');
     }
-    
+
     private static string getImportUserProfileId(String adminProfileId, String sandboxName, Map<String, List<Profile>> profileNameMap, String userName, String profName, String orgNames) {
         string profileId = '00e4x0000012F54'; // '00e4x0000012F54' is 'Minimum Access - Salesforce' Profile Id
         string[] allowedOrgs = orgNames.split(':');
@@ -811,7 +831,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
         }
         return userRoleNameMap;
     }
-    
+
     @TestVisible
     private static void updateUserLogins(Database.UpsertResult[] userResults) {
         Set<Id> userIdSet = new Set<Id>();
