@@ -93,10 +93,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>NSP_Sales_Representative__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>NSP_Client_Liaison__c</field>
             </layoutItems>
             <layoutItems>
