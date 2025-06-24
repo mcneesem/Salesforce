@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Restrict_Compensation_Services_Closure</fullName>
+    <active>true</active>
+    <description>who can close a Compensation Services Case</description>
+    <errorConditionFormula>AND(
+  NOT( $Permission.Bypass_Restrict_Compensation_Services_Closure ) ,
+  ISCHANGED( Status ) ,
+  ISPICKVAL( Status , &apos;Closed&apos;) ,
+  ( NSP_Category__c = &apos;Compensation Services&apos; )
+)</errorConditionFormula>
+    <errorMessage>You don’t have the required permissions to close this case. You can still reassign or cancel it if needed</errorMessage>
+</ValidationRule>
