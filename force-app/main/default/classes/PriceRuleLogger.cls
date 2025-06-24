@@ -1,4 +1,4 @@
-public class PriceRuleLogger {
+public with sharing class PriceRuleLogger {
     // test w/ PriceRuleLoggerTest (85%)
     
     public class RuleIdInput{
@@ -67,7 +67,7 @@ public class PriceRuleLogger {
     private static String generateQuery(List<Id> ruleIds){
         //query structure
         String queryBase = 'SELECT id, Price_Rule_Number__c, (SELECT id FROM SBQQ__PriceActions__r WHERE SBQQ__Field__c = \'Price_Rule_Log__c\') FROM SBQQ__PriceRule__c';
-        String queryCondition = '';
+        String queryCondition = ' ';
         String queryOrder = 'order by Name';
         
         if(
