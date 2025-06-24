@@ -3,6 +3,7 @@
     <description>Used by Compensation Service Team</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Compensation</label>
+    <permissionSets>Bypass_Restrict_Compensation_Services_Closure</permissionSets>
     <permissionSets>Case_Compensation_Access</permissionSets>
     <permissionSets>Organization_Wide_Email_Address_Compensation_Services</permissionSets>
     <permissionSets>Task_Record_Type_Time_Entry_DO_NOT_USE</permissionSets>

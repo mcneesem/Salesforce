@@ -3,6 +3,7 @@
     <description>Group of Permission Sets to be granted to Finance Service Users.</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Finance Service Users</label>
+    <permissionSets>Bypass_Required_Compensation_Services_Closure</permissionSets>
     <permissionSets>Finance_Service_Field_Access</permissionSets>
     <permissionSets>Finance_Service_User</permissionSets>
     <permissionSets>Project_Task_Access</permissionSets>
