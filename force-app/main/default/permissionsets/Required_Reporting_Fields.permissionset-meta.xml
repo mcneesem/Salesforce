@@ -813,6 +813,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>NSP_Project_Team__c.NSP_Assignee__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>NSP_ReportRequest__c.Performance_Specialist__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1359,6 +1364,26 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>pse__Proj__c.NSP_Config_Call_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+        <fieldPermissions>
+        <editable>false</editable>
+        <field>pse__Proj__c.NSP_Employee_Enrollment_In_Progress__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>pse__Proj__c.NSP_Employee_Enrollment_Not_Started__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>pse__Proj__c.NSP_Employee_Enrollment_Submitted__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>pse__Proj__c.NSP_Total_Projected_Employee_Enrollment__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
