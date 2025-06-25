@@ -589,25 +589,30 @@ export default class NSP_MidMarketFormIp extends NavigationMixin(
     }
 
     doHandleScroll = debounce(() => {
-        const { scrollTop } = this.contentElm;
-        const { selectedTab } = this.state;
-
+        const scrollTop = this.contentElm.scrollTop;
+        const currentTab = this.state.selectedTab;
+        
         this.sectionElms.forEach((section) => {
-            const { offsetHeight, offsetTop, dataset } = section;
-
-            if (
-                scrollTop >= offsetTop - SECTION_MARGIN &&
-                scrollTop < offsetHeight + offsetTop - SECTION_MARGIN &&
-                selectedTab !== dataset.id
-            ) {
-                this.state.selectedTab = dataset.id;
-                const tab = this.template.querySelector(
-                    `lightning-vertical-navigation-item[data-section=${dataset.id}]`
+            const { offsetTop, offsetHeight, dataset } = section;
+            const sectionId = dataset.id;
+            const isInView =
+            scrollTop >= offsetTop - SECTION_MARGIN &&
+            scrollTop < offsetTop + offsetHeight - SECTION_MARGIN;
+            
+            if (isInView && currentTab !== sectionId) {
+                this.state.selectedTab = sectionId;
+                
+                const tabElement = this.template.querySelector(
+                `lightning-vertical-navigation-item[data-section="${sectionId}"]`
                 );
-                tab.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                
+                if (tabElement) {
+                    tabElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
             }
         });
     }, SCROLL_DELAY_MS);
+
 
     showToast(config) {
         this.dispatchEvent(new ShowToastEvent({ ...config }));
