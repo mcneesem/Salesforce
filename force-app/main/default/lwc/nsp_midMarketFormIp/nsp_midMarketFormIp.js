@@ -460,27 +460,27 @@ export default class NSP_MidMarketFormIp extends NavigationMixin(
     }
 
     doPostUpsertActions() {
-        const postUpsertObjNames = Object.keys(this.postUpsertRecords);
-        
-        postUpsertObjNames.forEach((objName) => {
-            const actionFnName = POST_UPSERT_ACTION_MAPPING[objName];
-            const relatedField = RELATED_FIELD_NAME[objName];
-            
-            if (actionFnName && typeof this[actionFnName] === 'function') {
-                const updatedRecords = this.postUpsertRecords[objName].map((record) => ({
-                    ...record,
-                    ...(relatedField && { [relatedField]: this.recordId })
-                }));
-                
-                thisactionFnName;
-            }
-        });
-        
+        const postUpsertRecObjNames = Object.keys(this.postUpsertRecords);
+        if (postUpsertRecObjNames.length) {
+            postUpsertRecObjNames.forEach((objName) => {
+                const fnName = POST_UPSERT_ACTION_MAPPING[objName];
+                if (fnName && fnName in this) {
+                    const records = this.postUpsertRecords[objName].map((rec) => {
+                        const relatedFieldName = RELATED_FIELD_NAME[objName];
+                        if (relatedFieldName) {
+                            rec[relatedFieldName] = this.recordId;
+                        }
+
+                        return rec;
+                    });
+                    this[fnName](records, objName);
+                }
+            });
+        }
         if (!this.state.isSaveAndExitAction) {
             this.loadAutomationTable();
         }
     }
-
 
     // Below methods are being called dynamically on the basis of mapping given in constant.js file
     saveRelatedRecords(newRecords, objectApiName) {
@@ -771,24 +771,26 @@ export default class NSP_MidMarketFormIp extends NavigationMixin(
             ({ name }) => !NON_COPY_ABLE_SECTIONS.includes(name)
         );
     }
-    
+
     get selectedCopySections() {
-        const { state, fieldValues, recordId, copyAbleSections, copySectionChanged } = this;
-        
-        if (isNonEmptyArray(state.selectedSections) || copySectionChanged) {
+        const { state, fieldValues } = this;
+
+        if (isNonEmptyArray(state.selectedSections) || this.copySectionChanged) {
             return state.selectedSections;
         }
-        
-        const allSectionNames = copyAbleSections.map(({ name }) => name);
-        const savedSelections = fieldValues?.NSP_Copy_Section_Selections__c?.value;
-        
-        if (recordId && savedSelections) {
-            const selections = savedSelections.split(';');
-            state.selectedSections = isNonEmptyArray(selections) ? selections : allSectionNames;
+
+        const allSections = this.copyAbleSections.map(({ name }) => name);
+        if (this.recordId && fieldValues?.NSP_Copy_Section_Selections__c?.value) {
+            const selections =
+                fieldValues.NSP_Copy_Section_Selections__c.value.split(';');
+            state.selectedSections = isNonEmptyArray(selections)
+                ? selections
+                : allSections;
         } else {
-            state.selectedSections = allSectionNames;
+            state.selectedSections = allSections;
         }
-        
+
         return state.selectedSections;
     }
+
 }
