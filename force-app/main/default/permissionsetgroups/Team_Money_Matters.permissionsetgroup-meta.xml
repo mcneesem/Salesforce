@@ -8,7 +8,7 @@
     <permissionSets>Assign_Connected_App_Workbench</permissionSets>
     <permissionSets>Invoice_Missing_Files_Notification</permissionSets>
     <permissionSets>Manage_Posted_Invoices</permissionSets>
-    <permissionSets>Price_Rule_Log</permissionSets>
+    <permissionSets>Price_Rule_Logger</permissionSets>
     <permissionSets>Use_Invoice_Post_Batch</permissionSets>
     <permissionSets>dfsle__CLM_Administrator</permissionSets>
     <permissionSets>dfsle__DocuSign_Administrator</permissionSets>
