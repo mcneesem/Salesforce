@@ -168,7 +168,7 @@
             <name>Has_Permission</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>$Permission.Price_Rule_Logger_Automation</leftValueReference>
+                <leftValueReference>$Permission.Price_Rule_Logger</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -344,6 +344,22 @@
         <queriedFields>Id</queriedFields>
     </recordLookups>
     <screens>
+        <name>Error_Screen</name>
+        <label>Error Screen</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>ErrorMessage</name>
+            <fieldText>&lt;p&gt;{!$Flow.FaultMessage}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
         <name>Price_Rule_Logger</name>
         <label>Price Rule Logger</label>
         <locationX>0</locationX>
@@ -401,6 +417,9 @@
         <label>Fault Handler</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
+        <connector>
+            <targetReference>Error_Screen</targetReference>
+        </connector>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultElement</name>

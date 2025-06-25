@@ -19,7 +19,7 @@
                             <value>SBQQ__PriceRule__c.Price_Rule_Logger</value>
                             <visibilityRule>
                                 <criteria>
-                                    <leftValue>{!$Permission.CustomPermission.Price_Rule_Logger_Automation}</leftValue>
+                                    <leftValue>{!$Permission.CustomPermission.Price_Rule_Logger}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>true</rightValue>
                                 </criteria>
