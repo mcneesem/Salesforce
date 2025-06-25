@@ -771,26 +771,24 @@ export default class NSP_MidMarketFormIp extends NavigationMixin(
             ({ name }) => !NON_COPY_ABLE_SECTIONS.includes(name)
         );
     }
-
+    
     get selectedCopySections() {
-        const { state, fieldValues } = this;
-
-        if (isNonEmptyArray(state.selectedSections) || this.copySectionChanged) {
+        const { state, fieldValues, recordId, copyAbleSections, copySectionChanged } = this;
+        
+        if (isNonEmptyArray(state.selectedSections) || copySectionChanged) {
             return state.selectedSections;
         }
-
-        const allSections = this.copyAbleSections.map(({ name }) => name);
-        if (this.recordId && fieldValues?.NSP_Copy_Section_Selections__c?.value) {
-            const selections =
-                fieldValues.NSP_Copy_Section_Selections__c.value.split(';');
-            state.selectedSections = isNonEmptyArray(selections)
-                ? selections
-                : allSections;
+        
+        const allSectionNames = copyAbleSections.map(({ name }) => name);
+        const savedSelections = fieldValues?.NSP_Copy_Section_Selections__c?.value;
+        
+        if (recordId && savedSelections) {
+            const selections = savedSelections.split(';');
+            state.selectedSections = isNonEmptyArray(selections) ? selections : allSectionNames;
         } else {
-            state.selectedSections = allSections;
+            state.selectedSections = allSectionNames;
         }
-
+        
         return state.selectedSections;
     }
-
 }
