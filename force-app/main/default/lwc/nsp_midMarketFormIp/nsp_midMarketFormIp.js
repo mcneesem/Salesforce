@@ -460,27 +460,27 @@ export default class NSP_MidMarketFormIp extends NavigationMixin(
     }
 
     doPostUpsertActions() {
-        const postUpsertRecObjNames = Object.keys(this.postUpsertRecords);
-        if (postUpsertRecObjNames.length) {
-            postUpsertRecObjNames.forEach((objName) => {
-                const fnName = POST_UPSERT_ACTION_MAPPING[objName];
-                if (fnName && fnName in this) {
-                    const records = this.postUpsertRecords[objName].map((rec) => {
-                        const relatedFieldName = RELATED_FIELD_NAME[objName];
-                        if (relatedFieldName) {
-                            rec[relatedFieldName] = this.recordId;
-                        }
-
-                        return rec;
-                    });
-                    this[fnName](records, objName);
-                }
-            });
-        }
+        const postUpsertObjNames = Object.keys(this.postUpsertRecords);
+        
+        postUpsertObjNames.forEach((objName) => {
+            const actionFnName = POST_UPSERT_ACTION_MAPPING[objName];
+            const relatedField = RELATED_FIELD_NAME[objName];
+            
+            if (actionFnName && typeof this[actionFnName] === 'function') {
+                const updatedRecords = this.postUpsertRecords[objName].map((record) => ({
+                    ...record,
+                    ...(relatedField && { [relatedField]: this.recordId })
+                }));
+                
+                thisactionFnName;
+            }
+        });
+        
         if (!this.state.isSaveAndExitAction) {
             this.loadAutomationTable();
         }
     }
+
 
     // Below methods are being called dynamically on the basis of mapping given in constant.js file
     saveRelatedRecords(newRecords, objectApiName) {
