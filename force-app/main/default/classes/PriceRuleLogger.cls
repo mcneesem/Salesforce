@@ -15,10 +15,10 @@ public with sharing class PriceRuleLogger {
     //*DO NOT MODIFY*
     private static final List<String> formulaTemplate = new List<String>
     {
-        	'IF(OR(BEGINS(Price_Rule_Log__c,"'
-            ,',"),CONTAINS(Price_Rule_Log__c,",'
-            ,',")),Price_Rule_Log__c,NULLVALUE(Price_Rule_Log__c,"") & "'
-            ,',")'
+		'IF(OR(BEGINS(Price_Rule_Log__c,"',
+		',"),CONTAINS(Price_Rule_Log__c,",',
+		',")),Price_Rule_Log__c,NULLVALUE(Price_Rule_Log__c,"") & "',
+		',")'
     };
     
     @InvocableMethod
@@ -28,21 +28,22 @@ public with sharing class PriceRuleLogger {
         Integer actionsInserted = 0;
         
         //lists of price rules
-        List<Id> ruleIds = new List<Id>();
-        List<SBQQ__PriceRule__c> priceRulesToUpdate = new List<SBQQ__PriceRule__c>();
-        
+        List<Id> ruleIds = new List<Id>();        
+
         //handle flow input
-        for(RuleIdInput input : inputList){
-            if(input.ruleId != null){
-                ruleIds.add(input.ruleId);
-            }
-        } 
+        if( ( inputList != null ) && !inputList.isEmpty() ){
+            for(RuleIdInput input : inputList){
+                if(input.ruleId != null){
+                    ruleIds.add(input.ruleId);
+                }
+            } 
+        }
         
         //perform query to fetch applicable records
         Map<id,SBQQ__PriceRule__c> priceRulesMap = new Map<id,SBQQ__PriceRule__c>((List<SBQQ__PriceRule__c>)Database.query(generateQuery(ruleIds)));
         
         //update number field on price rules
-		updatePriceRuleNum(priceRulesMap,priceRulesToUpdate);
+		List<SBQQ__PriceRule__c> priceRulesToUpdate = PriceRuleLogger.updatePriceRuleNum( priceRulesMap );
         
         //perform updates
         if(priceRulesToUpdate.size()>0){
@@ -84,8 +85,8 @@ public with sharing class PriceRuleLogger {
     }
     
     //method to update number field on price rules
-    private static void updatePriceRuleNum(Map<id,SBQQ__PriceRule__c> priceRulesMap,List<SBQQ__PriceRule__c> priceRulesToUpdate){
-        system.debug(priceRulesMap);
+    private static List<SBQQ__PriceRule__c> updatePriceRuleNum( Map<id,SBQQ__PriceRule__c> priceRulesMap ){
+        List<SBQQ__PriceRule__c> priceRulesToUpdate = new List<SBQQ__PriceRule__c>();
         if(priceRulesMap != null){
             Decimal maxPriceRuleNum = getMaxNumber();
             for(SBQQ__PriceRule__c priceRule: priceRulesMap.values())
@@ -99,6 +100,7 @@ public with sharing class PriceRuleLogger {
                 }
             }
         }
+        return priceRulesToUpdate;
     }
     
     //get max number from existing price rules
@@ -106,7 +108,9 @@ public with sharing class PriceRuleLogger {
         Decimal maxNum = 1;
         AggregateResult result = [SELECT MAX(Price_Rule_Number__c)maxNumber FROM SBQQ__PriceRule__c];
         if(result != null){
-            maxNum = ((Decimal)result.get('maxNumber') ?? 0) + 1;
+            if(result.get('maxNumber') != null){
+                maxNum = (Decimal)result.get('maxNumber') + 1;
+            }
         }
         return maxNum;
     }
@@ -122,14 +126,16 @@ public with sharing class PriceRuleLogger {
         if( priceRules!= null && !priceRules.isEmpty()){
             //create actions for each rule
             for(SBQQ__PriceRule__c rule: priceRules){
-                Integer num = (Integer)rule.Price_Rule_Number__c;
-                SBQQ__PriceAction__c action = new SBQQ__PriceAction__c();
-                action.SBQQ__TargetObject__c = 'Quote Line';
-                action.SBQQ__Field__c = 'Price_Rule_Log__c';
-                //insert PR num between template Strings to construct formula
-                action.SBQQ__Formula__c = String.join(formulaTemplate,String.valueOf(num));
-                action.SBQQ__Rule__c = rule.id;
-                insertList.add(action);
+                if( rule.Price_Rule_Number__c != null ){
+                    Integer num = (Integer)rule.Price_Rule_Number__c;
+                    SBQQ__PriceAction__c action = new SBQQ__PriceAction__c();
+                    action.SBQQ__TargetObject__c = 'Quote Line';
+                    action.SBQQ__Field__c = 'Price_Rule_Log__c';
+                    //insert PR num between template Strings to construct formula
+                    action.SBQQ__Formula__c = String.join(formulaTemplate,String.valueOf(num));
+                    action.SBQQ__Rule__c = rule.id;
+                    insertList.add(action);
+                }
             }
         }
         
@@ -149,15 +155,10 @@ public with sharing class PriceRuleLogger {
     
     //method to log exceptions in two dml operations
     private static void logException(Exception e, String methodName){
-        if(
-            ( e!=null ) 
-            && !String.isBlank(methodName)
-        ){
-            NSP_ErrorLogHandler.logException(
-                PriceRuleLogger.class.getName() ,
-                methodName ,
-                e
-            );
-        }
+        NSP_ErrorLogHandler.logException(
+            PriceRuleLogger.class.getName() ,
+            methodName ,
+            e
+        );
     }
 }
