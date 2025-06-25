@@ -1590,7 +1590,7 @@
                 <fieldItem>Record.pse__Is_Billable__c</fieldItem>
                 <identifier>Recordpse_Is_Billable_cField</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 OR 2</booleanFilter>
+                    <booleanFilter>1 OR 2 OR 3</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.Layout_BOB__c}</leftValue>
                         <operator>EQUAL</operator>
@@ -1600,6 +1600,11 @@
                         <leftValue>{!Record.Layout_BOB__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>RET</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>PEO Billable</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -1888,7 +1893,7 @@
                 <fieldItem>Record.NSP_BPS_Project_Template__c</fieldItem>
                 <identifier>RecordNSP_BPS_Project_Template_cField</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 OR 2 OR 3</booleanFilter>
+                    <booleanFilter>1 OR 2</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.Layout_BOB__c}</leftValue>
                         <operator>EQUAL</operator>
@@ -1898,11 +1903,6 @@
                         <leftValue>{!Record.Layout_BOB__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>ITA Impl</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>TES</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -2312,7 +2312,7 @@
                 <componentName>flexipage:fieldSection</componentName>
                 <identifier>flexipage_fieldSection4</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 OR 2 OR 3 OR 4</booleanFilter>
+                    <booleanFilter>1 OR 2 OR 3 OR 4 OR 5</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.Layout_BOB__c}</leftValue>
                         <operator>EQUAL</operator>
@@ -2332,6 +2332,11 @@
                         <leftValue>{!Record.Layout_BOB__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>ITA Impl</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>PEO Billable</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
@@ -3424,19 +3429,6 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_BPS_Project_Template__c</fieldItem>
                 <identifier>RecordNSP_BPS_Project_Template_cField2</identifier>
-                <visibilityRule>
-                    <booleanFilter>1 OR 2</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>PEO Billable</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>BPS Generic</rightValue>
-                    </criteria>
-                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -5339,7 +5331,7 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>active</name>
-                    <value>true</value>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>body</name>
@@ -5352,7 +5344,7 @@
                 <componentName>flexipage:tab</componentName>
                 <identifier>flexipage_tab5</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 OR 2 OR 3 OR 4</booleanFilter>
+                    <booleanFilter>1 OR 2 OR 3 OR 4 OR 5</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.Layout_BOB__c}</leftValue>
                         <operator>EQUAL</operator>
@@ -5372,6 +5364,11 @@
                         <leftValue>{!Record.Layout_BOB__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>RET</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>TES</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
@@ -5542,7 +5539,7 @@
                 <componentName>flexipage:tabset</componentName>
                 <identifier>flexipage_tabset4</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 OR 2</booleanFilter>
+                    <booleanFilter>1 OR 2 OR 3</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.Layout_BOB__c}</leftValue>
                         <operator>EQUAL</operator>
@@ -5552,6 +5549,11 @@
                         <leftValue>{!Record.Layout_BOB__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>BPS Generic</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>TES</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
