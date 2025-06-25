@@ -107,10 +107,11 @@ public with sharing class PriceRuleLogger {
     private static Decimal getMaxNumber(){
         Decimal maxNum = 1;
         AggregateResult result = [SELECT MAX(Price_Rule_Number__c)maxNumber FROM SBQQ__PriceRule__c];
-        if(result != null){
-            if(result.get('maxNumber') != null){
-                maxNum = (Decimal)result.get('maxNumber') + 1;
-            }
+        if(
+            ( result != null ) 
+            && ( result.get('maxNumber') != null )
+        ){
+            maxNum = (Decimal)result.get('maxNumber') + 1;
         }
         return maxNum;
     }
