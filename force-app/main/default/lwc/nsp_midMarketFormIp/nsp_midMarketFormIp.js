@@ -272,26 +272,24 @@ export default class NSP_MidMarketFormIp extends NavigationMixin(
             return { label, value, iconName };
         });
     }
-
-    getChildRecordsForAllTargetIpRecords(
-        objApiName,
-        childRecords = [],
-        targetIPs = []
-    ) {
+    
+    getChildRecordsForAllTargetIpRecords(objApiName, childRecords = [], targetIPs = []) {
         const ipFieldName = RELATED_FIELD_NAME[objApiName];
-        const clonedRecs = [];
-
-        childRecords.forEach((rec) => {
-            targetIPs.forEach((targetIpRecId) => {
-                const recObj = { ...rec };
-                delete recObj.Id;
-                recObj[ipFieldName] = targetIpRecId;
-                recObj.attributes = { type: objApiName };
-                clonedRecs.push(recObj);
-            });
-        });
-        return clonedRecs;
+        
+        return childRecords.flatMap((record) =>
+            targetIPs.map((targetIpId) => ({
+                ...this.cloneRecordWithoutId(record),
+                [ipFieldName]: targetIpId,
+                attributes: { type: objApiName }
+            }))
+        );
     }
+    
+    cloneRecordWithoutId(record) {
+        const { Id, ...rest } = record;
+        return { ...rest };
+    }
+
 
     addCopyDataRecords() {
         const { state, postUpsertRecords } = this;
@@ -605,7 +603,7 @@ export default class NSP_MidMarketFormIp extends NavigationMixin(
                 const tabElement = this.template.querySelector(
                 `lightning-vertical-navigation-item[data-section="${sectionId}"]`
                 );
-                
+
                 if (tabElement) {
                     tabElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 }
