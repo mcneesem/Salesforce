@@ -226,10 +226,11 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
         resourceMap.put('RequestAuthDomain', 'account-d.docusign.com');
         resourceMap.put('RequestAuthEndpoint', 'https://account-d.docusign.com/oauth/token');
 
+        // retrieve org-specific values from DocuSign_Settings__c
         Map<String, DocuSign_Settings__c> docusignSettingsMap = DocuSign_Settings__c.getAll();
         for (String key : docusignSettingsMap.keySet()) {
             DocuSign_Settings__c docusignSettings = DocuSign_Settings__c.getValues(key);
-            if (sandboxName.startsWith(key.toLowerCase().left(3))) { // retrieve org-specific values from DocuSign_Settings__c
+            if (sandboxName.startsWith(key.toLowerCase().left(3))) {
                 resourceMap.put('CLMv2ApiEndpoint', 'https://' + docusignSettings.CLMBaseUrl__c + '/v2/');
                 resourceMap.put('DSAccountID', docusignSettings.AccountId__c);
                 resourceMap.put('DSUserName', docusignSettings.UserId__c);
