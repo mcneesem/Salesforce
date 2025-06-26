@@ -8,7 +8,7 @@
     </values>
     <values>
         <field>NSP_Days_Before_Expiry__c</field>
-        <value xsi:type="xsd:double">365.0</value>
+        <value xsi:type="xsd:double">30.0</value>
     </values>
     <values>
         <field>NSP_Default_Opportunity_Owner__c</field>
