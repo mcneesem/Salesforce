@@ -18,6 +18,10 @@
                 <behavior>Required</behavior>
                 <field>LeadId</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Required</behavior>
+                <field>Status</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
