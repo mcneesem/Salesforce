@@ -72,6 +72,7 @@ class NSP_PrepSandboxTest {
         NSP_PrepSandbox.doCLabels('stage');
         NSP_PrepSandbox.doCSettings('merge');
         NSP_PrepSandbox.doCSettings('test');
+        NSP_PrepSandbox.doCMetadata('test');
         Test.stopTest();
     }
 
