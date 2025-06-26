@@ -578,7 +578,6 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
             cS1.NSP_SiteUrl__c = 'https://insperity--' + sandboxName + '.sandbox.my.salesforce-sites.com/';
             upsert cS1;
         } catch(Exception e) {
-            System.debug('An exception occurred in doCSettings: ' + e.getMessage());
             NSP_PrepSandbox.handleException( e , 'doCSettings:NSP_GoogleRecaptchaSettings__c' );
         }
 
@@ -726,7 +725,6 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
             List<StaticResource> srList = new List<StaticResource>([SELECT Id, Body, Name FROM StaticResource WHERE Name IN :resourceMap.keySet()]);
 
             for (StaticResource sr : srList) {
-                System.debug(sr.Name + ' : ' + resourceMap.get(sr.Name));
         		MetadataService.Document doc = new MetadataService.Document();
                 doc.fullName = 'Services/' + resourceMap.get(sr.Name) + '.png';
                 doc.name = replaceUnderscoresWithSpaces(resourceMap.get(sr.Name));
