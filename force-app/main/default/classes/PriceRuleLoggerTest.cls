@@ -1,9 +1,8 @@
 @isTest
 private class PriceRuleLoggerTest {
-    
-    
+
     @IsTest
-    static void testLogPriceRules() {
+    private static void testLogPriceRules() {
         // Create test data
         SBQQ__PriceRule__c priceRule = new SBQQ__PriceRule__c();
         priceRule.SBQQ__Active__c = true;
@@ -12,18 +11,20 @@ private class PriceRuleLoggerTest {
         priceRule.SBQQ__TargetObject__c = 'Calculator';
         priceRule.Name = 'Test Price Rule';
         insert priceRule;
-        
+
         // Create test input
         PriceRuleLogger.RuleIdInput input = new PriceRuleLogger.RuleIdInput();
         input.ruleId = priceRule.Id;
-        
+
         // Call the method to test
         Test.startTest();
         List<PriceRuleLogger.RulesLoggedOutput> outputList = PriceRuleLogger.logPriceRules(new List<PriceRuleLogger.RuleIdInput>{input});
         Test.stopTest();
-        
+
         // Verify the results
         System.assertEquals(1, outputList.size()); 
         System.assertEquals(1, outputList[0].rulesLogged);
     }
+
 }
+//
