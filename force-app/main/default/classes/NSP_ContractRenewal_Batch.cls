@@ -68,7 +68,6 @@ public class NSP_ContractRenewal_Batch implements Database.Batchable<SObject>, D
         String Days30ListasString = '(\'' + String.join(ProductsWith30DaysList, '\', \'') + '\')';
         String Days60ListasString = '(\'' + String.join(ProductsWith60DaysList, '\', \'') + '\')';
         //query formation
-
         query = 'SELECT Id , SBQQ__RenewalForecast__c , SBQQ__RenewalQuoted__c , ContractTerm , NSP_Product_Type__c , SBQQ__ActiveContract__c '
         query += 'FROM Contract '
         query += 'WHERE '
