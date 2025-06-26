@@ -1,5 +1,5 @@
 global class NSP_PrepSandbox implements SandboxPostCopy {
-    // test w/ NSP_PrepSandboxTest (84%)
+    // test w/ NSP_PrepSandboxTest (85%)
 
     static final string STRING_INVALID = '.invalid';
     static final string DOCUSIGN_BASE_URL = 'https://uatna11.springcm.com/atlas/doclauncher/OneClickDocGen';
@@ -204,7 +204,6 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
     }
 
     public static void doDS_mdt(String sandboxName, List<List<MetadataService.Metadata>> allMetadataList, List<NSP_DocuSign_Signers__mdt> cMdDocuSigners) {
-        Integer batch = allMetadataList.size() - 1;
         for (NSP_DocuSign_Signers__mdt cMdRecord : cMdDocuSigners) {
             String name = cMdRecord.DeveloperName;
             String fullName = 'NSP_DocuSign_Signers.' + name; //custom metadata full name
@@ -216,29 +215,19 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
     }
 
     public static void doDSREST_mdt(String sandboxName, List<List<MetadataService.Metadata>> allMetadataList, List<DocuSignRESTSettings__mdt> cMdDocuSignREST) {
-        Integer batch = allMetadataList.size() - 1;
         // map of DocuSignRESTSettings__mdt names to default values for DEV
         Map<String, String> resourceMap = new Map<String, String>();
-        resourceMap.put('CLMv2ApiEndpoint', 'https://apiuatna11.springcm.com/v2/');
-        resourceMap.put('DSAccountID', 'e22ffda7-6a07-476c-89df-175b2404dd77');
-        resourceMap.put('DSUserName', '23931070-6fd0-461c-8ce4-a4132fb36ffe');
-        resourceMap.put('NSP_Docusign_Callback_Username', 'lisa.myers@insperity.com');
-        resourceMap.put('RequestAuthDomain', 'account-d.docusign.com');
-        resourceMap.put('RequestAuthEndpoint', 'https://account-d.docusign.com/oauth/token');
 
         // retrieve org-specific values from DocuSign_Settings__c
         Map<String, DocuSign_Settings__c> docusignSettingsMap = DocuSign_Settings__c.getAll();
-        for (String key : docusignSettingsMap.keySet()) {
-            DocuSign_Settings__c docusignSettings = DocuSign_Settings__c.getValues(key);
-            if (sandboxName.startsWith(key.toLowerCase().left(3))) {
-                resourceMap.put('CLMv2ApiEndpoint', 'https://api' + docusignSettings.CLMBaseUrl__c + '/v2/');
-                resourceMap.put('DSAccountID', docusignSettings.AccountId__c);
-                resourceMap.put('DSUserName', docusignSettings.UserId__c);
-                resourceMap.put('NSP_Docusign_Callback_Username', docusignSettings.Docusign_Callback_Username__c);
-                resourceMap.put('RequestAuthDomain', docusignSettings.BaseUrl__c);
-                resourceMap.put('RequestAuthEndpoint', 'https://' + docusignSettings.BaseUrl__c + '/oauth/token');
-            }
-        }
+        String keyVal = (docusignSettingsMap.containsKey(sandboxName.toUpperCase().left(3))) ? sandboxName.toUpperCase().left(3) : 'DEV';
+        DocuSign_Settings__c docusignSettings = DocuSign_Settings__c.getValues(keyVal);
+        resourceMap.put('CLMv2ApiEndpoint', 'https://api' + docusignSettings.CLMBaseUrl__c + '/v2/');
+        resourceMap.put('DSAccountID', docusignSettings.AccountId__c);
+        resourceMap.put('DSUserName', docusignSettings.UserId__c);
+        resourceMap.put('NSP_Docusign_Callback_Username', docusignSettings.Docusign_Callback_Username__c);
+        resourceMap.put('RequestAuthDomain', docusignSettings.BaseUrl__c);
+        resourceMap.put('RequestAuthEndpoint', 'https://' + docusignSettings.BaseUrl__c + '/oauth/token');
 
         for (DocuSignRESTSettings__mdt cMdRecord : cMdDocuSignREST) {
             String name = cMdRecord.DeveloperName;
@@ -250,13 +239,12 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
     }
 
     public static void doPEO_mdt(String sandboxName, List<List<MetadataService.Metadata>> allMetadataList, List<NSP_PEO_Implementations__mdt> cMdPEOImps) {
-        Integer batch = allMetadataList.size() - 1;
         for (NSP_PEO_Implementations__mdt cMdRecord : cMdPEOImps) {
             String name = cMdRecord.DeveloperName;
             String fullName = 'NSP_PEO_Implementations.' + name; //custom metadata full name
             String value = cMdRecord.NSP_Email_Address__c.substringBefore(STRING_INVALID).trim() + STRING_INVALID;
             switch on sandboxName {
-                when 'merge','test','stage','devserva','devservb' {
+                when 'merge','test','stage','devserva','devservb','devservx' {
                     value = 'monica.adams@insperity.com';
                 }
             }
@@ -267,7 +255,6 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
     }
 
     public static void doRET_mdt(String sandboxName, List<List<MetadataService.Metadata>> allMetadataList, List<NSP_Retirement_Services__mdt> cMdRetSvcs) {
-        Integer batch = allMetadataList.size() - 1;
         for (NSP_Retirement_Services__mdt cMdRecord : cMdRetSvcs) {
             string name = cMdRecord.DeveloperName;
             string fullName = 'NSP_Retirement_Services.' + name; //custom metadata full name
@@ -305,7 +292,6 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
     }
 
     public static void doTmpls_mdt(String sandboxName, Map<String, Id> mTmplId, List<List<MetadataService.Metadata>> allMetadataList, List<NSP_ProjectTemplateMapping__mdt> cMdTmpls) {
-        Integer batch = allMetadataList.size() - 1;
         for (NSP_ProjectTemplateMapping__mdt cMdTmpl : cMdTmpls) {
             if (mTmplId.containsKey(cMdTmpl.Template_Name__c) || Test.isRunningTest()) {
                 string name = cMdTmpl.DeveloperName;
@@ -318,7 +304,6 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
     }
 
     public static void doTmplKeys_mdt(String sandboxName, Map<String, Id> mTmplId, List<List<MetadataService.Metadata>> allMetadataList, List<Template_Key_and_Id_Mapping__mdt> cMdTmplKeys) {
-        Integer batch = allMetadataList.size() - 1;
         for (Template_Key_and_Id_Mapping__mdt cMdTmplKey : cMdTmplKeys) {
             if (mTmplId.containsKey(cMdTmplKey.Template_Name__c) || Test.isRunningTest()) {
                 string name = cMdTmplKey.DeveloperName;
@@ -593,7 +578,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
         }
 
         try {
-            OrgSettings__c cS3 = OrgSettings__c.getOrgDefaults();
+            OrgSettings__c cS3 = NSP_PrepSandbox.settings;
             cS3.OrgDomainUrl__c = URL.getOrgDomainUrl().toExternalForm().toLowerCase();
             cS3.Instance__c = [ SELECT InstanceName FROM Organization WHERE Id!=null LIMIT 1 ].InstanceName.toLowerCase();
             cS3.IsSandbox__c =  [ SELECT IsSandbox FROM Organization WHERE Id!=null LIMIT 1 ].IsSandbox;
@@ -751,12 +736,12 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
 
     @AuraEnabled(cacheable=true)
     public static OrgSettings__c getOrgSettings() {
-        return OrgSettings__c.getOrgDefaults();
+        return NSP_PrepSandbox.settings;
     }
 
     public static void setPostRefreshRunFlag(Integer iStep) {
         try {
-            OrgSettings__c cS = OrgSettings__c.getOrgDefaults();
+            OrgSettings__c cS = NSP_PrepSandbox.settings;
             if (iStep == 1) cS.PostRefreshRun__c = true;
             if (iStep == 2) cS.PostRefreshRun2__c = true;
             if (iStep == 3) cS.PostRefreshRun3__c = true;
@@ -775,11 +760,6 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
     }
 
     private static String apiEnabledSessionId() {
-        // PageReference sessionPage = Page.SessionId;
-        // String vfContent = sessionPage.getContent().toString();
-        // Integer startIndex = vfContent.indexOf('Start_Of_Session_Id') + 'Start_Of_Session_Id'.length();
-        // Integer endIndex = vfContent.indexOf('End_Of_Session_Id');
-        // return vfContent.substring(startIndex, endIndex);
         return UserInfo.getSessionId();
     }
 
@@ -896,5 +876,15 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
             methodName ,
             e
         );
+    }
+
+    private static OrgSettings__c settings {
+        private get {
+            if ( settings == null ) {
+                settings = OrgSettings__c.getOrgDefaults();
+            }
+            return settings;
+        }
+        private set;
     }
 }
