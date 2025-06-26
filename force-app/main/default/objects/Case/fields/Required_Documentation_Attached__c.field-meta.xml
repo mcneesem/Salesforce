@@ -3,27 +3,10 @@
     <fullName>Required_Documentation_Attached__c</fullName>
     <defaultValue>false</defaultValue>
     <externalId>false</externalId>
-    <inlineHelpText>Attach email from client in Files then update to Yes</inlineHelpText>
+    <inlineHelpText>Attach email from client in Files then check the box</inlineHelpText>
     <label>Required Documentation Attached</label>
-    <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
-    <type>Picklist</type>
-    <valueSet>
-        <restricted>true</restricted>
-        <valueSetDefinition>
-            <sorted>false</sorted>
-            <value>
-                <fullName>Yes</fullName>
-                <default>false</default>
-                <label>Yes</label>
-            </value>
-            <value>
-                <fullName>No</fullName>
-                <default>true</default>
-                <label>No</label>
-            </value>
-        </valueSetDefinition>
-    </valueSet>
+    <type>Checkbox</type>
 </CustomField>
