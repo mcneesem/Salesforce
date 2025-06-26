@@ -220,7 +220,13 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
 
         // retrieve org-specific values from DocuSign_Settings__c
         Map<String, DocuSign_Settings__c> docusignSettingsMap = DocuSign_Settings__c.getAll();
-        String keyVal = (docusignSettingsMap.containsKey(sandboxName.toUpperCase().left(3))) ? sandboxName.toUpperCase().left(3) : 'DEV';
+        String keyVal = 'DEV';
+        for (String key : docusignSettingsMap.keySet()) {
+            if (key.toUpperCase().startsWith(sandboxName.toUpperCase().left(3))) {
+                keyVal = key; // use the key that matches the sandbox name
+                break;
+            }
+        }
         DocuSign_Settings__c docusignSettings = DocuSign_Settings__c.getValues(keyVal);
         resourceMap.put('CLMv2ApiEndpoint', 'https://api' + docusignSettings.CLMBaseUrl__c + '/v2/');
         resourceMap.put('DSAccountID', docusignSettings.AccountId__c);
