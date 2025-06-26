@@ -56,6 +56,11 @@
         <label>HRCore Solution</label>
     </customValue>
     <customValue>
+        <fullName>HRScale</fullName>
+        <default>false</default>
+        <label>HRScale</label>
+    </customValue>
+    <customValue>
         <fullName>Insurance Services</fullName>
         <default>false</default>
         <label>Insurance Services</label>

@@ -21,6 +21,11 @@
         <label>HR360 - Select Edition</label>
     </customValue>
     <customValue>
+        <fullName>HRScale</fullName>
+        <default>false</default>
+        <label>HRScale</label>
+    </customValue>
+    <customValue>
         <fullName>Applicant Tracking</fullName>
         <default>false</default>
         <label>Applicant Tracking</label>
