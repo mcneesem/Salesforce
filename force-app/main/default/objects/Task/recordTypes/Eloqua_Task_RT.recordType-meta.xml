@@ -1170,10 +1170,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>1400</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>1401</fullName>
             <default>false</default>
         </values>
@@ -1223,10 +1219,6 @@
         </values>
         <values>
             <fullName>2101</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>2110</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1455,10 +1447,6 @@
         </values>
         <values>
             <fullName>4466</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>4477</fullName>
             <default>false</default>
         </values>
         <values>
