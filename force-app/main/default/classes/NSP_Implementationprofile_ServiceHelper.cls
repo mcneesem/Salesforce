@@ -1,6 +1,8 @@
 public class NSP_Implementationprofile_ServiceHelper {
     // test w/ NSP_FSOImplementationControllerTest, NSP_ImpprofileServiceHelper_Test, NSP_MMImplProfile_UpdateTest (80%)
 
+    private List<Case> caseToInsertList = new List<Case>();
+    private List<NSP_Implementation_Profile_Automation__c> ipAutomationRecords = new List<NSP_Implementation_Profile_Automation__c>();
     private String impRecordId;
     private String  impAutomationName;
     private String impMethodName;
@@ -231,6 +233,19 @@ public class NSP_Implementationprofile_ServiceHelper {
     }
     
     private void execute(){
+        for(String automation: ipRecordsByAutomation.keySet()) {
+            createCases(automation);
+        }
+
+        if(!caseToInsertList.isEmpty()){
+            //check for existing Cases to avoid duplications
+            recToInsert.addAll(ipAutomationHelper.getnewCasestoInsert(caseToInsertList));
+        }
+        if(!ipAutomationRecords.isEmpty()){
+            //check for existing Automation record and store the new Automation records
+            recToInsert.addAll(getnewAutomationListtoInsert(ipAutomationRecords));
+        }
+        
         if(ipRecordsByAutomation.containsKey(CLIENT_PROFILE_FN)){
             createCaseClientProfileInfo();
         }
@@ -1257,6 +1272,61 @@ public class NSP_Implementationprofile_ServiceHelper {
         
         return eachCase;
         
+    }
+
+    private void createCases( String automation ) {
+        Case_Automation__mdt caseMdt = null;
+        if(automation != null){
+            caseMdt = Case_Automation__mdt.getInstance(automation);
+        }
+        if(ipRecordsByAutomation.containsKey(automation) && ipRecordsByAutomation.get(automation) != null) {
+            for(Id ipRecId : ipRecordsByAutomation.get(automation)){
+                if(newIPs != null) {
+                    Implementation_Profile__c ipRec = newIPs.get(ipRecId);
+                    if((ipRec !=null && (isRerun || ipRec.NSP_Form_Completed__c) && !isSaveForm )){
+                        caseAutomations(automation,caseMdt, ipRecId);
+                    }
+                }
+            }
+        }
+    }
+
+    private void caseAutomations(
+        String automation ,
+        Case_Automation__mdt caseMdt ,
+        Id ipRecId
+        )
+    {
+        if ( ( data != null )
+            && data.containsKey( IP_IDENTIFIER )
+            && ( data.get( IP_IDENTIFIER ) != null )
+            && data.get( IP_IDENTIFIER ).containsKey( ipRecId )
+            && ( data.get( IP_IDENTIFIER ).get( ipRecId ) != null )
+            )
+        {
+            Implementation_Profile__c ipwithValue=(Implementation_Profile__c) data.get(IP_IDENTIFIER).get(ipRecId);
+            //Add here Case automations for IP
+        }
+    }
+
+    private Case createComplianceCase(Case_Automation__mdt caseMdt,Id ipRecId,Implementation_Profile__c ipwithValue) {
+        Case eachCase = new Case();
+        
+        eachCase.NSP_Opened_Date__c = Date.today();
+        eachCase.AccountId = ipWithValue.NSP_Asset__r.AccountId;
+        eachCase.AssetId = ipWithValue.NSP_Asset__c;
+        eachCase.NSP_ClientNumber__c = ipwithValue.NSP_AIMS_ClientNo__c;
+        eachCase.NSP_Segment__c = ipWithValue.NSP_Asset__r.NSP_Client_Segment_type__c;
+        eachCase.Status = NSP_ServiceConstants.OPEN;
+        eachCase.NSP_Case_Sub_Status__c = NSP_ServiceConstants.UNASSIGNED;
+        eachCase.NSP_Rating__c = NSP_ServiceConstants.CASE_RATING;
+        eachCase.NSP_Implementation_Profile__c=ipRecId;  
+        eachCase.Subject = SchemaController.safeText(caseMdt.Subject__c ,sObjectType.Case.Fields.Subject);
+        eachCase.Origin = SchemaController.safeText(caseMdt.Origin__c ,sObjectType.Case.Fields.Origin);
+        eachCase.NSP_Instructions__c = SchemaController.safeText(caseMdt.Instructions__c ,sObjectType.Case.Fields.NSP_Instructions__c);
+    	eachCase.NSP_Category__c = SchemaController.safeText(caseMdt.Category__c ,sObjectType.Case.Fields.NSP_Category__c);
+        eachCase.NSP_SubCategory__c = SchemaController.safeText(caseMdt.Sub_Category__c ,sObjectType.Case.Fields.NSP_SubCategory__c);
+        return eachCase;
     }
     
     public void createMMCaseOPTUM(){
@@ -2712,6 +2782,7 @@ public class NSP_Implementationprofile_ServiceHelper {
                 NSP_BPA_BPC__c ,
                 NSP_BPA_BPC_Ids__c ,
                 NSP_Asset__r.AccountId ,
+            	NSP_Asset__r.NSP_Client_Segment_type__c,
                 NSP_Form_Completed__c ,
                 NSP_Payroll_Specialist__c ,
                 NSP_Payroll_Specialist__r.pse__Salesforce_User__c ,
