@@ -15,7 +15,7 @@
             </value>
         </assignmentItems>
     </assignments>
-    <description>Number of Employees changed on a MM Opty for New Product with WA, WO, WS, or WX primary product</description>
+    <description>Updated to include &quot;HRScale.&quot; Number of Employees changed on a MM Opty for New Product with WA, WO, WS, or WX primary product</description>
     <environments>Default</environments>
     <interviewLabel>Opportunity - Before Save {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Opportunity - Before Save - Number of Employees Changed - MM</label>
@@ -44,7 +44,7 @@
         <connector>
             <targetReference>Update_Num_EEs_on_Acct_field</targetReference>
         </connector>
-        <filterLogic>1 AND (2 OR 3 OR 4 OR 5) AND 6 AND (7 OR 8)</filterLogic>
+        <filterLogic>1 AND (2 OR 3 OR 4 OR 5 OR 6) AND 7 AND (8 OR 9)</filterLogic>
         <filters>
             <field>NSP_Number_of_Employees__c</field>
             <operator>IsChanged</operator>
@@ -78,6 +78,13 @@
             <operator>EqualTo</operator>
             <value>
                 <stringValue>WS</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>NSP_PrimaryProduct__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>HRScale</stringValue>
             </value>
         </filters>
         <filters>
