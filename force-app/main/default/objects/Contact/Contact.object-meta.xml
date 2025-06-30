@@ -365,8 +365,8 @@
     </profileSearchLayouts>
     <profileSearchLayouts>
         <fields>FULL_NAME</fields>
-        <fields>NSP_Contact_Info__c</fields>
-        <fields>NSP_Job_Title__c</fields>
+        <fields>NSP_SSN__c</fields>
+        <fields>NSP_Per_ID__c</fields>
         <fields>ACCOUNT.NAME</fields>
         <fields>CONTACT.PHONE1</fields>
         <fields>NSP_Preferred_First_Name__c</fields>
