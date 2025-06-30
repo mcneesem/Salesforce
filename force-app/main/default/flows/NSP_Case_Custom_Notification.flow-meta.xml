@@ -3,8 +3,8 @@
     <actionCalls>
         <name>Send_Email_Alert_For_Case_Creation</name>
         <label>Send Email Alert For Case Creation</label>
-        <locationX>1166</locationX>
-        <locationY>2184</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <actionName>Case.NSP_Case_Assignment_Email_Notification</actionName>
         <actionType>emailAlert</actionType>
         <faultConnector>
@@ -18,14 +18,13 @@
             </value>
         </inputParameters>
         <nameSegment>Case.NSP_Case_Assignment_Email_Notification</nameSegment>
-        <versionSegment>1</versionSegment>
     </actionCalls>
-    <apiVersion>56.0</apiVersion>
+    <apiVersion>64.0</apiVersion>
     <assignments>
         <name>Add_Active_Group_Member_Id</name>
         <label>Add Active Group Member Id</label>
-        <locationX>1540</locationX>
-        <locationY>1224</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignmentItems>
             <assignToReference>ActiveGroupMemberds</assignToReference>
             <operator>Add</operator>
@@ -40,8 +39,8 @@
     <assignments>
         <name>assign_profile_id</name>
         <label>assign profile id</label>
-        <locationX>726</locationX>
-        <locationY>816</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignmentItems>
             <assignToReference>profilelist</assignToReference>
             <operator>Add</operator>
@@ -56,8 +55,8 @@
     <assignments>
         <name>store_User_Group_Id</name>
         <label>store User Group Id</label>
-        <locationX>1408</locationX>
-        <locationY>708</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignmentItems>
             <assignToReference>UserIdList</assignToReference>
             <operator>Add</operator>
@@ -72,8 +71,8 @@
     <decisions>
         <name>Check_Active_Group_Member_Ids</name>
         <label>Check Active Group Member Ids</label>
-        <locationX>1320</locationX>
-        <locationY>1608</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <defaultConnector>
             <targetReference>Check_Group_Email</targetReference>
         </defaultConnector>
@@ -97,8 +96,8 @@
     <decisions>
         <name>Check_Active_Group_Member_Ids_Contents</name>
         <label>Check Active Group Member Ids Contents</label>
-        <locationX>1122</locationX>
-        <locationY>1716</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <defaultConnector>
             <targetReference>Send_Email_Alert_For_Case_Creation</targetReference>
         </defaultConnector>
@@ -119,8 +118,8 @@
     <decisions>
         <name>Check_Active_Group_Members</name>
         <label>Check Active Group Members</label>
-        <locationX>1320</locationX>
-        <locationY>1008</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <defaultConnector>
             <targetReference>Collect_Active_Group_Member_Ids</targetReference>
         </defaultConnector>
@@ -144,8 +143,8 @@
     <decisions>
         <name>Check_Bypass</name>
         <label>Check Bypass</label>
-        <locationX>594</locationX>
-        <locationY>276</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <defaultConnector>
             <targetReference>Check_Owner_User_vs_Queue</targetReference>
         </defaultConnector>
@@ -166,8 +165,8 @@
     <decisions>
         <name>Check_Group_Email</name>
         <label>Check Group Email</label>
-        <locationX>1518</locationX>
-        <locationY>1716</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Has_Group_Email</name>
@@ -195,8 +194,8 @@
     <decisions>
         <name>Check_Owner_User_vs_Queue</name>
         <label>Check Owner: User vs Queue</label>
-        <locationX>1166</locationX>
-        <locationY>384</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Is_User</name>
@@ -246,8 +245,8 @@
     <decisions>
         <name>Check_Owner_vs_Creator</name>
         <label>Check Owner vs Creator</label>
-        <locationX>462</locationX>
-        <locationY>492</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <defaultConnector>
             <targetReference>Get_Profile_Id</targetReference>
         </defaultConnector>
@@ -268,8 +267,8 @@
     <decisions>
         <name>check_service_user</name>
         <label>check service user</label>
-        <locationX>638</locationX>
-        <locationY>1116</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>is_service_user</name>
@@ -287,14 +286,15 @@
             <label>is service user</label>
         </rules>
     </decisions>
+    <description>Updated for AZD-427202</description>
     <environments>Default</environments>
     <interviewLabel>Case Custom Notification {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Case Custom Notification</label>
     <loops>
         <name>Collect_Active_Group_Member_Ids</name>
         <label>Collect Active Group Member Ids</label>
-        <locationX>1452</locationX>
-        <locationY>1116</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <collectionReference>Get_Active_Group_Members</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -307,8 +307,8 @@
     <loops>
         <name>Get_Group_User</name>
         <label>Get_Group_User</label>
-        <locationX>1320</locationX>
-        <locationY>600</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <collectionReference>getGroupUser</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -321,8 +321,8 @@
     <loops>
         <name>loop_on_profile_id</name>
         <label>loop on profile id</label>
-        <locationX>638</locationX>
-        <locationY>708</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <collectionReference>Get_Profile_Id</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -354,8 +354,8 @@
     <recordLookups>
         <name>Get_Active_Group_Members</name>
         <label>Get Active Group Members</label>
-        <locationX>1320</locationX>
-        <locationY>900</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_Active_Group_Members</targetReference>
@@ -383,8 +383,8 @@
     <recordLookups>
         <name>Get_Profile_Id</name>
         <label>Get Profile Id</label>
-        <locationX>638</locationX>
-        <locationY>600</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>loop_on_profile_id</targetReference>
@@ -395,13 +395,6 @@
             <operator>EqualTo</operator>
             <value>
                 <stringValue>BPS Service</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>Name</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Contact Center</stringValue>
             </value>
         </filters>
         <filters>
@@ -432,8 +425,8 @@
     <recordLookups>
         <name>get_user</name>
         <label>get user</label>
-        <locationX>638</locationX>
-        <locationY>1008</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>check_service_user</targetReference>
@@ -467,8 +460,8 @@
     <recordLookups>
         <name>GetGroupEmail</name>
         <label>GetGroupEmail</label>
-        <locationX>1320</locationX>
-        <locationY>1500</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_Active_Group_Member_Ids</targetReference>
@@ -490,8 +483,8 @@
     <recordLookups>
         <name>getGroupUser</name>
         <label>getGroupUser</label>
-        <locationX>1320</locationX>
-        <locationY>492</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Group_User</targetReference>
@@ -511,7 +504,7 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <start>
-        <locationX>50</locationX>
+        <locationX>0</locationX>
         <locationY>0</locationY>
         <filterLogic>and</filterLogic>
         <filters>
@@ -535,8 +528,8 @@
     <subflows>
         <name>Fault_Handler</name>
         <label>Fault Handler</label>
-        <locationX>2134</locationX>
-        <locationY>2292</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultElement</name>
