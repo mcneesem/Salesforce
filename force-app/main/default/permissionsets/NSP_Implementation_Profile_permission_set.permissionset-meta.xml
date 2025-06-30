@@ -9489,11 +9489,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Implementation_Profile__c.Federal_Labor_Law_poster</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Implementation_Profile__c.Chngs_for_cafeteria_plan_questionnaire__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -9535,11 +9530,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Implementation_Profile__c.Client_Profile_Information__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Implementation_Profile__c.Client_Segment__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -11276,11 +11266,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Implementation_Profile__c.NSP_separate_pay_document_specify__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Implementation_Profile__c.National_Account_Type__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

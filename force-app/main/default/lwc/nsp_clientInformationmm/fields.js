@@ -17,8 +17,7 @@ const RL_FIELDS = [
   'Have_the_SCA_EEs_been_approved__c',
   'SCA_EEs_get_wages_in_lieu_of_benefits__c',
   'Can_client_provide_EEO_filing_address__c',
-  'NSP_Are_Certified_Payroll_reports_needed__c',
-  'Federal_Labor_Law_poster__c',
+  'NSP_Are_Certified_Payroll_reports_needed__c'
 ];
 
 const FIELD_CHANGE_HANDLER_MAPPING = {
@@ -74,8 +73,6 @@ const SECTION_FIELDS = [
   'NSP_AIMS_ClientNo_HR__c',
   'Effective_Date_Payroll_Worker_comp_EPLI__c',
   'NSP_Service_Model__c',
-  'Client_Segment__c',
-  'National_Account_Type__c',
   'Client_Profile_Information__c',
   'NSP_Related_Client__c',
   'Business_Inception_Date__c',
@@ -110,7 +107,6 @@ const SECTION_FIELDS = [
   'Client_part_of_entity_w_o_NSP__c',
   'NSP_Who_receives_Insperity_Communication__c',
   'Direct_deposit_offered_to_employees__c',
-  'Federal_Labor_Law_poster__c',
   'Client_Contact_Notes__c',
   'NSP_HR_Client_Email__c',
 ];
