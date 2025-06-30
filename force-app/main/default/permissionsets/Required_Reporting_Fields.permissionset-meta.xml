@@ -818,6 +818,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>NSP_Sales_to_Implementation__c.Project__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>NSP_Sales_to_Implementation__c.X401k_Plan_Consultant__c</field>
         <readable>true</readable>
     </fieldPermissions>
