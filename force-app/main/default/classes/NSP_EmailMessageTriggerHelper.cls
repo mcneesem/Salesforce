@@ -202,7 +202,7 @@ public with sharing class NSP_EmailMessageTriggerHelper {
                                     casesToUpdate.add( currentCase );
                                     caseToEmailMessageMap.put( currentCase , eMessage );
                                 } else if (
-                                    currentCase.RecordTypeId == NSP_EmailMessageTriggerHelper.PEO_RECORDTYPEID 
+                                    ( currentCase.RecordTypeId == NSP_EmailMessageTriggerHelper.PEO_RECORDTYPEID )
                                     && !isContactCenterToAddress
                                     )
                                 {
@@ -210,10 +210,10 @@ public with sharing class NSP_EmailMessageTriggerHelper {
                                     casesToUpdate.add( currentCase );
                                 }
                             } else if (
-                                currentCase.RecordTypeId == NSP_EmailMessageTriggerHelper.PEO_RECORDTYPEID
+                                ( currentCase.RecordTypeId == NSP_EmailMessageTriggerHelper.PEO_RECORDTYPEID )
                                 && isContactCenterToAddress
-                                && currentCase.Status == CLOSED
-                                    )
+                                && ( currentCase.Status == CLOSED )
+                                )
                             {
                                 Integer businessDaysBetween = getNoOfBusinessDaysBetweenDates(
                                     currentCase.ClosedDate.date() ,
