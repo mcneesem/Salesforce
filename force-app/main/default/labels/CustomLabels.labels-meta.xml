@@ -220,13 +220,6 @@
         <value>Client is currently making employer contributions?</value>
     </labels>
     <labels>
-        <fullName>Client_Segment</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Client Segment</shortDescription>
-        <value>Client Segment</value>
-    </labels>
-    <labels>
         <fullName>Close_Lost_Role_in_Opportunity_Team</fullName>
         <categories>Closed Lost. Roles Eligible</categories>
         <language>en_US</language>
@@ -430,13 +423,6 @@
         <value>There is already an existing Payroll Datasheet record for this Sub Client.</value>
     </labels>
     <labels>
-        <fullName>Federal_Labor_Law_poster</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Federal Labor Law poster</shortDescription>
-        <value>Does the client have the current version of the Federal Labor Law poster at each worksite location?</value>
-    </labels>
-    <labels>
         <fullName>FSOImplementationProject</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -611,13 +597,6 @@
         <protected>false</protected>
         <shortDescription>MinimumFeeItalic</shortDescription>
         <value>(&lt;I&gt;Minimum Fee&lt;/I&gt;)</value>
-    </labels>
-    <labels>
-        <fullName>National_Account_Type</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>National Account Type</shortDescription>
-        <value>National Account Type</value>
     </labels>
     <labels>
         <fullName>NSP_12_hours_Milliseconds</fullName>

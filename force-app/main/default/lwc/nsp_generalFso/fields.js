@@ -32,7 +32,6 @@ const RL_FIELDS = [
   'Hush_Protocol__c',
   'Will_the_owner_s_be_on_payroll__c',
   'Owner_aware_they_will_not_get_W2_wages__c',
-  'Federal_Labor_Law_poster__c',
 ];
 
 const FIELD_CHANGE_HANDLER_MAPPING = {
@@ -52,7 +51,6 @@ const SECTION_FIELDS = [
   'Integra_Implementation_Timeline__c',
   'Premier_Performance_Imp_Timeline__c',
   'Time_Entry_Method__c',
-  'Client_Segment__c',
   'Client_Profile_Information__c',
   'NSP_Related_Client__c',
   'NSP_Account_Executive__c',
@@ -80,7 +78,6 @@ const SECTION_FIELDS = [
   'Chngs_for_cafeteria_plan_questionnaire__c',
   'List_change_s__c',
   'Client_part_of_entity_w_o_NSP__c',
-  'Federal_Labor_Law_poster__c',
   'Payroll_general_notes__c',
   'remove_employee_directory_from_premier__c',
 ];
