@@ -33,7 +33,7 @@ public class NSP_ContractRenewal_Batch_Test {
         ct.SBQQ__Quote__c = quote1.Id;
         ct.ContractTerm = 12;
         ct.NSP_Product_Type__c = 'Performance Management';
-        Date dt = Date.today()-330;
+        Date dt = Date.today()-350;
         ct.StartDate = dt;
         ct.EndDate = dt+365;
         ct.Status = 'Draft';

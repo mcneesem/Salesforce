@@ -68,9 +68,18 @@ public class NSP_ContractRenewal_Batch implements Database.Batchable<SObject>, D
         String Days30ListasString = '(\'' + String.join(ProductsWith30DaysList, '\', \'') + '\')';
         String Days60ListasString = '(\'' + String.join(ProductsWith60DaysList, '\', \'') + '\')';
         //query formation
-        query='SELECT Id, SBQQ__RenewalForecast__c, SBQQ__RenewalQuoted__c, ContractTerm,NSP_Product_Type__c,SBQQ__ActiveContract__c FROM Contract WHERE SBQQ__RenewalForecast__c = FALSE AND SBQQ__RenewalQuoted__c = FALSE AND ContractTerm>=1 AND SBQQ__ActiveContract__c=1 AND';
-        query+=' ((NSP_Product_Type__c INCLUDES'+ Days30ListasString +' AND EndDate>=TODAY AND EndDate <= NEXT_N_DAYS:30 AND ContractTerm=1) OR (NSP_Product_Type__c INCLUDES '+ Days60ListasString +' AND EndDate>=TODAY AND EndDate <= NEXT_N_DAYS:62))';
-
+        query = 'SELECT Id , SBQQ__RenewalForecast__c , SBQQ__RenewalQuoted__c , ContractTerm , NSP_Product_Type__c , SBQQ__ActiveContract__c '
+        query += 'FROM Contract '
+        query += 'WHERE '
+        query += '( SBQQ__RenewalForecast__c = false ) '
+        query += 'AND ( SBQQ__RenewalQuoted__c = false ) '
+        query += 'AND ( ContractTerm > 1 ) '
+        query += 'AND ( SBQQ__ActiveContract__c = 1 ) '
+        query += 'AND ( EndDate >= TODAY ) '
+        query += 'AND ( '
+        query += '    ( NSP_Product_Type__c INCLUDES ' + Days30ListasString + ' AND EndDate <= NEXT_N_DAYS:30 ) '
+        query += '    OR ( NSP_Product_Type__c INCLUDES ' + Days60ListasString + ' AND EndDate <= NEXT_N_DAYS:62 ) '
+        query += ')';
     }
 
     public Database.QueryLocator start( Database.BatchableContext bc ) {
