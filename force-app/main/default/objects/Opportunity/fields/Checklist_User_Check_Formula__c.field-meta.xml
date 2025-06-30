@@ -13,7 +13,8 @@ ISPICKVAL(StageName, &quot;Closing&quot;)),
 OR(
 ISPICKVAL(NSP_PrimaryProduct__c,&quot;WX&quot;),
 ISPICKVAL(NSP_PrimaryProduct__c,&quot;WO&quot;),
-ISPICKVAL(NSP_PrimaryProduct__c,&quot;WS&quot;))),&quot;STP&quot;,
+ISPICKVAL(NSP_PrimaryProduct__c,&quot;WS&quot;),
+ISPICKVAL(NSP_PrimaryProduct__c,&quot;HRScale&quot;))),&quot;STP&quot;,
 
 IF(
 AND( 
