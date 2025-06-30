@@ -262,16 +262,16 @@ export default class NSP_MidMarketFormIp extends NavigationMixin(
                 this.hideLoadingSpinner();
             });
     }
-
+    
     getCopyDataOptions(value) {
         const iconName = 'standard:account';
-
-        return value.map((val) => {
-            const [, value, label] = val.split('~');
-
-            return { label, value, iconName };
+        
+        return value.map(item => {
+            const [, val, label] = item.split('~');
+            return { label, value: val, iconName };
         });
     }
+
     
     getChildRecordsForAllTargetIpRecords(objApiName, childRecords = [], targetIPs = []) {
         const ipFieldName = RELATED_FIELD_NAME[objApiName];
