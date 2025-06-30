@@ -2,7 +2,7 @@
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <customPermissions>
         <enabled>true</enabled>
-        <name>Bypass_Required_Compensation_Services_Closure_Information</name>
+        <name>Bypass_Required_Compensation_Services_Closure</name>
     </customPermissions>
     <description>Grants the Custom Permission: ByPass Required Compensation Services Closure</description>
     <hasActivationRequired>false</hasActivationRequired>
