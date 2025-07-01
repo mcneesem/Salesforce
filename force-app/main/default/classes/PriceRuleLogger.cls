@@ -38,7 +38,7 @@ public with sharing class PriceRuleLogger {
         //perform query to fetch applicable records
         Map<Id,SBQQ__PriceRule__c> priceRulesMap = new Map<Id,SBQQ__PriceRule__c>(
             (List<SBQQ__PriceRule__c>)Database.query(
-                NSP_ErrorLogHandler.generateQuery( ruleIds )
+                PriceRuleLogger.generateQuery( ruleIds )
             )
         );
         //update number field on price rules
@@ -49,9 +49,9 @@ public with sharing class PriceRuleLogger {
                 //price rule dml
                 update priceRulesToUpdate;
                 //insert price actions for the rules
-                actionsInserted = NSP_ErrorLogHandler.insertActions( priceRulesToUpdate );
+                actionsInserted = PriceRuleLogger.insertActions( priceRulesToUpdate );
             } catch ( exception e ) {
-                NSP_ErrorLogHandler.logException( e , 'logPriceRules' );
+                PriceRuleLogger.handleException( e , 'logPriceRules' );
             }
         }
         //return output to flow
@@ -81,7 +81,7 @@ public with sharing class PriceRuleLogger {
     private static List<SBQQ__PriceRule__c> updatePriceRuleNum( Map<Id,SBQQ__PriceRule__c> priceRulesMap ) {
         List<SBQQ__PriceRule__c> priceRulesToUpdate = new List<SBQQ__PriceRule__c>();
         if ( priceRulesMap != null ) {
-            Decimal maxPriceRuleNum = NSP_ErrorLogHandler.getMaxNumber();
+            Decimal maxPriceRuleNum = PriceRuleLogger.getMaxNumber();
             for ( SBQQ__PriceRule__c priceRule : priceRulesMap.values() ) {
                 if ( priceRule.SBQQ__PriceActions__r.isEmpty() ) {
                     if ( priceRule.Price_Rule_Number__c == null ) {
@@ -123,7 +123,7 @@ public with sharing class PriceRuleLogger {
                     action.SBQQ__TargetObject__c = 'Quote Line';
                     action.SBQQ__Field__c = 'Price_Rule_Log__c';
                     //insert PR num between template Strings to construct formula
-                    action.SBQQ__Formula__c = String.join( NSP_ErrorLogHandler.formulaTemplate , String.valueOf( num ) );
+                    action.SBQQ__Formula__c = String.join( PriceRuleLogger.formulaTemplate , String.valueOf( num ) );
                     action.SBQQ__Rule__c = rule.Id;
                     insertList.add( action );
                 }
@@ -135,7 +135,7 @@ public with sharing class PriceRuleLogger {
                 insert insertList;
                 outputActionCount = insertList.size();
             } catch ( exception e ) {
-                NSP_ErrorLogHandler.logException( e , 'insertActions' );
+                PriceRuleLogger.handleException( e , 'insertActions' );
             }
         }
         //return insert list size
@@ -143,7 +143,7 @@ public with sharing class PriceRuleLogger {
     }
 
     //method to log exceptions in two dml operations
-    private static void logException( Exception e , String methodName ) {
+    private static void handleException( Exception e , String methodName ) {
         NSP_ErrorLogHandler.logException(
             PriceRuleLogger.class.getName() ,
             methodName ,
