@@ -5,6 +5,7 @@
     <label>BPS Service User</label>
     <permissionSets>Account_Profile_Access</permissionSets>
     <permissionSets>Accrual_Profile_access</permissionSets>
+    <permissionSets>Benefit_Fields_access</permissionSets>
     <permissionSets>Client_goal_project_task_junction_access</permissionSets>
     <permissionSets>Enforce_Rule_Member_Account</permissionSets>
     <permissionSets>NSP_Main_Service_Contacts</permissionSets>
