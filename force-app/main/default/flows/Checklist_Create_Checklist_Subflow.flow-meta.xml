@@ -5879,12 +5879,19 @@
                     <isRequired>true</isRequired>
                     <storeOutputAutomatically>true</storeOutputAutomatically>
                     <visibilityRule>
-                        <conditionLogic>and</conditionLogic>
+                        <conditionLogic>or</conditionLogic>
                         <conditions>
                             <leftValueReference>recordOpportunity.NSP_PrimaryProduct__c</leftValueReference>
                             <operator>EqualTo</operator>
                             <rightValue>
                                 <stringValue>WS</stringValue>
+                            </rightValue>
+                        </conditions>
+                        <conditions>
+                            <leftValueReference>recordOpportunity.NSP_PrimaryProduct__c</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <stringValue>HRScale</stringValue>
                             </rightValue>
                         </conditions>
                     </visibilityRule>
