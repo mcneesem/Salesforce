@@ -1253,6 +1253,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>NSP_Sales_to_Implementation__c.Project__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>NSP_Sales_to_Implementation__c.Ready_for_QC_Review__c</field>
         <readable>true</readable>
     </fieldPermissions>
