@@ -4,7 +4,7 @@
     <active>true</active>
     <description>To enforce the field-level values for ...when the Status of a &quot;Compensation Services&quot; Case is changed to &quot;Closed&quot;</description>
     <errorConditionFormula>AND(
-  NOT( $Permission.Bypass_Required_Compensation_Services_Closure_Information ) ,
+  NOT( $Permission.Bypass_Required_Compensation_Services_Closure ) ,
   ISCHANGED( Status ) ,
   ISPICKVAL( Status , &apos;Closed&apos; ) ,
   ( NSP_Category__c = &apos;Compensation Services&apos; ) ,
