@@ -64,21 +64,7 @@
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>Get_Orders</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Get_Orders</leftValueReference>
                 <operator>IsBlank</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Get_Orders.OpportunityId</leftValueReference>
-                <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
@@ -107,13 +93,6 @@
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>Get_RET_S2I_Record</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Get_RET_S2I_Record</leftValueReference>
                 <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -121,7 +100,7 @@
             </conditions>
             <conditions>
                 <leftValueReference>Get_RET_S2I_Record.Project__c</leftValueReference>
-                <operator>IsNull</operator>
+                <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
                 </rightValue>
@@ -132,10 +111,10 @@
             <label>Yes : S2I is Exists</label>
         </rules>
     </decisions>
-    <description>AZD-339881 Create RET SVC Project and update the Project Id to S2I Record</description>
+    <description>AZD-339881 - Update S2I When RET Project is created</description>
     <environments>Default</environments>
-    <interviewLabel>Create Ret Svc Onboarding Project Update S2I async {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Create Ret Svc Onboarding Project Update S2I async</label>
+    <interviewLabel>Project - Async After Create - Set S2I Project {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Project - Async After Create - Set S2I Project</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -270,7 +249,7 @@
         <inputAssignments>
             <name>faultFlow</name>
             <value>
-                <stringValue>Create_Ret_Svc_Onboarding_Project_Update_S2I_async</stringValue>
+                <stringValue>Project_Async_After_Create_Set_S2I_Project</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
