@@ -120,6 +120,37 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Client_Type__c</picklist>
+        <values>
+            <fullName>HR360 - Select Edition</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HR360 Solution</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HRCore - Select Edition</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HRCore Solution</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HRScale Solution</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Prospect</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Stand Alone</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Complexity__c</picklist>
         <values>
             <fullName>High</fullName>
