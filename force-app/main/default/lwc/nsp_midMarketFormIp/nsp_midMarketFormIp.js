@@ -728,19 +728,18 @@ export default class NSP_MidMarketFormIp extends NavigationMixin(
 
         return formValues;
     }
-
+    
     updatePostUpsertRecords(sectionValues) {
         const { postUpsertRecords } = sectionValues;
-        if (postUpsertRecords) {
-            Object.keys(postUpsertRecords).forEach((objName) => {
-                const rec = this.postUpsertRecords[objName] || [];
-                this.postUpsertRecords[objName] = [
-                    ...rec,
-                    ...postUpsertRecords[objName],
-                ];
-            });
+        
+        if (!postUpsertRecords) return;
+        
+        for (const [objName, records] of Object.entries(postUpsertRecords)) {
+            const existingRecords = this.postUpsertRecords[objName] || [];
+            this.postUpsertRecords[objName] = [...existingRecords, ...records];
         }
     }
+
 
     updatePreviousValuesInFields(formValues) {
         const updatedFields = Object.keys(formValues);
