@@ -9,5 +9,5 @@
   ISPICKVAL( Status , &apos;Closed&apos;) ,
   ( NSP_Category__c = &apos;Compensation Services&apos; )
 )</errorConditionFormula>
-    <errorMessage>You don’t have the required permissions to close this case. You can still reassign or cancel it if needed</errorMessage>
+    <errorMessage>You do not have the required permissions to close this case. You can still reassign or cancel it if needed</errorMessage>
 </ValidationRule>
