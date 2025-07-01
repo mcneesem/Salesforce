@@ -11,8 +11,9 @@ Apex Class Name      :  NSP_ValidateOpportunityStage
  * Tejas                 12/24/2021            First Iteration
  */
 public with sharing class NSP_ValidateOpportunityStage {
-    // test w/ NSP_ValidateOpportunityStageTest (84%)
+    // test w/ NSP_ValidateOpportunityStageTest (83%)
 
+    public static Set<String> validHRProducts = new Set<String>{NSP_SalesConstants.WO, NSP_SalesConstants.WS, NSP_SalesConstants.HRScale};
     public static List<string> analysisStageCriteraTypes = System.Label.NSP_AnalysisStageCriteria.split(',');
     public static List<string> proposeStageCriteraTypes = System.Label.NSP_ProposeStageCriteria.split(',');
     public static List<string> exitCriteriaProductException = System.Label.NSP_ExitCriteriaProductException.split(',');
@@ -98,14 +99,8 @@ public with sharing class NSP_ValidateOpportunityStage {
                         }
                         
                         //Discovery
-                        if ( opp.StageName.equals( NSP_SalesConstants.DISCOVERY_STAGE )
-                            && ( ( opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WO )
-                                || ( opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WS || 
-                                opp.NSP_PrimaryProduct__c == NSP_SalesConstants.HRScale ||
-                                opp.NSP_PrimaryProduct__c == NSP_SalesConstants.HRScale )
-                                || ( opp.NSP_PrimaryProduct__c == null )
-                                )
-                            )
+                        if (opp.StageName.equals(NSP_SalesConstants.DISCOVERY_STAGE)
+                            && (opp.NSP_PrimaryProduct__c == null || validHRProducts.contains(opp.NSP_PrimaryProduct__c)))
                         {
                             String scannedEvent='';
                             if(eventList!=null){
@@ -130,9 +125,7 @@ public with sharing class NSP_ValidateOpportunityStage {
                         //Data Collection
                         if(opp.StageName.equals(NSP_SalesConstants.DATA_COLLECTION_STAGE))
                         {
-                            if(opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WO
-                                || opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WS 
-                                || opp.NSP_PrimaryProduct__c == NSP_SalesConstants.HRScale)
+                            if(validHRProducts.contains(opp.NSP_PrimaryProduct__c))
                             {
                                 String scannedEvent='';
                                 if(eventList!=null)
@@ -190,10 +183,7 @@ public with sharing class NSP_ValidateOpportunityStage {
                             // Modified: Primary Quote required only for Non WO opptys, hence moved Primary Quote validation to else if block
                             // Perform WO
                             // Added WS condition as part of DF-01869
-                            if ( proposeStageCriteraTypes.contains( opp.Type )
-                                && ( opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WO || opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WS 
-                                || opp.NSP_PrimaryProduct__c == NSP_SalesConstants.HRScale)
-                                )
+                            if ( proposeStageCriteraTypes.contains( opp.Type ) && validHRProducts.contains(opp.NSP_PrimaryProduct__c))
                             {
                                 String scannedTask='';
                                 if(eventList != null){
@@ -218,15 +208,14 @@ public with sharing class NSP_ValidateOpportunityStage {
                         //CR-031 removed Executive summary check and have added BPS Products condition
                         // 205583/208335 - bypass QuoteCriteria is Fee Inclusive is checked
                         if(!opp.Fee_Inclusive__c && opp.StageName.equals(NSP_SalesConstants.CLOSING_STAGE)){
-                            if(opp.NSP_PrimaryProduct__c != NSP_SalesConstants.WO && opp.NSP_PrimaryProduct__c != NSP_SalesConstants.WS && opp.NSP_PrimaryProduct__c != NSP_SalesConstants.HRScale 
+                            if(!validHRProducts.contains(opp.NSP_PrimaryProduct__c) 
                                && !opp.NSP_Bypass_Docusign_Signature__c && !opp.NSP_Order_Generated__c){
                                 if(!exitCriteriaProductException.contains(opp.NSP_PrimaryProduct__c)){
                                     opp.addError(System.Label.NSP_Create_Signed_Delivery_Order);
                                 } else if(opp.NSP_PrimaryProduct__c == NSP_SalesConstants.HR_CONSULTING_SERVICES && opp.NSP_Client_For_Life__c != NSP_SalesConstants.WO_WS){
                                     opp.addError(System.Label.NSP_Create_Signed_Delivery_Order);
                                 }
-                            } else if ( ( opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WO || opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WS || 
-                             opp.NSP_PrimaryProduct__c == NSP_SalesConstants.HRScale || opp.NSP_Order_Generated__c ) && !opp.NSP_Closing_Appointment__c ) {
+                            } else if ((validHRProducts.contains(opp.NSP_PrimaryProduct__c) || opp.NSP_Order_Generated__c ) && !opp.NSP_Closing_Appointment__c ) {
                                 opp.addError(System.Label.NSP_WO_Closing_Appointment_or_Docusign);
                             }
                         }
@@ -298,10 +287,7 @@ public with sharing class NSP_ValidateOpportunityStage {
                     //Modified: Primary Quote required only for Non WO opptys, hence moved Primary Quote validation to else if block
                     //Perform WO
                     // Added WS condition as part of DF-01869
-                    if ( proposeStageCriteraTypes.contains( opp.Type )
-                        && ( opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WO || opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WS 
-                        || opp.NSP_PrimaryProduct__c == NSP_SalesConstants.HRScale)
-                        )
+                    if ( proposeStageCriteraTypes.contains( opp.Type ) && validHRProducts.contains(opp.NSP_PrimaryProduct__c))
                     {
                         String scannedTask='';
                         if(taskList != null){
@@ -337,8 +323,7 @@ public with sharing class NSP_ValidateOpportunityStage {
                         } else if(opp.NSP_PrimaryProduct__c == NSP_SalesConstants.HR_CONSULTING_SERVICES && opp.NSP_Client_For_Life__c != NSP_SalesConstants.WO_WS){
                             opp.addError(System.Label.NSP_Create_Signed_Delivery_Order);
                         }
-                    } else if ( ( opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WO || opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WS ||
-                  opp.NSP_PrimaryProduct__c == NSP_SalesConstants.HRScale || opp.NSP_Order_Generated__c ) && !opp.NSP_Closing_Appointment__c ) {
+                    } else if ((validHRProducts.contains(opp.NSP_PrimaryProduct__c) || opp.NSP_Order_Generated__c ) && !opp.NSP_Closing_Appointment__c ) {
                         opp.addError(System.Label.NSP_WO_Closing_Appointment_or_Docusign);
                     }
                 }
@@ -375,8 +360,7 @@ public with sharing class NSP_ValidateOpportunityStage {
             
             String scannedTask='';
             String evalTaskMsg='';
-            if((opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WO || opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WS
-            || opp.NSP_PrimaryProduct__c == NSP_SalesConstants.HRScale))
+            if(validHRProducts.contains(opp.NSP_PrimaryProduct__c))
             {
                 if(taskList != null){
                     for(Task task:taskList){
@@ -444,10 +428,9 @@ public with sharing class NSP_ValidateOpportunityStage {
     private static void evaluateAnalysisStageCriteriaOld(Opportunity opp,List<Event> eventList){
         String scannedTask='';
         
-        if((opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WO || opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WS 
-        || opp.NSP_PrimaryProduct__c == NSP_SalesConstants.HRScale)
-            || (analysisStageCriteraTypes.contains(opp.Type)
-            && (opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WX || opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WA))){
+        if(validHRProducts.contains(opp.NSP_PrimaryProduct__c)
+            || analysisStageCriteraTypes.contains(opp.Type) && 
+            (opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WX || opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WA)){
 
             if(eventList!=null){
                 for(Event event:eventList){////looking for discovery
@@ -480,11 +463,7 @@ public with sharing class NSP_ValidateOpportunityStage {
     public static void evaluateQuoteCriteria( Opportunity opp , Map<Id,SBQQ__Quote__c> quoteMap ) {
         try {
             // 205583/208335 - bypass QuoteCriteria is Fee Inclusive is checked
-            if ( !opp.Fee_Inclusive__c
-                && ( opp.NSP_PrimaryProduct__c != NSP_SalesConstants.WO )
-                && ( opp.NSP_PrimaryProduct__c != NSP_SalesConstants.WS )
-                && ( opp.NSP_PrimaryProduct__c != NSP_SalesConstants.HRScale )
-                )
+            if ( !opp.Fee_Inclusive__c && !validHRProducts.contains(opp.NSP_PrimaryProduct__c))
             {
                 SBQQ__Quote__c primaryQuote = null;
                 if ( quoteMap != null ) {
@@ -575,12 +554,7 @@ public with sharing class NSP_ValidateOpportunityStage {
             )
         {
             opp.addError( System.Label.NSP_CANNOT_MOVE_TO_CLOSEDWON );
-        } else if ( !hasAllowCWNCSUserPerm
-            && ( ( opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WO )
-                || ( opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WS )
-                || ( opp.NSP_PrimaryProduct__c == NSP_SalesConstants.HRScale )
-                )
-            )
+        } else if ( !hasAllowCWNCSUserPerm && validHRProducts.contains(opp.NSP_PrimaryProduct__c))
         {
             opp.addError( System.Label.NSP_CANNOT_MOVE_TO_CLOSEDWON );
         }
@@ -588,8 +562,7 @@ public with sharing class NSP_ValidateOpportunityStage {
     }
 
     private static void evaluateClosedWonStageWOWS(Opportunity opp, Map<Id,NSP_Checklist__c> checklistMap, String scannedSTP){
-        if((opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WO || opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WS
-        || opp.NSP_PrimaryProduct__c == NSP_SalesConstants.HRScale)){
+        if(validHRProducts.contains(opp.NSP_PrimaryProduct__c)){
             
             if(checklistMap.get(opp.Id) != null){
                 scannedSTP = HAS_COMPLETED_STP;
@@ -623,12 +596,7 @@ public with sharing class NSP_ValidateOpportunityStage {
             )
         {
             opp.AddError(System.Label.NSP_CANNOT_MOVE_TO_CLOSEDWON);
-        } else if ( !hasAllowCWNCSUserPerm
-            && ( ( opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WO )
-                || ( opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WS )
-                || ( opp.NSP_PrimaryProduct__c == NSP_SalesConstants.HRScale )
-                )
-            )
+        } else if ( !hasAllowCWNCSUserPerm && validHRProducts.contains(opp.NSP_PrimaryProduct__c))
         {
             opp.AddError( System.Label.NSP_CANNOT_MOVE_TO_CLOSEDWON );
         }
