@@ -68,6 +68,17 @@ private class NSP_ValidateOpportunityStageTest {
         );
         insert ocr2;
 
+        Opportunity opp4=NSP_TestHelper.createOpenOpportunity(acnt.Id,'New Product',false);
+        opp4.StageName = 'Prospecting';
+        opp4.NSP_BidNumber__c='unique1234';
+        opp4.NSP_Partner__c=acnt.Id;
+        opp4.NSP_PrimaryProduct__c = 'HRScale';
+        try{            
+            insert opp4;
+        }catch(Exception ex){
+            ex.getStackTraceString();
+        }
+
         //Adding Tasks and Events to lists.
         List<SObject> sOList = new List<SObject>();
         Id taskRecTypeId = Schema.SObjectType.Task.getRecordTypeInfosByDeveloperName().get('Core_Sales_Task_RT').getRecordTypeId();
@@ -301,6 +312,8 @@ private class NSP_ValidateOpportunityStageTest {
         List<Group> groups= new List<Group>{gp1, gp2};
         Insert groups;
     }
+    
+    
     // Test for validations when Opportunity stage is set to Closing
     @isTest
     private static void checkOpptyStage(){
@@ -446,6 +459,48 @@ private class NSP_ValidateOpportunityStageTest {
         System.assertEquals('Closed Won', oppty.StageName);
     }
     
+    // Test for validations when Opportunity stage is set to Closing
+    // HRScale behavies as WS
+    @isTest
+    private static void checkOpptyStage5(){
+        test.startTest();
+        OpportunityStageSettings__c setting = new OpportunityStageSettings__c();
+        setting.Is_Enabled_WO_WS_Stage_Entry__c = true;
+        insert setting;
+
+        List<Opportunity> oppList = [SELECT Id FROM Opportunity WHERE StageName != NULL AND NSP_PrimaryProduct__c = 'HRScale' limit 1];
+        Opportunity oppty = oppList[0];
+        oppty.StageName='Analysis';
+        try{
+            update oppty; 
+        }catch(Exception ex){
+            ex.getStackTraceString();
+        }
+
+        oppty.StageName = 'Proposal';
+        try{
+            update oppty;
+        }catch(Exception ex){
+            ex.getStackTraceString();
+        }
+
+        oppty.StageName = 'Closing';
+        try{
+            update oppty;
+        }catch(Exception ex){
+            ex.getStackTraceString();
+        }
+
+        oppty.StageName = 'Closed Won';
+        try{
+            update oppty;
+        }catch(Exception ex){
+            ex.getStackTraceString();
+        }
+        test.stopTest();
+        System.assertEquals('Closed Won', oppty.StageName);
+    }
+
     // Test for open Discovery activity on Discovery stage
     @isTest
     private static void checkOpenDiscoveryActivities(){

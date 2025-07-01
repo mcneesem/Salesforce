@@ -28,6 +28,7 @@ public class NSP_SalesConstants {
     // To set primary product as WO
     public static final String WO ='WO';
     public static final String WS ='WS';
+    public static final String HRScale ='HRScale';
     // To set primary product as WX
     public static final String WX ='WX';
     public static final String WA ='WA';

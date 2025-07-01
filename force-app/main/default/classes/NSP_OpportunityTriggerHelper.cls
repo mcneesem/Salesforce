@@ -69,7 +69,8 @@ public with sharing class NSP_OpportunityTriggerHelper {
             if(opportunityObject.NSP_PrimaryProduct__c != null){
                 if(String.isNotBlank(opportunityObject.Accountid) && 
                 (opportunityObject.NSP_PrimaryProduct__c.equals(NSP_SalesConstants.WO) || 
-                opportunityObject.NSP_PrimaryProduct__c.equals(NSP_SalesConstants.WS) ) && 
+                opportunityObject.NSP_PrimaryProduct__c.equals(NSP_SalesConstants.WS) || 
+                opportunityObject.NSP_PrimaryProduct__c.equals(NSP_SalesConstants.HRScale)) && 
                 opportunityObject.NSP_lock_enrollment_fee__c == false){
                    calculateFrees.add(opportunityObject);
                }
@@ -85,6 +86,7 @@ public with sharing class NSP_OpportunityTriggerHelper {
                 if(String.isnotBlank(opportunityObject.NSP_PrimaryProduct__c) &&
                 (opportunityObject.NSP_PrimaryProduct__c.equals(NSP_SalesConstants.WO) ||
                  opportunityObject.NSP_PrimaryProduct__c.equals(NSP_SalesConstants.WS) ||
+                 opportunityObject.NSP_PrimaryProduct__c.equals(NSP_SalesConstants.HRScale) ||
                  opportunityObject.NSP_PrimaryProduct__c.equals(NSP_SalesConstants.WA) ||
                  opportunityObject.NSP_PrimaryProduct__c.equals(NSP_SalesConstants.WX))
                 && String.isBlank(opportunityObject.NSP_Parent_Opportunity__c)){                       
@@ -261,7 +263,8 @@ public with sharing class NSP_OpportunityTriggerHelper {
             if(newOpportunity.NSP_PrimaryProduct__c != null){
                if(String.isNotBlank(newOpportunity.Accountid) && 
                (newOpportunity.NSP_PrimaryProduct__c.equals(NSP_SalesConstants.WO) ||
-               newOpportunity.NSP_PrimaryProduct__c.equals(NSP_SalesConstants.WS)) &&
+               newOpportunity.NSP_PrimaryProduct__c.equals(NSP_SalesConstants.WS) || 
+               newOpportunity.NSP_PrimaryProduct__c.equals(NSP_SalesConstants.HRScale)) &&
                 !newOpportunity.NSP_lock_enrollment_fee__c){
                    calculateFrees.add(newOpportunity);
                 }
@@ -593,7 +596,8 @@ public with sharing class NSP_OpportunityTriggerHelper {
         List<Opportunity> newTaskOpportunityList
         )
         {
-        if ( ( newOpportunity.NSP_PrimaryProduct__c == NSP_SalesConstants.WO || newOpportunity.NSP_PrimaryProduct__c == NSP_SalesConstants.WS )
+        if ( ( newOpportunity.NSP_PrimaryProduct__c == NSP_SalesConstants.WO || newOpportunity.NSP_PrimaryProduct__c == NSP_SalesConstants.WS || 
+            newOpportunity.NSP_PrimaryProduct__c == NSP_SalesConstants.HRScale)
             && ( String.isNotBlank(newOpportunity.NSP_Contribution_Level__c) && String.isNotBlank(newOpportunity.NSP_Frequency_of_Distribution__c))
             && ( String.isBlank(oldOpportunity.NSP_Contribution_Level__c) || String.isBlank(oldOpportunity.NSP_Frequency_of_Distribution__c) )
             )
@@ -723,13 +727,15 @@ public with sharing class NSP_OpportunityTriggerHelper {
             
             if(opportunityRecord.NSP_Closing_Appointment__c != null
             && (((opportunityRecord.NSP_PrimaryProduct__c == NSP_SalesConstants.WO || 
-                  opportunityRecord.NSP_PrimaryProduct__c == NSP_SalesConstants.WS) && 
+                  opportunityRecord.NSP_PrimaryProduct__c == NSP_SalesConstants.WS || 
+                  opportunityRecord.NSP_PrimaryProduct__c == NSP_SalesConstants.HRScale) && 
                  opportunityRecord.NSP_Signed_CSA__c) 
                 || ((opportunityRecord.NSP_PrimaryProduct__c == NSP_SalesConstants.WX ||
                      opportunityRecord.NSP_PrimaryProduct__c == NSP_SalesConstants.WA) && 
                     opportunityRecord.NSP_Signed_Delivery_Order__c) 
                 || (opportunityRecord.NSP_PrimaryProduct__c != NSP_SalesConstants.WO && 
                     opportunityRecord.NSP_PrimaryProduct__c != NSP_SalesConstants.WS && 
+                    opportunityRecord.NSP_PrimaryProduct__c != NSP_SalesConstants.HRScale &&
                     opportunityRecord.NSP_PrimaryProduct__c != NSP_SalesConstants.WX &&
                     opportunityRecord.NSP_PrimaryProduct__c != NSP_SalesConstants.WA))){
                        opportunityRecord.StageName = NSP_SalesConstants.CLOSING_STAGE;
@@ -1591,12 +1597,14 @@ public with sharing class NSP_OpportunityTriggerHelper {
             && String.isBlank( newOpportunity.NSP_Parent_Opportunity__c )
             && (
                 (
-                    ( newOpportunity.NSP_PrimaryProduct__c.equals( NSP_SalesConstants.WO ) || newOpportunity.NSP_PrimaryProduct__c.equals( NSP_SalesConstants.WS ) )
+                    ( newOpportunity.NSP_PrimaryProduct__c.equals( NSP_SalesConstants.WO ) || newOpportunity.NSP_PrimaryProduct__c.equals( NSP_SalesConstants.WS ) || 
+                     newOpportunity.NSP_PrimaryProduct__c.equals( NSP_SalesConstants.HRScale )) 
                     && ( oldOpportunity.NSP_PrimaryProduct__c.equals( NSP_SalesConstants.WA ) || oldOpportunity.NSP_PrimaryProduct__c.equals( NSP_SalesConstants.WX ) )
                     )
                 || (
                     ( newOpportunity.NSP_PrimaryProduct__c.equals( NSP_SalesConstants.WA ) || newOpportunity.NSP_PrimaryProduct__c.equals( NSP_SalesConstants.WX ) )
-                    && ( oldOpportunity.NSP_PrimaryProduct__c.equals( NSP_SalesConstants.WO ) || oldOpportunity.NSP_PrimaryProduct__c.equals( NSP_SalesConstants.WS ) )
+                    && ( oldOpportunity.NSP_PrimaryProduct__c.equals( NSP_SalesConstants.WO ) || oldOpportunity.NSP_PrimaryProduct__c.equals( NSP_SalesConstants.WS )  || 
+                    oldOpportunity.NSP_PrimaryProduct__c.equals( NSP_SalesConstants.HRScale ) )
                     )
                 )
             )
