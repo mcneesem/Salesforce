@@ -226,52 +226,46 @@ export default class NSP_MidMarketFormIp extends NavigationMixin(
         this.state.selectedSections = detail.value;
         this.copySectionChanged = true;
     }
-
     generateCopyRequest(records) {
         this.showLoadingSpinner();
+        
         const { state, recordId, userData } = this;
         state.showCopyDialog = false;
-
-        const recordIds = records.map((rec) => rec.value);
+        
+        const recordIds = records.map(record => record.value);
         const fieldValues = this.getFieldValuesToCopy(recordIds);
-        const fields = this.getOnlyPermittedFields(
-            fieldValues,
-            state.updateableFields
-        );
+        const permittedFields = this.getOnlyPermittedFields(fieldValues, state.updateableFields);
+        
         const config = {
-            fieldValues: JSON.stringify(fields),
+            fieldValues: JSON.stringify(permittedFields),
             sourceId: recordId,
             recType: 'MM',
             userEmail: userData?.Email?.value,
             relatedObjnames: JSON.stringify(fieldValues.relatedObjects),
             postUpsertRecords: JSON.stringify(fieldValues.postUpsertRecords),
         };
-
-        copyIpRecordData({
-            recordIds,
-            config,
+        
+        copyIpRecordData({ recordIds, config })
+        .then(() => {
+            this.showSuccessToast('Copy Data Job queued successfully.');
+            state.copiedTargetRecords = recordIds;
+            state.copiedExistingRecordOptions = records;
         })
-            .then(() => {
-                this.showSuccessToast('Copy Data Job queued successfully.');
-                state.copiedTargetRecords = recordIds;
-                state.copiedExistingRecordOptions = records;
-                this.hideLoadingSpinner();
-            })
-            .catch((error) => {
-                this.showErrorToast(error.body.message);
-                this.hideLoadingSpinner();
-            });
+        .catch(error => {
+            this.showErrorToast(error?.body?.message || 'An error occurred.');
+        })
     }
-    
+
+
     getCopyDataOptions(value) {
         const iconName = 'standard:account';
-        
-        return value.map(item => {
-            const [, val, label] = item.split('~');
-            return { label, value: val, iconName };
+
+        return value.map((val) => {
+            const [, value, label] = val.split('~');
+
+            return { label, value, iconName };
         });
     }
-
     
     getChildRecordsForAllTargetIpRecords(objApiName, childRecords = [], targetIPs = []) {
         const ipFieldName = RELATED_FIELD_NAME[objApiName];
