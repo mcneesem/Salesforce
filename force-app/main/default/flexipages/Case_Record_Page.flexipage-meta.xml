@@ -277,7 +277,7 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>none</value>
+                    <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.AssetId</fieldItem>
                 <identifier>RecordAssetIdField</identifier>
@@ -814,7 +814,7 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>required</value>
+                    <value>none</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Required_Documentation_Attached__c</fieldItem>
                 <identifier>RecordRequired_Documentation_Attached_cField</identifier>
