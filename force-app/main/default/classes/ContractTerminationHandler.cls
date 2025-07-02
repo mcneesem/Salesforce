@@ -5,11 +5,10 @@ public class ContractTerminationHandler {
    public static void runContractTerminationHandler(List<ContractTerminationRequest> requests) {
       try {
             Map<Id, Date> contractToTerminationDates = new Map<Id, Date>();
-            List<SBQQ__Quote__c> quotesToUpdate = new List<SBQQ__Quote__c>();
             for (ContractTerminationRequest request : requests) {
          		contractToTerminationDates.put(request.ContractId, request.TerminationDate);
             }
-            if (!contractToTerminationDates.isEmpty()) {
+            if ( !contractToTerminationDates.isEmpty() && (Limits.getQueueableJobs() < Limits.getLimitQueueableJobs()) ) {
                 System.enqueueJob(new ContractTerminationQueue(contractToTerminationDates));
             }
         } catch (Exception e) {
