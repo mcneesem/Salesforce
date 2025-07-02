@@ -2143,7 +2143,7 @@
                 <identifier>RecordNSP_Additonal_Processing_Instructions_cField2</identifier>
             </fieldInstance>
         </itemInstances>
-        <name>Facet-a3c292db-ff14-4009-9b0f-c4772e30d164</name>
+        <name>Facet-68c59bae-2bab-41b3-8902-9e57f97df8cc</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -2151,13 +2151,13 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>body</name>
-                    <value>Facet-a3c292db-ff14-4009-9b0f-c4772e30d164</value>
+                    <value>Facet-68c59bae-2bab-41b3-8902-9e57f97df8cc</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:column</componentName>
-                <identifier>flexipage_column22</identifier>
+                <identifier>flexipage_column29</identifier>
             </componentInstance>
         </itemInstances>
-        <name>Facet-da524e78-0055-4235-a8b8-04ab93b96d1f</name>
+        <name>Facet-8d3044e2-5f68-4897-a2f3-e21f87f26ff5</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -2196,6 +2196,34 @@
             </componentInstance>
         </itemInstances>
         <name>Facet-cb54e000-b300-4185-b7d2-78c867677ab7</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_Listof_reports_received_with_payroll__c</fieldItem>
+                <identifier>RecordNSP_Listof_reports_received_with_payroll_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <name>Facet-9ef2fbd6-b8f8-4d89-921d-7cd37fdb1db9</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-9ef2fbd6-b8f8-4d89-921d-7cd37fdb1db9</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column30</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-29cfd83a-8ae4-4c36-a1b4-58806dcc3e54</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -2366,6 +2394,62 @@
             </componentInstance>
         </itemInstances>
         <name>Facet-9fb360a9-d343-406b-a218-edc022dac910</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Fulfillment_Permanent_Instructions__c</fieldItem>
+                <identifier>RecordFulfillment_Permanent_Instructions_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <name>Facet-b85611c6-4cb7-4ee6-9cf2-9e5d25bea75a</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-b85611c6-4cb7-4ee6-9cf2-9e5d25bea75a</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column31</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-dbffe43a-fc16-45c9-84dd-7e18362a355f</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_Payroll_ProcessingSpecialInstruction__c</fieldItem>
+                <identifier>RecordNSP_Payroll_ProcessingSpecialInstruction_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <name>Facet-2336f508-6d69-41f3-9aee-bebd6264b6b7</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-2336f508-6d69-41f3-9aee-bebd6264b6b7</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column22</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-085961a8-7991-40d8-a692-543e9faca3be</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -2785,9 +2869,6 @@
                     <name>relatedListFieldAliases</name>
                     <valueList>
                         <valueListItems>
-                            <value>NAME</value>
-                        </valueListItems>
-                        <valueListItems>
                             <value>NSP_Pay_Date__c</value>
                         </valueListItems>
                         <valueListItems>
@@ -2943,7 +3024,7 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>columns</name>
-                    <value>Facet-da524e78-0055-4235-a8b8-04ab93b96d1f</value>
+                    <value>Facet-8d3044e2-5f68-4897-a2f3-e21f87f26ff5</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>horizontalAlignment</name>
@@ -2951,10 +3032,10 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>label</name>
-                    <value>Payroll Fulfillment</value>
+                    <value>Payroll Processing</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:fieldSection</componentName>
-                <identifier>flexipage_fieldSection12</identifier>
+                <identifier>flexipage_fieldSection16</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.Source__c}</leftValue>
@@ -2993,6 +3074,31 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>columns</name>
+                    <value>Facet-29cfd83a-8ae4-4c36-a1b4-58806dcc3e54</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>label</name>
+                    <value>List of reports</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:fieldSection</componentName>
+                <identifier>flexipage_fieldSection17</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Source__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>AIMS</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>columns</name>
                     <value>Facet-9fb360a9-d343-406b-a218-edc022dac910</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
@@ -3005,6 +3111,56 @@
                 </componentInstanceProperties>
                 <componentName>flexipage:fieldSection</componentName>
                 <identifier>flexipage_fieldSection13</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>columns</name>
+                    <value>Facet-dbffe43a-fc16-45c9-84dd-7e18362a355f</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>label</name>
+                    <value>Payroll Fulfillment</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:fieldSection</componentName>
+                <identifier>flexipage_fieldSection18</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Source__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Workday</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>columns</name>
+                    <value>Facet-085961a8-7991-40d8-a692-543e9faca3be</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>label</name>
+                    <value>Payroll Processing Special Instructions</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:fieldSection</componentName>
+                <identifier>flexipage_fieldSection12</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Source__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>AIMS</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <name>Facet-f327ae52-e350-443a-babf-f60f7003b7fc</name>
