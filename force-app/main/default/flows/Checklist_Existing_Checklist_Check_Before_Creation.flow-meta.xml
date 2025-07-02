@@ -766,7 +766,7 @@
             <label>Performance Management or Time and Attendance</label>
         </rules>
     </decisions>
-    <description>Reworked for WS carve out. Added decision node to look for Account Segment for MM Checklist. Added STP or MMC Screen. Updated with Checklist Type and MidMarket Closing Checklist path added. Updated Missing Info decision node and resulting Missing info screen, removed varOpportunityRecord</description>
+    <description>Updated to include &quot;HRScale&quot; with WS. Reworked for WS carve out. Added decision node to look for Account Segment for MM Checklist. Added STP or MMC Screen. Updated with Checklist Type and MidMarket Closing Checklist path added. Updated Missing Info decision node and resulting Missing info screen, removed varOpportunityRecord</description>
     <environments>Default</environments>
     <interviewLabel>Checklist - Existing Checklist Check Before Creation {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Checklist - Existing Checklist Check Before Creation</label>
@@ -1174,12 +1174,19 @@
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <visibilityRule>
-                <conditionLogic>( 1 OR ( 2 AND 3 AND ( 4 OR 5 ) ) )</conditionLogic>
+                <conditionLogic>( (1 OR 2) OR ( 3 AND 4 AND ( 5 OR 6 ) ) )</conditionLogic>
                 <conditions>
                     <leftValueReference>recordOpportunity.NSP_PrimaryProduct__c</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue>WS</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>recordOpportunity.NSP_PrimaryProduct__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>HRScale</stringValue>
                     </rightValue>
                 </conditions>
                 <conditions>
