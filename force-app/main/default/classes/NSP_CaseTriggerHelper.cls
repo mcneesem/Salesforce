@@ -2184,12 +2184,19 @@ createdDate : 6/12/2023
                 }else{
                     
                     if(catSubCatConfidentialEligibleMap != NULL && catSubCatConfidentialEligibleMap.containsKey(catSubCatKey)){
-                        if(catSubCatConfidentialEligibleMap.get(catSubCatKey).Default_case_as_confidential__c){
+                        NSP_Category_Sub_Category_Mapping__c mapping = catSubCatConfidentialEligibleMap.get(catSubCatKey);
+                        Boolean isDefaultConfidential = mapping.Default_case_as_confidential__c;
+                        Boolean shouldDisplayPopup = mapping.NSP_Display_confidential_popup__c;
+                        if(isDefaultConfidential){
                             cse.NSP_Confidential__c = true;
                             cse.NSP_Show_Confidential_Checkbox__c = true;
-                        }else if(catSubCatConfidentialEligibleMap.get(catSubCatKey).NSP_Display_confidential_popup__c){
+                        }else if(shouldDisplayPopup){
                             cse.NSP_Show_Confidential_Checkbox__c = true;
                         }
+                        else if (!(isDefaultConfidential) && !(shouldDisplayPopup)){
+                        cse.NSP_Confidential__c = false;
+                        cse.NSP_Show_Confidential_Checkbox__c = false;
+                    }
                     }  
                     if (!cse.NSP_Show_Confidential_Checkbox__c && cse.NSP_Confidential__c) {
                         cse.NSP_Confidential__c = cse.NSP_Show_Confidential_Checkbox__c;
