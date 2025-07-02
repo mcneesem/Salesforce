@@ -232,6 +232,57 @@
                 <identifier>RecordNotes_to_Finance_cField</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Related_Contract_To_Terminate__c</fieldItem>
+                <identifier>RecordRelated_Contract_To_Terminate_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Transaction_Type__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Termination</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Termination_Order_Link__c</fieldItem>
+                <identifier>RecordTermination_Order_Link_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Transaction_Type__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Termination</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Auto_Termination__c</fieldItem>
+                <identifier>RecordAuto_Termination_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Transaction_Type__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Termination</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-ce6245b2-7ee0-46cc-9b50-32a33d74fda5</name>
         <type>Facet</type>
     </flexiPageRegions>

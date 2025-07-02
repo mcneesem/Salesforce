@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Non_WX_Termination_Date__c</fullName>
+    <formula>IF(
+NOT(ISBLANK(SBQQ__Order__r.Related_Contract_To_Terminate__c)),
+DATE(
+YEAR(ADDMONTHS(DATEVALUE(SBQQ__Order__r.ActivatedDate), -2)),
+MOD(MONTH(ADDMONTHS(DATEVALUE(SBQQ__Order__r.ActivatedDate), -1)), 12) + 1,
+1
+) - 1,
+NULL
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Non WX Termination Date</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Date</type>
+</CustomField>
