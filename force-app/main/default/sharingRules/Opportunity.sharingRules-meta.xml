@@ -35,6 +35,21 @@
         <includeRecordsOwnedByAll>false</includeRecordsOwnedByAll>
     </sharingCriteriaRules>
     <sharingCriteriaRules>
+        <fullName>Primary_Product_is_WS_or_WA</fullName>
+        <accessLevel>Edit</accessLevel>
+        <description>If Primary Product is WS, HRScale or WA, share with MidMarket Admins</description>
+        <label>Primary Product is WS or WA</label>
+        <sharedTo>
+            <role>MidMarket_Administrator</role>
+        </sharedTo>
+        <criteriaItems>
+            <field>NSP_PrimaryProduct__c</field>
+            <operation>equals</operation>
+            <value>HR360 - Select Edition,HRCore - Select Edition,HRScale</value>
+        </criteriaItems>
+        <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
         <fullName>Sales_Enablement_Analyst</fullName>
         <accessLevel>Edit</accessLevel>
         <label>Sales Enablement Analyst</label>
@@ -80,14 +95,14 @@
     <sharingCriteriaRules>
         <fullName>Share_WS_or_WA_to_MM_Admins</fullName>
         <accessLevel>Edit</accessLevel>
-        <label>Share WS or WA to MM Admins</label>
+        <label>Share WS, HRScale or WA to MM Admins</label>
         <sharedTo>
             <group>MidMarket_Administrator</group>
         </sharedTo>
         <criteriaItems>
             <field>NSP_PrimaryProduct__c</field>
             <operation>equals</operation>
-            <value>HR360 - Select Edition,HRCore - Select Edition</value>
+            <value>HR360 - Select Edition,HRCore - Select Edition,HRScale</value>
         </criteriaItems>
         <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
     </sharingCriteriaRules>
