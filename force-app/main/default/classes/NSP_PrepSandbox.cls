@@ -179,12 +179,11 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
 
     public static MetadataService.CustomMetadata buildCustomMetadataRow( String fullName, String name, String field, String value ) {
         MetadataService.CustomMetadata cMdUpd = new MetadataService.CustomMetadata();
-            cMdUpd.fullName = fullName;
-            cMdUpd.label = name;
+        cMdUpd.fullName = fullName;
+        cMdUpd.label = name;
         MetadataService.CustomMetadataValue customField1 = new MetadataService.CustomMetadataValue();
-            customField1.field = field; // the custom field API Name to be updated
-            customField1.value = value;
-
+        customField1.field = field; // the custom field API Name to be updated
+        customField1.value = value;
         if (cMdUpd.values != null) { //add the changes to list of changes to be deployed
             cMdUpd.values.add(customField1); 
         } else {
@@ -716,7 +715,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
             List<StaticResource> srList = new List<StaticResource>([SELECT Id, Body, Name FROM StaticResource WHERE Name IN :resourceMap.keySet()]);
 
             for (StaticResource sr : srList) {
-        		MetadataService.Document doc = new MetadataService.Document();
+                MetadataService.Document doc = new MetadataService.Document();
                 doc.fullName = 'Services/' + resourceMap.get(sr.Name) + '.png';
                 doc.name = replaceUnderscoresWithSpaces(resourceMap.get(sr.Name));
                 doc.content = EncodingUtil.base64Encode(sr.Body);
