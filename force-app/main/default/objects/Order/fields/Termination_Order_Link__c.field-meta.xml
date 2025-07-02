@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Termination_Order_Link__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF(NOT( ISBLANK( Termination_Order_Id__c ) ) ,
+     IF(NOT( ISBLANK( Termination_Order_Number__c ) ) ,
+        HYPERLINK ( &apos;/&apos; &amp; Termination_Order_Id__c , Termination_Order_Number__c ) ,
+     HYPERLINK ( &apos;/&apos; &amp; Termination_Order_Id__c , Termination_Order_Id__c )) ,
+null
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Termination Order Link</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>
