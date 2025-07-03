@@ -19,17 +19,15 @@ public class QuoteUpdateQueue implements Queueable,System.Finalizer{
                                     WHERE Id = :quoteId];
             if(!quotes.isEmpty()){
                 SBQQ__Quote__c quote = quotes[0];
-                if(quote != null){
-                    if(!quote.Ready_for_Approval__c && !quote.Auto_Termination__c){
-                        quote.Ready_for_Approval__c = true;
-                        quote.ApprovalStatus__c = QUOTE_STATUS_APPROVED;
-                        quote.SBQQ__Status__c = QUOTE_STATUS_APPROVED;
-                        quote.SubmittedUser__c = UserInfo.getUserId();
-                        quote.SubmittedDate__c = System.now().date();
-                        quote.Auto_Termination__c = true;
+                if(quote != null && !quote.Ready_for_Approval__c && !quote.Auto_Termination__c){
+                    quote.Ready_for_Approval__c = true;
+                    quote.ApprovalStatus__c = QUOTE_STATUS_APPROVED;
+                    quote.SBQQ__Status__c = QUOTE_STATUS_APPROVED;
+                    quote.SubmittedUser__c = UserInfo.getUserId();
+                    quote.SubmittedDate__c = System.now().date();
+                    quote.Auto_Termination__c = true;
 
-                        this.quotesToUpdate.add(quote);
-                    }
+                    this.quotesToUpdate.add(quote);
                 }
             }
             if (!this.quotesToUpdate.isEmpty()) {
