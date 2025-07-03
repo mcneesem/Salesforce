@@ -73,7 +73,7 @@
         </scheduledPaths>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <subflows>
         <name>Fault_Flow</name>
         <label>Fault Flow</label>
@@ -83,7 +83,7 @@
         <inputAssignments>
             <name>faultElement</name>
             <value>
-                <elementReference>Run_Quote_Calculation_For_Termination</elementReference>
+                <stringValue>Run_Quote_Calculation_For_Termination</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>

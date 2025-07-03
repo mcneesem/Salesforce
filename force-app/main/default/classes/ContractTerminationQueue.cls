@@ -11,14 +11,16 @@ public class ContractTerminationQueue implements Queueable, Database.AllowsCallo
     public void execute(QueueableContext context) {
         try{
             ContractAmender amender = new ContractAmender();
-            for (Id contractId : contractToTerminationDates.keySet()) {
-                Date terminationDate = contractToTerminationDates.get(contractId);
-                QuoteModel quoteModel = amender.load(contractId);
-                if (quoteModel != null && quoteModel.record != null) {
-                    SBQQ__Quote__c quote = (SBQQ__Quote__c) quoteModel.record;
-                    quote.NSP_TerminationDate__c = terminationDate;
-                    quote.Run_Quote_Calc_for_Termination__c = true;
-                    this.quotesToUpdate.add(quote);
+            if(this.contractToTerminationDates != null && !this.contractToTerminationDates.isEmpty()){
+                for (Id contractId : contractToTerminationDates.keySet()) {
+                    Date terminationDate = contractToTerminationDates.get(contractId);
+                    QuoteModel quoteModel = amender.load(contractId);
+                    if (quoteModel != null && quoteModel.record != null) {
+                        SBQQ__Quote__c quote = (SBQQ__Quote__c) quoteModel.record;
+                        quote.NSP_TerminationDate__c = terminationDate;
+                        quote.Run_Quote_Calc_for_Termination__c = true;
+                        this.quotesToUpdate.add(quote);
+                    }
                 }
             }
             if (!this.quotesToUpdate.isEmpty()) {

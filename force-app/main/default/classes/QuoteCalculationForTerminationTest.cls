@@ -59,7 +59,7 @@ private class QuoteCalculationForTerminationTest {
     }
 
     @IsTest
-    public static void testQuoteCalculationForTermination() {
+    private static void testQuoteCalculationForTermination() {
         List<String> quoteIdSet = new List<String>();
         SBQQ__Quote__c objQuote = [select Id from SBQQ__Quote__c LIMIT 1];
         quoteIdSet.add(objQuote.Id);

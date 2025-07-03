@@ -8,7 +8,7 @@
         <actionName>ContractTerminationHandler</actionName>
         <actionType>apex</actionType>
         <faultConnector>
-            <targetReference>Apex_Fault_Flow</targetReference>
+            <targetReference>Set_Fault_Element_Call_ContractTerminationHandler</targetReference>
         </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
@@ -42,6 +42,39 @@
         </assignmentItems>
         <connector>
             <targetReference>Call_ContractTerminationHandler</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Call_ContractTerminationHandler</name>
+        <label>Set Fault Element: Call_ContractTerminationHandler</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Call_ContractTerminationHandler</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Flow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Update_Contract</name>
+        <label>Set Fault Element: Update_Contract</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Update_Contract</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Fault_Flow</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -102,6 +135,28 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Check_for_Related_Contract_To_Terminate</name>
+        <label>Check for Related Contract To Terminate</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Contract_Exist</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__Order__r.Related_Contract_To_Terminate__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Orders</targetReference>
+            </connector>
+            <label>Contract Exist</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Get_Contracts_Null_Check</name>
         <label>Get Contracts Null Check</label>
         <locationX>0</locationX>
@@ -112,7 +167,7 @@
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>Get_Termination_Contract</leftValueReference>
-                <operator>IsNull</operator>
+                <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
@@ -134,7 +189,7 @@
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>Get_Orders</leftValueReference>
-                <operator>IsNull</operator>
+                <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
@@ -181,7 +236,7 @@
             <field>QuoteId</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>Get_Termination_Contract.SBQQ__Quote__c</elementReference>
+                <elementReference>$Record.SBQQ__Quote__c</elementReference>
             </value>
         </filters>
         <filters>
@@ -209,7 +264,7 @@
             <field>Id</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>$Record.SBQQ__Order__r.Related_Contract_To_Terminate__r.Id</elementReference>
+                <elementReference>$Record.SBQQ__Order__r.Related_Contract_To_Terminate__c</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
@@ -225,49 +280,32 @@
             <targetReference>Check_for_Product</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Fault_Flow</targetReference>
+            <targetReference>Set_Fault_Element_Update_Contract</targetReference>
         </faultConnector>
         <inputReference>Get_Termination_Contract</inputReference>
     </recordUpdates>
     <start>
         <locationX>0</locationX>
         <locationY>0</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>SBQQ__Order__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
         <object>Contract</object>
         <recordTriggerType>Create</recordTriggerType>
         <scheduledPaths>
             <connector>
-                <targetReference>Get_Orders</targetReference>
+                <targetReference>Check_for_Related_Contract_To_Terminate</targetReference>
             </connector>
             <pathType>AsyncAfterCommit</pathType>
         </scheduledPaths>
         <triggerType>RecordAfterSave</triggerType>
     </start>
     <status>Draft</status>
-    <subflows>
-        <name>Apex_Fault_Flow</name>
-        <label>Apex Fault Flow</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <flowName>Insperity_Fault_Handler_Subflow</flowName>
-        <inputAssignments>
-            <name>faultElement</name>
-            <value>
-                <elementReference>Call_ContractTerminationHandler</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>faultFlow</name>
-            <value>
-                <stringValue>Contract_Termination</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>faultMessage</name>
-            <value>
-                <elementReference>$Flow.FaultMessage</elementReference>
-            </value>
-        </inputAssignments>
-    </subflows>
     <subflows>
         <name>Fault_Flow</name>
         <label>Fault Flow</label>
@@ -277,7 +315,7 @@
         <inputAssignments>
             <name>faultElement</name>
             <value>
-                <elementReference>Update_Contract</elementReference>
+                <elementReference>varFaultElement</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -299,5 +337,15 @@
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>varFaultElement</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue></stringValue>
+        </value>
     </variables>
 </Flow>

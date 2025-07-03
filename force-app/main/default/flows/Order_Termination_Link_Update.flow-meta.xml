@@ -11,11 +11,11 @@
             <assignToReference>ContractID</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>$Record.SBQQ__Quote__r.SBQQ__MasterEvergreenContract__r.Id</elementReference>
+                <elementReference>$Record.SBQQ__Quote__r.SBQQ__MasterEvergreenContract__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Get_Original_Order</targetReference>
+            <targetReference>Get_New_Order</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -27,11 +27,44 @@
             <assignToReference>ContractID</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>$Record.SBQQ__Quote__r.SBQQ__MasterContract__r.Id</elementReference>
+                <elementReference>$Record.SBQQ__Quote__r.SBQQ__MasterContract__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Get_Original_Order</targetReference>
+            <targetReference>Get_New_Order</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>set_Fault_Element_Get_New_Order</name>
+        <label>set Fault Element: Get_New_Order</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_New_Order</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Flow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>set_Fault_Element_Update_Original_Order</name>
+        <label>set Fault Element: Update_Original_Order</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Update_Original_Order</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Fault_Flow</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -40,14 +73,14 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
-            <assignToReference>Get_Original_Order.Termination_Order_Id__c</assignToReference>
+            <assignToReference>Get_New_Order.Termination_Order_Id__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>$Record.Order_ID_18__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>Get_Original_Order.Termination_Order_Number__c</assignToReference>
+            <assignToReference>Get_New_Order.Termination_Order_Number__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>$Record.OrderNumber</elementReference>
@@ -68,7 +101,7 @@
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.SBQQ__Quote__r.SBQQ__MasterContract__c</leftValueReference>
-                <operator>IsNull</operator>
+                <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
@@ -83,7 +116,7 @@
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.SBQQ__Quote__r.SBQQ__MasterEvergreenContract__c</leftValueReference>
-                <operator>IsNull</operator>
+                <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
@@ -104,8 +137,8 @@
             <name>Order_Found</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Get_Original_Order</leftValueReference>
-                <operator>IsNull</operator>
+                <leftValueReference>Get_New_Order</leftValueReference>
+                <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
@@ -144,14 +177,17 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <recordLookups>
-        <name>Get_Original_Order</name>
-        <label>Get Original Order</label>
+        <name>Get_New_Order</name>
+        <label>Get New Order</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_for_Order</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>set_Fault_Element_Get_New_Order</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Related_Contract_To_Terminate__c</field>
@@ -184,9 +220,9 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <faultConnector>
-            <targetReference>Fault_Flow</targetReference>
+            <targetReference>set_Fault_Element_Update_Original_Order</targetReference>
         </faultConnector>
-        <inputReference>Get_Original_Order</inputReference>
+        <inputReference>Get_New_Order</inputReference>
     </recordUpdates>
     <start>
         <locationX>0</locationX>
@@ -204,6 +240,13 @@
             <operator>EqualTo</operator>
             <value>
                 <stringValue>Termination</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>SBQQ__Quote__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
             </value>
         </filters>
         <object>Order</object>
@@ -226,7 +269,7 @@
         <inputAssignments>
             <name>faultElement</name>
             <value>
-                <elementReference>Update_Original_Order</elementReference>
+                <elementReference>varFaultElement</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -246,7 +289,17 @@
         <name>ContractID</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
-        <isInput>true</isInput>
-        <isOutput>true</isOutput>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>varFaultElement</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue></stringValue>
+        </value>
     </variables>
 </Flow>

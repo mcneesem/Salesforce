@@ -78,7 +78,7 @@ private class ContractTerminationHandlerTest {
     }
 
     @IsTest
-    public static void testRunContractTerminationCallOut() {
+    private static void testRunContractTerminationCallOut() {
 
         Account objaccount  = [Select Id, Name from Account WHERE Name =: NSP_TestHelper.DEFAULT_COMPANY_NAME LIMIT 1];
 

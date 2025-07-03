@@ -13,24 +13,28 @@ public class QuoteUpdateQueue implements Queueable,System.Finalizer{
     public void execute(QueueableContext context){
 
         try {
-            SBQQ__Quote__c quote = [SELECT Id, Ready_for_Approval__c, ApprovalStatus__c, SBQQ__Status__c,
+            List<SBQQ__Quote__c> quotes = [SELECT Id, Ready_for_Approval__c, ApprovalStatus__c, SBQQ__Status__c,
                                     SubmittedUser__c, SubmittedDate__c, Auto_Termination__c
                                     FROM SBQQ__Quote__c
                                     WHERE Id = :quoteId];
+            if(!quotes.isEmpty()){
+                SBQQ__Quote__c quote = quotes[0];
+                if(quote != null){
+                    if(!quote.Ready_for_Approval__c && !quote.Auto_Termination__c){
+                        quote.Ready_for_Approval__c = true;
+                        quote.ApprovalStatus__c = QUOTE_STATUS_APPROVED;
+                        quote.SBQQ__Status__c = QUOTE_STATUS_APPROVED;
+                        quote.SubmittedUser__c = UserInfo.getUserId();
+                        quote.SubmittedDate__c = System.now().date();
+                        quote.Auto_Termination__c = true;
 
-            if(!quote.Ready_for_Approval__c && !quote.Auto_Termination__c){
-                quote.Ready_for_Approval__c = true;
-                quote.ApprovalStatus__c = QUOTE_STATUS_APPROVED;
-                quote.SBQQ__Status__c = QUOTE_STATUS_APPROVED;
-                quote.SubmittedUser__c = UserInfo.getUserId();
-                quote.SubmittedDate__c = System.now().date();
-                quote.Auto_Termination__c = true;
-
-                this.quotesToUpdate.add(quote);
+                        this.quotesToUpdate.add(quote);
+                    }
+                }
             }
-             if (!this.quotesToUpdate.isEmpty()) {
-                 System.attachFinalizer(this);
-             }
+            if (!this.quotesToUpdate.isEmpty()) {
+                System.attachFinalizer(this);
+            }
         } catch (Exception e) {
             QuoteUpdateQueue.handleException( e , 'execute-Queueable' );
         }
