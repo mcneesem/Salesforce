@@ -757,7 +757,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
         }
     }
 
-    private static MetadataService.MetadataPort createService() {
+    public static MetadataService.MetadataPort createService() {
         MetadataService.MetadataPort service = new MetadataService.MetadataPort();
         service.SessionHeader = new MetadataService.SessionHeader_element();
         service.SessionHeader.sessionId = apiEnabledSessionId();
