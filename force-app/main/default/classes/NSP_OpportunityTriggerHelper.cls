@@ -66,8 +66,9 @@ public with sharing class NSP_OpportunityTriggerHelper {
 
             // AZD-191924 AZD-232114 AZD-232117
             //  If primary product IS 'Workforce Optimization' then calculate fees
-            if(opportunityObject.NSP_PrimaryProduct__c != null){
-                if(String.isNotBlank(opportunityObject.Accountid) && NSP_ValidateOpportunityStage.validHRProducts.contains(opportunityObject.NSP_PrimaryProduct__c) && 
+            if(opportunityObject.NSP_PrimaryProduct__c != null && 
+                String.isNotBlank(opportunityObject.Accountid) && 
+                NSP_ValidateOpportunityStage.validHRProducts.contains(opportunityObject.NSP_PrimaryProduct__c) && 
                 opportunityObject.NSP_lock_enrollment_fee__c == false){
                    calculateFrees.add(opportunityObject);
                }
