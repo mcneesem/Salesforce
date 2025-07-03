@@ -71,7 +71,6 @@ public with sharing class NSP_OpportunityTriggerHelper {
                 NSP_ValidateOpportunityStage.validHRProducts.contains(opportunityObject.NSP_PrimaryProduct__c) && 
                 opportunityObject.NSP_lock_enrollment_fee__c == false){
                    calculateFrees.add(opportunityObject);
-               }
             }
 
             // Checking if account id is not blank
@@ -255,11 +254,11 @@ public with sharing class NSP_OpportunityTriggerHelper {
 
             // AZD-191924 AZD-232114 AZD-232117 
             //  If primary product IS 'Workforce Optimization' then calculate fees
-            if(newOpportunity.NSP_PrimaryProduct__c != null){
-               if(String.isNotBlank(newOpportunity.Accountid) && NSP_ValidateOpportunityStage.validHRProducts.contains(newOpportunity.NSP_PrimaryProduct__c) &&
+            if(newOpportunity.NSP_PrimaryProduct__c != null && 
+                String.isNotBlank(newOpportunity.Accountid) && 
+                NSP_ValidateOpportunityStage.validHRProducts.contains(newOpportunity.NSP_PrimaryProduct__c) &&
                 !newOpportunity.NSP_lock_enrollment_fee__c){
                    calculateFrees.add(newOpportunity);
-                }
             }
 
             if(newOpportunity.OwnerId != oldOpportunity.OwnerId){
