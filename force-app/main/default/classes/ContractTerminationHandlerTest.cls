@@ -4,7 +4,8 @@ private class ContractTerminationHandlerTest {
 
     private class myException extends Exception {}
 
-    @testSetup private static void makeData(){
+    @testSetup
+    private static void makeData() {
 
         Order_Settings__c orderSetting = Order_Settings__c.getOrgDefaults();
         orderSetting.EffectiveDateStartOfMonth__c = true;
@@ -68,7 +69,7 @@ private class ContractTerminationHandlerTest {
         ct.EndDate = dt+365;
         ct.Status = 'Draft';
         ct.NSP_Number_of_Employees__c = 86;
-		ct.NSP_PrimaryProduct__c = 'WX';
+        ct.NSP_PrimaryProduct__c = 'WX';
         insert ct;
         //Activating the contract
         ct.NSP_Product_Type__c = 'Workforce Acceleration';
@@ -121,10 +122,27 @@ private class ContractTerminationHandlerTest {
         ContractTerminationHandler.testHandleException( null , null );
         Test.stopTest();
 
-        SBQQ__Quote__c quoteResult = [select Id,Ready_for_Approval__c,
-									  Auto_Termination__c,SBQQ__MasterEvergreenContract__c,NSP_TransactionType__c,NSP_TerminationDate__c
-                                      from SBQQ__Quote__c
-                                      where NSP_TransactionType__c='Termination' AND SBQQ__Account__c=:objaccount.Id LIMIT 1];
+        List<SBQQ__Quote__c> quoteResults = [
+            SELECT
+                Id ,
+                Ready_for_Approval__c ,
+                Auto_Termination__c ,
+                SBQQ__MasterEvergreenContract__c ,
+                NSP_TransactionType__c ,
+                NSP_TerminationDate__c
+            FROM SBQQ__Quote__c
+            WHERE (
+                NSP_TransactionType__c = 'Termination'
+                AND SBQQ__Account__c = :objaccount.Id
+            )
+            LIMIT 1
+        ];
+        Assert.isNotNull( quoteResults );
+        Assert.isTrue( !quoteResults.isEmpty() );
+        SBQQ__Quote__c quoteResult = quoteResults[0];
+        Assert.isNotNull( quoteResult );
         System.assertEquals(Date.today(),quoteResult.NSP_TerminationDate__c);
     }
+
 }
+//
