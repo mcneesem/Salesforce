@@ -429,8 +429,8 @@ public with sharing class NSP_ValidateOpportunityStage {
         String scannedTask='';
         
         if(validHRProducts.contains(opp.NSP_PrimaryProduct__c)
-            || analysisStageCriteraTypes.contains(opp.Type) && 
-            (opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WX || opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WA)){
+            || (analysisStageCriteraTypes.contains(opp.Type) && 
+            (opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WX || opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WA))){
 
             if(eventList!=null){
                 for(Event event:eventList){////looking for discovery
