@@ -23,8 +23,8 @@
     <apiVersion>64.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <environments>Default</environments>
-    <interviewLabel>QuoteCalculationForTermination {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>QuoteCalculationForTermination</label>
+    <interviewLabel>Quote - Updated - Async - Calculation For Termination {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Quote - Updated - Async - Calculation For Termination</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -89,7 +89,7 @@
         <inputAssignments>
             <name>faultFlow</name>
             <value>
-                <stringValue>QuoteCalculationForTermination</stringValue>
+                <stringValue>Quote_Updated_Async_Calculation_For_Termination</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>

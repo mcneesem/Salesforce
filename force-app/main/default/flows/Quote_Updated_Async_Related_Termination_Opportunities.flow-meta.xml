@@ -39,8 +39,8 @@
         </rules>
     </decisions>
     <environments>Default</environments>
-    <interviewLabel>Opportunity Update On Termination {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Opportunity Update On Termination</label>
+    <interviewLabel>Quote - Updated - Async - Related Termination Opportunities {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Quote - Updated - Async - Related Termination Opportunities</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -135,7 +135,7 @@
         <inputAssignments>
             <name>faultFlow</name>
             <value>
-                <stringValue>Opportunity_Update_On_Termination</stringValue>
+                <stringValue>Quote_Updated_Async_Related_Termination_Opportunities</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
