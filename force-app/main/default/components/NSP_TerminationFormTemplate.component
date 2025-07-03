@@ -2,12 +2,13 @@
     <apex:image id="Logo" url="{!TopLogoUrl}" width="510" height="100"/><br/>
     <apex:outputText value="TERMINATIONS / REINSTATEMENTS" style="padding-left: 135px; font-weight:bold;"/><br/>
     <apex:outputText value="PLEASE PROCESS TERMS AS STATED" style="padding-left: 135px; font-weight:bold;"/><br/><br/>
-   
+
     <!-- Termination Section -->
-    <div style="padding-left:2%; text-align:left;">
-        <b>TERMINATIONS</b>
-    </div>
-   
+    <apex:outputPanel rendered="{!NOT(ISBLANK(wrapTerminationList))}">
+        <div style="padding-left:2%; text-align:left;">
+            <b>TERMINATIONS</b>
+        </div>
+    </apex:outputPanel>
     <apex:dataTable value="{!wrapTerminationList}" var="termination" width="100%">
         <apex:column style="padding-left:2%; padding-bottom:1%;">
             <table style="width: 100%; table-layout: fixed; text-align:left;">
@@ -171,11 +172,12 @@
             </table>
         </apex:column>
     </apex:dataTable>
-   
     <!-- Reinstatement Section -->
-    <div style="padding-left:2%; text-align:left;">
-        <b>REINSTATEMENTS</b>
-    </div>  
+    <apex:outputPanel rendered="{!NOT(ISBLANK(wrapReinstatementList))}">
+        <div style="padding-left:2%; text-align:left;">
+            <b>REINSTATEMENTS</b>
+        </div>
+    </apex:outputPanel>
     <apex:dataTable value="{!wrapReinstatementList}" var="reinstatement" width="100%">
         <apex:column style="padding-left:2%; padding-bottom:1%;">
             <table style="width: 100%; table-layout: fixed; text-align:left;">
@@ -225,8 +227,8 @@
             </table>
         </apex:column>
     </apex:dataTable>
-   
-    <b><big>Terminations Team </big></b><br/>
-    <apex:image id="Logo2" url="{!AddressLogoUrl}" width="500" height="100"/><br/>
+    <br/><br/>
+    <b><big>Terminations Team </big></b><br/><br/>
+    <apex:image id="Logo2" url="{!AddressLogoUrl}" width="200" height="56"/><br/>
     <apex:image id="Logo1" url="{!BottomLogoUrl}" width="500" height="30"/>
 </apex:component>
