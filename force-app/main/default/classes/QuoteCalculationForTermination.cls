@@ -3,11 +3,13 @@ global class QuoteCalculationForTermination implements SBQQ.CalculateCallback{
 
 	global void callback(String quoteJSON){
         try{
-            QuoteModel newquoteModel = (QuoteModel) JSON.deserialize(quoteJSON, QuoteModel.class);
-            if (newquoteModel != null && newquoteModel.record != null) {
-                SBQQ__Quote__c objNewQuote = newquoteModel.record;
-                if ( objNewQuote != null && (Limits.getQueueableJobs() < Limits.getLimitQueueableJobs()) ) {
-                    System.enqueueJob(new QuoteUpdateQueue(objNewQuote.Id));
+            if(String.isNotBlank(quoteJSON)){
+                QuoteModel newquoteModel = (QuoteModel) JSON.deserialize(quoteJSON, QuoteModel.class);
+                if (newquoteModel != null && newquoteModel.record != null) {
+                    SBQQ__Quote__c objNewQuote = newquoteModel.record;
+                    if ( objNewQuote != null && (Limits.getQueueableJobs() < Limits.getLimitQueueableJobs()) ) {
+                        System.enqueueJob(new QuoteUpdateQueue(objNewQuote.Id));
+                    }
                 }
             }
         }catch(Exception e ){
