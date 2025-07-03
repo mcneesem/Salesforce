@@ -4,7 +4,8 @@ private class QuoteCalculationForTerminationTest {
 
     private class myException extends Exception {}
 
-    @testSetup private static void makeData(){
+    @testSetup
+    private static void makeData() {
 
         Order_Settings__c orderSetting = Order_Settings__c.getOrgDefaults();
         orderSetting.EffectiveDateStartOfMonth__c = true;
@@ -63,17 +64,30 @@ private class QuoteCalculationForTerminationTest {
         List<String> quoteIdSet = new List<String>();
         SBQQ__Quote__c objQuote = [select Id from SBQQ__Quote__c LIMIT 1];
         quoteIdSet.add(objQuote.Id);
-		Test.startTest();
+        Test.startTest();
         QuoteCalculationForTermination.runQuoteCalculationForTermination(quoteIdSet);
         QuoteCalculationForTermination.testHandleException( null , null );
         QuoteUpdateQueue.testHandleException( null , null );
         Test.stopTest();
 
-        SBQQ__Quote__c quoteResult = [select Id,Ready_for_Approval__c,
-									  Auto_Termination__c,SBQQ__MasterEvergreenContract__c,NSP_TransactionType__c,NSP_TerminationDate__c
-                                      from SBQQ__Quote__c LIMIT 1];
+        List<SBQQ__Quote__c> quoteResults = [
+            SELECT
+                Id ,
+                Ready_for_Approval__c ,
+                Auto_Termination__c ,
+                SBQQ__MasterEvergreenContract__c ,
+                NSP_TransactionType__c ,
+                NSP_TerminationDate__c
+            FROM SBQQ__Quote__c
+            LIMIT 1
+        ];
+        Assert.isNotNull( quoteResults );
+        Assert.isTrue( !quoteResults.isEmpty() );
+        SBQQ__Quote__c quoteResult = quoteResults[0];
+        Assert.isNotNull( quoteResult );
         System.assertEquals(true,quoteResult.Ready_for_Approval__c);
         System.assertNotEquals(false,quoteResult.Auto_Termination__c);
-
     }
+
 }
+//
