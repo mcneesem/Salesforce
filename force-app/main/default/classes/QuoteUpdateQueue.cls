@@ -5,8 +5,8 @@ public class QuoteUpdateQueue implements Queueable , Finalizer {
     private Id quoteId = null;
     private List<SBQQ__Quote__c> quotesToUpdate = new List<SBQQ__Quote__c>();
 
-    public QuoteUpdateQueue( Id quoteId ) {
-        this.quoteId = quoteId;
+    public QuoteUpdateQueue( Id local ) {
+        this.quoteId = local;
     }
 
     public void execute( QueueableContext context ) {
