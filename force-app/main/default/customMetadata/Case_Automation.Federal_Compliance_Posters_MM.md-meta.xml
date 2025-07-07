@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Federal_Compliance_Posters_MM</label>
+    <protected>false</protected>
+    <values>
+        <field>Category__c</field>
+        <value xsi:type="xsd:string">Federal Poster Request</value>
+    </values>
+    <values>
+        <field>Detail__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Instructions__c</field>
+        <value xsi:type="xsd:string">Verify all Work Site locations have been entered in AIMS. Once verified, reassign this case to the Compliance Posters queue</value>
+    </values>
+    <values>
+        <field>Origin__c</field>
+        <value xsi:type="xsd:string">Onboarding Automation</value>
+    </values>
+    <values>
+        <field>Sub_Category__c</field>
+        <value xsi:type="xsd:string">New client poster order</value>
+    </values>
+    <values>
+        <field>Subject__c</field>
+        <value xsi:type="xsd:string">Federal Labor Law posters needed for Client Worksite location(s)</value>
+    </values>
+</CustomMetadata>
