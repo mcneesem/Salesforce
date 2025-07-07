@@ -4,6 +4,11 @@
         <enabled>true</enabled>
         <name>Account_Manage_PCM_Firms</name>
     </customPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Account.Private_Capital_Firm__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <flowAccesses>
         <enabled>true</enabled>
         <flow>PCM_Firms_Screen</flow>
