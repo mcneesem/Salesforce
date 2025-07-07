@@ -323,6 +323,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Case.Client_Type__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Case.Complexity__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -374,6 +379,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Case.Number_of_Employees__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.Opportunity__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1336,7 +1346,7 @@
         <field>pse__Proj__c.NSP_Config_Call_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
-        <fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>pse__Proj__c.NSP_Employee_Enrollment_In_Progress__c</field>
         <readable>true</readable>
