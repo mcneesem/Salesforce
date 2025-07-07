@@ -2,19 +2,14 @@
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <customPermissions>
         <enabled>true</enabled>
-        <name>Account_Allow_PCM_Flag_flip_back_to_No</name>
+        <name>Account_Manage_PCM_Firms</name>
     </customPermissions>
-    <customPermissions>
+    <flowAccesses>
         <enabled>true</enabled>
-        <name>Allow_Edit_Private_Capital_Firm</name>
-    </customPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Account.Private_Capital_Firm__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
+        <flow>PCM_Firms_Screen</flow>
+    </flowAccesses>
     <hasActivationRequired>false</hasActivationRequired>
-    <label>Account - Edit Private Capital Firm</label>
+    <label>Account - Manage PCM Firms</label>
     <objectPermissions>
         <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>

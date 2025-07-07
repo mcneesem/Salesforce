@@ -177,7 +177,7 @@
                             <value>Account.Manage_PCM_Firms</value>
                             <visibilityRule>
                                 <criteria>
-                                    <leftValue>{!$Permission.CustomPermission.Allow_Edit_Private_Capital_Firm}</leftValue>
+                                    <leftValue>{!$Permission.CustomPermission.Account_Manage_PCM_Firms}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>true</rightValue>
                                 </criteria>
@@ -9650,7 +9650,7 @@
                 <identifier>lst_dynamicRelatedList</identifier>
                 <visibilityRule>
                     <criteria>
-                        <leftValue>{!$Permission.CustomPermission.Allow_Edit_Private_Capital_Firm}</leftValue>
+                        <leftValue>{!$Permission.CustomPermission.Account_Manage_PCM_Firms}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>true</rightValue>
                     </criteria>
