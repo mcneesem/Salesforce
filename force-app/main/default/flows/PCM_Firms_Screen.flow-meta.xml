@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>64.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
         <name>Add_Account_to_Collection</name>
         <label>Add Account to Collection</label>
@@ -37,7 +38,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Delete_Records</targetReference>
+            <targetReference>Account_Relationship_DML_Subflow_Delete</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -85,40 +86,6 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Assign_faultElement_Account_PCM_Relationship</name>
-        <label>Assign faultElement Account_PCM_Relationship</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>varFaultElement</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Account_PCM_Relationship</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Assign_faultElement_Delete_Records</name>
-        <label>Assign faultElement Delete_Records</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>varFaultElement</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Delete_Records</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>Assign_faultElement_Get_Current_PCM_Relationships</name>
         <label>Assign faultElement Get_Current_PCM_Relationships</label>
         <locationX>0</locationX>
@@ -144,23 +111,6 @@
             <operator>Assign</operator>
             <value>
                 <stringValue>Get_Eligible_Accounts_for_PCM_Partner</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Assign_faultElement_Update_PCM_Percentage</name>
-        <label>Assign faultElement Update_PCM_Percentage</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>varFaultElement</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Update_PCM_Percentage</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -476,7 +426,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>Account_PCM_Relationship</targetReference>
+            <targetReference>Account_Relationship_DML_Subflow_Create</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>No more add</defaultConnectorLabel>
         <rules>
@@ -683,7 +633,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>Update_PCM_Percentage</targetReference>
+            <targetReference>Account_Relationship_DML_Subflow_Update</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>No more update</defaultConnectorLabel>
         <rules>
@@ -783,26 +733,6 @@
         </value>
     </processMetadataValues>
     <processType>Flow</processType>
-    <recordCreates>
-        <name>Account_PCM_Relationship</name>
-        <label>Account PCM Relationship</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <faultConnector>
-            <targetReference>Assign_faultElement_Account_PCM_Relationship</targetReference>
-        </faultConnector>
-        <inputReference>createPCMRelationships</inputReference>
-    </recordCreates>
-    <recordDeletes>
-        <name>Delete_Records</name>
-        <label>Delete Records</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <faultConnector>
-            <targetReference>Assign_faultElement_Delete_Records</targetReference>
-        </faultConnector>
-        <inputReference>deletePCMRelationships</inputReference>
-    </recordDeletes>
     <recordLookups>
         <name>Get_Current_PCM_Relationships</name>
         <label>Get Current PCM Relationships</label>
@@ -879,16 +809,6 @@
         <sortField>Name</sortField>
         <sortOrder>Asc</sortOrder>
     </recordLookups>
-    <recordUpdates>
-        <name>Update_PCM_Percentage</name>
-        <label>Update PCM Percentage</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <faultConnector>
-            <targetReference>Assign_faultElement_Update_PCM_Percentage</targetReference>
-        </faultConnector>
-        <inputReference>updatePCMRelationships</inputReference>
-    </recordUpdates>
     <screens>
         <name>Add_PCM_Firm</name>
         <label>Add PCM Firm</label>
@@ -905,6 +825,14 @@
             <name>Add_PCM</name>
             <fieldText>&lt;p&gt;&lt;strong&gt;Add new PCM relationship&lt;/strong&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
         </fields>
         <fields>
             <name>Add_PCM_Firm_Section1</name>
@@ -921,6 +849,14 @@
                     <inputsOnNextNavToAssocScrn>ResetValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                     <storeOutputAutomatically>true</storeOutputAutomatically>
+                    <styleProperties>
+                        <verticalAlignment>
+                            <stringValue>top</stringValue>
+                        </verticalAlignment>
+                        <width>
+                            <stringValue>12</stringValue>
+                        </width>
+                    </styleProperties>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -941,6 +877,14 @@
                     <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                     <scale>0</scale>
+                    <styleProperties>
+                        <verticalAlignment>
+                            <stringValue>top</stringValue>
+                        </verticalAlignment>
+                        <width>
+                            <stringValue>12</stringValue>
+                        </width>
+                    </styleProperties>
                     <validationRule>
                         <errorMessage>&lt;p&gt;PCM percentage must be greater than zero and total cannot exceed 100.&lt;/p&gt;</errorMessage>
                         <formulaExpression>( {!PCM_Percentage} &gt; 0 ) &amp;&amp; ( {!sumPCMPercentage} + {!PCM_Percentage} &lt;= 100 ) &amp;&amp; ( REGEX(TEXT({!PCM_Percentage}), &quot;^[0-9]*$&quot;) )</formulaExpression>
@@ -956,6 +900,14 @@
             </fields>
             <isRequired>false</isRequired>
             <regionContainerType>SectionWithoutHeader</regionContainerType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
         </fields>
         <helpText>&lt;p&gt;Add PCM Relationship&lt;/p&gt;</helpText>
         <nextOrFinishButtonLabel>Next</nextOrFinishButtonLabel>
@@ -1021,6 +973,14 @@
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
@@ -1052,6 +1012,14 @@
             <name>Manage_PCM</name>
             <fieldText>&lt;p&gt;&lt;strong&gt;Manage PCM Relationships&lt;/strong&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
         </fields>
         <fields>
             <name>What_change_would_you_like_to_make</name>
@@ -1063,6 +1031,14 @@
             <fieldType>RadioButtons</fieldType>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>false</isRequired>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
         </fields>
         <nextOrFinishButtonLabel>Next</nextOrFinishButtonLabel>
         <showFooter>true</showFooter>
@@ -1139,6 +1115,14 @@
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
         </fields>
         <fields>
             <name>new_PCM_percentage</name>
@@ -1148,6 +1132,14 @@
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <scale>0</scale>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
             <validationRule>
                 <errorMessage>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;PCM percentage must be greater than zero and total cannot exceed 100.&lt;/span&gt;&lt;/p&gt;</errorMessage>
                 <formulaExpression>( {!new_PCM_percentage} &gt; 0 ) &amp;&amp; ( {!sumPCMPercentage} - {!ExistingPCMDataTable.firstSelectedRow.PCM_Percentage__c} + {!new_PCM_percentage} &lt;= 100 ) &amp;&amp; ( REGEX(TEXT({!new_PCM_percentage}), &quot;^[0-9]*$&quot;) )</formulaExpression>
@@ -1187,6 +1179,14 @@
             <fieldType>RadioButtons</fieldType>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
         </fields>
         <nextOrFinishButtonLabel>Next</nextOrFinishButtonLabel>
         <showFooter>true</showFooter>
@@ -1212,6 +1212,14 @@
             <fieldType>RadioButtons</fieldType>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
         </fields>
         <nextOrFinishButtonLabel>Next</nextOrFinishButtonLabel>
         <showFooter>true</showFooter>
@@ -1224,7 +1232,64 @@
             <targetReference>Record_Id_Null_Check</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
+    <subflows>
+        <name>Account_Relationship_DML_Subflow_Create</name>
+        <label>Account Relationship - DML Subflow - Create</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <flowName>Account_Relationship_DML_Subflow</flowName>
+        <inputAssignments>
+            <name>dmlAccountRelationships</name>
+            <value>
+                <elementReference>createPCMRelationships</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>dmlAction</name>
+            <value>
+                <stringValue>Create</stringValue>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>Account_Relationship_DML_Subflow_Delete</name>
+        <label>Account Relationship - DML Subflow - Delete</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <flowName>Account_Relationship_DML_Subflow</flowName>
+        <inputAssignments>
+            <name>dmlAccountRelationships</name>
+            <value>
+                <elementReference>deletePCMRelationships</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>dmlAction</name>
+            <value>
+                <stringValue>Delete</stringValue>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>Account_Relationship_DML_Subflow_Update</name>
+        <label>Account Relationship - DML Subflow - Update</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <flowName>Account_Relationship_DML_Subflow</flowName>
+        <inputAssignments>
+            <name>dmlAccountRelationships</name>
+            <value>
+                <elementReference>updatePCMRelationships</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>dmlAction</name>
+            <value>
+                <stringValue>Update</stringValue>
+            </value>
+        </inputAssignments>
+    </subflows>
     <subflows>
         <name>Insperity_Fault_Handler_Subflow</name>
         <label>Insperity Fault Handler Subflow</label>
