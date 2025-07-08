@@ -2922,7 +2922,7 @@ public class NSP_Implementationprofile_ServiceHelper {
                 Are_you_registered_with_the_CSLB__c ,
                 NSP_Legal_Name__c ,
                 Contractor_s_License__c ,
-                Effective_Date_Payroll_Worker_comp_EPLI__c,
+                Effective_Date_Payroll_Worker_comp_EPLI__c ,
                 NSP_Project__c
             FROM Implementation_Profile__c
             WHERE ( Id IN :ipIds )
