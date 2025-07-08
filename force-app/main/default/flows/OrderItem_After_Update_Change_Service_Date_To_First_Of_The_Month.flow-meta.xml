@@ -72,10 +72,6 @@
     <start>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <connector>
-            <targetReference>Update_Order_Products</targetReference>
-        </connector>
-        <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Type</field>
@@ -92,14 +88,27 @@
             </value>
         </filters>
         <filters>
-            <field>Status</field>
-            <operator>NotEqualTo</operator>
+            <field>NSP_Rev_Rec_Rules_Reviewed__c</field>
+            <operator>IsChanged</operator>
             <value>
-                <stringValue>Draft</stringValue>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>NSP_Rev_Rec_Rules_Reviewed__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
             </value>
         </filters>
         <object>Order</object>
         <recordTriggerType>Update</recordTriggerType>
+        <scheduledPaths>
+            <connector>
+                <targetReference>Update_Order_Products</targetReference>
+            </connector>
+            <pathType>AsyncAfterCommit</pathType>
+        </scheduledPaths>
         <triggerType>RecordAfterSave</triggerType>
     </start>
     <status>Draft</status>
