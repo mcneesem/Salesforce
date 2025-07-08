@@ -358,7 +358,21 @@ public class NSP_OpportunityTriggerHelperTest {
         opp5.NSP_WaivedInsperityFee__c = true;
         opp5.NSP_InsperityFeePercent__c = 10;
         oppList.add(opp5);
-        
+
+        //  Formula 1 - Workforce Sync
+        Opportunity opp9 = new Opportunity();
+        opp9.Name = 'Test Oppty Enrollment Fee';
+        opp9.AccountId = acct.id;
+        opp9.stagename = NSP_SalesConstants.DISCOVERY_STAGE;
+        opp9.CloseDate = date.today();
+        opp9.CurrencyIsoCode = CURRENCY_USD;
+        opp9.NSP_PrimaryProduct__c = 'HRScale';
+        opp9.Type ='Existing Product';
+        opp9.NSP_AddonType__c = 'CAM';
+        opp9.NSP_Schedule_B_Enrollment_Fee__c = 1200;
+        opp9.NSP_TotalAnnualPayroll__c = 1500;
+        oppList.add(opp9);
+
         NSP_OpportunityTriggerHelper.calculateEnrollmentFees(oppList);
         Test.stopTest();
         
@@ -403,6 +417,13 @@ public class NSP_OpportunityTriggerHelperTest {
         //  opp.NSP_InsperityFee__c = (opp.NSP_InsperityFeePercent__c * opp.NSP_Schedule_B_Enrollment_Fee__c) / 100;
         //  (600 * 10) /100 = 60
         System.assertEquals(60, opp5.NSP_InsperityFee__c);
+
+        //  Formula 1  
+        //  HRScale should be the same as WS
+        //  opp.NSP_InsperityFee__c = opp.NSP_Schedule_B_Enrollment_Fee__c / 6;
+        //  1200/ 6 = 200
+        System.assertEquals(200, opp9.NSP_InsperityFee__c);
+
     }
     
         /**
@@ -1080,6 +1101,14 @@ static void createAssetTest3(){
         expected = new Set<String>{'workforce'};
         System.assertEquals(expected, result, 'The method should handle a single value without commas');
 
+        Test.stopTest();
+    }
+    
+    @isTest
+    static void testGetAssetRecord() {
+        Test.startTest();
+        Id recordId = NSP_OpportunityTriggerHelper.getAssetRecordTypeIdByName('WX_WA');
+        System.assertEquals('0124x000000yRuxAAE', recordId);
         Test.stopTest();
     }
 }
