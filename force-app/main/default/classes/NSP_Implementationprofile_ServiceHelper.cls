@@ -1376,6 +1376,7 @@ public class NSP_Implementationprofile_ServiceHelper {
         eachCase.NSP_Case_Sub_Status__c = NSP_ServiceConstants.UNASSIGNED;
         eachCase.NSP_Rating__c = NSP_ServiceConstants.CASE_RATING;
         eachCase.NSP_Implementation_Profile__c = ipRecId;
+        eachCase.Project__c = ipWithValue.NSP_Project__c;
         if ( caseMdt != null ) {
             eachCase.Subject = SchemaController.safeText(
                 caseMdt.Subject__c ,
@@ -2921,7 +2922,8 @@ public class NSP_Implementationprofile_ServiceHelper {
                 Are_you_registered_with_the_CSLB__c ,
                 NSP_Legal_Name__c ,
                 Contractor_s_License__c ,
-                Effective_Date_Payroll_Worker_comp_EPLI__c
+                Effective_Date_Payroll_Worker_comp_EPLI__c,
+                NSP_Project__c
             FROM Implementation_Profile__c
             WHERE ( Id IN :ipIds )
         ]);
