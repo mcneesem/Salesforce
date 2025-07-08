@@ -28,9 +28,23 @@
         </assignmentItems>
     </assignments>
     <assignments>
+        <description>set the default value of Seasonal Pricing as Not Applicable</description>
+        <name>Set_Seasonal_As_Not_Applicable</name>
+        <label>Set Seasonal As Not Applicable</label>
+        <locationX>578</locationX>
+        <locationY>803</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Seasonal_Pricing__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Not Applicable</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
         <name>SetQuote_Type_as_Supplemental</name>
         <label>SetQuote Type as Supplemental</label>
-        <locationX>402</locationX>
+        <locationX>446</locationX>
         <locationY>395</locationY>
         <assignmentItems>
             <assignToReference>$Record.SBQQ__Type__c</assignToReference>
@@ -47,7 +61,7 @@
         <description>Populate Seasonal Pricing field for Amendment quotes</description>
         <name>Check_Amendment_Quote</name>
         <label>Check Amendment Quote</label>
-        <locationX>534</locationX>
+        <locationX>578</locationX>
         <locationY>587</locationY>
         <defaultConnectorLabel>New Quote</defaultConnectorLabel>
         <rules>
@@ -72,12 +86,36 @@
         <label>Check Contract</label>
         <locationX>314</locationX>
         <locationY>695</locationY>
+        <defaultConnector>
+            <targetReference>Set_Seasonal_As_Not_Applicable</targetReference>
+        </defaultConnector>
         <defaultConnectorLabel>Skip</defaultConnectorLabel>
         <rules>
             <name>Master_Contract</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Master_Contract</leftValueReference>
+                <leftValueReference>$Record.SBQQ__MasterContract__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__MasterContract__r.SBQQ__Order__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__MasterContract__r.SBQQ__Order__r.SBQQ__Quote__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__MasterContract__r.SBQQ__Order__r.SBQQ__Quote__r.Seasonal_Pricing__c</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -98,6 +136,27 @@
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__MasterEvergreenContract__r.SBQQ__Order__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__MasterEvergreenContract__r.SBQQ__Order__r.SBQQ__Quote__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__MasterEvergreenContract__r.SBQQ__Order__r.SBQQ__Quote__r.Seasonal_Pricing__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Assign_Seasonal_From_Master_Evergreen_Contract</targetReference>
             </connector>
@@ -107,7 +166,7 @@
     <decisions>
         <name>Check_Supplemental_Quote</name>
         <label>Check Supplemental Quote</label>
-        <locationX>534</locationX>
+        <locationX>578</locationX>
         <locationY>287</locationY>
         <defaultConnector>
             <targetReference>Check_Amendment_Quote</targetReference>
@@ -171,7 +230,7 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <start>
-        <locationX>408</locationX>
+        <locationX>452</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Check_Supplemental_Quote</targetReference>
