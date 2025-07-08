@@ -132,7 +132,7 @@
             <label>Yes</label>
         </rules>
     </decisions>
-    <description>If Product is WX, WO, WA or WS and Opty is MidMarket (by segment or number of employees) and Num of Employees gets changed, then update related Account and send email alert if applicable.</description>
+    <description>Updated to include &quot;HRScale&quot; product. If Product is WX, WO, WA or WS and Opty is MidMarket (by segment or number of employees) and Num of Employees gets changed, then update related Account and send email alert if applicable.</description>
     <environments>Default</environments>
     <interviewLabel>Opportunity - Updated - Async - Number of Employees Changed Related To MidMarket {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Opportunity - Updated - Async - Number of Employees Changed Related to MidMarket</label>
@@ -238,7 +238,7 @@
     <start>
         <locationX>50</locationX>
         <locationY>0</locationY>
-        <filterLogic>(1 AND 2 AND 3 AND (4 OR 5) AND (6 OR 7 OR 8 OR 9) )</filterLogic>
+        <filterLogic>(1 AND 2 AND 3 AND (4 OR 5) AND (6 OR 7 OR 8 OR 9 OR 10) )</filterLogic>
         <filters>
             <field>NSP_Number_of_Employees__c</field>
             <operator>IsChanged</operator>
@@ -300,6 +300,13 @@
             <operator>EqualTo</operator>
             <value>
                 <stringValue>WA</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>NSP_PrimaryProduct__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>HRScale</stringValue>
             </value>
         </filters>
         <object>Opportunity</object>

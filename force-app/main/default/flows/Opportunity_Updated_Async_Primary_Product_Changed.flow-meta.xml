@@ -28,7 +28,6 @@
         </inputParameters>
         <nameSegment>CustomPermissionController</nameSegment>
         <storeOutputAutomatically>true</storeOutputAutomatically>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <apiVersion>61.0</apiVersion>
     <assignments>
@@ -234,7 +233,7 @@
             <label>Send MidMarket Email</label>
         </rules>
     </decisions>
-    <description>Updated for HCM Leads Specialist email for WX/WA. Moved logic to decision criteria and removed redundancies</description>
+    <description>Updated to include &quot;HRScale&quot; where &quot;WS&quot; appears. Updated for HCM Leads Specialist email for WX/WA. Moved logic to decision criteria and removed redundancies</description>
     <environments>Default</environments>
     <interviewLabel>Opportunity - Updated - Async - Primary Product Changed {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Opportunity - Updated - Async - Primary Product Changed</label>
@@ -305,7 +304,7 @@
     <start>
         <locationX>50</locationX>
         <locationY>0</locationY>
-        <filterLogic>1 AND (2 OR 3 OR 4 OR 5)</filterLogic>
+        <filterLogic>1 AND (2 OR 3 OR 4 OR 5 OR 6)</filterLogic>
         <filters>
             <field>NSP_PrimaryProduct__c</field>
             <operator>IsChanged</operator>
@@ -339,6 +338,13 @@
             <operator>EqualTo</operator>
             <value>
                 <stringValue>WS</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>NSP_PrimaryProduct__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>HRScale</stringValue>
             </value>
         </filters>
         <object>Opportunity</object>
