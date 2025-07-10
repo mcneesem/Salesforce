@@ -5,4 +5,5 @@
     <mayForecastManagerShare>false</mayForecastManagerShare>
     <name>Sales Leader</name>
     <opportunityAccessLevel>Edit</opportunityAccessLevel>
+    <parentRole>Sales_Executive</parentRole>
 </Role>
