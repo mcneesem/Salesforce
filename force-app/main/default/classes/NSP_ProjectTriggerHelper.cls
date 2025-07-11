@@ -13,6 +13,7 @@ public with sharing class NSP_ProjectTriggerHelper {
     public Static final List<String> PROJECTTASKNAMES = label.NSP_Project_Task_Names.split(',');
     public Static final String NEWPROJECTNAME = 'Post Implementation Payroll Follow Up';
     public Static final String NEWPROJECTTYPE = 'Implementation';
+    public Static final String LAYOUTBOB_PEOGENERIC	 = 'PEO Generic';
     public Static final Id WORECORDTYPEID = NSP_GenericRecordType.getRecordTypeId( 'Asset' , 'WO' );
     public static final Id PEOBILLRECTYPEID = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.PROJECT, NSP_ServiceConstants.PEO_BILL_RECORDTYPE);
     public static final Id casePEORecordTypeId = NSP_GenericRecordType.getRecordTypeId('Case', NSP_ServiceConstants.PEO);
@@ -1286,6 +1287,7 @@ public with sharing class NSP_ProjectTriggerHelper {
                                             clonedPrjct.pse__Start_Date__c = system.today();
                                             clonedPrjct.pse__End_Date__c =  System.today().addDays(60);
                                             clonedPrjct.pse__Project_Type__c = NEWPROJECTTYPE;
+                                            clonedPrjct.Layout_BOB__c = LAYOUTBOB_PEOGENERIC;
                                             clonedPrjct.pse__Project_Status__c = NSP_ServiceConstants.STATUS_ACTIVE;
                                             clonedPrjct.pse__Is_Active__c = true;
                                             clonedPrjct.NSP_Exclusively_Assign_Owner__c = true; // Added as part of DF-02179
