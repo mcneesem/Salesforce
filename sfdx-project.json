@@ -8,5 +8,5 @@
   "name": "insperity",
   "namespace": "",
   "sfdcLoginUrl": "https://test.salesforce.com/",
-  "sourceApiVersion": "59.0"
+  "sourceApiVersion": "64.0"
 }
