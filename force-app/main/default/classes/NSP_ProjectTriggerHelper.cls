@@ -3,24 +3,24 @@ public with sharing class NSP_ProjectTriggerHelper {
     // test w/ NSP_ProjectTriggerHelperTest (81%)
     // test w/ NSP_AssetServiceTriggerHelperTest (29%)
 
-    public Static Set<Id> dupPreventionSet = new Set<Id>();
+    public static Set<Id> dupPreventionSet = new Set<Id>();
     public final String PROJECTTASKSTATUSCOMPLETE = 'Complete';
     public final String PROJECTTASKSTATUSCANCELLED = 'Canceled';
     public final String PROJECTSERVICEPLAN3 = 'Service_Plan_Level_3';
     public final String PROJECTSERVICEPLAN4 = 'Service_Plan_Level_4';
-    public Static final Id PEOPROJECTTECORDTYPEID = NSP_GenericRecordType.getRecordTypeId( 'pse__Proj__c' , 'PEO_Project' );
-    public Static final Id TESBPSPROJECTTECORDTYPEID = NSP_GenericRecordType.getRecordTypeId( 'pse__Proj__c' , 'TES_BPS' );
-    public Static final List<String> PROJECTTASKNAMES = label.NSP_Project_Task_Names.split(',');
-    public Static final String NEWPROJECTNAME = 'Post Implementation Payroll Follow Up';
-    public Static final String NEWPROJECTTYPE = 'Implementation';
-    public Static final String LAYOUTBOB_PEOGENERIC	 = 'PEO Generic';
-    public Static final Id WORECORDTYPEID = NSP_GenericRecordType.getRecordTypeId( 'Asset' , 'WO' );
+    public static final Id PEOPROJECTTECORDTYPEID = NSP_GenericRecordType.getRecordTypeId( 'pse__Proj__c' , 'PEO_Project' );
+    public static final Id TESBPSPROJECTTECORDTYPEID = NSP_GenericRecordType.getRecordTypeId( 'pse__Proj__c' , 'TES_BPS' );
+    public static final List<String> PROJECTTASKNAMES = label.NSP_Project_Task_Names.split(',');
+    public static final String NEWPROJECTNAME = 'Post Implementation Payroll Follow Up';
+    public static final String NEWPROJECTTYPE = 'Implementation';
+    private static final String LAYOUTBOB_PEO_GENERIC = 'PEO Generic';
+    public static final Id WORECORDTYPEID = NSP_GenericRecordType.getRecordTypeId( 'Asset' , 'WO' );
     public static final Id PEOBILLRECTYPEID = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.PROJECT, NSP_ServiceConstants.PEO_BILL_RECORDTYPE);
     public static final Id casePEORecordTypeId = NSP_GenericRecordType.getRecordTypeId('Case', NSP_ServiceConstants.PEO);
     private static final Id itaCqaRecordTypeId = NSP_GenericRecordType.getRecordTypeId('Case', NSP_ServiceConstants.NSP_ITA_CQA);
     private static final Id peoProjectRecordTypeId = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.PROJECT, NSP_ServiceConstants.PROJECT_PEO_RECORDTYPE);
     private static final Id bpsProjectRecordTypeId = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.PROJECT, NSP_ServiceConstants.PROJECT_BPS_RECORDTYPE);
-    private Static final String SERVICEPLANPROJECTTYPE = 'Service Plan';
+    private static final String SERVICEPLANPROJECTTYPE = 'Service Plan';
 
     /*****************************************************************
     * Creating Constructor to call FF API's
@@ -1278,26 +1278,35 @@ public with sharing class NSP_ProjectTriggerHelper {
                                                 AND NSP_Role__c =: NSP_ServiceConstants.PAYROLL_SPECIALIST]){
                                                     prjctPayRollSpecialistMap.put(prjteam.NSP_Project__c, prjteam.NSP_Assignee__r.pse__Salesforce_User__c);
                                                 }
-            for(pse__Proj__c prjc : [SELECT Id, pse__Account__c ,
-                                        OwnerId,TemplateName__c,pse__Parent_Project__c
-                                        FROM pse__Proj__c WHERE Id IN: completedPrjctList]){
-                                            clonedPrjct = new pse__Proj__c();
-                                            clonedPrjct.Name = NEWPROJECTNAME;
-                                            clonedPrjct.OwnerId = prjctPayRollSpecialistMap.get(prjc.Id) != null ? prjctPayRollSpecialistMap.get(prjc.Id) : prjc.OwnerId;
-                                            clonedPrjct.pse__Start_Date__c = system.today();
-                                            clonedPrjct.pse__End_Date__c =  System.today().addDays(60);
-                                            clonedPrjct.pse__Project_Type__c = NEWPROJECTTYPE;
-                                            clonedPrjct.Layout_BOB__c = LAYOUTBOB_PEOGENERIC;
-                                            clonedPrjct.pse__Project_Status__c = NSP_ServiceConstants.STATUS_ACTIVE;
-                                            clonedPrjct.pse__Is_Active__c = true;
-                                            clonedPrjct.NSP_Exclusively_Assign_Owner__c = true; // Added as part of DF-02179
-                                            clonedPrjct.pse__Account__c = prjc.pse__Account__c;
-                                            clonedPrjct.recordTypeId = PEOPROJECTTECORDTYPEID;
-                                            clonedPrjct.pse__Parent_Project__c = prjc.Id;
-                                            clonedPrjctList.add(clonedPrjct);
-                                            prjActId.add(prjc.pse__Account__c);
-
-                                        }
+            for ( pse__Proj__c prjc : [
+                        SELECT
+                            Id ,
+                            pse__Account__c ,
+                            OwnerId ,
+                            TemplateName__c ,
+                            pse__Parent_Project__c
+                        FROM pse__Proj__c
+                        WHERE ( Id IN :completedPrjctList )
+                    ]
+                )
+            {
+                Id payrollSpecialistId = prjctPayRollSpecialistMap.get( prjc.Id );
+                clonedPrjct = new pse__Proj__c();
+                clonedPrjct.Name = NEWPROJECTNAME;
+                clonedPrjct.OwnerId = ( ( payrollSpecialistId != null ) ? payrollSpecialistId : prjc.OwnerId );
+                clonedPrjct.pse__Start_Date__c = System.today();
+                clonedPrjct.pse__End_Date__c = System.today().addDays( 60 );
+                clonedPrjct.pse__Project_Type__c = NSP_ProjectTriggerHelper.NEWPROJECTTYPE;
+                clonedPrjct.Layout_BOB__c = NSP_ProjectTriggerHelper.LAYOUTBOB_PEO_GENERIC;
+                clonedPrjct.pse__Project_Status__c = NSP_ServiceConstants.STATUS_ACTIVE;
+                clonedPrjct.pse__Is_Active__c = true;
+                clonedPrjct.NSP_Exclusively_Assign_Owner__c = true; // Added as part of DF-02179
+                clonedPrjct.pse__Account__c = prjc.pse__Account__c;
+                clonedPrjct.recordTypeId = NSP_ProjectTriggerHelper.PEOPROJECTTECORDTYPEID;
+                clonedPrjct.pse__Parent_Project__c = prjc.Id;
+                clonedPrjctList.add( clonedPrjct );
+                prjActId.add( prjc.pse__Account__c );
+            }
             if(!clonedPrjctList.isEmpty()){
                 Database.insert(clonedPrjctList);
                 for(pse__Proj__c clPrj : [SELECT Id, pse__Parent_Project__c FROM pse__Proj__c WHERE ID IN: clonedPrjctList]){
