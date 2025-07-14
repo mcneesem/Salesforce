@@ -146,20 +146,6 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
-                    <name>height</name>
-                    <value>400px</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>tabName</name>
-                    <value>Highspot_Content</value>
-                </componentInstanceProperties>
-                <componentName>highspot:HighspotContent</componentName>
-                <identifier>highspot_HighspotContent</identifier>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
                     <name>relatedListComponentOverride</name>
                     <value>NONE</value>
                 </componentInstanceProperties>

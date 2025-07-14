@@ -14332,10 +14332,6 @@
         <visible>true</visible>
     </recordTypeVisibilities>
     <tabVisibilities>
-        <tab>Highspot_Content</tab>
-        <visibility>Hidden</visibility>
-    </tabVisibilities>
-    <tabVisibilities>
         <tab>MindTickle</tab>
         <visibility>Hidden</visibility>
     </tabVisibilities>

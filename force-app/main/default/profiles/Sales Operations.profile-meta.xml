@@ -14946,10 +14946,6 @@
         <visible>true</visible>
     </recordTypeVisibilities>
     <tabVisibilities>
-        <tab>Highspot_Content</tab>
-        <visibility>DefaultOn</visibility>
-    </tabVisibilities>
-    <tabVisibilities>
         <tab>Onboarding_Meeting_Request__c</tab>
         <visibility>Hidden</visibility>
     </tabVisibilities>
