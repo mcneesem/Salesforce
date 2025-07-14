@@ -19,6 +19,7 @@
     <permissionSets>Core_Sales</permissionSets>
     <permissionSets>Enrollment_Fee_Edit</permissionSets>
     <permissionSets>Homepage_Access_Sales_User</permissionSets>
+    <permissionSets>Insperity_Detailed_Data_Access</permissionSets>
     <permissionSets>List_View_Enhanced_Access</permissionSets>
     <permissionSets>NSP_Asset_Pending_Comment_Access</permissionSets>
     <permissionSets>NSP_Billing_View_All</permissionSets>

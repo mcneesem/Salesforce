@@ -3,6 +3,7 @@
     <description>Permissions for Users in the Retirement Sales Manager legacy Role</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Retirement Sales Manager</label>
+    <permissionSets>Insperity_Detailed_Data_Access</permissionSets>
     <permissionSets>Opportunity_Allow_Closed_Lost_RET</permissionSets>
     <permissionSets>Opportunity_Closed_Won_Opp_Owner</permissionSets>
     <status>Updated</status>
