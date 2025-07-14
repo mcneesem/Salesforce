@@ -70,7 +70,7 @@
                                     <rightValue>true</rightValue>
                                 </criteria>
                                 <criteria>
-                                    <leftValue>{!$Permission.CustomPermission.Insperity_Detailed_Data_Access}</leftValue>
+                                    <leftValue>{!$Permission.CustomPermission.Detailed_Data_Access}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>true</rightValue>
                                 </criteria>

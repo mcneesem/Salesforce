@@ -18,9 +18,9 @@
     <permissionSets>Contact_View_All</permissionSets>
     <permissionSets>Core_Sales</permissionSets>
     <permissionSets>DOZISF__ZoomInfo_User</permissionSets>
+    <permissionSets>Detailed_Data_Access</permissionSets>
     <permissionSets>Edit_Closed_Won_Create_Box_Folder</permissionSets>
     <permissionSets>Homepage_Access_Seller</permissionSets>
-    <permissionSets>Insperity_Detailed_Data_Access</permissionSets>
     <permissionSets>LID_Sales_Navigator</permissionSets>
     <permissionSets>Lead_DUNS_Account_Owner_Routing</permissionSets>
     <permissionSets>Lead_Owner_Update_Share_SO</permissionSets>

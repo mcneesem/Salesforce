@@ -2,8 +2,8 @@
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <customPermissions>
         <enabled>true</enabled>
-        <name>Insperity_Detailed_Data_Access</name>
+        <name>Detailed_Data_Access</name>
     </customPermissions>
     <hasActivationRequired>false</hasActivationRequired>
-    <label>Insperity Detailed Data Access</label>
+    <label>Detailed Data Access</label>
 </PermissionSet>
