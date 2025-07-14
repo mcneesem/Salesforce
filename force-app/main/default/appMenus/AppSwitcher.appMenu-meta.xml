@@ -261,18 +261,6 @@
         <type>ConnectedApp</type>
     </appMenuItems>
     <appMenuItems>
-        <name>DNBoptimizer__DB_Optimizer</name>
-        <type>CustomApplication</type>
-    </appMenuItems>
-    <appMenuItems>
-        <name>DNBoptimizer__D_B_Optimizer</name>
-        <type>CustomApplication</type>
-    </appMenuItems>
-    <appMenuItems>
-        <name>DBOptimizer</name>
-        <type>ConnectedApp</type>
-    </appMenuItems>
-    <appMenuItems>
         <name>dfsle__DocuSignForSalesforceCore</name>
         <type>CustomApplication</type>
     </appMenuItems>
