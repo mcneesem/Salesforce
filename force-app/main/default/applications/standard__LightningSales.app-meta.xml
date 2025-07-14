@@ -3714,6 +3714,42 @@
         <type>Flexipage</type>
         <profile>Admin</profile>
     </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>PEO_Billable_Project_Record_Page</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>pse__Proj__c</pageOrSobjectType>
+        <recordType>pse__Proj__c.PEO_Project_Billable</recordType>
+        <type>Flexipage</type>
+        <profile>Contact Center</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>PEO_Billable_Project_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>pse__Proj__c</pageOrSobjectType>
+        <recordType>pse__Proj__c.PEO_Project_Billable</recordType>
+        <type>Flexipage</type>
+        <profile>Contact Center</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>PEO_Billable_Project_Record_Page</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>pse__Proj__c</pageOrSobjectType>
+        <recordType>pse__Proj__c.PEO_Project_Billable</recordType>
+        <type>Flexipage</type>
+        <profile>PEO Service</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>PEO_Billable_Project_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>pse__Proj__c</pageOrSobjectType>
+        <recordType>pse__Proj__c.PEO_Project_Billable</recordType>
+        <type>Flexipage</type>
+        <profile>PEO Service</profile>
+    </profileActionOverrides>
     <setupExperience>all</setupExperience>
     <tabs>standard-home</tabs>
     <tabs>standard-Campaign</tabs>
@@ -3728,7 +3764,6 @@
     <tabs>XactlyCorp__Incent</tabs>
     <tabs>NSP_Awards_and_Recognition__c</tabs>
     <tabs>NSP_Tier_Tracking__c</tabs>
-    <tabs>Highspot_Content</tabs>
     <tabs>NSP_Account_Group_Member__c</tabs>
     <uiType>Lightning</uiType>
     <utilityBar>Sales_UtilityBar</utilityBar>

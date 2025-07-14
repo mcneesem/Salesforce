@@ -32603,10 +32603,6 @@
         <visibility>DefaultOn</visibility>
     </tabVisibilities>
     <tabVisibilities>
-        <tab>Highspot_Content</tab>
-        <visibility>DefaultOn</visibility>
-    </tabVisibilities>
-    <tabVisibilities>
         <tab>MindTickle</tab>
         <visibility>Hidden</visibility>
     </tabVisibilities>
