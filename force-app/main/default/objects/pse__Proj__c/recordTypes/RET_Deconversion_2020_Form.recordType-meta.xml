@@ -688,6 +688,14 @@
             <fullName>Insperity Determined %E2%80%93 Sequencing</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Waiting on Accrual Profiles</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Waiting on CTM</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>NSP_Rating__c</picklist>

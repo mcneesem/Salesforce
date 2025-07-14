@@ -13,14 +13,14 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>Client Determined – Readiness</fullName>
-                <default>false</default>
-                <label>Client Determined – Readiness</label>
-            </value>
-            <value>
                 <fullName>Client Determined – Capacity</fullName>
                 <default>false</default>
                 <label>Client Determined – Capacity</label>
+            </value>
+            <value>
+                <fullName>Client Determined – Readiness</fullName>
+                <default>false</default>
+                <label>Client Determined – Readiness</label>
             </value>
             <value>
                 <fullName>Client Determined – Sequencing</fullName>
@@ -28,19 +28,29 @@
                 <label>Client Determined – Sequencing</label>
             </value>
             <value>
-                <fullName>Insperity Determined – Readiness</fullName>
-                <default>false</default>
-                <label>Insperity Determined – Readiness</label>
-            </value>
-            <value>
                 <fullName>Insperity Determined – Capacity</fullName>
                 <default>false</default>
                 <label>Insperity Determined – Capacity</label>
             </value>
             <value>
+                <fullName>Insperity Determined – Readiness</fullName>
+                <default>false</default>
+                <label>Insperity Determined – Readiness</label>
+            </value>
+            <value>
                 <fullName>Insperity Determined – Sequencing</fullName>
                 <default>false</default>
                 <label>Insperity Determined – Sequencing</label>
+            </value>
+            <value>
+                <fullName>Waiting on Accrual Profiles</fullName>
+                <default>false</default>
+                <label>Waiting on Accrual Profiles</label>
+            </value>
+            <value>
+                <fullName>Waiting on CTM</fullName>
+                <default>false</default>
+                <label>Waiting on CTM</label>
             </value>
         </valueSetDefinition>
     </valueSet>
