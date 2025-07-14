@@ -14861,10 +14861,6 @@
         <visible>true</visible>
     </recordTypeVisibilities>
     <tabVisibilities>
-        <tab>Highspot_Content</tab>
-        <visibility>DefaultOn</visibility>
-    </tabVisibilities>
-    <tabVisibilities>
         <tab>NSP_Sales_Office_Mapping__c</tab>
         <visibility>DefaultOn</visibility>
     </tabVisibilities>
