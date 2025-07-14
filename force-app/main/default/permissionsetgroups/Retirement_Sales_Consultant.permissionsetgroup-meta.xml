@@ -2,7 +2,7 @@
 <PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
     <hasActivationRequired>false</hasActivationRequired>
     <label>Retirement Sales Consultant</label>
-    <permissionSets>Insperity_Detailed_Data_Access</permissionSets>
+    <permissionSets>Detailed_Data_Access</permissionSets>
     <permissionSets>Opportunity_Closed_Won_Opp_Owner</permissionSets>
     <permissionSets>Opportunity_Owner_RET_Sales_Consultant</permissionSets>
     <status>Updated</status>
