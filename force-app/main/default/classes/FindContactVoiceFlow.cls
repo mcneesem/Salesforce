@@ -40,7 +40,7 @@ public without sharing class FindContactVoiceFlow {
                 }
             }
         } catch ( Exception e ) {
-            FindContactVoiceFlow.logException(
+            NSP_ErrorLogHandler.logException(
                 FindContactVoiceFlow.class.getName() ,
                 'getContactsByPhone' ,
                 e
