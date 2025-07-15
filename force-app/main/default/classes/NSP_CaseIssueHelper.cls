@@ -191,8 +191,7 @@ public with sharing class NSP_CaseIssueHelper {
         List<Messaging.SingleEmailMessage> emailMsgList
         )
     {
-        if ( ( cs != null )
-            && ( cs.Contact != null )
+        if ( String.isNotBlank( csContactWorkEmail )
             && ( csIssueMessage != null )
             && ( emailMsgList != null )
             && ( toAddressList != null )
