@@ -257,6 +257,11 @@ public without sharing class NSP_EnrollmentFeePaymentSharing {
                 }
             }
         }
+        NSP_EnrollmentFeePaymentSharing.handleDmlOperations( efpDeleteList );
+    }
+
+    // helper method to defeat sonar cognitive complexity...
+    private static void handleDmlOperations( List<NSP_Enrollment_Fee_Payment__Share> efpDeleteList ) {
         if ( NSP_EnrollmentFeePaymentSharing.isEnabled
             && !efpDeleteList.isEmpty()
             )
@@ -265,7 +270,7 @@ public without sharing class NSP_EnrollmentFeePaymentSharing {
             if ( NSP_EnrollmentFeePaymentSharing.isEnabledLogResults ) {
                 NSP_ErrorLogHandler.logResults(
                     NSP_EnrollmentFeePaymentSharing.class.getName() ,
-                    'onOppTeamMemberDelete:delete' ,
+                    'handleDmlOperations:delete' ,
                     results
                 );
             }
