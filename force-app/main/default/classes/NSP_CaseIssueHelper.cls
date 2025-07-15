@@ -120,7 +120,7 @@ public with sharing class NSP_CaseIssueHelper {
     // Params: Map<Id,String> closedIssueRatingMap
     //
     private static void sendEmailtoCaseContacts( Map<Id,String> closedIssueRatingMap ) {
-        Map<Id,EmailMessage> csIssueMessageMap = new Map<Id,EmailMessage>();
+        Map<Id,EmailMessage> csIssueMessageMap = new  Map<Id,EmailMessage>();
         for ( EmailMessage emsg : [
                     SELECT
                         Id ,
@@ -147,6 +147,7 @@ public with sharing class NSP_CaseIssueHelper {
         }
         //sending emails to the list of to addresses
         List<String> listOfTOAddresses = new List<String>();
+        List<Messaging.SingleEmailMessage> emailMsgList = new List<Messaging.SingleEmailMessage>();
         for ( Case cs : [
                     SELECT
                         Id ,
@@ -163,29 +164,29 @@ public with sharing class NSP_CaseIssueHelper {
                 ]
             )
         {
-            if ( ( cs.Contact.NSP_Work_email__c != null )
-                && csIssueMessageMap.containsKey( cs.NSP_Case_Issue__c )
-                && !listOfTOAddresses.contains( csIssueMessageMap.get( cs.NSP_Case_Issue__c ).ToAddress )
-                && !listOfTOAddresses.contains( csIssueMessageMap.get( cs.NSP_Case_Issue__c ).BccAddress )
-                && !listOfTOAddresses.contains( csIssueMessageMap.get( cs.NSP_Case_Issue__c ).CcAddress )
-                )
-            {
-                listOfTOAddresses.add( cs.Contact.NSP_Work_email__c );
-            }
-        }
-        List<Messaging.SingleEmailMessage> emailMsgList = new List<Messaging.SingleEmailMessage>();
-        if ( !listOfTOAddresses.isEmpty()
-            && listOfTOAddresses.contains( cs.Contact.NSP_Work_email__c )
-            )
-        {
-            Messaging.SingleEmailMessage email = NSP_CaseIssueHelper.generateSingleEmailMessage(
-                csIssueMessageMap.get( cs.NSP_Case_Issue__c ).RelatedToId ,
-                new List<String>{ cs.Contact.NSP_Work_email__c } ,
-                csIssueMessageMap.get( cs.NSP_Case_Issue__c ).Subject
-            );
-            if ( email != null ) {
-                email.setHtmlBody( csIssueMessageMap.get( cs.NSP_Case_Issue__c ).HtmlBody );
-                emailMsgList.add( email );
+            if ( csIssueMessageMap.containsKey( cs.NSP_Case_Issue__c ) ) {
+                if ( ( cs.Contact.NSP_Work_email__c != null )
+                    && !listOfTOAddresses.contains( csIssueMessageMap.get( cs.NSP_Case_Issue__c ).ToAddress )
+                    && !listOfTOAddresses.contains( csIssueMessageMap.get( cs.NSP_Case_Issue__c ).BccAddress )
+                    && !listOfTOAddresses.contains( csIssueMessageMap.get( cs.NSP_Case_Issue__c ).CcAddress )
+                    )
+                {
+                    listOfTOAddresses.add( cs.Contact.NSP_Work_email__c );
+                }
+                if ( !listOfTOAddresses.isEmpty()
+                    && listOfTOAddresses.contains( cs.Contact.NSP_Work_email__c )
+                    )
+                {
+                    Messaging.SingleEmailMessage email = NSP_CaseIssueHelper.generateSingleEmailMessage(
+                        csIssueMessageMap.get( cs.NSP_Case_Issue__c ).RelatedToId ,
+                        new List<String>{ cs.Contact.NSP_Work_email__c } ,
+                        csIssueMessageMap.get( cs.NSP_Case_Issue__c ).Subject
+                    );
+                    if ( email != null ) {
+                        email.setHtmlBody( csIssueMessageMap.get( cs.NSP_Case_Issue__c ).HtmlBody );
+                        emailMsgList.add( email );
+                    }
+                }
             }
         }
         Messaging.sendEmail( emailMsgList );
