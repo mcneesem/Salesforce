@@ -25,6 +25,7 @@
     <permissionSets>Financial_Analysis_Tool_Access</permissionSets>
     <permissionSets>Manage_Custom_Report_Types</permissionSets>
     <permissionSets>Marketing_Fields_Edit_Access</permissionSets>
+    <permissionSets>NSP_FLSA_PermissionSet</permissionSets>
     <permissionSets>NSP_Payroll_Data_Sheet</permissionSets>
     <permissionSets>NSP_Termination_Form_Access</permissionSets>
     <permissionSets>NVMStatsSF__View_NVM_Stats</permissionSets>
