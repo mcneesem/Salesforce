@@ -188,12 +188,12 @@
                             <visibilityRule>
                                 <booleanFilter>1 OR 2</booleanFilter>
                                 <criteria>
-                                    <leftValue>{!$User.Profile.Name}</leftValue>
+                                    <leftValue>{!$Permission.CustomPermission.Admin_Layout_Access}</leftValue>
                                     <operator>EQUAL</operator>
-                                    <rightValue>Sales Manager</rightValue>
+                                    <rightValue>true</rightValue>
                                 </criteria>
                                 <criteria>
-                                    <leftValue>{!$Permission.CustomPermission.Admin_Layout_Access}</leftValue>
+                                    <leftValue>{!$Permission.CustomPermission.Detailed_Data_Access}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>true</rightValue>
                                 </criteria>
