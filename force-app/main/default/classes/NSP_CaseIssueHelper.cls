@@ -179,7 +179,6 @@ public with sharing class NSP_CaseIssueHelper {
                 {
                     Messaging.SingleEmailMessage email = NSP_CaseIssueHelper.generateSingleEmailMessage(
                         csIssueMessageMap.get( cs.NSP_Case_Issue__c ).RelatedToId ,
-                        UserInfo.getUserId() ,
                         new List<String>{ cs.Contact.NSP_Work_email__c } ,
                         csIssueMessageMap.get( cs.NSP_Case_Issue__c ).Subject
                     );
@@ -195,7 +194,6 @@ public with sharing class NSP_CaseIssueHelper {
 
     private static Messaging.SingleEmailMessage generateSingleEmailMessage(
         String recordId ,
-        String targetObjId ,
         List<String> toAddressList ,
         String subject
         )
