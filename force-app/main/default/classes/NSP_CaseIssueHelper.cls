@@ -163,15 +163,14 @@ public with sharing class NSP_CaseIssueHelper {
                 ]
             )
         {
-            if ( csIssueMessageMap.containsKey( cs.NSP_Case_Issue__c ) ) {
-                if ( ( cs.Contact.NSP_Work_email__c != null )
-                    && !listOfTOAddresses.contains( csIssueMessageMap.get( cs.NSP_Case_Issue__c ).ToAddress )
-                    && !listOfTOAddresses.contains( csIssueMessageMap.get( cs.NSP_Case_Issue__c ).BccAddress )
-                    && !listOfTOAddresses.contains( csIssueMessageMap.get( cs.NSP_Case_Issue__c ).CcAddress )
-                    )
-                {
-                    listOfTOAddresses.add( cs.Contact.NSP_Work_email__c );
-                }
+            if ( ( cs.Contact.NSP_Work_email__c != null )
+                && csIssueMessageMap.containsKey( cs.NSP_Case_Issue__c )
+                && !listOfTOAddresses.contains( csIssueMessageMap.get( cs.NSP_Case_Issue__c ).ToAddress )
+                && !listOfTOAddresses.contains( csIssueMessageMap.get( cs.NSP_Case_Issue__c ).BccAddress )
+                && !listOfTOAddresses.contains( csIssueMessageMap.get( cs.NSP_Case_Issue__c ).CcAddress )
+                )
+            {
+                listOfTOAddresses.add( cs.Contact.NSP_Work_email__c );
             }
         }
         List<Messaging.SingleEmailMessage> emailMsgList = new List<Messaging.SingleEmailMessage>();
