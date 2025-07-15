@@ -1220,7 +1220,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>BPS Non-Editable Fields</shortDescription>
-        <value>NSP_WO_Customer__c,AccountId,Product2Id,NSP_Product_Line__c,NSP_First_Pay_Date__c,NSP_Reference_Able__c,NSP_Product_Segment__c,NSP_ProductBundle__c,NSP_Product_Risk_Level__c,NSP_Legal_Name__c,NSP_Business_Inception_Date__c,NSP_Legal_Entity_Description__c,NSP_Total_Active_Employee__c,NSP_Renewal_Date__c,NSP_Product_Term_Reason__c,NSP_Support_Category_Purchased__c,NSP_Support__c,NSP_Contract_Length__c,NSP_Support_Expires__c,NSP_Termination_Notice__c,NSP_Partner_Lookup__c,NSP_Vendor_Lookup__c,NSP_Date_Purchased__c,NSP_Business_Type__c,NSP_Client_Segment_type__c,NSP_Client_SegmentDate__c,NSP_Netsuite_Hardware_Item__c,NSP_Brightmove_Accnt__c,NSP_Company_Name__c</value>
+        <value>NSP_WO_Customer__c,AccountId,Product2Id,NSP_Product_Line__c,NSP_First_Pay_Date__c,NSP_Reference_Able__c,NSP_ProductBundle__c,NSP_Product_Risk_Level__c,NSP_Legal_Name__c,NSP_Business_Inception_Date__c,NSP_Legal_Entity_Description__c,NSP_Total_Active_Employee__c,NSP_Renewal_Date__c,NSP_Product_Term_Reason__c,NSP_Support_Category_Purchased__c,NSP_Support__c,NSP_Contract_Length__c,NSP_Support_Expires__c,NSP_Termination_Notice__c,NSP_Partner_Lookup__c,NSP_Vendor_Lookup__c,NSP_Date_Purchased__c,NSP_Business_Type__c,NSP_Client_Segment_type__c,NSP_Client_SegmentDate__c,NSP_Netsuite_Hardware_Item__c,NSP_Brightmove_Accnt__c,NSP_Company_Name__c</value>
     </labels>
     <labels>
         <fullName>NSP_BPS_Non_Employment_Screening_Fields</fullName>
