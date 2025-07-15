@@ -173,23 +173,44 @@ public with sharing class NSP_CaseIssueHelper {
                 {
                     listOfTOAddresses.add( cs.Contact.NSP_Work_email__c );
                 }
-                if ( !listOfTOAddresses.isEmpty()
-                    && listOfTOAddresses.contains( cs.Contact.NSP_Work_email__c )
-                    )
-                {
-                    Messaging.SingleEmailMessage email = NSP_CaseIssueHelper.generateSingleEmailMessage(
-                        csIssueMessageMap.get( cs.NSP_Case_Issue__c ).RelatedToId ,
-                        new List<String>{ cs.Contact.NSP_Work_email__c } ,
-                        csIssueMessageMap.get( cs.NSP_Case_Issue__c ).Subject
-                    );
-                    if ( email != null ) {
-                        email.setHtmlBody( csIssueMessageMap.get( cs.NSP_Case_Issue__c ).HtmlBody );
-                        emailMsgList.add( email );
-                    }
-                }
+                emailMsgList = NSP_CaseIssueHelper.generateSingleEmailMessages(
+                    cs.Contact.NSP_Work_email__c ,
+                    csIssueMessageMap.get( cs.NSP_Case_Issue__c ) ,
+                    listOfTOAddresses ,
+                    emailMsgList
+                );
             }
         }
         Messaging.sendEmail( emailMsgList );
+    }
+
+    private static List<Messaging.SingleEmailMessage> generateSingleEmailMessages(
+        String csContactWorkEmail ,
+        EmailMessage csIssueMessage ,
+        List<String> toAddressList ,
+        List<Messaging.SingleEmailMessage> emailMsgList
+        )
+    {
+        if ( ( cs != null )
+            && ( cs.Contact != null )
+            && ( csIssueMessage != null )
+            && ( emailMsgList != null )
+            && ( toAddressList != null )
+            && !toAddressList.isEmpty()
+            && toAddressList.contains( csContactWorkEmail )
+            )
+        {
+            Messaging.SingleEmailMessage email = NSP_CaseIssueHelper.generateSingleEmailMessage(
+                csIssueMessage.RelatedToId ,
+                new List<String>{ csContactWorkEmail } ,
+                csIssueMessage.Subject
+            );
+            if ( email != null ) {
+                email.setHtmlBody( csIssueMessage.HtmlBody );
+                emailMsgList.add( email );
+            }
+        }
+        return emailMsgList;
     }
 
     private static Messaging.SingleEmailMessage generateSingleEmailMessage(
