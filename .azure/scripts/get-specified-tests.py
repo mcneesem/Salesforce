@@ -26,7 +26,7 @@ def headDirectoryFiles( directorypath ):
     print( "get-specified-tests.py: headDirectoryFiles" )
     try:
         for filename in os.listdir( directorypath ):
-            headFile( filepath , filename )
+            headFile( directorypath , filename )
     except FileNotFoundError:
         print( f"Error: Directory not found at '{directorypath}'" )
     except Exception as e:
