@@ -247,14 +247,14 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
         for (NSP_PEO_Implementations__mdt cMdRecord : cMdPEOImps) {
             String name = cMdRecord.DeveloperName;
             String fullName = 'NSP_PEO_Implementations.' + name; //custom metadata full name
-            String default = cMdRecord.NSP_Email_Address__c.substringBefore(STRING_INVALID).trim() + STRING_INVALID;
-            String value = default;
+            String defaultValue = cMdRecord.NSP_Email_Address__c.substringBefore(STRING_INVALID).trim() + STRING_INVALID;
+            String value = defaultValue;
             switch on sandboxName {
                 when 'merge','test','stage','devserva','devservb','devservx' {
                     value = 'monica.adams@insperity.com';
                 }
                 when else {
-                    value = default;
+                    value = defaultValue;
                 }
             }
 
