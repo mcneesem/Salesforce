@@ -3,8 +3,10 @@ import argparse
 import os
 
 parser = argparse.ArgumentParser( description="Evalute the current build artifacts and determine the Apex Tests required for validation." )
-parser.add_argument( "isDebug" , help="Debug" )
-parser.add_argument( "artifactStagingDirectory" , help="Artifact Staging Directory" )
+#parser.add_argument( "isDebug" , help="Debug" )
+#parser.add_argument( "artifactStagingDirectory" , help="Artifact Staging Directory" )
+parser.add_argument( "--dir" , type=string , help="Artifact Staging Directory" )
+parser.add_argument( "--debug" , type=boolean , default=false , help="Debug" )
 args = parser.parse_args()
 
 # Scan Apex File
