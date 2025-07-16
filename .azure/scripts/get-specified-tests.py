@@ -6,7 +6,7 @@ parser = argparse.ArgumentParser( description="Evalute the current build artifac
 parser.add_argument( "artifactStagingDirectory" , help="Artifact Staging Directory" )
 args = parser.parse_args()
 
-def headFile( filepath , filename , headLength=50 ):
+def headFile( directorypath , filename , headLength=50 ):
     filepath = os.path.join( directorypath , filename )
     # Check if it's a regular file (not a directory or special file)
     if os.path.isfile( filepath ):
