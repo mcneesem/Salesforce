@@ -4,9 +4,9 @@ public class NSP_QuoteLineTriggerHelper {
     // test w/ QuoteExtControllerTests (63%)
 
     public void beforeUpdateDirector( List<SBQQ__Quoteline__c> newList ) {
-        List<Id> renewedSubIds = new List<Id>();
-        List<Id> originalPriceNullIds = new List<Id>();
         if ( ( newList != null ) && !newList.isEmpty() ) {
+            List<Id> renewedSubIds = new List<Id>();
+            List<Id> originalPriceNullIds = new List<Id>();
             for ( SBQQ__Quoteline__c qline : newList ) {
                 if ( ( qline.NSP_Action_Type__c == NSP_CPQConstants.QUOTE_TYPE_RENEWAL )
                     && ( qline.SBQQ__RenewedSubscription__c != null )
@@ -19,6 +19,12 @@ public class NSP_QuoteLineTriggerHelper {
                 }
             }
             this.updateOriginalPriceOnAmend( originalPriceNullIds , newList );
+            this.populateSerialIds( originalPriceNullIds , newList );
+        }
+    }
+
+    private void populateSerialIds( List<SBQQ__Quoteline__c> newList , List<Id> renewedSubIds ) {
+        if ( ( newList != null ) && !newList.isEmpty() ) {
             Map<Id,List<String>> flaggedEntitlementsMap = this.retrieveEntitlementsFlggedForET( renewedSubIds );
             for ( SBQQ__Quoteline__c qline : newList ) {
                 if ( ( qline.NSP_Action_Type__c == NSP_CPQConstants.QUOTE_TYPE_RENEWAL )
