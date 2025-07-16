@@ -61,7 +61,7 @@ def main() -> str:
 
 if __name__ == "__main__":
     try:
-        sys.stdout.write( main() )
+        main()
     except Exception as e:
         log_error(f"Unhandled exception: {e!s}")
         log_debug(traceback.format_exc())
