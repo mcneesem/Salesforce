@@ -709,7 +709,7 @@
     <textTemplates>
         <name>Opty_not_found</name>
         <isViewedAsPlainText>false</isViewedAsPlainText>
-        <text>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 14px; color: rgb(244, 7, 7); font-family: &amp;quot;Segoe UI VSS (Regular)&amp;quot;, &amp;quot;Segoe UI&amp;quot;, -apple-system, BlinkMacSystemFont, Roboto, &amp;quot;Helvetica Neue&amp;quot;, Helvetica, Ubuntu, Arial, sans-serif, &amp;quot;Apple Color Emoji&amp;quot;, &amp;quot;Segoe UI Emoji&amp;quot;, &amp;quot;Segoe UI Symbol&amp;quot;;&quot;&gt;This Account must have a Closed Won WO or WS opportunity to request a CTM or Orientation meeting.&lt;/span&gt;&lt;/p&gt;</text>
+        <text>&lt;p&gt;&lt;span style=&quot;color: rgb(253, 3, 3);&quot;&gt;The Account must have a Closed Won HR360 opportunity to request a CTM or Orientation meeting.&amp;nbsp;&lt;/span&gt;&lt;/p&gt;</text>
     </textTemplates>
     <variables>
         <name>Account_Sales_Office</name>
