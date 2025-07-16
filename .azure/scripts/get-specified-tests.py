@@ -52,11 +52,9 @@ def main() -> str:
     testClasses = testClasses | headDirectoryApex( args.artifactStagingDirectory + "/force-app/main/default/triggers/" )
     print( testClasses )
     print( " ----- " )
-    print( " ".join( testClasses ) )
-    print( " ----- " )
-
-    specifiedTests = "XXX"
+    specifiedTests = " ".join( testClasses )
     print( specifiedTests )
+    print( " ----- " )
     return specifiedTests;
 
 if __name__ == "__main__":
