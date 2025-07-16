@@ -51161,7 +51161,7 @@
   {
     "id": "01p4x00000VMCVBAA5",
     "name": "NSP_QuoteLineTriggerHandler",
-    "totalLines": 11,
+    "totalLines": 10,
     "lines": {
       "3": 1,
       "11": 1,
@@ -51172,11 +51172,10 @@
       "45": 1,
       "46": 1,
       "58": 1,
-      "68": 0,
-      "78": 0
+      "68": 0
     },
     "totalCovered": 9,
-    "coveredPercent": 82
+    "coveredPercent": 90
   },
   {
     "id": "01p4x00000VMCWjAAP",
