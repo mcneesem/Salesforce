@@ -19,7 +19,7 @@ public class NSP_QuoteLineTriggerHelper {
                 }
             }
             this.updateOriginalPriceOnAmend( originalPriceNullIds , newList );
-            this.populateSerialIds( originalPriceNullIds , newList );
+            this.populateSerialIds( newList , renewedSubIds );
         }
     }
 
