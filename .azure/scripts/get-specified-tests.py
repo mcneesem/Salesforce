@@ -34,7 +34,7 @@ def headDirectoryApex( directorypath ):
             if filename.endswith( ( ".cls" , ".trigger" ) ):
                 if "Test" in filename:
                     print( "Found Test Class: " + filename )
-                    testClasses.add( filename )
+                    testClasses.add( "" + filename )
                 else:
                     testClasses = testClasses | headFile( directorypath , filename )
     except FileNotFoundError:
