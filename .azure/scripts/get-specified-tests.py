@@ -15,9 +15,11 @@ def headFile( directorypath , filename , headLength=50 ):
                 for i , line in enumerate( f ):
                     if ( i >= headLength ):
                         break
-                    if "// test w/ " in line:
+                    annotation = "// test w/ "
+                    if annotation in line:
                         print( "Found Test Code Coverage Annotation: " + line.strip() )
                         testClasses.add( line.strip() )
+                        # testClasses.add( line.strip().split( annotation )[1] )
         except Exception as e:
             print( f"Error reading '{filename}': {e}" )
     else:
@@ -51,6 +53,9 @@ def main():
     testClasses = testClasses | headDirectoryApex( args.artifactStagingDirectory + "/force-app/main/default/triggers/" )
     print( testClasses )
     print( " ----- " )
+    print( " ".join( testClasses ) )
+    print( " ----- " )
+
     specifiedTests = "XXX"
     print( specifiedTests )
     return specifiedTests;
