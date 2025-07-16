@@ -3,6 +3,7 @@ import argparse
 
 parser = argparse.ArgumentParser( description="Evalute the current build artifacts and determine the Apex Tests required for validation." )
 parser.add_argument( "artifactStagingDirectory" , help="Artifact Staging Directory" )
+args = parser.parse_args()
 
 # Main function
 def main():
