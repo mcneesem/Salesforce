@@ -3,10 +3,8 @@ import argparse
 import os
 
 parser = argparse.ArgumentParser( description="Evalute the current build artifacts and determine the Apex Tests required for validation." )
-#parser.add_argument( "isDebug" , help="Debug" )
-#parser.add_argument( "artifactStagingDirectory" , help="Artifact Staging Directory" )
-parser.add_argument( "--dir" , type=string , help="Artifact Staging Directory" )
-parser.add_argument( "--debug" , type=boolean , default=false , help="Debug" )
+parser.add_argument( "--artifacts" , required=True , type=string , help="Artifact Staging Directory" )
+parser.add_argument( "--verbose" , action="store_true" , help="Enable verbose output" )
 args = parser.parse_args()
 
 # Scan Apex File
@@ -24,7 +22,7 @@ def scanApexFile( directorypath , filename , headLength=50 ):
                     # // test w/ OneSpecificApexTest, TwoSpecificApexTest (XX%)
                     # // test w/ OneSpecificApexTest (XX%)
                     # // test w/ TwoSpecificApexTest (XX%)
-                    if args.isDebug:
+                    if args.verbose:
                         print( "Found Test Code Coverage Annotation: " + line.strip() )
                     testClasses.add( line.strip().split( annotation )[1].split( " (" , 1 )[0] )
     return testClasses
@@ -36,7 +34,7 @@ def scanApexDirectory( directorypath ):
         if filename.endswith( ( ".cls" , ".trigger" ) ):
             if "Test" in filename:
                 # found a test class...
-                if args.isDebug:
+                if args.verbose:
                     print( "Found Test Class: " + filename )
                 testClasses.add( filename.split( "." , 1 )[0] )
             else:
@@ -46,14 +44,14 @@ def scanApexDirectory( directorypath ):
 
 # Main function
 def main():
-    if args.isDebug:
+    if args.verbose:
         print( "get-specified-tests.py: main" )
-        print( args.artifactStagingDirectory )
+        print( args.artifacts )
         print( " ----- " )
     testClasses = set()
-    testClasses = testClasses | scanApexDirectory( args.artifactStagingDirectory + "/force-app/main/default/classes/" )
-    testClasses = testClasses | scanApexDirectory( args.artifactStagingDirectory + "/force-app/main/default/triggers/" )
-    if args.isDebug:
+    testClasses = testClasses | scanApexDirectory( args.artifacts + "/force-app/main/default/classes/" )
+    testClasses = testClasses | scanApexDirectory( args.artifacts + "/force-app/main/default/triggers/" )
+    if args.verbose:
         print( testClasses )
         print( " ----- " )
     specifiedTests = " ".join( testClasses )
