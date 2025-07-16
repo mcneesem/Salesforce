@@ -18,8 +18,7 @@ def headFile( directorypath , filename , headLength=50 ):
                     annotation = "// test w/ "
                     if annotation in line:
                         print( "Found Test Code Coverage Annotation: " + line.strip() )
-                        testClasses.add( line.strip() )
-                        # testClasses.add( line.strip().split( annotation )[1] )
+                        testClasses.add( line.strip().split( annotation )[1].partition( " (" ) )
         except Exception as e:
             print( f"Error reading '{filename}': {e}" )
     else:
@@ -34,7 +33,7 @@ def headDirectoryApex( directorypath ):
             if filename.endswith( ( ".cls" , ".trigger" ) ):
                 if "Test" in filename:
                     print( "Found Test Class: " + filename )
-                    testClasses.add( filename )
+                    testClasses.add( filename.partition( "." ) )
                 else:
                     testClasses = testClasses | headFile( directorypath , filename )
     except FileNotFoundError:
