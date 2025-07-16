@@ -6,7 +6,7 @@ parser = argparse.ArgumentParser( description="Evalute the current build artifac
 parser.add_argument( "artifactStagingDirectory" , help="Artifact Staging Directory" )
 args = parser.parse_args()
 
-def headFile( directorypath , filename , headLength=50 ):
+def scanApexFile( directorypath , filename , headLength=50 ):
     testClasses = set()
     filepath = os.path.join( directorypath , filename )
     if os.path.isfile( filepath ):
@@ -17,6 +17,10 @@ def headFile( directorypath , filename , headLength=50 ):
                         break
                     annotation = "// test w/ "
                     if annotation in line:
+                        # found one of the following patterns...
+                        # // test w/ OneSpecificApexTest, TwoSpecificApexTest (XX%)
+                        # // test w/ OneSpecificApexTest (XX%)
+                        # // test w/ TwoSpecificApexTest (XX%)
                         print( "Found Test Code Coverage Annotation: " + line.strip() )
                         testClasses.add( line.strip().split( annotation )[1].split( " (" , 1 )[0] )
         except Exception as e:
@@ -25,8 +29,7 @@ def headFile( directorypath , filename , headLength=50 ):
         print( f"\n--- Skipping '{filename}' (not a regular file) ---" )
     return testClasses
 
-def headDirectoryApex( directorypath ):
-    print( "get-specified-tests.py: headDirectoryApex" )
+def scanApexDirectory( directorypath ):
     testClasses = set()
     try:
         for filename in os.listdir( directorypath ):
@@ -35,7 +38,7 @@ def headDirectoryApex( directorypath ):
                     print( "Found Test Class: " + filename )
                     testClasses.add( filename.split( "." , 1 )[0] )
                 else:
-                    testClasses = testClasses | headFile( directorypath , filename )
+                    testClasses = testClasses | scanApexFile( directorypath , filename )
     except FileNotFoundError:
         print( f"Error: Directory not found at '{directorypath}'" )
     except Exception as e:
@@ -48,14 +51,13 @@ def main() -> str:
     print( args.artifactStagingDirectory )
     print( " ----- " )
     testClasses = set()
-    testClasses = testClasses | headDirectoryApex( args.artifactStagingDirectory + "/force-app/main/default/classes/" )
-    testClasses = testClasses | headDirectoryApex( args.artifactStagingDirectory + "/force-app/main/default/triggers/" )
+    testClasses = testClasses | scanApexDirectory( args.artifactStagingDirectory + "/force-app/main/default/classes/" )
+    testClasses = testClasses | scanApexDirectory( args.artifactStagingDirectory + "/force-app/main/default/triggers/" )
     print( testClasses )
     print( " ----- " )
     specifiedTests = " ".join( testClasses )
     print( specifiedTests )
-    print( " ----- " )
-    return specifiedTests;
+    return specifiedTests
 
 if __name__ == "__main__":
     try:
