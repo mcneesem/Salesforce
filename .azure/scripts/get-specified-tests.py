@@ -3,7 +3,7 @@ import argparse
 import os
 
 parser = argparse.ArgumentParser( description="Evalute the current build artifacts and determine the Apex Tests required for validation." )
-parser.add_argument( "--artifacts" , required=True , type=string , help="Artifact Staging Directory" )
+parser.add_argument( "--artifacts" , required=True , help="Artifact Staging Directory" )
 parser.add_argument( "--verbose" , action="store_true" , help="Enable verbose output" )
 args = parser.parse_args()
 
