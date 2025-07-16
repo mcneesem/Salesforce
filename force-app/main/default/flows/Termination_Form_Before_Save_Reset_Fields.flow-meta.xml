@@ -196,7 +196,7 @@
             <assignToReference>$Record.NSP_Note_regarding_Attachment__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>NOTEREGARDINGATTACHMENT</elementReference>
+                <elementReference>noteRegardingAttachment</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -918,7 +918,7 @@
     </decisions>
     <environments>Default</environments>
     <formulas>
-        <name>NOTEREGARDINGATTACHMENT</name>
+        <name>noteRegardingAttachment</name>
         <dataType>String</dataType>
         <expression>CASE( {!$Record.NSP_Term_Reason__c} ,
 &quot;1900 Merger with Insperity Client&quot;, &quot;The original CSA for the terming client and the CSA for the client where the EE’s are being moved to MUST be attached prior to submitting the Termination Checklist&quot;,
