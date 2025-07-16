@@ -18,7 +18,7 @@ def headFile( directorypath , filename , headLength=50 ):
                     annotation = "// test w/ "
                     if annotation in line:
                         print( "Found Test Code Coverage Annotation: " + line.strip() )
-                        testClasses.add( line.strip().split( annotation )[1].partition( " (" ) )
+                        testClasses.add( line.strip().split( annotation )[1].split( " (" , 1 )[0] )
         except Exception as e:
             print( f"Error reading '{filename}': {e}" )
     else:
