@@ -3,6 +3,8 @@
 # Main function
 def main():
     print( "get-specified-tests.py: main" )
-    return "NSP_ServiceConstantsTest NSP_SalesConstantsTest";
+    specifiedTests = "NSP_ServiceConstantsTest NSP_SalesConstantsTest"
+    print( specifiedTests )
+    return specifiedTests;
 
 main()
