@@ -201,34 +201,34 @@ public with sharing class NSP_EmailMessageTriggerHelper {
                                     currentCase.NSP_Response_After_Close__c = true;
                                     casesToUpdate.add( currentCase );
                                     caseToEmailMessageMap.put( currentCase , eMessage );
+                                } else if (
+                                    ( currentCase.RecordTypeId == NSP_EmailMessageTriggerHelper.PEO_RECORDTYPEID )
+                                    && !isContactCenterToAddress
+                                    )
+                                {
+                                    currentCase.NSP_Response_After_Close__c = true;
+                                    casesToUpdate.add( currentCase );
                                 }
                             } else if (
                                 ( currentCase.RecordTypeId == NSP_EmailMessageTriggerHelper.PEO_RECORDTYPEID )
                                 && isContactCenterToAddress
+                                && ( currentCase.Status == CLOSED )
                                 )
                             {
-                                if ( !isContactCenterToAddress ) {
+                                Integer businessDaysBetween = getNoOfBusinessDaysBetweenDates(
+                                    currentCase.ClosedDate.date() ,
+                                    eMessage.MessageDate.date()
+                                );
+                                if ( businessDaysBetween <= 5 ) {
+                                    currentCase.Status = REOPENED;
+                                    currentCase.NSP_Case_Sub_Status__c = UNASSIGNED;
+                                    currentCase.OwnerId = NSP_EmailMessageTriggerHelper.CONTACTCENTER_QUEUEID;
                                     currentCase.NSP_Response_After_Close__c = true;
                                     casesToUpdate.add( currentCase );
-                                } else if ( ( currentCase.Status == CLOSED ) 
-                                    && isContactCenterToAddress
-                                    )
-                                {
-                                    Integer businessDaysBetween = getNoOfBusinessDaysBetweenDates(
-                                        currentCase.ClosedDate.date() ,
-                                        eMessage.MessageDate.date()
-                                    );
-                                    if ( businessDaysBetween <= 5 ) {
-                                        currentCase.Status = REOPENED;
-                                        currentCase.NSP_Case_Sub_Status__c = UNASSIGNED;
-                                        currentCase.OwnerId = NSP_EmailMessageTriggerHelper.CONTACTCENTER_QUEUEID;
-                                        currentCase.NSP_Response_After_Close__c = true;
-                                        casesToUpdate.add( currentCase );
-                                    } else {
-                                        caseToEmailMessageMap.put( currentCase , eMessage );
-                                        currentCase.NSP_Response_After_Close__c = true;
-                                        casesToUpdate.add( currentCase );
-                                    }
+                                } else {
+                                    caseToEmailMessageMap.put( currentCase , eMessage );
+                                    currentCase.NSP_Response_After_Close__c = true;
+                                    casesToUpdate.add( currentCase );
                                 }
                             }
                         }

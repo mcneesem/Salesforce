@@ -65,31 +65,32 @@ public with sharing class NSP_OpportunityTriggerHelper {
             ownerIdsSet.add(opportunityObject.OwnerId);
 
             // AZD-191924 AZD-232114 AZD-232117
-            //  If primary product IS 'Workforce Optimization' then calculate fees
-            if(opportunityObject.NSP_PrimaryProduct__c != null){
-                if(String.isNotBlank(opportunityObject.Accountid) && 
-                (opportunityObject.NSP_PrimaryProduct__c.equals(NSP_SalesConstants.WO) || 
-                opportunityObject.NSP_PrimaryProduct__c.equals(NSP_SalesConstants.WS) ) && 
-                opportunityObject.NSP_lock_enrollment_fee__c == false){
-                   calculateFrees.add(opportunityObject);
-               }
+            // If primary product IS 'Workforce Optimization' then calculate fees
+            if ( ( opportunityObject.NSP_PrimaryProduct__c != null )
+                && String.isNotBlank( opportunityObject.Accountid )
+                && NSP_ValidateOpportunityStage.validHRProducts.contains( opportunityObject.NSP_PrimaryProduct__c )
+                && ( opportunityObject.NSP_lock_enrollment_fee__c == false )
+                )
+            {
+                calculateFrees.add( opportunityObject );
             }
-
             // Checking if account id is not blank
-            if(String.isNotBlank(opportunityObject.Accountid)){
+            if ( String.isNotBlank( opportunityObject.Accountid ) ) {
                 // Adding account to the set
-                accountIdSet.add(opportunityObject.Accountid); 
-                
-                //Checking if the product type on opty is WO/WX and its a parent opportunity
+                accountIdSet.add( opportunityObject.Accountid );
+                // Checking if the product type on opty is WO/WX and its a parent opportunity
                 // Added as part of DF-01869 handled primary product for WO/WS or WA/WX
-                if(String.isnotBlank(opportunityObject.NSP_PrimaryProduct__c) &&
-                (opportunityObject.NSP_PrimaryProduct__c.equals(NSP_SalesConstants.WO) ||
-                 opportunityObject.NSP_PrimaryProduct__c.equals(NSP_SalesConstants.WS) ||
-                 opportunityObject.NSP_PrimaryProduct__c.equals(NSP_SalesConstants.WA) ||
-                 opportunityObject.NSP_PrimaryProduct__c.equals(NSP_SalesConstants.WX))
-                && String.isBlank(opportunityObject.NSP_Parent_Opportunity__c)){                       
-                       opportunityWoWxList.add(opportunityObject);
-                   }
+                if ( String.isnotBlank( opportunityObject.NSP_PrimaryProduct__c )
+                    && (
+                        NSP_ValidateOpportunityStage.validHRProducts.contains( opportunityObject.NSP_PrimaryProduct__c )
+                        || opportunityObject.NSP_PrimaryProduct__c.equals( NSP_SalesConstants.WA )
+                        || opportunityObject.NSP_PrimaryProduct__c.equals( NSP_SalesConstants.WX )
+                        )
+                    && String.isBlank( opportunityObject.NSP_Parent_Opportunity__c )
+                    )
+                {
+                    opportunityWoWxList.add( opportunityObject );
+                }
             }
             
             if(String.isNotBlank(opportunityObject.NSP_Parent_Opportunity__c)){
@@ -258,13 +259,13 @@ public with sharing class NSP_OpportunityTriggerHelper {
 
             // AZD-191924 AZD-232114 AZD-232117 
             //  If primary product IS 'Workforce Optimization' then calculate fees
-            if(newOpportunity.NSP_PrimaryProduct__c != null){
-               if(String.isNotBlank(newOpportunity.Accountid) && 
-               (newOpportunity.NSP_PrimaryProduct__c.equals(NSP_SalesConstants.WO) ||
-               newOpportunity.NSP_PrimaryProduct__c.equals(NSP_SalesConstants.WS)) &&
-                !newOpportunity.NSP_lock_enrollment_fee__c){
-                   calculateFrees.add(newOpportunity);
-                }
+            if ( ( newOpportunity.NSP_PrimaryProduct__c != null )
+                && String.isNotBlank( newOpportunity.Accountid )
+                && NSP_ValidateOpportunityStage.validHRProducts.contains( newOpportunity.NSP_PrimaryProduct__c )
+                && !newOpportunity.NSP_lock_enrollment_fee__c
+                )
+            {
+                calculateFrees.add( newOpportunity );
             }
 
             if(newOpportunity.OwnerId != oldOpportunity.OwnerId){
@@ -592,13 +593,17 @@ public with sharing class NSP_OpportunityTriggerHelper {
         Opportunity oldOpportunity ,
         List<Opportunity> newTaskOpportunityList
         )
-        {
-        if ( ( newOpportunity.NSP_PrimaryProduct__c == NSP_SalesConstants.WO || newOpportunity.NSP_PrimaryProduct__c == NSP_SalesConstants.WS )
-            && ( String.isNotBlank(newOpportunity.NSP_Contribution_Level__c) && String.isNotBlank(newOpportunity.NSP_Frequency_of_Distribution__c))
-            && ( String.isBlank(oldOpportunity.NSP_Contribution_Level__c) || String.isBlank(oldOpportunity.NSP_Frequency_of_Distribution__c) )
+    {
+        if ( NSP_ValidateOpportunityStage.validHRProducts.contains( newOpportunity.NSP_PrimaryProduct__c )
+            && String.isNotBlank( newOpportunity.NSP_Contribution_Level__c )
+            && String.isNotBlank( newOpportunity.NSP_Frequency_of_Distribution__c )
+            && (
+                String.isBlank( oldOpportunity.NSP_Contribution_Level__c )
+                || String.isBlank( oldOpportunity.NSP_Frequency_of_Distribution__c )
+                )
             )
         {
-            newTaskOpportunityList.add(newOpportunity);
+            newTaskOpportunityList.add( newOpportunity );
         }
         return newTaskOpportunityList;
     }
@@ -718,21 +723,26 @@ public with sharing class NSP_OpportunityTriggerHelper {
     // @param opportunityList list of New Opportunity.
     // @return void
     //
-    public void moveOpportunityToClosingStage(List<Opportunity> opportunityList){
-        for(Opportunity opportunityRecord : opportunityList){
-            
-            if(opportunityRecord.NSP_Closing_Appointment__c != null
-            && (((opportunityRecord.NSP_PrimaryProduct__c == NSP_SalesConstants.WO || 
-                  opportunityRecord.NSP_PrimaryProduct__c == NSP_SalesConstants.WS) && 
-                 opportunityRecord.NSP_Signed_CSA__c) 
-                || ((opportunityRecord.NSP_PrimaryProduct__c == NSP_SalesConstants.WX ||
-                     opportunityRecord.NSP_PrimaryProduct__c == NSP_SalesConstants.WA) && 
-                    opportunityRecord.NSP_Signed_Delivery_Order__c) 
-                || (opportunityRecord.NSP_PrimaryProduct__c != NSP_SalesConstants.WO && 
-                    opportunityRecord.NSP_PrimaryProduct__c != NSP_SalesConstants.WS && 
-                    opportunityRecord.NSP_PrimaryProduct__c != NSP_SalesConstants.WX &&
-                    opportunityRecord.NSP_PrimaryProduct__c != NSP_SalesConstants.WA))){
-                       opportunityRecord.StageName = NSP_SalesConstants.CLOSING_STAGE;
+    public void moveOpportunityToClosingStage( List<Opportunity> opportunityList ) {
+        for ( Opportunity opportunityRecord : opportunityList ) {
+            if ( ( opportunityRecord.NSP_Closing_Appointment__c != null )
+                && (
+                    ( NSP_ValidateOpportunityStage.validHRProducts.contains( opportunityRecord.NSP_PrimaryProduct__c )
+                        && opportunityRecord.NSP_Signed_CSA__c
+                        )
+                    || ( ( opportunityRecord.NSP_PrimaryProduct__c == NSP_SalesConstants.WX
+                            || opportunityRecord.NSP_PrimaryProduct__c == NSP_SalesConstants.WA
+                            )
+                        && opportunityRecord.NSP_Signed_Delivery_Order__c
+                        )
+                    || ( !NSP_ValidateOpportunityStage.validHRProducts.contains( opportunityRecord.NSP_PrimaryProduct__c )
+                        && opportunityRecord.NSP_PrimaryProduct__c != NSP_SalesConstants.WX
+                        && opportunityRecord.NSP_PrimaryProduct__c != NSP_SalesConstants.WA
+                        )
+                    )
+                )
+            {
+                opportunityRecord.StageName = NSP_SalesConstants.CLOSING_STAGE;
             }
         }
     }
@@ -1591,17 +1601,23 @@ public with sharing class NSP_OpportunityTriggerHelper {
             && String.isBlank( newOpportunity.NSP_Parent_Opportunity__c )
             && (
                 (
-                    ( newOpportunity.NSP_PrimaryProduct__c.equals( NSP_SalesConstants.WO ) || newOpportunity.NSP_PrimaryProduct__c.equals( NSP_SalesConstants.WS ) )
-                    && ( oldOpportunity.NSP_PrimaryProduct__c.equals( NSP_SalesConstants.WA ) || oldOpportunity.NSP_PrimaryProduct__c.equals( NSP_SalesConstants.WX ) )
+                    NSP_ValidateOpportunityStage.validHRProducts.contains( newOpportunity.NSP_PrimaryProduct__c )
+                    && (
+                        oldOpportunity.NSP_PrimaryProduct__c.equals( NSP_SalesConstants.WA )
+                        || oldOpportunity.NSP_PrimaryProduct__c.equals( NSP_SalesConstants.WX )
+                        )
                     )
                 || (
-                    ( newOpportunity.NSP_PrimaryProduct__c.equals( NSP_SalesConstants.WA ) || newOpportunity.NSP_PrimaryProduct__c.equals( NSP_SalesConstants.WX ) )
-                    && ( oldOpportunity.NSP_PrimaryProduct__c.equals( NSP_SalesConstants.WO ) || oldOpportunity.NSP_PrimaryProduct__c.equals( NSP_SalesConstants.WS ) )
+                    (
+                        newOpportunity.NSP_PrimaryProduct__c.equals( NSP_SalesConstants.WA )
+                        || newOpportunity.NSP_PrimaryProduct__c.equals( NSP_SalesConstants.WX )
+                        )
+                    && NSP_ValidateOpportunityStage.validHRProducts.contains( oldOpportunity.NSP_PrimaryProduct__c )
                     )
                 )
             )
         {
-            primaryProductChanged.add(newOpportunity.Id);
+            primaryProductChanged.add( newOpportunity.Id );
         }
     }
 

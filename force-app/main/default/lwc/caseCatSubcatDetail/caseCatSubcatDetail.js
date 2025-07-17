@@ -217,6 +217,7 @@ export default class CaseCatSubcatDetail extends LightningElement {
             detail: { type: 'SubCategory', value } 
         }));
         this.detailOptions = this.createOptions(this.categoryWrapper.mCatSubToDetails[`${this.selectedCategory}-${value}`]);
+        this.resetSelection(['Detail', 'Version']);
         this.showDetail = this.detailOptions.length > 0;
         this.versionOptions = this.createOptions(this.categoryWrapper.mCatSubDetailToVersions[
             `${this.selectedCategory}-${this.selectedSubCategory}-${this.selectedDetail}`

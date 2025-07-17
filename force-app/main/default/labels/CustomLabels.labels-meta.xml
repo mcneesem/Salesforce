@@ -220,6 +220,13 @@
         <value>Client is currently making employer contributions?</value>
     </labels>
     <labels>
+        <fullName>Client_Segment</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Client Segment</shortDescription>
+        <value>Client Segment</value>
+    </labels>
+    <labels>
         <fullName>Close_Lost_Role_in_Opportunity_Team</fullName>
         <categories>Closed Lost. Roles Eligible</categories>
         <language>en_US</language>
@@ -281,6 +288,13 @@
         <protected>false</protected>
         <shortDescription>Close_Lost_Roles_for_same_sales_office_on_Opp_Owner</shortDescription>
         <value>MidMarket Sales Leader,MidMarket Administrator,District Administrator,District Manager,Regional Administrator,Regional Manager</value>
+    </labels>
+    <labels>
+        <fullName>Contractor_Management_Envelope_Configuration</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Contractor Management Envelope Configuration</shortDescription>
+        <value>a8NPb000000QjkfMAC</value>
     </labels>
     <labels>
         <fullName>DA_and_DM_Userrole</fullName>
@@ -421,6 +435,13 @@
         <protected>false</protected>
         <shortDescription>ExistingPDSMessage</shortDescription>
         <value>There is already an existing Payroll Datasheet record for this Sub Client.</value>
+    </labels>
+    <labels>
+        <fullName>Federal_Labor_Law_poster</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Federal Labor Law poster</shortDescription>
+        <value>Does the client have the current version of the Federal Labor Law poster at each worksite location?</value>
     </labels>
     <labels>
         <fullName>FSOImplementationProject</fullName>
@@ -597,6 +618,13 @@
         <protected>false</protected>
         <shortDescription>MinimumFeeItalic</shortDescription>
         <value>(&lt;I&gt;Minimum Fee&lt;/I&gt;)</value>
+    </labels>
+    <labels>
+        <fullName>National_Account_Type</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>National Account Type</shortDescription>
+        <value>National Account Type</value>
     </labels>
     <labels>
         <fullName>NSP_12_hours_Milliseconds</fullName>
@@ -935,7 +963,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ApprovalSubmitterGroups</shortDescription>
-        <value>NSP_CSS,NSP_Recruiting_Services,NSP_Retail_Sales,NSP_SE_Group_1,NSP_SE_Group_2,NSP_SE_MidMarket,NSP_Talent_Connect,NSG_Inside_Sales,NSP_SE_Group_3,NSP_CPQ_Admin,NSP_Support_Renewal_Specialists,NSP_Retirement_Services,NSP_HR_Consulting,NSP_WS_Consulting,NSP_Learning_and_Development,NSP_Finance_Users_Edit_Access_Group,NSP_iSolved_Service</value>
+        <value>NSP_CSS,NSP_Recruiting_Services,NSP_Retail_Sales,NSP_SE_Group_1,NSP_SE_Group_2,NSP_SE_MidMarket,NSP_Talent_Connect,NSG_Inside_Sales,NSP_SE_Group_3,NSP_CPQ_Admin,NSP_Support_Renewal_Specialists,NSP_Retirement_Services,NSP_HR_Consulting,NSP_WS_Consulting,NSP_Learning_and_Development,NSP_Finance_Users_Edit_Access_Group,NSP_iSolved_Service,CPQ_Compensation_Services</value>
     </labels>
     <labels>
         <fullName>NSP_Approve_Primary_Quote</fullName>
@@ -6644,6 +6672,13 @@ Climate Plus: https://nexus.insperity.com/groups/38605/posts/3272612-climate-plu
         <protected>false</protected>
         <shortDescription>Sub Client Contact Initial</shortDescription>
         <value>aD4</value>
+    </labels>
+    <labels>
+        <fullName>Survey_Interview_Form</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Survey Interview Form</shortDescription>
+        <value>https://nexus.insperity.com/groups/38605/posts/3305251-copy-of-employee-surveys-overview-new</value>
     </labels>
     <labels>
         <fullName>Termination_Task_Completion</fullName>

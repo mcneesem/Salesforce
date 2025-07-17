@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Restrict_Private_Capital_Firm</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+  NOT( $Permission.Bypass_Restrict_Private_Capital_Firm ) ,
+  ISCHANGED( Private_Capital_Firm__c ) ,
+  ISPICKVAL( PRIORVALUE( Private_Capital_Firm__c ) , &quot;Yes&quot; ) ,
+  ISPICKVAL( Private_Capital_Firm__c , &quot;No&quot; ) ,
+  ( $User.Id = OwnerId )
+)</errorConditionFormula>
+    <errorDisplayField>Private_Capital_Firm__c</errorDisplayField>
+    <errorMessage>Account Owner cannot change PCM Flag back to No</errorMessage>
+</ValidationRule>

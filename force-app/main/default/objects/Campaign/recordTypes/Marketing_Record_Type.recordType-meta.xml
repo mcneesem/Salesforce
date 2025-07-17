@@ -19,6 +19,61 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>DB_Campaign_Tactic__c</picklist>
+        <values>
+            <fullName>Direct Mail</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Employment Seminars</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Internal Website</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Lunches</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Online Banners%2FAds</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Partners</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Print Advertisement</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Public Relations</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Referral Program</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sales Call Down</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Webinars</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Delivery_Mechanism_Type__c</picklist>
         <values>
             <fullName>3rd Party Content Marketing</fullName>
@@ -1169,6 +1224,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>HRScale</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Insurance Services</fullName>
             <default>false</default>
         </values>
@@ -1293,11 +1352,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>MidMarket</fullName>
+            <fullName>Enterprise</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Enterprise</fullName>
+            <fullName>MidMarket</fullName>
             <default>false</default>
         </values>
     </picklistValues>

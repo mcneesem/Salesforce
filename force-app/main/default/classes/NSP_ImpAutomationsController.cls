@@ -26,7 +26,7 @@ public class NSP_ImpAutomationsController {
                     Client_does_business_in_MA_NY_or_VA__c, Client_entity_owned_or_a_non_profit__c, Client_expect_chnges_in_the_organization__c,
                     Client_has_Service_Contract_Act_SCA_EEs__c, Client_has_any_post_tax_deductions__c, Client_has_any_special_payroll_needs__c,
                     Client_has_existing_retirement_plan__c, Client_have_EEO_filing_under__c, Client_have_any_Commission_only_EEs__c, Client_have_any_EEs_on_F1_or_J1_Visa_s__c,
-                    Client_have_any_EEs_that_work_in_NY__c, Client_have_any_urgent_HR_needs__c, Client_have_will_have_any_Seasonal_EEs__c,
+                    Client_have_any_EEs_that_work_in_NY__c, Client_have_any_urgent_HR_needs__c, Client_have_will_have_any_Seasonal_EEs__c,Federal_Labor_Law_poster__c,National_Account_Type__c,Client_Segment__c,
                     Client_interested_in_NSP_tracking_PTO__c, Client_internal_deadline_for_OEE_OBE__c, Client_is_making_employer_contributions__c, Client_maintain_own_FSA__c,
                     Client_maintaining_existing_EPLI_policy__c, Client_part_of_entity_w_o_NSP__c, Client_runs_expenses_or_payroll__c, Client_s_previous_payroll_provider__c,
                     Client_s_previous_waiting_period__c, Client_union_EE_Check_all_that_Apply__c, Client_utilizing_Insperity_s_TimeStar__c,

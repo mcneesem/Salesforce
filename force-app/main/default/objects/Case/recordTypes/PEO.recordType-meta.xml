@@ -127,6 +127,75 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Client_Type__c</picklist>
+        <values>
+            <fullName>HR360 - Select Edition</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HR360 Solution</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HRCore - Select Edition</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HRCore Solution</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HRScale Solution</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Prospect</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Stand Alone</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Complexity__c</picklist>
+        <values>
+            <fullName>High</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Low</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Medium</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Method_of_Shipment__c</picklist>
+        <values>
+            <fullName>Deliver-It</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fed Ex</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hotshot</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>UPS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>US Postal Service</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>NSP_AppealedBy__c</picklist>
         <values>
             <fullName>Claimant</fullName>
@@ -4123,6 +4192,17 @@
         </values>
         <values>
             <fullName>Wages Raised</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Required_Documentation_Attached__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
             <default>false</default>
         </values>
     </picklistValues>

@@ -2844,10 +2844,16 @@
                 <fieldItem>Record.NSP_Sales_Office__c</fieldItem>
                 <identifier>RecordNSP_Sales_Office__cField3</identifier>
                 <visibilityRule>
+                    <booleanFilter>1 OR 2</booleanFilter>
                     <criteria>
-                        <leftValue>{!Record.NSP_Opportunity_Primary_Product__c}</leftValue>
+                        <leftValue>{!Record.NSP_Opportunity__r.NSP_PrimaryProduct__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>WS</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Opportunity__r.NSP_PrimaryProduct__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>HRScale</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -2861,10 +2867,16 @@
                 <fieldItem>Record.NSP_Client_Website__c</fieldItem>
                 <identifier>RecordNSP_Client_Website__cField2</identifier>
                 <visibilityRule>
+                    <booleanFilter>1 OR 2</booleanFilter>
                     <criteria>
-                        <leftValue>{!Record.NSP_Opportunity_Primary_Product__c}</leftValue>
+                        <leftValue>{!Record.NSP_Opportunity__r.NSP_PrimaryProduct__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>WS</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Opportunity__r.NSP_PrimaryProduct__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>HRScale</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -2878,10 +2890,16 @@
                 <fieldItem>Record.NSP_Bid_Number__c</fieldItem>
                 <identifier>RecordNSP_Bid_Number__cField2</identifier>
                 <visibilityRule>
+                    <booleanFilter>1 OR 2</booleanFilter>
                     <criteria>
-                        <leftValue>{!Record.NSP_Opportunity_Primary_Product__c}</leftValue>
+                        <leftValue>{!Record.NSP_Opportunity__r.NSP_PrimaryProduct__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>WS</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Opportunity__r.NSP_PrimaryProduct__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>HRScale</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -2895,10 +2913,16 @@
                 <fieldItem>Record.NSP_Version_Number__c</fieldItem>
                 <identifier>RecordNSP_Version_Number__cField</identifier>
                 <visibilityRule>
+                    <booleanFilter>1 OR 2</booleanFilter>
                     <criteria>
-                        <leftValue>{!Record.NSP_Opportunity_Primary_Product__c}</leftValue>
+                        <leftValue>{!Record.NSP_Opportunity__r.NSP_PrimaryProduct__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>WS</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Opportunity__r.NSP_PrimaryProduct__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>HRScale</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -3136,10 +3160,16 @@
                 <fieldItem>Record.NSP_Account_Billing_Street__c</fieldItem>
                 <identifier>RecordNSP_Account_Billing_Street__cField</identifier>
                 <visibilityRule>
+                    <booleanFilter>1 OR 2</booleanFilter>
                     <criteria>
-                        <leftValue>{!Record.NSP_Opportunity_Primary_Product__c}</leftValue>
+                        <leftValue>{!Record.NSP_Opportunity__r.NSP_PrimaryProduct__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>WS</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Opportunity__r.NSP_PrimaryProduct__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>HRScale</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -3153,10 +3183,16 @@
                 <fieldItem>Record.NSP_Account_Billling_City__c</fieldItem>
                 <identifier>RecordNSP_Account_Billling_City__cField</identifier>
                 <visibilityRule>
+                    <booleanFilter>1 OR 2</booleanFilter>
                     <criteria>
-                        <leftValue>{!Record.NSP_Opportunity_Primary_Product__c}</leftValue>
+                        <leftValue>{!Record.NSP_Opportunity__r.NSP_PrimaryProduct__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>WS</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Opportunity__r.NSP_PrimaryProduct__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>HRScale</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -3170,10 +3206,16 @@
                 <fieldItem>Record.NSP_Account_Billing_State_Code__c</fieldItem>
                 <identifier>RecordNSP_Account_Billing_State_Code__cField</identifier>
                 <visibilityRule>
+                    <booleanFilter>1 OR 2</booleanFilter>
                     <criteria>
-                        <leftValue>{!Record.NSP_Opportunity_Primary_Product__c}</leftValue>
+                        <leftValue>{!Record.NSP_Opportunity__r.NSP_PrimaryProduct__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>WS</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Opportunity__r.NSP_PrimaryProduct__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>HRScale</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -3187,10 +3229,16 @@
                 <fieldItem>Record.NSP_Account_Billing_State__c</fieldItem>
                 <identifier>RecordNSP_Account_Billing_State__cField</identifier>
                 <visibilityRule>
+                    <booleanFilter>1 OR 2</booleanFilter>
                     <criteria>
-                        <leftValue>{!Record.NSP_Opportunity_Primary_Product__c}</leftValue>
+                        <leftValue>{!Record.NSP_Opportunity__r.NSP_PrimaryProduct__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>WS</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Opportunity__r.NSP_PrimaryProduct__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>HRScale</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -3204,10 +3252,16 @@
                 <fieldItem>Record.NSP_Billing_Postal_Code__c</fieldItem>
                 <identifier>RecordNSP_Billing_Postal_Code_cField</identifier>
                 <visibilityRule>
+                    <booleanFilter>1 OR 2</booleanFilter>
                     <criteria>
-                        <leftValue>{!Record.NSP_Opportunity_Primary_Product__c}</leftValue>
+                        <leftValue>{!Record.NSP_Opportunity__r.NSP_PrimaryProduct__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>WS</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Opportunity__r.NSP_PrimaryProduct__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>HRScale</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -4115,7 +4169,7 @@
                 <componentName>flexipage:fieldSection</componentName>
                 <identifier>flexipage_fieldSection7</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 AND (2 OR 3)</booleanFilter>
+                    <booleanFilter>1 AND (2 OR 3 OR 4)</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.Checklist_Type__c}</leftValue>
                         <operator>EQUAL</operator>
@@ -4130,6 +4184,11 @@
                         <leftValue>{!Record.NSP_Opportunity_Primary_Product__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>WO</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Opportunity__r.NSP_PrimaryProduct__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>HRScale</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>

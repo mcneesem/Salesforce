@@ -12,6 +12,16 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
+                <fullName>Cancelled During Implementation</fullName>
+                <default>false</default>
+                <label>Cancelled During Implementation</label>
+            </value>
+            <value>
+                <fullName>Client Did Not Disclose</fullName>
+                <default>false</default>
+                <label>Client Did Not Disclose</label>
+            </value>
+            <value>
                 <fullName>Client termed in Implementation</fullName>
                 <default>false</default>
                 <label>Client termed in Implementation</label>
@@ -22,9 +32,34 @@
                 <label>Cost</label>
             </value>
             <value>
+                <fullName>Cost Related</fullName>
+                <default>false</default>
+                <label>Cost Related</label>
+            </value>
+            <value>
                 <fullName>Covid-19</fullName>
                 <default>false</default>
                 <label>Covid-19</label>
+            </value>
+            <value>
+                <fullName>Customer Support</fullName>
+                <default>false</default>
+                <label>Customer Support</label>
+            </value>
+            <value>
+                <fullName>Do Not Need</fullName>
+                <default>false</default>
+                <label>Do Not Need</label>
+            </value>
+            <value>
+                <fullName>ERP has module</fullName>
+                <default>false</default>
+                <label>ERP has module</label>
+            </value>
+            <value>
+                <fullName>FEIN Change</fullName>
+                <default>false</default>
+                <label>FEIN Change</label>
             </value>
             <value>
                 <fullName>Financial - Bankruptcy</fullName>
@@ -37,6 +72,11 @@
                 <label>Financial - Delinquency</label>
             </value>
             <value>
+                <fullName>Financial Issues</fullName>
+                <default>false</default>
+                <label>Financial Issues</label>
+            </value>
+            <value>
                 <fullName>Financial - NSF</fullName>
                 <default>false</default>
                 <label>Financial - NSF</label>
@@ -47,9 +87,29 @@
                 <label>Financial - Other</label>
             </value>
             <value>
+                <fullName>Financial Trouble</fullName>
+                <default>false</default>
+                <label>Financial Trouble</label>
+            </value>
+            <value>
+                <fullName>Functionality</fullName>
+                <default>false</default>
+                <label>Functionality</label>
+            </value>
+            <value>
+                <fullName>HR360 Support Ended</fullName>
+                <default>false</default>
+                <label>HR360 Support Ended</label>
+            </value>
+            <value>
                 <fullName>Insperity Terminated</fullName>
                 <default>false</default>
                 <label>Insperity Terminated</label>
+            </value>
+            <value>
+                <fullName>Moved to HR360</fullName>
+                <default>false</default>
+                <label>Moved to HR360</label>
             </value>
             <value>
                 <fullName>Never Onboarded</fullName>
@@ -97,6 +157,16 @@
                 <label>Out of Business</label>
             </value>
             <value>
+                <fullName>Product Issues</fullName>
+                <default>false</default>
+                <label>Product Issues</label>
+            </value>
+            <value>
+                <fullName>Product Offering Gap</fullName>
+                <default>false</default>
+                <label>Product Offering Gap</label>
+            </value>
+            <value>
                 <fullName>Service Issues</fullName>
                 <default>false</default>
                 <label>Service Issues</label>
@@ -105,6 +175,16 @@
                 <fullName>Sold Business</fullName>
                 <default>false</default>
                 <label>Sold Business</label>
+            </value>
+            <value>
+                <fullName>Sold Business/Merger</fullName>
+                <default>false</default>
+                <label>Sold Business/Merger</label>
+            </value>
+            <value>
+                <fullName>Technology</fullName>
+                <default>false</default>
+                <label>Technology</label>
             </value>
             <value>
                 <fullName>Technology - iSovled</fullName>
@@ -132,39 +212,14 @@
                 <label>Technology - TimeStar</label>
             </value>
             <value>
-                <fullName>WO Support Ended</fullName>
-                <default>false</default>
-                <label>WO Support Ended</label>
-            </value>
-            <value>
-                <fullName>Cancelled During Implementation</fullName>
-                <default>false</default>
-                <label>Cancelled During Implementation</label>
-            </value>
-            <value>
-                <fullName>ERP has module</fullName>
-                <default>false</default>
-                <label>ERP has module</label>
-            </value>
-            <value>
-                <fullName>Financial Trouble</fullName>
-                <default>false</default>
-                <label>Financial Trouble</label>
-            </value>
-            <value>
-                <fullName>Functionality</fullName>
-                <default>false</default>
-                <label>Functionality</label>
-            </value>
-            <value>
-                <fullName>Product Issues</fullName>
-                <default>false</default>
-                <label>Product Issues</label>
-            </value>
-            <value>
                 <fullName>Termed WO</fullName>
                 <default>false</default>
                 <label>Termed WO</label>
+            </value>
+            <value>
+                <fullName>WO Support Ended</fullName>
+                <default>false</default>
+                <label>WO Support Ended</label>
             </value>
             <value>
                 <fullName>Bank gave free – Free with other service</fullName>

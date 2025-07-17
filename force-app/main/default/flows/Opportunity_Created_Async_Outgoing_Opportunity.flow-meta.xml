@@ -148,7 +148,7 @@
             <label>Yes - Primary Opty is populated</label>
         </rules>
     </decisions>
-    <description>Updated to change Account&apos;s Sales Account Status. Walks through to Primary Opty Owner&apos;s District Manager. Passes Outgoing Opty to subflow to map Primary Opty fields and related records</description>
+    <description>Get Account Info now filters out Partner Account RT Id. Updated to change Account&apos;s Sales Account Status. Walks through to Primary Opty Owner&apos;s District Manager. Passes Outgoing Opty to subflow to map Primary Opty fields and related records</description>
     <environments>Default</environments>
     <interviewLabel>Opportunity - Created - Async - Outgoing Opportunity {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Opportunity - Created - Async - Outgoing Opportunity</label>
@@ -189,6 +189,13 @@
             <operator>EqualTo</operator>
             <value>
                 <elementReference>$Record.AccountId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>RecordTypeId</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>0124x000000yRuwAAE</stringValue>
             </value>
         </filters>
         <object>Account</object>

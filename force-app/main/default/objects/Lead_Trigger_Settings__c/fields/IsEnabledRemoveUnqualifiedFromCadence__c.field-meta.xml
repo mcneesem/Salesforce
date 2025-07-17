@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IsEnabledRemoveUnqualifiedFromCadence__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>If checked, Lead_Remove_Unqualified_Lead_from_Cadence flow&apos;s &quot;Lead was Disqualified&quot; path is enabled/live</description>
+    <externalId>false</externalId>
+    <label>IsEnabledRemoveUnqualifiedFromCadence</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

@@ -341,7 +341,29 @@
         onchange={handleValueChange}
         ondblclick={handleDoubleClick}>
       </c-nsp_selection-box>
-
+      <c-nsp_selection-box
+        disabled={disabledFields.Client_Segment__c}
+        label={label.clientSegment}
+        data-name="Client_Segment__c"
+        field-api-name="Implementation_Profile__c.Client_Segment__c"
+        record-type-id={recordTypeId}
+        value={field.Client_Segment__c}
+        onchange={handleValueChange}
+        ondblclick={handleDoubleClick}>
+      </c-nsp_selection-box>
+      <template lwc:if={visibility.National_Account_Type__c}>
+        <c-nsp_selection-box
+            disabled={disabledFields.National_Account_Type__c}
+            lwc:if={visibility.National_Account_Type__c}
+            field-api-name="Implementation_Profile__c.National_Account_Type__c"
+            record-type-id={recordTypeId}
+            value={field.National_Account_Type__c}
+            data-name="National_Account_Type__c"
+            class={styles.National_Account_Type__c}
+            onchange={handleValueChange}
+            ondblclick={handleDoubleClick}>
+        </c-nsp_selection-box>
+      </template>
       <c-nsp_selection-box
         disabled={disabledFields.Client_Profile_Information__c}
         label={objFields.Client_Profile_Information__c.label}
@@ -715,6 +737,41 @@
         onchange={handleValueChange}
         ondblclick={handleDoubleClick}>
       </c-nsp_selection-box>
+      <c-nsp_selection-box
+        disabled={disabledFields.Federal_Labor_Law_poster__c}
+        label={label.federalLaborLawPoster}
+        data-name="Federal_Labor_Law_poster__c"
+        field-api-name="Implementation_Profile__c.Federal_Labor_Law_poster__c"
+        record-type-id={recordTypeId}
+        value={field.Federal_Labor_Law_poster__c}
+        onchange={handleValueChange}
+        ondblclick={handleDoubleClick}>
+      </c-nsp_selection-box>
+      <div>
+        <lightning-formatted-text
+          value="Federal posters will only be sent if the client’s current posters are out of date or they don’t have one. Client will need to download and print state posters.">
+        </lightning-formatted-text>
+      </div>
+      <div>
+        <lightning-formatted-text
+          value="All state specific and miscellaneous posters can be found on Premier ">
+        </lightning-formatted-text>
+          <lightning-formatted-url
+            value="https://portal.insperity.com/pcms/labor_law_compliance_posters" 
+            label="Labor Law Compliance Posters" 
+            target="_blank">
+          </lightning-formatted-url>
+      </div>
+      <div>
+        <lightning-formatted-text
+          value="For more information visit Nexus: ">
+        </lightning-formatted-text>
+        <lightning-formatted-url
+          value="https://nexus.insperity.com/groups/38605/posts/3354323-compliance-posters-labor-law-poster-process?video_markers=poster%2Cposters%2Cposters" 
+          label="Compliance Posters: Labor Law Poster Process | Human Resources" 
+          target="_blank" >
+        </lightning-formatted-url>
+      </div>
       <lightning-formatted-text
         class="slds-form-element__label slds-m-left_xx-small"
         value={label.ClientNotes}

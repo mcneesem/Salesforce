@@ -174,6 +174,16 @@
                             <value>CustomButton.Account.Send_For_Signature</value>
                         </valueListItems>
                         <valueListItems>
+                            <value>Account.Manage_PCM_Firms</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!$Permission.CustomPermission.Account_Manage_PCM_Firms}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>true</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
                             <value>CustomButton.Account.NSP_Detailed_Data</value>
                             <visibilityRule>
                                 <booleanFilter>1 OR 2</booleanFilter>
@@ -425,6 +435,16 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Account_Segment__c</fieldItem>
                 <identifier>RecordNSP_Account_Segment_cField3</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Private_Capital_Firm__c</fieldItem>
+                <identifier>RecordPrivate_Capital_Firm_cField2</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1057,6 +1077,16 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Account_Segment__c</fieldItem>
                 <identifier>RecordNSP_Account_Segment_cField4</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Private_Capital_Firm__c</fieldItem>
+                <identifier>RecordPrivate_Capital_Firm_cField3</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -2531,6 +2561,16 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Account_Segment__c</fieldItem>
                 <identifier>RecordNSP_Account_Segment_cField5</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Private_Capital_Firm__c</fieldItem>
+                <identifier>RecordPrivate_Capital_Firm_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -9548,6 +9588,73 @@
             <componentInstance>
                 <componentName>nsp_visualIndicator</componentName>
                 <identifier>c_nsp_visualIndicator</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>actionNames</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>adminFilters</name>
+                    <valueList>
+                        <valueListItems>
+                            <value>Type__c|EQUALS|[&quot;Private Capital Management&quot;]</value>
+                        </valueListItems>
+                    </valueList>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>maxRecordsToDisplay</name>
+                    <value>10</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>parentFieldApiName</name>
+                    <value>Account.Id</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListApiName</name>
+                    <value>Account_Relationships__r</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListDisplayType</name>
+                    <value>ADVGRID</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListFieldAliases</name>
+                    <valueList>
+                        <valueListItems>
+                            <value>Related_Account__c</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>PCM_Percentage__c</value>
+                        </valueListItems>
+                    </valueList>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListLabel</name>
+                    <value>PCM Relationships</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>showActionBar</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>sortFieldAlias</name>
+                    <value>Related_Account_Name__c</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>sortFieldOrder</name>
+                    <value>Ascending</value>
+                </componentInstanceProperties>
+                <componentName>lst:dynamicRelatedList</componentName>
+                <identifier>lst_dynamicRelatedList</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!$Permission.CustomPermission.Account_Manage_PCM_Firms}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <itemInstances>

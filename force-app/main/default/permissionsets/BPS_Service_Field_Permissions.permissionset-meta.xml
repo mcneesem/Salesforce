@@ -2792,7 +2792,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Asset.NSP_Signature_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -25268,6 +25268,21 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>pse__Proj__c.NSP_Employee_Enrollment_In_Progress__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>pse__Proj__c.NSP_Employee_Enrollment_Not_Started__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>pse__Proj__c.NSP_Employee_Enrollment_Submitted__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>pse__Proj__c.NSP_Exclusively_Assign_Owner__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -25359,6 +25374,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>pse__Proj__c.NSP_TimeStar_Accrual_Status__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>pse__Proj__c.NSP_Total_Projected_Employee_Enrollment__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

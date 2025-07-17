@@ -5,7 +5,7 @@
     <formula>CASE( NSP_Term_Reason__c , 
 &quot;1900 Merger with Insperity Client&quot;, &quot;The original CSA for the terming client and the CSA for the client where the EE’s are being moved to MUST be attached prior to submitting the Termination Checklist&quot;,
 &quot;2700 Change in FEIN&quot;, &quot;The Letter of Assignment for the client where the EE’s were moved MUST be attached prior to submitting the Termination Checklist&quot;,
-&quot;None&quot;)</formula>
+&quot; &quot;)</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <inlineHelpText>The Client’s Letter of Assignment MUST be attached prior to submitting the Termination Checklist</inlineHelpText>
     <label>Note Regarding Attachment</label>

@@ -96,11 +96,6 @@
         <visible>true</visible>
     </applicationVisibilities>
     <applicationVisibilities>
-        <application>standard__OnlineSales</application>
-        <default>false</default>
-        <visible>true</visible>
-    </applicationVisibilities>
-    <applicationVisibilities>
         <application>standard__Platform</application>
         <default>false</default>
         <visible>false</visible>
@@ -16115,11 +16110,11 @@
         <recordType>NSP_Termination_Form__c.NSP_Client_Reinstatement</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>NSP_Termination_Form__c-Finance Service Reinstatement Layout</layout>
+        <layout>NSP_Termination_Form__c-Credit Specialist Form</layout>
         <recordType>NSP_Termination_Form__c.NSP_Credit_Specialist_Form</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>NSP_Termination_Form__c-Finance Service Reinstatement Layout</layout>
+        <layout>NSP_Termination_Form__c-Payroll Specialist Form</layout>
         <recordType>NSP_Termination_Form__c.NSP_Payroll_Specialist_Form</recordType>
     </layoutAssignments>
     <objectPermissions>

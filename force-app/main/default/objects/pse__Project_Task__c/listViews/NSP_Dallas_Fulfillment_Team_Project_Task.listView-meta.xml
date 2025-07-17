@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Dallas_Fulfillment_Team_Project_Task</fullName>
+    <filterScope>Queue</filterScope>
+    <label>Dallas Fulfillment Team</label>
+    <queue>NSP_Dallas_Fulfillment_Team</queue>
+    <sharedTo>
+        <allInternalUsers></allInternalUsers>
+    </sharedTo>
+</ListView>
