@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>FLSA Review Yes MM</label>
+    <protected>false</protected>
+    <values>
+        <field>Category__c</field>
+        <value xsi:type="xsd:string">HR Admin Compliance - FLSA</value>
+    </values>
+    <values>
+        <field>Detail__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Instructions__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Origin__c</field>
+        <value xsi:type="xsd:string">Onboarding Automation</value>
+    </values>
+    <values>
+        <field>Sub_Category__c</field>
+        <value xsi:type="xsd:string">Other</value>
+    </values>
+    <values>
+        <field>Subject__c</field>
+        <value xsi:type="xsd:string">FLSA Review Service Requested</value>
+    </values>
+</CustomMetadata>
