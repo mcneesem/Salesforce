@@ -1,4 +1,5 @@
 public class NSP_QuoteLineTriggerHelper {
+    // test w/ NSP_ProcessSerialIdsTest, QuoteExtControllerTests, NSP_ServiceConstantsTest (94%)
     // test w/ NSP_ProcessSerialIdsTest, QuoteExtControllerTests (94%)
     // test w/ NSP_ProcessSerialIdsTest (94%)
     // test w/ QuoteExtControllerTests (63%)
