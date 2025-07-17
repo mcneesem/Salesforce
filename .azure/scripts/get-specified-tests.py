@@ -19,13 +19,23 @@ def scanApexFile( filepath , headLength=50 ):
                     annotation = "// test w/ "
                     if annotation in line:
                         # found one of the following patterns...
+                        # // test w/ OneSpecificApexTest, TwoSpecificApexTest, ThreeSpecificApexTest (XX%)
                         # // test w/ OneSpecificApexTest, TwoSpecificApexTest (XX%)
                         # // test w/ OneSpecificApexTest (XX%)
-                        # // test w/ TwoSpecificApexTest (XX%)
                         stripped = line.strip()
                         if args.verbose:
                             print( "Found Test Code Coverage Annotation: " + stripped )
-                        testClasses.add( stripped.split( annotation )[1].split( " (" , 1 )[0] )
+                        # remove "// test w/" and "(XX%)" patterns...
+                        trimmed = stripped.split( annotation )[1].split( "(" , 1 )[0].strip()
+                        if "," not in trimmed:
+                            # handle the single test required pattern...
+                            # // test w/ OneSpecificApexTest (XX%)
+                            testClasses.add( trimmed )
+                        else
+                            # handle the multiple tests required patterns...
+                            # // test w/ OneSpecificApexTest, TwoSpecificApexTest, ThreeSpecificApexTest (XX%)
+                            # // test w/ OneSpecificApexTest, TwoSpecificApexTest (XX%)
+                            testClasses = testClasses | trimmed.replace( "," , " " ).replace( "  " , " " ).split()
     return testClasses
 
 # Scan Apex Directory
