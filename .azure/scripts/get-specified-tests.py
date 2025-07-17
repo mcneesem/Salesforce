@@ -71,7 +71,7 @@ def main():
     if args.verbose:
         print( testClasses )
         print( " ----- " )
-    specifiedTests = " ".join( testClasses ).strip()
+    specifiedTests = " ".join( sorted( list( testClasses ) ) ).strip()
     print( specifiedTests )
     return specifiedTests
 
