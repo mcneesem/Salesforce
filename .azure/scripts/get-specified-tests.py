@@ -35,7 +35,7 @@ def scanApexFile( filepath , headLength=50 ):
                             # handle the multiple tests required patterns...
                             # // test w/ OneSpecificApexTest, TwoSpecificApexTest, ThreeSpecificApexTest (XX%)
                             # // test w/ OneSpecificApexTest, TwoSpecificApexTest (XX%)
-                            testClasses = testClasses | trimmed.replace( "," , " " ).replace( "  " , " " ).split()
+                            testClasses.update( trimmed.replace( "," , " " ).replace( "  " , " " ).split() )
     return testClasses
 
 # Scan Apex Directory
