@@ -3,7 +3,7 @@
 // Refactored FSO IP - AZD-352367
 //
 public class NSP_Implprofile_ServiceHelperUpdate {
-    // test w/ NSP_Implprofile_ServiceHelperUpdate_Test (86%)
+    // test w/ NSP_Implprofile_ServiceHelperUpdate_Test (85%)
 
     private  Boolean isRerun =false;
     private Boolean isSaveForm = false;
@@ -68,6 +68,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
     private static final String enrollFee_FN ='Enter_Enrollment_Fee';
     private static final String enrollFee_Subtask_FN ='EnrollmentFeeSubtask';
     private static final String DATA_VERIFICATION ='AWW_EE_Data_Verification' ;
+    private static final String FLSA_EXEMPTION_REVIEW ='FLSA_Exemption_Review_non_EG';
     private static  Integer Counter=0;
     private static Id ipFSORecordTypeId = SObjectType.Implementation_Profile__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.FSOProfile).getRecordTypeId();
     private static Id ipMMRecordTypeId = SObjectType.Implementation_Profile__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.MMProfile).getRecordTypeId();
@@ -101,7 +102,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
                 COBRA_FORM_NOT_COLLECTED_FN , SUBTASK_GARNISH_FN ,
                 SUBTASK_LEVIES_FN , INTERNAL_DISCOVERY_FN ,
                 ONSITE_DISCOVERY_FN ,
-                enrollFee_FN ,enrollFee_Subtask_FN, DATA_VERIFICATION
+                enrollFee_FN ,enrollFee_Subtask_FN, DATA_VERIFICATION,FLSA_EXEMPTION_REVIEW
             }
         );
     }
@@ -270,6 +271,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
             checkOnsiteDiscovery(ipRec, existingRec);
             checkEnrollFee(ipRec, existingRec);
             checkDataVerification(ipRec, existingRec);
+            checkFlsaExemptionReview(ipRec, existingRec);
         }
     }
 
@@ -302,6 +304,24 @@ public class NSP_Implprofile_ServiceHelperUpdate {
             )
         {
             updateEligibleRecordsMap(ipRecordsByAutomation, newRec.Id, DATA_VERIFICATION);
+        }
+    }
+    private void checkFlsaExemptionReview(Implementation_Profile__c newRec, Implementation_Profile__c existingRec) {
+        if (automationsToExecute.contains(FLSA_EXEMPTION_REVIEW)
+            && newRec != null
+            && newRec.RecordTypeId == ipFSORecordTypeId
+            && newRec.Would_the_client_like_a_FLSA_Exemption__c == NSP_ServiceConstants.YES
+            && newRec.Is_the_client_Emerging_Growth__c == NSP_ServiceConstants.No
+            && newRec.NSP_HR_Quality_Support_Team_Member__c != null
+            && newRec.NSP_HR_Specialist__c != null
+            && (existingRec == null
+                || newRec.NSP_Form_Completed__c
+                || newRec.Would_the_client_like_a_FLSA_Exemption__c != existingRec.Would_the_client_like_a_FLSA_Exemption__c
+                || newRec.Is_the_client_Emerging_Growth__c != existingRec.Is_the_client_Emerging_Growth__c
+                )
+            )
+        {
+            updateEligibleRecordsMap(ipRecordsByAutomation, newRec.Id, FLSA_EXEMPTION_REVIEW);
         }
     }
 
@@ -866,6 +886,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
             createProjecttaskforEnrollFee(automation,pta,proj,ipRecId,ipwithValue,workCalendarId);
             createSubtaskforEnrollment(automation,pta,proj,ipRecId,ipwithValue,workCalendarId);
             createProjectTaskForDataVerification(automation,pta,proj,ipRecId,ipwithValue,workCalendarId);
+            createProjectTaskForFlsaExemptionReview(automation,pta,proj,ipRecId,ipwithValue,workCalendarId);
             emailNotifyInternalDiscovery(automation,ipRecId);
             emailNotifyOnsiteDiscovery(automation,ipRecId);
         }
@@ -1100,6 +1121,28 @@ public class NSP_Implprofile_ServiceHelperUpdate {
             )
         {
             eachProjecttask.OwnerId=ipwithValue.NSP_Project_Manager__r.pse__Salesforce_User__c;
+        }
+        return eachProjectTask;
+    }
+    
+    //HR Client Implementation Team Member owner
+    private pse__Project_Task__c hrClientImplementationOwner(
+        pse__Proj__c proj ,
+        NSP_ProjectTask_Automation__mdt pta ,
+        Id ipRecId ,
+        Implementation_Profile__c ipwithValue ,
+        Id workCalendarId
+        )
+    {
+        String milestoneKey = createMilestoneForProjectTask(proj, pta);
+        pse__Project_Task__c eachProjecttask = createProjectTaskfromIP(proj,  pta.NSP_Category__c,ipRecId,milestoneKey);
+        genericProjectTask(proj,eachProjecttask, pta, workCalendarId);
+        if(ipwithValue != null
+            && ipwithValue.NSP_HR_Quality_Support_Team_Member__c!=null
+            && ipwithValue.NSP_HR_Quality_Support_Team_Member__r.pse__Salesforce_User__c!=null
+            )
+        {
+            eachProjecttask.OwnerId=ipwithValue.NSP_HR_Quality_Support_Team_Member__r.pse__Salesforce_User__c;
         }
         return eachProjectTask;
     }
@@ -2020,6 +2063,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
                     NSP_Project_Manager__r.NSP_Work_email__c ,
                     NSP_HR_Quality_Support_Team_Member__c ,
                     NSP_HR_Quality_Support_Team_Member__r.NSP_Work_email__c ,
+                	NSP_HR_Quality_Support_Team_Member__r.pse__Salesforce_User__c ,
                     NSP_Project_Manager__r.NSP_Job_Title__c ,
                     NSP_Project_Manager__r.pse__Salesforce_User__c ,
                     Account__c ,
@@ -2637,6 +2681,35 @@ public class NSP_Implprofile_ServiceHelperUpdate {
                     second
                 );
                 eachProjecttask.pse__End_Date_Time__c = endDate.addDays(-7);
+                projectTaskToInsertList.add(eachProjecttask);
+                ipAutomationRecords.add(
+                    createIPAutomation(
+                        ipRecId,
+                        ipa.NSP_Automation_Name__c,
+                        ipa.NSP_Method_Name__c,
+                        ipa.NSP_Section__c,NSP_ServiceConstants.FSOProfile
+                    )
+                );
+            }
+        }
+    }
+    private void createProjectTaskForFlsaExemptionReview(
+        String automation ,
+        NSP_ProjectTask_Automation__mdt pta ,
+        pse__Proj__c proj ,
+        Id ipRecId ,
+        Implementation_Profile__c ipwithValue ,
+        Id workCalendarId
+        )
+    {
+        if(automation == FLSA_EXEMPTION_REVIEW){
+            pse__Project_Task__c eachProjecttask = hrClientImplementationOwner(proj,pta,ipRecId,ipwithValue,workCalendarId);
+            NSP_Implementation_Automations__mdt ipa = NSP_Implementation_Automations__mdt.getInstance(automation);
+            DateTime now = DateTime.now();
+            if ( eachProjecttask != null && ipa != null)
+            {
+                eachProjecttask.pse__Start_Date_Time__c = DateTime.now();
+                eachProjecttask.pse__End_Date_Time__c = now.addDays(30);
                 projectTaskToInsertList.add(eachProjecttask);
                 ipAutomationRecords.add(
                     createIPAutomation(
