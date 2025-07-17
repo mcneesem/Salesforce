@@ -280,6 +280,9 @@ import ClientInspectedRegulatoryAgency from '@salesforce/label/c.NSP_ClientInspe
 import ClientInterestedOnSiteSafetyInsp from '@salesforce/label/c.NSP_ClientInterested_OnSiteSafetyInsp';
 import splPayrollNeeds from '@salesforce/label/c.NSP_Spl_Payroll_Needs';
 import clientCommOnlyEE from '@salesforce/label/c.NSP_Client_CommissionOnlyEEs';
+import flsaExemption from '@salesforce/label/c.Would_the_client_like_a_FLSA_Exemption';
+import flsaReachOut from '@salesforce/label/c.Who_should_the_FLSA_team_reach_out_to';
+import emergingGrowth from '@salesforce/label/c.Is_the_client_Emerging_Growth';
 import clientEEVisa from '@salesforce/label/c.NSP_Client_EE_F_J_Visa';
 import clientNSPTracking from '@salesforce/label/c.NSP_Client_NSPTracking';
 import clientPTOSickLeaveCopy from '@salesforce/label/c.NSP_ClientPTO_Leave_copy';
@@ -885,6 +888,9 @@ export {
     ImmediateSafetyConcerns,
     splPayrollNeeds,
     clientCommOnlyEE,
+    flsaExemption,
+    flsaReachOut,
+    emergingGrowth,
     clientEEVisa,
     clientNSPTracking,
     clientPTOSickLeaveCopy,
