@@ -48,10 +48,11 @@ def scanApexDirectory( directorypath ):
 
 # Main function
 def main():
-    print( "get-specified-tests.py: main" )
-    print( args.artifacts )
-    print( args.verbose )
-    print( " ----- " )
+    if args.verbose:
+        print( "get-specified-tests.py: main" )
+        print( args.artifacts )
+        print( args.verbose )
+        print( " ----- " )
     testClasses = set()
     if os.path.exists( args.artifacts ):
         if os.path.isdir( args.artifacts ):
