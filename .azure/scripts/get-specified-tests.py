@@ -31,7 +31,7 @@ def scanApexFile( filepath , headLength=50 ):
                             # handle the single test required pattern...
                             # // test w/ OneSpecificApexTest (XX%)
                             testClasses.add( trimmed )
-                        else
+                        else:
                             # handle the multiple tests required patterns...
                             # // test w/ OneSpecificApexTest, TwoSpecificApexTest, ThreeSpecificApexTest (XX%)
                             # // test w/ OneSpecificApexTest, TwoSpecificApexTest (XX%)
