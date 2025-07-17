@@ -61,7 +61,7 @@ def main():
     if args.verbose:
         print( testClasses )
         print( " ----- " )
-    specifiedTests = " ".join( testClasses )
+    specifiedTests = " ".join( testClasses ).strip()
     print( specifiedTests )
     return specifiedTests
 
