@@ -92,6 +92,21 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>HRCore_Contract_Changes__c</picklist>
+        <values>
+            <fullName>Contract Term</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Contract Value</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Termination Clause</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>NSP_Account_Status__c</picklist>
         <values>
             <fullName>Active</fullName>
@@ -1108,6 +1123,10 @@
         </values>
         <values>
             <fullName>HR Consulting Services</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HRScale</fullName>
             <default>false</default>
         </values>
         <values>

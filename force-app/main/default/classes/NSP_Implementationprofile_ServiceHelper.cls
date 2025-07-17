@@ -1,6 +1,8 @@
 public class NSP_Implementationprofile_ServiceHelper {
     // test w/ NSP_FSOImplementationControllerTest, NSP_ImpprofileServiceHelper_Test, NSP_MMImplProfile_UpdateTest (80%)
 
+    private List<Case> caseToInsertList = new List<Case>();
+    private List<NSP_Implementation_Profile_Automation__c> ipAutomationRecords = new List<NSP_Implementation_Profile_Automation__c>();
     private String impRecordId;
     private String  impAutomationName;
     private String impMethodName;
@@ -69,6 +71,8 @@ public class NSP_Implementationprofile_ServiceHelper {
     private static final String EE_COMMISSION_FN ='NSP_EE_Commission';
     private static final String NSP_Existing_Retirement_Plan_Move_FSO='NSP_Existing_Retirement_Plan_Move_FSO';
     private static final String CAFETERIAL_PLAN_FN ='NSP_Cafeterai_Plan_Questionnaire';
+    private static final String FEDERAL_COMPLIANCE_POSTERS ='Federal_Compliance_Posters';
+    private static final String FEDERAL_COMPLIANCE_POSTERS_MM ='Federal_Compliance_Posters_MM';
     private static final String TECH_PACKET_FN ='NSP_Teck_Packet';
     private static final String AdditionalBPSes_FSO ='NSP_Additional_BPSes';
     private static final String NSP_New_401_k_FSO='NSP_New_401_k_FSO';
@@ -174,6 +178,8 @@ public class NSP_Implementationprofile_ServiceHelper {
             PRIOR_WAGES_FN ,
             EE_COMMISSION_FN ,
             CAFETERIAL_PLAN_FN ,
+            FEDERAL_COMPLIANCE_POSTERS ,
+            FEDERAL_COMPLIANCE_POSTERS_MM ,
             TECH_PACKET_FN ,
             AdditionalBPSes_FSO ,
             CLIENT_AWW_YES ,
@@ -229,8 +235,19 @@ public class NSP_Implementationprofile_ServiceHelper {
         
         
     }
-    
-    private void execute(){
+
+    private void execute() {
+        for ( String automation: ipRecordsByAutomation.keySet() ) {
+            createCases( automation );
+        }
+        if ( !caseToInsertList.isEmpty() ) {
+            //check for existing Cases to avoid duplications
+            recToInsert.addAll( ipAutomationHelper.getnewCasestoInsert( caseToInsertList ) );
+        }
+        if ( !ipAutomationRecords.isEmpty() ) {
+            //check for existing Automation record and store the new Automation records
+            recToInsert.addAll( getnewAutomationListtoInsert( ipAutomationRecords ) );
+        }
         if(ipRecordsByAutomation.containsKey(CLIENT_PROFILE_FN)){
             createCaseClientProfileInfo();
         }
@@ -405,12 +422,13 @@ public class NSP_Implementationprofile_ServiceHelper {
         }
         Messaging.sendEmail(msgListToBeSend);
     }
-    
-    private void populateEligibleRecords(){
-        for(Implementation_Profile__c ipRec : newIPs.values()){
-            Implementation_Profile__c existingRec = oldIPs != null ? oldIPs.get(ipRec.Id) : null;
-            
+
+    private void populateEligibleRecords() {
+        for ( Implementation_Profile__c ipRec : newIPs.values() ) {
+            Implementation_Profile__c existingRec = ( ( oldIPs != null ) ? oldIPs.get( ipRec.Id ) : null );
             // All the automation methods will check the eligibility of the current record.
+            checkForFederalCompliancePosters( ipRec , existingRec );
+            checkForFederalCompliancePostersMM( ipRec , existingRec );
             if(automationsToExecute.contains(CLIENT_PROFILE_FN)){
                 checkForClientProfileInfo(ipRec, existingRec);
             }
@@ -796,6 +814,42 @@ public class NSP_Implementationprofile_ServiceHelper {
             }
     }
     
+    private void checkForFederalCompliancePosters( Implementation_Profile__c newRec , Implementation_Profile__c existingRec ) {
+        if ( ( automationsToExecute != null )
+            && automationsToExecute.contains( FEDERAL_COMPLIANCE_POSTERS )
+            && ( newRec != null )
+            && ( newRec.RecordTypeId == ipFSORecordTypeId )
+            && ( ( newRec.Federal_Labor_Law_poster__c == NSP_ServiceConstants.No )
+                || ( newRec.Federal_Labor_Law_poster__c == NSP_SalesConstants.APPROVAL_STATUS_PENDING )
+                )
+            && ( ( existingRec == null )
+                || ( newRec.NSP_Form_Completed__c )
+                || ( newRec.Federal_Labor_Law_poster__c != existingRec.Federal_Labor_Law_poster__c )
+                )
+            )
+        {
+            updateEligibleRecordsMap( ipRecordsByAutomation , newRec.Id , FEDERAL_COMPLIANCE_POSTERS );
+        }
+    }
+
+    private void checkForFederalCompliancePostersMM( Implementation_Profile__c newRec , Implementation_Profile__c existingRec ) {
+        if ( ( automationsToExecute != null )
+            && automationsToExecute.contains( FEDERAL_COMPLIANCE_POSTERS_MM )
+            && ( newRec != null )
+            && ( newRec.RecordTypeId == ipMMRecordTypeId )
+            && ( ( newRec.Federal_Labor_Law_poster__c == NSP_ServiceConstants.No )
+                || ( newRec.Federal_Labor_Law_poster__c == NSP_SalesConstants.APPROVAL_STATUS_PENDING )
+                )
+            && ( ( existingRec == null )
+                || ( newRec.NSP_Form_Completed__c )
+                || ( newRec.Federal_Labor_Law_poster__c != existingRec.Federal_Labor_Law_poster__c )
+                )
+            )
+        {
+            updateEligibleRecordsMap( ipRecordsByAutomation , newRec.Id , FEDERAL_COMPLIANCE_POSTERS_MM );
+        }
+    }
+
     private void checkForSeasonalEE(Implementation_Profile__c newRec, Implementation_Profile__c existingRec) {
         
         if(newRec.RecordTypeId != ipMMRecordTypeId
@@ -1258,7 +1312,133 @@ public class NSP_Implementationprofile_ServiceHelper {
         return eachCase;
         
     }
-    
+
+    private void createCases( String automation ) {
+        Case_Automation__mdt caseMdt = null;
+        if ( automation != null ) {
+            caseMdt = Case_Automation__mdt.getInstance( automation );
+        }
+        if ( ipRecordsByAutomation.containsKey( automation )
+            && ( ipRecordsByAutomation.get(automation) != null )
+            )
+        {
+            for ( Id ipRecId : ipRecordsByAutomation.get( automation ) ) {
+                if ( newIPs != null ) {
+                    Implementation_Profile__c ipRec = newIPs.get( ipRecId );
+                    if ( ( ipRec != null )
+                        && ( isRerun || ipRec.NSP_Form_Completed__c )
+                        && !isSaveForm
+                        )
+                    {
+                        caseAutomations( automation , caseMdt , ipRecId );
+                    }
+                }
+            }
+        }
+    }
+
+    private void caseAutomations(
+        String automation ,
+        Case_Automation__mdt caseMdt ,
+        Id ipRecId
+        )
+    {
+        if ( ( data != null )
+            && data.containsKey( IP_IDENTIFIER )
+            && ( data.get( IP_IDENTIFIER ) != null )
+            && data.get( IP_IDENTIFIER ).containsKey( ipRecId )
+            && ( data.get( IP_IDENTIFIER ).get( ipRecId ) != null )
+            )
+        {
+            Implementation_Profile__c ipwithValue=(Implementation_Profile__c)data.get( IP_IDENTIFIER ).get( ipRecId );
+            //Add here Case automations for IP
+            createPostersCase( automation , caseMdt , ipRecId , ipwithValue );
+        }
+    }
+
+    private Case createComplianceCase(
+        Case_Automation__mdt caseMdt ,
+        Id ipRecId ,
+        Implementation_Profile__c ipwithValue
+        )
+    {
+        Case eachCase = new Case();
+        eachCase.NSP_Opened_Date__c = Date.today();
+        if ( ipWithValue != null ) {
+            eachCase.AssetId = ipWithValue.NSP_Asset__c;
+            eachCase.NSP_ClientNumber__c = ipwithValue.NSP_AIMS_ClientNo__c;
+            if ( ipWithValue.NSP_Asset__r != null ) {
+                eachCase.AccountId = ipWithValue.NSP_Asset__r.AccountId;
+                eachCase.NSP_Segment__c = ipWithValue.NSP_Asset__r.NSP_Client_Segment_type__c;
+            }
+        }
+        eachCase.Status = NSP_ServiceConstants.OPEN;
+        eachCase.NSP_Case_Sub_Status__c = NSP_ServiceConstants.UNASSIGNED;
+        eachCase.NSP_Rating__c = NSP_ServiceConstants.CASE_RATING;
+        eachCase.NSP_Implementation_Profile__c = ipRecId;
+        eachCase.Project__c = ipWithValue.NSP_Project__c;
+        if ( caseMdt != null ) {
+            eachCase.Subject = SchemaController.safeText(
+                caseMdt.Subject__c ,
+                sObjectType.Case.Fields.Subject
+            );
+            eachCase.Origin = SchemaController.safeText(
+                caseMdt.Origin__c ,
+                sObjectType.Case.Fields.Origin
+            );
+            eachCase.NSP_Instructions__c = SchemaController.safeText(
+                caseMdt.Instructions__c ,
+                sObjectType.Case.Fields.NSP_Instructions__c
+            );
+            eachCase.NSP_Category__c = SchemaController.safeText(
+                caseMdt.Category__c ,
+                sObjectType.Case.Fields.NSP_Category__c
+            );
+            eachCase.NSP_SubCategory__c = SchemaController.safeText(
+                caseMdt.Sub_Category__c ,
+                sObjectType.Case.Fields.NSP_SubCategory__c
+            );
+        }
+        return eachCase;
+    }
+
+    private void createPostersCase(
+        String automation ,
+        Case_Automation__mdt caseMdt ,
+        Id ipRecId ,
+        Implementation_Profile__c ipwithValue
+        )
+    {
+        if ( automation == FEDERAL_COMPLIANCE_POSTERS || automation == FEDERAL_COMPLIANCE_POSTERS_MM ) {
+            Case eachCase = createComplianceCase( caseMdt , ipRecId , ipwithValue );
+            NSP_Implementation_Automations__mdt ipa = NSP_Implementation_Automations__mdt.getInstance( automation );
+            if ( ( automation == FEDERAL_COMPLIANCE_POSTERS )
+                && ( ipwithValue.NSP_Orientation_Coordinator__c != null )
+                && ( ipwithValue.NSP_Orientation_Coordinator__r.pse__Salesforce_User__c != null )
+                )
+            {
+                eachCase.OwnerId = ipwithValue.NSP_Orientation_Coordinator__r.pse__Salesforce_User__c;
+            } else if ( ( automation == FEDERAL_COMPLIANCE_POSTERS_MM )
+                && ( ipwithValue.NSP_Transition_Specialist__c != null )
+                && ( ipwithValue.NSP_Transition_Specialist__r.pse__Salesforce_User__c != null )
+                )
+            {
+                eachCase.OwnerId = ipwithValue.NSP_Transition_Specialist__r.pse__Salesforce_User__c;
+            }
+            ipAutomationRecords.add(
+                ipAutomationHelper.createIPAutomation(
+                    ipwithValue ,
+                    ipa.NSP_Automation_Name__c ,
+                    ipa.NSP_Method_Name__c ,
+                    ipa.NSP_Section__c
+                )
+            );
+            if ( eachCase != null ) {
+                caseToInsertList.add( eachCase );
+            }
+        }
+    }
+
     public void createMMCaseOPTUM(){
         //create case for HSA with optum bank 
         List<NSP_Implementation_Profile_Automation__c> ipAutomationRecords = new List<NSP_Implementation_Profile_Automation__c>();
@@ -2712,11 +2892,14 @@ public class NSP_Implementationprofile_ServiceHelper {
                 NSP_BPA_BPC__c ,
                 NSP_BPA_BPC_Ids__c ,
                 NSP_Asset__r.AccountId ,
+                NSP_Asset__r.NSP_Client_Segment_type__c ,
                 NSP_Form_Completed__c ,
                 NSP_Payroll_Specialist__c ,
                 NSP_Payroll_Specialist__r.pse__Salesforce_User__c ,
                 NSP_Onboarding_Specialist_Coordinator__c ,
                 NSP_Orientation_Rep__c ,
+                NSP_Orientation_Coordinator__r.pse__Salesforce_User__c ,
+                NSP_Transition_Specialist__r.pse__Salesforce_User__c ,
                 NSP_Orientation_Rep__r.NSP_Work_Email__c ,
                 NSP_Onboarding_Specialist_Coordinator__r.NSP_Work_email__c ,
                 NSP_HR_Specialist__c ,
@@ -2739,7 +2922,8 @@ public class NSP_Implementationprofile_ServiceHelper {
                 Are_you_registered_with_the_CSLB__c ,
                 NSP_Legal_Name__c ,
                 Contractor_s_License__c ,
-                Effective_Date_Payroll_Worker_comp_EPLI__c
+                Effective_Date_Payroll_Worker_comp_EPLI__c ,
+                NSP_Project__c
             FROM Implementation_Profile__c
             WHERE ( Id IN :ipIds )
         ]);

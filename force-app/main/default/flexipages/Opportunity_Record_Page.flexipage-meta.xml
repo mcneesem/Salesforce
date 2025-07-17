@@ -39,16 +39,6 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Amount</fieldItem>
-                <identifier>RecordAmountField3</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.OwnerId</fieldItem>
@@ -424,6 +414,26 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.Interest_Product_Offering__c</fieldItem>
+                <identifier>RecordInterest_Product_Offering_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Product_Offering__c</fieldItem>
+                <identifier>RecordProduct_Offering_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.NSP_PrimaryProduct__c</fieldItem>
                 <identifier>RecordNSP_PrimaryProduct_cField</identifier>
             </fieldInstance>
@@ -781,9 +791,9 @@
                         <rightValue>Sales Admin</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!$User.UserRole.DeveloperName}</leftValue>
+                        <leftValue>{!$Permission.CustomPermission.Opportunity_Closed_Won_NCS_User}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>New_Client_Sales</rightValue>
+                        <rightValue>true</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -834,6 +844,26 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Account_Segment__c</fieldItem>
                 <identifier>RecordNSP_Account_Segment_cField2</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Interest_Product_Offering__c</fieldItem>
+                <identifier>RecordInterest_Product_Offering_cField2</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Product_Offering__c</fieldItem>
+                <identifier>RecordProduct_Offering_cField2</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1336,6 +1366,26 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Referred_By_COI__c</fieldItem>
                 <identifier>RecordNSP_Referred_By_COI_cField2</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Interest_Product_Offering__c</fieldItem>
+                <identifier>RecordInterest_Product_Offering_cField3</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Product_Offering__c</fieldItem>
+                <identifier>RecordProduct_Offering_cField3</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>

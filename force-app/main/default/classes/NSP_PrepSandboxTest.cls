@@ -1,6 +1,47 @@
 @isTest
 class NSP_PrepSandboxTest {
 
+    @IsTest
+    static void testUpdateUserLogins() {
+        Profile profile = [SELECT Id FROM Profile WHERE Name = 'Standard User' LIMIT 1];
+        User user = new User(
+            FirstName = 'Test',
+            LastName = 'User',
+            Email = 'testuser@example.com',
+            Username = 'testuser@example.com.sandbox',
+            Alias = 'tuser',
+            TimeZoneSidKey = 'America/Los_Angeles',
+            LocaleSidKey = 'en_US',
+            EmailEncodingKey = 'UTF-8',
+            ProfileId = profile.Id,
+            LanguageLocaleKey = 'en_US'
+        );
+        insert user;
+
+        // Query the test user
+        User testUser = [SELECT Id FROM User WHERE Username = 'testuser@example.com.sandbox'];
+        UserLogin ulogin = [SELECT Id, IsFrozen, UserId From UserLogin Where UserId = :testUser.Id LIMIT 1];
+        if (ulogin != null) {
+            ulogin.IsFrozen = true;
+            update ulogin;
+        }
+
+        // Mock the Database.UpsertResult for the test user
+        Database.UpsertResult userResult = (Database.UpsertResult) JSON.deserialize(
+            '{"success":true,"id":"' + testUser.Id + '"}',
+            Database.UpsertResult.class
+        );
+
+        // Call the updateUserLogins method with the mock result
+        Test.startTest();
+        NSP_PrepSandbox.updateUserLogins(new List<Database.UpsertResult>{ userResult });
+        Test.stopTest();
+
+        // Verify that the UserLogin record was updated
+        UserLogin updatedUserLogin = [SELECT Id, IsFrozen FROM UserLogin WHERE UserId = :testUser.Id];
+        System.assertEquals(false, updatedUserLogin.IsFrozen, 'UserLogin record should have IsFrozen set to false');
+    }
+
     @isTest
     static void testSandboxPrep() {
         // Insert logic here to create records of the objects that the class your testing manipulates.
@@ -31,6 +72,7 @@ class NSP_PrepSandboxTest {
         NSP_PrepSandbox.doCLabels('stage');
         NSP_PrepSandbox.doCSettings('merge');
         NSP_PrepSandbox.doCSettings('test');
+        NSP_PrepSandbox.doCMetadata('test');
         Test.stopTest();
     }
 

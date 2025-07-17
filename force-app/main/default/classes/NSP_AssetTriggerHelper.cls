@@ -1,10 +1,13 @@
 public with sharing class NSP_AssetTriggerHelper {
-    // test w/ NSP_AssetTriggerHelperTest (83%)
+    // test w/ NSP_AssetTriggerHelperTest (86%)
 
     private static final Id woAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Asset' , 'WO' );
     private static final Id wxAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Asset' , 'NSP_Asset_Product' );
     private static final Id cpqAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Asset' , 'NSP_CPQ_Asset' );
     private static final Id performanceAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Asset' , 'Performance_Management' );
+    private static final Id employmentScreeningAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Asset' , 'Employment_Screening' );
+    private static final Id recruitingServicesAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Asset' , 'Recruiting_Services' );
+    private static final Id applicantTrackingAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Asset' , 'Applicant_Tracking' );
     private static final Id retWoAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Asset' , 'RET_WO' );
     private static final Id retChoiceAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Asset' , 'RET_Choice' );
     private static final Id stpChecklistRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'NSP_Checklist__c' , 'NSP_Sold_to_Paid_Checklist' );
@@ -14,7 +17,7 @@ public with sharing class NSP_AssetTriggerHelper {
     // @param newList List of New Accounts.
     // @return void
     //
-    public void beforeInsertDirector( List<Asset> newList ) { 
+    public void beforeInsertDirector( List<Asset> newList ) {
         try {
             // ADO-314743
             // ~ handle Default Asset Record Type change for "Integration User" Profile
@@ -57,7 +60,7 @@ public with sharing class NSP_AssetTriggerHelper {
         List<Asset> ast = new List<Asset>();
         List<Asset> docusignAsset = new List<Asset>();
         try {
-            for(Asset assetObj: newList){              
+            for(Asset assetObj: newList){
                 if ( ( assetObj.Status != null )
                     && ( ( assetObj.Status == 'Active' ) || ( assetObj.Status == 'Onboarding' ) )
                     )
@@ -69,7 +72,7 @@ public with sharing class NSP_AssetTriggerHelper {
                     && ( assetObj.RecordTypeId != NSP_AssetTriggerHelper.cpqAssetRecordTypeId )
                     )
                 {
-                    docusignAsset.add(assetObj); 
+                    docusignAsset.add(assetObj);
                 }
             }
             if(!docusignAsset.isEmpty()){
@@ -88,7 +91,7 @@ public with sharing class NSP_AssetTriggerHelper {
     // @param newMap, oldMap List of Assets.
     // @return void
     //
-    public void beforeUpdateDirector( Map<Id,Asset> newMap , Map<Id,Asset> oldMap ) { 
+    public void beforeUpdateDirector( Map<Id,Asset> newMap , Map<Id,Asset> oldMap ) {
         try {
             updatePayDateonAsset( newMap.values() , oldMap ); // added for STY-03387
         } catch ( Exception e ) {
@@ -101,7 +104,7 @@ public with sharing class NSP_AssetTriggerHelper {
     // @param newMap, oldMap List of Assets.
     // @return void
     //
-    public void afterUpdateDirector( Map<Id,Asset> newMap , Map<Id,Asset> oldMap ) { 
+    public void afterUpdateDirector( Map<Id,Asset> newMap , Map<Id,Asset> oldMap ) {
         if ( ( newMap != null ) && ( newMap.size() > 0 ) ) {
             NSP_SObjectHistoryTrackingHelper.enqueueJob(
                 (Map<Id,sObject>)newMap ,
@@ -197,7 +200,7 @@ public with sharing class NSP_AssetTriggerHelper {
                 )
             ];
             for (Asset eachAsset : assetList) {
-                if (eachAsset.AccountId != null) { 
+                if (eachAsset.AccountId != null) {
                     if (!accountToAssetRecordtypeMap.containsKey(eachAsset.AccountId)) {
                         accountToAssetRecordtypeMap.put(eachAsset.AccountId, new Set<String>());
                     }
@@ -237,7 +240,7 @@ public with sharing class NSP_AssetTriggerHelper {
     // @param :List<Asset> ast
     // @Defect : STY-04435
     // @return void
-    //    
+    //
     public static void updateActiveAssets( List<Asset> ast ) {
         Map<Id, Set<String>> mp = new Map<Id, Set<String>>();
         Map<Id, RecordTypeInfo> rtinfos = Asset.sObjectType.getDescribe().getRecordTypeInfosById();
@@ -269,7 +272,7 @@ public with sharing class NSP_AssetTriggerHelper {
             )
         ];
         for (Asset eachAsset : assetList) {
-            if (eachAsset.AccountId != null ) { 
+            if (eachAsset.AccountId != null ) {
                 if (!mp.containsKey(eachAsset.AccountId)) {
                     mp.put(eachAsset.AccountId, new Set<String>());
                 }
@@ -295,7 +298,7 @@ public with sharing class NSP_AssetTriggerHelper {
                 a.NSP_Active_Assets__c = String.join( activeAssetList , ';' );
             }
         }
-        update acctLst; 
+        update acctLst;
     }
 
     //
@@ -309,18 +312,18 @@ public with sharing class NSP_AssetTriggerHelper {
     public void mapGovernmentContratcorOnPDS( Set<Id> assetIdSet ) {
         Map<Id, Boolean> isSubClientGovConMap = new Map<Id, Boolean>();
         List<NSP_Payroll__c> payRollList = new List<NSP_Payroll__c>();
-        for(NSP_Sub_Client__c  subClient :[SELECT Id, 
-                                           NSP_Asset__c, 
+        for(NSP_Sub_Client__c  subClient :[SELECT Id,
+                                           NSP_Asset__c,
                                            NSP_Asset__r.NSP_Government_Contractor__c,
                                            NSP_Asset__r.recordTypeId
-                                           FROM NSP_Sub_Client__c 
+                                           FROM NSP_Sub_Client__c
                                            WHERE NSP_Asset__c IN: assetIdSet] ){
-                                               isSubClientGovConMap.put(subClient.Id, subClient.NSP_Asset__r.NSP_Government_Contractor__c);    
+                                               isSubClientGovConMap.put(subClient.Id, subClient.NSP_Asset__r.NSP_Government_Contractor__c);
                                            }
         if(!isSubClientGovConMap.isEmpty()){
-            for(NSP_Payroll__c pRoll : [SELECT Id, NSP_Sub_Client_Name__c, 
-                                        NSP_Government_Contractor__c 
-                                        FROM NSP_Payroll__c 
+            for(NSP_Payroll__c pRoll : [SELECT Id, NSP_Sub_Client_Name__c,
+                                        NSP_Government_Contractor__c
+                                        FROM NSP_Payroll__c
                                         WHERE NSP_Sub_Client_Name__c IN:isSubClientGovConMap.keySet() ]){
                                             pRoll.NSP_Government_Contractor__c = isSubClientGovConMap.get(pRoll.NSP_Sub_Client_Name__c);
                                             payRollList.add(pRoll);
@@ -341,13 +344,13 @@ public with sharing class NSP_AssetTriggerHelper {
     // @param :List<Asset> newAssets, map<Id, Asset> oldAssets
     // @createdDate : 11/03/2022
     // @Defect : STY-03624
-    // @return void                          
+    // @return void
     //
     public static void createPlatformEventForAsset( List<Asset> newAssets , Map<Id,Asset> oldAssets ) {
         //Boolean to check if any field is changed
         List<Asset_Event__e> assetEventToBeInserted = New List<Asset_Event__e>();
         List<string> assetFieldDetails = new List<string>();
-        
+
         //Get Record details for Metadata
         NSP_Platform_Event_Fields_Management__mdt assetFieldFromMdt = NSP_Platform_Event_Fields_Management__mdt.getInstance( 'Asset_Fields' );
         if ( assetFieldFromMdt.NSP_Active__c ) {
@@ -359,6 +362,9 @@ public with sharing class NSP_AssetTriggerHelper {
                 Boolean isValidRecordType = (
                     ( record.RecordTypeId == NSP_AssetTriggerHelper.woAssetRecordTypeId )
                     || ( record.RecordTypeId == NSP_AssetTriggerHelper.performanceAssetRecordTypeId )
+                    || ( record.RecordTypeId == NSP_AssetTriggerHelper.employmentScreeningAssetRecordTypeId )
+                    || ( record.RecordTypeId == NSP_AssetTriggerHelper.recruitingServicesAssetRecordTypeId )
+                    || ( record.RecordTypeId == NSP_AssetTriggerHelper.applicantTrackingAssetRecordTypeId )
                 );
                 if ( isValidRecordType ) {
                     Asset oldAsset = null;
@@ -406,8 +412,8 @@ public with sharing class NSP_AssetTriggerHelper {
     //
     public void updateInvoiceDate( List<Asset> newList , Map<Id,Asset> oldMap ) {
         set<Id> idSet = new set<Id>();
-        set<Id> idwxset = new set<Id>();   
-        List <opportunity> oppList = new List<opportunity> (); 
+        set<Id> idwxset = new set<Id>();
+        List <opportunity> oppList = new List<opportunity> ();
         if(newList.size() > 0){
             for(Asset newAsset :newList){
                 if(newAsset.opportunity__c!=null){
@@ -446,20 +452,20 @@ public with sharing class NSP_AssetTriggerHelper {
 
     /**
 * Iterates throught the list of new Assets and passes the required attributes to other methods.
-* @param newList, oldMap List of Assets.  
-* @return void   
-* description: logic to copy to Asset Projected First Pay Date with opportunity with primary product  WS/WO  
-* from check list Requested First Pay Date from check list.          
+* @param newList, oldMap List of Assets.
+* @return void
+* description: logic to copy to Asset Projected First Pay Date with opportunity with primary product  WS/WO
+* from check list Requested First Pay Date from check list.
 * Date :9/27/2022 for STY-03387
 */
 	public void updatePayDateonAsset(List<Asset> newList,Map<Id, Asset> oldMap){
-		
-		
-		set<id> opportunityIdSet = new set<id>(); 
+
+
+		set<id> opportunityIdSet = new set<id>();
 		map<id,NSP_Checklist__c> opportunityIdToChecklistMap = new map<id,NSP_Checklist__c>();
 		for(Asset newAsset : newList){
 			Asset oldAsset = oldMap != null ? oldMap.get(newAsset.Id):null;
-			
+
             if ( ( newAsset.Opportunity__c != null )
                 && ( newAsset.RecordTypeId == NSP_AssetTriggerHelper.woAssetRecordTypeId )
                 && ( Trigger.isInsert || ( newAsset.Opportunity__c != oldAsset.Opportunity__c ) )
@@ -468,21 +474,21 @@ public with sharing class NSP_AssetTriggerHelper {
 				opportunityIdSet.add(newAsset.Opportunity__c); // get opportunity id
 			}
 		}
-		
+
 		if(opportunityIdSet.Size() > 0){
 			// create opportunity to checklist map
-			for(NSP_Checklist__c eachChecklist : [SELECT Id,NSP_Requested_First_Pay_Date__c,NSP_Opportunity__c FROM NSP_Checklist__c 
+			for(NSP_Checklist__c eachChecklist : [SELECT Id,NSP_Requested_First_Pay_Date__c,NSP_Opportunity__c FROM NSP_Checklist__c
 											WHERE NSP_Opportunity__c IN :opportunityIdSet AND
-											NSP_Opportunity__r.NSP_PrimaryProduct__c IN ('WS','WO') AND 
+											NSP_Opportunity__r.NSP_PrimaryProduct__c IN ('WS','WO') AND
 											recordtypeId =: NSP_AssetTriggerHelper.stpChecklistRecordTypeId AND
 											NSP_Requested_First_Pay_Date__c != null
 											]){
 				opportunityIdToChecklistMap.put(eachChecklist.NSP_Opportunity__c,eachChecklist);
 			}
-			
+
 			for(Asset newAsset : newList){
 				Asset oldAsset = oldMap != null ? oldMap.get(newAsset.Id):null;
-				
+
                 if ( ( newAsset.Opportunity__c != null )
                     && ( newAsset.RecordTypeId == NSP_AssetTriggerHelper.woAssetRecordTypeId )
                     && ( Trigger.isInsert || ( newAsset.Opportunity__c != oldAsset.Opportunity__c ) )
@@ -495,47 +501,47 @@ public with sharing class NSP_AssetTriggerHelper {
 			}
 		}
 	}
-    
+
 
 /***********************************************************************************************
     * MethodName: updateAssetServiceRegion
     * Description : This method is used to update Service Region Field on before Insert.
     * Params:       List<Asset> Boolean isInsert
     * ********************************************************************************************/
-        
+
     public static void updateAssetServiceRegion(List<Asset> newList){
         Map<id,NSP_Account_Team__c> accountTeamById = new Map<id,NSP_Account_Team__c>();
         set<Id> setofAccountIds = new set<Id>();
-        for(Asset asset : newList){            
+        for(Asset asset : newList){
             //accountId should not be null and record type should be 'WO'
             if(asset.AccountId != null && asset.RecordTypeId == NSP_AssetTriggerHelper.woAssetRecordTypeId){
                 setofAccountIds.add(asset.AccountId);
             }
         }
-        
+
         if(!setofAccountIds.isEmpty()) {
             //Build Account Map for Service Region
             for(NSP_Account_Team__c accountTeam : [SELECT Id, Name,NSP_Account__c, NSP_User__r.NSP_Service_Region__c, NSP_Role__c FROM NSP_Account_Team__c WHERE NSP_Account__c =: setofAccountIds AND NSP_Role__c = 'Manager, HR Services' AND NSP_User__c != null]){
                 accountTeamById.put(accountTeam.NSP_Account__c,accountTeam);
             }
-            
+
             for(Asset asset : newList){
                 if(accountTeamById.ContainsKey(asset.AccountId)){
                      asset.NSP_Service_Region__c = accountTeamById.get(asset.AccountId).NSP_User__r.NSP_Service_Region__c;
                 }
             }
         }
-        
+
     }
 
     /***********************************************************************************************
     * MethodName: processLeadParentFromAsset
     * Description : Method to process lead parent on plan subplan and child asset. story STY-03796
-    * Params:       List<Id> 
+    * Params:       List<Id>
     * ********************************************************************************************/
-    
+
     @InvocableMethod(label='processLeadParentFromAsset' description='Method to process lead parent on plan subplan and child asset' category='Asset')
-    public static void processLeadParentFromAsset(list<id> assetIds){	
+    public static void processLeadParentFromAsset(list<id> assetIds){
         NSP_ProcessAssetforLeadParent.processLeadParent(new set<Id>(assetIds));
     }
 
@@ -548,7 +554,7 @@ public with sharing class NSP_AssetTriggerHelper {
     //
     public void peoTESClientStatus ( List<Asset> newList , Map<Id,Asset> oldMap ) {
         List <Account> accListLookup = new List<Account> ();
-        set<id> accIdSet = new set<id>(); 
+        set<id> accIdSet = new set<id>();
         Map<id,Asset> assetWoOnboard = new Map<id,Asset>();
         Map<id,Asset> assetWxOnboard = new Map<id,Asset>();
         Map<id,Asset> assetWoWxTerm = new Map<id,Asset>();
@@ -563,7 +569,7 @@ public with sharing class NSP_AssetTriggerHelper {
         List<String> status = new List<String>{'Onboarding', 'Active','Terminated'};
 		for(Asset newAsset : newList){
 			Asset oldAsset = oldMap != null ? oldMap.get(newAsset.Id):null;
-			
+
 			if ( ((newAsset.RecordTypeId == NSP_AssetTriggerHelper.woAssetRecordTypeId ||newAsset.RecordTypeId == NSP_AssetTriggerHelper.wxAssetRecordTypeId)&&(status.contains(newAsset.Status)) )
                 && ((Trigger.isInsert && newAsset.AccountId!= NULL) ||(Trigger.isUpdate && newAsset.Status != oldAsset.Status && newAsset.AccountId!= NULL) ) ){
 				accIdSet.add(newAsset.AccountId); // get asset id
@@ -583,65 +589,65 @@ public with sharing class NSP_AssetTriggerHelper {
                 if((newAsset.Status == 'Terminated') && newAsset.RecordTypeId == NSP_AssetTriggerHelper.wxAssetRecordTypeId ){
                     assetWxTerm.put(newAsset.AccountId, newAsset);
                 }
-                
-               
+
+
 			}
-            
-           
+
+
 		}
-        
+
         If(assetWoWxTerm.Size() > 0){
         for(Asset assetLi : [SELECT id,accountid FROM Asset WHERE (RecordTypeId =: NSP_AssetTriggerHelper.woAssetRecordTypeId OR RecordTypeId =: NSP_AssetTriggerHelper.wxAssetRecordTypeId) AND (Status= 'Active' OR Status= 'Onboarding') AND accountid IN :assetWoWxTerm.KeySet() ]){
     	woWxActiveList.add(assetLi.accountid);
-		}    
-        for(Account acc : [SELECT id,(SELECT id,accountid,NSP_Termination_Date__c,Status,NSP_Product_Line__c FROM Assets WHERE NSP_Termination_Date__c!=NUll AND Status = 'Terminated' AND (RecordTypeId =: NSP_AssetTriggerHelper.woAssetRecordTypeId OR RecordTypeId =: NSP_AssetTriggerHelper.wxAssetRecordTypeId) order by NSP_Termination_Date__c desc limit 1) FROM account WHERE ID IN :assetWoWxTerm.KeySet()]){    
+		}
+        for(Account acc : [SELECT id,(SELECT id,accountid,NSP_Termination_Date__c,Status,NSP_Product_Line__c FROM Assets WHERE NSP_Termination_Date__c!=NUll AND Status = 'Terminated' AND (RecordTypeId =: NSP_AssetTriggerHelper.woAssetRecordTypeId OR RecordTypeId =: NSP_AssetTriggerHelper.wxAssetRecordTypeId) order by NSP_Termination_Date__c desc limit 1) FROM account WHERE ID IN :assetWoWxTerm.KeySet()]){
     		for( asset asobj : acc.Assets){
-                
+
                  assetWoWxLatestTerm.put(asobj.AccountId, asobj);
 
     			}
-		} 
-            
+		}
+
         }
         If(assetWoTerm.Size() > 0){
 		for(Asset assetLi : [SELECT id,accountid FROM Asset WHERE RecordTypeId =: NSP_AssetTriggerHelper.woAssetRecordTypeId AND (Status= 'Active' OR Status= 'Onboarding') AND accountid IN :assetWoTerm.KeySet() ]){
     	onboardList.add(assetLi.accountid);
 		}
-          
-        for(Account acc : [SELECT id,(SELECT id,accountid,NSP_Termination_Date__c FROM Assets WHERE NSP_Termination_Date__c!=NUll AND Status = 'Terminated' AND RecordTypeId =: NSP_AssetTriggerHelper.woAssetRecordTypeId order by NSP_Termination_Date__c desc limit 1) FROM account WHERE ID IN :assetWoTerm.KeySet()]){    
-    		for( asset asobj : acc.Assets){               
-                 assetWoLatestTerm.put(asobj.AccountId, asobj);                
+
+        for(Account acc : [SELECT id,(SELECT id,accountid,NSP_Termination_Date__c FROM Assets WHERE NSP_Termination_Date__c!=NUll AND Status = 'Terminated' AND RecordTypeId =: NSP_AssetTriggerHelper.woAssetRecordTypeId order by NSP_Termination_Date__c desc limit 1) FROM account WHERE ID IN :assetWoTerm.KeySet()]){
+    		for( asset asobj : acc.Assets){
+                 assetWoLatestTerm.put(asobj.AccountId, asobj);
     			}
-		} 
-            
+		}
+
         }
-        
+
         If(assetWxTerm.Size() > 0){
         for(Asset assetLi : [SELECT id,accountid FROM Asset WHERE RecordTypeId =: NSP_AssetTriggerHelper.wxAssetRecordTypeId AND (Status= 'Active' OR Status= 'Onboarding') AND accountid IN :assetWxTerm.KeySet() ]){
     	onactiveList.add(assetLi.accountid);
-		}    
-        for(Account acc : [SELECT id,(SELECT id,accountid,NSP_Termination_Date__c FROM Assets WHERE NSP_Termination_Date__c!=NUll AND Status = 'Terminated' AND RecordTypeId =: NSP_AssetTriggerHelper.wxAssetRecordTypeId order by NSP_Termination_Date__c desc limit 1) FROM account WHERE ID IN :assetWxTerm.KeySet()]){    
-    		for( asset asobj : acc.Assets){                
-                 assetWxLatestTerm.put(asobj.AccountId, asobj);                 
+		}
+        for(Account acc : [SELECT id,(SELECT id,accountid,NSP_Termination_Date__c FROM Assets WHERE NSP_Termination_Date__c!=NUll AND Status = 'Terminated' AND RecordTypeId =: NSP_AssetTriggerHelper.wxAssetRecordTypeId order by NSP_Termination_Date__c desc limit 1) FROM account WHERE ID IN :assetWxTerm.KeySet()]){
+    		for( asset asobj : acc.Assets){
+                 assetWxLatestTerm.put(asobj.AccountId, asobj);
     			}
-		} 
-            
+		}
+
         }
-        
-        
+
+
         If(accIdSet.Size() > 0){
-            
+
             For(Id accId :accIdSet ){
                 Account accObject = new Account();
                 accObject.Id = accId;
                 If(assetWoOnboard.containsKey(accId)){
-                  
+
                     if(assetWoOnboard.get(accId).NSP_Product_Line__c != null){
                     String nspProduct = assetWoOnboard.get(accId).NSP_Product_Line__c;
                     String nspStatus = assetWoOnboard.get(accId).Status;
                     String nspClientStatus = nspProduct+' - '+nspStatus;
                     accObject.PEO_TES_Client_Status__c = nspClientStatus;
-                    
+
                     }
                     else{
                     String nspStatus = assetWoOnboard.get(accId).Status;
@@ -649,12 +655,12 @@ public with sharing class NSP_AssetTriggerHelper {
                     }
                 }
                 Else If(assetWxOnboard.containsKey(accId)){
-                    
+
                     if(assetWxOnboard.get(accId).NSP_Product_Line__c != null){
                     String nspProduct = assetWxOnboard.get(accId).NSP_Product_Line__c;
                     String nspStatus = assetWxOnboard.get(accId).Status;
                     String nspClientStatus = nspProduct+' - '+nspStatus;
-                    accObject.PEO_TES_Client_Status__c = nspClientStatus;                   
+                    accObject.PEO_TES_Client_Status__c = nspClientStatus;
                     }
                     else{
                     String nspStatus = assetWxOnboard.get(accId).Status;
@@ -662,7 +668,7 @@ public with sharing class NSP_AssetTriggerHelper {
                     }
                 }
                  Else If(assetWoWxTerm.containsKey(accId) && !woWxActiveList.contains(accId) && !assetWoWxLatestTerm.isEmpty()){
-                                         
+
                     if(assetWoWxLatestTerm.get(accId).NSP_Product_Line__c != null){
                     String nspProduct = assetWoWxLatestTerm.get(accId).NSP_Product_Line__c;
                     String nspStatus = assetWoWxLatestTerm.get(accId).Status;
@@ -676,7 +682,7 @@ public with sharing class NSP_AssetTriggerHelper {
                     }
                 }
                 Else If(assetWoWxTerm.containsKey(accId) && !woWxActiveList.contains(accId) && assetWoWxLatestTerm.isEmpty()){
-                                         
+
                     if(assetWoWxTerm.get(accId).NSP_Product_Line__c != null){
                     String nspProduct = assetWoWxTerm.get(accId).NSP_Product_Line__c;
                     String nspStatus = assetWoWxTerm.get(accId).Status;
@@ -689,37 +695,37 @@ public with sharing class NSP_AssetTriggerHelper {
                     accObject.PEO_TES_Client_Status__c = nspStatus;
                     }
                 }
-                
+
                 If(assetWoOnboard.containsKey(accId)){
                     accObject.WO_Asset__c =assetWoOnboard.get(accId).Id;
-                
+
                 }
                 Else If(assetWoTerm.containsKey(accId) && !onboardList.contains(accId) && !assetWoLatestTerm.isEmpty()){
                    accObject.WO_Asset__c =assetWoLatestTerm.get(accId).Id;
-                
+
                 }
                 Else If(assetWoTerm.containsKey(accId) && !onboardList.contains(accId) && assetWoLatestTerm.isEmpty()){
                    accObject.WO_Asset__c =assetWoTerm.get(accId).Id;
-                
+
                 }
-                
+
                 If(assetWxOnboard.containsKey(accId)){
                     accObject.WX_Asset__c =assetWxOnboard.get(accId).Id;
-                
+
                 }
                 Else If(assetWxTerm.containsKey(accId) && !onactiveList.contains(accId) && !assetWxLatestTerm.isEmpty()){
                     accObject.WX_Asset__c =assetWxLatestTerm.get(accId).Id;
-                
+
                 }
                  Else If(assetWxTerm.containsKey(accId) && !onactiveList.contains(accId) && assetWxLatestTerm.isEmpty()){
                     accObject.WX_Asset__c =assetWxTerm.get(accId).Id;
-                
+
                 }
-                 
-               accListLookup.add(accObject); 
+
+               accListLookup.add(accObject);
             }
-            
-            
+
+
         }
         try {
             if ( !accListLookup.isEmpty() ) {
@@ -740,7 +746,7 @@ public with sharing class NSP_AssetTriggerHelper {
     public void updateRETAsset( List<Asset> newList , Map<Id,Asset> oldMap ) {
         List <ID> onRetList = new List<ID> ();
 		List <Account> retList = new List<Account> ();
-        set<id> accIdSet = new set<id>(); 
+        set<id> accIdSet = new set<id>();
         Map<id,Asset> assetRetOnboard = new Map<id,Asset>();
         Map<id,Asset> assetChoiceOnboard = new Map<id,Asset>();
         Map<id,Asset> assetRet_ChoiceTerm = new Map<id,Asset>();
@@ -750,58 +756,58 @@ public with sharing class NSP_AssetTriggerHelper {
 			if( (Trigger.isInsert && newAsset.AccountId!= NULL) ||(Trigger.isUpdate && newAsset.Status != oldAsset.Status && newAsset.AccountId!= NULL) ){
 				accIdSet.add(newAsset.AccountId); // get asset id
                 if((newAsset.Status == 'Onboarding' || newAsset.Status == 'Active') && newAsset.RecordTypeId == NSP_AssetTriggerHelper.retWoAssetRecordTypeId ){
-                    assetRetOnboard.put(newAsset.AccountId, newAsset);                    
+                    assetRetOnboard.put(newAsset.AccountId, newAsset);
                 }
                 Else If((newAsset.Status == 'Onboarding' || newAsset.Status == 'Active') && newAsset.RecordTypeId == NSP_AssetTriggerHelper.retChoiceAssetRecordTypeId ){
-                    assetChoiceOnboard.put(newAsset.AccountId, newAsset);                    
+                    assetChoiceOnboard.put(newAsset.AccountId, newAsset);
                 }
                 Else If(newAsset.Status == 'Terminated' && (newAsset.RecordTypeId == NSP_AssetTriggerHelper.retWoAssetRecordTypeId || newAsset.RecordTypeId == NSP_AssetTriggerHelper.retChoiceAssetRecordTypeId ) ){
                     assetRet_ChoiceTerm.put(newAsset.AccountId, newAsset);
                 }
-                
-                
-               
+
+
+
 			}
-            
-           
+
+
 		}
-        
+
         If(assetRet_ChoiceTerm.Size() > 0){
         for(Asset assetLi : [SELECT id,accountid FROM Asset WHERE (RecordTypeId =: NSP_AssetTriggerHelper.retWoAssetRecordTypeId OR RecordTypeId =: NSP_AssetTriggerHelper.retChoiceAssetRecordTypeId) AND (Status= 'Active' OR Status= 'Onboarding') AND accountid IN :assetRet_ChoiceTerm.KeySet() ]){
     	onRetList.add(assetLi.accountid);
-		}      
-        for(Account acc : [SELECT id,(SELECT id,accountid,NSP_Termination_Date__c FROM Assets WHERE NSP_Termination_Date__c!=NUll AND (RecordTypeId =: NSP_AssetTriggerHelper.retWoAssetRecordTypeId OR RecordTypeId =: NSP_AssetTriggerHelper.retChoiceAssetRecordTypeId) order by NSP_Termination_Date__c desc limit 1) FROM account where ID IN :assetRet_ChoiceTerm.KeySet()]){    
+		}
+        for(Account acc : [SELECT id,(SELECT id,accountid,NSP_Termination_Date__c FROM Assets WHERE NSP_Termination_Date__c!=NUll AND (RecordTypeId =: NSP_AssetTriggerHelper.retWoAssetRecordTypeId OR RecordTypeId =: NSP_AssetTriggerHelper.retChoiceAssetRecordTypeId) order by NSP_Termination_Date__c desc limit 1) FROM account where ID IN :assetRet_ChoiceTerm.KeySet()]){
     		for( asset asobj : acc.Assets){
                  assetRet_ChoiceLatestTerm.put(asobj.AccountId, asobj);
 
     			}
-		} 
-            
+		}
+
         }
-                
+
         If(accIdSet.Size() > 0){
-            
+
             For(Id accId :accIdSet ){
-                                                                 
+
                 If(assetRetOnboard.containsKey(accId)){
-                    retList.add(new Account(id = accId,RET_Asset__c =assetRetOnboard.get(accId).Id )); 
+                    retList.add(new Account(id = accId,RET_Asset__c =assetRetOnboard.get(accId).Id ));
                 }
                 Else If(assetChoiceOnboard.containsKey(accId)){
                     retList.add(new Account(id = accId,RET_Asset__c =assetChoiceOnboard.get(accId).Id ));
-                
+
                 }
 				Else If(assetRet_ChoiceTerm.containsKey(accId)  && !onRetList.contains(accId) && !assetRet_ChoiceLatestTerm.isEmpty()){
                     retList.add(new Account(id = accId,RET_Asset__c =assetRet_ChoiceLatestTerm.get(accId).Id ));
-                
+
                 }
                 Else If(assetRet_ChoiceTerm.containsKey(accId)  && !onRetList.contains(accId) && assetRet_ChoiceLatestTerm.isEmpty()){
                     retList.add(new Account(id = accId,RET_Asset__c =assetRet_ChoiceTerm.get(accId).Id ));
-                
-                }   
-                
+
+                }
+
             }
-            
-            
+
+
         }
         try {
             if ( !retList.isEmpty() ) {
@@ -818,7 +824,7 @@ public with sharing class NSP_AssetTriggerHelper {
             NSP_AssetTriggerHelper.handleException( e , methodName );
         }
     }
-    
+
     private static void handleException( Exception e , String methodName ) {
         NSP_ErrorLogHandler.logException(
             NSP_AssetTriggerHelper.class.getName() ,

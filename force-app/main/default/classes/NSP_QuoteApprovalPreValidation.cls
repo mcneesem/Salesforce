@@ -12,7 +12,7 @@ Modification Log     :
 */
 
 public class NSP_QuoteApprovalPreValidation {
-    // test w/ QuoteExtControllerTests (80%)
+    // test w/ QuoteExtControllerTests (81%)
 
     //constructor
     private NSP_QuoteApprovalPreValidation(){}
@@ -316,16 +316,7 @@ public class NSP_QuoteApprovalPreValidation {
                 errorMessageList.add(QuoteExtController.TERMINATION_DATE_ERROR);
             }
             //validate seasonal calculation
-            Seasonal_Pricing_Setting__c seasonalSettings = Seasonal_Pricing_Setting__c.getOrgDefaults();
-            Boolean seasonalEnabled = seasonalSettings.Enabled__c;
-            if ( quoteRec.Seasonal_Pricing__c != 'Not Applicable'
-                && quoteRec.Seasonal_Pricing__c != ''
-                && seasonalEnabled
-                && quoteRec.Ready_for_Approval__c == False
-                )
-            {
-                errorMessageList.add(QuoteExtController.SEASONAL_ERR);
-            }
+            validateSeasonalCalculation(quoteRec,errorMessageList);
         }
         descriptionOfService = validateDescriptionOfServices(QuoteId);
         serialIds=validateSerialIds(QuoteId);
@@ -338,7 +329,32 @@ public class NSP_QuoteApprovalPreValidation {
         return errorMessageList;
         
     }
-    
+
+    //method to validate Seasonal Calculations
+    private static void validateSeasonalCalculation( SBQQ__Quote__c quoteRec , List<String> errorMessageList ) {
+        if ( ( NSP_QuoteApprovalPreValidation.settings != null )
+            && ( NSP_QuoteApprovalPreValidation.settings.Enabled__c )
+            && ( quoteRec != null )
+            && String.isNotBlank( quoteRec.Seasonal_Pricing__c )
+            && ( quoteRec.Seasonal_Pricing__c != 'Not Applicable' )
+            && ( quoteRec.Ready_for_Approval__c == False )
+            )
+        {
+            errorMessageList.add( QuoteExtController.SEASONAL_ERR );
+        }
+    }
+
+    // get settings only once per thread...
+    private static Seasonal_Pricing_Setting__c settings {
+        get {
+            if ( settings == null ) {
+                settings = Seasonal_Pricing_Setting__c.getInstance( UserInfo.getUserId() );
+            }
+            return settings;
+        }
+        private set;
+    }
+
     /**
 * Method for querying all quoteline assocaited to a quote to check 
 * if Description of Service is populated for supplemental delivery orders 

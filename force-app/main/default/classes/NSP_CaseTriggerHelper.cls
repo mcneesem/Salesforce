@@ -2145,53 +2145,74 @@ return type : void
     }
     
     
-    /**********************************************************************************************
-MethodName: checkTheEligibiltyOfConfidentiality 
-Description : This method describes about Whether Case is Confidential Eligible or Not
-Params:       String Category String SubCategory
-Story:        STY-4166
-createdDate : 6/12/2023
-********************************************************************************************/
-    private static void checkTheEligibiltyOfConfidentiality(Set<String> categorySet, Set<String> subCategorySet, List<case> caseList){
-        Map<string, NSP_Category_Sub_Category_Mapping__c> catSubCatConfidentialEligibleMap = new Map<string, NSP_Category_Sub_Category_Mapping__c>();
-        
-        try{          
-            for(NSP_Category_Sub_Category_Mapping__c catSubCatMapping : [SELECT Id, NSP_Category__c, NSP_Subcategory__c, 
-                                                                         NSP_Public_Groups_To_Share__c,
-                                                                         NSP_Detail__c,
-                                                                         NSP_Display_confidential_popup__c,
-                                                                         Default_case_as_confidential__c
-                                                                         FROM NSP_Category_Sub_Category_Mapping__c 
-                                                                         WHERE NSP_Category__c IN: categorySet 
-                                                                         AND NSP_Subcategory__c IN: subCategorySet]){
+    //
+    // MethodName: checkTheEligibiltyOfConfidentiality
+    // Description : This method describes about Whether Case is Confidential Eligible or Not
+    // Params: String Category String SubCategory
+    // Story: STY-4166
+    // createdDate : 6/12/2023
+    //
+    private static void checkTheEligibiltyOfConfidentiality(
+        Set<String> categorySet ,
+        Set<String> subCategorySet ,
+        List<case> caseList
+        )
+    {
+        Map<String,NSP_Category_Sub_Category_Mapping__c> catSubCatConfidentialEligibleMap = new Map<String, NSP_Category_Sub_Category_Mapping__c>();
+        try {
+            for ( NSP_Category_Sub_Category_Mapping__c catSubCatMapping : [
+                        SELECT
+                            Id ,
+                            NSP_Category__c ,
+                            NSP_Subcategory__c ,
+                            NSP_Public_Groups_To_Share__c ,
+                            NSP_Detail__c ,
+                            NSP_Display_confidential_popup__c ,
+                            Default_case_as_confidential__c
+                        FROM NSP_Category_Sub_Category_Mapping__c
+                        WHERE (
+                            ( NSP_Category__c IN :categorySet )
+                            AND ( NSP_Subcategory__c IN :subCategorySet )
+                        )
+                    ]
+                )
+            {
                 String keyCatSubCat = catSubCatMapping.NSP_Category__c + ';' + catSubCatMapping.NSP_Subcategory__c;
-                if(String.isNotBlank(catSubCatMapping.NSP_Detail__c)){
+                if ( String.isNotBlank( catSubCatMapping.NSP_Detail__c ) ) {
                    keyCatSubCat +=  ';' + catSubCatMapping.NSP_Detail__c;
-                   catSubCatConfidentialEligibleMap.put(keyCatSubCat, catSubCatMapping); 
-                }else{
-                   catSubCatConfidentialEligibleMap.put(keyCatSubCat, catSubCatMapping);
-                }                                                                     
+                }
+                catSubCatConfidentialEligibleMap.put( keyCatSubCat , catSubCatMapping );
             }
-    
-            for(Case cse : caseList){
+            for ( Case cse : caseList ) {
                 String catSubCatKey = cse.NSP_Category__c + ';' + cse.NSP_Subcategory__c;
-                if(String.isNotBlank(cse.NSP_Detail__c)){
+                if ( String.isNotBlank( cse.NSP_Detail__c ) ) {
                     catSubCatKey += ';' + cse.NSP_Detail__c;
                 }
-                
-                if(Test.isRunningTest()){
+                if ( Test.isRunningTest() ) {
                     cse.NSP_Show_Confidential_Checkbox__c = false;
-                }else{
-                    
-                    if(catSubCatConfidentialEligibleMap != NULL && catSubCatConfidentialEligibleMap.containsKey(catSubCatKey)){
-                        if(catSubCatConfidentialEligibleMap.get(catSubCatKey).Default_case_as_confidential__c){
+                } else {
+                    if ( ( catSubCatConfidentialEligibleMap != null )
+                        && catSubCatConfidentialEligibleMap.containsKey( catSubCatKey )
+                        )
+                    {
+                        NSP_Category_Sub_Category_Mapping__c mapping = catSubCatConfidentialEligibleMap.get( catSubCatKey );
+                        Boolean isDefaultConfidential = false;
+                        Boolean shouldDisplayPopup = false;
+                        if ( mapping != null ) {
+                            isDefaultConfidential = mapping.Default_case_as_confidential__c;
+                            shouldDisplayPopup = mapping.NSP_Display_confidential_popup__c;
+                        }
+                        if ( isDefaultConfidential ) {
                             cse.NSP_Confidential__c = true;
                             cse.NSP_Show_Confidential_Checkbox__c = true;
-                        }else if(catSubCatConfidentialEligibleMap.get(catSubCatKey).NSP_Display_confidential_popup__c){
+                        } else if ( shouldDisplayPopup ) {
                             cse.NSP_Show_Confidential_Checkbox__c = true;
+                        } else {
+                            cse.NSP_Confidential__c = false;
+                            cse.NSP_Show_Confidential_Checkbox__c = false;
                         }
-                    }  
-                    if (!cse.NSP_Show_Confidential_Checkbox__c && cse.NSP_Confidential__c) {
+                    }
+                    if ( !cse.NSP_Show_Confidential_Checkbox__c && cse.NSP_Confidential__c ) {
                         cse.NSP_Confidential__c = cse.NSP_Show_Confidential_Checkbox__c;
                     }
                 }
@@ -2203,5 +2224,6 @@ createdDate : 6/12/2023
             );
         }
     }
+
 }
 //

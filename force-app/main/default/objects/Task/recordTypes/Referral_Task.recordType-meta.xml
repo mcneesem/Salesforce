@@ -3316,10 +3316,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Contingent Workforce</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Contractor Management</fullName>
             <default>false</default>
         </values>
@@ -3341,6 +3337,10 @@
         </values>
         <values>
             <fullName>HRCore Onboarding Amendment</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HRScale</fullName>
             <default>false</default>
         </values>
         <values>
