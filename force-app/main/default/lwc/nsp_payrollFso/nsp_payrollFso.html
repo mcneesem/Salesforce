@@ -438,22 +438,19 @@
       data-name="Would_the_client_like_a_FLSA_Exemption__c"
       value={field.Would_the_client_like_a_FLSA_Exemption__c}
       onchange={handleValueChange}
-      ondblclick={handleDoubleClick}
-      help-text="Always answer this as Yes for MM Enterprise clients. 
-      Do not ask the client as Enterprise will work directly with them. 
-      All Segments: If the client requests a review, 
-      please make sure to notate any Related Clients on the IP.">
+      ondblclick={handleDoubleClick}>
     </c-nsp_selection-box>
 
     <lightning-formatted-text
       lwc:if={visibility.Who_should_the_FLSA_team_reach_out_to__c}
-      class="slds-form-element__label slds-m-left_xx-small"
+      class={styles.Who_should_the_FLSA_team_reach_out_to__c}
       value={label.flsaReachOut}
       data-field="Who_should_the_FLSA_team_reach_out_to__c">
     </lightning-formatted-text>
 
     <lightning-input-field
       lwc:if={visibility.Who_should_the_FLSA_team_reach_out_to__c}
+      class={styles.Who_should_the_FLSA_team_reach_out_to__c}
       value={field.Who_should_the_FLSA_team_reach_out_to__c}
       disabled={disabledFields.Who_should_the_FLSA_team_reach_out_to__c}
       field-name="Who_should_the_FLSA_team_reach_out_to__c"
@@ -464,6 +461,7 @@
 
     <c-nsp_selection-box
       lwc:if={visibility.Is_the_client_Emerging_Growth__c}
+      class={styles.Is_the_client_Emerging_Growth__c}
       disabled={disabledFields.Is_the_client_Emerging_Growth__c}
       label={label.emergingGrowth}
       field-api-name="Implementation_Profile__c.Is_the_client_Emerging_Growth__c"

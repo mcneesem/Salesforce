@@ -712,13 +712,14 @@
 
       <lightning-formatted-text
         lwc:if={visibility.Who_should_the_FLSA_team_reach_out_to__c}
-        class="slds-form-element__label slds-m-left_xx-small"
+        class={styles.Who_should_the_FLSA_team_reach_out_to__c}
         value={label.flsaReachOut}
         data-field="Who_should_the_FLSA_team_reach_out_to__c">
       </lightning-formatted-text>
 
       <lightning-input-field
         lwc:if={visibility.Who_should_the_FLSA_team_reach_out_to__c}
+        class={styles.Who_should_the_FLSA_team_reach_out_to__c}
         value={field.Who_should_the_FLSA_team_reach_out_to__c}
         disabled={disabledFields.Who_should_the_FLSA_team_reach_out_to__c}
         field-name="Who_should_the_FLSA_team_reach_out_to__c"
