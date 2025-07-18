@@ -69,7 +69,7 @@ def main():
         body += args.validation + "\n"
     if ( args.operation and args.operation.strip() ):
         body += args.operation + "\n"
-    sendSummary( subject , body )
+    sendSummary( subject.strip() , body.strip() )
     if args.verbose:
         print( " ~ ~ ~ " )
 
