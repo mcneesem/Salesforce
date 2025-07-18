@@ -92,7 +92,7 @@
             <assignToReference>Fault_Element</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Accrual Profile Task Email</stringValue>
+                <stringValue>Accrual_Profile_Task_Email</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -108,7 +108,7 @@
             <assignToReference>Fault_Element</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Fetch Project Team Records Based on Project</stringValue>
+                <stringValue>Fetch_Project_Team_Records_Based_on_Project</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -125,7 +125,7 @@
             <assignToReference>Fault_Element</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Get Related Contact</stringValue>
+                <stringValue>Get_Related_Contact</stringValue>
             </value>
         </assignmentItems>
         <connector>
