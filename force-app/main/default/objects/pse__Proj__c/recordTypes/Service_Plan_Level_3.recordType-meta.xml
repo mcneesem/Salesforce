@@ -705,7 +705,7 @@
         </values>
         <values>
             <fullName>Neutral</fullName>
-            <default>false</default>
+            <default>true</default>
         </values>
         <values>
             <fullName>Somewhat favorable</fullName>
