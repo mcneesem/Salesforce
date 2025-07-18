@@ -25,7 +25,7 @@ def sendSummary( subject , body ):
         print( "sender: " + args.sender )
         print( "recipient: " + args.recipient )
         print( "subject: " + subject )
-        print( "body: " + body )
+        print( "body: \n" + body )
         print( " ~ ~ ~ " )
     message = MIMEMultipart()
     message["From"] = args.sender
