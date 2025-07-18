@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Operation__c</fullName>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <label>Operation</label>
+    <required>true</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Equals</fullName>
+                <default>true</default>
+                <label>Equals</label>
+            </value>
+            <value>
+                <fullName>Does Not Equal</fullName>
+                <default>false</default>
+                <label>Does Not Equal</label>
+            </value>
+            <value>
+                <fullName>Is Null</fullName>
+                <default>false</default>
+                <label>Is Null</label>
+            </value>
+            <value>
+                <fullName>Is Not Null</fullName>
+                <default>false</default>
+                <label>Is Not Null</label>
+            </value>
+            <value>
+                <fullName>Is Blank</fullName>
+                <default>false</default>
+                <label>Is Blank</label>
+            </value>
+            <value>
+                <fullName>Is Not Blank</fullName>
+                <default>false</default>
+                <label>Is Not Blank</label>
+            </value>
+            <value>
+                <fullName>Greater Than or Equals</fullName>
+                <default>false</default>
+                <label>Greater Than or Equals</label>
+            </value>
+            <value>
+                <fullName>Less Than or Equals</fullName>
+                <default>false</default>
+                <label>Less Than or Equals</label>
+            </value>
+            <value>
+                <fullName>Contains</fullName>
+                <default>false</default>
+                <label>Contains</label>
+            </value>
+            <value>
+                <fullName>Does Not Contain</fullName>
+                <default>false</default>
+                <label>Does Not Contain</label>
+            </value>
+            <value>
+                <fullName>In</fullName>
+                <default>false</default>
+                <label>In</label>
+            </value>
+            <value>
+                <fullName>Not In</fullName>
+                <default>false</default>
+                <label>Not In</label>
+            </value>
+            <value>
+                <fullName>Does Not Exist</fullName>
+                <default>false</default>
+                <label>Does Not Exist</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>
