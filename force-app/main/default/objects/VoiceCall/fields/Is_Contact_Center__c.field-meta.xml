@@ -16,6 +16,8 @@
   CONTAINS( RIGHT( FromPhoneNumber , 10 ) , &quot;2080049770&quot; ) ,
   CONTAINS( RIGHT( FromPhoneNumber , 10 ) , &quot;5541704359&quot; ) ,
   CONTAINS( RIGHT( FromPhoneNumber , 10 ) , &quot;7133441390&quot; ) ,
+  CONTAINS( RIGHT( FromPhoneNumber , 10 ) , &quot;8667153552&quot; ) ,
+  CONTAINS( RIGHT( FromPhoneNumber , 10 ) , &quot;3239880890&quot; ) ,
   CONTAINS( RIGHT( ToPhoneNumber , 10 ) , &quot;6282080131&quot; ) ,
   CONTAINS( RIGHT( ToPhoneNumber , 10 ) , &quot;6282080133&quot; ) ,
   CONTAINS( RIGHT( ToPhoneNumber , 10 ) , &quot;6282080134&quot; ) ,
@@ -27,7 +29,9 @@
   CONTAINS( RIGHT( ToPhoneNumber , 10 ) , &quot;8009191907&quot; ) ,
   CONTAINS( RIGHT( ToPhoneNumber , 10 ) , &quot;2080049770&quot; ) ,
   CONTAINS( RIGHT( ToPhoneNumber , 10 ) , &quot;5541704359&quot; ) ,
-  CONTAINS( RIGHT( ToPhoneNumber , 10 ) , &quot;7133441390&quot; )
+  CONTAINS( RIGHT( ToPhoneNumber , 10 ) , &quot;7133441390&quot; ) ,
+  CONTAINS( RIGHT( ToPhoneNumber , 10 ) , &quot;8667153552&quot; ) ,
+  CONTAINS( RIGHT( ToPhoneNumber , 10 ) , &quot;3239880890&quot; )
 )</formula>
     <label>Is Contact Center</label>
     <type>Checkbox</type>
