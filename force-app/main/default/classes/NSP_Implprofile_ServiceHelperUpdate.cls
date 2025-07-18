@@ -1135,7 +1135,10 @@ public class NSP_Implprofile_ServiceHelperUpdate {
         )
     {
         String milestoneKey = createMilestoneForProjectTask(proj, pta);
-        pse__Project_Task__c eachProjecttask = createProjectTaskfromIP(proj,  pta.NSP_Category__c,ipRecId,milestoneKey);
+        pse__Project_Task__c eachProjecttask = null;
+        if(pta != null){
+        	eachProjecttask = createProjectTaskfromIP(proj,  pta.NSP_Category__c,ipRecId,milestoneKey);    
+        }
         genericProjectTask(proj,eachProjecttask, pta, workCalendarId);
         if(ipwithValue != null
             && ipwithValue.NSP_HR_Quality_Support_Team_Member__c!=null
