@@ -3923,7 +3923,7 @@ public class NSP_Implementationprofile_ServiceHelper {
     }
 
     //Retrieves Related Clients of the Implementation Profile 
-    private String relatedClients(Implementation_Profile__c ipwithValue, Boolean email) {
+    private String relatedClients(Implementation_Profile__c ipwithValue, Boolean isEmail) {
         List<String> clientIds = new List<String>();
         clientIds = splitRelatedClient(ipwithValue);
         Map<Id, Account> clientsMap = new Map<Id, Account>();
@@ -3938,10 +3938,10 @@ public class NSP_Implementationprofile_ServiceHelper {
             if(clientsMap.containsKey(Id) && clientsMap.get(Id) != null){
                 client = clientsMap.get(Id);
             }
-            if( client != null && email ) {
+            if( client != null && isEmail ) {
                 //Email formatting
                 bulletList += '<li>'+ client.Name + '</li>';    
-            } else if (client != null && !email){
+            } else if (client != null && !isEmail){
                 //Long Text Area field formatting
                 bulletList += '• '+ client.Name + '\n';
             }
@@ -3966,7 +3966,11 @@ public class NSP_Implementationprofile_ServiceHelper {
     }
     
     private String flsaReviewContacts(Implementation_Profile__c ipwithValue) {
-        String contacts = ipwithValue.Who_should_the_FLSA_team_reach_out_to__c;
+        String contacts = '';
+        if( ipwithValue != null ) {
+            contacts = ipwithValue.Who_should_the_FLSA_team_reach_out_to__c;
+        }
+        
         String contactsFormatted = '';
         if(String.isNotBlank(contacts)) {
             if(contacts.contains(','))
