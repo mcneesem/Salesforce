@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>WO Analysis 1</label>
+    <protected>false</protected>
+    <values>
+        <field>Error_Message__c</field>
+        <value xsi:type="xsd:string">Please complete the following Task before moving to Analysis stage: Business Profile Started</value>
+    </values>
+    <values>
+        <field>Field__c</field>
+        <value xsi:type="xsd:string">Subject</value>
+    </values>
+    <values>
+        <field>Group__c</field>
+        <value xsi:type="xsd:string">A1</value>
+    </values>
+    <values>
+        <field>IsActive__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>Object__c</field>
+        <value xsi:type="xsd:string">Task</value>
+    </values>
+    <values>
+        <field>Operation__c</field>
+        <value xsi:type="xsd:string">Equals</value>
+    </values>
+    <values>
+        <field>Primary_Product__c</field>
+        <value xsi:type="xsd:string">WO,WS,HRScale</value>
+    </values>
+    <values>
+        <field>Stage__c</field>
+        <value xsi:type="xsd:string">Analysis</value>
+    </values>
+    <values>
+        <field>Value__c</field>
+        <value xsi:type="xsd:string">Business Profile Started</value>
+    </values>
+</CustomMetadata>
