@@ -60,8 +60,7 @@ public with sharing class NSP_ValidateOpportunityStage {
         Map<Id,User> opportunityOwnerRoleMap = getUserRole( oppOwnerIdList ); 
 
         //  Kill switch added on 6/10/2024
-        if( !OpportunityStageSettings__c.getInstance(UserInfo.getUserId()).Is_Enabled_WO_WS_Stage_Entry__c // Kill switch added on 6/10/2024
-            && !UserInfo.getUserName().contains('matt.mcneese') ){
+        if( !OpportunityStageSettings__c.getInstance(UserInfo.getUserId()).Is_Enabled_WO_WS_Stage_Entry__c ){ // Kill switch added on 6/10/2024
             validateOpportunityStageOld(newList, opportunityOwnerRoleMap);
         } else if( (newList != null) && !newList.isEmpty() ){
             Map<ID, Opportunity> oppEventTaskOCRMap = new Map<ID, Opportunity>(
