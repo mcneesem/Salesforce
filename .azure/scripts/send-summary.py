@@ -18,17 +18,15 @@ parser.add_argument( "--operation" , help="Summary Operation" )
 parser.add_argument( "--verbose" , action="store_true" , help="Enable verbose output" )
 args = parser.parse_args()
 
-if args.verbose:
-    print( args )
-
 # Send Summary
 def sendSummary( subject , body ):
     if args.verbose:
         print( "send-summary.py: sendSummary" )
-        print( args.sender )
-        print( args.recipient )
-        print(subject)
-        print(body)
+        print( "sender: " + args.sender )
+        print( "recipient: " + args.recipient )
+        print( "subject: " + subject )
+        print( "body: " + body )
+        print( " ~ ~ ~ " )
     message = MIMEMultipart()
     message["From"] = args.sender
     message["To"] = args.recipient
@@ -40,23 +38,23 @@ def sendSummary( subject , body ):
             server.login( args.login , args.password )
             server.sendmail( args.sender , args.recipient , message.as_string() )
             if args.verbose:
-                print("Email sent successfully!")
+                print( "Email sent successfully!" )
     except Exception as e:
-        print(f"Error sending email: {e}")
+        print( f"Error sending email: {e}" )
 
 # Main function
 def main():
     if args.verbose:
         print( "send-summary.py: main" )
-        print( args.job )
-        print( args.branch )
-        print( args.commits )
-        print( args.build )
-        print( args.validation )
-        print( args.operation )
-
+        print( args )
+        print( "job: " + args.job )
+        print( "branch: " + args.branch )
+        print( "commits: " + args.commits )
+        print( "build: " + args.build )
+        print( "validation: " + args.validation )
+        print( "operation: " + args.operation )
+        print( " ~ ~ ~ " )
     subject = "Azure: " + args.job
-
     body = ""
     if ( args.job and args.job.strip() ):
         body += args.job + "\n"
@@ -71,7 +69,8 @@ def main():
         body += args.validation + "\n"
     if ( args.operation and args.operation.strip() ):
         body += args.operation + "\n"
-
     sendSummary( subject , body )
+    if args.verbose:
+        print( " ~ ~ ~ " )
 
 main()
