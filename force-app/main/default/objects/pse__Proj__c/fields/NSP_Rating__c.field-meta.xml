@@ -25,7 +25,7 @@
             </value>
             <value>
                 <fullName>Neutral</fullName>
-                <default>false</default>
+                <default>true</default>
                 <label>Neutral</label>
             </value>
             <value>
