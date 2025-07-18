@@ -8,7 +8,7 @@
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
         <faultConnector>
-            <targetReference>Async_Accrual_Profile_Task_Email_Notifications_Error</targetReference>
+            <targetReference>Set_Fault_Element_For_Accrual_Profile_Task_Email</targetReference>
         </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
@@ -31,9 +31,6 @@
         </inputParameters>
         <inputParameters>
             <name>senderAddress</name>
-            <value>
-                <elementReference>$User.Email</elementReference>
-            </value>
         </inputParameters>
         <inputParameters>
             <name>composeEmailContent</name>
@@ -44,13 +41,13 @@
         <inputParameters>
             <name>emailSubject</name>
             <value>
-                <elementReference>Eamil_Subject</elementReference>
+                <elementReference>Email_Subject</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
             <name>emailBody</name>
             <value>
-                <stringValue>&lt;p&gt;The &lt;a href=&quot;{!Project_Task_Link}&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot;&gt;Policy Review And Accrual Profile&lt;/a&gt; task for {!$Record.NSP_Account_Id__r.Name} ({!$Record.NSP_AIMS_Account__c}) is complete.&lt;/p&gt;</stringValue>
+                <stringValue>&lt;p&gt;The&lt;a href=&quot;{!Project_Task_Link}&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot;&gt;Policy Review &amp;amp; Accrual Profile&lt;/a&gt; task for {!$Record.NSP_Account_Id__r.Name} ({!$Record.NSP_AIMS_Account__c}) is complete.&lt;/p&gt;</stringValue>
             </value>
         </inputParameters>
         <inputParameters>
@@ -86,6 +83,56 @@
     </actionCalls>
     <apiVersion>64.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Set_Fault_Element_For_Accrual_Profile_Task_Email</name>
+        <label>Set Fault Element For Accrual Profile Task Email</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>Fault_Element</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Accrual Profile Task Email</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Async_Accrual_Profile_Task_Email_Notifications_Error</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_For_Fetch_Project_Team_Records</name>
+        <label>Set Fault Element For Fetch Project Team Records</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>Fault_Element</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Fetch Project Team Records Based on Project</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Async_Accrual_Profile_Task_Email_Notifications_Error</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_For_Get_Contacts</name>
+        <label>Set Fault Element For Get Contacts</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>Fault_Element</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get Related Contact</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Async_Accrual_Profile_Task_Email_Notifications_Error</targetReference>
+        </connector>
+    </assignments>
     <decisions>
         <name>Check_on_Project_Team</name>
         <label>Check on Project Team</label>
@@ -95,13 +142,6 @@
         <rules>
             <name>Project_Team_Exists</name>
             <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Fetch_Project_Team_Records_Based_on_Project</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
             <conditions>
                 <leftValueReference>Fetch_Project_Team_Records_Based_on_Project</leftValueReference>
                 <operator>IsBlank</operator>
@@ -131,13 +171,6 @@
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
-            <conditions>
-                <leftValueReference>Get_Related_Contact</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
             <connector>
                 <targetReference>Accrual_Profile_Task_Email</targetReference>
             </connector>
@@ -150,8 +183,8 @@
         <dataType>String</dataType>
         <expression>LEFT({!$Api.Partner_Server_URL_630}, FIND( &apos;/services&apos;, {!$Api.Partner_Server_URL_630})) &amp; {!$Record.NSP_Record_Id__c}</expression>
     </formulas>
-    <interviewLabel>Async Accrual Profile Task Email Notifications {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Async Accrual Profile Task Email Notifications</label>
+    <interviewLabel>Project Task - After Save - Async - Policy Review &amp; Accrual Profiles Notifications {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Project Task - After Save - Async - Policy Review &amp; Accrual Profiles Notifications</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -181,7 +214,7 @@
             <targetReference>Check_on_Project_Team</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Unable_to_Fetch_Project_Team_Records_Based_on_Project_Issue</targetReference>
+            <targetReference>Set_Fault_Element_For_Fetch_Project_Team_Records</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -222,7 +255,7 @@
             <targetReference>Validate_Contact_Exists</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Unable_To_Fetch_Contact_Record_For_Project_Manager_Role</targetReference>
+            <targetReference>Set_Fault_Element_For_Get_Contacts</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -297,63 +330,13 @@
         <inputAssignments>
             <name>faultElement</name>
             <value>
-                <stringValue>Accrual Profile Task Email</stringValue>
+                <elementReference>Fault_Element</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <name>faultFlow</name>
             <value>
-                <stringValue>Async Accrual Profile Task Email Notifications</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>faultMessage</name>
-            <value>
-                <elementReference>$Flow.FaultMessage</elementReference>
-            </value>
-        </inputAssignments>
-    </subflows>
-    <subflows>
-        <name>Unable_To_Fetch_Contact_Record_For_Project_Manager_Role</name>
-        <label>Unable To Fetch Contact Record For Project Manager Role</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <flowName>Insperity_Fault_Handler_Subflow</flowName>
-        <inputAssignments>
-            <name>faultElement</name>
-            <value>
-                <stringValue>Get Related Contact</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>faultFlow</name>
-            <value>
-                <stringValue>Async Accrual Profile Task Email Notifications</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>faultMessage</name>
-            <value>
-                <elementReference>$Flow.FaultMessage</elementReference>
-            </value>
-        </inputAssignments>
-    </subflows>
-    <subflows>
-        <name>Unable_to_Fetch_Project_Team_Records_Based_on_Project_Issue</name>
-        <label>Unable to Fetch Project Team Records Based on Project Issue</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <flowName>Insperity_Fault_Handler_Subflow</flowName>
-        <inputAssignments>
-            <name>faultElement</name>
-            <value>
-                <stringValue>Fetch Project Team Records Based on Project</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>faultFlow</name>
-            <value>
-                <stringValue>Async Accrual Profile Task Email Notifications</stringValue>
+                <stringValue>Project_Task_After_Save_Async_Policy_Review_Accrual_Profiles_Notifications</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -364,13 +347,18 @@
         </inputAssignments>
     </subflows>
     <textTemplates>
-        <name>Eamil_Subject</name>
+        <name>Email_Subject</name>
         <isViewedAsPlainText>true</isViewedAsPlainText>
         <text>{!$Record.Name} complete for {!$Record.NSP_Account_Id__r.Name} ({!$Record.NSP_AIMS_Account__c})</text>
     </textTemplates>
-    <textTemplates>
-        <name>Email_Body</name>
-        <isViewedAsPlainText>true</isViewedAsPlainText>
-        <text>The {!Project_Task_Link}&amp;nbsp;task for {!$Record.pse__Project__r.pse__Account__r.Name} is complete.</text>
-    </textTemplates>
+    <variables>
+        <name>Fault_Element</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue></stringValue>
+        </value>
+    </variables>
 </Flow>
