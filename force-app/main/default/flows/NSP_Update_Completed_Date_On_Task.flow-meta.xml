@@ -180,7 +180,7 @@
         <recordTriggerType>Update</recordTriggerType>
         <triggerType>RecordBeforeSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <variables>
         <name>idTaskEloquaRT</name>
         <dataType>String</dataType>
