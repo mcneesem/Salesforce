@@ -37,8 +37,7 @@ def sendSummary( subject , body ):
             server.starttls()
             server.login( args.login , args.password )
             server.sendmail( args.sender , args.recipient , message.as_string() )
-            if args.verbose:
-                print( "Email sent successfully!" )
+            print( f"Email sent to: {args.recipient}" )
     except Exception as e:
         print( f"Error sending email: {e}" )
 
