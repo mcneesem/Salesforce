@@ -292,8 +292,9 @@ public with sharing class NSP_OpportunityTriggerHelper {
                     String newStageName = opportunityNewMap.get(opportunityId).StageName;
                     String oldStageName = opportunityOldMap.get(opportunityId).StageName;
                     if ( !NSP_OpportunityTriggerHelper.hasAdminPermission 
-                        && ( opptyStageOrder.get( newStageName ) < opptyStageOrder.get( oldStageName ) )
-                        )
+                          && ( opptyStageOrder.get( newStageName ) < opptyStageOrder.get( oldStageName ) )
+                          && NSP_ValidateOpportunityStage.validHRProducts.contains( opportunityNewMap.get(opportunityId).NSP_PrimaryProduct__c )
+                       )
                     {
                         opportunityNewMap.get(opportunityId).addError(Label.Opportunity_Backward_Stage);
                     }
