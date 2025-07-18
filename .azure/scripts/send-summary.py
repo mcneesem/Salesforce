@@ -18,16 +18,18 @@ parser.add_argument( "--operation" , help="Summary Operation" )
 parser.add_argument( "--verbose" , action="store_true" , help="Enable verbose output" )
 args = parser.parse_args()
 
-print( args )
+if args.verbose:
+    print( args )
 
 # Send Summary
 def sendSummary( subject , body ):
-    print( "send-summary.py: sendSummary" )
+    if args.verbose:
+        print( "send-summary.py: sendSummary" )
+        print( args.sender )
+        print( args.recipient )
+        print(subject)
+        print(body)
     message = MIMEMultipart()
-    print( args.sender )
-    print( args.recipient )
-    print(subject)
-    print(body)
     message["From"] = args.sender
     message["To"] = args.recipient
     message["Subject"] = subject
@@ -37,19 +39,21 @@ def sendSummary( subject , body ):
             server.starttls()
             server.login( args.login , args.password )
             server.sendmail( args.sender , args.recipient , message.as_string() )
-            print("Email sent successfully!")
+            if args.verbose:
+                print("Email sent successfully!")
     except Exception as e:
         print(f"Error sending email: {e}")
 
 # Main function
 def main():
-    print( "send-summary.py: main" )
-    print( args.job )
-    print( args.branch )
-    print( args.commits )
-    print( args.build )
-    print( args.validation )
-    print( args.operation )
+    if args.verbose:
+        print( "send-summary.py: main" )
+        print( args.job )
+        print( args.branch )
+        print( args.commits )
+        print( args.build )
+        print( args.validation )
+        print( args.operation )
 
     subject = "Azure: " + args.job
 
