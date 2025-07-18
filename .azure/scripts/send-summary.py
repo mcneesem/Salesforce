@@ -7,14 +7,15 @@ import argparse
 parser = argparse.ArgumentParser( description="Generate an build report and send via email." )
 parser.add_argument( "--login" , required=True , help="Sparkpost Login" )
 parser.add_argument( "--password" , required=True , help="Sparkpost Password" )
-parser.add_argument( "--from" , required=True , help="From Address" )
-parser.add_argument( "--to" , required=True , help="To Address" )
+parser.add_argument( "--sender" , required=True , help="From Address" )
+parser.add_argument( "--recipient" , required=True , help="To Address" )
 parser.add_argument( "--job" , help="Summary Job" )
 parser.add_argument( "--branch" , help="Summary Branch" )
 parser.add_argument( "--commits" , help="Summary Commits" )
 parser.add_argument( "--build" , help="Summary Build" )
 parser.add_argument( "--validation" , help="Summary Validation" )
 parser.add_argument( "--operation" , help="Summary Operation" )
+parser.add_argument( "--verbose" , action="store_true" , help="Enable verbose output" )
 args = parser.parse_args()
 
 print( args )
@@ -23,19 +24,19 @@ print( args )
 def sendSummary( subject , body ):
     print( "send-summary.py: sendSummary" )
     message = MIMEMultipart()
-    print( args.from )
-    print( args.to )
+    print( args.sender )
+    print( args.recipient )
     print(subject)
     print(body)
-    message["From"] = args.from
-    message["To"] = args.to
+    message["From"] = args.sender
+    message["To"] = args.recipient
     message["Subject"] = subject
     message.attach(MIMEText(body, "plain")) # plain or html
     try:
         with smtplib.SMTP("smtpstatic.sparkpostmail.com", 587) as server:
             server.starttls()
             server.login( args.login , args.password )
-            server.sendmail( args.from , args.to , message.as_string() )
+            server.sendmail( args.sender , args.recipient , message.as_string() )
             print("Email sent successfully!")
     except Exception as e:
         print(f"Error sending email: {e}")
