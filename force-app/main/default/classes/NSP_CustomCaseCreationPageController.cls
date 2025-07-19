@@ -1,66 +1,123 @@
 public with sharing class NSP_CustomCaseCreationPageController {
-    // test w/ NSP_CustomCaseCreationPageControllerTest (83%)
+    // test w/ NSP_CustomCaseCreationPageControllerTest (82%)
 
-    public static final String NOCONFIGERROR = 'No Case Type Configuration Found';
-    public static final String NSP_CUSTOMCASECREATIONPAGECONTROLLER = 'NSP_CustomCaseCreationPageController';   
-    public static final String SERVICE_OPERATIONS = 'Service Operations';
-    
-    @AuraEnabled(cacheable = true)
-    public static List < NSP_Category_Sub_Category_Mapping__c > getCategoryList(String recordTypeId, Boolean isCatViewAll) {
+    private static final String SERVICE_OPERATIONS = 'Service Operations';
+
+    @AuraEnabled(cacheable=true)
+    public static List<NSP_Category_Sub_Category_Mapping__c> getCategoryList( String recordTypeId , Boolean isCatViewAll ) {
         try {
-            List<NSP_Category_Sub_Category_Mapping__c> lstCatMapping;
-            String userTitle = getUserTitle();
-            String userProfile = getProfileName();
-            Boolean isAdmin = userProfile == NSP_ServiceConstants.SYSTEM_ADMINISTRATOR ? true : false;
-            String caseRecType = getCaseRecordType(recordTypeId);
-            if(String.isNotBlank(caseRecType) && caseRecType.contains(NSP_ServiceConstants.PEO)){
-                caseRecType = NSP_ServiceConstants.PEO;
-            }else if(String.isNotBlank(caseRecType) && caseRecType.contains(NSP_ServiceConstants.BPS)){
-                caseRecType = NSP_ServiceConstants.BPS;
+            List<NSP_Category_Sub_Category_Mapping__c> lstCatMapping = new List<NSP_Category_Sub_Category_Mapping__c>();
+            String userTitle = NSP_CustomCaseCreationPageController.getUserTitle();
+            String caseRecType = NSP_CustomCaseCreationPageController.getCaseRecordType( recordTypeId );
+            if ( String.isNotBlank( caseRecType ) ) {
+                if ( caseRecType.contains( NSP_ServiceConstants.PEO ) ) {
+                    caseRecType = NSP_ServiceConstants.PEO;
+                } else if ( caseRecType.contains( NSP_ServiceConstants.BPS ) ) {
+                    caseRecType = NSP_ServiceConstants.BPS;
+                }
             }
-            if (userTitle != null && isCatViewAll == false  && isAdmin) {
-                lstCatMapping = [SELECT Id, Name, NSP_Category__c, NSP_CategoryDescription__c,
-                    NSP_Subcategory__c, NSP_Display_confidential_popup__c,
-                    NSP_SubcategoryDescription__c, NSP_Detail__c, NSP_Version__c,
-                    NSP_DetailDescription__c, NSP_UserTitle__c, NSP_RecordType__c
-                    FROM NSP_Category_Sub_Category_Mapping__c
-                    WHERE NSP_RecordType__c =: caseRecType AND NSP_UserTitle__c includes(: userTitle) AND NSP_isActive__c = True AND NSP_Subcategory__c !=: NSP_ServiceConstants.SUBCATEGORY_NOT_ON_UI ORDER BY NSP_Category__c, NSP_Subcategory__c
-                ];
+            Set<String> excludedCategories = new Set<String>();
+            if ( !NSP_CustomCaseCreationPageController.hasPermissionFLSA ) {
+                // prevent DmlExceptions...
+                // ~ exclude 'HR Admin Compliance - FLSA' NSP_Category__c value for Users without the NSP_FLSA Custom Permission...
+                // ~ See Validation Rule: Case.NSP_FLSA_Permission
+                excludedCategories.add( 'HR Admin Compliance - FLSA' );
             }
-            else if(userTitle != null && isCatViewAll == false && !isAdmin) {
-                lstCatMapping = [SELECT Id, Name, NSP_Category__c, NSP_CategoryDescription__c,
-                    NSP_Subcategory__c, NSP_Display_confidential_popup__c,
-                    NSP_SubcategoryDescription__c, NSP_Detail__c, NSP_Version__c,
-                    NSP_DetailDescription__c, NSP_UserTitle__c, NSP_RecordType__c
+            if ( String.isNotBlank( userTitle )
+                && !isCatViewAll
+                && NSP_CustomCaseCreationPageController.hasPermissionAdmin
+                )
+            {
+                lstCatMapping = [
+                    SELECT
+                        Id , Name , NSP_Category__c , NSP_CategoryDescription__c ,
+                        NSP_Subcategory__c , NSP_Display_confidential_popup__c ,
+                        NSP_SubcategoryDescription__c , NSP_Detail__c , NSP_Version__c ,
+                        NSP_DetailDescription__c , NSP_UserTitle__c , NSP_RecordType__c
                     FROM NSP_Category_Sub_Category_Mapping__c
-                    WHERE NSP_RecordType__c =: caseRecType AND NSP_UserTitle__c includes(: userTitle) AND NSP_isActive__c = True AND NSP_Subcategory__c !=: NSP_ServiceConstants.SUBCATEGORY_NOT_ON_UI AND NSP_Category__c != :SERVICE_OPERATIONS ORDER BY NSP_Category__c, NSP_Subcategory__c
+                    WHERE (
+                        ( NSP_RecordType__c = :caseRecType )
+                        AND ( NSP_UserTitle__c INCLUDES ( :userTitle ) )
+                        AND ( NSP_isActive__c = true )
+                        AND ( NSP_Subcategory__c != :NSP_ServiceConstants.SUBCATEGORY_NOT_ON_UI )
+                        AND ( NSP_Category__c NOT IN :excludedCategories )
+                    )
+                    ORDER BY NSP_Category__c , NSP_Subcategory__c
                 ];
-            }
-            else if(!isAdmin) {
-                lstCatMapping =  [SELECT Id, Name, NSP_Category__c, NSP_CategoryDescription__c,
-                    NSP_Subcategory__c, NSP_Display_confidential_popup__c,
-                    NSP_SubcategoryDescription__c, NSP_Detail__c, NSP_Version__c,
-                    NSP_DetailDescription__c, NSP_UserTitle__c, NSP_RecordType__c
+            } else if ( String.isNotBlank( userTitle )
+                && !isCatViewAll
+                && !NSP_CustomCaseCreationPageController.hasPermissionAdmin
+                )
+            {
+                excludedCategories.add( NSP_CustomCaseCreationPageController.SERVICE_OPERATIONS );
+                lstCatMapping = [
+                    SELECT
+                        Id , Name , NSP_Category__c , NSP_CategoryDescription__c ,
+                        NSP_Subcategory__c , NSP_Display_confidential_popup__c ,
+                        NSP_SubcategoryDescription__c , NSP_Detail__c , NSP_Version__c ,
+                        NSP_DetailDescription__c , NSP_UserTitle__c , NSP_RecordType__c
                     FROM NSP_Category_Sub_Category_Mapping__c
-                    WHERE NSP_RecordType__c =: caseRecType AND NSP_isActive__c = True AND NSP_Category__c != :SERVICE_OPERATIONS AND NSP_Subcategory__c !=: NSP_ServiceConstants.SUBCATEGORY_NOT_ON_UI ORDER BY NSP_Category__c, NSP_Subcategory__c
+                    WHERE (
+                        ( NSP_RecordType__c = :caseRecType )
+                        AND ( NSP_UserTitle__c INCLUDES ( :userTitle ) )
+                        AND ( NSP_isActive__c = true )
+                        AND ( NSP_Subcategory__c != :NSP_ServiceConstants.SUBCATEGORY_NOT_ON_UI )
+                        AND ( NSP_Category__c NOT IN :excludedCategories )
+                    )
+                    ORDER BY NSP_Category__c , NSP_Subcategory__c
                 ];
-            } 
-            else {
-                lstCatMapping =  [SELECT Id, Name, NSP_Category__c, NSP_CategoryDescription__c,
-                    NSP_Subcategory__c, NSP_Display_confidential_popup__c,
-                    NSP_SubcategoryDescription__c, NSP_Detail__c, NSP_Version__c,
-                    NSP_DetailDescription__c, NSP_UserTitle__c, NSP_RecordType__c
+            } else if ( !NSP_CustomCaseCreationPageController.hasPermissionAdmin ) {
+                excludedCategories.add( NSP_CustomCaseCreationPageController.SERVICE_OPERATIONS );
+                lstCatMapping = [
+                    SELECT
+                        Id , Name , NSP_Category__c , NSP_CategoryDescription__c ,
+                        NSP_Subcategory__c , NSP_Display_confidential_popup__c ,
+                        NSP_SubcategoryDescription__c , NSP_Detail__c , NSP_Version__c ,
+                        NSP_DetailDescription__c , NSP_UserTitle__c , NSP_RecordType__c
                     FROM NSP_Category_Sub_Category_Mapping__c
-                    WHERE NSP_RecordType__c =: caseRecType AND NSP_isActive__c = True AND NSP_Subcategory__c !=: NSP_ServiceConstants.SUBCATEGORY_NOT_ON_UI ORDER BY NSP_Category__c, NSP_Subcategory__c
+                    WHERE (
+                        ( NSP_RecordType__c = :caseRecType )
+                        AND ( NSP_isActive__c = true )
+                        AND ( NSP_Subcategory__c != :NSP_ServiceConstants.SUBCATEGORY_NOT_ON_UI )
+                        AND ( NSP_Category__c NOT IN :excludedCategories )
+                    )
+                    ORDER BY NSP_Category__c , NSP_Subcategory__c
                 ];
-
+            } else {
+                lstCatMapping = [
+                    SELECT
+                        Id , Name , NSP_Category__c , NSP_CategoryDescription__c ,
+                        NSP_Subcategory__c , NSP_Display_confidential_popup__c ,
+                        NSP_SubcategoryDescription__c , NSP_Detail__c , NSP_Version__c ,
+                        NSP_DetailDescription__c , NSP_UserTitle__c , NSP_RecordType__c
+                    FROM NSP_Category_Sub_Category_Mapping__c
+                    WHERE (
+                        ( NSP_RecordType__c = :caseRecType )
+                        AND ( NSP_isActive__c = true )
+                        AND ( NSP_Subcategory__c != :NSP_ServiceConstants.SUBCATEGORY_NOT_ON_UI )
+                        AND ( NSP_Category__c NOT IN :excludedCategories )
+                    )
+                    ORDER BY NSP_Category__c , NSP_Subcategory__c
+                ];
             }
             return lstCatMapping;
-        } catch (Exception excep) {
-            throw new AuraHandledException(excep.getMessage());
+        } catch ( Exception e ) {
+            throw new AuraHandledException( e.getMessage() );
         }
     }
 
+    private static Boolean hasPermissionFLSA {
+        private get {
+            if ( hasPermissionFLSA == null ) {
+                hasPermissionFLSA = CustomPermissionController.checkUserPermission(
+                    'NSP_FLSA' ,
+                    UserInfo.getUserId()
+                );
+            }
+            return hasPermissionFLSA;
+        }
+        private set;
+    }
 
     @AuraEnabled
     public static string getUserTitle(){
@@ -75,7 +132,7 @@ public with sharing class NSP_CustomCaseCreationPageController {
 
     @AuraEnabled
     public static String getInternalAccountId(){
-        
+
         try {
             if(System.Label.NSP_InternalAccountName!= null && String.isNotBlank(System.Label.NSP_InternalAccountName)){
                 return [SELECT ID FROM Account  WHERE Name =:System.Label.NSP_InternalAccountName LIMIT 1 ].Id;
@@ -107,16 +164,16 @@ public with sharing class NSP_CustomCaseCreationPageController {
     public static ResponseWrapper getCaseFromConfig(String type,String accountId){
         try{
             List<NSP_Case_Configuration__mdt> lCaseConfigurations = new List<NSP_Case_Configuration__mdt>([SELECT Id,Label,NSP_Subject__c,NSP_User_Notes__c FROM NSP_Case_Configuration__mdt WHERE Label =: type LIMIT 1]);
-            
+
             NSP_Case_Configuration__mdt oCaseConfig = new NSP_Case_Configuration__mdt();
             if(lCaseConfigurations.size() > 0){
                 oCaseConfig = lCaseConfigurations[0];
             }else{
-                return new ResponseWrapper(false,'',NOCONFIGERROR);
+                return new ResponseWrapper(false,'','No Case Type Configuration Found');
             }
             accountId = (accountId == '') ? null : accountId;
             Case oCase = new NSP_CaseService().fillCaseBasedOnType(new Case(Type = type,AccountId = accountId));
-            
+
             return new ResponseWrapper(true,JSON.serialize(new CaseConfigWrapper(oCase,oCaseConfig)),'');
         } catch (Exception excep) {
             throw new AuraHandledException(excep.getMessage());
@@ -133,62 +190,71 @@ public with sharing class NSP_CustomCaseCreationPageController {
             this.oCaseConfig = oCaseConfig;
         }
     }
-    
+
     //Attachment part by Sruthi - Start
-    /** @method saveFiles() 
+    /** @method saveFiles()
        * @desc Creates a content version from a given file's base64 and name and Converting attachments to Content Versions(Files) as part of DF-05467
        * @param {String} recordId - Id of the record you want to attach this file to
        * @param {list<Object>} filesToInsert - content type you want to attach this file to
        * @return {Id} - returns the created attachment  if the
        *   upload was successful, otherwise returns null
         *Modified Date : 8/21/2023 */
-       
+
     @AuraEnabled
-    public static void saveFiles(list<Object> filesToInsert, String recordId) {
+    public static void saveFiles( List<Object> filesToInsert , String recordId ) {
         try {
             List<ContentVersion> contVersionList = new List<ContentVersion>();
             List<ContentDocumentLink> contDocumentLinkList = new List<ContentDocumentLink>();
-            ContentVersion cVersion ;
-            ContentDocumentLink cDocLink ;
-            
+            ContentVersion cVersion;
+            ContentDocumentLink cDocLink;
             //Getting files from nsp_customcasecreation lwc component
-            for (Object file : filesToInsert) {
-                FileInfo fileData = (FileInfo)JSON.deserialize(JSON.serialize(file), FileInfo.class);
-            cVersion = createContVersion(fileData.Title, fileData.FileContent);
-                contVersionList.add(cVersion);// Adding each ContentVersion to the ContentVersionList   
+            for ( Object file : filesToInsert ) {
+                FileInfo fileData = (FileInfo)JSON.deserialize( JSON.serialize( file ) , FileInfo.class );
+                cVersion = createContVersion( fileData.Title , fileData.FileContent );
+                contVersionList.add( cVersion );// Adding each ContentVersion to the ContentVersionList
             }
-            
-            if(!contVersionList.isEmpty()){
-                List<Database.SaveResult> conVersionResults = Database.insert(contVersionList, false);
-                NSP_ErrorLogHandler.logSaveResult(NSP_CUSTOMCASECREATIONPAGECONTROLLER, 'saveFiles', conVersionResults );
-                
+            if ( !contVersionList.isEmpty() ) {
+                List<Database.SaveResult> conVersionResults = Database.insert( contVersionList , false );
+                NSP_ErrorLogHandler.logResults(
+                    NSP_CustomCaseCreationPageController.class.getName() ,
+                    'saveFiles:ContentVersion' ,
+                    conVersionResults
+                );
                 //Iterate over ContentVersion List to create ContentDocumentLink Object.
-                for(ContentVersion contVersion : [SELECT ContentDocumentId FROM ContentVersion
-                                                  WHERE Id IN:contVersionList]){  
-                                                      cDocLink = createContDocLink(contVersion.ContentDocumentId, recordId);
-                                                      contDocumentLinkList.add(cDocLink);// Adding each ContentDocumentLink to the ContentDocumentLink List
-            }
-            
-                if(!contDocumentLinkList.isEmpty()){
-                    List<Database.SaveResult> contDocResults = Database.insert(contDocumentLinkList, false);
-                    NSP_ErrorLogHandler.logSaveResult(NSP_CUSTOMCASECREATIONPAGECONTROLLER, 'saveFiles', contDocResults );
+                for ( ContentVersion contVersion : [
+                                SELECT ContentDocumentId
+                                FROM ContentVersion
+                                WHERE ( Id IN :contVersionList )
+                            ]
+                        )
+                {
+                    cDocLink = createContDocLink( contVersion.ContentDocumentId , recordId );
+                    contDocumentLinkList.add( cDocLink );// Adding each ContentDocumentLink to the ContentDocumentLink List
+                }
+                if ( !contDocumentLinkList.isEmpty() ) {
+                    List<Database.SaveResult> contDocResults = Database.insert( contDocumentLinkList , false );
+                    NSP_ErrorLogHandler.logResults(
+                        NSP_CustomCaseCreationPageController.class.getName() ,
+                        'saveFiles:ContentDocumentLink' ,
+                        contDocResults
+                    );
                 }
             }
-        } catch (Exception excep) {
-            throw new AuraHandledException(excep.getMessage());
-        } 
-
+        } catch ( Exception e ) {
+            throw new AuraHandledException( e.getMessage() );
+        }
     }
+
     /*
      * Method Name : createContVersion
-     * Description : This is a method creates a ContentVersion for the files 
+     * Description : This is a method creates a ContentVersion for the files
      * Return Type : ContentVersion
      * Params : String Title, Blob Content
      * Date : 8/22/2023
      * */
     public static ContentVersion createContVersion(String Title, Blob Content){
         ContentVersion contVers = new ContentVersion();
-        contVers.ContentLocation = 'S'; 
+        contVers.ContentLocation = 'S';
         contVers.PathOnClient = Title;
         contVers.Origin = 'H';
         contVers.OwnerId = userinfo.getUserId();
@@ -198,7 +264,7 @@ public with sharing class NSP_CustomCaseCreationPageController {
     }
     /*
      * Method Name : createContDocLink
-     * Description : This is a method creates a ContentDocumentLink for the ContentVersions 
+     * Description : This is a method creates a ContentDocumentLink for the ContentVersions
      * Return Type : ContentDocumentLink
      * Params : Id ContDocId, Id recId
      * Date : 8/22/2023
@@ -216,48 +282,66 @@ public with sharing class NSP_CustomCaseCreationPageController {
         public Blob FileContent;
         public String FileType;
     }
-    //Attachment part by Sruthi - End
-    
-    //view all by Sruthi - start
-    @AuraEnabled(cacheable = true)
-    public static List < NSP_Category_Sub_Category_Mapping__c > getAllCategoryList(String recordTypeId, String selectedCat) {
+
+    @AuraEnabled(cacheable=true)
+    public static List<NSP_Category_Sub_Category_Mapping__c> getAllCategoryList( String recordTypeId , String selectedCat ) {
         try {
-            String caseRecType = getCaseRecordType(recordTypeId);
-            if(String.isNotBlank(caseRecType) && caseRecType.contains(NSP_ServiceConstants.PEO)){
-                caseRecType = NSP_ServiceConstants.PEO;
-            }else if(String.isNotBlank(caseRecType) && caseRecType.contains(NSP_ServiceConstants.BPS)){
-                caseRecType = NSP_ServiceConstants.BPS;
+            String caseRecType = NSP_CustomCaseCreationPageController.getCaseRecordType( recordTypeId );
+            if ( String.isNotBlank( caseRecType ) ) {
+                if ( caseRecType.contains( NSP_ServiceConstants.PEO ) ) {
+                    caseRecType = NSP_ServiceConstants.PEO;
+                } else if ( caseRecType.contains( NSP_ServiceConstants.BPS ) ) {
+                    caseRecType = NSP_ServiceConstants.BPS;
+                }
             }
-            if(String.isNotBlank(selectedCat)){
-                return [SELECT Id, Name, NSP_Category__c, NSP_Version__c, NSP_CategoryDescription__c,
-                    NSP_Subcategory__c, NSP_Display_confidential_popup__c,
-                    NSP_SubcategoryDescription__c, NSP_Detail__c, NSP_DetailDescription__c,
-                    NSP_UserTitle__c, NSP_RecordType__c
+            Set<String> excludedCategories = new Set<String>();
+            if ( !NSP_CustomCaseCreationPageController.hasPermissionFLSA ) {
+                // prevent DmlExceptions...
+                // ~ exclude 'HR Admin Compliance - FLSA' NSP_Category__c value for Users without the NSP_FLSA Custom Permission...
+                // ~ See Validation Rule: Case.NSP_FLSA_Permission
+                excludedCategories.add( 'HR Admin Compliance - FLSA' );
+            }
+            List<NSP_Category_Sub_Category_Mapping__c> lstCatMapping = new List<NSP_Category_Sub_Category_Mapping__c>();
+            if ( String.isNotBlank( selectedCat ) ) {
+                lstCatMapping = [
+                    SELECT
+                        Id , Name , NSP_Category__c , NSP_Version__c , NSP_CategoryDescription__c ,
+                        NSP_Subcategory__c , NSP_Display_confidential_popup__c ,
+                        NSP_SubcategoryDescription__c , NSP_Detail__c, NSP_DetailDescription__c ,
+                        NSP_UserTitle__c , NSP_RecordType__c
                     FROM NSP_Category_Sub_Category_Mapping__c
-                    WHERE NSP_RecordType__c =: caseRecType AND
-                    NSP_Subcategory__c !=: NSP_ServiceConstants.SUBCATEGORY_NOT_ON_UI AND
-                    NSP_isActive__c = True AND
-                    NSP_Category__c = :selectedCat
-                    ORDER BY NSP_Category__c, NSP_Subcategory__c
+                    WHERE (
+                        ( NSP_RecordType__c = :caseRecType )
+                        AND ( NSP_isActive__c = true )
+                        AND ( NSP_Subcategory__c != :NSP_ServiceConstants.SUBCATEGORY_NOT_ON_UI )
+                        AND ( NSP_Category__c NOT IN :excludedCategories )
+                        AND ( NSP_Category__c = :selectedCat )
+                    )
+                    ORDER BY NSP_Category__c , NSP_Subcategory__c
+                ];
+            } else {
+                lstCatMapping = [
+                    SELECT
+                        Id , Name , NSP_Category__c , NSP_Version__c , NSP_CategoryDescription__c ,
+                        NSP_Subcategory__c , NSP_Display_confidential_popup__c ,
+                        NSP_SubcategoryDescription__c , NSP_Detail__c, NSP_DetailDescription__c ,
+                        NSP_UserTitle__c , NSP_RecordType__c
+                    FROM NSP_Category_Sub_Category_Mapping__c
+                    WHERE (
+                        ( NSP_RecordType__c = :caseRecType )
+                        AND ( NSP_isActive__c = true )
+                        AND ( NSP_Subcategory__c != :NSP_ServiceConstants.SUBCATEGORY_NOT_ON_UI )
+                        AND ( NSP_Category__c NOT IN :excludedCategories )
+                    )
+                    ORDER BY NSP_Category__c , NSP_Subcategory__c
                 ];
             }
-            return [SELECT Id, Name, NSP_Category__c, NSP_Version__c, NSP_CategoryDescription__c,
-                NSP_Subcategory__c, NSP_Display_confidential_popup__c,
-                NSP_SubcategoryDescription__c, NSP_Detail__c, NSP_DetailDescription__c,
-                NSP_UserTitle__c, NSP_RecordType__c
-                FROM NSP_Category_Sub_Category_Mapping__c
-                WHERE NSP_RecordType__c =: caseRecType AND
-                NSP_Subcategory__c !=: NSP_ServiceConstants.SUBCATEGORY_NOT_ON_UI AND
-                NSP_isActive__c = True
-                ORDER BY NSP_Category__c, NSP_Subcategory__c
-            ];
-        } catch (Exception excep) {
-            throw new AuraHandledException(excep.getMessage());
+            return lstCatMapping;
+        } catch ( Exception e ) {
+            throw new AuraHandledException( e.getMessage() );
         }
     }
-    
-    //view all by Sruthi - end
-    
+
     /**
     * Iterates throught all categories create a Dependencies map of Cat/SubCat/Detail/Version
     * @return Serialized From of CategoryDependenyWrapper
@@ -299,7 +383,7 @@ public with sharing class NSP_CustomCaseCreationPageController {
         try {
             List<NSP_Category_Sub_Category_Mapping__c> lCategoriesRecords = getCategoryList(recordTypeId, isCatViewAll);
             return JSON.serialize(getDependencyWrapper(lCategoriesRecords));
-            
+
         } catch (Exception excep) {
             throw new AuraHandledException(excep.getMessage());
         }
@@ -354,7 +438,7 @@ public with sharing class NSP_CustomCaseCreationPageController {
             mCatSubDetailToVersions.put(catSubCatDet, versionListToSort);
         }
         return new CategoryDependenyWrapper(mCatToSubCatogories, mCatSubToDetails, mCatSubDetailToVersions);
-    } 
+    }
 
     public class CategoryDependenyWrapper{
         @AuraEnabled
@@ -401,9 +485,9 @@ public with sharing class NSP_CustomCaseCreationPageController {
             throw new AuraHandledException(excep.getMessage());
         }
     }
-    
-        /** 
- * @method getRelatedCategory() 
+
+        /**
+ * @method getRelatedCategory()
  * @param {String} selectedCategory
  * @param {String} recordTypeId
  * @return List<String>
@@ -427,7 +511,7 @@ public static List < String > getRelatedSubCategory(String selectedCategory, Str
         throw new AuraHandledException(excep.getMessage());
     }
 }
-    
+
     @AuraEnabled(cacheable=true)
     public static List<String> getRelatedDetail(String selectedSubCategory, String selectedCategory, String recordTypeId) {
         try{
@@ -445,7 +529,7 @@ public static List < String > getRelatedSubCategory(String selectedCategory, Str
             throw new AuraHandledException(excep.getMessage());
         }
     }
-    
+
     @AuraEnabled(cacheable=true)
     public static List<String> getRelatedVersion(String selectedDetail, String recordTypeId) {
         try{
@@ -463,120 +547,170 @@ public static List < String > getRelatedSubCategory(String selectedCategory, Str
             throw new AuraHandledException(excep.getMessage());
         }
     }
-    
-     /** @method autoPopulateAsset() 
-     * @desc Auto populate asset on case record based on cat, subcat & account selected
-     * @param {String} category - Category selected which comes from category subcategory mapping object
-     * @param {String} subCategory - subCategory selected which comes from category subcategory mapping object
-     * @param {String} accountId - Id from Account object
-     * @return List<Asset> - returns Asset based on active asset linked to account
-     */
+
+    //
+    // @desc Auto populate asset on case record based on cat, subcat & account selected
+    // @param {String} category - Category selected which comes from category subcategory mapping object
+    // @param {String} subCategory - subCategory selected which comes from category subcategory mapping object
+    // @param {String} accountId - Id from Account object
+    // @return List<Asset> - returns Asset based on active asset linked to account
+    //
     @AuraEnabled
-    public static List < Asset > autoPopulateAsset(String category, String subCategory, String accountId) {
-        String [] listofValues = new String[]{NSP_ServiceConstants.TERMINATED, NSP_ServiceConstants.BACKOUT };
-        if ((String.isNotBlank(category) || category != '') &&
-            (subCategory != null || subCategory != '')
-        ) {
+    public static List<Asset> autoPopulateAsset( String category , String subCategory , String accountId ) {
+        List<Asset> response = null;
+        if ( String.isNotBlank( category ) && String.isNotBlank( subCategory ) ) {
             //query cat, subcat records for asset recordtype based on user selection while creating case
-            List < NSP_Category_Sub_Category_Mapping__c > catSubcat = [SELECT Id, Name, NSP_Category__c,
-                NSP_Subcategory__c, NSP_Asset_Record_Types__c,
-                NSP_UserTitle__c, NSP_RecordType__c
+            List<NSP_Category_Sub_Category_Mapping__c> catSubcat = [
+                SELECT
+                    Id , Name , NSP_Category__c ,
+                    NSP_Subcategory__c , NSP_Asset_Record_Types__c ,
+                    NSP_UserTitle__c , NSP_RecordType__c
                 FROM NSP_Category_Sub_Category_Mapping__c
-                WHERE NSP_Category__c =: category AND NSP_Subcategory__c =: subCategory
+                WHERE (
+                    ( NSP_Category__c = :category )
+                    AND ( NSP_Subcategory__c = :subCategory )
+                )
             ];
-            if(!catSubcat.isEmpty()){
-            //pass asset record type from above query to get active asset id from the related account of case
-            return [select Id, AccountId, RecordTypeId, RecordType.Name, Status from Asset
-                WHERE AccountId =: accountId and RecordType.Name =: catSubcat[0].NSP_Asset_Record_Types__c and
-                Status NOT IN :(listofValues)
-            ];
-            }else {
-                return null;
+            if ( String.isNotBlank( accountId ) && ( catSubcat != null ) && !catSubcat.isEmpty() ) {
+                //pass asset record type from above query to get active asset id from the related account of case
+                response = [
+                    SELECT Id , AccountId , RecordTypeId , RecordType.Name , Status
+                    FROM Asset
+                    WHERE (
+                        ( AccountId = :accountId )
+                        AND ( RecordType.Name = :catSubcat[0].NSP_Asset_Record_Types__c )
+                        AND (
+                            Status NOT IN (
+                                :NSP_ServiceConstants.TERMINATED ,
+                                :NSP_ServiceConstants.BACKOUT
+                            )
+                        )
+                    )
+                ];
             }
-
         }
-
-        return null;
+        return response;
     }
-    /** @method getCaseRecordType() 
-     * @desc Fetch case record type name based on record type id passed or logged in user profile
-     * @param {String} recordId - Record type Id of the case created
-     * @return {String} - returns case record type name
-     */
+
+    // @method getCaseRecordType()
+    // @desc Fetch case record type name based on record type id passed or logged in user profile
+    // @param {String} recordId - Record type Id of the case created
+    // @return {String} - returns case record type name
     @AuraEnabled
-    public static string getCaseRecordType(String recordTypeId) {
+    public static string getCaseRecordType( String recordTypeId ) {
         try {
-            String caseRecordType;
+            String response = null;
             //fetch case recordtype name based on recordtypeid selected on creation of case
-            if (recordTypeId != null && recordTypeId != '' ) {
-                caseRecordType = [SELECT Id, Name FROM RecordType WHERE Id =: recordTypeId].Name;
+            if ( String.isNotBlank( recordTypeId ) ) {
+                List<RecordType> records = [
+                    SELECT Id , Name
+                    FROM RecordType
+                    WHERE ( Id = :recordTypeId )
+                ];
+                if ( ( records != null ) && !records.isEmpty() ) {
+                    response = records[0].Name;
+                }
             } else {
                 //if recordtypeid is null fetch case record type name based on logged in user profile id
-                String profileName = [select Id, Name from Profile WHERE Id =: Userinfo.getProfileid()].Name;
-                if (profileName == NSP_ServiceConstants.PEOSERVICE 
-                    || profileName == NSP_ServiceConstants.CONTACTCENTER
-                    || profileName == NSP_ServiceConstants.RT) {
-                    return NSP_ServiceConstants.PEO;
+                if ( ( NSP_CustomCaseCreationPageController.userInfoProfileName == NSP_ServiceConstants.PEOSERVICE )
+                    || ( NSP_CustomCaseCreationPageController.userInfoProfileName == NSP_ServiceConstants.CONTACTCENTER )
+                    || ( NSP_CustomCaseCreationPageController.userInfoProfileName == NSP_ServiceConstants.RT )
+                    )
+                {
+                    response = NSP_ServiceConstants.PEO;
                 }
-                if (profileName == NSP_ServiceConstants.BPSSERVICE || profileName == NSP_ServiceConstants.SYSTEM_ADMINISTRATOR) {
-                    return NSP_ServiceConstants.BPS;
+                if ( ( NSP_CustomCaseCreationPageController.userInfoProfileName == NSP_ServiceConstants.BPSSERVICE )
+                    || ( NSP_CustomCaseCreationPageController.hasPermissionAdmin )
+                    )
+                {
+                    response = NSP_ServiceConstants.BPS;
                 }
             }
-            return caseRecordType;
-
-        } catch (Exception excep) {
-            throw new AuraHandledException(excep.getMessage());
+            return response;
+        } catch ( Exception e ) {
+            throw new AuraHandledException( e.getMessage() );
         }
     }
 
-           /** @method isContactHasMultipleACRs() 
-    * @desc method to check whether the selected Contact has Muliple ACRs
-    * @param {String} contId - Selected ContactId
-    * @return {Boolean} - returns true or false based on Mulple ACRs
-    */
-
+    // @method isContactHasMultipleACRs()
+    // @desc method to check whether the selected Contact has Muliple ACRs
+    // @param {String} contId - Selected ContactId
+    // @return {Boolean} - returns true or false based on Mulple ACRs
     @AuraEnabled
-    public static Boolean isContactHasMultipleACRs(String contId) {
-        try{
-            List<AccountContactRelation> acrList = [SELECT Id, 
-                                                    AccountId,
-                                                    ContactId 
-                                                    FROM AccountContactRelation 
-                                                    WHERE ContactId =: contId];
-            return acrList.size() > 1;
-        }catch (Exception excep) {
-            throw new AuraHandledException(excep.getMessage());
+    public static Boolean isContactHasMultipleACRs( String contId ) {
+        try {
+            List<AccountContactRelation> acrList = [
+                SELECT Id , AccountId , ContactId
+                FROM AccountContactRelation
+                WHERE ( ContactId = :contId )
+            ];
+            return ( ( acrList != null ) && ( acrList.size() > 1 ) );
+        } catch ( Exception e ) {
+            throw new AuraHandledException( e.getMessage() );
         }
     }
 
-    /**
-* @MethodName: getProfileName
-* @Description: This method describes to fetch the profile Name of loggedin User
-* @param : 
-* @createdDate : 11/24/2022
-* @Story : STY-03083
-* @return void                          
-*/
-@AuraEnabled
-public static String getProfileName() { 
-    String profileName = '';
-    List<String> FIELDS = new List<String>{'Id','ProfileId', 'Profile.Name'};                                      
-        try{
-         User getLoggedInUser = (User) new NSP_sObjectSelector(NSP_ServiceConstants.USER_OBJECT,FIELDS).setSecurityEnforce(false).selectById(UserInfo.getUserId());
-            profileName = getLoggedInUser.Profile.Name;
-            return profileName;
-        }catch (Exception excep) {
-            throw new AuraHandledException(excep.getMessage());
+    //
+    // @MethodName: getProfileName
+    // @Description: This method describes to fetch the profile Name of loggedin User
+    // @param :
+    // @createdDate : 11/24/2022
+    // @Story : STY-03083
+    // @return void
+    //
+    @AuraEnabled
+    public static String getProfileName() {
+        try {
+            return NSP_CustomCaseCreationPageController.userInfoProfileName;
+        } catch ( Exception e ) {
+            throw new AuraHandledException( e.getMessage() );
         }
-}
+    }
+
+    private static String userInfoProfileName {
+        private get {
+            if ( userInfoProfileName == null ) {
+                String local = null;
+                List<Profile> records = [
+                    SELECT Id , Name
+                    FROM Profile
+                    WHERE ( Id = :Userinfo.getProfileid() )
+                ];
+                Profile record = null;
+                if ( ( records != null ) && !records.isEmpty() ) {
+                    record = records[0];
+                }
+                if ( record != null ) {
+                    local = record.Name;
+                }
+                userInfoProfileName = local;
+            }
+            return userInfoProfileName;
+        }
+        private set;
+    }
+
+    private static Boolean hasPermissionAdmin {
+        private get {
+            if ( hasPermissionAdmin == null ) {
+                hasPermissionAdmin = (
+                    String.isNotBlank( NSP_CustomCaseCreationPageController.userInfoProfileName )
+                    && NSP_CustomCaseCreationPageController.userInfoProfileName.startsWith( 'System Admin' )
+                );
+            }
+            return hasPermissionAdmin;
+        }
+        private set;
+    }
+
     /**
 * @MethodName: isMemberOfPrivateSection125Visibility
-* @Description: This method describes to show private checkbox if the category is "H&W Section 125" and the loggedinUser in 
+* @Description: This method describes to show private checkbox if the category is "H&W Section 125" and the loggedinUser in
 NSP_Private_Section_125_Visibility public group
-* @param : 
+* @param :
 * @createdDate : 11/29/2022
 * @Story : STY-02804
-* @return void                          
+* @return void
 */
 @AuraEnabled
 public static Boolean isMemberOfPrivateSection125Visibility(){
@@ -584,99 +718,99 @@ public static Boolean isMemberOfPrivateSection125Visibility(){
     Boolean isShowPrivateCheckbox = false;
     try{
         for(GroupMember gMem : [SELECT UserOrGroupId FROM GroupMember WHERE Group.DeveloperName =: NSP_ServiceConstants.SECTION_125_PRIVATE_CASE_VISIBILTY]){
-            grpUserIdSet.add(gMem.UserOrGroupId);   
+            grpUserIdSet.add(gMem.UserOrGroupId);
         }
         if(!grpUserIdSet.isEmpty() && grpUserIdSet.contains(userInfo.getUserId())){
-            isShowPrivateCheckbox = true; 
+            isShowPrivateCheckbox = true;
         }
         return isShowPrivateCheckbox;
     }catch (Exception excep) {
         throw new AuraHandledException(excep.getMessage());
     }
 }
-    
+
     /**
 * @MethodName: getMapOfObjectNameAndKeyPrefix
 * @Description: This method is used to get the object name and it's key prefix to use while the record to it's respective parent
-* @param : 
+* @param :
 * @createdDate : 04/14/2023
 * @Story : DF-03341
-* @return void                          
+* @return void
 */
     @AuraEnabled
     public static Map<String, String> getMapOfObjectNameAndKeyPrefix(){
         Map<string, string> objectNameKeyPrefixMap = new Map<string, string>();
-        
+
         try{
             String accountKeyPrefix = Account.SObjectType.getDescribe().getKeyPrefix(); // Account
             objectNameKeyPrefixMap.put('accountID', accountKeyPrefix);
-            
+
             String contactKeyPrefix = Contact.SObjectType.getDescribe().getKeyPrefix(); // Contact
             objectNameKeyPrefixMap.put('contactID', contactKeyPrefix);
-            
+
             String assetKeyPrefix = Asset.SObjectType.getDescribe().getKeyPrefix(); // Asset
             objectNameKeyPrefixMap.put('assetId', assetKeyPrefix);
-            
+
             String projectKeyPrefix = pse__Proj__c.SObjectType.getDescribe().getKeyPrefix(); // Project
             objectNameKeyPrefixMap.put('projectId', projectKeyPrefix);
-            
+
             String parentCaseKeyPrefix = Case.SObjectType.getDescribe().getKeyPrefix(); // ParentCase
             objectNameKeyPrefixMap.put('caseParentId', parentCaseKeyPrefix);
-            
+
             String caseIssueKeyPrefix = NSP_Case_Issue__c.SObjectType.getDescribe().getKeyPrefix(); // caseIssue
             objectNameKeyPrefixMap.put('caseIssueId', caseIssueKeyPrefix);
-            
+
             String planKeyPrefix = NSP_Plan__c.SObjectType.getDescribe().getKeyPrefix(); // Plan
             objectNameKeyPrefixMap.put('planID', planKeyPrefix);
-            
+
             String planSubPlanKeyPrefix = NSP_Plan_SubPlan__c.SObjectType.getDescribe().getKeyPrefix(); // Sub Plan
-            objectNameKeyPrefixMap.put('subplanID', planSubPlanKeyPrefix); 
-            
+            objectNameKeyPrefixMap.put('subplanID', planSubPlanKeyPrefix);
+
             String amendmentCheckListKeyPrefix = NSP_Amendment_Checklist__c.SObjectType.getDescribe().getKeyPrefix(); // NSP_Amendment_Checklist__c
             objectNameKeyPrefixMap.put('NSP_RET_Amendment_Checklist__c', amendmentCheckListKeyPrefix);
-            
+
             String salesToImplKeyPrefix = NSP_Sales_to_Implementation__c.SObjectType.getDescribe().getKeyPrefix(); // NSP_Sales_to_Implementation__c
             objectNameKeyPrefixMap.put('NSP_RET_Sales_to_Implementation__c', salesToImplKeyPrefix);
-            
+
             String monthlyParticipationKeyPrefix = NSP_Participation_SaaS_Activity__c.SObjectType.getDescribe().getKeyPrefix(); // NSP_Participation_SaaS_Activity__c
             objectNameKeyPrefixMap.put('NSP_RET_Monthly_Participation__c', monthlyParticipationKeyPrefix);
-            
+
             String eoyAmendmentKeyPrefix = NSP_EOY_Amendment__c.SObjectType.getDescribe().getKeyPrefix(); // NSP_EOY_Amendment__c
             objectNameKeyPrefixMap.put('NSP_RET_EOY_Amendments__c', eoyAmendmentKeyPrefix);
-            
+
             String complianceKeyPrefix = NSP_Compliance__c.SObjectType.getDescribe().getKeyPrefix(); // NSP_Compliance__c
             objectNameKeyPrefixMap.put('NSP_RET_Compliance__c', complianceKeyPrefix);
-            
+
             String cgndqKeyPrefix = NSP_CGNDQ__c.SObjectType.getDescribe().getKeyPrefix(); // NSP_CGNDQ__c
             objectNameKeyPrefixMap.put('NSP_RET_CGNDQ__c', cgndqKeyPrefix);
-            
+
             String planTrackingPrefix = NSP_5500_Plan_Tracking__c.SObjectType.getDescribe().getKeyPrefix(); // NSP_5500_Plan_Tracking__c
             objectNameKeyPrefixMap.put('NSP_RET_5500_Plan_Tracking__c', planTrackingPrefix);
-            
+
             String eligibilityKeyPrefix = NSP_Eligibility__c.SObjectType.getDescribe().getKeyPrefix(); // NSP_Eligibility__c
             objectNameKeyPrefixMap.put('NSP_RET_Eligibility__c', eligibilityKeyPrefix);
-            
+
             String deconversionKeyPrefix = NSP_Deconversion__c.SObjectType.getDescribe().getKeyPrefix(); // NSP_Deconversion__c
             objectNameKeyPrefixMap.put('NSP_RET_Deconversion__c', deconversionKeyPrefix);
-            
+
             String contributionKeyPrefix = NSP_Contribution__c.SObjectType.getDescribe().getKeyPrefix(); // NSP_Contribution__c
             objectNameKeyPrefixMap.put('NSP_RET_Contribution__c', contributionKeyPrefix);
-            
+
             String clinetSubPlanHistoryKeyPrefix = NSP_Client_Sub_Plan_History__c.SObjectType.getDescribe().getKeyPrefix(); // NSP_Client_Sub_Plan_History__c
             objectNameKeyPrefixMap.put('NSP_RET_Client_Sub_Plan_History__c', clinetSubPlanHistoryKeyPrefix);
-            
+
             String clientChangeFieldsKeyPrefix = NSP_Client_Change_Fields__c.SObjectType.getDescribe().getKeyPrefix(); // NSP_Client_Change_Fields__c
             objectNameKeyPrefixMap.put('NSP_RET_Client_Change__c', clientChangeFieldsKeyPrefix);
-            
+
             String subPlanChangeHisKeyPrefix = NSP_Sub_Plan_Change_History__c.SObjectType.getDescribe().getKeyPrefix(); // NSP_Sub_Plan_Change_History__c
             objectNameKeyPrefixMap.put('NSP_RET_Sub_Plan_Change_History__c', subPlanChangeHisKeyPrefix);
-            
+
             return objectNameKeyPrefixMap;
         }catch (Exception excep) {
             throw new AuraHandledException(excep.getMessage());
         }
     }
-    
+
     @AuraEnabled(cacheable=true)
     public static Boolean getCaseSettingFlag() {
         return CustomCaseCreationSettings__c.getInstance(UserInfo.getProfileId()).IsReloadEnabled__c;
@@ -686,14 +820,14 @@ public static Boolean isMemberOfPrivateSection125Visibility(){
         Boolean userInQueue = false;
         String queueName = 'Compensation_Services';
         if(String.isNotBlank(queueName)){
-          List<GroupMember> groupMemberList = [Select Id from GroupMember where UserOrGroupId = :UserInfo.getUserId() AND GroupId IN (SELECT Id FROM Group WHERE Type = 'Queue' AND DeveloperName=:queueName)];  
+          List<GroupMember> groupMemberList = [Select Id from GroupMember where UserOrGroupId = :UserInfo.getUserId() AND GroupId IN (SELECT Id FROM Group WHERE Type = 'Queue' AND DeveloperName=:queueName)];
             if(!groupMemberList.isEmpty()){
                 userInQueue = true;
             }
         }
         return userInQueue;
     }
-    
+
     @AuraEnabled(cacheable=true)
     public static List<Contact> getRelatedContacts(String accountId) {
         List<Contact> contacts = new List<Contact>();
@@ -743,3 +877,4 @@ public static Boolean isMemberOfPrivateSection125Visibility(){
     }
 
 }
+//
