@@ -33,7 +33,6 @@ public with sharing class NSP_ValidateOpportunityStage {
     private static Boolean hasAllowCLTechnologyPerm = CustomPermissionController.checkUserPermission( 'Opportunity_Allow_Closed_Lost_Technology' , UserInfo.getUserId() );
     private static Boolean hasAllowCWNCSUserPerm = CustomPermissionController.checkUserPermission( 'Opportunity_Closed_Won_NCS_User' , UserInfo.getUserId() );
     public static final String DEFAULT_PRODUCT = 'Default';
-    public static final String ID_FIELD = 'Id';
     public static final String OPPORTUNITY_OBJ = 'Opportunity';
     public static final String HAS_DISCOVERY = ' has Discovery ';
     public static final String HAS_OPEN_EVENT = ' has Open Event ';
@@ -166,45 +165,45 @@ public with sharing class NSP_ValidateOpportunityStage {
         return passCheckCount;
     }
 
-    private static void evaluateGroupedCriteria( Opportunity opp, Map<String,List<SObject>> relatedObjectMap, Map<String, List<Opportunity_Stage_Validation__mdt>> groupedStageValMap ){
+    private static void evaluateGroupedCriteria(Opportunity opp, Map<String,List<SObject>> relatedObjectMap, Map<String, List<Opportunity_Stage_Validation__mdt>> groupedStageValMap){
         for( String groupName : groupedStageValMap.keySet() ){
-            Boolean passCheck = evaluateOneCriteriaGroup( opp, groupName , relatedObjectMap , groupedStageValMap );            
+            Boolean passCheck = false;
+            String groupRelatedObjName = getGroupRelatedObjName( groupName , groupedStageValMap );
+            for( SObject relatedObject : relatedObjectMap.get(groupRelatedObjName) ){
+                Integer passCheckCount = evaluateOneCriteriaGroup( opp, groupName , relatedObject, groupedStageValMap );
+                if( passCheckCount >= groupedStageValMap.get(groupName).size() ){
+                    passCheck = true;
+                }
+            }
             if( !passCheck ){
                 opp.addError(groupedStageValMap.get(groupName)[0].Error_Message__c);
             }
         }
     }
 
-    public static Boolean evaluateOneCriteriaGroup( Opportunity opp, String groupName , Map<String,List<SObject>> relatedObjectMap, Map<String, List<Opportunity_Stage_Validation__mdt>> groupedStageValMap ){
-        Boolean passCheck = false;
+    public static Integer evaluateOneCriteriaGroup( Opportunity opp , String groupName , SObject relatedObject, Map<String, List<Opportunity_Stage_Validation__mdt>> groupedStageValMap ){
         Integer passCheckCount = 0;
         String groupCheckType = '';
-        String groupRelatedObjName = getGroupRelatedObjName( groupName , groupedStageValMap );
-        for( SObject relatedObject : relatedObjectMap.get(groupRelatedObjName) ){
-            passCheckCount = 0;
-            for( Opportunity_Stage_Validation__mdt groupOptyStageVal : groupedStageValMap.get(groupName) ){
-                if( groupOptyStageVal.Field__c == ID_FIELD && groupOptyStageVal.Operation__c == Operator.DOES_NOT_EXIST.name() ){
-                    groupCheckType = Operator.DOES_NOT_EXIST.name();
-                    continue;
-                } else if( groupOptyStageVal.Object__c == OPPORTUNITY_OBJ ){
-                    // when a group CONTAINS an Opportunity object val record, the rest of the group only needs checking if the Opty condition is true
-                    if( checkCondition(opp.get(groupOptyStageVal.Field__c), groupOptyStageVal.Value__c, groupOptyStageVal.Operation__c) ){
-                        passCheckCount++;
-                    } else {
-                        passCheck = true;
-                        break;
-                    }
-                } else if( checkCondition(relatedObject.get(groupOptyStageVal.Field__c), groupOptyStageVal.Value__c, groupOptyStageVal.Operation__c) ){
-                    passCheckCount++;
-                }
+        for( Opportunity_Stage_Validation__mdt groupOptyStageVal : groupedStageValMap.get(groupName) ){
+            Object valFieldValue = null;
+            if( groupOptyStageVal.Operation__c == Operator.DOES_NOT_EXIST.name() ){
+                groupCheckType = Operator.DOES_NOT_EXIST.name();
+            } else if( groupOptyStageVal.Object__c == OPPORTUNITY_OBJ ){
+                valFieldValue = opp.get(groupOptyStageVal.Field__c);
+            } else {
+                valFieldValue = relatedObject.get(groupOptyStageVal.Field__c);
             }
-            if( groupCheckType == Operator.DOES_NOT_EXIST.name() && passCheckCount < groupedStageValMap.get(groupName).size() - 1 ){
-                passCheck = true;
-            } else if( passCheckCount >= groupedStageValMap.get(groupName).size() ){
-                passCheck = true;
+
+            if( (checkCondition(valFieldValue , groupOptyStageVal.Value__c , groupOptyStageVal.Operation__c))
+             || (groupCheckType == Operator.DOES_NOT_EXIST.name()) )
+            {
+                passCheckCount++;
             }
         }
-        return passCheck;
+        if( groupCheckType == Operator.DOES_NOT_EXIST.name() && passCheckCount >= groupedStageValMap.get(groupName).size() ){
+            passCheckCount = 0; // if record exists that should not, return 0 to trip error message
+        }
+        return passCheckCount;
     }
 
     public static String getGroupRelatedObjName( String groupName , Map<String, List<Opportunity_Stage_Validation__mdt>> groupedStageValMap ){
@@ -366,7 +365,6 @@ public with sharing class NSP_ValidateOpportunityStage {
 
     private static void evaluateAnalysisStageCriteria( Opportunity opp, List<Event> eventList ){
         String scannedTask='';
-        String evalTaskMsg='';
         if( analysisStageCriteraTypes.CONTAINS(opp.Type)
             && (opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WX || opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WA) ){
 
