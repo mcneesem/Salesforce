@@ -149,7 +149,9 @@ public with sharing class NSP_ValidateOpportunityStage {
                 }
             } else if( String.isBlank(currentOptyStageVal.Group__c) ){ // check any related objects
                 passCheckCount = evaluateRelatedObjCriteria( currentOptyStageVal , relatedObjectMap );
-                if( passCheckCount < 1 ) opp.addError(currentOptyStageVal.Error_Message__c);
+                if( passCheckCount < 1 ){
+                    opp.addError(currentOptyStageVal.Error_Message__c);
+                }
             }
         }
     }
@@ -165,10 +167,7 @@ public with sharing class NSP_ValidateOpportunityStage {
     }
 
     private static void evaluateGroupedCriteria( Opportunity opp, Map<String,List<SObject>> relatedObjectMap, Map<String, List<Opportunity_Stage_Validation__mdt>> groupedStageValMap ){
-        Integer passCheckCount = 0;
-        String groupCheckType = '';
         for( String groupName : groupedStageValMap.keySet() ){
-            groupCheckType = '';
             Boolean passCheck = evaluateOneCriteriaGroup( opp, groupName , relatedObjectMap , groupedStageValMap );            
             if( !passCheck ){
                 opp.addError(groupedStageValMap.get(groupName)[0].Error_Message__c);
@@ -526,7 +525,6 @@ public with sharing class NSP_ValidateOpportunityStage {
     }
  
     private static void evaluateClosedWonStageCriteria( Opportunity opp ) {
-        String scannedSTP = '';
         if ( NSP_ValidateOpportunityStage.permittedCWOppOwnerUserMap.CONTAINSKey( opp.OwnerId )
             && ( !hasAllowCWNCSUserPerm )
             && ownerBasedCriteriaProducts.CONTAINS( opp.NSP_PrimaryProduct__c )
@@ -735,10 +733,6 @@ public with sharing class NSP_ValidateOpportunityStage {
             Date ruleValueDate = null;
             if( ruleValue.indexOf('TODAY') > -1 ) {
                 ruleValueDate = Date.today();
-            } else if( ruleValue.indexOf('TOMORROW') > -1 ) {
-                ruleValueDate = Date.today().addDays(1);
-            } else if( ruleValue.indexOf('YESTERDAY') > -1 ) {
-                ruleValueDate = Date.today().addDays(-1);
             }
             return checkConditionTyped(Date.valueOf(fieldValue), ruleValueDate, operation);
         } else if (fieldValue instanceOf Double) {
