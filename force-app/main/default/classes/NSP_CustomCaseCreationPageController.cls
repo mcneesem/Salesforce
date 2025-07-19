@@ -1,5 +1,5 @@
 public with sharing class NSP_CustomCaseCreationPageController {
-    // test w/ NSP_CustomCaseCreationPageControllerTest (82%)
+    // test w/ NSP_CustomCaseCreationPageControllerTest (80%)
 
     private static final String SERVICE_OPERATIONS = 'Service Operations';
 
@@ -15,13 +15,6 @@ public with sharing class NSP_CustomCaseCreationPageController {
                 } else if ( caseRecType.contains( NSP_ServiceConstants.BPS ) ) {
                     caseRecType = NSP_ServiceConstants.BPS;
                 }
-            }
-            Set<String> excludedCategories = new Set<String>();
-            if ( !NSP_CustomCaseCreationPageController.hasPermissionFLSA ) {
-                // prevent DmlExceptions...
-                // ~ exclude 'HR Admin Compliance - FLSA' NSP_Category__c value for Users without the NSP_FLSA Custom Permission...
-                // ~ See Validation Rule: Case.NSP_FLSA_Permission
-                excludedCategories.add( 'HR Admin Compliance - FLSA' );
             }
             if ( String.isNotBlank( userTitle )
                 && !isCatViewAll
@@ -40,7 +33,7 @@ public with sharing class NSP_CustomCaseCreationPageController {
                         AND ( NSP_UserTitle__c INCLUDES ( :userTitle ) )
                         AND ( NSP_isActive__c = true )
                         AND ( NSP_Subcategory__c != :NSP_ServiceConstants.SUBCATEGORY_NOT_ON_UI )
-                        AND ( NSP_Category__c NOT IN :excludedCategories )
+                        AND ( Id NOT IN :NSP_CustomCaseCreationPageController.restrictedFlsaMappingIds )
                     )
                     ORDER BY NSP_Category__c , NSP_Subcategory__c
                 ];
@@ -49,7 +42,6 @@ public with sharing class NSP_CustomCaseCreationPageController {
                 && !NSP_CustomCaseCreationPageController.hasPermissionAdmin
                 )
             {
-                excludedCategories.add( NSP_CustomCaseCreationPageController.SERVICE_OPERATIONS );
                 lstCatMapping = [
                     SELECT
                         Id , Name , NSP_Category__c , NSP_CategoryDescription__c ,
@@ -62,12 +54,12 @@ public with sharing class NSP_CustomCaseCreationPageController {
                         AND ( NSP_UserTitle__c INCLUDES ( :userTitle ) )
                         AND ( NSP_isActive__c = true )
                         AND ( NSP_Subcategory__c != :NSP_ServiceConstants.SUBCATEGORY_NOT_ON_UI )
-                        AND ( NSP_Category__c NOT IN :excludedCategories )
+                        AND ( NSP_Category__c != :NSP_CustomCaseCreationPageController.SERVICE_OPERATIONS )
+                        AND ( Id NOT IN :NSP_CustomCaseCreationPageController.restrictedFlsaMappingIds )
                     )
                     ORDER BY NSP_Category__c , NSP_Subcategory__c
                 ];
             } else if ( !NSP_CustomCaseCreationPageController.hasPermissionAdmin ) {
-                excludedCategories.add( NSP_CustomCaseCreationPageController.SERVICE_OPERATIONS );
                 lstCatMapping = [
                     SELECT
                         Id , Name , NSP_Category__c , NSP_CategoryDescription__c ,
@@ -79,7 +71,8 @@ public with sharing class NSP_CustomCaseCreationPageController {
                         ( NSP_RecordType__c = :caseRecType )
                         AND ( NSP_isActive__c = true )
                         AND ( NSP_Subcategory__c != :NSP_ServiceConstants.SUBCATEGORY_NOT_ON_UI )
-                        AND ( NSP_Category__c NOT IN :excludedCategories )
+                        AND ( NSP_Category__c != :NSP_CustomCaseCreationPageController.SERVICE_OPERATIONS )
+                        AND ( Id NOT IN :NSP_CustomCaseCreationPageController.restrictedFlsaMappingIds )
                     )
                     ORDER BY NSP_Category__c , NSP_Subcategory__c
                 ];
@@ -95,7 +88,7 @@ public with sharing class NSP_CustomCaseCreationPageController {
                         ( NSP_RecordType__c = :caseRecType )
                         AND ( NSP_isActive__c = true )
                         AND ( NSP_Subcategory__c != :NSP_ServiceConstants.SUBCATEGORY_NOT_ON_UI )
-                        AND ( NSP_Category__c NOT IN :excludedCategories )
+                        AND ( Id NOT IN :NSP_CustomCaseCreationPageController.restrictedFlsaMappingIds )
                     )
                     ORDER BY NSP_Category__c , NSP_Subcategory__c
                 ];
@@ -115,6 +108,51 @@ public with sharing class NSP_CustomCaseCreationPageController {
                 );
             }
             return hasPermissionFLSA;
+        }
+        private set;
+    }
+
+    private static Set<Id> restrictedFlsaMappingIds {
+        private get {
+            if ( restrictedFlsaMappingIds == null ) {
+                Set<Id> local = new Set<Id>();
+                if ( !NSP_CustomCaseCreationPageController.hasPermissionFLSA
+                    && ( NSP_CustomCaseCreationPageController.restrictedFlsaMappings != null )
+                    && !NSP_CustomCaseCreationPageController.restrictedFlsaMappings.isEmpty()
+                    )
+                {
+                    local = NSP_CustomCaseCreationPageController.restrictedFlsaMappings.keySet();
+                }
+                restrictedFlsaMappingIds = local;
+            }
+            return restrictedFlsaMappingIds;
+        }
+        private set;
+    }
+
+    // prevent DmlExceptions...
+    // ~ See Validation Rule: Case.NSP_FLSA_Permission
+    // ~ excluded combinations of NSP_Category__c/NSP_SubCategory__c for Users without the NSP_FLSA Custom Permission...
+    private static Map<Id,NSP_Category_Sub_Category_Mapping__c> restrictedFlsaMappings {
+        private get {
+            if ( restrictedFlsaMappings == null ) {
+                List<String> restrictedFlsaSubcategories = new List<String>();
+                if ( String.isNotBlank( System.Label.NSP_FLSA_Case_Sub_Categories ) ) {
+                    restrictedFlsaSubcategories = System.Label.NSP_FLSA_Case_Sub_Categories.split( ',' );
+                }
+                restrictedFlsaMappings = new Map<Id,NSP_Category_Sub_Category_Mapping__c>(
+                    [
+                        SELECT Id
+                        FROM NSP_Category_Sub_Category_Mapping__c
+                        WHERE (
+                            ( NSP_Category__c = 'HR Admin Compliance - FLSA' )
+                            AND ( NSP_Subcategory__c IN :restrictedFlsaSubcategories )
+                        )
+                        ORDER BY NSP_Category__c , NSP_Subcategory__c
+                    ]
+                );
+            }
+            return restrictedFlsaMappings;
         }
         private set;
     }
@@ -294,13 +332,6 @@ public with sharing class NSP_CustomCaseCreationPageController {
                     caseRecType = NSP_ServiceConstants.BPS;
                 }
             }
-            Set<String> excludedCategories = new Set<String>();
-            if ( !NSP_CustomCaseCreationPageController.hasPermissionFLSA ) {
-                // prevent DmlExceptions...
-                // ~ exclude 'HR Admin Compliance - FLSA' NSP_Category__c value for Users without the NSP_FLSA Custom Permission...
-                // ~ See Validation Rule: Case.NSP_FLSA_Permission
-                excludedCategories.add( 'HR Admin Compliance - FLSA' );
-            }
             List<NSP_Category_Sub_Category_Mapping__c> lstCatMapping = new List<NSP_Category_Sub_Category_Mapping__c>();
             if ( String.isNotBlank( selectedCat ) ) {
                 lstCatMapping = [
@@ -314,7 +345,7 @@ public with sharing class NSP_CustomCaseCreationPageController {
                         ( NSP_RecordType__c = :caseRecType )
                         AND ( NSP_isActive__c = true )
                         AND ( NSP_Subcategory__c != :NSP_ServiceConstants.SUBCATEGORY_NOT_ON_UI )
-                        AND ( NSP_Category__c NOT IN :excludedCategories )
+                        AND ( Id NOT IN :NSP_CustomCaseCreationPageController.restrictedFlsaMappingIds )
                         AND ( NSP_Category__c = :selectedCat )
                     )
                     ORDER BY NSP_Category__c , NSP_Subcategory__c
@@ -331,7 +362,7 @@ public with sharing class NSP_CustomCaseCreationPageController {
                         ( NSP_RecordType__c = :caseRecType )
                         AND ( NSP_isActive__c = true )
                         AND ( NSP_Subcategory__c != :NSP_ServiceConstants.SUBCATEGORY_NOT_ON_UI )
-                        AND ( NSP_Category__c NOT IN :excludedCategories )
+                        AND ( Id NOT IN :NSP_CustomCaseCreationPageController.restrictedFlsaMappingIds )
                     )
                     ORDER BY NSP_Category__c , NSP_Subcategory__c
                 ];
