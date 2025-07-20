@@ -731,121 +731,85 @@ public with sharing class NSP_ValidateOpportunityStage {
             Date ruleValueDate = null;
             if( ruleValue.indexOf('TODAY') > -1 ) {
                 ruleValueDate = Date.today();
+                return checkConditionDate( Date.valueOf(fieldValue) , ruleValueDate , operation );
+            } else if( String.isBlank(ruleValue) ){
+                return checkConditionTyped( fieldValue , ruleValueDate , operation );
             }
-            return checkConditionTyped(Date.valueOf(fieldValue), ruleValueDate, operation);
-        } else if (fieldValue instanceOf Double) {
-            Double ruleValueDouble = null;
+        } else if ( (fieldValue instanceOf Decimal) || (fieldValue instanceOf Double) || (fieldValue instanceOf Integer) ) {
+            Decimal ruleValueDecimal = null;
             if( !String.isBlank(ruleValue) ){
-                ruleValueDouble = Double.valueOf(ruleValue);
+                ruleValueDecimal = Decimal.valueOf(ruleValue);
+                return checkConditionDecimal( Decimal.valueOf(String.valueOf(fieldValue)) , ruleValueDecimal , operation );
+            } else {
+                return checkConditionTyped( fieldValue , ruleValueDecimal , operation );
             }
-            return checkConditionTyped(Double.valueOf(fieldValue), ruleValueDouble, operation);
-        } else if (fieldValue instanceOf Integer) {
-            Integer ruleValueInteger = null;
-            if( !String.isBlank(ruleValue) ){
-                ruleValueInteger = Integer.valueOf(ruleValue);
-            }
-            return checkConditionTyped(Integer.valueOf(fieldValue), ruleValueInteger, operation);
         } else if (fieldValue instanceOf String) {
-            return checkConditionTyped(String.valueOf(fieldValue), ruleValue, operation);
+            return checkConditionTyped( fieldValue , ruleValue , operation );
         } else if (fieldValue instanceOf Boolean) {
             Boolean ruleValueBoolean = null;
             if( !String.isBlank(ruleValue) ){
                 ruleValueBoolean = Boolean.valueOf(ruleValue);
             }
-            return checkConditionTyped(Boolean.valueOf(fieldValue), ruleValueBoolean, operation);
+            return checkConditionTyped( fieldValue , ruleValueBoolean , operation );
         }
         return false;
     }
 
-    public static Boolean checkConditionTyped(Date fieldValue, Date ruleValue, String operation){
-        if (operation == Operator.EQUALS.name()) {
+    public static Boolean checkConditionTyped( Object fieldValue , Object ruleValue , String operation ) {
+        if ( operation == Operator.EQUALS.name() ){
             return fieldValue == ruleValue;
-        } else if (operation == Operator.DOES_NOT_EQUAL.name()) {
+        } else if ( operation == Operator.DOES_NOT_EQUAL.name() ){
             return fieldValue != ruleValue;
-        } else if (operation == Operator.GREATER_THAN_OR_EQUALS.name()) {
-            return fieldValue != null && !String.isBlank(String.valueOf(fieldValue)) && fieldValue >= ruleValue;
-        } else if (operation == Operator.LESS_THAN_OR_EQUALS.name()) {
-            return fieldValue != null && !String.isBlank(String.valueOf(fieldValue)) && fieldValue <= ruleValue;
-        } else if (operation == Operator.IS_BLANK.name()) {
-            return fieldValue == null || String.isBlank(String.valueOf(fieldValue));
-        } else if (operation == Operator.IS_NOT_BLANK.name()) {
-            return fieldValue != null && !String.isBlank(String.valueOf(fieldValue));
-        }
-        return false;
-    }
-
-    public static Boolean checkConditionTyped(Double fieldValue, Double ruleValue, String operation){
-        if (operation == Operator.EQUALS.name()) {
-            return fieldValue == ruleValue;
-        } else if (operation == Operator.DOES_NOT_EQUAL.name()) {
-            return fieldValue != ruleValue;
-        } else if (operation == Operator.GREATER_THAN_OR_EQUALS.name()) {
-            return fieldValue != null && !String.isBlank(String.valueOf(fieldValue)) && fieldValue >= ruleValue;
-        } else if (operation == Operator.LESS_THAN_OR_EQUALS.name()) {
-            return fieldValue != null && !String.isBlank(String.valueOf(fieldValue)) && fieldValue <= ruleValue;
-        } else if (operation == Operator.IS_BLANK.name()) {
-            return fieldValue == null || String.isBlank(String.valueOf(fieldValue));
-        } else if (operation == Operator.IS_NOT_BLANK.name()) {
-            return fieldValue != null && !String.isBlank(String.valueOf(fieldValue));
-        }
-        return false;
-    }
-
-    public static Boolean checkConditionTyped(Integer fieldValue, Integer ruleValue, String operation){
-        if (operation == Operator.EQUALS.name()) {
-            return fieldValue == ruleValue;
-        } else if (operation == Operator.DOES_NOT_EQUAL.name()) {
-            return fieldValue != ruleValue;
-        } else if (operation == Operator.GREATER_THAN_OR_EQUALS.name()) {
-            return fieldValue != null && !String.isBlank(String.valueOf(fieldValue)) && fieldValue >= ruleValue;
-        } else if (operation == Operator.LESS_THAN_OR_EQUALS.name()) {
-            return fieldValue != null && !String.isBlank(String.valueOf(fieldValue)) && fieldValue <= ruleValue;
-        } else if (operation == Operator.IS_BLANK.name()) {
-            return fieldValue == null || String.isBlank(String.valueOf(fieldValue));
-        } else if (operation == Operator.IS_NOT_BLANK.name()) {
-            return fieldValue != null && !String.isBlank(String.valueOf(fieldValue));
-        }
-        return false;
-    }
-
-    public static Boolean checkConditionTyped(String fieldValue, String ruleValue, String operation){
-        if (operation == Operator.EQUALS.name()) {
-            return fieldValue == ruleValue;
-        } else if (operation == Operator.DOES_NOT_EQUAL.name()) {
-            return fieldValue != ruleValue;
-        } else if (operation == Operator.CONTAINS.name()) {
-            return fieldValue != null && fieldValue.CONTAINS(ruleValue);
-        } else if (operation == Operator.DOES_NOT_CONTAIN.name()) {
-            return fieldValue != null && !fieldValue.CONTAINS(ruleValue);
-        } else if (operation == Operator.IS_IN.name()) {
-            if (fieldValue != null && ruleValue != null) {
-                Set<String> ruleValueSet = new Set<String>(ruleValue.split(','));
-                return ruleValueSet.CONTAINS(fieldValue);
+        } else if ( operation == Operator.CONTAINS.name() ){
+            return fieldValue != null && String.valueOf(fieldValue).CONTAINS(String.valueOf(ruleValue));
+        } else if ( operation == Operator.DOES_NOT_CONTAIN.name() ){
+            return fieldValue != null && !String.valueOf(fieldValue).CONTAINS(String.valueOf(ruleValue));
+        } else if ( operation == Operator.IS_IN.name() ){
+            if (fieldValue != null && !String.isBlank(String.valueOf(fieldValue)) && ruleValue != null && !String.isBlank(String.valueOf(ruleValue))) {
+                Set<String> ruleValueSet = new Set<String>(String.valueOf(ruleValue).split(','));
+                return ruleValueSet.CONTAINS(String.valueOf(fieldValue));
             }
             return false;
-        } else if (operation == Operator.IS_NOT_IN.name()) {
-            if (fieldValue != null && ruleValue != null) {
-                Set<String> ruleValueSet = new Set<String>(ruleValue.split(','));
-                return !ruleValueSet.CONTAINS(fieldValue);
+        } else if ( operation == Operator.IS_NOT_IN.name() ){
+            if (fieldValue != null && !String.isBlank(String.valueOf(fieldValue)) && ruleValue != null && !String.isBlank(String.valueOf(ruleValue))) {
+                Set<String> ruleValueSet = new Set<String>(String.valueOf(ruleValue).split(','));
+                return !ruleValueSet.CONTAINS(String.valueOf(fieldValue));
             }
             return true;
-        } else if (operation == Operator.IS_BLANK.name()) {
-            return String.isBlank(fieldValue) || fieldValue == null;
-        } else if (operation == Operator.IS_NOT_BLANK.name()) {
-            return !String.isBlank(fieldValue) && fieldValue != null;
+        } else if ( operation == Operator.IS_BLANK.name() ){
+            return String.isBlank(String.valueOf(fieldValue)) || fieldValue == null;
+        } else if ( operation == Operator.IS_NOT_BLANK.name() ){
+            return !String.isBlank(String.valueOf(fieldValue)) && fieldValue != null;
         }
         return false;
     }
 
-    public static Boolean checkConditionTyped(Boolean fieldValue, Boolean ruleValue, String operation){
-        if (operation == Operator.EQUALS.name()) {
+    public static Boolean checkConditionDate( Date fieldValue , Date ruleValue , String operation ){
+        if ( operation == Operator.EQUALS.name() ) {
             return fieldValue == ruleValue;
-        } else if (operation == Operator.DOES_NOT_EQUAL.name()) {
+        } else if ( operation == Operator.DOES_NOT_EQUAL.name() ) {
             return fieldValue != ruleValue;
+        } else if ( operation == Operator.GREATER_THAN_OR_EQUALS.name() ) {
+            return fieldValue != null && !String.isBlank(String.valueOf(fieldValue)) && fieldValue >= ruleValue;
+        } else if ( operation == Operator.LESS_THAN_OR_EQUALS.name() ) {
+            return fieldValue != null && !String.isBlank(String.valueOf(fieldValue)) && fieldValue <= ruleValue;
         }
         return false;
     }
-    
+
+    public static Boolean checkConditionDecimal( Decimal fieldValue , Decimal ruleValue , String operation ){
+        if ( operation == Operator.EQUALS.name() ) {
+            return fieldValue == ruleValue;
+        } else if ( operation == Operator.DOES_NOT_EQUAL.name() ) {
+            return fieldValue != ruleValue;
+        } else if ( operation == Operator.GREATER_THAN_OR_EQUALS.name() ) {
+            return fieldValue != null && !String.isBlank(String.valueOf(fieldValue)) && fieldValue >= ruleValue;
+        } else if ( operation == Operator.LESS_THAN_OR_EQUALS.name() ) {
+            return fieldValue != null && !String.isBlank(String.valueOf(fieldValue)) && fieldValue <= ruleValue;
+        }
+        return false;
+    }
+   
     private static Map<Id,User> permittedRETSCUserMap {
         private get {
             if ( permittedRETSCUserMap == null ) {
