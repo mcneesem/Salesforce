@@ -24,7 +24,7 @@
     </values>
     <values>
         <field>Operation__c</field>
-        <value xsi:type="xsd:string">Greater Than or Equals</value>
+        <value xsi:type="xsd:string">GREATER_THAN_OR_EQUALS</value>
     </values>
     <values>
         <field>Primary_Product__c</field>

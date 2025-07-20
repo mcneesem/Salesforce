@@ -24,7 +24,7 @@
     </values>
     <values>
         <field>Operation__c</field>
-        <value xsi:type="xsd:string">Does Not Exist</value>
+        <value xsi:type="xsd:string">DOES_NOT_EXIST</value>
     </values>
     <values>
         <field>Primary_Product__c</field>
