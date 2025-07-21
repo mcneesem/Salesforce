@@ -617,7 +617,7 @@
                 <fieldItem>Record.Case__c</fieldItem>
                 <identifier>RecordCase_cField</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 OR 2</booleanFilter>
+                    <booleanFilter>1 OR 2 OR 3</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.Layout_BOB__c}</leftValue>
                         <operator>EQUAL</operator>
@@ -627,6 +627,11 @@
                         <leftValue>{!Record.Layout_BOB__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>RET</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>BPS Generic</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -708,6 +713,39 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.Project_Lost_Reason__c</fieldItem>
+                <identifier>RecordProject_Lost_Reason_cField</identifier>
+                <visibilityRule>
+                    <booleanFilter>(1 OR 2 OR 3) AND 4</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>RET</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>BPS Generic</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>ITA Impl</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.pse__Project_Status__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Close/Lost</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.pse__Start_Date__c</fieldItem>
                 <identifier>Recordpse_Start_Date_cField</identifier>
             </fieldInstance>
@@ -730,23 +768,6 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Project_Complete__c</fieldItem>
                 <identifier>RecordNSP_Project_Complete_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Project_Lost_Reason__c</fieldItem>
-                <identifier>RecordProject_Lost_Reason_cField</identifier>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>RET</rightValue>
-                    </criteria>
-                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -2647,8 +2668,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.NSP_On_Hold_Reason__c</fieldItem>
-                <identifier>RecordNSP_On_Hold_Reason_cField2</identifier>
+                <fieldItem>Record.Hold_Status__c</fieldItem>
+                <identifier>RecordHold_Status_cField</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.pse__Project_Status__c}</leftValue>
@@ -2666,6 +2687,23 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.pse__Project_Status_Notes__c</fieldItem>
                 <identifier>Recordpse_Project_Status_Notes_cField2</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Project_Lost_Reason__c</fieldItem>
+                <identifier>RecordProject_Lost_Reason_cField2</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.pse__Project_Status__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Close/Lost</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -2696,16 +2734,6 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Project_Complete__c</fieldItem>
                 <identifier>RecordNSP_Project_Complete_cField3</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Project_Lost_Reason__c</fieldItem>
-                <identifier>RecordProject_Lost_Reason_cField2</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -4861,6 +4889,10 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
+                    <name>label</name>
+                    <value>Tabs</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>tabs</name>
                     <value>maintabs</value>
                 </componentInstanceProperties>
@@ -5553,6 +5585,10 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
+                    <name>label</name>
+                    <value>Tabs</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>tabs</name>
                     <value>Facet-38aa8923-c34d-49aa-8706-adef47de389a</value>
                 </componentInstanceProperties>
@@ -5580,6 +5616,10 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
+                <componentInstanceProperties>
+                    <name>label</name>
+                    <value>Tabs</value>
+                </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>tabs</name>
                     <value>Facet-8beb920c-1d4e-479d-a7cb-6915694fe70e</value>
@@ -5614,6 +5654,10 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
+                <componentInstanceProperties>
+                    <name>label</name>
+                    <value>Tabs</value>
+                </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>tabs</name>
                     <value>sidebartabs</value>
